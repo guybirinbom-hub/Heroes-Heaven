@@ -1,0 +1,614 @@
+[
+ {
+  "id": "wheelchair-land-delvers-chair",
+  "name": "Wheelchair (Land-Delver's Chair)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5
+  },
+  "text": "Wheelchair Source Player Core pg. 293 A common wheelchair is ideal for everyday use but isn't designed for strenuous activity. These wheelchairs are most common among non-adventurers. Wheelchairs come in a variety of sizes to suit every person regardless of height or body type. Wheelchair Source Player Core pg. 293 Price 5 sp Usage see text Bulk 2 Wheelchair (Traveler's Chair) Source Player Core pg. 293 Price 5 gp Usage see text Bulk 3 A traveler's chair is tailored for frequent adventures and travels. The design is sleek and fashionable to provide excellent comfort and support. A traveler's chair has small mechanisms, either made from interlocking wood pieces, clockwork, or other devices, that allow the chair to traverse up or down stairs without any additional difficulty (moving up stairs is still difficult terrain, just like for other characters), and move through other common adventuring terrain without any additional difficulty, such as ladders and uneven ground. Wheel Chair (Chair Storage) Source Player Core pg. 293 Price 1 gp Chair storage can be purchased and applied to any wheelchair. This reduces the amount of Bulk the items weigh when stored within the chair, much like a backpack. The first 2 Bulk of items stowed in your chair don't count against your Bulk limit. If you use both chair storage and a backpack at the same time, only 2 Bulk total isn't counted against your limit, much like if you used multiple backpacks or similar items at the same time. Wheelchair (Su"
+ },
+ {
+  "id": "wheelchair-supramarine-chair",
+  "name": "Wheelchair (Supramarine Chair)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 5
+  },
+  "text": "Wheelchair Source Player Core pg. 293 A common wheelchair is ideal for everyday use but isn't designed for strenuous activity. These wheelchairs are most common among non-adventurers. Wheelchairs come in a variety of sizes to suit every person regardless of height or body type. Wheelchair Source Player Core pg. 293 Price 5 sp Usage see text Bulk 2 Wheelchair (Traveler's Chair) Source Player Core pg. 293 Price 5 gp Usage see text Bulk 3 A traveler's chair is tailored for frequent adventures and travels. The design is sleek and fashionable to provide excellent comfort and support. A traveler's chair has small mechanisms, either made from interlocking wood pieces, clockwork, or other devices, that allow the chair to traverse up or down stairs without any additional difficulty (moving up stairs is still difficult terrain, just like for other characters), and move through other common adventuring terrain without any additional difficulty, such as ladders and uneven ground. Wheel Chair (Chair Storage) Source Player Core pg. 293 Price 1 gp Chair storage can be purchased and applied to any wheelchair. This reduces the amount of Bulk the items weigh when stored within the chair, much like a backpack. The first 2 Bulk of items stowed in your chair don't count against your Bulk limit. If you use both chair storage and a backpack at the same time, only 2 Bulk total isn't counted against your limit, much like if you used multiple backpacks or similar items at the same time. Wheelchair (Su"
+ },
+ {
+  "id": "wheelchair-travelers-chair",
+  "name": "Wheelchair (Traveler's Chair)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5
+  },
+  "text": "Wheelchair Source Player Core pg. 293 A common wheelchair is ideal for everyday use but isn't designed for strenuous activity. These wheelchairs are most common among non-adventurers. Wheelchairs come in a variety of sizes to suit every person regardless of height or body type. Wheelchair Source Player Core pg. 293 Price 5 sp Usage see text Bulk 2 Wheelchair (Traveler's Chair) Source Player Core pg. 293 Price 5 gp Usage see text Bulk 3 A traveler's chair is tailored for frequent adventures and travels. The design is sleek and fashionable to provide excellent comfort and support. A traveler's chair has small mechanisms, either made from interlocking wood pieces, clockwork, or other devices, that allow the chair to traverse up or down stairs without any additional difficulty (moving up stairs is still difficult terrain, just like for other characters), and move through other common adventuring terrain without any additional difficulty, such as ladders and uneven ground. Wheel Chair (Chair Storage) Source Player Core pg. 293 Price 1 gp Chair storage can be purchased and applied to any wheelchair. This reduces the amount of Bulk the items weigh when stored within the chair, much like a backpack. The first 2 Bulk of items stowed in your chair don't count against your Bulk limit. If you use both chair storage and a backpack at the same time, only 2 Bulk total isn't counted against your limit, much like if you used multiple backpacks or similar items at the same time. Wheelchair (Su"
+ },
+ {
+  "id": "whip-of-compliance",
+  "name": "Whip of Compliance",
+  "level": 9,
+  "itemType": "weapon",
+  "traits": [
+   "disarm",
+   "finesse",
+   "magical",
+   "nonlethal",
+   "reach",
+   "trip"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3000
+  },
+  "text": "The handle of this braided leather +1 striking whip is made from the hairs of a variety of rare and mythical animals. When used against an animal, the *whip of compliance* can potentially force the target to follow your commands. **Activate** ⟨1⟩ command --- **Effect** Until the end of your current turn, any animals you Strike with the whip must attempt a . On a failed or critically failed saving throw, the whip casts a 4th-rank Suggestion spell on the animal with a base duration of 1 round, and the spell loses the linguistic trait. The course of action must still fulfill *suggestion's* requirements. If you can cast spells, you can expend one of your spells of 4th level or higher as a part of activating the whip; if you do so, the *suggestions* this turn have their normal base duration."
+ },
+ {
+  "id": "wig-of-holding",
+  "name": "Wig of Holding",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "usage": "wornheadwear",
+  "price": {
+   "gp": 45
+  },
+  "text": "*Wigs of holding* are created from planar fibers and contain small extradimensional spaces accessible within the hair. They can hold up to four items of light Bulk inside them, and Bulk held within the wig of holding doesn't increase the Bulk of the wig itself. You can Interact with a wig of holding to put items inside or remove items from it, and you can do so more easily than with a mundane container. It only takes a single Interact action to withdraw these items, like a worn item, rather than taking two Interact actions, like a stowed item."
+ },
+ {
+  "id": "wind-up-wings-flutterback",
+  "name": "Wind-up Wings (Flutterback)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "attached-to-a-thrown-weapon",
+  "price": {
+   "gp": 50
+  },
+  "text": "These delicate clockwork wings enable thrown weapons to soar through the air at high speeds, performing turns and other aerial maneuvers mid-flight. Wind-up wings also have different types of special effects depending on the type. Wind-up wings must be attached to a thrown weapon and wound to function. A thrown weapon with an attached set of wind-up wings can't have anything else attached to it, or the wings cease to function. Attaching or detaching a pair of wind-up wings to a thrown weapon requires a repair kit, and the process takes 10 minutes. Winding an attached pair of wind-up wings takes three Interact actions. There are a variety of wind-up wings, with different effects. When you make a thrown Strike with the weapon to which a pair of flutterback wind-up wings are attached, and the wings are wound, the wings fly the weapon back to your hand after the Strike is complete. If your hands are full when the weapon returns, the wings hover in place 3 feet above the ground. At the end of your turn, the wings are wound down; they don't function again until wound. If you aren't holding the weapon when the flutterback wind-up wings become wound down, the weapon falls to the ground."
+ },
+ {
+  "id": "wind-up-wings-homing",
+  "name": "Wind-up Wings (Homing)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "attached-to-a-thrown-weapon",
+  "price": {
+   "gp": 1800
+  },
+  "text": "These delicate clockwork wings enable thrown weapons to soar through the air at high speeds, performing turns and other aerial maneuvers mid-flight. Wind-up wings also have different types of special effects depending on the type. Wind-up wings must be attached to a thrown weapon and wound to function. A thrown weapon with an attached set of wind-up wings can't have anything else attached to it, or the wings cease to function. Attaching or detaching a pair of wind-up wings to a thrown weapon requires a repair kit, and the process takes 10 minutes. Winding an attached pair of wind-up wings takes three Interact actions. There are a variety of wind-up wings, with different effects. When you make a thrown Strike with the weapon to which a pair of homing wind-up wings are attached, and the wings are wound, the wings seek out your target, flying through cover and avoiding obstacles. You ignore the target's concealed condition and reduce the target's cover by one step (lesser cover to no cover, standard cover to lesser cover, or greater cover to standard cover). After the Strike is complete, the wings are wound down; they don't function again until wound."
+ },
+ {
+  "id": "windborne-platform",
+  "name": "Windborne Platform",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "air",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "These magical platforms are used in a variety of performances. They allow performers to access high places safely, while also serving an important role before the performance even begins. They're used by various backstage crews to hang lights, curtains, and scenery above the stage. Sometimes several of these platforms are lined up to make an upper and lower stage. This large 10-foot-by-10-foot platform can be secured to a surface as a 1-minute activity. While standing on a secured platform, any creature can use the Adjust Height activation. **Activate—Adjust Height** ⟨1⟩ (manipulate) --- **Effect** The platform and all creatures and items on the platform either rise or lower up to 10 feet. This action fails if there is more than 50 Bulk on the platform."
+ },
+ {
+  "id": "windlass-bolas",
+  "name": "Windlass Bolas",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "Windlass Bolas Source Treasure Vault (Remastered) pg. 34 Price 200 gp Usage held in 1 hand Bulk L Base Weapon Bola Clockwork mechanisms tick away inside the weights of these +1 striking returning bolas, spooling out more cord in midair. Activate (manipulate) Frequency once per day; Effect The cord of the bola snakes out as you throw it, allowing the weapon to wrap around a group of enemies. You use the bolas to attempt a ranged Trip against all creatures in a 5-foot radius burst within the weapon's first range increment. Roll a separate Athletics check for each target. Each attempt counts toward your multiple attack penalty, but don't increase your penalty until you have made all the attempts."
+ },
+ {
+  "id": "wine-fine",
+  "name": "Wine (Fine)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Wine (Fine) Source Travel Guide pg. 36 Price 1 gp (per bottle)"
+ },
+ {
+  "id": "winged-greater",
+  "name": "Winged (Greater)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 35000
+  },
+  "text": "This rune is a swirling glyph on the front of the armor. A large pair of transparent, ephemeral wings floats out from the back of the armor. **Activate—Take to the Skies** ⟨2⟩ (concentrate, manipulate) --- **Effect** You trace the rune on the front of the breastplate and the armor's ephemeral wings grow tangible, granting you a fly Speed of 25 feet or your land Speed, whichever is slower. Once activated, the wings remain tangible indefinitely. You can Dismiss the activation if you choose, and you don't have to wait an hour to activate the rune again. Once the effect ends, the wings return to their ephemeral form."
+ },
+ {
+  "id": "witch-kit",
+  "name": "Witch Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1,
+   "sp": 8,
+   "cp": 2
+  },
+  "text": "Witch Kit Source Player Core pg. 268 Price 1 gp, 8 sp, 2 cp Money Left Over 13 gp, 1 sp, 8 cp Bulk 2, 5 light Armor Explorer's Clothing Weapons Sickle, sling with 20 bullets, Staff Gear Adventurer's Pack Options cookware (1 gp), healer's toolkit (5 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "witch-token",
+  "name": "Witch Token",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "usage": "worn",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {},
+  "text": "When the *witch token* is invested by a mortal, all of the mortal's spells, except those cast at the highest level the mortal can cast, count as 1 level higher for the purpose of counteracting other spells and being counteracted. The creature can also Activate the *witch token* to Cast a Spell once per day. This spell is chosen from one of the uniila's arcane spontaneous spells of rank 4 or lower when the uniila creates the token. While a creature has the *witch token* invested, it treats its saving throws against the uniila's spells as one degree of success worse, and the uniila always knows the distance and direction to the creature. A creature can't have more than one *witch token* invested, and an uniila can't have more than one *witch token* in existence. The uniila can destroy their *witch token* as a free action with the concentrate trait; if the *witch token* is invested when the uniila does so, the creature that has the *witch token* invested takes 9d8 damage ()."
+ },
+ {
+  "id": "wizard-kit",
+  "name": "Wizard Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 2,
+   "sp": 6
+  },
+  "text": "Wizard Kit Source Player Core pg. 268 Price 2 gp, 6 sp Money Left Over 12 gp, 4 sp Bulk 2, 2 light Armor Explorer's Clothing Weapons Staff Gear Writing Set, Adventurer's Pack Options crossbow with 20 bolts (3 gp, 2 sp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "wizards-tower",
+  "name": "Wizard's Tower",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "structure"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 2500
+  },
+  "text": "A wizard's tower is a tiny gaming piece carved into the form of a stone tower. --- **Activate** (10 minutes) command, envision, Interact --- **Effect** The gaming piece transforms into a fully furnished stone tower 80 feet high and 30 feet in diameter. The tower is topped by a peaked wooden roof, with a wooden door on the second floor accessed by wooden stairs on the tower's exterior. A spiral staircase in the center of the tower connects its 6 floors. The bottom floor is empty, ideal for storage, and the second floor is a great hall for audiences and guests. The third and fourth floors are divided into servants quarters and guest rooms, while the top two floors feature luxurious personal chambers and an alchemy lab. You can revert the tower back to its original state by climbing to the top floor and using an action to speak a command word."
+ },
+ {
+  "id": "woe",
+  "name": "Woe",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "relic",
+   "water"
+  ],
+  "usage": "worncloak",
+  "price": {},
+  "text": "Little is known about the origins of this wintry cloak of snowflakes, which functions as a Living Mantle but with snow instead of plants."
+ },
+ {
+  "id": "wondrous-figurine-bismuth-leopards",
+  "name": "Wondrous Figurine (Bismuth Leopards)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 495
+  },
+  "text": "This exquisitely crafted statuette is carved into the form of twin panthers climbing a tree. When activated, it transforms into a pair of beautiful Leopards that are carved out of bismuth and flash hypnotically as they move. Creatures that come within 5 feet of a bismuth leopard or that end their turn within 5 feet of a bismuth leopard become dazzled for 1 round unless they succeed at a save. A creature that comes within 5 feet of both leopards or ends its turn within 5 feet of both leopards need only attempt one saving throw each time. The leopards can be called on only once per day, and they remain in their leopard form for up to 10 minutes. If either of the leopards is slain, that leopard can't be summoned again until 1 week has passed, but this doesn't prevent you from summoning the other leopard."
+ },
+ {
+  "id": "wondrous-figurine-candy-constrictor",
+  "name": "Wondrous Figurine (Candy Constrictor)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 140
+  },
+  "text": "Although appearing as a multicolored piece of stick candy, this figurine bears a narrow snake head at one end and is as durable as stone. When activated, it becomes a rainbow-striped Ball Python except it lacks the Stealth skill. The snake can be used once per day, and it can remain in snake form for up to 20 minutes."
+ },
+ {
+  "id": "wondrous-figurine-golden-lions",
+  "name": "Wondrous Figurine (Golden Lions)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 900
+  },
+  "text": "Each one of these statuettes is 1 inch in height, carved from a specific material and taking the shape of a particular animal or animals. **Activate** ⟨2⟩ command, Interact --- **Effect** You activate the statue by placing it on solid ground and then speaking its name, causing the statuette to transform into a living creature or creatures. In creature form, the figurine has the minion trait. It can understand your language and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency (if any), appear in its entry below. If the figurine is slain while in animal form, it reverts to its statue shape and cannot be activated again until 1 week has passed. If the figurine is destroyed in statue form, it is shattered and its magic is lost. --- This statuette depicts a pair of gold lions, and when activated, it becomes a pair of adult Lions. The lions can be called on only once per day, and they remain in lion form for no more than 1 hour. If either of the lions is slain, that lion cannot be summoned again until 1 week has passed, but this doesn't prevent you from summoning the other."
+ },
+ {
+  "id": "wondrous-figurine-jade-serpent",
+  "name": "Wondrous Figurine (Jade Serpent)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 340
+  },
+  "text": "Each one of these statuettes is 1 inch in height, carved from a specific material and taking the shape of a particular animal or animals. **Activate** ⟨2⟩ command, Interact --- **Effect** You activate the statue by placing it on solid ground and then speaking its name, causing the statuette to transform into a living creature or creatures. In creature form, the figurine has the minion trait. It can understand your language and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency (if any), appear in its entry below. If the figurine is slain while in animal form, it reverts to its statue shape and cannot be activated again until 1 week has passed. If the figurine is destroyed in statue form, it is shattered and its magic is lost. --- This tiny statue first appears to be a formless lump of jade until closer inspection reveals it to be a serpentine body curled into a snug knot. When activated, this figurine becomes a Giant Viper. The figurine can be used only once per day, and it can remain in serpent form for no more than 10 minutes."
+ },
+ {
+  "id": "wondrous-figurine-marble-elephant",
+  "name": "Wondrous Figurine (Marble Elephant)",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 2700
+  },
+  "text": "Finely carved from a solid piece of marble, this gleaming elephant statuette becomes a fully grown Elephant when activated. The elephant can be called upon no more than four times per month. It remains for 24 hours as long as it is being used as a beast of burden or for transport. If it attempts an attack or otherwise engages in combat, it reverts to statuette form after 1d4 rounds."
+ },
+ {
+  "id": "wondrous-figurine-obsidian-steed",
+  "name": "Wondrous Figurine (Obsidian Steed)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 6000
+  },
+  "text": "This sinister-looking black statuette resembles a horse rearing up on its hind legs. When activated, this figurine becomes a Nightmare. It can be called upon once per week for up to 24 hours, though it won't use Interplanar Teleport or its other abilities on behalf of its rider. Although evil, it allows itself to be ridden by creatures of any alignment, although if a good creature mounts it, the rider must attempt a . On a failure, the nightmare uses Interplanar Teleport to take the rider to a random location in the Abyss, where it promptly returns to statue form, stranding its rider in that nightmarish place."
+ },
+ {
+  "id": "wondrous-figurine-rubber-bear",
+  "name": "Wondrous Figurine (Rubber Bear)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 350
+  },
+  "text": "Each one of these statuettes is 1 inch in height, carved from a specific material and taking the shape of a particular animal or animals. **Activate** ⟨2⟩ command, Interact --- **Effect** You activate the statue by placing it on solid ground and then speaking its name, causing the statuette to transform into a living creature or creatures. In creature form, the figurine has the minion trait. It can understand your language and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency (if any), appear in its entry below. If the figurine is slain while in animal form, it reverts to its statue shape and cannot be activated again until 1 week has passed. If the figurine is destroyed in statue form, it is shattered and its magic is lost. --- This small, stretchable statuette depicts a bear wearing a tutu and a fez and balancing on a ball slightly larger than its head. When activated, it becomes a Grizzly Bear with similar attire. The bear remains balanced upon its rubber ball, and is therefore ungainly: it cannot Climb or Swim, has a -10- foot circumstance penalty to its Speed, and is always off-guard. If the bear leaves its ball, such as if it is repositioned with forced movement or knocked prone, it immediately reverts to statuette form. The bear can be used once per day, and it can remain in bear form for up to 1 hour."
+ },
+ {
+  "id": "wondrous-figurine-ruby-hippopotamus",
+  "name": "Wondrous Figurine (Ruby Hippopotamus)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 700
+  },
+  "text": "This roughly hewn ruby figurine shimmers with a deep red hue and is carved into the likeness of an ornery hippopotamus. When activated, it transforms into an enraged that sees everything within 30 feet of its activation area as its territory. It will relentlessly and ferociously attack anyone within this area except you, but it ignores your commands in favor of defending its area. The hippopotamus is active for 1 minute before reverting to its statue shape, satisfied that it has punished all possible interlopers into its territory. The figurine can be used only once per day."
+ },
+ {
+  "id": "wondrous-figurine-stuffed-fox",
+  "name": "Wondrous Figurine (Stuffed Fox)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "other",
+  "price": {
+   "gp": 125
+  },
+  "text": "This small toy fox has tufted, fluffy ears and buttons for eyes. When activated, it transforms into a big fox with the statistics of a Riding Dog. The stuffed fox always allows you to ride it. While you do, you don't take the -2 penalty to Reflex saves while being mounted, and its jaws Strike gains Knockdown. The stuffed fox can be activated once a day and remains in its form for up to 1 hour."
+ },
+ {
+  "id": "wooden-taws",
+  "name": "Wooden Taws",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Wooden Taws to be fired from a Taw launcher."
+ },
+ {
+  "id": "wool-1-bulk",
+  "name": "Wool (1 Bulk)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Wool Source Travel Guide pg. 36 Wool (1 Bulk) Source Travel Guide pg. 36 Price 1 gp Wool (Sack) Source Travel Guide pg. 36 Price 24 gp"
+ },
+ {
+  "id": "wool-sack",
+  "name": "Wool (Sack)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 24
+  },
+  "text": "Wool Source Travel Guide pg. 36 Wool (1 Bulk) Source Travel Guide pg. 36 Price 1 gp Wool (Sack) Source Travel Guide pg. 36 Price 24 gp"
+ },
+ {
+  "id": "word-of-faith",
+  "name": "Word of Faith",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "holy",
+   "positive",
+   "vitality"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Word of Faith Source GM Core pg. 311 Aspect Celestial Activate (concentrate, manipulate) Frequency once per hour; Effect Placing your hand on yourself or an ally, you heal their wounds and bolster their spirit. The target regains 1d8 HP per item level and reduces their frightened value by 1."
+ },
+ {
+  "id": "world-forge",
+  "name": "World Forge",
+  "level": 25,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "invested",
+   "magical",
+   "mythic"
+  ],
+  "text": "World Forge Source War of Immortals pg. 152 Usage held in 1 hand Bulk 1 Mounted upon a base of iron, inscribed with innumerable runes, this immense anvil can be used to forge nearly anything into reality. Stories claim that even metaphorical and abstract concepts, including “a graveknight’s mercy” and “the tears of a living wildfire” have been hammered into solid shape upon Worldforge, though the tales disagree about what form those objects took. The cost of using Worldforge, however, is prohibitive for mere mortals. In addition to the fuel and metal it consumes, Worldforge draws upon the user’s physical and spiritual strength to sustain the act of creation. The demand of its magic is such that no one save gods, or those who are nearly gods, can use it and survive. Activate—Wondrous Forge (downtime, manipulate) Requirements You have the ability to make a Crafting check at mythic proficiency (such as that granted by the Artisan’s Calling); Effect After spending 2 days setting up the work (or 1 if you have the desired item’s formula) and supplying Worldforge with adequate raw materials (as determined by the GM), you attempt to Craft something upon it. The DC and final cost of the item is also determined by the GM. For each day you spend Crafting, you must expend a Mythic Point or your drained condition increases by 1; this condition can’t be reduced until you have finished Crafting the item or you abandon the project. Each day spent Crafting upon the Worldforge counts as 10 day"
+ },
+ {
+  "id": "worldforge",
+  "name": "Worldforge",
+  "level": 25,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "invested",
+   "magical",
+   "mythic"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "Mounted upon a base of iron, inscribed with innumerable runes, this immense anvil can be used to forge nearly anything into reality. Stories claim that even metaphorical and abstract concepts, including \"a graveknight's mercy\" and \"the tears of a living wildfire\" have been hammered into solid shape upon *Worldforge*, though the tales disagree about what form those objects took. The cost of using *Worldforge*, however, is prohibitive for mere mortals. In addition to the fuel and metal it consumes, *Worldforge* draws upon the user's physical and spiritual strength to sustain the act of creation. The demand of its magic is such that no one save gods, or those who are nearly gods, can use it and survive. --- **Activate—Wondrous Forge** (downtime, manipulate) **Requirements** You have the ability to make a Crafting check at mythic proficiency (such as that granted by the Artisan's Calling) **Effect** After spending 2 days setting up the work (or 1 if you have the desired item's formula) and supplying *Worldforge* with adequate raw materials (as determined by the GM), you attempt to Craft something upon it. The DC and final cost of the item is also determined by the GM. For each day you spend Crafting, you must expend a Mythic Point or your drained condition increases by 1; this condition can't be reduced until you have finished Crafting the item or you abandon the project. Each day spent Crafting upon the *Worldforge* counts as 10 days of normal Crafting time. If the value of your"
+ },
+ {
+  "id": "wounding",
+  "name": "Wounding",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-piercing-or-slashing-melee-weapon",
+  "price": {
+   "gp": 340
+  },
+  "text": "Weapons with *wounding* runes are said to thirst for blood. When you hit a creature with a *wounding* weapon, you deal an extra 1d6 persistent bleed damage."
+ },
+ {
+  "id": "wraithweave-patch-type-i",
+  "name": "Wraithweave Patch (Type I)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "A wraithweave patch appears to be a square sheet of gray cloth that sparkles softly when observed in dim light. An incorporeal creature can touch, hold, and carry wraithweave patches (unlike most physical objects). You can Interact with a wraithweave patch to securely wrap up an object or container that does not exceed light Bulk. Once an object is wrapped up, its Bulk becomes negligible, and the wraithweave patch appears and behaves as if it's nothing more than a tightly folded but empty piece of cloth. You must Interact with the wraithweave patch again to unfold it, at which point the wrapped object returns to its normal Bulk and can itself be interacted with again. Creatures wrapped in a wraithweave patch are not affected and treat the patch as normal cloth. A wrapped item provides no benefits until it is unwrapped, but can be detected by magic normally. If the wraithweave patch is destroyed, any object it contains reverts to normal and is exposed to the damage or effect that destroyed the wraithweave patch. **Activate** ⟨2⟩ command, Interact **Requirements** the wraithweave patch has been wrapped around an object and you are incorporeal --- **Effect** You cause the wraithweave patch and the object it contains to become incorporeal. This effect lasts as long as you Sustain the activation. The wraithweave patch can only be touched, held, and carried by an incorporeal creature, and returns to solid form if not carried by such a creature-if the wraithweave patch is in a solid"
+ },
+ {
+  "id": "wraithweave-patch-type-ii",
+  "name": "Wraithweave Patch (Type II)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 1750
+  },
+  "text": "A wraithweave patch appears to be a square sheet of gray cloth that sparkles softly when observed in dim light. An incorporeal creature can touch, hold, and carry wraithweave patches (unlike most physical objects). You can Interact with a wraithweave patch to securely wrap up an object or container that does not exceed 1 Bulk. Once an object is wrapped up, its Bulk becomes negligible, and the wraithweave patch appears and behaves as if it's nothing more than a tightly folded but empty piece of cloth. You must Interact with the wraithweave patch again to unfold it, at which point the wrapped object returns to its normal Bulk and can itself be interacted with again. Creatures wrapped in a wraithweave patch are not affected and treat the patch as normal cloth. A wrapped item provides no benefits until it is unwrapped, but can be detected by magic normally. If the wraithweave patch is destroyed, any object it contains reverts to normal and is exposed to the damage or effect that destroyed the wraithweave patch. **Activate** ⟨2⟩ command, Interact **Requirements** the wraithweave patch has been wrapped around an object and you are incorporeal --- **Effect** You cause the wraithweave patch and the object it contains to become incorporeal. This effect lasts as long as you Sustain the activation. The wraithweave patch can only be touched, held, and carried by an incorporeal creature, and returns to solid form if not carried by such a creature-if the wraithweave patch is in a solid obj"
+ },
+ {
+  "id": "wraithweave-patch-type-iii",
+  "name": "Wraithweave Patch (Type III)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 6000
+  },
+  "text": "A wraithweave patch appears to be a square sheet of gray cloth that sparkles softly when observed in dim light. An incorporeal creature can touch, hold, and carry wraithweave patches (unlike most physical objects). You can Interact with a wraithweave patch to securely wrap up an object or container that does not exceed 2 Bulk. Once an object is wrapped up, its Bulk becomes negligible, and the wraithweave patch appears and behaves as if it's nothing more than a tightly folded but empty piece of cloth. You must Interact with the wraithweave patch again to unfold it, at which point the wrapped object returns to its normal Bulk and can itself be interacted with again. Creatures wrapped in a wraithweave patch are not affected and treat the patch as normal cloth. A wrapped item provides no benefits until it is unwrapped, but can be detected by magic normally. If the wraithweave patch is destroyed, any object it contains reverts to normal and is exposed to the damage or effect that destroyed the wraithweave patch. **Activate** ⟨2⟩ command, Interact **Requirements** the wraithweave patch has been wrapped around an object and you are incorporeal --- **Effect** You cause the wraithweave patch and the object it contains to become incorporeal. This effect lasts as long as you Sustain the activation. The wraithweave patch can only be touched, held, and carried by an incorporeal creature, and returns to solid form if not carried by such a creature-if the wraithweave patch is in a solid obj"
+ },
+ {
+  "id": "wrist-grappler",
+  "name": "Wrist Grappler",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 25
+  },
+  "text": "This specialized Grappling Gun, which attaches to your wrist, connects to a spool of 50 feet of thin metal cord attached to a pack on your back. The wrist grappler and pack are small enough that they can be concealed with a loose jacket or similar piece of clothing. You can deploy or stow the gun from the attached wrist device with an Interact action. Reloading a wrist grappler uses the same process as reloading a standard grappling gun and takes 1 minute."
+ },
+ {
+  "id": "wrist-grappler-clockwork",
+  "name": "Wrist Grappler (Clockwork)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 40
+  },
+  "text": "This specialized Grappling Gun (Clockwork), which attaches to your wrist, connects to a spool of 50 feet of thin metal cord attached to a pack on your back. The wrist grappler and pack are small enough that they can be concealed with a loose jacket or similar piece of clothing. You can deploy or stow the gun from the attached wrist device with an Interact action. Reloading a clockwork wrist grappler uses the same process as reloading a clockwork grappling gun and takes 3 actions."
+ },
+ {
+  "id": "writing-set",
+  "name": "Writing Set",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1
+  },
+  "text": "Using a writing set, you can draft correspondence and scribe scrolls. A set includes stationery, including a variety of paper and parchment, as well as ink, a quill or inkpen, sealing wax, and a simple seal. If you've written a large amount, you can refill your kit with extra ink and paper."
+ },
+ {
+  "id": "writing-set-extra-ink-and-paper",
+  "name": "Writing Set (Extra Ink and Paper)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "sp": 1
+  },
+  "text": "Extra ink and paper to refill your writing set."
+ },
+ {
+  "id": "yellow-musk-vial",
+  "name": "Yellow Musk Vial",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "inhaled",
+   "mental",
+   "poison"
+  ],
+  "price": {
+   "gp": 7
+  },
+  "text": "Yellow Musk Vial Source Bestiary 2 pg. 301 Price 7 gp Usage held in 1 hand Bulk L Activate Interact The powdered pollen from a yellow musk creeper addles the mind. Saving Throw DC 16 Will; Maximum Duration 2 rounds; Stage 1 fascinated by the poison cloud (1 round); Stage 2 fascinated by the poison cloud, and can use no actions but to move closer to the cloud’s point of origin (1 round)"
+ }
+]

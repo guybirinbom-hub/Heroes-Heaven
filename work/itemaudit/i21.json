@@ -1,0 +1,904 @@
+[
+ {
+  "id": "slumber-arrow",
+  "name": "Slumber Arrow",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical",
+   "mental",
+   "sleep"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 11
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Sleep arrows often have shafts of deep blue or black, and their fletching is exceptionally soft and downy. An activated sleep arrow deals no damage, but a living creature hit by it grows lethargic and must attempt a saving throw. On a failure, it takes a –5-foot status penalty to its Speeds for 1 round, and is also Slowed 1 for 1 round on a critical failure. **Craft Requirements** Supply one casting of *sleep*."
+ },
+ {
+  "id": "smoked-goggles",
+  "name": "Smoked Goggles",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worneyepiece",
+  "price": {
+   "gp": 20
+  },
+  "text": "These goggles use lenses made out of smoked glass to protect against creatures with gaze attacks. While wearing smoked goggles, you're always considered to be Averting Your Gaze, but all creatures have Concealment from you. The fact that the goggles conceal creatures is part of what grants the wearer the item's benefits. If you have a way to negate the concealment from the smoked goggles, you no longer gain the benefit, either."
+ },
+ {
+  "id": "smoking-sword",
+  "name": "Smoking Sword",
+  "level": 3,
+  "itemType": "weapon",
+  "traits": [
+   "fire",
+   "magical",
+   "versatile-p"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "Smoke constantly belches from this +1 magic longsword. Any successful Strike with this sword deals 1 extra fire damage. You can use a special action to make the blade's edges light on fire. --- **Activate—Stoke Flames** ⟨1⟩ (concentrate) Until the end of your turn, the blade deals 1d6 extra fire damage instead of just 1. After you use this action, you can't use it again for 10 minutes."
+ },
+ {
+  "id": "smoky-hag-eye",
+  "name": "Smoky Hag Eye",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "occult",
+   "scrying"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 450
+  },
+  "text": "This item appears to be an ordinary semiprecious stone and is typically mounted on a brooch or ring, but the stone is, in fact, an eyeball. This illusion can be seen through with true seeing or similar magic, and anyone who interacts with the item feels its wet and sticky surface, allowing them to attempt to disbelieve the illusion (DC 19). Many hags claim a hag eye is more effective if plucked from a living, awake creature, but this is likely just a convenient excuse for sadism. The hag eye produces no direct benefit for the wearer, but allows the hag who created it, or any member of her coven, can peer through the eye using the Seek action. This has no range limit, provided the hag is on the same plane. Any damage dealt to the eye destroys it. If this happens while a hag is looking through it, the hag is blinded for 1 hour. A *smoky hag eye* is named after the black vapor that constantly emanates from it, like the smoke that continually seeps from a bodak's eye. --- **Activate** ⟨1⟩ (death, necromancy, visual) You target a creature within 30 feet that must be able to see the smoky hag eye. The target must attempt a save. Once a creature attempts this save, it's temporarily immune for 24 hours. --- **Critical Success** The creature is unaffected. **Success** The creature is Drained 1. **Failure** The creature is Doomed 1 and Drained 2. **Critical Failure** The creature is doomed 1 and Drained 3. --- **Craft Requirements** You must be a hag, and the raw materials must include"
+ },
+ {
+  "id": "smugglers-sack-type-i",
+  "name": "Smuggler's Sack (Type I)",
+  "level": 4,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 75
+  },
+  "text": "This specialized version of a bag of holding appears to be a plain, leather bag that opens at the top, with a thin leather cord attached to cinch the sack closed. The sack's magic allows you to access either its mundane space or an extradimensional pocket. The mundane space inside the sack always holds 5 Bulk. The pocket has a capacity of 1 bulk. Anyone searching the bag can notice a thin, magical seam indicating the existence of the extradimensional space with a successful check. --- **Activate** ⟨1⟩ command **Effect** You speak a secret command word. Depending on which word you use, the sack either opens up to the mundane sack or the extradimensional pocket. You can Interact to put items in or remove them as normal."
+ },
+ {
+  "id": "smugglers-sack-type-ii",
+  "name": "Smuggler's Sack (Type II)",
+  "level": 7,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 300
+  },
+  "text": "This specialized version of a bag of holding appears to be a plain, leather bag that opens at the top, with a thin leather cord attached to cinch the sack closed. The sack's magic allows you to access either its mundane space or an extradimensional pocket. The mundane space inside the sack always holds 5 Bulk. The pocket has a capacity of 5 bulk. Anyone searching the bag can notice a thin, magical seam indicating the existence of the extradimensional space with a successful check. --- **Activate** ⟨1⟩ command **Effect** You speak a secret command word. Depending on which word you use, the sack either opens up to the mundane sack or the extradimensional pocket. You can Interact to put items in or remove them as normal."
+ },
+ {
+  "id": "smugglers-sack-type-iii",
+  "name": "Smuggler's Sack (Type III)",
+  "level": 11,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1200
+  },
+  "text": "This specialized version of a bag of holding appears to be a plain, leather bag that opens at the top, with a thin leather cord attached to cinch the sack closed. The sack's magic allows you to access either its mundane space or an extradimensional pocket. The mundane space inside the sack always holds 5 Bulk. The pocket has a capacity of 10 bulk. Anyone searching the bag can notice a thin, magical seam indicating the existence of the extradimensional space with a successful check. --- **Activate** ⟨1⟩ command **Effect** You speak a secret command word. Depending on which word you use, the sack either opens up to the mundane sack or the extradimensional pocket. You can Interact to put items in or remove them as normal."
+ },
+ {
+  "id": "smugglers-sack-type-iv",
+  "name": "Smuggler's Sack (Type IV)",
+  "level": 13,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 2400
+  },
+  "text": "This specialized version of a bag of holding appears to be a plain, leather bag that opens at the top, with a thin leather cord attached to cinch the sack closed. The sack's magic allows you to access either its mundane space or an extradimensional pocket. The mundane space inside the sack always holds 5 Bulk. The pocket has a capacity of 25 bulk. Anyone searching the bag can notice a thin, magical seam indicating the existence of the extradimensional space with a successful check. --- **Activate** ⟨1⟩ command **Effect** You speak a secret command word. Depending on which word you use, the sack either opens up to the mundane sack or the extradimensional pocket. You can Interact to put items in or remove them as normal."
+ },
+ {
+  "id": "smugglers-sack-type-v",
+  "name": "Smuggler's Sack (Type V)",
+  "level": 17,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 12000
+  },
+  "text": "This specialized version of a bag of holding appears to be a plain, leather bag that opens at the top, with a thin leather cord attached to cinch the sack closed. The sack's magic allows you to access either its mundane space or an extradimensional pocket. The mundane space inside the sack always holds 5 Bulk. The pocket has a capacity of 50 bulk. Anyone searching the bag can notice a thin, magical seam indicating the existence of the extradimensional space with a successful check. --- **Activate** ⟨1⟩ command **Effect** You speak a secret command word. Depending on which word you use, the sack either opens up to the mundane sack or the extradimensional pocket. You can Interact to put items in or remove them as normal."
+ },
+ {
+  "id": "smuggling-level-1",
+  "name": "Smuggling (Level 1)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Smuggling Source Firebrands pg. 95 Smuggling involves the discrete transport of people or goods. Examples include moving weapons through a neutral nation to supply a hidden army, transporting endangered creatures out of hostile territory for protection, and dispersing stolen resources to the needy. While smugglers are often associated with illicit substances and illegal activities, Firebrands use smuggling as a way to move people and resources undetected across great distances; they do this by using their own networks or by hiring local experts. Many of the Firebrands' operations involve spectacles as misdirection, and it's not uncommon for them to cause a stir to allow goods to be smuggled more easily elsewhere. In particular, they work with the Bellflower Network to aid in the relocation of displaced peoples across borders. Smugglers transport goods by either taking unconventional routes, offering bribes to guards and inspectors, hiding smuggled goods or people, or disguising or declaring the goods as something different. Borders and conflict zones are areas where smuggling thrives, although smaller or more specialized rings can be found all across the Inner Sea region. Smuggling rings typically operate along particular routes or between specific locations, and the availability of smuggling services and the capacity of those services is up to GM discretion. The cost of smuggling services depends on distance, as determined by the level of service, and includes transportation"
+ },
+ {
+  "id": "smuggling-level-2",
+  "name": "Smuggling (Level 2)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 20
+  },
+  "text": "Smuggling Source Firebrands pg. 95 Smuggling involves the discrete transport of people or goods. Examples include moving weapons through a neutral nation to supply a hidden army, transporting endangered creatures out of hostile territory for protection, and dispersing stolen resources to the needy. While smugglers are often associated with illicit substances and illegal activities, Firebrands use smuggling as a way to move people and resources undetected across great distances; they do this by using their own networks or by hiring local experts. Many of the Firebrands' operations involve spectacles as misdirection, and it's not uncommon for them to cause a stir to allow goods to be smuggled more easily elsewhere. In particular, they work with the Bellflower Network to aid in the relocation of displaced peoples across borders. Smugglers transport goods by either taking unconventional routes, offering bribes to guards and inspectors, hiding smuggled goods or people, or disguising or declaring the goods as something different. Borders and conflict zones are areas where smuggling thrives, although smaller or more specialized rings can be found all across the Inner Sea region. Smuggling rings typically operate along particular routes or between specific locations, and the availability of smuggling services and the capacity of those services is up to GM discretion. The cost of smuggling services depends on distance, as determined by the level of service, and includes transportation"
+ },
+ {
+  "id": "smuggling-level-3",
+  "name": "Smuggling (Level 3)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Smuggling Source Firebrands pg. 95 Smuggling involves the discrete transport of people or goods. Examples include moving weapons through a neutral nation to supply a hidden army, transporting endangered creatures out of hostile territory for protection, and dispersing stolen resources to the needy. While smugglers are often associated with illicit substances and illegal activities, Firebrands use smuggling as a way to move people and resources undetected across great distances; they do this by using their own networks or by hiring local experts. Many of the Firebrands' operations involve spectacles as misdirection, and it's not uncommon for them to cause a stir to allow goods to be smuggled more easily elsewhere. In particular, they work with the Bellflower Network to aid in the relocation of displaced peoples across borders. Smugglers transport goods by either taking unconventional routes, offering bribes to guards and inspectors, hiding smuggled goods or people, or disguising or declaring the goods as something different. Borders and conflict zones are areas where smuggling thrives, although smaller or more specialized rings can be found all across the Inner Sea region. Smuggling rings typically operate along particular routes or between specific locations, and the availability of smuggling services and the capacity of those services is up to GM discretion. The cost of smuggling services depends on distance, as determined by the level of service, and includes transportation"
+ },
+ {
+  "id": "smuggling-level-4",
+  "name": "Smuggling (Level 4)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 90
+  },
+  "text": "Smuggling Source Firebrands pg. 95 Smuggling involves the discrete transport of people or goods. Examples include moving weapons through a neutral nation to supply a hidden army, transporting endangered creatures out of hostile territory for protection, and dispersing stolen resources to the needy. While smugglers are often associated with illicit substances and illegal activities, Firebrands use smuggling as a way to move people and resources undetected across great distances; they do this by using their own networks or by hiring local experts. Many of the Firebrands' operations involve spectacles as misdirection, and it's not uncommon for them to cause a stir to allow goods to be smuggled more easily elsewhere. In particular, they work with the Bellflower Network to aid in the relocation of displaced peoples across borders. Smugglers transport goods by either taking unconventional routes, offering bribes to guards and inspectors, hiding smuggled goods or people, or disguising or declaring the goods as something different. Borders and conflict zones are areas where smuggling thrives, although smaller or more specialized rings can be found all across the Inner Sea region. Smuggling rings typically operate along particular routes or between specific locations, and the availability of smuggling services and the capacity of those services is up to GM discretion. The cost of smuggling services depends on distance, as determined by the level of service, and includes transportation"
+ },
+ {
+  "id": "smuggling-level-5",
+  "name": "Smuggling (Level 5)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 150
+  },
+  "text": "Smuggling Source Firebrands pg. 95 Smuggling involves the discrete transport of people or goods. Examples include moving weapons through a neutral nation to supply a hidden army, transporting endangered creatures out of hostile territory for protection, and dispersing stolen resources to the needy. While smugglers are often associated with illicit substances and illegal activities, Firebrands use smuggling as a way to move people and resources undetected across great distances; they do this by using their own networks or by hiring local experts. Many of the Firebrands' operations involve spectacles as misdirection, and it's not uncommon for them to cause a stir to allow goods to be smuggled more easily elsewhere. In particular, they work with the Bellflower Network to aid in the relocation of displaced peoples across borders. Smugglers transport goods by either taking unconventional routes, offering bribes to guards and inspectors, hiding smuggled goods or people, or disguising or declaring the goods as something different. Borders and conflict zones are areas where smuggling thrives, although smaller or more specialized rings can be found all across the Inner Sea region. Smuggling rings typically operate along particular routes or between specific locations, and the availability of smuggling services and the capacity of those services is up to GM discretion. The cost of smuggling services depends on distance, as determined by the level of service, and includes transportation"
+ },
+ {
+  "id": "snagging",
+  "name": "Snagging",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "applied-to-belt-cape-cloak-or-scarf",
+  "price": {
+   "gp": 60
+  },
+  "text": "This animated item attempts to catch you when you fall. You can attempt to Grab an Edge, even if your hands are tied behind your back or otherwise restrained, so long as there's a solid edge within 10 feet. If you roll a success, you can Grab the Edge even if you don't have a hand free."
+ },
+ {
+  "id": "snake",
+  "name": "Snake",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Snake Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 gp"
+ },
+ {
+  "id": "snowshoes",
+  "name": "Snowshoes",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornshoes",
+  "price": {
+   "gp": 10
+  },
+  "text": "These specialized pieces of footwear are designed to distribute the wearer's weight over a larger area to prevent them from sinking while walking on snow. They are typically made with a wood frame and rawhide lacings that are tied over the wearer's other footwear. While wearing snowshoes, you ignore the effects of non-magical difficult terrain caused by snow (reducing greater difficult terrain from snow to ordinary difficult terrain). You take a –10-foot item penalty to your Speed if wearing snowshoes while walking on any surface other than snow."
+ },
+ {
+  "id": "soap",
+  "name": "Soap",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 2
+  },
+  "text": "Bar of soap."
+ },
+ {
+  "id": "society-portrait",
+  "name": "Society Portrait",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 210
+  },
+  "text": "**Access** Member of a secret society --- These large portraits are commonly commissioned by secret societies to display their current member ranks, and to protect against members who would break their vows to keep their secrets. Each member being painted gives their consent to be traced by the portrait, and they agree to keep their vows for as long as their membership stands or until death, whichever comes first. This consent can be transferred to a new portrait if one is needed once the society expands, without needing another confirmation. Should a member betray the secrets of their society, their image in the society portrait changes within 10 minutes, altering the image of the member by spelling out \"TRAITOR\" across their form. It provides no details on the specifics of the betrayal. The traitor can attempt a save or check at the time they betrayed a secret to avoid the portrait revealing their treachery. The traitorous scrawl can be counteracted by dispel magic targeted at the portrait (counteract DC 20, counteract rank of 3)."
+ },
+ {
+  "id": "sorcerer-kit",
+  "name": "Sorcerer Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 2,
+   "sp": 4,
+   "cp": 2
+  },
+  "text": "Sorcerer Kit Source Player Core 2 pg. 277 Price 2 gp, 4 sp, 2 cp Money Left Over 12 gp, 5 sp, 8 cp Bulk 1, 7 light Armor Explorer's Clothing Weapons sling with 20 bullets, Dagger Gear Adventurer's Pack Options adventurer’s pack, caltrops (2 sets) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "soul-cage",
+  "name": "Soul Cage",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "arcane",
+   "void"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1600
+  },
+  "text": "As you Craft your *soul cage*, you trap your soul within it, an integral part of the complicated process of becoming a lich. When you're destroyed, your soul flees to the *soul cage*, which rebuilds your undead body over the course of 1d10 days. Afterward, you manifest next to the *soul cage*, fully healed and in a new body (lacking any equipment you had on your old body). Only destroying your *soul cage* can prevent you from returning. You choose the form of your *soul cage* when you Craft it. A few options include a miniature cage, a ring, an amulet, or a crown. Work with your GM to adjust the usage and Bulk as needed, though a soul cage is rarely more than light Bulk. The soul cage has Hardness 9 and 36 HP. If your *soul cage* is destroyed but you aren't, you can attempt to find your soul and trap it again, building a new soul cage. This is no trivial feat and often takes an entire adventure to accomplish. If you don't cage your soul again, you suffer a long decline. --- **Craft Requirements** You have Lich Dedication."
+ },
+ {
+  "id": "soul-chain",
+  "name": "Soul Chain",
+  "level": 6,
+  "itemType": "weapon",
+  "traits": [
+   "cursed",
+   "disarm",
+   "finesse",
+   "trip"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "A *soul chain* is a *+1 striking Spiked Chain* that has become cursed after a forge-spurned used it to kill a creature and trap its soul. In the hands of a forge-spurned, a soul chain inflicts an additional 1d6 damage on a hit. Other creatures can use a *soul chain* as a standard *+1 striking spiked chain*. A soul chain fuses with its wielder the first time the wielder damages a living creature with the weapon. A character who dies while carrying a *soul chain* must attempt a save; on a failure, they're immediately transformed into a forge-spurned. Carrying multiple *soul chains* doesn't increase the DC of the save, but the carrier must attempt the save once for each chain they carry."
+ },
+ {
+  "id": "soul-magic",
+  "name": "Soul Magic",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "enchantment",
+   "mental"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Soul Magic Source Secrets of Magic pg. 231 Aspect Soul Activate envision; Frequency once per day; Effect You infuse yourself or a willing creature that you touch with spiritual energy. This has the effect of divine inspiration."
+ },
+ {
+  "id": "soul-puppet",
+  "name": "Soul Puppet",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "necromancy"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Soul Puppet Source Secrets of Magic pg. 231 Aspect Soul Activate command, envision; Frequency once per day; Effect You bind loose souls, briefly animating an undead creature. The soul seed casts animate dead at a level equal to half the soul seed's level rounded up. You can Sustain this Activation as you would the spell."
+ },
+ {
+  "id": "spacious-pouch-type-i",
+  "name": "Spacious Pouch (Type I)",
+  "level": 4,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 75
+  },
+  "text": "Though it appears to be a cloth bag decorated with panels of richly colored silk or stylish embroidery, a *spacious pouch* opens into a magical space larger than its outside dimensions. The Bulk held inside the bag doesn't change the Bulk of the *spacious pouch* itself. The amount of Bulk the bag's extradimensional space can hold depends on its type. You can Interact with the *spacious pouch* to stow items in it or remove them just like a mundane sack. Though the bag can hold a great amount of material, an object still needs to be able to fit through the opening of the sack to be stored inside. If the bag is overloaded or broken, it ruptures and is ruined, causing the items inside to be lost forever. If it's turned inside out, the items inside spill out unharmed, but the bag must be put right before it can be used again. A living creature placed inside the bag has enough air for 10 minutes before it begins to suffocate, and it can attempt to Escape against a DC of 13. An item inside the bag provides no benefits unless it's retrieved first. An item in the bag can't be detected by magic that detects only things on the same plane. --- **Capacity** 25 Bulk"
+ },
+ {
+  "id": "spacious-pouch-type-ii",
+  "name": "Spacious Pouch (Type II)",
+  "level": 7,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 300
+  },
+  "text": "Though it appears to be a cloth bag decorated with panels of richly colored silk or stylish embroidery, a *spacious pouch* opens into a magical space larger than its outside dimensions. The Bulk held inside the bag doesn't change the Bulk of the *spacious pouch* itself. The amount of Bulk the bag's extradimensional space can hold depends on its type. You can Interact with the *spacious pouch* to stow items in it or remove them just like a mundane sack. Though the bag can hold a great amount of material, an object still needs to be able to fit through the opening of the sack to be stored inside. If the bag is overloaded or broken, it ruptures and is ruined, causing the items inside to be lost forever. If it's turned inside out, the items inside spill out unharmed, but the bag must be put right before it can be used again. A living creature placed inside the bag has enough air for 10 minutes before it begins to suffocate, and it can attempt to Escape against a DC of 13. An item inside the bag provides no benefits unless it's retrieved first. An item in the bag can't be detected by magic that detects only things on the same plane. --- **Capacity** 50 Bulk"
+ },
+ {
+  "id": "spacious-pouch-type-iii",
+  "name": "Spacious Pouch (Type III)",
+  "level": 11,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1200
+  },
+  "text": "Though it appears to be a cloth bag decorated with panels of richly colored silk or stylish embroidery, a *spacious pouch* opens into a magical space larger than its outside dimensions. The Bulk held inside the bag doesn't change the Bulk of the *spacious pouch* itself. The amount of Bulk the bag's extradimensional space can hold depends on its type. You can Interact with the *spacious pouch* to stow items in it or remove them just like a mundane sack. Though the bag can hold a great amount of material, an object still needs to be able to fit through the opening of the sack to be stored inside. If the bag is overloaded or broken, it ruptures and is ruined, causing the items inside to be lost forever. If it's turned inside out, the items inside spill out unharmed, but the bag must be put right before it can be used again. A living creature placed inside the bag has enough air for 10 minutes before it begins to suffocate, and it can attempt to Escape against a DC of 13. An item inside the bag provides no benefits unless it's retrieved first. An item in the bag can't be detected by magic that detects only things on the same plane. --- **Capacity** 100 Bulk"
+ },
+ {
+  "id": "spacious-pouch-type-iv",
+  "name": "Spacious Pouch (Type IV)",
+  "level": 13,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 2400
+  },
+  "text": "Though it appears to be a cloth bag decorated with panels of richly colored silk or stylish embroidery, a *spacious pouch* opens into a magical space larger than its outside dimensions. The Bulk held inside the bag doesn't change the Bulk of the *spacious pouch* itself. The amount of Bulk the bag's extradimensional space can hold depends on its type. You can Interact with the *spacious pouch* to stow items in it or remove them just like a mundane sack. Though the bag can hold a great amount of material, an object still needs to be able to fit through the opening of the sack to be stored inside. If the bag is overloaded or broken, it ruptures and is ruined, causing the items inside to be lost forever. If it's turned inside out, the items inside spill out unharmed, but the bag must be put right before it can be used again. A living creature placed inside the bag has enough air for 10 minutes before it begins to suffocate, and it can attempt to Escape against a DC of 13. An item inside the bag provides no benefits unless it's retrieved first. An item in the bag can't be detected by magic that detects only things on the same plane. --- **Capacity** 150 Bulk"
+ },
+ {
+  "id": "spare-wax-cylinder",
+  "name": "Spare Wax Cylinder",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 3
+  },
+  "text": "A spare recording cylinder for the Clockwork Recorder."
+ },
+ {
+  "id": "sparkblade",
+  "name": "Sparkblade",
+  "level": 3,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "finesse",
+   "magical",
+   "versatile-s"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 70
+  },
+  "text": "Faint, delicate etchings of lightning trace across the blade of this +1 cold iron shortsword. Cold iron is made from particularly pure sources of iron and shaped with little to no heat, resulting in weapons deadly to demons and fey alike. **Activate** ⟨1⟩ Interact Once per day, you can spend 1 action to point the sparkblade at a foe within 30 feet of you and shoot an arc of lightning from the blade. This lightning can leap from your chosen foe to another creature you choose within 30 feet, dealing 2d4+4 damage to each creature ()."
+ },
+ {
+  "id": "spell-bastion",
+  "name": "Spell-Bastion",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "applied-to-shield",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 2700
+  },
+  "text": "A *spell-bastion* rune creates a reservoir of eldritch energy within the shield. A spellcaster can spend 1 minute to Cast a Spell of 3rd level or lower into the shield. The spell must take 2 actions or fewer to cast and must be able to target a creature other than the caster. The spell has no immediate effect-it's instead stored for later. When you invest a *spell-bastion* shield, you immediately know the name and level of the stored spell. A *spell-bastion* shield found as treasure has a 50% chance of having a spell of the GM's choice stored in it. --- **Activate** ⟨1⟩ envision **Requirements** Your *spell-bastion* shield is storing a spell, and you have your shield raised --- **Effect** You prepare to unleash the stored spell on any foe that hits you until your next turn. --- **Activate** ⟨4⟩ command **Requirements** You have a spell stored in your *spell-bastion* shield, and you've activated the shield since your last turn in preparation for unleashing the spell **Trigger** You use the Shield Block reaction against a foe that the stored spell can target --- **Effect** You unleash the stored spell, which uses the target of the triggering attack as the target of the spell. This empties the spell from the shield and allows a spell to be cast into it again. --- **Activate** ⟨1⟩ command --- **Effect** You harmlessly expend the stored spell. This frees the shield to have a new spell cast into it."
+ },
+ {
+  "id": "spell-echo-shot",
+  "name": "Spell Echo Shot",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 5500
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- Generous amounts of djezet and orichalcum mix in a spell echo shot. When you Activate it, you name up to four creatures, in addition to you, that the ammunition's magic works for. When spell echo shot strikes a target, which can be a square, it remains intact. It moves with a creature it struck, unless the GM determines otherwise, until that creature regains any Hit Points. If it doesn't stick to the target, the active ammunition instead falls into the target's space, remaining active. If you or one of the four selected creatures include the ammunition in the area of a spell that is 5th rank or lower; has an area of a burst, cone, or line; and does not have a duration, the materials in the ammunition immediately duplicate that spell with the same parameters. A duplicated spell can't be duplicated again by another effect. Duplicating a spell destroys the ammunition, which otherwise remains active for 1 minute."
+ },
+ {
+  "id": "spell-reservoir",
+  "name": "Spell Reservoir",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-melee-weapon",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 2700
+  },
+  "text": "A *spell reservoir* rune creates a pool of eldritch energy within the etched weapon. A spellcaster can spend 1 minute to cast a spell of 3rd rank or lower into the weapon. The spell must require 2 actions or fewer to cast and must be able to target a creature other than the caster. The spell has no immediate effect—it is instead stored for later. When you wield a *spell reservoir* weapon, you immediately know the name and rank of the stored spell. A *spell reservoir* weapon found as treasure has a 50% chance of having a spell of the GM's choice stored in it. **Activate—Channeled Release** ⟨2⟩ (concentrate) **Requirements** A spell is stored in the weapon --- **Effect** Make a Strike with the weapon. You expend the stored spell as part of this Strike; this empties the spell from the weapon and allows a spell to be cast into it again. If the Strike hits, the spell targets the target of the attack. If the spell requires a spell attack roll, the result of your attack roll with the weapon determines the degree of success of the spell, and if the spell requires a saving throw, the DC is 30. **Activate—Safe Release** ⟨1⟩ (concentrate) --- **Effect** Harmlessly expend the stored spell. This frees the weapon to have a new spell cast into it."
+ },
+ {
+  "id": "spellbook-blank",
+  "name": "Spellbook (Blank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "A spellbook holds the written knowledge necessary to learn and prepare various spells, a necessity for wizards (who typically get one for free) and a useful luxury for other spellcasters looking to learn additional spells. Each spellbook can hold up to 100 spells. The Price listed is for a blank spellbook."
+ },
+ {
+  "id": "spellcasting-1st-rank",
+  "name": "Spellcasting (1st rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 3
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellcasting-2nd-rank",
+  "name": "Spellcasting (2nd rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 7
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellcasting-3rd-rank",
+  "name": "Spellcasting (3rd rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 18
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellcasting-4th-rank",
+  "name": "Spellcasting (4th rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 40
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellcasting-5th-rank",
+  "name": "Spellcasting (5th rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 80
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellcasting-6th-rank",
+  "name": "Spellcasting (6th rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 160
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellcasting-7th-rank",
+  "name": "Spellcasting (7th rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 360
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellcasting-8th-rank",
+  "name": "Spellcasting (8th rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 720
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellcasting-9th-rank",
+  "name": "Spellcasting (9th rank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1800
+  },
+  "text": "Spellcasting Source Player Core pg. 295 Spellcasting services, listed on Table 6–15, are uncommon. Having a spell cast for you requires finding a spellcaster who knows and is willing to cast it. It’s hard to find someone who can cast higher-rank spells, and uncommon spells typically cost at least 100% more, if you can find someone who knows them at all. Spells that take a long time to cast (over 1 minute) usually cost 25% more. You must pay any cost listed in the spell in addition to the Price on the table. Spellcasting (1st rank) Source Player Core pg. 295 Price 3 gp (plus any cost required to cast the specific spell) Spellcasting (2nd rank) Source Player Core pg. 295 Price 7 gp (plus any cost required to cast the specific spell) Spellcasting (3rd rank) Source Player Core pg. 295 Price 18 gp (plus any cost required to cast the specific spell) Spellcasting (4th rank) Source Player Core pg. 295 Price 40 gp (plus any cost required to cast the specific spell) Spellcasting (5th rank) Source Player Core pg. 295 Price 80 gp (plus any cost required to cast the specific spell) Spellcasting (6th rank) Source Player Core pg. 295 Price 160 gp (plus any cost required to cast the specific spell) Spellcasting (7th rank) Source Player Core pg. 295 Price 360 gp (plus any cost required to cast the specific spell) Spellcasting (8th rank) Source Player Core pg. 295 Price 720 gp (plus any cost required to cast the specific spell) Spellcasting (9th rank) Source Player Core pg. 295 Price 1,800 gp "
+ },
+ {
+  "id": "spellstrike-ammunition-type-i",
+  "name": "Spellstrike Ammunition (Type I)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 12
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 1st"
+ },
+ {
+  "id": "spellstrike-ammunition-type-ii",
+  "name": "Spellstrike Ammunition (Type II)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 30
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 2nd"
+ },
+ {
+  "id": "spellstrike-ammunition-type-iii",
+  "name": "Spellstrike Ammunition (Type III)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 70
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 3rd"
+ },
+ {
+  "id": "spellstrike-ammunition-type-iv",
+  "name": "Spellstrike Ammunition (Type IV)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 150
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 4th"
+ },
+ {
+  "id": "spellstrike-ammunition-type-ix",
+  "name": "Spellstrike Ammunition (Type IX)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 8000
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 10th"
+ },
+ {
+  "id": "spellstrike-ammunition-type-v",
+  "name": "Spellstrike Ammunition (Type V)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 300
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 5th"
+ },
+ {
+  "id": "spellstrike-ammunition-type-vi",
+  "name": "Spellstrike Ammunition (Type VI)",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 6th"
+ },
+ {
+  "id": "spellstrike-ammunition-type-vii",
+  "name": "Spellstrike Ammunition (Type VII)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 1300
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 7th"
+ },
+ {
+  "id": "spellstrike-ammunition-type-viii",
+  "name": "Spellstrike Ammunition (Type VIII)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 3000
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Cast a Spell --- Mystic patterns create a magic reservoir within this ammunition. You activate *spellstrike ammunition* by Casting a Spell into the ammunition. The spell must be of a spell rank the ammunition can hold, and the spell must be able to target a creature other than the caster. A creature hit by activated *spellstrike ammunition* is targeted by the spell. If the creature isn't a valid target for the spell, the spell is lost. The ammunition affects only the target hit, even if the spell would normally affect more than one target. If the spell requires a spell attack roll, use the result of your ranged attack roll with the ammunition to determine the degree of success of the spell. If the spell requires a saving throw, the target attempts the save against your spell DC. Combine the Strike and spell's damage for the purpose of resistances and weaknesses. The maximum rank of spell the ammunition can hold determines its item level and Price. Maximum Spell Rank 8th"
+ },
+ {
+  "id": "spellwatch",
+  "name": "Spellwatch",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 3000
+  },
+  "text": "Counter-runes chip away at unwanted magic that impedes you. You can attempt a new saving throw against one hostile spell affecting you at the start of each of your turns. If you succeed, the spell ends, and if you fail it continues unchanged, with no additional ill effect. If you're affected by multiple hostile spells, choose only one each turn to attempt the additional save against."
+ },
+ {
+  "id": "sphere-of-annihilation",
+  "name": "Sphere of Annihilation",
+  "level": 27,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {},
+  "text": "A *sphere of annihilation* is a floating black sphere that pulls any matter that comes into contact with it into a void, destroying it utterly. Anything or anyone destroyed by the sphere can be brought back only by a deity's direct intervention. The sphere can't be counteracted by dispel magic or similar effects. The sphere stays entirely still until caused to move by a creature controlling it. Taking control of the sphere requires succeeding at an attempt to activate it. A talisman of the sphere makes it easier to control the sphere. **Activate** ⟨1⟩ command **Requirements** You are within 40 feet of the sphere --- **Effect** You attempt a or check to take control of the sphere. If someone else already controls the sphere, this check uses their Will DC if higher. If you succeed, you take control of the sphere. If you fail, the sphere moves 10 feet closer to you (or 20 feet on a critical failure). You keep control as long as you remain within 80 feet of the sphere and Sustain the Activation each round. When you Sustain the Activation, you must attempt a or check. If you succeed, you direct the sphere to move up to 10 feet in a straight line (or up to 20 feet on a critical success). On a failure, you lose control of the sphere, and it moves 10 feet closer to you in a straight line (or 20 feet on a critical failure). **Destruction** When a gate spell is cast such that its rift overlaps a *sphere of annihilation*, roll d%. On a result of 1-50, the sphere is destroyed; on a 51-85"
+ },
+ {
+  "id": "spider",
+  "name": "Spider",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "Spider Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 2 sp"
+ },
+ {
+  "id": "spider-satchel-lesser",
+  "name": "Spider Satchel (Lesser)",
+  "level": 2,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 6
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- The Verduran Forest's tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target's allies don't automatically end the effect. The bomb deals 1d6 persistent poison damage, 1 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "spirit-blink",
+  "name": "Spirit Blink",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "conjuration",
+   "teleportation"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Spirit Blink Source Secrets of Magic pg. 231 Aspect Soul Activate command, envision; Frequency once per day; Effect You blink between the realm of mortals and the Ethereal Plane. This grants you the effects of blink, except the resistance is equal to the soul seed's level instead of 5."
+ },
+ {
+  "id": "splatrope-extruder",
+  "name": "Splatrope Extruder",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 50
+  },
+  "text": "This portable nozzle-and-trigger assembly based on spider spinnerets can extrude and weave alchemical adhesives into temporary constructions. As an Interact action, you can attach a Glue Bomb to the extruder. **Activate** ⟨1⟩ (manipulate) **Requirements** A glue bomb is installed in the extruder --- **Effect** The extruder converts the glue bomb into a 30-foot rope, whip, or net, depending on the nozzle die you choose when activating the device. The created object lasts for 1 hour. The DC to Escape a created rope (if used to bind a creature) or net is equal to the consumed glue bomb's DC and Escaping destroys the created object."
+ },
+ {
+  "id": "splendid-pyschopomp-mask",
+  "name": "Splendid Pyschopomp Mask",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornmask",
+  "price": {
+   "gp": 50
+  },
+  "text": ""
+ },
+ {
+  "id": "splint",
+  "name": "Splint",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 5
+  },
+  "text": "Splints can be applied to the following joints: finger, hand, wrist, elbow, knee, and shin. They are strapped to the desired area but are more rigid in structure than supports and braces, with metal or wooden bars pulled firmly against the bone structure to provide constant support (ring splints only attach to a single digit). They are a little less flexible, but you still have full use of your limbs and fingers when using one. You still have full mobility of the limb when not wearing it, but the limb becomes painful and feels less secure without the extra support it normally has, which might present physical symptoms."
+ }
+]

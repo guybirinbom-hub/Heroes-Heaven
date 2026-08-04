@@ -1,0 +1,915 @@
+[
+ {
+  "id": "moderate-rending-gauntlets",
+  "name": "Moderate Rending Gauntlets",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 1700
+  },
+  "text": "Rending Gauntlets May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Usage worn bracers Bulk L These heavy gloves are reinforced with thick animal hide and sharpened bone. Activate—Shredding Finisher (manipulate) Frequency once per hour; Requirements You hit the same creature with two unarmed Strikes in the same round; Effect The gauntlets’ spikes dig into the creature just before you tear them free, dealing the listed piercing damage. Lesser Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 130 gp The gauntlets deal 2d6 piercing damage. Moderate Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 1,700 gp The gauntlets deal 4d6 piercing damage. Greater Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 32,000 gp The gauntlets deal 6d6 piercing damage."
+ },
+ {
+  "id": "moderate-roc-shaft-arrow",
+  "name": "Moderate Roc-Shaft Arrow",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 160
+  },
+  "text": "Roc-Shaft Arrow May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Ammunition arrow Activate Interact Each of these arrows is made from an immense roc’s flight feather, most of whose vanes have been trimmed to expose the arrow’s shaft. When an activated roc-shaft arrow hits a target, the arrow briefly grows a pair of avian wings and attempts to carry off the target. The target must succeed at a Fortitude save or be moved to a space you choose within an area determined by the arrow’s type; if the target critically fails, the arrow can move them an additional 10 feet. If this would move the target into a hazardous space, this effect gains the incapacitation trait. Lesser Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 24 gp The arrow can move the target 10 feet (20 feet on a critical failure), and the Fortitude save DC is 19. Moderate Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 160 gp The arrow can move the target 15 feet (20 feet on a critical failure), and the Fortitude save DC is 27. Greater Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 1,000 gp The arrow can move the target 20 feet (30 feet on a critical failure), and the Fortitude save DC is 34."
+ },
+ {
+  "id": "moderate-swapping-stone",
+  "name": "Moderate Swapping Stone",
+  "level": 14,
+  "itemType": "consumable",
+  "traits": [
+   "conjuration",
+   "consumable",
+   "magical",
+   "teleportation"
+  ],
+  "price": {
+   "gp": 600
+  },
+  "text": "Bonmuan Swapping Stone May contain spoilers from Fists of the Ruby Phoenix Source Pathfinder #166: Despair on Danger Island pg. 75 Usage held in 1 hand Activate Interact This small, opalescent stone glows with a light that constantly shifts between colors. When you activate the stone, you throw it into a space within 100 feet. The stone then casts dimension door on you and transports you to itself. This destroys the stone. You can instead hurl the stone at a creature in an attempt to bring that creature closer to you. Make a ranged Strike against a creature using your highest proficiency with a ranged weapon. The swapping stone has a range increment of 15 feet. On a hit, the stone shatters against the creature, casting dimension door on the creature and causing it to instantly teleport to a space adjacent to you. An unwilling creature can resist this teleportation with a successful DC 28 Will save. Lesser Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 300 gp Moderate Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 600 gp The Will save DC is 31. Greater Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 3,000 gp The Will save DC is 37. Major Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 9,000 gp The Will save DC is 43."
+ },
+ {
+  "id": "moderate-tangibility-resonator",
+  "name": "Moderate Tangibility Resonator",
+  "level": 11,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "price": {
+   "gp": 300
+  },
+  "text": "Tangibility Resonator May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) One of the stranger devices to come out of the University of Lepidstadt is a twisted glass contraption that hums with electricity. This vibration is harmless to most but is massively disruptive to the locomotion of incorporeal creatures. When activated, one incorporeal creature within 15 feet must attempt a DC 19 Fortitude saving throw. Once used, the vibrations cause the glass to shatter. Success The target is unaffected. Failure The target is immobilized for 1 round. Critical Failure The target is immobilized and off-guard for 1 round. Lesser Tangibility Resonator Source Rival Academies pg. 93 Price 25 gp Moderate Tangibility Resonator Source Rival Academies pg. 93 Price 300 gp The Fortitude DC is 27. Major Tangibility Resonator Source Rival Academies pg. 93 Price 2,500 gp The Fortitude DC is 35."
+ },
+ {
+  "id": "moderate-vanishing-shocker",
+  "name": "Moderate Vanishing Shocker",
+  "level": 11,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "electricity",
+   "gadget",
+   "illusion",
+   "magical"
+  ],
+  "price": {
+   "gp": 300
+  },
+  "text": "Vanishing Shocker May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) The vanishing shocker is a cube with extruding spikes at each corner. This inscrutable device channels occult energy through the electricity it produces, creating the result of invisible lighting. When activated, the cube floats above your head, creating a field of invisible electricity in a 10-foot emanation that lasts for 1 round. You and creatures within the emanation are concealed. Creatures that enter or start their turn within the area must attempt a DC 22 Reflex save. Success The target is unaffected. Failure The target is off-guard for 1 round. Critical Failure The target is clumsy 1 and off-guard for 1 round. Lesser Vanishing Shocker Source Rival Academies pg. 93 Price 70 gp Moderate Vanishing Shocker Source Rival Academies pg. 93 Price 300 gp The Reflex DC is 27. Greater Vanishing Shocker Source Rival Academies pg. 93 Price 1,300 gp The Reflex DC is 33. Major Vanishing Shocker Source Rival Academies pg. 93 Price 8,000 gp The Reflex DC is 38."
+ },
+ {
+  "id": "moderate-wood-rotted-root",
+  "name": "Moderate Wood-Rotted Root",
+  "level": 7,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 55
+  },
+  "text": "Wood-Rotted Root May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This palm-sized chunk of wood it rotting, and riddled with mold and fungi. You can crush this wood to use it as a spell catalyst when you cast a oaken resilience. When you do, the bark that covers your skin is rotting, and emits a small cloud of spores whenever you're hurt. For the duration, whenever you take physical damage, your rotting bark skin emits a cloud of spores in the listed emanation. Creatures in the area must attempt a Fortitude save at the listed DC to avoid taking the listed poison damage. Lesser Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 11 gp The DC is 15, the area is a 5-foot emanation, and the poison damage is 1. Moderate Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 55 gp The DC is 21, the area is a 5-foot emanation, and the poison damage is 1d4. Greater Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 190 gp The DC is 24, the area is a 10-foot emanation, and the poison damage is 1d8. Major Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 900 gp The DC is 29, the area is a 15-foot emanation, and the poison damage is 2d8."
+ },
+ {
+  "id": "molten-crucible",
+  "name": "Molten Crucible",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "transmutation"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Molten Crucible Source Highhelm pg. 114 Aspect Forge Activate command, Interact; Frequency once per day; Effect You strike your relic against a weapon, armor, or shield made of metal. The item becomes red hot and, over the next 10 minutes, transforms into a different base item from the same category. This changes the item's base form while retaining its same materials, runes, and magical properties. Both base items must have an item level of 1 or less, and weapons must require the same number of hands. Specific items can't be changed in this way unless the GM expressly allows it. For example, a +2 cold iron mace can become a +2 cold iron longsword, or chain mail can become half plate, but a moonlit chain can't be affected in this way."
+ },
+ {
+  "id": "monk-kit",
+  "name": "Monk Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5,
+   "sp": 3
+  },
+  "text": "Monk Kit Source Player Core 2 pg. 277 Price 5 gp, 3 sp Money Left Over 9 gp, 7 sp Bulk 3, 3 light Armor Explorer's Clothing Weapons darts (10) Gear Grappling Hook, Climbing Kit, Adventurer's Pack, Smoke Ball (Lesser) Options staff (0 gp), longspear (5 sp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "monkey",
+  "name": "Monkey",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 3
+  },
+  "text": "Monkey Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 3 gp"
+ },
+ {
+  "id": "monkeys-paw",
+  "name": "Monkey's Paw",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical",
+   "misfortune"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This dried, gnarled hand is clenched in a fist, waiting for a creature to pick it up. When you pick up the *monkey's paw*, the hand opens, revealing three withered fingers. The *monkey's paw* grants you three wishes (with the effects of a success on the *wish* ritual), curling one finger after every one. Once you pick up the *monkey's paw*, you cannot discard the hand until it returns to a clenched fist by granting its three wishes. Any attempts to discard the hand, even with the effects of a *wish* ritual, are unsuccessful as the *monkey's paw* reappears among your possessions within 1d4 hours; it doesn't work for any other creature in the intervening time. The hand returns even if another creature steals it from you. Once you make all three wishes, the *monkey's paw* uses Interplanar Teleport to travel to a random point in the multiverse. Whenever the *monkey's paw* hears you utter a statement that sounds like a wish, even if you don't use the words \"I wish,\" it activates and grants a twisted, horrifying version of your wish, producing any effect within the possibility of *wish* ritual, and potentially a greater effect at the GM's discretion."
+ },
+ {
+  "id": "monsoon-curtain",
+  "name": "Monsoon Curtain",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "air",
+   "water"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Monsoon Curtain Source GM Core pg. 318 Aspect Water Activate (attack, concentrate) Frequency once per day; Effect You call down a curtain of violent rain in a location within 120 feet. The wall is 5 feet thick, 30 feet long, up to 30 feet high, and lasts for 1 minute. The wall stands vertically, but you can shape its path. The wall has the following effects. If a fire effect crosses through the wall, it either uses the outcome one degree of success worse than the result of its attack roll or its targets use the outcome one degree of success better than the result of their saving throw, as appropriate. Creatures with a weakness to water that cross the wall or start their turn in the wall take damage equal to their weakness. The wall imposes a –2 status penalty to Perception checks to sense creatures or objects on the other side."
+ },
+ {
+  "id": "moonkeep-flowers",
+  "name": "Moonkeep Flowers",
+  "level": 5,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "plant"
+  ],
+  "text": "Moonkeep Flowers May contain spoilers from Shades of Blood Source Pathfinder #213: Thirst for Blood pg. 82 Usage held in 1 hand Activate (concentrate, manipulate) These magical flowers are infused with the power to counteract the curse of the werecreature. Intentionally growing these flowers is nearly impossible, as they don’t produce seeds, and the primal magic required to produce them has been lost to time. They occasionally grow in places where a particular powerful werecreature is buried, though if an exact process to guarantee their growth exists, it remains a mystery. Moonkeep Lily Source Pathfinder #213: Thirst for Blood pg. 82 Price 30 gp This thin, white lily has stamens that end in small, round portions resembling the moon. When you eat the flower, you gain the flower’s protection for 1 week. During this time, your curse of the werecreature becomes partially inert. Your jaws Strike doesn’t inflict the curse of the werecreature during this time. Moonkeep Orchid Source Pathfinder #213: Thirst for Blood pg. 82 Price 30 gp This pale orchid glows nearly white when exposed to moonlight. When you eat the flower, you gain its protection for 3 days. During this time, your curse of the werecreature and moon frenzy don’t cause you to automatically transform during a full moon, and you retain full control of your faculties during a full moon. Moonkeep Hyacinth Source Pathfinder #213: Thirst for Blood pg. 82 Price 400 gp This long hyacinth features round buds that bloom into bri"
+ },
+ {
+  "id": "moonsilver-necklace",
+  "name": "Moonsilver Necklace",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 1000
+  },
+  "text": "Those who are in tune with nature understand well the transience of life and the migration of souls. Just as the moon waxes and wanes, so too are the candles of life lit and extinguished. The ritual for creating this item requires an animal sacrifice in direct moonlight, the belief being that creatures sacrificed in this way are blessed to reincarnate into better lives. While you have this silver, crescent-shaped necklace invested, your unarmed melee Strikes are silver weapons with the properties of the Ghost Touch rune."
+ },
+ {
+  "id": "mortal-chronicle",
+  "name": "Mortal Chronicle",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "usage": "tattooed-on-the-body",
+  "price": {
+   "gp": 10
+  },
+  "text": "Common among fatalists and adventurers with access to resurrection magic, mortal chronicles look like tombstones, funeral plaques, or simple scrolls bearing the wearer's name or nickname. If you die, the date and cause of your death appear on the tattoo. The cause is literal and inexact, failing to identify specifics; it could read \"beheaded\" or \"immolated\" but not \"beheaded by Amiri\" or \"murdered with fire.\" If you're raised from the dead, a mark on the tattoo indicates the date you reversed your death. The tattoo then expands enough to list your next death when it comes."
+ },
+ {
+  "id": "mother-maw",
+  "name": "Mother Maw",
+  "level": 15,
+  "itemType": "container",
+  "traits": [
+   "cursed",
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 6000
+  },
+  "text": "This item appears to be and functions as a portable hole, but it's actually the maw of an alien extradimensional creature akin to and older than a *bag of devouring*. Any animal or vegetable matter put in the hole has a chance of triggering the creature's interest. Whenever you reach into the hole to retrieve an item or place an animal or plant product within the bag, roll a . On a success, the hole ignores the intrusion. On a failure, the *mother maw* devours the triggering material, removing it from existence. The maw can't eat artifacts. If the triggering material isn't entirely inside the maw, such as when someone reaches inside, the *mother maw* attempts to pull it completely inside using a Grapple action with a +28 Athletics bonus. On a success, it devours the victim or object. Whenever the maw critically fails the Athletics check, it regurgitates one creature or object it previously devoured. The condition of the vomited creature or object depends on its resilience and the time it has spent inside the maw. Typically, the maw spews forth items it finds difficult to digest, such as those made of adamantine or protected by magic. It can and does regurgitate remains, though."
+ },
+ {
+  "id": "mountain-to-the-sky",
+  "name": "Mountain to the Sky",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "structure"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10000
+  },
+  "text": "**Activate** 1 minute (Interact) This tiny, carved walnut shell contains a sacred mountain within. You can only activate *mountain to the sky* on an unoccupied patch of earth or soil. When activated, the walnut transforms into an impossibly steep mountain, 5,000 feet tall and 100 feet wide at the base. Climbing the mountain requires 8 hours and a successful check. After activating it, if you climb to the top of the mountain without any assistance from flight or magic, the mountain *plane shifts* you to *Heaven* when you reach the summit. You can return the mountain to the sky into the shape of a walnut shell as a 1-minute activity, which has the *concentrate* and *manipulate* traits, so long as no living creatures are present on the mountain."
+ },
+ {
+  "id": "mouse",
+  "name": "Mouse",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Mouse Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 cp"
+ },
+ {
+  "id": "mud-bomb-lesser",
+  "name": "Mud Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This clay vessel launches gobs of clinging mud and grit. The bomb deals 1d6 damage and 1 bludgeoning splash damage. On a critical hit, the target is dazzled until the start of your next turn."
+ },
+ {
+  "id": "mudlily",
+  "name": "Mudlily",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 15
+  },
+  "text": "This golden flower grows amid filthy ponds or puddles, its spotless yellow petals sharply contrasting its soiled surroundings. You can pin a *mudlily* to your clothing or your hair to enjoy some of its magical sullying and cleaning properties. While you wear a clean *mudlily*, you gradually become dirty over the course of an hour; grime and mud subtly manifest from nowhere onto your clothes, hair, skin, and all of your possessions other than the *mudlily*. After just 1 hour, you appear as though you've been living in squalor for years. This filth can be washed away normally, but it inevitably returns as long as you continue to wear a clean *mudlily*. If you soil the mudlily with some dirt or mud, as long as you wear the flower, you instead become clean over an hour. Any gunk soiling your person vanishes completely from everywhere on your body except the *mudlily*. Each day at dawn, the *mudlily* instantly becomes clean again."
+ },
+ {
+  "id": "mug",
+  "name": "Mug",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "musical-instrument-handheld",
+  "name": "Musical Instrument (Handheld)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 8
+  },
+  "text": "Handheld instruments include bagpipes, a small set of chimes, small drums, fiddles and viols, flutes and recorders, small harps, lutes, trumpets, and similarly sized instruments. The GM might rule that an especially large handheld instrument (like a tuba) has greater Bulk. Heavy instruments such as large drums, a full set of chimes, and keyboard instruments are less portable and generally need to be stationary while played."
+ },
+ {
+  "id": "musical-instrument-heavy",
+  "name": "Musical Instrument (Heavy)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 2
+  },
+  "text": "Handheld instruments include bagpipes, a small set of chimes, small drums, fiddles and viols, flutes and recorders, small harps, lutes, trumpets, and similarly sized instruments. The GM might rule that an especially large handheld instrument (like a tuba) has greater Bulk. Heavy instruments such as large drums, a full set of chimes, and keyboard instruments are less portable and generally need to be stationary while played."
+ },
+ {
+  "id": "musket-staff-of-the-void",
+  "name": "Musket Staff of the Void",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "negative",
+   "staff",
+   "void"
+  ],
+  "price": {
+   "gp": 100
+  },
+  "text": "Musket Staff of the Void Source NPC Core pg. 81 Price 100 gp Usage held in 2 hands Bulk 1 Base Weapon Flintlock Musket A stock carved of enchanted wood forms the base for a musket staff, a magic weapon used by a gunwitch as both a powerful firearm and magical staff. Many other variants exist with different spells. This +1 flintlock musket has a reinforced stock permanently attached to it, and the musket's weapon potency rune (and any other runes) applies to Strikes with the stock as well. The musket staff also contains spells and can be prepared following the same rules as a staff. Cantrip void warp 1st grim tendrils"
+ },
+ {
+  "id": "mythic-striking",
+  "name": "Mythic Striking",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "mythic"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 70000
+  },
+  "text": "This weapon is filled with unmatched destructive power. The weapon deals five weapon damage dice. --- **Activate—Unstoppable Devastation** ⟨5⟩ (concentration) **Trigger** You roll the weapon damage dice for a Strike with this weapon and do not like the result **Effect** Spend a Mythic Point and reroll your weapon damage dice, taking the higher of the two results. --- **Craft Requirements** *Mythic striking* runes can only be crafted, etched, or transferred by a mythic character capable of making a Crafting check at mythic proficiency (such as by having the Artisan's Calling)."
+ },
+ {
+  "id": "nail-bomb-lesser",
+  "name": "Nail Bomb (Lesser)",
+  "level": 2,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 8
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. The bomb deals 2d4 piercing damage and 1 piercing splash damage from a cold iron source."
+ },
+ {
+  "id": "nap-gas-disperser",
+  "name": "Nap Gas Disperser",
+  "level": 7,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "gadget",
+   "magical"
+  ],
+  "price": {
+   "gp": 70
+  },
+  "text": "Nap Gas Disperser May contain spoilers from Shades of Blood Source Pathfinder #215: To Blot Out the Sun pg. 80 Price 70 gp Usage held in 1 hand Bulk L Activate (manipulate) When you Activate a nap gas dispenser, you can either place it in an adjacent space or toss it up to 30 feet away. Once you’ve done so, the metallic canister instantly disperses knockout gas in a 15-foot burst. Creatures in the area must attempt a DC 23 Fortitude save, with the following results. This is a poison and incapacitation effect. Critical Success The creature is unaffected. Success The creature takes a –2 status penalty to Perception checks and is slowed 1 for 1 round. Failure The creature is slowed 1 for 1 minute. At the end of their next turn, they fall prone and fall unconscious for 1 minute. A creature can Interact to shake the creature awake as normal, but this doesn’t shorten the duration of the slowed condition. Critical Failure As failure, but the creature is slowed 1 for 1 hour and it takes three Interact actions to wake them."
+ },
+ {
+  "id": "navigators-star",
+  "name": "Navigator's Star",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "usage": "tattooed-on-the-body",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 18
+  },
+  "text": "A star inked on the back of the hand, usually between the thumb and forefinger, keeps you on the right path. **Activate** ⟨2⟩ (concentrate, manipulate) --- **Effect** As you hold up your hand and align the star in view, you learn which direction you're facing."
+ },
+ {
+  "id": "necklace-of-knives",
+  "name": "Necklace of Knives",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 25
+  },
+  "text": "This necklace strung with miniature stone throwing knives. As long as you wear it, you are never without a weapon, a crude surgical tool, or stake for a vampire, if necessary in following Pharasma's teachings. **Activate** ⟨1⟩ Interact --- **Effect** You pluck a miniature knife from the necklace, and it grows into a normal stone, steel, or wooden dagger for as long as you hold it, fading away 1 round after it leaves your hand. No matter how many knives you pull from the necklace, you never seem to deplete them. Wooden daggers from the necklace are as effective as ordinary steel daggers and can be useful to stake vampires."
+ },
+ {
+  "id": "necrotic-bomb-greater",
+  "name": "Necrotic Bomb (Greater)",
+  "level": 11,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Necrotic bombs combine reagents most people consider disgusting at best and unholy at worst, creating a life-sucking miasma upon contact with air. A necrotic bomb deals the listed void damage and splash damage, and it sickens the primary target on a critical hit. This damage harms only living creatures. --- You gain a +2 bonus to attack rolls. The bomb deals 3d6 void damage and 3 void splash damage. On a critical hit, the target is Sickened 3."
+ },
+ {
+  "id": "necrotic-bomb-lesser",
+  "name": "Necrotic Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Necrotic bombs combine reagents most people consider disgusting at best and unholy at worst, creating a life-sucking miasma upon contact with air. A necrotic bomb deals the listed void damage and splash damage, and it sickens the primary target on a critical hit. This damage harms only living creatures. --- The bomb deals 1d6 void damage and 1 void splash damage. On a critical hit, the target is Sickened 1."
+ },
+ {
+  "id": "necrotic-bomb-major",
+  "name": "Necrotic Bomb (Major)",
+  "level": 17,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 2500
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Necrotic bombs combine reagents most people consider disgusting at best and unholy at worst, creating a life-sucking miasma upon contact with air. A necrotic bomb deals the listed void damage and splash damage, and it sickens the primary target on a critical hit. This damage harms only living creatures. --- You gain a +3 bonus to attack rolls The bomb deals deals 4d6 void damage and 4 void splash damage. On a critical hit, the target is Sickened 4."
+ },
+ {
+  "id": "net-launcher",
+  "name": "Net Launcher",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 16
+  },
+  "text": "This wide, hollow tube is two to three feet long and fires an unattached net at much greater range than one can be thrown. A net launcher can be wielded while propped up on your shoulder or cradled under your arm. A net must be carefully folded to be launched without tangling. Properly loading a net into a net launcher takes 1 minute. A net fired with a net launcher can target a Medium or smaller creature within 40 feet, rather than 20 feet."
+ },
+ {
+  "id": "nightbreeze-machine",
+  "name": "Nightbreeze Machine",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "air",
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 125
+  },
+  "text": "The nightbreeze machine can turn a scorching hot room into a comfortable one with just the pull of a lever. Its outer shell is a brass cube half as tall as the average human that houses a series of flat metal \"blades\" in a circular arrangement. When placed on a flat surface, a creature within reach can Interact to flip the lever, turning the machine on. When the machine is active, the blades begin to spin rapidly, setting the air in the room into motion, which cools off the room's inhabitants. A front-mounted metal grate prevents anyone from coming into accidental contact with the spinning blades without impeding airflow. The nightbreeze machine was recently commissioned by Malduoni, Keeper of the First Law, leader of the nation of Rahadoum. He tasked the country's brightest inventors with creating devices that would, in his words, \"Ensure that no mortal need fear death from the desert heat.\" This machine was the first creation to come out of this consolidated engineering effort, but it won't be the last. A nightbreeze machine can affect an enclosed area of no more than 50 feet by 50 feet and has negligible effect when used in a larger enclosed area or outside. While active, it reduces the effects of severe heat by one step to mild heat, and reduces extreme heat to severe heat. A nightbreeze machine isn't powerful enough to reduce the effects of incredible heat, though fortunately such heat isn't found naturally in the deserts of Rahadoum. A nightbreeze machine runs for 8 hou"
+ },
+ {
+  "id": "oil",
+  "name": "Oil",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Oil Source Player Core pg. 290 Price 1 cp Hands 2 You can use oil to fuel lanterns, but you can also set a pint of oil aflame and throw it. You must first spend an Interact action preparing the oil, then throw it with another action as a ranged attack. If you hit, it splatters on the creature or in a single 5-foot square you target. You must succeed at a DC 10 flat check for the oil to ignite successfully when it hits. If the oil ignites, the target takes 1d6 fire damage."
+ },
+ {
+  "id": "oneiric-crystals-of-the-slumberer",
+  "name": "Oneiric Crystals of the Slumberer",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "mental",
+   "occult"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 5500
+  },
+  "text": "Oneiric Crystals of the Slumberer Source High Seas pg. 108 Price 5,500 gp Usage held in 1 hand Bulk L These trapezoidal crystals were created by a powerful alghollthu master from long-forgotten deep sea stones. They were used to steal the dreams and memories of the master’s victims, trapping them inside so they could be consulted when needed. When broken, the creatures whose memories were stolen retrieve them but are stupefied 1 for 1 round. Activate—Steal Remembrance (concentrate, manipulate) Frequency once per day; Effect Choose a creature you can see, trapping its memories in the crystal. The creature must attempt a DC 31 Will saving throw. If the creature is asleep, it uses the outcome one degree of success worse than the result of its roll. Critical Success The creature is unaffected and realizes you tried to steal its memories. Success The creature is stupefied 1 for 1 round but doesn’t lose any memory, and believes you did something harmless to its mind. Failure The creature is stupefied 2 for 1 hour and loses all memory of a particular topic that can be detailed in 50 words or fewer. Critical Failure The creature is stupefied 4 for 1 day and loses all memory of two particular topics, each of which can be detailed in 50 words or fewer."
+ },
+ {
+  "id": "ooze-ammunition-greater",
+  "name": "Ooze Ammunition (Greater)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "alchemical",
+   "consumable"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 350
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Ooze ammunition is a capsule containing a sticky substance. If you hit a creature with activated ooze ammunition, it deals acid damage instead of its normal damage type, and the creature then takes a –10-foot penalty to Speed and 3d4 damage until it ends the effects. On a critical hit, the creature is immobilized for 1 round in addition to the other effects. The target can end the effects by Escaping (DC 29) the sticky foam. Other creatures can provide the action, although doing so deals half the ammunition's persistent acid damage to the assisting creature. A creature that ends the effect still takes the persistent damage that turn."
+ },
+ {
+  "id": "ooze-ammunition-lesser",
+  "name": "Ooze Ammunition (Lesser)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "alchemical",
+   "consumable"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 7
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Ooze ammunition is a capsule containing a sticky substance. If you hit a creature with activated ooze ammunition, it deals acid damage instead of its normal damage type, and the creature then takes a –5-foot penalty to Speed and 1d4 damage until it ends the effects. On a critical hit, the creature is immobilized for 1 round in addition to the other effects. The target can end the effects by Escaping (DC 16) the sticky foam. Other creatures can provide the action, although doing so deals half the ammunition's persistent acid damage to the assisting creature. A creature that ends the effect still takes the persistent damage that turn."
+ },
+ {
+  "id": "ooze-ammunition-major",
+  "name": "Ooze Ammunition (Major)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "alchemical",
+   "consumable"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3250
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Ooze ammunition is a capsule containing a sticky substance. If you hit a creature with activated ooze ammunition, it deals acid damage instead of its normal damage type, and the creature then takes a –15-foot penalty to Speed and 4d4 damage until it ends the effects. On a critical hit, the creature is immobilized for 1 round in addition to the other effects. The target can end the effects by Escaping (DC 38) the sticky foam. Other creatures can provide the action, although doing so deals half the ammunition's persistent acid damage to the assisting creature. A creature that ends the effect still takes the persistent damage that turn."
+ },
+ {
+  "id": "ooze-ammunition-moderate",
+  "name": "Ooze Ammunition (Moderate)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "alchemical",
+   "consumable"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 42
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Ooze ammunition is a capsule containing a sticky substance. If you hit a creature with activated ooze ammunition, it deals acid damage instead of its normal damage type, and the creature then takes a –10-foot penalty to Speed and 2d4 damage until it ends the effects. On a critical hit, the creature is immobilized for 1 round in addition to the other effects. The target can end the effects by Escaping (DC 20) the sticky foam. Other creatures can provide the action, although doing so deals half the ammunition's persistent acid damage to the assisting creature. A creature that ends the effect still takes the persistent damage that turn."
+ },
+ {
+  "id": "opossum-domestic",
+  "name": "Opossum, domestic",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 2
+  },
+  "text": "Opossum, domestic Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 2 gp This tamed version of the wild Arcadian opossum is favored by those who like to match outfits with their pets, as the domestic opossum tolerates clothing and accessories. They're very tolerant of travel and can eat table scraps, making them popular with caravan drivers or ship captains."
+ },
+ {
+  "id": "oracle-kit",
+  "name": "Oracle Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5,
+   "sp": 5,
+   "cp": 2
+  },
+  "text": "Oracle Kit Source Player Core 2 pg. 277 Price 5 gp, 5 sp, 2 cp Money Left Over 9 gp, 4 sp, 8 cp Bulk 3, 3 light Armor Studded Leather Armor Weapons sling with 20 bullets, Mace Gear Adventurer's Pack Options steel shield (2 gp), healer’s toolkit (5 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "oracular-hag-eye",
+  "name": "Oracular Hag Eye",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "occult",
+   "scrying"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 75
+  },
+  "text": "This item appears to be an ordinary semiprecious stone and is typically mounted on a brooch or ring, but the stone is, in fact, an eyeball. This illusion can be seen through with true seeing or similar magic, and anyone who interacts with the item feels its wet and sticky surface, allowing them to attempt to disbelieve the illusion (DC 19). Many hags claim a hag eye is more effective if plucked from a living, awake creature, but this is likely just a convenient excuse for sadism. The hag eye produces no direct benefit for the wearer, but allows the hag who created it, or any member of her coven, can peer through the eye using the Seek action. This has no range limit, provided the hag is on the same plane. Any damage dealt to the eye destroys it. If this happens while a hag is looking through it, the hag is blinded for 1 hour. Oracular hag eyes are made with the eye of a cyclops. A hag who casts Augury with an oracular hag eye in her possession reduces the DC of the secret flat check to 2. --- **Craft Requirements** You must be a hag, and the raw materials must include the eye of a cyclops."
+ },
+ {
+  "id": "orb-shard",
+  "name": "Orb Shard",
+  "level": 20,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "artifact",
+   "finesse",
+   "magical",
+   "versatile-s"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "A shard of the *Orb of Gold Dragonkind* resembles a pointed length of crystal about the size and shape of a shortsword without a hilt. It functions as a *+3 striking shortsword* that deals 2d6 extra damage to dragons. Each *orb shard* within 60 feet of the *flawed orb of Gold Dragonkind* increases the save DC against the orb by 1; thus, if all 13 remaining *orb shards* are in this area, the save DC against the flawed orb increases from DC 30 to DC 43. A talented spellcaster or crafter can integrate an *orb shard* back into the flawed orb to make this DC increase permanent. **Destruction** An *orb shard* is extraordinarily resilient, but it can be damaged or even destroyed by mundane attacks (Hardness 40, HP 50, BT 25). It has weakness 30 to the Breath Weapons and Strikes of gold dragons."
+ },
+ {
+  "id": "orichalcum-buckler-high-grade",
+  "name": "Orichalcum Buckler (High-Grade)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 12000
+  },
+  "text": "Orichalcum Shield Source GM Core pg. 233 Usage varies by shield Base Material Orichalcum Orichalcum shields' time-bending properties are particularly useful for keeping them intact. The first time each day an orichalcum shield would be destroyed, it's instead left with 1 Hit Point and the broken condition. Orichalcum Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 587 Price 12,000 gp Bulk L The shield has Hardness 14, HP 56, and BT 28. Craft Requirements orichalcum worth at least 6,000 gp Orichalcum Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 587 Price 13,200 gp Bulk 1 The shield has Hardness 16, HP 64, and BT 32. Craft Requirements orichalcum worth at least 6,600 gp"
+ },
+ {
+  "id": "orichalcum-chunk",
+  "name": "Orichalcum Chunk",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1000
+  },
+  "text": "The most rare and valuable skymetal, orichalcum is coveted for its incredible time-related magical properties. This dull, coppery metal isn't as physically sturdy as adamantine, but orichalcum's time-bending properties protect it, granting it greater Hardness and Hit Points. If an orichalcum item takes damage but isn't destroyed, it repairs itself completely 24 hours later. ## Orichalcum Items | Orichalcum Items | Hardness | HP | BT | | --- | --- | --- | --- | | Thin Items | | | | | High-grade | 16 | 64 | 32 | | Items | | | | | High-grade | 18 | 72 | 36 | | Structure | | | | | High-grade | 35 | 140 | 70 |"
+ },
+ {
+  "id": "orichalcum-ingot",
+  "name": "Orichalcum Ingot",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10000
+  },
+  "text": "The most rare and valuable skymetal, orichalcum is coveted for its incredible time-related magical properties. This dull, coppery metal isn't as physically sturdy as adamantine, but orichalcum's time-bending properties protect it, granting it greater Hardness and Hit Points. If an orichalcum item takes damage but isn't destroyed, it repairs itself completely 24 hours later. ## Orichalcum Items | Orichalcum Items | Hardness | HP | BT | | --- | --- | --- | --- | | Thin Items | | | | | High-grade | 16 | 64 | 32 | | Items | | | | | High-grade | 18 | 72 | 36 | | Structure | | | | | High-grade | 35 | 140 | 70 |"
+ },
+ {
+  "id": "orichalcum-object-high-grade",
+  "name": "Orichalcum Object (High-Grade)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 10000
+  },
+  "text": "Orichalcum Source GM Core pg. 254 The most rare and valuable skymetal, orichalcum is coveted for its incredible time-related magical properties. This dull, coppery metal isn't as physically sturdy as adamantine, but orichalcum's time-bending properties protect it, granting it greater Hardness and Hit Points. If an orichalcum item takes damage but isn't destroyed, it repairs itself completely 24 hours later. Orichalcum Items Orichalcum Items Hardness HP BT Thin Items High-grade 16 64 32 Items High-grade 18 72 36 Structure High-grade 35 140 70 Material Uses Orichalcum Armor Orichalcum Shield Orichalcum Weapon Orichalcum Chunk Source GM Core pg. 254, Core Rulebook pg. 579 Price 1,000 gp Bulk L Orichalcum Ingot Source GM Core pg. 254, Core Rulebook pg. 579 Price 10,000 gp Orichalcum Object (High-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 10,000 gp (per Bulk)"
+ },
+ {
+  "id": "orichalcum-shield",
+  "name": "Orichalcum Shield",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Orichalcum Shield Source GM Core pg. 233 Usage varies by shield Base Material Orichalcum Orichalcum shields' time-bending properties are particularly useful for keeping them intact. The first time each day an orichalcum shield would be destroyed, it's instead left with 1 Hit Point and the broken condition. Orichalcum Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 587 Price 12,000 gp Bulk L The shield has Hardness 14, HP 56, and BT 28. Craft Requirements orichalcum worth at least 6,000 gp Orichalcum Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 587 Price 13,200 gp Bulk 1 The shield has Hardness 16, HP 64, and BT 32. Craft Requirements orichalcum worth at least 6,600 gp"
+ },
+ {
+  "id": "orichalcum-shield-high-grade",
+  "name": "Orichalcum Shield (High-Grade)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 13200
+  },
+  "text": "Orichalcum Shield Source GM Core pg. 233 Usage varies by shield Base Material Orichalcum Orichalcum shields' time-bending properties are particularly useful for keeping them intact. The first time each day an orichalcum shield would be destroyed, it's instead left with 1 Hit Point and the broken condition. Orichalcum Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 587 Price 12,000 gp Bulk L The shield has Hardness 14, HP 56, and BT 28. Craft Requirements orichalcum worth at least 6,000 gp Orichalcum Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 587 Price 13,200 gp Bulk 1 The shield has Hardness 16, HP 64, and BT 32. Craft Requirements orichalcum worth at least 6,600 gp"
+ },
+ {
+  "id": "orichalcum-weapon",
+  "name": "Orichalcum Weapon",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Orichalcum Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Orichalcum Orichalcum weapons can have four magic property runes instead of three. Due to orichalcum's temporal properties, etching the quickstrike weapon property rune onto an orichalcum weapon costs half the normal Price (though transferring the rune to a weapon made of another material requires you to first pay the remaining Price and then pay the cost to transfer). Orichalcum Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 22,500 gp (+2250 gp per Bulk) Craft Requirements at least 11,250 gp of orichalcum + 1,125 gp per Bulk"
+ },
+ {
+  "id": "orichalcum-weapon-high-grade",
+  "name": "Orichalcum Weapon (High-Grade)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 22500
+  },
+  "text": "Orichalcum Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Orichalcum Orichalcum weapons can have four magic property runes instead of three. Due to orichalcum's temporal properties, etching the quickstrike weapon property rune onto an orichalcum weapon costs half the normal Price (though transferring the rune to a weapon made of another material requires you to first pay the remaining Price and then pay the cost to transfer). Orichalcum Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 22,500 gp (+2250 gp per Bulk) Craft Requirements at least 11,250 gp of orichalcum + 1,125 gp per Bulk"
+ },
+ {
+  "id": "pacifying",
+  "name": "Pacifying",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 150
+  },
+  "text": "This rune turns weapons into instruments of peacemaking. **Activate** ⟨5⟩ (concentrate, mental) **Trigger** You damage a creature with the etched weapon --- **Effect** The damaged creature must succeed at a save or be pacified. A pacified creature takes a –2 penalty to attack rolls on any attacks that aren't nonlethal for 1 minute, and the creature also experiences a clear psychic warning that they should stop making attacks that could kill."
+ },
+ {
+  "id": "pact-of-blood-taking",
+  "name": "Pact of Blood-Taking",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "contract",
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "**Devil** Barbazu **Decipher Writing** Society, Warfare Lore --- You negotiate for might and viciousness. **Benefit** Your successful Strikes with slashing and piercing melee weapons deal 1 damage. On a critical success, this persistent bleed damage is equal to half your level. **Payment** You regain half the normal number of Hit Points from resting (including Hit Points gained from long-term rest) and from any application of the Medicine skill. **Hidden Condition** The barbazu owns any weapons you find. No more often than once per month, the barbazu can demand a single weapon of its choice (often the best weapon in your possession). You are compelled to hand over the weapon immediately, without question. **Termination Clause** The contract guarantees that you will not \"be slain by the barbazu or by barbazu action.\" This wording is vague; if any barbazu kills you, or if you die from persistent bleed damage from any source, the contract is voided."
+ },
+ {
+  "id": "paint-set",
+  "name": "Paint Set",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1
+  },
+  "text": "This set of painting supplies includes paints, brushes, jars, a palette, a set of small canvases, and a miniature easel. You can refill your paint set with extra paints and canvas for 1 sp."
+ },
+ {
+  "id": "palanquin-of-night",
+  "name": "Palanquin of Night",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "other",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {
+   "gp": 825
+  },
+  "text": "This small square of dark blue fabric appears to be painted with a depiction of the night sky, shifting each day to match the sky above Geb the previous night. **Activate** ⟨3⟩ Interact --- **Effect** The fabric unfolds into a dark palanquin large enough to comfortably hold two Medium creatures. Four spectral bearers appear at the corners of the palanquin, capable of carrying it effortlessly over most types of terrain as long as the terrain is relatively flat and devoid of hazards. Spectral bearers have the statistics of an Unseen Servant, except they're strong enough to carry the palanquin and its occupants. They move generally along a basic set of directions you indicate upon activation, which can include turns onto various streets, but they don't take other creatures' feelings into account and can be inconsiderate to passersby in an inhabited area as they relentlessly move you forward. The bearers move slowly but steadily along their simple directions. While the palanquin is perfectly suitable for overland travel, the bearers' imprecise movements and the requirement to reactivate the palanquin to change destinations make it unsuited for a combat encounter or other situation where seconds and precise movements count. The palanquin's interior ceiling is painted with the same night sky pattern as the cloth, and dark curtains hang over the windows. The palanquin protects its occupants from sunlight and severe heat and cold (though not extreme or incredible heat or cold) as wel"
+ },
+ {
+  "id": "palm-crossbow",
+  "name": "Palm Crossbow",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "This thick, elegant bracelet conceals a specialized firing mechanism that can hold a single blowgun dart. You can fire the dart normally from the bracelet. Recognizing the bracelet's nature requires a successful check. **Activate** ⟨2⟩ Interact --- **Effect** You expand the bracelet into a Hand Crossbow. The bracelet has enough pieces to assemble up to three bolts, but the bolts contain necessary components for the bracelet. Without all of the bolt pieces, you cannot collapse the crossbow back into a bracelet."
+ },
+ {
+  "id": "paper-shredder",
+  "name": "Paper Shredder",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 30
+  },
+  "text": "Whether it's a parchment with ominous pentagrams and dangerous magical symbols inscribed upon it, incriminating legal documents, or just simply paper waste, sometimes you just need to make sure a document is completely destroyed in a way that makes it nearly impossible to read afterwards. Enter the paper shredder, a clockwork device that performs exactly this function. With 1 minute of wind-up, a paper shredder can function for up to 1 hour of shredding, and it automatically enters standby mode when not in use, meaning the device can typically go for weeks between wind-ups unless you shred an exceptionally large volume of paper. Setting a piece of paper or parchment into the paper shredder takes a single Interact action, which means you can shred up to three pages of paper or parchment each round. If the page is longer than normal, it takes longer to shred, as determined by the GM. Additionally, only one person can use the shredder each round, limiting it to shredding three pages per round regardless of how many people are available to feed paper into it. The paper shredders rips and tears the paper or parchment apart into tiny disjointed strips. This is typically sufficient to destroy Rune Trap and other similar dangerous magical traps on the paper, though the GM might determine that particularly resilient magical traps find some way to survive their shredding. If the paper is magically protected or otherwise has more Hardness than a normal sheet of paper or parchment, the s"
+ },
+ {
+  "id": "parchment-of-direct-message",
+  "name": "Parchment of Direct Message",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 50
+  },
+  "text": "These two sheets resemble ordinary parchment, save for a simple seal burned into the corner. The two sheets are magically linked, though if either of the sheets is burnt, cut in half or smaller, or otherwise destroyed, then the other sheet becomes an ordinary piece of parchment. When you write a message on one of the sheets, the text disappears over the span of 1 minute, leaving no ink, imprint, or any other trace of inscription behind. The message then appears on the linked piece of parchment. The magical link between the sheets only functions while both sheets are within 10 miles of each other. Outside of this range, any writing remains on the sheets as if they were mundane sheets of parchment, though this writing becomes erased if the parchment is activated. **Activate** ⟨1⟩ command --- **Effect** You utter a specific magical phrase while holding one of the sheets of parchment. All writing disappears from the parchment."
+ },
+ {
+  "id": "pathfinder-chronicle",
+  "name": "Pathfinder Chronicle",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 6
+  },
+  "text": "Numerous volumes and editions of the Pathfinder Chronicles exist, each cataloging different adventures. Pathfinder Chronicles are a type of scholarly journal that specifically devotes topics to Pathfinder discoveries, rather than more theoretical academic topics. Because Pathfinders have better access to these chronicles than other scholarly journals, they are particularly common among Pathfinder agents building a library of reference texts."
+ },
+ {
+  "id": "pathfinders-coin",
+  "name": "Pathfinder's Coin",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 30
+  },
+  "text": "This coin usually resembles ancient currency. An intricate matrix of gold and platinum wires inside the coin causes it to float an inch in the air and spin if placed on a wayfinder. --- **Activate** ⟨1⟩ command **Requirements** The coin is levitating above a Wayfinder **Effect** You give the coin a message of 25 words or fewer. The message repeats in your voice the next time the coin is floated above a *wayfinder*. A *Pathfinder's coin* can hold only one message at a time, and it replays its message only once."
+ }
+]

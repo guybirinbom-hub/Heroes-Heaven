@@ -1,0 +1,855 @@
+[
+ {
+  "id": "green-gut",
+  "name": "Green Gut",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "price": {
+   "gp": 2500
+  },
+  "text": "Green Gut May contain spoilers from Extinction Curse Source Pathfinder #155: Lord of the Black Sands pg. 75 Price 2,500 gp Usage held in 1 hand Bulk L Activate Interact This watery, mint-green emetic of xulgath design is often carried in a delicate obsidian vial or other fragile container. In the unfortunate circumstance that a creature has been Swallowed Whole by another creature, the swallowed creature can break open a vial of greengut to immediately induce vomiting. The swallower must succeed at a DC 40 Fortitude save or take 18d6 poison damage and possibly vomit the contents of its stomach. Critical Success The creature is unaffected. Success The creature takes half damage. Failure The creature takes full damage, is sickened 1, and vomits up any and all creatures Swallowed Whole on its next turn (a single action, which also allows it a Fortitude save against the sickened condition), as well as any stones or other objects it swallowed. Critical Failure As failure, but the creature takes double damage and is sickened 2."
+ },
+ {
+  "id": "grievous",
+  "name": "Grievous",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 700
+  },
+  "text": "When your attack roll with this weapon is a critical hit and gains the critical specialization effect, you gain an additional benefit depending on the weapon group. **Axe** You can damage a third creature, with the same restrictions. **Bow** The Athletics check to pull the missile free is DC 20. **Brawling** The target takes a -4 circumstance penalty to its save. **Club** You can knock the target up to 15 feet away. **Crossbow** If the target of the critical hit is adjacent to a surface, it gets stuck to that surface by the missile, as the bow critical specialization. **Dart** The base Persistent Bleed Damage increases to 2d6. **Firearm** The target takes a -4 circumstance penalty to its save. **Flail** You move the target 5 feet. You can't move it away from you, but you can move it in another direction of your choice. **Hammer** You can also knock the target 5 feet away from you. **Knife** The target takes a –5-foot status penalty to its Speed while it has the Persistent Bleed Damage. **Pick** The extra damage from the critical specialization effect increases to 4 per weapon damage die. **Polearm** You can move the target up to 10 feet. **Shield** You can knock the target up to 10 feet away. **Sling** The target also takes a –10-foot status penalty to its Speed for 1 round if it fails the save. **Spear** The clumsy condition lasts for 2 rounds. **Sword** The target is off-guard until the end of your next turn."
+ },
+ {
+  "id": "gruesome-bolt",
+  "name": "Gruesome Bolt",
+  "level": 6,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 50
+  },
+  "text": "Gruesome Bolt Source Battlecry! pg. 133 Price 50 gp Ammunition ballista bolt (ballista) This sickly green ammunition emits an eerie wail as it flies through the air. When a gruesome bolt impacts its target, it embeds a seed of fear in nearby creatures. All creatures within 10 feet of the target are subject to the effects of a 3rd-rank fear spell (DC 19). Craft Requirements Supply one casting of fear (3rd rank)."
+ },
+ {
+  "id": "guide-expedient-wilderness-guide",
+  "name": "Guide (Expedient Wilderness Guide)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 6
+  },
+  "text": "Guide Source Firebrands pg. 93 Venturing away from home or into the wilderness can be dangerous, especially when the terrain and local creatures are unfamiliar. Guide services reduce the risk of danger during an expedition as guides know the safest or the quickest routes to take through various areas. They also can arrange transportation, food, lodging, and other resources needed for a journey. Guides can assist with locating specific flora or fauna, which is particularly helpful for those in search of ingredients for alchemy or a ritual. Guide services typically focus on either wilderness or survival. Wilderness guides are familiar with the terrain and the habits of the creatures who dwell in the region. They can guide you through unfamiliar or hazardous locations using an expedient route, which is the standard route that covers the distance in the shortest amount of time regardless of the hazards you may face, or using a safe route, which doubles your travel time but minimizes the risk of running into hostile creatures. Survival guides have knowledge of subjects of their level plus 4, so a 1st-level survival guide can help locate targets of up to 5th level. Targets can include creatures, specific plants, or even specific locations such as a glade with a direct view of an upcoming eclipse. The level of a target is either the level of the creature or the level of the challenge used to determine the DC for locating the target, as determined by the GM. For example, the GM might"
+ },
+ {
+  "id": "guide-harness",
+  "name": "Guide Harness",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "companion"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 5
+  },
+  "text": "The grip of this guide harness fits comfortably in the hand. Guide harnesses are purpose-built for low-sight or blind adventurers who have guide animals. Usually fastened with side straps placed through a martingale, guide harnesses can be easily reconfigured to allow them to be worn by any animal companion."
+ },
+ {
+  "id": "guide-safe-wilderness-guide",
+  "name": "Guide (Safe Wilderness Guide)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 4
+  },
+  "text": "Guide Source Firebrands pg. 93 Venturing away from home or into the wilderness can be dangerous, especially when the terrain and local creatures are unfamiliar. Guide services reduce the risk of danger during an expedition as guides know the safest or the quickest routes to take through various areas. They also can arrange transportation, food, lodging, and other resources needed for a journey. Guides can assist with locating specific flora or fauna, which is particularly helpful for those in search of ingredients for alchemy or a ritual. Guide services typically focus on either wilderness or survival. Wilderness guides are familiar with the terrain and the habits of the creatures who dwell in the region. They can guide you through unfamiliar or hazardous locations using an expedient route, which is the standard route that covers the distance in the shortest amount of time regardless of the hazards you may face, or using a safe route, which doubles your travel time but minimizes the risk of running into hostile creatures. Survival guides have knowledge of subjects of their level plus 4, so a 1st-level survival guide can help locate targets of up to 5th level. Targets can include creatures, specific plants, or even specific locations such as a glade with a direct view of an upcoming eclipse. The level of a target is either the level of the creature or the level of the challenge used to determine the DC for locating the target, as determined by the GM. For example, the GM might"
+ },
+ {
+  "id": "guide-survival-guide-level-1-trained",
+  "name": "Guide (Survival Guide Level 1; Trained)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 4
+  },
+  "text": "Guide Source Firebrands pg. 93 Venturing away from home or into the wilderness can be dangerous, especially when the terrain and local creatures are unfamiliar. Guide services reduce the risk of danger during an expedition as guides know the safest or the quickest routes to take through various areas. They also can arrange transportation, food, lodging, and other resources needed for a journey. Guides can assist with locating specific flora or fauna, which is particularly helpful for those in search of ingredients for alchemy or a ritual. Guide services typically focus on either wilderness or survival. Wilderness guides are familiar with the terrain and the habits of the creatures who dwell in the region. They can guide you through unfamiliar or hazardous locations using an expedient route, which is the standard route that covers the distance in the shortest amount of time regardless of the hazards you may face, or using a safe route, which doubles your travel time but minimizes the risk of running into hostile creatures. Survival guides have knowledge of subjects of their level plus 4, so a 1st-level survival guide can help locate targets of up to 5th level. Targets can include creatures, specific plants, or even specific locations such as a glade with a direct view of an upcoming eclipse. The level of a target is either the level of the creature or the level of the challenge used to determine the DC for locating the target, as determined by the GM. For example, the GM might"
+ },
+ {
+  "id": "guide-survival-guide-level-2",
+  "name": "Guide (Survival Guide Level 2)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Guide Source Firebrands pg. 93 Venturing away from home or into the wilderness can be dangerous, especially when the terrain and local creatures are unfamiliar. Guide services reduce the risk of danger during an expedition as guides know the safest or the quickest routes to take through various areas. They also can arrange transportation, food, lodging, and other resources needed for a journey. Guides can assist with locating specific flora or fauna, which is particularly helpful for those in search of ingredients for alchemy or a ritual. Guide services typically focus on either wilderness or survival. Wilderness guides are familiar with the terrain and the habits of the creatures who dwell in the region. They can guide you through unfamiliar or hazardous locations using an expedient route, which is the standard route that covers the distance in the shortest amount of time regardless of the hazards you may face, or using a safe route, which doubles your travel time but minimizes the risk of running into hostile creatures. Survival guides have knowledge of subjects of their level plus 4, so a 1st-level survival guide can help locate targets of up to 5th level. Targets can include creatures, specific plants, or even specific locations such as a glade with a direct view of an upcoming eclipse. The level of a target is either the level of the creature or the level of the challenge used to determine the DC for locating the target, as determined by the GM. For example, the GM might"
+ },
+ {
+  "id": "guide-survival-guide-level-3-expert",
+  "name": "Guide (Survival Guide Level 3; Expert)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 20
+  },
+  "text": "Guide Source Firebrands pg. 93 Venturing away from home or into the wilderness can be dangerous, especially when the terrain and local creatures are unfamiliar. Guide services reduce the risk of danger during an expedition as guides know the safest or the quickest routes to take through various areas. They also can arrange transportation, food, lodging, and other resources needed for a journey. Guides can assist with locating specific flora or fauna, which is particularly helpful for those in search of ingredients for alchemy or a ritual. Guide services typically focus on either wilderness or survival. Wilderness guides are familiar with the terrain and the habits of the creatures who dwell in the region. They can guide you through unfamiliar or hazardous locations using an expedient route, which is the standard route that covers the distance in the shortest amount of time regardless of the hazards you may face, or using a safe route, which doubles your travel time but minimizes the risk of running into hostile creatures. Survival guides have knowledge of subjects of their level plus 4, so a 1st-level survival guide can help locate targets of up to 5th level. Targets can include creatures, specific plants, or even specific locations such as a glade with a direct view of an upcoming eclipse. The level of a target is either the level of the creature or the level of the challenge used to determine the DC for locating the target, as determined by the GM. For example, the GM might"
+ },
+ {
+  "id": "guide-survival-guide-level-4",
+  "name": "Guide (Survival Guide Level 4)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Guide Source Firebrands pg. 93 Venturing away from home or into the wilderness can be dangerous, especially when the terrain and local creatures are unfamiliar. Guide services reduce the risk of danger during an expedition as guides know the safest or the quickest routes to take through various areas. They also can arrange transportation, food, lodging, and other resources needed for a journey. Guides can assist with locating specific flora or fauna, which is particularly helpful for those in search of ingredients for alchemy or a ritual. Guide services typically focus on either wilderness or survival. Wilderness guides are familiar with the terrain and the habits of the creatures who dwell in the region. They can guide you through unfamiliar or hazardous locations using an expedient route, which is the standard route that covers the distance in the shortest amount of time regardless of the hazards you may face, or using a safe route, which doubles your travel time but minimizes the risk of running into hostile creatures. Survival guides have knowledge of subjects of their level plus 4, so a 1st-level survival guide can help locate targets of up to 5th level. Targets can include creatures, specific plants, or even specific locations such as a glade with a direct view of an upcoming eclipse. The level of a target is either the level of the creature or the level of the challenge used to determine the DC for locating the target, as determined by the GM. For example, the GM might"
+ },
+ {
+  "id": "gunners-bandolier",
+  "name": "Gunner's Bandolier",
+  "level": 3,
+  "itemType": "container",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "This incredibly spacious bandolier can hold up to 4 one-handed crossbows or firearms that take no more than 1 action to completely reload (typically meaning that weapons with the capacity or repeating traits won't fit in the bandolier's holsters). A gunner's bandolier can be etched with runes as though it were a ranged weapon. When you invest the gunner's bandolier, you can attune it to each of the 4 weapons holstered in it. **Activate** ⟨1⟩ (concentrate) --- **Effect** You empower one of the attuned weapons in the bandolier, granting it the runes etched onto the gunner's bandolier and removing the runes from any previously drawn weapon. Then, you Interact to draw the weapon. **Activate** ⟨3⟩ (concentrate) --- **Effect** All weapons that were attuned to the bandolier when you invested it, not including any weapons you're currently wielding, return to the bandolier, and one of the returned weapons is automatically reloaded."
+ },
+ {
+  "id": "gunners-saddle",
+  "name": "Gunner's Saddle",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornsaddle",
+  "price": {
+   "gp": 20
+  },
+  "text": "Developed by marauders from the Mana Wastes, this clockwork saddle comes with a retractable weapon mount that can be used as a tripod to stabilize a weapon with the kickback trait. Just like a normal tripod, you Interact to deploy the tripod to stabilize the firearm, and then again to retract the tripod to move it. The saddle uses complex hydraulics to protect the steed from the firearm's recoil."
+ },
+ {
+  "id": "gut-ripper",
+  "name": "Gut-Ripper",
+  "level": 7,
+  "itemType": "weapon",
+  "traits": [
+   "deadly-d10",
+   "magical",
+   "mythic",
+   "trip"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {},
+  "text": "This *+1 striking ogre hook* causes its owner to dream of past murders conducted with the weapon. *Gut-Ripper*'s mythic magic is tied to the bloodlust of the ogre boss who was holding it upon becoming mythic. If *Gut-Ripper* doesn't kill a creature each day by midnight, it becomes a non-magical ogre hook. --- **Activate—Rip Guts! Rip Guts!** ⟨2⟩ **Cost** 1 Mythic Point **Effect** You throw *Gut-Ripper* in a line of any length up to 60 feet, then it returns to your hands. Each creature in the line takes damage with a save. If there's a creature at the end of the line, you instead make a melee Strike against it with the hook that deals an additional 2d10 damage. Each time a creature takes this bleed damage, you regain that many HP; this is a healing vitality effect. This activation can't be used again for 1d4 rounds."
+ },
+ {
+  "id": "hag-eye",
+  "name": "Hag Eye",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "occult",
+   "scrying"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 50
+  },
+  "text": "This item appears to be an ordinary semiprecious stone and is typically mounted on a brooch or ring, but the stone is, in fact, an eyeball. This illusion can be seen through with Truesight or similar magic, and anyone who interacts with the item feels its wet, sticky surface, allowing them to attempt to disbelieve the illusion (). Many hags claim a hag eye is more effective if plucked from a living, awake creature, but this is likely just a convenient excuse for sadism. The hag eye produces no direct benefit for the wearer, but allows the hag who created it, or any member of their coven, to peer through the eye using the Seek action. This has no range limit, provided the hag is on the same plane. Any damage dealt to the eye destroys it. If this happens while a hag is looking through it, the hag is blinded for 1 hour. --- **Craft Requirements** You are a hag."
+ },
+ {
+  "id": "hag-eye-frightful",
+  "name": "Hag Eye (Frightful)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "divination",
+   "invested",
+   "occult",
+   "scrying"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 85
+  },
+  "text": "Hag Eye Source Bestiary 3 pg. 128 Usage worn This item appears to be an ordinary semiprecious stone and is typically mounted on a brooch or ring, but the stone is, in fact, an eyeball. This illusion can be seen through with true seeing or similar magic, and anyone who interacts with the item feels its wet and sticky surface, allowing them to attempt to disbelieve the illusion (DC 19). Many hags claim a hag eye is more effective if plucked from a living, awake creature, but this is likely just a convenient excuse for sadism. The hag eye produces no direct benefit for the wearer, but allows the hag who created it, or any member of her coven, can peer through the eye using the Seek action. This has no range limit, provided the hag is on the same plane. Any damage dealt to the eye destroys it. If this happens while a hag is looking through it, the hag is blinded for 1 hour. Craft Requirements You must be a hag. Hag Eye Source Bestiary 3 pg. 128 Price 50 gp Usage worn Hag Eye (Frightful) Source Pathfinder #182: Graveclaw pg. 76 Price 85 gp Usage worn A frightful hag eye is made with the eye of a creature whose gaze inflicts fear, such as some velstracs. Activate (emotion, enchantment, fear, mental, visual) Trigger once per day; Effect You target a creature within 30 feet that must be able to see the frightful hag eye; the target must attempt a DC 19 Will save. Once a creature attempts this save, it's temporarily immune for 24 hours. Critical Success The target is unaffected. Succe"
+ },
+ {
+  "id": "hammer",
+  "name": "Hammer",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "handkerchief-of-disagreeable-disguise-greater",
+  "name": "Handkerchief of Disagreeable Disguise (Greater)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 30
+  },
+  "text": "This elegant scarf appears to be and functions as a Masquerade Scarf. When you invest the scarf, it fuses to you. **Activate** ⟨2⟩ (manipulate) --- **Effect** Like a masquerade scarf, the scarf casts a 2nd-rank Illusory Disguise spell on you. However, the illusion disadvantages you based on your intent, making you, for example, appear to be a suspicious ruffian if you're trying to sneak past guards or lending you the seeming of a pauper if you're trying to impress a shallow aristocrat. You and those you consider to be allies must succeed at a save or you perceive the illusion as you intended it, though others won't. Evidence to the contrary allows you to attempt to disbelieve the false version of the illusion. You can't Dismiss the spell."
+ },
+ {
+  "id": "handling-gloves",
+  "name": "Handling Gloves",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worngloves",
+  "price": {
+   "sp": 5
+  },
+  "text": ""
+ },
+ {
+  "id": "harness",
+  "name": "Harness",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 8
+  },
+  "text": ""
+ },
+ {
+  "id": "harpoon-bolt",
+  "name": "Harpoon Bolt",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 15
+  },
+  "text": "**Ammunition** round --- This iron spike can be fitted into the barrel of a two-handed firearm that doesn't have the scatter property with an Interact action. The spike is attached to a 50-foot-long coil of rope held in a simple spool that can be attached to a weapon's barrel. The weight and awkward balance of the bolt and its spool reduce the range of the weapon by 10 feet when fired. A creature hit by a harpoon bolt takes normal damage from the shot and must succeed at a save. On a failure, the harpoon bolt becomes lodged in its body. Once a harpoon bolt is lodged, a creature can remove the harpoon bolt with a DC 18 check to Escape or Force Open, but on a failure, the creature takes 1d4 damage. As long as the harpoon bolt remains lodged, the creature can't move more than 50 feet away from you. You can attempt to Trip a creature by tugging on the rope attached to the harpoon bolt, even if it isn't within your reach, but if you fail this attempt, the bolt rips free, causing 1d4 damage to the target but releasing it from the bolt. If you reload, drop, or fire the firearm again, the creature is no longer limited in its movement. Once a harpoon bolt is removed from a creature, the bolt, its rope, and the spool all decay away, consumed by the same magic that empowers the unusual ammunition to function in the first place."
+ },
+ {
+  "id": "harrow-carrying-case",
+  "name": "Harrow Carrying Case",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "This elegant wooden case contains a recessed section to hold a simple or common harrow deck and a harrow mat. The case features a watertight seal to protect its contents from the elements and everyday wear and tear."
+ },
+ {
+  "id": "harrow-deck-common",
+  "name": "Harrow Deck (Common)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 10
+  },
+  "text": "Used by gamblers and seers alike, this deck of cards comes in several varieties. --- Common harrow decks are made from higher-quality paper and feature illustrations-harrow readers typically use these decks."
+ },
+ {
+  "id": "harrow-deck-fine",
+  "name": "Harrow Deck (Fine)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 11
+  },
+  "text": "Used by gamblers and seers alike, this deck of cards comes in several varieties. --- Fine harrow decks are made from a variety of materials, such as high-quality paper, woods, bone, ivory, or metal."
+ },
+ {
+  "id": "harrow-deck-simple",
+  "name": "Harrow Deck (Simple)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1
+  },
+  "text": "Used by gamblers and seers alike, this deck of cards comes in several varieties. --- Simple harrow decks are made from low-quality paper and typically have only an icon and a number to signify the suit and alignment. These simple decks are mostly used for games of chance, as the actual image and significance of the cards are irrelevant for such games."
+ },
+ {
+  "id": "head-gem",
+  "name": "Head Gem",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {},
+  "text": "Upon your brow is a gem that houses your soul. When casting any spell or ritual to return you to life, your intact head gem can be substituted for your body. While you can freely remove your head gem, it's typically impossible for another creature to forcibly remove or destroy your head gem unless you're killed or permanently incapacitated first; at the GM's discretion, powerful magic or abilities can circumvent this restriction. If your head gem is removed or destroyed, it can be regrown using a day-long ritual. When this occurs, any remains of the previous gem immediately crumble to dust."
+ },
+ {
+  "id": "healers-toolkit",
+  "name": "Healer's Toolkit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 5
+  },
+  "text": "This kit of bandages, herbs, and suturing tools is necessary for Medicine checks to Administer First Aid, Treat Disease, Treat Poison, or Treat Wounds. If you wear your healer's toolkit, you can draw and replace its tools as part of the action that uses them."
+ },
+ {
+  "id": "healing-wave",
+  "name": "Healing Wave",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "positive",
+   "vitality"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Healing Wave Source GM Core pg. 315 Aspect Life Activate (concentrate) Frequency once per hour; Effect You release a wave of vitality energy in a 15-foot cone. You and each living target in the area regain 1d4 HP per level of the relic."
+ },
+ {
+  "id": "hearing-aid",
+  "name": "Hearing Aid",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 5
+  },
+  "text": "A hearing aid is worn in the ear and is made from carved wood, shaped metal, or even small clockwork pieces. The shape of the device aids those that are hard of hearing, and you can wear one or two depending on your hearing loss. You can attach or remove your hearing aids as an Interact action."
+ },
+ {
+  "id": "hearing-aid-magical",
+  "name": "Hearing Aid (Magical)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5
+  },
+  "text": "Hearing Aid Source Player Core pg. 293 A hearing aid is worn in the ear and is made from carved wood, shaped metal, or even small clockwork pieces. The shape of the device aids those who are hard of hearing, and you can wear one or two depending on your hearing loss. You can attach or remove your hearing aids as an Interact action. Hearing Aid Source Player Core pg. 293 Price 5 sp Hearing Aid (Magical) Source Player Core pg. 293 Price 5 gp A magical hearing aid has the magical trait. With its curved shape, it hooks over the top and sits behind your ear, with a receiver that fits into the ear opening. The external part of the device detects sound waves and, using magic, transfers them down the receiver and into your ear. You can wear one or two depending on your hearing loss, and you can turn your hearing aids on or off using an Interact action."
+ },
+ {
+  "id": "heat-haze",
+  "name": "Heat Haze",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fire"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Heat Haze Source GM Core pg. 314 Aspect Fire Your relic's heat keeps the air around you pleasantly warm. While you are holding or wearing the relic, it protects you from severe environmental cold. At 9th level, it also protects you from extreme cold, and at 17th level, it protects you from incredible cold. At 4th level, the relic also gains the following activation. Activate (concentrate) Frequency once per day; Effect Your relic erratically elevates the air temperature around you, creating heat shimmers that distort your appearance and grant you the concealed condition for 1 minute. As the nature of this effect still leaves your location obvious, you can't use this concealment to Hide or Sneak."
+ },
+ {
+  "id": "heated-cloak",
+  "name": "Heated Cloak",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worncloak",
+  "price": {
+   "gp": 160
+  },
+  "text": "This fine cloak is lined with tiny tubes of slowly reacting alchemical reagents. These chemicals generate heat, which is circulated throughout the cloak by the wearer's movements. While active, the wearer is protected from severe cold. The cloak offers no protection from extreme or incredible cold. It operates for 24 hours and can be reset with a simple process that takes 1 minute."
+ },
+ {
+  "id": "heckling-tools",
+  "name": "Heckling Tools",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "intelligent",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "**Perception** +9; precise vision 30 feet, imprecise hearing 30 feet **Communication** telepathy (two common languages) **Skills** Intimidation +9, one skill associated with their use +9 **Int** +2, **Wis** +2, **Cha** +2 **Will** +7 --- Tools that are severely misused or left in malevolent circumstances can develop malicious sapience, dedicated to critiquing those who use them. Such heckling tools are often born from implements useful to adventurers because such people are the likely to misuse tools or leave them in a corrupting situation. When you first set to using the tools, they fuse to you. Used for their intended purpose, the tools telepathically badger and disparage you, mocking your abilities and giving you ill-founded advice. You must succeed at a save to realize this badgering comes from the tools and not your own negative thoughts. Instead of the tool's usual bonus, you take a –2 circumstance penalty to checks made using heckling tools. Once you realize the tools are cursed, you can suppress their negative effects, gaining their typical bonus for 24 hours if you succeed at a or check to placate them, often by offering obsequious, public admiration."
+ },
+ {
+  "id": "hells-judgement",
+  "name": "Hell's Judgement",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Hell's Judgement Source Battlecry! pg. 128 Price 10,000 gp Usage held in 2 hands Bulk 2 Base Weapon Guisarme Access A character who is a member of the Hellknights has access to this weapon. These massive +2 flaming greater striking guisarmes are bestowed only upon the most loyal and renowned Hellknight paravicars, especially those who have distinguished themselves in the service of the strict laws of the organization. Activate—Flames of Phlegethon (concentrate, divine, manipulate, unholy) Frequency once per day; Effect You strike the ground with your axe, tearing open a one-way rift to the fourth layer of Hell in a 30-foot line that spews a curtain of hellfire. All creatures in the area take 6d6 fire damage and 6d6 spirit damage (DC 37 basic Reflex save) before the rift vanishes."
+ },
+ {
+  "id": "hidden-pocket-outfit",
+  "name": "Hidden Pocket Outfit",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worngarment",
+  "price": {
+   "gp": 75
+  },
+  "text": "Usually worn by actors but also popular with anyone intent on subterfuge, this outfit resembles a normal piece of clothing, but with multiple pockets designed to conceal blood pack squibs and similar small items. When wearing this outfit, you automatically succeed on all relevant checks to Conceal an Object on your person as long as the object is of light or negligible Bulk. However, someone specifically searching you can still attempt a Perception check against your Stealth DC."
+ },
+ {
+  "id": "hireling-skilled",
+  "name": "Hireling (Skilled)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 5
+  },
+  "text": "Hireling Source Core Rulebook pg. 294 PFS Note Pathfinder Society characters may not pay for hirelings as listed in the Core Rulebook. More capable hirelings are available via the Achievement Points system. Paid laborers can provide services for you. Unskilled hirelings can perform simple manual labor and are untrained at most skills. Skilled hirelings have expert proficiency in a particular skill. Hirelings are level 0. If a skill check is needed, an untrained hireling has a +0 modifier, while a skilled hireling has a +4 modifier in their area of expertise and +0 for other skill checks. Hirelings’ rates double if they’re going adventuring with you. Hireling (Unskilled) Source Core Rulebook pg. 294 Price 1 sp (per day) Hireling (Skilled) Source Core Rulebook pg. 294 Price 5 sp (per day)"
+ },
+ {
+  "id": "hireling-unskilled",
+  "name": "Hireling (Unskilled)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Hireling Source Core Rulebook pg. 294 PFS Note Pathfinder Society characters may not pay for hirelings as listed in the Core Rulebook. More capable hirelings are available via the Achievement Points system. Paid laborers can provide services for you. Unskilled hirelings can perform simple manual labor and are untrained at most skills. Skilled hirelings have expert proficiency in a particular skill. Hirelings are level 0. If a skill check is needed, an untrained hireling has a +0 modifier, while a skilled hireling has a +4 modifier in their area of expertise and +0 for other skill checks. Hirelings’ rates double if they’re going adventuring with you. Hireling (Unskilled) Source Core Rulebook pg. 294 Price 1 sp (per day) Hireling (Skilled) Source Core Rulebook pg. 294 Price 5 sp (per day)"
+ },
+ {
+  "id": "hollowed-hilt",
+  "name": "Hollowed Hilt",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 3
+  },
+  "text": "A hollowed hilt is a weapon modification that allows a pommel to be detached and its hilt meticulously hollowed out to create a small compartment without greatly affecting its balance. Often used by knight emissaries to hide important missives, this space can hold an object of light Bulk about the size of a scroll. A creature studying the weapon can find the hilt compartment with a successful check. Any weapon with an appropriate hilt or pommel can be converted into a hollowed one by paying the equipment's price."
+ },
+ {
+  "id": "holy-water",
+  "name": "Holy Water",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "consumable",
+   "divine",
+   "holy",
+   "splash",
+   "thrown"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This vial contains water blessed by a benevolent deity. You activate a vial of *holy water* by throwing it as a Strike. It's a simple thrown weapon with a range increment of 20 feet. *Holy water* deals 1d6 spirit damage and 1 spirit splash damage. *Holy water* can damage only creatures with the unholy trait."
+ },
+ {
+  "id": "homeward-swallow",
+  "name": "Homeward Swallow",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "usage": "tattooed-on-the-body",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 150
+  },
+  "text": "This small tattoo of a swallow always points toward your home. The tattooing must take place at a location you consider to be your home, or the magic fails to bind with the ink. When you travel to your home using teleportation that can be off target, such as Teleport or Interplanar Teleport, you arrive exactly at your home. If your home is destroyed or you come to believe a new place is your home, this tattoo fades from your skin. **Activate** ⟨1⟩ (concentrate) --- **Effect** You sense the direction toward your home."
+ },
+ {
+  "id": "hongbao-of-many-things",
+  "name": "Hongbao of Many Things",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {},
+  "text": "This enchanted long, red envelope is decorated with beautiful illustrations in gold ink. The hongbao holds twelve slips safely within. **Activate** ⟨1⟩ Interact --- **Effect** You draw a randomly selected slip from the hongbao, which transforms permanently into a useful item. Until you draw another item, the illustration on the outside of the hongbao changes to one of twelve animals, matching the item pulled. Each slip can be drawn only once; after the last slip is gone, the hongbao becomes a non-magical red envelope that retains the illustration of the final slip drawn. The effects of each slip are as follows: 1. 3d4 small firecracker pellets that let out a loud squeak when thrown against a hard surface. 2. Embroidered Leather Armor made from oxhide. 3. A Healing Potion (Lesser), except it is applied as a balm instead of drunk. 4. A stuffed bunny dressed in red robes. 5. 50 feet of coiled silk Rope. 6. A bottle of snake wine. 7. A wooden, horse-drawn Wagon. 8. A musical Musical Instrument (Handheld) made out of a ram's horn. 9. A collapsible metal-banded bo Staff. 10. An ornate jeweled egg. 11. A small, jade, statuette of a guardian lion dog. 12. 6 delicious pork buns that function as emergency Rations."
+ },
+ {
+  "id": "hooked",
+  "name": "Hooked",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-melee-weapon",
+  "price": {
+   "gp": 140
+  },
+  "text": "A *hooked weapon* extends hooks when it's used to attack. A *hooked weapon* gains the trip trait. If a *hooked weapon* normally has the trip trait, you can attempt to Trip a foe as a reaction when you critically hit it with the *hooked weapon*."
+ },
+ {
+  "id": "horn-of-plenty",
+  "name": "Horn of Plenty",
+  "level": 0,
+  "itemType": "container",
+  "traits": [
+   "divine",
+   "extradimensional"
+  ],
+  "usage": "worn",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "horse",
+  "name": "Horse",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 2
+  },
+  "text": "Horse Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 2 gp"
+ },
+ {
+  "id": "hourglass",
+  "name": "Hourglass",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 3
+  },
+  "text": ""
+ },
+ {
+  "id": "hunger-oil",
+  "name": "Hunger Oil",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "contact",
+   "divine",
+   "poison"
+  ],
+  "price": {
+   "gp": 235
+  },
+  "text": "Hunger Oil May contain spoilers from Agents of Edgewatch Source Pathfinder #160: Assault on Hunting Lodge Seven pg. 66 Price 235 gp Usage held in 2 hands Bulk L Activate Interact Rendered from the fat of corporeal undead creatures and infused with ghoulish magic, this yellowish oil causes its victims to experience stabbing hunger pangs that only living flesh can abate. If you eat at least a mouthful of humanoid flesh, you ignore the enfeebled condition from hunger oil for 1 minute. While under the effect of hunger oil, you regain only half as many Hit Points from healing effects unless you've eaten at least a mouthful of humanoid flesh in the last minute. Saving Throw DC 30 Fortitude; Onset 1 minute; Maximum Duration 6 minutes; Stage 1 enfeebled 2 (1 minute); Stage 2 enfeebled 3 (1 minute); Stage 3 enfeebled 4 (1d4 minutes) Craft Requirements Supply one casting of ghoulish cravings."
+ },
+ {
+  "id": "hunters-bow",
+  "name": "Hunter's Bow",
+  "level": 3,
+  "itemType": "weapon",
+  "traits": [
+   "deadly-d10",
+   "magical"
+  ],
+  "usage": "held-in-one-plus-hands",
+  "price": {
+   "gp": 60
+  },
+  "text": "Stealthy hunters can use this +1 magic shortbow to attack from hiding. If you use this bow to Strike a target that can't see you and you get a critical hit, the target takes an extra 1d6 damage."
+ },
+ {
+  "id": "hunters-hagbook",
+  "name": "Hunter's Hagbook",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "fortune",
+   "grimoire",
+   "magical"
+  ],
+  "usage": "other",
+  "price": {
+   "gp": 700
+  },
+  "text": "This magical book has its official title, The *Grimoire of Lady Jayne Cutter*, written on an inside page in illuminated letters. Among occultists and other scholars, it's known by its colloquial name: the Hunter's Hagbook. The book is a grimoire created and used by a legendary Varisian monster hunter. The *Hunter's Hagbook* can hold 100 spells but the spells below are always present in the book, can't be removed from it, and count against the total. When you attempt a saving throw against a coven spell, you can immediately end the duration of a spell affecting you that you prepared from this book. If you do, the result of your saving throw is one degree of success better than your roll (for example, a critical failure becomes a failure). --- Caster's Imposition Blind Eye Blood Duplicate Hag's Fruit Ritual Obstruction Web of Influence"
+ },
+ {
+  "id": "hydration-cloak",
+  "name": "Hydration Cloak",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 150
+  },
+  "text": "Hydration Cloak Source High Seas pg. 108 Price 150 gp Usage worn cloak Bulk L This cloak is made of turquoise scales that absorb moisture, hydrating the wearer. After being fully submerged in water for 1 hour, the cloak allows aquatic creatures, such as azarketis, to stay out of water for up to 1 week without penalties, after which it must be submerged again. Activate—Pull Hood (manipulate) Frequency once per day; Effect You pull the cloak’s hood up and gain the effects of a 2nd-rank water walk until you pull the hood down, to a maximum of 10 minutes."
+ },
+ {
+  "id": "ignitor",
+  "name": "Ignitor",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 5
+  },
+  "text": "An ignitor uses interlocking clockwork to create a small spark in order to ignite flammable materials. While holding the ignitor, you can Interact with it to ignite a flammable object within reach."
+ },
+ {
+  "id": "illusory-backdrop",
+  "name": "Illusory Backdrop",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical",
+   "structure"
+  ],
+  "usage": "carried",
+  "price": {
+   "gp": 900
+  },
+  "text": "This three-panel folding backdrop measures 5 feet tall and 3 feet wide and takes 2 hands to carry when folded up. It projects a preset illusion when fully unfolded. Illusory backdrops are typically used by artists, bards, gallery owners, and the occasional politician, and common illusions include the tops of battlements with grand castles in the background, cozy bowers, and well-appointed rooms. **Activate—Set the Scene** 1 minute (manipulate) --- **Effect** You unfold the illusory backdrop, placing it on the edge of three contiguous 5-foot squares in a straight line. The illusion then emanates in a from the center of the line, facing straight away from the panel. The illusion contains a scene that includes up to 5 discrete objects (usually foliage or pieces of furniture). The scene is static and lasts for 1 hour, though that duration restarts if the backdrop is refolded and then unfolded again. The appearance of the illusion is determined when the illusory backdrop is crafted and can't be changed."
+ },
+ {
+  "id": "immaculate-instrument",
+  "name": "Immaculate Instrument",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "divine",
+   "mythic"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This object, made of silver light, takes the form of a small musical instrument, prop, or other tool associated with a specific art form. The holder of the *immaculate instrument* never suffers from creative blocks of any kind and their work is always insightful and skilled. A character who uses the *immaculate instrument* to Perform or Craft can attempt the check at mythic proficiency once per month, and as long as they possess their *immaculate instrument*, they treat any critical failures with these skills as failures. --- **Destruction** If the holder uses the *immaculate instrument* to intentionally produce a work that is not just mediocre or crass, but one that devalues the public opinion of the art form itself in a showing of at least 100 spectators, the instrument fades away in shame."
+ },
+ {
+  "id": "immovable-arm",
+  "name": "Immovable Arm",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 700
+  },
+  "text": "The flat iron bar of an *immovable rod* has been worked into the core frame of this prosthetic arm, a small button discreetly placed at the heel of the hand. --- **Activate** ⟨1⟩ Interact --- **Effect** You curl your fingers inward to press the button on the heel of your hand, anchoring your prosthetic arm in place. Your arm no longer moves, defying gravity if necessary. You can still move the fingers of this hand and your elbow, shoulder, and rest of your body while the magic is in effect, but you can't move your wrist. If you press the button again, the rod inside your arm is deactivated, ending the magic that anchors it in place. While anchored, the arm can be moved only if 8,000 pounds of pressure is placed upon it or if a creature succeeds at a check to Force Open your arm. A creature can notice the button hidden in the hand of the prosthesis with a successful check to Seek."
+ },
+ {
+  "id": "immovable-rod",
+  "name": "Immovable Rod",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "This flat iron bar is almost completely nondescript, except for one small button appearing on its surface. **Activate** ⟨1⟩ Interact --- **Effect** You push the button to anchor the rod in place. It doesn't move, defying gravity if need be. If the button is pushed again, the rod deactivates, ending the anchoring magic. While anchored, the rod can be moved only if 8,000 pounds of pressure are applied to it or if a creature uses Athletics to Force Open the rod with a DC of 40 (though most intelligent creatures can just push the button to release the rod)."
+ },
+ {
+  "id": "immovable-tripod",
+  "name": "Immovable Tripod",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 700
+  },
+  "text": "This copper tripod has a magical core that can't be moved once magically locked in place—a perfect example of engineering ingenuity applied to magic items. This eccentric magical power is put to a pragmatic use of stabilizing weapons without the need for solid ground on which to stabilize them. In addition to extraplanar and aquatic environments, these devices have seen use by flying and climbing snipers who would otherwise have no way to mitigate their weapons' fierce kickback. **Activate** ⟨1⟩ (manipulate) --- **Effect** You deploy the tripod and press a button to lock it into place, allowing you to deploy the tripod in midair, underwater, or anywhere else where you don't have a solid horizontal surface available. If you Activate the tripod by pushing the button again, you release and retrieve the tripod. While anchored, the tripod can be moved only if 8,000 pounds of pressure are applied to it or if a creature uses Athletics to force-open the tripod with a DC of 40 (though most intelligent creatures can just push the button to release the tripod)."
+ },
+ {
+  "id": "imp-shot",
+  "name": "Imp Shot",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 24
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- This black-and-red ammunition contains an egg-shaped capsule. When an activated *imp shot* hits, the capsule cracks open and releases a manifestation that resembles a Tiny imp that can't act in any way or provide benefits outside those described here. If the Strike misses the target, the imp appears, makes a rude gesture at you, and vanishes in a puff of sulfuric smoke. On a hit, though, the imp harries the target for up to 1 minute, remaining in the target's space, slapping, nipping, hurling insults, and moving with the target as it moves. A creature harried by the imp is off-guard and takes a –2 circumstance penalty to attack rolls and skill checks. At the start of your turn on each round while the imp is active, you must attempt a . On a failure, the imp makes a final vulgar gesture at the target and vanishes in a cloud of brimstone."
+ },
+ {
+  "id": "impactful",
+  "name": "Impactful",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "force",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 1000
+  },
+  "text": "This rune thrums with pure magical energy. Weapons with the rune deal an additional 1d6 force damage on a successful Strike. On a critical hit, you can choose to force the target to succeed at a save or be pushed 5 feet away from you."
+ },
+ {
+  "id": "impactful-greater",
+  "name": "Impactful (Greater)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "force",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 15000
+  },
+  "text": "This rune thrums with pure magical energy. Weapons with the rune deal an additional 1d6 force damage on a successful Strike. On a critical hit, you can choose to force the target to succeed at a save or be pushed 10 feet away from you."
+ },
+ {
+  "id": "implacable",
+  "name": "Implacable",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-med-heavy-armor",
+  "price": {
+   "gp": 1200
+  },
+  "text": "This substantial rune makes you difficult to hold back. Whenever you are affected by an effect that lasts until you Escape (for instance, from the Grapple action or a tanglefoot bag), you become quickened. You can use the extra action each round only to Step or Escape."
+ },
+ {
+  "id": "impulse-control",
+  "name": "Impulse Control",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 5
+  },
+  "text": "The magical impulse control upgrade attaches the wheelchair to your fingers or nerve impulses, making it accessible for those with mobility restrictions or other health conditions. You still can't move the wheelchair if you're physically or magically prevented from doing so, such as by being grabbed or magically paralyzed."
+ },
+ {
+  "id": "incandescent-sight",
+  "name": "Incandescent Sight",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fire"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Incandescent Sight Source GM Core pg. 314 Aspect Fire Activate (concentrate) Frequency once per day; Effect Your eyes become attuned to heat signatures as your vision extends into the infrared, granting you a heatsight precise sense for 1 minute. Your heatsight can see temperature gradients out to a range of 30 feet, allowing you to detect living creatures and warm objects even in the dark. Warm objects block your heatsight even if they are transparent, such as hot water."
+ }
+]

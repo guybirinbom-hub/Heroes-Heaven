@@ -1,0 +1,832 @@
+[
+ {
+  "id": "siccatite-armor-standard-grade",
+  "name": "Siccatite Armor (Standard-Grade)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1600
+  },
+  "text": "Siccatite Armor Source Grand Bazaar pg. 100 Usage worn armor Bulk varies by armor Base Material Siccatite Siccatite armor must be fitted with protective undercoats for it to be safely donned, making it heavier than other types of armor; add 1 Bulk to the armor's typical weight. When wearing cold siccatite armor, you're protected from severe and extreme environmental heat, and when wearing hot siccatite armor, you're protected from severe and extreme environmental cold. An opponent that has you grabbed or restrained with its body while you're wearing standard-grade siccatite armor takes 4 energy damage at the end of its turn (either fire or cold, for hot and cold siccatite armor respectively), or 6 damage for a high-grade siccatite armor. Siccatite Armor (Standard-Grade) Source Grand Bazaar pg. 100 Price 1,600 gp (+160 gp per Bulk) Craft Requirements The initial raw materials must include at least 200 gp of siccatite + 20 gp per Bulk. Siccatite Armor (High-Grade) Source Grand Bazaar pg. 100 Price 32,000 gp (+3,200 gp per Bulk) Craft Requirements The initial raw materials must include at least 16,000 gp of siccatite + 1,600 gp per Bulk."
+ },
+ {
+  "id": "siccatite-chunk",
+  "name": "Siccatite Chunk",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 500
+  },
+  "text": "In its raw state, this silvery ore is either scalding hot or freezing cold. Metallurgists disagree over whether siccatite is two related substances or one substance that determines its temperature output via some unknown process. Whatever the reason, the extreme temperature of the material means it must be handled carefully. Hot siccatite can easily ignite flammables such as paper and dry brush, and cold siccatite left in moist areas quickly surrounds itself with a thick layer of ice. A creature that comes into physical contact with a significant amount of siccatite takes 1 energy damage for each round of continued contact (either fire or cold damage, for hot and cold siccatite respectively). ## Siccatite Items | Siccatite Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 6 | 24 | 12 | | High-grade | 10 | 40 | 20 | | **Items** | | | | | Standard-grade | 10 | 40 | 20 | | High-grade | 13 | 52 | 26 | | **Structures** | | | | | Standard-grade | 20 | 80 | 40 | | High-grade | 26 | 104 | 52 |"
+ },
+ {
+  "id": "siccatite-ingot",
+  "name": "Siccatite Ingot",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 5000
+  },
+  "text": "In its raw state, this silvery ore is either scalding hot or freezing cold. Metallurgists disagree over whether siccatite is two related substances or one substance that determines its temperature output via some unknown process. Whatever the reason, the extreme temperature of the material means it must be handled carefully. Hot siccatite can easily ignite flammables such as paper and dry brush, and cold siccatite left in moist areas quickly surrounds itself with a thick layer of ice. A creature that comes into physical contact with a significant amount of siccatite takes 1 energy damage for each round of continued contact (either fire or cold damage, for hot and cold siccatite respectively). ## Siccatite Items | Siccatite Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 6 | 24 | 12 | | High-grade | 10 | 40 | 20 | | **Items** | | | | | Standard-grade | 10 | 40 | 20 | | High-grade | 13 | 52 | 26 | | **Structures** | | | | | Standard-grade | 20 | 80 | 40 | | High-grade | 26 | 104 | 52 |"
+ },
+ {
+  "id": "siccatite-object-high-grade",
+  "name": "Siccatite Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 6000
+  },
+  "text": "Siccatite Source Grand Bazaar pg. 100 In its raw state, this silvery ore is either scalding hot or freezing cold. Metallurgists disagree over whether siccatite is two related substances or one substance that determines its temperature output via some unknown process. Whatever the reason, the extreme temperature of the material means it must be handled carefully. Hot siccatite can easily ignite flammables such as paper and dry brush, and cold siccatite left in moist areas quickly surrounds itself with a thick layer of ice. A creature that comes into physical contact with a significant amount of siccatite takes 1 energy damage for each round of continued contact (either fire or cold damage, for hot and cold siccatite respectively). Siccatite Siccatite Items Hardness HP BT Thin Items Standard-grade 6 24 12 High-grade 10 40 20 Items Standard-grade 10 40 20 High-grade 13 52 26 Structures Standard-grade 20 80 40 High-grade 26 104 52 Material Uses Siccatite Armor Siccatite Shield Siccatite Weapon Siccatite Chunk Source Grand Bazaar pg. 100 Price 500 gp Bulk L Siccatite Ingot Source Grand Bazaar pg. 100 Price 5,000 gp Bulk 1 Siccatite Object (Standard-Grade) Source Grand Bazaar pg. 100 Price 350 gp (per Bulk) Siccatite Object (High-Grade) Source Grand Bazaar pg. 100 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "siccatite-object-standard-grade",
+  "name": "Siccatite Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Siccatite Source Grand Bazaar pg. 100 In its raw state, this silvery ore is either scalding hot or freezing cold. Metallurgists disagree over whether siccatite is two related substances or one substance that determines its temperature output via some unknown process. Whatever the reason, the extreme temperature of the material means it must be handled carefully. Hot siccatite can easily ignite flammables such as paper and dry brush, and cold siccatite left in moist areas quickly surrounds itself with a thick layer of ice. A creature that comes into physical contact with a significant amount of siccatite takes 1 energy damage for each round of continued contact (either fire or cold damage, for hot and cold siccatite respectively). Siccatite Siccatite Items Hardness HP BT Thin Items Standard-grade 6 24 12 High-grade 10 40 20 Items Standard-grade 10 40 20 High-grade 13 52 26 Structures Standard-grade 20 80 40 High-grade 26 104 52 Material Uses Siccatite Armor Siccatite Shield Siccatite Weapon Siccatite Chunk Source Grand Bazaar pg. 100 Price 500 gp Bulk L Siccatite Ingot Source Grand Bazaar pg. 100 Price 5,000 gp Bulk 1 Siccatite Object (Standard-Grade) Source Grand Bazaar pg. 100 Price 350 gp (per Bulk) Siccatite Object (High-Grade) Source Grand Bazaar pg. 100 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "siccatite-weapon-high-grade",
+  "name": "Siccatite Weapon (High-Grade)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 15000
+  },
+  "text": "Siccatite Weapon Source Grand Bazaar pg. 101 Usage varies by weapon Bulk varies by weapon Base Material Siccatite Crafting weapons from siccatite is often enough to drive smiths to despair, as the extreme temperature of the metal can cause it to shatter while being worked. Siccatite weapons have substantial grip wrappings to protect their wielders from the metal's extreme temperatures. They're constantly surrounded by a heat haze or a halo of rime, depending on the siccatite's type. Siccatite weapons automatically gain either a flaming or frost property rune, for hot and cold siccatite respectively, even if they aren't otherwise enchanted; this rune can't be removed, and it deals 1d8 damage instead of 1d6 damage. This uses one of the weapon's property rune slots as normal. High-grade siccatite gains a greater flaming (hot siccatite) or greater frost (cold siccatite) property instead. Siccatite Weapon (Standard-Grade) Source Grand Bazaar pg. 101 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of siccatite + 17.5 gp per Bulk Siccatite Weapon (High-Grade) Source Grand Bazaar pg. 101 Price 15,000 gp (+1,500 gp per Bulk) Craft Requirements at least 7,500 gp of siccatite + 750 gp per Bulk"
+ },
+ {
+  "id": "siccatite-weapon-standard-grade",
+  "name": "Siccatite Weapon (Standard-Grade)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1400
+  },
+  "text": "Siccatite Weapon Source Grand Bazaar pg. 101 Usage varies by weapon Bulk varies by weapon Base Material Siccatite Crafting weapons from siccatite is often enough to drive smiths to despair, as the extreme temperature of the metal can cause it to shatter while being worked. Siccatite weapons have substantial grip wrappings to protect their wielders from the metal's extreme temperatures. They're constantly surrounded by a heat haze or a halo of rime, depending on the siccatite's type. Siccatite weapons automatically gain either a flaming or frost property rune, for hot and cold siccatite respectively, even if they aren't otherwise enchanted; this rune can't be removed, and it deals 1d8 damage instead of 1d6 damage. This uses one of the weapon's property rune slots as normal. High-grade siccatite gains a greater flaming (hot siccatite) or greater frost (cold siccatite) property instead. Siccatite Weapon (Standard-Grade) Source Grand Bazaar pg. 101 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of siccatite + 17.5 gp per Bulk Siccatite Weapon (High-Grade) Source Grand Bazaar pg. 101 Price 15,000 gp (+1,500 gp per Bulk) Craft Requirements at least 7,500 gp of siccatite + 750 gp per Bulk"
+ },
+ {
+  "id": "sifting-pan",
+  "name": "Sifting Pan",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 3
+  },
+  "text": "A simple circular or rectangle pan with a mesh on the bottom. Often used for sifting through dirt or mud to find gold, sifting pans can be used to search for many materials, depending on the size of the holes in the mesh."
+ },
+ {
+  "id": "sight-theft-grit",
+  "name": "Sight-Theft Grit",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "divine",
+   "ingested",
+   "poison"
+  ],
+  "price": {
+   "gp": 115
+  },
+  "text": "Sight-Theft Grit May contain spoilers from Agents of Edgewatch Source Pathfinder #160: Assault on Hunting Lodge Seven pg. 66 Price 115 gp Usage held in 1 hand Bulk L Activate Interact This blackish grit seems to absorb light and resembles particularly dark flakes of black pepper. Infused with the blindness spell, sight-theft grit causes the victim's sight to dim and then depart altogether. The blinded condition from this poison lasts for an additional 24 hours once the poison has run its course. Saving Throw DC 28 Fortitude; Onset 10 minutes; Maximum Duration 14 hours; Stage 1 dazzled and a –2 status penalty to visual Perception checks (1 hour); Stage 2 dazzled and a –4 status penalty to visual Perception checks (1 hour); Stage 3 blinded (2d6 hours) Craft Requirements Supply one casting of blindness."
+ },
+ {
+  "id": "sighting-shot",
+  "name": "Sighting Shot",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "light",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 72
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ (concentrate) --- Eyes are carved onto a sighting shot. When you Activate the ammunition, it glows, shedding bright light for 20 feet and dim light for 20 feet beyond that. If you shot the activated ammunition, your mind swirls with images of what the sighting shot passed and hit as if you sprinted along the ammunition's course. You see this path as if with your normal visual senses. Once a sighting shot hits anything or reaches its maximum range, it stops transmitting images to you. A sighting shot's light is visible to creatures who didn't Activate the ammunition, but they receive no special information from it."
+ },
+ {
+  "id": "signal-whistle",
+  "name": "Signal Whistle",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 8
+  },
+  "text": "When sounded, a signal whistle can be heard clearly up to half a mile away across open terrain."
+ },
+ {
+  "id": "signifers-mask",
+  "name": "Signifer's Mask",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornmask",
+  "price": {},
+  "text": "This mask is often devoid of eyeholes or other decorative features. The mask doesn't obscure your vision, though it makes it impossible for others to see your eyes. While wearing your signifer's mask, you gain a +1 circumstance bonus to Deception checks to lie, Intimidation checks to coerce, and Deception DCs against sense-motive."
+ },
+ {
+  "id": "silencer",
+  "name": "Silencer",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 1
+  },
+  "text": "One of the more prolifically used devices developed in the infamous Alkenstar Gunworks, these small firearm components are capable of muffling most of the weapons' explosive sound when fired. Without a silencer, a firearm's shot makes a loud and distinctive bang, which can easily be heard through doors and thin walls, but firearms equipped with silencers only make a quiet noise when fired. Due to engineering constraints, a silencer can't be attached to any firearm with the scatter trait. Attaching a silencer to a firearm takes 1 minute, and the silencer is consumed the first time a shot is fired through it."
+ },
+ {
+  "id": "silencing-ammunition",
+  "name": "Silencing Ammunition",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "illusion",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 125
+  },
+  "text": "**Ammunition** arrow, bolt **Activate** ⟨1⟩ Interact --- *Silencing ammunition* is particularly dense and seems to dampen sounds around it. On a successful Strike, an activated piece of *silencing ammunition* creates a 2nd-rank Silence effect on the target. The target can resist the effects of the ammunition with a successful save, though it takes a -2 circumstance penalty if the Strike was a critical hit. While the effect is active, the target can use an Interact action to try to tug out the arrow or bolt and end the effect early; this requires a successful ."
+ },
+ {
+  "id": "silencing-shot",
+  "name": "Silencing Shot",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "illusion",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 300
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- This shimmering, golden-hued ammunition never makes any sound. A creature hit by a *silencing shot* is subject to the effects of a 4th-rank Silence spell unless it succeeds at a save. **Craft Requirements** Supply one casting of *silence* at 4th rank."
+ },
+ {
+  "id": "silver-armor-high-grade",
+  "name": "Silver Armor (High-Grade)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 20000
+  },
+  "text": "Silver Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor Base Material Silver Silver armor sickens certain creatures that touch it. A creature with weakness to silver that critically fails an unarmed attack against a creature in silver armor becomes sickened 1. A creature with weakness to silver is sickened 1 as long as it wears silver armor. Silver Armor (Low-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 140 gp (+14 gp per Bulk) silver worth at least 70 sp + 7 sp per Bulk Silver Armor (Standard-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,200 gp (+120 gp per Bulk) The initial raw materials must include silver worth at least 150 gp + 15 gp per Bulk. Silver Armor (High-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 20,000 gp (+2,000 gp per Bulk) The initial raw materials must include silver worth at least 10,000 gp + 1,000 gp per Bulk."
+ },
+ {
+  "id": "silver-armor-low-grade",
+  "name": "Silver Armor (Low-Grade)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 140
+  },
+  "text": "Silver Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor Base Material Silver Silver armor sickens certain creatures that touch it. A creature with weakness to silver that critically fails an unarmed attack against a creature in silver armor becomes sickened 1. A creature with weakness to silver is sickened 1 as long as it wears silver armor. Silver Armor (Low-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 140 gp (+14 gp per Bulk) silver worth at least 70 sp + 7 sp per Bulk Silver Armor (Standard-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,200 gp (+120 gp per Bulk) The initial raw materials must include silver worth at least 150 gp + 15 gp per Bulk. Silver Armor (High-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 20,000 gp (+2,000 gp per Bulk) The initial raw materials must include silver worth at least 10,000 gp + 1,000 gp per Bulk."
+ },
+ {
+  "id": "silver-armor-standard-grade",
+  "name": "Silver Armor (Standard-Grade)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1200
+  },
+  "text": "Silver Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor Base Material Silver Silver armor sickens certain creatures that touch it. A creature with weakness to silver that critically fails an unarmed attack against a creature in silver armor becomes sickened 1. A creature with weakness to silver is sickened 1 as long as it wears silver armor. Silver Armor (Low-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 140 gp (+14 gp per Bulk) silver worth at least 70 sp + 7 sp per Bulk Silver Armor (Standard-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,200 gp (+120 gp per Bulk) The initial raw materials must include silver worth at least 150 gp + 15 gp per Bulk. Silver Armor (High-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 20,000 gp (+2,000 gp per Bulk) The initial raw materials must include silver worth at least 10,000 gp + 1,000 gp per Bulk."
+ },
+ {
+  "id": "silver-buckler-high-grade",
+  "name": "Silver Buckler (High-Grade)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5000
+  },
+  "text": "Silver Shield Source GM Core pg. 234 Usage varies by shield Base Material Silver Silver shields don't typically have an additional effect, though when used for a shield bash, they're silver weapons. Silver Buckler (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 30 gp Bulk L The shield has Hardness 1, HP 4, and BT 2. Craft Requirements silver worth at least 15 sp Silver Shield (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 34 gp Bulk 1 The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 17 sp Silver Buckler (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 300 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 375 sp Silver Shield (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 340 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements silver worth at least 425 sp Silver Buckler (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements silver worth at least 2,500 gp Silver Shield (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,500 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements silver worth at least 2,750 gp"
+ },
+ {
+  "id": "silver-buckler-low-grade",
+  "name": "Silver Buckler (Low-Grade)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 30
+  },
+  "text": "Silver Shield Source GM Core pg. 234 Usage varies by shield Base Material Silver Silver shields don't typically have an additional effect, though when used for a shield bash, they're silver weapons. Silver Buckler (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 30 gp Bulk L The shield has Hardness 1, HP 4, and BT 2. Craft Requirements silver worth at least 15 sp Silver Shield (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 34 gp Bulk 1 The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 17 sp Silver Buckler (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 300 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 375 sp Silver Shield (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 340 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements silver worth at least 425 sp Silver Buckler (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements silver worth at least 2,500 gp Silver Shield (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,500 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements silver worth at least 2,750 gp"
+ },
+ {
+  "id": "silver-buckler-standard-grade",
+  "name": "Silver Buckler (Standard-Grade)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 300
+  },
+  "text": "Silver Shield Source GM Core pg. 234 Usage varies by shield Base Material Silver Silver shields don't typically have an additional effect, though when used for a shield bash, they're silver weapons. Silver Buckler (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 30 gp Bulk L The shield has Hardness 1, HP 4, and BT 2. Craft Requirements silver worth at least 15 sp Silver Shield (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 34 gp Bulk 1 The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 17 sp Silver Buckler (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 300 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 375 sp Silver Shield (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 340 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements silver worth at least 425 sp Silver Buckler (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements silver worth at least 2,500 gp Silver Shield (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,500 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements silver worth at least 2,750 gp"
+ },
+ {
+  "id": "silver-chunk",
+  "name": "Silver Chunk",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10
+  },
+  "text": "Silver weapons are a bane to creatures ranging from devils to werewolves. Silver items are less durable than steel items, and low-grade silver items are usually merely silver-plated. ## Silver Items | Silver Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Low-grade | 3 | 12 | 6 | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Items** | | | | | Low-grade | 5 | 20 | 10 | | Standard-grade | 7 | 28 | 14 | | High-grade | 10 | 40 | 20 | | **Structure** | | | | | Low-grade | 10 | 40 | 20 | | Standard-grade | 14 | 56 | 28 | | High-grade | 20 | 80 | 40 |"
+ },
+ {
+  "id": "silver-ingot",
+  "name": "Silver Ingot",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 100
+  },
+  "text": "Silver weapons are a bane to creatures ranging from devils to werewolves. Silver items are less durable than steel items, and low-grade silver items are usually merely silver-plated. ## Silver Items | Silver Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Low-grade | 3 | 12 | 6 | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Items** | | | | | Low-grade | 5 | 20 | 10 | | Standard-grade | 7 | 28 | 14 | | High-grade | 10 | 40 | 20 | | **Structure** | | | | | Low-grade | 10 | 40 | 20 | | Standard-grade | 14 | 56 | 28 | | High-grade | 20 | 80 | 40 |"
+ },
+ {
+  "id": "silver-object-high-grade",
+  "name": "Silver Object (High-Grade)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 4500
+  },
+  "text": "Silver Source GM Core pg. 254 Silver weapons are a bane to creatures ranging from devils to werewolves. Silver items are less durable than steel items, and low-grade silver items are usually merely silver-plated. Silver Items Silver Items Hardness HP BT Thin Items Low-grade 3 12 6 Standard-grade 5 20 10 High-grade 8 32 16 Items Low-grade 5 20 10 Standard-grade 7 28 14 High-grade 10 40 20 Structure Low-grade 10 40 20 Standard-grade 14 56 28 High-grade 20 80 40 Material Uses Silver Armor Silver Shield Silver Weapon Silver Chunk Source GM Core pg. 254, Core Rulebook pg. 579 Price 10 gp Bulk L Silver Ingot Source GM Core pg. 254, Core Rulebook pg. 579 Price 100 gp Silver Object (Low-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 20 gp (per Bulk) Silver Object (Standard-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 250 gp (per Bulk) Silver Object (High-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 4,500 gp (per Bulk)"
+ },
+ {
+  "id": "silver-object-low-grade",
+  "name": "Silver Object (Low-Grade)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 20
+  },
+  "text": "Silver Source GM Core pg. 254 Silver weapons are a bane to creatures ranging from devils to werewolves. Silver items are less durable than steel items, and low-grade silver items are usually merely silver-plated. Silver Items Silver Items Hardness HP BT Thin Items Low-grade 3 12 6 Standard-grade 5 20 10 High-grade 8 32 16 Items Low-grade 5 20 10 Standard-grade 7 28 14 High-grade 10 40 20 Structure Low-grade 10 40 20 Standard-grade 14 56 28 High-grade 20 80 40 Material Uses Silver Armor Silver Shield Silver Weapon Silver Chunk Source GM Core pg. 254, Core Rulebook pg. 579 Price 10 gp Bulk L Silver Ingot Source GM Core pg. 254, Core Rulebook pg. 579 Price 100 gp Silver Object (Low-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 20 gp (per Bulk) Silver Object (Standard-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 250 gp (per Bulk) Silver Object (High-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 4,500 gp (per Bulk)"
+ },
+ {
+  "id": "silver-object-standard-grade",
+  "name": "Silver Object (Standard-Grade)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 250
+  },
+  "text": "Silver Source GM Core pg. 254 Silver weapons are a bane to creatures ranging from devils to werewolves. Silver items are less durable than steel items, and low-grade silver items are usually merely silver-plated. Silver Items Silver Items Hardness HP BT Thin Items Low-grade 3 12 6 Standard-grade 5 20 10 High-grade 8 32 16 Items Low-grade 5 20 10 Standard-grade 7 28 14 High-grade 10 40 20 Structure Low-grade 10 40 20 Standard-grade 14 56 28 High-grade 20 80 40 Material Uses Silver Armor Silver Shield Silver Weapon Silver Chunk Source GM Core pg. 254, Core Rulebook pg. 579 Price 10 gp Bulk L Silver Ingot Source GM Core pg. 254, Core Rulebook pg. 579 Price 100 gp Silver Object (Low-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 20 gp (per Bulk) Silver Object (Standard-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 250 gp (per Bulk) Silver Object (High-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 4,500 gp (per Bulk)"
+ },
+ {
+  "id": "silver-orb-greater",
+  "name": "Silver Orb (Greater)",
+  "level": 18,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 5000
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Filled with sharp silver filings and alchemical reagents, this glass sphere leaves behind a cloud of dangerous shards. A creature hit with the orb takes 1 slashing damage and is covered with silver filings, making weapons and unarmed attacks damaging them be treated as silver until they spend an Interact action to clean off. Except on a critical miss, the filings linger airborne in a around the target. The cloud lasts for 1 minute or until dispersed by a strong wind. Creatures inside the cloud are concealed to those outside. Each breathing creature who ends its turn in the cloud takes 5d6 damage from a silver source, with a save."
+ },
+ {
+  "id": "silver-orb-lesser",
+  "name": "Silver Orb (Lesser)",
+  "level": 5,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 30
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Filled with sharp silver filings and alchemical reagents, this glass sphere leaves behind a cloud of dangerous shards. A creature hit with the orb takes 1 slashing damage and is covered with silver filings, making weapons and unarmed attacks damaging them be treated as silver until they spend an Interact action to clean off. Except on a critical miss, the filings linger airborne in a around the target. The cloud lasts for 1 minute or until dispersed by a strong wind. Creatures inside the cloud are concealed to those outside. Each breathing creature who ends its turn in the cloud takes 1d6 damage from a silver source, with a save."
+ },
+ {
+  "id": "silver-orb-powder",
+  "name": "Silver Orb (Powder)",
+  "level": 12,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 400
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Filled with sharp silver filings and alchemical reagents, this glass sphere leaves behind a cloud of dangerous shards. A creature hit with the orb takes 1 slashing damage and is covered with silver filings, making weapons and unarmed attacks damaging them be treated as silver until they spend an Interact action to clean off. Except on a critical miss, the filings linger airborne in a around the target. The cloud lasts for 1 minute or until dispersed by a strong wind. Creatures inside the cloud are concealed to those outside. Each breathing creature who ends its turn in the cloud takes 3d6 damage from a silver source, with a save."
+ },
+ {
+  "id": "silver-powder-orb",
+  "name": "Silver Powder Orb",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "bomb"
+  ],
+  "price": {
+   "gp": 400
+  },
+  "text": "Silver Orb Source Wake the Dead #1 pg. 27 Usage held in 1 hand Bulk L Activate Strike Filled with sharp silver flings and alchemical reagents, this glass sphere leaves behind a cloud of dangerous shards. A creature hit with the orb takes 1 slashing damage and is covered with silver filings, making weapons and unnarmed attacks damaging them be treated as silver until they spend an Interact action to clean off. Except on a critical miss, the filings linger airborne in a 5-foot burst around the target. The cloud lasts for 1 minute or until dispersed by a strong wind. Creatures inside the cloud are concealed to those outside. Each breathing creature who ends its turn in the cloud takes the listed slashing damage from a silver source, with a basic Fortitude save. Silver Orb (Lesser) Source Wake the Dead #1 pg. 27 Price 30 gp Bulk L The cloud deals 1d6 slashing damage and the save DC is 19. Silver Powder Orb Source Wake the Dead #1 pg. 27 Price 400 gp Bulk L The cloud deals 3d6 slashing damage and the save DC is 29. Silver Orb (Greater) Source Wake the Dead #1 pg. 27 Price 5,000 gp Bulk L The cloud deals 5d6 slashing damage and the save DC is 39."
+ },
+ {
+  "id": "silver-shield-high-grade",
+  "name": "Silver Shield (High-Grade)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5500
+  },
+  "text": "Silver Shield Source GM Core pg. 234 Usage varies by shield Base Material Silver Silver shields don't typically have an additional effect, though when used for a shield bash, they're silver weapons. Silver Buckler (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 30 gp Bulk L The shield has Hardness 1, HP 4, and BT 2. Craft Requirements silver worth at least 15 sp Silver Shield (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 34 gp Bulk 1 The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 17 sp Silver Buckler (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 300 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 375 sp Silver Shield (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 340 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements silver worth at least 425 sp Silver Buckler (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements silver worth at least 2,500 gp Silver Shield (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,500 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements silver worth at least 2,750 gp"
+ },
+ {
+  "id": "silver-shield-low-grade",
+  "name": "Silver Shield (Low-Grade)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 34
+  },
+  "text": "Silver Shield Source GM Core pg. 234 Usage varies by shield Base Material Silver Silver shields don't typically have an additional effect, though when used for a shield bash, they're silver weapons. Silver Buckler (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 30 gp Bulk L The shield has Hardness 1, HP 4, and BT 2. Craft Requirements silver worth at least 15 sp Silver Shield (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 34 gp Bulk 1 The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 17 sp Silver Buckler (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 300 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 375 sp Silver Shield (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 340 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements silver worth at least 425 sp Silver Buckler (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements silver worth at least 2,500 gp Silver Shield (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,500 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements silver worth at least 2,750 gp"
+ },
+ {
+  "id": "silver-shield-standard-grade",
+  "name": "Silver Shield (Standard-Grade)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 340
+  },
+  "text": "Silver Shield Source GM Core pg. 234 Usage varies by shield Base Material Silver Silver shields don't typically have an additional effect, though when used for a shield bash, they're silver weapons. Silver Buckler (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 30 gp Bulk L The shield has Hardness 1, HP 4, and BT 2. Craft Requirements silver worth at least 15 sp Silver Shield (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 34 gp Bulk 1 The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 17 sp Silver Buckler (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 300 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 375 sp Silver Shield (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 340 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements silver worth at least 425 sp Silver Buckler (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements silver worth at least 2,500 gp Silver Shield (High-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 5,500 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements silver worth at least 2,750 gp"
+ },
+ {
+  "id": "silver-transmuting-ingot",
+  "name": "Silver Transmuting Ingot",
+  "level": 1,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "whetstone"
+  ],
+  "price": {
+   "gp": 3
+  },
+  "text": "Transmuting Ingot Source Battlecry! pg. 137 Usage held in 1 hand Bulk L Activate (manipulate) A miniature ingot of metal hangs upon a leather cord, with deep weapon grooves on its surface. A weapon it’s applied to counts as a particular precious material for physical damage it deals for 1 minute, depending on its type. Silver Transmuting Ingot Source Battlecry! pg. 137 Price 3 gp Cold Iron Transmuting Ingot Source Battlecry! pg. 137 Price 4 gp Adamantine Transmuting Ingot Source Battlecry! pg. 137 Price 154 gp"
+ },
+ {
+  "id": "silver-weapon-high-grade",
+  "name": "Silver Weapon (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 9000
+  },
+  "text": "Silver Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Silver Silver weapons deal additional damage to creatures with weakness to silver, like werewolves, and ignore the resistances of some other creatures, like devils. Silver Weapon (Low-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 40 gp (+4 gp per Bulk) Craft Requirements at least 20 sp of silver + 2 sp per Bulk Silver Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 880 gp (+88 gp per Bulk) Craft Requirements at least 110 gp of silver + 11 gp per Bulk Silver Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 9,000 gp (+900 gp per Bulk) Craft Requirements at least 4,500 gp of silver + 450 gp per Bulk"
+ },
+ {
+  "id": "silver-weapon-low-grade",
+  "name": "Silver Weapon (Low-Grade)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 40
+  },
+  "text": "Silver Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Silver Silver weapons deal additional damage to creatures with weakness to silver, like werewolves, and ignore the resistances of some other creatures, like devils. Silver Weapon (Low-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 40 gp (+4 gp per Bulk) Craft Requirements at least 20 sp of silver + 2 sp per Bulk Silver Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 880 gp (+88 gp per Bulk) Craft Requirements at least 110 gp of silver + 11 gp per Bulk Silver Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 9,000 gp (+900 gp per Bulk) Craft Requirements at least 4,500 gp of silver + 450 gp per Bulk"
+ },
+ {
+  "id": "silver-weapon-standard-grade",
+  "name": "Silver Weapon (Standard-Grade)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 880
+  },
+  "text": "Silver Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Silver Silver weapons deal additional damage to creatures with weakness to silver, like werewolves, and ignore the resistances of some other creatures, like devils. Silver Weapon (Low-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 40 gp (+4 gp per Bulk) Craft Requirements at least 20 sp of silver + 2 sp per Bulk Silver Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 880 gp (+88 gp per Bulk) Craft Requirements at least 110 gp of silver + 11 gp per Bulk Silver Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 9,000 gp (+900 gp per Bulk) Craft Requirements at least 4,500 gp of silver + 450 gp per Bulk"
+ },
+ {
+  "id": "singularity-ammunition",
+  "name": "Singularity Ammunition",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 550
+  },
+  "text": "**Ammunition** Any **Activate** ⟨1⟩ Interact --- Singularity ammunition seems to pull in the light around it, swirling along the surface in a misty pattern. An activated singularity arrow creates a strong gravitational force, centered on the creature hit. All creatures in a from the target must succeed at a save or be pulled 5 feet closer to the target. The singularity then explodes, dealing damage to the original target and all creatures in a ()."
+ },
+ {
+  "id": "sisterstone-chunk",
+  "name": "Sisterstone Chunk",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 20
+  },
+  "text": "Sisterstone is a term used for two closely related ores infused by the spiritual runoff in the Field of Maidens, dusk sisterstone and scarlet sisterstone. They have the same physical properties except for color-dusk sisterstone is a pale orange while scarlet sisterstone is orange-red. When near an object made of the other type of sisterstone, they both begin exuding spiritual energy that repels undead. When an object made of dusk sisterstone is within 15 feet of an object made of scarlet sisterstone of the same grade, they create a reciprocal field. Any undead creature adjacent to one of the objects when the field is formed, or who moves adjacent to one while the field is active, becomes Enfeebled 1 unless it succeeds at a save. This lasts until the undead creature is no longer adjacent to either of the items or until the field's removed (typically by the objects ceasing to be within 15 feet of one another). The DC increases to 22 if both items are standard grade or better, and to 33 if they're both high grade. Unworked chunks and ingots don't create a reciprocal field. A single object can't be made of both types of sisterstone."
+ },
+ {
+  "id": "sisterstone-ingot",
+  "name": "Sisterstone Ingot",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 200
+  },
+  "text": "Sisterstone is a term used for two closely related ores infused by the spiritual runoff in the Field of Maidens, dusk sisterstone and scarlet sisterstone. They have the same physical properties except for color-dusk sisterstone is a pale orange while scarlet sisterstone is orange-red. When near an object made of the other type of sisterstone, they both begin exuding spiritual energy that repels undead. When an object made of dusk sisterstone is within 15 feet of an object made of scarlet sisterstone of the same grade, they create a reciprocal field. Any undead creature adjacent to one of the objects when the field is formed, or who moves adjacent to one while the field is active, becomes Enfeebled 1 unless it succeeds at a save. This lasts until the undead creature is no longer adjacent to either of the items or until the field's removed (typically by the objects ceasing to be within 15 feet of one another). The DC increases to 22 if both items are standard grade or better, and to 33 if they're both high grade. Unworked chunks and ingots don't create a reciprocal field. A single object can't be made of both types of sisterstone."
+ },
+ {
+  "id": "sisterstone-object-high-grade",
+  "name": "Sisterstone Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 5500
+  },
+  "text": "Sisterstone May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 79 Sisterstone is a term used for two closely related ores infused by the spiritual runoff in the Field of Maidens, dusk sisterstone and scarlet sisterstone. They have the same physical properties except for color—dusk sisterstone is a pale orange while scarlet sisterstone is orange-red. When near an object made of the other type of sisterstone, they both begin exuding spiritual energy that repels undead. When an object made of dusk sisterstone is within 15 feet of an object made of scarlet sisterstone of the same grade, they create a reciprocal field. Any undead creature adjacent to one of the objects when the field is formed, or who moves adjacent to one while the field is active, becomes enfeebled 1 unless it succeeds at a DC 15 Fortitude save. This lasts until the undead creature is no longer adjacent to either of the items or until the field's removed (typically by the objects ceasing to be within 15 feet of one another). The DC increases to 22 if both items are standard grade or better, and to 33 if they're both high grade. Unworked chunks and ingots don't create a reciprocal field. A single object can't be made of both types of sisterstone. Sisterstone Items Sisterstone Items Hardness HP BT Thin Items Low-grade 6 18 9 Standard-grade 8 24 12 High-grade 10 36 18 Items Low-grade 10 28 14 Standard-grade 12 40 20 High-grade 15 54 27 Structures Low-grade 20 56 28 Standard-grade 24 "
+ },
+ {
+  "id": "sisterstone-object-low-grade",
+  "name": "Sisterstone Object (Low-Grade)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 30
+  },
+  "text": "Sisterstone May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 79 Sisterstone is a term used for two closely related ores infused by the spiritual runoff in the Field of Maidens, dusk sisterstone and scarlet sisterstone. They have the same physical properties except for color—dusk sisterstone is a pale orange while scarlet sisterstone is orange-red. When near an object made of the other type of sisterstone, they both begin exuding spiritual energy that repels undead. When an object made of dusk sisterstone is within 15 feet of an object made of scarlet sisterstone of the same grade, they create a reciprocal field. Any undead creature adjacent to one of the objects when the field is formed, or who moves adjacent to one while the field is active, becomes enfeebled 1 unless it succeeds at a DC 15 Fortitude save. This lasts until the undead creature is no longer adjacent to either of the items or until the field's removed (typically by the objects ceasing to be within 15 feet of one another). The DC increases to 22 if both items are standard grade or better, and to 33 if they're both high grade. Unworked chunks and ingots don't create a reciprocal field. A single object can't be made of both types of sisterstone. Sisterstone Items Sisterstone Items Hardness HP BT Thin Items Low-grade 6 18 9 Standard-grade 8 24 12 High-grade 10 36 18 Items Low-grade 10 28 14 Standard-grade 12 40 20 High-grade 15 54 27 Structures Low-grade 20 56 28 Standard-grade 24 "
+ },
+ {
+  "id": "sisterstone-object-standard-grade",
+  "name": "Sisterstone Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Sisterstone May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 79 Sisterstone is a term used for two closely related ores infused by the spiritual runoff in the Field of Maidens, dusk sisterstone and scarlet sisterstone. They have the same physical properties except for color—dusk sisterstone is a pale orange while scarlet sisterstone is orange-red. When near an object made of the other type of sisterstone, they both begin exuding spiritual energy that repels undead. When an object made of dusk sisterstone is within 15 feet of an object made of scarlet sisterstone of the same grade, they create a reciprocal field. Any undead creature adjacent to one of the objects when the field is formed, or who moves adjacent to one while the field is active, becomes enfeebled 1 unless it succeeds at a DC 15 Fortitude save. This lasts until the undead creature is no longer adjacent to either of the items or until the field's removed (typically by the objects ceasing to be within 15 feet of one another). The DC increases to 22 if both items are standard grade or better, and to 33 if they're both high grade. Unworked chunks and ingots don't create a reciprocal field. A single object can't be made of both types of sisterstone. Sisterstone Items Sisterstone Items Hardness HP BT Thin Items Low-grade 6 18 9 Standard-grade 8 24 12 High-grade 10 36 18 Items Low-grade 10 28 14 Standard-grade 12 40 20 High-grade 15 54 27 Structures Low-grade 20 56 28 Standard-grade 24 "
+ },
+ {
+  "id": "sisterstone-weapon-high-grade",
+  "name": "Sisterstone Weapon (High-Grade)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 32000
+  },
+  "text": "Sisterstone Weapon May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage varies by weapon Bulk varies by weapon Base Material Sisterstone A weapon with a sisterstone striking surface can be charged with undead-destroying energy in response to violence from an undead creature. A creature wielding a sisterstone weapon gains the following activation. Only melee weapons can be made of sisterstone. Activate command; Trigger The ally is critically hit by a Strike from an undead creature you can see; Requirements A reciprocal field is active between this weapon and an ally's sisterstone armor or sisterstone weapon; Effect Your weapon leaps out with positive energy in retaliation. Strike the triggering undead with the weapon, and your Strike deals 2 additional positive damage. The positive damage increases to 4 if your sisterstone weapon is standard grade, or 6 if it's high grade. If the triggering undead is beyond the reach of your sisterstone weapon, your Strike doesn't deal its base damage, but can still deal the positive damage. Sisterstone Weapon (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 70 gp (plus 7 gp per Bulk) Sisterstone Weapon (Standard-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 1,200 gp (plus 120 gp per Bulk) Sisterstone Weapon (High-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 32,000 gp (plus 3,200 gp per Bulk)"
+ },
+ {
+  "id": "sisterstone-weapon-low-grade",
+  "name": "Sisterstone Weapon (Low-Grade)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 70
+  },
+  "text": "Sisterstone Weapon May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage varies by weapon Bulk varies by weapon Base Material Sisterstone A weapon with a sisterstone striking surface can be charged with undead-destroying energy in response to violence from an undead creature. A creature wielding a sisterstone weapon gains the following activation. Only melee weapons can be made of sisterstone. Activate command; Trigger The ally is critically hit by a Strike from an undead creature you can see; Requirements A reciprocal field is active between this weapon and an ally's sisterstone armor or sisterstone weapon; Effect Your weapon leaps out with positive energy in retaliation. Strike the triggering undead with the weapon, and your Strike deals 2 additional positive damage. The positive damage increases to 4 if your sisterstone weapon is standard grade, or 6 if it's high grade. If the triggering undead is beyond the reach of your sisterstone weapon, your Strike doesn't deal its base damage, but can still deal the positive damage. Sisterstone Weapon (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 70 gp (plus 7 gp per Bulk) Sisterstone Weapon (Standard-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 1,200 gp (plus 120 gp per Bulk) Sisterstone Weapon (High-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 32,000 gp (plus 3,200 gp per Bulk)"
+ },
+ {
+  "id": "sisterstone-weapon-standard-grade",
+  "name": "Sisterstone Weapon (Standard-Grade)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1200
+  },
+  "text": "Sisterstone Weapon May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage varies by weapon Bulk varies by weapon Base Material Sisterstone A weapon with a sisterstone striking surface can be charged with undead-destroying energy in response to violence from an undead creature. A creature wielding a sisterstone weapon gains the following activation. Only melee weapons can be made of sisterstone. Activate command; Trigger The ally is critically hit by a Strike from an undead creature you can see; Requirements A reciprocal field is active between this weapon and an ally's sisterstone armor or sisterstone weapon; Effect Your weapon leaps out with positive energy in retaliation. Strike the triggering undead with the weapon, and your Strike deals 2 additional positive damage. The positive damage increases to 4 if your sisterstone weapon is standard grade, or 6 if it's high grade. If the triggering undead is beyond the reach of your sisterstone weapon, your Strike doesn't deal its base damage, but can still deal the positive damage. Sisterstone Weapon (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 70 gp (plus 7 gp per Bulk) Sisterstone Weapon (Standard-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 1,200 gp (plus 120 gp per Bulk) Sisterstone Weapon (High-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 32,000 gp (plus 3,200 gp per Bulk)"
+ },
+ {
+  "id": "skittering-mask",
+  "name": "Skittering Mask",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornmask",
+  "price": {
+   "gp": 30
+  },
+  "text": "A *skittering mask* is a hand-carved, wooden, full-head mask that sports several holes along each side of the face. The first time each day that you begin your turn unconscious and within 25 feet of an enemy, skittering metallic insect legs emerge from the holes in the mask and Step 5 feet away from the nearest enemy, dragging your body along with the mask. If more than one enemy is equidistant, the mask Steps away from one of them at random. The mask possesses no special senses and does not react to hidden or undetected enemies, nor can it distinguish that a creature not acting openly hostile is an enemy."
+ },
+ {
+  "id": "skittering-mask-greater",
+  "name": "Skittering Mask (Greater)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornmask",
+  "price": {
+   "gp": 500
+  },
+  "text": "A *skittering mask* is a hand-carved, wooden, full-head mask that sports several holes along each side of the face. The first time each day that you begin your turn unconscious and within 25 feet of an enemy, metallic insect legs emerge from the holes in the mask and Step 15 feet away from the nearest enemy, dragging your body along with the mask. For 1 minute, each time you begin your turn unconscious and within 25 feet of an enemy, the mask Steps 15 feet away from the nearest enemy again. An ally can signal the mask with a single action, which has the auditory and concentrate traits. If the mask hears the signal, it attempts to move you towards that ally when it Steps away from the nearest enemy. If more than one enemy is equidistant, the mask Steps away from one of them at random. The mask possesses no special senses and does not react to hidden or undetected enemies, nor can it distinguish that a creature not acting openly hostile is an enemy."
+ },
+ {
+  "id": "sky-serpent-bolt",
+  "name": "Sky Serpent Bolt",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "air",
+   "consumable",
+   "electricity",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 25
+  },
+  "text": "**Activate** ⟨1⟩ or ⟨2⟩ Interact --- This azure bolt is carved in the shape of an undulating snake, its bared fangs framing the point of its head. When an activated sky serpent bolt successfully hits a target, the bolt takes the form of a snake made of pure lightning, dealing damage to all creatures in a ( save) starting from the target. If you spent 2 actions to activate the sky serpent bolt, then the line is 60 feet long, and at a single point in the line, you can change the remainder of the line's path by up to a 90-degree angle."
+ },
+ {
+  "id": "skyrider-sword-greater",
+  "name": "Skyrider Sword (Greater)",
+  "level": 19,
+  "itemType": "weapon",
+  "traits": [
+   "air",
+   "magical",
+   "versatile-p"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 32000
+  },
+  "text": "This *+3 greater striking greater shock greatsword* has a broad, flat blade that can support the weight of a Medium-sized or smaller wielder. Magic allows the weapon to soar through the air, carrying its wielder along with it. --- **Activate** ⟨1⟩ command **Requirements** You're holding the sword in at least one hand --- **Effect** You leap upon your sword as it soars through the air. You gain a fly Speed of 25 feet or your land Speed, whichever is slower, but you can't Strike with your weapon except via the weapon's other activation (see below). You can Dismiss the activation, and it ends automatically if you cease holding the weapon with at least one hand. --- **Activate** ⟨2⟩ Interact **Requirements** You are riding on your weapon --- **Effect** You ride your weapon into a foe, attacking it as you fly past. You Fly, making a melee Strike with the weapon once at any point during your movement."
+ },
+ {
+  "id": "skysunder",
+  "name": "Skysunder",
+  "level": 4,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "dwarf",
+   "electricity",
+   "magical",
+   "parry",
+   "relic",
+   "versatile-b"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This *+1 striking clan dagger* bears the face of a stern dwarven god, his beard and features forming part of the blade."
+ },
+ {
+  "id": "slashing-claws",
+  "name": "Slashing Claws",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 50
+  },
+  "text": "Sharp claws have been grafted to your hands or feet, perhaps extending from your knuckles or the tips of your toes. You gain a claw unarmed attack that deals 1d4 slashing damage. These claws are in the brawling group and have the agile and finesse traits."
+ },
+ {
+  "id": "sleep-arrow",
+  "name": "Sleep Arrow",
+  "level": 3,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "enchantment",
+   "magical",
+   "mental",
+   "sleep"
+  ],
+  "price": {
+   "gp": 11
+  },
+  "text": "Sleep Arrow Source Core Rulebook pg. 560 Price 11 gp Ammunition arrow Activate Interact Sleep arrows often have shafts of deep blue or black, and their fletching is exceptionally soft and downy. An activated sleep arrow deals no damage, but a living creature hit by it is subject to the effects of a sleep spell (DC 17). Craft Requirements Supply one casting of sleep."
+ },
+ {
+  "id": "sleeves-of-storage",
+  "name": "Sleeves of Storage",
+  "level": 4,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "usage": "worngarment",
+  "price": {
+   "gp": 100
+  },
+  "text": "This loose robe has wide, voluminous sleeves that each contain an extradimensional space. These spaces each function as a Spacious Pouch (Type I) that can hold up to 5 Bulk of items (for a total of 10 Bulk), though no individual item can be of more than 1 Bulk; the sleeves grow slightly heavy as you reach maximum capacity. You can add or remove an item from a sleeve with a single hand free as an Interact action. If a sleeve is completely empty, you can place your own familiar into that extradimensional space. It can survive comfortably in your sleeve for up to 1 hour, after which it begins to *suffocate*. While in your sleeve, it can't be affected or targeted by any effects, but you don't benefit from any master abilities. A familiar can exit the sleeve of its own volition with a single action that has the *manipulate* and *move* traits. You can't place any other creature into your sleeves, nor can you place your familiar in a sleeve if it's larger than Tiny. If your familiar is in your sleeve, you can't place any items in the sleeve."
+ },
+ {
+  "id": "sleeves-of-storage-greater",
+  "name": "Sleeves of Storage (Greater)",
+  "level": 9,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "usage": "worngarment",
+  "price": {
+   "gp": 600
+  },
+  "text": "This loose robe has wide, voluminous sleeves that each contain an extradimensional space. These spaces each function as a Spacious Pouch (Type I) that can hold up to 20 Bulk of items (for a total of 40 Bulk), though no individual item can be of more than 1 Bulk; the sleeves grow slightly heavy as you reach maximum capacity. You can add or remove an item from a sleeve with a single hand free as an Interact action. If a sleeve is completely empty, you can place your own familiar into that extradimensional space. It can survive comfortably in your sleeve for up to 4 hours, after which it begins to *suffocate*. While in your sleeve, it can't be affected or targeted by any effects, but you don't benefit from any master abilities. A familiar can exit the sleeve of its own volition with a single action that has the *manipulate* and *move* traits. You can't place any other creature into your sleeves, nor can you place your familiar in a sleeve if it's larger than Tiny. If your familiar is in your sleeve, you can't place any items in the sleeve."
+ },
+ {
+  "id": "sling-bullets",
+  "name": "Sling Bullets",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "cp": 1
+  },
+  "text": "These are small metal balls, typically either iron or lead, designed to be used as ammunition in slings."
+ },
+ {
+  "id": "sloughstone-chunk",
+  "name": "Sloughstone Chunk",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 500
+  },
+  "text": "Sloughstone Source War of Immortals pg. 208 Weapons made from sloughstone exploit Verex-That-Was's hatred of his unwilling transformation, turning his own flesh against him. Processing sloughstone is difficult and unpleasant, increasing the DC to craft an item with the material by 4. Structures can't be made out of sloughstone. Sloughstone Sloughstone Items **Hardness ** HP BT Thin Items Standard-grade 8 36 18 High-grade 11 48 24 Items Standard-grade 12 50 25 High-grade 15 62 31 Sloughstone Chunk Source War of Immortals pg. 208 Price 500 gp Sloughstone Ingot Source War of Immortals pg. 208 Price 5,000 gp Sloughstone Object (Standard-Grade) Source War of Immortals pg. 208 Price 350 gp (per Bulk) Sloughstone Object (High-Grade) Source War of Immortals pg. 208 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "sloughstone-ingot",
+  "name": "Sloughstone Ingot",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 5000
+  },
+  "text": "Sloughstone Source War of Immortals pg. 208 Weapons made from sloughstone exploit Verex-That-Was's hatred of his unwilling transformation, turning his own flesh against him. Processing sloughstone is difficult and unpleasant, increasing the DC to craft an item with the material by 4. Structures can't be made out of sloughstone. Sloughstone Sloughstone Items **Hardness ** HP BT Thin Items Standard-grade 8 36 18 High-grade 11 48 24 Items Standard-grade 12 50 25 High-grade 15 62 31 Sloughstone Chunk Source War of Immortals pg. 208 Price 500 gp Sloughstone Ingot Source War of Immortals pg. 208 Price 5,000 gp Sloughstone Object (Standard-Grade) Source War of Immortals pg. 208 Price 350 gp (per Bulk) Sloughstone Object (High-Grade) Source War of Immortals pg. 208 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "sloughstone-object-high-grade",
+  "name": "Sloughstone Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 6000
+  },
+  "text": "Sloughstone Source War of Immortals pg. 208 Weapons made from sloughstone exploit Verex-That-Was's hatred of his unwilling transformation, turning his own flesh against him. Processing sloughstone is difficult and unpleasant, increasing the DC to craft an item with the material by 4. Structures can't be made out of sloughstone. Sloughstone Sloughstone Items **Hardness ** HP BT Thin Items Standard-grade 8 36 18 High-grade 11 48 24 Items Standard-grade 12 50 25 High-grade 15 62 31 Sloughstone Chunk Source War of Immortals pg. 208 Price 500 gp Sloughstone Ingot Source War of Immortals pg. 208 Price 5,000 gp Sloughstone Object (Standard-Grade) Source War of Immortals pg. 208 Price 350 gp (per Bulk) Sloughstone Object (High-Grade) Source War of Immortals pg. 208 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "sloughstone-object-standard-grade",
+  "name": "Sloughstone Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Sloughstone Source War of Immortals pg. 208 Weapons made from sloughstone exploit Verex-That-Was's hatred of his unwilling transformation, turning his own flesh against him. Processing sloughstone is difficult and unpleasant, increasing the DC to craft an item with the material by 4. Structures can't be made out of sloughstone. Sloughstone Sloughstone Items **Hardness ** HP BT Thin Items Standard-grade 8 36 18 High-grade 11 48 24 Items Standard-grade 12 50 25 High-grade 15 62 31 Sloughstone Chunk Source War of Immortals pg. 208 Price 500 gp Sloughstone Ingot Source War of Immortals pg. 208 Price 5,000 gp Sloughstone Object (Standard-Grade) Source War of Immortals pg. 208 Price 350 gp (per Bulk) Sloughstone Object (High-Grade) Source War of Immortals pg. 208 Price 6,000 gp (per Bulk)"
+ }
+]

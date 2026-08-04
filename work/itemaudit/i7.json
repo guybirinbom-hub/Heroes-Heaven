@@ -1,0 +1,924 @@
+[
+ {
+  "id": "dragons-tongue-major",
+  "name": "Dragon's Tongue (Major)",
+  "level": 20,
+  "itemType": "weapon",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 55000
+  },
+  "text": "This *+3 major striking longspear* was crafted by a renowned monster hunter, who designed the prototype from the bones and scales of a diabolic dragon. The drathyrican folds of an ancient dragon, the organ that generates their magical breath, are crucial to the operation of the spear. The mechanics of the weapon are largely based on an injection spear: when the safety is disengaged and a secondary lever is squeezed, it produces a magical effect like a dragon's breath from the hollow tip of the spear. **Activate—Breath of the Spear** ⟨2⟩ (concentrate, manipulate) The dragon's tongue releases a burst of energy that manifests as a dealing damage with a save. You can't use this activation again for 1d4 rounds. The damage type matches the breath of the dragon the weapon was made from, and this activation has the corresponding trait. --- **Craft Requirements** The initial raw materials must include the drathyrican folds of a dragon."
+ },
+ {
+  "id": "drake-rifle",
+  "name": "Drake Rifle",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 100
+  },
+  "text": "Drake Rifle Source Guns & Gears (Remastered) pg. 154 Price 100 gp Usage held in 2 hands Bulk 2 A drake rifle is a firearm made from the saliva glands of a drake. The firearm launches small bursts of empowered spittle instead of typical rounds of ammunition. A drake rifle is a +1 weapon. It's a distinct type of martial firearm that deals 1d10 damage with a range increment of 150 feet and reload 1. It deals acid, cold, electricity, fire, or poison damage, depending on the drake from which it was made. On a critical hit, the spittle clings to the target and they take persistent damage of the same type as the weapon equal to 1d4 + the number of weapon damage dice. A drake rifle does not add critical specialization effects. Activate—Drake Shot manipulate Frequency once per day; Effect You fire a large, specialized burst designed to hamper your foes. Make a ranged Strike with the drake rifle. As long as the Strike isn't a critical failure, the drake rifle deals 1 splash damage per weapon damage die to the target and creatures within 5 feet of the target. This splash damage is of the same type as its normal damage. On a hit, the drake rifle provides one of the following additional effects based on its damage type: Acid Clinging acid makes it painful and sickening to move. The target becomes sickened 1. Cold Frozen spittle clings to the target. The target takes a –10-foot status penalty to their Speeds for 1 minute. Electricity Small bursts of electricity continue to spark and jolt t"
+ },
+ {
+  "id": "dread-greater",
+  "name": "Dread (Greater)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 21000
+  },
+  "text": "Eerie symbols cover your armor, inspiring terror in your foes. Frightened enemies within 30 feet that can see you must attempt a save at the end of their turn; on a failure, the value of their frightened condition doesn't decrease that turn, no matter the value."
+ },
+ {
+  "id": "dread-lesser",
+  "name": "Dread (Lesser)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 225
+  },
+  "text": "Eerie symbols cover your armor, inspiring terror in your foes. Frightened enemies within 30 feet that can see you must attempt a save at the end of their turn; on a failure, the value of their frightened condition doesn't decrease below 1 that turn."
+ },
+ {
+  "id": "dread-moderate",
+  "name": "Dread (Moderate)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 1800
+  },
+  "text": "Eerie symbols cover your armor, inspiring terror in your foes. Frightened enemies within 30 feet that can see you must attempt a save at the end of their turn; on a failure, the value of their frightened condition doesn't decrease below 2 that turn."
+ },
+ {
+  "id": "dreadsmoke-thurible",
+  "name": "Dreadsmoke Thurible",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "This black-and-gray thurible is decorated with a skeleton motif; the jaw of one of the decorative skulls unhinges, allowing you to load it with incense as an action. A long, thin chain is connected to the top of the thurible. **Activate** ⟨2⟩ Interact; **Cost** incense worth at least 5 gp --- **Effect** You swing the thurible around you, spreading inky black smoke in a that has the effect of Mist. Undead creatures can see through the smoke as if it didn't exist. Void energy also disrupts the magic of the smoke; anyone who uses a void effect, along with creatures affected by a void effect, can see through the smoke for 1 round."
+ },
+ {
+  "id": "dream-lens",
+  "name": "Dream Lens",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "usage": "other",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "dreaming-round",
+  "name": "Dreaming Round",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "incapacitation",
+   "magical",
+   "mental",
+   "sleep"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 900
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (concentrate) --- The night sky seems contained in this glass projectile. When an activated *dreaming round* damages a creature, it induces drowsiness. The creature must attempt a save. --- **Critical Success** The creature is unaffected and becomes temporarily immune for 1 minute. **Success** The creature becomes Slowed 1 and fatigued for 1 round. **Failure** The creature becomes fatigued and slowed 1, and must attempt another Fortitude save at the end of each of its turns. If it fails, its slowed condition increases by 1. A successful save reduces the slowed condition by 1. If the slowed condition is removed or reduced to 0, the effect and the fatigued condition end. If the target's actions are reduced to 0 by this effect, it immediately falls into a deep sleep and is unconscious, during which it no longer attempts a save at the end of its turn. It wakes up automatically after 1 hour or if it takes damage, but not due to non-painful stimuli (such as noise or being nudged). When it wakes up, its slowed condition decreases by 1, though it must once again save at the end of each of its turns and might risk falling asleep again. **Critical Failure** As failure, except the target is initially Slowed 2."
+ },
+ {
+  "id": "dreamweb-bolt",
+  "name": "Dreamweb Bolt",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 50
+  },
+  "text": "Dreamweb Source War of Immortals pg. 215 Made from the webs spun from the thorax of the Weaver of Webs herself, dreamweb offers a number of mystic benefits. Cloth items and rope made from dream web have Hardness 4 with 12 HP per inch and a break DC of 16. Light armor made from dream web is lighter than normal cloth or leather: the armor's Bulk is reduced by 1 (reduced to light Bulk if the armor's normal Bulk is 1, with no effect on an item that normally has light Bulk). Light armor made from dream web grants the wearer poison resistance equal to 3 plus the value of its armor potency rune. Dreamweb Dreamweb Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 7 28 14 Items Standard-grade 6 32 16 High-grade 9 44 22 Dreamweb Bolt Source War of Immortals pg. 215 Price 50 gp Dreamweb Object (Standard-Grade) Source War of Immortals pg. 215 Price 150 gp (per Bulk) Dreamweb Object (High-Grade) Source War of Immortals pg. 215 Price 3,000 gp (per Bulk)"
+ },
+ {
+  "id": "dreamweb-object-high-grade",
+  "name": "Dreamweb Object (High-Grade)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 3000
+  },
+  "text": "Dreamweb Source War of Immortals pg. 215 Made from the webs spun from the thorax of the Weaver of Webs herself, dreamweb offers a number of mystic benefits. Cloth items and rope made from dream web have Hardness 4 with 12 HP per inch and a break DC of 16. Light armor made from dream web is lighter than normal cloth or leather: the armor's Bulk is reduced by 1 (reduced to light Bulk if the armor's normal Bulk is 1, with no effect on an item that normally has light Bulk). Light armor made from dream web grants the wearer poison resistance equal to 3 plus the value of its armor potency rune. Dreamweb Dreamweb Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 7 28 14 Items Standard-grade 6 32 16 High-grade 9 44 22 Dreamweb Bolt Source War of Immortals pg. 215 Price 50 gp Dreamweb Object (Standard-Grade) Source War of Immortals pg. 215 Price 150 gp (per Bulk) Dreamweb Object (High-Grade) Source War of Immortals pg. 215 Price 3,000 gp (per Bulk)"
+ },
+ {
+  "id": "dreamweb-object-standard-grade",
+  "name": "Dreamweb Object (Standard-Grade)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 150
+  },
+  "text": "Dreamweb Source War of Immortals pg. 215 Made from the webs spun from the thorax of the Weaver of Webs herself, dreamweb offers a number of mystic benefits. Cloth items and rope made from dream web have Hardness 4 with 12 HP per inch and a break DC of 16. Light armor made from dream web is lighter than normal cloth or leather: the armor's Bulk is reduced by 1 (reduced to light Bulk if the armor's normal Bulk is 1, with no effect on an item that normally has light Bulk). Light armor made from dream web grants the wearer poison resistance equal to 3 plus the value of its armor potency rune. Dreamweb Dreamweb Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 7 28 14 Items Standard-grade 6 32 16 High-grade 9 44 22 Dreamweb Bolt Source War of Immortals pg. 215 Price 50 gp Dreamweb Object (Standard-Grade) Source War of Immortals pg. 215 Price 150 gp (per Bulk) Dreamweb Object (High-Grade) Source War of Immortals pg. 215 Price 3,000 gp (per Bulk)"
+ },
+ {
+  "id": "druid-kit",
+  "name": "Druid Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 4
+  },
+  "text": "Druid Kit Source Player Core pg. 268 Price 4 gp Money Left Over 11 gp Bulk 4, 4 light Armor Hide Armor Weapons 4 javelins, Spear Gear Adventurer's Pack, Primal Symbol Options healer's toolkit (5 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "duck",
+  "name": "Duck",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 5
+  },
+  "text": "Duck Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 5 sp"
+ },
+ {
+  "id": "duelists-blazon",
+  "name": "Duelist's Blazon",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "relic"
+  ],
+  "text": "Duelist's Blazon Source Treasure Vault (Remastered) pg. 202 Aspects Emotion (pride) and Luck A duelist's blazon set relic was once used by a legendary swordmaster, absorbing their verve, tenacity, and daring. Though each set contains the same items, they all have unique styles, from the elegant, rose-themed decor of the blazon of Taldan swashbuckler Miralla d'Asivran to the spiked sword and attire of Kuthonite maestro duelist Essinte Zaim. Duelists have been known to challenge one another over the set's components. Set Items: +1 rapier (level 2), Bravery Baldric (Fleet) (level 5), Winged Sandals (level 10), Invisible Chain Shirt (level 13), Mercurial Mantle (level 18) Gifts: The set grants the following gifts. - 1: Dominant Emotion - 2: Whammy - 3: Steal Luck - 4: Emotion Conduit - 5: Against All Odds Collective Features: The set grants the following features. Two Items: You can use dominant emotion at will. Three Items: You can use whammy one additional time per day, but a creature affected by it is temporarily immune for 24 hours. Four Items: When you use steal luck and get a success or critical success, you're quickened until the end of your next turn. Five Items: If dominant emotion or emotion conduit counteract an effect, the target gains a brief surge of luck in the form of a d20 they can add to another single d20 roll, taking the highest result. Until used, this die remains with the target until their next daily preparations, and the target can't gain another die from "
+ },
+ {
+  "id": "dullahan-codex",
+  "name": "Dullahan Codex",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "grimoire",
+   "magical"
+  ],
+  "usage": "other",
+  "price": {},
+  "text": "The origins of the notorious *Dullahan Codex* are shrouded in mystery. Some legends claim it belongs to a dullahan whose head was taken by the Grim Reaper. Others attribute its creation to a powerful necromancer whose name has been lost to time. Whatever the truth, the grimoire has passed down through the ages, sometimes via mortal hands and other times mysteriously appearing among the possessions of its next target. It deserves its reputation for dooming those who possess it to die, but scholars debate whether the codex causes this fate or merely acts as its harbinger. The *Dullahan Codex* is a jet-black tome bearing a single rune embossed on its cover, and it functions as a true endless grimoire. Inside, scrawled across its parchment pages in a delicate, spidery script, is a lengthy list of names that always appears in a reader's native alphabet. The grimoire isn't sentient, but it selects its owners, quickly passing out of the hands of those it doesn't choose. An intended victim's name appears on the list of names. If your name is on the list and you touch the volume or read from its pages, you must attempt a save. **Critical Success** The codex disappears, moving on to a new victim. **Success** The codex fuses to you. **Failure** The codex fuses to you, and you become Doomed 1. **Critical Failure** As failure, but you're Doomed 2. If you attempt to get rid of the codex while it's fused to you, it returns to your possession within an hour. Each day the codex is fused to yo"
+ },
+ {
+  "id": "duskwood-armor-high-grade",
+  "name": "Duskwood Armor (High-Grade)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 32000
+  },
+  "text": "Duskwood Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Duskwood Duskwood armor is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on armor that normally has light Bulk). It’s easier to wear than normal wood armor, reducing the Strength modifier necessary to ignore its check penalty by 1 and reducing its Speed penalty by 5 feet. (There are no types of wood armor in this book.) Duskwood Armor (Standard-Grade) Source GM Core pg. 228 Price 1,600 gp (+160 gp per Bulk) The initial raw materials must include duskwood worth at least 200 gp + 20 gp per Bulk. Duskwood Armor (High-Grade) Source GM Core pg. 228 Price 32,000 gp (+3,200 gp per Bulk) The initial raw materials must include duskwood worth at least 16,000 gp + 1,600 gp per Bulk."
+ },
+ {
+  "id": "duskwood-armor-standard-grade",
+  "name": "Duskwood Armor (Standard-Grade)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1600
+  },
+  "text": "Duskwood Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Duskwood Duskwood armor is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on armor that normally has light Bulk). It’s easier to wear than normal wood armor, reducing the Strength modifier necessary to ignore its check penalty by 1 and reducing its Speed penalty by 5 feet. (There are no types of wood armor in this book.) Duskwood Armor (Standard-Grade) Source GM Core pg. 228 Price 1,600 gp (+160 gp per Bulk) The initial raw materials must include duskwood worth at least 200 gp + 20 gp per Bulk. Duskwood Armor (High-Grade) Source GM Core pg. 228 Price 32,000 gp (+3,200 gp per Bulk) The initial raw materials must include duskwood worth at least 16,000 gp + 1,600 gp per Bulk."
+ },
+ {
+  "id": "duskwood-branch",
+  "name": "Duskwood Branch",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 500
+  },
+  "text": "Duskwood is a very lightweight wood found primarily in old-growth forests in south-central Avistan; it is dark as ebony but has a slight purple tint. A duskwood item's Bulk is reduced by 1 (or to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of duskwood is based on the item's normal Bulk, not its reduced Bulk for being made of duskwood, but reduce the Bulk before making any further Bulk adjustments for the size of the item. ## Duskwood Items | Duskwood Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Items** | | | | | Standard-grade | 7 | 28 | 14 | | High-grade | 10 | 40 | 20 | | **Structure** | | | | | Standard-grade | 14 | 56 | 28 | | High-grade | 20 | 80 | 40 |"
+ },
+ {
+  "id": "duskwood-buckler-high-grade",
+  "name": "Duskwood Buckler (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8000
+  },
+  "text": "Duskwood Shield Source GM Core pg. 233 Usage varies by shield Base Material Duskwood Duskwood shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). Duskwood Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements duskwood worth at least 50 gp Duskwood Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 55 gp Duskwood Tower Shield (Standard-Grade) Source GM Core pg. 233 Price 560 gp Bulk 3 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 70 gp Duskwood Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements duskwood worth at least 4,000 gp Duskwood Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 4,400 gp Duskwood Tower Shield (High-Grade) Source GM Core pg. 233 Price 11,200 gp Bulk 3 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 5,600 gp"
+ },
+ {
+  "id": "duskwood-buckler-standard-grade",
+  "name": "Duskwood Buckler (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 400
+  },
+  "text": "Duskwood Shield Source GM Core pg. 233 Usage varies by shield Base Material Duskwood Duskwood shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). Duskwood Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements duskwood worth at least 50 gp Duskwood Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 55 gp Duskwood Tower Shield (Standard-Grade) Source GM Core pg. 233 Price 560 gp Bulk 3 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 70 gp Duskwood Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements duskwood worth at least 4,000 gp Duskwood Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 4,400 gp Duskwood Tower Shield (High-Grade) Source GM Core pg. 233 Price 11,200 gp Bulk 3 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 5,600 gp"
+ },
+ {
+  "id": "duskwood-lumber",
+  "name": "Duskwood Lumber",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 5000
+  },
+  "text": "Duskwood is a very lightweight wood found primarily in old-growth forests in south-central Avistan; it is dark as ebony but has a slight purple tint. A duskwood item's Bulk is reduced by 1 (or to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of duskwood is based on the item's normal Bulk, not its reduced Bulk for being made of duskwood, but reduce the Bulk before making any further Bulk adjustments for the size of the item. ## Duskwood Items | Duskwood Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Items** | | | | | Standard-grade | 7 | 28 | 14 | | High-grade | 10 | 40 | 20 | | **Structure** | | | | | Standard-grade | 14 | 56 | 28 | | High-grade | 20 | 80 | 40 |"
+ },
+ {
+  "id": "duskwood-object-high-grade",
+  "name": "Duskwood Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 6000
+  },
+  "text": "Duskwood Source GM Core pg. 254 Duskwood is a very lightweight wood found primarily in old-growth forests in south-central Avistan; it is dark as ebony but has a slight purple tint. A duskwood item's Bulk is reduced by 1 (or to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of duskwood is based on the item's normal Bulk, not its reduced Bulk for being made of duskwood, but reduce the Bulk before making any further Bulk adjustments for the size of the item. Duskwood Duskwood Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-grade 7 28 14 High-grade 10 40 20 Structure Standard-grade 14 56 28 High-grade 20 80 40 Material Uses Duskwood Armor Duskwood Shield Duskwood Weapon Duskwood Branch Source GM Core pg. 254 Price 500 gp Duskwood Lumber Source GM Core pg. 254 Price 5,000 gp Duskwood Object (Standard-Grade) Source GM Core pg. 254 Price 350 gp (per Bulk) Duskwood Object (High-Grade) Source GM Core pg. 254 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "duskwood-object-standard-grade",
+  "name": "Duskwood Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Duskwood Source GM Core pg. 254 Duskwood is a very lightweight wood found primarily in old-growth forests in south-central Avistan; it is dark as ebony but has a slight purple tint. A duskwood item's Bulk is reduced by 1 (or to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of duskwood is based on the item's normal Bulk, not its reduced Bulk for being made of duskwood, but reduce the Bulk before making any further Bulk adjustments for the size of the item. Duskwood Duskwood Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-grade 7 28 14 High-grade 10 40 20 Structure Standard-grade 14 56 28 High-grade 20 80 40 Material Uses Duskwood Armor Duskwood Shield Duskwood Weapon Duskwood Branch Source GM Core pg. 254 Price 500 gp Duskwood Lumber Source GM Core pg. 254 Price 5,000 gp Duskwood Object (Standard-Grade) Source GM Core pg. 254 Price 350 gp (per Bulk) Duskwood Object (High-Grade) Source GM Core pg. 254 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "duskwood-shield-high-grade",
+  "name": "Duskwood Shield (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8800
+  },
+  "text": "Duskwood Shield Source GM Core pg. 233 Usage varies by shield Base Material Duskwood Duskwood shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). Duskwood Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements duskwood worth at least 50 gp Duskwood Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 55 gp Duskwood Tower Shield (Standard-Grade) Source GM Core pg. 233 Price 560 gp Bulk 3 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 70 gp Duskwood Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements duskwood worth at least 4,000 gp Duskwood Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 4,400 gp Duskwood Tower Shield (High-Grade) Source GM Core pg. 233 Price 11,200 gp Bulk 3 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 5,600 gp"
+ },
+ {
+  "id": "duskwood-shield-standard-grade",
+  "name": "Duskwood Shield (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 440
+  },
+  "text": "Duskwood Shield Source GM Core pg. 233 Usage varies by shield Base Material Duskwood Duskwood shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). Duskwood Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements duskwood worth at least 50 gp Duskwood Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 55 gp Duskwood Tower Shield (Standard-Grade) Source GM Core pg. 233 Price 560 gp Bulk 3 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 70 gp Duskwood Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements duskwood worth at least 4,000 gp Duskwood Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 4,400 gp Duskwood Tower Shield (High-Grade) Source GM Core pg. 233 Price 11,200 gp Bulk 3 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 5,600 gp"
+ },
+ {
+  "id": "duskwood-tower-shield-high-grade",
+  "name": "Duskwood Tower Shield (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 11200
+  },
+  "text": "Duskwood Shield Source GM Core pg. 233 Usage varies by shield Base Material Duskwood Duskwood shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). Duskwood Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements duskwood worth at least 50 gp Duskwood Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 55 gp Duskwood Tower Shield (Standard-Grade) Source GM Core pg. 233 Price 560 gp Bulk 3 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 70 gp Duskwood Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements duskwood worth at least 4,000 gp Duskwood Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 4,400 gp Duskwood Tower Shield (High-Grade) Source GM Core pg. 233 Price 11,200 gp Bulk 3 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 5,600 gp"
+ },
+ {
+  "id": "duskwood-tower-shield-standard-grade",
+  "name": "Duskwood Tower Shield (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 560
+  },
+  "text": "Duskwood Shield Source GM Core pg. 233 Usage varies by shield Base Material Duskwood Duskwood shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). Duskwood Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements duskwood worth at least 50 gp Duskwood Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 55 gp Duskwood Tower Shield (Standard-Grade) Source GM Core pg. 233 Price 560 gp Bulk 3 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 70 gp Duskwood Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements duskwood worth at least 4,000 gp Duskwood Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 4,400 gp Duskwood Tower Shield (High-Grade) Source GM Core pg. 233 Price 11,200 gp Bulk 3 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements duskwood worth at least 5,600 gp"
+ },
+ {
+  "id": "duskwood-weapon-high-grade",
+  "name": "Duskwood Weapon (High-Grade)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 13500
+  },
+  "text": "Duskwood Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Duskwood Duskwood weapons are as dark as ebony, with a slight purple tint. A duskwood weapon's Bulk is reduced by 1 (or to light Bulk if its normal Bulk is 1, with no effect on a weapon that normally has light Bulk). Duskwood Weapon (Standard-Grade) Source GM Core pg. 240 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of duskwood + 17.5 gp per Bulk Duskwood Weapon (High-Grade) Source GM Core pg. 240 Price 13,500 gp (+1350 gp per Bulk) Craft Requirements at least 6,750 gp of duskwood + 675 gp per Bulk"
+ },
+ {
+  "id": "duskwood-weapon-standard-grade",
+  "name": "Duskwood Weapon (Standard-Grade)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1400
+  },
+  "text": "Duskwood Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Duskwood Duskwood weapons are as dark as ebony, with a slight purple tint. A duskwood weapon's Bulk is reduced by 1 (or to light Bulk if its normal Bulk is 1, with no effect on a weapon that normally has light Bulk). Duskwood Weapon (Standard-Grade) Source GM Core pg. 240 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of duskwood + 17.5 gp per Bulk Duskwood Weapon (High-Grade) Source GM Core pg. 240 Price 13,500 gp (+1350 gp per Bulk) Craft Requirements at least 6,750 gp of duskwood + 675 gp per Bulk"
+ },
+ {
+  "id": "dust-goggles",
+  "name": "Dust Goggles",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "worneyeglasses",
+  "price": {
+   "gp": 250
+  },
+  "text": "These sand-colored goggles keep the harsh weather of the Cinderlands at bay. While wearing the goggles, you ignore penalties to Perception from desert weather effects and gain a +1 bonus to Perception checks involving sight."
+ },
+ {
+  "id": "dwarven-daisy-lesser",
+  "name": "Dwarven Daisy (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 6
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- A dwarven daisy is a string of dozens of firecrackers that create tiny, loud explosions. The string ends with a short, wrapped fuse. Pulling off the wrapping in a quick motion lights the fuse and is done as part of the action to Strike. A dwarven daisy deals the listed fire damage and splash damage. A dwarven daisy also has a chance to dazzle its target. A creature struck by a dwarven daisy must succeed at a save or become dazzled for 1 round. The firework deals 1d6 fire damage and 1 fire splash damage. The DC is 16."
+ },
+ {
+  "id": "dwarven-daisy-moderate",
+  "name": "Dwarven Daisy (Moderate)",
+  "level": 3,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 18
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- A dwarven daisy is a string of dozens of firecrackers that create tiny, loud explosions. The string ends with a short, wrapped fuse. Pulling off the wrapping in a quick motion lights the fuse and is done as part of the action to Strike. A dwarven daisy deals the listed fire damage and splash damage. A dwarven daisy also has a chance to dazzle its target. A creature struck by a dwarven daisy must succeed at a save or become dazzled for 1 round. The firework deals 2d6 fire damage and 2 fire splash damage. The DC is 18."
+ },
+ {
+  "id": "dwarven-thrower",
+  "name": "Dwarven Thrower",
+  "level": 13,
+  "itemType": "weapon",
+  "traits": [
+   "magical",
+   "shove"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 2750
+  },
+  "text": "This +2 striking warhammer is inlaid with precious metals and decorated with geometric patterns in a dwarven style. If you're a dwarf, a dwarven thrower functions for you as a +2 greater striking returning warhammer with the thrown 30 feet trait, and your attacks with the hammer deal 1d8 additional damage against giants."
+ },
+ {
+  "id": "dyes-and-ink",
+  "name": "Dyes and Ink",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Dyes and Ink Source Travel Guide pg. 37 Price 1 sp (per vial)"
+ },
+ {
+  "id": "ease-burden",
+  "name": "Ease Burden",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "earth"
+  ],
+  "text": "Ease Burden Source GM Core pg. 312 Aspect Earth Your relic draws strength from the earth underfoot to lighten your load. As long as your relic is on your person and you are standing on the ground, you can carry 1 more Bulk than normal before becoming encumbered, and you increase your maximum Bulk by 2. At 6th level and every 4 levels thereafter, increase the Bulk you can carry before becoming encumbered by 1 and your maximum Bulk by 2."
+ },
+ {
+  "id": "elder-sign",
+  "name": "Elder Sign",
+  "level": 25,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "occult"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {},
+  "text": "This stone tablet is carved with the symbol of a five-branched twig. There are only a limited number of elder signs, and each time one is destroyed, the universe's doom creeps inexorably closer. Reciting one of three different occult mantras ( check to do so correctly) allows three different activations. All three abilities work only on a creature connected to the Elder Mythos or a cosmic horror, such as a wendigo or gug; the activations refer to them as \"eldritch creatures.\" **Activate** ⟨2⟩ command, envision, Interact --- **Effect** The *elder sign* casts a 10th-rank banishment spell on an eldritch creature. Even if the creature isn't extraplanar, the *elder sign* can still banish it, sending it back to the part of the Material Plane from which it originated. If the creature is a Great Old One, the *elder sign* banishes it automatically (as if it critically failed its save) but is then forever destroyed. **Activate** ⟨2⟩ command, envision, Interact --- **Effect** The *elder sign* casts dispel magic on an effect from an eldritch creature, using a counteract rank of 10 and +30 modifier for the roll. **Activate** ⟨2⟩ command, envision, Interact --- **Effect** The *elder sign* casts dimensional lock, though it wards against travel by only eldritch creatures. Each time the *elder sign* casts *dimensional lock* in this way, the previous *dimensional lock* spell ends. **Destruction** The only way to destroy an *elder sign* is to use it to banish a Great Old One."
+ },
+ {
+  "id": "electrocable",
+  "name": "Electrocable",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "electricity",
+   "fire"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 45
+  },
+  "text": "This foot‐long length of conductive cable is capped on both ends by grounded handles containing Stasian coils. These coils can be turned on or off as a single action. While on, the coils electrify the cable, dealing 1d6 plus 1d6 damage in a thin precise line to anything the cable touches, though the cable is too unwieldy to use as a weapon. Electrocables are typically used to \"cut\" a thin straight line through metal. They ignore 10 points of a metal object's hardness."
+ },
+ {
+  "id": "elemental-ammunition-greater",
+  "name": "Elemental Ammunition (Greater)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "splash"
+  ],
+  "price": {
+   "gp": 210
+  },
+  "text": "Elemental Ammunition Source Treasure Vault (Remastered) pg. 42 Ammunition any Activate (manipulate) When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing persistent acid, cold, electricity, fire, or poison damage to the target and splash damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type. Elemental Ammunition (Lesser) Source Treasure Vault (Remastered) pg. 42 Price 3 gp The ammunition deals 1 persistent damage and 1 splash damage. Elemental Ammunition (Moderate) Source Treasure Vault (Remastered) pg. 42 Price 21 gp The ammunition deals 2d4 persistent damage and 2 splash damage. Elemental Ammunition (Greater) Source Treasure Vault (Remastered) pg. 42 Price 210 gp The ammunition deals 3d4 persistent damage and 3 splash damage."
+ },
+ {
+  "id": "elemental-ammunition-greater-acid",
+  "name": "Elemental Ammunition (Greater, Acid)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "alchemical",
+   "consumable",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 210
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 3d4 persistent acid damage to the target and 3 splash acid damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-greater-cold",
+  "name": "Elemental Ammunition (Greater, Cold)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "cold",
+   "consumable",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 210
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 3d4 persistent cold damage to the target and 3 splash cold damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-greater-electricity",
+  "name": "Elemental Ammunition (Greater, Electricity)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "electricity",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 210
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 3d4 persistent electricity damage to the target and 3 splash electricity damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-greater-fire",
+  "name": "Elemental Ammunition (Greater, Fire)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 210
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 3d4 persistent fire damage to the target and 3 splash fire damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-greater-poison",
+  "name": "Elemental Ammunition (Greater, Poison)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 210
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 3d4 persistent poison damage to the target and 3 splash poison damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-lesser",
+  "name": "Elemental Ammunition (Lesser)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "splash"
+  ],
+  "price": {
+   "gp": 3
+  },
+  "text": "Elemental Ammunition Source Treasure Vault (Remastered) pg. 42 Ammunition any Activate (manipulate) When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing persistent acid, cold, electricity, fire, or poison damage to the target and splash damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type. Elemental Ammunition (Lesser) Source Treasure Vault (Remastered) pg. 42 Price 3 gp The ammunition deals 1 persistent damage and 1 splash damage. Elemental Ammunition (Moderate) Source Treasure Vault (Remastered) pg. 42 Price 21 gp The ammunition deals 2d4 persistent damage and 2 splash damage. Elemental Ammunition (Greater) Source Treasure Vault (Remastered) pg. 42 Price 210 gp The ammunition deals 3d4 persistent damage and 3 splash damage."
+ },
+ {
+  "id": "elemental-ammunition-lesser-acid",
+  "name": "Elemental Ammunition (Lesser, Acid)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "alchemical",
+   "consumable",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 1 persistent acid damage to the target and 1 splash acid damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-lesser-cold",
+  "name": "Elemental Ammunition (Lesser, Cold)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "cold",
+   "consumable",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 1 persistent cold damage to the target and 1 splash cold damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-lesser-electricity",
+  "name": "Elemental Ammunition (Lesser, Electricity)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "electricity",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 1 persistent electricity damage to the target and 1 splash electricity damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-lesser-fire",
+  "name": "Elemental Ammunition (Lesser, Fire)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 1 persistent fire damage to the target and 1 splash fire damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-lesser-poison",
+  "name": "Elemental Ammunition (Lesser, Poison)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 1 persistent poison damage to the target and 1 splash poison damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-moderate",
+  "name": "Elemental Ammunition (Moderate)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "splash"
+  ],
+  "price": {
+   "gp": 21
+  },
+  "text": "Elemental Ammunition Source Treasure Vault (Remastered) pg. 42 Ammunition any Activate (manipulate) When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing persistent acid, cold, electricity, fire, or poison damage to the target and splash damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type. Elemental Ammunition (Lesser) Source Treasure Vault (Remastered) pg. 42 Price 3 gp The ammunition deals 1 persistent damage and 1 splash damage. Elemental Ammunition (Moderate) Source Treasure Vault (Remastered) pg. 42 Price 21 gp The ammunition deals 2d4 persistent damage and 2 splash damage. Elemental Ammunition (Greater) Source Treasure Vault (Remastered) pg. 42 Price 210 gp The ammunition deals 3d4 persistent damage and 3 splash damage."
+ },
+ {
+  "id": "elemental-ammunition-moderate-acid",
+  "name": "Elemental Ammunition (Moderate, Acid)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "alchemical",
+   "consumable",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 21
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 2d4 persistent acid damage to the target and 2 splash acid damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-moderate-cold",
+  "name": "Elemental Ammunition (Moderate, Cold)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "cold",
+   "consumable",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 21
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 2d4 persistent cold damage to the target and 2 splash cold damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-moderate-electricity",
+  "name": "Elemental Ammunition (Moderate, Electricity)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "electricity",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 21
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 2d4 persistent electricity damage to the target and 2 splash electricity damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-moderate-fire",
+  "name": "Elemental Ammunition (Moderate, Fire)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 21
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 2d4 persistent fire damage to the target and 2 splash fire damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "elemental-ammunition-moderate-poison",
+  "name": "Elemental Ammunition (Moderate, Poison)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 21
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing 2d4 persistent poison damage to the target and 2 splash poison damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type."
+ },
+ {
+  "id": "encompassing-lockpick",
+  "name": "Encompassing Lockpick",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 450
+  },
+  "text": "This lockpick houses a small compartment containing many smaller picks and other miniature tools. The lockpick itself is surprisingly malleable, belying the components within. An almost-impossible number of other tools are hidden in the compartment, including an entire set of Infiltrator Thieves' Tools and any Replacement Picks (Infiltrator Picks), an Elite Disguise Kit and any Replacement Cosmetics (Elite), and an Extreme Climber's Kit, all while still somehow remaining only light Bulk. This makes the encompassing lockpick a favorite discreet option for rogues infiltrating high society events, as formal wear generally has few pockets and only allows a character to wear a single tool kit of light Bulk."
+ },
+ {
+  "id": "energizing",
+  "name": "Energizing",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "A weapon with this rune can absorb energy damage to empower it. --- **Activate** ⟨5⟩ envision **Trigger** You take acid, cold, electricity, fire, or sonic damage --- **Effect** The weapon becomes imbued with the triggering energy type. It deals an additional 1d8 damage of the triggering type until the end of your next turn. As normal, if you use this reaction again during the duration, the damage doesn't combine; instead, change the 1d8 damage to the new triggering type of damage and change the duration to the end of your next turn."
+ },
+ {
+  "id": "energy-absorbing",
+  "name": "Energy-Absorbing",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 1200
+  },
+  "text": "As with *energy-resistant* runes, these runes convey protective forces from the Elemental Planes. You gain 5 resistance to acid, cold, electricity, or fire. The crafter chooses the damage type when creating the rune. Multiple energy-absorbing runes can be etched onto a suit of armor; rather than using only the highest-level effect, each must provide resistance to a different type. When an energy-absorbing rune provides resistance to damage from a foe's attack or ability, the armor itself appears to become infused with that energy, be it dripping with acid, riming over in frost, crackling with lightning, or flickering with flames. This effect does not inflict damage itself and ends at the start of your next turn, or as soon as you take the following reaction. **Activate** ⟨5⟩ envision **Trigger** Your armor is infused with energy and you take damage from a melee Strike --- **Effect** You unleash the infused energy against the triggering melee Strike, inflicting 2d6 damage of that energy type to the creature who made the melee Strike."
+ },
+ {
+  "id": "energy-absorbing-greater",
+  "name": "Energy-Absorbing (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 6000
+  },
+  "text": "As with *energy-resistant* runes, these runes convey protective forces from the Elemental Planes. You gain 10 resistance to acid, cold, electricity, or fire. The crafter chooses the damage type when creating the rune. Multiple energy-absorbing runes can be etched onto a suit of armor; rather than using only the highest-level effect, each must provide resistance to a different type. When an energy-absorbing rune provides resistance to damage from a foe's attack or ability, the armor itself appears to become infused with that energy, be it dripping with acid, riming over in frost, crackling with lightning, or flickering with flames. This effect does not inflict damage itself and ends at the start of your next turn, or as soon as you take the following reaction. **Activate** ⟨5⟩ envision **Trigger** Your armor is infused with energy and you take damage from a melee Strike --- **Effect** You unleash the infused energy against the triggering melee Strike, inflicting 4d6 damage of that energy type to the creature who made the melee Strike."
+ },
+ {
+  "id": "energy-breath-potion-greater",
+  "name": "Energy Breath Potion (Greater)",
+  "level": 17,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "price": {
+   "gp": 3000
+  },
+  "text": "Energy Breath Potion Source GM Core pg. 259 Usage held in 1 hand Bulk L Activate (manipulate) Distilled from the energy of dangerous spells, an energy breath potion grants you the Energy Breath action for 1 hour after you imbibe the concoction. The potency of the breath depends on the potion's type, based on how long the distilled ingredients were aged. This potion has the trait matching the damage type. Energy Breath Each creature in an area takes damage depending on its basic saving throw. The damage amount and save DC depend on the potion's energy type. The damage type is the same as the potion's energy type. The area and save depend on the energy type, as seen in the table below. After you use Energy Breath, you can't do so again for 1d4 rounds. ## Energy Type Area (Save) Acid 30-foot line (Reflex) Cold 15-foot cone (Reflex) Electricity 30-foot line (Reflex) Fire 15-foot cone (Reflex) Sonic 15-foot cone (Fortitude) Energy Breath Potion (Lesser) Source GM Core pg. 259 Price 70 gp The damage is 4d6, and the save DC is 23. Energy Breath Potion (Moderate) Source GM Core pg. 259 Price 400 gp The damage is 6d6, and the save DC is 29. Energy Breath Potion (Greater) Source GM Core pg. 259 Price 3,000 gp The damage is 10d6, and the save DC is 37."
+ }
+]

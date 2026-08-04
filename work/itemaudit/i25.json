@@ -1,0 +1,1148 @@
+[
+ {
+  "id": "wand-of-hawthorn-4th-rank-spell",
+  "name": "Wand of Hawthorn (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "plant",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "Wand of Hawthorn Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Carved from a hawthorn branch, this wand has a smooth handle, but the shaft remains covered in bark and long thorns. Polished red stones, arranged like a cluster of berries, decorate the pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree. While oaken resilience lasts, any creature that hits the target with an unarmed Strike or otherwise touches it takes piercing damage from the thorns, with the amount determined by the wand’s type. A creature that has engulfed or swallowed the target takes this damage as well at the start of each of the target’s turns. Craft Requirements Supply a casting of Oaken Resilience of the appropriate rank. Wand of Hawthorn (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L The thorns deal 1d4 piercing damage. Wand of Hawthorn (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L The thorns deal 2d4 piercing damage. Wand of Hawthorn (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L The thorns deal 3d4 piercing damage. Wand of Hawthorn (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L The thorns deal 4d4 piercing damage."
+ },
+ {
+  "id": "wand-of-hawthorn-6th-rank-spell",
+  "name": "Wand of Hawthorn (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "plant",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "Wand of Hawthorn Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Carved from a hawthorn branch, this wand has a smooth handle, but the shaft remains covered in bark and long thorns. Polished red stones, arranged like a cluster of berries, decorate the pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree. While oaken resilience lasts, any creature that hits the target with an unarmed Strike or otherwise touches it takes piercing damage from the thorns, with the amount determined by the wand’s type. A creature that has engulfed or swallowed the target takes this damage as well at the start of each of the target’s turns. Craft Requirements Supply a casting of Oaken Resilience of the appropriate rank. Wand of Hawthorn (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L The thorns deal 1d4 piercing damage. Wand of Hawthorn (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L The thorns deal 2d4 piercing damage. Wand of Hawthorn (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L The thorns deal 3d4 piercing damage. Wand of Hawthorn (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L The thorns deal 4d4 piercing damage."
+ },
+ {
+  "id": "wand-of-hawthorn-8th-rank-spell",
+  "name": "Wand of Hawthorn (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "plant",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "Wand of Hawthorn Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Carved from a hawthorn branch, this wand has a smooth handle, but the shaft remains covered in bark and long thorns. Polished red stones, arranged like a cluster of berries, decorate the pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree. While oaken resilience lasts, any creature that hits the target with an unarmed Strike or otherwise touches it takes piercing damage from the thorns, with the amount determined by the wand’s type. A creature that has engulfed or swallowed the target takes this damage as well at the start of each of the target’s turns. Craft Requirements Supply a casting of Oaken Resilience of the appropriate rank. Wand of Hawthorn (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L The thorns deal 1d4 piercing damage. Wand of Hawthorn (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L The thorns deal 2d4 piercing damage. Wand of Hawthorn (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L The thorns deal 3d4 piercing damage. Wand of Hawthorn (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L The thorns deal 4d4 piercing damage."
+ },
+ {
+  "id": "wand-of-hybrid-form-2nd-rank-spell",
+  "name": "Wand of Hybrid Form (2nd-Rank Spell)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "polymorph",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell"
+ },
+ {
+  "id": "wand-of-hybrid-form-3rd-rank-spell",
+  "name": "Wand of Hybrid Form (3rd-Rank Spell)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "polymorph",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 450
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell"
+ },
+ {
+  "id": "wand-of-hybrid-form-4th-rank-spell",
+  "name": "Wand of Hybrid Form (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "polymorph",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 850
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell"
+ },
+ {
+  "id": "wand-of-hybrid-form-5th-rank-spell",
+  "name": "Wand of Hybrid Form (5th-Rank Spell)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "polymorph",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1750
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell"
+ },
+ {
+  "id": "wand-of-hybrid-form-6th-rank-spell",
+  "name": "Wand of Hybrid Form (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "polymorph",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 3750
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell"
+ },
+ {
+  "id": "wand-of-hybrid-form-7th-rank-spell",
+  "name": "Wand of Hybrid Form (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "polymorph",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 8000
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell"
+ },
+ {
+  "id": "wand-of-hybrid-form-8th-rank-spell",
+  "name": "Wand of Hybrid Form (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "polymorph",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 19000
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell"
+ },
+ {
+  "id": "wand-of-hybrid-form-9th-rank-spell",
+  "name": "Wand of Hybrid Form (9th-Rank Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "polymorph",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 55000
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell"
+ },
+ {
+  "id": "wand-of-mental-purification-1st-rank-spell",
+  "name": "Wand of Mental Purification (1st-Rank Spell)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 110
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mental-purification-2nd-rank-spell",
+  "name": "Wand of Mental Purification (2nd-Rank Spell)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mental-purification-3rd-rank-spell",
+  "name": "Wand of Mental Purification (3rd-Rank Spell)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mental-purification-4th-rank-spell",
+  "name": "Wand of Mental Purification (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1400
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mental-purification-5th-rank-spell",
+  "name": "Wand of Mental Purification (5th-Rank Spell)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 3000
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mental-purification-6th-rank-spell",
+  "name": "Wand of Mental Purification (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mental-purification-7th-rank-spell",
+  "name": "Wand of Mental Purification (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mental-purification-8th-rank-spell",
+  "name": "Wand of Mental Purification (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mental-purification-9th-rank-spell",
+  "name": "Wand of Mental Purification (9th-Rank Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "healing",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 70000
+  },
+  "text": "Wand of Mental Purification Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Red feathers hang from the handle of this ivory wand. Holding it brings a sense of gentle calm. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target. Treat the soothe spell's level as 1 higher for this counteract check. Craft Requirements Supply a casting of soothe of the appropriate rank. Wand of Mental Purification (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 110 gp Bulk L Wand of Mental Purification (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Mental Purification (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Mental Purification (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,400 gp Bulk L Wand of Mental Purification (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,000 gp Bulk L Wand of Mental Purification (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Mental Purification (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Mental Purification (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Mental Purification (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-mercy-1st-rank-spell",
+  "name": "Wand of Mercy (1st-Rank Spell)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 75
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-mercy-2nd-rank-spell",
+  "name": "Wand of Mercy (2nd-Rank Spell)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-mercy-3rd-rank-spell",
+  "name": "Wand of Mercy (3rd-Rank Spell)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 425
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-mercy-4th-rank-spell",
+  "name": "Wand of Mercy (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 850
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-mercy-5th-rank-spell",
+  "name": "Wand of Mercy (5th-Rank Spell)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1650
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-mercy-6th-rank-spell",
+  "name": "Wand of Mercy (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 3600
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-mercy-7th-rank-spell",
+  "name": "Wand of Mercy (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 7900
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-mercy-8th-rank-spell",
+  "name": "Wand of Mercy (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 19000
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-mercy-9th-rank-spell",
+  "name": "Wand of Mercy (9th-Rank Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 52000
+  },
+  "text": "Wand of Mercy Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L The pommel of this rose quartz wand resembles the stylized wings of an angel. When you cast its spell and choose not to make it nonlethal, the crystal deepens to blood red. The color reverts to rose when you cast the spell from the wand nonlethally. Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , it must deal damage, and it can’t have the death, nonlethal, or void traits. Wand of Mercy (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 75 gp Bulk L Wand of Mercy (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 200 gp Bulk L Wand of Mercy (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 425 gp Bulk L Wand of Mercy (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 850 gp Bulk L Wand of Mercy (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,650 gp Bulk L Wand of Mercy (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 3,600 gp Bulk L Wand of Mercy (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 7,900 gp Bulk L Wand of Mercy (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1"
+ },
+ {
+  "id": "wand-of-paralytic-shock-3rd-rank-spell",
+  "name": "Wand of Paralytic Shock (3rd-Rank Spell)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "electricity",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "Wand of Paralytic Shock Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L A two-pronged metal rod, this wand has a handle coated in thick rubber. Each prong ends in a copper coil. When Activated, the wand produces a loud zapping sound. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast paralyze, electrocuting the target into immobility. Each target takes electricity damage at the start of its turns while it remains stunned or paralyzed due to the spell. The amount of damage depends on the wand's type. Craft Requirements Supply a casting of paralyze of the appropriate rank. Wand of Paralytic Shock (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L The electrocution deals 1d12 electricity damage. Wand of Paralytic Shock (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L The electrocution deals 2d12 electricity damage."
+ },
+ {
+  "id": "wand-of-paralytic-shock-7th-rank-spell",
+  "name": "Wand of Paralytic Shock (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "electricity",
+   "magical",
+   "mental",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Wand of Paralytic Shock Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L A two-pronged metal rod, this wand has a handle coated in thick rubber. Each prong ends in a copper coil. When Activated, the wand produces a loud zapping sound. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast paralyze, electrocuting the target into immobility. Each target takes electricity damage at the start of its turns while it remains stunned or paralyzed due to the spell. The amount of damage depends on the wand's type. Craft Requirements Supply a casting of paralyze of the appropriate rank. Wand of Paralytic Shock (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L The electrocution deals 1d12 electricity damage. Wand of Paralytic Shock (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L The electrocution deals 2d12 electricity damage."
+ },
+ {
+  "id": "wand-of-pernicious-poison-1st-rank-spell",
+  "name": "Wand of Pernicious Poison (1st-Rank Spell)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "poison",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 100
+  },
+  "text": "Wand of Pernicious Poison Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This wand is made of chitin, topped with a hooked barb that weeps droplets of foul-smelling, green fluid when you Activate the wand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast a Spell determined by the wand's type. The poison the spell delivers gains the virulent trait. Craft Requirements Supply a casting of spider sting of the appropriate rank. Wand of Pernicious Poison (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L The spell is spider sting. Wand of Pernicious Poison (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L The spell is 6th-rank spider sting, but it deals 3d6 damage on a touch or on a successful save, and delivers this poison. Deadly Spider Venom (poison, virulent) Level 11; Maximum Duration 6 rounds; Stage 1 3d6 poison damage and enfeebled 2 (1 round); Stage 2 4d6 poison damage and enfeebled 2 (1 round); Stage 3 6d6 poison damage and enfeebled 2 (1 round)"
+ },
+ {
+  "id": "wand-of-pernicious-poison-6th-rank-spell",
+  "name": "Wand of Pernicious Poison (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "poison",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "Wand of Pernicious Poison Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This wand is made of chitin, topped with a hooked barb that weeps droplets of foul-smelling, green fluid when you Activate the wand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast a Spell determined by the wand's type. The poison the spell delivers gains the virulent trait. Craft Requirements Supply a casting of spider sting of the appropriate rank. Wand of Pernicious Poison (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L The spell is spider sting. Wand of Pernicious Poison (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L The spell is 6th-rank spider sting, but it deals 3d6 damage on a touch or on a successful save, and delivers this poison. Deadly Spider Venom (poison, virulent) Level 11; Maximum Duration 6 rounds; Stage 1 3d6 poison damage and enfeebled 2 (1 round); Stage 2 4d6 poison damage and enfeebled 2 (1 round); Stage 3 6d6 poison damage and enfeebled 2 (1 round)"
+ },
+ {
+  "id": "wand-of-reaching-1st-rank-spell",
+  "name": "Wand of Reaching (1st-Rank Spell)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 100
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-reaching-2nd-rank-spell",
+  "name": "Wand of Reaching (2nd-Rank Spell)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-reaching-3rd-rank-spell",
+  "name": "Wand of Reaching (3rd-Rank Spell)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-reaching-4th-rank-spell",
+  "name": "Wand of Reaching (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-reaching-5th-rank-spell",
+  "name": "Wand of Reaching (5th-Rank Spell)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 2000
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-reaching-6th-rank-spell",
+  "name": "Wand of Reaching (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-reaching-7th-rank-spell",
+  "name": "Wand of Reaching (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-reaching-8th-rank-spell",
+  "name": "Wand of Reaching (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-reaching-9th-rank-spell",
+  "name": "Wand of Reaching (9th-Rank Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 70000
+  },
+  "text": "Wand of Reaching Source Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This long, slender wand is constructed of silver, polished to a mirror shine. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell. Its range increases by 30 feet. As normal for increasing ranges, if the spell normally has a range of touch, its range extends to 30 feet. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , and must have a range. Wand of Reaching (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 100 gp Bulk L Wand of Reaching (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Reaching (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 500 gp Bulk L Wand of Reaching (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Reaching (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 2,000 gp Bulk L Wand of Reaching (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Reaching (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 10,000 gp Bulk L Wand of Reaching (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L Wand of Reaching (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 70,"
+ },
+ {
+  "id": "wand-of-refracting-rays-4th-rank-spell",
+  "name": "Wand of Refracting Rays (4th-Rank Spell)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1400
+  },
+  "text": "Wand of Refracting Rays Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L This wand is short and wide with a hexagonal, crystal shaft and a leather-wrapped handle. The wand refracts direct bright light into a rainbow. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic ray of the indicated rank. After you cast the spell, if you hit the target, the light refracts to another creature within 30 feet of the first target. Roll your spell attack roll and to determine the ray's color separately for each target. The ray continues to refract each time it hits. The refraction ceases if you miss any target, and you can end the refraction at any point. You can't target the same creature more than once, and you must have line of effect to all targets. Craft Requirements Supply a casting of chromatic ray of the appropriate rank. Wand of Refracting Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,400 gp Bulk L Wand of Refracting Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 6,500 gp Bulk L"
+ },
+ {
+  "id": "wand-of-refracting-rays-6th-rank-spell",
+  "name": "Wand of Refracting Rays (6th-Rank Spell)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 6500
+  },
+  "text": "Wand of Refracting Rays Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L This wand is short and wide with a hexagonal, crystal shaft and a leather-wrapped handle. The wand refracts direct bright light into a rainbow. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic ray of the indicated rank. After you cast the spell, if you hit the target, the light refracts to another creature within 30 feet of the first target. Roll your spell attack roll and to determine the ray's color separately for each target. The ray continues to refract each time it hits. The refraction ceases if you miss any target, and you can end the refraction at any point. You can't target the same creature more than once, and you must have line of effect to all targets. Craft Requirements Supply a casting of chromatic ray of the appropriate rank. Wand of Refracting Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,400 gp Bulk L Wand of Refracting Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 6,500 gp Bulk L"
+ },
+ {
+  "id": "wand-of-rolling-flames-2nd-rank-spell",
+  "name": "Wand of Rolling Flames (2nd-Rank Spell)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "Wand of Rolling Flames Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L The luminous design of red-orange cracks on this black obsidian wand suggests cooling lava. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank. If you create the flame on the ground, the ground in the sphere’s square and all adjacent squares are coated in rolling flames until the start of your next turn. These are difficult terrain and hazardous terrain. A creature that moves on the ground takes fire damage for every square of rolling flames it moves into, with the amount determined by the wand’s type. If a creature in the flames doesn’t move on its turn, it takes the damage for each of the squares it’s in at the end of its turn. The first time you Sustain the Spell each round, the sphere creates rolling flames again in its new location (or the same location if you chose not to move it), provided it’s on the ground. Craft Requirements Supply a casting of floating flame of the appropriate rank. Wand of Rolling Flames (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 250 gp Bulk L The rolling flames deal 1 fire damage. Wand of Rolling Flames (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 500 gp Bulk L The rolling flames deal 2 fire damage. Wand of Rolling Flames (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,000 gp Bulk L The rolling flames deal 3 fire damage. Wand "
+ },
+ {
+  "id": "wand-of-rolling-flames-3rd-rank-spell",
+  "name": "Wand of Rolling Flames (3rd-Rank Spell)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "Wand of Rolling Flames Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L The luminous design of red-orange cracks on this black obsidian wand suggests cooling lava. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank. If you create the flame on the ground, the ground in the sphere’s square and all adjacent squares are coated in rolling flames until the start of your next turn. These are difficult terrain and hazardous terrain. A creature that moves on the ground takes fire damage for every square of rolling flames it moves into, with the amount determined by the wand’s type. If a creature in the flames doesn’t move on its turn, it takes the damage for each of the squares it’s in at the end of its turn. The first time you Sustain the Spell each round, the sphere creates rolling flames again in its new location (or the same location if you chose not to move it), provided it’s on the ground. Craft Requirements Supply a casting of floating flame of the appropriate rank. Wand of Rolling Flames (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 250 gp Bulk L The rolling flames deal 1 fire damage. Wand of Rolling Flames (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 500 gp Bulk L The rolling flames deal 2 fire damage. Wand of Rolling Flames (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,000 gp Bulk L The rolling flames deal 3 fire damage. Wand "
+ },
+ {
+  "id": "wand-of-rolling-flames-4th-rank-spell",
+  "name": "Wand of Rolling Flames (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "Wand of Rolling Flames Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L The luminous design of red-orange cracks on this black obsidian wand suggests cooling lava. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank. If you create the flame on the ground, the ground in the sphere’s square and all adjacent squares are coated in rolling flames until the start of your next turn. These are difficult terrain and hazardous terrain. A creature that moves on the ground takes fire damage for every square of rolling flames it moves into, with the amount determined by the wand’s type. If a creature in the flames doesn’t move on its turn, it takes the damage for each of the squares it’s in at the end of its turn. The first time you Sustain the Spell each round, the sphere creates rolling flames again in its new location (or the same location if you chose not to move it), provided it’s on the ground. Craft Requirements Supply a casting of floating flame of the appropriate rank. Wand of Rolling Flames (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 250 gp Bulk L The rolling flames deal 1 fire damage. Wand of Rolling Flames (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 500 gp Bulk L The rolling flames deal 2 fire damage. Wand of Rolling Flames (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,000 gp Bulk L The rolling flames deal 3 fire damage. Wand "
+ },
+ {
+  "id": "wand-of-rolling-flames-5th-rank-spell",
+  "name": "Wand of Rolling Flames (5th-Rank Spell)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 2000
+  },
+  "text": "Wand of Rolling Flames Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L The luminous design of red-orange cracks on this black obsidian wand suggests cooling lava. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank. If you create the flame on the ground, the ground in the sphere’s square and all adjacent squares are coated in rolling flames until the start of your next turn. These are difficult terrain and hazardous terrain. A creature that moves on the ground takes fire damage for every square of rolling flames it moves into, with the amount determined by the wand’s type. If a creature in the flames doesn’t move on its turn, it takes the damage for each of the squares it’s in at the end of its turn. The first time you Sustain the Spell each round, the sphere creates rolling flames again in its new location (or the same location if you chose not to move it), provided it’s on the ground. Craft Requirements Supply a casting of floating flame of the appropriate rank. Wand of Rolling Flames (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 250 gp Bulk L The rolling flames deal 1 fire damage. Wand of Rolling Flames (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 500 gp Bulk L The rolling flames deal 2 fire damage. Wand of Rolling Flames (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,000 gp Bulk L The rolling flames deal 3 fire damage. Wand "
+ },
+ {
+  "id": "wand-of-rolling-flames-6th-rank-spell",
+  "name": "Wand of Rolling Flames (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "Wand of Rolling Flames Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L The luminous design of red-orange cracks on this black obsidian wand suggests cooling lava. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank. If you create the flame on the ground, the ground in the sphere’s square and all adjacent squares are coated in rolling flames until the start of your next turn. These are difficult terrain and hazardous terrain. A creature that moves on the ground takes fire damage for every square of rolling flames it moves into, with the amount determined by the wand’s type. If a creature in the flames doesn’t move on its turn, it takes the damage for each of the squares it’s in at the end of its turn. The first time you Sustain the Spell each round, the sphere creates rolling flames again in its new location (or the same location if you chose not to move it), provided it’s on the ground. Craft Requirements Supply a casting of floating flame of the appropriate rank. Wand of Rolling Flames (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 250 gp Bulk L The rolling flames deal 1 fire damage. Wand of Rolling Flames (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 500 gp Bulk L The rolling flames deal 2 fire damage. Wand of Rolling Flames (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,000 gp Bulk L The rolling flames deal 3 fire damage. Wand "
+ },
+ {
+  "id": "wand-of-rolling-flames-7th-rank-spell",
+  "name": "Wand of Rolling Flames (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Wand of Rolling Flames Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L The luminous design of red-orange cracks on this black obsidian wand suggests cooling lava. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank. If you create the flame on the ground, the ground in the sphere’s square and all adjacent squares are coated in rolling flames until the start of your next turn. These are difficult terrain and hazardous terrain. A creature that moves on the ground takes fire damage for every square of rolling flames it moves into, with the amount determined by the wand’s type. If a creature in the flames doesn’t move on its turn, it takes the damage for each of the squares it’s in at the end of its turn. The first time you Sustain the Spell each round, the sphere creates rolling flames again in its new location (or the same location if you chose not to move it), provided it’s on the ground. Craft Requirements Supply a casting of floating flame of the appropriate rank. Wand of Rolling Flames (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 250 gp Bulk L The rolling flames deal 1 fire damage. Wand of Rolling Flames (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 500 gp Bulk L The rolling flames deal 2 fire damage. Wand of Rolling Flames (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,000 gp Bulk L The rolling flames deal 3 fire damage. Wand "
+ },
+ {
+  "id": "wand-of-rolling-flames-8th-rank-spell",
+  "name": "Wand of Rolling Flames (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "Wand of Rolling Flames Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L The luminous design of red-orange cracks on this black obsidian wand suggests cooling lava. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank. If you create the flame on the ground, the ground in the sphere’s square and all adjacent squares are coated in rolling flames until the start of your next turn. These are difficult terrain and hazardous terrain. A creature that moves on the ground takes fire damage for every square of rolling flames it moves into, with the amount determined by the wand’s type. If a creature in the flames doesn’t move on its turn, it takes the damage for each of the squares it’s in at the end of its turn. The first time you Sustain the Spell each round, the sphere creates rolling flames again in its new location (or the same location if you chose not to move it), provided it’s on the ground. Craft Requirements Supply a casting of floating flame of the appropriate rank. Wand of Rolling Flames (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 250 gp Bulk L The rolling flames deal 1 fire damage. Wand of Rolling Flames (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 500 gp Bulk L The rolling flames deal 2 fire damage. Wand of Rolling Flames (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,000 gp Bulk L The rolling flames deal 3 fire damage. Wand "
+ },
+ {
+  "id": "wand-of-rolling-flames-9th-rank-spell",
+  "name": "Wand of Rolling Flames (9th-Rank Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 70000
+  },
+  "text": "Wand of Rolling Flames Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L The luminous design of red-orange cracks on this black obsidian wand suggests cooling lava. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank. If you create the flame on the ground, the ground in the sphere’s square and all adjacent squares are coated in rolling flames until the start of your next turn. These are difficult terrain and hazardous terrain. A creature that moves on the ground takes fire damage for every square of rolling flames it moves into, with the amount determined by the wand’s type. If a creature in the flames doesn’t move on its turn, it takes the damage for each of the squares it’s in at the end of its turn. The first time you Sustain the Spell each round, the sphere creates rolling flames again in its new location (or the same location if you chose not to move it), provided it’s on the ground. Craft Requirements Supply a casting of floating flame of the appropriate rank. Wand of Rolling Flames (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 250 gp Bulk L The rolling flames deal 1 fire damage. Wand of Rolling Flames (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 500 gp Bulk L The rolling flames deal 2 fire damage. Wand of Rolling Flames (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 142 Price 1,000 gp Bulk L The rolling flames deal 3 fire damage. Wand "
+ },
+ {
+  "id": "wand-of-slaying-7th-level-spell",
+  "name": "Wand of Slaying (7th-Level Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Wand of Slaying Source Core Rulebook pg. 598 Usage held in 1 hand Bulk L This polished black wand has a green gem at the tip, and anyone who looks into it sees a reflection of a grinning skull instead of their face. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast finger of death of the indicated level. If the spell slays its target, the corpse releases negative energy in a 20-foot emanation, dealing negative damage equal to double the spell’s level. Craft Requirements Supply a casting of finger of death of the appropriate level. Wand of Slaying (7th-Level Spell) Source Core Rulebook pg. 598 Price 10,000 gp Wand of Slaying (8th-Level Spell) Source Core Rulebook pg. 598 Price 24,000 gp Wand of Slaying (9th-Level Spell) Source Core Rulebook pg. 598 Price 70,000 gp"
+ },
+ {
+  "id": "wand-of-slaying-8th-level-spell",
+  "name": "Wand of Slaying (8th-Level Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "Wand of Slaying Source Core Rulebook pg. 598 Usage held in 1 hand Bulk L This polished black wand has a green gem at the tip, and anyone who looks into it sees a reflection of a grinning skull instead of their face. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast finger of death of the indicated level. If the spell slays its target, the corpse releases negative energy in a 20-foot emanation, dealing negative damage equal to double the spell’s level. Craft Requirements Supply a casting of finger of death of the appropriate level. Wand of Slaying (7th-Level Spell) Source Core Rulebook pg. 598 Price 10,000 gp Wand of Slaying (8th-Level Spell) Source Core Rulebook pg. 598 Price 24,000 gp Wand of Slaying (9th-Level Spell) Source Core Rulebook pg. 598 Price 70,000 gp"
+ },
+ {
+  "id": "wand-of-slaying-9th-level-spell",
+  "name": "Wand of Slaying (9th-Level Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 70000
+  },
+  "text": "Wand of Slaying Source Core Rulebook pg. 598 Usage held in 1 hand Bulk L This polished black wand has a green gem at the tip, and anyone who looks into it sees a reflection of a grinning skull instead of their face. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast finger of death of the indicated level. If the spell slays its target, the corpse releases negative energy in a 20-foot emanation, dealing negative damage equal to double the spell’s level. Craft Requirements Supply a casting of finger of death of the appropriate level. Wand of Slaying (7th-Level Spell) Source Core Rulebook pg. 598 Price 10,000 gp Wand of Slaying (8th-Level Spell) Source Core Rulebook pg. 598 Price 24,000 gp Wand of Slaying (9th-Level Spell) Source Core Rulebook pg. 598 Price 70,000 gp"
+ },
+ {
+  "id": "wand-of-spiritual-warfare-2nd-level",
+  "name": "Wand of Spiritual Warfare (2nd-Level)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "evocation",
+   "force",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 360
+  },
+  "text": "Wand of Spiritual Warfare Source Grand Bazaar pg. 11 PFS Note Due to their connection to the shop’s proprietor, all Pathfinder Society agents have access to the items from Barghest’s Bin Usage held in 1 hand Bulk L This wand juts from an ornate hilt like a short, wooden dagger blade. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level. When you critically hit, you apply the weapon's critical specialization effect. In addition, you can etch one of the following property runes onto the wand: corrosive, flaming, frost, shock, thundering, or their respective greater versions. The spiritual weapon's Strikes gain the effects of this rune. Craft Requirements Supply a casting of spiritual weapon of the appropriate level. Wand of Spiritual Warfare (2nd-Level) Source Grand Bazaar pg. 11 Price 360 gp Bulk L Wand of Spiritual Warfare (4th-Level) Source Grand Bazaar pg. 11 Price 1,400 gp Bulk L Wand of Spiritual Warfare (6th-Level) Source Grand Bazaar pg. 11 Price 6,500 gp Bulk L Wand of Spiritual Warfare (8th-Level) Source Grand Bazaar pg. 11 Price 40,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-spiritual-warfare-4th-level",
+  "name": "Wand of Spiritual Warfare (4th-Level)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "evocation",
+   "force",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1400
+  },
+  "text": "Wand of Spiritual Warfare Source Grand Bazaar pg. 11 PFS Note Due to their connection to the shop’s proprietor, all Pathfinder Society agents have access to the items from Barghest’s Bin Usage held in 1 hand Bulk L This wand juts from an ornate hilt like a short, wooden dagger blade. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level. When you critically hit, you apply the weapon's critical specialization effect. In addition, you can etch one of the following property runes onto the wand: corrosive, flaming, frost, shock, thundering, or their respective greater versions. The spiritual weapon's Strikes gain the effects of this rune. Craft Requirements Supply a casting of spiritual weapon of the appropriate level. Wand of Spiritual Warfare (2nd-Level) Source Grand Bazaar pg. 11 Price 360 gp Bulk L Wand of Spiritual Warfare (4th-Level) Source Grand Bazaar pg. 11 Price 1,400 gp Bulk L Wand of Spiritual Warfare (6th-Level) Source Grand Bazaar pg. 11 Price 6,500 gp Bulk L Wand of Spiritual Warfare (8th-Level) Source Grand Bazaar pg. 11 Price 40,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-spiritual-warfare-6th-level",
+  "name": "Wand of Spiritual Warfare (6th-Level)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "evocation",
+   "force",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 6500
+  },
+  "text": "Wand of Spiritual Warfare Source Grand Bazaar pg. 11 PFS Note Due to their connection to the shop’s proprietor, all Pathfinder Society agents have access to the items from Barghest’s Bin Usage held in 1 hand Bulk L This wand juts from an ornate hilt like a short, wooden dagger blade. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level. When you critically hit, you apply the weapon's critical specialization effect. In addition, you can etch one of the following property runes onto the wand: corrosive, flaming, frost, shock, thundering, or their respective greater versions. The spiritual weapon's Strikes gain the effects of this rune. Craft Requirements Supply a casting of spiritual weapon of the appropriate level. Wand of Spiritual Warfare (2nd-Level) Source Grand Bazaar pg. 11 Price 360 gp Bulk L Wand of Spiritual Warfare (4th-Level) Source Grand Bazaar pg. 11 Price 1,400 gp Bulk L Wand of Spiritual Warfare (6th-Level) Source Grand Bazaar pg. 11 Price 6,500 gp Bulk L Wand of Spiritual Warfare (8th-Level) Source Grand Bazaar pg. 11 Price 40,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-spiritual-warfare-8th-level",
+  "name": "Wand of Spiritual Warfare (8th-Level)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "evocation",
+   "force",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 40000
+  },
+  "text": "Wand of Spiritual Warfare Source Grand Bazaar pg. 11 PFS Note Due to their connection to the shop’s proprietor, all Pathfinder Society agents have access to the items from Barghest’s Bin Usage held in 1 hand Bulk L This wand juts from an ornate hilt like a short, wooden dagger blade. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level. When you critically hit, you apply the weapon's critical specialization effect. In addition, you can etch one of the following property runes onto the wand: corrosive, flaming, frost, shock, thundering, or their respective greater versions. The spiritual weapon's Strikes gain the effects of this rune. Craft Requirements Supply a casting of spiritual weapon of the appropriate level. Wand of Spiritual Warfare (2nd-Level) Source Grand Bazaar pg. 11 Price 360 gp Bulk L Wand of Spiritual Warfare (4th-Level) Source Grand Bazaar pg. 11 Price 1,400 gp Bulk L Wand of Spiritual Warfare (6th-Level) Source Grand Bazaar pg. 11 Price 6,500 gp Bulk L Wand of Spiritual Warfare (8th-Level) Source Grand Bazaar pg. 11 Price 40,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-splintered-sorrows-2nd-rank-spell",
+  "name": "Wand of Splintered Sorrows (2nd-Rank Spell)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand",
+   "wood"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "Wand of Splintered Sorrows May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 79 Usage held in 1 hand Bulk L This wooden wand is roughly cut, as if it had been crudely chopped from a tree and left forgotten. When held, the wand imparts feelings of deep sorrow. Activate Cast a Spell; Frequency once per day plus overcharge; Effect You cast splinter volley of the indicated rank. Each splinter contains some of the despair felt by cruelly harvested trees, causing any creature damaged by this spell to become stupefied 2 for a number of rounds equal to the spell rank. On a critical success on the attack roll, the target also weeps, becoming slowed 1 for the same duration. Craft Requirements Supply a casting of splinter volley of the appropriate level. Wand of Splintered Sorrows (2nd-Rank Spell) Source Pathfinder #202: Severed at the Root pg. 79 Price 250 gp Wand of Splintered Sorrows (4th-Rank Spell) Source Pathfinder #202: Severed at the Root pg. 79 Price 1,000 gp Wand of Splintered Sorrows (6th-Rank Spell) Source Pathfinder #202: Severed at the Root pg. 79 Price 4,500 gp Wand of Splintered Sorrows (8th-Rank Spell) Source Pathfinder #202: Severed at the Root pg. 79 Price 24,000 gp"
+ }
+]

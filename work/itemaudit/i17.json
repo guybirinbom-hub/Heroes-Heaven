@@ -1,0 +1,828 @@
+[
+ {
+  "id": "primal-symbol",
+  "name": "Primal Symbol",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "Primal spellcasters, especially druids, often wear adornments of natural materials to symbolize their connection to nature, such as rings of woven plants, tokens made from animal parts, or other symbols related to a druidic order or nature philosophy."
+ },
+ {
+  "id": "printing-press",
+  "name": "Printing Press",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "other",
+  "price": {
+   "gp": 600
+  },
+  "text": "The printing press is a revolutionary machine that combines movable type with a mechanical inking system and screw press, allowing for the mass production of large volumes of text. Using the press, a worker can produce up to 3,600 identical pages per day. In order to use the printing press, you must first set the type for the page you want to print. Time required to set type varies depending on the number of characters used; from 1 hour for small pages with brief text, to 8 hours for a full-sized normal page of text, though extreme examples may be outside this range. When you prepare a page for printing, you can include engraved images in addition to text. No magical properties of text are transferred in the printing process, so it cannot be used to mass-produce magical scrolls, spellbooks, or similar spells or magic items."
+ },
+ {
+  "id": "propelling-winds",
+  "name": "Propelling Winds",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "air"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Propelling Winds Source GM Core pg. 310 Aspect Air Activate (concentrate, manipulate) Frequency once per hour; Effect The relic casts fly targeting you."
+ },
+ {
+  "id": "prosthesis",
+  "name": "Prosthesis",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 5
+  },
+  "text": "A prosthesis replaces a missing or damaged body part. Typical prostheses include artificial feet, eyes, hands, and limbs, though a basic prosthesis can be designed as a replacement for any body part. Advancements in the prosthetic field mean that even the most basic of prostheses can provide the full range of functionality for a missing body part. A prosthesis has a number of belts or cuffs that keep it attached to your body. You can attach or remove a prosthesis as an Interact action."
+ },
+ {
+  "id": "psychic-scream",
+  "name": "Psychic Scream",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "mental"
+  ],
+  "text": "Psychic Scream Source GM Core pg. 316 Aspect Mind Activate (concentrate) Effect Your thoughts build before spilling forth in a powerful telepathic scream. Enemies within a 20-foot-radius burst centered on you must attempt a basic Will save or take 1d10 mental damage for every 2 levels of the relic. On a critical failure, they are also stupefied 1 for 1 minute."
+ },
+ {
+  "id": "purple-worm-venom",
+  "name": "Purple Worm Venom",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "injury",
+   "poison"
+  ],
+  "price": {
+   "gp": 500
+  },
+  "text": "Purple Worm Venom Source Core Rulebook pg. 553 Price 500 gp Usage held in 2 hands Bulk L Activate Interact Venom from enormous purple worms leaves a victim weakened. Saving Throw DC 32 Fortitude; Maximum Duration 6 rounds; Stage 1 5d6 poison damage and enfeebled 2 (1 round); Stage 2 6d6 poison damage and enfeebled 2 (1 round); Stage 3 8d6 poison and enfeebled 2 (1 round)"
+ },
+ {
+  "id": "pusk-bone-tiles",
+  "name": "Pusk Bone Tiles",
+  "level": 2,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical",
+   "unholy"
+  ],
+  "price": {
+   "gp": 7
+  },
+  "text": "Demon Bone Tiles May contain spoilers from Convocation Source Rival Academies pg. 111 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) These bones from different types of demons can be used to form temporary barriers. When you crush the bone fragments and blow the resulting dust around yourself as you cast shield, the shield appears as a bone bulwark shaped like the demon’s face. When use Shield Block with the spell, the barrier explodes into many bone fragments. The shards cause persistent bleed damage to each creature adjacent to you that fails a Reflex save at the listed DC. This persistent bleed damage is unholy and can be stopped with an Interact action to remove the shards. Pusk Bone Tiles Source Rival Academies pg. 111 Price 7 gp The persistent bleed damage is 1d4, and the save DC is 16. Brimorak Bone Tiles Source Rival Academies pg. 111 Price 28 gp The persistent bleed damage is 1d6, and the save DC is 20. Seraptis Bone Tiles Source Rival Academies pg. 111 Price 1,200 gp The persistent bleed damage is 2d8, and the save DC is 34."
+ },
+ {
+  "id": "puzzle-box-challenging",
+  "name": "Puzzle Box (Challenging)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10
+  },
+  "text": "A puzzle box features moving parts, locking mechanisms, and other components designed to confound the user. Solving a puzzle box typically requires three successful DC 25 Games Lore or checks to Open a Lock, though puzzle boxes come in countless configurations and themes, and the GM can determine which skills are appropriate."
+ },
+ {
+  "id": "puzzle-box-challenging-hollow",
+  "name": "Puzzle Box (Challenging) (Hollow)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 20
+  },
+  "text": "A puzzle box features moving parts, locking mechanisms, and other components designed to confound the user. Solving a puzzle box typically requires three successful DC 25 Games Lore or checks to Open a Lock, though puzzle boxes come in countless configurations and themes, and the GM can determine which skills are appropriate. --- A hollow puzzle box is designed to have an empty compartment in its center, allowing you to hide an object inside of the box. Only someone that solves the puzzle box can access the item within. A hollow puzzle box can hold an item of negligible Bulk no larger than 1 inch in diameter. Any puzzle box can be made into a hollow puzzle box. Doing so doubles the puzzle box's price."
+ },
+ {
+  "id": "puzzle-box-complex",
+  "name": "Puzzle Box (Complex)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 2
+  },
+  "text": "A puzzle box features moving parts, locking mechanisms, and other components designed to confound the user. Solving a puzzle box typically requires three successful DC 20 Games Lore or checks to Open a Lock, though puzzle boxes come in countless configurations and themes, and the GM can determine which skills are appropriate."
+ },
+ {
+  "id": "puzzle-box-complex-hollow",
+  "name": "Puzzle Box (Complex) (Hollow)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 4
+  },
+  "text": "A puzzle box features moving parts, locking mechanisms, and other components designed to confound the user. Solving a puzzle box typically requires three successful DC 20 Games Lore or checks to Open a Lock, though puzzle boxes come in countless configurations and themes, and the GM can determine which skills are appropriate. --- A hollow puzzle box is designed to have an empty compartment in its center, allowing you to hide an object inside of the box. Only someone that solves the puzzle box can access the item within. A hollow puzzle box can hold an item of negligible Bulk no larger than 1 inch in diameter. Any puzzle box can be made into a hollow puzzle box. Doing so doubles the puzzle box's price."
+ },
+ {
+  "id": "puzzle-box-hollow",
+  "name": "Puzzle Box (Hollow)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Puzzle Box Source Grand Bazaar pg. 59 Hands 1 Usage held in 1 hand Bulk L A puzzle box features moving parts, locking mechanisms, and other components designed to confound the user. Solving a puzzle box typically requires three successful Games Lore or Thievery checks to Open a Lock, though puzzle boxes come in countless configurations and themes, and the GM can determine which skills are appropriate. Puzzle Box (Simple) Source Grand Bazaar pg. 59 Price 2 sp Bulk L The DC to solve this puzzle box is 15. Puzzle Box (Complex) Source Grand Bazaar pg. 59 Price 2 gp Bulk L The DC to solve this puzzle box is 20. Puzzle Box (Challenging) Source Grand Bazaar pg. 59 Price 10 gp Bulk L The DC to solve this puzzle box is 25. Puzzle Box (Hollow) Source Grand Bazaar pg. 59 Bulk L A hollow puzzle box is designed to have an empty compartment in its center, allowing you to hide an object inside of the box. Only someone that solves the puzzle box can access the item within. A hollow puzzle box can hold an item of negligible Bulk no larger than 1 inch in diameter. Any puzzle box can be made into a hollow puzzle box. Doing so doubles the puzzle box's price."
+ },
+ {
+  "id": "puzzle-box-simple",
+  "name": "Puzzle Box (Simple)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 2
+  },
+  "text": "A puzzle box features moving parts, locking mechanisms, and other components designed to confound the user. Solving a puzzle box typically requires three successful DC 15 Games Lore or checks to Open a Lock, though puzzle boxes come in countless configurations and themes, and the GM can determine which skills are appropriate."
+ },
+ {
+  "id": "puzzle-box-simple-hollow",
+  "name": "Puzzle Box (Simple) (Hollow)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 4
+  },
+  "text": "A puzzle box features moving parts, locking mechanisms, and other components designed to confound the user. Solving a puzzle box typically requires three successful DC 15 Games Lore or checks to Open a Lock, though puzzle boxes come in countless configurations and themes, and the GM can determine which skills are appropriate. --- A hollow puzzle box is designed to have an empty compartment in its center, allowing you to hide an object inside of the box. Only someone that solves the puzzle box can access the item within. A hollow puzzle box can hold an item of negligible Bulk no larger than 1 inch in diameter. Any puzzle box can be made into a hollow puzzle box. Doing so doubles the puzzle box's price."
+ },
+ {
+  "id": "pyrite-rat",
+  "name": "Pyrite Rat",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 32
+  },
+  "text": "This lustrous, rat-shaped pyrite statuette is 1 inch tall. When activated, the statuette transforms into a flesh-and-blood giant rat. You can use the following action when you hold the *pyrite rat*. You can use this action only once per day, and the rat remains transformed for 1 hour. --- **Activate—Transform Statue** ⟨2⟩ (concentrate, manipulate) You place the statue on solid ground and speak the rat's secret name, causing the statuette to transform into a living Giant Rat. In creature form, the giant rat acts on your turn. It gets 2 actions and can't use reactions. You have to spend an action each turn to tell it what to do; otherwise, it tries to run away from danger or cowers where it is. If the rat is slain while in animal form, it reverts to its statue shape and can't be transformed again until 1 week has passed. If the figurine is destroyed while in its statue form, it's shattered and its magical properties are lost forever."
+ },
+ {
+  "id": "quenching",
+  "name": "Quenching",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 250
+  },
+  "text": "This rune counters burning and corrosive agents. Armor with this rune reduces the DC of the flat check to end persistent acid or fire damage affecting you from 15 to 12 (7 with particularly effective assistance)."
+ },
+ {
+  "id": "quenching-greater",
+  "name": "Quenching (Greater)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 1000
+  },
+  "text": "This rune counters burning and corrosive agents. Armor with this rune reduces the DC of the flat check to end persistent acid or fire damage affecting you from 15 to 10 (5 with particularly effective assistance)."
+ },
+ {
+  "id": "quenching-major",
+  "name": "Quenching (Major)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 4500
+  },
+  "text": "This rune counters burning and corrosive agents. Armor with this rune reduces the DC of the flat check to end persistent acid or fire damage affecting you from 15 to 8 (3 with particularly effective assistance)."
+ },
+ {
+  "id": "quenching-true",
+  "name": "Quenching (True)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 24000
+  },
+  "text": "This rune counters burning and corrosive agents. Armor with this rune reduces the DC of the flat check to end persistent acid or fire damage affecting you from 15 to 5 (particularly effective assistance automatically removes the persistent acid or fire damage)."
+ },
+ {
+  "id": "quick-change-outfit",
+  "name": "Quick-Change Outfit",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "A quick-change outfit is in fact two separate outfits sewn together. The specialized sewing technique allows you to switch quickly between the two outfits. You can use 3 consecutive Interact actions to slip out of the outfit, swap to the other side, and slip it back on. The two outfits can be of any kind (such as ordinary clothing and fine clothing) and appear as one outfit on one side and the second outfit on the other. The outfit's appearance is purely superficial, so you don't receive any special benefits from an outfit (such as protection from environmental cold with winter clothing), though the GM might still apply specific benefits like the bonus to checks with high-fashion fine clothing. You can notice the odd features of a quick-change outfit (such as extra seams) with a successful check. The outfit's price is equal to double the price of the more expensive of the two outfits it mimics, and its Bulk is 1 higher than the highest Bulk values of the two outfits."
+ },
+ {
+  "id": "quickstrike",
+  "name": "Quickstrike",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 10000
+  },
+  "text": "Attacks with a *quickstrike* weapon are supernaturally swift. While wielding a *quickstrike* weapon, you gain the quickened condition, but you can use the additional action granted only to make a Strike with the etched weapon."
+ },
+ {
+  "id": "rabbit",
+  "name": "Rabbit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Rabbit Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 gp"
+ },
+ {
+  "id": "raccoon",
+  "name": "Raccoon",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5
+  },
+  "text": "Raccoon Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 5 gp"
+ },
+ {
+  "id": "rail-dash",
+  "name": "Rail Dash",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "metal"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Rail Dash Source Rage of Elements pg. 148 Aspect Metal Activate ; Frequency once per hour; Effect Your relic conjures a guideway of magnets beneath you, creating a frictionless path for you to rush forward at high speeds. You Stride up to three times in a straight line. If you end your final Stride adjacent to an object or creature, you ram into it, dealing 1d12 bludgeoning damage for every 2 levels of the relic, with a basic Reflex save."
+ },
+ {
+  "id": "raiment",
+  "name": "Raiment",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 140
+  },
+  "text": "This armor can be disguised with a mere thought. **Activate—Costume Change** ⟨1⟩ (concentrate) --- **Effect** You change the shape and appearance of this armor to appear as ordinary or fine clothes of your imagining. The armor's statistics don't change. Only a creature that's benefiting from truesight or a similar effect can attempt to disbelieve this illusion, with a DC of 25."
+ },
+ {
+  "id": "raise-ramparts",
+  "name": "Raise Ramparts",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "earth"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Raise Ramparts Source GM Core pg. 313 Aspect Earth Activate (concentrate, manipulate) Frequency once per day; Effect Your relic reshapes the earth around you. You cast 5th-level wall of stone."
+ },
+ {
+  "id": "ranger-kit",
+  "name": "Ranger Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 3,
+   "sp": 7
+  },
+  "text": "Ranger Kit Source Player Core pg. 268 Price 3 gp, 7 sp Money Left Over 11 gp, 3 sp Bulk 2, 1 light Armor Leather Armor Weapons Dagger Gear Adventurer's Pack Options longbow with 20 arrows (6 gp, 2 sp), longsword and steel shield (3 gp), 2 shortswords (1 gp, 8 sp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "ranging-shot",
+  "name": "Ranging Shot",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 9
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- Strange striations and pits mark the head of a ranging shot. When the activated ammunition is fired, it sends out whistling pings along its path until it hits something or reaches its maximum range. As long as you can perceive the sounds the ammunition makes, you can tell exactly how far it has flown. The sounds are audible to creatures who didn't Activate the ammunition, but they receive no special information from the ranging shot's whistling."
+ },
+ {
+  "id": "rappelling-kit",
+  "name": "Rappelling Kit",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 30
+  },
+  "text": "This satchel contains all the basic equipment found in a climbing kit plus the specialized equipment—including a harness, belay device, and locking clips—needed for descents. When Climbing down with a rappelling kit, you move twice as fast as usual based on your check result."
+ },
+ {
+  "id": "rat",
+  "name": "Rat",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Rat Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 sp"
+ },
+ {
+  "id": "rattling-bolt",
+  "name": "Rattling Bolt",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "arcane",
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 15
+  },
+  "text": "**Ammunition** bolts **Activate** ⟨1⟩ Interact --- Sometimes when dealing with undead incursions, a more subtle approach is called for. Paradoxically, this is precisely what the rattling bolts are most often used for, despite each one ringing like a shaken chain when launched. Once it hits the target, the rattling transfers into that creature's body. A target damaged by the rattling bolt must succeed at a save or be deafened and Stupefied 1 for 1 round (or 1 minute on a critical hit). An undead affected by a rattling bolt further loses any lifesense ability it might have had for the same duration as the deafening."
+ },
+ {
+  "id": "rattling-bolt-greater",
+  "name": "Rattling Bolt (Greater)",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "arcane",
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 425
+  },
+  "text": "**Ammunition** bolts **Activate** ⟨1⟩ Interact --- Sometimes when dealing with undead incursions, a more subtle approach is called for. Paradoxically, this is precisely what the rattling bolts are most often used for, despite each one ringing like a shaken chain when launched. Once it hits the target, the rattling transfers into that creature's body. A target damaged by the rattling bolt must succeed at a save or be deafened and Stupefied 1 for 1 round (or 1 minute on a critical hit). An undead affected by a rattling bolt further loses any lifesense ability it might have had for the same duration as the deafening."
+ },
+ {
+  "id": "reading-ring",
+  "name": "Reading Ring",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 15
+  },
+  "text": "A *reading ring* is personalized to its user and capable of reading only languages in which the user is fluent. Each ring is unique and can't be used by anyone other than its specific bonded user. A *reading ring* is bonded to its user in a process that taps into the user's inner potential, similar to an invested item, except the process takes 10 minutes, is permanent, and doesn't count toward your number of invested items. You can wear the ring in various ways, often either on a finger or a chain worn about your person if you can't have it on a digit. You can use the *reading ring* to read text by taking an Interact action, and you read with the ring at roughly the same rate as a visual reader. There is no limit to how often you can use the ring to read in this manner."
+ },
+ {
+  "id": "reading-ring-greater",
+  "name": "Reading Ring (Greater)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 1800
+  },
+  "text": "A *greater reading ring* is personalized to its user and capable of reading any written language and enable the wearer to comprehend what it reads. Each ring is unique and can't be used by anyone other than its specific bonded user. A *greater reading ring* is bonded to its user in a process that taps into the user's inner potential, similar to an invested item, except the process takes 10 minutes, is permanent, and doesn't count toward your number of invested items. You can wear the ring in various ways, often either on a finger or a chain worn about your person if you can't have it on a digit. You can use the *greater reading ring* to read text by taking an Interact action, and you read with the ring at roughly the same rate as a visual reader. There is no limit to how often you can use the ring to read in this manner."
+ },
+ {
+  "id": "ready",
+  "name": "Ready",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 200
+  },
+  "text": "A *ready* rune draws component pieces of a suit of armor toward one another, making it extremely fast to get into. You can don light armor with a *ready* rune as a single action, or medium or heavy armor with a ready rune as a 2-action activity."
+ },
+ {
+  "id": "ready-greater",
+  "name": "Ready (Greater)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 1200
+  },
+  "text": "A *ready* rune draws component pieces of a suit of armor toward one another, making it extremely fast to get into. You can don any armor with this rune as a single action."
+ },
+ {
+  "id": "reapers-lancet",
+  "name": "Reaper's Lancet",
+  "level": 5,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "concealable",
+   "finesse",
+   "magical",
+   "parry",
+   "poison",
+   "twin"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "Hendrid Pratchett himself designed this custom skull-topped +1 striking exquisite sword cane and had it gilded in high-quality gold. Its first victim was the very smith whom Pratchett commissioned to craft the weapon, so the means of its construction are a secret known only to Pratchett. The magic of the *Reaper's Lancet* applies to both the blade and the sheath, making them each effectively a +1 striking weapon, but only if both are wielded by the same creature-if the two components are shared between creatures, only the blade retains the rune's magic. *Reaper's Lancet* has a hidden reservoir inside the skull that automatically applies a new dose of poison to the blade after the previous dose was expended with a successful Strike. The reservoir must be filled manually (a process requiring 1 minute) and is large enough to hold only 3 doses at a time. Any sort of injury-delivered poison can be placed in it, though all doses must be of the same poison. The Price of the poison is not reflected in this weapon's listed Price. **Activate** ⟨5⟩ Interact **Trigger** You damage a creature with Reaper's Lancet --- **Effect** You poison the creature you hit with the poison currently in the reservoir."
+ },
+ {
+  "id": "reapers-sigh",
+  "name": "Reaper's Sigh",
+  "level": 7,
+  "itemType": "weapon",
+  "traits": [
+   "deadly-d10",
+   "magical",
+   "relic",
+   "trip",
+   "wood"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "This *+1 wounding striking scythe* is a weapon of intricately embellished blackened metals and polished surfaces. It was originally intended to venerate Urgathoa in her role as the herald of autumn in pre-Taldor Isger but has recently found more malevolent meaning. With the scythe in her hands, Urgathoa was said to cull the harvest for feast to usher in the cold, bleak winters. As Urgathoa's legends took a darker tone, the scythe's own legend was reclaimed to venerate Erastil and Pharasma as part of the holiday for which it now claims a name."
+ },
+ {
+  "id": "red-thread-knot",
+  "name": "Red Thread Knot",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 360
+  },
+  "text": "This small length of red thread is knotted six times, with a loop at each end so it can either be worn as a bracelet or anklet, or hung from a strap. **Activate—Untie Fate** ⟨5⟩(concentrate, fortune) **Trigger** You critically fail a save --- **Effect** The knot unties one of its six knots, altering your fate in the process. Treat your saving throw as if you failed the check rather than critically failed the check. Once the sixth knot unties, it becomes a non-magical red thread."
+ },
+ {
+  "id": "reducer-round",
+  "name": "Reducer Round",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 25
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ Interact This bullet is fashioned from a rubbery substance and stamped with the image of a diminutive ant twitching in surprise. The bullet deals no damage on a successful hit. Instead, the target must attempt a save. --- **Success** The target is unaffected. **Failure** The target shrinks to Tiny size for 1d4 rounds. Its reach becomes 0 feet, and it's Enfeebled 1 for this duration. **Critical Failure** The target shrinks to Tiny size for 1 minute. Its reach becomes 0 feet, and it's Enfeebled 2 for this duration"
+ },
+ {
+  "id": "regalia-implement",
+  "name": "Regalia Implement",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "reinforced-surcoat",
+  "name": "Reinforced Surcoat",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "adjustment"
+  ],
+  "usage": "applied-to-medium-heavy-armor",
+  "price": {
+   "gp": 2
+  },
+  "text": "This surcoat is made of thick fabric and light chain, designed to protect vital areas. When you are critically hit by an attack, you gain physical resistance equal to 2 + the value of the armor's potency rune against the attack's damage. If the armor is in the chain armor group and you have its armor specialization effect, you instead increase the physical resistance from the chain armor specialization by 2. This can't reduce the damage to less than the damage rolled for the hit before doubling for a critical hit. However, the reinforced surcoat increases the Speed penalty of your armor by 5 feet."
+ },
+ {
+  "id": "reinforcing-rune-greater",
+  "name": "Reinforcing Rune (Greater)",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-shield",
+  "price": {
+   "gp": 2500
+  },
+  "text": "Reinforcing runes make a shield significantly more durable, allowing it to effectively block more powerful attacks. --- The shield's Hardness increases by 5, it gains an additional 80 Hit Points, and its BT increases by 40 (maximum 15 Hardness, 120 HP, and 60 BT)."
+ },
+ {
+  "id": "reinforcing-rune-lesser",
+  "name": "Reinforcing Rune (Lesser)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-shield",
+  "price": {
+   "gp": 300
+  },
+  "text": "Reinforcing runes make a shield significantly more durable, allowing it to effectively block more powerful attacks. --- The shield's Hardness increases by 3, it gains an additional 52 Hit Points, and its BT increases by 26 (maximum 10 Hardness, 80 HP, and 40 BT)."
+ },
+ {
+  "id": "reinforcing-rune-major",
+  "name": "Reinforcing Rune (Major)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-shield",
+  "price": {
+   "gp": 8000
+  },
+  "text": "Reinforcing runes make a shield significantly more durable, allowing it to effectively block more powerful attacks. --- The shield's Hardness increases by 5, it gains an additional 84 Hit Points, and its BT increases by 42 (maximum 17 Hardness, 136 HP, and 68 BT)."
+ },
+ {
+  "id": "reinforcing-rune-minor",
+  "name": "Reinforcing Rune (Minor)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-shield",
+  "price": {
+   "gp": 75
+  },
+  "text": "Reinforcing runes make a shield significantly more durable, allowing it to effectively block more powerful attacks. --- The shield's Hardness increases by 3, it gains an additional 44 Hit Points, and its BT increases by 22 (maximum 8 Hardness, 64 HP, and 32 BT)."
+ },
+ {
+  "id": "reinforcing-rune-moderate",
+  "name": "Reinforcing Rune (Moderate)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-shield",
+  "price": {
+   "gp": 900
+  },
+  "text": "Reinforcing runes make a shield significantly more durable, allowing it to effectively block more powerful attacks. --- The shield's Hardness increases by 3, it gains an additional 64 Hit Points, and its BT increases by 32 (maximum 13 Hardness, 104 HP, and 52 BT)."
+ },
+ {
+  "id": "reinforcing-rune-supreme",
+  "name": "Reinforcing Rune (Supreme)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-shield",
+  "price": {
+   "gp": 32000
+  },
+  "text": "Reinforcing runes make a shield significantly more durable, allowing it to effectively block more powerful attacks. --- The shield's Hardness increases by 7, it gains an additional 108 Hit Points, and its BT increases by 54 (maximum 20 Hardness, 160 HP, and 80 BT)."
+ },
+ {
+  "id": "religious-symbol-silver",
+  "name": "Religious Symbol (Silver)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 2
+  },
+  "text": "This piece of wood or silver is emblazoned with an image representing a deity. Some divine spellcasters, such as clerics, can use a religious symbol of their deity to use certain abilities and cast some spells. A religious symbol can be worn on the body on a chain or pin, or can be held."
+ },
+ {
+  "id": "religious-symbol-wooden",
+  "name": "Religious Symbol (Wooden)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "sp": 1
+  },
+  "text": "This piece of wood or silver is emblazoned with an image representing a deity. Some divine spellcasters, such as clerics, can use a religious symbol of their deity to use certain abilities and cast some spells. A religious symbol can be worn on the body on a chain or pin, or can be held."
+ },
+ {
+  "id": "religious-text",
+  "name": "Religious Text",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "This manuscript contains scripture of a particular religion. Some divine spellcasters, such as clerics, can use a religious text to use certain abilities. A religious text must be held in one hand to use it."
+ },
+ {
+  "id": "remote-trigger",
+  "name": "Remote Trigger",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 125
+  },
+  "text": "This trigger array uses percussive alchemical caps and crystals to remotely detonate alchemical bombs through harmonic vibrations. You can Interact to flip up a switch on the trigger, causing it to emit infrasonic pulses that attune it to one alchemical bomb over the course of 10 minutes. The trigger can be attuned to up to three bombs at a time. **Activate** ⟨1⟩ (manipulate) --- The trigger detonates any number of attuned bombs within 60 feet of it. You choose which ones to detonate. A bomb detonated by remote trigger deals its splash damage to any creature in its square."
+ },
+ {
+  "id": "repair-toolkit",
+  "name": "Repair Toolkit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 2
+  },
+  "text": "A repair kit allows you to perform simple repairs while traveling. It contains a portable anvil, tongs, woodworking tools, a whetstone, and oils for conditioning leather and wood. You can use a repair kit to Repair items using the Crafting skill. You can draw and replace a worn repair toolkit as part of the action that uses it."
+ },
+ {
+  "id": "repeater-bandolier",
+  "name": "Repeater bandolier",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 1
+  },
+  "text": "This leather bandolier holds up to three magazines for repeating weapons in leather pockets that pop open with the quick flick of a thumb. You can replace a magazine in a repeating weapon with a magazine from a worn bandolier faster, reducing the number of Interact actions required by 1. You can wear only one repeater bandolier at a time."
+ },
+ {
+  "id": "repeating-crossbow-magazine",
+  "name": "Repeating Crossbow Magazine",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 9
+  },
+  "text": ""
+ },
+ {
+  "id": "repeating-hand-crossbow-magazine",
+  "name": "Repeating Hand Crossbow Magazine",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 9
+  },
+  "text": ""
+ },
+ {
+  "id": "repeating-heavy-crossbow-magazine",
+  "name": "Repeating Heavy Crossbow Magazine",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 9
+  },
+  "text": ""
+ },
+ {
+  "id": "replacement-filter-level-1",
+  "name": "Replacement Filter (Level 1)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "bonded",
+  "price": {
+   "gp": 3
+  },
+  "text": "A replacement filter for a Water Purifier. The counteract modifier using this filter is +5."
+ },
+ {
+  "id": "replacement-filter-level-10",
+  "name": "Replacement Filter (Level 10)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "bonded",
+  "price": {
+   "gp": 155
+  },
+  "text": "A replacement filter for a Water Purifier. The counteract modifier using this filter is +17."
+ },
+ {
+  "id": "replacement-filter-level-5",
+  "name": "Replacement Filter (Level 5)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "bonded",
+  "price": {
+   "gp": 25
+  },
+  "text": "A replacement filter for a Water Purifier. The counteract modifier using this filter is +9."
+ }
+]

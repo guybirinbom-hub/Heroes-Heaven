@@ -1,0 +1,912 @@
+[
+ {
+  "id": "awakened-adamantine-shot",
+  "name": "Awakened Adamantine Shot",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3500
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (manipulate) --- These bullets are formed from a liquefied high-grade precious metal and enchanted to unlock that metal's true potential. The shot is a high-grade adamantine bullet. The awakened adamantine breaks through any resistance. The shot ignores the first 20 resistance a creature has to physical damage, all damage, or piercing or bludgeoning damage. Against a construct or creature who already has a resistance bypassed by adamantine, or a weakness to adamantine, the shot shatters the target's defenses, causing them to become off-guard for 1 minute instead. Because adamantine is uncommon, this version of awakened metal shot is uncommon even for gunslingers or other characters with access to uncommon guns and bullets from this book."
+ },
+ {
+  "id": "awakened-silver-shot",
+  "name": "Awakened Silver Shot",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 2300
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (manipulate) --- These bullets are formed from a liquefied high-grade precious metal and enchanted to unlock that metal's true potential. The shot is a high-grade silver bullet. The awakened silver gleams with altered celestial moonlight designed to weaken and expose devils and werecreatures. On a hit, it attempts to counteract any polymorph effect on the target. The counteract rank is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead. If you counteracted the Change Shape ability, the creature can't use that ability again for 1 round, or 1 minute on a critical success. If you hit a devil or werecreature not under a polymorph effect, the target is Enfeebled 1 for 1 minute instead."
+ },
+ {
+  "id": "axiomatic",
+  "name": "Axiomatic",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "evocation",
+   "lawful",
+   "magical"
+  ],
+  "price": {
+   "gp": 1400
+  },
+  "text": "Axiomatic Source Core Rulebook pg. 583 Price 1,400 gp Usage etched onto a weapon without an anarchic rune Complex and symmetrical, an axiomatic rune imbues a weapon with lawful energy. A weapon with this rune deals an additional 1d6 lawful damage against chaotic targets. If you are chaotic, you are enfeebled 2 while carrying or wielding this weapon. When you critically succeed at an attack roll with this weapon against a chaotic creature, instead of rolling, count each weapon damage die as average damage rounded up (3 for d4, 4 for d6, 5 for d8, 6 for d10, 7 for d12). Craft Requirements You are lawful."
+ },
+ {
+  "id": "axolotl",
+  "name": "Axolotl",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 40
+  },
+  "text": "Axolotl Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 40 gp"
+ },
+ {
+  "id": "azatas-grace",
+  "name": "Azata's Grace",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "chaotic",
+   "conjuration",
+   "divine"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Azata's Grace Source Pathfinder #200: Seven Dooms for Sandpoint pg. 185 Aspect Celestial Activate command, Interact; Frequency once per day; Effect Monarch opens a conduit to Desna's palace of Cynosure and infuses your soul with the grace of the azatas who dance and frolic therein. You gain 50 additional Hit Points, increasing both your maximum and current Hit Points, as well as weakness 10 to lawful damage. You also gain the effects of the righteous call gift, without expending that gift's daily use. You can Dismiss the effect. If you do so, you unleash a wave of chaotic power in the form of a rainbow-like pulse of light, causing the relic to cast scintillating pattern. The effects of this casting of scintillating pattern don't affect your allies."
+ },
+ {
+  "id": "backpack-ballista-bolts",
+  "name": "Backpack Ballista Bolts",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "backpack-catapult-stones",
+  "name": "Backpack Catapult Stones",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "badger",
+  "name": "Badger",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1,
+   "sp": 5
+  },
+  "text": "Badger Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 gp, 5 sp"
+ },
+ {
+  "id": "bag-of-devouring-type-i",
+  "name": "Bag of Devouring Type I",
+  "level": 7,
+  "itemType": "container",
+  "traits": [
+   "cursed",
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a . On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely. **Athletics Bonus** +15; acts as a *type II bag of holding*"
+ },
+ {
+  "id": "bag-of-devouring-type-ii",
+  "name": "Bag of Devouring Type II",
+  "level": 11,
+  "itemType": "container",
+  "traits": [
+   "cursed",
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a . On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely. **Athletics Bonus** +21; acts as a *type III bag of holding*"
+ },
+ {
+  "id": "bag-of-devouring-type-iii",
+  "name": "Bag of Devouring Type III",
+  "level": 13,
+  "itemType": "container",
+  "traits": [
+   "cursed",
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a . On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely. **Athletics Bonus** +24; acts as a *type IV bag of holding*"
+ },
+ {
+  "id": "bag-of-weasels",
+  "name": "Bag of Weasels",
+  "level": 4,
+  "itemType": "container",
+  "traits": [
+   "cursed",
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "This item appears to be and functions as a *Spacious Pouch (Type I)*, until you try to retrieve an item from the bag. Whenever you retrieve an item from the *bag of weasels*, roll a . On a success, you retrieve the item as normal. On a failure, the item you retrieve is transformed into a weasel; this doesn't affect artifacts, cursed items, or other hard-to-destroy items. This weasel uses either the weasel statistics or a giant rat statistics and exudes an aura of magic. The weasel has no loyalty to you and typically attempts to escape as quickly as possible. If the weasel is counteracted, it transforms back into the original item that was taken from the *bag of weasels*. If it dies or is slain, the weasel disappears and the item is permanently destroyed. Because the weasel is a transformed item, you don't gain any benefit you would receive from attacking a creature, defeating one, damaging one, or the like, but you do gain any benefit you would gain from destroying an item."
+ },
+ {
+  "id": "ball",
+  "name": "Ball",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 3
+  },
+  "text": "Toy balls come in a variety of shapes, sizes, and compositions, such as with squishy fabric, bouncy rubber, or lightweight wicker, or forms like bean-filled sacks and hard-hide balls."
+ },
+ {
+  "id": "bandalore",
+  "name": "Bandalore",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 5
+  },
+  "text": "Similar to a spool of string, a bandalore consists of two wooden disks connected to a central axle wound with string. By holding the end of the string and releasing the bandalore, a skilled user can move the bandalore up and down, performing a variety of tricks."
+ },
+ {
+  "id": "bane",
+  "name": "Bane",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 100
+  },
+  "text": "A bane rune causes a weapon to grant you improved understanding of creatures of a particular type, allowing you to deal more damage to those creatures. The crafter chooses aberration, animal, beast, celestial, construct, dragon, elemental, fey, fiend, giant, monitor, ooze, or both fungus and plant. The weapon deals 1d6 additional damage of the weapon's damage type to creatures with the chosen trait or traits. The benefit doesn't apply against creatures of the chosen type disguised as other creatures. It's up to GM discretion whether the bane rune applies against a creature disguised as a creature of the chosen type. The GM might allow bane runes for other creature traits, such as astral, dream, or demon. However, humanoids, undead, and specific types of humanoids (such as elves) are never a valid option."
+ },
+ {
+  "id": "bane-ammunition-greater",
+  "name": "Bane Ammunition (Greater)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Monster hunters favor bane ammunition that contains a capsule of reagents tailored to a particular type of creature—aberration, animal, beast, dragon, fey, giant, ooze, or both fungus and plant. Each type requires a different formula. When activated bane ammunition hits a target that has a trait matching the selected type, it takes 3d6 damage in addition to the damage the attack normally deals."
+ },
+ {
+  "id": "bane-ammunition-lesser",
+  "name": "Bane Ammunition (Lesser)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Monster hunters favor bane ammunition that contains a capsule of reagents tailored to a particular type of creature—aberration, animal, beast, dragon, fey, giant, ooze, or both fungus and plant. Each type requires a different formula. When activated bane ammunition hits a target that has a trait matching the selected type, it takes 1d4 damage in addition to the damage the attack normally deals."
+ },
+ {
+  "id": "bane-ammunition-moderate",
+  "name": "Bane Ammunition (Moderate)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 25
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Monster hunters favor bane ammunition that contains a capsule of reagents tailored to a particular type of creature—aberration, animal, beast, dragon, fey, giant, ooze, or both fungus and plant. Each type requires a different formula. When activated bane ammunition hits a target that has a trait matching the selected type, it takes 2d6 damage in addition to the damage the attack normally deals."
+ },
+ {
+  "id": "barbarian-kit",
+  "name": "Barbarian Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 4
+  },
+  "text": "Barbarian Kit Source Player Core 2 pg. 277 Price 4 gp Money Left Over 11 gp Bulk 3, 5 light Armor Hide Armor Weapons javelins (4) Gear Grappling Hook, Adventurer's Pack Options greataxe (2 gp), greatclub (1 gp), greatsword (2 gp), or battle axe and steel shield (3 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "bard-kit",
+  "name": "Bard Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 7,
+   "sp": 5,
+   "cp": 2
+  },
+  "text": "Bard Kit Source Player Core pg. 268 Price 7 gp, 5 sp, 2 cp Money Left Over 7 gp, 4 sp, 8 cp Bulk 4, 4 light Armor Studded Leather Armor Weapons sling with 20 bullets, Rapier, Dagger Gear Adventurer's Pack, Musical Instrument (Handheld) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "barding-saddle",
+  "name": "Barding Saddle",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "companion",
+   "invested",
+   "magical"
+  ],
+  "usage": "wornsaddle",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 330
+  },
+  "text": "This saddle is covered with well-polished metal plates on the outside and adjusts to fit any mount. --- **Activate—Ready for Battle** ⟨2⟩ (manipulate) --- You touch the metal plates of the saddle, which begin to unfold around the creature, covering your mount in heavy barding that extends from a simple-looking saddle. The Bulk of the saddle is the same in either form, but your mount isn't affected by the restrictions or the benefits of wearing barding while it's in saddle form. If the mount is already wearing barding, this has no effect. You return the barding to saddle form by using the same activity."
+ },
+ {
+  "id": "basic-chair",
+  "name": "Basic Chair",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 5
+  },
+  "text": "This common wheelchair is ideal for everyday use but isn't designed for strenuous activity. Basic chairs are most common among non-adventurers."
+ },
+ {
+  "id": "basic-companion-chair",
+  "name": "Basic Companion Chair",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "barding",
+   "companion"
+  ],
+  "usage": "other",
+  "price": {
+   "sp": 4
+  },
+  "text": "This harness fits around the torso of an animal companion and connects via struts to a number of wheels to assist the companion's movement. Companion chairs can be fitted for animal companions of any shape or size and have two- and four-wheel configurations. Like the basic chair, a companion chair is ideal for everyday use but not more strenuous activity, making it more common among non-adventurers."
+ },
+ {
+  "id": "basic-crafters-book",
+  "name": "Basic Crafter's Book",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 1
+  },
+  "text": "This book contains the formulas for Crafting the 0-level common items in Chapter 6 of the Pathfinder Player Core."
+ },
+ {
+  "id": "bat",
+  "name": "Bat",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 3
+  },
+  "text": "Bat Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 3 gp"
+ },
+ {
+  "id": "battering-ammunition",
+  "name": "Battering Ammunition",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 15
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Etched with the symbol of a ram's head, activated battering ammunition magically gathers momentum as it flies, imparting this momentum to its target on a successful Strike. It deals bludgeoning damage instead of its normal damage type and pushes the target 5 feet on a successful hit."
+ },
+ {
+  "id": "beacon-of-the-wilds",
+  "name": "Beacon of the Wilds",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "cp": 0,
+   "gp": 3800,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This magical banner lightens your feet and allows you to move adroitly. This banner is sometimes referred to as the marching flag. You and your allies ignore difficult terrain within the banner's aura."
+ },
+ {
+  "id": "beacon-shot",
+  "name": "Beacon Shot",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 10
+  },
+  "text": "**Ammunition** arrow, bolt **Activate** ⟨1⟩ (manipulate) --- The shaft of a *beacon shot* is studded with tiny flecks of glimmering gemstones. When an activated *beacon shot* hits a target, it embeds itself into that target and spews sparks for 1 minute. If the target is invisible, it becomes merely hidden to creatures who would otherwise be unable to see it. The sparks also negate the concealed condition if the target was otherwise concealed. A creature can remove the arrow or bolt by using an Interact basic action and succeeding at a check."
+ },
+ {
+  "id": "bedroll",
+  "name": "Bedroll",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "cp": 2
+  },
+  "text": "A rolled up bed."
+ },
+ {
+  "id": "beehive",
+  "name": "Beehive",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Beehive Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 gp"
+ },
+ {
+  "id": "beginners-luck",
+  "name": "Beginner's Luck",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fortune"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Beginner's Luck Source Treasure Vault (Remastered) pg. 199 Aspect Luck Activate (concentrate) Frequency once per day; Trigger You attempt a d20 roll you're untrained in; Effect You treat your proficiency bonus as equal to half your level, or if the relic is 7th level or higher, as equal to your level. Then, roll twice, taking the better of the two results. This doesn't allow you to use a skill's trained actions."
+ },
+ {
+  "id": "bell-implement",
+  "name": "Bell Implement",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "bellflower-toolbelt",
+  "name": "Bellflower Toolbelt",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornbelt",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 220
+  },
+  "text": "Different versions of the bellflower toolbelt are customized to appear to suit specific trades, so a belt used for carpentry would look different from a belt for baking. **Activate** ⟨2⟩ (concentrate, manipulate) **Effect** You place an object of up to 1 Bulk into the belt, transforming that object into a tool befitting the trade for which the belt was created. Each object remains transformed until it has been removed from the belt for 24 hours or someone uses a single Interact action to return it to its normal form. If enough transformed items are in it, the belt can be used as an Artisan's Toolkit for that trade."
+ },
+ {
+  "id": "bellicose-dagger",
+  "name": "Bellicose Dagger",
+  "level": 7,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "cursed",
+   "finesse",
+   "magical",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "The hilt of a bellicose dagger is etched with the word for \"war\" in various languages. Having absorbed the spirit of violence over the course of its existence, the weapon now craves bloodshed. A bellicose dagger is a *+1 striking wounding dagger*. However, anytime you interact with creatures, no matter the context, you must succeed at a save or else find you have, as a reaction, drawn the dagger. When you use the bellicose dagger as a weapon for the first time, it fuses to you. While it's in your possession, you take a –2 circumstance penalty to Diplomacy checks and skill checks to avoid fighting, such as Deception checks to trick your way out of a scuffle or Stealth checks to sneak past enemies."
+ },
+ {
+  "id": "beloveds-bracelets",
+  "name": "Beloved's Bracelets",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "mythic"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 10000
+  },
+  "text": "The mightiest wizards of Eurythnia, the realm of lust, would sometimes share one of these pairs of bracelets—the silver, most often—with their closest confidantes and most trusted apprentices, while keeping the golden one for themselves. **Activate—Grant Mythic Power** 1 minute (concentrate) **Requirements** Both bracelets are invested and the silver bracelet is not already imbued with mythic power --- **Effect** The wearer of the golden bracelet imbues the silver bracelet with a portion of their mythic power by spending 1 Mythic Point. Until the silver bracelet is no longer imbued with mythic power, the maximum number of Mythic Points the wearer of the golden bracelet can have is reduced by 1. Whenever the wearer of the silver bracelet would attempt a skill check, they can choose to make the check at mythic proficiency. If they do, the silver bracelet loses its mythic power and the wearer of the golden bracelet is immediately aware of this, regardless of the distance between the two bracelets, even if they are on different planes of existence. If the creature who had invested in the silver bracelet dies before expending the mythic power in it, the silver bracelet immediately teleports into the possession of the wearer of the golden bracelet regardless of the distance between them, even if they are on different planes of existence."
+ },
+ {
+  "id": "belt-of-good-health",
+  "name": "Belt of Good Health",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "wornbelt",
+  "price": {
+   "cp": 0,
+   "gp": 85,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "When you put on this belt, its silver buckle begins to glow, which slowly spreads into the heart-shaped jewel in the center. You increase your maximum Hit Points and current Hit Points by 4. If you remove the belt, you immediately decrease both your maximum and current HP by 4."
+ },
+ {
+  "id": "bestow-life",
+  "name": "Bestow Life",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "positive",
+   "vitality"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Bestow Life Source GM Core pg. 315 Aspect Life Activate (concentrate) Frequency once per day; Effect An infusion of vitality energy from your relic can temporarily animate an unliving object. You transform an adjacent inanimate object into an animated object with a level equal to one-half the relic's level and appropriate to the object (so a broom would become an animated broom). The object pursues a single simple noncombat task you state when you use Bestow Life, ignoring any subsequent commands. The object is mindless and pursues the task single-mindedly and in an uncreative manner. The object remains animated for 1 hour."
+ },
+ {
+  "id": "beverages-bottle-of-fine-wine",
+  "name": "Beverages (Bottle of Fine Wine)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Beverages Source Player Core pg. 294 Beverages (Mug of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 1 Bulk L Beverages (Keg of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp Hands 2 Bulk 2 Beverages (Pot of Coffee or Tea) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 cp Hands 1 Bulk L Beverages (Bottle of Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp Hands 1 Bulk L Beverages (Bottle of Fine Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 1 Bulk L"
+ },
+ {
+  "id": "beverages-bottle-of-wine",
+  "name": "Beverages (Bottle of Wine)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Beverages Source Player Core pg. 294 Beverages (Mug of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 1 Bulk L Beverages (Keg of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp Hands 2 Bulk 2 Beverages (Pot of Coffee or Tea) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 cp Hands 1 Bulk L Beverages (Bottle of Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp Hands 1 Bulk L Beverages (Bottle of Fine Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 1 Bulk L"
+ },
+ {
+  "id": "beverages-keg-of-ale",
+  "name": "Beverages (Keg of Ale)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "Beverages Source Player Core pg. 294 Beverages (Mug of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 1 Bulk L Beverages (Keg of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp Hands 2 Bulk 2 Beverages (Pot of Coffee or Tea) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 cp Hands 1 Bulk L Beverages (Bottle of Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp Hands 1 Bulk L Beverages (Bottle of Fine Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 1 Bulk L"
+ },
+ {
+  "id": "beverages-mug-of-ale",
+  "name": "Beverages (Mug of Ale)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Beverages Source Player Core pg. 294 Beverages (Mug of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 1 Bulk L Beverages (Keg of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp Hands 2 Bulk 2 Beverages (Pot of Coffee or Tea) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 cp Hands 1 Bulk L Beverages (Bottle of Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp Hands 1 Bulk L Beverages (Bottle of Fine Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 1 Bulk L"
+ },
+ {
+  "id": "beverages-pot-of-coffee-or-tea",
+  "name": "Beverages (Pot of Coffee or Tea)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 2
+  },
+  "text": "Beverages Source Player Core pg. 294 Beverages (Mug of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 1 Bulk L Beverages (Keg of Ale) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp Hands 2 Bulk 2 Beverages (Pot of Coffee or Tea) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 cp Hands 1 Bulk L Beverages (Bottle of Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp Hands 1 Bulk L Beverages (Bottle of Fine Wine) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 1 Bulk L"
+ },
+ {
+  "id": "bi-resonant-wayfinder",
+  "name": "Bi-Resonant Wayfinder",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 200
+  },
+  "text": "A *bi-resonant wayfinder* is inlaid with intricate platinum wires in a complex array of conduits for magical energy. These conduits control the resonant interference of aeon stones. A *bi-resonant wayfinder* works just like a regular Wayfinder except it has two aeon stone slots, and the aeon stones in both slots grant their resonant powers without interfering with each other. The *bi-resonant wayfinder* and the two aeon stones count as two items toward your investiture limit."
+ },
+ {
+  "id": "big-rock-bullet",
+  "name": "Big Rock Bullet",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "earth",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "**Ammunition** sling bullet **Activate** ⟨1⟩ Interact --- A big rock bullet is a sling bullet made of heavy granite, but each piece of ammunition feels much more dense than it appears. When activated, a big rock bullet transforms into a giant rock just before hitting the target. The target takes 4d6 damage on a successful hit. Even on a failed attack roll (but not a critical failure), the target takes 2d6 damage. Creatures with the Catch Rock reaction can use it against a big rock bullet."
+ },
+ {
+  "id": "big-rock-bullet-greater",
+  "name": "Big Rock Bullet (Greater)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "earth",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "**Ammunition** sling bullet **Activate** ⟨1⟩ Interact --- A big rock bullet is a sling bullet made of heavy granite, but each piece of ammunition feels much more dense than it appears. When activated, a big rock bullet transforms into a giant rock just before hitting the target. The target takes 8d6 damage on a successful hit. Even on a failed attack roll (but not a critical failure), the target takes 4d6 damage. Creatures with the Catch Rock reaction can use it against a big rock bullet."
+ },
+ {
+  "id": "big-rock-bullet-major",
+  "name": "Big Rock Bullet (Major)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "earth",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1150
+  },
+  "text": "**Ammunition** sling bullet **Activate** ⟨1⟩ Interact --- A big rock bullet is a sling bullet made of heavy granite, but each piece of ammunition feels much more dense than it appears. When activated, a big rock bullet transforms into a giant rock just before hitting the target. The target takes 12d6 damage on a successful hit. Even on a failed attack roll (but not a critical failure), the target takes 6d6 damage. Creatures with the Catch Rock reaction can use it against a big rock bullet."
+ },
+ {
+  "id": "bioluminescence-bomb",
+  "name": "Bioluminescence Bomb",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "light"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This vial of glowing goo constantly sheds dim light in a 10-foot radius. When a bioluminescence bomb strikes a creature or a hard surface, it shatters and releases the bioluminescent fluid's energy in a flare of light. Each creature within 10 feet of where the bomb exploded must succeed at a or be marked with dye that continues to glow for 24 hours. An affected creature must also attempt a saving throw against the overwhelming burst of light. --- **Success** The creature is unaffected. **Failure** The creature is dazzled for 1 round. **Critical Failure** The creature is blinded for 1 round, then dazzled for 1 round."
+ },
+ {
+  "id": "bird",
+  "name": "Bird",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Bird Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Bird Source Travel Guide pg. 101 Price 1 sp Bird (House Eagle) Source Travel Guide pg. 101 Price 10 gp These smaller falcons feature the brown-and-white markings of eagles and are popular among Eagle Knights. They serve both as a symbol of national pride and help keep watch in the field. They can be kept in a home but require a dedicated perch. They're known for pouncing on and tearing up floor rugs."
+ },
+ {
+  "id": "bird-house-eagle",
+  "name": "Bird (House Eagle)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Bird Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Bird Source Travel Guide pg. 101 Price 1 sp Bird (House Eagle) Source Travel Guide pg. 101 Price 10 gp These smaller falcons feature the brown-and-white markings of eagles and are popular among Eagle Knights. They serve both as a symbol of national pride and help keep watch in the field. They can be kept in a home but require a dedicated perch. They're known for pouncing on and tearing up floor rugs."
+ },
+ {
+  "id": "bitter",
+  "name": "Bitter",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "poison"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 135
+  },
+  "text": "While you wear this acrid armor, any creature that Engulfs you or Swallows you Whole is Sickened 1; if it spends an action retching to reduce the sickened condition, you can attempt to Escape as a reaction."
+ },
+ {
+  "id": "black-powder-dose-or-round",
+  "name": "Black Powder (Dose or Round)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "cp": 1
+  },
+  "text": "Black Powder Source Guns & Gears (Remastered) pg. 169 Ammunition round Activate Interact Black powder is a volatile and explosive alchemical substance commonly used in the production of firearm munitions. Black powder becomes inert and useless when wet and must be kept in a sealed, water-tight container. Black Powder (Dose or Round) Source Guns & Gears (Remastered) pg. 169 Price 1 cp The smallest unit of black powder that still has a simple use, a dose can be a simple package paper parcel around black powder or it can be packaged with a metal bullet or pellet to be used as ammunition. When ignited with a fuse or exposed to direct flame, a dose of black powder explodes. This isn't powerful enough to deal damage but makes a loud sound and could trigger further explosions. A fuse for a dose can be created with a few twists of paper and causes the dose to explode the round after it's lit. Black Powder (Horn) Source Guns & Gears (Remastered) pg. 169 Price 5 gp A horn contains 500 doses worth of black powder. A horn can be detonated by leaving a small trail of black powder and then lighting it. Each 5-foot square requires one dose of black powder to create a trail through. As long as the horn is mostly full (at least 400 doses remaining) it can be detonated to deal 1d6 fire damage in a 5-foot burst (DC 16 basic Reflex save). It takes 1 round per 15 feet of powder trail laid down for a horn to detonate after the trail is lit. If multiple horns detonate simultaneously, it can increas"
+ },
+ {
+  "id": "black-scorpion-stingmace",
+  "name": "Black Scorpion Stingmace",
+  "level": 15,
+  "itemType": "weapon",
+  "traits": [
+   "magical",
+   "poison",
+   "shove"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 6250
+  },
+  "text": "The massive stinger of a black scorpion adds significant weight to this *+2 greater striking Fearsome mace*. On a critical hit, the target is exposed to black scorpion venom. --- **Black Scorpion Venom** (poison) **Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 2d12 damage and Clumsy 2 (1 round) **Stage 2** 3d12 damage, clumsy 2, and Slowed 1 (1 round) **Stage 3** 4d12 damage, Clumsy 4, and Slowed 2 (1 round). --- **Craft Requirements** The initial raw materials must include the intact stinger of a black scorpion."
+ },
+ {
+  "id": "blade-launcher",
+  "name": "Blade Launcher",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 18
+  },
+  "text": "A blade launcher has a bow-like assembly mounted on a handled frame. The frame can be configured to fire either a dagger, dart, shuriken, or starknife. Configuring a blade launcher requires three Interact actions. Once properly configured, loading an appropriate thrown weapon into a blade launcher requires a single Interact action. A blade launcher can't fire weapons for which it's not currently configured. A weapon fired with a blade launcher loses the agile, monk, thrown, and versatile traits, if it has them, and has a range increment of 40 feet. Due to losing the thrown weapon trait, returning and most other effects that allow a weapon to return don't function; even if a launched weapon did return, you'd still need to load it into the blade launcher with an Interact action to fire the blade launcher again."
+ },
+ {
+  "id": "blade-of-fallen-stars",
+  "name": "Blade of Fallen Stars",
+  "level": 22,
+  "itemType": "weapon",
+  "traits": [
+   "combination",
+   "concussive",
+   "kickback"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 46500
+  },
+  "text": "This *+4 major striking greater frost gun sword* is made from high-grade cold siccatite. This gun sword's elegant, silvery blade is double-edged and etched with stars and constellations that move and mirror the night sky. The blade absorbs starlight, and prolonged exposure causes it to form a layer of glittering residue. Smiths in Dongun Hold forged this weapon by combining the cracked remains of a skymetal arquebus and the shards of an exceptional elven greatsword. Some tales of the forging report that the sword was Tear of Eventide, a great blade forged out of starlight for the battle between Desna and Aolar. Whether or not that was the case, dwarven curators who examined the shards simply noted that the blade's material was compatible with the cracked gun. After an extremely tense diplomatic brunch, the weapon is now regarded as a miracle of elven artistry and dwarven engineering, and a powerful symbol of allyship between their kingdoms. --- **Activate** ⟨1⟩ Interact **Effect** You unfold the parrying hooks extending from the blade to form a bipod, which has the same benefits as a typical Tripod. This negates the –2 penalty from kickback but must be reversed by a subsequent Interact action before the weapon can be repositioned or wielded in melee. --- **Activate** ⟨2⟩ command, Interact **Requirements** The blade of fallen stars was exposed to starlight for at least one hour since the last time this ability was used **Effect** The coating on the blade seeps into the engravi"
+ },
+ {
+  "id": "blast-lance",
+  "name": "Blast Lance",
+  "level": 4,
+  "itemType": "weapon",
+  "traits": [
+   "deadly-d8",
+   "fire",
+   "jousting-d6",
+   "magical",
+   "reach"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {
+   "gp": 100
+  },
+  "text": "This weapon is a long *+1 Lance* with a muzzle built into the pointed tip, allowing the user to fire the chamber after a successful melee attack. A barrel running down the length of the lance allows you to load firearm ammunition into the base of the weapon more easily than it might seem from the design. It takes 2 actions to reload a *blast lance*. --- **Activate** ⟨4⟩ command **Trigger** You strike a foe with the *blast lance* **Requirements** The *blast lance* is loaded with a round **Effect** You fire a blast of gunpowder through the weapon that deals 2d8 damage. The foe must attempt a save. --- **Critical Success** The target is unaffected by the blast of gunpowder and the *blast lance* misfires and jams. **Success** The target takes half the fire damage. **Failure** The target takes the full fire damage and is pushed back 5 feet. You can Stride after it, but you must move the same distance and in the same direction. **Critical Failure** The target takes double damage and is pushed back 10 feet. You can Stride after it, but you must move the same distance and in the same direction."
+ },
+ {
+  "id": "blast-lance-greater",
+  "name": "Blast Lance (Greater)",
+  "level": 8,
+  "itemType": "weapon",
+  "traits": [
+   "deadly-d8",
+   "fire",
+   "jousting-d6",
+   "magical",
+   "reach"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "This weapon is a long *+1 striking Lance* with a muzzle built into the pointed tip, allowing the user to fire the chamber after a successful melee attack. A barrel running down the length of the lance allows you to load firearm ammunition into the base of the weapon more easily than it might seem from the design. It takes 2 actions to reload a *blast lance*. --- **Activate** ⟨4⟩ command **Trigger** You strike a foe with the *blast lance* **Requirements** The *blast lance* is loaded with a round **Effect** You fire a blast of gunpowder through the weapon that deals 3d8 damage. The foe must attempt a save. --- **Critical Success** The target is unaffected by the blast of gunpowder and the *blast lance* misfires and jams. **Success** The target takes half the fire damage. **Failure** The target takes the full fire damage and is pushed back 5 feet. You can Stride after it, but you must move the same distance and in the same direction. **Critical Failure** The target takes double damage and is pushed back 10 feet. You can Stride after it, but you must move the same distance and in the same direction."
+ },
+ {
+  "id": "blasting-stone-lesser",
+  "name": "Blasting Stone (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "sonic",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- When this pebble hits a creature or a hard surface, it explodes with a deafening bang. A blasting stone deals 1d4 sonic damage and 1 sonic splash damage, and each creature within 10 feet of the space in which the stone exploded must succeed at a saving throw with the listed DC or be deafened until the end of its next turn."
+ },
+ {
+  "id": "blazing-banner",
+  "name": "Blazing Banner",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "fire",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "cp": 0,
+   "gp": 100,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This magical banner shimmers in a fiery array of reds, oranges, and yellows. The rampant threads catch light in the wind and give the appearance of a blazing flame. Whenever you or an ally within the banner's aura critically succeeds with a Strike, the Strike deals an additional 1d4 damage."
+ },
+ {
+  "id": "blazing-banner-greater",
+  "name": "Blazing Banner (Greater)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "fire",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "gp": 2000
+  },
+  "text": "This magical banner shimmers in a fiery array of reds, oranges, and yellows. The rampant threads catch light in the wind and give the appearance of a blazing flame. Whenever you or an ally within the banner's aura critically succeeds with a Strike, the Strike deals an additional 1d6 persistent fire damage."
+ },
+ {
+  "id": "blazing-banner-major",
+  "name": "Blazing Banner (Major)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "fire",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "cp": 0,
+   "gp": 36000,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This magical banner shimmers in a fiery array of reds, oranges, and yellows. The rampant threads catch light in the wind and give the appearance of a blazing flame. Whenever you or an ally within the banner's aura critically succeeds with a Strike, the Strike deals an additional 1d8 persistent fire damage."
+ }
+]

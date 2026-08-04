@@ -1,0 +1,869 @@
+[
+ {
+  "id": "rounds-gun-sword",
+  "name": "Rounds (Gun Sword)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-hammer-gun",
+  "name": "Rounds (Hammer Gun)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-hand-cannon",
+  "name": "Rounds (Hand Cannon)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-harmona-gun",
+  "name": "Rounds (Harmona Gun)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-jezail",
+  "name": "Rounds (Jezail)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-mace-multipistol",
+  "name": "Rounds (Mace Multipistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-pepperbox",
+  "name": "Rounds (Pepperbox)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-piercing-wind",
+  "name": "Rounds (Piercing Wind)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-rapier-pistol",
+  "name": "Rounds (Rapier Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-shield-pistol",
+  "name": "Rounds (Shield Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "rounds-shobhad-longrifle",
+  "name": "Rounds (Shobhad Longrifle)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-slide-pistol",
+  "name": "Rounds (Slide Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-spike-launcher",
+  "name": "Rounds (Spike Launcher)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {},
+  "text": "Ammunition for a Spike Launcher"
+ },
+ {
+  "id": "rounds-three-peaked-tree",
+  "name": "Rounds (Three-peaked Tree)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "ruler",
+  "name": "Ruler",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 5
+  },
+  "text": "A ruler is a straight-edged object used for measuring small distances accurately and drawing straight lines."
+ },
+ {
+  "id": "runewell-of-lust",
+  "name": "Runewell of Lust",
+  "level": 23,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "usage": "other",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {},
+  "text": "The Runewell of Lust is a potent artifact and was the first of its kind among the runelords. As with all runewells, the Runewell of Lust is immobile and located within a demiplane that's inexorably linked to it, but the anima focus that allows access to the demiplane and the runewell can be transported to new locations through a series of complex rites known only to Sorshen herself. Originally, the Runewell of Lust could absorb soul fragments of those who served Sorshen upon their deaths, granting her an essentially limitless supply of magical power she could use to fund potent rituals or craft magical items, but she disabled this ability soon after she woke years ago and decided it was time for a change. The Runewell of Lust appears as a hot spring filled with soothing 3-foot-deep waters. **Activate—Exit the Eye** ⟨1⟩ (concentrate, manipulate) --- **Effect** By splashing the runewell's water on yourself while you stand within it, you transport yourself back to a space of your choice within 30 feet of the anima focus, which is currently located in Sorshen's atrium. --- **Destruction** If Sorshen is slain, the waters within the Runewell of Lust immediately become normal water, destroying the runewell in the process. The Eye of Desire is destroyed as well. Creatures not native to the Eye of Desire are immediately transported to the vicinity of the runewell's linked anima focus and become Stunned 3; any foreign objects within the Eye of Desire at the time are similarly ejected."
+ },
+ {
+  "id": "rustbringer",
+  "name": "Rustbringer",
+  "level": 10,
+  "itemType": "weapon",
+  "traits": [
+   "disarm",
+   "magical",
+   "metal",
+   "sweep",
+   "trip"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 900
+  },
+  "text": "The handle, chain, and spiked ball of this *+1 striking corrosive flail* are all made of iron so rusted that the weapon appears nonfunctional at first glance. On Strikes against a creature that's primarily made of metal, it gains the deadly d10 trait. **Activate—Rusting Disarm** ⟨5⟩ **Trigger** You critically succeed at a Disarm attempt with the flail against a metal weapon --- **Effect** Flakes of acid-laden rust are deposited on the disarmed weapon. The weapon takes 2d6 damage, ignoring the weapon's Hardness."
+ },
+ {
+  "id": "rustbringer-greater",
+  "name": "Rustbringer (Greater)",
+  "level": 17,
+  "itemType": "weapon",
+  "traits": [
+   "disarm",
+   "magical",
+   "metal",
+   "sweep",
+   "trip"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 13500
+  },
+  "text": "The handle, chain, and spiked ball of this *+3 greater striking greater corrosive flail* are all made of iron so rusted that the weapon appears nonfunctional at first glance. On Strikes against a creature that's primarily made of metal, it gains the deadly d10 trait. **Activate—Rusting Disarm** ⟨5⟩ **Trigger** You critically succeed at a Disarm attempt with the flail against a metal weapon --- **Effect** Flakes of acid-laden rust are deposited on the disarmed weapon. The weapon takes 4d6 damage, ignoring the weapon's Hardness."
+ },
+ {
+  "id": "rusting-ammunition-greater",
+  "name": "Rusting Ammunition (Greater)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "force"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ Interact --- Rusting ammunition is made using an ore louse's saliva and, when activated, deals damage to objects or creatures primarily made of metal. The target takes 4d8 damage for up to 6 rounds. A creature that drops to 0 Hit Points while taking this persistent damage crumbles into fine powder; its gear remains. For an object, the ammunition destroys a 10-foot cube. --- **Craft Requirements** Supply the saliva of an Ore Louse"
+ },
+ {
+  "id": "rusting-ammunition-moderate",
+  "name": "Rusting Ammunition (Moderate)",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "force"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ Interact --- Rusting ammunition is made using an ore louse's saliva and, when activated, deals damage to objects or creatures primarily made of metal. The target takes 3d8 damage for up to 5 rounds. A creature that drops to 0 Hit Points while taking this persistent damage crumbles into fine powder; its gear remains. For an object, the ammunition destroys a 5-foot cube. --- **Craft Requirements** Supply the saliva of an Ore Louse"
+ },
+ {
+  "id": "sack-of-hyrdras-teeth",
+  "name": "Sack of Hyrdra's Teeth",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1800
+  },
+  "text": "Sack of Hyrdra's Teeth Source Battlecry! pg. 146 Price 1,800 gp Usage held in 1 hand Bulk 1 This soft cotton bag has a drawstring of sinew and a jagged embroidery pattern around the mouth. Inside are a seemingly endless number of needle-sharp teeth. Activate—Sow a Tooth (manipulate, occult) Frequency once per hour; Effect You cast forth a tooth from the bag, and where it lands, a skeleton springs up from the ground. This has the effect of phantasmal minion, except the minion appears as a visible skeleton. Activate—Fist Full of Fangs (manipulate, occult) Frequency once per day; Effect You draw a whole handful of teeth and cast them to the ground, casting rouse skeletons as a 5th-rank spell (DC 30)."
+ },
+ {
+  "id": "sacred-glow",
+  "name": "Sacred Glow",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "holy",
+   "light"
+  ],
+  "text": "Sacred Glow Source GM Core pg. 311 Aspect Celestial Activate (concentrate, manipulate) Effect Your relic shines with holy light. This creates bright light in a 30-foot emanation around the item. Unholy creatures in the area are frightened 1 and can't lower their frightened value below 1 as long as they remain in the light. Fiends in the area increase any weakness to holy they have by 5. You can Sustain this activation for up to 1 minute."
+ },
+ {
+  "id": "safe-house-level-1",
+  "name": "Safe House (Level 1)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Safe House Source Firebrands pg. 94 Safe houses are locations that are difficult to find and provide sanctuary for groups or individuals in need of a suitable hiding place to lie low. These locations may be utilized by spies seeking refuge from enemies, accused criminals running from unjust or corrupt law enforcement, or any number of others sheltering from a hostile, unsafe, or oppressive situation. Many Firebrands make use of a safe house or set one up themselves in the course of their journeys to keep their presence hidden from spies or to find refuge while fleeing from dangerous locations. The costs associated with each level is the amount of money required to commission and establish a safe house of that level. This includes renting, purchasing, or constructing the location, bribing any informants for their discretion, and securing routes to and from the safe house in case of emergency. The cost of access to a safe house increases with the level of security it provides. Any creature attempting to locate a safe house must spend at least 2 hours to attempt to Gather Information on the location, the DC of which is determined by the safe house's level. The DC of the check required to locate a given safe house is reduced by 1 for each day that the safe house remains in use. For this reason, a particular location is typically used for a maximum of three days, so longer stays in an area require movement between multiple locations. Once the location of a safe house has been comp"
+ },
+ {
+  "id": "safe-house-level-2",
+  "name": "Safe House (Level 2)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 100
+  },
+  "text": "Safe House Source Firebrands pg. 94 Safe houses are locations that are difficult to find and provide sanctuary for groups or individuals in need of a suitable hiding place to lie low. These locations may be utilized by spies seeking refuge from enemies, accused criminals running from unjust or corrupt law enforcement, or any number of others sheltering from a hostile, unsafe, or oppressive situation. Many Firebrands make use of a safe house or set one up themselves in the course of their journeys to keep their presence hidden from spies or to find refuge while fleeing from dangerous locations. The costs associated with each level is the amount of money required to commission and establish a safe house of that level. This includes renting, purchasing, or constructing the location, bribing any informants for their discretion, and securing routes to and from the safe house in case of emergency. The cost of access to a safe house increases with the level of security it provides. Any creature attempting to locate a safe house must spend at least 2 hours to attempt to Gather Information on the location, the DC of which is determined by the safe house's level. The DC of the check required to locate a given safe house is reduced by 1 for each day that the safe house remains in use. For this reason, a particular location is typically used for a maximum of three days, so longer stays in an area require movement between multiple locations. Once the location of a safe house has been comp"
+ },
+ {
+  "id": "safe-house-level-3",
+  "name": "Safe House (Level 3)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1000
+  },
+  "text": "Safe House Source Firebrands pg. 94 Safe houses are locations that are difficult to find and provide sanctuary for groups or individuals in need of a suitable hiding place to lie low. These locations may be utilized by spies seeking refuge from enemies, accused criminals running from unjust or corrupt law enforcement, or any number of others sheltering from a hostile, unsafe, or oppressive situation. Many Firebrands make use of a safe house or set one up themselves in the course of their journeys to keep their presence hidden from spies or to find refuge while fleeing from dangerous locations. The costs associated with each level is the amount of money required to commission and establish a safe house of that level. This includes renting, purchasing, or constructing the location, bribing any informants for their discretion, and securing routes to and from the safe house in case of emergency. The cost of access to a safe house increases with the level of security it provides. Any creature attempting to locate a safe house must spend at least 2 hours to attempt to Gather Information on the location, the DC of which is determined by the safe house's level. The DC of the check required to locate a given safe house is reduced by 1 for each day that the safe house remains in use. For this reason, a particular location is typically used for a maximum of three days, so longer stays in an area require movement between multiple locations. Once the location of a safe house has been comp"
+ },
+ {
+  "id": "sambuca",
+  "name": "Sambuca",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 120
+  },
+  "text": "A sambuca is a long, covered troop bridge designed to help troops move from sea to land. Preparing it for use requires lashing together two galleys or other ships of similar size. The sambuca is then mounted across the ships on one end with its length suspended upward, and attached to pulleys fastened to the tops of the ships' masts. Once the ships are moved into position, the sambuca can be lowered to rest on a battlement or other surface, allowing troops to rush from the ships onto their intended destination. The sambuca has AC 17, Fort +11, Ref +5, Hardness 8, HP 32 (BT 16), and object immunities. It's covered on all sides to protect those who cross, granting them greater cover. The end of the sambuca can be lowered by teams operating the pulleys in concert. This requires three crew members on each ship, and they can lower the far end of the sambuca by 15 feet each round they work."
+ },
+ {
+  "id": "sampling-ammunition",
+  "name": "Sampling Ammunition",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 22
+  },
+  "text": "**Ammunition** arrow, bolt --- The head of this arrow or bolt is a pointed glass cylinder with a hollow core. Upon hitting a corporeal creature, sampling ammunition captures a small portion of the target's skin, blood, and flesh. The sample falls to the ground below wherever the creature was hit. This sample is sealed and magically preserved inside its chamber, although it deteriorates normally once the cylinder is opened. Sampling ammunition can't collect samples from creatures made entirely of metal, stone, or other hard substances."
+ },
+ {
+  "id": "sands-of-the-hourglass",
+  "name": "Sands of the Hourglass",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Sands of the Hourglass Source Treasure Vault (Remastered) pg. 200 Aspect Time Prerequisite The relic is 5th level or higher. Activate (concentrate, manipulate) Frequency once per hour; Effect You target one creature within 30 feet, temporarily imposing the decrepitude of time on it. The target must attempt a Fortitude saving throw. The clumsy and enfeebled conditions last 1 minute. Critical Success The target is unaffected. Success The target becomes clumsy 1 and enfeebled 1. Failure The target becomes clumsy 2, enfeebled 2, and drained 1. Critical Failure The target becomes clumsy 3, enfeebled 3, and drained 2."
+ },
+ {
+  "id": "sanguine-ammunition",
+  "name": "Sanguine Ammunition",
+  "level": 8,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 75
+  },
+  "text": "Sanguine Ammunition Source High Seas pg. 64 Price 75 gp Ammunition any Access You're a member of the Red Mantis Assassins Activate (manipulate) This wickedly barbed ammunition looks dangerous to even touch. It dissolves into blood on impact, leaving no trace if the target has blood. The target takes a –2 circumstance penalty to saves against diseases and poisons for 1 round. You can also Activate sanguine ammunition as part of Casting a Spell. The spell must be 3rd-rank or lower, must take 1 or 2 actions to cast, must have the poison or disease trait, and must target a creature other than the caster. Casting a Spell this way has no effect; instead, a creature hit by sanguine ammunition activated this way is targeted by the spell in addition to the item’s normal effects. If the target isn’t a valid target for the spell, the spell is lost. The ammunition affects only the target hit. If the spell requires a spell attack, use the result of your ranged attack roll to determine the degree of success of the spell. If the spell requires a save, the target attempts the save against your spell DC."
+ },
+ {
+  "id": "sawtooth-reaper",
+  "name": "Sawtooth Reaper",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 6000
+  },
+  "text": "Sawtooth Reaper Source High Seas pg. 64 PFS Note No duration on effects. Price 6,000 gp Usage held in 2 hands Bulk 1 Base Weapon Kusarigama Access You're a member of the Red Mantis Assassins The serrated blade and chain of this +2 greater striking keen wounding kusarigama shine blood red. A crimson haze wafts from the blade. Activate—Ensnaring Disarm ; Trigger An enemy within reach misses you with a melee weapon Strike; Effect You attempt to Disarm the triggering creature. You can do so even if you don’t have a hand free. Activate—Bloodmist Whirl (concentrate, manipulate) Frequency once per hour; Effect You whirl the chain of the sawtooth reaper, creating a crimson fog that conceals you for 1 round or until you Strike. The next Strike you make treats the target as off-guard, and when you use Ensnaring Disarm you can also Strike the same target as a free action."
+ },
+ {
+  "id": "scope-of-limning",
+  "name": "Scope of Limning",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "attached-to-firearm-scope",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 900
+  },
+  "text": "The dwarven gunsmiths of Dongun Hold originally created these scopes to help them clear out vermin in underground areas. This scope captures the sound that echoes off a creature hit by the firearm and transforms it into light, illuminating the target for all to see. **Activate—Outline** ⟨1⟩ (auditory, light, manipulate) --- **Effect** If your next Strike from the weapon to which the scope is attached hits a creature, the sound of the impact transforms into light, causing the creature to glow until the end of your next turn. A visible creature can't be concealed while they glow. If a creature is invisible, they're concealed while glowing, rather than being undetected. Because the effect requires a solid impact, incorporeal creatures are unaffected unless the bullet can deal force damage or has the effects of the ghost touch property rune."
+ },
+ {
+  "id": "scouting-arrow",
+  "name": "Scouting Arrow",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 85
+  },
+  "text": "**Ammunition** arrow, bolt **Activate** ⟨1⟩ (concentrate) --- The tip of this arrow is carved into the shape of a lidless eye. When an activated scouting arrow strikes a surface within the second range increment of the weapon it was fired from, the wielder of that weapon can Seek as though they were at the point of impact of the arrow using their normal senses. After this glimpse, the ammunition crumbles to ash."
+ },
+ {
+  "id": "scroll-belt",
+  "name": "Scroll Belt",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 15
+  },
+  "text": "These belts are specially designed to allow for writing along the inside surface. You can scribe a spell to a scroll belt, Crafting the scroll as normal. A scroll belt can only hold a single spell, and you must Cast the Spell before you can scribe another spell to the belt. You can't Cast a Spell from the belt while wearing it; you must remove the belt with an Interact action. A scroll belt acts as a mundane belt, but when a spell is scribed on it, any creature can immediately discern that an unattended belt holds magic. If you're wearing the belt, a creature can notice the belt holds a spell with a successful check against your Stealth DC."
+ },
+ {
+  "id": "scroll-case-of-simplicity",
+  "name": "Scroll Case of Simplicity",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "text": "Scroll Case of Simplicity Source Character Guide pg. 111 Usage held in 1 hand Access A character who is a member of the Pathfinder Society has access to this option. The four different types of scroll cases of simplicity often bear adornments appropriate to their magical tradition, such as angelic wings or otherworldly lettering. On the inside, intricate runic diagrams spiral out to surround the scroll stored within. A scroll placed within the case can be converted into energy to cast consistently useful spells depending on its type. You must be able to cast spells of a given tradition to use a scroll case of simplicity of a corresponding type. Activate Interact; Requirements The scroll case contains a single scroll of a 1st-level spell; Effect You transfer the scroll’s energy into the scroll case, consuming the scroll, and you can immediately begin casting one of the scroll case’s spells. If you use any action other than to Cast a Spell from the scroll case after activating the scroll case of simplicity, the scroll and its energy are lost. Arcane Scroll Case of Simplicity Source Character Guide pg. 111 Price 100 gp Usage held in 1 hand The scroll case can be used to cast alarm or unseen servant. Divine Scroll Case of Simplicity Source Character Guide pg. 111 Price 100 gp Usage held in 1 hand The scroll case can be used to cast heal or purify food and drink. Occult Scroll Case of Simplicity Source Character Guide pg. 111 Price 100 gp Usage held in 1 hand The scroll case can b"
+ },
+ {
+  "id": "sealing-chest-greater",
+  "name": "Sealing Chest (Greater)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1250
+  },
+  "text": "Vigilant Seal members use these containers when transporting samples and relics. The containers are soundproof, airtight, and studded with lead sheets, mistletoe, and other materials that block magical auras. Up to 1 Bulk of objects can be placed inside a sealing chest; the magic auras and curses of any objects placed within the chest cannot extend beyond the box unless they are of a greater level than the chest. Artifacts and similarly powerful items are unaffected regardless of level. Many cursed items prevent their bearer from removing them, but a successful remove curse gives enough time to stash the item in the chest."
+ },
+ {
+  "id": "sealing-chest-lesser",
+  "name": "Sealing Chest (Lesser)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 75
+  },
+  "text": "Vigilant Seal members use these containers when transporting samples and relics. The containers are soundproof, airtight, and studded with lead sheets, mistletoe, and other materials that block magical auras. Up to 1 Bulk of objects can be placed inside a sealing chest; the magic auras and curses of any objects placed within the chest cannot extend beyond the box unless they are of a greater level than the chest. Artifacts and similarly powerful items are unaffected regardless of level. Many cursed items prevent their bearer from removing them, but a successful remove curse gives enough time to stash the item in the chest."
+ },
+ {
+  "id": "sealing-chest-major",
+  "name": "Sealing Chest (Major)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 3750
+  },
+  "text": "Vigilant Seal members use these containers when transporting samples and relics. The containers are soundproof, airtight, and studded with lead sheets, mistletoe, and other materials that block magical auras. Up to 1 Bulk of objects can be placed inside a sealing chest; the magic auras and curses of any objects placed within the chest cannot extend beyond the box unless they are of a greater level than the chest. Artifacts and similarly powerful items are unaffected regardless of level. Many cursed items prevent their bearer from removing them, but a successful remove curse gives enough time to stash the item in the chest."
+ },
+ {
+  "id": "sealing-chest-moderate",
+  "name": "Sealing Chest (Moderate)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 300
+  },
+  "text": "Vigilant Seal members use these containers when transporting samples and relics. The containers are soundproof, airtight, and studded with lead sheets, mistletoe, and other materials that block magical auras. Up to 1 Bulk of objects can be placed inside a sealing chest; the magic auras and curses of any objects placed within the chest cannot extend beyond the box unless they are of a greater level than the chest. Artifacts and similarly powerful items are unaffected regardless of level. Many cursed items prevent their bearer from removing them, but a successful remove curse gives enough time to stash the item in the chest."
+ },
+ {
+  "id": "searing-wave",
+  "name": "Searing Wave",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fire"
+  ],
+  "text": "Searing Wave Source GM Core pg. 314 Aspect Fire Activate (concentrate, manipulate) Effect You allow a portion of the fire magic housed in your relic to escape in a direction of your choice. You deal 1d10 fire damage for every 2 levels of the relic to all creatures in a 30-foot cone (basic Reflex). You can't use Searing Wave again for 1d4 rounds."
+ },
+ {
+  "id": "seraptis-bone-tiles",
+  "name": "Seraptis Bone Tiles",
+  "level": 15,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical",
+   "unholy"
+  ],
+  "price": {
+   "gp": 1200
+  },
+  "text": "Demon Bone Tiles May contain spoilers from Convocation Source Rival Academies pg. 111 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) These bones from different types of demons can be used to form temporary barriers. When you crush the bone fragments and blow the resulting dust around yourself as you cast shield, the shield appears as a bone bulwark shaped like the demon’s face. When use Shield Block with the spell, the barrier explodes into many bone fragments. The shards cause persistent bleed damage to each creature adjacent to you that fails a Reflex save at the listed DC. This persistent bleed damage is unholy and can be stopped with an Interact action to remove the shards. Pusk Bone Tiles Source Rival Academies pg. 111 Price 7 gp The persistent bleed damage is 1d4, and the save DC is 16. Brimorak Bone Tiles Source Rival Academies pg. 111 Price 28 gp The persistent bleed damage is 1d6, and the save DC is 20. Seraptis Bone Tiles Source Rival Academies pg. 111 Price 1,200 gp The persistent bleed damage is 2d8, and the save DC is 34."
+ },
+ {
+  "id": "serrating",
+  "name": "Serrating",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "A *serrating* weapon's bladed edge separates into jagged, swirling shards that spin along the blade. When dealing slashing damage, the weapon deals an additional 1d4 damage. **Activate** ⟨1⟩ Interact --- **Effect** You brandish the weapon and focus its power, causing the serrated shards to buzz as they spin at a dizzying speed. On your next hit with the weapon this turn that deals slashing damage, the *serrating* rune adds an additional 1d12 damage instead of the additional 1d4 damage, and then the shards return to their usual speed."
+ },
+ {
+  "id": "shade-hat",
+  "name": "Shade Hat",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornheadwear",
+  "price": {
+   "gp": 150
+  },
+  "text": "This comfortable and stylish wide-brimmed hat magically protects you from the worst of the heat in hot areas, even when the heat doesn't come from the sun. While wearing the *shade hat*, you are protected from mild and severe heat (but not extreme heat)."
+ },
+ {
+  "id": "shadow-essence",
+  "name": "Shadow Essence",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "injury",
+   "negative",
+   "poison",
+   "void"
+  ],
+  "price": {
+   "gp": 160
+  },
+  "text": "Shadow Essence Source Core Rulebook pg. 553 Price 160 gp Usage held in 2 hands Bulk L Activate Interact Distilled from the Plane of Shadow, this oily substance imposes tenebrous effects. The enfeebled condition from shadow essence lasts for 24 hours. Saving Throw DC 29 Fortitude; Maximum Duration 6 rounds; Stage 1 3d6 negative damage and 2d6 poison damage (1 round); Stage 2 3d6 negative damage, 2d6 poison damage, and enfeebled 1 (1 round); Stage 3 3d6 negative damage, 2d6 poison damage, and enfeebled 2 (1 round)"
+ },
+ {
+  "id": "shadow-manse",
+  "name": "Shadow Manse",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "structure"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1550
+  },
+  "text": "This miniature dollhouse is made of dark wood with steep eaves and wide windows. Close inspection through the open windows reveals the inside to be elaborately decorated with fine furniture and ebony accoutrements. **Activate** 1 minute (command, envision, Interact) --- **Effect** You cause the dollhouse to grow into a mansion, 60 feet across and 20 feet high, with a dozen rooms. The mansion pushes aside rather than traps creatures in the area when it is created. The door appears in front of you; it bears no lock and provides easy entrance to anyone. The mansion's interior is well-appointed and dimly lit via wall sconces and fireplaces that emit pale, heatless flames. Each day at dusk, the mansion's dining room produces enough fine food and water to sustain the creatures in the manor at that time. Except for this nourishment, everything inside the manor is nearly impossible to break; even the flimsiest chairs and thinnest draperies have Hardness 20. The material inside the mansion vanishes if removed, but is replaced with the next activation. Although the mansion is easy for anyone to enter, only you and other creatures you designate when you activate the manor can leave it. Others find themselves entering some other part of the mansion when they leave through a door or window, rather than exiting. A creature that succeeds at a check when attempting to exit the mansion can leave it if they choose, as can anyone who Forces Open an exit with a successful check; any opening they"
+ },
+ {
+  "id": "shadow-signet",
+  "name": "Shadow Signet",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "This obsidian ring allows you to partially warp your spells through the Netherworld, allowing them to strike directly at a target's body. **Activate** ⟨4⟩ (concentrate, spellshape) --- **Effect** If your next action is to Cast a Spell that requires a spell attack roll against Armor Class, choose Fortitude DC or Reflex DC. You make your spell attack roll against that defense instead of AC. If the spell has multiple targets, the choice of DC applies to all of them."
+ },
+ {
+  "id": "shadow-smith",
+  "name": "Shadow Smith",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "shadow"
+  ],
+  "text": "Shadow Smith Source GM Core pg. 317 Aspect Shadow Activate (manipulate) Effect Your relic pulls at nearby shadows, twisting them into the shape of a simple weapon or a simple tool or item, such as a rope or crowbar. It lasts until it's used for a single activity, until you use shadow smith again, or for 1 minute, whichever comes first, after which it dissipates."
+ },
+ {
+  "id": "shapespeak-mask",
+  "name": "Shapespeak Mask",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornmask",
+  "price": {
+   "gp": 80
+  },
+  "text": "A *shapespeak mask* is carved into the shape of an animal, usually tailored to a species of beast that the user favors. While wearing this mask, you can speak even when polymorphed into an animal. The shapespeak mask removes no other limitations, such as the inability to cast spells when transformed."
+ },
+ {
+  "id": "shard-of-self-destruction",
+  "name": "Shard of Self-Destruction",
+  "level": 5,
+  "itemType": "weapon",
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This jagged shard of bone appears to be and functions as a *+1 striking dagger* with a sharp edge that is perpetually stained with blood. Whenever you critically hit with the weapon, you deal an additional 1d6 persistent bleed damage, but you also take 1d6 damage. You take a –2 penalty to the flat check to remove this bleed damage, and when you succeed at this flat check, you are exposed to Verex's ruin (see below) as the site of the injury grows red and inflamed, your blood vessels discoloring and swelling as if serrated knives were trying to push their way out. Once the curse has activated for the first time, the weapon fuses to you; while you can sheathe the dagger outside of combat, it appears in your hand when a fight begins and you can't sheathe it as long as there is an enemy you can perceive. --- **Verex's Ruin** (disease, unholy) **Saving Throw** **Onset** 1 hour **Stage 1** Enfeebled 1 (1 day) **Stage 2** Enfeebled 2, fatigued, and 1d6 damage each time you would take persistent bleed damage (1 week) **Stage 3** as stage 2, but the spirit damage increases to 2d6 (1 week) **Stage 4** Enfeebled 3, fatigued, and 4d6 damage each time you would take persistent bleed damage (1 week) **Stage 5** death"
+ },
+ {
+  "id": "sharpened-canines",
+  "name": "Sharpened Canines",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 50
+  },
+  "text": "Some of your teeth have been replaced with those of a larger meat-eating predator. You gain a jaws unarmed attack that deals 1d6 piercing damage. These jaws are in the brawling group."
+ },
+ {
+  "id": "shattered-earth",
+  "name": "Shattered Earth",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "earth"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Shattered Earth Source GM Core pg. 313 Aspect Earth Activate (concentrate, manipulate) Frequency once per hour; Effect Seismic pulses from your relic ripple through the nearby ground, shaking sharp fragments to the surface. A 10-foot-radius patch of stone or earth within 60 feet is transformed into difficult terrain. A creature that enters an affected square during a move action must succeed at an Acrobatics check or Reflex save or take 1d6 piercing damage; it needs to roll only once per move action even if it moves through several squares. At 6th level and every 4 levels thereafter, increase the damage by 1d6."
+ },
+ {
+  "id": "shield-augmentation",
+  "name": "Shield Augmentation",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "adjustment"
+  ],
+  "usage": "applied-to-shield",
+  "price": {
+   "sp": 8
+  },
+  "text": "There are numerous methods to modify shields-snarling rods to catch weapons, bladed edges, padding for nonlethal strikes, and so on-but all share basic functionality. A shield augmentation can be etched with weapon runes, much like a shield boss or shield spikes, but doesn't otherwise alter your shield's statistics. A shield bearing an augmentation can't be combined with an attached weapon, like shield spikes. A shield augmentation grants your shield one or more weapon traits, chosen when the augmentation is created. You can either choose to add the backswing or forceful trait, or you can choose two of the following weapon traits: disarm, nonlethal, shove, thrown 10 feet, trip, or versatile S."
+ },
+ {
+  "id": "shield-sconce",
+  "name": "Shield Sconce",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "affixed-to-a-shield",
+  "price": {
+   "sp": 1
+  },
+  "text": "This carefully balanced metal bracket can be attached to the front or top of a shield or tower shield (but not a buckler), allowing you to carry a torch without giving up your shield or holding it in your other hand. While carrying a torch in this way, you must attempt a every time you use the Shield Block reaction; on a failure, the torch is extinguished."
+ },
+ {
+  "id": "shifting",
+  "name": "Shifting",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-melee-weapon",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 225
+  },
+  "text": "With a moment of manipulation, you can shift this weapon into a different weapon with a similar form. **Activate—Shift Weapon** ⟨1⟩ (manipulate) --- **Effect** The weapon takes the shape of another melee weapon that requires the same number of hands to wield. The weapon's runes and any precious material it's made of apply to the weapon's new shape. Any property runes that can't apply to the new form are suppressed until the item takes a shape to which they can apply. The weapons a *shifting* weapon can turn into are based on the base attributes of the weapon, so reference the weapon's Hands entry in the weapons table to see what it can turn into. For example, a bastard sword requires one hand, even though it gets a benefit in two hands from the two-hand trait. Therefore, a *shifting bastard sword* could turn into a longsword, but not a greatsword. Activating this rune doesn't change how many hands you're currently using to hold the weapon."
+ },
+ {
+  "id": "shining-ammunition",
+  "name": "Shining Ammunition",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "light",
+   "magical"
+  ],
+  "price": {
+   "gp": 3
+  },
+  "text": "*Shining ammunition* gives off a faint glow. When shot, it sheds bright light in a 20-foot radius (and dim light to the next 20 feet) for 10 minutes. If it hits a target, it sticks, causing the target to shed light in the same radius. A creature can remove the ammunition with an Interact action, but the ammunition itself continues to glow for the rest of the duration or until destroyed."
+ },
+ {
+  "id": "shock",
+  "name": "Shock",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "electricity",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 500
+  },
+  "text": "Electric arcs crisscross *shock* weapons, dealing an extra 1d6 electricity damage on a hit. On a critical hit, electricity arcs out to deal an equal amount of electricity damage to up to two other creatures of your choice within 10 feet of the target."
+ },
+ {
+  "id": "shock-greater",
+  "name": "Shock (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "electricity",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 6500
+  },
+  "text": "Electric arcs crisscross *shock* weapons, dealing an extra 1d6 electricity damage on a hit. On a critical hit, electricity arcs out to deal an equal amount of electricity damage to up to two other creatures of your choice within 10 feet of the target. Electricity damage dealt by this weapon ignores the target's electricity resistance (and the other creatures' on a critical hit)."
+ },
+ {
+  "id": "shootist-bandolier",
+  "name": "Shootist Bandolier",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "This leather bandolier holds up to three Repeating Hand Crossbow Magazines in leather pockets that pop open with the quick flick of a thumb. You reduce the reload time for a repeating hand crossbow magazine from the bandolier by 1, to a total of 2 actions. You can wear only one shootist bandolier at a time."
+ },
+ {
+  "id": "shot-of-the-first-vault",
+  "name": "Shot of the First Vault",
+  "level": 23,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "divine"
+  ],
+  "usage": "other",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {},
+  "text": "Legends claim that some long-forgotten god stole the original bundle of *shots of the First Vault* from Abadar's repository. Since then, individual pieces have turned up throughout the multiverse. When you pick up a *shot of the First Vault*, it immediately reshapes itself to function with any ranged weapon and establishes you as its owner until another creature picks it up. As its owner, you can use the shot's single-action activation after shooting it. Instead of rolling weapon damage dice, a *shot of the First Vault* deals 25 damage plus any bonuses or additional damage as if 25 were the result of the weapon's damage dice; the damage type matches that normally dealt by the weapon. Upon damaging a creature, the *shot of the First Vault* shatters, and the fragments ricochet to hit any other enemies within 30 feet, making attack rolls with the same attack bonus. The shattered fragments remain lodged in the creatures they damage; the creatures are Clumsy 2 while the fragments remain in place. A total of 3 Interact actions are required to remove the fragments from yourself or an adjacent creature; alternatively, a single action and a successful check can be used. A critical failure on this Medicine check deals 10 persistent bleed damage to the creature with the embedded fragment. **Activate—Reload Order** ⟨1⟩ (concentrate) --- **Effect** You recall the *shot of the First Vault*, which automatically reloads itself into your weapon. If the shot had fragmented, the fragments viole"
+ },
+ {
+  "id": "siblings-coin",
+  "name": "Sibling's Coin",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10
+  },
+  "text": "**Access** Member of a secret society --- Contrary to widespread belief, secret handshakes are not the preferred method of confirmation between secret society members, mostly because this would be obvious in the middle of a crowded street or busy tavern. Instead, societies tend to mark each other by carrying sibling's coins. The name was originally coined by a past secret society that has since fallen into obscurity, but its ingenious coins remain. The coins are innocuous, resembling common silver coins until the owner twists the outer edge clockwise. At this point, the face of the coin rotates to reveal the symbol of the secret society of the owner. Suspected compatriots often toy with their coins as a half-recognized fidget, before trying to subtly flash the inscription to their fellow conversationalist. While it's possible to notice the coin's mechanism if you specifically check the coin (), few people individually inspect coins unless they have a reason to be suspicious of them."
+ },
+ {
+  "id": "siccatite-armor-high-grade",
+  "name": "Siccatite Armor (High-Grade)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 32000
+  },
+  "text": "Siccatite Armor Source Grand Bazaar pg. 100 Usage worn armor Bulk varies by armor Base Material Siccatite Siccatite armor must be fitted with protective undercoats for it to be safely donned, making it heavier than other types of armor; add 1 Bulk to the armor's typical weight. When wearing cold siccatite armor, you're protected from severe and extreme environmental heat, and when wearing hot siccatite armor, you're protected from severe and extreme environmental cold. An opponent that has you grabbed or restrained with its body while you're wearing standard-grade siccatite armor takes 4 energy damage at the end of its turn (either fire or cold, for hot and cold siccatite armor respectively), or 6 damage for a high-grade siccatite armor. Siccatite Armor (Standard-Grade) Source Grand Bazaar pg. 100 Price 1,600 gp (+160 gp per Bulk) Craft Requirements The initial raw materials must include at least 200 gp of siccatite + 20 gp per Bulk. Siccatite Armor (High-Grade) Source Grand Bazaar pg. 100 Price 32,000 gp (+3,200 gp per Bulk) Craft Requirements The initial raw materials must include at least 16,000 gp of siccatite + 1,600 gp per Bulk."
+ }
+]

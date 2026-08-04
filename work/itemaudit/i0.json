@@ -1,0 +1,857 @@
+[
+ {
+  "id": "10th-rank-scroll",
+  "name": "10th-rank Scroll",
+  "level": 19,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 8000
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "1st-rank-scroll",
+  "name": "1st-rank Scroll",
+  "level": 1,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 4
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "2nd-rank-scroll",
+  "name": "2nd-rank Scroll",
+  "level": 3,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 12
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "3rd-rank-scroll",
+  "name": "3rd-rank Scroll",
+  "level": 5,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 30
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "4th-rank-scroll",
+  "name": "4th-rank Scroll",
+  "level": 7,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 70
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "5th-rank-scroll",
+  "name": "5th-rank Scroll",
+  "level": 9,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 150
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "6th-rank-scroll",
+  "name": "6th-rank Scroll",
+  "level": 11,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 300
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "7th-rank-scroll",
+  "name": "7th-rank Scroll",
+  "level": 13,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 600
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "8-round-magazine",
+  "name": "8-Round Magazine",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 2
+  },
+  "text": "A barricade buster fires spheres of metal with extreme velocity and very little accuracy."
+ },
+ {
+  "id": "8th-rank-scroll",
+  "name": "8th-rank Scroll",
+  "level": 15,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 1300
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "9th-rank-scroll",
+  "name": "9th-rank Scroll",
+  "level": 17,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "price": {
+   "gp": 3000
+  },
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "abadars-flawless-scale",
+  "name": "Abadar's Flawless Scale",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 50
+  },
+  "text": "This immaculate golden set of merchant's scales is considered a divine instrument among Abadar's most faithful. Unlike most scales, this one has only a single dish for placing small objects, and calculates value rather than weight. On the other side of the fulcrum, a steel arrow indicator points to various numbers engraved on the side of the scale. By placing an object of light Bulk onto the dish, you can determine its value in gold pieces in the market in which the scale was made (most of these scales are made in Katapesh or Absalom), based on its material composition and artisanship. For example, after placing a gemstone on the dish, the scale will indicate the fairest (average, in most cases) price you can expect to fetch in the market to which the scale is calibrated, but the scale wouldn't detect the gemstone's historical significance or any magical properties. *Abadar's flawless scale* can be calibrated to a different market by performing a 1-hour ritual in the proximity of that market."
+ },
+ {
+  "id": "abrogail-i-script",
+  "name": "Abrogail I Script",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 300
+  },
+  "text": "This satirical play by Amalia Wraxton was published in 4710 ar. Its controversial content, depicting the eponymous queen as the lover of Asmodeus and a coconspirator in the death of Aroden, caused an uproar that led to violent suppression and a defiant uprising. The play has since been banned and can be found only among the secret collections of art connoisseurs. If you own a copy of this play, you can publicly perform parts of Abrogail I as a downtime activity with a successful check. This activity lasts four hours including setup, rehearsal, and attracting a crowd, and you can't perform this play again in this settlement for a week. --- **Critical Success** As success, but you gain 2 Uprising Points. **Success** The people are roused by your performance. You gain 1 Uprising Point. **Failure** The authorities crack down on rebellious activity, stopping you from performing in this settlement again for 1 month. **Critical Failure** As failure, but the people are intimidated and you lose 1 Uprising Point."
+ },
+ {
+  "id": "absorb-injury",
+  "name": "Absorb Injury",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "necromancy"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Absorb Injury Source Secrets of Magic pg. 231 Aspect Soul Activate envision; Frequency once per day; Trigger an ally within 30 feet takes damage; Effect You forge a conduit to your ally's soul and absorb the injury to protect them. You receive the damage instead of your ally; you also take any additional effects associated with the transferred damage, such as poison on the blade, conditions, or persistent fire damage from a critical hit with a flaming rune."
+ },
+ {
+  "id": "abysium-buckler-high-grade",
+  "name": "Abysium Buckler (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8000
+  },
+  "text": "Abysium Shield Source Grand Bazaar pg. 96 Usage varies by shield Base Material Abysium These glowing shields are crafted to ensure that the abysium used is safely contained within a durable outer shell. If the shield breaks, however, the toxic metal becomes exposed. When you use the Shield Block reaction against an adjacent creature's melee Strike, if the shield breaks, the creature is exposed to the abysium and is sickened 1 for a standard-grade shield or sickened 2 for a high-grade shield. Abysium Buckler (Standard-Grade) Source Grand Bazaar pg. 96 Price 400 gp Bulk L The shield has Hardness 4, HP 16, and BT 8. Craft Requirements abysium worth at least 50 gp Abysium Shield (Standard-Grade) Source Grand Bazaar pg. 96 Price 440 gp Bulk 1 The shield has Hardness 6, HP 24, and BT 12. Craft Requirements abysium worth at least 55 gp Abysium Buckler (High-Grade) Source Grand Bazaar pg. 96 Price 8,000 gp Bulk L The shield has Hardness 7, HP 28, and BT 14. Craft Requirements abysium worth at least 4,000 gp Abysium Shield (High-Grade) Source Grand Bazaar pg. 96 Price 8,800 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements abysium worth at least 4,400 gp"
+ },
+ {
+  "id": "abysium-buckler-standard-grade",
+  "name": "Abysium Buckler (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 400
+  },
+  "text": "Abysium Shield Source Grand Bazaar pg. 96 Usage varies by shield Base Material Abysium These glowing shields are crafted to ensure that the abysium used is safely contained within a durable outer shell. If the shield breaks, however, the toxic metal becomes exposed. When you use the Shield Block reaction against an adjacent creature's melee Strike, if the shield breaks, the creature is exposed to the abysium and is sickened 1 for a standard-grade shield or sickened 2 for a high-grade shield. Abysium Buckler (Standard-Grade) Source Grand Bazaar pg. 96 Price 400 gp Bulk L The shield has Hardness 4, HP 16, and BT 8. Craft Requirements abysium worth at least 50 gp Abysium Shield (Standard-Grade) Source Grand Bazaar pg. 96 Price 440 gp Bulk 1 The shield has Hardness 6, HP 24, and BT 12. Craft Requirements abysium worth at least 55 gp Abysium Buckler (High-Grade) Source Grand Bazaar pg. 96 Price 8,000 gp Bulk L The shield has Hardness 7, HP 28, and BT 14. Craft Requirements abysium worth at least 4,000 gp Abysium Shield (High-Grade) Source Grand Bazaar pg. 96 Price 8,800 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements abysium worth at least 4,400 gp"
+ },
+ {
+  "id": "abysium-chunk",
+  "name": "Abysium Chunk",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 450
+  },
+  "text": "A blue-green metal with an eerie green luminescence, abysium radiates power that's inimical to life. Careless exposure to the material can lead to long-term damage to the immune system; as such, mining abysium is hazardous, as large quantities of the metal in an area cause all nearby creatures to become sick. A creature carrying an abysium object is Sickened 1 for a standard-grade object of light Bulk, Sickened 2 for a standard-grade object of 1 Bulk or more or a high-grade object of light Bulk, or Sickened 3 for a high-grade object of 1 Bulk or more. This and all other sickening effects of abysium are poison effects. Crafters can use 1 abysium chunk to create up to 6 doses of poisonous Abysium Powder. Unscrupulous smiths have harnessed abysium's toxic properties to create noxious weapons and deadly substances. All objects crafted from abysium shed dim light in a 10-foot radius. ## Abysium Items | Abysium Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 6 | 24 | 12 | | High-grade | 10 | 40 | 20 | | **Items** | | | | | Standard-grade | 10 | 40 | 20 | | High-grade | 13 | 52 | 26 | | **Structures** | | | | | Standard-grade | 20 | 80 | 40 | | High-grade | 26 | 104 | 52 |"
+ },
+ {
+  "id": "abysium-ingot",
+  "name": "Abysium Ingot",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 4500
+  },
+  "text": "A blue-green metal with an eerie green luminescence, abysium radiates power that's inimical to life. Careless exposure to the material can lead to long-term damage to the immune system; as such, mining abysium is hazardous, as large quantities of the metal in an area cause all nearby creatures to become sick. A creature carrying an abysium object is Sickened 1 for a standard-grade object of light Bulk, Sickened 2 for a standard-grade object of 1 Bulk or more or a high-grade object of light Bulk, or Sickened 3 for a high-grade object of 1 Bulk or more. This and all other sickening effects of abysium are poison effects. Crafters can use 1 abysium chunk to create up to 6 doses of poisonous Abysium Powder. Unscrupulous smiths have harnessed abysium's toxic properties to create noxious weapons and deadly substances. All objects crafted from abysium shed dim light in a 10-foot radius. ## Abysium Items | Abysium Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 6 | 24 | 12 | | High-grade | 10 | 40 | 20 | | **Items** | | | | | Standard-grade | 10 | 40 | 20 | | High-grade | 13 | 52 | 26 | | **Structures** | | | | | Standard-grade | 20 | 80 | 40 | | High-grade | 26 | 104 | 52 |"
+ },
+ {
+  "id": "abysium-object-high-grade",
+  "name": "Abysium Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 7500
+  },
+  "text": "Abysium Source Grand Bazaar pg. 96 A blue-green metal with an eerie green luminescence, abysium radiates power that's inimical to life. Careless exposure to the material can lead to long-term damage to the immune system; as such, mining abysium is hazardous, as large quantities of the metal in an area cause all nearby creatures to become sick. A creature carrying an abysium object is sickened 1 for a standard-grade object of light Bulk, sickened 2 for a standard-grade object of 1 Bulk or more or a high-grade object of light Bulk, or sickened 3 for a high-grade object of 1 Bulk or more. This and all other sickening effects of abysium are poison effects. Crafters can use 1 abysium chunk to create up to 6 doses of poisonous abysium powder. Unscrupulous smiths have harnessed abysium's toxic properties to create noxious weapons and deadly substances. All objects crafted from abysium shed dim light in a 10-foot radius. Abysium Abysium Items Hardness HP BT Thin Items Standard-grade 6 24 12 High-grade 10 40 20 Items Standard-grade 10 40 20 High-grade 13 52 26 Structures Standard-grade 20 80 40 High-grade 26 104 52 Material Uses Abysium Armor Abysium Shield Abysium Weapon Abysium Chunk Source Grand Bazaar pg. 96 Price 450 gp Bulk L Abysium Ingot Source Grand Bazaar pg. 96 Price 4,500 gp Bulk 1 Abysium Object (Standard-Grade) Source Grand Bazaar pg. 96 Price 450 gp (per Bulk) Abysium Object (High-Grade) Source Grand Bazaar pg. 96 Price 7,500 gp (per Bulk)"
+ },
+ {
+  "id": "abysium-object-standard-grade",
+  "name": "Abysium Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 450
+  },
+  "text": "Abysium Source Grand Bazaar pg. 96 A blue-green metal with an eerie green luminescence, abysium radiates power that's inimical to life. Careless exposure to the material can lead to long-term damage to the immune system; as such, mining abysium is hazardous, as large quantities of the metal in an area cause all nearby creatures to become sick. A creature carrying an abysium object is sickened 1 for a standard-grade object of light Bulk, sickened 2 for a standard-grade object of 1 Bulk or more or a high-grade object of light Bulk, or sickened 3 for a high-grade object of 1 Bulk or more. This and all other sickening effects of abysium are poison effects. Crafters can use 1 abysium chunk to create up to 6 doses of poisonous abysium powder. Unscrupulous smiths have harnessed abysium's toxic properties to create noxious weapons and deadly substances. All objects crafted from abysium shed dim light in a 10-foot radius. Abysium Abysium Items Hardness HP BT Thin Items Standard-grade 6 24 12 High-grade 10 40 20 Items Standard-grade 10 40 20 High-grade 13 52 26 Structures Standard-grade 20 80 40 High-grade 26 104 52 Material Uses Abysium Armor Abysium Shield Abysium Weapon Abysium Chunk Source Grand Bazaar pg. 96 Price 450 gp Bulk L Abysium Ingot Source Grand Bazaar pg. 96 Price 4,500 gp Bulk 1 Abysium Object (Standard-Grade) Source Grand Bazaar pg. 96 Price 450 gp (per Bulk) Abysium Object (High-Grade) Source Grand Bazaar pg. 96 Price 7,500 gp (per Bulk)"
+ },
+ {
+  "id": "abysium-shield-high-grade",
+  "name": "Abysium Shield (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8800
+  },
+  "text": "Abysium Shield Source Grand Bazaar pg. 96 Usage varies by shield Base Material Abysium These glowing shields are crafted to ensure that the abysium used is safely contained within a durable outer shell. If the shield breaks, however, the toxic metal becomes exposed. When you use the Shield Block reaction against an adjacent creature's melee Strike, if the shield breaks, the creature is exposed to the abysium and is sickened 1 for a standard-grade shield or sickened 2 for a high-grade shield. Abysium Buckler (Standard-Grade) Source Grand Bazaar pg. 96 Price 400 gp Bulk L The shield has Hardness 4, HP 16, and BT 8. Craft Requirements abysium worth at least 50 gp Abysium Shield (Standard-Grade) Source Grand Bazaar pg. 96 Price 440 gp Bulk 1 The shield has Hardness 6, HP 24, and BT 12. Craft Requirements abysium worth at least 55 gp Abysium Buckler (High-Grade) Source Grand Bazaar pg. 96 Price 8,000 gp Bulk L The shield has Hardness 7, HP 28, and BT 14. Craft Requirements abysium worth at least 4,000 gp Abysium Shield (High-Grade) Source Grand Bazaar pg. 96 Price 8,800 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements abysium worth at least 4,400 gp"
+ },
+ {
+  "id": "abysium-shield-standard-grade",
+  "name": "Abysium Shield (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 440
+  },
+  "text": "Abysium Shield Source Grand Bazaar pg. 96 Usage varies by shield Base Material Abysium These glowing shields are crafted to ensure that the abysium used is safely contained within a durable outer shell. If the shield breaks, however, the toxic metal becomes exposed. When you use the Shield Block reaction against an adjacent creature's melee Strike, if the shield breaks, the creature is exposed to the abysium and is sickened 1 for a standard-grade shield or sickened 2 for a high-grade shield. Abysium Buckler (Standard-Grade) Source Grand Bazaar pg. 96 Price 400 gp Bulk L The shield has Hardness 4, HP 16, and BT 8. Craft Requirements abysium worth at least 50 gp Abysium Shield (Standard-Grade) Source Grand Bazaar pg. 96 Price 440 gp Bulk 1 The shield has Hardness 6, HP 24, and BT 12. Craft Requirements abysium worth at least 55 gp Abysium Buckler (High-Grade) Source Grand Bazaar pg. 96 Price 8,000 gp Bulk L The shield has Hardness 7, HP 28, and BT 14. Craft Requirements abysium worth at least 4,000 gp Abysium Shield (High-Grade) Source Grand Bazaar pg. 96 Price 8,800 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements abysium worth at least 4,400 gp"
+ },
+ {
+  "id": "abysium-weapon-high-grade",
+  "name": "Abysium Weapon (High-Grade)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 24000
+  },
+  "text": "Abysium Weapon Source Grand Bazaar pg. 97 Usage varies by weapon Bulk varies by weapon Base Material Abysium Abysium weapons are safe to carry, as the toxic metal is contained within an outer shell. However, the inherent toxicity in these blue-green weapons can irradiate open wounds and poison foes. Abysium weapons have one fewer property rune slot, but they deal 1d4 poison damage on a successful Strike, and on a critical hit, the target is sickened 1, or sickened 2 with high-grade abysium. Abysium Weapon (Standard-Grade) Source Grand Bazaar pg. 97 Price 2,000 gp (+200 gp per Bulk) Craft Requirements at least 250 gp of abysium + 25 gp per Bulk Abysium Weapon (High-Grade) Source Grand Bazaar pg. 97 Price 24,000 gp (+2,400 gp per Bulk) Craft Requirements at least 12,000 gp of abysium + 1,200 gp per Bulk"
+ },
+ {
+  "id": "abysium-weapon-standard-grade",
+  "name": "Abysium Weapon (Standard-Grade)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 2000
+  },
+  "text": "Abysium Weapon Source Grand Bazaar pg. 97 Usage varies by weapon Bulk varies by weapon Base Material Abysium Abysium weapons are safe to carry, as the toxic metal is contained within an outer shell. However, the inherent toxicity in these blue-green weapons can irradiate open wounds and poison foes. Abysium weapons have one fewer property rune slot, but they deal 1d4 poison damage on a successful Strike, and on a critical hit, the target is sickened 1, or sickened 2 with high-grade abysium. Abysium Weapon (Standard-Grade) Source Grand Bazaar pg. 97 Price 2,000 gp (+200 gp per Bulk) Craft Requirements at least 250 gp of abysium + 25 gp per Bulk Abysium Weapon (High-Grade) Source Grand Bazaar pg. 97 Price 24,000 gp (+2,400 gp per Bulk) Craft Requirements at least 12,000 gp of abysium + 1,200 gp per Bulk"
+ },
+ {
+  "id": "acid-flask-lesser",
+  "name": "Acid Flask (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This flask filled with corrosive acid deals 1 acid damage, 1d6 persistent acid damage, and 1 acid splash damage."
+ },
+ {
+  "id": "adamantine-armor-high-grade",
+  "name": "Adamantine Armor (High-Grade)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 32000
+  },
+  "text": "Adamantine Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Adamantine Adamantine armor has a shiny, black appearance and is amazingly durable. Adamantine Armor (Standard-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 1,600 gp (+160 gp per Bulk) The initial raw materials must include adamantine worth at least 200 gp + 20 gp per Bulk. Adamantine Armor (High-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 32,000 gp (+3,200 gp per Bulk) The initial raw materials must include adamantine worth at least 16,000 gp + 1,600 gp per Bulk."
+ },
+ {
+  "id": "adamantine-armor-standard-grade",
+  "name": "Adamantine Armor (Standard-Grade)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1600
+  },
+  "text": "Adamantine Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Adamantine Adamantine armor has a shiny, black appearance and is amazingly durable. Adamantine Armor (Standard-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 1,600 gp (+160 gp per Bulk) The initial raw materials must include adamantine worth at least 200 gp + 20 gp per Bulk. Adamantine Armor (High-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 32,000 gp (+3,200 gp per Bulk) The initial raw materials must include adamantine worth at least 16,000 gp + 1,600 gp per Bulk."
+ },
+ {
+  "id": "adamantine-buckler-high-grade",
+  "name": "Adamantine Buckler (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8000
+  },
+  "text": "Adamantine Shield Source GM Core pg. 233 Usage varies by shield Base Material Adamantine Adamantine shields are particularly sturdy, and when used for a shield bash, they're adamantine weapons. Adamantine Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 400 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements adamantine worth at least 50 gp Adamantine Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 440 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements adamantine worth at least 55 gp Adamantine Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 8,000 gp Bulk L The shield has Hardness 11, HP 44, and BT 22. Craft Requirements adamantine worth at least 4,000 gp Adamantine Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 The shield has Hardness 13, HP 52, and BT 26. Craft Requirements adamantine worth at least 4,400 gp"
+ },
+ {
+  "id": "adamantine-buckler-standard-grade",
+  "name": "Adamantine Buckler (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 400
+  },
+  "text": "Adamantine Shield Source GM Core pg. 233 Usage varies by shield Base Material Adamantine Adamantine shields are particularly sturdy, and when used for a shield bash, they're adamantine weapons. Adamantine Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 400 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements adamantine worth at least 50 gp Adamantine Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 440 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements adamantine worth at least 55 gp Adamantine Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 8,000 gp Bulk L The shield has Hardness 11, HP 44, and BT 22. Craft Requirements adamantine worth at least 4,000 gp Adamantine Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 The shield has Hardness 13, HP 52, and BT 26. Craft Requirements adamantine worth at least 4,400 gp"
+ },
+ {
+  "id": "adamantine-chunk",
+  "name": "Adamantine Chunk",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 500
+  },
+  "text": "Mined from rocks that fell from the heavens, adamantine is one of the hardest metals known. It has a shiny, black appearance, and it is prized for its amazing resiliency and ability to hold an incredibly sharp edge. ## Adamantine Items | Adamantine Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 10 | 40 | 20 | | High-grade | 13 | 52 | 26 | | **Items** | | | | | Standard-grade | 14 | 56 | 28 | | High-grade | 17 | 68 | 34 | | **Structure** | | | | | Standard-grade | 28 | 112 | 56 | | High-grade | 34 | 136 | 68 |"
+ },
+ {
+  "id": "adamantine-echo",
+  "name": "Adamantine Echo",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "earth",
+   "invested",
+   "magical",
+   "relic"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {},
+  "text": "Made from glossy, nearly black adamantine, this large fragment of a plate armor vambrace provides little protection on its own. However, when incorporated into an intact suit of armor, it functions as a +1 armor potency rune."
+ },
+ {
+  "id": "adamantine-ingot",
+  "name": "Adamantine Ingot",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 5000
+  },
+  "text": "Mined from rocks that fell from the heavens, adamantine is one of the hardest metals known. It has a shiny, black appearance, and it is prized for its amazing resiliency and ability to hold an incredibly sharp edge. ## Adamantine Items | Adamantine Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 10 | 40 | 20 | | High-grade | 13 | 52 | 26 | | **Items** | | | | | Standard-grade | 14 | 56 | 28 | | High-grade | 17 | 68 | 34 | | **Structure** | | | | | Standard-grade | 28 | 112 | 56 | | High-grade | 34 | 136 | 68 |"
+ },
+ {
+  "id": "adamantine-object-high-grade",
+  "name": "Adamantine Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 6000
+  },
+  "text": "Adamantine Source GM Core pg. 253 Mined from rocks that fell from the heavens, adamantine is one of the hardest metals known. It has a shiny, black appearance, and it is prized for its amazing resiliency and ability to hold an incredibly sharp edge. Adamantine Items Adamantine Items Hardness HP BT Thin Items Standard-grade 10 40 20 High-grade 13 52 26 Items Standard-grade 14 56 28 High-grade 17 68 34 Structure Standard-grade 28 112 56 High-grade 34 136 68 Material Uses Adamantine Armor Adamantine Shield Adamantine Weapon Adamantine Chunk Source GM Core pg. 253, Core Rulebook pg. 578 Price 500 gp Bulk L Adamantine Ingot Source GM Core pg. 253, Core Rulebook pg. 578 Price 5,000 gp Bulk 1 Adamantine Object (Standard-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 350 gp (per Bulk) Adamantine Object (High-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "adamantine-object-standard-grade",
+  "name": "Adamantine Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Adamantine Source GM Core pg. 253 Mined from rocks that fell from the heavens, adamantine is one of the hardest metals known. It has a shiny, black appearance, and it is prized for its amazing resiliency and ability to hold an incredibly sharp edge. Adamantine Items Adamantine Items Hardness HP BT Thin Items Standard-grade 10 40 20 High-grade 13 52 26 Items Standard-grade 14 56 28 High-grade 17 68 34 Structure Standard-grade 28 112 56 High-grade 34 136 68 Material Uses Adamantine Armor Adamantine Shield Adamantine Weapon Adamantine Chunk Source GM Core pg. 253, Core Rulebook pg. 578 Price 500 gp Bulk L Adamantine Ingot Source GM Core pg. 253, Core Rulebook pg. 578 Price 5,000 gp Bulk 1 Adamantine Object (Standard-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 350 gp (per Bulk) Adamantine Object (High-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "adamantine-shield-high-grade",
+  "name": "Adamantine Shield (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8800
+  },
+  "text": "Adamantine Shield Source GM Core pg. 233 Usage varies by shield Base Material Adamantine Adamantine shields are particularly sturdy, and when used for a shield bash, they're adamantine weapons. Adamantine Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 400 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements adamantine worth at least 50 gp Adamantine Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 440 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements adamantine worth at least 55 gp Adamantine Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 8,000 gp Bulk L The shield has Hardness 11, HP 44, and BT 22. Craft Requirements adamantine worth at least 4,000 gp Adamantine Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 The shield has Hardness 13, HP 52, and BT 26. Craft Requirements adamantine worth at least 4,400 gp"
+ },
+ {
+  "id": "adamantine-shield-standard-grade",
+  "name": "Adamantine Shield (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 440
+  },
+  "text": "Adamantine Shield Source GM Core pg. 233 Usage varies by shield Base Material Adamantine Adamantine shields are particularly sturdy, and when used for a shield bash, they're adamantine weapons. Adamantine Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 400 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements adamantine worth at least 50 gp Adamantine Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 440 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements adamantine worth at least 55 gp Adamantine Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 8,000 gp Bulk L The shield has Hardness 11, HP 44, and BT 22. Craft Requirements adamantine worth at least 4,000 gp Adamantine Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 The shield has Hardness 13, HP 52, and BT 26. Craft Requirements adamantine worth at least 4,400 gp"
+ },
+ {
+  "id": "adamantine-transmuting-ingot",
+  "name": "Adamantine Transmuting Ingot",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "whetstone"
+  ],
+  "price": {
+   "gp": 154
+  },
+  "text": "Transmuting Ingot Source Battlecry! pg. 137 Usage held in 1 hand Bulk L Activate (manipulate) A miniature ingot of metal hangs upon a leather cord, with deep weapon grooves on its surface. A weapon it’s applied to counts as a particular precious material for physical damage it deals for 1 minute, depending on its type. Silver Transmuting Ingot Source Battlecry! pg. 137 Price 3 gp Cold Iron Transmuting Ingot Source Battlecry! pg. 137 Price 4 gp Adamantine Transmuting Ingot Source Battlecry! pg. 137 Price 154 gp"
+ },
+ {
+  "id": "adamantine-weapon-high-grade",
+  "name": "Adamantine Weapon (High-Grade)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 13500
+  },
+  "text": "Adamantine Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Adamantine Adamantine weapons have a shiny black appearance and cut through lesser items with ease. They treat any object they hit as if it had half as much Hardness as usual, unless the object's Hardness is greater than that of the adamantine weapon. Adamantine Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of adamantine + 17.5 gp per Bulk Adamantine Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 13,500 gp (+1350 gp per Bulk) Craft Requirements at least 6,750 gp of adamantine + 675 gp per Bulk"
+ },
+ {
+  "id": "adamantine-weapon-standard-grade",
+  "name": "Adamantine Weapon (Standard-Grade)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1400
+  },
+  "text": "Adamantine Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Adamantine Adamantine weapons have a shiny black appearance and cut through lesser items with ease. They treat any object they hit as if it had half as much Hardness as usual, unless the object's Hardness is greater than that of the adamantine weapon. Adamantine Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of adamantine + 17.5 gp per Bulk Adamantine Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 13,500 gp (+1350 gp per Bulk) Craft Requirements at least 6,750 gp of adamantine + 675 gp per Bulk"
+ },
+ {
+  "id": "advanced-book-of-translation-tien",
+  "name": "Advanced Book of Translation (Tien)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 125
+  },
+  "text": "The book is leather-bound and decorated with the symbol of the Lantern Lodge. Red and gold cords wrap around the book and tie to keep it shut. Each volume offers translation for a different language. When working with a book of translation, you can attempt Diplomacy checks to Gather Information or to Make an Impression with creatures that speak the language featured in the book, even if you do not speak the language. Such checks take 10 times longer to complete. An advanced book of translation features more complex phrases, local colloquialisms, and assumes a rudimentary understanding of the featured language. Checks attempted while using an advanced book of translation do not take a circumstance penalty."
+ },
+ {
+  "id": "advancing",
+  "name": "Advancing",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-heavy-armor",
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {
+   "gp": 625
+  },
+  "text": "This rune charges up as you defeat your foes, driving you forward across the battlefield with every victory. **Activate**⟨4⟩ (concentrate) **Requirements** Your last action or activity reduced an enemy to 0 Hit Points --- **Effect** You Stride up to 15 feet. This movement doesn't trigger reactions. You can Burrow, Climb, Fly, or Swim instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "advancing-greater",
+  "name": "Advancing (Greater)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-heavy-armor",
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {
+   "gp": 8000
+  },
+  "text": "This rune charges up as you defeat your foes, driving you forward across the battlefield with every victory. **Activate**⟨4⟩ (concentrate) **Requirements** Your last action or activity reduced an enemy to 0 Hit Points --- **Effect** You Stride up to your Speed. This movement doesn't trigger reactions. You can Burrow, Climb, Fly, or Swim instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "adventurers-pack",
+  "name": "Adventurer's Pack",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 0,
+   "gp": 0,
+   "pp": 0,
+   "sp": 15
+  },
+  "text": "This item is the starter kit for an adventurer, containing the essential items for exploration and survival. The Bulk value is for the entire pack together, but see the descriptions of individual items as necessary. The pack contains the following items: a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks' rations, soap, 5 torches, and a waterskin."
+ },
+ {
+  "id": "aeon-stone-agate-ellipsoid",
+  "name": "Aeon Stone (Agate Ellipsoid)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 130
+  },
+  "text": "This aeon stone allows you to cast 2nd-rank Augury as a divine innate spell once per day. The resonant power causes the *augury* spell from the aeon stone to always succeed at the to give an answer other than \"nothing.\""
+ },
+ {
+  "id": "aeon-stone-clear-quartz-octagon",
+  "name": "Aeon Stone (Clear Quartz Octagon)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 90
+  },
+  "text": "This clear quartz stone appears to have been smashed and then repaired by pouring molten copper into the cracks and fitting the shards back together using the copper as a sort of mortar. When a non-magical item in your possession with a value of 90 gp or less and a Bulk of 1 Bulk or less would become broken, this aeon stone automatically activates, preventing the item from breaking by restoring the item's current Hit Points to the item's maximum Hit Points. The stone then turns permanently into a *Aeon Stone (Dull Grey)*. The stone's resonant power allows you to cast 1st-rank Mending as a divine innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-consumed",
+  "name": "Aeon Stone (Consumed)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 9
+  },
+  "text": "Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an *aeon stone* with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of *aeon stones*, each with a different appearance and magical effect. Each *aeon stone* also gains a resonant power when slotted into a special magical item called a *wayfinder*. --- A *consumed* aeon stone is a dull lump that has lost its magical properties. It still rotates your head like any other aeon stone and can thus serve as a stylish, hand-free option for various spells that target an object. This aeon stone has no resonant power."
+ },
+ {
+  "id": "aeon-stone-delaying",
+  "name": "Aeon Stone (Delaying)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 350
+  },
+  "text": "Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an *aeon stone* with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of *aeon stones*, each with a different appearance and magical effect. Each *aeon stone* also gains a resonant power when slotted into a special magical item called a *wayfinder*. --- When you would die from the dying condition (typically at dying 4), this smooth pink stone automatically activates and reduces your dying value to 1 less than would normally kill you (typically to dying 3). The stone then permanently turns into a Aeon Stone (Consumed). You can benefit from this ability only once per day, even if you have multiple such stones. The resonant power allows you to cast 1st-rank Heal as a divine innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-dusty-rose-prism",
+  "name": "Aeon Stone (Dusty Rose Prism)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 50
+  },
+  "text": "This aeon stone allows you to cast the 1st-rank Shield cantrip as an arcane innate spell, surrounding yourself in pink energy. The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10."
+ },
+ {
+  "id": "aeon-stone-envisioning",
+  "name": "Aeon Stone (Envisioning)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 425
+  },
+  "text": "Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an *aeon stone* with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of *aeon stones*, each with a different appearance and magical effect. Each *aeon stone* also gains a resonant power when slotted into a special magical item called a *wayfinder*. --- This clear cube allows you to communicate with a limited form of telepathy to a range of 100 feet. The messages are transmitted as a simple image each round. These images are the quality of a hasty or childish sketch but can be roughly understood by creatures regardless of language. This provides no special ability to respond to your images. The resonant power allows you to cast Translate as an occult innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-lavender-and-green-ellipsoid",
+  "name": "Aeon Stone (Lavender and Green Ellipsoid)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 30000
+  },
+  "text": "This functions as a pale lavender ellipsoid aeon stone, but it casts an 8th-rank Dispel Magic spell with a counteract modifier of 1d20+31. The resonant power allows you to cast Detect Magic and Read Aura as arcane innate spells at will."
+ },
+ {
+  "id": "aeon-stone-mottled-ellipsoid",
+  "name": "Aeon Stone (Mottled Ellipsoid)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 6100
+  },
+  "text": "This aeon stone alters your life force. You gain void healing, which means you are damaged by vitality energy and not healed by vitality healing effects. You don't take void damage, and you are healed by void effects that heal undead. The resonant power allows you to cast 7th-rank False Vitality once per day."
+ },
+ {
+  "id": "aeon-stone-nourishing",
+  "name": "Aeon Stone (Nourishing)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 325
+  },
+  "text": "Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an *aeon stone* with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of *aeon stones*, each with a different appearance and magical effect. Each *aeon stone* also gains a resonant power when slotted into a special magical item called a *wayfinder*. --- After you've invested and worn this transparent stone for a week continuously, you no longer need to eat or drink. This time resets if you remove the *aeon stone* or it's invested by someone else. The resonant power allows you to cast Air Bubble as a primal innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-pale-orange-rhomboid",
+  "name": "Aeon Stone (Pale Orange Rhomboid)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 40000
+  },
+  "text": "The first time each day you die, your vital and spiritual essences mingle together and reside within this aeon stone. You have a limited sense of how many life forces are currently within 30 feet of the stone, which you can potentially use to determine when it's safe to call on the stone's power. At any time within the next hour after your body died, you can spend 1 minute concentrating in order to return to your body. As long as your body is still intact, you are no longer dead- you are restored to 1 HP with the Doomed 3 and Wounded 3 conditions. You can benefit from the effects of only one pale orange rhomboid aeon stone in a given day. The resonant power allows you to wait more than an hour to return to your body with the aeon stone; as long as the wayfinder remains on the body, your body doesn't decay and you can return at any point."
+ },
+ {
+  "id": "aeon-stone-peering",
+  "name": "Aeon Stone (Peering)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 8500
+  },
+  "text": "Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an *aeon stone* with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of *aeon stones*, each with a different appearance and magical effect. Each *aeon stone* also gains a resonant power when slotted into a special magical item called a *wayfinder*. --- This faintly colored prism catches and transforms light. If the aeon stone is in an area of bright light, shades of purple light provide dim light in a 30-foot radius. In that radius, magical items and effects are tinged with purple, the depth of the color revealing their counteract rank. The GM also secretly rolls a counteract check against any darkness or illusion effect the light touches. It has a counteract modifier of +25. If the light fails to counteract an effect, it won't try again for 24 hours. Inside a *wayfinder*, the *aeon stone* cannot catch light. However, its resona"
+ },
+ {
+  "id": "aeon-stone-pink-rhomboid",
+  "name": "Aeon Stone (Pink Rhomboid)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 1900
+  },
+  "text": "When you invest this stone, you gain 15 temporary Hit Points. If the stone's effects are suppressed, you lose any of the temporary Hit Points remaining until it returns. The temporary Hit Points refresh during your daily preparations; they do not refresh if you re-invest the stone, or invest another *pink rhomboid aeon stone*, before then. The resonant power allows you to cast the Stabilize cantrip as a divine innate spell."
+ },
+ {
+  "id": "aeon-stone-smoothing",
+  "name": "Aeon Stone (Smoothing)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 310
+  },
+  "text": "Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an *aeon stone* with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of *aeon stones*, each with a different appearance and magical effect. Each *aeon stone* also gains a resonant power when slotted into a special magical item called a *wayfinder*. --- This spherical piece of silvery stone helps you ignore minor issues. You can ignore status penalties to skill checks from Clumsy 1, Enfeebled 1, Frightened 1, Sickened 1, and Stupefied 1 conditions as long as the value of that condition is 1. Its resonant power allows you to cast Guidance as an occult innate cantrip."
+ },
+ {
+  "id": "aeon-stone-western-star",
+  "name": "Aeon Stone (Western Star)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 225
+  },
+  "text": "This aeon stone must be activated to provide a benefit. --- **Activate** ⟨2⟩ envision, Interact --- **Effect** You activate the aeon stone to gain the effects of a 1st-rank Illusory Disguise. The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise."
+ },
+ {
+  "id": "aerekostes-item",
+  "name": "Aerekostes (Item)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "divine",
+   "intelligent",
+   "mythic"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "text": "Aerekostes (Item) May contain spoilers from Myth-Speaker Source Pathfinder #218: Titanbane pg. 79 Usage held in 1 hand Bulk 1 Perception +16; precise vision 60 feet, imprecise hearing 60 feet Communication telepathy Skills Arcana +18, Religion +16 Int +6, Wis +4, Cha +3 Will +16 Aerekostes is a +1 striking shifting falcata. Though unable to move on their own, Aerekostes can flex, adjust their center of mass, and make other adjustments to adapt to a chosen wielder’s fighting style. For the purposes of proficiency, class abilities, and feats (except those that would increase the weapon’s damage die size), a wielder that Aerekostes approves of can treat Aerekostes as a martial weapon that belongs to their choice of the axe, brawling, club, knife, pick, spear, or sword weapon group. Aerekostes does not actually change form and their critical specialization effect does not change. As a hero-god, Aerekostes is a mythic being who starts each session with their own pool of 3 Mythic Points. Whenever their wielder would regain 2 or more Mythic Points, Aerekostes regains 1 Mythic Point. Activate—Forward Planning (concentrate, fortune) Frequency once per minute; Effect Aerekostes studies the ongoing combat and myriad ways an upcoming attack might resolve. On the next attack made using Aerekostes before the end of their next turn, their wielder rolls twice and takes the better result. Activate—Spell Reserve (concentrate) Effect Aerekostes channels their mythic power into a minor miracle. "
+ },
+ {
+  "id": "against-all-odds",
+  "name": "Against All Odds",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fortune"
+  ],
+  "text": "Against All Odds Source Treasure Vault (Remastered) pg. 200 Aspect Luck Activate (concentrate) Frequency once per 10 minutes; Trigger You attempt a skill check with a DC that is at least 15 higher than your bonus in the skill; Effect You roll twice and take the better result."
+ },
+ {
+  "id": "aim-aiding",
+  "name": "Aim-Aiding",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 225
+  },
+  "text": "Armor etched with this rune aids in routing ranged attacks aimed at an enemy around you. You don't provide enemies cover against your allies' ranged attacks."
+ }
+]

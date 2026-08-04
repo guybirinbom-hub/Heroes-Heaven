@@ -1,0 +1,820 @@
+[
+ {
+  "id": "called-lastwall",
+  "name": "Called (Lastwall)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 350
+  },
+  "text": "A *called* weapon can be teleported to its owner's hand. --- **Activate** 1 minute (command, envision) --- **Effect** You imprint upon the weapon, proclaiming yourself as its owner. This allows you to use the rune's second activation until someone else uses this activation or succeeds at a Will save to prevent you from using the second activation. --- **Activate** ⟨2⟩ command, envision --- **Effect** You extend your hand and call the weapon. If the weapon is within 100 feet of you, it appears in your hand even if it was restrained. If the weapon is in another creature's possession, that creature can attempt a save against your Will DC. If the creature succeeds, your bond as the owner is broken, and you can't use this activation again until you use the first activation to restore the connection."
+ },
+ {
+  "id": "called-weapon-rune",
+  "name": "Called (Weapon Rune)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "conjuration",
+   "magical"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Called (Weapon Rune) Source Knights of Lastwall pg. 89 Price 350 gp Usage etched onto a weapon A called weapon can be teleported to its owner's hand. Activate 1 minute (command, envision); Effect You imprint upon the weapon, proclaiming yourself as its owner. This allows you to use the rune's second activation until someone else uses this activation or succeeds at a Will save to prevent you from using the second activation. Activate command, envision; Effect You extend your hand and call the weapon. If the weapon is within 100 feet of you, it appears in your hand even if it was restrained. If the weapon is in another creature's possession, that creature can attempt a Will save against your Will DC. If the creature succeeds, your bond as the owner is broken, and you can't use this activation again until you use the first activation to restore the connection."
+ },
+ {
+  "id": "calling-stone",
+  "name": "Calling Stone",
+  "level": 7,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 60
+  },
+  "text": "Calling Stone Source Battlecry! pg. 133 Price 60 gp Ammunition stone (catapult) Activate (concentrate) This magical ammunition is made of clear amber with an inner glow that pulses rapidly. It is used by commanders to aid their troops in focusing fire on a specific enemy location. When activated, the blast area is illuminated in a brilliant light that draws the eye from across the battlefield. This light lasts for 1 minute, during which time Aim actions that end with a siege weapon targeting within the illuminated area can be made using one fewer action than normal (minimum 1)."
+ },
+ {
+  "id": "caltrops",
+  "name": "Caltrops",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 3
+  },
+  "text": "These four-pronged metal spikes can damage a creature's feet. You can scatter caltrops in an empty square adjacent to you with an Interact action. The first creature that moves into that square must succeed at a check or take 1d4 damage and 1 persistent bleed damage. A creature taking persistent bleed damage from caltrops takes a –5-foot penalty to its Speed. Spending an Interact action to pluck the caltrops free reduces the DC to stop the bleeding. Once a creature takes damage from caltrops, enough are ruined that other creatures moving into the square are safe. Deployed caltrops can be salvaged and reused if no creatures took damage from them. Otherwise, enough are ruined that they can't be salvaged."
+ },
+ {
+  "id": "canary-tail-first-week",
+  "name": "Canary Tail (First Week)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Canary Source Firebrands pg. 92 Knowledge is often the key to a successful venture, and canaries are boots on the ground who can get the information you need to carry out your missions. Sometimes, you may need to gather information in an area or culture you're not familiar with, and you may need to do so without being seen or in advance of your arrival to that location. Utilizing a local network of eyes and ears is often the best way to carry out this type of reconnaissance. Organizations like the Firebrands have large networks of canaries scattered throughout the Inner Sea region capable of gathering information or following specific targets, and some Firebrands may even be canaries themselves. Discretion and confidentiality are two of the most important values for any member of a canary network. If an individual's identity or role is revealed, it can spell death—or worse—for them and the rest of the network. To help minimize this risk, canaries know only one or two other individuals within the network and never share the identities of others with their clients. In some cases, this network of informants may have two members residing in the same household without knowing that they're both involved. Due to this secretive nature, information must be passed securely— parchment slips baked into your bread or dropped into your pocket, a letter slipped under your door, a confirmation whispered into your ear. Canaries come in two varieties: informants and tails. A canary informant a"
+ },
+ {
+  "id": "candlecap",
+  "name": "Candlecap",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "light",
+   "magical"
+  ],
+  "usage": "wornheadwear",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 12
+  },
+  "text": "The crown of a *candlecap* is stitched leather sewn in the shape of a small bowl. Fixed inside the bowl is a melted nub of wax with a small black wick. --- **Activate** ⟨1⟩ (manipulate) **Effect** You shake your head, and the candle wick ignites. The *candlecap* sheds dim light in a 20-foot radius. The candle doesn't require oxygen and can't be smothered or quenched. Activating the *candlecap* again douses the light."
+ },
+ {
+  "id": "cane",
+  "name": "Cane",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 5
+  },
+  "text": "A cane is a straight cane with a curved handle, shaped like the tip of a hook. Its simple design helps with balance and only slightly assists with taking weight off the affected opposite leg. The cane is typically 2 to 3 feet long but can be lengthened or shortened as needed."
+ },
+ {
+  "id": "cartographers-kit",
+  "name": "Cartographer's Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 42
+  },
+  "text": "This kit includes a writing set, a compass, a standard astrolabe, a ruler, and a survey map."
+ },
+ {
+  "id": "cat",
+  "name": "Cat",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Cat Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Cat Source Travel Guide pg. 101 Price 3 cp Cat (Galtan Orange) Source Travel Guide pg. 101 Price 10 gp The Galtan orange cat was bred to have short legs and a thick orange coat so it could easily hunt vermin in tight spaces. They were often kept as staff in noble houses. During the Galtan revolution, as noble households fell, these cats were left to fend for their themselves. While there's a substantial feral population, only one breeder of pedigreed Galtan orange cats remains, making them highly sought after."
+ },
+ {
+  "id": "cat-galtan-orange",
+  "name": "Cat (Galtan Orange)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Cat Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Cat Source Travel Guide pg. 101 Price 3 cp Cat (Galtan Orange) Source Travel Guide pg. 101 Price 10 gp The Galtan orange cat was bred to have short legs and a thick orange coat so it could easily hunt vermin in tight spaces. They were often kept as staff in noble houses. During the Galtan revolution, as noble households fell, these cats were left to fend for their themselves. While there's a substantial feral population, only one breeder of pedigreed Galtan orange cats remains, making them highly sought after."
+ },
+ {
+  "id": "catch-pole",
+  "name": "Catch Pole",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 2
+  },
+  "text": "This sturdy pole has a rope attached to one end in a loop with the other end extending to the handle. You can pull the handle side of the rope to tighten the loop. Using this loop, you can Grapple without having a free hand. A creature grabbed this way receives a –2 circumstance penalty to attack rolls when Striking with an unarmed attack. Due to limitations in the size of the loop, a catch pole can only be used on creatures sized Medium or smaller."
+ },
+ {
+  "id": "cave-worm-repellent",
+  "name": "Cave Worm Repellent",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "text": "Cave Worm Repellent May contain spoilers from Extinction Curse Source Pathfinder #155: Lord of the Black Sands pg. 75 Usage held in 1 hand Bulk L Activate 1 minute (Interact) Cave worm repellent is a highly noxious oil that can be applied to a creature or sprinkled in a circle around a 10-foot-radius area. In either case, after it is applied, it lasts for 24 hours or until it is scrubbed clean with 1 minute of work. When applied to a creature, the repellent causes cave worms of the indicated type to avoid attacking that creature in melee as long as they have something else nearby to attack. The repellent does not deter a cave worm from making ranged attacks against a coated target. If no creatures are within a cave worm's reach and it wants to approach and make a melee attack, it approaches and attacks a non-coated creature if it can without spending more actions to do so. If the coated creature is swallowed by the designated type of cave worm, the cave worm must succeed at a Fortitude save or involuntarily regurgitate the swallowed creature on the next round (a single action). When sprinkled around an area, cave worm repellent negates any chance of a random encounter with the particular type of cave worm in that area, as the creatures purposefully avoid the affected area. Other types of repellent that function similarly to this one might exist at the GM's discretion. Uncommon or rare creatures are typically much harder to repel, and repellent against them might necessitate h"
+ },
+ {
+  "id": "chain",
+  "name": "Chain",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 4
+  },
+  "text": "Chain Source Player Core pg. 287 Price 4 gp (10 ft.) Hands 2 Bulk 1"
+ },
+ {
+  "id": "chain-10-feet",
+  "name": "Chain (10 feet)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 4
+  },
+  "text": "10 feet of chain."
+ },
+ {
+  "id": "chain-of-the-stilled-spirit",
+  "name": "Chain of the Stilled Spirit",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 650
+  },
+  "text": "This 3-foot length of chain is made of a mystical blue-white steel. You can wrap the chain around an item or creature; if a ghost of 9th level or lower is bound to the item or creature via its rejuvenation ability, it cannot rejuvenate if it is destroyed. This chain can't impede a ghost's rejuvenation that is tied to an area, only to an item or creature. At the GM's discretion, the *chain of the stilled spirit* might work on abilities similar to Rejuvenation that prevent a spirit from going being fully destroyed."
+ },
+ {
+  "id": "chalice-implement",
+  "name": "Chalice Implement",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "champion-kit",
+  "name": "Champion Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8,
+   "sp": 7
+  },
+  "text": "Champion Kit Source Player Core 2 pg. 277 Price 8 gp, 7 sp Money Left Over 6 gp, 3 sp Bulk 3, 7 light Armor Chain Mail Weapons javelins (4), Dagger Gear Grappling Hook, Crowbar, Adventurer's Pack Options steel shield (2 gp), your deity's favored weapon (see your deities entry; use the Price listed in the weapon's entry) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "chaos-collar",
+  "name": "Chaos Collar",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "companion",
+   "invested",
+   "primal"
+  ],
+  "usage": "worncollar",
+  "price": {
+   "gp": 125
+  },
+  "text": "This unobtrusive collar is made to hide beneath an animal's fur or blend in against scaled skin. It's most often used by unscrupulous trophy hunters hoping to make a name for themselves by defeating threats they artificially created, using hapless animals as pawns. A *chaos collar* fuses to its animal bearer the first time it's clasped around the creature's neck. Three nights per month, it transforms the animal into the form of a terrifying monster. The appearance is the same size as the original animal and doesn't change the animal's statistics, but it's always something new, horrifying, and unique to that particular *chaos collar*. The transformation lasts from dusk until dawn, and it occurs with complete randomness throughout the month. An animal slain while wearing a *chaos collar* remains in the form it had at the time of its death. Once its bearer dies, the collar transforms into a scrap of dirty string and falls off, where the unscrupulous hunter can collect and use it again."
+ },
+ {
+  "id": "charming",
+  "name": "Charming",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "auditory",
+   "emotion",
+   "incapacitation",
+   "mental"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Charming Source Treasure Vault (Remastered) pg. 198 Aspect Artistry Activate (concentrate) Frequency once per day; Effect You speak briefly about your craft or enact a short performance. The relic casts charm at a rank equal to half its own."
+ },
+ {
+  "id": "chatterer-of-follies",
+  "name": "Chatterer of Follies",
+  "level": 6,
+  "itemType": "weapon",
+  "traits": [
+   "illusion",
+   "magical",
+   "shove",
+   "two-hand-d10",
+   "versatile-p"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 200
+  },
+  "text": "This heavy +1 striking khakarra is cast from solid steel and plated with pyrite. Metal charms shaped like grinning idols festoon its great arched ring, and during combat, as tiny tendrils of flame fly off the pyrite, these hanging dolls seem to chatter in tune with the clash and din of battle. Whenever you complete a move action during your turn, choose a creature adjacent to you at the end of your movement. Until the end of your turn, that creature takes a -1 status penalty to Will saves against your enchantment spells and your illusion spells. Any time you cast your enchantment and illusion spells, you become concealed during your move actions for the rest of the turn."
+ },
+ {
+  "id": "chime-of-opening",
+  "name": "Chime of Opening",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 235
+  },
+  "text": "This hollow dawnsilver tube is about a foot long and bears engravings reminiscent of open locks and broken chains. The chime can be activated 10 times before it cracks and becomes useless. **Activate** ⟨1⟩ Interact --- **Effect** You aim the chime at a container, door, or lock you want to open and strike the chime. The chime sends out magical vibrations that attempt a Thievery check against the lock's DC, with a Thievery bonus of 1d20+13. This targets only one lock or binding at a time, so you might need to activate the chime multiple times to open a target with several forms of protection."
+ },
+ {
+  "id": "chronicler-wayfinder",
+  "name": "Chronicler Wayfinder",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "Chronicler wayfinders bear a mystical connection to the Pathfinder Chronicles themselves, granting them the ability to assist in situations where unusual lore is needed by drawing on lore from a particular topic. Each chronicler wayfinder is attuned to a specific Lore skill, chosen at the time of creation. In addition to the effects of a Wayfinder, a chronicler wayfinder has the following activation. --- **Activate** ⟨1⟩ Envision --- **Effect** You tap into the Pathfinder Chronicles on the chronicler wayfinder's attuned topic, gaining the effects of a Recall Knowledge action with the chosen Lore skill. For the Lore check's modifier, use whichever is better of +12 or your own modifier, using your level as your proficiency bonus even if you're untrained in the attuned Lore skill."
+ },
+ {
+  "id": "cinderclaw-gauntlet",
+  "name": "Cinderclaw Gauntlet",
+  "level": 5,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "free-hand",
+   "magical",
+   "versatile-s"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 150
+  },
+  "text": "This sharp-taloned *+1 striking spiked gauntlet* appears to have been crafted from dragon scales, with claws built from iron. In addition to the typical weapon traits, a Cinderclaw gauntlet has the versatile S trait. On a critical hit, the *Cinderclaw gauntlet* deals an additional 1d6 fire damage. **Activate** ⟨5⟩ command **Trigger** Your attack roll with the *Cinderclaw gauntlet* is a critical success. --- **Effect** The creature you hit must succeed at a save or be Sickened 1 by the gauntlet's acrid smoke. Creatures that don't need to breathe are immune."
+ },
+ {
+  "id": "cipher-of-elemental-planes",
+  "name": "Cipher of Elemental Planes",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 9000
+  },
+  "text": "This device is made from two metal discs, one slightly smaller than the other, each bearing a variety of runes and symbols along their outer edges. The center ring typically shows a rune for each elemental plane, and many older ciphers include only the planes of air, earth, fire, and water. A thick, golden pin in the center of both discs holds them together. --- **Activate - Align to Plane** ⟨1⟩ (manipulate, scrying, visual) **Effect** You turn the discs to align symbols, creating a minute planar gateway as large as a keyhole. You can look through it to view a location in an elemental plane. Each cipher connects to 12 locations on each elemental plane-typically large settlements. Anyone holding the cipher can understand the primary language of the plane the cipher is aligned to. A cipher of the planes can be used in place of a planar key for Interplanar Teleport and similar magic for travel to the plane it's aligned to. When it's used this way, you arrive unerringly at the location the cipher is aligned to."
+ },
+ {
+  "id": "cipher-of-the-elemental-planes",
+  "name": "Cipher of the Elemental Planes",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "price": {
+   "gp": 9000
+  },
+  "text": "Cipher of the Elemental Planes Source Rage of Elements pg. 224 Price 9,000 gp Usage held in 1 hand Bulk L This device is made from two metal discs, one slightly smaller than the other, each bearing a variety of runes and symbols along their outer edges. The center ring typically shows a rune for each elemental plane, and many older ciphers include only the planes of air, earth, fire, and water. A thick, golden pin in the center of both discs holds them together. Activate—Align to Plane (manipulate, scrying, visual) Effect You turn the discs to align symbols, creating a minute planar gateway as large as a keyhole. You can look through it to view a location in an elemental plane. Each cipher connects to 12 locations on each elemental plane—typically large settlements. Anyone holding the cipher can understand the primary language of the plane the cipher is aligned to. A cipher of the planes can be used in place of a planar key for interplanar teleport and similar magic for travel to the plane it's aligned to. When it's used this way, you arrive unerringly at the location the cipher is aligned to."
+ },
+ {
+  "id": "clay",
+  "name": "Clay",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "cp": 1
+  },
+  "text": "This malleable, oil-based clay can be shaped by hand and is available in a variety of colors. A single unit has 4 ounces of clay."
+ },
+ {
+  "id": "clean-luck",
+  "name": "Clean Luck",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fortune"
+  ],
+  "text": "Clean Luck Source Treasure Vault (Remastered) pg. 199 Aspect Luck Activate (concentrate) Frequency once per 10 minutes; Trigger You attempt a d20 roll affected by a misfortune effect; Effect Negate the misfortune effect. Any other fortune effect still applies."
+ },
+ {
+  "id": "cleric-kit",
+  "name": "Cleric Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1,
+   "sp": 7
+  },
+  "text": "Cleric Kit Source Player Core pg. 268 Price 1 gp, 7 sp Money Left Over 13 gp, 3 sp Bulk 1, 2 light Armor Explorer's Clothing Gear Adventurer's Pack, Religious Symbol (Wooden) Options your deity's favored weapon (see your deities entry; use the Price listed in the weapon's entry), chain mail (6 gp), healer's toolkit (5 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "climbing-bolt",
+  "name": "Climbing Bolt",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 15
+  },
+  "text": "The shaft of this bolt is wrapped with fine twine. When the bolt strikes a solid surface, the twine unwinds and enlarges into a 50-foot-long rope, securely fastened to the surface the bolt struck. The rope can be pulled free with an Interact action and a successful check."
+ },
+ {
+  "id": "climbing-kit",
+  "name": "Climbing Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 5
+  },
+  "text": "This satchel includes 50 feet of rope, pulleys, a dozen pitons, a hammer, a grappling hook, and one set of crampons. Climbing kits allow you to attach yourself to the wall you're Climbing, moving half as quickly as usual (minimum 5 feet) but letting you attempt a whenever you critically fail to prevent a fall. A single kit has only enough materials for one climber; each climber needs their own kit. If you wear your climbing kit, you can access it as part of a Climb action."
+ },
+ {
+  "id": "cloak-of-feline-rest",
+  "name": "Cloak of Feline Rest",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worncloak",
+  "price": {
+   "gp": 20
+  },
+  "text": "This black velvet cloak is featureless and very soft to the touch. Upon wearing it for the first time, you're momentarily overwhelmed with a sense of comfort and coziness. While wearing this cloak you can comfortably rest in any space, so long as it's not wet or particularly hazardous. While sleeping in this cloak you only take a -2 status penalty to auditory Perception checks, rather than a -4 status penalty."
+ },
+ {
+  "id": "cloak-of-immolation",
+  "name": "Cloak of Immolation",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "worncloak",
+  "price": {},
+  "text": "Appearing as a magic cloak such as a *clandestine cloak*, this garment is made of highly volatile fabric. While wearing it, if you take fire damage, you also take 1d10 damage. Taking fire damage while the persistent fire damage is in effect has no additional effect. You can extinguish the persistent fire damage as normal. Any creature that hits you with a melee unarmed attack while you are taking this persistent fire damage takes fire damage equal to the persistent fire damage you took on your previous turn. Once the curse has activated for the first time, the cloak fuses to you."
+ },
+ {
+  "id": "cloak-of-waves-clouds",
+  "name": "Cloak of Waves & Clouds",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worncloak",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 38000
+  },
+  "text": "This magical cloak was crafted from the feathers and scales of a legendary giant fish that could transform into a resplendent bird. **Activate—Cut Air and Sea** ⟨1⟩ (concentrate, manipulate) --- **Effect** The cloak ripples, becoming either giant eagle feathers or iridescent fish scales. Until you next Activate the cloak, you gain either a swim Speed of 60 feet and the ability to breathe underwater or a fly Speed of 40 feet."
+ },
+ {
+  "id": "clockwork-bookshelf",
+  "name": "Clockwork Bookshelf",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 15
+  },
+  "text": "This device was originally created by an inventor who had way more books they wanted to access than available wall space to store them. Each of the bookshelf's six levels is actually loaded with a pair of shelves instead of a single shelf. A simple switch on the side of the bookshelf flips the corresponding shelf to the other side, revealing any books stored in the paired shelf. While this makes the clockwork bookshelf a little deeper than a normal bookshelf, in order to fit both shelves, it effectively allows you to store twice as many books using the same amount of wall space. Those who wish to keep volumes hidden from visitors (or perhaps stow a weapon or potion within a false book) often load the hidden shelf first, then switch to the second shelf lined with more respectable volumes."
+ },
+ {
+  "id": "clockwork-box-packer",
+  "name": "Clockwork Box Packer",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 50
+  },
+  "text": "This handy clockwork device is too expensive for most warehouses and shipping docks to make use of it, but some nobles have purchased the item for their staff as a status symbol, and merchants who are in the shipping trade can afford to slowly reap the benefits of its usage. It takes 1 minute to wind a clockwork box packer; after which, it can function for up to 1 hour. You can indicate how high you want the clockwork box packer to stack boxes and what the packing storage dimensions are. Once packing instructions have been input, you can load a crate onto the clockwork box packer, and it begins its task. Once the box is stacked, the clockwork box packer closes the box, if necessary, then ties a ribbon or cord around it from a supply loaded into the clockwork box packer in advance. Once the package is secure, the clockwork box packer stacks it and then swivels back into position, ready to accept another box. In this way, the clockwork device can finish within minutes a packing job that might take humanoid workers an hour"
+ },
+ {
+  "id": "clockwork-dial",
+  "name": "Clockwork Dial",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 20
+  },
+  "text": "This small timepiece allows you to accurately track time, useful for coordinating attacks, cooking, and all other sorts of activities, without the steadiness or care necessary to use an hourglass. As always, spell durations are too inexact to be reliably tracked, as they don't last precisely the duration listed. Protected within a brass or steel case, the clockwork mechanism of this device is turned using a small key. Most dials have a maximum duration of 1 hour, with each turn of the key adding 10 minutes to the timer, though some are crafted with longer or shorter durations and intervals. Setting the timer requires one free hand and an Interact action."
+ },
+ {
+  "id": "clockwork-megaphone",
+  "name": "Clockwork Megaphone",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 15
+  },
+  "text": "A clockwork megaphone uses cunning clockwork gears to adjust the shape and angle of the cone within the megaphone, allowing you to raise or lower the volume, widen or contract the angle in which you project your voice, or both at the same time. This makes a clockwork megaphone far more useful than an ordinary megaphone for situations where you want to make sure that everyone in a particular venue or location can hear you without being so loud that your voice comes across as a painful shout. It takes 1 minute to wind up a clockwork megaphone, which allows it to remain active for up to 1 hour of adjustments, only counting the time you change the megaphone's settings, not the time you spend speaking. Since it automatically enters standby mode when not in use, this typically means you don't have to wind up the clockwork megaphone for months, or even years, depending on how often you adjust the settings each day."
+ },
+ {
+  "id": "clockwork-recorder",
+  "name": "Clockwork Recorder",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "This small recording device can be as tiny as a music box or around the size of large book and is typically concealed in hollowed-out books and jewelry. A clockwork recorder can record up to 1 hour of sound before its wax cylinders must be retrieved and replaced. Any given clockwork recorder can play back the recordings of a cylinder, regardless of whether it was the recorder used for the original recording. **Activate** ⟨3⟩ Interact --- **Effect** You wind the recorder to start recording sound or to play back a recording. You can have the recording or playback start immediately or be timed to start at any point up to one month later."
+ },
+ {
+  "id": "clockwork-sun",
+  "name": "Clockwork Sun",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "arcane",
+   "artifact",
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "**AC** 45 **Fort** +36, **Ref** +30 **Hardness** 20 **HP** 300 (BT 150) **Immunities** critical hits, object immunities, precision damage **Weaknesses** electricity 20, orichalcum 20 **Resistances** physical 20 (except adamantine or orichalcum) **Speed** 10 feet, climb 10 feet --- At the height of the Azlant Empire, there were those who had the wealth and skill to elevate the hobby of terrarium-keeping into a truly breathtaking endeavor. By deploying a clockwork sun into a subterranean cavern, these power-drunk overlords introduced a day-night cycle to chambers that otherwise would never have felt the touch of sunlight. At Azlant's height, an elite association of powerful spellcasters and aristocrats kept vast underground terrariums outfitted with clockwork suns, competing to see who could create the most astounding \"personal world.\" Yet not all clockwork suns were the playthings of the rich and bored. The one in En-Gokal served a practical purpose, nurturing farmlands that kept the inmates and staff of the prison fed. Even now, centuries after the cataclysmic events of Earthfall, this clockwork sun continues its relentless crawl across the cavern above Underheaven. A clockwork sun is an elephant-sized sphere of polished bronze plates fitted with glowing crystals, all arranged around a heart of grinding gears. An array of magical lenses amplifies the energy shed by a single aeon stone set in the center of the artifact, generating light that mimics that of a real sun. A series"
+ },
+ {
+  "id": "cloth-cotton",
+  "name": "Cloth (Cotton)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 8
+  },
+  "text": "Cloth Source Travel Guide pg. 37 Cloth (wool cloth, 1 Bulk) Source Travel Guide pg. 37 Price 4 sp Cloth (Wool Cloth, 1 square yard) Source Travel Guide pg. 37 Price 1 cp Cloth (Linen) Source Travel Guide pg. 37 Price 6 sp Cloth (Cotton) Source Travel Guide pg. 37 Price 8 sp"
+ },
+ {
+  "id": "cloth-linen",
+  "name": "Cloth (Linen)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 6
+  },
+  "text": "Cloth Source Travel Guide pg. 37 Cloth (wool cloth, 1 Bulk) Source Travel Guide pg. 37 Price 4 sp Cloth (Wool Cloth, 1 square yard) Source Travel Guide pg. 37 Price 1 cp Cloth (Linen) Source Travel Guide pg. 37 Price 6 sp Cloth (Cotton) Source Travel Guide pg. 37 Price 8 sp"
+ },
+ {
+  "id": "cloth-of-nullification",
+  "name": "Cloth of Nullification",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 75000
+  },
+  "text": "This small piece of embroidered cloth is inimical to all magic. **Activate—Nullify Magic** ⟨2⟩ (manipulate) --- **Effect** You cover a magic item with the cloth or wave the cloth near a magic effect and attempt to counteract the effect or item. The cloth's counteract check modifier is +32, and its counteract rank is 10. Regardless of the result, the cloth of nullification can't be activated again for 2d6 hours. On a success, the effect or item is deactivated for the same amount of time, and its duration, if any, continues to expire during that time. With a successful counteract check, you can instead choose to completely absorb the magic from the effect or item into the cloth of nullification. If you do, both become completely non-magical and their magic can't be recovered, even by the remake spell. The cloth of nullification automatically fails to counteract most artifacts and similarly powerful items"
+ },
+ {
+  "id": "cloth-wool-cloth-1-bulk",
+  "name": "Cloth (wool cloth, 1 Bulk)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 4
+  },
+  "text": "Cloth Source Travel Guide pg. 37 Cloth (wool cloth, 1 Bulk) Source Travel Guide pg. 37 Price 4 sp Cloth (Wool Cloth, 1 square yard) Source Travel Guide pg. 37 Price 1 cp Cloth (Linen) Source Travel Guide pg. 37 Price 6 sp Cloth (Cotton) Source Travel Guide pg. 37 Price 8 sp"
+ },
+ {
+  "id": "cloth-wool-cloth-1-square-yard",
+  "name": "Cloth (Wool Cloth, 1 square yard)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Cloth Source Travel Guide pg. 37 Cloth (wool cloth, 1 Bulk) Source Travel Guide pg. 37 Price 4 sp Cloth (Wool Cloth, 1 square yard) Source Travel Guide pg. 37 Price 1 cp Cloth (Linen) Source Travel Guide pg. 37 Price 6 sp Cloth (Cotton) Source Travel Guide pg. 37 Price 8 sp"
+ },
+ {
+  "id": "clothing-cold-weather",
+  "name": "Clothing (Cold-Weather)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 4
+  },
+  "text": ""
+ },
+ {
+  "id": "clothing-desert",
+  "name": "Clothing (Desert)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornclothing",
+  "price": {
+   "sp": 4
+  },
+  "text": "Desert clothing is made up of loose-fitting, light, breathable clothes that protect your head and body from the sun and allow you to cool off easily. They allow you to negate the damage from severe environmental heat and reduce the damage from extreme heat to that of severe heat. This effect is negated if the clothing is worn with any armor, except armor that is especially cooling at the GM's discretion."
+ },
+ {
+  "id": "clothing-explorers",
+  "name": "Clothing (Explorer's)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Clothing Source Player Core pg. 287 Ordinary clothing is functional with basic tailoring, such as peasant garb, monk's robes, or work clothes. More expensive finery or clothes for specific climes cost more. Clothing (Ordinary) Source Player Core pg. 287, Core Rulebook pg. 287 Price 1 sp Clothing (Explorer's) Source Player Core pg. 291, Core Rulebook pg. 287 Price 1 sp Bulk L Explorer’s clothing is sturdy enough that it can be reinforced to protect you, even though it isn’t a suit of armor. It comes in many forms, though the most common sorts look like clerical vestments, monk’s garments, or wizard’s robes, as members of all three classes are likely to avoid wearing armor. For more information on explorer’s clothing, see its entry in the armor category. Clothing (Fine) Source Player Core pg. 291, Core Rulebook pg. 287 Price 2 gp Bulk L Clothing (High-Fashion Fine) Source Player Core pg. 291, Core Rulebook pg. 287 Price 55 gp Bulk L Clothing (Cold-Weather) Source Player Core pg. 291 Price 4 sp Bulk L Clothing (Desert) Source Howl of the Wild pg. 112 Price 4 sp Bulk L Desert clothing is made up of loose-fitting, light, breathable clothes that protect your head and body from the sun and allow you to cool off easily. They allow you to negate the damage from severe environmental heat and reduce the damage from extreme heat to that of severe heat. This effect is negated if the clothing is worn with any armor, except armor that is especially cooling at the GM’s discretion."
+ },
+ {
+  "id": "clothing-fine",
+  "name": "Clothing (Fine)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 2
+  },
+  "text": "Fine clothing, suitable for a noble or royal, is made with expensive fabrics, precious metals, and intricate patterns."
+ },
+ {
+  "id": "clothing-ordinary",
+  "name": "Clothing (Ordinary)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 1
+  },
+  "text": "Ordinary clothing is functional with basic tailoring, such as peasant garb, monk's robes, or work clothes."
+ },
+ {
+  "id": "coating",
+  "name": "Coating",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 700
+  },
+  "text": "When etched, this rune creates an extradimensional space that links to the weapon that wields it. The space can hold up to 1 Bulk but can contain only poisons and magic oils that could be applied to the weapon. Stowing or retrieving an item in the space requires an Interact action, except when using the rune's activation. **Activate** ⟨1⟩ (concentrate) **Requirements** At least one magic oil or poison is stored inside the rune's extradimensional space --- **Effect** For 1 minute, you can apply stored oils and poisons to the weapon without needing any hands free. Applying them takes the same number of actions as normal. An oil or poison applied this way pours directly from the extradimensional space onto the weapon, and when it's fully applied, its empty vial is ejected."
+ },
+ {
+  "id": "codebreakers-parchment",
+  "name": "Codebreaker's Parchment",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 45
+  },
+  "text": "This finely crafted, seemingly mundane parchment is useful for writing sensitive documents. When words are written on this parchment, they instantly scramble into unrecognizable script, requiring a DC 20 check to Decipher Writing. --- **Activate** ⟨1⟩ command --- **Effect** The scrambled words align into the originally written script. Identifying the parchment reveals that it can be activated with a command, but a critical success to Identify Magic is needed to learn the command word. --- **Activate** ⟨1⟩ Interact --- **Effect** You light the parchment on fire, burning the words off while leaving the parchment unharmed and ready to bear more text."
+ },
+ {
+  "id": "codebreakers-parchment-greater",
+  "name": "Codebreaker's Parchment (Greater)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 950
+  },
+  "text": "This finely crafted, seemingly mundane parchment is useful for writing sensitive documents. When words are written on this parchment, they instantly scramble into unrecognizable script, requiring a DC 30 check with master proficiency to Decipher Writing. --- **Activate** ⟨1⟩ command --- **Effect** The scrambled words align into the originally written script. Identifying the parchment reveals that it can be activated with a command, but a critical success to Identify Magic is needed to learn the command word. --- **Activate** ⟨1⟩ Interact --- **Effect** You light the parchment on fire, burning the words off while leaving the parchment unharmed and ready to bear more text."
+ },
+ {
+  "id": "codebreakers-parchment-major",
+  "name": "Codebreaker's Parchment (Major)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 14500
+  },
+  "text": "This finely crafted, seemingly mundane parchment is useful for writing sensitive documents. When words are written on this parchment, they instantly scramble into unrecognizable script, requiring a DC 40 check with legendary proficiency to Decipher Writing. --- **Activate** ⟨1⟩ command --- **Effect** The scrambled words align into the originally written script. Identifying the parchment reveals that it can be activated with a command, but a critical success to Identify Magic is needed to learn the command word. --- **Activate** ⟨1⟩ Interact --- **Effect** You light the parchment on fire, burning the words off while leaving the parchment unharmed and ready to bear more text."
+ },
+ {
+  "id": "coded-signal-monument",
+  "name": "Coded Signal (Monument)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1000
+  },
+  "text": "Coded Signal Source Dark Archives (Remastered) pg. 84 Secret societies are notorious for their rituals and symbolism, and for working those symbols into their properties and belongings. The silent hunters of the Cat and Mouse Society wear cat masks and brand their lodges with the sign of the sphinx. Some of this is due to ego, some due to what might be best understood as an exercise in branding, but some is to convey messages to members. Unlike other secret messages, coded signals make no effort to direct themselves to a specific individual. Rather, the message is clearly visible, but the actual meaning is decipherable only to members of the secret society. Recognizing the Signal: If one isn't a member of the relevant society, then identifying the presence of a coded signal requires succeeding at a Society check, with a critical success also conveying the general meaning. The DC depends on how secretive and widespread the society is—the Esoteric Order of the Palatine Eye, widespread and famous, might use a simple expert DC of 20, while the paranoid Exarchate of the Infinite Clock might use a simple master DC of 30, and an even more obscure society might use the simple legendary DC of 40. Coded Signal (Temporary) Source Dark Archives (Remastered) pg. 84 Price 10 gp Temporary signal examples include newspaper advertisements or temporary illusions. Coded Signal (Permanent) Source Dark Archives (Remastered) pg. 84 Price 100 gp Permanent signal examples include graffiti on a wall "
+ },
+ {
+  "id": "coded-signal-permanent",
+  "name": "Coded Signal (Permanent)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 100
+  },
+  "text": "Coded Signal Source Dark Archives (Remastered) pg. 84 Secret societies are notorious for their rituals and symbolism, and for working those symbols into their properties and belongings. The silent hunters of the Cat and Mouse Society wear cat masks and brand their lodges with the sign of the sphinx. Some of this is due to ego, some due to what might be best understood as an exercise in branding, but some is to convey messages to members. Unlike other secret messages, coded signals make no effort to direct themselves to a specific individual. Rather, the message is clearly visible, but the actual meaning is decipherable only to members of the secret society. Recognizing the Signal: If one isn't a member of the relevant society, then identifying the presence of a coded signal requires succeeding at a Society check, with a critical success also conveying the general meaning. The DC depends on how secretive and widespread the society is—the Esoteric Order of the Palatine Eye, widespread and famous, might use a simple expert DC of 20, while the paranoid Exarchate of the Infinite Clock might use a simple master DC of 30, and an even more obscure society might use the simple legendary DC of 40. Coded Signal (Temporary) Source Dark Archives (Remastered) pg. 84 Price 10 gp Temporary signal examples include newspaper advertisements or temporary illusions. Coded Signal (Permanent) Source Dark Archives (Remastered) pg. 84 Price 100 gp Permanent signal examples include graffiti on a wall "
+ },
+ {
+  "id": "coded-signal-temporary",
+  "name": "Coded Signal (Temporary)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Coded Signal Source Dark Archives (Remastered) pg. 84 Secret societies are notorious for their rituals and symbolism, and for working those symbols into their properties and belongings. The silent hunters of the Cat and Mouse Society wear cat masks and brand their lodges with the sign of the sphinx. Some of this is due to ego, some due to what might be best understood as an exercise in branding, but some is to convey messages to members. Unlike other secret messages, coded signals make no effort to direct themselves to a specific individual. Rather, the message is clearly visible, but the actual meaning is decipherable only to members of the secret society. Recognizing the Signal: If one isn't a member of the relevant society, then identifying the presence of a coded signal requires succeeding at a Society check, with a critical success also conveying the general meaning. The DC depends on how secretive and widespread the society is—the Esoteric Order of the Palatine Eye, widespread and famous, might use a simple expert DC of 20, while the paranoid Exarchate of the Infinite Clock might use a simple master DC of 30, and an even more obscure society might use the simple legendary DC of 40. Coded Signal (Temporary) Source Dark Archives (Remastered) pg. 84 Price 10 gp Temporary signal examples include newspaper advertisements or temporary illusions. Coded Signal (Permanent) Source Dark Archives (Remastered) pg. 84 Price 100 gp Permanent signal examples include graffiti on a wall "
+ },
+ {
+  "id": "cold-iron-armor-high-grade",
+  "name": "Cold Iron Armor (High-Grade)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 20000
+  },
+  "text": "Cold Iron Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Cold Iron Cold iron armor sickens certain creatures that touch it. A creature with weakness to cold iron (such as most demons and fey) that critically fails an unarmed attack against a creature in cold iron armor becomes sickened 1. A creature with weakness to cold iron is sickened 1 as long as it wears cold iron armor. Cold Iron Armor (Low-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 140 gp (+14 gp per Bulk) The initial raw materials must include cold iron worth at least 70 sp + 7 sp per Bulk. Cold Iron Armor (Standard-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 1,200 gp (+120 gp per Bulk) The initial raw materials must include at least 150 gp of cold iron + 15 gp per Bulk. Cold Iron Armor (High-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 20,000 gp (+2,000 gp per Bulk) The initial raw materials must include cold iron worth at least 10,000 gp + 1,000 gp per Bulk."
+ },
+ {
+  "id": "cold-iron-armor-low-grade",
+  "name": "Cold Iron Armor (Low-Grade)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 140
+  },
+  "text": "Cold Iron Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Cold Iron Cold iron armor sickens certain creatures that touch it. A creature with weakness to cold iron (such as most demons and fey) that critically fails an unarmed attack against a creature in cold iron armor becomes sickened 1. A creature with weakness to cold iron is sickened 1 as long as it wears cold iron armor. Cold Iron Armor (Low-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 140 gp (+14 gp per Bulk) The initial raw materials must include cold iron worth at least 70 sp + 7 sp per Bulk. Cold Iron Armor (Standard-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 1,200 gp (+120 gp per Bulk) The initial raw materials must include at least 150 gp of cold iron + 15 gp per Bulk. Cold Iron Armor (High-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 20,000 gp (+2,000 gp per Bulk) The initial raw materials must include cold iron worth at least 10,000 gp + 1,000 gp per Bulk."
+ },
+ {
+  "id": "cold-iron-armor-standard-grade",
+  "name": "Cold Iron Armor (Standard-Grade)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1200
+  },
+  "text": "Cold Iron Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Cold Iron Cold iron armor sickens certain creatures that touch it. A creature with weakness to cold iron (such as most demons and fey) that critically fails an unarmed attack against a creature in cold iron armor becomes sickened 1. A creature with weakness to cold iron is sickened 1 as long as it wears cold iron armor. Cold Iron Armor (Low-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 140 gp (+14 gp per Bulk) The initial raw materials must include cold iron worth at least 70 sp + 7 sp per Bulk. Cold Iron Armor (Standard-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 1,200 gp (+120 gp per Bulk) The initial raw materials must include at least 150 gp of cold iron + 15 gp per Bulk. Cold Iron Armor (High-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 20,000 gp (+2,000 gp per Bulk) The initial raw materials must include cold iron worth at least 10,000 gp + 1,000 gp per Bulk."
+ },
+ {
+  "id": "cold-iron-buckler-high-grade",
+  "name": "Cold Iron Buckler (High-Grade)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5000
+  },
+  "text": "Cold Iron Shield Source GM Core pg. 233 Usage varies by shield Base Material Cold Iron Cold iron shields don't typically have an additional effect, though when used for a shield bash, they're cold iron weapons. Cold Iron Buckler (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 30 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements cold iron worth at least 15 sp Cold Iron Shield (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 34 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 17 sp Cold Iron Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 300 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 375 sp Cold Iron Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 340 gp Bulk 1 The shield has Hardness 7, HP 28, and BT 14. Craft Requirements cold iron worth at least 425 sp Cold Iron Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,000 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements cold iron worth at least 2,500 gp Cold Iron Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,500 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements cold iron worth at least 2,750 gp"
+ }
+]

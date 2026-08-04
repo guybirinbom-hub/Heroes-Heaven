@@ -1,0 +1,893 @@
+[
+ {
+  "id": "air-bladder",
+  "name": "Air Bladder",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 1
+  },
+  "text": "**Bulk** L (1 if inflated) --- This weighted animal bladder can be inflated with air in preparation for a dive. It holds enough air to breathe for one round. As a free action, you can inhale the contents of the air bladder, which resets the number of rounds you can hold your breath. You can inflate the bladder or remove its attached weight as an Interact action. An unattached inflated bladder without the weight will float toward the surface of the water at a rate of 60 feet per round."
+ },
+ {
+  "id": "air-cartridge-firing-system",
+  "name": "Air Cartridge Firing System",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "attached-to-crossbow-or-firearm-firing-mechanism",
+  "price": {
+   "gp": 75
+  },
+  "text": "Air cartridge firing mechanisms use a container of compressed air affixed to a sealed system that releases the air in a small burst to propel ammunition, and they're the default used in Arcadian air repeaters. Any firearm can be modified to replace its normal firing mechanism with an air cartridge firing system, allowing the weapon to be fired underwater or in other conditions that would normally prevent the ignition of black powder. The air cartridges lack much of the propulsive power of black powder, however, imposing a –10-foot penalty to the attached firearm's range increment. Weapons with the kickback trait don't gain that trait's benefits when using an air cartridge firing system. Attaching an air cartridge firing system takes one hour, though this time can overlap with the standard time required to maintain and clean your firearm to prevent misfires."
+ },
+ {
+  "id": "alchemical-atomizer",
+  "name": "Alchemical Atomizer",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 175
+  },
+  "text": "Khismar developed this unique atomizer that allows for the distribution of elixirs, oils, and potions as a fine spray or mist. The atomizer can hold a single elixir, oil, or potion. An atomizer contains enough reagents to use it up to 10 times before the reagents must be replaced. A new batch of reagents costs 5 gp and requires an Interact action to replace. --- **Activate** ⟨1⟩ Interact --- **Effect** You spray the contents of the atomizer on yourself or an adjacent willing ally or unattended object. The target gains the effects of the applied elixir, oil, or potion. The target must be a valid target for the effect, such as food or drink for a nectar of purification, or the consumable is lost. --- **Activate** ⟨2⟩ Interact --- **Effect** You cause the atomizer to mix its reagents and fire its held consumable at a square within 30 feet. The consumable forms a cloud that fills the space. The first willing valid target to enter the space automatically gains the effect of the consumable. If there are multiple valid targets, such as with multiple weapons for aligned oil, the creature entering the space determines how the effect is applied. The cloud is consumed upon contact with a willing valid target or at the start of your next turn, whichever comes first."
+ },
+ {
+  "id": "alchemical-bomb",
+  "name": "Alchemical Bomb",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Alchemical Bomb Source Player Core pg. 280 Favored Weapon Inna, Laudinmio Price (Varies) Damage Varies Bulk L Hands 1 Range 20 ft. Type Ranged Category Martial Group Bomb These bombs come in a variety of types and levels of power, but no matter the variety, you throw the bomb at the target and it explodes, unleashing its alchemical blast. Click here for a list of alchemical bombs. Critical Specialization Effects Source Core Rulebook pg. 283 Certain feats, class features, weapon runes, and other effects can grant you additional benefits when you make a Strike with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always decide not to add the critical specialization effect of your weapon. Click here for the full rules on Critical Specialization Effects."
+ },
+ {
+  "id": "alchemical-chart-greater",
+  "name": "Alchemical Chart (Greater)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 19000
+  },
+  "text": "This sturdy, rigid alchemical chart contains shorthand references on quickly mixing reagents for maximum effect. If you hold this chart while using Quick Alchemy, the items you create of 18th level or lower remain potent for 1 additional round."
+ },
+ {
+  "id": "alchemical-chart-lesser",
+  "name": "Alchemical Chart (Lesser)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 100
+  },
+  "text": "This sturdy, rigid alchemical chart contains shorthand references on quickly mixing reagents for maximum effect. If you hold this chart while using Quick Alchemy, the items you create of 4th level or lower remain potent for 1 additional round."
+ },
+ {
+  "id": "alchemical-chart-moderate",
+  "name": "Alchemical Chart (Moderate)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1750
+  },
+  "text": "This sturdy, rigid alchemical chart contains shorthand references on quickly mixing reagents for maximum effect. If you hold this chart while using Quick Alchemy, the items you create of 12th level or lower remain potent for 1 additional round."
+ },
+ {
+  "id": "alchemist-kit",
+  "name": "Alchemist Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8,
+   "sp": 3,
+   "cp": 2
+  },
+  "text": "Alchemist Kit Source Player Core 2 pg. 277 Price 8 gp, 3 sp, 2 cp Money Left Over 6 gp, 6 sp, 8 cp Bulk 3, 7 light Armor Studded Leather Armor Weapons sling with 20 bullets, Dagger Gear caltrops (2 sets), Alchemist's Toolkit, Adventurer's Pack Options repair toolkit (2 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "alchemists-fire-lesser",
+  "name": "Alchemist's Fire (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Alchemist's fire is a combination of volatile liquids that ignite when exposed to air. Alchemist's fire deals 1d8 fire damage, 1 persistent fire damage, and 1 fire splash damage."
+ },
+ {
+  "id": "alchemists-flamethrower",
+  "name": "Alchemist's Flamethrower",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "fire"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 35
+  },
+  "text": "This long cylinder is topped by a pair of brass sockets and a collection of polished pipes and tubes. A total of two vials of alchemist's fire must be loaded into the sockets at the base of the weapon and the tubes cleaned and primed. Properly loading the flamethrower in this way takes 1 minute. When the trigger on a loaded flamethrower is pulled, the alchemist's fire is siphoned into the rifle and shot out of the muzzle in a line of fire. The damage dealt by a flamethrower is determined by the strength of the weakest alchemist's fire loaded into the flamethrower. --- **Activate** ⟨2⟩ (fire, manipulate) **Requirements** The flamethrower is loaded **Effect** You pull the trigger, expending both loaded alchemist's fires to shoot a line of fire. Creatures in the area take fire damage based on the weakest alchemist's fire loaded into the flamethrower, as noted below. Creatures that critically fail the basic Reflex save additionally take the listed persistent fire damage. - **Lesser Alchemist's Fire**: The flamethrower deals () in a . 1 damage. - **Moderate Alchemist's Fire**: The flamethrower deals () in a . 2 damage. - **Greater Alchemist's Fire**: The flamethrower deals () in a . 3 damage. - **Major Alchemist's Fire**: The flamethrower deals () in a . 4 damage."
+ },
+ {
+  "id": "alchemists-lab",
+  "name": "Alchemist's Lab",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 5
+  },
+  "text": "You need an alchemist's lab to Craft alchemical items during downtime."
+ },
+ {
+  "id": "alchemists-toolkit",
+  "name": "Alchemist's Toolkit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 3
+  },
+  "text": "This mobile collection of vials and chemicals can be used for simple alchemical tasks. If you wear your alchemist's toolkit, you can draw and replace it as part of the action that uses it."
+ },
+ {
+  "id": "ale",
+  "name": "Ale",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "Ale Source Travel Guide pg. 36 Price 2 sp (per keg)"
+ },
+ {
+  "id": "aligned-oil",
+  "name": "Aligned Oil",
+  "level": 9,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "divine",
+   "evocation",
+   "oil"
+  ],
+  "price": {
+   "gp": 140
+  },
+  "text": "Aligned Oil Source Core Rulebook pg. 561 Price 140 gp Usage held in 2 hands Bulk L Activate Interact This oil fills a weapon with cosmic power of an alignment. Each aligned oil is crafted to one alignment: chaos, evil, good, or law (such as a good-aligned oil). A weapon anointed with this oil gains the effects of the property rune matching its alignment: anarchic (chaos), axiomatic (law), holy (good), or unholy (evil). This lasts for 1 minute."
+ },
+ {
+  "id": "all-will-decay",
+  "name": "All Will Decay",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "metal"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "All Will Decay Source Rage of Elements pg. 148 Aspect Metal Your relic's link to the Plane of Metal tunes it in to the inevitability of rust and decay. You can cast 5th-rank rust cloud at will as an innate spell. Activate (aura, concentrate) Frequency once per day; Effect Rusted flakes swirl in a cloud around you, creating a 15-foot emanation that lasts for 1 minute. You're concealed to anyone outside the cloud. An enemy that starts its turn in the cloud takes 15 slashing damage with a basic Fortitude save. If the target has the metal trait or is primarily made of metal, the damage is 30 instead. Unattended non-magical metal items within the cloud automatically become broken."
+ },
+ {
+  "id": "allys-kerchief",
+  "name": "Ally's Kerchief",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {
+   "gp": 25
+  },
+  "text": "Organizations generally buy these simple squares of fabric in large batches with an invisible symbol on each. They help armies composed of troops unfamiliar with each other, such as mercenaries or conscripts, to recognize allied units. The kerchiefs might be tied around the head, neck, or arm. They can also be used to root out impostors. --- **Activate—Identify Allies** ⟨4⟩ (concentrate) **Trigger** You move within 15 feet of a creature wearing a matching ally's kerchief --- **Effect** The symbol magically glows above your head. It's invisible to everyone not invested in a matching ally's kerchief."
+ },
+ {
+  "id": "alpaca",
+  "name": "Alpaca",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 75
+  },
+  "text": "Alpaca Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 75 gp"
+ },
+ {
+  "id": "amulet-implement",
+  "name": "Amulet Implement",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "amulet-of-the-slumberer",
+  "name": "Amulet of the Slumberer",
+  "level": 21,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "invested",
+   "occult"
+  ],
+  "usage": "worn",
+  "price": {},
+  "text": "Companion Item to The Eye of the Slumberer. Only one such amulet can exist at any given time, and the artifact can grow a new one in 10 minutes if the original is destroyed. The Eye's abilities that require a saving throw use the higher of the amulet wearer's spell DC or class DC."
+ },
+ {
+  "id": "anarchic",
+  "name": "Anarchic",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "chaotic",
+   "evocation",
+   "magical"
+  ],
+  "price": {
+   "gp": 1400
+  },
+  "text": "Anarchic Source Core Rulebook pg. 583 Price 1,400 gp Usage etched onto a weapon without an axiomatic rune An anarchic rune is jagged and asymmetrical, channeling chaotic energy. A weapon with this rune deals an additional 1d6 chaotic damage against lawful targets. If you are lawful, you are enfeebled 2 while carrying or wielding this weapon. When you critically succeed at a Strike with this weapon against a lawful creature, roll 1d6. On a 1 or 2, you deal double minimum damage; on a 3 or 4, double your damage normally; on a 5 or 6, you deal double maximum damage. Craft Requirements You are chaotic."
+ },
+ {
+  "id": "anchoring",
+  "name": "Anchoring",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 900
+  },
+  "text": "This rune prevents enemies from escaping your grasp by fleeing to other planes. If you critically hit a target with an anchoring weapon, the weapon casts Planar Tether on the target (DC 27 Will, counteract modifier +17)."
+ },
+ {
+  "id": "anchoring-greater",
+  "name": "Anchoring (Greater)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 22000
+  },
+  "text": "This rune prevents enemies from escaping your grasp by fleeing to other planes. When you critically hit a target with a weapon with the anchoring rune, the weapon casts 8th-rank Planar Tether on the target (DC 38 Will, counteract modifier +28), except that if the target critically succeeds at its Will save, instead of having no effect, the *dimensional anchor* lasts for 1 round. When you hit a target with the weapon but don't critically hit, the target is affected by 4th-rank *dimensional anchor* for 1 round without a save (this still uses a counteract modifier of +28)."
+ },
+ {
+  "id": "angelic-vessel",
+  "name": "Angelic Vessel",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "holy"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Angelic Vessel Source GM Core pg. 311 Aspect Celestial Activate (concentrate, manipulate) Frequency once per day; Effect At your invitation, a celestial imbues your body with the divine. You gain 50 additional Hit Points, increasing both your maximum and current Hit Points, as well as weakness 10 to unholy. If the relic has the righteous call gift, this activation grants the effects of that gift as well, without expending its daily use. You can Dismiss the effect. If you do, you can unleash a wave of holy power, causing the relic to cast an 8th-rank divine decree with the holy trait."
+ },
+ {
+  "id": "animal-bed",
+  "name": "Animal Bed",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "sp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "anointed-waterskin",
+  "name": "Anointed Waterskin",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "divine",
+   "good",
+   "water"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "This waterskin coruscates with holy energy, causing it to slowly fill itself with special blessed water unique to the item. After using any of the activations, the waterskin is empty, but slowly refills itself. It becomes full enough to use again at the next dawn. --- **Activate** ⟨2⟩ command, Interact **Requirements** The anointed waterskin is full --- **Effect** You throw the anointed waterskin up to 60 feet. The water explodes out of it, with the effects of Holy Cascade (DC 25). --- **Activate** ⟨1⟩ Interact **Requirements** The anointed waterskin is full --- **Effect** You drink the water within the waterskin, granting you the effects of Bless. As normal with the spell, you can increase the radius with a single action with the concentrate trait. --- **Activate** 1 minute (command, Interact) **Requirements** The anointed waterskin is full --- **Effect** You decant the water, creating up to 10 vials of *Holy Water*. You must provide the vials."
+ },
+ {
+  "id": "antler-arrow",
+  "name": "Antler Arrow",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 7
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Creation of these arrows was inspired by an encounter with a horned archon scout who sought to peacefully restrain their foes. When an activated *antler arrow* hits a target, bone antlers extend to pin it down. The target must succeed at a save or become stuck to the surface, taking the critical specialization effects of a bow. If the hit with the *antler arrow* is a critical hit and you have access to the bow critical specialization effect, the DC of the Athletics check increases to 15."
+ },
+ {
+  "id": "anylength-rope-greater",
+  "name": "Anylength Rope (Greater)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 300
+  },
+  "text": "This 100-foot length of silk rope is lightweight and appears to be inlaid with golden threads. The rope can hold up to 3,000 pounds and is particularly durable, with a Hardness of 5 and 24 Hit Points. **Activate** ⟨1⟩ command **Effect** You command the rope to split, declaring a specific length or amount, such as \"ten feet of rope,\" \"half of the rope,\" and so on. The rope splits itself into the requested piece, leaving the remaining length intact. If the rope isn't long enough to provide the requested amount, the activation fails. --- **Activate** ⟨2⟩ envision, Interact **Requirements** The rope is split into two or more pieces **Effect** The rope attempts to reassemble itself. All pieces of the rope within 500 feet slither back toward you, moving 50 feet per round, over the span of 1 minute. Obstacles and other creatures can prevent a piece of rope from reaching you. Once all pieces reach you or the minute has passed, the pieces rejoin, becoming a single rope. The length of this reformed rope is equal to the total length of all the pieces together; if a piece is missing, the rope is now shorter than its original 100-foot length. Any pieces that didn't rejoin with the rest of the rope remain where they are after the minute passes."
+ },
+ {
+  "id": "aon-apothecary-s-garden",
+  "name": "Apothecary's Garden",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "plant"
+  ],
+  "price": {},
+  "text": "Apothecary's Garden Aspect Plant Your relic grows potent natural medicines. Each night, two medicinal herbs (or other plants) grow from your relic and can be harmlessly harvested during your next daily preparations. A living creature that consumes an herb with an Interact action regains 1d8 Hit Points for every 2 relic levels (minimum 1d8). At 9th level, the relic grows three herbs each night, and at 17th level, the relic grows four herbs each night. Herbs wither away 1 day after being harvested."
+ },
+ {
+  "id": "aon-archmage-s-regalia",
+  "name": "Archmage's Regalia",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "relic"
+  ],
+  "price": {},
+  "text": "Archmage's Regalia Aspects Life and Mind Many wizards have enhanced their spellcasting capabilities with an archmage's regalia . Legend tells of such a relic set that belonged to the wizard-king Nex, with powers far beyond that of a typical relic. Although some believe Nex took his regalia with him when he disappeared, several credible reports of items matching their descriptions have surfaced over the years. No one has yet managed to track down all five pieces, and it's possible some have been destroyed or otherwise lost. Set Items : Mage's Hat (level 3), Endless Grimoire (level 6), Accolade Robe (level 10), Bands of Force (Greater) (level 14), Greater Staff of Arcane Might (level 16) Gifts : The set grants the following gifts. - 1: Repository of Knowledge - 2: Bestow Life - 3: Psychic Scream - 4: Vitality Siphon - 5: Mental Bastion Collective Features : The set grants the following features. Two Items: The repository of knowledge gift grants you one additional Lore skill of the GM’s choice. This skill advances as other skills from the gift do. Three Items: When you use your bestow life gift, if the animated object’s level is no greater than your level – 4, you can make it a minion with the minion trait. Four Items: The psychic scream gift creates a 30-foot‑radius burst. Five Items: Treat the outcomes of skill checks you roll to Identify Magic, Learn a Spell, and Recall Knowledge as one degree of success better."
+ },
+ {
+  "id": "aon-azata-s-grace",
+  "name": "Azata's Grace",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "chaotic",
+   "conjuration",
+   "divine"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {},
+  "text": "Azata's Grace Aspect Celestial Activate Two Actions command, Interact; Frequency once per day; Effect Monarch opens a conduit to Desna's palace of Cynosure and infuses your soul with the grace of the azatas who dance and frolic therein. You gain 50 additional Hit Points, increasing both your maximum and current Hit Points, as well as weakness 10 to lawful damage. You also gain the effects of the righteous call gift, without expending that gift's daily use. You can Dismiss the effect. If you do so, you unleash a wave of chaotic power in the form of a rainbow-like pulse of light, causing the relic to cast scintillating pattern . The effects of this casting of scintillating pattern don't affect your allies."
+ },
+ {
+  "id": "aon-beginner-s-luck",
+  "name": "Beginner's Luck",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fortune"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {},
+  "text": "Beginner's Luck Aspect Luck Activate Reaction (concentrate) Frequency once per day; Trigger You attempt a d20 roll you're untrained in; Effect You treat your proficiency bonus as equal to half your level, or if the relic is 7th level or higher, as equal to your level. Then, roll twice, taking the better of the two results. This doesn't allow you to use a skill's trained actions."
+ },
+ {
+  "id": "aon-duelist-s-blazon",
+  "name": "Duelist's Blazon",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "relic"
+  ],
+  "price": {},
+  "text": "Duelist's Blazon Aspects Emotion (pride) and Luck A duelist's blazon set relic was once used by a legendary swordmaster, absorbing their verve, tenacity, and daring. Though each set contains the same items, they all have unique styles, from the elegant, rose-themed decor of the blazon of Taldan swashbuckler Miralla d'Asivran to the spiked sword and attire of Kuthonite maestro duelist Essinte Zaim. Duelists have been known to challenge one another over the set's components. Set Items : +1 rapier (level 2), Bravery Baldric (Fleet) (level 5), Winged Sandals (level 10), Invisible Chain Shirt (level 13), Mercurial Mantle (level 18) Gifts : The set grants the following gifts. - 1: Dominant Emotion - 2: Whammy - 3: Steal Luck - 4: Emotion Conduit - 5: Against All Odds Collective Features : The set grants the following features. Two Items : You can use dominant emotion at will. Three Items : You can use whammy one additional time per day, but a creature affected by it is temporarily immune for 24 hours. Four Items : When you use steal luck and get a success or critical success, you're quickened until the end of your next turn. Five Items : If dominant emotion or emotion conduit counteract an effect, the target gains a brief surge of luck in the form of a d20 they can add to another single d20 roll, taking the highest result. Until used, this die remains with the target until their next daily preparations, and the target can't gain another die from this effect until after that time. U"
+ },
+ {
+  "id": "aon-inventor-s-chair",
+  "name": "Inventor's Chair",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "relic"
+  ],
+  "price": {},
+  "text": "Initially crafted by a gifted inventor who no longer had the use of their legs, the inventor's chair is a traveler's chair. It's a marvel of engineering, utilizing clockwork mechanisms to maneuver about. The chair comes equipped with wheel blades, and portions of its frame contain sterling artisan's tools. The inventor's chair might be a family heirloom or a gift from someone who inherited it. It could instead sit unused in its inventor's abandoned estate, awaiting another user. Minor Gifts : emotion surge, muse (Crafting) Major Gifts : emotion conduit, enthralling Grand Gift : artistic perfection (Crafting)"
+ },
+ {
+  "id": "aon-pharasma-s-command",
+  "name": "Pharasma's Command",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "relic"
+  ],
+  "price": {},
+  "text": "Pharasma's Command Aspects Life and Time Pharasma's devoted followers vow to seek out and destroy undead wherever they can be found, a task made more urgent with the rise of Tar-Baphon. Though the Whispering Tyrant was prevented from taking over Golarion, his forces are still massing. Undead unaffiliated with the lich represent an unacceptable perversion of the cycle of life and death to Pharasmins, and permitting such creatures to exist is anathema to her. To aid her faithful in their sacred duty to send the dead where they belong, Pharasmin priests developed this item set. While using Pharasma's command , you must abide by her edicts and anathema or else the relic ceases to function for you until you atone. This set doesn't function for undead beings. Set Items : +1 dagger (level 2), Symbol of Conflict (level 4), Wand of Overflowing Life (3rd-Rank Spell) (level 9), Devoted Vestments (level 11) or Cloister Robe (Greater) (level 15), Staff of Healing (True) (level 16) Gifts : The set grants the following gifts. - 1: Healing Wave - 2: Sands of the Hourglass - 3: Inextinguishable - 4: Temporal Pulse - 5: Life Everlasting Collective Features : The set grants the following features. Two Items : Healing wave increases to 1d6 per relic level. Three Items : You can use sands of the hourglass as a 30-foot line; each creature in the line must save against the effect. Four Items : Treat the outcome of your recovery checks as one step better. Five Items : When you use temporal pulse, ea"
+ },
+ {
+  "id": "aon-sack-of-hyrdra-s-teeth",
+  "name": "Sack of Hyrdra's Teeth",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1800
+  },
+  "text": "This soft cotton bag has a drawstring of sinew and a jagged embroidery pattern around the mouth. Inside are a seemingly endless number of needle-sharp teeth. Activate—Sow a Tooth Two Actions (manipulate, occult) Frequency once per hour; Effect You cast forth a tooth from the bag, and where it lands, a skeleton springs up from the ground. This has the effect of phantasmal minion , except the minion appears as a visible skeleton. Activate—Fist Full of Fangs Two Actions (manipulate, occult) Frequency once per day; Effect You draw a whole handful of teeth and cast them to the ground, casting rouse skeletons as a 5th-rank spell (DC 30)."
+ },
+ {
+  "id": "aon-sleuth-s-pipe",
+  "name": "Sleuth's Pipe",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "relic"
+  ],
+  "price": {},
+  "text": "A famed detective once owned the long, curved sleuth's pipe , taking it with them on investigations, keeping it in hand or mouth while cogitating. The pipe might have passed down through generations. Or, when an owner dies without heirs, it could go up for auction, be given to family friends, or remain at the scene of a crime to be found later. The sleuth's pipe has sapience that eventually awakens, allowing the relic to act as a helpful assistant in investigations. Even while this sapience sleeps within the pipe, it grants you a +1 item bonus to Perception checks to Sense Motive, and if you're an investigator, any checks you make to Pursue a Lead. Minor Gifts : beginner's luck, repository of knowledge Major Gifts : intelligent relic, steal luck Grand Gift : mental bastion"
+ },
+ {
+  "id": "apocalypse-seed",
+  "name": "Apocalypse Seed",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical",
+   "mythic"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {},
+  "text": "When the runelord of greed Gimmel summoned and briefly controlled the Oliphaunt of Jandelay, he set into motion events he couldn't have guessed, and the aftermath of the visitation would forever change Golarion. Neither the forces of Azlant nor Thassilon could challenge the Oliphaunt once it broke free of Gimmel's control, but that doesn't mean it didn't leave behind some small part of itself—a fragment of one of its teeth that served as a sort of seed, promising an eventual apocalypse in the land's far future. It was this tooth fragment that first drew the Ashen Man's attention to Golarion so long ago. The *Apocalypse Seed* might be but a fragment of one of the Oliphaunt's teeth, but it's still as large as a barrel. The huge chunk of ivory retains a jagged edge on the side where it broke off. Otherwise, it's unblemished and of an unsettling yellow tint in coloration. Sometimes, when caught on the edge of one's peripheral vision, the surface seems covered with writhing spiral sigils, but they fade from view if directly observed. The first time a creature touches the *Apocalypse Seed*, they hear phantom sounds of titanic footsteps and the far-off trumpet of annihilation, drawing inexorably closer for a few moments before the sensation fades, never to be repeated for that creature again. **Activate—Oliphaunt's Cry** ⟨2⟩ (concentrate, manipulate, sonic) --- **Effect** Spend 1 Mythic Point. You summon the echo of the Oliphaunt's trumpeting blast, creating a of sound. Each creatur"
+ },
+ {
+  "id": "apothecarys-garden",
+  "name": "Apothecary's Garden",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "plant"
+  ],
+  "text": "Apothecary's Garden Source GM Core pg. 316 Aspect Plant Your relic grows potent natural medicines. Each night, two medicinal herbs (or other plants) grow from your relic and can be harmlessly harvested during your next daily preparations. A living creature that consumes an herb with an Interact action regains 1d8 Hit Points for every 2 relic levels (minimum 1d8). At 9th level, the relic grows three herbs each night, and at 17th level, the relic grows four herbs each night. Herbs wither away 1 day after being harvested."
+ },
+ {
+  "id": "apparition-gloves",
+  "name": "Apparition Gloves",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "worngloves",
+  "price": {
+   "gp": 25
+  },
+  "text": "This set of gloves translates whatever the wearer says into the signed version of that language by projecting a ghostly, translucent version of the wearer's hands in front of them. The apparition is a purely visual illusion used for communication, so it can't move on its own, nor can it hold or manipulate objects, or attack."
+ },
+ {
+  "id": "arboreal-wand-2nd-rank-spell",
+  "name": "Arboreal Wand (2nd-rank spell)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "magical",
+   "positive",
+   "vitality",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 700
+  },
+  "text": "Arboreal Wand May contain spoilers from Wardens of Wildwood Source Pathfinder #201: Pactbreaker pg. 81 Usage held in 1 hand Bulk L This gnarled wand is made from the branch of an arboreal. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank. After you cast the spell, the raw primal energy stored within the arboreal from which the wand was made washes over one target you choose and tries to purify its essence. The wand attempts to counteract the lowest level affliction affecting your target. It uses your casting modifier and a counteract rank of half the wand’s item level rounded up. Craft Requirements Supply a casting of heal of the appropriate level and a branch freely given by an arboreal. Arboreal Wand (2nd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 700 gp Arboreal Wand (3rd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 1,400 gp Arboreal Wand (4th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 3,000 gp Arboreal Wand (5th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 6,500 gp Arboreal Wand (6th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 15,000 gp Arboreal Wand (7th-rank spell) Source Pathfinder #201: Pactbreaker pg. 81 Price 40,000 gp"
+ },
+ {
+  "id": "arboreal-wand-3rd-rank-spell",
+  "name": "Arboreal Wand (3rd-rank spell)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "magical",
+   "positive",
+   "vitality",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1400
+  },
+  "text": "Arboreal Wand May contain spoilers from Wardens of Wildwood Source Pathfinder #201: Pactbreaker pg. 81 Usage held in 1 hand Bulk L This gnarled wand is made from the branch of an arboreal. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank. After you cast the spell, the raw primal energy stored within the arboreal from which the wand was made washes over one target you choose and tries to purify its essence. The wand attempts to counteract the lowest level affliction affecting your target. It uses your casting modifier and a counteract rank of half the wand’s item level rounded up. Craft Requirements Supply a casting of heal of the appropriate level and a branch freely given by an arboreal. Arboreal Wand (2nd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 700 gp Arboreal Wand (3rd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 1,400 gp Arboreal Wand (4th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 3,000 gp Arboreal Wand (5th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 6,500 gp Arboreal Wand (6th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 15,000 gp Arboreal Wand (7th-rank spell) Source Pathfinder #201: Pactbreaker pg. 81 Price 40,000 gp"
+ },
+ {
+  "id": "arboreal-wand-4th-rank-spell",
+  "name": "Arboreal Wand (4th-rank spell)",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "magical",
+   "positive",
+   "vitality",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 3000
+  },
+  "text": "Arboreal Wand May contain spoilers from Wardens of Wildwood Source Pathfinder #201: Pactbreaker pg. 81 Usage held in 1 hand Bulk L This gnarled wand is made from the branch of an arboreal. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank. After you cast the spell, the raw primal energy stored within the arboreal from which the wand was made washes over one target you choose and tries to purify its essence. The wand attempts to counteract the lowest level affliction affecting your target. It uses your casting modifier and a counteract rank of half the wand’s item level rounded up. Craft Requirements Supply a casting of heal of the appropriate level and a branch freely given by an arboreal. Arboreal Wand (2nd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 700 gp Arboreal Wand (3rd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 1,400 gp Arboreal Wand (4th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 3,000 gp Arboreal Wand (5th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 6,500 gp Arboreal Wand (6th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 15,000 gp Arboreal Wand (7th-rank spell) Source Pathfinder #201: Pactbreaker pg. 81 Price 40,000 gp"
+ },
+ {
+  "id": "arboreal-wand-5th-rank-spell",
+  "name": "Arboreal Wand (5th-rank spell)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "magical",
+   "positive",
+   "vitality",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 6500
+  },
+  "text": "Arboreal Wand May contain spoilers from Wardens of Wildwood Source Pathfinder #201: Pactbreaker pg. 81 Usage held in 1 hand Bulk L This gnarled wand is made from the branch of an arboreal. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank. After you cast the spell, the raw primal energy stored within the arboreal from which the wand was made washes over one target you choose and tries to purify its essence. The wand attempts to counteract the lowest level affliction affecting your target. It uses your casting modifier and a counteract rank of half the wand’s item level rounded up. Craft Requirements Supply a casting of heal of the appropriate level and a branch freely given by an arboreal. Arboreal Wand (2nd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 700 gp Arboreal Wand (3rd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 1,400 gp Arboreal Wand (4th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 3,000 gp Arboreal Wand (5th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 6,500 gp Arboreal Wand (6th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 15,000 gp Arboreal Wand (7th-rank spell) Source Pathfinder #201: Pactbreaker pg. 81 Price 40,000 gp"
+ },
+ {
+  "id": "arboreal-wand-6th-rank-spell",
+  "name": "Arboreal Wand (6th-rank spell)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "magical",
+   "positive",
+   "vitality",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 15000
+  },
+  "text": "Arboreal Wand May contain spoilers from Wardens of Wildwood Source Pathfinder #201: Pactbreaker pg. 81 Usage held in 1 hand Bulk L This gnarled wand is made from the branch of an arboreal. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank. After you cast the spell, the raw primal energy stored within the arboreal from which the wand was made washes over one target you choose and tries to purify its essence. The wand attempts to counteract the lowest level affliction affecting your target. It uses your casting modifier and a counteract rank of half the wand’s item level rounded up. Craft Requirements Supply a casting of heal of the appropriate level and a branch freely given by an arboreal. Arboreal Wand (2nd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 700 gp Arboreal Wand (3rd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 1,400 gp Arboreal Wand (4th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 3,000 gp Arboreal Wand (5th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 6,500 gp Arboreal Wand (6th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 15,000 gp Arboreal Wand (7th-rank spell) Source Pathfinder #201: Pactbreaker pg. 81 Price 40,000 gp"
+ },
+ {
+  "id": "arboreal-wand-7th-rank-spell",
+  "name": "Arboreal Wand (7th-rank spell)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "magical",
+   "positive",
+   "vitality",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 40000
+  },
+  "text": "Arboreal Wand May contain spoilers from Wardens of Wildwood Source Pathfinder #201: Pactbreaker pg. 81 Usage held in 1 hand Bulk L This gnarled wand is made from the branch of an arboreal. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank. After you cast the spell, the raw primal energy stored within the arboreal from which the wand was made washes over one target you choose and tries to purify its essence. The wand attempts to counteract the lowest level affliction affecting your target. It uses your casting modifier and a counteract rank of half the wand’s item level rounded up. Craft Requirements Supply a casting of heal of the appropriate level and a branch freely given by an arboreal. Arboreal Wand (2nd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 700 gp Arboreal Wand (3rd-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 1,400 gp Arboreal Wand (4th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 3,000 gp Arboreal Wand (5th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 6,500 gp Arboreal Wand (6th-rank spell) Source Pathfinder #201: Pactbreaker pg. 241 Price 15,000 gp Arboreal Wand (7th-rank spell) Source Pathfinder #201: Pactbreaker pg. 81 Price 40,000 gp"
+ },
+ {
+  "id": "archaic-wayfinder",
+  "name": "Archaic Wayfinder",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 30
+  },
+  "text": "**Activate** Cast a Spell An *archaic wayfinder* functions as a compass and acts as a repository for one cantrip cast into it. To fill an *archaic wayfinder*, a spellcaster casts the chosen cantrip into the empty device, providing any necessary cost; the spell cannot be one that is normally cast as a free action or reaction. Activating an *archaic wayfinder* is the same as the casting for the relevant spell. Once it has been activated, it becomes empty again. An *archaic wayfinder* can hold an aeon stone and activate its resonant power. An archaic wayfinder counts against the limit of one wayfinder with a slotted resonant aeon stone."
+ },
+ {
+  "id": "archmages-regalia",
+  "name": "Archmage's Regalia",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "relic"
+  ],
+  "text": "Archmage's Regalia Source Treasure Vault (Remastered) pg. 201 Aspects Life and Mind Many wizards have enhanced their spellcasting capabilities with an archmage's regalia. Legend tells of such a relic set that belonged to the wizard-king Nex, with powers far beyond that of a typical relic. Although some believe Nex took his regalia with him when he disappeared, several credible reports of items matching their descriptions have surfaced over the years. No one has yet managed to track down all five pieces, and it's possible some have been destroyed or otherwise lost. Set Items: Mage's Hat (level 3), Endless Grimoire (level 6), Accolade Robe (level 10), Bands of Force (Greater) (level 14), Greater Staff of Arcane Might (level 16) Gifts: The set grants the following gifts. - 1: Repository of Knowledge - 2: Bestow Life - 3: Psychic Scream - 4: Vitality Siphon - 5: Mental Bastion Collective Features: The set grants the following features. Two Items: The repository of knowledge gift grants you one additional Lore skill of the GM’s choice. This skill advances as other skills from the gift do. Three Items: When you use your bestow life gift, if the animated object’s level is no greater than your level – 4, you can make it a minion with the minion trait. Four Items: The psychic scream gift creates a 30-foot‑radius burst. Five Items: Treat the outcomes of skill checks you roll to Identify Magic, Learn a Spell, and Recall Knowledge as one degree of success better."
+ },
+ {
+  "id": "armor-latches",
+  "name": "Armor Latches",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "adjustment"
+  ],
+  "usage": "applied-to-armor",
+  "price": {
+   "gp": 4
+  },
+  "text": "This armor is easily doffed. A set of armor with armor latches gains the noisy trait; you can't add latches to armor that already possesses the noisy trait. You can remove a set of armor with armor latches with a 3-action activity, which has the manipulate trait. This doesn't affect the time it takes to don the armor."
+ },
+ {
+  "id": "arrows",
+  "name": "Arrows",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "These projectiles are the ammunition for bows. The shaft of an arrow is made of wood. It is stabilized in flight by fletching at one end and bears a metal head on the other."
+ },
+ {
+  "id": "artisans-toolkit",
+  "name": "Artisan's Toolkit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 4
+  },
+  "text": "You need these tools to create items from raw materials with the Craft skill. Different sets are needed for different work, as determined by the GM; for example, a blacksmith's toolkit differs from a woodworker's toolkit. If you wear your artisan's toolkit, you can draw and replace it as part of the action that uses it."
+ },
+ {
+  "id": "ashen",
+  "name": "Ashen",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 700
+  },
+  "text": "In his attempts to recreate the initial feeling of the object he encountered ages ago, the Ash Engineer discovered a different effect, one that would confound his enemies. Ashen weapons are typically coated in a thin layer of ash that gradually returns over the span of a day, even after wiping away. A creature hit by an attack from an ashen weapon becomes surrounded by burning ash, which deals 1d4 damage. This ash clouds the senses, causing the creature to become confused for 1 round unless it succeeds at a save."
+ },
+ {
+  "id": "ashen-greater",
+  "name": "Ashen (Greater)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 9000
+  },
+  "text": "In his attempts to recreate the initial feeling of the object he encountered ages ago, the Ash Engineer discovered a different effect, one that would confound his enemies. Ashen weapons are typically coated in a thin layer of ash that gradually returns over the span of a day, even after wiping away. A creature hit by an attack from an ashen weapon becomes surrounded by burning ash, which deals 1d8 damage. This ash clouds the senses, causing the creature to become confused for 1 round unless it succeeds at a save. On a critical failure, the effect lasts for 1 minute."
+ },
+ {
+  "id": "assisting",
+  "name": "Assisting",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 125
+  },
+  "text": "Your armor provides support for your joints or advanced prostheses for missing limbs, holding your body in place and easing physical symptoms. This replicates the benefits of any number of splints, supports, and prostheses. When you invest the armor, you determine how many such supports you want, and where on your body they assist you. In addition, the extra support and structure provided by the armor allows you to transport more than you would otherwise normally be able to. You can carry Bulk equal to 6 + your Strength modifier before becoming encumbered, and you can hold and carry a total Bulk of up to 11 + your Strength modifier."
+ },
+ {
+  "id": "astral",
+  "name": "Astral",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "spirit"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 450
+  },
+  "text": "*Astral* weapons command powerful spiritual energy from the Astral Plane. This rune has the same effects as a *Ghost Touch* rune, plus Strikes with it deal an extra 1d6 spirit damage. If used to attack a creature that's possessing another creature, this weapon deals no damage to the possessed creature. On a critical hit against a creature possessing another creature, the possessing creature must succeed at a save or be expelled and unable to possess a creature for 1d4 rounds."
+ },
+ {
+  "id": "astral-greater",
+  "name": "Astral (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "spirit"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 6000
+  },
+  "text": "*Astral* weapons command powerful spiritual energy from the Astral Plane. This rune has the same effects as a *Ghost Touch* rune, plus Strikes with it deal an extra 1d6 spirit damage. If used to attack a creature that's possessing another creature, this weapon deals no damage to the possessed creature. On a critical hit against a creature possessing another creature, the possessing creature must succeed at a save or be expelled and unable to possess a creature for 1d4 rounds. Spirit damage dealt by this weapon ignores the target's spirit resistance."
+ },
+ {
+  "id": "astrolabe-of-falling-stars",
+  "name": "Astrolabe of Falling Stars",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 150
+  },
+  "text": "Astrolabe of Falling Stars May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 232 Price 150 gp Usage held in 2 hands Bulk L This astrolabe is fashioned of magically attuned platinum plates and rings and is inset with carefully measured ruby gems. The astrolabe’s back is engraved with helpful charts, a calendar, and a maker’s mark. An astrolabe of falling stars can be used as a mariner’s astrolabe. In addition, it can produce the following magical effect. Activate—Starfall (manipulate) Frequency once per day; Effect With a flick of your finger, you set the astrolabe’s rule spinning, causing the inset rubies to become a blur. Choose a point within 100 feet. The astrolabe of falling stars calls down a brief rain of meteorites in a 10-foot burst centered on that point, dealing 1d8 bludgeoning and 1d8 fire damage to creatures in the area (DC 19 basic Reflex save)."
+ },
+ {
+  "id": "atmospheric-breathing-suit",
+  "name": "Atmospheric Breathing Suit",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 100
+  },
+  "text": "A combination of waterproof leather, durable glass, and a system of copper tubes allows aquatic creatures who wear this suit to be able to spend time on land. They're custom-tailored to fit a wide variety of body types and needs. Part of the system of tubes is set up in a way to allow the wearer to speak and hear as well as they normally would with creatures outside the suit. Water, either fresh or salt, is kept moving throughout the system to keep the wearer moisturized. The moving water allows for easier flow to the gills or breathing apparatus of the creature. It also means that the water will slowly run out. Each suit must be refilled with the proper type of water for a creature every 24 hours. It takes 2 gallons of water to refill a suit."
+ },
+ {
+  "id": "atrophy-bomb-lesser",
+  "name": "Atrophy Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4
+  },
+  "text": "**Activate** ⟨1⟩ Strike Atrophy bombs contain powerful chemicals developed by Urgathoan alchemists that sap a living creature's strength and drain their energy. The bomb deals 1d4 persistent void damage and 1 void splash damage, and the target is Enfeebled 1 until the start of your next turn."
+ },
+ {
+  "id": "authorized",
+  "name": "Authorized",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 50
+  },
+  "text": "Sharp needles impale anyone who attempts to wield this weapon other than its rightful owner. Each authorized rune is etched with the blood of a specific creature. If any other creature wields the weapon, needles immediately erupt from the weapon's hilt or shaft, dealing 1d8 damage plus 1d4 persistent bleed damage to the wielder. If the weapon has a striking rune, this damage increases to 1d8 damage per damage die and 1d4 persistent damage per damage die; this counts only the weapon's base die and dice from the striking rune. The persistent bleed damage can't end while the creature still holds the weapon. The spikes retract once the creature lets go. When the rune is crafted, the crafter can choose to broaden the criteria for who can safely wield the item, expanding the users to creatures with a particular alignment, bloodline, or patron deity, as the crafter chooses. This criterion must be shared by the creature who contributed the blood for the rune."
+ },
+ {
+  "id": "avernal-cape",
+  "name": "Avernal Cape",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "earth",
+   "invested",
+   "magical",
+   "relic"
+  ],
+  "usage": "worncloak",
+  "price": {},
+  "text": "Made from preserved crimson worm hide, this thick leather cape can deflect incoming blows without serious damage. It functions as a Dueling Cape and while moved into a protective position, it also grants you fire resistance equal to twice the relic's number of gifts."
+ }
+]

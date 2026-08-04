@@ -1,0 +1,911 @@
+[
+ {
+  "id": "researcher-level-1-trained",
+  "name": "Researcher (Level 1; trained)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 4
+  },
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When contracting independent research, you hire the researcher to study a subject on your behalf and report the findings to you upon completion. An independent researcher can provide information on subjects up to their level +4, though more difficult tasks take much longer to research. Once the research is done, the researcher presents the relevant findings for the subject as determined by the GM, which is typically the critical success of Recall Knowledge. The level of the subject determines how long the independent research takes. A researcher can provide information on a subject of their level afte"
+ },
+ {
+  "id": "researcher-level-2",
+  "name": "Researcher (Level 2)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 6
+  },
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When contracting independent research, you hire the researcher to study a subject on your behalf and report the findings to you upon completion. An independent researcher can provide information on subjects up to their level +4, though more difficult tasks take much longer to research. Once the research is done, the researcher presents the relevant findings for the subject as determined by the GM, which is typically the critical success of Recall Knowledge. The level of the subject determines how long the independent research takes. A researcher can provide information on a subject of their level afte"
+ },
+ {
+  "id": "researcher-level-3-expert",
+  "name": "Researcher (Level 3; expert)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When contracting independent research, you hire the researcher to study a subject on your behalf and report the findings to you upon completion. An independent researcher can provide information on subjects up to their level +4, though more difficult tasks take much longer to research. Once the research is done, the researcher presents the relevant findings for the subject as determined by the GM, which is typically the critical success of Recall Knowledge. The level of the subject determines how long the independent research takes. A researcher can provide information on a subject of their level afte"
+ },
+ {
+  "id": "researcher-level-4",
+  "name": "Researcher (Level 4)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 14
+  },
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When contracting independent research, you hire the researcher to study a subject on your behalf and report the findings to you upon completion. An independent researcher can provide information on subjects up to their level +4, though more difficult tasks take much longer to research. Once the research is done, the researcher presents the relevant findings for the subject as determined by the GM, which is typically the critical success of Recall Knowledge. The level of the subject determines how long the independent research takes. A researcher can provide information on a subject of their level afte"
+ },
+ {
+  "id": "researcher-level-5",
+  "name": "Researcher (Level 5)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 20
+  },
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When contracting independent research, you hire the researcher to study a subject on your behalf and report the findings to you upon completion. An independent researcher can provide information on subjects up to their level +4, though more difficult tasks take much longer to research. Once the research is done, the researcher presents the relevant findings for the subject as determined by the GM, which is typically the critical success of Recall Knowledge. The level of the subject determines how long the independent research takes. A researcher can provide information on a subject of their level afte"
+ },
+ {
+  "id": "researcher-level-6",
+  "name": "Researcher (Level 6)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 40
+  },
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When contracting independent research, you hire the researcher to study a subject on your behalf and report the findings to you upon completion. An independent researcher can provide information on subjects up to their level +4, though more difficult tasks take much longer to research. Once the research is done, the researcher presents the relevant findings for the subject as determined by the GM, which is typically the critical success of Recall Knowledge. The level of the subject determines how long the independent research takes. A researcher can provide information on a subject of their level afte"
+ },
+ {
+  "id": "researcher-level-7-master",
+  "name": "Researcher (Level 7; master)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When contracting independent research, you hire the researcher to study a subject on your behalf and report the findings to you upon completion. An independent researcher can provide information on subjects up to their level +4, though more difficult tasks take much longer to research. Once the research is done, the researcher presents the relevant findings for the subject as determined by the GM, which is typically the critical success of Recall Knowledge. The level of the subject determines how long the independent research takes. A researcher can provide information on a subject of their level afte"
+ },
+ {
+  "id": "resonating-ammunition",
+  "name": "Resonating Ammunition",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical",
+   "sonic"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 300
+  },
+  "text": "**Ammunition** arrow, bolt **Activate** ⟨1⟩ Interact --- The end of this ammunition is a metallic tuning fork with magical etchings. When an activated resonating arrow hits its target, the tuning fork resonates with residual energy from the shot, transforming it into dangerous sound waves. This deals 5d10 damage to the target and each creature within 10 feet of it with a save."
+ },
+ {
+  "id": "restful-tent",
+  "name": "Restful Tent",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 320
+  },
+  "text": "This four-person tent provides several benefits for those who rest within. The climate inside the tent is comfortable and allows creatures inside it to withstand most hostile weather conditions, but incredible heat or cold, powerful storms, and winds of hurricane force or greater can still damage or destroy the tent. Mundane pests such as solitary ordinary insects avoid the tent, though swarms and giant insects can attack the tent as normal. Once you pitch the tent, only you can easily move it; any other creatures must succeed at a check to do so. Finally, the tent automatically camouflages with its surroundings, requiring a Searching creature to succeed at a check to notice it."
+ },
+ {
+  "id": "restorative-handwraps",
+  "name": "Restorative Handwraps",
+  "level": 5,
+  "itemType": "weapon",
+  "traits": [
+   "invested"
+  ],
+  "usage": "worngloves",
+  "price": {
+   "gp": 150
+  },
+  "text": "Glowing runes cover these *+1 striking handwraps of mighty blows*. When you critically hit an enemy with a Strike as part of a Flurry of Blows, you can regain 4 Hit Points. This is a healing vitality effect. The handwraps can heal you only once every 10 minutes."
+ },
+ {
+  "id": "retrieval-belt",
+  "name": "Retrieval Belt",
+  "level": 7,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "usage": "wornbelt",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "cp": 0,
+   "gp": 340,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This belt is covered in small pouches that clasp with buttons of painstakingly carved stone. The belt is tied to an extradimensional space that can hold one item of 1 Bulk or less. Anyone holding the belt can sense its contents, but only those who've invested it can store or retrieve items. Many retrieval belts are found with an item already inside. --- **Activate—Store Item** ⟨1⟩ (manipulate) **Requirements** There is room for an item in the belt **Effect** One item you're holding with a Bulk of 1 or less vanishes into the belt's extradimensional space. --- **Activate—Retrieve Item** ⟨4⟩ (manipulate) **Requirements** An item is stored in the belt and you have a free hand **Effect** The item stored in the belt appears in your hand. Neither Store Item nor Retrieve Item can be activated again for 1 minute."
+ },
+ {
+  "id": "retrieval-belt-greater",
+  "name": "Retrieval Belt (Greater)",
+  "level": 9,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "usage": "wornbelt",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "cp": 0,
+   "gp": 600,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This belt is covered in small pouches that clasp with buttons of painstakingly carved stone. The belt is tied to an extradimensional space that can hold up to three items of 1 Bulk or less. Anyone holding the belt can sense its contents, but only those who've invested it can store or retrieve items. Many retrieval belts are found with an item already inside. --- **Activate—Store Item** ⟨1⟩ (manipulate) **Requirements** There is room for an item in the belt **Effect** One item you're holding with a Bulk of 1 or less vanishes into the belt's extradimensional space. --- **Activate—Retrieve Item** ⟨4⟩ (manipulate) **Requirements** An item is stored in the belt and you have a free hand **Effect** The item stored in the belt appears in your hand. Neither Store Item nor Retrieve Item can be activated again for 1 minute."
+ },
+ {
+  "id": "retrieval-belt-major",
+  "name": "Retrieval Belt (Major)",
+  "level": 13,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "usage": "wornbelt",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "cp": 0,
+   "gp": 2500,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This belt is covered in small pouches that clasp with buttons of painstakingly carved stone. The belt is tied to an extradimensional space that can hold up to ten items of 1 Bulk or less. Anyone holding the belt can sense its contents, but only those who've invested it can store or retrieve items. Many retrieval belts are found with an item already inside. --- **Activate—Store Item** ⟨1⟩ (manipulate) **Requirements** There is room for an item in the belt **Effect** One item you're holding with a Bulk of 1 or less vanishes into the belt's extradimensional space. --- **Activate—Retrieve Item** ⟨4⟩ (manipulate) **Requirements** An item is stored in the belt and you have a free hand **Effect** The item stored in the belt appears in your hand. Neither Store Item nor Retrieve Item can be activated again for 1 minute."
+ },
+ {
+  "id": "returning",
+  "name": "Returning",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-thrown-weapon",
+  "price": {
+   "gp": 55
+  },
+  "text": "When you make a thrown Strike with this weapon, it flies back to your hand after the Strike is complete. If your hands are full when the weapon returns, it falls to the ground in your space."
+ },
+ {
+  "id": "revenant-blade",
+  "name": "Revenant Blade",
+  "level": 10,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "finesse",
+   "invested",
+   "magical",
+   "trip",
+   "void"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 900
+  },
+  "text": "The mortal agents of powerful necromancers are a varied lot, but they tend to share two things in common: a deep and abiding fear of death, and a desperate hope that loyalty to their foul masters might be rewarded with some means of transcending it. To most of these wretched souls, this simple *+1 striking sickle* is as close as they will ever come to realizing that desire. Revenant blades are usually created in large numbers to arm a necromancer's mortal troops before sending them into battle, and despite their name, they can be crafted from whichever base weapon is best suited for the expected conflict. Whatever form it takes, every revenant blade is adorned in some way with a small gem of deep black onyx. When you invest in the weapon, a small portion of your soul is transferred into the gem, bonding it to you and granting the weapon the effects of the Decaying rune for as long as it remains invested. Should you die in battle while invested in a revenant blade, its gem shatters, and your corpse rises 1 round later to continue the fight. You become an undead creature under the GM's control, although you generally retain the motivations and loyalties you had in life. The GM chooses what type of undead you become, selecting an appropriate undead creature that has a level no greater than your level – 5, to a minimum of 0. You can't be raised from the dead by any means short of a wish ritual until your undead form is destroyed."
+ },
+ {
+  "id": "rhino-shot",
+  "name": "Rhino Shot",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 22
+  },
+  "text": "**Ammunition** Any **Activate** ⟨1⟩ Interact --- This arrow is made of polished animal horn, with the head of a rhinoceros carved in place of a traditional arrowhead. When an activated rhino shot is fired, the ethereal form of a large rhinoceros takes shape around the projectile. On a successful Strike, the attack deals an additional 2d6 force damage, and the target must succeed at a or be knocked prone. If the hit with the *rhino shot* was a critical success, the target is knocked prone unless it critically succeeds at its save."
+ },
+ {
+  "id": "rhinoceros-mask",
+  "name": "Rhinoceros Mask",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornmask",
+  "price": {
+   "gp": 90
+  },
+  "text": "Covered with thick armor and bearing a thicker horn, this face mask grants you increased momentum. If you Stride at least 10 feet, your next melee Strike before the end of your turn ignores the Hardness of objects with a Hardness of 5 or less. If the object has more than Hardness 5, the mask grants no benefit."
+ },
+ {
+  "id": "rhinoceros-mask-greater",
+  "name": "Rhinoceros Mask (Greater)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornmask",
+  "price": {
+   "gp": 425
+  },
+  "text": "Covered with thick armor and bearing a thicker horn, this face mask grants you increased momentum. If you Stride at least 10 feet, your next melee Strike before the end of your turn ignores the Hardness of objects with a Hardness of 10 or less. If the object has more than Hardness 10, the mask grants no benefit."
+ },
+ {
+  "id": "rhythm-bone",
+  "name": "Rhythm Bone",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "auditory",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 8
+  },
+  "text": "This small, enchanted bone (most often a jaw) is usually capped with metal at its ends. It's activated by striking it against a hard surface. --- **Activate** ⟨1⟩ Interact **Effect** The bone begins recording the next 1 minute of ambient sounds (including speech) that require a DC 15 or lower Perception check to hear. The bone's recording doesn't copy magical auditory effects, such as those of spellcasting, a harpy's song, or a banshee's wail. Once the rhythm bone has been activated in this way, it retains the recorded sound for the rest of its existence and can't be activated this way again. --- **Activate** ⟨1⟩ Interact **Effect** The bone replays its recorded sounds. --- **Craft Requirements** Supply a casting of Ghost Sound."
+ },
+ {
+  "id": "rhythm-bone-greater",
+  "name": "Rhythm Bone (Greater)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "auditory",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 64
+  },
+  "text": "This small, enchanted bone (most often a jaw) is usually capped with metal at its ends. It's activated by striking it against a hard surface. --- **Activate** ⟨1⟩ Interact **Effect** The bone begins recording the next 10 minutes of ambient sounds (including speech) that require a DC 20 or lower Perception check to hear. The bone's recording doesn't copy magical auditory effects, such as those of spellcasting, a harpy's song, or a banshee's wail. Once the rhythm bone has been activated in this way, it retains the recorded sound for the rest of its existence and can't be activated this way again. --- **Activate** ⟨1⟩ Interact **Effect** The bone replays its recorded sounds. --- **Craft Requirements** Supply a casting of Ghost Sound."
+ },
+ {
+  "id": "rime-jar",
+  "name": "Rime Jar",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {
+   "gp": 175
+  },
+  "text": "Magical reagents slosh inside this rime-frosted pottery jar the size of a human head. Despite appearing to be rimed in hoarfrost, the jar is warm to the touch. Ilverani wizards create *rime jars* to sustain themselves during the coldest winter nights. **Activate—Siphon Chill** ⟨3⟩ (manipulate) --- **Effect** The jar draws off the cold and warms your body. If you have the fatigued condition caused by exposure to environmental cold, it removes the condition. For 8 hours after applying the rime, you treat extreme cold as severe cold."
+ },
+ {
+  "id": "ring-of-counterspells",
+  "name": "Ring of Counterspells",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 925
+  },
+  "text": "This ornate silver ring bears two competing geometric designs of brightly colored and wildly clashing inlaid gemstones. A spellcaster can cast a single spell into this ring as long as no spell is currently stored within, expending the normal time, costs, and so forth to Cast the Spell. The spell's effect doesn't occur; the spell's power is instead stored within the ring. When you invest a *ring of counterspells*, you immediately know the name and rank of the spell stored inside, if any. A *ring of counterspells* found as treasure has a 50% chance of having a spell stored in it. The GM determines that spell. --- **Activate** ⟨5⟩ envision **Trigger** You are targeted by or within the area of the spell stored within the ring --- **Effect** You can attempt to counteract the triggering spell, using the rank of the spell stored in the ring and a counteract modifier of 1d20+19. Once you do, the stored spell's energy is spent, and the ring is empty. --- **Activate** ⟨1⟩ command --- **Effect** You harmlessly expend the stored spell, having no effect but emptying the ring so that another spell can be cast into it."
+ },
+ {
+  "id": "ring-of-discretion",
+  "name": "Ring of Discretion",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "visual"
+  ],
+  "usage": "wornring",
+  "price": {
+   "gp": 15
+  },
+  "text": "A *ring of discretion* magically conceals any armor and sheathed weapons you're wearing by either turning them invisible or creating the illusion of ordinary clothes. The ring doesn't change your appearance beyond concealing weapons and armor. As soon as you wield a weapon affected by the ring, the weapon becomes obvious to onlookers and is no longer affected until you sheathe the weapon for at least 1 minute. A creature can use the Seek action to examine you and disbelieve this illusion (DC 15), and it can attempt to do so without using an action each time it hits you with an attack."
+ },
+ {
+  "id": "ring-of-minor-arcana",
+  "name": "Ring of Minor Arcana",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 160
+  },
+  "text": "This rose-gold ring is adorned in the center by a somewhat ominous-looking horned skull. This ring gives you the power to cast the following innate arcane cantrips any number of times each day: Detect Magic, Telekinetic Hand, and . Each is cast as a 1st-rank spell. If you are an arcane spellcaster, these can instead be heightened to the rank of your cantrips."
+ },
+ {
+  "id": "ring-of-ravenousness",
+  "name": "Ring of Ravenousness",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 325
+  },
+  "text": "Carved of acacia wood, a ring of ravenousness is inlaid with a geometric pattern. The ring appears to be a *Ring of Sustenance*. Once you invest it, though, it fuses to you, its effects activating immediately. While wearing the ring, you require twice the normal amount of food and drink for a creature your size to avoid starvation and thirst."
+ },
+ {
+  "id": "ring-of-recalcitrant-wishes",
+  "name": "Ring of Recalcitrant Wishes",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "This band of interwoven gold and copper, traced with Aklo symbols, is topped with a gleaming, luminescent opal gently bleeding wisps of shadowstuff. --- **Activate** ⟨3⟩ command --- **Effect** You attempt to make the ring cast an arcane Wish spell. However, if the ring doesn't deem the wish to be sufficiently selfless, the wish isn't cast and the ring can't be activated for 24 hours. You are Drained 3, whether or not the ring refuses the wish. --- Once the wish is cast, the Ring of Recalcitrant Wishes has no powers, though it is rumored that the wearer's death in an act of profound self-sacrifice restores the wish to the ring."
+ },
+ {
+  "id": "ring-of-sneering-charity",
+  "name": "Ring of Sneering Charity",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "wornring",
+  "price": {},
+  "text": "This gold ring seems to offer good fortune to the wearer when they're charitable to those in need, but its curse was created to tear societies apart by inflaming class resentments and discrediting good works of true charity. Upon donning the ring, you must attempt a secret save to avoid activating its magic. If you succeed, the ring's curse remains dormant, and it appears to be an exhausted item with no magic left. If you fail, the curse awakens, and the ring fuses to you. You're compelled to spend 10% of your wealth—and 10% of any future wealth you obtain—on charity. However, your acts of charity are insensitive and so insulting that they earn the recipients' enmity. For example, upon learning someone lost a child, you might toss money at them \"to buy a new one.\" You can't understand why your gifts aren't met with gratitude and resent the unappreciative recipients, and you firmly believe you should be able to call upon them for favors. You consider yourself an ideal philanthropist, and you constantly try to ingratiate yourself with other charitable organizations and individuals by offering to guide their donations to be more like your own."
+ },
+ {
+  "id": "ring-of-spell-turning",
+  "name": "Ring of Spell Turning",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 67000
+  },
+  "text": "This golden ring has three diamonds set into its face. **Activate** ⟨5⟩ envision **Trigger** You are targeted by a spell --- **Effect** The ring replicates the effects of an 8th-rank Spell Turning with a counteract modifier of 1d20+35, possibly causing the triggering spell to reflect back on its caster. The ring can reflect no more than 9 total ranks of spells per day. If you activate the ring to reflect a spell that would exceed this limit, the attempt fails, but the attempted usage of the ring does not count toward the daily limit."
+ },
+ {
+  "id": "ring-of-sustenance",
+  "name": "Ring of Sustenance",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 325
+  },
+  "text": "This polished wooden ring constantly refreshes your body and mind. You don't need to eat or drink while wearing it, and you need only 2 hours of sleep per day to gain the benefits of 8 hours of sleep. A *ring of sustenance* doesn't function until it's been worn and invested continuously for a week. Removing it resets this interval."
+ },
+ {
+  "id": "ring-of-truth",
+  "name": "Ring of Truth",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {},
+  "text": "This ring appears to be a ring of lies, but when invested, close investigation reveals angelic wings and divine creatures hidden on the face of the ring. When you invest the ring, you are rendered unable to tell a deliberate lie, in either speech or writing. If you attempt to omit the truth or phrase things truthfully but deceptively, roll a ; on a failure, the ring itself blurts out the entire truth (as you believe it) as an answer. Keeping silent does not activate the ring's curse. Once the curse has activated for the first time, the ring fuses to you."
+ },
+ {
+  "id": "robe-of-feathers-fall",
+  "name": "Robe of Feathers Fall",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested"
+  ],
+  "usage": "wornclothing",
+  "price": {},
+  "text": "This dashing travel- (and beer-) stained feathered robe is the result of magic experimentation gone awry. Dared to create a robe that would continually cast Gentle Landing during a brainstorming session at a local pub, a young wizard got the enchantment wrong. Instead of a robe that would let its wearer float through the air, they got....this: When you first invest the robe, and whenever you make your daily preparations, roll 1d6 and consult the following list to determine the type of feathers. 1: crow; 2: duck; 3: ostrich; 4: chicken; 5: goose; 6: peacock. With each step taken, huge amounts of feathers sprout forth from the robe with great force. The feathers make you concealed from all other creatures, but also conceal all other creatures from you. Of course, you cannot use this concealed condition to Hide. --- ***Note**: This item originates from the 2022 Paizo April Fools Blog post.*"
+ },
+ {
+  "id": "rod-of-cancellation",
+  "name": "Rod of Cancellation",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 75000
+  },
+  "text": "This powerful magic rod is inimical to all magic. --- **Activate** ⟨2⟩ Interact --- **Effect** You touch the rod to a magical effect or magic item and attempt to counteract the effect or item. Regardless of the result, the rod of cancellation can't be activated again for 2d6 hours. On a success, the effect or item is deactivated for the same amount of time, and its duration, if any, continues to expire during that time. If you choose, you can instead completely drain the rod of cancellation's magic on a success in order to completely drain the magic from the effect or item. If you do, both become completely non-magical and their magic can't be recovered, even by the Remake spell. The rod of cancellation automatically fails to counteract most artifacts and similarly powerful items, but it reacts explosively when activated against a Sphere of Annihilation without a counteract check."
+ },
+ {
+  "id": "rod-of-negation",
+  "name": "Rod of Negation",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 4300
+  },
+  "text": "This long, plain, leaden rod can disrupt magic. **Activate** ⟨2⟩ Interact --- **Effect** This rod emits a thin, gray beam that negates a spell or magic item, casting a 6th-rank Dispel Magic spell with a counteract modifier of 1d20+23. Once activated, the rod can't be activated again for 2d6 hours."
+ },
+ {
+  "id": "rogue-kit",
+  "name": "Rogue Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 6,
+   "sp": 2
+  },
+  "text": "Rogue Kit Source Player Core pg. 268 Price 6 gp, 2 sp Money Left Over 8 gp, 8 sp Bulk 4, 1 light Armor Leather Armor Weapons Rapier, Dagger Gear Adventurer's Pack Options thieves' toolkit (3 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "rooting",
+  "name": "Rooting",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "usage": "etched-onto-melee-weapon",
+  "price": {
+   "gp": 360
+  },
+  "text": "Small roots grow along the surface of the weapon, clinging tightly to its contours. On a critical hit with the weapon, roots grow from the target. It's immobilized for 1 round (escape show-dc=all dc=23) and Clumsy 1 for as long as the immobilization lasts."
+ },
+ {
+  "id": "rooting-greater",
+  "name": "Rooting (Greater)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "usage": "etched-onto-melee-weapon",
+  "price": {
+   "gp": 1400
+  },
+  "text": "Small roots grow along the surface of the weapon, clinging tightly to its contours. On a critical hit with the weapon, roots grow from the target. It's immobilized for 1 round (escape show-dc=all dc=28) and Clumsy 1 for as long as the immobilization lasts."
+ },
+ {
+  "id": "rooting-major",
+  "name": "Rooting (Major)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "usage": "etched-onto-melee-weapon",
+  "price": {
+   "gp": 6500
+  },
+  "text": "Small roots grow along the surface of the weapon, clinging tightly to its contours. On a critical hit with the weapon, roots grow from the target. It's immobilized for 1 round (escape show-dc=all dc=34) and Clumsy 1 for as long as the immobilization lasts."
+ },
+ {
+  "id": "rooting-true",
+  "name": "Rooting (True)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "usage": "etched-onto-melee-weapon",
+  "price": {
+   "gp": 40000
+  },
+  "text": "Small roots grow along the surface of the weapon, clinging tightly to its contours. On a critical hit with the weapon, roots grow from the target. It's immobilized for 1 round (escape show-dc=all dc=41) and Clumsy 1 for as long as the immobilization lasts."
+ },
+ {
+  "id": "rope",
+  "name": "Rope",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 5
+  },
+  "text": "50 feet of rope."
+ },
+ {
+  "id": "rope-of-climbing-greater",
+  "name": "Rope of Climbing (Greater)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 300
+  },
+  "text": "This silk rope measures 50 feet long and is capable of holding up to 3,000 pounds. If the rope is ever cut, only the longest remaining portion retains its magic. **Activate** ⟨1⟩ Interact --- **Effect** You hold one end of the rope and point to a destination. The rope animates for 1 minute, moving 10 feet per round until it reaches the destination or runs out of length. The rope can move across any non-damaging horizontal or vertical surface, but it can't extend upward without a surface to support it. At any point while the rope is animated, you can use an Interact action to wiggle the rope, giving it one of the following commands: stop in place, fasten securely to the nearest available object, detach from an object, or knot or unknot itself."
+ },
+ {
+  "id": "rounds-arquebus",
+  "name": "Rounds (Arquebus)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-axe-musket",
+  "name": "Rounds (Axe Musket)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-black-powder-knuckle-dusters",
+  "name": "Rounds (Black Powder Knuckle Dusters)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-blunderbuss",
+  "name": "Rounds (Blunderbuss)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-cane-pistol",
+  "name": "Rounds (Cane Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-clan-pistol",
+  "name": "Rounds (Clan Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-coat-pistol",
+  "name": "Rounds (Coat Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-dagger-pistol",
+  "name": "Rounds (Dagger Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-dawnsilver-tree",
+  "name": "Rounds (Dawnsilver Tree)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-double-barreled-musket",
+  "name": "Rounds (Double-Barreled Musket)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-double-barreled-pistol",
+  "name": "Rounds (Double-Barreled Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-dragon-mouth-pistol",
+  "name": "Rounds (Dragon Mouth Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-dueling-pistol",
+  "name": "Rounds (Dueling Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-dwarven-scattergun",
+  "name": "Rounds (Dwarven Scattergun)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-explosive-dogslicer",
+  "name": "Rounds (Explosive Dogslicer)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-fire-lance",
+  "name": "Rounds (Fire Lance)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-flingflenser",
+  "name": "Rounds (Flingflenser)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-flintlock-musket",
+  "name": "Rounds (Flintlock Musket)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-flintlock-pistol",
+  "name": "Rounds (Flintlock Pistol)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "rounds-gnome-amalgam-musket",
+  "name": "Rounds (Gnome Amalgam Musket)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ }
+]

@@ -1,0 +1,852 @@
+[
+ {
+  "id": "pathfinders-pouch",
+  "name": "Pathfinder's Pouch",
+  "level": 6,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "This unobtrusive belt pouch is popular among Pathfinders who operate in places where the Society is not welcome. It is constantly under the effects of a 3rd-rank Disguise Magic spell to appear non-magical. The pouch's normal space holds as much as an ordinary belt pouch, but it also has a small extradimensional space that holds up to 1 Bulk of items. A creature actively inspecting the pouch in its ordinary state discovers the existence of the extradimensional space only on a critical success to Search the pouch (see the Concealing an Item action of the Stealth skill), though when the extradimensional space is active, it's obvious to anyone examining the pouch that it is more than it seems. **Activate** ⟨1⟩ Interact --- **Effect** You switch the pouch to allow access to its extradimensional space instead of its normal space, or vice versa. This lasts until you next activate it. Items in the other space are inaccessible and hard to find until you switch the pouch back."
+ },
+ {
+  "id": "peachwood-branch",
+  "name": "Peachwood Branch",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 600
+  },
+  "text": "Peachwood, often cultivated by Pharasmin priests, can ward against undead—even incorporeal ones. However, the wood loses its magical properties when it comes in contact with metal, requiring advanced carpentry to make full use of it. --- ## Peachwood Items | Peachwood Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 4 | 16 | 8 | | High-grade | 6 | 24 | 12 | | **Items** | | | | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Structure** | | | | | Standard-grade | 12 | 48 | 24 | | High-grade | 18 | 64 | 32 |"
+ },
+ {
+  "id": "peachwood-lumber",
+  "name": "Peachwood Lumber",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 6000
+  },
+  "text": "Peachwood, often cultivated by Pharasmin priests, can ward against undead—even incorporeal ones. However, the wood loses its magical properties when it comes in contact with metal, requiring advanced carpentry to make full use of it. --- ## Peachwood Items | Peachwood Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 4 | 16 | 8 | | High-grade | 6 | 24 | 12 | | **Items** | | | | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Structure** | | | | | Standard-grade | 12 | 48 | 24 | | High-grade | 18 | 64 | 32 |"
+ },
+ {
+  "id": "peachwood-object-high-grade",
+  "name": "Peachwood Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 7500
+  },
+  "text": "Peachwood Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Peachwood, often cultivated by Pharasmin priests, can ward against undead—even incorporeal ones. However, the wood loses its magical properties when it comes in contact with metal, requiring advanced carpentry to make full use of it. ## Peachwood Items Hardness HP BT Thin Items Standard-grade 4 16 6 High-grade 24 32 12 Items Standard-grade 5 20 10 High-grade 8 32 16 Structures Standard-grade 12 48 24 High-grade 18 64 32 Material Uses Peachwood Weapon Peachwood Object (Standard-Grade) Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 500 gp (per Bulk) Peachwood Object (High-Grade) Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 7,500 gp (per Bulk) Peachwood Branch Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 600 gp Peachwood Lumber Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 6,000 gp"
+ },
+ {
+  "id": "peachwood-object-standard-grade",
+  "name": "Peachwood Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 500
+  },
+  "text": "Peachwood Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Peachwood, often cultivated by Pharasmin priests, can ward against undead—even incorporeal ones. However, the wood loses its magical properties when it comes in contact with metal, requiring advanced carpentry to make full use of it. ## Peachwood Items Hardness HP BT Thin Items Standard-grade 4 16 6 High-grade 24 32 12 Items Standard-grade 5 20 10 High-grade 8 32 16 Structures Standard-grade 12 48 24 High-grade 18 64 32 Material Uses Peachwood Weapon Peachwood Object (Standard-Grade) Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 500 gp (per Bulk) Peachwood Object (High-Grade) Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 7,500 gp (per Bulk) Peachwood Branch Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 600 gp Peachwood Lumber Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 6,000 gp"
+ },
+ {
+  "id": "peachwood-weapon-high-grade",
+  "name": "Peachwood Weapon (High-Grade)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 19000
+  },
+  "text": "Peachwood Weapon Source Tian Xia Character Guide pg. 130, Book of the Dead pg. 20 Usage varies by weapon Bulk varies by weapon Base Material Peachwood Peachwood weapons have an auburn tinge in direct sunlight. Peachwood is treated as duskwood for undead creatures' resistances or weaknesses related to duskwood (bypassing a jiang-shi's resistance, for example). In addition, peachwood weapons bypass a small portion of the resistances of any undead creature. Strikes with a peachwood weapon treat an undead's resistances against physical damage as 2 lower for standard-grade peachwood, and 4 lower for high-grade. Peachwood Weapon (Standard-Grade) Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 2,000 gp (+ 200 gp per bulk) Craft Requirements At least 250 gp of peachwood + 25 gp per Bulk Peachwood Weapon (High-Grade) Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 19,000 gp (+ 1,900 gp per Bulk) Craft Requirements At least 9,500 gp of peachwood + 950 gp per Bulk"
+ },
+ {
+  "id": "peachwood-weapon-standard-grade",
+  "name": "Peachwood Weapon (Standard-Grade)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 2000
+  },
+  "text": "Peachwood Weapon Source Tian Xia Character Guide pg. 130, Book of the Dead pg. 20 Usage varies by weapon Bulk varies by weapon Base Material Peachwood Peachwood weapons have an auburn tinge in direct sunlight. Peachwood is treated as duskwood for undead creatures' resistances or weaknesses related to duskwood (bypassing a jiang-shi's resistance, for example). In addition, peachwood weapons bypass a small portion of the resistances of any undead creature. Strikes with a peachwood weapon treat an undead's resistances against physical damage as 2 lower for standard-grade peachwood, and 4 lower for high-grade. Peachwood Weapon (Standard-Grade) Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 2,000 gp (+ 200 gp per bulk) Craft Requirements At least 250 gp of peachwood + 25 gp per Bulk Peachwood Weapon (High-Grade) Source Tian Xia Character Guide pg. 129, Book of the Dead pg. 20 Price 19,000 gp (+ 1,900 gp per Bulk) Craft Requirements At least 9,500 gp of peachwood + 950 gp per Bulk"
+ },
+ {
+  "id": "pelagic-helmet",
+  "name": "Pelagic Helmet",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornheadwear",
+  "price": {
+   "gp": 5
+  },
+  "text": "Most merfolk have no problem surfacing for a while, but constant existence in the air is exhausting and demoralizing. A clever artisan off the coast of Arcadia came up with this solution—a sturdy frame that goes on the shoulders and supports a bubble-like helmet filled with water. A mouthpiece lets the wearer speak to the outside world, and a plant-based filtration system keeps the water at the appropriate level of freshness or brackishness for the wearer. Over the years, these contraptions have spread to most of the world's oceans, though many merfolk don't use them—some find the devices just too heavy and would rather deal with the dryness. The helms are especially popular with abyssal merfolk, who tint the glass dark to protect from the too-bright surface."
+ },
+ {
+  "id": "penetrating-ammunition",
+  "name": "Penetrating Ammunition",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 400
+  },
+  "text": "**Ammunition** arrow, bolt **Activate** ⟨1⟩ (manipulate) --- This ammunition has a slender shape and a viciously pointed tip. When you activate and shoot *penetrating ammunition*, the Strike takes the shape of a originating from you. Roll one attack roll and compare the result to the AC of each target in the line. The ammunition ignores up to 10 of a target's resistance, and it can penetrate walls up to 1 foot thick with Hardness 10 or less. Each target that takes damage from this ammunition also takes 1d6. If your attack roll result is a natural 20, you improve your degree of success only against the first target in the line, but you can still score a critical hit on other targets if your result exceeds their AC by 10 or more. If you have access to your bow's critical specialization effect, *penetrating ammunition* applies that effect only against a target in the last square of the line."
+ },
+ {
+  "id": "perception-filter",
+  "name": "Perception Filter",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "mental"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Perception Filter Source GM Core pg. 316 Aspect Mind Activate (concentrate) Frequency once per day; Effect Your relic reaches into the minds of nearby creatures and blocks your presence from their perceptions. For the next 10 minutes, a creature that enters a 120-foot-radius emanation, centered on you, must attempt a secret Will save, after which the creature is then temporarily immune for 1 day. Critical Success The creature is unaffected. Success The creature takes a –2 status penalty to Perception checks to Seek or otherwise detect you. Failure You filter all of the creature's senses, making it difficult for it to notice you. When you are hidden or undetected from the creature, it doesn't observe you as soon as you do anything other than Hide, Sneak, or Step. If it rolls a Perception check to Seek or otherwise detect you, it gets the outcome one degree of success worse than what it rolled, and if you roll a Stealth check to Hide, Sneak, or otherwise escape its attention, you get the outcome one degree of success better than what you rolled against the creature. If you use a hostile action toward the creature, the effect ends for that creature after your hostile action is completed. Critical Failure As failure, but the effect doesn't end for that creature if you use a hostile action against it."
+ },
+ {
+  "id": "periscope",
+  "name": "Periscope",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 25
+  },
+  "text": "This is a 2-foot-long tube with two angled mirrors, one at each end. When the mirrors are aligned correctly, you can look around obstacles while remaining behind cover. This doesn't provide a sufficient line of effect to target creatures around corners."
+ },
+ {
+  "id": "pernicious-spore-bomb-lesser",
+  "name": "Pernicious Spore Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains fast-growing mold spores, which quickly take root but just as quickly rot away. The bomb deals 1 poison damage, 1d4 persistent piercing damage, and 1 poison splash damage. Except on a critical failure, one square of the target creature's space is coated in vegetation, becoming difficult terrain for 1 round."
+ },
+ {
+  "id": "pharasmas-command",
+  "name": "Pharasma's Command",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "relic"
+  ],
+  "text": "Pharasma's Command Source Treasure Vault (Remastered) pg. 202 Aspects Life and Time Pharasma's devoted followers vow to seek out and destroy undead wherever they can be found, a task made more urgent with the rise of Tar-Baphon. Though the Whispering Tyrant was prevented from taking over Golarion, his forces are still massing. Undead unaffiliated with the lich represent an unacceptable perversion of the cycle of life and death to Pharasmins, and permitting such creatures to exist is anathema to her. To aid her faithful in their sacred duty to send the dead where they belong, Pharasmin priests developed this item set. While using Pharasma's command, you must abide by her edicts and anathema or else the relic ceases to function for you until you atone. This set doesn't function for undead beings. Set Items: +1 dagger (level 2), Symbol of Conflict (level 4), Wand of Overflowing Life (3rd-Rank Spell) (level 9), Devoted Vestments (level 11) or Cloister Robe (Greater) (level 15), Staff of Healing (True) (level 16) Gifts: The set grants the following gifts. - 1: Healing Wave - 2: Sands of the Hourglass - 3: Inextinguishable - 4: Temporal Pulse - 5: Life Everlasting Collective Features: The set grants the following features. Two Items: Healing wave increases to 1d6 per relic level. Three Items: You can use sands of the hourglass as a 30-foot line; each creature in the line must save against the effect. Four Items: Treat the outcome of your recovery checks as one step better. Five Ite"
+ },
+ {
+  "id": "phistophilus-fiddle",
+  "name": "Phistophilus Fiddle",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "relic"
+  ],
+  "text": "Phistophilus Fiddle Source Treasure Vault (Remastered) pg. 205 Usage held in 2 hands Bulk 1 Made of pure gold with platinum strings, the phistophilus fiddle shouldn't be able to play a note—but play it does, so beautifully that it can move almost any audience. The fiddle was stolen from the contract devil who created it, and the cunning fiend still wants to reclaim the instrument. Fiendish misfortunes often befall its owners, allowing it to switch hands. The fiddle is a handheld virtuoso instrument. Minor Gifts: little helper, muse (Performance) Major Gifts: charming, fiendish bargain Grand Gift: artistic perfection (Performance)"
+ },
+ {
+  "id": "phoenix-necklace",
+  "name": "Phoenix Necklace",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "healing",
+   "magical"
+  ],
+  "usage": "wornnecklace",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {},
+  "text": "This brilliant jewelry is made from fine silver interwoven with a uniquely malleable form of ruby that causes the necklace to glimmer like a flickering fire. Hao Jin created the necklaces to mitigate the potential of death during the Ruby Phoenix Tournament pre-qualifier, and she specially attuned each phoenix necklace to the silver feathers she created for the pre-qualifying round. While the silver feathers themselves aren't magical, they are required to activate the necklace's power. Each team starts with 3 feathers hidden in their headquarters; they acquire more through challenges and events. Additionally, the tournament emissary's enforcers have the ability to deliver messages to the necklace's wearer at any time by casting Sending, though the wearer can't respond. --- **Activate** ⟨3⟩ command, envision **Effect** You select any number of willing creatures you can see within 30 feet, including yourself. The selected creatures can make nonlethal attacks without taking a penalty to their attack rolls. This effect remains in place until you remove the necklace or use this activation again. --- **Activate** 10 minutes (envision, Interact) **Effect** The necklace consumes one of the attached silver feathers and casts 7th-rank Raise Dead. Activating this ability is particularly costly and every activation requires consuming one more silver feather than the previous activation. --- **Destruction** Once a phoenix necklace has 10 silver feathers attached, Hao Jin can transform the"
+ },
+ {
+  "id": "piercing-horn",
+  "name": "Piercing Horn",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 52
+  },
+  "text": "A beast's horn or horns have been grafted onto your skull. You gain a horn unarmed attack that deals 1d8 piercing damage. This horn is in the brawling group."
+ },
+ {
+  "id": "pig",
+  "name": "Pig",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 5
+  },
+  "text": "Pig Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 5 sp"
+ },
+ {
+  "id": "pilgrims-token",
+  "name": "Pilgrim's Token",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "sp": 1
+  },
+  "text": "This wooden religious symbol is a small token of protection from a site holy to your faith. As long as this religious symbol is in your possession, when you tie an adversary's initiative roll, you go first. If you lose this religious symbol, you must purchase or Craft a replacement and attune it. Such a token usually costs at least 1 sp, and the attunement takes 10 minutes of prayer. You can also attune a different religious symbol with the same amount of time, but you lose the benefit of the previous religious symbol."
+ },
+ {
+  "id": "pinwheel",
+  "name": "Pinwheel",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 1
+  },
+  "text": "This paper and wood pinwheel spins when blown upon by a person or the wind."
+ },
+ {
+  "id": "piton",
+  "name": "Piton",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 1
+  },
+  "text": "These small spikes can be used as anchors to make climbing easier. To affix a piton, you must hold it in one hand and use a hammer to drive it in with your other hand. You can attach a rope to the hammered piton so that you don't fall all the way to the ground on a critical failure while Climbing."
+ },
+ {
+  "id": "planar-shot",
+  "name": "Planar Shot",
+  "level": 8,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 90
+  },
+  "text": "Planar Shot Source Battlecry! pg. 133 Price 90 gp Ammunition cannonball (cannon) Activate (manipulate) Within each planar shot is a small gem magically linked to one of the following elemental planes: air (electricity), earth (acid), fire (fire), metal (electricity), water (cold), or wood (vitality), chosen when the shot is crafted. This gem shatters upon impact, dealing an additional 1d10 damage of the corresponding type. Any creature that critically fails its Reflex save also takes 1d10 persistent damage of the same type."
+ },
+ {
+  "id": "planar-tunnel",
+  "name": "Planar Tunnel",
+  "level": 15,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {
+   "gp": 6000
+  },
+  "text": "A complex, collapsible mechanism forms the outer surface of a planar tunnel. It's linked to a passageway that can be accessed if the tunnel is fully opened. The passage is extradimensional, but borders another plane of existence. Each planar tunnel is keyed to one specific plane. If another extradimensional space is opened inside the planar tunnel, rather than deactivating either item as typical for extradimensional spaces, a rift to the keyed plane tears open and destroys both items. Any creature or unattended object in the planar tunnel is instantly transported to the keyed plane, though a creature can avoid this by succeeding at a save. **Activate** ⟨3⟩ (manipulate) --- You open the collapsed mechanism to fully open the tunnel, revealing an extradimensional space that stays in place. The tunnel is 6 feet across—just big enough to cover a 5-foot square—and 10 feet deep. The passage's depth is perpendicular to the surface, so it's most commonly placed on a floor to make a hole straight down or on a wall to create a horizontal passage through it. The atmosphere is hospitable to travel even if the keyed plane wouldn't be. Anyone adjacent to either edge of the tunnel can Interact to collapse the opening. This closes both entrances to the extradimensional space. Any objects or creatures within the tunnel remain inside, and any that can't fit fully inside are ejected into the nearest open space. No matter how many items are in the planar tunnel, its Bulk never changes. Items can "
+ },
+ {
+  "id": "plate-of-yled-graveknight-plate",
+  "name": "Plate of Yled (Graveknight Plate)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "aberration",
+   "evil",
+   "magical",
+   "necromancy"
+  ],
+  "price": {
+   "gp": 250
+  },
+  "text": "Plate of Yled Source Wake the Dead #5 pg. 24 Usage worn armor Bulk 4 Base Armor Full Plate This sinister suit of jet-black +1 full plate was designed to bolster the graveknights of Yled's undead armies, creating unstoppable legions. The armor gains additional abilities if it is a graveknight's armor. If a graveknight wearing undamaged Plate of Yled is destroyed, the armor rebuilds its body of the course of 1d10 rounds instead of 1d10 days. A living creature who dons the armor is affected by the graveknight's curse immediately instead of 1 hour. Craft Requirements The metals used to create this armor must include a fragment from a previous graveknight's armor. Plate of Yled (Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 250 gp Plate of Yled (Greater Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 415 gp The armor is +1 resilient full plate and the DC is 24 Plate of Yled (Major Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 1,160 gp The armor is +2 resilient full plate and the DC is 28 Plate of Yled (True Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 3,600 gp The armor is +2 greater resilient full plate and the DC is 31"
+ },
+ {
+  "id": "plate-of-yled-greater-graveknight-plate",
+  "name": "Plate of Yled (Greater Graveknight Plate)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "aberration",
+   "evil",
+   "magical",
+   "necromancy"
+  ],
+  "price": {
+   "gp": 415
+  },
+  "text": "Plate of Yled Source Wake the Dead #5 pg. 24 Usage worn armor Bulk 4 Base Armor Full Plate This sinister suit of jet-black +1 full plate was designed to bolster the graveknights of Yled's undead armies, creating unstoppable legions. The armor gains additional abilities if it is a graveknight's armor. If a graveknight wearing undamaged Plate of Yled is destroyed, the armor rebuilds its body of the course of 1d10 rounds instead of 1d10 days. A living creature who dons the armor is affected by the graveknight's curse immediately instead of 1 hour. Craft Requirements The metals used to create this armor must include a fragment from a previous graveknight's armor. Plate of Yled (Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 250 gp Plate of Yled (Greater Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 415 gp The armor is +1 resilient full plate and the DC is 24 Plate of Yled (Major Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 1,160 gp The armor is +2 resilient full plate and the DC is 28 Plate of Yled (True Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 3,600 gp The armor is +2 greater resilient full plate and the DC is 31"
+ },
+ {
+  "id": "plate-of-yled-major-graveknight-plate",
+  "name": "Plate of Yled (Major Graveknight Plate)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "aberration",
+   "evil",
+   "magical",
+   "necromancy"
+  ],
+  "price": {
+   "gp": 1160
+  },
+  "text": "Plate of Yled Source Wake the Dead #5 pg. 24 Usage worn armor Bulk 4 Base Armor Full Plate This sinister suit of jet-black +1 full plate was designed to bolster the graveknights of Yled's undead armies, creating unstoppable legions. The armor gains additional abilities if it is a graveknight's armor. If a graveknight wearing undamaged Plate of Yled is destroyed, the armor rebuilds its body of the course of 1d10 rounds instead of 1d10 days. A living creature who dons the armor is affected by the graveknight's curse immediately instead of 1 hour. Craft Requirements The metals used to create this armor must include a fragment from a previous graveknight's armor. Plate of Yled (Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 250 gp Plate of Yled (Greater Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 415 gp The armor is +1 resilient full plate and the DC is 24 Plate of Yled (Major Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 1,160 gp The armor is +2 resilient full plate and the DC is 28 Plate of Yled (True Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 3,600 gp The armor is +2 greater resilient full plate and the DC is 31"
+ },
+ {
+  "id": "plate-of-yled-true-graveknight-plate",
+  "name": "Plate of Yled (True Graveknight Plate)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "aberration",
+   "evil",
+   "magical",
+   "necromancy"
+  ],
+  "price": {
+   "gp": 3600
+  },
+  "text": "Plate of Yled Source Wake the Dead #5 pg. 24 Usage worn armor Bulk 4 Base Armor Full Plate This sinister suit of jet-black +1 full plate was designed to bolster the graveknights of Yled's undead armies, creating unstoppable legions. The armor gains additional abilities if it is a graveknight's armor. If a graveknight wearing undamaged Plate of Yled is destroyed, the armor rebuilds its body of the course of 1d10 rounds instead of 1d10 days. A living creature who dons the armor is affected by the graveknight's curse immediately instead of 1 hour. Craft Requirements The metals used to create this armor must include a fragment from a previous graveknight's armor. Plate of Yled (Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 250 gp Plate of Yled (Greater Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 415 gp The armor is +1 resilient full plate and the DC is 24 Plate of Yled (Major Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 1,160 gp The armor is +2 resilient full plate and the DC is 28 Plate of Yled (True Graveknight Plate) Source Wake the Dead #5 pg. 24 Price 3,600 gp The armor is +2 greater resilient full plate and the DC is 31"
+ },
+ {
+  "id": "playing-cards",
+  "name": "Playing Cards",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 5
+  },
+  "text": "A standard deck of cards consists of 54 cards made from thick paper contained within a paper sleeve. The most common deck used for games and gambling is known as the Old Mage deck and features four suits themed with the four essences of magic, each with 13 cards, as well as two wildcards. The name and appearance of the deck varies from region to region, such as the Magician's Deck in Taldor or the Deck of Masks in the Shackles."
+ },
+ {
+  "id": "pocket-stage",
+  "name": "Pocket Stage",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "structure"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 138
+  },
+  "text": "This item appears to be a miniature replica of a theater. It includes a small pocket full of minute set dressing and costumed paper dolls. **Activate—Play with Dolls** (1 minute) (concentrate, manipulate) --- **Effect** You place the miniature theater on the ground, filling it with any set dressing and up to six figures you choose. Then, you tap a rhythm on the miniature, causing it to grow into a modest stage 20 feet wide and 15 feet deep. It's dressed with the decorations you selected, and simple mannequins wear the costumes you chose. A wooden proscenium arch frames the stage, and simple curtains along the sides conceal the wings. As a magical structure, the stage has the structure trait. All the stage's set dressing is illusory and disappears if taken more than 20 feet from the stage. The costumes are physical but with illusory embellishments that fade at the same range, revealing only plain, white smocks."
+ },
+ {
+  "id": "pocket-watch",
+  "name": "Pocket Watch",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 25
+  },
+  "text": "This timepiece is a marvel of clockwork and miniaturization; its gears, arbor, and mainspring are immaculately crafted and tuned to maximize precision and reduce time loss. This pocket watch has the properties of a clockwork dial, except it has a maximum duration of 24 hours and is available to characters from Alkenstar."
+ },
+ {
+  "id": "poison-ring",
+  "name": "Poison Ring",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 10
+  },
+  "text": "This ring contains a compartment beneath the bezel intended to hold a small amount of poison. You can determine the ring's true purpose with a successful check. Noticing the compartment while the ring is being worn is more difficult and typically requires a successful Perception check against the Stealth DC of the person wearing the ring. You place poison within the ring using the same method for applying poison to a weapon. You can release the ring's poison or consume it using an Interact action if you have a free hand. The ring's compartment is large enough to hold an effective amount of most poisons, but it's too small to hold a significant amount of other liquids, including potions and magical oils."
+ },
+ {
+  "id": "poisonous-cloak-type-i",
+  "name": "Poisonous Cloak Type I",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This innocuous-looking cloak is associated with a type of poison, set at the cloak's creation. It often appears as a clandestine cloak or a cloak of the bat to the unaware. When you invest this cloak, you lose any resistance to poison damage, and anytime you take piercing or slashing damage in combat, you are exposed to the type of poison associated with the poisonous cloak with no onset, even if it's not an injury poison. Once the curse has activated for the first time, the cloak fuses to you. **Poison** giant scorpion venom"
+ },
+ {
+  "id": "poisonous-cloak-type-ii",
+  "name": "Poisonous Cloak Type II",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This innocuous-looking cloak is associated with a type of poison, set at the cloak's creation. It often appears as a clandestine cloak or a cloak of the bat to the unaware. When you invest this cloak, you lose any resistance to poison damage, and anytime you take piercing or slashing damage in combat, you are exposed to the type of poison associated with the poisonous cloak with no onset, even if it's not an injury poison. Once the curse has activated for the first time, the cloak fuses to you. **Poison** wolfsbane"
+ },
+ {
+  "id": "poisonous-cloak-type-iii",
+  "name": "Poisonous Cloak Type III",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This innocuous-looking cloak is associated with a type of poison, set at the cloak's creation. It often appears as a clandestine cloak or a cloak of the bat to the unaware. When you invest this cloak, you lose any resistance to poison damage, and anytime you take piercing or slashing damage in combat, you are exposed to the type of poison associated with the poisonous cloak with no onset, even if it's not an injury poison. Once the curse has activated for the first time, the cloak fuses to you. **Poison** purple worm venom"
+ },
+ {
+  "id": "poisonous-cloak-type-iv",
+  "name": "Poisonous Cloak Type IV",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This innocuous-looking cloak is associated with a type of poison, set at the cloak's creation. It often appears as a clandestine cloak or a cloak of the bat to the unaware. When you invest this cloak, you lose any resistance to poison damage, and anytime you take piercing or slashing damage in combat, you are exposed to the type of poison associated with the poisonous cloak with no onset, even if it's not an injury poison. Once the curse has activated for the first time, the cloak fuses to you. **Poison** hemlock"
+ },
+ {
+  "id": "poisonous-dagger",
+  "name": "Poisonous Dagger",
+  "level": 5,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "finesse",
+   "magical",
+   "poison",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 150
+  },
+  "text": "This *+1 striking dagger* has an image of a snake emblazoned on its blade. When you critically succeed at an attack roll with the dagger, magical fangs emerge and poison the target, dealing 1d4 persistent poison damage."
+ },
+ {
+  "id": "polar-travel-kit",
+  "name": "Polar Travel Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 30
+  },
+  "text": "Polar Travel Kit Source Pathfinder #189: Dreamers of the Nameless Spires pg. 28 Price 30 gp Bulk 4 A polar travel kit costs 30 gp and is 4 Bulk. Each kit includes a bedroll, a climbing kit, a compass, a small knife, a repair kit, a short shovel, a short saw for cutting ice, a set of skis and poles, a pair of snow goggles, a pair of snowshoes, a spyglass, twenty tindertwigs, and two sets of winter clothing."
+ },
+ {
+  "id": "political-favor-major",
+  "name": "Political Favor (Major)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10000
+  },
+  "text": "Political Favor Source Dark Archives (Remastered) pg. 84 For many, the allure of being in a secret society is the chance to place their hands on the levers of power in government. Members can rub elbows with the great and good, introduce themselves to politicians and power brokers, and (Counterfeit) form bonds through shared allegiances unavailable to the common rabble. They can lean on those connections for a favor, some little trifle that might matter a great deal to them. Purchasing political favors typically requires membership in a secret society that has significant political sway in the region (such as the Esoteric Order of the Palatine Eye in Ustalav). At the GM's discretion, characters with similarly deep connections (perhaps by virtue of having the royalty background) might also be able to purchase political favors. While the options below assume the favors are being purchased with cash, in most secret societies, favors are more likely to be traded for other favors or services rendered. The granter of the favor isn't necessarily a member of a secret society, but anyone in high office is invariably entangled in webs of favor and obligation. The degree of the favor is based on how much effort it requires of the decision-maker and how much risk to which it exposes them. This can vary depending on the NPC. A moderate favor that takes days or weeks of work for a lord in high standing might be fulfilled with one sentence from a monarch. Political Favor (Minor) Source Dark"
+ },
+ {
+  "id": "political-favor-minor",
+  "name": "Political Favor (Minor)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Political Favor Source Dark Archives (Remastered) pg. 84 For many, the allure of being in a secret society is the chance to place their hands on the levers of power in government. Members can rub elbows with the great and good, introduce themselves to politicians and power brokers, and (Counterfeit) form bonds through shared allegiances unavailable to the common rabble. They can lean on those connections for a favor, some little trifle that might matter a great deal to them. Purchasing political favors typically requires membership in a secret society that has significant political sway in the region (such as the Esoteric Order of the Palatine Eye in Ustalav). At the GM's discretion, characters with similarly deep connections (perhaps by virtue of having the royalty background) might also be able to purchase political favors. While the options below assume the favors are being purchased with cash, in most secret societies, favors are more likely to be traded for other favors or services rendered. The granter of the favor isn't necessarily a member of a secret society, but anyone in high office is invariably entangled in webs of favor and obligation. The degree of the favor is based on how much effort it requires of the decision-maker and how much risk to which it exposes them. This can vary depending on the NPC. A moderate favor that takes days or weeks of work for a lord in high standing might be fulfilled with one sentence from a monarch. Political Favor (Minor) Source Dark"
+ },
+ {
+  "id": "political-favor-moderate",
+  "name": "Political Favor (Moderate)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1000
+  },
+  "text": "Political Favor Source Dark Archives (Remastered) pg. 84 For many, the allure of being in a secret society is the chance to place their hands on the levers of power in government. Members can rub elbows with the great and good, introduce themselves to politicians and power brokers, and (Counterfeit) form bonds through shared allegiances unavailable to the common rabble. They can lean on those connections for a favor, some little trifle that might matter a great deal to them. Purchasing political favors typically requires membership in a secret society that has significant political sway in the region (such as the Esoteric Order of the Palatine Eye in Ustalav). At the GM's discretion, characters with similarly deep connections (perhaps by virtue of having the royalty background) might also be able to purchase political favors. While the options below assume the favors are being purchased with cash, in most secret societies, favors are more likely to be traded for other favors or services rendered. The granter of the favor isn't necessarily a member of a secret society, but anyone in high office is invariably entangled in webs of favor and obligation. The degree of the favor is based on how much effort it requires of the decision-maker and how much risk to which it exposes them. This can vary depending on the NPC. A moderate favor that takes days or weeks of work for a lord in high standing might be fulfilled with one sentence from a monarch. Political Favor (Minor) Source Dark"
+ },
+ {
+  "id": "pollen-spray",
+  "name": "Pollen Spray",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "plant"
+  ],
+  "text": "Pollen Spray Source GM Core pg. 317 Aspect Plant Activate (concentrate, manipulate) Effect Pollen and poison spores spray from your relic, dealing 1d6 poison damage for every 2 relic levels (minimum 1d6) to all creatures in a 15-foot cone (basic Fortitude save). On a critical failure, targets are also dazzled for 1 round. You can't use Pollen Spray again for 1d4 rounds."
+ },
+ {
+  "id": "pontoon",
+  "name": "Pontoon",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "applied-to-footwear",
+  "price": {
+   "gp": 650
+  },
+  "text": "Footwear with *pontoon runes* allows you to traverse waterways with ease. While wearing footwear with the rune, you can walk on the surface of water and other liquids without falling through. This offers no protection against damage the liquid deals. You can go under the liquid's surface, but you must Swim if you do."
+ },
+ {
+  "id": "portable",
+  "name": "Portable",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {
+   "gp": 660
+  },
+  "text": "This enables armor to collapse into a disguised, portable form. **Activate**⟨3⟩ (concentrate, manipulate) --- **Effect** You doff your armor, which folds into another wearable object, such as a bangle or amulet with light Bulk. This wearable object has features that hint at the armor it hides. You aren't wearing the armor while it's in this form, but at the GM's discretion, you can still activate properties that might feasibly come from the wearable item the armor has become. If the armor is in its portable form, you can use this activation to revert it to armor, which you can don in 1 minute."
+ },
+ {
+  "id": "portable-gaming-hall",
+  "name": "Portable Gaming Hall",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 500
+  },
+  "text": "A *portable gaming hall* resembles a miniature roulette wheel, except it's marked with indecipherable runes, not numbers. --- **Activate** (1 minute) command, envision, Interact --- **Effect** The wheel grows into a circular room 30 feet in diameter, with a door on one side. Six chairs surround a circular table, 10 feet in diameter. The underside of the table contains retractable drawers full of dice, harrow cards, game pieces, and other gambling accouterments. A gallon of ale or a similar drink with a spigot near the bottom hangs on the door, replenishing to a full gallon each day; you can also bring in your own drinks if you require more than the gaming hall provides. You can flip the central table over as a 3-action activity, which has the manipulate trait, to revert the gaming hall to its original form."
+ },
+ {
+  "id": "portable-weapon-mount-monopod",
+  "name": "Portable Weapon Mount (Monopod)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 2
+  },
+  "text": "Powerful firearms like the arquebus were originally used to defend fortifications or ships, mounted on casements or pintles to steady their aim and offset their recoil. More mobile means of stabilizing weapons with kickback were developed as firearms began to spread across the Inner Sea. The standard tripod takes an Interact action to deploy using one hand. Monopods are lighter and can be deployed with a single hand using the same action as drawing the firearm. They still require an Interact action to retrieve. Monopods are less stable than a tripod, and firing a kickback weapon from a monopod without the necessary Strength reduces the penalty to a -1 circumstance penalty instead of removing it entirely."
+ },
+ {
+  "id": "portable-weapon-mount-shielded-tripod",
+  "name": "Portable Weapon Mount (Shielded Tripod)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 50
+  },
+  "text": "Powerful firearms like the arquebus were originally used to defend fortifications or ships, mounted on casements or pintles to steady their aim and offset their recoil. More mobile means of stabilizing weapons with kickback were developed as firearms began to spread across the Inner Sea. The standard tripod takes an Interact action to deploy using one hand. A shielded tripod resembles a squat shield on a tripod. You can deploy and retrieve a shielded tripod with an Interact action, as normal, but while a shielded tripod is in your square, you can use the Take Cover action to gain standard cover behind the tripod's shield. You can't use this cover to Hide or Sneak, as normal for times when your cover still leaves your position obvious."
+ },
+ {
+  "id": "portable-weapon-mount-tripod-shielded",
+  "name": "Portable Weapon Mount (Tripod, Shielded)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Portable Weapon Mount Source Guns & Gears (Remastered) pg. 182 PFS Note Characters with access to firearms gain access to accessories that can be used with those weapons. Bulk 1 Powerful firearms like the arquebus were originally used to defend fortifications or ships, mounted on casements or pintles to steady their aim and offset their recoil. More mobile means of stabilizing weapons with kickback were developed as firearms began to spread across the Inner Sea. The standard tripod takes an Interact action to deploy using one hand. Portable Weapon Mount (Monopod) Source Guns & Gears (Remastered) pg. 182 Price 2 sp Bulk 1 Monopods are lighter and can be deployed with a single hand using the same action as drawing the firearm. They still require an Interact action to retrieve. Monopods are less stable than a tripod, and firing a kickback weapon from a monopod without the necessary Strength reduces the penalty to a –1 circumstance penalty instead of removing it entirely. Portable Weapon Mount (Tripod, Shielded) Source Guns & Gears (Remastered) pg. 182 Price 50 gp Bulk 5 A shielded tripod resembles a squat shield on a tripod. You can deploy and retrieve a shielded tripod with an Interact action, as normal, but while a shielded tripod is in your square, you can use the Take Cover action to gain standard cover behind the tripod's shield. You can't use this cover to Hide or Sneak, as normal for times when your cover still leaves your position obvious."
+ },
+ {
+  "id": "potion-of-retaliation-greater",
+  "name": "Potion of Retaliation (Greater)",
+  "level": 12,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "price": {
+   "gp": 400
+  },
+  "text": "Potion of Retaliation Source Player Core 2 pg. 304 Usage held in 1 hand Bulk L Activate (manipulate) A potion of retaliation is available in four varieties—acid, cold, electricity, and fire—each with a faint shimmer of the energy it contains. For 1 minute after drinking a potion of retaliation, you glow with a faint aura of that energy, and a creature that touches you (such as by making an unarmed attack or using a spell with a range of touch against you) takes damage of that type. The moderate, greater, and major versions also damage an adjacent creature that hits you with a melee weapon Strike. Potion of Retaliation (Minor) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 4 gp Bulk L The aura deals 1 damage. Potion of Retaliation (Lesser) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 12 gp Bulk L The aura deals 1d4 damage. Potion of Retaliation (Moderate) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 50 gp Bulk L The aura deals 2d4 damage. Potion of Retaliation (Greater) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 400 gp Bulk L The aura deals 3d6 damage. Potion of Retaliation (Major) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 5,000 gp Bulk L The aura deals 4d8 damage."
+ },
+ {
+  "id": "potion-of-retaliation-lesser",
+  "name": "Potion of Retaliation (Lesser)",
+  "level": 3,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "price": {
+   "gp": 12
+  },
+  "text": "Potion of Retaliation Source Player Core 2 pg. 304 Usage held in 1 hand Bulk L Activate (manipulate) A potion of retaliation is available in four varieties—acid, cold, electricity, and fire—each with a faint shimmer of the energy it contains. For 1 minute after drinking a potion of retaliation, you glow with a faint aura of that energy, and a creature that touches you (such as by making an unarmed attack or using a spell with a range of touch against you) takes damage of that type. The moderate, greater, and major versions also damage an adjacent creature that hits you with a melee weapon Strike. Potion of Retaliation (Minor) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 4 gp Bulk L The aura deals 1 damage. Potion of Retaliation (Lesser) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 12 gp Bulk L The aura deals 1d4 damage. Potion of Retaliation (Moderate) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 50 gp Bulk L The aura deals 2d4 damage. Potion of Retaliation (Greater) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 400 gp Bulk L The aura deals 3d6 damage. Potion of Retaliation (Major) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 5,000 gp Bulk L The aura deals 4d8 damage."
+ },
+ {
+  "id": "potion-of-retaliation-major",
+  "name": "Potion of Retaliation (Major)",
+  "level": 18,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "price": {
+   "gp": 5000
+  },
+  "text": "Potion of Retaliation Source Player Core 2 pg. 304 Usage held in 1 hand Bulk L Activate (manipulate) A potion of retaliation is available in four varieties—acid, cold, electricity, and fire—each with a faint shimmer of the energy it contains. For 1 minute after drinking a potion of retaliation, you glow with a faint aura of that energy, and a creature that touches you (such as by making an unarmed attack or using a spell with a range of touch against you) takes damage of that type. The moderate, greater, and major versions also damage an adjacent creature that hits you with a melee weapon Strike. Potion of Retaliation (Minor) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 4 gp Bulk L The aura deals 1 damage. Potion of Retaliation (Lesser) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 12 gp Bulk L The aura deals 1d4 damage. Potion of Retaliation (Moderate) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 50 gp Bulk L The aura deals 2d4 damage. Potion of Retaliation (Greater) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 400 gp Bulk L The aura deals 3d6 damage. Potion of Retaliation (Major) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 5,000 gp Bulk L The aura deals 4d8 damage."
+ },
+ {
+  "id": "potion-of-retaliation-minor",
+  "name": "Potion of Retaliation (Minor)",
+  "level": 1,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "price": {
+   "gp": 4
+  },
+  "text": "Potion of Retaliation Source Player Core 2 pg. 304 Usage held in 1 hand Bulk L Activate (manipulate) A potion of retaliation is available in four varieties—acid, cold, electricity, and fire—each with a faint shimmer of the energy it contains. For 1 minute after drinking a potion of retaliation, you glow with a faint aura of that energy, and a creature that touches you (such as by making an unarmed attack or using a spell with a range of touch against you) takes damage of that type. The moderate, greater, and major versions also damage an adjacent creature that hits you with a melee weapon Strike. Potion of Retaliation (Minor) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 4 gp Bulk L The aura deals 1 damage. Potion of Retaliation (Lesser) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 12 gp Bulk L The aura deals 1d4 damage. Potion of Retaliation (Moderate) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 50 gp Bulk L The aura deals 2d4 damage. Potion of Retaliation (Greater) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 400 gp Bulk L The aura deals 3d6 damage. Potion of Retaliation (Major) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 5,000 gp Bulk L The aura deals 4d8 damage."
+ },
+ {
+  "id": "potion-of-retaliation-moderate",
+  "name": "Potion of Retaliation (Moderate)",
+  "level": 6,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "price": {
+   "gp": 50
+  },
+  "text": "Potion of Retaliation Source Player Core 2 pg. 304 Usage held in 1 hand Bulk L Activate (manipulate) A potion of retaliation is available in four varieties—acid, cold, electricity, and fire—each with a faint shimmer of the energy it contains. For 1 minute after drinking a potion of retaliation, you glow with a faint aura of that energy, and a creature that touches you (such as by making an unarmed attack or using a spell with a range of touch against you) takes damage of that type. The moderate, greater, and major versions also damage an adjacent creature that hits you with a melee weapon Strike. Potion of Retaliation (Minor) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 4 gp Bulk L The aura deals 1 damage. Potion of Retaliation (Lesser) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 12 gp Bulk L The aura deals 1d4 damage. Potion of Retaliation (Moderate) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 50 gp Bulk L The aura deals 2d4 damage. Potion of Retaliation (Greater) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 400 gp Bulk L The aura deals 3d6 damage. Potion of Retaliation (Major) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 5,000 gp Bulk L The aura deals 4d8 damage."
+ },
+ {
+  "id": "practice-targets",
+  "name": "Practice Targets",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "Practice Targets Source Guns & Gears (Remastered) pg. 179 Price 2 sp (price for 10) Bulk L While gunslingers have many methods for practicing their aim, these sturdy paper targets are excellent for tracking a gunslinger's progress over time, keeping score of how close they came to hitting the most vital spots. These targets are also used in situations where more detailed accuracy must be recorded, such as firearm competitions. Practice targets can appear in many shapes and sizes and usually come in packs of 10 held in protective cases made of heavy cloth or light leather."
+ },
+ {
+  "id": "praying-mantis",
+  "name": "Praying Mantis",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Praying Mantis Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 sp"
+ },
+ {
+  "id": "precious-anodization",
+  "name": "Precious Anodization",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "metal"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Precious Anodization Source Rage of Elements pg. 148 Aspect Metal Activate (concentrate) Frequency once per day; Effect For one minute, your relic is affected by a clad in metal spell of a rank equal to half the relic's level, rounded up. You can choose uncommon metals in addition to common ones."
+ },
+ {
+  "id": "precognition",
+  "name": "Precognition",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "prediction"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Precognition Source Treasure Vault (Remastered) pg. 200 Aspect Time Activate (concentrate) Frequency once per day; Trigger Your turn starts; Effect You analyze diverging time streams to determine the best course of action. Resolve two turns as if they occurred, then choose which one happens. The other does not occur."
+ },
+ {
+  "id": "predictable-silver-piece",
+  "name": "Predictable Silver Piece",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "This seemingly unremarkable, weathered silver coin bears the bust of an unnamed monarch on the face and a majestic bird on the tail. You can toss the coin without activating it, in which case it follows the normal laws of probability. **Activate—Cheat Fate** ⟨1⟩ (manipulate) --- **Effect** You rub your thumb on one side of the coin with the intent of slightly tweaking the strands of fate, then flip the coin into the air in a coin toss. No matter how the toss is resolved- letting the coin fall to the ground, slapping it down on the back of your hand, or catching it on your open palm-it always lands with the side you rubbed face up."
+ },
+ {
+  "id": "preordained-spear",
+  "name": "Preordained Spear",
+  "level": 9,
+  "itemType": "weapon",
+  "traits": [
+   "magical",
+   "monk",
+   "mythic",
+   "thrown-20"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 700
+  },
+  "text": "This *+1 striking spear* seems to know when its wielder is about to die. Its wooden body bears countless carvings, leaving it thinner than most spears. While you are doomed, a *preordained spear* glows with a faint red light that gives you a haunted look and sheds dim light within 5 feet. **Activate—Delay Doom** ⟨1⟩ (manipulate) **Requirements** Your name is not on the spear, and you have the doomed condition --- **Effect** Your name appears on the shaft of the *preordained spear*. Your doomed value decreases by 1, and you regain 1 Mythic Point. Your name fades from the spear the next time you make your daily preparations."
+ },
+ {
+  "id": "preserving",
+  "name": "Preserving",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "applied-to-a-basket-bag-or-other-container",
+  "price": {
+   "gp": 45
+  },
+  "text": "*Preserving runes* are common among merchants and other travelers who are on the road for weeks or months at a time. Any non-magical food and drink inside a container with a *preserving rune* remains fresher for longer, taking ten times as long to spoil. This feature doesn't prolong the duration of alchemical items."
+ },
+ {
+  "id": "preserving-shot",
+  "name": "Preserving Shot",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Resembling a large salt crystal, preserving shots are made to allow troops to more easily hunt for food on long marches. When a large or smaller animal is killed by a preserving shot, the meat is magically transformed into jerky, salt pork, or some other preserved form appropriate for the animal, allowing the hunter to quickly butcher it and resume their march without the need to smoke or cure the meat."
+ },
+ {
+  "id": "pressure-bomb-lesser",
+  "name": "Pressure Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This tightly sealed metal container is filled with highly pressurized gas that can explode to release a powerful shockwave. A pressure bomb deals 1d4 damage and 1 bludgeoning splash damage. On a critical hit, the target is knocked prone. Tiny or smaller targets are pushed 5 feet away from you."
+ }
+]

@@ -1,0 +1,928 @@
+[
+ {
+  "id": "splinter-spear",
+  "name": "Splinter Spear",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wood"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 2700
+  },
+  "text": "Splintering Spear Source Rage of Elements pg. 202 Usage held in 1 hand Bulk L Base Weapon Spear The entirety of this +2 duskwood greater striking spear is made of worn, cracked, splintered wood, including the spearhead. These splinters never harm you when you hold the weapon, but when you hit with the spear, splinters break off in the target, dealing 1d6 persistent bleed damage. Activate—Shatter ; Frequency once per day; Effect You smash the spear into the ground or another nearby surface, shattering it into thousands of duskwood splinters in your choice of a 30-foot cone or a 10-foot emanation. Each creature in the area takes 12d6 piercing damage with a DC 30 basic Reflex save. A creature that fails also takes the same amount of persistent bleed damage as the spear deals on a hit. The spear regrows into its full form at the end of this turn. Splinter Spear Source Rage of Elements pg. 202 Price 2,700 gp Bulk L Splinter Spear (Greater) Source Rage of Elements pg. 202 Price 15,000 gp Bulk L The spear is a +3 high-grade duskwood greater striking spear, and the activation's damage is 16d6 (DC 37). Splinter Spear (Major) Source Rage of Elements pg. 202 Price 60,000 gp Bulk L The spear is a +3 high-grade duskwood major striking spear, and the activation's damage is 18d6 (DC 43)."
+ },
+ {
+  "id": "splinter-spear-greater",
+  "name": "Splinter Spear (Greater)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wood"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 15000
+  },
+  "text": "Splintering Spear Source Rage of Elements pg. 202 Usage held in 1 hand Bulk L Base Weapon Spear The entirety of this +2 duskwood greater striking spear is made of worn, cracked, splintered wood, including the spearhead. These splinters never harm you when you hold the weapon, but when you hit with the spear, splinters break off in the target, dealing 1d6 persistent bleed damage. Activate—Shatter ; Frequency once per day; Effect You smash the spear into the ground or another nearby surface, shattering it into thousands of duskwood splinters in your choice of a 30-foot cone or a 10-foot emanation. Each creature in the area takes 12d6 piercing damage with a DC 30 basic Reflex save. A creature that fails also takes the same amount of persistent bleed damage as the spear deals on a hit. The spear regrows into its full form at the end of this turn. Splinter Spear Source Rage of Elements pg. 202 Price 2,700 gp Bulk L Splinter Spear (Greater) Source Rage of Elements pg. 202 Price 15,000 gp Bulk L The spear is a +3 high-grade duskwood greater striking spear, and the activation's damage is 16d6 (DC 37). Splinter Spear (Major) Source Rage of Elements pg. 202 Price 60,000 gp Bulk L The spear is a +3 high-grade duskwood major striking spear, and the activation's damage is 18d6 (DC 43)."
+ },
+ {
+  "id": "splinter-spear-major",
+  "name": "Splinter Spear (Major)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wood"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 60000
+  },
+  "text": "Splintering Spear Source Rage of Elements pg. 202 Usage held in 1 hand Bulk L Base Weapon Spear The entirety of this +2 duskwood greater striking spear is made of worn, cracked, splintered wood, including the spearhead. These splinters never harm you when you hold the weapon, but when you hit with the spear, splinters break off in the target, dealing 1d6 persistent bleed damage. Activate—Shatter ; Frequency once per day; Effect You smash the spear into the ground or another nearby surface, shattering it into thousands of duskwood splinters in your choice of a 30-foot cone or a 10-foot emanation. Each creature in the area takes 12d6 piercing damage with a DC 30 basic Reflex save. A creature that fails also takes the same amount of persistent bleed damage as the spear deals on a hit. The spear regrows into its full form at the end of this turn. Splinter Spear Source Rage of Elements pg. 202 Price 2,700 gp Bulk L Splinter Spear (Greater) Source Rage of Elements pg. 202 Price 15,000 gp Bulk L The spear is a +3 high-grade duskwood greater striking spear, and the activation's damage is 16d6 (DC 37). Splinter Spear (Major) Source Rage of Elements pg. 202 Price 60,000 gp Bulk L The spear is a +3 high-grade duskwood major striking spear, and the activation's damage is 18d6 (DC 43)."
+ },
+ {
+  "id": "spotless-spats",
+  "name": "Spotless Spats",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 30
+  },
+  "text": "No soldier in a parade or other formal appearance would dare forget their pristine white spats covering their boots. Their presence inspires the wearer to keep the rest of their uniform equally tidy. While wearing the *spotless spats*, your outfit is magically cleaned every 10 minutes, as if by the spell."
+ },
+ {
+  "id": "spray-pellet",
+  "name": "Spray Pellet",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Spray Pellet Source Treasure Vault (Remastered) pg. 30 Price 1 sp (price for 10) Bulk L Hands Type Ranged Category Ammunition Group Sling Specially prepared packet of spray pellets. Critical Specialization Effects Source Core Rulebook pg. 283 Certain feats, class features, weapon runes, and other effects can grant you additional benefits when you make a Strike with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always decide not to add the critical specialization effect of your weapon. Click here for the full rules on Critical Specialization Effects."
+ },
+ {
+  "id": "sprout-ally",
+  "name": "Sprout Ally",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "plant"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Sprout Ally Source GM Core pg. 317 Aspect Plant Activate (concentrate, manipulate) Frequency once per day; Effect Your relic rapidly matures and animates nearby plant matter into an ally to fight by you, casting summon plant or fungus, with a rank of half the item's level rounded up. You can Sustain this activation as you would the spell."
+ },
+ {
+  "id": "spry-sinews-greater",
+  "name": "Spry Sinews (Greater)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 1300
+  },
+  "text": "The tendons in your legs are uncommonly stretchy. When you Leap, you increase the horizontal distance of your Leap by 10 feet and the vertical distance by 6 feet."
+ },
+ {
+  "id": "spry-sinews-lesser",
+  "name": "Spry Sinews (Lesser)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 55
+  },
+  "text": "The tendons in your legs are uncommonly stretchy. When you Leap, you increase the horizontal distance of your Leap by 5 feet and the vertical distance by 3 feet."
+ },
+ {
+  "id": "spurned-lute",
+  "name": "Spurned Lute",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 50
+  },
+  "text": "Made of a deep-brown rosewood, a *spurned lute* is adorned with carved flowers. The lute appears to be and functions as a virtuoso instrument. (Other *spurned instruments* exist, but the lute is the least rare.) This lute has a jealous streak, demanding total loyalty from its \"partner\" musician. After you play the lute for the first time, it fuses to you. If you go a day without using it to Perform, you become Stupefied 1 until you next do so. After that, when you attempt a Performance check using an instrument other than the lute, you take a –4 circumstance penalty to do so, and you must succeed at a save or become stupefied 1 for 1 minute."
+ },
+ {
+  "id": "spyglass",
+  "name": "Spyglass",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 20
+  },
+  "text": "A typical spyglass lets you see eight times farther than normal."
+ },
+ {
+  "id": "squirrel",
+  "name": "Squirrel",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 7
+  },
+  "text": "Squirrel Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 7 sp"
+ },
+ {
+  "id": "st-alkitarems-eye",
+  "name": "St. Alkitarem's Eye",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornnecklace",
+  "price": {
+   "gp": 28
+  },
+  "text": "St. Alkitarem's Eye is a simple silver chain bearing a brass housing with tiny brass wings. At the center of the housing is a *Clear Spindle Aeon Stone*, positioned so it resembles an open eye. This is necklace is known as *St. Alkitarem's Eye*. The housing can bear a single aeon stone in the same manner as a wayfinder, allowing the necklace's wearer to benefit from the aeon stone just as though it were orbiting their head. The necklace can bear only a *clear spindle aeon stone*, not other types of aeon stones. It allows the bearer to use the aeon stone's resonant power and doesn't restrict the wearer from investing other aeon stones (even those slotted in a wayfinder). *St. Alkitarem's Eye* otherwise has the same statistics (including Price) as a wayfinder."
+ },
+ {
+  "id": "stabling",
+  "name": "Stabling",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 2
+  },
+  "text": "Stabling Source Player Core pg. 294 Price 2 cp (per day)"
+ },
+ {
+  "id": "stalwarts-ring",
+  "name": "Stalwart's Ring",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "invested"
+  ],
+  "usage": "worn",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 160
+  },
+  "text": "This fairly simple ring has no gemstone inlaid, but the band is cast to resembled a fanged wolf's head. Once per day, during your daily preparations, you can meditate on this ring to grant yourself 5 temporary Hit Points. These last until your next daily preparation, as long as you are wearing the ring."
+ },
+ {
+  "id": "stanching",
+  "name": "Stanching",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 130
+  },
+  "text": "These symbols close bloody wounds. Armor with this rune reduces the DC of the flat check to end persistent bleed damage from 15 to 12 (7 with particularly effective assistance)."
+ },
+ {
+  "id": "stanching-greater",
+  "name": "Stanching (Greater)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 600
+  },
+  "text": "These symbols close bloody wounds. Armor with this rune reduces the DC of the flat check to end persistent bleed damage from 15 to 10 (5 with particularly effective assistance)."
+ },
+ {
+  "id": "stanching-major",
+  "name": "Stanching (Major)",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 2500
+  },
+  "text": "These symbols close bloody wounds. Armor with this rune reduces the DC of the flat check to end persistent bleed damage from 15 to 8 (3 with particularly effective assistance)."
+ },
+ {
+  "id": "stanching-true",
+  "name": "Stanching (True)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "price": {
+   "gp": 12500
+  },
+  "text": "These symbols close bloody wounds. Armor with this rune reduces the DC of the flat check to end persistent bleed damage from 15 to 5 (particularly effective assistance automatically removes persistent bleed damage)."
+ },
+ {
+  "id": "standard-book-of-translation-tien",
+  "name": "Standard Book of Translation (Tien)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 25
+  },
+  "text": "The book is leather-bound and decorated with the symbol of the Lantern Lodge. Red and gold cords wrap around the book and tie to keep it shut. Each volume offers translation for a different language. When working with a book of translation, you can attempt Diplomacy checks to Gather Information or to Make an Impression with creatures that speak the language featured in the book, even if you do not speak the language. Such checks take 10 times longer to complete and you take a -2 circumstance penalty to the check due to your limited communication capabilities."
+ },
+ {
+  "id": "star-grenade-lesser",
+  "name": "Star Grenade (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- These unusual gunpowder bombs, typically marked with a symbol of a four-pointed star on their outer surface, explode outward in the shape of a cross whenever they Strike a target. When you throw a star grenade, arrange two perpendicular 25-foot lines over the target, both centered on the target and moving straight through the target, not diagonally. Creatures other than the target within these two lines take splash damage (typically 8 squares take splash damage for a Medium creature). Any effect that alters or adjusts the splash area's shape or size, like the alchemist feat Expanded Splash, doesn't apply to star grenades. The bomb deals 1d8 damage and 1 splash Damage."
+ },
+ {
+  "id": "starless-scope-lens",
+  "name": "Starless Scope Lens",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 100
+  },
+  "text": "A replacement lens for a Starless Scope. If you know the formula for the *starless scope*, you can Craft a new lens with a (master) check. --- **Activate** ⟨2⟩ Interact (manipulate); You can replace a broken lens in a *starless scope* with an undamaged one."
+ },
+ {
+  "id": "starshot-arrow-greater",
+  "name": "Starshot Arrow (Greater)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 800
+  },
+  "text": "**Activate** ⟨1⟩ Interact The metal of these arrows is said to have come from a star that ventured too close to Golarion and was shot down by a moonlit archer. When you activate and shoot a *starshot arrow*, you take no range penalties against any target that you can personally detect. There must be a line of effect between you and the target. You can fire at any creature you can detect, regardless of range. The arrow travels instantly, hitting your target as soon as you fire the arrow. This is a teleportation effect."
+ },
+ {
+  "id": "starshot-arrow-lesser",
+  "name": "Starshot Arrow (Lesser)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 55
+  },
+  "text": "**Activate** ⟨1⟩ Interact The metal of these arrows is said to have come from a star that ventured too close to Golarion and was shot down by a moonlit archer. When you activate and shoot a *starshot arrow*, you take no range penalties against any target that you can personally detect. There must be a line of effect between you and the target. The target must be within the maximum range of your weapon."
+ },
+ {
+  "id": "steal-luck",
+  "name": "Steal Luck",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "contingency"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Steal Luck Source Treasure Vault (Remastered) pg. 199 Aspect Luck Activate (concentrate) Frequency once per day; ; Trigger You or a creature within 30 feet of you rolls two d20s for a fortune or misfortune effect and you like the higher roll; Effect You steal the higher of the two numbers the triggering target rolled; the target must use the other result. Until you make your next daily preparations, you can substitute that number for one d20 roll made for a saving throw or skill check you have to make against an effect created by an enemy, hazard, or the environment. Doing so is a fortune effect. If you fail to do so before your next daily preparations, you lose the stored number."
+ },
+ {
+  "id": "steam-winch",
+  "name": "Steam Winch",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "steam"
+  ],
+  "usage": "other",
+  "price": {
+   "gp": 425
+  },
+  "text": "This hefty winch is powered by a small steam engine and includes a 100-foot length of steel cable, which enables you to haul a heavier load than you could with a hand cranked winch or comealong. A steam winch allows you to slowly pull a heavy load (usually up to 50 Bulk) along a flat surface or up and down a vertical expanse. Attaching a steam winch to a device takes three Interact actions, while starting the winch (and getting it warm enough to operate) takes 10 minutes. Once in operation, a steam winch requires regular maintenance to function. Every 20 minutes, the boiler must be refilled and heat levels maintained."
+ },
+ {
+  "id": "steamflight-pack",
+  "name": "Steamflight Pack",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork",
+   "steam"
+  ],
+  "usage": "wornbackpack",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 6000
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- The steamflight pack allows its user to fly without using magic or wings. Each steamflight pack looks like a large brass backpack with two large nozzles mounted on the sides pointing downward. It also features metal arms reaching around the front that terminate in handles with activation buttons on them. When the user holds down an activation button, a complex series of mechanisms pumps water from the large tank in the backpack and releases it through the nozzles as powerful jets of steam, enabling the user to fly short distances. Tilting the handle adjusts the nozzles' angles, allowing the user to control the direction of their flight. When active, the steamflight pack gives the user a fly Speed of 20 feet. It carries enough water for 20 minutes of operation and can be refilled in five minutes with a supply of normal water and a funnel. --- **Activate—On/Off Switch** ⟨2⟩ (manipulate) **Effect** You turn the steamflight pack on or off."
+ },
+ {
+  "id": "steelscour-lesser",
+  "name": "Steelscour (lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Interact or Strike --- A viscous acidic goo fills this glass vial, specially designed to eat through metallic objects. You can throw the steelscour as an alchemical bomb, targeting a metal creature or metal object held by a creature. It deals 1d8 persistent acid damage that ignores up to 5 hardness from metal. Steelscour has no effect on living or undead flesh and deals half damage to objects constructed of non-metal materials. Instead of using steelscour as a bomb, you can pour it on an adjacent unattended metal object with an Interact action, automatically dealing the listed persistent acid damage for 5 rounds with no flat check to end the condition. When used this way, steelscour loses the bomb trait."
+ },
+ {
+  "id": "stepping-stone-shot",
+  "name": "Stepping Stone Shot",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 65
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (concentrate, manipulate) --- A series of small stone discs pressed into a single round make up this ammunition. When you fire an activated stepping stone shot, whether you hit or miss your target, the shot creates a series of supports in a line that creatures can walk on as if solid ground. The line can ascend or descend at a 45-degree angle. The discs support any amount of weight, but don't otherwise pose any sort of obstacle; creatures and attacks can move through them if they wish. They crumble to dust if anything attempts to move or otherwise manipulate them. A creature can use a two-action activity, which has the manipulate trait, to Stride up to its speed on the stones while causing them to crumble behind it. This ammunition does not work in firearms with the scatter trait. The maximum length of the line depends on the type of ammunition. However, the line also can't extend beyond the maximum distance for a Strike from your firearm (usually six times the firearm's range increment). The stones reach up to 100 feet, and they last up to the end of your next turn if no one collapses them."
+ },
+ {
+  "id": "stepping-stone-shot-greater",
+  "name": "Stepping Stone Shot (Greater)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 185
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (concentrate, manipulate) --- A series of small stone discs pressed into a single round make up this ammunition. When you fire an activated stepping stone shot, whether you hit or miss your target, the shot creates a series of supports in a line that creatures can walk on as if solid ground. The line can ascend or descend at a 45-degree angle. The discs support any amount of weight, but don't otherwise pose any sort of obstacle; creatures and attacks can move through them if they wish. They crumble to dust if anything attempts to move or otherwise manipulate them. A creature can use a two-action activity, which has the manipulate trait, to Stride up to its speed on the stones while causing them to crumble behind it. This ammunition does not work in firearms with the scatter trait. The maximum length of the line depends on the type of ammunition. However, the line also can't extend beyond the maximum distance for a Strike from your firearm (usually six times the firearm's range increment). The stones reach up to 250 feet, and they last up to 1 minute if no one collapses them."
+ },
+ {
+  "id": "sticky-algae-bomb-lesser",
+  "name": "Sticky Algae Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "water"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- These bombs have been mixed with sticky algae that glow and emit poison. Attacks with this bomb don't take the normal penalties and restrictions for being used in water or underwater. The bomb deals 1d8 poison damage and 1 poison splash damage. In addition, the target is tagged by the bioluminescent substance and leaves a highly visible trail for the next hour. The DC to Track a creature using this trail is 19, but the trail appears only in water."
+ },
+ {
+  "id": "stone-bullet",
+  "name": "Stone Bullet",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1300
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This sling bullet looks like a petrified serpent's eye. A creature hit by an activated *stone bullet* is subject to the effects of a 6th-rank Petrify spell (). --- **Craft Requirements** Supply one casting of Petrify."
+ },
+ {
+  "id": "stone-object-low-grade",
+  "name": "Stone Object (Low-Grade)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Stone Source Treasure Vault (Remastered) pg. 169 Stone was one of the earliest materials used to create tools, and crafters can still fashion it into a variety of implements, weapons, and even armor. Simple stone objects are made from common materials such as flint or basalt, while exquisite stone objects might be made from crystal, obsidian, or semi-precious gems. Particularly notable stone armors or weapons might even be crafted entirely from a giant emerald, ruby, or sapphire, though they can still use the base statistics presented below. Stone can replace the striking surface of any melee weapon as long as it has no complex moving parts, and ammunition can be crafted with it. Stone can replace metal components in chain and composite armor; only plate armor that specifically describes itself as being made from stone can be crafted from this material Stone Objects Hardness HP BT Thin Items 4 16 8 Items 7 24 12 Structures 14 48 24 Stone Object (Low-Grade) Source Treasure Vault (Remastered) pg. 169 Price 1 sp (per Bulk)"
+ },
+ {
+  "id": "stone-of-weight",
+  "name": "Stone of Weight",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "Also known as a loadstone, this small stone appears nonmagical and has a lovely sheen, giving the impression that it could be a valuable or a notable item or a magic stone of some kind. When you've carried the stone on your person for 1 minute, its curse activates: the stone's size does not change, but it suddenly increases in weight to 5 Bulk. This additional weight does not cause the stone to deal more damage if thrown or used as a weapon. It reappears in your possessions within 1 minute if you discard it, and can't be destroyed or thrown away permanently, or even placed in a container that would reduce or negate its Bulk (like a bag of holding), until it is subject to a remove curse spell or similar magic effect. Once the curse has activated for the first time, the stone fuses to you."
+ },
+ {
+  "id": "stonethroat-ammunition",
+  "name": "Stonethroat Ammunition",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 325
+  },
+  "text": "**Ammunition** arrow, bolt **Activate** ⟨1⟩ Interact --- Each piece of stonethroat ammunition is tipped with an unusual yellow stone. When an activated piece of stonethroat ammunition hits a target, the target must attempt a . --- **Critical Success** The creature is unaffected. **Success** The ammunition lodges itself loosely into the target's throat. For 1 round, the target takes a -2 status penalty to attack rolls with its jaws or fangs, and to Athletics checks. **Failure** The ammunition embeds itself deep in the target's throat. The target can't use its jaws or fangs Strike (if it has one) or the Swallow Whole ability until the end of its next turn. **Critical Failure** As failure, and the target is Enfeebled 2 for 1 round."
+ },
+ {
+  "id": "storage",
+  "name": "Storage",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "adjustment"
+  ],
+  "usage": "applied-to-armor-or-unarmored-defense-clothing",
+  "price": {
+   "gp": 1
+  },
+  "text": "The storage adjustment fits the armor or clothing with belts, buckles, pouches, and loops for holding and storing tools. Countless fasteners make the armor as jangly as chain mail. While wearing armor with this adjustment, you can wear up to 3 Bulk of toolkits instead of the usual 2. However, the armor acquires the noisy trait. If it already has the noisy trait, increase its penalty to Stealth checks by 1."
+ },
+ {
+  "id": "storm-arrow",
+  "name": "Storm Arrow",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "air",
+   "consumable",
+   "electricity",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 130
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- The head of this arrow is made from gleaming copper. When an activated *storm arrow* hits a target, it is buffeted by raging winds and struck by a bolt of lightning that deals 3d12 damage and the target must attempt a saving throw. If this arrow is shot from a weapon with a *shock* property rune, the save DC increases to 27, though the attack doesn't benefit from the *shock* property rune itself. --- **Critical Success** The foe is unaffected. **Success** The foe takes half damage and isn't affected by the wind. **Failure** The foe takes full damage and is buffeted by winds for 1 round, taking a -2 circumstance penalty to ranged attack rolls and a –10-foot circumstance penalty to its fly Speed. **Critical Failure** As failure, but the foe takes double damage."
+ },
+ {
+  "id": "storm-hammer",
+  "name": "Storm Hammer",
+  "level": 3,
+  "itemType": "weapon",
+  "traits": [
+   "electricity",
+   "magical",
+   "shove"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "Sparks of crackling electricity arc from this *+1 magic warhammer*, and the head thrums with distant thunder. Any hit with this hammer deals 1 extra electricity damage. You can use a special action to transform the sparks into lightning bolts. --- **Activate—Electrify** ⟨1⟩ (concentrate) Until the end of your turn, the hammer deals 1d6 extra electricity damage instead of just 1. After you activate the *storm hammer*, you can't activate it again for 10 minutes."
+ },
+ {
+  "id": "striking",
+  "name": "Striking",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 65
+  },
+  "text": "A *striking* rune stores destructive magic in the weapon, increasing the weapon damage dice it deals to two instead of one. For instance, a *+1 striking dagger* would deal 2d4 damage instead of 1d4 damage. You can upgrade the *striking* rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. You must have the formula of the stronger rune to do so, and the Price of the upgrade is the difference between the two runes' Prices."
+ },
+ {
+  "id": "striking-greater",
+  "name": "Striking (Greater)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 1065
+  },
+  "text": "A *striking* rune stores destructive magic in the weapon, increasing the weapon damage dice it deals to two instead of one. For instance, a *+1 striking dagger* would deal 2d4 damage instead of 1d4 damage. You can upgrade the *striking* rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. You must have the formula of the stronger rune to do so, and the Price of the upgrade is the difference between the two runes' Prices. The weapon deals three weapon damage dice."
+ },
+ {
+  "id": "striking-major",
+  "name": "Striking (Major)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 31065
+  },
+  "text": "A *striking* rune stores destructive magic in the weapon, increasing the weapon damage dice it deals to two instead of one. For instance, a *+1 striking dagger* would deal 2d4 damage instead of 1d4 damage. You can upgrade the *striking* rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. You must have the formula of the stronger rune to do so, and the Price of the upgrade is the difference between the two runes' Prices. The weapon deals four weapon damage dice."
+ },
+ {
+  "id": "sun-dazzler",
+  "name": "Sun Dazzler",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "light",
+   "visual"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 450
+  },
+  "text": "This metallic tube has a complex array of lenses and prisms at one end and a hatch at the other. The hatch can be unlocked, loaded with a Glow Rod, and refastened using 3 Interact actions. **Activate** ⟨1⟩ (manipulate) **Requirements** A glow rod is installed in the dazzler --- **Effect** The glow rod burns to dust in a single focused flash, creating a of scintillating light. Each creature in the cone must attempt a save, with the following effects. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 round. **Failure** The creature is blinded for 1 round or until it spends an Interact action to rub its eyes, ending the blinded condition. **Critical Failure** The creature is blinded for 1 round."
+ },
+ {
+  "id": "sun-shot",
+  "name": "Sun Shot",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Sun slings use small metal bullets covered in sharp spikes known as sun shots. A bundle of 10 sun shots has light bulk and costs 1 sp."
+ },
+ {
+  "id": "support",
+  "name": "Support",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 5
+  },
+  "text": "Supports, also commonly known as braces, can be applied to any of the following major joints: wrist, elbow, knee, and ankle. They typically strap around the desired area and provide not only support but warmth that soothes aches and pains. You can still use your limb or joint even if you're not wearing your support, but you might feel aches and pains that are worse than usual and may manifest into physical symptoms."
+ },
+ {
+  "id": "swap-luck",
+  "name": "Swap Luck",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Swap Luck Source Treasure Vault (Remastered) pg. 199 Aspect Luck Activate (concentrate) Frequency once per hour; Trigger You roll a failure or critical failure on a saving throw against an effect with multiple targets; Effect You swap rolls with another target who's willing to swap with you. Each of you determines the new results with your new rolls."
+ },
+ {
+  "id": "swashbuckler-kit",
+  "name": "Swashbuckler Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8,
+   "sp": 7
+  },
+  "text": "Swashbuckler Kit Source Player Core 2 pg. 277 Price 8 gp, 7 sp Money Left Over 6 gp, 3 sp Bulk 3, 3 light Armor Leather Armor Weapons hand crossbow with 20 bolts, Rapier Gear Adventurer's Pack Options buckler (1 gp), dueling cape (5 sp), fine clothing (2 gp), grappling hook (1 sp), main-gauche (5 sp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "sweet-hags-eye",
+  "name": "Sweet Hag's Eye",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "occult",
+   "scrying"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 75
+  },
+  "text": "This item appears to be a normal, if admittedly macabre, piece of hard peppermint candy the size and shape of a human eyeball. That's because it is actually the eye of a sweet hag, removed and painstakingly replaced with a mix of enchantment and cookery. It is typically mounted on a piece of jewelry or stored in a small sack worn on a cord. The eye provides no direct benefit for the wearer, but the hag whose eye it once was can peer through it using the seek action, and cast the Message cantrip through it onto the creature carrying the eye. Both these effects have no range limited, provided the hag is on the same plane. Any damage to the eye destroys it. The sweet hag can also choose to destroy the eye remotely using Meltaway Mint. The eye can also be eaten, but a creature who attempts this is exposed to sickeningly sweet. **Activate—Meltaway Mint** ⟨1⟩ --- **Effect** The hag causes the eye to melt away under a brief flare of intense heat. If a creature is holding the eye, they must attempt a save. On a failure, they take 1d4 damage as the boiling hot candy remains stick to and burn their skin. --- **Sickeningly Sweet** (ingested, poison) The sickened condition caused by this poison can't be ended until the poison's effects end **Saving Throw** **Onset** 1 minute **Maximum Duration** 10 minutes; **Stage 1** Sickened 1 (1 minute) **Stage 2** 1d8 damage and Sickened 2 (1 minute) **Stage 3** 2d8 damage and Sickened 3 (1 minute) --- **Craft Requirements** You must be a sweet hag."
+ },
+ {
+  "id": "tablet-of-chained-souls",
+  "name": "Tablet of Chained Souls",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {},
+  "text": "Half-formed, unreadable runes drift across this weathered stone tablet, which resembles a tombstone too eroded to be legible. Created by a long-dead order of scholars dedicated to Pharasma, the *tablet of chained souls* can be a powerful tool in laying uneasy spirits to rest, but its magic exacts a heavy cost. **Activate—Spirit Carving** ⟨3⟩ (concentrate, manipulate) --- **Effect** You present the tablet to a ghost or lay it on a haunted site. The tablet's words resolve into a cryptic but accurate clue about the spirit's unfinished business. Upon reading the tablet's words, you're subject to a Geas that requires you to right that wrong and lay the ghost to rest. If you die without completing the task, you become a ghost, cursed to remain until another recovers the tablet and discharges your duty."
+ },
+ {
+  "id": "tack",
+  "name": "Tack",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 4
+  },
+  "text": "Tack includes all the gear required to outfit a riding animal, including a saddle, bit and bridle, and stirrups if necessary. Especially large or oddly shaped animals might require specialty saddles. These can be more expensive or hard to find, as determined by the GM. The Bulk value given is for tack worn by a creature. If carried, the Bulk increases to 2."
+ },
+ {
+  "id": "talisman-cord",
+  "name": "Talisman Cord",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 850
+  },
+  "text": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans. When you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to two particular schools of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a . On a success, that talisman is not consumed and can be used again."
+ },
+ {
+  "id": "talisman-cord-greater",
+  "name": "Talisman Cord (Greater)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 8500
+  },
+  "text": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans. When you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to three particular schools of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a . On a success, that talisman is not consumed and can be used again."
+ },
+ {
+  "id": "talisman-cord-lesser",
+  "name": "Talisman Cord (Lesser)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 85
+  },
+  "text": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans. When you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to a particular school of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a . On a success, that talisman is not consumed and can be used again."
+ },
+ {
+  "id": "talisman-of-the-sphere",
+  "name": "Talisman of the Sphere",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This loop of adamantine can be slung on a chain to be worn as a necklace, but must be held to convey its benefits. A creature that can't cast either arcane or occult spells takes 8d6 mental damage just from picking up the item, and they take that damage again at the start of each of their turns if they continue to hold it. If the wielder can cast arcane or occult spells, they can use the talisman of the sphere to more easily control a sphere of annihilation. This reduces the DC of the check to control the sphere or Sustain the Activation by 10. **Destruction** The talisman of the sphere is destroyed if touched by a sphere of annihilation."
+ },
+ {
+  "id": "taljjaes-mask-the-beast",
+  "name": "Taljjae's Mask (The Beast)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornmask",
+  "price": {},
+  "text": "Those who gain one of Taljjae's masks, either by defeating Taljjae or some other means, are known as its understudies and gain a fraction of its power. Each of Taljjae's masks is an 18th-level unique item with the invested and magical traits; if broken, they're automatically repaired to full HP when invested during daily preparations. The effect of a mask on a PC is noted in the mask's Understudy entry. Wearing one of Taljjae's masks also imposes Taljjae's jelly sense and jelly gluttony on the creature as long as it wears the mask. The Beast brings out its wearer's feral nature, granting it a claw melee unarmed attack that deals 1d4 slashing damage and has the agile trait, or increasing the damage die of their claw unarmed attack from 1d4 to 1d6 damage if they have a claw unarmed attack that deals 1d4 damage."
+ },
+ {
+  "id": "tallow-bomb-lesser",
+  "name": "Tallow Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- A mixture of rendered animal fat and acids designed to ignite the fat when exposed to air, a tallow bomb creates a splash of burning oil that adheres to skin, clothes, and hair. A tallow bomb deals the listed fire damage, persistent fire damage, and splash damage. On a critical hit, a living creature taking persistent fire damage from a tallow bomb is Sickened 1 from the stench of burning fat and can't reduce its sickened value below 1 while the persistent fire damage lasts. The bomb deals 1d4 persistent fire damage and 1 fire splash damage."
+ },
+ {
+  "id": "tank-stationary",
+  "name": "Tank (Stationary)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "tank-traveling",
+  "name": "Tank (Traveling)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 10
+  },
+  "text": ""
+ },
+ {
+  "id": "tattletale-orb-clear-quartz",
+  "name": "Tattletale Orb (Clear Quartz)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical",
+   "scrying"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 3800
+  },
+  "text": "A tattletale orb is a polished crystal sphere that appears to function as a Crystal Ball (Clear Quartz). If those whom you use the orb to scry on roll better than a critical failure on their saving throw, they receive a telepathic message alerting them to the scrying. A success or better at the save allows the target to choose to allow you to scry anyway, knowing they can use an aspect of the orb against you, according to the orb's type. A creature that rolls a critical success on the saving throw also learns your name and location. Once you Activate a tattletale orb or use it to cast one of your scrying spells, it fuses to you. You must succeed at a Will save, using the scrying Will DC of a crystal ball of the orb's type, to use another such device. Tattletale orbs come in the same types as crystal balls, with the same activations and powers. However, your target must roll a critical failure on the saving throw for the orb to function as normal for that type of crystal ball."
+ },
+ {
+  "id": "tattletale-orb-peridot",
+  "name": "Tattletale Orb (Peridot)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical",
+   "scrying"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 12500
+  },
+  "text": "A tattletale orb is a polished crystal sphere that appears to function as a Crystal Ball (Peridot). If those whom you use the orb to scry on roll better than a critical failure on their saving throw, they receive a telepathic message alerting them to the scrying. A success or better at the save allows the target to choose to allow you to scry anyway, knowing they can use an aspect of the orb against you, according to the orb's type. A creature that rolls a critical success on the saving throw also learns your name and location. Once you Activate a tattletale orb or use it to cast one of your scrying spells, it fuses to you. You must succeed at a Will save, using the scrying Will DC of a crystal ball of the orb's type, to use another such device. Tattletale orbs come in the same types as crystal balls, with the same activations and powers. However, your target must roll a critical failure on the saving throw for the orb to function as normal for that type of crystal ball. The target can send you one telepathic demand."
+ },
+ {
+  "id": "tear-away-clothing",
+  "name": "Tear-Away Clothing",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 5
+  },
+  "text": "**Usage** modifies existing clothing. --- Performers and criminals are both known to use disposable clothing designed to be torn off the body quickly and easily. This garment is loose enough to be worn over another outfit, including light armor. You can remove tear-away clothing with an Interact action. The price for tear-away clothing is to modify an existing outfit. If purchasing a new outfit, add the tear-away clothing's price to the outfit to modify it as part of the purchase."
+ },
+ {
+  "id": "tears-of-the-last-azlanti",
+  "name": "Tears of the Last Azlanti",
+  "level": 25,
+  "itemType": "equipment",
+  "traits": [
+   "arcane",
+   "artifact",
+   "invested"
+  ],
+  "usage": "wornnecklace",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {},
+  "text": "This gold necklace sports six bails, each with a different *aeon stone*. The backside of each bail is engraved with a single ancient Azlanti rune: Patience, Remembrance, Resilience, Tenacity, Wisdom, Invention. While a bail is active, you recall pieces of childhood memories, brief stories and lessons spoken to you by Aroden. The knowledge imparted by each bail carries a specific power but also allows you to access the invested and resonant powers of the *aeon stone* in the active bail's slot as though the stone orbited your head. Each day at dawn, a new bail becomes active; roll 1d6 to determine which bail is active, determined by the table below. Only one bail can be active at any time. Once per day, you can attempt to exchange the *aeon stone* in a given bail for another *aeon stone* with a successful check. | 1D6 | Bail | Default *Aeon Stone* | | --- | --- | --- | | 1 | Patience | Gold nodule | | | **Active Power** Telepathy with a range of 100 feet | | | 2 | Rememberance | Tourmaline sphere | | | **Active Power** Cast at will | | | 3 | Resilience | Clear spindle | | | **Active Power** Worn armor gains the Antimagic property rune | | | 4 | Tenacity | Pink rhomboid | | | **Active Power** Wielded weapons gain the Vorpal property rune | | | 5 | Wisdom | Orange prism | | | **Active Power** Skill checks for downtime activities or to Recall Knowledge are one degree of success higher | | | 6 | Invention | Lavender and green ellipsoid | | | **Active Power** You can craft items up "
+ }
+]

@@ -1,0 +1,801 @@
+[
+ {
+  "id": "cold-iron-buckler-low-grade",
+  "name": "Cold Iron Buckler (Low-Grade)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 30
+  },
+  "text": "Cold Iron Shield Source GM Core pg. 233 Usage varies by shield Base Material Cold Iron Cold iron shields don't typically have an additional effect, though when used for a shield bash, they're cold iron weapons. Cold Iron Buckler (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 30 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements cold iron worth at least 15 sp Cold Iron Shield (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 34 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 17 sp Cold Iron Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 300 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 375 sp Cold Iron Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 340 gp Bulk 1 The shield has Hardness 7, HP 28, and BT 14. Craft Requirements cold iron worth at least 425 sp Cold Iron Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,000 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements cold iron worth at least 2,500 gp Cold Iron Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,500 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements cold iron worth at least 2,750 gp"
+ },
+ {
+  "id": "cold-iron-buckler-standard-grade",
+  "name": "Cold Iron Buckler (Standard-Grade)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 300
+  },
+  "text": "Cold Iron Shield Source GM Core pg. 233 Usage varies by shield Base Material Cold Iron Cold iron shields don't typically have an additional effect, though when used for a shield bash, they're cold iron weapons. Cold Iron Buckler (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 30 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements cold iron worth at least 15 sp Cold Iron Shield (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 34 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 17 sp Cold Iron Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 300 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 375 sp Cold Iron Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 340 gp Bulk 1 The shield has Hardness 7, HP 28, and BT 14. Craft Requirements cold iron worth at least 425 sp Cold Iron Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,000 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements cold iron worth at least 2,500 gp Cold Iron Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,500 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements cold iron worth at least 2,750 gp"
+ },
+ {
+  "id": "cold-iron-chunk",
+  "name": "Cold Iron Chunk",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10
+  },
+  "text": "Weapons made from cold iron are deadly to demons and fey alike. Cold iron looks like normal iron but is mined from particularly pure sources and shaped with little or no heat. This process is extremely difficult, especially for high-grade cold iron items. ## Cold Iron Items | Cold Iron Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Low-grade | 5 | 20 | 10 | | Standard-grade | 7 | 28 | 14 | | High-grade | 10 | 40 | 20 | | **Items** | | | | | Low-grade | 9 | 36 | 18 | | Standard-grade | 11 | 44 | 22 | | High-grade | 14 | 56 | 28 | | **Structure** | | | | | Low-grade | 18 | 72 | 36 | | Standard-grade | 22 | 88 | 44 | | High-grade | 28 | 112 | 56 |"
+ },
+ {
+  "id": "cold-iron-ingot",
+  "name": "Cold Iron Ingot",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 100
+  },
+  "text": "Weapons made from cold iron are deadly to demons and fey alike. Cold iron looks like normal iron but is mined from particularly pure sources and shaped with little or no heat. This process is extremely difficult, especially for high-grade cold iron items. ## Cold Iron Items | Cold Iron Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Low-grade | 5 | 20 | 10 | | Standard-grade | 7 | 28 | 14 | | High-grade | 10 | 40 | 20 | | **Items** | | | | | Low-grade | 9 | 36 | 18 | | Standard-grade | 11 | 44 | 22 | | High-grade | 14 | 56 | 28 | | **Structure** | | | | | Low-grade | 18 | 72 | 36 | | Standard-grade | 22 | 88 | 44 | | High-grade | 28 | 112 | 56 |"
+ },
+ {
+  "id": "cold-iron-object-high-grade",
+  "name": "Cold Iron Object (High-Grade)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 4500
+  },
+  "text": "Cold Iron Source GM Core pg. 253 Weapons made from cold iron are deadly to demons and fey alike. Cold iron looks like normal iron but is mined from particularly pure sources and shaped with little or no heat. This process is extremely difficult, especially for high-grade cold iron items. Cold Iron Items Cold Iron Items Hardness HP BT Thin Items Low-grade 5 20 10 Standard-grade 7 28 14 High-grade 10 40 20 Items Low-grade 9 36 18 Standard-grade 11 44 22 High-grade 14 56 28 Structure Low-grade 18 72 36 Standard-grade 22 88 44 High-grade 28 112 56 Material Uses Cold Iron Armor Cold Iron Shield Cold Iron Weapon Cold Iron Chunk Source GM Core pg. 253, Core Rulebook pg. 578 Price 10 gp Bulk L Cold Iron Ingot Source GM Core pg. 253, Core Rulebook pg. 578 Price 100 gp Cold Iron Object (Low-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 20 gp (per Bulk) Cold Iron Object (Standard-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 250 gp (per Bulk) Cold Iron Object (High-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 4,500 gp (per Bulk)"
+ },
+ {
+  "id": "cold-iron-object-low-grade",
+  "name": "Cold Iron Object (Low-Grade)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 20
+  },
+  "text": "Cold Iron Source GM Core pg. 253 Weapons made from cold iron are deadly to demons and fey alike. Cold iron looks like normal iron but is mined from particularly pure sources and shaped with little or no heat. This process is extremely difficult, especially for high-grade cold iron items. Cold Iron Items Cold Iron Items Hardness HP BT Thin Items Low-grade 5 20 10 Standard-grade 7 28 14 High-grade 10 40 20 Items Low-grade 9 36 18 Standard-grade 11 44 22 High-grade 14 56 28 Structure Low-grade 18 72 36 Standard-grade 22 88 44 High-grade 28 112 56 Material Uses Cold Iron Armor Cold Iron Shield Cold Iron Weapon Cold Iron Chunk Source GM Core pg. 253, Core Rulebook pg. 578 Price 10 gp Bulk L Cold Iron Ingot Source GM Core pg. 253, Core Rulebook pg. 578 Price 100 gp Cold Iron Object (Low-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 20 gp (per Bulk) Cold Iron Object (Standard-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 250 gp (per Bulk) Cold Iron Object (High-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 4,500 gp (per Bulk)"
+ },
+ {
+  "id": "cold-iron-object-standard-grade",
+  "name": "Cold Iron Object (Standard-Grade)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 250
+  },
+  "text": "Cold Iron Source GM Core pg. 253 Weapons made from cold iron are deadly to demons and fey alike. Cold iron looks like normal iron but is mined from particularly pure sources and shaped with little or no heat. This process is extremely difficult, especially for high-grade cold iron items. Cold Iron Items Cold Iron Items Hardness HP BT Thin Items Low-grade 5 20 10 Standard-grade 7 28 14 High-grade 10 40 20 Items Low-grade 9 36 18 Standard-grade 11 44 22 High-grade 14 56 28 Structure Low-grade 18 72 36 Standard-grade 22 88 44 High-grade 28 112 56 Material Uses Cold Iron Armor Cold Iron Shield Cold Iron Weapon Cold Iron Chunk Source GM Core pg. 253, Core Rulebook pg. 578 Price 10 gp Bulk L Cold Iron Ingot Source GM Core pg. 253, Core Rulebook pg. 578 Price 100 gp Cold Iron Object (Low-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 20 gp (per Bulk) Cold Iron Object (Standard-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 250 gp (per Bulk) Cold Iron Object (High-Grade) Source GM Core pg. 253, Core Rulebook pg. 578 Price 4,500 gp (per Bulk)"
+ },
+ {
+  "id": "cold-iron-shield-high-grade",
+  "name": "Cold Iron Shield (High-Grade)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5500
+  },
+  "text": "Cold Iron Shield Source GM Core pg. 233 Usage varies by shield Base Material Cold Iron Cold iron shields don't typically have an additional effect, though when used for a shield bash, they're cold iron weapons. Cold Iron Buckler (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 30 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements cold iron worth at least 15 sp Cold Iron Shield (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 34 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 17 sp Cold Iron Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 300 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 375 sp Cold Iron Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 340 gp Bulk 1 The shield has Hardness 7, HP 28, and BT 14. Craft Requirements cold iron worth at least 425 sp Cold Iron Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,000 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements cold iron worth at least 2,500 gp Cold Iron Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,500 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements cold iron worth at least 2,750 gp"
+ },
+ {
+  "id": "cold-iron-shield-low-grade",
+  "name": "Cold Iron Shield (Low-Grade)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 34
+  },
+  "text": "Cold Iron Shield Source GM Core pg. 233 Usage varies by shield Base Material Cold Iron Cold iron shields don't typically have an additional effect, though when used for a shield bash, they're cold iron weapons. Cold Iron Buckler (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 30 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements cold iron worth at least 15 sp Cold Iron Shield (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 34 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 17 sp Cold Iron Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 300 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 375 sp Cold Iron Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 340 gp Bulk 1 The shield has Hardness 7, HP 28, and BT 14. Craft Requirements cold iron worth at least 425 sp Cold Iron Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,000 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements cold iron worth at least 2,500 gp Cold Iron Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,500 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements cold iron worth at least 2,750 gp"
+ },
+ {
+  "id": "cold-iron-shield-standard-grade",
+  "name": "Cold Iron Shield (Standard-Grade)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 340
+  },
+  "text": "Cold Iron Shield Source GM Core pg. 233 Usage varies by shield Base Material Cold Iron Cold iron shields don't typically have an additional effect, though when used for a shield bash, they're cold iron weapons. Cold Iron Buckler (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 30 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements cold iron worth at least 15 sp Cold Iron Shield (Low-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 34 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 17 sp Cold Iron Buckler (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 300 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements cold iron worth at least 375 sp Cold Iron Shield (Standard-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 340 gp Bulk 1 The shield has Hardness 7, HP 28, and BT 14. Craft Requirements cold iron worth at least 425 sp Cold Iron Buckler (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,000 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements cold iron worth at least 2,500 gp Cold Iron Shield (High-Grade) Source GM Core pg. 233, Core Rulebook pg. 586 Price 5,500 gp Bulk 1 The shield has Hardness 10, HP 40, and BT 20. Craft Requirements cold iron worth at least 2,750 gp"
+ },
+ {
+  "id": "cold-iron-transmuting-ingot",
+  "name": "Cold Iron Transmuting Ingot",
+  "level": 1,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "whetstone"
+  ],
+  "price": {
+   "gp": 4
+  },
+  "text": "Transmuting Ingot Source Battlecry! pg. 137 Usage held in 1 hand Bulk L Activate (manipulate) A miniature ingot of metal hangs upon a leather cord, with deep weapon grooves on its surface. A weapon it’s applied to counts as a particular precious material for physical damage it deals for 1 minute, depending on its type. Silver Transmuting Ingot Source Battlecry! pg. 137 Price 3 gp Cold Iron Transmuting Ingot Source Battlecry! pg. 137 Price 4 gp Adamantine Transmuting Ingot Source Battlecry! pg. 137 Price 154 gp"
+ },
+ {
+  "id": "cold-iron-weapon-high-grade",
+  "name": "Cold Iron Weapon (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 9000
+  },
+  "text": "Cold Iron Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Cold Iron Cold iron weapons deal additional damage to creatures with weakness to cold iron, like demons and fey. Cold Iron Weapon (Low-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 40 gp (+4 gp per Bulk) Craft Requirements at least 20 sp of cold iron + 2 sp per Bulk Cold Iron Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 880 gp (+88 gp per Bulk) Craft Requirements at least 110 gp of cold iron + 11 gp per Bulk Cold Iron Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 9,000 gp (+900 gp per Bulk) Craft Requirements at least 4,500 gp of cold iron + 450 gp per Bulk"
+ },
+ {
+  "id": "cold-iron-weapon-low-grade",
+  "name": "Cold Iron Weapon (Low-Grade)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 40
+  },
+  "text": "Cold Iron Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Cold Iron Cold iron weapons deal additional damage to creatures with weakness to cold iron, like demons and fey. Cold Iron Weapon (Low-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 40 gp (+4 gp per Bulk) Craft Requirements at least 20 sp of cold iron + 2 sp per Bulk Cold Iron Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 880 gp (+88 gp per Bulk) Craft Requirements at least 110 gp of cold iron + 11 gp per Bulk Cold Iron Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 9,000 gp (+900 gp per Bulk) Craft Requirements at least 4,500 gp of cold iron + 450 gp per Bulk"
+ },
+ {
+  "id": "cold-iron-weapon-standard-grade",
+  "name": "Cold Iron Weapon (Standard-Grade)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 880
+  },
+  "text": "Cold Iron Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Cold Iron Cold iron weapons deal additional damage to creatures with weakness to cold iron, like demons and fey. Cold Iron Weapon (Low-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 40 gp (+4 gp per Bulk) Craft Requirements at least 20 sp of cold iron + 2 sp per Bulk Cold Iron Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 880 gp (+88 gp per Bulk) Craft Requirements at least 110 gp of cold iron + 11 gp per Bulk Cold Iron Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 9,000 gp (+900 gp per Bulk) Craft Requirements at least 4,500 gp of cold iron + 450 gp per Bulk"
+ },
+ {
+  "id": "collar",
+  "name": "Collar",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "collar-of-empathy",
+  "name": "Collar of Empathy",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "companion",
+   "invested",
+   "primal"
+  ],
+  "usage": "worncollar",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "This ornate collar of intertwined leather strips of contrasting colors is paired with a bracelet of a similar construction. When you wear and invest the bracelet and your companion wears and invests the collar, you gain a stronger connection to each other. You and your companion can always sense each other's emotional states and basic physical wants and needs. **Activate—Empathic Link** ⟨1⟩ (concentrate) --- **Effect** You perceive through your animal companion's senses instead of your own. You can Sustain the activation. You are unaware of your own surroundings for as long as you are using your animal companion's senses. In addition to the obvious use when you are separated from your companion, this ability might allow you to notice sounds, scents, and other stimuli that your companion's senses register but yours alone don't."
+ },
+ {
+  "id": "collar-of-the-shifting-spider",
+  "name": "Collar of the Shifting Spider",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical"
+  ],
+  "usage": "worncollar",
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {
+   "gp": 133
+  },
+  "text": "This intimidating collar contains a hollow central tube and ends in twin metal points shaped like spider fangs. The collar can be loaded with an alchemical mutagen as an Interact action. **Activate** ⟨4⟩ (manipulate) **Trigger** You roll initiative **Requirements** A mutagen is loaded in the collar --- **Effect** The metal points dig into your neck, inflicting 1 damage and injecting the mutagen directly into your bloodstream. This has the same effect as if you drank the mutagen conventionally, except the duration of the mutagen is halved due to the more direct administration."
+ },
+ {
+  "id": "comealong",
+  "name": "Comealong",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 3
+  },
+  "text": "This portable winch consists of a length of cable or chain, two hooks, and a ratcheting drum with a handle. When used with two sections of rope or chain, it allows you to pull a heavy load along a flat surface."
+ },
+ {
+  "id": "command-legion",
+  "name": "Command Legion",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "unholy"
+  ],
+  "text": "Command Legion Source GM Core pg. 314 Aspect Fiend Activate (concentrate) Effect Your relic opens a gate within itself, overwhelming your enemies with fiends. You cast 6th-rank summon fiend, but summon two fiends instead of one, and you can command them both with 1 action to Sustain a spell. If the relic has the profane fervor gift, this activation grants the effects of that gift as well, without expending its daily use. For the next minute, you can use the following activation. Activate (concentrate) Effect You summon that same fiend again in an adjacent space. The fiend returns at full Hit Points and all conditions, spells, and other effects on it end before you summon it again. However, it does not recover any limited-use abilities it used before, such as innate spells or abilities with a Frequency entry."
+ },
+ {
+  "id": "communication-bangle",
+  "name": "Communication Bangle",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 10
+  },
+  "text": "This simple brass ring is meant to be worn as an ornamentation piece to an outfit, oftentimes as a bangle on the wrist, as the ring closure of a scarf or sash, or as an ornamentation piece of a headdress. While decorative, this serves a cover for the bangle's function as a message bearer. Messages can be coded into the bangle, either through a series of raised dots and dashes or a pattern of notches of different depths and spacings. A bangle is large enough to hold a simple message consisting of a few words like \"Danger. Flee.\" or \"Meeting. Sunset. Fountain.\" Coding a message into a bangle requires 1 minute of time. All Pathfinders with access to communication bangles are taught how to code and read most basic messages, but anyone with a bangle can develop their own communication system. A creature inspecting a bangle can discover its true purpose by succeeding at a check. Deciphering a message requires a creature to succeed at a Society check against the coder's Deception DC."
+ },
+ {
+  "id": "communication-pendants",
+  "name": "Communication Pendants",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "auditory",
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3000
+  },
+  "text": "Each of these matching necklaces has been constructed using one half of a purple teardrop-shaped gem, split in two. These pendants function only with the other pendant in their pair and must be crafted together. If one pendant becomes broken, the other shatters into non-magical shards. The price listed above is for a pair of pendants. --- **Activate** ⟨1⟩ Interact --- **Effect** You speak, audibly projecting your voice from the pendant you're wearing to the other. Your voice can be heard by whoever is wearing the other pendant no matter how far away the pendants are from each other, as long as the wearer has invested the other pendant and is on the same plane as you. Continued activation allows you to communicate with the other pendant's wearer whenever and for as long as your desire."
+ },
+ {
+  "id": "compass",
+  "name": "Compass",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "A compass helps you Sense Direction or navigate, provided you're in a location with uniform magnetic fields. Without a compass, you take a -2 item penalty to these checks (similar to using a shoddy item)."
+ },
+ {
+  "id": "compound-eyes",
+  "name": "Compound Eyes",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "fortune",
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 75
+  },
+  "text": "You replace your eyes with ones similar to an insect's or a crustacean's, which allow you to better pinpoint movement. Once per day when you attempt a flat check to target a creature that's concealed from you, you can roll twice and take the better result."
+ },
+ {
+  "id": "concealment-coin",
+  "name": "Concealment Coin",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 3
+  },
+  "text": "This hollow piece resembles a typical coin and features enough space inside to hide brief messages written on small pieces of paper. You can unscrew or close the coin with an Interact action. You can determine an unattended concealment coin's true nature with a successful check. Determining the coin's nature while it's being handled is more difficult and typically requires a successful Perception check against the Thievery DC of the person holding the coin."
+ },
+ {
+  "id": "conducting",
+  "name": "Conducting",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 300
+  },
+  "text": "A conducting weapon can channel energy through it. The weapon gains the resonant weapon trait, except that when you Conduct Energy, the weapon deals an additional 1d8 damage of the selected type instead of 1 additional damage per die; if the weapon already had the resonant weapon trait, it deals 1d8 damage plus 1 damage per die instead. On a critical hit, the weapon deals 1d8 persistent damage of the same type."
+ },
+ {
+  "id": "conduit-shot-greater",
+  "name": "Conduit Shot (Greater)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 600
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ command --- Fine lines of djezet sparkle in conduit shot. When you Activate it, you name up to four creatures, in addition to you, that the ammunition's magic works for. When a conduit shot hits a target, which can be a square, it remains intact. It moves with a creature it struck, unless the GM determines otherwise, until that creature regains any Hit Points. If it doesn't stick to the target, the active ammunition instead falls into the target's space, remaining active. If you or one of the four selected creatures include the ammunition in the area of a spell that is 7th rank or lower; has an area of a burst, cone, or line; and does not have a duration, the djezet in the ammunition flares in striations of red light, increasing the area of that spell. Add 5 feet to the radius of a burst that has a radius of at least 10 feet or to the length of a cone or line normally 15 feet long or smaller. For a larger cone or line, add 10 feet to the length. These increases are based on the spell's original area, ignoring any increases due to other effects, such as the Widen Spell feat. Increasing a spell's area destroys the ammunition, which otherwise remains active for 1 minute."
+ },
+ {
+  "id": "conduit-shot-lesser",
+  "name": "Conduit Shot (Lesser)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 50
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- Fine lines of djezet sparkle in conduit shot. When you Activate it, you name up to four creatures, in addition to you, that the ammunition's magic works for. When a conduit shot hits a target, which can be a square, it remains intact. It moves with a creature it struck, unless the GM determines otherwise, until that creature regains any Hit Points. If it doesn't stick to the target, the active ammunition instead falls into the target's space, remaining active. If you or one of the four selected creatures include the ammunition in the area of a spell that is 3rd rank or lower; has an area of a burst, cone, or line; and does not have a duration, the djezet in the ammunition flares in striations of red light, increasing the area of that spell. Add 5 feet to the radius of a burst that has a radius of at least 10 feet or to the length of a cone or line normally 15 feet long or smaller. For a larger cone or line, add 10 feet to the length. These increases are based on the spell's original area, ignoring any increases due to other effects, such as the Widen Spell feat. Increasing a spell's area destroys the ammunition, which otherwise remains active for 1 minute."
+ },
+ {
+  "id": "conduit-shot-moderate",
+  "name": "Conduit Shot (Moderate)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- Fine lines of djezet sparkle in conduit shot. When you Activate it, you name up to four creatures, in addition to you, that the ammunition's magic works for. When a conduit shot hits a target, which can be a square, it remains intact. It moves with a creature it struck, unless the GM determines otherwise, until that creature regains any Hit Points. If it doesn't stick to the target, the active ammunition instead falls into the target's space, remaining active. If you or one of the four selected creatures include the ammunition in the area of a spell that is 5th rank or lower; has an area of a burst, cone, or line; and does not have a duration, the djezet in the ammunition flares in striations of red light, increasing the area of that spell. Add 5 feet to the radius of a burst that has a radius of at least 10 feet or to the length of a cone or line normally 15 feet long or smaller. For a larger cone or line, add 10 feet to the length. These increases are based on the spell's original area, ignoring any increases due to other effects, such as the Widen Spell feat. Increasing a spell's area destroys the ammunition, which otherwise remains active for 1 minute."
+ },
+ {
+  "id": "cookware",
+  "name": "Cookware",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "copper-ingot",
+  "name": "Copper (Ingot)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Copper (Ingot) Source Travel Guide pg. 36 Price 10 gp"
+ },
+ {
+  "id": "corrective-lenses",
+  "name": "Corrective Lenses",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "sp": 5
+  },
+  "text": "A set of corrective lenses might take the form of eyeglasses or specialized goggles worn over the eyes. You can don or remove your corrective lenses as an Interact action."
+ },
+ {
+  "id": "corrosive",
+  "name": "Corrosive",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 500
+  },
+  "text": "Acid sizzles across the surface of the weapon. When you hit with the weapon, add 1d6 acid damage to the damage dealt. In addition, on a critical hit, the target's armor (if any) takes 3d6 acid damage (before applying Hardness); if the target has a shield raised, the shield takes this damage instead."
+ },
+ {
+  "id": "corrosive-ammunition",
+  "name": "Corrosive Ammunition",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 70
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This peculiar ammunition is coated in yellow dust that leaves a stain on anything it touches. When activated corrosive ammunition hits a target, it dissolves across the target's armor. The armor takes 1d8 damage that ignores the armor's Hardness; if the target isn't wearing armor, it takes the acid damage instead. This damage occurs at the end of the target's turns. The creature can end this effect by spending an Interact action to wipe off the corrosive dust, and otherwise the effect ends once the armor becomes broken."
+ },
+ {
+  "id": "corrosive-greater",
+  "name": "Corrosive (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "acid",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 6500
+  },
+  "text": "Acid sizzles across the surface of the weapon. When you hit with the weapon, add 1d6 acid damage to the damage dealt. In addition, on a critical hit, the target's armor (if any) takes 6d6 acid damage (before applying Hardness); if the target has a shield raised, the shield takes this damage instead. The acid damage dealt by this weapon ignores the target's acid resistance."
+ },
+ {
+  "id": "cotton-1-bulk",
+  "name": "Cotton (1 Bulk)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 2
+  },
+  "text": "Cotton Source Travel Guide pg. 36 Cotton (1 Bulk) Source Travel Guide pg. 36 Price 2 gp Cotton (Bale) Source Travel Guide pg. 36 Price 100 gp"
+ },
+ {
+  "id": "cotton-bale",
+  "name": "Cotton (Bale)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 100
+  },
+  "text": "Cotton Source Travel Guide pg. 36 Cotton (1 Bulk) Source Travel Guide pg. 36 Price 2 gp Cotton (Bale) Source Travel Guide pg. 36 Price 100 gp"
+ },
+ {
+  "id": "counterfeit-item-high-grade",
+  "name": "Counterfeit Item (High-Grade)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Counterfeit Item Source Dark Archives (Remastered) pg. 84 Many secret societies dabble in ancient lore and rare antiquities. If one were to ask what their greatest challenge is, instead of evading police attention or dealing with the occasional mystic curse, most members would say it's separating counterfeit goods from real ones. Almost anything can be counterfeited, and counterfeiting is a major criminal enterprise with its own tricks, techniques, and intricacies. Some counterfeiters specialize in the production of adulterated coinage, while others produce beautiful legal documents with forged signatures and stolen stamps. Another class of forger produces artwork in the style of some great master, while ancient relics can be churned out by the dozen in subterranean workshops. You can hire a counterfeiter to create low-grade, medium-grade, or high-grade counterfeit goods. In all cases, the goods can still act as mundane examples of their type (a counterfeit copy of the queen's longsword is still a longsword), and if the original is enchanted, then the counterfeiter attempts to fake the appropriate magical auras. Counterfeit goods don't have any other magical powers, though—a counterfeit scroll can't be used to Cast a Spell, for example. A counterfeit good can't be cheaper than the base item. For example, the sword couldn't be cheaper than a longsword, nor the scroll cheaper than a piece of parchment. An item sold to a store goes through a rigorous vetting process that is extr"
+ },
+ {
+  "id": "counterfeit-item-low-grade",
+  "name": "Counterfeit Item (Low-Grade)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Counterfeit Item Source Dark Archives (Remastered) pg. 84 Many secret societies dabble in ancient lore and rare antiquities. If one were to ask what their greatest challenge is, instead of evading police attention or dealing with the occasional mystic curse, most members would say it's separating counterfeit goods from real ones. Almost anything can be counterfeited, and counterfeiting is a major criminal enterprise with its own tricks, techniques, and intricacies. Some counterfeiters specialize in the production of adulterated coinage, while others produce beautiful legal documents with forged signatures and stolen stamps. Another class of forger produces artwork in the style of some great master, while ancient relics can be churned out by the dozen in subterranean workshops. You can hire a counterfeiter to create low-grade, medium-grade, or high-grade counterfeit goods. In all cases, the goods can still act as mundane examples of their type (a counterfeit copy of the queen's longsword is still a longsword), and if the original is enchanted, then the counterfeiter attempts to fake the appropriate magical auras. Counterfeit goods don't have any other magical powers, though—a counterfeit scroll can't be used to Cast a Spell, for example. A counterfeit good can't be cheaper than the base item. For example, the sword couldn't be cheaper than a longsword, nor the scroll cheaper than a piece of parchment. An item sold to a store goes through a rigorous vetting process that is extr"
+ },
+ {
+  "id": "counterfeit-item-medium-grade",
+  "name": "Counterfeit Item (Medium-Grade)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Counterfeit Item Source Dark Archives (Remastered) pg. 84 Many secret societies dabble in ancient lore and rare antiquities. If one were to ask what their greatest challenge is, instead of evading police attention or dealing with the occasional mystic curse, most members would say it's separating counterfeit goods from real ones. Almost anything can be counterfeited, and counterfeiting is a major criminal enterprise with its own tricks, techniques, and intricacies. Some counterfeiters specialize in the production of adulterated coinage, while others produce beautiful legal documents with forged signatures and stolen stamps. Another class of forger produces artwork in the style of some great master, while ancient relics can be churned out by the dozen in subterranean workshops. You can hire a counterfeiter to create low-grade, medium-grade, or high-grade counterfeit goods. In all cases, the goods can still act as mundane examples of their type (a counterfeit copy of the queen's longsword is still a longsword), and if the original is enchanted, then the counterfeiter attempts to fake the appropriate magical auras. Counterfeit goods don't have any other magical powers, though—a counterfeit scroll can't be used to Cast a Spell, for example. A counterfeit good can't be cheaper than the base item. For example, the sword couldn't be cheaper than a longsword, nor the scroll cheaper than a piece of parchment. An item sold to a store goes through a rigorous vetting process that is extr"
+ },
+ {
+  "id": "countering-charm",
+  "name": "Countering Charm",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 1200
+  },
+  "text": "This glittering charm is made of a gemstone flawed with a leaden inclusion. Spellcasters can cast spells into *countering charms* that they've invested or that are invested by a willing creature. The spell's effect doesn't occur; the spell's power is instead stored within the charm, replacing any spell previously there. The charm can hold only spells cast from spell slots, not cantrips or focus spells. While the charm is invested, the creature who has invested it knows what spell is stored within and automatically identifies that spell when it's cast. **Activate—Counter** ⟨5⟩ (manipulate) **Trigger** You are targeted by or within the area of the spell stored within the charm **Requirements** You have a free hand --- **Effect** You present the charm and attempt to counteract the triggering spell, using the rank of the spell stored in the charm and a counteract modifier of +20. This expends the spell held in the charm."
+ },
+ {
+  "id": "countering-charm-greater",
+  "name": "Countering Charm (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 5500
+  },
+  "text": "This glittering charm is made of a gemstone flawed with a leaden inclusion. Spellcasters can cast spells into *countering charms* that they've invested or that are invested by a willing creature. The spell's effect doesn't occur; the spell's power is instead stored within the charm, replacing any spell previously there. The charm can hold only spells cast from spell slots, not cantrips or focus spells. While the charm is invested, the creature who has invested it knows what spell is stored within and automatically identifies that spell when it's cast. **Activate—Counter** ⟨5⟩ (manipulate) **Trigger** You are targeted by or within the area of the spell stored within the charm **Requirements** You have a free hand --- **Effect** You present the charm and attempt to counteract the triggering spell, using the rank of the spell stored in the charm and a counteract modifier of +25. This expends the spell held in the charm."
+ },
+ {
+  "id": "countering-charm-major",
+  "name": "Countering Charm (Major)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 20000
+  },
+  "text": "This glittering charm is made of a gemstone flawed with a leaden inclusion. Spellcasters can cast spells into *countering charms* that they've invested or that are invested by a willing creature. The spell's effect doesn't occur; the spell's power is instead stored within the charm, replacing any spell previously there. The charm can hold only spells cast from spell slots, not cantrips or focus spells. While the charm is invested, the creature who has invested it knows what spell is stored within and automatically identifies that spell when it's cast. **Activate—Counter** ⟨5⟩ (manipulate) **Trigger** You are targeted by or within the area of the spell stored within the charm **Requirements** You have a free hand --- **Effect** You present the charm and attempt to counteract the triggering spell, using the rank of the spell stored in the charm and a counteract modifier of +30. This expends the spell held in the charm."
+ },
+ {
+  "id": "cow",
+  "name": "Cow",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8
+  },
+  "text": "Cow Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 8 gp"
+ },
+ {
+  "id": "cradle-minder",
+  "name": "Cradle Minder",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Cradle Minder Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 50 gp Sought after in Cheliax, the cradle minder resembles an imp. Despite rumors they were given as part of household pacts with devils, these creatures were bred from fiendish frog. Amphibious, they have leathery wings, frog-like eyes, and a forgiving temperament. They're ideal companions for children, as they tend to bond closely with one person and let out loud croaks when they become aware of danger. They require fiendish earthworms (unique feed) regularly, so ensuring you have a stable food supply is a necessity for ownership."
+ },
+ {
+  "id": "crimson-brand",
+  "name": "Crimson Brand",
+  "level": 9,
+  "itemType": "weapon",
+  "traits": [
+   "magical",
+   "two-hand-d12"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 700
+  },
+  "text": "These ominous swords are decorated with crimson lacquer and serve as perfect conduits for the Crimson Oath's power. The first was granted to Clarethe Iomedar by a mysterious patron who many Reclaimers believe to be an emissary of Ragathiel. A crimson brand is a +1 striking Wounding bastard sword. When the wielder uses the crimson brand to cast Invoke the Crimson Oath, they can generate a or a instead of the normal . Whenever the wielder would inflict persistent bleed damage on an undead creature with the *crimson brand*, they can instead wreathe the creature in ruby energy, inflicting the same amount of persistent vitality damage instead of persistent bleed damage."
+ },
+ {
+  "id": "crowbar",
+  "name": "Crowbar",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 5
+  },
+  "text": "When Forcing Open an object that doesn't have an easy grip, a crowbar makes it easier to gain the necessary leverage. Without a crowbar, prying something open takes a -2 item penalty to the Athletics check to Force Open."
+ },
+ {
+  "id": "crushing",
+  "name": "Crushing",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-bludgeoning-weapon",
+  "price": {
+   "gp": 50
+  },
+  "text": "Weapons with this rune empower your strength, and attacks with these weapons leave your foe staggered. When you critically hit a target with this weapon, your target becomes Clumsy 1 and Enfeebled 1 until the end of your next turn."
+ },
+ {
+  "id": "crushing-greater",
+  "name": "Crushing (Greater)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-bludgeoning-weapon",
+  "price": {
+   "gp": 650
+  },
+  "text": "Weapons with this rune empower your strength, and attacks with these weapons leave your foe staggered. When you critically hit a target with this weapon, your target becomes Clumsy 2 and Enfeebled 2 until the end of your next turn."
+ },
+ {
+  "id": "crutch",
+  "name": "Crutch",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 5
+  },
+  "text": "Crutches come as singles or as a pair depending on how much support you need while walking. A crutch fits under your armpit, and you use your hand and the swing of your arm to move with them."
+ },
+ {
+  "id": "curse-wound",
+  "name": "Curse Wound",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "curse",
+   "unholy"
+  ],
+  "text": "Curse Wound Source GM Core pg. 313 Aspect Fiend Prerequisite The relic is a weapon. Activate (concentrate) Trigger Your Strike with your relic deals damage to a creature within 60 feet; Effect The evil within your relic curses an enemy's wound to ensure they won't heal. The triggering creature must attempt a Will save or be unable to restore the Hit Points lost by damage from the triggering Strike until its next daily preparations. If you use Curse Wound on a creature already affected by your Curse Wound, your previous application expires."
+ },
+ {
+  "id": "cursed-dreamstone",
+  "name": "Cursed Dreamstone",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "A *dreamstone* can become cursed if left exposed to creatures that corrupt sleep, generate nightmares, or otherwise prey on sleeping or dreaming victims via supernatural methods. A *cursed dreamstone* seems to function as a normal *dreamstone* until the bearer falls asleep or is forced to attempt a saving throw against a sleep effect. At this point, the person carrying the cursed *dreamstone* must attempt a save to resist the curse's effects. --- **Critical Success** The character resists the curse entirely and experiences a vivid dream while sleeping that warns them of the nature of the *cursed dreamstone*. **Success** The character resists the curse. **Failure** As long as the cursed character possesses the stone, they are fatigued whenever they wake from sleep, whether natural or magically induced, and they take a -2 item penalty to all saving throws against sleep effects instead of gaining the normal bonus from a *dreamstone*. **Critical Failure** As failure, and whenever the bearer attempts a saving throw against a sleep effect, they get the outcome that is one degree worse than the result of their saving throw."
+ },
+ {
+  "id": "cursed-immaculate-instrument",
+  "name": "Cursed Immaculate Instrument",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "cursed",
+   "divine",
+   "mythic"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This Immaculate Instrument has been cursed by the sublime breath it was taken from, causing it to warp, rust, or tarnish, though the holder of the instrument cannot perceive this and rationalizes away any attempt to explain the instrument's obviously cursed nature. Whenever the *cursed immaculate instrument* is used to produce a work, the holder must succeed on a or the work fails, leaving the holder frustrated and raising the DC of subsequent flat checks by 1. When the DC reaches 20, the work fails as normal, but the holder continues to attempt it fruitlessly to the exclusion of all other activities, including eating, drinking, and sleep, until they expire or the curse is broken."
+ },
+ {
+  "id": "cutlery",
+  "name": "Cutlery",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Ammunition for the Spoon Gun Users typically upend the entire contents of their cutlery drawer into the gun, aim it in the general direction of the foe, and hope it hits something."
+ },
+ {
+  "id": "cytillesh-toolkit",
+  "name": "Cytillesh Toolkit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 5
+  },
+  "text": "These healer's toolkits are collections of crystalline scalpels and gritty salves made of cytillesh. They all glow the same sickly blue. While the toolkit is outside its opaque container, it sheds dim light in a 5-foot radius. Any non-dero using or wearing the toolkit is Sickened 1 until 1 hour after they've stopped, which cannot be reduced during that time."
+ },
+ {
+  "id": "dancing-shadow",
+  "name": "Dancing Shadow",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "shadow"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Dancing Shadow Source GM Core pg. 318 Aspect Shadow Prerequisite The relic is a weapon. Activate (concentrate, manipulate) Frequency once per hour; Effect Your relic's shadow detaches from your relic and dances through the air to attack an enemy. When you Activate the relic, designate a target. The relic's shadow flies up to 60 feet until it's adjacent to that foe and then makes a Strike against it, dealing 5d8 damage on a success or double that on a critical success; the damage type is of any type normally dealt by your relic. The shadow uses your attack bonus with the relic, and it uses and contributes to your multiple attack penalty. While this activation is in effect, you can use a single action, which has the attack and concentrate traits, to mentally direct the shadow to make another Strike against the same target. The shadow lasts until that target is reduced to 0 Hit Points, that target moves more than 400 feet from you, or that target moves to an area where no shadow could be cast, such as an area of complete darkness, whichever comes first. The shadow doesn't take up space, grant flanking, or have any other attributes a creature would, and it automatically follows the chosen foe. The shadow can't make any attack other than its Strike, and feats or spells that affect weapons do not apply to it."
+ },
+ {
+  "id": "dark-roads",
+  "name": "Dark Roads",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "shadow",
+   "teleportation"
+  ],
+  "text": "Dark Roads Source GM Core pg. 318 Aspect Shadow Activate (concentrate) Effect Your relic creates a path from your shadow to a nearby one, teleporting you and any items you're wearing or holding from your current space to an unoccupied one within 30 feet that you can see. You can't use the dark roads gift again for 1d4 rounds. If the destination is not within an area of bright light, the range is instead 60 feet. If this would bring another creature with you—even if you're carrying it in an extradimensional container—the gift fails."
+ },
+ {
+  "id": "dawnfire-beacon",
+  "name": "Dawnfire Beacon",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "light",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "cp": 0,
+   "gp": 45,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "The warm, caring light of the sun glows from the center of this magical banner, mirroring the dawn. This magical banner exudes bright light in the banner's aura (and dim light in an area equal to twice the banner's aura). This effect is suppressed when you aren't holding the banner or wielding the weapon it is affixed to."
+ },
+ {
+  "id": "dawnsilver-armor-high-grade",
+  "name": "Dawnsilver Armor (High-Grade)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 32000
+  },
+  "text": "Dawnsilver Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Dawnsilver Dawnsilver armor is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on armor that normally has light Bulk). It’s easier to wear than normal metal armor, reducing the Strength modifier necessary to ignore its check penalty by 1 and reducing its Speed penalty by 5 feet. Dawnsilver Armor (Standard-Grade) Source GM Core pg. 228 Price 1,600 gp (+160 gp per Bulk) The initial raw materials must include dawnsilver worth at least 200 gp + 20 gp per Bulk. Dawnsilver Armor (High-Grade) Source GM Core pg. 228 Price 32,000 gp (+3,200 gp per Bulk) The initial raw materials must include dawnsilver worth at least 16,000 gp + 1,600 gp per Bulk."
+ },
+ {
+  "id": "dawnsilver-armor-standard-grade",
+  "name": "Dawnsilver Armor (Standard-Grade)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1600
+  },
+  "text": "Dawnsilver Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Dawnsilver Dawnsilver armor is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on armor that normally has light Bulk). It’s easier to wear than normal metal armor, reducing the Strength modifier necessary to ignore its check penalty by 1 and reducing its Speed penalty by 5 feet. Dawnsilver Armor (Standard-Grade) Source GM Core pg. 228 Price 1,600 gp (+160 gp per Bulk) The initial raw materials must include dawnsilver worth at least 200 gp + 20 gp per Bulk. Dawnsilver Armor (High-Grade) Source GM Core pg. 228 Price 32,000 gp (+3,200 gp per Bulk) The initial raw materials must include dawnsilver worth at least 16,000 gp + 1,600 gp per Bulk."
+ },
+ {
+  "id": "dawnsilver-buckler-high-grade",
+  "name": "Dawnsilver Buckler (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8000
+  },
+  "text": "Dawnsilver Shield Source GM Core pg. 233 Usage varies by shield Base Material Dawnsilver Dawnsilver shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). When used for a shield bash, they're treated as silver weapons. Dawnsilver Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements dawn silver worth at least 50 gp Dawnsilver Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements dawnsilver worth at least 55 gp Dawnsilver Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements dawnsilver worth at least 4,000 gp Dawnsilver Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements at least 4,400 gp of dawnsilver"
+ }
+]

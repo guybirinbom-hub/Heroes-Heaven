@@ -1,0 +1,844 @@
+[
+ {
+  "id": "lesser-energized-shield",
+  "name": "Lesser Energized Shield",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Energized Shield Source Battlecry! pg. 124 Usage held in 1 hand Bulk 1 Base Shield Steel Shield This minor reinforcing steel shield (Hardness 8, HP 64, BT 32) is lined with pale silver that glows when struck. Whenever you use the Shield Block reaction, this shield becomes energized for 1 round. Activate—Energized Blast (force, manipulate) Frequency once per 10 minutes; Requirements The shield is energized; Effect You direct the stored energy into a short blast, targeting a creature within 15 feet. The target takes 2d10 force damage (DC 23 basic Reflex save). Lesser Energized Shield Source Battlecry! pg. 124 Price 350 gp Moderate Energized Shield Source Battlecry! pg. 124 Price 1,300 gp The damage increases to 3d10 and the DC increases to 28. Greater Energized Shield Source Battlecry! pg. 124 Price 6,000 gp The damage increases to 4d10 and the DC increases to 34. Major Energized Shield Source Battlecry! pg. 124 Price 35,000 gp The damage increases to 5d10 and the DC increases to 39."
+ },
+ {
+  "id": "lesser-necrotic-cap",
+  "name": "Lesser Necrotic Cap",
+  "level": 4,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 18
+  },
+  "text": "Necrotic Cap May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L You can use this slimy, rotting mushroom as a spell catalyst when you cast an acid grip spell by tapping it against the target, causing the mushroom to release a cloud of necrotic spores. When you do, acid grip loses the acid trait, gains the fungus trait, and all acid damage the spell deals becomes void damage. On a hit, the target additionally gains the enfeebled and sickened conditions, with the listed values, as the spores consume their flesh. As long as the target is taking persistent void damage, they can’t reduce the value of their sickened condition below 1. Lesser Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 18 gp The value of the enfeebled and sickened conditions is 1. Moderate Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 80 gp The value of the enfeebled and sickened conditions is 2. Greater Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 350 gp The value of the enfeebled and sickened conditions is 3. Major Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 1,200 gp The value of the enfeebled and sickened conditions is 4."
+ },
+ {
+  "id": "lesser-quartz-coil-rail-transport",
+  "name": "Lesser Quartz-Coil Rail Transport",
+  "level": 4,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "electricity",
+   "gadget",
+   "teleportation"
+  ],
+  "price": {
+   "gp": 20
+  },
+  "text": "Quartz-Coil Rail Transport May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) This odd metal rod is often misinterpreted as a mechanical wand of some kind. Any gadgeteer or mage will be able to elaborate on the fact that magic wands do not need to be throughly covered in a copper wire coil and that the pointed quartz crystal at its tip thrums with electricity, not magic. When activated, electricity courses through you, allowing you to move through the voltage that arcs through the air. You instantly transport yourself and any items you’re wearing and holding from your current space to an unoccupied space up to 20 feet away that you can see. If this would bring another creature with you— even if you’re carrying it in an extradimensional container— the teleportation fails. You and all creatures in a line between your original location and your destination take 2 electricity damage. Lesser Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 20 gp Moderate Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 150 gp The distance you can teleport increases to 40 feet, and the electricty damage increases to 4. Greater Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 650 gp The distance you can teleport increases to 60 feet, and the electricty damage increases to 6. Major Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 8,000 gp The distance you can teleport increases t"
+ },
+ {
+  "id": "lesser-rending-gauntlets",
+  "name": "Lesser Rending Gauntlets",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 130
+  },
+  "text": "Rending Gauntlets May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Usage worn bracers Bulk L These heavy gloves are reinforced with thick animal hide and sharpened bone. Activate—Shredding Finisher (manipulate) Frequency once per hour; Requirements You hit the same creature with two unarmed Strikes in the same round; Effect The gauntlets’ spikes dig into the creature just before you tear them free, dealing the listed piercing damage. Lesser Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 130 gp The gauntlets deal 2d6 piercing damage. Moderate Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 1,700 gp The gauntlets deal 4d6 piercing damage. Greater Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 32,000 gp The gauntlets deal 6d6 piercing damage."
+ },
+ {
+  "id": "lesser-roc-shaft-arrow",
+  "name": "Lesser Roc-Shaft Arrow",
+  "level": 5,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 24
+  },
+  "text": "Roc-Shaft Arrow May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Ammunition arrow Activate Interact Each of these arrows is made from an immense roc’s flight feather, most of whose vanes have been trimmed to expose the arrow’s shaft. When an activated roc-shaft arrow hits a target, the arrow briefly grows a pair of avian wings and attempts to carry off the target. The target must succeed at a Fortitude save or be moved to a space you choose within an area determined by the arrow’s type; if the target critically fails, the arrow can move them an additional 10 feet. If this would move the target into a hazardous space, this effect gains the incapacitation trait. Lesser Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 24 gp The arrow can move the target 10 feet (20 feet on a critical failure), and the Fortitude save DC is 19. Moderate Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 160 gp The arrow can move the target 15 feet (20 feet on a critical failure), and the Fortitude save DC is 27. Greater Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 1,000 gp The arrow can move the target 20 feet (30 feet on a critical failure), and the Fortitude save DC is 34."
+ },
+ {
+  "id": "lesser-swapping-stone",
+  "name": "Lesser Swapping Stone",
+  "level": 11,
+  "itemType": "consumable",
+  "traits": [
+   "conjuration",
+   "consumable",
+   "magical",
+   "teleportation"
+  ],
+  "price": {
+   "gp": 300
+  },
+  "text": "Bonmuan Swapping Stone May contain spoilers from Fists of the Ruby Phoenix Source Pathfinder #166: Despair on Danger Island pg. 75 Usage held in 1 hand Activate Interact This small, opalescent stone glows with a light that constantly shifts between colors. When you activate the stone, you throw it into a space within 100 feet. The stone then casts dimension door on you and transports you to itself. This destroys the stone. You can instead hurl the stone at a creature in an attempt to bring that creature closer to you. Make a ranged Strike against a creature using your highest proficiency with a ranged weapon. The swapping stone has a range increment of 15 feet. On a hit, the stone shatters against the creature, casting dimension door on the creature and causing it to instantly teleport to a space adjacent to you. An unwilling creature can resist this teleportation with a successful DC 28 Will save. Lesser Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 300 gp Moderate Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 600 gp The Will save DC is 31. Greater Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 3,000 gp The Will save DC is 37. Major Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 9,000 gp The Will save DC is 43."
+ },
+ {
+  "id": "lesser-tangibility-resonator",
+  "name": "Lesser Tangibility Resonator",
+  "level": 5,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "price": {
+   "gp": 25
+  },
+  "text": "Tangibility Resonator May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) One of the stranger devices to come out of the University of Lepidstadt is a twisted glass contraption that hums with electricity. This vibration is harmless to most but is massively disruptive to the locomotion of incorporeal creatures. When activated, one incorporeal creature within 15 feet must attempt a DC 19 Fortitude saving throw. Once used, the vibrations cause the glass to shatter. Success The target is unaffected. Failure The target is immobilized for 1 round. Critical Failure The target is immobilized and off-guard for 1 round. Lesser Tangibility Resonator Source Rival Academies pg. 93 Price 25 gp Moderate Tangibility Resonator Source Rival Academies pg. 93 Price 300 gp The Fortitude DC is 27. Major Tangibility Resonator Source Rival Academies pg. 93 Price 2,500 gp The Fortitude DC is 35."
+ },
+ {
+  "id": "lesser-vanishing-shocker",
+  "name": "Lesser Vanishing Shocker",
+  "level": 7,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "electricity",
+   "gadget",
+   "illusion",
+   "magical"
+  ],
+  "price": {
+   "gp": 70
+  },
+  "text": "Vanishing Shocker May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) The vanishing shocker is a cube with extruding spikes at each corner. This inscrutable device channels occult energy through the electricity it produces, creating the result of invisible lighting. When activated, the cube floats above your head, creating a field of invisible electricity in a 10-foot emanation that lasts for 1 round. You and creatures within the emanation are concealed. Creatures that enter or start their turn within the area must attempt a DC 22 Reflex save. Success The target is unaffected. Failure The target is off-guard for 1 round. Critical Failure The target is clumsy 1 and off-guard for 1 round. Lesser Vanishing Shocker Source Rival Academies pg. 93 Price 70 gp Moderate Vanishing Shocker Source Rival Academies pg. 93 Price 300 gp The Reflex DC is 27. Greater Vanishing Shocker Source Rival Academies pg. 93 Price 1,300 gp The Reflex DC is 33. Major Vanishing Shocker Source Rival Academies pg. 93 Price 8,000 gp The Reflex DC is 38."
+ },
+ {
+  "id": "lesser-wood-rotted-root",
+  "name": "Lesser Wood-Rotted Root",
+  "level": 3,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 11
+  },
+  "text": "Wood-Rotted Root May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This palm-sized chunk of wood it rotting, and riddled with mold and fungi. You can crush this wood to use it as a spell catalyst when you cast a oaken resilience. When you do, the bark that covers your skin is rotting, and emits a small cloud of spores whenever you're hurt. For the duration, whenever you take physical damage, your rotting bark skin emits a cloud of spores in the listed emanation. Creatures in the area must attempt a Fortitude save at the listed DC to avoid taking the listed poison damage. Lesser Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 11 gp The DC is 15, the area is a 5-foot emanation, and the poison damage is 1. Moderate Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 55 gp The DC is 21, the area is a 5-foot emanation, and the poison damage is 1d4. Greater Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 190 gp The DC is 24, the area is a 10-foot emanation, and the poison damage is 1d8. Major Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 900 gp The DC is 29, the area is a 15-foot emanation, and the poison damage is 2d8."
+ },
+ {
+  "id": "liars-board",
+  "name": "Liar's Board",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 90
+  },
+  "text": "This clockwork game board contains 6 hidden compartments that can be opened by moving the game pieces in specific, preset patterns. Each chamber has a unique combination, and only one chamber can be opened at a time. Once a chamber is opened, a new combination can be set as a 1-minute activity. You can identify a Liar's Board as a clockwork device with a successful check, and you can find an individual hidden compartment with a successful check. The GM rolls a d6 to determine which chamber is discovered, rolling again if the result is one you're already aware of. You can force open a compartment you've identified with a successful check, but tampering will be obvious unless you critically succeed at the check. If you spend at least 1 hour examining the game board, you can instead attempt to deduce the correct combination to open a compartment with a successful or check."
+ },
+ {
+  "id": "liars-gun",
+  "name": "Liar's Gun",
+  "level": 7,
+  "itemType": "weapon",
+  "traits": [
+   "capacity-4",
+   "cobbled",
+   "concussive",
+   "fatal-d8",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 360
+  },
+  "text": "This dubious weapon gets its name from the fact that it's typically crafted with multiple false barrels so that it's more difficult for enemies to predict the weapon's angle of fire from the four working barrels. Most of the time, this gun functions as a *+1 striking pepperbox* with capacity 4 instead of capacity 3, albeit one with a complicated loading mechanism involving rotating the barrels. In a pinch though, all four of the real barrels can be fired simultaneously. --- **Activate—Everywhere Shot** ⟨2⟩ Interact **Effect** Make up to four Strikes with the liar's gun. Each of the four Strikes must be against a different target within a . You apply and increase your multiple attack penalty for the four Strikes only after resolving all attacks. If the weapon misfires on any of these attacks, wait to apply the misfire until you resolve all of the attacks."
+ },
+ {
+  "id": "lich-dust",
+  "name": "Lich Dust",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "ingested",
+   "poison"
+  ],
+  "price": {
+   "gp": 110
+  },
+  "text": "Lich Dust Source Core Rulebook pg. 552 Price 110 gp Usage held in 1 hand Bulk L Activate Interact Dust salvaged from the remains of a destroyed lich has paralytic properties that make it a valuable poison. Saving Throw DC 28 Fortitude; Onset 10 minutes; Maximum Duration 6 minutes; Stage 1 fatigued (1 minute); Stage 2 5d6 poison damage and fatigued (1 minute); Stage 3 5d6 poison damage, fatigued, and paralyzed (1 minute)"
+ },
+ {
+  "id": "life-everlasting",
+  "name": "Life Everlasting",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "positive",
+   "vitality"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Life Everlasting Source GM Core pg. 316 Aspect Life Activate (concentrate) Frequency once per day; Effect Massive amounts of vitality energy surge forth. For 1 minute, you emit vitality energy in a 10-foot emanation centered on you. At the end of your turn, you (if you are living) and allied living creatures in the emanation regain 10 Hit Points. If you or an allied creature would die due to an increased dying value, you can Dismiss the activation as a free action to prevent the death; if you do, their dying value doesn't increase."
+ },
+ {
+  "id": "lifebloom",
+  "name": "Lifebloom",
+  "level": 6,
+  "itemType": "weapon",
+  "traits": [
+   "deadly-d8",
+   "forceful",
+   "magical",
+   "reach",
+   "relic",
+   "wood"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "This *+1 vitalizing striking glaive* is said to have been carved from a single branch of an ancient white ash tree deep in the Arthfell Forest. The grain of the weapon's blade is especially tight, giving the weapon both incredible durability and a finish that resembles silver and steel folded by a master smith."
+ },
+ {
+  "id": "light-writer",
+  "name": "Light Writer",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork",
+   "light"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 200
+  },
+  "text": "The light writer is a cutting edge invention, first created in Absalom in late 4721, combining magic and clockwork innovation to allow its operator to create a true-to-life, monochromatic portrait of people or a scene over the course of 20 minutes of exposure. It consists of two flat metal squares, one larger than the other, connected by a tube of leather similar to that found on a bellows. The smaller square, which sits at the front of the device, has a small glass lens in the center of it. The larger square contains a specially treated metallic plate on the inside; its exterior also has both a small control stick connected via flexible wire, and a small metal tube attached to the top and pointing forward. The user presses a button on the control stick to activate the light writer. Upon activation, magical light illuminates the tube, producing a steady light for 20 minutes. This light is captured by the lens and projected onto the metal plate, slowly creating an image of the scene in front of the lens. The plate can then be removed, allowing the image to be displayed anywhere the owner desires. The light writer is mounted on a tripod and must be perfectly still during operation to prevent any defects from appearing in the plate image. If creating a captured image of a living creature, it is equally important for that creature to remain still throughout the process, to avoid a ghostlike blurring of the final image"
+ },
+ {
+  "id": "lightning-rod-shot",
+  "name": "Lightning Rod Shot",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- Made from a shaft of silver with a gleaming copper tip, the lightning rod shot crackles with electricity as it flies through the air. When a lightning rod shot strikes a target, it remains intact. It moves with a creature it struck, unless the GM determines otherwise, until that creature regains any Hit Points. If it doesn't stick to the target, it falls to the ground and becomes inactive. If the target of this shot is within 10 feet of any creature or target that takes electricity damage, the target of this shot takes 1 for each die of damage taken by the nearby creature or target. If the target of this shot takes electricity damage from a spell or attack, it also takes 1 additional electricity damage for each die of damage dealt. If the spell or attack allows a saving throw to reduce the damage, the target of this shot takes a –1 circumstance penalty to the save. This shot remains active for 1 minute, after which it falls to the ground and crumbles to dust."
+ },
+ {
+  "id": "lightning-storm",
+  "name": "Lightning Storm",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "air",
+   "electricity"
+  ],
+  "text": "Lightning Storm Source GM Core pg. 310 Aspect Air Activate (concentrate); Effect The relic surrounds you with a storm of wind, rain, and lightning in a 30-foot emanation. This storm is difficult terrain for creatures other than you. Any creature other than you that enters or starts its turn in the storm takes 1d12 electricity damage, with a basic Reflex save (2d12 damage at 15th level). You can Sustain this activation up to 1 minute."
+ },
+ {
+  "id": "linguistic-nexus",
+  "name": "Linguistic Nexus",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "mental"
+  ],
+  "text": "Linguistic Nexus Source GM Core pg. 316 Aspect Mind Your relic grants you a powerful neural plasticity, and as a result, you can learn languages more easily. You learn an additional language of your choice for every 2 levels of the relic (minimum 1). You can retrain one of the languages from the relic with only a single week of downtime."
+ },
+ {
+  "id": "little-helper",
+  "name": "Little Helper",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "unholy"
+  ],
+  "text": "Little Helper Source GM Core pg. 313 Aspect Fiend Your relic awakens to sapience, developing a personality (usually one that clashes with your own). Your relic has a personality corresponding to the type of fiend associated with the item, the unholy trait, precise vision and imprecise hearing each out to 30 feet, the ability to understand and speak one language you know, and Intelligence, Wisdom, and Charisma modifiers of +0. Your item's total Perception and Will modifiers are equal to your proficiency modifiers in Perception and Will, respectively. It's trained in the Lore associated with its fiend type (such as Demon Lore), for a total modifier of 2 + the relic's level. Unlike most intelligent items, the relic has no actions or reactions and can't use any of its own activations."
+ },
+ {
+  "id": "living-death",
+  "name": "Living Death",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Living Death Source GM Core pg. 312 Aspect Death You stand on the threshold between the living and the dead. If you attempt a saving throw against an effect that would deal void damage to you, such as harm, your outcome is one degree of success better than what you rolled. If you roll a critical success and the effect is capable of healing undead, you regain HP equal to half the spell's full damage. Any vitality spell or effect that would heal you has only half the normal effect. All these effects apply only if you are a living creature."
+ },
+ {
+  "id": "lizard",
+  "name": "Lizard",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Lizard Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Lizard Source Travel Guide pg. 101 Price 1 sp Lizard (X's) Source Travel Guide pg. 101 Price 1 gp Named after the druid that popularized them, these black-and-white lizards have substantial stomachs and a rather slow digestive system. X trained these lizards to keep valuables in their stomachs. They swallow specially treated purses with attached chains that clip to a collar, which can hold objects up to 1 Bulk. The contents of the purse stay safe for one month before slowly dissolving."
+ },
+ {
+  "id": "lizard-xs",
+  "name": "Lizard (X's)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Lizard Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Lizard Source Travel Guide pg. 101 Price 1 sp Lizard (X's) Source Travel Guide pg. 101 Price 1 gp Named after the druid that popularized them, these black-and-white lizards have substantial stomachs and a rather slow digestive system. X trained these lizards to keep valuables in their stomachs. They swallow specially treated purses with attached chains that clip to a collar, which can hold objects up to 1 Bulk. The contents of the purse stay safe for one month before slowly dissolving."
+ },
+ {
+  "id": "lock-average",
+  "name": "Lock (Average)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 15
+  },
+  "text": "Picking an average lock requires four successful checks."
+ },
+ {
+  "id": "lock-good",
+  "name": "Lock (Good)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 200
+  },
+  "text": "Picking a good lock requires five successful checks."
+ },
+ {
+  "id": "lock-poor",
+  "name": "Lock (Poor)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 2
+  },
+  "text": "Picking a poor lock requires two successful checks."
+ },
+ {
+  "id": "lock-simple",
+  "name": "Lock (Simple)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 2
+  },
+  "text": "Picking a simple lock requires three successful checks."
+ },
+ {
+  "id": "lock-superior",
+  "name": "Lock (Superior)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 4500
+  },
+  "text": "Picking a superior lock requires six successful checks."
+ },
+ {
+  "id": "lodging-bed-for-1",
+  "name": "Lodging (Bed, for 1)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Lodging Source Player Core pg. 294 Lodging (Floor Space) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per day) Lodging (Bed, for 1) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp (per day) Lodging (Private Room, for 2) Source Player Core pg. 294, Core Rulebook pg. 294 Price 8 sp (per day) Lodging (Extravagant Suite, for 6) Source Player Core pg. 294, Core Rulebook pg. 294 Price 10 gp (per day)"
+ },
+ {
+  "id": "lodging-extravagant-suite-for-6",
+  "name": "Lodging (Extravagant Suite, for 6)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Lodging Source Player Core pg. 294 Lodging (Floor Space) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per day) Lodging (Bed, for 1) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp (per day) Lodging (Private Room, for 2) Source Player Core pg. 294, Core Rulebook pg. 294 Price 8 sp (per day) Lodging (Extravagant Suite, for 6) Source Player Core pg. 294, Core Rulebook pg. 294 Price 10 gp (per day)"
+ },
+ {
+  "id": "lodging-floor-space",
+  "name": "Lodging (Floor Space)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 3
+  },
+  "text": "Lodging Source Player Core pg. 294 Lodging (Floor Space) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per day) Lodging (Bed, for 1) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp (per day) Lodging (Private Room, for 2) Source Player Core pg. 294, Core Rulebook pg. 294 Price 8 sp (per day) Lodging (Extravagant Suite, for 6) Source Player Core pg. 294, Core Rulebook pg. 294 Price 10 gp (per day)"
+ },
+ {
+  "id": "lodging-private-room-for-2",
+  "name": "Lodging (Private Room, for 2)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 8
+  },
+  "text": "Lodging Source Player Core pg. 294 Lodging (Floor Space) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per day) Lodging (Bed, for 1) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp (per day) Lodging (Private Room, for 2) Source Player Core pg. 294, Core Rulebook pg. 294 Price 8 sp (per day) Lodging (Extravagant Suite, for 6) Source Player Core pg. 294, Core Rulebook pg. 294 Price 10 gp (per day)"
+ },
+ {
+  "id": "luckless-dice",
+  "name": "Luckless Dice",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical",
+   "misfortune"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 5
+  },
+  "text": "Carved of bone, luckless dice appear to be a set of loaded dice. If unsuccessfully identified as cursed, luckless dice seem to hold a minor enchantment that improves your luck. However, they fuse to you when you use them, cursing you with ill fortune. Luckless dice don't grant a bonus on Games Lore checks. Instead, when you use them to gamble, the GM rolls secretly, granting you the lower result. Once you realize the dice are cursed, the GM can instead allow you to roll twice and take the lower result."
+ },
+ {
+  "id": "lucky-kitchen-witch",
+  "name": "Lucky Kitchen Witch",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "usage": "other",
+  "price": {
+   "gp": 250
+  },
+  "text": "This small doll in the shape of a witch is made from sticks and clad in a simple dress, bonnet, and wooden shoes. It sits astride a miniature straw broom. When hung in a kitchen, the witch brings good luck and protects a cook from malicious spirits. The *lucky kitchen witch* must hang in a kitchen for a week to give any benefit. When you have a *lucky kitchen witch* hung in your kitchen, you can reroll a Cooking Lore or Crafting check made during downtime to make food, Earn Income, or Craft an alchemical item in your kitchen."
+ },
+ {
+  "id": "lumber",
+  "name": "Lumber",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Lumber Source Travel Guide pg. 37 Price 1 cp (per 40 board feet)"
+ },
+ {
+  "id": "magazine-air-repeater",
+  "name": "Magazine (Air Repeater)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 6
+  },
+  "text": "Magazine (Air Repeater) Source Guns & Gears (Remastered) pg. 151 PFS Note All Pathfinder Society agents have access to all uncommon weapons, ammunition, and related items from Chapter 4 Access The following regions have access to firearms: Alkenstar, Dongun Hold, Tian Xia, Vudra, Arcadia, Ustalav, the Shackles Price 6 sp Bulk — Hands Type Ranged Category Ammunition Group Firearm A typical air repeater magazine holds 6 pellets. Critical Specialization Effects Source Core Rulebook pg. 283 Certain feats, class features, weapon runes, and other effects can grant you additional benefits when you make a Strike with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always decide not to add the critical specialization effect of your weapon. Click here for the full rules on Critical Specialization Effects."
+ },
+ {
+  "id": "magazine-long-air-repeater",
+  "name": "Magazine (Long Air Repeater)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 8
+  },
+  "text": "Magazine (Long Air Repeater) Source Guns & Gears (Remastered) pg. 151 PFS Note All Pathfinder Society agents have access to all uncommon weapons, ammunition, and related items from Chapter 4 Access The following regions have access to firearms: Alkenstar, Dongun Hold, Tian Xia, Vudra, Arcadia, Ustalav, the Shackles Price 8 sp Bulk — Hands Type Ranged Category Ammunition Group Firearm A typical long air repeater magazine holds 8 pellets. Critical Specialization Effects Source Core Rulebook pg. 283 Certain feats, class features, weapon runes, and other effects can grant you additional benefits when you make a Strike with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always decide not to add the critical specialization effect of your weapon. Click here for the full rules on Critical Specialization Effects."
+ },
+ {
+  "id": "magazine-with-6-pellets",
+  "name": "Magazine with 6 Pellets",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 6
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "magazine-with-8-pellets",
+  "name": "Magazine with 8 Pellets",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 6
+  },
+  "text": "Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items."
+ },
+ {
+  "id": "magic-scroll",
+  "name": "Magic Scroll",
+  "level": 1,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "scroll"
+  ],
+  "text": "Magic Scroll Source GM Core pg. 262 Usage held in 1 hand Bulk L Activate Cast A Spell Effect You Cast the Spell at the indicated rank. This roll of paper or parchment contains a single spell. Craft Requirements Supply a listed-rank casting of the spell. 1st-rank Scroll Source GM Core pg. 262 Price 4 gp 2nd-rank Scroll Source GM Core pg. 262 Price 12 gp 3rd-rank Scroll Source GM Core pg. 262 Price 30 gp 4th-rank Scroll Source GM Core pg. 262 Price 70 gp 5th-rank Scroll Source GM Core pg. 262 Price 150 gp 6th-rank Scroll Source GM Core pg. 262 Price 300 gp 7th-rank Scroll Source GM Core pg. 262 Price 600 gp 8th-rank Scroll Source GM Core pg. 262 Price 1,300 gp 9th-rank Scroll Source GM Core pg. 262 Price 3,000 gp 10th-rank Scroll Source GM Core pg. 262 Price 8,000 gp"
+ },
+ {
+  "id": "magical-hearing-aid",
+  "name": "Magical Hearing Aid",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 5
+  },
+  "text": "These curved hearing aids hook over the top and sit behind your ear, with a receiver that fits into the ear opening. The external part of the device detects sound waves and, using magic, transfers them down the receiver and into your ear. You can wear one or two depending on your hearing loss, and you can turn your hearing aids on or off using an Interact action."
+ },
+ {
+  "id": "magnetic-construction-set",
+  "name": "Magnetic Construction Set",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 2
+  },
+  "text": "This collection of small magnets and metal rods comes in a wooden box. The magnets are strong enough to firmly cling to metal objects but too weak to move or suspend them. The metal rods are a quarter of an inch in diameter and vary in length from 3 to 6 inches. If connected with the magnets, these rods can be used to build flimsy shapes and structures, which collapse if external weight or pressure is applied."
+ },
+ {
+  "id": "major-astonishing-ink",
+  "name": "Major Astonishing Ink",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "gp": 2250
+  },
+  "text": "Dr. Ushernacht's Astonishing Ink May contain spoilers from Convocation Source Rival Academies pg. 89 Usage held in 1 hand Bulk L Activate 10 minutes (manipulate) This syrupy ink smells organic and faintly spoiled. It’s tied to one of Ushernacht’s engines, created with a sample of the fluid from inside the engine. If the associated engine stops functioning, all ink linked with it can no longer be activated, including freshly created ink. When you write a question on a sheet of paper using the astonishing ink, handwriting scrawls over the paper after 10 minutes, answering with the knowledge it can draw from its engine. The astonishing ink has all Lore skills and attempts a Recall Knowledge check to answer the question using the listed bonus. At the GM’s discretion, the astonishing ink takes a –4 circumstance penalty to the check if the question relates to advice, emotions, opinions, or other subjective topics. If the astonishing ink fails (but not critically fails) the check to Recall Knowledge, the writing turns blood-red as it forms disturbing words. Anyone reading these words must succeed at a Will save at the listed DC or become stupefied 1 until they get a full night’s rest. The bloody message may also carry valuable or misleading information at the GM’s discretion. You can use a vial of astonishing ink to ask 5 questions before it’s used up. Minor Astonishing Ink Source Rival Academies pg. 89 Price 10 gp The ink has a +10 modifier, and the Will DC is 18. Moderate Astonish"
+ },
+ {
+  "id": "major-banner-of-creeping-death",
+  "name": "Major Banner of Creeping Death",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "price": {
+   "gp": 36000
+  },
+  "text": "Banner of Creeping Death Source Battlecry! pg. 138 Usage affixed or held in 1 hand Bulk L The very fabric of this off-putting magical banner seems to be rotting with a slick, foul texture. Traditionally, these banners were created from the uniforms of fallen enemy troops, but this is considered a cruel and dishonorable practice by many modern nations. While holding a banner of creeping death, you can use the following ability. Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions. All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save). Lesser Banner of Creeping Death Source Battlecry! pg. 138 Price 120 gp Moderate Banner of Creeping Death Source Battlecry! pg. 138 Price 750 gp The void damage increases to 2d4+2 and the save DC increases to 26. Greater Banner of Creeping Death Source Battlecry! pg. 138 Price 4,500 gp The void damage increases to 4d4+4 and the save DC increases to 32. Major Banner of Creeping Death Source Battlecry! pg. 138 Price 36,000 gp The void damage increases 8d4+8 and the save DC increases to 42."
+ },
+ {
+  "id": "major-banner-of-piercing-shards",
+  "name": "Major Banner of Piercing Shards",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "price": {
+   "gp": 22000
+  },
+  "text": "Banner of Piercing Shards Source Battlecry! pg. 138 Usage affixed or held in 1 hand Bulk L This magical banner has an intricately embroidered pattern of shards and cracks across its surface, almost like a broken mirror. Though it always feels dry to the touch, this banner from a distance gleams red as if slightly stained with the blood of your enemies. While holding a banner of piercing shards, you can use the following ability. Activate—Shards Seek Wounds (concentrate) Frequency once per minute; Effect Shards of sharpened glass violently shoot out from the magical banner into the newly opened wounds of a nearby enemy. The magical banner deals 1d4 persistent bleed damage to any enemy within the banner’s aura that has been dealt damage since the end of your last turn. Banner of Piercing Shards Source Battlecry! pg. 138 Price 465 gp Greater Banner of Piercing Shards Source Battlecry! pg. 138 Price 2,600 gp The persistent bleed damage increases to 2d4. Major Banner of Piercing Shards Source Battlecry! pg. 138 Price 22,000 gp The persistent bleed damage increases to 3d4."
+ },
+ {
+  "id": "major-black-ash",
+  "name": "Major Black Ash",
+  "level": 15,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 1300
+  },
+  "text": "Black Ash May contain spoilers from Spore War Source Pathfinder #210: Whispers in the Dirt pg. 78 Usage held in 1 hand Activate Cast a Spell On certain rare occasions, when a particularly despoiled tree or a powerful demonic fungal infestation (such as a Jeharlu Spore) is destroyed, the grimy black ash that remains behind functions as a catalyst called black ash. A wall of thorns empowered with this catalyst gains the fungus trait and appears diseased and toxic, with greasy filaments of dripping fungus growing through its vines. A creature damaged by this wall’s thorns takes an additional amount of persistent poison damage. Black Ash Source Pathfinder #210: Whispers in the Dirt pg. 78 Price 30 gp The persistent damage is 1d6 Greater Black Ash Source Pathfinder #210: Whispers in the Dirt pg. 78 Price 200 gp The persistent damage is 2d6 Major Black Ash Source Pathfinder #210: Whispers in the Dirt pg. 78 Price 1,300 gp The persistent damage is 3d6"
+ },
+ {
+  "id": "major-blazing-banner",
+  "name": "Major Blazing Banner",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "fire",
+   "magical"
+  ],
+  "price": {
+   "gp": 36000
+  },
+  "text": "Blazing Banner Source Battlecry! pg. 140 Usage affixed or held in 1 hand Bulk L This magical banner shimmers in a fiery array of reds, oranges, and yellows. The rampant threads catch light in the wind and give the appearance of a blazing flame. Whenever you or an ally within the banner’s aura critically succeeds with a Strike, the Strike deals an additional 1d4 persistent fire damage. Blazing Banner Source Battlecry! pg. 140 Price 100 gp Greater Blazing Banner Source Battlecry! pg. 140 Price 2,000 gp The additional persistent fire damage increases to 1d6. Major Blazing Banner Source Battlecry! pg. 140 Price 36,000 gp The additional persistent fire damage increases to 1d8."
+ },
+ {
+  "id": "major-bloodstone-doll",
+  "name": "Major Bloodstone Doll",
+  "level": 16,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 1800
+  },
+  "text": "Bloodstone Doll May contain spoilers from Convocation Source Rival Academies pg. 101 Usage held in 1 hand Bulk L Activate (concentrate, manipulate) Trigger A creature within 60 feet casts a summon spell Requirement You have a free hand This small doll has been carved from a fragment of Bloodstone. When you Activate a bloodstone doll in response to another’s magic, you Interact to take it in hand and hold it up toward the triggering creature. Attempt a counteract check against the triggering spell at the listed bonus and rank. If the spell would be counteracted, the bloodstone doll instead influences the summoned creature. You gain control of the summoned creature and can dictate its 2 actions for that turn. The triggering creature then regains control of their summoned creature, but the summoned creature takes a –2 status penalty to attack rolls against you. Your bloodstone doll shatters when the summon spell ends. Minor Bloodstone Doll Source Rival Academies pg. 101 Price 15 gp The bloodstone doll has a counteract modifier of +9 and a counteract rank of 2. Moderate Bloodstone Doll Source Rival Academies pg. 101 Price 180 gp The bloodstone doll has a counteract modifier of +17 and a counteract rank of 5. Major Bloodstone Doll Source Rival Academies pg. 101 Price 1,800 gp The bloodstone doll has a counteract modifier of +25 and a counteract rank of 8."
+ },
+ {
+  "id": "major-boots-of-the-secret-blade",
+  "name": "Major Boots of the Secret Blade",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 5500
+  },
+  "text": "Boots of the Secret Blade Source Battlecry! pg. 149 Usage worn shoes Bulk L You pride yourself on being well prepared with weaponry for any situation. Your dark-gray boots might appear mundane, but you know that they can conjure a blade at any moment. Even the most thorough of searches can’t find a knife that doesn’t exist yet. Activate—Draw Secret Blade (manipulate) Frequency once per hour; Effect You reach down to your boot, draw a dagger from it, and make a ranged or melee Strike with it. This dagger is created magically and does not exist before being drawn. The dagger remains a physical object until the next time you use Draw Secret Blade, and it disappears as a new blade is created. Boots of the Secret Blade Source Battlecry! pg. 149 Price 30 gp Greater Boots of the Secret Blade Source Battlecry! pg. 149 Price 450 gp When you Draw Secret Blade, you draw a +1 striking dagger. Major Boots of the Secret Blade Source Battlecry! pg. 149 Price 5,500 gp When you Draw Secret Blade, you draw a +2 greater striking dagger."
+ },
+ {
+  "id": "major-bougainvillea-blossom",
+  "name": "Major Bougainvillea Blossom",
+  "level": 15,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 1200
+  },
+  "text": "Bougainvillea Blossom May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This pink flower has long, slender thorns along the stem. The flower can be used as a catalyst when casting an entangling flora spell, which causes the affected plants to sprout long thorns and vibrant pink blossoms. The area becomes hazardous terrain, dealing the listed piercing damage to an enemy each time it enters an affected square. Lesser Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 10 gp The piercing damage of the hazardous terrain is 1. Moderate Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 60 gp The piercing damage of the hazardous terrain is 2. Greater Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 300 gp The piercing damage of the hazardous terrain is 3. Major Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 1,200 gp The piercing damage of the hazardous terrain is 5."
+ },
+ {
+  "id": "major-dragons-tongue",
+  "name": "Major Dragon's Tongue",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "price": {
+   "gp": 55000
+  },
+  "text": "Dragon's Tongue Source Draconic Codex pg. 222 PFS Note The damage type(s) for this item must be chosen at purchase or when crafted. Usage held in 2 hands Bulk 2 Base Weapon Longspear This +2 striking longspear was crafted by a renowned monster hunter, who designed the prototype from the bones and scales of a diabolic dragon. The drathyrican folds of a young dragon, the organ that generates their magical breath, are crucial to the operation of the spear. The mechanics of the weapon are largely based on an injection spear: when the safety is disengaged and a secondary lever is squeezed, it produces a magical effect like a dragon’s breath from the hollow tip of the spear. Activate—Breath of the Spear (concentrate, manipulate) Effect The dragon’s tongue releases a burst of energy that manifests as a 30-foot cone dealing 6d6 damage with a DC 28 basic Reflex save. You can’t use this activation again for 1d4 rounds. The damage type matches the breath of the dragon the weapon was made from, and this activation has the corresponding trait. Craft Requirements The initial raw materials must include the drathyrican folds of a dragon. Dragon's Tongue Source Draconic Codex pg. 222 Price 1,350 gp Greater Dragon's Tongue Source Draconic Codex pg. 222 Price 2,750 gp Made using the drathyrican folds of an adult dragon, the longspear is a +2 greater striking longspear and the activation’s damage is 7d6 (DC 30). Major Dragon's Tongue Source Draconic Codex pg. 222 Price 55,000 gp Made using the d"
+ },
+ {
+  "id": "major-energized-shield",
+  "name": "Major Energized Shield",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "price": {
+   "gp": 35000
+  },
+  "text": "Energized Shield Source Battlecry! pg. 124 Usage held in 1 hand Bulk 1 Base Shield Steel Shield This minor reinforcing steel shield (Hardness 8, HP 64, BT 32) is lined with pale silver that glows when struck. Whenever you use the Shield Block reaction, this shield becomes energized for 1 round. Activate—Energized Blast (force, manipulate) Frequency once per 10 minutes; Requirements The shield is energized; Effect You direct the stored energy into a short blast, targeting a creature within 15 feet. The target takes 2d10 force damage (DC 23 basic Reflex save). Lesser Energized Shield Source Battlecry! pg. 124 Price 350 gp Moderate Energized Shield Source Battlecry! pg. 124 Price 1,300 gp The damage increases to 3d10 and the DC increases to 28. Greater Energized Shield Source Battlecry! pg. 124 Price 6,000 gp The damage increases to 4d10 and the DC increases to 34. Major Energized Shield Source Battlecry! pg. 124 Price 35,000 gp The damage increases to 5d10 and the DC increases to 39."
+ },
+ {
+  "id": "major-golden-wings",
+  "name": "Major Golden Wings",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 650
+  },
+  "text": "Golden Wings Source High Seas pg. 50 Usage worn cloak Bulk 2 Access You're from Hermea This pair of huge wings is crafted from numerous feathers made of a lightweight, golden magical alloy. When activated, the wings emit a melodic sound and a shimmering glow. Activate—Assisted Flight (manipulate) Frequency once per day; Effect For the next 10 minutes, you can Leap 20 feet, using the wings to propel yourself. You must land on a space with solid ground. For the duration, you also emit a bright light in a 20-foot radius and dim light for the next 20 feet. You take a –2 item penalty to Stealth checks to Hide and Sneak. Golden Wings Source High Seas pg. 50 Price 60 gp Greater Golden Wings Source High Seas pg. 50 Price 350 gp When you activate the wings, for the duration, you can also use an action to flap the wings to glide slowly toward the ground, 5 feet down and up to 20 feet forward through the air. As long as you spend 1 action gliding each round and haven’t yet reached the ground, you remain in the air at the end of your turn. Major Golden Wings Source High Seas pg. 50 Price 650 gp When you activate the wings, you also gain a fly Speed of 20 feet for the duration. True Golden Wings Source High Seas pg. 50 Price 14,000 gp When you activate the wings, you also gain a fly Speed equal to your Speed or 25 feet, whichever is greater, for the duration."
+ },
+ {
+  "id": "major-knaves-standard",
+  "name": "Major Knave’s Standard",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "price": {
+   "gp": 36000
+  },
+  "text": "Knave's Standard Source Battlecry! pg. 140 Usage affixed or held in 1 hand Bulk L This magical banner is dip-dyed in an ombre from black to red, mottled and uneven. Whenever you or an ally within the banner’s aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d4 precision damage. Knave’s Standard Source Battlecry! pg. 140 Price 100 gp Greater Knave’s Standard Source Battlecry! pg. 140 Price 1,800 gp The additional precision damage increases to 1d6. Major Knave’s Standard Source Battlecry! pg. 140 Price 36,000 gp The additional precision damage increases to 1d8."
+ },
+ {
+  "id": "major-mitigation-mail",
+  "name": "Major Mitigation Mail",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 14000
+  },
+  "text": "Mitigation Mail Source Battlecry! pg. 122 Usage worn armor Bulk 2 Base Armor Chain Mail This +1 resilient chain mail helps bind up your wounds when you’re injured in battle, enabling you to continue fighting. Activate—Salve (concentrate, healing, manipulate, vitality) Frequency once per day; Effect You restore 5d10+10 Hit points. Mitigation Mail Source Battlecry! pg. 122 Price 700 gp Greater Mitigation Mail Source Battlecry! pg. 122 Price 3,000 gp The armor is +2 resilient chain mail, and the healing is increased to 8d10+15 Hit Points. Major Mitigation Mail Source Battlecry! pg. 122 Price 14,000 gp The armor is +2 greater resilient chain mail, and the healing is increased to 11d10+20 Hit Points."
+ },
+ {
+  "id": "major-necrotic-cap",
+  "name": "Major Necrotic Cap",
+  "level": 15,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 1200
+  },
+  "text": "Necrotic Cap May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L You can use this slimy, rotting mushroom as a spell catalyst when you cast an acid grip spell by tapping it against the target, causing the mushroom to release a cloud of necrotic spores. When you do, acid grip loses the acid trait, gains the fungus trait, and all acid damage the spell deals becomes void damage. On a hit, the target additionally gains the enfeebled and sickened conditions, with the listed values, as the spores consume their flesh. As long as the target is taking persistent void damage, they can’t reduce the value of their sickened condition below 1. Lesser Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 18 gp The value of the enfeebled and sickened conditions is 1. Moderate Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 80 gp The value of the enfeebled and sickened conditions is 2. Greater Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 350 gp The value of the enfeebled and sickened conditions is 3. Major Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 1,200 gp The value of the enfeebled and sickened conditions is 4."
+ },
+ {
+  "id": "major-quartz-coil-rail-transport",
+  "name": "Major Quartz-Coil Rail Transport",
+  "level": 19,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "electricity",
+   "gadget",
+   "teleportation"
+  ],
+  "price": {
+   "gp": 8000
+  },
+  "text": "Quartz-Coil Rail Transport May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) This odd metal rod is often misinterpreted as a mechanical wand of some kind. Any gadgeteer or mage will be able to elaborate on the fact that magic wands do not need to be throughly covered in a copper wire coil and that the pointed quartz crystal at its tip thrums with electricity, not magic. When activated, electricity courses through you, allowing you to move through the voltage that arcs through the air. You instantly transport yourself and any items you’re wearing and holding from your current space to an unoccupied space up to 20 feet away that you can see. If this would bring another creature with you— even if you’re carrying it in an extradimensional container— the teleportation fails. You and all creatures in a line between your original location and your destination take 2 electricity damage. Lesser Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 20 gp Moderate Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 150 gp The distance you can teleport increases to 40 feet, and the electricty damage increases to 4. Greater Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 650 gp The distance you can teleport increases to 60 feet, and the electricty damage increases to 6. Major Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 8,000 gp The distance you can teleport increases t"
+ },
+ {
+  "id": "major-reactive-mail",
+  "name": "Major Reactive Mail",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 14000
+  },
+  "text": "Reactive Mail Source Battlecry! pg. 122 Usage worn armor Bulk 2 Base Armor Chain Mail Often heavily battle scared from use, this chain mail is commonly issued to frontline soldiers who are tasked with battling through enemies to reach high-value targets across the battlefield. Activate—Quick Spike (manipulate, metal) Frequency once per hour; Trigger A creature within 15 feet uses a manipulate action; Effect An iron spike launches from your armor at the target, dealing 2d8 piercing damage to the target (DC 20 basic Reflex save). If the target critically fails, the triggering action is disrupted. Reactive Mail Source Battlecry! pg. 122 Price 160 gp Greater Reactive Mail Source Battlecry! pg. 122 Price 1,400 gp The armor is +1 resilient chain mail. The damage increases to 5d8 and the DC increases to 28. Major Reactive Mail Source Battlecry! pg. 122 Price 14,000 gp The armor is +2 greater resilient chain mail. The damage increases to 7d8 and the DC increases to 36."
+ },
+ {
+  "id": "major-staff-of-arcane-might",
+  "name": "Major Staff of Arcane Might",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "staff"
+  ],
+  "price": {
+   "gp": 90000
+  },
+  "text": "Staff of Arcane Might Source GM Core pg. 279 Usage held in 1 hand Bulk 1 This staff of magically hardened wood is topped with a silver sculpture depicting magical runic symbols. A staff of arcane might is a +1 striking staff. Activate—Sunder (death, force, manipulate) Effect You destroy the staff, unleashing a blast of arcane power in a 30- foot cone, dealing 2d6 force damage per charge remaining in the staff with a DC 30 basic Reflex save. Activate Cast a Spell; Effect You expend a number of charges from the staff to cast a spell from its list. Craft Requirements Supply one casting of all listed ranks of all listed spells. Staff of Arcane Might Source GM Core pg. 279 Price 1,900 gp Cantrip detect magic 1st phantasmal minion 2nd everlight 3rd force barrage, paralyze 4th dispelling globe, mystic armor, translocate 5th fireball, force barrage, lightning bolt Greater Staff of Arcane Might Source GM Core pg. 279 Price 10,000 gp A greater staff of arcane might is a +2 greater striking staff. Sunder deals 2d8 force damage per charge and is DC 35. 6th disintegrate, mystic armor, wall of force 7th howling blizzard, fireball, lightning bolt Major Staff of Arcane Might Source GM Core pg. 279 Price 90,000 gp A major staff of arcane might is a +3 greater striking staff. Sunder deals 2d10 force damage per charge and is DC 40. 8th mystic armor, wall of force 9th dispel magic, falling stars, howling blizzard"
+ },
+ {
+  "id": "major-swapping-stone",
+  "name": "Major Swapping Stone",
+  "level": 20,
+  "itemType": "consumable",
+  "traits": [
+   "conjuration",
+   "consumable",
+   "magical",
+   "teleportation"
+  ],
+  "price": {
+   "gp": 9000
+  },
+  "text": "Bonmuan Swapping Stone May contain spoilers from Fists of the Ruby Phoenix Source Pathfinder #166: Despair on Danger Island pg. 75 Usage held in 1 hand Activate Interact This small, opalescent stone glows with a light that constantly shifts between colors. When you activate the stone, you throw it into a space within 100 feet. The stone then casts dimension door on you and transports you to itself. This destroys the stone. You can instead hurl the stone at a creature in an attempt to bring that creature closer to you. Make a ranged Strike against a creature using your highest proficiency with a ranged weapon. The swapping stone has a range increment of 15 feet. On a hit, the stone shatters against the creature, casting dimension door on the creature and causing it to instantly teleport to a space adjacent to you. An unwilling creature can resist this teleportation with a successful DC 28 Will save. Lesser Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 300 gp Moderate Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 600 gp The Will save DC is 31. Greater Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 3,000 gp The Will save DC is 37. Major Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 9,000 gp The Will save DC is 43."
+ },
+ {
+  "id": "major-tangibility-resonator",
+  "name": "Major Tangibility Resonator",
+  "level": 17,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "price": {
+   "gp": 2500
+  },
+  "text": "Tangibility Resonator May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) One of the stranger devices to come out of the University of Lepidstadt is a twisted glass contraption that hums with electricity. This vibration is harmless to most but is massively disruptive to the locomotion of incorporeal creatures. When activated, one incorporeal creature within 15 feet must attempt a DC 19 Fortitude saving throw. Once used, the vibrations cause the glass to shatter. Success The target is unaffected. Failure The target is immobilized for 1 round. Critical Failure The target is immobilized and off-guard for 1 round. Lesser Tangibility Resonator Source Rival Academies pg. 93 Price 25 gp Moderate Tangibility Resonator Source Rival Academies pg. 93 Price 300 gp The Fortitude DC is 27. Major Tangibility Resonator Source Rival Academies pg. 93 Price 2,500 gp The Fortitude DC is 35."
+ }
+]

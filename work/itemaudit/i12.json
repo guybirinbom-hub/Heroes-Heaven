@@ -1,0 +1,828 @@
+[
+ {
+  "id": "inextinguishable",
+  "name": "Inextinguishable",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "positive",
+   "vitality"
+  ],
+  "text": "Inextinguishable Source GM Core pg. 315 Aspect Life Your connection to life force makes you more difficult to snuff out than others. You die from the dying condition at dying 5, rather than dying 4. If you roll a success on a save against a death or void effect, you get a critical success instead."
+ },
+ {
+  "id": "infesting-shot",
+  "name": "Infesting Shot",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 200
+  },
+  "text": "Infesting Shot Source Battlecry! pg. 133 Price 200 gp Ammunition stones (trebuchet) This stone is riddled with holes and cracks large enough to allow insects or other small vermin to pass through. After it’s Launched, two army ant swarms crawl out of the stone into spaces adjacent to the stone. The swarms are agitated and attack the closest non-ant creatures."
+ },
+ {
+  "id": "infiltrators-accessory",
+  "name": "Infiltrator's Accessory",
+  "level": 5,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "concealable",
+   "finesse",
+   "illusion",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 150
+  },
+  "text": "This elegant *+1 striking sword cane* serves equally well as a fashionable accessory and hidden weapon suitable for high-society events where weapons aren't typically permitted. **Activate-Hide Magic** ⟨1⟩ (manipulate) --- **Effect** You twist the sword cane's hilt, magically merging the blade into the cane. While the blade is merged, it can't be drawn and gains the benefits of a 3rd-rank Disguise Magic spell to appear non-magical. Passive observers can't attempt a check to notice the cane is anything more than a mundane, if superb, fashion accessory. Those carefully examining it can discern the cane is more than it appears, but doing so is extremely difficult (). Activating the sword cane again releases the blade, allowing it to be drawn normally."
+ },
+ {
+  "id": "infused-stone",
+  "name": "Infused Stone",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 3,
+   "sp": 5
+  },
+  "text": "Infused Stone Source Travel Guide pg. 37 Price 3 gp, 5 sp (+ per pound)"
+ },
+ {
+  "id": "injection-reservoir",
+  "name": "Injection Reservoir",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "adjustment",
+   "alchemical"
+  ],
+  "usage": "applied-to-a-non-injection-melee-weapon-piercing-damage",
+  "price": {
+   "gp": 10
+  },
+  "text": "This reservoir and spring-loaded needle can be attached to a weapon to let it inject deadly poisons. Additionally, the reservoir can be filled with an injury poison. Immediately after a successful attack with the adjusted weapon, you can inject the target with the loaded poison by activating the reservoir with an Interact action. Refilling the reservoir with a new poison requires 3 Interact actions and uses both hands. Adding an injection reservoir to a weapon throws off its balance, causing the multiple attack penalty with the weapon to be one greater than usual (usually –6 on a second attack and –11 on a third; or –5 and –10 with an agile weapon)."
+ },
+ {
+  "id": "inquisitive-quill",
+  "name": "Inquisitive Quill",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "intelligent",
+   "magical"
+  ],
+  "usage": "held-in-one-hand-or-free-standing",
+  "price": {},
+  "text": "**Perception** +11; precise vision 30 feet, imprecise hearing 30 feet **Communication** speech (five languages) **Skills** Arcana +12, Nature +9, Occultism +10, Religion +9, Scribing Lore +12, Society +10 **Int** +4, **Wis** +3, **Cha** +1 **Will** +11 --- A colorful feather adorns an *inquisitive quill*, which never runs out of ink. Essentially a Tiny construct, an *inquisitive quill* can stand on its own when given a surface, balancing as it writes or stands. (Drawing a line gives it an effective Speed of 5 feet.) It has strong curiosity, eagerly writing any information offered to it, often acting as a scribe for its partner. The quill copies text and drawings it can see or transcribes dictation it hears. It writes at a rate that rivals that of an expert scribe."
+ },
+ {
+  "id": "inspiring",
+  "name": "Inspiring",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "mental"
+  ],
+  "text": "Inspiring Source Treasure Vault (Remastered) pg. 198 Aspect Artistry Activate (concentrate) Effect You create a vision of a token you could have crafted or make a short performance to inspire an ally within 60 feet. This otherwise works as the uplifting overture cantrip."
+ },
+ {
+  "id": "instant-fortress",
+  "name": "Instant Fortress",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "structure"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {
+   "gp": 9300
+  },
+  "text": "This metal cube is small enough to fit in your palm. Close inspection reveals fine lines in the dark gray metal, as though the cube were folded thousands of times. **Activate** ⟨3⟩ command, Interact --- **Effect** You toss the cube on the ground, and it immediately unfolds into an adamantine fortress. The fortress is 20 feet square and 30 feet high, with adamantine stairs leading up to three sets of battlements at heights of 10 feet and 20 feet and at the top. Arrow slits along the lower battlements and crenelations at the top provide standard cover to anyone within the fortress. There's no roof, leaving an open, 10-foot-square vertical shaft through the center of the structure. As a magical structure, the fortress has the structure trait. Because it expands outward, the fortress can't catch creatures inside it as a magical structure normally does. Instead, it pushes those creatures back. It can't push a creature into a surface or hazard this way, and stops expanding if that would happen. The fortress has a single door in the center of one wall on the ground level, and the door appears directly in front of you when you activate the fortress. Provided you're within 100 feet of the door, you can cause the door to open or slam shut and lock by spending a single action to issue a verbal command, which has the auditory trait. The DC to Force Open the door or Pick its Lock is 40. You can instantly return the instant fortress to its cube form by spending a single action to issue a v"
+ },
+ {
+  "id": "instinct-crown",
+  "name": "Instinct Crown",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 900
+  },
+  "text": "Instinct Crown Source Treasure Vault (Remastered) pg. 152 Price 900 gp Usage worn headwear Bulk L An instinct crown is a magical headpiece imbued with the essence of instincts that barbarians draw upon in combat. Each crown is fashioned to represent the instinct it's tied to, such as a wolf's head for an animal instinct crown or a simple helmet with Jotun runes for a giant instinct crown. When worn, the crown allows you to tap further into your instincts, granting you even greater benefits if the crown's essence matches your instinct. You must be able to Rage to use the crown's activations. Activate (concentrate) Frequency once per day; Trigger You roll initiative; Requirements You have Quick-Tempered and meet its requirements;; Effect You use Quick-Tempered and gain 10 additional temporary Hit Points from your Rage. Activate (concentrate, rage) Frequency once per day; Requirements You’re raging, and the crown’s instinct matches your barbarian instinct; Effect You draw upon your instinct to gain a boon, as follows. Animal: Your bestial instincts take over, granting you greater ferocity. You can Stride as part of the activation, and you gain 10 additional temporary Hit Points from your rage. Until the end of your rage, you deal 3 additional damage with your animal’s unarmed attacks, and those unarmed attacks gain the deadly d8 trait. Dragon: The might of dragons surrounds you in the form of dancing flames, poisonous wisps, or another appropriate manifestation. Until the end of"
+ },
+ {
+  "id": "intelligent-relic",
+  "name": "Intelligent Relic",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "intelligent"
+  ],
+  "text": "Intelligent Relic Source Treasure Vault (Remastered) pg. 200 Aspect Intelligent Relic Your relic becomes an intelligent item. The relic possesses precise sight at a range of 30 feet and imprecise hearing at a range of 30 feet. It is trained in Perception, increasing its proficiency when you increase yours. Choose whether it can speak aloud or communicate with you telepathically. It knows languages fitting its backstory, usually from among those you know. The relic is also trained in three skills, increasing one skill’s proficiency each time the relic gains a new gift. Your relic’s mental attribute modifiers begin at +3, +2, and +1, arranged as you choose. The relic is also trained in Will saves, and its proficiency increases as yours does. Each time you gain a new gift, increase one of the relic’s mental attribute modifiers by 1. The relic otherwise functions as normal for an intelligent item. If you’re sanctified to holy or to unholy, you can choose to have your relic sanctified in the same way."
+ },
+ {
+  "id": "inubrix-chunk",
+  "name": "Inubrix Chunk",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 550
+  },
+  "text": "This pale, malleable metal's unusual molecular structure allows it to partially pass through iron and steel without touching them. While this property is useful for making weapons that bypass metal armor, inubrix is barely sturdier than lead. Even in an alloyed state, this skymetal is so fragile that it's difficult to use in crafting reliable shields and less than ideal for crafting armor. ## Inubrix Items | Inubrix Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 4 | 16 | 8 | | High-grade | 7 | 28 | 14 | | **Items** | | | | | Standard-grade | 8 | 32 | 16 | | High-grade | 11 | 44 | 22 | | **Structures** | | | | | Standard-grade | 17 | 68 | 34 | | High-grade | 23 | 92 | 46 |"
+ },
+ {
+  "id": "inubrix-ingot",
+  "name": "Inubrix Ingot",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 5500
+  },
+  "text": "This pale, malleable metal's unusual molecular structure allows it to partially pass through iron and steel without touching them. While this property is useful for making weapons that bypass metal armor, inubrix is barely sturdier than lead. Even in an alloyed state, this skymetal is so fragile that it's difficult to use in crafting reliable shields and less than ideal for crafting armor. ## Inubrix Items | Inubrix Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 4 | 16 | 8 | | High-grade | 7 | 28 | 14 | | **Items** | | | | | Standard-grade | 8 | 32 | 16 | | High-grade | 11 | 44 | 22 | | **Structures** | | | | | Standard-grade | 17 | 68 | 34 | | High-grade | 23 | 92 | 46 |"
+ },
+ {
+  "id": "inubrix-object-high-grade",
+  "name": "Inubrix Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 6500
+  },
+  "text": "Inubrix Source Grand Bazaar pg. 98 This pale, malleable metal's unusual molecular structure allows it to partially pass through iron and steel without touching them. While this property is useful for making weapons that bypass metal armor, inubrix is barely sturdier than lead. Even in an alloyed state, this skymetal is so fragile that it's difficult to use in crafting reliable shields and less than ideal for crafting armor. Inubrix Inubrix Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 7 28 14 Items Standard-grade 8 32 16 High-grade 11 44 22 Structures Standard-grade 17 68 34 High-grade 23 92 46 Material Uses Inubrix Armor Inubrix Shield Inubrix Weapon Inubrix Chunk Source Grand Bazaar pg. 98 Price 550 gp Inubrix Ingot Source Grand Bazaar pg. 98 Price 5,500 gp Inubrix Object (Standard-Grade) Source Grand Bazaar pg. 98 Price 400 gp (per Bulk) Inubrix Object (High-Grade) Source Grand Bazaar pg. 98 Price 6,500 gp (per Bulk)"
+ },
+ {
+  "id": "inubrix-object-standard-grade",
+  "name": "Inubrix Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 400
+  },
+  "text": "Inubrix Source Grand Bazaar pg. 98 This pale, malleable metal's unusual molecular structure allows it to partially pass through iron and steel without touching them. While this property is useful for making weapons that bypass metal armor, inubrix is barely sturdier than lead. Even in an alloyed state, this skymetal is so fragile that it's difficult to use in crafting reliable shields and less than ideal for crafting armor. Inubrix Inubrix Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 7 28 14 Items Standard-grade 8 32 16 High-grade 11 44 22 Structures Standard-grade 17 68 34 High-grade 23 92 46 Material Uses Inubrix Armor Inubrix Shield Inubrix Weapon Inubrix Chunk Source Grand Bazaar pg. 98 Price 550 gp Inubrix Ingot Source Grand Bazaar pg. 98 Price 5,500 gp Inubrix Object (Standard-Grade) Source Grand Bazaar pg. 98 Price 400 gp (per Bulk) Inubrix Object (High-Grade) Source Grand Bazaar pg. 98 Price 6,500 gp (per Bulk)"
+ },
+ {
+  "id": "inventors-chair",
+  "name": "Inventor's Chair",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "relic"
+  ],
+  "text": "Inventor's Chair Source Treasure Vault (Remastered) pg. 205 Bulk 3 Initially crafted by a gifted inventor who no longer had the use of their legs, the inventor's chair is a traveler's chair. It's a marvel of engineering, utilizing clockwork mechanisms to maneuver about. The chair comes equipped with wheel blades, and portions of its frame contain sterling artisan's tools. The inventor's chair might be a family heirloom or a gift from someone who inherited it. It could instead sit unused in its inventor's abandoned estate, awaiting another user. Minor Gifts: emotion surge, muse (Crafting) Major Gifts: emotion conduit, enthralling Grand Gift: artistic perfection (Crafting)"
+ },
+ {
+  "id": "investigator-kit",
+  "name": "Investigator Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 9,
+   "sp": 2
+  },
+  "text": "Investigator Kit Source Player Core 2 pg. 277 Price 9 gp, 2 sp Money Left Over 5 gp, 8 sp Bulk 3, 5 light Armor Studded Leather Armor Weapons Shortsword, Sap, crossbow with 20 bolts Gear Crowbar, Adventurer's Pack Options alchemist’s toolkit (3 gp), simple manacles (3 gp), writing set (1 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "id": "iron-ingot",
+  "name": "Iron (Ingot)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Iron (Ingot) Source Travel Guide pg. 36 Price 1 gp"
+ },
+ {
+  "id": "item-cache-common-cache-level-1",
+  "name": "Item Cache (Common Cache Level 1)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 2
+  },
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache includes the cost of sourcing the items requested. The maximum item level available for cached items is typically equal to the maximum allowed by the level of the city or settlement. Extradimensional spaces such as bags of holding can be used for item caches, and the cost of those specialized containers must be paid in advance. The GM decides if you can commission the services of a supplier who can set up an item cache and what items can be sourced for that particular cache. Common item caches take 1d6 days to prepare and secure, while uncommon item caches take 1d6 months to prepare and secure d"
+ },
+ {
+  "id": "item-cache-common-cache-level-2",
+  "name": "Item Cache (Common Cache Level 2)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5
+  },
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache includes the cost of sourcing the items requested. The maximum item level available for cached items is typically equal to the maximum allowed by the level of the city or settlement. Extradimensional spaces such as bags of holding can be used for item caches, and the cost of those specialized containers must be paid in advance. The GM decides if you can commission the services of a supplier who can set up an item cache and what items can be sourced for that particular cache. Common item caches take 1d6 days to prepare and secure, while uncommon item caches take 1d6 months to prepare and secure d"
+ },
+ {
+  "id": "item-cache-common-cache-level-3",
+  "name": "Item Cache (Common Cache Level 3)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache includes the cost of sourcing the items requested. The maximum item level available for cached items is typically equal to the maximum allowed by the level of the city or settlement. Extradimensional spaces such as bags of holding can be used for item caches, and the cost of those specialized containers must be paid in advance. The GM decides if you can commission the services of a supplier who can set up an item cache and what items can be sourced for that particular cache. Common item caches take 1d6 days to prepare and secure, while uncommon item caches take 1d6 months to prepare and secure d"
+ },
+ {
+  "id": "item-cache-common-cache-level-4",
+  "name": "Item Cache (Common Cache Level 4)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache includes the cost of sourcing the items requested. The maximum item level available for cached items is typically equal to the maximum allowed by the level of the city or settlement. Extradimensional spaces such as bags of holding can be used for item caches, and the cost of those specialized containers must be paid in advance. The GM decides if you can commission the services of a supplier who can set up an item cache and what items can be sourced for that particular cache. Common item caches take 1d6 days to prepare and secure, while uncommon item caches take 1d6 months to prepare and secure d"
+ },
+ {
+  "id": "item-cache-uncommon-cache-level-1",
+  "name": "Item Cache (Uncommon Cache Level 1)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache includes the cost of sourcing the items requested. The maximum item level available for cached items is typically equal to the maximum allowed by the level of the city or settlement. Extradimensional spaces such as bags of holding can be used for item caches, and the cost of those specialized containers must be paid in advance. The GM decides if you can commission the services of a supplier who can set up an item cache and what items can be sourced for that particular cache. Common item caches take 1d6 days to prepare and secure, while uncommon item caches take 1d6 months to prepare and secure d"
+ },
+ {
+  "id": "item-cache-uncommon-cache-level-2",
+  "name": "Item Cache (Uncommon Cache Level 2)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache includes the cost of sourcing the items requested. The maximum item level available for cached items is typically equal to the maximum allowed by the level of the city or settlement. Extradimensional spaces such as bags of holding can be used for item caches, and the cost of those specialized containers must be paid in advance. The GM decides if you can commission the services of a supplier who can set up an item cache and what items can be sourced for that particular cache. Common item caches take 1d6 days to prepare and secure, while uncommon item caches take 1d6 months to prepare and secure d"
+ },
+ {
+  "id": "item-cache-uncommon-cache-level-3",
+  "name": "Item Cache (Uncommon Cache Level 3)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 100
+  },
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache includes the cost of sourcing the items requested. The maximum item level available for cached items is typically equal to the maximum allowed by the level of the city or settlement. Extradimensional spaces such as bags of holding can be used for item caches, and the cost of those specialized containers must be paid in advance. The GM decides if you can commission the services of a supplier who can set up an item cache and what items can be sourced for that particular cache. Common item caches take 1d6 days to prepare and secure, while uncommon item caches take 1d6 months to prepare and secure d"
+ },
+ {
+  "id": "item-cache-uncommon-cache-level-4",
+  "name": "Item Cache (Uncommon Cache Level 4)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 250
+  },
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache includes the cost of sourcing the items requested. The maximum item level available for cached items is typically equal to the maximum allowed by the level of the city or settlement. Extradimensional spaces such as bags of holding can be used for item caches, and the cost of those specialized containers must be paid in advance. The GM decides if you can commission the services of a supplier who can set up an item cache and what items can be sourced for that particular cache. Common item caches take 1d6 days to prepare and secure, while uncommon item caches take 1d6 months to prepare and secure d"
+ },
+ {
+  "id": "jahan-waystone",
+  "name": "Jahan Waystone",
+  "level": 21,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical",
+   "teleportation"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "This enormous stone glows with a pale light and emits a quiet hum. Each *Jahan waystone* is part of a paired link. The paired stones correspond in the color of the light they emit, as well as the specific tone at which they hum. --- **Activate** (1 minute) envision, Interact --- **Effect** You place your hand on the stone and focus on the stone's light. The stone's glow envelopes all creatures in a 10-foot radius with its light and attempts to teleport the creatures to its paired stone. If there is no open space within 30 feet of the target waystone, the teleportation attempt fails. A creature can resist the teleportation with a successful ."
+ },
+ {
+  "id": "jar-of-shifting-sands",
+  "name": "Jar of Shifting Sands",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 320
+  },
+  "text": "This small, ceramic jar is full, holding approximately a quarter gallon of sand. When poured out, the jar immediately begins to conjure more sand. It is said, however improbably, that this jar is responsible for creating at least one desert in the world. --- **Activate** ⟨1⟩ command, Interact --- **Effect** You cause sand to pour out of the jar at a rate of 1 gallon per round. This doesn't end until the cap is placed back on the jar. --- **Activate** ⟨2⟩ command, Interact --- **Effect** You quickly pour sand over an adjacent square, making it difficult terrain. You can't use either of the jar's activations for 1 minute."
+ },
+ {
+  "id": "jellyfish-lamp",
+  "name": "Jellyfish Lamp",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 2
+  },
+  "text": "These bioluminescent jellyfish are as bright as candles, come in a variety of colors, and can act as living lanterns. They dry up and die if removed from the water for more than 1 hour, but as long as they're allowed access to seawater, they can usually survive for up to 1 year by feeding on micronutrients. Rarely, a well-treated jellyfish lamp might live longer and potentially develop stronger light or additional abilities."
+ },
+ {
+  "id": "jistkan-colossus-crusher",
+  "name": "Jistkan Colossus Crusher",
+  "level": 15,
+  "itemType": "weapon",
+  "traits": [
+   "magical",
+   "shove"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 6250
+  },
+  "text": "This *+2 greater striking maul* is a marvel of magical and mechanical engineering, designed thousands of years ago by the mages of the Jistka Imperium for the express purpose of disabling any of the Imperium's countless magical constructs and automatons that might turn against their creators. When you damage a construct with a Strike from the Jistkan colossus crusher, you deal an additional 1d6 persistent force damage. Additionally, whenever you critically hit a construct with this weapon, the Jistkan colossus crusher briefly disrupts the magical energy signature animating the construct; it must succeed a save or become Stunned 1."
+ },
+ {
+  "id": "jorngarls-harm",
+  "name": "Jorngarl's Harm",
+  "level": 20,
+  "itemType": "weapon",
+  "traits": [
+   "occult"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "This oversized greataxe, infamous for the chilling laughter it emits whenever it takes a life, was crafted by the frost giant sorcerer Jorngarl from the final blade named Toothy Morris after it was stolen in an attack on a Gray Gardener convoy. It functions as a *+3 major striking vorpal greataxe* that retains the unique properties of a Final Blade, trapping the souls of any it slays and preventing them from being returned to life by any means short of divine intervention, even a Wish ritual or similar magic."
+ },
+ {
+  "id": "judgement-thurible",
+  "name": "Judgement Thurible",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Judgement Thurible Source Treasure Vault (Remastered) pg. 126 Usage affixed to armor or a weapon The golden religious symbol on the top of this spherical incense holder shifts its form to match the faith of its bearer. You gain no benefit from a judgment thurible if you don’t worship a deity. The spell DC of any spell cast by activating this item is 27. Armor After you cast a spell by activating the thurible, the thurible casts 3rd-rank protection on you, with a duration of 1 round. Weapon After you cast a spell by activating the thurible, the weapon gains a rune that lasts until the end of your next turn. It gains the holy rune if your deity allows holy sanctification or the unholy rune if your deity allows unholy sanctification. If your deity allows both, you can choose which rune the weapon gains. If your deity allows neither, your weapon doesn’t gain a rune. Activate Cast a Spell; Effect You cast divine lance. Judgement Thurible Source Treasure Vault (Remastered) pg. 126 Price 975 gp Activate Cast a Spell; Frequency once per day; Effect You cast divine wrath. Judgement Thurible (Greater) Source Treasure Vault (Remastered) pg. 126 Price 14,000 gp The additional damage from the rune granted by the thurible is 2d6, and the spell DC is 35. Activate Cast a Spell; Frequency once per day; Effect You cast 6th-rank divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast divine decree. Judgement Thurible (Major) Source Treasure Vault (Remastered) pg. 126 Price "
+ },
+ {
+  "id": "judgement-thurible-greater",
+  "name": "Judgement Thurible (Greater)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 14000
+  },
+  "text": "Judgement Thurible Source Treasure Vault (Remastered) pg. 126 Usage affixed to armor or a weapon The golden religious symbol on the top of this spherical incense holder shifts its form to match the faith of its bearer. You gain no benefit from a judgment thurible if you don’t worship a deity. The spell DC of any spell cast by activating this item is 27. Armor After you cast a spell by activating the thurible, the thurible casts 3rd-rank protection on you, with a duration of 1 round. Weapon After you cast a spell by activating the thurible, the weapon gains a rune that lasts until the end of your next turn. It gains the holy rune if your deity allows holy sanctification or the unholy rune if your deity allows unholy sanctification. If your deity allows both, you can choose which rune the weapon gains. If your deity allows neither, your weapon doesn’t gain a rune. Activate Cast a Spell; Effect You cast divine lance. Judgement Thurible Source Treasure Vault (Remastered) pg. 126 Price 975 gp Activate Cast a Spell; Frequency once per day; Effect You cast divine wrath. Judgement Thurible (Greater) Source Treasure Vault (Remastered) pg. 126 Price 14,000 gp The additional damage from the rune granted by the thurible is 2d6, and the spell DC is 35. Activate Cast a Spell; Frequency once per day; Effect You cast 6th-rank divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast divine decree. Judgement Thurible (Major) Source Treasure Vault (Remastered) pg. 126 Price "
+ },
+ {
+  "id": "judgement-thurible-major",
+  "name": "Judgement Thurible (Major)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 65000
+  },
+  "text": "Judgement Thurible Source Treasure Vault (Remastered) pg. 126 Usage affixed to armor or a weapon The golden religious symbol on the top of this spherical incense holder shifts its form to match the faith of its bearer. You gain no benefit from a judgment thurible if you don’t worship a deity. The spell DC of any spell cast by activating this item is 27. Armor After you cast a spell by activating the thurible, the thurible casts 3rd-rank protection on you, with a duration of 1 round. Weapon After you cast a spell by activating the thurible, the weapon gains a rune that lasts until the end of your next turn. It gains the holy rune if your deity allows holy sanctification or the unholy rune if your deity allows unholy sanctification. If your deity allows both, you can choose which rune the weapon gains. If your deity allows neither, your weapon doesn’t gain a rune. Activate Cast a Spell; Effect You cast divine lance. Judgement Thurible Source Treasure Vault (Remastered) pg. 126 Price 975 gp Activate Cast a Spell; Frequency once per day; Effect You cast divine wrath. Judgement Thurible (Greater) Source Treasure Vault (Remastered) pg. 126 Price 14,000 gp The additional damage from the rune granted by the thurible is 2d6, and the spell DC is 35. Activate Cast a Spell; Frequency once per day; Effect You cast 6th-rank divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast divine decree. Judgement Thurible (Major) Source Treasure Vault (Remastered) pg. 126 Price "
+ },
+ {
+  "id": "junk-bomb-lesser",
+  "name": "Junk Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This volatile-looking bomb is cobbled together from jagged metal scrap, broken glass, and other bits of razor-sharp fragments, lashed around a core of explosive alchemical slag. A junk bomb deals 1d8 damage, 1 damage, and 1 slashing splash damage."
+ },
+ {
+  "id": "juxtaposition-ammunition",
+  "name": "Juxtaposition Ammunition",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 225
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ Interact --- Juxtaposition ammunition quivers with anticipation, as if the projectile wishes to constantly be in motion. When an activated juxtaposition ammunition hits a creature, it doesn't deal the Strike's normal damage. Instead, the target must succeed at a save or be teleported to a safe, unoccupied square of your choice within 60 feet of its original position and within the weapon's first range increment. On a critical failure, the target is also Sickened 1 from the gut-wrenching sensation of sudden movement. Any relocation from the juxtaposition ammunition is forced movement."
+ },
+ {
+  "id": "kayalini",
+  "name": "Kayalini",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 5
+  },
+  "text": "Kayalini Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 5 gp Originally brought to Absalom by kayals fleeing the Shadow Plane, kayalinis are shy creatures made from shadow. They resemble small monkeys with reptilian features like claws, short horns, and long, shadowy tongues. When in a new home, they tend to hide under beds or in closets. Around people they trust, they'll sit quietly on a lap for hours."
+ },
+ {
+  "id": "keen",
+  "name": "Keen",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-piercing-or-slashing-melee-weapon",
+  "price": {
+   "gp": 3000
+  },
+  "text": "The edges of a *keen* weapon are preternaturally sharp. Attacks with this weapon are a critical hit on a 19 on the die as long as that result is a success. This property has no effect on a 19 if the result would be a failure."
+ },
+ {
+  "id": "keep-stone-chunk",
+  "name": "Keep Stone Chunk",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "carried",
+  "price": {
+   "gp": 750
+  },
+  "text": "The crowning achievement of Highhelm's millennia of metallurgical advancements and engineering is the beautiful alloy called keep stone. Despite its name, no stone is used in the production of keep stone. Through the use of a highly guarded process that smelts together adamantine and lead, Highhelm's greatest crafters were able to develop a material with an appearance that more closely resembles marble than metal. Keep stone is only slightly weaker than adamantine alone, but with the incredible ability to disrupt magic. Any spell or magical effect targeting raw keep stone must succeed at a DC 5 flat check or the effect is lost. Keep stone's use in the construction of Torag's Shield is not only to stretch Highhelm's adamantine reserves further and protect the walls from magical assault, but also because of its protective effects on divination magic on both Highhelm itself and its immediate vicinity. If the target of a divination spell is in the presence of a large quantity of keep stone, including a structure, the caster must also succeed at a DC 5 flat check or the spell is lost. ## Keep Stone Items | Keep Stone Items | Hardness | HP | BT | | --- | --- | --- | --- | | Thin Items | | | | | High-grade | 10 | 46 | 24 | | Items | | | | | High-grade | 14 | 60 | 30 | | Structure | | | | | High-grade | 30 | 122 | 61 |"
+ },
+ {
+  "id": "keep-stone-ingot",
+  "name": "Keep Stone Ingot",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "carried",
+  "price": {
+   "gp": 7500
+  },
+  "text": "The crowning achievement of Highhelm's millennia of metallurgical advancements and engineering is the beautiful alloy called keep stone. Despite its name, no stone is used in the production of keep stone. Through the use of a highly guarded process that smelts together adamantine and lead, Highhelm's greatest crafters were able to develop a material with an appearance that more closely resembles marble than metal. Keep stone is only slightly weaker than adamantine alone, but with the incredible ability to disrupt magic. Any spell or magical effect targeting raw keep stone must succeed at a DC 5 flat check or the effect is lost. Keep stone's use in the construction of Torag's Shield is not only to stretch Highhelm's adamantine reserves further and protect the walls from magical assault, but also because of its protective effects on divination magic on both Highhelm itself and its immediate vicinity. If the target of a divination spell is in the presence of a large quantity of keep stone, including a structure, the caster must also succeed at a DC 5 flat check or the spell is lost. ## Keep Stone Items | Keep Stone Items | Hardness | HP | BT | | --- | --- | --- | --- | | Thin Items | | | | | High-grade | 10 | 46 | 24 | | Items | | | | | High-grade | 14 | 60 | 30 | | Structure | | | | | High-grade | 30 | 122 | 61 |"
+ },
+ {
+  "id": "keep-stone-object-high-grade",
+  "name": "Keep Stone Object (High-Grade)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 9000
+  },
+  "text": "Keep Stone Source Highhelm pg. 113 The crowning achievement of Highhelm's millennia of metallurgical advancements and engineering is the beautiful alloy called keep stone. Despite its name, no stone is used in the production of keep stone. Through the use of a highly guarded process that smelts together adamantine and lead, Highhelm's greatest crafters were able to develop a material with an appearance that more closely resembles marble than metal. Keep stone is only slightly weaker than adamantine alone, but with the incredible ability to disrupt magic. Any spell or magical effect targeting raw keep stone must succeed at a DC 5 flat check or the effect is lost. Keep stone's use in the construction of Torag's Shield is not only to stretch Highhelm's adamantine reserves further and protect the walls from magical assault, but also because of its protective effects on divination magic on both Highhelm itself and its immediate vicinity. If the target of a divination spell is in the presence of a large quantity of keep stone, including a structure, the caster must also succeed at a DC 5 flat check or the spell is lost. Keep Stone Keep Stone Items Hardness HP BT Thin Items High-Grade 10 46 24 Items High-Grade 14 60 30 Structures High-Grade 30 122 61 Material Uses Keep Stone Armor Keep Stone Shield Keep Stone Weapon Keep Stone Chunk Source Highhelm pg. 113 Price 750 gp Keep Stone Ingot Source Highhelm pg. 113 Price 7,500 gp Keep Stone Object (High-Grade) Source Highhelm pg. 113 Pric"
+ },
+ {
+  "id": "kite",
+  "name": "Kite",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 4
+  },
+  "text": "This colorful canvas kite is controlled by twine and flies when it catches the wind."
+ },
+ {
+  "id": "knapsack-of-halflingkind",
+  "name": "Knapsack of Halflingkind",
+  "level": 9,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "healing",
+   "invested",
+   "magical"
+  ],
+  "usage": "wornbackpack",
+  "price": {
+   "gp": 675
+  },
+  "text": "This sturdy leather satchel contains three compartments fastened with large clasps. The first compartment is lined in blue satin and contains an extradimensional space equivalent to a Spacious Pouch (Type II). The second compartment has no lining. You can pull forth cookware and cooking utensils from it. Once they have been used to prepare a meal, the items transform into plates and silverware, and they evaporate once the meal has been eaten, taking any leftovers with them. The cookware reappears cleaned in the compartment 1 hour later. The compartment provides only kitchenware, not any food. The third compartment is lined with plush purple velvet and contains berry tarts wrapped in parchment paper. A creature can unwrap and eat one tart with an Interact action to regain 2d8+4 Hit Points. The knapsack produces four tarts per day, which appear at breakfast time. Any tarts not eaten by the end of the day evaporate."
+ },
+ {
+  "id": "knaves-standard",
+  "name": "Knave's Standard",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "cp": 0,
+   "gp": 100,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This magical banner is dip-dyed in an ombre from black to red, mottled and uneven. Whenever you or an ally within the banner's aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d4 precision damage."
+ },
+ {
+  "id": "knaves-standard-greater",
+  "name": "Knave's Standard (Greater)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "gp": 1800
+  },
+  "text": "This magical banner is dip-dyed in an ombre from black to red, mottled and uneven. Whenever you or an ally within the banner's aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d6 precision damage."
+ },
+ {
+  "id": "knaves-standard-major",
+  "name": "Knave's Standard (Major)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "cp": 0,
+   "gp": 36000,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This magical banner is dip-dyed in an ombre from black to red, mottled and uneven. Whenever you or an ally within the banner's aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d8 precision damage."
+ },
+ {
+  "id": "knights-standard",
+  "name": "Knight's Standard",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 5
+  },
+  "text": "This cloth flag or banner, no larger than a few feet long, bears the symbol or heraldry of a deity, knightly house, nation, or similar organization. A typical standard comes with a stand or pole to hold it aloft. You can instead spend 2 consecutive Interact actions to mount a knight's standard on a two-handed polearm or spear weapon; the standard is visible as long as you wield the weapon with two hands. Some individuals are inspired by the sight of a standard or demoralized by the destruction of one."
+ },
+ {
+  "id": "ladder-10-foot",
+  "name": "Ladder (10-foot)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "cp": 3
+  },
+  "text": ""
+ },
+ {
+  "id": "ladder-10-ft",
+  "name": "Ladder (10 ft.)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 3
+  },
+  "text": "Ladder (10 ft.) Source Player Core pg. 288 Price 3 cp Hands 2 Bulk 3"
+ },
+ {
+  "id": "land-delvers-chair",
+  "name": "Land-delver's Chair",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 5
+  },
+  "text": "A supramarine chair is a wheeled, water-filled bath or tank, originally designed by merfolk, for assisting aquatic people's mobility on land. The heavier-duty land-delver's chair functions as a Traveler's Chair. You increase your Speed to 20 feet or your swim Speed, whichever is lower."
+ },
+ {
+  "id": "lantern-bulls-eye",
+  "name": "Lantern (Bull's-Eye)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "A lantern sheds bright light and requires 1 pint of oil to function for 6 hours. A bull's-eye lantern emits its light in a 60-foot cone (and dim light in the next 60 feet)."
+ },
+ {
+  "id": "lantern-hooded",
+  "name": "Lantern (Hooded)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 7
+  },
+  "text": "A lantern sheds bright light and requires 1 pint of oil to function for 6 hours. A hooded lantern sheds light in a 30-foot radius (and dim light in the next 30 feet) and is equipped with shutters, which you can close to block the light. Closing or opening the shutters takes an Interact action."
+ },
+ {
+  "id": "lantern-implement",
+  "name": "Lantern Implement",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "large-bore-modifications",
+  "name": "Large Bore Modifications",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "attached-to-firearm",
+  "price": {
+   "gp": 120
+  },
+  "text": "These modifications include a heavier stock and larger replacement barrel designed to increase the stopping power of firearms. *Large bore modifications* can only be applied to firearms with the kickback or scatter traits, and attaching *large bore modifications* takes 1 hour, though this time can overlap with the standard time required to maintain and clean your firearm to prevent misfires. When you attach *large bore modifications* to a kickback weapon, the bonus to damage granted by the kickback trait increases from 1 to 2 additional Damage and the Strength requirement to fire the weapon without penalty increases to +4. When you attach *large bore modifications* to a weapon with the scatter trait, the radius of the scatter effect increases by 5 feet, but the weapon imposes a -2 penalty on attack rolls if the wielder's Strength modifier is less than +2. If the weapon has both the kickback and scatter traits, apply both sets of modifications with the Strength requirement raised to +4 to avoid penalties when firing."
+ },
+ {
+  "id": "lashing-currents",
+  "name": "Lashing Currents",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "water"
+  ],
+  "text": "Lashing Currents Source GM Core pg. 318 Aspect Water Prerequisite The relic is a weapon. Water collects at the tip of your relic. You can adjust your grip on your relic with an Interact action to allow you to make lashing current weapon Strikes with your relic, which deal 1d4 bludgeoning damage; have the disarm, finesse, reach 10, trip, and versatile S traits; and are in the flail group. Your lashing current Strikes gain the benefit of your relic's fundamental and property runes, though any property runes that would not be applicable to the lashing currents are not applied. You can use another Interact action to return to your normal grip and make Strikes with the relic."
+ },
+ {
+  "id": "leash",
+  "name": "Leash",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "leather",
+  "name": "Leather",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 2
+  },
+  "text": "Leather Source Travel Guide pg. 37 Price 2 cp (+ per square yard)"
+ },
+ {
+  "id": "legerdemain-handkerchief",
+  "name": "Legerdemain Handkerchief",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 25
+  },
+  "text": "This frilled, silvery-gray handkerchief is a stylish tool for personal hygiene by all appearances, but it can be used to covertly make very small items vanish. **Activate** ⟨1⟩ (manipulate) **Requirements** The handkerchief is entirely covering an item of negligible Bulk --- **Effect** The handkerchief transports the item it covers into its extradimensional space. The handkerchief can hold only one item within its extradimensional space at a time, so any item taken is replaced by any item already within the space. You can also use this action to expel an item already within the extradimensional space without replacing it. This activation can't be used on an attended item unless the creature with that item allows it. Placing the handkerchief over an item typically takes an Interact action."
+ },
+ {
+  "id": "lesser-aurochs-might-tattoo",
+  "name": "Lesser Aurochs' Might Tattoo",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 475
+  },
+  "text": "Aurochs' Might Tattoo May contain spoilers from Triumph of the Tusk Source Pathfinder #207: Resurrection Flood pg. 79 Usage tattooed on the body The auroch depicted by this tattoo is a powerful symbol of strength and resilience. When upgraded, the tattoo expands to depict an increasingly imposing herd of aurochs. Activate—Aurochs Charge (concentrate) Frequency once per day; Effect You Stride twice and make a melee Strike against a creature within your reach at any point during your movement. If the Strike hits and deals damage, the target attempts a DC 24 Fortitude save to avoid being toppled by the impact. Critical Success The target is unaffected. Success The target is off-guard until the beginning of its next turn. Failure The target is knocked prone. Critical Failure As failure, but the target also takes 2d6 bludgeoning damage. Lesser Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 475 gp Moderate Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 2,575 gp The Fortitude saving throw DC is 30, and the bludgeoning damage dealt by a critical failure is 4d6. Greater Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 20,000 gp The Fortitude saving throw DC is 38, and the bludgeoning damage dealt by a critical failure is 6d6."
+ },
+ {
+  "id": "lesser-banner-of-creeping-death",
+  "name": "Lesser Banner of Creeping Death",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "price": {
+   "gp": 120
+  },
+  "text": "Banner of Creeping Death Source Battlecry! pg. 138 Usage affixed or held in 1 hand Bulk L The very fabric of this off-putting magical banner seems to be rotting with a slick, foul texture. Traditionally, these banners were created from the uniforms of fallen enemy troops, but this is considered a cruel and dishonorable practice by many modern nations. While holding a banner of creeping death, you can use the following ability. Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions. All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save). Lesser Banner of Creeping Death Source Battlecry! pg. 138 Price 120 gp Moderate Banner of Creeping Death Source Battlecry! pg. 138 Price 750 gp The void damage increases to 2d4+2 and the save DC increases to 26. Greater Banner of Creeping Death Source Battlecry! pg. 138 Price 4,500 gp The void damage increases to 4d4+4 and the save DC increases to 32. Major Banner of Creeping Death Source Battlecry! pg. 138 Price 36,000 gp The void damage increases 8d4+8 and the save DC increases to 42."
+ },
+ {
+  "id": "lesser-bougainvillea-blossom",
+  "name": "Lesser Bougainvillea Blossom",
+  "level": 3,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 10
+  },
+  "text": "Bougainvillea Blossom May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This pink flower has long, slender thorns along the stem. The flower can be used as a catalyst when casting an entangling flora spell, which causes the affected plants to sprout long thorns and vibrant pink blossoms. The area becomes hazardous terrain, dealing the listed piercing damage to an enemy each time it enters an affected square. Lesser Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 10 gp The piercing damage of the hazardous terrain is 1. Moderate Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 60 gp The piercing damage of the hazardous terrain is 2. Greater Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 300 gp The piercing damage of the hazardous terrain is 3. Major Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 1,200 gp The piercing damage of the hazardous terrain is 5."
+ }
+]

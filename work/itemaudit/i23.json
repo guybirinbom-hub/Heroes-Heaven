@@ -1,0 +1,845 @@
+[
+ {
+  "id": "temporal-pulse",
+  "name": "Temporal Pulse",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Temporal Pulse Source Treasure Vault (Remastered) pg. 200 Aspect Time Activate (concentrate) Frequency once per day; Effect You make time shudder around you, stealing it from enemies and granting it to allies. Creatures of your choice within 30 feet must attempt a Will save. For each creature you render slowed with this gift, you can render one ally within 30 feet, including you, quickened for 1 round. Success The creature is unaffected. Failure The creature is slowed 1. Critical Failure The creature is slowed 2."
+ },
+ {
+  "id": "ten-foot-pole",
+  "name": "Ten-Foot Pole",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "cp": 1
+  },
+  "text": "When wielding this long pole, you can use Seek to search a square up to 10 feet away. The pole is not sturdy enough to use as a weapon."
+ },
+ {
+  "id": "tenderizer-grenade-lesser",
+  "name": "Tenderizer Grenade (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb's contents soften, oxidize, and season whatever they touch. On a successful Strike, a tenderizer grenade deals the 1d6 acid damage to the target and the 1 acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb's type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature's mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit."
+ },
+ {
+  "id": "tent-four-person",
+  "name": "Tent (Four-Person)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 5
+  },
+  "text": ""
+ },
+ {
+  "id": "tent-pavilion",
+  "name": "Tent (Pavilion)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 40
+  },
+  "text": ""
+ },
+ {
+  "id": "tent-pup",
+  "name": "Tent (Pup)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 8
+  },
+  "text": ""
+ },
+ {
+  "id": "terrifying-ammunition",
+  "name": "Terrifying Ammunition",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "emotion",
+   "fear",
+   "magical",
+   "mental"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 50
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This black-and-gray ammunition is etched with occult symbols and tiny, grinning skulls. When activated terrifying ammunition damages a creature, it fills the creature's mind with visions of their own failures, tragedies, and eventually, their own death. The creature must attempt a save. --- **Critical Success** The creature is unaffected. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 1 and can't reduce its frightened value below 1 until it spends an action, which has the concentrate trait, to calm itself down. **Critical Failure** As failure, but the creature is Frightened 2."
+ },
+ {
+  "id": "the-juggler",
+  "name": "The Juggler",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "usage": "carried",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {},
+  "text": "**Suit** Key (Dex) **Alignment** chaotic good --- *The Juggler* represents coordination and destiny. As long as you have *The Juggler* invested and you aren't carrying an item in two hands, you have a free hand (as you keep tossing the items in your hands back and forth, keeping one in the air at all times). You can use all items in your hands normally, so long as they can be used or wielded in one hand. If you can't act while you're carrying more items than your actual number of hands, you release all items you're holding or wielding. If you are at least 17th level, you instead have two free hands, as you can juggle an additional item. **Activate** ⟨5⟩ Interact **Trigger** an item of 1 Bulk or less falls within your reach, or an attacker fails an attack roll to hit you or a creature within your reach with a thrown weapon of 1 Bulk or less --- **Effect** You grab the triggering item. If all of your hands are full (including any extra free hands from The Juggler), you must immediately release an item, which can include the triggering item."
+ },
+ {
+  "id": "the-old-mage-deck",
+  "name": "The Old Mage Deck",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 5
+  },
+  "text": "The Old Mage Deck Source Secrets of Magic pg. 183 Price 5 sp Hands 2 Also known as the Magician's Deck in Taldor or the Deck of Masks in the Shackles, the non-magical deck of cards called the Old Mage Deck exists with minor variances across Golarion. The four suits correspond to the four essences of magic (matter, spirit, mind, life) and each contains 13 numbered cards with characters depicted on them, plus two wildcards. While common decks are inexpensive (costing 5 sp), limited-edition decks with elaborate art and high-quality materials are often highly sought after by collectors. A deck has negligible Bulk, and takes both hands to use. In a classic Old Mage Deck, the 13 cards in each suit are as follows, with Jatembe's Ten Magic Warriors as cards 2 through 11: Initiate (1), Red Hyena (2), Grey Elephant (3), Golden Snake (4), Black Ibex (5), Frog of Shifting Colors (6), Emerald Spider (7), Walnut Hawk (8), White Bull (9), Blue Leopard (10), Black Heron (11), a different creature for each suit representing the given suit's magical essence (12), and Old Mage Jatembe using magic of the suit's essence (13). Wildcards vary from deck to deck, making each Old Mage Deck unique. Old Mage Deck Substitutions Old Mage Deck Standard Deck Minor Arcana Suit of Matter Diamonds Pentacles Suit of Spirit Clubs Wands Suit of Mind Spades Swords Suit of Life Hearts Cups One Ace Ace Eleven Jack Knight Twelve Queen Queen Thirteen King King Wildcards Jokers Any two Pages or Major Arcana cards"
+ },
+ {
+  "id": "theater-enhancers",
+  "name": "Theater Enhancers",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worneyeglasses",
+  "price": {
+   "gp": 15
+  },
+  "text": "*Theater enhancers* resemble a pair of opera glasses. When worn, they allow the viewer to see subtle illusions on key props or stage elements that have been cast ahead of time. For instance, a puppet of a demon might appear to project a sinister moving shadow, or a backdrop of a mountain might have snowflakes falling over it. Popular among theatergoers who want a visual experience grander than what they can see with their own eyes, *theater enhancers* are largely limited to fancy stage productions that can afford the time and money it takes to enchant a stage with them in mind."
+ },
+ {
+  "id": "thieves-toolkit",
+  "name": "Thieves' Toolkit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 3
+  },
+  "text": "You need a thieves' toolkit to Pick Locks or Disable Devices (of some types) using the Thievery skill. If your thieves' toolkit is broken, you can repair it by replacing the lock picks with Replacement Picks appropriate to your toolkit; this doesn't require using the Repair action. If you wear your thieves' toolkit, you can draw and replace it as part of the action that uses it."
+ },
+ {
+  "id": "thieves-toolkit-infiltrator-picks",
+  "name": "Thieves' Toolkit (Infiltrator Picks)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 3
+  },
+  "text": "These are replacement picks for Thieves' Toolkit (Infiltrator)."
+ },
+ {
+  "id": "thieves-toolkit-replacement-picks",
+  "name": "Thieves' Toolkit (Replacement Picks)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "sp": 3
+  },
+  "text": "These are replacement picks for a Thieves' Toolkit."
+ },
+ {
+  "id": "thieves-tools-concealable-picks",
+  "name": "Thieves' Tools (Concealable Picks)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 10
+  },
+  "text": "These are replacement picks for Thieves' Tools (Concealable)."
+ },
+ {
+  "id": "thrasher-tail",
+  "name": "Thrasher Tail",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork",
+   "kobold",
+   "mechanical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 620
+  },
+  "text": "Kobolds admire well-designed objects, especially if it gives them an opportunity to pack it with traps and surprises. This prosthetic tail hides numerous blades and spikes, tensioned and wound around a spring-loaded trigger at the base of the prosthesis. Resetting and reattaching a sprung thrasher tail takes 10 minutes. **Activate** ⟨5⟩ **Trigger** You're grabbed --- **Effect** Your tail comes off in your opponent's hand, and the mechanism unwinds, causing the blades and spikes to protrude and the tail to spin and thrash. The tail deals 8d6 damage to the opponent who has you grabbed with a save. Regardless of the result of their save, you're no longer grabbed."
+ },
+ {
+  "id": "thresholds-of-truth",
+  "name": "Thresholds of Truth",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "Zarmavdian's spellbook, *Thresholds of Truth*, was once a straightforward treatise on arcane and occult lore containing several useful spells. It's been so heavily annotated, however, that the original text is hard to read. It's clear that Zarmavdian wanted to prevent eldritch creatures from manipulating innocent minds, but his spellbook is a treasure trove for those seeking dangerous or inscrutable lore. The bookseller Morlibint currently keeps this book in his collection at Odd Stories. Thresholds of Truth provides access to the archetype and contains the following spells: --- Cantrips - Void Warp - Light - Daze - Detect Magic - Electric Arc - Ghost Sound - Telekinetic Hand - Light - - Read Aura - Shield 1st Level - Alarm - Charm - Dizzying Colors - Mystic Armor - Force Barrage - Sure Strike - Phantasmal Minion 2nd Level - Translate - Dispel Magic - False Vitality - Revealing Light - Web 3rd Level - Haste - Lightning Bolt - Locate - Paralyze - Slow 4th Level - - Daydreamer's Curse - Containment"
+ },
+ {
+  "id": "throwers-bandolier",
+  "name": "Thrower's Bandolier",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "This bandolier is covered in straps and pouches capable of holding up to 2 Bulk of one-handed thrown weapons. A thrower's bandolier has a *+1 weapon potency rune* etched into it, and it can be etched with runes as though it were a one-handed thrown weapon. When you invest the thrower's bandolier, you can attune it to all the weapons sheathed in it (this ends any previous attunements made with the bandolier). Whenever you draw a weapon from the bandolier, the bandolier's runes are replicated onto that weapon. Any runes already on the weapon are suppressed, and any runes previously replicated to a different weapon in this way are removed, returning it to normal. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Effect** All weapons attuned to the bandolier, not including any weapons you're currently wielding, return to the bandolier."
+ },
+ {
+  "id": "throwing-shield",
+  "name": "Throwing Shield",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "adjustment"
+  ],
+  "usage": "applied-to-buckler-shield",
+  "price": {
+   "gp": 5
+  },
+  "text": "These special straps and weightings fit over a shield or buckler, but not a tower shield. They are designed to let you doff and throw the shield in one swift movement. You can quickly remove the shield by spending a free action as part of the Strike to throw the shield. When thrown in this way, the shield is a martial thrown weapon that deals 1d6 bludgeoning damage and has the thrown 20 feet trait. A shield with the throwing shield attachment can't have any attached weapons, such as shield spikes or a shield boss, and the adjustments to make it more aerodynamic make it slightly less sturdy, reducing its Hardness by 1."
+ },
+ {
+  "id": "thundering",
+  "name": "Thundering",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "sonic"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 500
+  },
+  "text": "A *thundering* weapon lets out a peal of thunder when it hits, dealing an extra 1d6 sonic damage on a successful Strike. On a critical hit, the target must succeed at a save or be deafened for 1 minute (or 1 hour on a critical failure)."
+ },
+ {
+  "id": "thundering-greater",
+  "name": "Thundering (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "sonic"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 6500
+  },
+  "text": "A *thundering* weapon lets out a peal of thunder when it hits, dealing an extra 1d6 sonic damage on a successful Strike. On a critical hit, the target must succeed at a save or be deafened permanently. Sonic damage dealt by this weapon ignores the target's sonic resistance."
+ },
+ {
+  "id": "tidal-crash",
+  "name": "Tidal Crash",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "water"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Tidal Crash Source GM Core pg. 318 Aspect Water Activate (concentrate) Frequency once per day; Effect Your relic spews forth a dense sphere of water. Make a spell attack roll against a target within 30 feet. On a success, you deal 2d10 bludgeoning damage plus 2 bludgeoning splash damage. At 3rd level and every 2 levels thereafter, increase the initial damage by 1d10 and the splash damage by 1."
+ },
+ {
+  "id": "time-jump",
+  "name": "Time Jump",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Time Jump Source Treasure Vault (Remastered) pg. 200 Aspect Time Activate (concentrate) Frequency once per day; Effect Your relic casts time jump on you to your specifications."
+ },
+ {
+  "id": "time-reversal",
+  "name": "Time Reversal",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Time Reversal Source Treasure Vault (Remastered) pg. 200 Aspect Time Activate (concentrate) Frequency once per day; Effect The relic casts time beacon on you."
+ },
+ {
+  "id": "timepiece-desktop-clock",
+  "name": "Timepiece (Desktop Clock)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10
+  },
+  "text": "Clockwork timepieces come in a variety of sizes and aesthetic styles, but they're all designed to display the accurate time of day down to the second. Clockwork timepieces have a 24-hour activation cycle, after which they must wound in a process that takes 1 minute to complete. Desktop clocks have been designed to be small enough to only take up a quarter of a typical writing desk's surface area, but they're still too bulky and heavy to be lugged around casually."
+ },
+ {
+  "id": "timepiece-grand-clock",
+  "name": "Timepiece (Grand Clock)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 50
+  },
+  "text": "Clockwork timepieces come in a variety of sizes and aesthetic styles, but they're all designed to display the accurate time of day down to the second. Clockwork timepieces have a 24-hour activation cycle, after which they must wound in a process that takes 1 minute to complete. These towering, ten-foot-tall clocks have been painstakingly handcrafted by skilled artisans and feature loud chimes that can be heard hourly throughout a manor. Owners of grand clocks usually tend to display them prominently in a study, lounge area, or foyer."
+ },
+ {
+  "id": "tin-ingot",
+  "name": "Tin (Ingot)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 30
+  },
+  "text": "Tin (Ingot) Source Travel Guide pg. 36 Price 30 gp"
+ },
+ {
+  "id": "toll",
+  "name": "Toll",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Toll Source Player Core pg. 294 Price 1 cp"
+ },
+ {
+  "id": "tome-implement",
+  "name": "Tome Implement",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "tool-long",
+  "name": "Tool (Long)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1
+  },
+  "text": "This entry is a catchall for basic hand tools that don't have a specific adventuring purpose. A hoe, shovel, or sledgehammer is a long tool, and a hand drill, ice hook, or trowel is a short tool. A tool can usually be used as an improvised weapon, dealing 1d6 damage. The GM determines the damage type that's appropriate or adjusts the damage if needed."
+ },
+ {
+  "id": "tool-short",
+  "name": "Tool (Short)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "sp": 4
+  },
+  "text": "This entry is a catchall for basic hand tools that don't have a specific adventuring purpose. A hoe, shovel, or sledgehammer is a long tool, and a hand drill, ice hook, or trowel is a short tool. A tool can usually be used as an improvised weapon, dealing 1d4 damage. The GM determines the damage type that's appropriate or adjusts the damage if needed."
+ },
+ {
+  "id": "toolkit-of-bronze-whispers",
+  "name": "Toolkit of Bronze Whispers",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "divine",
+   "intelligent"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 50
+  },
+  "text": "**Perception** +12; precise vision 30 feet, imprecise hearing 30 feet **Communication** telepathy (Common and two other common languages) **Skills** Clockwork Lore +15, Crafting +13, Religion +11 **Int** +4, **Wis** +3, **Cha** +0 **Will** +12 --- Sacred to the faith of Brigh, a toolkit of bronze whispers has been used with such devotion it has developed a consciousness and personality that can be a blessing to a partnered crafter. A toolkit of bronze whispers functions as a set of Artisan's Tools (Sterling). Such toolkits focus on new creations and enthusiastically suggest crafting techniques to wielders. A toolkit of bronze whispers knows common item formulas of its level or lower and any other formulas the GM chooses. It can teach these formulas. You must still spend the time to copy a formula before you can use it."
+ },
+ {
+  "id": "tooth-and-claw-tattoo",
+  "name": "Tooth and Claw Tattoo",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "usage": "tattooed-on-the-body",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "This tattoo resembles an animal's fangs, claws, or similar natural weapons, letting you wield such weapons and turn into the same beast. When you receive the tattoo, choose the animal from among the following: ape, bear, bull, canine, cat, deer, frog, shark, or snake. You can ask questions of, receive answers from, and use the Diplomacy skill with animals of that kind. This tattoo is usually located on the body part or parts it's meant to transform—on the back of the hands for claws, around the mouth for jaws, on the forehead for horns, and so on. **Activate** ⟨1⟩ (concentrate, morph) --- **Effect** You gain an unarmed attack matching the tattoo for 1 minute. It has the same damage as your best unarmed attack and has the same traits. Its damage type is bludgeoning for a fist or frog's jaws; piercing for an antler, fangs, horns, or most jaws; or slashing for claws. **Activate** ⟨2⟩ (concentrate, polymorph) --- **Effect** The tattoo casts 3rd-rank Animal Form to transform you into the animal that matches your tattoo."
+ },
+ {
+  "id": "tooth-and-claw-tattoo-greater",
+  "name": "Tooth and Claw Tattoo (Greater)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "usage": "tattooed-on-the-body",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "This tattoo resembles an animal's fangs, claws, or similar natural weapons, letting you wield such weapons and turn into the same beast. When you receive the tattoo, choose the animal from among the following: ape, bear, bull, canine, cat, deer, frog, shark, or snake. You can ask questions of, receive answers from, and use the Diplomacy skill with animals of that kind. This tattoo is usually located on the body part or parts it's meant to transform—on the back of the hands for claws, around the mouth for jaws, on the forehead for horns, and so on. **Activate** ⟨1⟩ (concentrate, morph) --- **Effect** You gain an unarmed attack matching the tattoo for 1 minute. It has the same damage as your best unarmed attack and has the same traits. Its damage type is bludgeoning for a fist or frog's jaws; piercing for an antler, fangs, horns, or most jaws; or slashing for claws. **Activate** ⟨2⟩ (concentrate, polymorph) --- **Effect** The tattoo casts 4th-rank Animal Form to transform you into the animal that matches your tattoo."
+ },
+ {
+  "id": "tooth-and-claw-tattoo-major",
+  "name": "Tooth and Claw Tattoo (Major)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "usage": "tattooed-on-the-body",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "This tattoo resembles an animal's fangs, claws, or similar natural weapons, letting you wield such weapons and turn into the same beast. When you receive the tattoo, choose the animal from among the following: ape, bear, bull, canine, cat, deer, frog, shark, or snake. You can ask questions of, receive answers from, and use the Diplomacy skill with animals of that kind. This tattoo is usually located on the body part or parts it's meant to transform—on the back of the hands for claws, around the mouth for jaws, on the forehead for horns, and so on. **Activate** ⟨1⟩ (concentrate, morph) --- **Effect** You gain an unarmed attack matching the tattoo for 1 minute. It has the same damage as your best unarmed attack and has the same traits. Its damage type is bludgeoning for a fist or frog's jaws; piercing for an antler, fangs, horns, or most jaws; or slashing for claws. **Activate** ⟨2⟩ (concentrate, polymorph) --- **Effect** The tattoo casts 5th-rank Animal Form to transform you into the animal that matches your tattoo."
+ },
+ {
+  "id": "torch",
+  "name": "Torch",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "cp": 1
+  },
+  "text": "A torch sheds bright light in a 20-foot radius (and dim light to the next 20 feet) for 1 hour. It can be used as an improvised weapon that deals 1d4 bludgeoning damage plus 1 fire damage."
+ },
+ {
+  "id": "toxic-blood",
+  "name": "Toxic Blood",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical",
+   "poison"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 650
+  },
+  "text": "Your blood flows with tetrodotoxin or a similar toxin, poisoning enemies who dare to bite you. Creatures that damage you with an attack using their mouths (such as a jaws or fang Strike) must attempt a saving throw. --- **Critical Success** The creature is unaffected. **Success** The creature is Sickened 1. **Failure** The creature takes 2d6 damage and is sickened 1. **Critical Failure** The creature takes 4d6 damage and is Sickened 2."
+ },
+ {
+  "id": "toy-carriage",
+  "name": "Toy Carriage",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 5
+  },
+  "text": "A miniature toy carriage is carved from wood and has fully functioning wheels. It can vary in size from 2 to 8 inches long, too small for even Tiny creatures to ride. If pushed or propelled, obstacles and terrain might slow, stop, tip, or divert the carriage's course. --- If pushed and released as an Interact action, a toy carriage rolls along the ground up to 20 feet."
+ },
+ {
+  "id": "toy-carriage-windup",
+  "name": "Toy Carriage (Windup)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 5
+  },
+  "text": "A miniature toy carriage is carved from wood and has fully functioning wheels. It can vary in size from 2 to 8 inches long, too small for even Tiny creatures to ride. If pushed or propelled, obstacles and terrain might slow, stop, tip, or divert the carriage's course. --- A tiny crank protrudes from the side of this carriage. If the crank is wound and the carriage is released on the ground, the carriage propels in a straight line at a Speed of 10 feet. Each Interact action spent winding the crank propels the carriage for 1 round. A windup toy carriage can be wound for a maximum of 9 actions total, at which point it's too tight to wind further."
+ },
+ {
+  "id": "trackers-goggles",
+  "name": "Tracker's Goggles",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worneyepiece",
+  "price": {
+   "gp": 60
+  },
+  "text": "These lenses of forest-green glass are bound in rough leather stitched with crude twine. While wearing these goggles, you gain a +1 bonus to Survival checks to Sense Direction and Track. If you fail a check to Track, you can try again after 30 minutes rather than an hour."
+ },
+ {
+  "id": "trackers-goggles-greater",
+  "name": "Tracker's Goggles (Greater)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worneyepiece",
+  "price": {
+   "gp": 660
+  },
+  "text": "These lenses of forest-green glass are bound in rough leather stitched with crude twine. While wearing these goggles, you gain a +2 bonus to Survival checks to Sense Direction and Track. If you fail a check to Track, you can try again after 15 minutes rather than an hour."
+ },
+ {
+  "id": "tracking-tag",
+  "name": "Tracking Tag",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "affixed-to-a-creature",
+  "price": {
+   "sp": 1
+  },
+  "text": "Small and unobtrusive tags made from a durable material, often leather or hardwood, tracking tags are attached to wild animals, usually by a collar, to track their movements. They also serve as a way to let others know that someone is keeping track of this animal. Each tag is also inscribed with a unique label so individual creatures can be more easily identified among a herd."
+ },
+ {
+  "id": "traitors-ring",
+  "name": "Traitor's Ring",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 15
+  },
+  "text": "**Access** Member of a secret society --- This ring has a thick band supporting a square-cut gem that can be customized to the buyer's preference. The thickness of the band allows it to be taken to any jeweler or blacksmith to be adjusted to different hands or fingers from the original make. There is a tiny clasp at the side of the gem that, when pressed, opens the gem, revealing a small, hinged compartment. This compartment is designed to hold one dose of poison, allowing wearers to slip the contents of the ring into the food or drink of an intended target. The compartment can be closed again by gently pressing the gem back into place. Noticing the compartment requires a check for anyone inspecting the ring."
+ },
+ {
+  "id": "transportation-caravan",
+  "name": "Transportation (Caravan)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 3
+  },
+  "text": "Transportation Source Player Core pg. 294 The cost to hire transportation includes standard travel with no amenities. Most transit services provide basic sleeping arrangements, and some provide meals at the rates listed on Table 6–14. Arranging transportation into dangerous lands can be more expensive or impossible. Transportation (Caravan) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per 5 miles) Transportation (Carriage) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp (per 5 miles) Transportation (Ferry or Riverboat) Source Player Core pg. 294, Core Rulebook pg. 294 Price 4 cp (per 5 miles) Transportation (Sailing Ship) Source Player Core pg. 294, Core Rulebook pg. 294 Price 6 cp (per 5 miles)"
+ },
+ {
+  "id": "transportation-carriage",
+  "name": "Transportation (Carriage)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "Transportation Source Player Core pg. 294 The cost to hire transportation includes standard travel with no amenities. Most transit services provide basic sleeping arrangements, and some provide meals at the rates listed on Table 6–14. Arranging transportation into dangerous lands can be more expensive or impossible. Transportation (Caravan) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per 5 miles) Transportation (Carriage) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp (per 5 miles) Transportation (Ferry or Riverboat) Source Player Core pg. 294, Core Rulebook pg. 294 Price 4 cp (per 5 miles) Transportation (Sailing Ship) Source Player Core pg. 294, Core Rulebook pg. 294 Price 6 cp (per 5 miles)"
+ },
+ {
+  "id": "transportation-ferry-or-riverboat",
+  "name": "Transportation (Ferry or Riverboat)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 4
+  },
+  "text": "Transportation Source Player Core pg. 294 The cost to hire transportation includes standard travel with no amenities. Most transit services provide basic sleeping arrangements, and some provide meals at the rates listed on Table 6–14. Arranging transportation into dangerous lands can be more expensive or impossible. Transportation (Caravan) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per 5 miles) Transportation (Carriage) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp (per 5 miles) Transportation (Ferry or Riverboat) Source Player Core pg. 294, Core Rulebook pg. 294 Price 4 cp (per 5 miles) Transportation (Sailing Ship) Source Player Core pg. 294, Core Rulebook pg. 294 Price 6 cp (per 5 miles)"
+ },
+ {
+  "id": "transportation-sailing-ship",
+  "name": "Transportation (Sailing Ship)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 6
+  },
+  "text": "Transportation Source Player Core pg. 294 The cost to hire transportation includes standard travel with no amenities. Most transit services provide basic sleeping arrangements, and some provide meals at the rates listed on Table 6–14. Arranging transportation into dangerous lands can be more expensive or impossible. Transportation (Caravan) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per 5 miles) Transportation (Carriage) Source Player Core pg. 294, Core Rulebook pg. 294 Price 2 sp (per 5 miles) Transportation (Ferry or Riverboat) Source Player Core pg. 294, Core Rulebook pg. 294 Price 4 cp (per 5 miles) Transportation (Sailing Ship) Source Player Core pg. 294, Core Rulebook pg. 294 Price 6 cp (per 5 miles)"
+ },
+ {
+  "id": "transposition-ammunition",
+  "name": "Transposition Ammunition",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical",
+   "teleportation"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 125
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Interact --- Transposition ammunition has a milky-white cast and will sometimes shift position subtly of its own accord. When you activate the ammunition, instead of making your Strike against a foe, you fire transposition ammunition at any unoccupied square you can see within your weapon's first range increment and succeed without making an attack roll. You pull yourself through the Astral Plane, teleporting along with any items you are holding into the square where you shot the ammunition. If this would carry along any other creature (even one in an extradimensional space), the activation fails."
+ },
+ {
+  "id": "transposition-ammunition-greater",
+  "name": "Transposition Ammunition (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical",
+   "teleportation"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 1250
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ Interact --- Transposition ammunition has a milky-white cast and will sometimes shift position subtly of its own accord. When you activate the ammunition, instead of making your Strike against a foe, you fire transposition ammunition at any unoccupied square you can see within your weapon's first range increment and succeed without making an attack roll. You pull yourself through the Astral Plane, teleporting along with any items you are holding into the square where you shot the ammunition. When you teleport, you can take along up to two willing adjacent creatures. These creatures must each arrive in unoccupied squares adjacent to the transposition ammunition; if there's not enough space for both of them, you choose which one is teleported."
+ },
+ {
+  "id": "travelers-any-tool",
+  "name": "Traveler's Any-Tool",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "Before it's activated, this item appears to be an ash rod capped with steel on either end. **Activate—Tap** ⟨2⟩ (concentrate, manipulate) --- **Effect** You imagine a specific simple tool, and the any-tool transforms into it. (Usually, you can choose from a tool listed in the gear from Player Core). This transforms the wooden portion into any haft and the metal caps into spades, hammer heads, or the like, allowing for most basic tools but nothing more complex. You can return the item to its rod form with an Interact action."
+ },
+ {
+  "id": "travelers-chair",
+  "name": "Traveler's Chair",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 5
+  },
+  "text": "A traveler's chair is tailored for frequent adventures and travels. The design is sleek and fashionable to provide excellent comfort and support. A traveler's chair has small mechanisms, either made from interlocking wood pieces, clockwork, or other devices, that allow the chair to traverse up or down stairs without any additional difficulty (moving up stairs is still difficult terrain, just like for other characters), and move through other common adventuring terrain without any additional difficulty, such as ladders and uneven ground."
+ },
+ {
+  "id": "travelers-cloak",
+  "name": "Traveler's Cloak",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 7
+  },
+  "text": "These cloaks are designed to accommodate long treks through various climates. Traveler's cloaks for hot climates might be bleached white and created from lighter materials, while those intended for cold climates are made of thicker materials and have linings intended to retain heat. While wearing a traveler's cloak for the appropriate type of weather, increase the time it takes to become fatigued from temperature effects by 2 hours. A traveler's cloak has no effect at extreme or incredible temperatures."
+ },
+ {
+  "id": "traveling-companions-chair",
+  "name": "Traveling Companion's Chair",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "barding",
+   "companion"
+  ],
+  "usage": "other",
+  "price": {
+   "gp": 4
+  },
+  "text": "This more robust assembly is well suited for longer travel and all manner of adventuring. As with the traveler's chair, small mechanisms built into the wheels and support struts allow the user to traverse up and down stairs without any additional difficulty (though moving up stairs is still difficult terrain, just like for other adventurers) and move without additional difficulty through ladders, uneven ground, and other common adventuring terrain."
+ },
+ {
+  "id": "treats-standard",
+  "name": "Treats (Standard)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Treats Source Travel Guide pg. 103 Treats (Standard) Source Travel Guide pg. 101 Price 1 cp Treats (Unique) Source Travel Guide pg. 101 Price 1 sp"
+ },
+ {
+  "id": "treats-unique",
+  "name": "Treats (Unique)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Treats Source Travel Guide pg. 103 Treats (Standard) Source Travel Guide pg. 101 Price 1 cp Treats (Unique) Source Travel Guide pg. 101 Price 1 sp"
+ },
+ {
+  "id": "trident-of-the-azarketis",
+  "name": "Trident of the Azarketis",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Trident of the Azarketis Source High Seas pg. 108 Usage held in 1 hand Bulk 1 Base Weapon Trident This +2 striking trident is made of golden metal, its handle carved with reliefs of waves and seashells. These tridents are often wielded by high-ranking azarketi soldiers in the ranks of alghollthu armies. Activate—Force of the Sea (manipulate) Frequency once per day; Effect You cast a 5th-rank hydraulic torrent. The spell DC is 29. Trident of the Azarketis Source High Seas pg. 108 Price 1,300 gp Greater Trident of the Azarketis Source High Seas pg. 108 Price 2,700 gp This is a +2 greater striking trident. When you activate the trident to cast hydraulic torrent, the spell is 6th-rank (DC 31)."
+ },
+ {
+  "id": "tripline-arrow",
+  "name": "Tripline Arrow",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 6
+  },
+  "text": "**Ammunition** arrow --- This arrow unspools a line of wire as its flies at its target. The wire animates as it hits a target and attempts to wrap around its legs before vanishing a moment later. If you can apply the bow's critical specialization effect, you can choose to knock the target prone instead of pinning the target. If you cannot apply the bow's critical specialization effect, you can instead attempt to use the arrow to Trip with the Athletics skill as if the bow had the trip weapon trait. The arrow's unwieldy nature halves its weapon's range increment."
+ },
+ {
+  "id": "tripod",
+  "name": "Tripod",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 2
+  },
+  "text": "Tripods are designed for use with kickback weapons, as a way for gunslingers with lower strength to accurately use these more powerful weapons by sacrificing mobility instead. They can be set up and attached to a firearm with a single Interact action using one hand, setting the tripod in your square. If the kickback weapon requires two hands, you can change your grip on the weapon as part of this action. While this sturdy piece of engineering is in use, you don't take the -2 penalty for firing a kickback weapon, even if your Strength isn't high enough to avoid the penalty. However, you must retrieve the tripod with a single Interact action before you can move the firearm to a different position. Normally, when you're hidden or undetected, you become observed if you do anything except Hide, Sneak, or Step. However, deploying or retrieving a tripod with an Interact action doesn't automatically make you observed, so long as you don't set up or remove the tripod when it's in a spot where creatures can see the tripod itself."
+ },
+ {
+  "id": "trollhound-pick",
+  "name": "Trollhound Pick",
+  "level": 5,
+  "itemType": "weapon",
+  "traits": [
+   "fatal-d12",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 140
+  },
+  "text": "This *+1 striking greatpick* bears a head studded with the tusks of a trollhound. --- **Activate—Ravenous Strike** ⟨2⟩ (magical, manipulate) **Effect** You Strike with the *trollhound pick*, transferring a portion of a trollhound's legendary appetite to the target. A living enemy who takes damage from the attack must attempt a save. --- **Critical Success** The creature is unaffected. **Success** The creature suffers hunger pangs, becoming off-guard for 1 round. **Failure** The creature experiences gnawing hunger, becoming off-guard for 1 round and Enfeebled 1 for 1 minute. If the creature consumes any amount of food or drink (including imbibing a potion), the enfeebled condition ends. **Critical Failure** As failure, but the creature is Enfeebled 2 and each instance of consuming food or drink reduces the penalty by 1. --- **Craft Requirements** The initial raw materials must include the teeth and tongue from a trollhound."
+ },
+ {
+  "id": "true-golden-wings",
+  "name": "True Golden Wings",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 14000
+  },
+  "text": "Golden Wings Source High Seas pg. 50 Usage worn cloak Bulk 2 Access You're from Hermea This pair of huge wings is crafted from numerous feathers made of a lightweight, golden magical alloy. When activated, the wings emit a melodic sound and a shimmering glow. Activate—Assisted Flight (manipulate) Frequency once per day; Effect For the next 10 minutes, you can Leap 20 feet, using the wings to propel yourself. You must land on a space with solid ground. For the duration, you also emit a bright light in a 20-foot radius and dim light for the next 20 feet. You take a –2 item penalty to Stealth checks to Hide and Sneak. Golden Wings Source High Seas pg. 50 Price 60 gp Greater Golden Wings Source High Seas pg. 50 Price 350 gp When you activate the wings, for the duration, you can also use an action to flap the wings to glide slowly toward the ground, 5 feet down and up to 20 feet forward through the air. As long as you spend 1 action gliding each round and haven’t yet reached the ground, you remain in the air at the end of your turn. Major Golden Wings Source High Seas pg. 50 Price 650 gp When you activate the wings, you also gain a fly Speed of 20 feet for the duration. True Golden Wings Source High Seas pg. 50 Price 14,000 gp When you activate the wings, you also gain a fly Speed equal to your Speed or 25 feet, whichever is greater, for the duration."
+ },
+ {
+  "id": "true-name-amulet-greater",
+  "name": "True Name Amulet (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornamulet",
+  "price": {
+   "gp": 5500
+  },
+  "text": "This amulet bears the true name of a single creature with a level no higher than the item's level. These amulets are typically made of gold and engraved, but could be made of anything, including simple clay. The name is clearly visible, though only to you, and only while you have the amulet invested. If you can read the language in which the name is written, that creature always takes the effects of *invoke true name* against your spells (with a spell rank equal to half the item's level, rounded up). In addition, when the creature uses any magical effect against you, you can immediately attempt to counteract it using Arcana, Nature, Occult, or Religion for the counteract check and the true name amulet's level to determine the counteract rank. Legendary amulets bearing the true names of creatures of level 21+ may exist."
+ }
+]

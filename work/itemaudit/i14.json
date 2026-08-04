@@ -1,0 +1,837 @@
+[
+ {
+  "id": "major-vanishing-shocker",
+  "name": "Major Vanishing Shocker",
+  "level": 19,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "electricity",
+   "gadget",
+   "illusion",
+   "magical"
+  ],
+  "price": {
+   "gp": 8000
+  },
+  "text": "Vanishing Shocker May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) The vanishing shocker is a cube with extruding spikes at each corner. This inscrutable device channels occult energy through the electricity it produces, creating the result of invisible lighting. When activated, the cube floats above your head, creating a field of invisible electricity in a 10-foot emanation that lasts for 1 round. You and creatures within the emanation are concealed. Creatures that enter or start their turn within the area must attempt a DC 22 Reflex save. Success The target is unaffected. Failure The target is off-guard for 1 round. Critical Failure The target is clumsy 1 and off-guard for 1 round. Lesser Vanishing Shocker Source Rival Academies pg. 93 Price 70 gp Moderate Vanishing Shocker Source Rival Academies pg. 93 Price 300 gp The Reflex DC is 27. Greater Vanishing Shocker Source Rival Academies pg. 93 Price 1,300 gp The Reflex DC is 33. Major Vanishing Shocker Source Rival Academies pg. 93 Price 8,000 gp The Reflex DC is 38."
+ },
+ {
+  "id": "major-wood-rotted-root",
+  "name": "Major Wood-Rotted Root",
+  "level": 14,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 900
+  },
+  "text": "Wood-Rotted Root May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This palm-sized chunk of wood it rotting, and riddled with mold and fungi. You can crush this wood to use it as a spell catalyst when you cast a oaken resilience. When you do, the bark that covers your skin is rotting, and emits a small cloud of spores whenever you're hurt. For the duration, whenever you take physical damage, your rotting bark skin emits a cloud of spores in the listed emanation. Creatures in the area must attempt a Fortitude save at the listed DC to avoid taking the listed poison damage. Lesser Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 11 gp The DC is 15, the area is a 5-foot emanation, and the poison damage is 1. Moderate Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 55 gp The DC is 21, the area is a 5-foot emanation, and the poison damage is 1d4. Greater Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 190 gp The DC is 24, the area is a 10-foot emanation, and the poison damage is 1d8. Major Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 900 gp The DC is 29, the area is a 15-foot emanation, and the poison damage is 2d8."
+ },
+ {
+  "id": "malefic-mirror",
+  "name": "Malefic Mirror",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "occult",
+   "scrying",
+   "unholy"
+  ],
+  "usage": "other",
+  "price": {},
+  "text": "This magic mirror is the conduit between the mirror seer and the source of their power. Any creature who looks in this silver mirror can speak with the entity the mirror is linked to, but only a creature who has made a pact with the entity can activate the *malefic mirror*. If the mirror is shattered, any spells created by the mirror end (it has AC 5, object immunities, Hardness 5, HP 20, and BT 10). --- **Activate—Peer Beyond** 10 minutes (concentrate, occult) **Effect** The mirror casts a DC 28 Scrying spell for the benefit of the creature activating it. The target must be within the owner's domain (typically within 20 miles of the mirror). The viewer's familiarity with the target doesn't affect the spell's DC. --- **Activate—Mirror Mimicry** 10 minutes (concentrate, manipulate, occult) **Effect** The mirror transforms its owner's appearance into an exact copy of any humanoid the owner desires, with a pale mimicry of that creature's abilities. This has the effects of a 3rd-rank Illusory Disguise spell with a duration of 4 hours. The activation can also be Dismissed. In addition, the disguised creature can automatically create illusions to mimic the abilities of the subject, with the appearance of spells, abilities, or even impressive physical deeds. These deeds are entirely illusory and can be disbelieved with a successful check. If an illusion makes it appear as though the creature moved farther or differently than they actually can (such as making them fly or teleport), t"
+ },
+ {
+  "id": "malleable",
+  "name": "Malleable",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "metal"
+  ],
+  "usage": "etched-onto-medium-heavy-metal-armor",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 650
+  },
+  "text": "The metal of your armor can shift and rearrange at a moment's notice, allowing you to manipulate what kind of damage it resists. --- **Activate—Reconfigure Armor** ⟨1⟩ (manipulate) --- **Effect** The armor's composition shifts, changing its specialization group to a different one of your choice. This doesn't change what the armor is made of, and any runes or precious material it's made of apply to the new composition. Any property runes that can't apply to the new form are suppressed until the item takes a composition to which they can apply."
+ },
+ {
+  "id": "malyass-root-paste",
+  "name": "Malyass Root Paste",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "contact",
+   "poison"
+  ],
+  "price": {
+   "gp": 55
+  },
+  "text": "Malyass Root Paste Source Core Rulebook pg. 552 Price 55 gp Usage held in 2 hands Bulk L Activate Interact Malyass root paste sees use to impede opponents in athletic competitions, in addition to espionage and tracking. Saving Throw DC 26 Fortitude; Onset 1 minute; Maximum Duration 6 minutes; Stage 1 clumsy 1 and –10-foot status penalty to all Speeds (1 minute); Stage 2 clumsy 2 and –20-foot status penalty to all Speeds (1 minute); Stage 3 clumsy 3, flat-footed, and –30-foot status penalty to all Speeds"
+ },
+ {
+  "id": "mammoth-bow",
+  "name": "Mammoth Bow",
+  "level": 12,
+  "itemType": "weapon",
+  "traits": [
+   "deadly-d10",
+   "magical",
+   "propulsive",
+   "volley-50"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 2000
+  },
+  "text": "This heavy, 12-foot-tall *+2 striking Composite Longbow* is fashioned from mammoth tusks lashed together. Due to its great size, you can attack with the Mammoth Bow only if you're Large or larger. The Mammoth Bow deals 2d6 additional piercing damage because of its incredible, magically enhanced draw power. Additionally, the Mammoth Bow has a 180-foot range increment instead of a 100-foot range increment, but its volley range increases from 30 feet to 50 feet."
+ },
+ {
+  "id": "man-feller",
+  "name": "Man-Feller",
+  "level": 7,
+  "itemType": "weapon",
+  "traits": [
+   "magical",
+   "sweep"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 360
+  },
+  "text": "This impressive-looking weapon is forged from a single piece of cold iron. Man-Feller is a *+1 striking cold iron Battle Axe* that strikes particularly painful wounds into the flesh of humans it hews. The battle axe deals an additional 1d6 slashing damage to any human it wounds. This benefit doesn't apply against humans disguised as other creatures. It's up to GM discretion whether this effect applies against such a disguised human. Those who might find it amusing to point out the awkward and almost comedic duplication in the weapon's name would do well to consider that those who previously mocked the name of King Merlokrep's favorite axe to the kobold's face didn't live long enough to finish their self-congratulatory chuckles."
+ },
+ {
+  "id": "manacles-average",
+  "name": "Manacles (Average)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 20
+  },
+  "text": "You can manacle someone who is willing or otherwise at your mercy as an exploration activity taking 10-30 seconds depending on the creature's size and how many manacles you apply. A two-legged creature with its legs bound takes a –15-foot circumstance penalty to its Speeds, and a two-handed creature with its wrists bound has to succeed at a any time it uses a manipulate action or else that action fails. This DC may be higher depending on how tightly the manacles constrain the hands. A creature bound to a stationary object is immobilized. For creatures with more or fewer limbs, the GM determines what effect manacles have, if any. Freeing a creature from average manacles requires four successful checks."
+ },
+ {
+  "id": "manacles-good",
+  "name": "Manacles (Good)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 250
+  },
+  "text": "You can manacle someone who is willing or otherwise at your mercy as an exploration activity taking 10-30 seconds depending on the creature's size and how many manacles you apply. A two-legged creature with its legs bound takes a –15-foot circumstance penalty to its Speeds, and a two-handed creature with its wrists bound has to succeed at a any time it uses a manipulate action or else that action fails. This DC may be higher depending on how tightly the manacles constrain the hands. A creature bound to a stationary object is immobilized. For creatures with more or fewer limbs, the GM determines what effect manacles have, if any. Freeing a creature from good manacles requires five successful checks."
+ },
+ {
+  "id": "manacles-of-persuasion",
+  "name": "Manacles of Persuasion",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "nonlethal"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 45
+  },
+  "text": "These sturdy, average manacles are connected by a thick iron chain that is much heavier than its appearance suggests at a glance. Followers of Zon-Kuthon sometimes employ manacles of persuasion against captured enemies and spies. When the manacles are locked around an immobilized creature's wrists, they begin to sap the life out of the victim, dealing 2 void damage per hour until the creature falls unconscious. The effect is nonlethal, so the damage doesn't cause the creature to become dying. While the creature is unconscious, the manacles deal no damage and allow the creature to recover Hit Points normally to a maximum of 10 Hit Points, at which point the manacles begin to deal damage once more. The manacles have no effect on a creature that is not immobilized."
+ },
+ {
+  "id": "manacles-poor",
+  "name": "Manacles (Poor)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 3
+  },
+  "text": "You can manacle someone who is willing or otherwise at your mercy as an exploration activity taking 10-30 seconds depending on the creature's size and how many manacles you apply. A two-legged creature with its legs bound takes a –15-foot circumstance penalty to its Speeds, and a two-handed creature with its wrists bound has to succeed at a any time it uses a manipulate action or else that action fails. This DC may be higher depending on how tightly the manacles constrain the hands. A creature bound to a stationary object is immobilized. For creatures with more or fewer limbs, the GM determines what effect manacles have, if any. Freeing a creature from poor manacles requires two successful checks."
+ },
+ {
+  "id": "manacles-simple",
+  "name": "Manacles (Simple)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 3
+  },
+  "text": "You can manacle someone who is willing or otherwise at your mercy as an exploration activity taking 10-30 seconds depending on the creature's size and how many manacles you apply. A two-legged creature with its legs bound takes a –15-foot circumstance penalty to its Speeds, and a two-handed creature with its wrists bound has to succeed at a any time it uses a manipulate action or else that action fails. This DC may be higher depending on how tightly the manacles constrain the hands. A creature bound to a stationary object is immobilized. For creatures with more or fewer limbs, the GM determines what effect manacles have, if any. Freeing a creature from simple manacles requires three successful checks."
+ },
+ {
+  "id": "manacles-superior",
+  "name": "Manacles (Superior)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 5000
+  },
+  "text": "You can manacle someone who is willing or otherwise at your mercy as an exploration activity taking 10-30 seconds depending on the creature's size and how many manacles you apply. A two-legged creature with its legs bound takes a –15-foot circumstance penalty to its Speeds, and a two-handed creature with its wrists bound has to succeed at a any time it uses a manipulate action or else that action fails. This DC may be higher depending on how tightly the manacles constrain the hands. A creature bound to a stationary object is immobilized. For creatures with more or fewer limbs, the GM determines what effect manacles have, if any. Freeing a creature from superior manacles requires six successful checks."
+ },
+ {
+  "id": "map-geographical-map",
+  "name": "Map (Geographical Map)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 20
+  },
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "map-geologic-map",
+  "name": "Map (Geologic Map)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 25
+  },
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "map-local-map",
+  "name": "Map (Local Map)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "map-nautical-chart",
+  "name": "Map (Nautical Chart)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 25
+  },
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "map-pictorial-map",
+  "name": "Map (Pictorial Map)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "map-political-map",
+  "name": "Map (Political Map)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 20
+  },
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "map-treasure-map",
+  "name": "Map (Treasure Map)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 200
+  },
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "map-weather-map",
+  "name": "Map (Weather Map)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 50
+  },
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "marble",
+  "name": "Marble",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Marble Source Travel Guide pg. 37 Price 10 gp (per slab)"
+ },
+ {
+  "id": "marbles",
+  "name": "Marbles",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 2
+  },
+  "text": "These tiny round balls are made of polished stone and colorful glass, and come in a bag of 200. You can pour marbles in an empty square adjacent to you with an Interact action. The first creature that moves into that square must succeed at a check or save (its choice) or fall prone. Once a creature enters a space with marbles, enough marbles are scattered that other creatures moving into that space don't need to attempt a roll to avoid falling."
+ },
+ {
+  "id": "mask-fine",
+  "name": "Mask (Fine)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornmask",
+  "price": {
+   "gp": 2
+  },
+  "text": "A mask helps you use the Impersonate action to pass yourself off as someone you aren't. This well-crafted mask, suitable for a noble at a masquerade, is made with impeccable craftsmanship and expensive material, such as porcelain and gold filigree."
+ },
+ {
+  "id": "mask-of-the-cursed-eye",
+  "name": "Mask of the Cursed Eye",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornmask",
+  "price": {
+   "gp": 475
+  },
+  "text": "A mask of the cursed eye is decorated with at least one wide, staring eye. The first time each day you're targeted with a detection, prediction, revelation, or scrying spell by a creature on your plane that you can't perceive, the creature targeting you must attempt a save. This effect is automatic and does not require you to Activate the item. --- **Critical Success** The creature is unaffected. **Success** The creature is unaffected. You know you've been targeted with a divination spell, but the mask gives you no additional information. **Failure** The creature is Sickened 1 and dazzled for 1 minute. You know you've been targeted with a divination spell, but the mask gives you no additional information. **Critical Failure** The creature is Sickened 2 and dazzled for 10 minutes, and the spell is disrupted. You gain a brief mental glimpse of the triggering creature and learn its approximate distance and direction."
+ },
+ {
+  "id": "mask-ordinary",
+  "name": "Mask (Ordinary)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornmask",
+  "price": {
+   "cp": 5
+  },
+  "text": "A mask helps you use the Impersonate action to pass yourself off as someone you aren't. This ordinary mask is made out of cheap material, such as paper-mâché or simple cloth. This can be specially fitted over another mask."
+ },
+ {
+  "id": "mask-plague",
+  "name": "Mask (Plague)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornmask",
+  "price": {
+   "gp": 10
+  },
+  "text": "A mask helps you use the Impersonate action to pass yourself off as someone you aren't. This stylized bird mask is equipped with a basic filter. The plague mask attempts to counteract any inhaled poisons or airborne diseases each round you breathe. The same replacement filters used in Water Purifiers can be used with a plague mask, granting you the counteract modifier and effects of the filter for 20 minutes. Plague masks are uncommon items because the filters they use to protect from inhaled poisons and diseases are themselves uncommon. As such, you can buy a plague mask without a filter as a common item, though it's usually more cost-effective to buy a fine mask in the shape of a plague mask in that case."
+ },
+ {
+  "id": "mask-rubber",
+  "name": "Mask (Rubber)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "wornmask",
+  "price": {
+   "gp": 5
+  },
+  "text": "A mask helps you use the Impersonate action to pass yourself off as someone you aren't. Rubber masks are sculpted to resemble the face of another creature. You can use this mask to help decrease the difficulty of Impersonating a specific creature with a very different face than yours."
+ },
+ {
+  "id": "masquerade-scarf-greater",
+  "name": "Masquerade Scarf (Greater)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 340
+  },
+  "text": "This delicately embroidered scarf matches with every outfit and can even complete a costume or disguise with illusions. --- **Activate—Masquerade** ⟨2⟩ (manipulate) **Effect** You arrange the scarf over your lower face, and it casts a 2nd-rank Illusory Disguise spell on you, which ends immediately if the scarf is removed. You can alter the scarf's appearance or make it invisible as part of the *illusory disguise*, but it can still be felt if touched."
+ },
+ {
+  "id": "material-component-pouch",
+  "name": "Material Component Pouch",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 5
+  },
+  "text": "Material Component Pouch Source Core Rulebook pg. 290 Price 5 sp Hands 1 Bulk L This pouch contains material components for those spells that require them. Though the components are used up over time, you can refill spent components during your daily preparations."
+ },
+ {
+  "id": "meal-fine-dining",
+  "name": "Meal (Fine Dining)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1
+  },
+  "text": "Meals Source Player Core pg. 294 Meal (Poor) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 2 Bulk L Meal (Square) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp Hands 2 Bulk L Meal (Fine Dining) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 2 Bulk L"
+ },
+ {
+  "id": "meal-poor",
+  "name": "Meal (Poor)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Meals Source Player Core pg. 294 Meal (Poor) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 2 Bulk L Meal (Square) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp Hands 2 Bulk L Meal (Fine Dining) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 2 Bulk L"
+ },
+ {
+  "id": "meal-square",
+  "name": "Meal (Square)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 3
+  },
+  "text": "Meals Source Player Core pg. 294 Meal (Poor) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 2 Bulk L Meal (Square) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp Hands 2 Bulk L Meal (Fine Dining) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 2 Bulk L"
+ },
+ {
+  "id": "meals",
+  "name": "Meals",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Meals Source Player Core pg. 294 Meal (Poor) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 cp Hands 2 Bulk L Meal (Square) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp Hands 2 Bulk L Meal (Fine Dining) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 gp Hands 2 Bulk L"
+ },
+ {
+  "id": "mechanical-torch",
+  "name": "Mechanical Torch",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10
+  },
+  "text": "Powered by electricity, you can turn a mechanical torch on and off by toggling a lever on the torch with an Interact action. When active, the torch sheds bright light in either a 20-foot radius (and dim light to the next 40 feet) or a 40-foot cone (and dim light to the next 40 feet). Changing this area requires a single Interact action to flip a switch. The torch carries sufficient charge to operate for ten minutes. You can recharge the torch in 1 minute via an integrated crank-charging mechanism, turning the clockwork gears and generating sparks to power the torch, though doing so requires two hands."
+ },
+ {
+  "id": "membership-cords",
+  "name": "Membership Cords",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 5
+  },
+  "text": "**Access** Member of a secret society --- These braided wool cords are threaded with reflective metal threads in patterns specified by the purchaser. No two society's patterns are the same, and purchasers tend to return to the same weaver each time to ensure new cords match previous ones. In a room lit only by dim candlelight, the reflective metal threads shimmer in a specific pattern. Many societies use these cords to prevent outsiders from infiltrating secret meetings and often have someone at the meeting area's entrance checking cords before allowing entry."
+ },
+ {
+  "id": "memoir-map",
+  "name": "Memoir Map",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "usage": "tattooed-on-the-body",
+  "price": {
+   "gp": 13
+  },
+  "text": "Your journeys and the major events in your life that occur after you obtain this tattoo appear on it, your life story traced upon your skin. Each time you journey somewhere new or accomplish something noteworthy to you, a design or symbol appears, representing the event. The positions of these images are relative in location, but measurements aren't exact. A memoir map starts with an icon representing your location when you receive the tattoo, usually over the heart, and grows from there. Traveling to another plane causes a new portion to appear on a different part of your body to represent that plane. If you want a record of your life before you receive your memoir map, you can have the tattoo artist embellish the map to represent past events."
+ },
+ {
+  "id": "mental-bastion",
+  "name": "Mental Bastion",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "mental"
+  ],
+  "text": "Mental Bastion Source GM Core pg. 316 Aspect Mind Your relic takes over some of your mental processes and enhances others. You gain telepathy; if you already have telepathy, you instead increase its range by 30 feet. Whenever you would become stupefied, reduce the value by 1. You are permanently quickened and can use the additional action to Recall Knowledge."
+ },
+ {
+  "id": "merchants-scale",
+  "name": "Merchant's Scale",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 2
+  },
+  "text": ""
+ },
+ {
+  "id": "merciful",
+  "name": "Merciful",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "mental"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 70
+  },
+  "text": "Merciful weapons are sheathed in an unmistakable wispy green aura recognized by both gladiators and guards around the world. A *merciful* weapon has the nonlethal trait and can't be used to make a lethal attack. Any persistent damage the weapon would deal is negated. On a critical hit, a *merciful* weapon causes the target to become fascinated with the weapon's wielder for 1 minute, as the target is bombarded with feelings of guilt and remorse. This is a mental effect. If you have access to the weapon's critical specialization effect, you choose whether to use it or the *merciful* effect."
+ },
+ {
+  "id": "meteor-shot",
+  "name": "Meteor Shot",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "fire",
+   "magical",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 70
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (manipulate) --- This craggy stone ammunition is warm to the touch. When you fire an activated meteor shot, it explodes into a small swarm of meteors as it reaches its target, scorching nearby creatures and littering the ground with rubble. In addition to the weapon's normal damage, the meteor shot deals fire damage and the ground in the area becomes difficult terrain. The ammunition deals damage in a around the target ( save). In addition, the Strike gains the following critical failure effect. --- **Critical Failure** The weapon misfires."
+ },
+ {
+  "id": "meteor-shot-greater",
+  "name": "Meteor Shot (Greater)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "fire",
+   "magical",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 400
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (manipulate) --- This craggy stone ammunition is warm to the touch. When you fire an activated meteor shot, it explodes into a small swarm of meteors as it reaches its target, scorching nearby creatures and littering the ground with rubble. In addition to the weapon's normal damage, the meteor shot deals fire damage and the ground in the area becomes difficult terrain. The ammunition deals damage in a around the target ( save). In addition, the Strike gains the following critical failure effect. --- **Critical Failure** The weapon misfires."
+ },
+ {
+  "id": "meteor-shot-major",
+  "name": "Meteor Shot (Major)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "fire",
+   "magical",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3000
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (manipulate) --- This craggy stone ammunition is warm to the touch. When you fire an activated meteor shot, it explodes into a small swarm of meteors as it reaches its target, scorching nearby creatures and littering the ground with rubble. In addition to the weapon's normal damage, the meteor shot deals fire damage and the ground in the area becomes difficult terrain. The ammunition deals damage in a around the target ( save). In addition, the Strike gains the following critical failure effect. --- **Critical Failure** The weapon misfires."
+ },
+ {
+  "id": "mindlance",
+  "name": "Mindlance",
+  "level": 8,
+  "itemType": "weapon",
+  "traits": [
+   "arcane",
+   "concussive",
+   "fatal-d12",
+   "kickback",
+   "mental",
+   "nonlethal"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 500
+  },
+  "text": "This *+1 striking arquebus* is used by caravan guards to nonlethally—though powerfully—deter large game and bandits. When fired, the spark gun deals mental damage and adds the nonlethal trait to the attack. Each mindlance also includes a reinforced stock that benefits from any fundamental runes on the firearm. When you critically succeed at an attack roll with a mindlance, the target becomes Frightened 2 unless it succeeds at a save."
+ },
+ {
+  "id": "mindsponge",
+  "name": "Mindsponge",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "mental",
+   "occult"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 700
+  },
+  "text": "A *mindsponge* appears as a misshapen gray sponge that unsettlingly resembles a malformed human brain. Though pliable in all the same ways as a damp sponge, a *mindsponge* has no ability to absorb water and, in fact, doesn't seem terribly porous at all. Instead, a *mindsponge* is used to absorb thoughts and memories from living creatures. --- **Activate—Wipe Memories** ⟨2⟩ (concentrate, manipulate) **Effect** The *mindsponge* casts Rewrite Memory, but only to erase a memory—a *mindsponge* can't enhance memory clarity, alter memories, or add false memories. --- **Activate—Absorb Memories** 1 minute (concentrate, manipulate) **Effect** You use the *mindsponge* to harvest the memories and mental energy of a specially prepared target as it dies. To prepare the target (who must be willing or helpless), you must perform a 10-minute surgery to expose a portion of the target's brain without killing them. This requires a successful (master) check; if you fail this check, the target dies before you can use the *mindsponge*. Memories and psychic energy absorbed aren't taken from the target's soul but from energies temporarily infused within the body, so that a creature slain in this way who is later brought back to life retains their harvested memories and energy. The corpse of someone who has had their memories harvested is difficult to communicate with via talking corpse—treat the saving throw result against that spell as one degree of success lower than the actual result. A *mindspon"
+ },
+ {
+  "id": "minor-astonishing-ink",
+  "name": "Minor Astonishing Ink",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "gp": 10
+  },
+  "text": "Dr. Ushernacht's Astonishing Ink May contain spoilers from Convocation Source Rival Academies pg. 89 Usage held in 1 hand Bulk L Activate 10 minutes (manipulate) This syrupy ink smells organic and faintly spoiled. It’s tied to one of Ushernacht’s engines, created with a sample of the fluid from inside the engine. If the associated engine stops functioning, all ink linked with it can no longer be activated, including freshly created ink. When you write a question on a sheet of paper using the astonishing ink, handwriting scrawls over the paper after 10 minutes, answering with the knowledge it can draw from its engine. The astonishing ink has all Lore skills and attempts a Recall Knowledge check to answer the question using the listed bonus. At the GM’s discretion, the astonishing ink takes a –4 circumstance penalty to the check if the question relates to advice, emotions, opinions, or other subjective topics. If the astonishing ink fails (but not critically fails) the check to Recall Knowledge, the writing turns blood-red as it forms disturbing words. Anyone reading these words must succeed at a Will save at the listed DC or become stupefied 1 until they get a full night’s rest. The bloody message may also carry valuable or misleading information at the GM’s discretion. You can use a vial of astonishing ink to ask 5 questions before it’s used up. Minor Astonishing Ink Source Rival Academies pg. 89 Price 10 gp The ink has a +10 modifier, and the Will DC is 18. Moderate Astonish"
+ },
+ {
+  "id": "minor-bloodstone-doll",
+  "name": "Minor Bloodstone Doll",
+  "level": 4,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 15
+  },
+  "text": "Bloodstone Doll May contain spoilers from Convocation Source Rival Academies pg. 101 Usage held in 1 hand Bulk L Activate (concentrate, manipulate) Trigger A creature within 60 feet casts a summon spell Requirement You have a free hand This small doll has been carved from a fragment of Bloodstone. When you Activate a bloodstone doll in response to another’s magic, you Interact to take it in hand and hold it up toward the triggering creature. Attempt a counteract check against the triggering spell at the listed bonus and rank. If the spell would be counteracted, the bloodstone doll instead influences the summoned creature. You gain control of the summoned creature and can dictate its 2 actions for that turn. The triggering creature then regains control of their summoned creature, but the summoned creature takes a –2 status penalty to attack rolls against you. Your bloodstone doll shatters when the summon spell ends. Minor Bloodstone Doll Source Rival Academies pg. 101 Price 15 gp The bloodstone doll has a counteract modifier of +9 and a counteract rank of 2. Moderate Bloodstone Doll Source Rival Academies pg. 101 Price 180 gp The bloodstone doll has a counteract modifier of +17 and a counteract rank of 5. Major Bloodstone Doll Source Rival Academies pg. 101 Price 1,800 gp The bloodstone doll has a counteract modifier of +25 and a counteract rank of 8."
+ },
+ {
+  "id": "miring-round",
+  "name": "Miring Round",
+  "level": 7,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 70
+  },
+  "text": "Miring Round Source Battlecry! pg. 133 Price 70 gp Ammunition mortar round (mortar) Activate (manipulate) This ammunition is made of thick glass filled with gray, murky water. When a miring round impacts the ground, it shatters, the murky water soaking into the ground in the normal blast area for the weapon and turning it into soft mud regardless of its normal composition. The area becomes difficult terrain for one minute. Any siege weapons or other heavy objects, as determined by the GM, sink into the mire. Siege weapons that sink in are difficult to operate, requiring 1 additional action to Aim for as long as they remain in the mud. After 1 minute, the mud dries up and the ground returns to its normal composition. Any creatures or objects in the mud are returned to the surface."
+ },
+ {
+  "id": "mirror",
+  "name": "Mirror",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": ""
+ },
+ {
+  "id": "mirror-implement",
+  "name": "Mirror Implement",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "mirror-of-sleeping-vigil",
+  "name": "Mirror of Sleeping Vigil",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "invested",
+   "magical",
+   "sleep"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 300
+  },
+  "text": "This jeweled mirror grants you gain greater control over your dreaming self. While invested, you can watch over your sleeping body from the Dreamlands, letting you see your own body and a around you, though you can't hear, smell, or use other senses from your dreaming self. You do not take the -4 status penalty to visual Perception checks in that area or gain the blinded condition from being unconscious against creatures in that area. As long as you fell asleep voluntarily and not from a sleep effect, you can automatically wake up from sleep if there is visible activity around you."
+ },
+ {
+  "id": "misdirecting-haversack",
+  "name": "Misdirecting Haversack",
+  "level": 6,
+  "itemType": "container",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "This brown leather satchel is made from a heavily oiled and rustic leather. The satchel is large enough to hold up to 1 Bulk worth of items. --- **Activate** 1 minute (envision, Interact) --- **Effect** Documents inside the haversack become magically disguised as documents of a similar type but with misleading information. Anyone inspecting a document notices the disguise with a successful check, but determining the actual text requires a successful check to Decipher Writing. This lasts until you use this activation again, which ends the effect for all previously disguised documents; until you use the second activation to end the effect for a single document; or until a document in the haversack remains outside the haversack for at least 1 hour, ending the effect for that document. --- **Activate** ⟨1⟩ command --- **Effect** You revert one of the documents back to its original state."
+ },
+ {
+  "id": "moderate-astonishing-ink",
+  "name": "Moderate Astonishing Ink",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "gp": 160
+  },
+  "text": "Dr. Ushernacht's Astonishing Ink May contain spoilers from Convocation Source Rival Academies pg. 89 Usage held in 1 hand Bulk L Activate 10 minutes (manipulate) This syrupy ink smells organic and faintly spoiled. It’s tied to one of Ushernacht’s engines, created with a sample of the fluid from inside the engine. If the associated engine stops functioning, all ink linked with it can no longer be activated, including freshly created ink. When you write a question on a sheet of paper using the astonishing ink, handwriting scrawls over the paper after 10 minutes, answering with the knowledge it can draw from its engine. The astonishing ink has all Lore skills and attempts a Recall Knowledge check to answer the question using the listed bonus. At the GM’s discretion, the astonishing ink takes a –4 circumstance penalty to the check if the question relates to advice, emotions, opinions, or other subjective topics. If the astonishing ink fails (but not critically fails) the check to Recall Knowledge, the writing turns blood-red as it forms disturbing words. Anyone reading these words must succeed at a Will save at the listed DC or become stupefied 1 until they get a full night’s rest. The bloody message may also carry valuable or misleading information at the GM’s discretion. You can use a vial of astonishing ink to ask 5 questions before it’s used up. Minor Astonishing Ink Source Rival Academies pg. 89 Price 10 gp The ink has a +10 modifier, and the Will DC is 18. Moderate Astonish"
+ },
+ {
+  "id": "moderate-aurochs-might-tattoo",
+  "name": "Moderate Aurochs' Might Tattoo",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 2575
+  },
+  "text": "Aurochs' Might Tattoo May contain spoilers from Triumph of the Tusk Source Pathfinder #207: Resurrection Flood pg. 79 Usage tattooed on the body The auroch depicted by this tattoo is a powerful symbol of strength and resilience. When upgraded, the tattoo expands to depict an increasingly imposing herd of aurochs. Activate—Aurochs Charge (concentrate) Frequency once per day; Effect You Stride twice and make a melee Strike against a creature within your reach at any point during your movement. If the Strike hits and deals damage, the target attempts a DC 24 Fortitude save to avoid being toppled by the impact. Critical Success The target is unaffected. Success The target is off-guard until the beginning of its next turn. Failure The target is knocked prone. Critical Failure As failure, but the target also takes 2d6 bludgeoning damage. Lesser Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 475 gp Moderate Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 2,575 gp The Fortitude saving throw DC is 30, and the bludgeoning damage dealt by a critical failure is 4d6. Greater Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 20,000 gp The Fortitude saving throw DC is 38, and the bludgeoning damage dealt by a critical failure is 6d6."
+ },
+ {
+  "id": "moderate-banner-of-creeping-death",
+  "name": "Moderate Banner of Creeping Death",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "price": {
+   "gp": 750
+  },
+  "text": "Banner of Creeping Death Source Battlecry! pg. 138 Usage affixed or held in 1 hand Bulk L The very fabric of this off-putting magical banner seems to be rotting with a slick, foul texture. Traditionally, these banners were created from the uniforms of fallen enemy troops, but this is considered a cruel and dishonorable practice by many modern nations. While holding a banner of creeping death, you can use the following ability. Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions. All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save). Lesser Banner of Creeping Death Source Battlecry! pg. 138 Price 120 gp Moderate Banner of Creeping Death Source Battlecry! pg. 138 Price 750 gp The void damage increases to 2d4+2 and the save DC increases to 26. Greater Banner of Creeping Death Source Battlecry! pg. 138 Price 4,500 gp The void damage increases to 4d4+4 and the save DC increases to 32. Major Banner of Creeping Death Source Battlecry! pg. 138 Price 36,000 gp The void damage increases 8d4+8 and the save DC increases to 42."
+ },
+ {
+  "id": "moderate-bloodstone-doll",
+  "name": "Moderate Bloodstone Doll",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 180
+  },
+  "text": "Bloodstone Doll May contain spoilers from Convocation Source Rival Academies pg. 101 Usage held in 1 hand Bulk L Activate (concentrate, manipulate) Trigger A creature within 60 feet casts a summon spell Requirement You have a free hand This small doll has been carved from a fragment of Bloodstone. When you Activate a bloodstone doll in response to another’s magic, you Interact to take it in hand and hold it up toward the triggering creature. Attempt a counteract check against the triggering spell at the listed bonus and rank. If the spell would be counteracted, the bloodstone doll instead influences the summoned creature. You gain control of the summoned creature and can dictate its 2 actions for that turn. The triggering creature then regains control of their summoned creature, but the summoned creature takes a –2 status penalty to attack rolls against you. Your bloodstone doll shatters when the summon spell ends. Minor Bloodstone Doll Source Rival Academies pg. 101 Price 15 gp The bloodstone doll has a counteract modifier of +9 and a counteract rank of 2. Moderate Bloodstone Doll Source Rival Academies pg. 101 Price 180 gp The bloodstone doll has a counteract modifier of +17 and a counteract rank of 5. Major Bloodstone Doll Source Rival Academies pg. 101 Price 1,800 gp The bloodstone doll has a counteract modifier of +25 and a counteract rank of 8."
+ },
+ {
+  "id": "moderate-bougainvillea-blossom",
+  "name": "Moderate Bougainvillea Blossom",
+  "level": 7,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 60
+  },
+  "text": "Bougainvillea Blossom May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This pink flower has long, slender thorns along the stem. The flower can be used as a catalyst when casting an entangling flora spell, which causes the affected plants to sprout long thorns and vibrant pink blossoms. The area becomes hazardous terrain, dealing the listed piercing damage to an enemy each time it enters an affected square. Lesser Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 10 gp The piercing damage of the hazardous terrain is 1. Moderate Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 60 gp The piercing damage of the hazardous terrain is 2. Greater Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 300 gp The piercing damage of the hazardous terrain is 3. Major Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 1,200 gp The piercing damage of the hazardous terrain is 5."
+ },
+ {
+  "id": "moderate-energized-shield",
+  "name": "Moderate Energized Shield",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "price": {
+   "gp": 1300
+  },
+  "text": "Energized Shield Source Battlecry! pg. 124 Usage held in 1 hand Bulk 1 Base Shield Steel Shield This minor reinforcing steel shield (Hardness 8, HP 64, BT 32) is lined with pale silver that glows when struck. Whenever you use the Shield Block reaction, this shield becomes energized for 1 round. Activate—Energized Blast (force, manipulate) Frequency once per 10 minutes; Requirements The shield is energized; Effect You direct the stored energy into a short blast, targeting a creature within 15 feet. The target takes 2d10 force damage (DC 23 basic Reflex save). Lesser Energized Shield Source Battlecry! pg. 124 Price 350 gp Moderate Energized Shield Source Battlecry! pg. 124 Price 1,300 gp The damage increases to 3d10 and the DC increases to 28. Greater Energized Shield Source Battlecry! pg. 124 Price 6,000 gp The damage increases to 4d10 and the DC increases to 34. Major Energized Shield Source Battlecry! pg. 124 Price 35,000 gp The damage increases to 5d10 and the DC increases to 39."
+ },
+ {
+  "id": "moderate-necrotic-cap",
+  "name": "Moderate Necrotic Cap",
+  "level": 8,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 80
+  },
+  "text": "Necrotic Cap May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L You can use this slimy, rotting mushroom as a spell catalyst when you cast an acid grip spell by tapping it against the target, causing the mushroom to release a cloud of necrotic spores. When you do, acid grip loses the acid trait, gains the fungus trait, and all acid damage the spell deals becomes void damage. On a hit, the target additionally gains the enfeebled and sickened conditions, with the listed values, as the spores consume their flesh. As long as the target is taking persistent void damage, they can’t reduce the value of their sickened condition below 1. Lesser Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 18 gp The value of the enfeebled and sickened conditions is 1. Moderate Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 80 gp The value of the enfeebled and sickened conditions is 2. Greater Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 350 gp The value of the enfeebled and sickened conditions is 3. Major Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 1,200 gp The value of the enfeebled and sickened conditions is 4."
+ },
+ {
+  "id": "moderate-quartz-coil-rail-transport",
+  "name": "Moderate Quartz-Coil Rail Transport",
+  "level": 9,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "electricity",
+   "gadget",
+   "teleportation"
+  ],
+  "price": {
+   "gp": 150
+  },
+  "text": "Quartz-Coil Rail Transport May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) This odd metal rod is often misinterpreted as a mechanical wand of some kind. Any gadgeteer or mage will be able to elaborate on the fact that magic wands do not need to be throughly covered in a copper wire coil and that the pointed quartz crystal at its tip thrums with electricity, not magic. When activated, electricity courses through you, allowing you to move through the voltage that arcs through the air. You instantly transport yourself and any items you’re wearing and holding from your current space to an unoccupied space up to 20 feet away that you can see. If this would bring another creature with you— even if you’re carrying it in an extradimensional container— the teleportation fails. You and all creatures in a line between your original location and your destination take 2 electricity damage. Lesser Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 20 gp Moderate Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 150 gp The distance you can teleport increases to 40 feet, and the electricty damage increases to 4. Greater Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 650 gp The distance you can teleport increases to 60 feet, and the electricty damage increases to 6. Major Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 8,000 gp The distance you can teleport increases t"
+ }
+]

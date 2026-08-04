@@ -1,0 +1,947 @@
+[
+ {
+  "id": "blazons-of-shared-power",
+  "name": "Blazons of Shared Power",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn-and-attached-to-two-weapons",
+  "price": {
+   "gp": 52
+  },
+  "text": "These brass emblems come in a variety of designs, usually customized to the purchaser to reflect the heraldry of a family or guild. *Blazons of shared power* come in sets of three. When you invest the blazons, you wear one of the three on your chest, and you attach the others to a pair of one-handed weapons, choosing one as the primary weapon and one as the secondary weapon. These weapons can be either melee weapons or ranged weapons. As long as you're wielding both the primary weapon and the secondary weapon, the secondary weapon gains the benefit of the fundamental runes on the primary weapon. A weapon can only have a single blazon of shared power attached to it at a time."
+ },
+ {
+  "id": "blazons-of-shared-power-greater",
+  "name": "Blazons of Shared Power (Greater)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn-and-attached-to-two-weapons",
+  "price": {
+   "gp": 1350
+  },
+  "text": "These brass emblems come in a variety of designs, usually customized to the purchaser to reflect the heraldry of a family or guild. *Blazons of shared power* come in sets of three. When you invest the blazons, you wear one of the three on your chest, and you attach the others to a pair of one-handed weapons, choosing one as the primary weapon and one as the secondary weapon. These weapons can be either melee weapons or ranged weapons. As long as you're wielding both the primary weapon and the secondary weapon, the secondary weapon gains the benefit of the fundamental runes on the primary weapon. A weapon can only have a single blazon of shared power attached to it at a time. A set of *greater blazons of shared power* also replicates property runes from the primary weapon, so long as the secondary weapon meets all the prerequisites for a given rune and isn't a specific weapon. The secondary weapon gains the benefits of those runes. All of its own runes are suppressed. When you invest the blazons, you can elect for them to transfer only fundamental runes, in which case they function as standard *blazons of shared power*."
+ },
+ {
+  "id": "bleeding-canines",
+  "name": "Bleeding Canines",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 320
+  },
+  "text": "Some of your teeth have been replaced with those of a larger meat-eating predator. You gain a jaws unarmed attack that deals 1d8 piercing damage. These jaws are in the brawling group. Whenever you score a critical hit with your jaws, your target takes 1 persistent bleed damage per weapon damage die."
+ },
+ {
+  "id": "blight-bomb-lesser",
+  "name": "Blight Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Blight bombs contain volatile toxic chemicals that rot flesh. A blight bomb deals 1d4 poison damage, 1d4 persistent poison damage, and 1 poison splash damage."
+ },
+ {
+  "id": "blightburn-necklace",
+  "name": "Blightburn Necklace",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornnecklace",
+  "price": {
+   "gp": 2300
+  },
+  "text": "This heavy iron necklace is decorated with tiny gems that resemble the stars in the ceiling high above the Vault of the Black Desert. While you have invested this item, you cannot contract blightburn sickness. It doesn't cure blightburn sickness if you already have it, but the disease's stage can't progress while you wear it."
+ },
+ {
+  "id": "blightburn-ward",
+  "name": "Blightburn Ward",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornnecklace",
+  "price": {
+   "gp": 2300
+  },
+  "text": "This heavy iron necklace is decorated with tiny gems that resemble the stars in the ceiling high above the Vault of the Black Desert. While you have invested this item, you cannot contract blightburn sickness. It doesn't cure blightburn sickness if you already have it, but the disease's stage can't progress while you wear it."
+ },
+ {
+  "id": "blindpepper-bolt",
+  "name": "Blindpepper Bolt",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 10
+  },
+  "text": "**Ammunition** bolt **Activate** ⟨1⟩ Interact --- The head of this bolt is a vented container that smells strongly of caustic pepper. When an activated blindpepper bolt hits a target, it deals no damage; instead the creature must attempt a save. If the Strike was a critical success, the target takes a -2 circumstance penalty to its Fortitude save. At the GM's discretion, a creature with no eyes or olfactory organs might not be affected by this item. --- **Critical Success** The target is unaffected. **Success** The target is dazzled until the end of your next turn. It can end the effect early if it spends an action, which has the manipulate trait, to wipe down its eyes. **Failure** The target is dazzled for 1 minute. **Critical Failure** The target is blinded until the end of your next turn and dazzled for 1 minute."
+ },
+ {
+  "id": "blister-ammunition-greater",
+  "name": "Blister Ammunition (Greater)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1400
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Blister ammunition is loaded with alchemically processed irritants, such as pollen, pepper, and formic acid. A creature hit by activated blister ammunition must attempt a save or begin to itch uncontrollably for 10 rounds in addition to damage the attack normally deals. On a critical hit, increase the Fortitude DC by 2 (), and the target is dazzled for 1 round. For the duration, each time the target attempts a concentrate action, it must attempt a , losing the action on a failure. An affected creature can use a single Interact action to scratch and sneeze, allowing it to automatically pass the flat check. The effect ends early once an affected creature spends 3 Interact actions scratching and sneezing. These Interact actions don't need to be consecutive."
+ },
+ {
+  "id": "blister-ammunition-lesser",
+  "name": "Blister Ammunition (Lesser)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 21
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Blister ammunition is loaded with alchemically processed irritants, such as pollen, pepper, and formic acid. A creature hit by activated blister ammunition must attempt a save or begin to itch uncontrollably for 3 rounds in addition to damage the attack normally deals. On a critical hit, increase the Fortitude DC by 2 (), and the target is dazzled for 1 round. For the duration, each time the target attempts a concentrate action, it must attempt a , losing the action on a failure. An affected creature can use a single Interact action to scratch and sneeze, allowing it to automatically pass the flat check. The effect ends early once an affected creature spends 3 Interact actions scratching and sneezing. These Interact actions don't need to be consecutive."
+ },
+ {
+  "id": "blister-ammunition-moderate",
+  "name": "Blister Ammunition (Moderate)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 210
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Blister ammunition is loaded with alchemically processed irritants, such as pollen, pepper, and formic acid. A creature hit by activated blister ammunition must attempt a save or begin to itch uncontrollably for 6 rounds in addition to damage the attack normally deals. On a critical hit, increase the Fortitude DC by 2 (), and the target is dazzled for 1 round. For the duration, each time the target attempts a concentrate action, it must attempt a , losing the action on a failure. An affected creature can use a single Interact action to scratch and sneeze, allowing it to automatically pass the flat check. The effect ends early once an affected creature spends 3 Interact actions scratching and sneezing. These Interact actions don't need to be consecutive."
+ },
+ {
+  "id": "blocks",
+  "name": "Blocks",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 1
+  },
+  "text": "These wooden blocks can be stacked to build flimsy structures. A standard set comes in a small sack with 12 blocks."
+ },
+ {
+  "id": "blood-bomb-lesser",
+  "name": "Blood Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is full of shrapnel and anti-coagulants designed to make targets bleed out. It deals 1 slashing, 1d6 persistent bleed damage and 1 slashing splash damage."
+ },
+ {
+  "id": "bloodbane",
+  "name": "Bloodbane",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "dwarf",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 475
+  },
+  "text": "A *bloodbane* clan dagger is especially vicious against the ancestral enemies of the clan. When you damage an appropriate type of creature with the weapon, that creature takes 1 damage. The type of creature depends on the clan that made the dagger, but is typically drow, duergar, giant, or orc. In addition, whenever you inflict persistent bleed damage with a *bloodbane* weapon (whether from its innate ability or in some other way), the weapon leaves ragged wounds. The bleeding creature must succeed at a save or become sickened 1. The creature is then temporarily immune for 1 hour."
+ },
+ {
+  "id": "bloodbane-greater",
+  "name": "Bloodbane (Greater)",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "dwarf",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 2800
+  },
+  "text": "A *bloodbane* clan dagger is especially vicious against the ancestral enemies of the clan. When you damage an appropriate type of creature with the weapon, that creature takes 1d4. The type of creature depends on the clan that made the dagger, but is typically drow, duergar, giant, or orc. In addition, whenever you inflict persistent bleed damage with a *bloodbane* weapon (whether from its innate ability or in some other way), the weapon leaves ragged wounds. The bleeding creature must succeed at a save or become sickened 1. The creature is then temporarily immune for 1 hour."
+ },
+ {
+  "id": "bloodgorger-scythe",
+  "name": "Bloodgorger Scythe",
+  "level": 7,
+  "itemType": "weapon",
+  "traits": [
+   "deadly-d10",
+   "magical",
+   "trip"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 340
+  },
+  "text": "This *+1 striking scythe* is made from the cruel, blackened branches of the carnivorous scythe tree, which hungrily drink up spilled blood. --- **Activate—Root in Blood** ⟨1⟩ (manipulate) **Requirements** Your last action was a successful Strike with this weapon and your target isn't currently taking any persistent bleed damage **Effect** You break off a piece of the *bloodgorger scythe* inside your enemy to feed on their blood and sprout into a new tree. The target takes 1 damage at the end of their turn. Each failure to stop the bleeding increases this bleed damage by 1 as a small scythe tree grows from the wound, to a maximum of 3 persistent bleed damage. --- **Activate—Sapling Slash** ⟨1⟩ (concentrate) **Requirements** A target has a piece of the *bloodgorger scythe* broken off inside them and has failed to recover from the persistent bleed damage for 3 consecutive turns **Effect** The sprouted scythe tree grows large enough to be commanded. It makes a melee Strike against the target or a creature adjacent to the target, with a +18 to hit and dealing 1d10 damage. --- **Craft Requirements** The initial raw materials must include branches and roots from a scythe tree."
+ },
+ {
+  "id": "bloodletting-kukri",
+  "name": "Bloodletting Kukri",
+  "level": 6,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "finesse",
+   "magical",
+   "trip"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 240
+  },
+  "text": "This *+1 striking kukri* has a crimson blade that shimmers eerily in bright light. On a critical hit, the kukri deals 1d8 persistent bleed damage. If the target didn't already have persistent bleed damage when you scored the critical hit, you also gain 1d8 temporary Hit Points for 1 minute."
+ },
+ {
+  "id": "bloodthirsty",
+  "name": "Bloodthirsty",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-piercing-or-slashing-melee-weapon",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 8500
+  },
+  "text": "The magic in this rune sings in time with your attacks and coaxes you into finishing your opponent. When you critically hit a target that's taking persistent bleed damage, your target becomes Drained 1. --- **Activate** ⟨5⟩ envision **Trigger** You reduce a creature to 0 Hit Points with the weapon --- **Effect** You gain a number of temporary Hit Points equal to twice the creature's level. These Hit Points remain for 1 minute."
+ },
+ {
+  "id": "blowgun-darts",
+  "name": "Blowgun Darts",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "cp": 5
+  },
+  "text": "These thin, light darts are typically made of hardwood and stabilized with fletching of down or fur. They are often hollow so they can be used to deliver poison."
+ },
+ {
+  "id": "boastful-hunter",
+  "name": "Boastful Hunter",
+  "level": 3,
+  "itemType": "weapon",
+  "traits": [
+   "concussive",
+   "fatal-aim-d12",
+   "intelligent",
+   "primal"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "**Perception** +11; precise vision 30 feet, imprecise hearing 30 feet **Communication** speech (Common) **Skills** Nature +9, Performance +10, Survival +11 **Int** +0, **Wis** +2, **Cha** +3 **Will** +11 --- Possessing a boisterous, proud demeanor, this *+1 jezail* is an aspiring big game hunter, always quick to share a tale of its bold adventures and predatory conquests—although the veracity of such tales is often questionable. A *boastful hunter* enjoys tracking and hunting animals of all kinds but takes particular pleasure in taking down large, dangerous, or rare animals. Against an animal, the boastful hunter deals 1d6 additional damage. On a critical hit against an animal, the boastful hunter also deals 1d6 persistent bleed damage. A *boastful hunter* urges you to face off against tougher and tougher creatures—a challenge the ambitious rifle may not be adequate to deal with. If the *boastful hunter* goes one week without participating in a hunt against an animal of at least your level, it becomes bored. A bored *boastful hunter* complains incessantly and imposes a –1 item penalty to attack rolls against non-animal targets. A bored *boastful hunter* can be appeased by using it in combat against an animal of at least your level. Unable to accept its own weaknesses, a *boastful hunter* blames any failed hunts on you, and considers remarks about its strength or quality a terrible insult. An insulted *boastful hunter* badmouths you to sentient creatures you interact with, imp"
+ },
+ {
+  "id": "bola-shot",
+  "name": "Bola Shot",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 25
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- This ammunition bears a rune with three lines radiating out, each ending in a circle. When an activated bola shot hits a target, it deals nonlethal bludgeoning damage. Compare the attack roll to the target's Reflex DC to determine the shot's other effects. --- **Critical Success** The target falls prone and is Stunned 1. **Success** The target falls prone. **Failure** No additional effect."
+ },
+ {
+  "id": "bolts",
+  "name": "Bolts",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 1
+  },
+  "text": "Shorter than traditional arrows but similar in construction, bolts are the ammunition used by crossbows."
+ },
+ {
+  "id": "bolts-phalanx-piercer",
+  "name": "Bolts (Phalanx Piercer)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Bolts (Phalanx Piercer) Source Treasure Vault (Remastered) pg. 30 Price 1 sp (price for 5) Bulk L Hands Type Ranged Category Ammunition Group Bow Heavy, iron-shod bolt. Critical Specialization Effects Source Core Rulebook pg. 283 Certain feats, class features, weapon runes, and other effects can grant you additional benefits when you make a Strike with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always decide not to add the critical specialization effect of your weapon. Click here for the full rules on Critical Specialization Effects."
+ },
+ {
+  "id": "bomb-coagulant-alembic",
+  "name": "Bomb Coagulant Alembic",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 150
+  },
+  "text": "This apparatus increases the viscosity of the reagents in alchemical bombs, to deadly effect. As a 10-minute activity that has the manipulate trait, you can use a bomb coagulant alembic to distill the contents of one infused alchemical bomb that deals splash damage into a stickier substance. After distilling, the bomb deals no splash damage but instead deals persistent damage equal to and of the same type as its original splash damage. If the bomb already deals persistent damage, distilling increases that damage by the bomb's original splash damage."
+ },
+ {
+  "id": "bomb-launcher",
+  "name": "Bomb Launcher",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 20
+  },
+  "text": "This long, hollow tube is held in two hands and braced over the shoulder. Inside, it contains a small metal basket sized to hold alchemical bombs. A chute in the top delivers an alchemical bomb into the internal basket, while a lever on the underside pulls the basket back and locks it in place. Loading an alchemical bomb into a bomb launcher requires a single Interact action. With a pull of a trigger, the basket speeds forward, allowing you to Strike with the loaded alchemical bomb over long distances. Bombs fired with a bomb launcher have a range increment of 60 feet."
+ },
+ {
+  "id": "bombers-saddle",
+  "name": "Bomber's Saddle",
+  "level": 13,
+  "itemType": "container",
+  "traits": [
+   "companion",
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 2800
+  },
+  "text": "Developed by urdefhans for their skaveling mounts but quickly copied by other races' cavalry, this leather saddle is made from cave worm hide and is designed to fit a variety of flying steeds. In addition to a seat for the rider, the bomber's saddle has a bomb compartment situated underneath the mount. The compartment can hold up to six alchemical bombs of light or negligible Bulk. --- **Activate** ⟨1⟩ Interact --- **Effect** You drop a single item from the saddle's compartment, which falls to the ground below. If the item is a bomb, make a ranged Strike with it. --- **Activate** ⟨2⟩ Interact **Requirements** The saddle's compartment is loaded with two to six bombs --- **Effect** You drop the saddle's entire payload, scattering the bombs below. Make a single ranged Strike against an AC of 10. The AC increases by 1 for every 5 feet above the target area you are. On a failure, the bombs fly away wildly and deal no damage. On a successful attack roll, the bombs fall and shatter, starting in the target area and moving in a line of 5-foot spaces up to 30 feet long for six bombs, one bomb per space. The bombs don't directly hit any creatures; instead, creatures take splash damage from the bombs as usual, but combine the splash damage from multiple overlapping bombs together before applying weaknesses or resistances. Apply any effects normally applied to splash damage when throwing a bomb (such as the effects of the Calculated Splash feat)."
+ },
+ {
+  "id": "bone-object",
+  "name": "Bone Object",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Bone Source Treasure Vault (Remastered) pg. 169 A durable material when properly treated, bone can replace wood and metal when creating armor, shields, and weapons. The statistics for bone are applicable to a variety of other sturdy animal-based products, such as chitin, horn, ivory, coral, and shell, which can also be classified as bone for the purposes of determining item statistics. Bone elements from certain beasts, like the horn of a unicorn or the spikes of a manticore, may even yield magical properties when worked by a skilled crafter. Bone Objects Hardness HP BT Thin Items 4 16 8 Items 6 24 12 Structures 12 48 24 Bone Specimen Source Treasure Vault (Remastered) pg. 169 Price 1 sp Bulk 1 Bone Object Source Treasure Vault (Remastered) pg. 169 Price 1 sp (per Bulk)"
+ },
+ {
+  "id": "bone-specimen",
+  "name": "Bone Specimen",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Bone Source Treasure Vault (Remastered) pg. 169 A durable material when properly treated, bone can replace wood and metal when creating armor, shields, and weapons. The statistics for bone are applicable to a variety of other sturdy animal-based products, such as chitin, horn, ivory, coral, and shell, which can also be classified as bone for the purposes of determining item statistics. Bone elements from certain beasts, like the horn of a unicorn or the spikes of a manticore, may even yield magical properties when worked by a skilled crafter. Bone Objects Hardness HP BT Thin Items 4 16 8 Items 6 24 12 Structures 12 48 24 Bone Specimen Source Treasure Vault (Remastered) pg. 169 Price 1 sp Bulk 1 Bone Object Source Treasure Vault (Remastered) pg. 169 Price 1 sp (per Bulk)"
+ },
+ {
+  "id": "book-of-lost-days",
+  "name": "Book of Lost Days",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {},
+  "text": "This massive tome's yellowed pages curl at the edges, and the letters on its face and spine are too worn to be read. When you open the book, it always opens to a page that seems to perfectly answer the question you had in mind, but reading more than a few lines causes your head to swim alarmingly. --- **Activate—Study Memory** 1 hour (concentrate, manipulate) **Requirements** You aren't drained --- **Effect** You open the book while trying to learn information about any topic. *The Book of Lost Days* permits you to view another's memory, which contains information about that subject commensurate to rolling a total of 40 to Recall Knowledge about the topic, with additional context provided on a success or critical success. The price for this knowledge is the memory of a day in your past, and the vitality of a day in your future. You lose the memory of that day completely, and the total of all the knowledge you learned on that date is added to the book's repository of information. The book, not you, chooses which memories are taken, preferring days with concentrated emotional resonance, and thus tends to steal significant life moments. This loss affects only your memories; it has no effect on your level, class, feats, or other character choices. Your natural lifespan is also shortened by 1 day. The loss of this life energy causes you to be Drained 2. You can't reduce the drained condition for 2 days, after which you can recover normally from the condition. Creatures have occasi"
+ },
+ {
+  "id": "book-of-translation-advanced",
+  "name": "Book of Translation (Advanced)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 125
+  },
+  "text": "Book of Translation Source PFS Guide pg. 92 Usage held in 1 hand Bulk L The book is leather-bound and decorated with the symbol of the Lantern Lodge. Red and gold cords wrap around the book and tie to keep it shut. Each volume offers translation for a different language. When working with a book of translation, you can attempt Diplomacy checks to Gather Information or to Make an Impression with creatures that speak the language featured in the book, even if you do not speak the language. Such checks take 10 times longer to complete and you take a –2 circumstance penalty to the check due to your limited communication capabilities. Book of Translation (Standard) Source PFS Guide pg. 93 Price 25 gp Bulk L Book of Translation (Advanced) Source PFS Guide pg. 93 Price 125 gp Bulk L An advanced book of translation features more complex phrases, local colloquialisms, and assumes a rudimentary understanding of the featured language. Checks attempted while using an advanced book of translation do not take a circumstance penalty."
+ },
+ {
+  "id": "book-of-translation-standard",
+  "name": "Book of Translation (Standard)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 25
+  },
+  "text": "Book of Translation Source PFS Guide pg. 92 Usage held in 1 hand Bulk L The book is leather-bound and decorated with the symbol of the Lantern Lodge. Red and gold cords wrap around the book and tie to keep it shut. Each volume offers translation for a different language. When working with a book of translation, you can attempt Diplomacy checks to Gather Information or to Make an Impression with creatures that speak the language featured in the book, even if you do not speak the language. Such checks take 10 times longer to complete and you take a –2 circumstance penalty to the check due to your limited communication capabilities. Book of Translation (Standard) Source PFS Guide pg. 93 Price 25 gp Bulk L Book of Translation (Advanced) Source PFS Guide pg. 93 Price 125 gp Bulk L An advanced book of translation features more complex phrases, local colloquialisms, and assumes a rudimentary understanding of the featured language. Checks attempted while using an advanced book of translation do not take a circumstance penalty."
+ },
+ {
+  "id": "boots-of-dancing",
+  "name": "Boots of Dancing",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1250
+  },
+  "text": "These boots act as Boots of Elvenkind (Greater), but they react wildly to strong physical exertion. While you wear the boots, the curse activates whenever you attempt an Athletics check or Stride more than once in a single round during an encounter. The boots cast an 8th-rank Uncontrollable Dance spell on you, and you automatically fail your save. Once the curse has activated for the first time, the boots fuse to you."
+ },
+ {
+  "id": "bottled-lightning-lesser",
+  "name": "Bottled Lightning (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "electricity",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Bottled lightning is packed with volatile reagents that create a blast of electricity when they are exposed to air. Bottled lightning deals 1d6 electricity damage and 1 electricity splash damage. On a hit, the target becomes off-guard until the start of your next turn."
+ },
+ {
+  "id": "bottled-sunlight-greater",
+  "name": "Bottled Sunlight (Greater)",
+  "level": 12,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "light",
+   "splash",
+   "vitality"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 360
+  },
+  "text": "**Activate** ⟨1⟩ Interact --- This mirrored bottle contains various chemicals dissolved in two immiscible solvents. Shaking the bottle induces chemical reactions that cause it to glow. For 1 hour, the bottle sheds bright light in a 20-foot radius (and dim light to the next 40 feet). During this hour, it can be thrown like a bomb. This requires a single action to Activate with a Strike, like other bombs, and deals the damage below. If it's not thrown within an hour of the first activation, it defuses harmlessly and is consumed. The bomb deals 3d4 vitality damage and 3 vitality splash damage, as well as 3d4 additional fire damage. As normal, vitality damage harms only undead and other creatures with void healing. Undead with a particular vulnerability to sunlight (such as vampires or wraiths) take the maximum amount of vitality damage from bottled sunlight (12 instead of 3d4). For any ability that depends on the number of weapon dice bottled sunlight has, count only the vitality damage dice"
+ },
+ {
+  "id": "bottled-sunlight-lesser",
+  "name": "Bottled Sunlight (Lesser)",
+  "level": 2,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "light",
+   "splash",
+   "vitality"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 7
+  },
+  "text": "**Activate** ⟨1⟩ Interact --- This mirrored bottle contains various chemicals dissolved in two immiscible solvents. Shaking the bottle induces chemical reactions that cause it to glow. For 1 hour, the bottle sheds bright light in a 20-foot radius (and dim light to the next 40 feet). During this hour, it can be thrown like a bomb. This requires a single action to Activate with a Strike, like other bombs, and deals the damage below. If it's not thrown within an hour of the first activation, it defuses harmlessly and is consumed. The bomb deals 1d4 vitality damage and 1 vitality splash damage, as well as 1d4 additional fire damage. As normal, vitality damage harms only undead and other creatures with void healing. Undead with a particular vulnerability to sunlight (such as vampires or wraiths) take the maximum amount of vitality damage from bottled sunlight (4 instead of 1d4). For any ability that depends on the number of weapon dice bottled sunlight has, count only the vitality damage dice."
+ },
+ {
+  "id": "bottled-sunlight-major",
+  "name": "Bottled Sunlight (Major)",
+  "level": 18,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "light",
+   "splash",
+   "vitality"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "**Activate** ⟨1⟩ Interact --- This mirrored bottle contains various chemicals dissolved in two immiscible solvents. Shaking the bottle induces chemical reactions that cause it to glow. For 1 hour, the bottle sheds bright light in a 20-foot radius (and dim light to the next 40 feet). During this hour, it can be thrown like a bomb. This requires a single action to Activate with a Strike, like other bombs, and deals the damage below. If it's not thrown within an hour of the first activation, it defuses harmlessly and is consumed. The bomb deals 4d4 vitality damage and 4 vitality splash damage, as well as 4d4 additional fire damage. As normal, vitality damage harms only undead and other creatures with void healing. Undead with a particular vulnerability to sunlight (such as vampires or wraiths) take the maximum amount of vitality damage from bottled sunlight (16 instead of 4d4). For any ability that depends on the number of weapon dice bottled sunlight has, count only the vitality damage dice."
+ },
+ {
+  "id": "bottled-sunlight-moderate",
+  "name": "Bottled Sunlight (Moderate)",
+  "level": 4,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "light",
+   "splash",
+   "vitality"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 20
+  },
+  "text": "**Activate** ⟨1⟩ Interact --- This mirrored bottle contains various chemicals dissolved in two immiscible solvents. Shaking the bottle induces chemical reactions that cause it to glow. For 1 hour, the bottle sheds bright light in a 20-foot radius (and dim light to the next 40 feet). During this hour, it can be thrown like a bomb. This requires a single action to Activate with a Strike, like other bombs, and deals the damage below. If it's not thrown within an hour of the first activation, it defuses harmlessly and is consumed. The bomb deals 2d4 vitality damage and 2 vitality splash damage, as well as 2d4 additional fire damage. As normal, vitality damage harms only undead and other creatures with void healing. Undead with a particular vulnerability to sunlight (such as vampires or wraiths) take the maximum amount of vitality damage from bottled sunlight (8 instead of 2d4). For any ability that depends on the number of weapon dice bottled sunlight has, count only the vitality damage dice."
+ },
+ {
+  "id": "bottomless-reservoir",
+  "name": "Bottomless Reservoir",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "extradimensional",
+   "water"
+  ],
+  "text": "Bottomless Reservoir Source GM Core pg. 319 Aspect Water Activate (manipulate) Effect Your relic can absorb and release water, storing it in an endless reservoir. You either touch your relic to an adjacent body of water and absorb 1 gallon of it into the reservoir, or you release 1 gallon of a liquid from the reservoir. You can add another action to the activation to absorb water from a touched creature made entirely of water, like a water elemental. If you do, it takes 1d6 damage per relic level (basic Fortitude save). Activate (manipulate) Trigger You are targeted by an acid or water effect; Effect Your relic attempts to counteract the effect, expending 1 gallon of stored liquid. At the GM's discretion, you can use this ability on effects made of other liquids, such as blood."
+ },
+ {
+  "id": "bottomless-stein",
+  "name": "Bottomless Stein",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 25
+  },
+  "text": "A magic item regarded as holy by followers of Cayden Cailean, this ornate metallic stein is always filled to the brim with delicious ale, no matter how much is drunk or spilled. If it is emptied (such as by being gulped quickly or upended onto the floor), the *bottomless stein* will fill again within 1 round as long as it is right side up, though it's impossible to transfer the ale to another container to sell it or store it for later. The exact type of ale with which the stein is filled is determined at the item's creation, and cannot be changed thereafter."
+ },
+ {
+  "id": "box-of-unspoiling-type-i",
+  "name": "Box of Unspoiling (Type I)",
+  "level": 5,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 200
+  },
+  "text": "This storage container decorated with images of wildlife and berries is popular among Shoanti quahs and other nomadic groups. The box functions like a *spacious pouch*, holding 25 Bulk, and is inscribed with magic to keep its contents cool to allow for travel with perishable items like meat and fruit. Items in the box are kept fresh for up to a year."
+ },
+ {
+  "id": "box-of-unspoiling-type-ii",
+  "name": "Box of Unspoiling (Type II)",
+  "level": 8,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 575
+  },
+  "text": "This storage container decorated with images of wildlife and berries is popular among Shoanti quahs and other nomadic groups. The box functions like a *spacious pouch*, holding 50 Bulk, and is inscribed with magic to keep its contents cool to allow for travel with perishable items like meat and fruit. Items in the box are kept fresh for up to a year."
+ },
+ {
+  "id": "box-of-unspoiling-type-iii",
+  "name": "Box of Unspoiling (Type III)",
+  "level": 12,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1640
+  },
+  "text": "This storage container decorated with images of wildlife and berries is popular among Shoanti quahs and other nomadic groups. The box functions like a *spacious pouch*, holding 100 Bulk, and is inscribed with magic to keep its contents cool to allow for travel with perishable items like meat and fruit. Items in the box are kept fresh for up to a year."
+ },
+ {
+  "id": "box-of-unspoiling-type-iv",
+  "name": "Box of Unspoiling (Type IV)",
+  "level": 14,
+  "itemType": "container",
+  "traits": [
+   "extradimensional",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 3600
+  },
+  "text": "This storage container decorated with images of wildlife and berries is popular among Shoanti quahs and other nomadic groups. The box functions like a *spacious pouch*, holding 150 Bulk, and is inscribed with magic to keep its contents cool to allow for travel with perishable items like meat and fruit. Items in the box are kept fresh for up to a year."
+ },
+ {
+  "id": "brain-cylinder",
+  "name": "Brain Cylinder",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 250
+  },
+  "text": "**Perception** +15; vision (precise) 30 feet, hearing (imprecise) 30 feet **Communication** speech (all languages known in life) **Skills** varies **Int** +2, **Wis** +2, **Cha** +2 **AC** 21; **Fort** +10, **Ref** +8, **Will** +15 **HP** 68; **Immunities** bleed, disease, death effects, paralyzed, poison; **Weaknesses** bludgeoning 7, sonic 7; **Resistances** fire 7, piercing 7, slashing 7 --- A brain cylinder allows the extracted brain of a Large or smaller creature to continue to function even after it has been removed from the body. As long as the brain remains in the cylinder, the creature remains alive and can continue to think, even though its body is dead. Detachable modules that fit into the base of the cylinder allow the brain to see, hear, or speak using a raspy speaker. So long as these are attached, the brain can speak and understand any languages it knew in life, though nothing within the cylinder compels it to do so if it is unwilling. It also retains its living alignment, and can use Intelligence-, Wisdom-, and Charisma-based skills. A standard brain cylinder has one skill at +15, one at +13, and two at +11, as chosen by the GM. The brain retains no other abilities it possessed in life, including purely mental ones. Mi-go typically preserve humanoid brains in this manner when they wish to interrogate a creature at a later date, or when they wish to preserve a creature as a resource for consultation or research purposes, as a brain preserved in this manner can "
+ },
+ {
+  "id": "branch-attendants-mask",
+  "name": "Branch Attendant's Mask",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 25
+  },
+  "text": "Although not all attendants' masks are enchanted, many apply a first enchantment to celebrate their acceptance into a branch of the academy. While you wear the mask or have it as your bonded item, add the associated cantrip to your prepared cantrips. This has no effect if you do not prepare cantrips from the arcane or primal lists. - **Cascade Bearers** Read Aura - **Emerald Boughs** Root Reading - **Rain-Scribes** Deep Breath - **Tempest-Sun Mages** Electric Arc - **Uzunjati**"
+ },
+ {
+  "id": "brass-ear",
+  "name": "Brass Ear",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "A brass ear is a short, flared tube with one end narrow enough to comfortably fit against the ear canal. When using a brass ear to listen through a door, window, thin wall, or similar barrier, if the barrier would normally increase the DC of your Perception check to hear sounds on the other side, the DC increases by only half as much as normal. It's not suitable for improving your hearing in general, a role better served by a hearing aid."
+ },
+ {
+  "id": "breath-of-dragons",
+  "name": "Breath of Dragons",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "evocation"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Breath of Dragons Source Secrets of Magic pg. 230 Aspect Dragon Activate command, envision; Frequency once per day; Effect You breathe out a cone or line of energy. You deal 2d6 damage for every 2 levels of the soul seed to all creatures in either a 30-foot cone or an 80-foot line, with a basic Reflex save. The shape is whichever is appropriate for the soul seed's draconic origin, as is the damage type. This ability has the trait matching the damage type."
+ },
+ {
+  "id": "brick",
+  "name": "Brick",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1,
+   "cp": 7
+  },
+  "text": "Brick Source Travel Guide pg. 37 Price 1 sp, 7 cp (per 1,000 bricks)"
+ },
+ {
+  "id": "brilliant",
+  "name": "Brilliant",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 2000
+  },
+  "text": "This rune causes a weapon to transform into pure, brilliant energy. The weapon deals an additional 1d4 fire damage on a successful Strike, as well as 1d4 spirit damage to fiends and 1d4 vitality damage to undead. On a critical hit, the target must succeed at a or be blinded for 1 round. --- **Activate—Shine Bright!** ⟨1⟩ (concentrate, light) --- **Effect** You plunge your weapon into darkness to return the light. Attempt a counteract check with a counteract rank of 5 and a +19 counteract modifier to end a magical darkness effect whose area is within reach of the weapon."
+ },
+ {
+  "id": "brilliant-greater",
+  "name": "Brilliant (Greater)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "This rune causes a weapon to transform into pure, brilliant energy. The weapon deals an additional 1d4 fire damage on a successful Strike, as well as 1d4 spirit damage to fiends and 1d4 vitality damage to undead. On a critical hit, the target must succeed at a or be blinded for 1 round. --- **Activate—Shine Bright!** ⟨1⟩ (concentrate, light) --- **Effect** You plunge your weapon into darkness to return the light. Attempt a counteract check with a counteract rank of 9 and a +31 counteract modifier to end a magical darkness effect whose area is within reach of the weapon. Damage dealt by this weapon ignores the target's resistances to fire, spirit, and vitality."
+ },
+ {
+  "id": "brimorak-bone-tiles",
+  "name": "Brimorak Bone Tiles",
+  "level": 5,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical",
+   "unholy"
+  ],
+  "price": {
+   "gp": 28
+  },
+  "text": "Demon Bone Tiles May contain spoilers from Convocation Source Rival Academies pg. 111 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) These bones from different types of demons can be used to form temporary barriers. When you crush the bone fragments and blow the resulting dust around yourself as you cast shield, the shield appears as a bone bulwark shaped like the demon’s face. When use Shield Block with the spell, the barrier explodes into many bone fragments. The shards cause persistent bleed damage to each creature adjacent to you that fails a Reflex save at the listed DC. This persistent bleed damage is unholy and can be stopped with an Interact action to remove the shards. Pusk Bone Tiles Source Rival Academies pg. 111 Price 7 gp The persistent bleed damage is 1d4, and the save DC is 16. Brimorak Bone Tiles Source Rival Academies pg. 111 Price 28 gp The persistent bleed damage is 1d6, and the save DC is 20. Seraptis Bone Tiles Source Rival Academies pg. 111 Price 1,200 gp The persistent bleed damage is 2d8, and the save DC is 34."
+ },
+ {
+  "id": "brooch-of-shielding",
+  "name": "Brooch of Shielding",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 30
+  },
+  "text": "This piece of silver or gold jewelry is adorned with miniature images of kite shields and can be used to fasten a cloak or cape. The brooch automatically absorbs magic missile spells targeting you. A brooch of shielding can absorb 30 individual magic missiles before it melts and becomes useless. Sometimes when found, a brooch of shielding has already absorbed a number of missiles."
+ },
+ {
+  "id": "buoyancy-vest",
+  "name": "Buoyancy Vest",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worngarment",
+  "price": {
+   "gp": 5
+  },
+  "text": "This canvas vest has been filled with cork shavings, tightly folded, and sewn shut. Wearing a buoyancy vest allows you to float in water with a lowered risk of sinking. If you end your turn in water while wearing a buoyancy vest and haven't succeeded at a Swim action that turn, attempt a . On a success, you do not sink, though you can still get moved by the current, as determined by the GM. The GM can also determine whether the vest is more or less effective in different weather conditions, raising the DC in rough waters or lowering the DC in calm water."
+ },
+ {
+  "id": "buoyant-shot",
+  "name": "Buoyant Shot",
+  "level": 5,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 20
+  },
+  "text": "Buoyant Shot Source Battlecry! pg. 132 Price 20 gp Ammunition stone sphere (bombard) These stone spheres are etched with images of clouds. Each buoyant shot is 1 Bulk instead of 4 and can float on the surface of water instead of sinking. When this ammunition is Launched, a creature who fails their Reflex saving throw is also pushed 5 feet away from the center of the burst (10 feet on a critical failure)."
+ },
+ {
+  "id": "burnished-plating",
+  "name": "Burnished Plating",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "adjustment"
+  ],
+  "usage": "affixed-to-a-ranged-weapon",
+  "price": {
+   "gp": 5
+  },
+  "text": "These highly polished metal plates can be added to any armor. While wearing armor with burnished plating, you gain the Sunshine! reaction. However, you take a -4 circumstance penalty to stealth checks except in darkness, and your armor's Strength entry increases its value by 2, requiring you to have a higher Strength score to overcome the armor's penalties. Even if you meet your armor's new Strength entry, you still take the penalty to Stealth checks. When you are critically hit by an attack that deals bludgeoning damage, burnished plating stops working until someone spends 10 minutes repairing and polishing it; this doesn't require a Crafting check. --- **Sunshine!** ⟨5⟩ **Trigger** A creature you can see targets you with an attack **Requirements** You are in an area of bright light --- **Effect** You twist to reflect light in your foe's eyes. The attacking creature must succeed at a check or the attack fails. The attacker doesn't need to roll this flat check if it has a precise sense other than vision or if it would already need to roll a flat check with a higher DC to target you, such as if you are concealed or hidden."
+ },
+ {
+  "id": "burrowing-bolt",
+  "name": "Burrowing Bolt",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 55
+  },
+  "text": "**Ammunition** arrow, bolt **Activate** ⟨1⟩ (manipulate) --- These arrows have tips grooved like a drill bit and angled fletching, causing them to spin quickly about their shaft when fired. When striking a structure or object of Hardness 14 or less within your first range increment, an activated burrowing bolt tunnels into the surface silently and leaves a hole behind it, burrowing through up to 5 feet of material before magically vanishing."
+ },
+ {
+  "id": "burrowing-bolt-greater",
+  "name": "Burrowing Bolt (Greater)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 650
+  },
+  "text": "**Ammunition** arrow, bolt **Activate** ⟨1⟩ (manipulate) --- These arrows have tips grooved like a drill bit and angled fletching, causing them to spin quickly about their shaft when fired. When striking a structure or object of Hardness 18 or less within your first range increment, an activated burrowing bolt tunnels into the surface silently and leaves a hole behind it, burrowing through up to 10 feet of material before magically vanishing."
+ },
+ {
+  "id": "butterfly-or-moth",
+  "name": "Butterfly or Moth",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Butterfly or Moth Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 sp"
+ },
+ {
+  "id": "cage",
+  "name": "Cage",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "sp": 5
+  },
+  "text": ""
+ },
+ {
+  "id": "call-of-the-wild",
+  "name": "Call of the Wild",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Call of the Wild Source GM Core pg. 310 Aspect Beast Activate (concentrate, manipulate) Frequency once per day; Effect Your relic summons a creature to fight at your side, casting summon animal with a spell rank of half the item's level rounded up. You can Sustain this activation as you would the spell."
+ },
+ {
+  "id": "called-accessory-rune",
+  "name": "Called (Accessory Rune)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "conjuration",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "Called (Accessory Rune) Source Grand Bazaar pg. 88 Price 60 gp Usage applied to any item of light or negligible Bulk With this rune, you can instantly retrieve an item in your possession without digging around looking for it. Activate command; Frequency once per hour; Requirements You have a free hand and the called item is in a bag, pack, pouch, or other container on your person, or unattended within 30 feet; Effect The item teleports to a free hand."
+ }
+]

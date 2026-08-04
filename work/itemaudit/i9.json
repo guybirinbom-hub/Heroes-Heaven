@@ -1,0 +1,849 @@
+[
+ {
+  "id": "final-stand",
+  "name": "Final Stand",
+  "level": 17,
+  "itemType": "weapon",
+  "traits": [
+   "artifact",
+   "deadly-d8",
+   "disarm",
+   "divine",
+   "finesse",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "The origins of this *+3 greater striking rapier* are shrouded in mystery, but it earned its name in the hands of an unknown hero who used it to singlehandedly defend a remote Nirmathi village from a vicious gang of bandits, shrugging off dozens of blows that would have felled any other mortal. Only when all of the bandits had been dispatched or driven off did the noble warrior finally succumb to their injuries. While wielding *Final Stand*, if you take damage that would reduce you to 0 Hit Points but not immediately kill you, attempt a . If you succeed, you avoid being knocked out and remain at 1 Hit Point instead. For the remainder of the encounter, you can't regain Hit Points in any way, though you can be stabilized if you gain the dying condition. If you're still conscious and there are no nearby enemies that you can perceive, you immediately drop to 0 Hit Points and are dying 1. If you have any other abilities that would allow you to remain at 1 Hit Point when you would be reduced to 0 Hit Points (such as Orc Ferocity), you must use those abilities before you can benefit from Final Stand's ability. --- **Destruction** If the wielder of *Final Stand* surrenders to their enemies while any of their allies are still standing, the blade weakens and the DC of the flat check permanently increases by 2. Final Stand shatters into hundreds of pieces the moment the DC of the flat check is ever higher than 20."
+ },
+ {
+  "id": "fingerprint-kit",
+  "name": "Fingerprint Kit",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 30
+  },
+  "text": "Rarely found outside of major metropolises, fingerprinting kits are a state-of-the-art, non-magical means of linking suspects to the scene of a crime. The kit consists of two parts. The first, a delicate brush and a jar of extremely fine dust, is used to reveal fingerprints left behind by most humanoid creatures. The dust sticks to the natural oils left behind on smooth surfaces. When you use the kit to determine whether or not creatures left behind a fingerprint at a crime scene, the GM rolls a secret Thievery check against the Thievery DC of every creature capable of leaving prints that has interacted with the scene. On a success, you locate a clear print from that creature and carefully transfer it to a special sheet of sticky paper. (Note that fingerprints can last for days, and prints collected in this manner often include those of victims, witnesses, and unrelated passersby.) At the GM's discretion, the print-leaving creature might get a bonus to its Thievery DC for taking special precautions. In other cases, finding a print might be impossible (such as if the creature was wearing gloves or if the location has been significantly compromised). The second part of the kit is a small sheaf of paper and a pad soaked in ink. By forcing a humanoid creature with fingerprints to roll a finger across the pad and then press it to the paper, you can obtain an image of the unique whorls in that creature's fingerprints. These can then be compared to any prints found at a crime scene."
+ },
+ {
+  "id": "fingerprinting-kit",
+  "name": "Fingerprinting Kit",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 30
+  },
+  "text": "Fingerprinting Kit May contain spoilers from Agents of Edgewatch Source Pathfinder #157: Devil at the Dreaming Palace pg. 77 Price 30 gp Hands 2 Usage held in 2 hands Bulk L Rarely found outside of major metropolises, fingerprinting kits are a state-of-the-art, non-magical means of linking suspects to the scene of a crime. The kit consists of two parts. The first, a delicate brush and a jar of extremely fine dust, is used to reveal fingerprints left behind by most humanoid creatures. The dust sticks to the natural oils left behind on smooth surfaces. When you use the kit to determine whether or not creatures left behind a fingerprint at a crime scene, the GM rolls a secret Thievery check against the Thievery DC of every creature capable of leaving prints that has interacted with the scene. On a success, you locate a clear print from that creature and carefully transfer it to a special sheet of sticky paper. (Note that fingerprints can last for days, and prints collected in this manner often include those of victims, witnesses, and unrelated passersby.) At the GM's discretion, the print-leaving creature might get a bonus to its Thievery DC for taking special precautions. In other cases, finding a print might be impossible (such as if the creature was wearing gloves or if the location has been significantly compromised). The second part of the kit is a small sheaf of paper and a pad soaked in ink. By forcing a humanoid creature with fingerprints to roll a finger across the pad "
+ },
+ {
+  "id": "firearm-ammunition-10-rounds",
+  "name": "Firearm Ammunition (10 rounds)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearm Ammunition (10 rounds) Source Guns & Gears (Remastered) pg. 151 PFS Note All Pathfinder Society agents have access to all uncommon weapons, ammunition, and related items from Chapter 4 Access The following regions have access to firearms: Alkenstar, Dongun Hold, Tian Xia, Vudra, Arcadia, Ustalav, the Shackles Price 1 sp Bulk L Hands Type Ranged Category Ammunition Group Firearm Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items. Critical Specialization Effects Source Core Rulebook pg. 283 Certain feats, class features, weapon runes, and other effects can grant you additional benefits when you make a Strike with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always d"
+ },
+ {
+  "id": "firearm-ammunition-5-rounds",
+  "name": "Firearm Ammunition (5 rounds)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Firearm Ammunition (5 rounds) Source Guns & Gears (Remastered) pg. 151 PFS Note All Pathfinder Society agents have access to all uncommon weapons, ammunition, and related items from Chapter 4 Access The following regions have access to firearms: Alkenstar, Dongun Hold, Tian Xia, Vudra, Arcadia, Ustalav, the Shackles Price 1 sp Bulk L Hands Type Ranged Category Ammunition Group Firearm Firearms require ammunition consisting of a projectile and black powder. A round of ammo can vary in its composition but is typically either a prepackaged paper cartridge, including wadding, bullet, and black powder, or loose shot packed in manually. Some weapons, like hand cannons and blunderbusses, can fire other materials, but their ammunition has the same Price due to the cost of the black powder. Because making rounds of firearm ammunition requires creating black powder, you need the Alchemical Crafting skill feat to make them. Firearm rounds are a valid option for magical ammunition, just like arrows or bolts. Crafting magical firearm ammunition requires you to be able to craft both alchemical and magical items. Critical Specialization Effects Source Core Rulebook pg. 283 Certain feats, class features, weapon runes, and other effects can grant you additional benefits when you make a Strike with certain weapons and get a critical success. This is called a critical specialization effect. The exact effect depends on which weapon group your weapon belongs to, as listed below. You can always de"
+ },
+ {
+  "id": "firearm-cleaning-kit",
+  "name": "Firearm Cleaning Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 1
+  },
+  "text": "This kit contains cleaning cloth, oil, small steel brushes, and other minor tools necessary for proper cleaning and maintenance of a firearm. Without a firearm cleaning kit, you can't perform the necessary tasks during your daily preparations to ensure that your firearm isn't at risk of misfiring under normal use conditions."
+ },
+ {
+  "id": "fireworks-display",
+  "name": "Fireworks Display",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {},
+  "text": "These displays are designed to create distinctive effects you can use to make onlookers marvel and even to gain an advantage in combat. --- *Note: This item is to be used by the archetype.*"
+ },
+ {
+  "id": "fish",
+  "name": "Fish",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "cp": 1
+  },
+  "text": "Fish Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 cp"
+ },
+ {
+  "id": "fishing-lure",
+  "name": "Fishing Lure",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "consumable"
+  ],
+  "price": {
+   "sp": 2
+  },
+  "text": "When a lure is attached to a combat fishing pole, it can be used to make thrown weapon attacks with a range increment of 20 feet, though the lure must then be reeled back in with an Interact action before the weapon can be used at range again (see the tethered trait). The ranged trip, tethered, thrown, and versatile P traits of the combat fishing pole only apply to thrown attacks made with a lure."
+ },
+ {
+  "id": "fishing-tackle",
+  "name": "Fishing Tackle",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 8
+  },
+  "text": "This kit include a collapsible fishing pole, fishhooks, line, lures, and a fishing net."
+ },
+ {
+  "id": "flag-of-the-stronghold-major",
+  "name": "Flag of the Stronghold (Major)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "gp": 70000
+  },
+  "text": "This magical banner is off-white with a depiction of a stronghold that's often colored in a striking blue. Those who stand under the banner are prepared to face the weapons of war and defend their keep until the end. You and allies within the banner's aura gain resistance 10 to damage from siege weapons."
+ },
+ {
+  "id": "flaming",
+  "name": "Flaming",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 500
+  },
+  "text": "A weapon with this rune is empowered by flickering flame. The weapon deals an additional 1d6 fire damage on a successful Strike, plus 1d10 persistent fire damage on a critical hit."
+ },
+ {
+  "id": "flaming-greater",
+  "name": "Flaming (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 6500
+  },
+  "text": "A weapon with this rune is empowered by flickering flame. The weapon deals an additional 1d6 fire damage on a successful Strike, plus 2d10 persistent fire damage on a critical hit. Fire damage dealt by this weapon (including the persistent fire damage) ignores the target's fire resistance."
+ },
+ {
+  "id": "flare-bolt",
+  "name": "Flare Bolt",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "fire"
+  ],
+  "text": "Flare Bolt Source GM Core pg. 314 Aspect Fire Activate (attack, concentrate, manipulate) Effect A bolt of flames scorches out from the relic. Make a spell attack roll with your relic against a target within 30 feet. The bolt deals 1d6 fire damage for every 2 levels the relic has (minimum 1d6). Critical Success The bolt deals double damage, as well as persistent fire damage equal to the level of the relic. Success The bolt deals full damage."
+ },
+ {
+  "id": "flawless-celestial-shawl",
+  "name": "Flawless Celestial Shawl",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "divine",
+   "invested"
+  ],
+  "usage": "worngarment",
+  "price": {},
+  "text": "Each *flawless celestial shawl* functions only for a specifc tennin and is the culmination of their immortal cultivation. The sash is made of celestial silken threads stronger than adamantine yet lighter than gossamer. The tennin can draw thread from the *flawless celestial shawl* to serve as a sterling artisan's toolkit and workshop to Craft. The sash can be used to work with precious materials of any grade. On any Crafting check the tennin attempts using the shawl, they use the outcome one degree of success better than the result of their roll. --- **Activation—Reweave** ⟨3⟩ The tennin uses the sash to Repair an item. This Repair activity loses the exploration trait."
+ },
+ {
+  "id": "flaying-knife",
+  "name": "Flaying Knife",
+  "level": 8,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "finesse",
+   "magical",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 480
+  },
+  "text": "This long, thin +1 striking Wounding dagger has a smooth edge on one side and a serrated edge on the other. Its persistent bleed damage comes from slicing away long strips of the target's flesh, and it deals 1d8 on a hit instead of 1d6. A creature takes a -2 status penalty to saving throws against diseases for as long as it has persistent bleed damage from this knife."
+ },
+ {
+  "id": "fleshgem-combat",
+  "name": "Fleshgem (Combat)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "primal"
+  ],
+  "usage": "worn",
+  "price": {
+   "gp": 160
+  },
+  "text": "Originally developed as a body modification by oreads, *fleshgems* are crystals that can be implanted in the skin of a creature of any ancestry. While a *fleshgem* can be applied anywhere on the body for cosmetic purposes, the most common usage among adventurers is to implant them at the base of the fingers, to be used like brass knuckles. These pointed crystal shards embedded in your fingers grant you a fist Strike that deals 1d6 damage, is in the brawling group, and has the magical and unarmed traits. Combat fleshgems can be enhanced with the effects of *handwraps of mighty blows*, as normal for an unarmed attack."
+ },
+ {
+  "id": "fleshrender",
+  "name": "Fleshrender",
+  "level": 18,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "finesse",
+   "magical",
+   "twin"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 24000
+  },
+  "text": "This *+3 greater striking animated dawnsilver sawtooth saber* has many serrated edges and gleams blinding white in bright light. If you're wielding Blood-Drinker in your other hand, increase *Fleshrender's* attack modifier to +32 instead of +24, and increase its fly Speed to 50 feet when you Set Free *Fleshrender*."
+ },
+ {
+  "id": "flint-and-steel",
+  "name": "Flint and Steel",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "cp": 5
+  },
+  "text": "Flint and steel are useful in creating a fire if you have the time to catch a spark, though using them is typically too time-consuming to be practical during an encounter. Even in ideal conditions, using flint and steel to light a flame requires using at least 3 actions, and often significantly longer."
+ },
+ {
+  "id": "floating-tent-four-person",
+  "name": "Floating Tent (Four-Person)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 25
+  },
+  "text": "This diamond-shaped tent is designed for sleeping in planar environments without gravity, such as the Plane of Air. Weights are attached at each of its six points, carefully balanced against each other to prevent the tent from leaning too far in any one direction. The tent has an anchor, which can be used to moor the tent and prevent it from floating away from the object or location it is anchored to. A standard floating tent is large enough for four creatures and their supplies, containing four hammocks in two rows suspended in the center of the tent and large nets near the top and bottom of the tent for gear."
+ },
+ {
+  "id": "floating-tent-pup",
+  "name": "Floating Tent (Pup)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "gp": 10
+  },
+  "text": "This diamond-shaped tent is designed for sleeping in planar environments without gravity, such as the Plane of Air. Weights are attached at each of its six points, carefully balanced against each other to prevent the tent from leaning too far in any one direction. The tent has an anchor, which can be used to moor the tent and prevent it from floating away from the object or location it is anchored to. A floating pup tent is large enough for one person and their supplies. It contains one hammock suspended in the center of the tent, large enough for a Medium or smaller creature to comfortably sleep, in addition to a net beneath the hammock where gear can be stored."
+ },
+ {
+  "id": "flooding-bolt",
+  "name": "Flooding Bolt",
+  "level": 8,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "water"
+  ],
+  "price": {
+   "gp": 75
+  },
+  "text": "Flooding Bolt Source Battlecry! pg. 133 Price 75 gp Ammunition heavy ballista bolt (heavy ballista) The hardened glass head of this bolt is filled with sloshing sea water. Designed for sinking ships in naval combat, this bolt does damage as normal for its weapon type. If it deals damage to the ship’s hull, it pierces through the wall and lodges itself in place, the tip shattering and flooding the hold at a rate of 10 gallons per round for 1 minute. This bolt can be removed from the hull with an Interact action."
+ },
+ {
+  "id": "floorbell",
+  "name": "Floorbell",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 120
+  },
+  "text": "This surprisingly sturdy 3-foot-by-3-foot clay tile resembles a thick pressure plate. It can support up to 500 pounds of weight atop it before it is destroyed. The *floorbell*'s nature is obvious at a glance, but mundane or magical means can obscure or camouflage the tile (such as by covering it in scattered leaves or by casting an Illusory Object spell) to make it harder to detect. --- **Activate** ⟨2⟩ command, Interact **Effect** The *floorbell* must be activated on level ground. When you do, specify the amount of weight that triggers the *floorbell*'s alarm system. When the amount of weight you specify (or more) is placed on the *floorbell*, it emits an ear-piercing wail clearly audible to a range of 150 feet. A *floorbell* can also ring an alarm if a weight you specify is removed from the *floorbell*, such as if you activated it while a heavy sack was on it."
+ },
+ {
+  "id": "flower-press",
+  "name": "Flower Press",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "sp": 6
+  },
+  "text": "A flower press resembles a book with wooden covers and straps that tighten down to apply pressure. There are individual pages for multiple plants. Pressing flowers and other plants in this way allows them to be preserved for future study or as ornamentation. It can also be used to make impressions of plants for inclusion in journals and guidebooks instead of illustrations. Most flower presses can contain a dozen or so flowers at a time, each one on a different layer."
+ },
+ {
+  "id": "flying-broomstick",
+  "name": "Flying Broomstick",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 1900
+  },
+  "text": "This broom has a tenuous connection to gravity, and it tends to drift even while stowed. You can ride on the broom using one hand to guide it, and the broom can carry up to one passenger in addition to you. The broom moves at a fly Speed of 20 feet. The broom can carry only so much, taking a –10-foot penalty to its Speed if laden with more than 20 Bulk, and crashing to the ground if it carries more than 30 Bulk. **Activate—Lift Off** ⟨2⟩ (concentrate, manipulate) --- **Effect** You name a destination on the same plane, and the broom speeds toward it at a fly Speed of 40 feet. You must either clutch the broom with two hands in order to ride it, or you need to release the broom to send it off with no rider. If you don't have a good idea of the location, layout, and general direction of the destination, or if your named destination is on another plane, the broom wanders aimlessly, circling back to its starting location after 30 minutes. If the broom carries a rider, this activation lasts until 4 hours pass (typically 16 miles of travel), the broom reaches its destination, or you Dismiss the activation. If the broom doesn't have a rider, the activation lasts until the broom reaches its destination. When the activation ends, the broom floats to the ground and can't be activated again for 1 hour."
+ },
+ {
+  "id": "folding-ladder",
+  "name": "Folding Ladder",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 3
+  },
+  "text": "**Bulk** 1 (3 unfolded) --- This multi-hinged, 10-foot ladder is useful for climbing upward or across dangerous pits. You can fold or unfold the ladder with two total Interact actions, which don't need to consecutive."
+ },
+ {
+  "id": "follypops-hotpops",
+  "name": "Follypops (Hotpops)",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "evocation",
+   "magical"
+  ],
+  "price": {
+   "gp": 175
+  },
+  "text": "Follypops Source Grand Bazaar pg. 47 Usage held in 1 hand Bulk L Activate Interact These savory breaded snacks stuffed with cheese, peppers, and “secret ingredients” of draconic or demonic origin are often offered alongside a challenge—complete a full portion and get a free drink. For 1 hour after consuming follypops, your stomach gurgles and rumbles with magical potential. During this time, you can unleash magic in the area up to three times as a single action, which has the concentrate trait, with an area and damage determined by the type of pop; the third time you use this magic, the effects of your follypops end. All creatures within the area must attempt a DC 27 basic saving throw each time you unleash magic, as noted by the type of pop. Follypops (Hotpops) Source Grand Bazaar pg. 47 Price 175 gp Bulk L You begin to sweat profusely after consuming the serving. When you unleash magic, you breathe out a blast of fire in a 15-foot cone. Creatures in the cone take 4d6 fire damage with the first blast, 2d6 fire damage with the second blast, and 1d6 fire damage with the final blast. The creatures must attempt a basic Reflex save for each blast. Follypops (Rotters) Source Grand Bazaar pg. 47 Price 175 gp Bulk L Your breath smells of rotting garbage after you consume the serving. When you unleash magic, you exhale a noxious breath in a 15-foot cone. Creatures in the cone take 4d6 poison damage with the first breath, 2d6 poison damage with the second breath, and 1d6 poison damage"
+ },
+ {
+  "id": "follypops-rotters",
+  "name": "Follypops (Rotters)",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "evocation",
+   "magical"
+  ],
+  "price": {
+   "gp": 175
+  },
+  "text": "Follypops Source Grand Bazaar pg. 47 Usage held in 1 hand Bulk L Activate Interact These savory breaded snacks stuffed with cheese, peppers, and “secret ingredients” of draconic or demonic origin are often offered alongside a challenge—complete a full portion and get a free drink. For 1 hour after consuming follypops, your stomach gurgles and rumbles with magical potential. During this time, you can unleash magic in the area up to three times as a single action, which has the concentrate trait, with an area and damage determined by the type of pop; the third time you use this magic, the effects of your follypops end. All creatures within the area must attempt a DC 27 basic saving throw each time you unleash magic, as noted by the type of pop. Follypops (Hotpops) Source Grand Bazaar pg. 47 Price 175 gp Bulk L You begin to sweat profusely after consuming the serving. When you unleash magic, you breathe out a blast of fire in a 15-foot cone. Creatures in the cone take 4d6 fire damage with the first blast, 2d6 fire damage with the second blast, and 1d6 fire damage with the final blast. The creatures must attempt a basic Reflex save for each blast. Follypops (Rotters) Source Grand Bazaar pg. 47 Price 175 gp Bulk L Your breath smells of rotting garbage after you consume the serving. When you unleash magic, you exhale a noxious breath in a 15-foot cone. Creatures in the cone take 4d6 poison damage with the first breath, 2d6 poison damage with the second breath, and 1d6 poison damage"
+ },
+ {
+  "id": "follypops-sizzlers",
+  "name": "Follypops (Sizzlers)",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "evocation",
+   "magical"
+  ],
+  "price": {
+   "gp": 175
+  },
+  "text": "Follypops Source Grand Bazaar pg. 47 Usage held in 1 hand Bulk L Activate Interact These savory breaded snacks stuffed with cheese, peppers, and “secret ingredients” of draconic or demonic origin are often offered alongside a challenge—complete a full portion and get a free drink. For 1 hour after consuming follypops, your stomach gurgles and rumbles with magical potential. During this time, you can unleash magic in the area up to three times as a single action, which has the concentrate trait, with an area and damage determined by the type of pop; the third time you use this magic, the effects of your follypops end. All creatures within the area must attempt a DC 27 basic saving throw each time you unleash magic, as noted by the type of pop. Follypops (Hotpops) Source Grand Bazaar pg. 47 Price 175 gp Bulk L You begin to sweat profusely after consuming the serving. When you unleash magic, you breathe out a blast of fire in a 15-foot cone. Creatures in the cone take 4d6 fire damage with the first blast, 2d6 fire damage with the second blast, and 1d6 fire damage with the final blast. The creatures must attempt a basic Reflex save for each blast. Follypops (Rotters) Source Grand Bazaar pg. 47 Price 175 gp Bulk L Your breath smells of rotting garbage after you consume the serving. When you unleash magic, you exhale a noxious breath in a 15-foot cone. Creatures in the cone take 4d6 poison damage with the first breath, 2d6 poison damage with the second breath, and 1d6 poison damage"
+ },
+ {
+  "id": "force-blast",
+  "name": "Force Blast",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "evocation"
+  ],
+  "text": "Force Blast Source Secrets of Magic pg. 231 Aspect Soul Activate command, envision; Effect A blast of force envelops a creature of your choosing within 30 feet. This blast deals 1d6 force damage, with a basic Fortitude save. The damage increases by 1d6 at 3rd level and every 2 levels thereafter."
+ },
+ {
+  "id": "forge-weld",
+  "name": "Forge Weld",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "transmutation"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Forge Weld Source Highhelm pg. 114 Aspect Forge Activate command, Interact; Frequency once per day; Effect You strike the relic against a non-magical metal object of 4 Bulk or less, repairing it. The object's edges glow white hot, and you restore 5 Hit Points to the object per level of the relic. If this repairs the item above its Broken Threshold, it is no longer broken. This ability cannot replace lost pieces or restore something that's been completely destroyed."
+ },
+ {
+  "id": "forgotten-signet",
+  "name": "Forgotten Signet",
+  "level": 21,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "invested",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {},
+  "text": "At the center of this silver ring gleams an obsidian gem, its surface emblazoned with a bloodred rune of forgetting. While wearing a *forgotten signet*, you're subjected to Hidden Mind (+32 counteract bonus) and easily fade from others' memory. Sapient creatures must attempt a save each time you depart from their company or they forget you entirely. --- **Critical Success** The creature's memories of you are normal. **Success** The creature remembers you and your interactions but has difficulty describing either to others. Each time they attempt to share information about these subjects with someone else, they relate only confusing or unclear details about you and this interaction. **Failure** The creature remembers your existence but no details about you or your interactions. For example, they remember speaking with an individual of your most basic biological traits, such as a human woman, but not your name, appearance, or other specific features. **Critical Failure** The creature retains no memories of you or this interaction. --- **Destruction** If a creature learns the true name of a *forgotten signet*'s wearer and makes it public knowledge, that *forgotten signet* tarnishes and breaks in two."
+ },
+ {
+  "id": "form-of-fury",
+  "name": "Form of Fury",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Form of Fury Source GM Core pg. 310 Aspect Beast Prerequisite The relic is a worn item. Activate (concentrate); Frequency twice per day; Effect Calling upon the bestial nature within, you change shape into that of an animal. The relic casts animal form on you, transforming you into the same type of animal every time, chosen when the gift is gained; the spell rank is half the item's level, rounded down."
+ },
+ {
+  "id": "form-of-vengeance",
+  "name": "Form of Vengeance",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Form of Vengeance Source GM Core pg. 310 Aspect Beast Prerequisite form of fury gift Whenever you use the relic's form of fury activation, it can cast aerial form or dinosaur form instead of animal form. Like form of fury, these spells also turn you into the same type of animal each time (so you have three forms you can assume in total, one from each spell). The spell rank is the same as defined in form of fury. While transformed, you can switch from one of the three forms to another by Sustaining the activation. This doesn't change the duration."
+ },
+ {
+  "id": "formula-book-blank",
+  "name": "Formula Book (Blank)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "A formula book holds the formulas necessary to make items other than the common equipment from Pathfinder Player Core; characters of the alchemist class typically get one for free. Each formula book can hold the formulas for up to 100 different items. Formulas can also appear on parchment sheets, tablets, and almost any other medium; there's no need for you to copy them into a specific book as long as you can keep them on hand to reference them."
+ },
+ {
+  "id": "fortification",
+  "name": "Fortification",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-med-heavy-armor",
+  "price": {
+   "gp": 2000
+  },
+  "text": "A *fortification* rune wards against the most deadly attacks. Each time you're critically hit while wearing the etched armor, attempt a . On a success, it becomes a normal hit. This property thickens the armor, increasing its Bulk by 1 and the Strength required to reduce its penalties by 1."
+ },
+ {
+  "id": "fortification-greater",
+  "name": "Fortification (Greater)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-med-heavy-armor",
+  "price": {
+   "gp": 24000
+  },
+  "text": "A *greater fortification* rune wards against the most deadly attacks. Each time you're critically hit while wearing the etched armor, attempt a . On a success, it becomes a normal hit. This property thickens the armor, increasing its Bulk by 1 and the Strength required to reduce its penalties by 1."
+ },
+ {
+  "id": "four-ways-dogslicer",
+  "name": "Four-Ways Dogslicer",
+  "level": 12,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "backstabber",
+   "cold",
+   "electricity",
+   "finesse",
+   "fire",
+   "goblin",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1700
+  },
+  "text": "This *+2 striking dogslicer* is obviously the work of a brilliant but scrappy artisan who valued versatility over safety. Four toothy gems line the blade's cutting edge, three of which glow-one with fiery red light, one with a chill blue, and one that gives off sparks-while the last is a glistening black. Each of these gems embodies a weapon property rune, but only one rune can be active at a time. --- **Activate-Gem Twist** ⟨1⟩ (manipulate) **Effect** You twist the gem along the blade corresponding with the desired weapon rune: red for *flaming*, blue for *frost*, or yellow for *shock*. You take 1d6 damage of the type the chosen rune deals. You can instead twist the black gem to disable the active property rune, taking no damage."
+ },
+ {
+  "id": "fox",
+  "name": "Fox",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 8
+  },
+  "text": "Fox Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 8 sp"
+ },
+ {
+  "id": "freeze-ammunition",
+  "name": "Freeze Ammunition",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable",
+   "splash"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 28
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- Freeze ammunition carries chilling reagents that activate on contact with the target. A creature hit by activated freeze ammunition takes cold damage instead of the weapon's normal damage type, plus 2 cold splash damage. Hitting a 5-foot-square surface successfully with freeze ammunition deals 2 cold splash damage and covers the space in a layer of ice. Each creature standing on the icy surface must succeed at a save or check or else fall prone. Creatures using an action to move onto the icy surface must attempt either a Reflex save or an Acrobatics check to Balance. Creatures that Step or Crawl don't need to attempt a check or save. The ice melts after 1 minute, although unusually hot or cold temperatures can change this duration at the GM's discretion. Dealing at least 1 point of fire damage to the ice removes it instantly"
+ },
+ {
+  "id": "freezing-ammunition",
+  "name": "Freezing Ammunition",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "cold",
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 25
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This chilly ammunition is dark blue and cold to the touch. When activated *freezing ammunition* hits a target, the target must succeed at a save or be Slowed 1 for 1 round by the intense cold (slowed 1 for 1 minute on a critical failure)."
+ },
+ {
+  "id": "frog",
+  "name": "Frog",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "Frog Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 2 sp"
+ },
+ {
+  "id": "frost",
+  "name": "Frost",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "cold",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 500
+  },
+  "text": "This weapon is empowered with freezing ice. It deals an additional 1d6 cold damage on a successful Strike. On a critical hit, the target is also Slowed 1 until the end of your next turn unless it succeeds at a save."
+ },
+ {
+  "id": "frost-greater",
+  "name": "Frost (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "cold",
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 6500
+  },
+  "text": "This weapon is empowered with freezing ice. It deals an additional 1d6 cold damage on a successful Strike. On a critical hit, the target is also Slowed 1 until the end of your next turn unless it succeeds at a save. Cold damage dealt by this weapon ignores the target's cold resistance."
+ },
+ {
+  "id": "frost-vial-lesser",
+  "name": "Frost Vial (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "cold",
+   "consumable",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- The bright blue liquid reagents in this vial rapidly absorb heat when exposed to air. A frost vial deals 1d6 cold damage and 1 cold splash damage. On a hit, the target takes a –5-foot status penalty to its Speeds until the end of its next turn."
+ },
+ {
+  "id": "fulcrum-lattice",
+  "name": "Fulcrum Lattice",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "occult"
+  ],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1200
+  },
+  "text": "This silver and copper framework is shaped to hold four focusing lenses, one behind the other, from smallest to largest. It has a socketed base to be mounted into a stand, such as that found in a lighthouse lantern. The Fulcrum Lattice was specifically designed to hold the four fulcrum lenses from smallest to largest (ebon, crimson, ochre, emerald), and it hums slightly while within 10 feet of any fulcrum lens. A fulcrum lens slotted into the Fulcrum Lattice has no Bulk; the lattice remains at 1 Bulk and can be carried easily. Inserting or removing a lens from the Fulcrum Lattice requires a single Interact action. The Fulcrum Lattice channels the power of fulcrum lenses joined with it. While you hold the Fulcrum Lattice, lenses socketed into it are considered to be in your hand for the purpose of activating their abilities. When you make a melee spell attack with a lens in the Fulcrum Lattice, you use the highest melee spell attack modifier of any lens in the lattice, or you can use your melee attack modifier with simple weapons if it's greater."
+ },
+ {
+  "id": "furnace-of-endings-lesser",
+  "name": "Furnace of Endings (Lesser)",
+  "level": 2,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 35
+  },
+  "text": "Ash Cultists make use of these metal scroll cases to deliver secret messages or as ways to \"smuggle\" stolen documents since initial inspections find an elegant yet empty case. The cases are enchanted to instantly immolate any parchment or document placed inside of it. While invested, you can Interact with the scroll case to recreate the last message that was destroyed this way. For as long as the case is open, ashes will rise into the air, recreating the text of the message exactly as it was written. When you close the case or leave it unattended for 1 minute, the message scatters until the next time you Interact with it."
+ },
+ {
+  "id": "ganjay-book",
+  "name": "Ganjay Book",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "transmutation"
+  ],
+  "price": {
+   "gp": 10
+  },
+  "text": "Ganjay Book Source PFS Guide pg. 96 Price 10 gp Bulk L or — This item is a formula book, religious text, or spellbook that has been creased—possibly by Princess Ganjay herself—to fold up into an impossibly small shape. When folded up, the book can't be read or used, but its Bulk is reduced by 1 (a book that is 1 Bulk becomes light Bulk, and a book that is light Bulk becomes negligible in weight). Activate 1 minute (Interact); Effect You fold or unfold the Ganjay book, manipulating the cunning creases."
+ },
+ {
+  "id": "ganjay-book-1-bulk-book",
+  "name": "Ganjay Book (1 bulk book)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10
+  },
+  "text": "This item is a formula book, religious text, or spellbook that has been creased-possibly by Princess Ganjay herself-to fold up into an impossibly small shape. When folded up, the book can't be read or used, but its Bulk is reduced by 1 (a book that is 1 Bulk becomes light Bulk, and a book that is light Bulk becomes negligible in weight). --- **Activate** 1 minute (Interact) You fold or unfold the Ganjay book, manipulating the cunning creases."
+ },
+ {
+  "id": "ganjay-book-light-bulk-book",
+  "name": "Ganjay Book (Light bulk book)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 10
+  },
+  "text": "This item is a formula book, religious text, or spellbook that has been creased-possibly by Princess Ganjay herself-to fold up into an impossibly small shape. When folded up, the book can't be read or used, but its Bulk is reduced by 1 (a book that is 1 Bulk becomes light Bulk, and a book that is light Bulk becomes negligible in weight). --- **Activate** 1 minute (Interact) You fold or unfold the Ganjay book, manipulating the cunning creases."
+ },
+ {
+  "id": "garrote-bolt",
+  "name": "Garrote Bolt",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1200
+  },
+  "text": "**Activate** ⟨1⟩ Interact --- The shaft of this silver bolt is engraved with wiry designs. When a *garrote bolt* hits a target, it transforms into a silver garrote and wraps around one of the target's appendages, dealing an additional 2d12 damage. On a critical hit, it wraps around the target's throat, and the target can't breathe until the persistent damage ends."
+ },
+ {
+  "id": "garrote-shot",
+  "name": "Garrote Shot",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1200
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- Wiry designs mark the silvery coating on a garrote shot. When the activated ammunition hits a target, it transforms into a silvery garrote that wraps around one of the target's appendages, dealing 2d12. On a critical hit, it wraps around the target's throat if it has one, and the target can't breathe until the persistent damage ends. If the persistent damage kills the target, the garrote severs the appendage it's wrapped around."
+ },
+ {
+  "id": "gauntlight",
+  "name": "Gauntlight",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "gerbil-or-hamster",
+  "name": "Gerbil or Hamster",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 1
+  },
+  "text": "Gerbil or Hamster Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 1 sp"
+ },
+ {
+  "id": "ghost-ammunition",
+  "name": "Ghost Ammunition",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "price": {
+   "gp": 900
+  },
+  "text": "**Ammunition** any *Ghost ammunition* is cool to the touch. This ammunition has the benefits of the *Ghost Touch* property rune and can fly through any obstacle except those that can block incorporeal creatures or effects. Though the ammunition penetrates barriers and ignores all cover, the target still benefits from the flat check from being concealed or hidden. You still can't target an undetected creature without guessing. After it is launched, the ammunition vanishes into mist. However, in the dead of the night 1d4 days later, it reappears in the last quiver or other container it was taken from."
+ },
+ {
+  "id": "ghost-charge-lesser",
+  "name": "Ghost Charge (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "vitality"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- These spring-loaded metal canisters contain a mixture of chemicals and salts that drain and disintegrate nearby undead creatures. A *ghost charge* deals 1d8 vitality damage and 1 vitality splash damage, though as usual for vitality damage, this damage harms only undead and creatures with void healing. A primary target that takes damage from a *ghost charge* becomes Enfeebled 1 until the start of your next turn. *Ghost charges* are designed to explode even on contact with a spiritual substance, making them ideal for damaging incorporeal undead."
+ },
+ {
+  "id": "ghost-stone",
+  "name": "Ghost Stone",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "other",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "ghost-touch",
+  "name": "Ghost Touch",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 75
+  },
+  "text": "A weapon etched with this rune can harm creatures without physical form. A *ghost touch* weapon is particularly effective against incorporeal creatures, which almost always have a specific vulnerability to *ghost touch* weapons. Incorporeal creatures can touch, hold, and wield *ghost touch* weapons (unlike most physical objects)."
+ },
+ {
+  "id": "ghosthands-comet",
+  "name": "Ghosthand's Comet",
+  "level": 23,
+  "itemType": "weapon",
+  "traits": [
+   "artifact",
+   "backstabber",
+   "concussive",
+   "fatal-d12",
+   "kickback",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {},
+  "text": "The barrel of this long rifle is translucent in places, forming a swirled pattern along the metal, and its stock is formed of crimson wood. *Ghosthand's Comet* is a *+4 major striking beast-bane greater impactful advanced firearm* with a range increment of 300 feet. It deals 5d8 force damage and has the backstabber, concussive, kickback, and fatal d12 traits. As a star gun, Ghosthand's Comet runs on magic and doesn't use ammunition or black powder. The weapon is silent when fired. --- **Activate** ⟨4⟩ (concentrate) **Trigger** You attempt a ranged Strike with *Ghosthand's Comet* **Effect** For the triggering Strike, *Ghosthand's Comet* changes its damage type to your choice of acid, cold, electricity, fire, or sonic. --- **Activate** ⟨1⟩ (concentrate) **Effect** On your next attempt at a ranged Strike with *Ghosthand's Comet*, the shot phases through any material or magical obstacle, such as a wall of force, in its path, ignoring all cover. You must attempt the Strike by the end of your turn or this effect is lost. --- **Destruction** If the Grim Reaper slays the wielder of *Ghosthand's Comet*, the Reaper's scythe, as it strikes the killing blow, is destined to slice the star gun in half."
+ },
+ {
+  "id": "giant-catch-pole",
+  "name": "Giant Catch Pole",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 50
+  },
+  "text": "This sturdy pole has a rope attached to one end in a loop with the other end extending to the handle. You can pull the handle side of the rope to tighten the loop. Using this loop, you can Grapple without having a free hand. A creature grabbed this way receives a –2 circumstance penalty to attack rolls when Striking with an unarmed attack. Due to limitations in the size of the loop, a catch pole can only be used on creatures sized Medium or smaller. A giant catch pole is made from thicker steel and heavier rope. It functions the same as a catch pole but can be used to Grapple creatures up to your normal size limit. However, the implement is so ungainly that you are Clumsy 1 while wielding it."
+ }
+]

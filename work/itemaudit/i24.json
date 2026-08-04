@@ -1,0 +1,1025 @@
+[
+ {
+  "id": "true-name-amulet-lesser",
+  "name": "True Name Amulet (Lesser)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornamulet",
+  "price": {
+   "gp": 150
+  },
+  "text": "This amulet bears the true name of a single creature with a level no higher than the item's level. These amulets are typically made of gold and engraved, but could be made of anything, including simple clay. The name is clearly visible, though only to you, and only while you have the amulet invested. If you can read the language in which the name is written, that creature always takes the effects of *invoke true name* against your spells (with a spell rank equal to half the item's level, rounded up). In addition, when the creature uses any magical effect against you, you can immediately attempt to counteract it using Arcana, Nature, Occult, or Religion for the counteract check and the true name amulet's level to determine the counteract rank. Legendary amulets bearing the true names of creatures of level 21+ may exist."
+ },
+ {
+  "id": "true-name-amulet-major",
+  "name": "True Name Amulet (Major)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornamulet",
+  "price": {
+   "gp": 55000
+  },
+  "text": "This amulet bears the true name of a single creature with a level no higher than the item's level. These amulets are typically made of gold and engraved, but could be made of anything, including simple clay. The name is clearly visible, though only to you, and only while you have the amulet invested. If you can read the language in which the name is written, that creature always takes the effects of *invoke true name* against your spells (with a spell rank equal to half the item's level, rounded up). In addition, when the creature uses any magical effect against you, you can immediately attempt to counteract it using Arcana, Nature, Occult, or Religion for the counteract check and the true name amulet's level to determine the counteract rank. Legendary amulets bearing the true names of creatures of level 21+ may exist."
+ },
+ {
+  "id": "true-name-amulet-moderate",
+  "name": "True Name Amulet (Moderate)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "wornamulet",
+  "price": {
+   "gp": 850
+  },
+  "text": "This amulet bears the true name of a single creature with a level no higher than the item's level. These amulets are typically made of gold and engraved, but could be made of anything, including simple clay. The name is clearly visible, though only to you, and only while you have the amulet invested. If you can read the language in which the name is written, that creature always takes the effects of *invoke true name* against your spells (with a spell rank equal to half the item's level, rounded up). In addition, when the creature uses any magical effect against you, you can immediately attempt to counteract it using Arcana, Nature, Occult, or Religion for the counteract check and the true name amulet's level to determine the counteract rank. Legendary amulets bearing the true names of creatures of level 21+ may exist."
+ },
+ {
+  "id": "trundle-wheel",
+  "name": "Trundle Wheel",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "A trundle wheel is used to measure distance. It is a wheel attached to a handle so that it rolls along the ground. The wheel is often covered with leather or a rough metal to allow better grip on a surface and ensure it maintains traction. It's of an exact circumference, usually a yard or five feet. Each time it makes a complete rotation it makes an audible click so the user knows they have gone exactly that distance and can count the clicks to determine a longer distance traveled."
+ },
+ {
+  "id": "trustworthy-round",
+  "name": "Trustworthy Round",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "free"
+  },
+  "price": {
+   "gp": 9
+  },
+  "text": "**Ammunition** any **Activate** ⟨4⟩ (concentrate) --- This ammunition was developed in Dongun Hold to minimize casualties to friendly fire, and is always marked by a burnished copper head or tip so it can be easily identified. Before you can fire a trustworthy round, you must call out a target. You don't need to specify a name; the target could be \"The angry tiger attacking our group on the left.\" The round will only hit the specified target and will turn to gossamer dust midair if it misses the intended target or comes into contact with anything else; this also prevents abilities that redirect attacks. The round doesn't have any capabilities beyond your own to determine whether someone is who you think they are, so you can't use it to determine a disguised creature's identity. If you specify a target of \"Seltyiel\" and shoot someone disguised as Seltyiel who you thought was Seltyiel, the attack will still hit, whereas if you were about to hit a disguised Seltyiel who you didn't recognize to be Seltyiel, the round would dissolve."
+ },
+ {
+  "id": "turtle",
+  "name": "Turtle",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 3
+  },
+  "text": "Turtle Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 3 sp"
+ },
+ {
+  "id": "twigjack-sack-lesser",
+  "name": "Twigjack Sack (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- Sharp, flexible brambles poke from this sack made of intricately intertwined plant fibers. The sack's contents creak under the strain of the tightly compressed bundle. When thrown, a twigjack sack bursts open, spraying brambles in all directions that gouge and slash nearby creatures. A twigjack sack deals the listed piercing damage, persistent bleed damage, and splash damage. The bomb deals 1d6 piercing damage, 1 persistent bleed damage, and 1 piercing splash damage."
+ },
+ {
+  "id": "twining-chains",
+  "name": "Twining Chains",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "adjustment"
+  ],
+  "usage": "applied-to-armor",
+  "price": {
+   "gp": 5
+  },
+  "text": "This set of chains is completely covered with spikes and sharp blades. Not balanced for weapon use, twining chains are instead wrapped around a user's body as a deterrent to attackers-and, for some, a fashion statement. While wearing twining chains, you gain the Thorns reaction. In addition to their dangers, twining chains' weight also increases your armor's Bulk by 1, Strength entry value by 2, and check penalty by 2. --- **Thorns** ⟨5⟩ **Trigger** You are hit by an unarmed attack --- **Effect** You twist to harm your attacker with your chains' spikes and blades. Make an attack roll against the triggering attacker using your unarmed attack modifier. On a hit, the attacking creature takes 1d6 damage. This damage increases to 2d6 damage if the armor has a +1 potency rune, 3d6 damage if the armor has a +2 potency rune, or 4d6 damage if the armor has a +3 potency rune. However, whether you hit or miss, you take piercing damage equal to the number of d6s of piercing damage you would deal your attacker."
+ },
+ {
+  "id": "twining-staff",
+  "name": "Twining Staff",
+  "level": 6,
+  "itemType": "weapon",
+  "traits": [
+   "magical",
+   "monk",
+   "two-hand-d8"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "Appearing to be just a small, flat disk made of twigs, this item can grow and shrink. Once formed, this oak staff is carved with twisting patterns along its length. **Activate—Form Staff** ⟨1⟩ (manipulate) --- **Effect** You cause the twigs to rapidly grow or contract, reshaping into a *+1 striking staff*, a *+1 striking bo staff*, or its disk form. In its disk form, it has negligible Bulk and must be held in one hand to be activated. In the other forms, it has the same Bulk as a normal weapon of its type. You can switch your grip as part of the activation. When you expand the item, you can use the force of the expansion to High Jump or to try to Force Open a door or the like by wedging the disk into a gap before activation. The staff makes the Athletics check with a 1d20+15 modifier."
+ },
+ {
+  "id": "twisting-twine-greater",
+  "name": "Twisting Twine (Greater)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 300
+  },
+  "text": "This ball of hempen twine resists efforts to unravel it by hand. **Activate—Unravel Twine** ⟨1⟩ (manipulate) --- **Effect** You toss the ball of twine into a square within 20 feet. The twine then unravels and animates, attempting to Disarm or Trip (your choice) a creature in the square with a total of +15 to the Athletics check. At the end of your turn, the twine winds itself back into a ball and returns to your hand; if you don't have a free hand, it returns to your space instead."
+ },
+ {
+  "id": "umbral-body",
+  "name": "Umbral Body",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "shadow"
+  ],
+  "text": "Umbral Body Source GM Core pg. 318 Aspect Shadow Activate (concentrate, manipulate) Effect Shadowy essence infuses your body, and you can reshape wisps of yourself into a variety of damaging shadows. This has the effect of a 6th-rank shadow blast, choosing from only bludgeoning, slashing, or piercing damage. You can't use this activation again for 1d4 rounds."
+ },
+ {
+  "id": "unarmored",
+  "name": "Unarmored",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "text": "Unarmored Source Player Core pg. 273 Price — AC Bonus +0 Dex Cap — Check Penalty — Speed Penalty — Strength — Bulk — Category Unarmored Group — Nethys Note: no description was provided for this item"
+ },
+ {
+  "id": "underground-bounty",
+  "name": "Underground Bounty",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "earth",
+   "metal"
+  ],
+  "text": "Underground Bounty Source GM Core pg. 313 Aspect Earth Your relic produces metals and stones to empower your weapons. Each day during your daily preparations, your relic conjures a magical shard of silver, cold iron, gold, or a non-precious stone or metal material of your choice (such as bronze or granite). If your relic is a weapon, it immediately absorbs the shard, causing it to gain a magical sheen of that metal or stone until your next daily preparations. If your relic is not a weapon, the shard is not immediately used, and you can touch it to a stone or metal weapon using an Interact action to give it a magical sheen of that metal or stone for 10 minutes. While coated in the magical sheen, the weapon interacts with weaknesses, resistances, and the like as if it were made of the stone or metal from the shard rather than its own. The sheen and the shard are obviously magical in nature, and if you don't use the shard, it disappears when you make your next daily preparations. At 17th level, add adamantine and dawnsilver to the available options."
+ },
+ {
+  "id": "underwater",
+  "name": "Underwater",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 50
+  },
+  "text": "This weapon works as well in water as it does on land. Attacks with the weapon don't take the normal penalties and restrictions for being used in water or underwater. If the weapon is capable of dealing fire damage, its fire functions underwater as well."
+ },
+ {
+  "id": "underwater-firing-mechanism",
+  "name": "Underwater Firing Mechanism",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "attached-to-crossbow-or-firearm-firing-mechanism",
+  "price": {
+   "gp": 600
+  },
+  "text": "This device replaces the attached firearm's normal firing mechanism (normally, most guns use a flintlock or matchlock firing mechanism). When the firearm's wielder fires the weapon, a small rune etched on a piece of stone affixed inside the mechanism releases a magical spark that's propelled through the firing mechanism and into the firearm, launching its bullet. An *underwater firing mechanism* allows the attached firearm to be fired underwater or in other conditions that would normally prevent the ignition of black powder. Attaching an *underwater firing mechanism* to a firearm takes 1 hour, though this time can overlap with the standard time required to maintain and clean your firearm to prevent misfires."
+ },
+ {
+  "id": "unexceptional",
+  "name": "Unexceptional",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "applied-to-any-item-of-light-or-negligible-bulk",
+  "price": {
+   "gp": 60
+  },
+  "text": "Merchants traveling into Stonebreach sometimes apply this accessory rune to specific wares to avoid the notice of thieves. Conversely, many thieves in Highhelm apply these runes to stolen goods to help them smuggle items out of the city. The item gains the effects of Disguise Magic to appear as non-magical. The rune's effects also cause anyone who closely observes or holds the item to believe it is a mundane version of that type of item, such as believing a magical dagger to be an ordinary dagger, unless the creature succeeds at a save. Creatures that succeed their save see that there is more to the item than meets the eye, but aren't immediately aware of the *magic aura* effect."
+ },
+ {
+  "id": "unholy-water",
+  "name": "Unholy Water",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "consumable",
+   "divine",
+   "splash",
+   "thrown",
+   "unholy"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- A malicious deity's malice lies within this vial of water. You activate a vial of *unholy water* by throwing it as a Strike. It's a simple thrown weapon with a range increment of 20 feet. *Unholy water* deals 1d6 spirit damage and 1 spirit splash damage. *Unholy water* can damage only creatures with the holy trait."
+ },
+ {
+  "id": "universal-solvent-greater",
+  "name": "Universal Solvent (Greater)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "gp": 325
+  },
+  "text": "Universal Solvent Source Advanced Player's Guide pg. 255 Usage held in 1 hand Bulk L Activate Interact Originally formulated as a means of dissolving sovereign glue, this powerful solvent can break almost any adhesive's grip. As universal solvent is particularly effective against sovereign glue, it automatically dissolves sovereign glue. It attempts to counteract any other adhesives, such as tanglefoot bags, with a counteract modifier depending on the type. Universal Solvent (Moderate) Source Advanced Player's Guide pg. 255 Price 21 gp Bulk L The serum has a counteract modifier of +9. Universal Solvent (Greater) Source Advanced Player's Guide pg. 255 Price 325 gp Bulk L The serum has a counteract modifier of +19. Universal Solvent (Major) Source Advanced Player's Guide pg. 255 Price 3,250 gp Bulk L The serum has a counteract modifier of +28."
+ },
+ {
+  "id": "universal-solvent-major",
+  "name": "Universal Solvent (Major)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "gp": 3250
+  },
+  "text": "Universal Solvent Source Advanced Player's Guide pg. 255 Usage held in 1 hand Bulk L Activate Interact Originally formulated as a means of dissolving sovereign glue, this powerful solvent can break almost any adhesive's grip. As universal solvent is particularly effective against sovereign glue, it automatically dissolves sovereign glue. It attempts to counteract any other adhesives, such as tanglefoot bags, with a counteract modifier depending on the type. Universal Solvent (Moderate) Source Advanced Player's Guide pg. 255 Price 21 gp Bulk L The serum has a counteract modifier of +9. Universal Solvent (Greater) Source Advanced Player's Guide pg. 255 Price 325 gp Bulk L The serum has a counteract modifier of +19. Universal Solvent (Major) Source Advanced Player's Guide pg. 255 Price 3,250 gp Bulk L The serum has a counteract modifier of +28."
+ },
+ {
+  "id": "universal-solvent-moderate",
+  "name": "Universal Solvent (Moderate)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "price": {
+   "gp": 21
+  },
+  "text": "Universal Solvent Source Advanced Player's Guide pg. 255 Usage held in 1 hand Bulk L Activate Interact Originally formulated as a means of dissolving sovereign glue, this powerful solvent can break almost any adhesive's grip. As universal solvent is particularly effective against sovereign glue, it automatically dissolves sovereign glue. It attempts to counteract any other adhesives, such as tanglefoot bags, with a counteract modifier depending on the type. Universal Solvent (Moderate) Source Advanced Player's Guide pg. 255 Price 21 gp Bulk L The serum has a counteract modifier of +9. Universal Solvent (Greater) Source Advanced Player's Guide pg. 255 Price 325 gp Bulk L The serum has a counteract modifier of +19. Universal Solvent (Major) Source Advanced Player's Guide pg. 255 Price 3,250 gp Bulk L The serum has a counteract modifier of +28."
+ },
+ {
+  "id": "vandals-banner",
+  "name": "Vandal's Banner",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "usage": "affixed-or-held-in-one-hand",
+  "price": {
+   "cp": 0,
+   "gp": 100,
+   "pp": 0,
+   "sp": 0
+  },
+  "text": "This magical banner is imbued with the foolhardy courage of hooligans and troublemakers. Strikes you or an ally make while within the banner's aura ignore the first 2 points of Hardness of an object."
+ },
+ {
+  "id": "venom-glands",
+  "name": "Venom Glands",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical",
+   "poison"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 55
+  },
+  "text": "Your salivary glands are modified to be capable of spraying a deadly venom. You gain a poison spray unarmed ranged attack with a range increment of 10 feet that deals 1d4 poison damage. On a critical hit, the target is also Sickened 1."
+ },
+ {
+  "id": "versatile-tinderbox",
+  "name": "Versatile Tinderbox",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wood"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 20
+  },
+  "text": "A fine case carved from elegant wood, this tinderbox holds twigs and strips of wood in a selection of six colors. In a typical *versatile tinderbox*, these colors are black, blue, green, magenta, yellow, and violet. When used in lighting a fire, colored tinder alters the flames' color and smoke to match. The box is perfectly carved and constructed to hold tinder, keeping it completely dry, but is incapable of closing if used to hold anything else. The tinderbox replenishes itself; it's never out of tinder when its owner is in need, but it never produces a surplus of tinder either."
+ },
+ {
+  "id": "vexing-vapor-lesser",
+  "name": "Vexing Vapor (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "inhaled",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a fine red powder made from toxic berries. A lesser vexing vapor bomb deals 1d6 damage and 1 mental splash damage. On a hit, the target must succeed at a check before taking actions with the concentrate trait. This lasts until the end of its next turn (1 minute on a critical hit)."
+ },
+ {
+  "id": "vine-arrow",
+  "name": "Vine Arrow",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 10
+  },
+  "text": "**Activate** ⟨1⟩ (concentrate) --- Leafy stalks protrude from the shaft of this rustic arrow. When an activated *vine arrow* hits a target, the arrow's shaft splits and grows, wrapping the target in vines. The target takes a –10-foot circumstance penalty to its Speeds for 2d4 rounds, or until it Escapes against a DC of 19. On a critical hit, the target is also immobilized until it Escapes."
+ },
+ {
+  "id": "viper-arrow",
+  "name": "Viper Arrow",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 17
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- The shaft of this arrow is covered in fine green scales, and its iron head comes to a pair of points almost like fangs. After an activated viper arrow hits a target, the arrow transforms into a Viper. The target is affected by the viper's poison, as if it had been bitten. The viper then lands in an open space adjacent to the target. The viper has the summoned trait and acts at the end of your turn, even though you didn't use the Sustain a Spell action. It is under the GM's control, but it generally attacks the creature the arrow struck. The viper vanishes after 1 minute or when slain. **Craft Requirements** Supply one casting of Summon Animal"
+ },
+ {
+  "id": "vitality-siphon",
+  "name": "Vitality Siphon",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "healing",
+   "positive",
+   "vitality"
+  ],
+  "text": "Vitality Siphon Source GM Core pg. 315 Aspect Life Activate (concentrate) Trigger An ally within 60 feet regains more Hit Points than it is currently down via a targeted healing vitality effect without a duration; Effect Your relic acts as a relay for vitality. You or an adjacent willing creature regain a number of Hit Points equal to the amount in excess of the triggering creature's maximum Hit Points; for instance, if the triggering creature was missing 5 Hit Points and was targeted by a heal spell that restored 12 Hit Points, you or an adjacent willing creature would regain the remaining 7 Hit Points."
+ },
+ {
+  "id": "vitalizing",
+  "name": "Vitalizing",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 150
+  },
+  "text": "A *vitalizing* weapon pulses with vital energy, dealing an extra 1d6 persistent vitality damage to undead. On a critical hit, the undead is also Enfeebled 1 until the end of your next turn."
+ },
+ {
+  "id": "vitalizing-greater",
+  "name": "Vitalizing (Greater)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-melee-weapon",
+  "price": {
+   "gp": 4300
+  },
+  "text": "A *greater vitalizing* weapon pulses with vital energy, dealing an extra 2d6 persistent vitality damage to undead. On a critical hit, the undead creature is Enfeebled 1 and Stupefied 1 as long as it has the persistent damage from this rune."
+ },
+ {
+  "id": "vocal-shells",
+  "name": "Vocal Shells",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "clockwork"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 50
+  },
+  "text": "Used by more technologically inclined bards, ventriloquists, and other performers to throw their voices, this gadget consists of two button-sized conch shells, each containing a miniaturized mechanism designed to pick up and transmit sound. One of the shells is designated the sending shell and contains a tiny indentation. When this indentation is pressed and the shell is close to a source of sound (such as on an actor's necklace), any sound that reaches it is transmitted to the receiver shell. If the receiver shell is located within 20 feet, it plays the sounds captured by the sending shell at a perfect volume and pitch."
+ },
+ {
+  "id": "voicebox",
+  "name": "Voicebox",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "worn",
+  "price": {
+   "sp": 5
+  },
+  "text": "This box contains small, magical amplifiers that allow a non-verbal character to translate thought into speech, which emits from the necklace. The speech produced matches any language you understand."
+ },
+ {
+  "id": "void-shackles",
+  "name": "Void Shackles",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "void"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 12500
+  },
+  "text": "*Void shackles* are built from supernatural crystals that form in the Void—materials that dig painfully into the flesh of those they restrain. A set of *void shackles* functions as superior manacles, but while they are in the Void, the crystals fluctuate in response to the plane's energy, which increases all DCs to remove them or Escape by 1 to DC 43. If a check to remove *void shackles* from a creature fails, the wearer of the manacles takes 10d6 damage ( save). While a creature is manacled, the *void shackles* attempt to counteract any teleportation effect that targets the manacled creature, with a counteract rank of 9th and a +25 modifier to the roll. If the teleportation effect is countered, the manacled creature takes 10d6 damage ( save). Void shackles can be placed on incorporeal creatures as if they were not incorporeal. An incorporeal creature manacled by *void shackles* cannot pass through solid objects. Even a soul can be restrained via *void shackles*, provided the soul was of a 17th- or lower-level creature in life. A soul held in *void shackles* cannot move on to the afterlife, cannot become undead, and can be transported by simply transporting the shackles. **Activate—Affix Shackle** ⟨2⟩ (manipulate) --- **Effect** You affix the *void shackles* to a helpless or willing creature or to any 17th- or lower-level soul. The shackles grow in size to accommodate the wrists or ankles of any size creature. **Activate—Release Shackle** ⟨2⟩ (manipulate) --- **Effect** You c"
+ },
+ {
+  "id": "vorpal",
+  "name": "Vorpal",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-slashing-melee-weapon",
+  "activationCost": {
+   "type": "reaction"
+  },
+  "price": {
+   "gp": 15000
+  },
+  "text": "Originally created as a means of slaying the legendary jabberwock, *vorpal* weapons prove equally effective against nearly any foe with a head. --- **Activate—Snicker-Snack** ⟨5⟩ (concentrate, death, incapacitation) **Trigger** You roll a natural 20 on a Strike with the weapon against a creature that has a head, critically succeed, and deal slashing damage. **Effect** The target must succeed at a save or be decapitated. This kills any creature except ones that don't require a head to live. For creatures with multiple heads, this usually kills the creature only if you sever its last head."
+ },
+ {
+  "id": "waffle-iron",
+  "name": "Waffle Iron",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 5
+  },
+  "text": "This set of hinged metal plates features studs on the inside of each plate to provide a texture for the pastry cakes you cook with it. You pour batter on the plates, close the device, and place it on a fire or stove to cook."
+ },
+ {
+  "id": "waffle-iron-high-grade-mithral",
+  "name": "Waffle Iron (High-Grade Mithral)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 6005
+  },
+  "text": "This set of hinged metal plates features studs on the inside of each plate to provide a texture for the pastry cakes you cook with it. You pour batter on the plates, close the device, and place it on a fire or stove to cook. Truly fit for emperors and demigods, this waffle iron is made of high-grade dawnsilver. Although most metallurgists are certain that the much more affordable standard-grade dawnsilver waffle iron maintains dawnsilver's full non-stick properties, the super elite insist that only waffles made from high-grade dawnsilver waffle irons conform to the most perfect shape and texture. Nadian has one high-grade dawnsilver waffle iron for sale emblazoned with an archaic symbol associated with Milani from before she became a deity, supposedly used to make Milani herself waffles during her mortal life. As it's made of dawnsilver, this is an uncommon item."
+ },
+ {
+  "id": "waffle-iron-imprint",
+  "name": "Waffle Iron (Imprint)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 2
+  },
+  "text": "This set of hinged metal plates features studs on the inside of each plate to provide a texture for the pastry cakes you cook with it. You pour batter on the plates, close the device, and place it on a fire or stove to cook. The plates of this waffle iron feature a noble insignia, a religious symbol, or other design to imprint onto the pastry."
+ },
+ {
+  "id": "waffle-iron-mithral",
+  "name": "Waffle Iron (Mithral)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 355
+  },
+  "text": "This set of hinged metal plates features studs on the inside of each plate to provide a texture for the pastry cakes you cook with it. You pour batter on the plates, close the device, and place it on a fire or stove to cook. The plates of this waffle iron are made of standard-grade dawnsilver rather than iron and might bear an imprint on the plates. As with other dawnsilver cookware, food rarely sticks to a dawnsilver waffle iron. As it's made of dawnsilver, this is an uncommon item."
+ },
+ {
+  "id": "walking-cauldron",
+  "name": "Walking Cauldron",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "usage": "other",
+  "price": {
+   "gp": 12
+  },
+  "text": "This iron cauldron stands upon sturdy iron crow's feet. A *walking cauldron* has a land Speed of 25 feet and can be used as a suitable tool to *Craft* potions, oils, or other liquids. As a single action, which has the *auditory* and *concentrate* traits, you can command the cauldron to either follow you or to stand in place. When following you, the cauldron does its best to remain within 30 feet of you, but its ungainly movements are too imprecise to predictably direct in a combat encounter or other situation where seconds and precise locations count. It can carry up to 2 Bulk of ingredients for potions or other liquids inside of itself while following you, but if overloaded or if you put anything else inside it, it stands in place and refuses to move until 10 minutes after you remove the excess."
+ },
+ {
+  "id": "wand-cane",
+  "name": "Wand Cane",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 100
+  },
+  "text": "Though it appears to be a basic cane, the inner workings of the *wand cane* are an intricate network of lenses and magical circuits, with a slot at the top to insert a wand. The *wand cane* then spends 1 minute attuning to the wand, after which the wand can be used through the cane."
+ },
+ {
+  "id": "wand-implement",
+  "name": "Wand Implement",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": ""
+ },
+ {
+  "id": "wand-of-choking-mist-2nd-rank-spell",
+  "name": "Wand of Choking Mist (2nd-Rank Spell)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand",
+   "water"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "Wand of Choking Mist Source Treasure Vault (Remastered) pg. 138 Usage held in 1 hand Bulk L This blackened wood wand has a smoldering tip, emitting a slight trail of steam. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast the wand's spell, but the mist prevents creatures from being able to breathe in its area. They must hold their breath or start suffocating. Craft Requirements Supply a casting of mist for the 2nd-rank wand or cinder swarm for the 4th-rank wand. Wand of Choking Mist (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 250 gp Bulk L The spell is mist. Wand of Choking Mist (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 1,000 gp Bulk L The spell is cinder swarm."
+ },
+ {
+  "id": "wand-of-choking-mist-4th-rank-spell",
+  "name": "Wand of Choking Mist (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "wand",
+   "water"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "Wand of Choking Mist Source Treasure Vault (Remastered) pg. 138 Usage held in 1 hand Bulk L This blackened wood wand has a smoldering tip, emitting a slight trail of steam. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast the wand's spell, but the mist prevents creatures from being able to breathe in its area. They must hold their breath or start suffocating. Craft Requirements Supply a casting of mist for the 2nd-rank wand or cinder swarm for the 4th-rank wand. Wand of Choking Mist (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 250 gp Bulk L The spell is mist. Wand of Choking Mist (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 1,000 gp Bulk L The spell is cinder swarm."
+ },
+ {
+  "id": "wand-of-clinging-rime-7th-rank-spell",
+  "name": "Wand of Clinging Rime (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "cold",
+   "magical",
+   "wand",
+   "water"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Wand of Clinging Rime Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L A thin layer of frost coats this gnarled holly wand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast frigid flurry of the indicated rank. After you cast the spell, the ice crystals freeze to flesh and other surfaces, clinging to the creatures in the area. Each creature that fails its save takes persistent cold damage with the amount determined by the wand's type. Craft Requirements Supply a casting of frigid flurry of the appropriate rank. Wand of Clinging Rime (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L The persistent cold damage is 1d6. Wand of Clinging Rime (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L The persistent cold damage is 2d6. Wand of Clinging Rime (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L The persistent cold damage is 3d6."
+ },
+ {
+  "id": "wand-of-clinging-rime-8th-rank-spell",
+  "name": "Wand of Clinging Rime (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "cold",
+   "magical",
+   "wand",
+   "water"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "Wand of Clinging Rime Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L A thin layer of frost coats this gnarled holly wand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast frigid flurry of the indicated rank. After you cast the spell, the ice crystals freeze to flesh and other surfaces, clinging to the creatures in the area. Each creature that fails its save takes persistent cold damage with the amount determined by the wand's type. Craft Requirements Supply a casting of frigid flurry of the appropriate rank. Wand of Clinging Rime (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L The persistent cold damage is 1d6. Wand of Clinging Rime (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L The persistent cold damage is 2d6. Wand of Clinging Rime (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L The persistent cold damage is 3d6."
+ },
+ {
+  "id": "wand-of-clinging-rime-9th-rank-spell",
+  "name": "Wand of Clinging Rime (9th-Rank Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "cold",
+   "magical",
+   "wand",
+   "water"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 70000
+  },
+  "text": "Wand of Clinging Rime Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L A thin layer of frost coats this gnarled holly wand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast frigid flurry of the indicated rank. After you cast the spell, the ice crystals freeze to flesh and other surfaces, clinging to the creatures in the area. Each creature that fails its save takes persistent cold damage with the amount determined by the wand's type. Craft Requirements Supply a casting of frigid flurry of the appropriate rank. Wand of Clinging Rime (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L The persistent cold damage is 1d6. Wand of Clinging Rime (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L The persistent cold damage is 2d6. Wand of Clinging Rime (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L The persistent cold damage is 3d6."
+ },
+ {
+  "id": "wand-of-dazzling-rays-3rd-rank-spell",
+  "name": "Wand of Dazzling Rays (3rd-Rank Spell)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "holy",
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "Wand of Dazzling Rays Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Solidified radiance comprises this slender, featureless wand. It sheds bright light in a 20-foot radius and dim light for the next 20 feet. After you Activate the wand, the light fades, so it only sheds dim light in a 20-foot radius. The wand returns to its original brightness each dawn. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity. A creature that takes damage from the spell is blinded for 1 round and dazzled for a number of rounds equal to the spell rank. On a critical success on the attack roll, the target is also blinded for as long as it’s dazzled from the spell. However, it can attempt a Fortitude saving throw against your spell DC at the end of each of its turns, ending the blinded condition on a success (but remaining dazzled). Craft Requirements Supply a casting of holy light of the appropriate rank. Wand of Dazzling Rays (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dazzling Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dazzling Rays (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dazzling Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dazzling Rays (7th-Rank Spell) Source Treasure V"
+ },
+ {
+  "id": "wand-of-dazzling-rays-4th-rank-spell",
+  "name": "Wand of Dazzling Rays (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "holy",
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "Wand of Dazzling Rays Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Solidified radiance comprises this slender, featureless wand. It sheds bright light in a 20-foot radius and dim light for the next 20 feet. After you Activate the wand, the light fades, so it only sheds dim light in a 20-foot radius. The wand returns to its original brightness each dawn. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity. A creature that takes damage from the spell is blinded for 1 round and dazzled for a number of rounds equal to the spell rank. On a critical success on the attack roll, the target is also blinded for as long as it’s dazzled from the spell. However, it can attempt a Fortitude saving throw against your spell DC at the end of each of its turns, ending the blinded condition on a success (but remaining dazzled). Craft Requirements Supply a casting of holy light of the appropriate rank. Wand of Dazzling Rays (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dazzling Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dazzling Rays (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dazzling Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dazzling Rays (7th-Rank Spell) Source Treasure V"
+ },
+ {
+  "id": "wand-of-dazzling-rays-5th-rank-spell",
+  "name": "Wand of Dazzling Rays (5th-Rank Spell)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "holy",
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 2000
+  },
+  "text": "Wand of Dazzling Rays Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Solidified radiance comprises this slender, featureless wand. It sheds bright light in a 20-foot radius and dim light for the next 20 feet. After you Activate the wand, the light fades, so it only sheds dim light in a 20-foot radius. The wand returns to its original brightness each dawn. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity. A creature that takes damage from the spell is blinded for 1 round and dazzled for a number of rounds equal to the spell rank. On a critical success on the attack roll, the target is also blinded for as long as it’s dazzled from the spell. However, it can attempt a Fortitude saving throw against your spell DC at the end of each of its turns, ending the blinded condition on a success (but remaining dazzled). Craft Requirements Supply a casting of holy light of the appropriate rank. Wand of Dazzling Rays (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dazzling Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dazzling Rays (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dazzling Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dazzling Rays (7th-Rank Spell) Source Treasure V"
+ },
+ {
+  "id": "wand-of-dazzling-rays-6th-rank-spell",
+  "name": "Wand of Dazzling Rays (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "holy",
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "Wand of Dazzling Rays Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Solidified radiance comprises this slender, featureless wand. It sheds bright light in a 20-foot radius and dim light for the next 20 feet. After you Activate the wand, the light fades, so it only sheds dim light in a 20-foot radius. The wand returns to its original brightness each dawn. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity. A creature that takes damage from the spell is blinded for 1 round and dazzled for a number of rounds equal to the spell rank. On a critical success on the attack roll, the target is also blinded for as long as it’s dazzled from the spell. However, it can attempt a Fortitude saving throw against your spell DC at the end of each of its turns, ending the blinded condition on a success (but remaining dazzled). Craft Requirements Supply a casting of holy light of the appropriate rank. Wand of Dazzling Rays (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dazzling Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dazzling Rays (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dazzling Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dazzling Rays (7th-Rank Spell) Source Treasure V"
+ },
+ {
+  "id": "wand-of-dazzling-rays-7th-rank-spell",
+  "name": "Wand of Dazzling Rays (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "holy",
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Wand of Dazzling Rays Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Solidified radiance comprises this slender, featureless wand. It sheds bright light in a 20-foot radius and dim light for the next 20 feet. After you Activate the wand, the light fades, so it only sheds dim light in a 20-foot radius. The wand returns to its original brightness each dawn. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity. A creature that takes damage from the spell is blinded for 1 round and dazzled for a number of rounds equal to the spell rank. On a critical success on the attack roll, the target is also blinded for as long as it’s dazzled from the spell. However, it can attempt a Fortitude saving throw against your spell DC at the end of each of its turns, ending the blinded condition on a success (but remaining dazzled). Craft Requirements Supply a casting of holy light of the appropriate rank. Wand of Dazzling Rays (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dazzling Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dazzling Rays (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dazzling Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dazzling Rays (7th-Rank Spell) Source Treasure V"
+ },
+ {
+  "id": "wand-of-dazzling-rays-8th-rank-spell",
+  "name": "Wand of Dazzling Rays (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "holy",
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "Wand of Dazzling Rays Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Solidified radiance comprises this slender, featureless wand. It sheds bright light in a 20-foot radius and dim light for the next 20 feet. After you Activate the wand, the light fades, so it only sheds dim light in a 20-foot radius. The wand returns to its original brightness each dawn. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity. A creature that takes damage from the spell is blinded for 1 round and dazzled for a number of rounds equal to the spell rank. On a critical success on the attack roll, the target is also blinded for as long as it’s dazzled from the spell. However, it can attempt a Fortitude saving throw against your spell DC at the end of each of its turns, ending the blinded condition on a success (but remaining dazzled). Craft Requirements Supply a casting of holy light of the appropriate rank. Wand of Dazzling Rays (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dazzling Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dazzling Rays (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dazzling Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dazzling Rays (7th-Rank Spell) Source Treasure V"
+ },
+ {
+  "id": "wand-of-dazzling-rays-9th-rank-spell",
+  "name": "Wand of Dazzling Rays (9th-Rank Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "fire",
+   "holy",
+   "light",
+   "magical",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 70000
+  },
+  "text": "Wand of Dazzling Rays Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Solidified radiance comprises this slender, featureless wand. It sheds bright light in a 20-foot radius and dim light for the next 20 feet. After you Activate the wand, the light fades, so it only sheds dim light in a 20-foot radius. The wand returns to its original brightness each dawn. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity. A creature that takes damage from the spell is blinded for 1 round and dazzled for a number of rounds equal to the spell rank. On a critical success on the attack roll, the target is also blinded for as long as it’s dazzled from the spell. However, it can attempt a Fortitude saving throw against your spell DC at the end of each of its turns, ending the blinded condition on a success (but remaining dazzled). Craft Requirements Supply a casting of holy light of the appropriate rank. Wand of Dazzling Rays (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dazzling Rays (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dazzling Rays (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dazzling Rays (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dazzling Rays (7th-Rank Spell) Source Treasure V"
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-3rd-rank-spell",
+  "name": "Wand of Dumbfounding Doom (3rd-Rank Spell)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "fear",
+   "incapacitation",
+   "magical",
+   "mental",
+   "prediction",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 500
+  },
+  "text": "Wand of Dumbfounding Doom Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Carvings of skulls, monsters, and all manner of violence decorate this wand of blackened bone, but it makes absurd sounds when Activated, such as a honking horn, a manic giggle, or a daydreamy sigh. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd. If the target becomes frightened by the spell, it also becomes stupefied with a value 1 higher than the frightened value. This lasts for the duration of the spell. Craft Requirements Supply a casting of impending doom of the appropriate rank. Wand of Dumbfounding Doom (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dumbfounding Doom (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dumbfounding Doom (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dumbfounding Doom (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dumbfounding Doom (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L Wand of Dumbfounding Doom (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L Wand of Dumbfounding Doom (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-4th-rank-spell",
+  "name": "Wand of Dumbfounding Doom (4th-Rank Spell)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "fear",
+   "incapacitation",
+   "magical",
+   "mental",
+   "prediction",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1000
+  },
+  "text": "Wand of Dumbfounding Doom Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Carvings of skulls, monsters, and all manner of violence decorate this wand of blackened bone, but it makes absurd sounds when Activated, such as a honking horn, a manic giggle, or a daydreamy sigh. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd. If the target becomes frightened by the spell, it also becomes stupefied with a value 1 higher than the frightened value. This lasts for the duration of the spell. Craft Requirements Supply a casting of impending doom of the appropriate rank. Wand of Dumbfounding Doom (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dumbfounding Doom (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dumbfounding Doom (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dumbfounding Doom (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dumbfounding Doom (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L Wand of Dumbfounding Doom (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L Wand of Dumbfounding Doom (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-5th-rank-spell",
+  "name": "Wand of Dumbfounding Doom (5th-Rank Spell)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "fear",
+   "incapacitation",
+   "magical",
+   "mental",
+   "prediction",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 2000
+  },
+  "text": "Wand of Dumbfounding Doom Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Carvings of skulls, monsters, and all manner of violence decorate this wand of blackened bone, but it makes absurd sounds when Activated, such as a honking horn, a manic giggle, or a daydreamy sigh. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd. If the target becomes frightened by the spell, it also becomes stupefied with a value 1 higher than the frightened value. This lasts for the duration of the spell. Craft Requirements Supply a casting of impending doom of the appropriate rank. Wand of Dumbfounding Doom (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dumbfounding Doom (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dumbfounding Doom (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dumbfounding Doom (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dumbfounding Doom (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L Wand of Dumbfounding Doom (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L Wand of Dumbfounding Doom (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-6th-rank-spell",
+  "name": "Wand of Dumbfounding Doom (6th-Rank Spell)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "fear",
+   "incapacitation",
+   "magical",
+   "mental",
+   "prediction",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "Wand of Dumbfounding Doom Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Carvings of skulls, monsters, and all manner of violence decorate this wand of blackened bone, but it makes absurd sounds when Activated, such as a honking horn, a manic giggle, or a daydreamy sigh. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd. If the target becomes frightened by the spell, it also becomes stupefied with a value 1 higher than the frightened value. This lasts for the duration of the spell. Craft Requirements Supply a casting of impending doom of the appropriate rank. Wand of Dumbfounding Doom (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dumbfounding Doom (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dumbfounding Doom (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dumbfounding Doom (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dumbfounding Doom (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L Wand of Dumbfounding Doom (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L Wand of Dumbfounding Doom (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-7th-rank-spell",
+  "name": "Wand of Dumbfounding Doom (7th-Rank Spell)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "fear",
+   "incapacitation",
+   "magical",
+   "mental",
+   "prediction",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 10000
+  },
+  "text": "Wand of Dumbfounding Doom Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Carvings of skulls, monsters, and all manner of violence decorate this wand of blackened bone, but it makes absurd sounds when Activated, such as a honking horn, a manic giggle, or a daydreamy sigh. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd. If the target becomes frightened by the spell, it also becomes stupefied with a value 1 higher than the frightened value. This lasts for the duration of the spell. Craft Requirements Supply a casting of impending doom of the appropriate rank. Wand of Dumbfounding Doom (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dumbfounding Doom (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dumbfounding Doom (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dumbfounding Doom (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dumbfounding Doom (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L Wand of Dumbfounding Doom (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L Wand of Dumbfounding Doom (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-8th-rank-spell",
+  "name": "Wand of Dumbfounding Doom (8th-Rank Spell)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "fear",
+   "incapacitation",
+   "magical",
+   "mental",
+   "prediction",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 24000
+  },
+  "text": "Wand of Dumbfounding Doom Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Carvings of skulls, monsters, and all manner of violence decorate this wand of blackened bone, but it makes absurd sounds when Activated, such as a honking horn, a manic giggle, or a daydreamy sigh. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd. If the target becomes frightened by the spell, it also becomes stupefied with a value 1 higher than the frightened value. This lasts for the duration of the spell. Craft Requirements Supply a casting of impending doom of the appropriate rank. Wand of Dumbfounding Doom (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dumbfounding Doom (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dumbfounding Doom (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dumbfounding Doom (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dumbfounding Doom (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L Wand of Dumbfounding Doom (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L Wand of Dumbfounding Doom (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-9th-rank-spell",
+  "name": "Wand of Dumbfounding Doom (9th-Rank Spell)",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "fear",
+   "incapacitation",
+   "magical",
+   "mental",
+   "prediction",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 70000
+  },
+  "text": "Wand of Dumbfounding Doom Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L Carvings of skulls, monsters, and all manner of violence decorate this wand of blackened bone, but it makes absurd sounds when Activated, such as a honking horn, a manic giggle, or a daydreamy sigh. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd. If the target becomes frightened by the spell, it also becomes stupefied with a value 1 higher than the frightened value. This lasts for the duration of the spell. Craft Requirements Supply a casting of impending doom of the appropriate rank. Wand of Dumbfounding Doom (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 500 gp Bulk L Wand of Dumbfounding Doom (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 1,000 gp Bulk L Wand of Dumbfounding Doom (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 2,000 gp Bulk L Wand of Dumbfounding Doom (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 4,500 gp Bulk L Wand of Dumbfounding Doom (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L Wand of Dumbfounding Doom (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L Wand of Dumbfounding Doom (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-hawthorn-2nd-rank-spell",
+  "name": "Wand of Hawthorn (2nd-Rank Spell)",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "plant",
+   "wand"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 250
+  },
+  "text": "Wand of Hawthorn Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L Carved from a hawthorn branch, this wand has a smooth handle, but the shaft remains covered in bark and long thorns. Polished red stones, arranged like a cluster of berries, decorate the pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree. While oaken resilience lasts, any creature that hits the target with an unarmed Strike or otherwise touches it takes piercing damage from the thorns, with the amount determined by the wand’s type. A creature that has engulfed or swallowed the target takes this damage as well at the start of each of the target’s turns. Craft Requirements Supply a casting of Oaken Resilience of the appropriate rank. Wand of Hawthorn (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L The thorns deal 1d4 piercing damage. Wand of Hawthorn (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L The thorns deal 2d4 piercing damage. Wand of Hawthorn (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L The thorns deal 3d4 piercing damage. Wand of Hawthorn (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L The thorns deal 4d4 piercing damage."
+ }
+]

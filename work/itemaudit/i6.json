@@ -1,0 +1,837 @@
+[
+ {
+  "id": "dawnsilver-buckler-standard-grade",
+  "name": "Dawnsilver Buckler (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 400
+  },
+  "text": "Dawnsilver Shield Source GM Core pg. 233 Usage varies by shield Base Material Dawnsilver Dawnsilver shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). When used for a shield bash, they're treated as silver weapons. Dawnsilver Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements dawn silver worth at least 50 gp Dawnsilver Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements dawnsilver worth at least 55 gp Dawnsilver Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements dawnsilver worth at least 4,000 gp Dawnsilver Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements at least 4,400 gp of dawnsilver"
+ },
+ {
+  "id": "dawnsilver-chunk",
+  "name": "Dawnsilver Chunk",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 500
+  },
+  "text": "Dawnsilver is renowned for its lightness, durability, and effectiveness against a range of creatures including devils and werecreatures. It has the same sheen as silver but a slightly lighter hue. Dawnsilver weapons and armor are treated as if they were silver for the purpose of damaging creatures with weakness to silver. A metal item made of dawnsilver is lighter than one made of iron or steel: the item's Bulk is reduced by 1 (reduced to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of this material is based on the item's normal Bulk, not its reduced Bulk for being made of dawnsilver, but reduce the Bulk before making any further Bulk adjustments for the size of the item. ## Dawnsilver Items | Dawnsilver Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Items** | | | | | Standard-grade | 9 | 36 | 18 | | High-grade | 12 | 48 | 24 | | **Structure** | | | | | Standard-grade | 18 | 72 | 36 | | High-grade | 24 | 96 | 48 |"
+ },
+ {
+  "id": "dawnsilver-ingot",
+  "name": "Dawnsilver Ingot",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 5000
+  },
+  "text": "Dawnsilver is renowned for its lightness, durability, and effectiveness against a range of creatures including devils and werecreatures. It has the same sheen as silver but a slightly lighter hue. Dawnsilver weapons and armor are treated as if they were silver for the purpose of damaging creatures with weakness to silver. A metal item made of dawnsilver is lighter than one made of iron or steel: the item's Bulk is reduced by 1 (reduced to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of this material is based on the item's normal Bulk, not its reduced Bulk for being made of dawnsilver, but reduce the Bulk before making any further Bulk adjustments for the size of the item. ## Dawnsilver Items | Dawnsilver Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Items** | | | | | Standard-grade | 9 | 36 | 18 | | High-grade | 12 | 48 | 24 | | **Structure** | | | | | Standard-grade | 18 | 72 | 36 | | High-grade | 24 | 96 | 48 |"
+ },
+ {
+  "id": "dawnsilver-object-high-grade",
+  "name": "Dawnsilver Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 6000
+  },
+  "text": "Dawnsilver Source GM Core pg. 253 Dawnsilver is renowned for its lightness, durability, and effectiveness against a range of creatures including devils and werecreatures. It has the same sheen as silver but a slightly lighter hue. Dawnsilver weapons and armor are treated as if they were silver for the purpose of damaging creatures with weakness to silver. A metal item made of dawnsilver is lighter than one made of iron or steel: the item's Bulk is reduced by 1 (reduced to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of this material is based on the item's normal Bulk, not its reduced Bulk for being made of dawnsilver, but reduce the Bulk before making any further Bulk adjustments for the size of the item. Dawnsilver Dawnsilver Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-grade 9 36 18 High-grade 12 48 24 Structure Standard-grade 18 72 36 High-grade 24 96 48 Material Uses Dawnsilver Armor Dawnsilver Shield Dawnsilver Weapon Dawnsilver Chunk Source GM Core pg. 253 Price 500 gp Bulk L Dawnsilver Ingot Source GM Core pg. 253 Price 5,000 gp Dawnsilver Object (Standard-Grade) Source GM Core pg. 253 Price 350 gp (per Bulk) Dawnsilver Object (High-Grade) Source GM Core pg. 254 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "dawnsilver-object-standard-grade",
+  "name": "Dawnsilver Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Dawnsilver Source GM Core pg. 253 Dawnsilver is renowned for its lightness, durability, and effectiveness against a range of creatures including devils and werecreatures. It has the same sheen as silver but a slightly lighter hue. Dawnsilver weapons and armor are treated as if they were silver for the purpose of damaging creatures with weakness to silver. A metal item made of dawnsilver is lighter than one made of iron or steel: the item's Bulk is reduced by 1 (reduced to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of this material is based on the item's normal Bulk, not its reduced Bulk for being made of dawnsilver, but reduce the Bulk before making any further Bulk adjustments for the size of the item. Dawnsilver Dawnsilver Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-grade 9 36 18 High-grade 12 48 24 Structure Standard-grade 18 72 36 High-grade 24 96 48 Material Uses Dawnsilver Armor Dawnsilver Shield Dawnsilver Weapon Dawnsilver Chunk Source GM Core pg. 253 Price 500 gp Bulk L Dawnsilver Ingot Source GM Core pg. 253 Price 5,000 gp Dawnsilver Object (Standard-Grade) Source GM Core pg. 253 Price 350 gp (per Bulk) Dawnsilver Object (High-Grade) Source GM Core pg. 254 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "dawnsilver-shield-high-grade",
+  "name": "Dawnsilver Shield (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8800
+  },
+  "text": "Dawnsilver Shield Source GM Core pg. 233 Usage varies by shield Base Material Dawnsilver Dawnsilver shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). When used for a shield bash, they're treated as silver weapons. Dawnsilver Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements dawn silver worth at least 50 gp Dawnsilver Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements dawnsilver worth at least 55 gp Dawnsilver Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements dawnsilver worth at least 4,000 gp Dawnsilver Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements at least 4,400 gp of dawnsilver"
+ },
+ {
+  "id": "dawnsilver-shield-standard-grade",
+  "name": "Dawnsilver Shield (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 440
+  },
+  "text": "Dawnsilver Shield Source GM Core pg. 233 Usage varies by shield Base Material Dawnsilver Dawnsilver shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). When used for a shield bash, they're treated as silver weapons. Dawnsilver Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements dawn silver worth at least 50 gp Dawnsilver Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements dawnsilver worth at least 55 gp Dawnsilver Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements dawnsilver worth at least 4,000 gp Dawnsilver Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bulk L The shield has Hardness 8, HP 32, and BT 16. Craft Requirements at least 4,400 gp of dawnsilver"
+ },
+ {
+  "id": "dawnsilver-weapon-high-grade",
+  "name": "Dawnsilver Weapon (High-Grade)",
+  "level": 17,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 13500
+  },
+  "text": "Dawnsilver Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Dawnsilver Dawnsilver weapons are slightly lighter than silver. A dawnsilver weapon is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on a weapon that normally has light Bulk). Dawnsilver Weapon (Standard-Grade) Source GM Core pg. 240 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of dawnsilver + 17.5 gp per Bulk Dawnsilver Weapon (High-Grade) Source GM Core pg. 240 Price 13,500 gp (+1350 gp per Bulk) Craft Requirements at least 6,750 gp of dawnsilver + 675 gp per Bulk"
+ },
+ {
+  "id": "dawnsilver-weapon-standard-grade",
+  "name": "Dawnsilver Weapon (Standard-Grade)",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1400
+  },
+  "text": "Dawnsilver Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Dawnsilver Dawnsilver weapons are slightly lighter than silver. A dawnsilver weapon is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on a weapon that normally has light Bulk). Dawnsilver Weapon (Standard-Grade) Source GM Core pg. 240 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of dawnsilver + 17.5 gp per Bulk Dawnsilver Weapon (High-Grade) Source GM Core pg. 240 Price 13,500 gp (+1350 gp per Bulk) Craft Requirements at least 6,750 gp of dawnsilver + 675 gp per Bulk"
+ },
+ {
+  "id": "deadly-slashing-claws",
+  "name": "Deadly Slashing Claws",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 320
+  },
+  "text": "Sharp claws have been grafted to your hands or feet, perhaps extending from your knuckles or the tips of your toes. You gain a claw unarmed attack that deals 1d6 slashing damage. These claws are in the brawling group and have the agile, deadly d8, and finesse traits."
+ },
+ {
+  "id": "deadly-spark",
+  "name": "Deadly Spark",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "air",
+   "electricity"
+  ],
+  "text": "Deadly Spark Source GM Core pg. 309 Aspect Air Activate (concentrate, manipulate) Effect A spark flashes out from the relic toward a creature within 20 feet. This spark deals 1d12 electricity damage (basic Reflex save). The damage increases by 1d12 at 6th level and by another 1d12 every 4 levels thereafter."
+ },
+ {
+  "id": "deathseeker",
+  "name": "Deathseeker",
+  "level": 8,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "deadly-d8",
+   "finesse",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 500
+  },
+  "text": "A hauntingly beautiful and masterfully crafted blade, this *+1 striking wounding kris* has been whet with the spilled blood of its creator, imbuing violent intent within its crimson curves. When you critically succeed at a Strike made with a deathseeker, the target feels the blade's unbridled bloodlust trying to consume it and must attempt a save; this effect has the incapacitation trait. --- **Critical Success** The target is unaffected and is temporarily immune for 24 hours. **Success** The target takes an additional 1 persistent bleed damage, and the DC for recovering from persistent bleed damage is 17, or 12 with particularly effective assistance. **Failure** As success, except the target is also confused for 1 round. It gets a flat check to recover from this confusion when it critically succeeds at a Strike against another creature or reduces another living being to 0 Hit Points, but not when it takes damage. **Critical Failure** As success, except the target is also confused for 3 rounds. It gets a flat check to recover from this confusion when it critically succeeds at a Strike against another creature or reduces another living being to 0 Hit Points, but not when it takes damage."
+ },
+ {
+  "id": "decaying",
+  "name": "Decaying",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "void"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 500
+  },
+  "text": "Eerie waves of purplish energy dance across the surface of a weapon etched with this rune. When you hit with the weapon, add 1d4 void damage to the damage dealt. In addition, on a critical hit, the target takes 2d4 persistent void damage; if the target has a shield raised, the shield takes the same amount of persistent damage (its wielder rolls the flat check to see if the persistent damage ends, or the GM rolls if the shield is no longer in someone's possession). Unlike normal void damage, the void damage from a *decaying* rune damages objects, constructs, and the like by eroding them away."
+ },
+ {
+  "id": "decaying-greater",
+  "name": "Decaying (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "void"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 6500
+  },
+  "text": "Eerie waves of purplish energy dance across the surface of a weapon etched with this rune. When you hit with the weapon, add 1d4 void damage to the damage dealt. In addition, on a critical hit, the target takes 4d4 persistent void damage; if the target has a shield raised, the shield takes the same amount of persistent damage (its wielder rolls the flat check to see if the persistent damage ends, or the GM rolls if the shield is no longer in someone's possession). Unlike normal void damage, the void damage from a *decaying* rune damages objects, constructs, and the like by eroding them away. The void damage dealt by this weapon ignores the target's void resistance or immunity."
+ },
+ {
+  "id": "deck-of-illusions",
+  "name": "Deck of Illusions",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "This set of 34 parchment cards usually comes in a velvet bag or simple leather wrap. Each card depicts a different creature, monster, or other being that, when the deck is activated, immediately appears as a believable, life-size illusion. You can look at the card's artwork, but no magical effect takes place until you Activate the deck, shuffling and drawing randomly. Deck of Illusions Cards --- **Activate** ⟨1⟩ envision, Interact --- **Effect** You draw a card, chosen randomly from the remaining cards in the deck, and throw it to the ground to create an illusion of the creature depicted. The image is an illusory creature, except it has a range of only 30 feet from where the card was thrown and the illusion lasts until destroyed or until anyone moves or damages the card. The creature takes its actions once on your turn if you're within 60 feet of the card and Sustain the Activation. The illusion ends if you don't Sustain it, or if you activate a new card from the deck."
+ },
+ {
+  "id": "deck-of-many-things",
+  "name": "Deck of Many Things",
+  "level": 22,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {},
+  "text": "These 22 cards of heavy vellum, usually stored in a box or a pouch, bear images or glyphs depicting symbols of magical power. Looking at a card without activating it shows the card face but has no magical effect. Once the deck is face down, the cards randomize themselves-if you look at the top card multiple times, you may find it changes. Any card removed from the deck goes missing after a few seconds, reappearing in the deck. **Activate** ⟨1⟩ envision, Interact --- **Effect** You declare how many cards you will draw facedown from the deck, then draw your first card. The card takes effect immediately. Any further cards must be drawn within the next hour, and any card you don't voluntarily draw flits off the deck and affects you anyway. You can never activate the same *deck of many things* again. Once a card is drawn, it produces its effect immediately and then disappears back into the deck, which immediately shuffles itself. (The Dullard and Jester are exceptions, as described in their entries below.) The effects of each card are as follows."
+ },
+ {
+  "id": "deck-of-mischief",
+  "name": "Deck of Mischief",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 75
+  },
+  "text": "This deck of 54 cards appears nearly identical to standard playing cards. Comprised of four thematic suits of 13 cards each, as well as two wildcards, the deck of mischief is a favorite of scoundrels who prefer not to leave their games to chance-or to at least nudge the odds in their favor. If you know how to activate the deck, you can illusorily transform the ace and face cards into other cards in the deck. The deck is true to its name and less likely to comply with your wishes if not well cared for. While surprisingly resistant to the elements, a waterlogged, dirty, or battered deck may not function as desired, giving you incorrect information about which cards are still in the deck or failing to hold the illusion at a critical moment. If a deck becomes incomplete due to damaged or missing cards, it rapidly loses its deceptive capabilities and might even purposefully sabotage you. --- **Activate** ⟨1⟩ envision, Interact --- **Effect** You learn which of the ace and face cards are still in the deck. You can then swap the apparent face of an ace or face card in your hand (if you have any) with the face of one still in the deck. A creature who Seeks or touches the card can attempt to disbelieve this illusion ()."
+ },
+ {
+  "id": "deepdread-claw",
+  "name": "Deepdread Claw",
+  "level": 14,
+  "itemType": "weapon",
+  "traits": [
+   "invested",
+   "magical",
+   "monk",
+   "thrown-20"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 4000
+  },
+  "text": "One of a set of four identical spears collectively known as the Four Claws of the Deepdread, this weapon is fashioned from a single seamless piece of matte-black metal with a razored silver edge. In bright light, it functions as a +1 striking spear, but in darkness or dim light, it becomes a +2 greater striking spear. You can upgrade its fundamental runes as normal for a specific weapon, starting from a +2 greater striking spear, but its fundamental runes are always one type worse in bright light. **Activate** ⟨1⟩ command --- **Effect** You establish a telepathic link with someone else wielding a deepdread claw, enabling you to telepathically communicate with the creature while they possess the deepdread claw regardless of distance, so long as you remain on the same plane. You can end a telepathic link you create or that you are part of as an action, which has the concentrate trait. **Activate** ⟨2⟩ command, Interact --- **Effect** You cast 4th-rank darkness. You can see clearly in this darkness."
+ },
+ {
+  "id": "defoliation-bomb-lesser",
+  "name": "Defoliation Bomb (Lesser)",
+  "level": 2,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 7
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. A defoliation bomb deals the 1d6 void damage, 1d4 persistent void damage, and 1 void splash damage to all plants in the area. Non-creature plants in the area immediately wither and die."
+ },
+ {
+  "id": "demolishing",
+  "name": "Demolishing",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 225
+  },
+  "text": "A *demolishing* weapon is made to destroy constructs. Damage inflicted on a construct with a demolishing weapon continues to spread throughout the creature-cracks form, linkages fail, surfaces erode-and otherwise dismantle its body. When you damage a construct using a *demolishing* weapon, you deal an extra 1d6 damage. On a critical hit, you deal an extra 1d12 damage instead"
+ },
+ {
+  "id": "deployable-cover",
+  "name": "Deployable Cover",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 15
+  },
+  "text": "This thick mat of canvas, foliage, and wood is mounted on a tripod of flexible metal struts, folded into a baton-like shape, and clamped shut. You can rapidly deploy it on the ground with an Interact action to create cover. Deployable cover completely blocks one edge of the chosen square, allowing you (and others) to gain standard cover when you use the Take Cover action. Before it can be used again, deployable cover must be carefully folded and clamped shut, which takes 1 minute."
+ },
+ {
+  "id": "depth-charge-i",
+  "name": "Depth Charge (I)",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 25
+  },
+  "text": "**Ammunition** any --- Carved with stylized images of water or aquatic life, depth charges that are fired underwater or at a submerged target function with their normal range increments and can hit no matter their normal damage type. This ammunition explodes if it hits a target underwater, dealing damage in a according to its type. This burst doesn't extend out of the water."
+ },
+ {
+  "id": "depth-charge-ii",
+  "name": "Depth Charge (II)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 55
+  },
+  "text": "**Ammunition** any --- Carved with stylized images of water or aquatic life, depth charges that are fired underwater or at a submerged target function with their normal range increments and can hit no matter their normal damage type. This ammunition explodes if it hits a target underwater, dealing damage in a according to its type. This burst doesn't extend out of the water."
+ },
+ {
+  "id": "depth-charge-iii",
+  "name": "Depth Charge (III)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 165
+  },
+  "text": "**Ammunition** any --- Carved with stylized images of water or aquatic life, depth charges that are fired underwater or at a submerged target function with their normal range increments and can hit no matter their normal damage type. This ammunition explodes if it hits a target underwater, dealing damage in a according to its type. This burst doesn't extend out of the water."
+ },
+ {
+  "id": "depth-charge-iv",
+  "name": "Depth Charge (IV)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 330
+  },
+  "text": "**Ammunition** any --- Carved with stylized images of water or aquatic life, depth charges that are fired underwater or at a submerged target function with their normal range increments and can hit no matter their normal damage type. This ammunition explodes if it hits a target underwater, dealing damage in a according to its type. This burst doesn't extend out of the water."
+ },
+ {
+  "id": "depth-charge-v",
+  "name": "Depth Charge (V)",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 660
+  },
+  "text": "**Ammunition** any --- Carved with stylized images of water or aquatic life, depth charges that are fired underwater or at a submerged target function with their normal range increments and can hit no matter their normal damage type. This ammunition explodes if it hits a target underwater, dealing damage in a according to its type. This burst doesn't extend out of the water."
+ },
+ {
+  "id": "depth-charge-vi",
+  "name": "Depth Charge (VI)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 1500
+  },
+  "text": "**Ammunition** any --- Carved with stylized images of water or aquatic life, depth charges that are fired underwater or at a submerged target function with their normal range increments and can hit no matter their normal damage type. This ammunition explodes if it hits a target underwater, dealing damage in a according to its type. This burst doesn't extend out of the water."
+ },
+ {
+  "id": "depth-charge-vii",
+  "name": "Depth Charge (VII)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 3200
+  },
+  "text": "**Ammunition** any --- Carved with stylized images of water or aquatic life, depth charges that are fired underwater or at a submerged target function with their normal range increments and can hit no matter their normal damage type. This ammunition explodes if it hits a target underwater, dealing damage in a according to its type. This burst doesn't extend out of the water."
+ },
+ {
+  "id": "depth-gauge",
+  "name": "Depth Gauge",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 1
+  },
+  "text": "This simple tool consists of a small iron weight attached to a thin rope that is marked at regular intervals (typically every foot). It can be used to measure the depth of a hole or body of water by dropping the weight down into unknown depths and counting the markings on the rope. It can also be used as a plumb bob."
+ },
+ {
+  "id": "devils-luck",
+  "name": "Devil's Luck",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "contract",
+   "fortune",
+   "invested",
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {},
+  "text": "**Devil** Imp **Decipher Writing** Arcana, Occultism, Society --- You've bargained with an imp, one of the least powerful devils, for a fragment of infernal luck. **Benefit** Once per day, you can roll a saving throw twice and use the higher result. **Payment** At the termination of your mortal life, your soul must serve the imp for 100 years. **Hidden Condition** The \"termination of mortal life\" clause is carefully worded to hasten your demise. You can't use the benefit against a death effect, and if you roll a failure on a saving throw against a death effect, you get a critical failure instead. **Termination Clause** If you critically fail a saving throw against a death effect and do not die, the contract becomes unenforceable on its terms and is voided."
+ },
+ {
+  "id": "dimension-shot",
+  "name": "Dimension Shot",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 360
+  },
+  "text": "**Ammunition** any **Activate** ⟨2⟩ (concentrate) --- Dimension shot is deep blue black, but motes of light play upon it like stars in the night sky. The activated ammunition allows you to teleport to a location near where the ammunition hits. If you hit a creature, you can teleport to an unoccupied space adjacent to that creature. If you fire at a square, you can teleport to a space that contains that square or an unoccupied space adjacent to it. The teleportation fails if no unoccupied space is available to you"
+ },
+ {
+  "id": "dinosaur",
+  "name": "Dinosaur",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 10
+  },
+  "text": "Dinosaur Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 10 gp"
+ },
+ {
+  "id": "disguise-kit",
+  "name": "Disguise Kit",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 2
+  },
+  "text": "This small wooden box contains cosmetics, false facial hair, spirit gum, and a few simple wigs. You usually need a disguise kit to set up a disguise in order to Impersonate someone using the Deception skill. If you've crafted a large number of disguises, you can replenish your cosmetics supply with replacement cosmetics suitable for the type of your disguise kit. You can draw and replace a worn disguise kit as part of the action that uses it."
+ },
+ {
+  "id": "disguise-kit-replacement-cosmetics",
+  "name": "Disguise Kit (Replacement Cosmetics)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "other",
+  "price": {
+   "sp": 1
+  },
+  "text": "This small wooden box contains cosmetics, false facial hair, spirit gum, and a few simple wigs. You usually need a disguise kit to set up a disguise in order to Impersonate someone using the Deception skill. If you've crafted a large number of disguises, you can replenish your cosmetics supply with replacement cosmetics suitable for the type of your disguise kit."
+ },
+ {
+  "id": "disintegration-bolt",
+  "name": "Disintegration Bolt",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 1300
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- The shaft of this bolt is scorched and blackened, and handling it coats your fingers with a fine black powder. When an activated *disintegration bolt* hits a target, it is subject to a spell requiring a save. As with the spell, a critical hit on the attack roll causes the target's saving throw outcome to be one degree worse. --- **Craft Requirements** Supply one casting of *disintegrate*."
+ },
+ {
+  "id": "dispersing-bullet",
+  "name": "Dispersing Bullet",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 50
+  },
+  "text": "**Ammunition** sling bullet **Activate** ⟨1⟩ Interact --- The metals used to forge this lead shot were taken from a variety of continents and barely stay together. When an activated dispersing bullet hits a target, the bullet scatters into a sphere of metal shards as the metals try to return to their places of origin. All creatures in a around the target of the attack (and not including the target) must succeed at a save or be pushed 10 feet from the target (15 feet on a critical failure)."
+ },
+ {
+  "id": "distracting-carapace",
+  "name": "Distracting Carapace",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 80
+  },
+  "text": "Your skin is studded with pieces of iridescent chitin that ripple like oil on water. When you move your body in a distracting way, your allies can take advantage to move stealthily. When you Aid an ally who is trying to Create a Diversion, instead of the usual effects of Aid, you can roll an Acrobatics or Performance check and use that result to determine the outcome of the diversion, instead of attempting a Deception check."
+ },
+ {
+  "id": "divine-retribution",
+  "name": "Divine Retribution",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "holy"
+  ],
+  "text": "Divine Retribution Source GM Core pg. 310 Aspect Celestial Prerequisite The relic is a weapon. Activate (concentrate); Effect Drawing upon divine fury, you single out a target that damaged you or an ally within the past round and fill your relic with divine vengeance against them. Make a Strike against that foe, dealing an additional damage die on a hit. If the target has the unholy trait, it's also enfeebled 1 until the start of your next turn on a hit (or enfeebled 2 on a critical hit)."
+ },
+ {
+  "id": "djezet-alloy-ingot",
+  "name": "Djezet Alloy Ingot",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 6000
+  },
+  "text": "This rust red metal is liquid at room temperature, making it challenging for all but the most skilled metallurgists to craft with and earning it the name \"quickiron\" in some places. Djezet is also extremely reactive to magic, even in its solid, workable alloyed form. It glows when targeted by magic, and objects crafted with djezet alloys glow with scarlet striations, which lead some smiths to nickname it \"tiger iron.\" When targeted by spells, objects crafted from djezet alloys exhibit these glowing red markings that last for 1 round or the duration of the spell, whichever is longer. A djezet mass contains enough djezet to refine into up to two Djezet Doses. ## Djezet Alloy Items | Djezet Alloy Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Items** | | | | | Standard-grade | 9 | 36 | 18 | | High-grade | 12 | 48 | 24 | | **Structures** | | | | | Standard-grade | 18 | 72 | 36 | | High-grade | 24 | 96 | 48 |"
+ },
+ {
+  "id": "djezet-alloy-object-high-grade",
+  "name": "Djezet Alloy Object (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 7000
+  },
+  "text": "Djezet Source Grand Bazaar pg. 97 This rust red metal is liquid at room temperature, making it challenging for all but the most skilled metallurgists to craft with and earning it the name “quickiron” in some places. Djezet is also extremely reactive to magic, even in its solid, workable alloyed form. It glows when targeted by magic, and objects crafted with djezet alloys glow with scarlet striations, which lead some smiths to nickname it “tiger iron.” When targeted by spells, objects crafted from djezet alloys exhibit these glowing red markings that last for 1 round or the duration of the spell, whichever is longer. A djezet mass contains enough djezet to refine into up to two djezet doses. Djezet Alloy Djezet Alloy Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-grade 9 36 18 High-grade 12 48 24 Structures Standard-grade 18 72 36 High-grade 24 96 48 Material Uses Djezet Armor Djezet Shield Djezet Weapon Djezet Mass Source Grand Bazaar pg. 97 Price 600 gp Bulk L Djezet Alloy Ingot Source Grand Bazaar pg. 97 Price 6,000 gp Bulk 1 Djezet Alloy Object (Standard-Grade) Source Grand Bazaar pg. 97 Price 400 gp (per Bulk) Djezet Alloy Object (High-Grade) Source Grand Bazaar pg. 97 Price 7,000 gp (per Bulk)"
+ },
+ {
+  "id": "djezet-alloy-object-standard-grade",
+  "name": "Djezet Alloy Object (Standard-Grade)",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "price": {
+   "gp": 400
+  },
+  "text": "Djezet Source Grand Bazaar pg. 97 This rust red metal is liquid at room temperature, making it challenging for all but the most skilled metallurgists to craft with and earning it the name “quickiron” in some places. Djezet is also extremely reactive to magic, even in its solid, workable alloyed form. It glows when targeted by magic, and objects crafted with djezet alloys glow with scarlet striations, which lead some smiths to nickname it “tiger iron.” When targeted by spells, objects crafted from djezet alloys exhibit these glowing red markings that last for 1 round or the duration of the spell, whichever is longer. A djezet mass contains enough djezet to refine into up to two djezet doses. Djezet Alloy Djezet Alloy Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-grade 9 36 18 High-grade 12 48 24 Structures Standard-grade 18 72 36 High-grade 24 96 48 Material Uses Djezet Armor Djezet Shield Djezet Weapon Djezet Mass Source Grand Bazaar pg. 97 Price 600 gp Bulk L Djezet Alloy Ingot Source Grand Bazaar pg. 97 Price 6,000 gp Bulk 1 Djezet Alloy Object (Standard-Grade) Source Grand Bazaar pg. 97 Price 400 gp (per Bulk) Djezet Alloy Object (High-Grade) Source Grand Bazaar pg. 97 Price 7,000 gp (per Bulk)"
+ },
+ {
+  "id": "djezet-armor-high-grade",
+  "name": "Djezet Armor (High-Grade)",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 35000
+  },
+  "text": "Djezet Armor Source Grand Bazaar pg. 98 Usage worn armor Bulk varies by armor Base Material Djezet Armor made of djezet alloy is easy to enchant. Transferring runes onto djezet armor from other armor waives the usual 1/10 cost to etch the rune. This benefit has no effect on the cost of the rune itself or on the cost to transfer a rune off djezet armor onto a non-djezet armor. High-grade djezet armor can be etched with an additional property rune (to a maximum of four instead of three for +3 armor). Djezet Armor (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,800 gp (+180 gp per Bulk) Craft Requirements The initial raw materials must include at least 225 gp of djezet + 22.5 gp per Bulk. Djezet Armor (High-Grade) Source Grand Bazaar pg. 98 Price 35,000 gp (+3,500 gp per Bulk) Craft Requirements The initial raw materials must include at least 17,500 gp of djezet + 1,750 gp per Bulk."
+ },
+ {
+  "id": "djezet-armor-standard-grade",
+  "name": "Djezet Armor (Standard-Grade)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1800
+  },
+  "text": "Djezet Armor Source Grand Bazaar pg. 98 Usage worn armor Bulk varies by armor Base Material Djezet Armor made of djezet alloy is easy to enchant. Transferring runes onto djezet armor from other armor waives the usual 1/10 cost to etch the rune. This benefit has no effect on the cost of the rune itself or on the cost to transfer a rune off djezet armor onto a non-djezet armor. High-grade djezet armor can be etched with an additional property rune (to a maximum of four instead of three for +3 armor). Djezet Armor (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,800 gp (+180 gp per Bulk) Craft Requirements The initial raw materials must include at least 225 gp of djezet + 22.5 gp per Bulk. Djezet Armor (High-Grade) Source Grand Bazaar pg. 98 Price 35,000 gp (+3,500 gp per Bulk) Craft Requirements The initial raw materials must include at least 17,500 gp of djezet + 1,750 gp per Bulk."
+ },
+ {
+  "id": "djezet-buckler-high-grade",
+  "name": "Djezet Buckler (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8000
+  },
+  "text": "Djezet Shield Source Grand Bazaar pg. 98 Usage varies by shield Base Material Djezet The burnished red faces of djezet-alloy shields attract effects made of pure magic. While you have a djezet shield Raised, you can use the Shield Block reaction when you would take energy damage in addition to the reaction's usual trigger. When taking energy damage from a spell, the shield's listed Hardness doubles. Djezet Buckler (Standard-Grade) Source Grand Bazaar pg. 98 Price 600 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements djezet worth at least 75 gp Djezet Shield (Standard-Grade) Source Grand Bazaar pg. 98 Price 660 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements djezet worth at least 82.5 gp Djezet Buckler (High-Grade) Source Grand Bazaar pg. 98 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements djezet worth at least 4,000 gp Djezet Shield (High-Grade) Source Grand Bazaar pg. 98 Price 8,800 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements djezet worth at least 4,400 gp"
+ },
+ {
+  "id": "djezet-buckler-standard-grade",
+  "name": "Djezet Buckler (Standard-Grade)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 600
+  },
+  "text": "Djezet Shield Source Grand Bazaar pg. 98 Usage varies by shield Base Material Djezet The burnished red faces of djezet-alloy shields attract effects made of pure magic. While you have a djezet shield Raised, you can use the Shield Block reaction when you would take energy damage in addition to the reaction's usual trigger. When taking energy damage from a spell, the shield's listed Hardness doubles. Djezet Buckler (Standard-Grade) Source Grand Bazaar pg. 98 Price 600 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements djezet worth at least 75 gp Djezet Shield (Standard-Grade) Source Grand Bazaar pg. 98 Price 660 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements djezet worth at least 82.5 gp Djezet Buckler (High-Grade) Source Grand Bazaar pg. 98 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements djezet worth at least 4,000 gp Djezet Shield (High-Grade) Source Grand Bazaar pg. 98 Price 8,800 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements djezet worth at least 4,400 gp"
+ },
+ {
+  "id": "djezet-mass",
+  "name": "Djezet Mass",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "precious"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 600
+  },
+  "text": "This rust red metal is liquid at room temperature, making it challenging for all but the most skilled metallurgists to craft with and earning it the name \"quickiron\" in some places. Djezet is also extremely reactive to magic, even in its solid, workable alloyed form. It glows when targeted by magic, and objects crafted with djezet alloys glow with scarlet striations, which lead some smiths to nickname it \"tiger iron.\" When targeted by spells, objects crafted from djezet alloys exhibit these glowing red markings that last for 1 round or the duration of the spell, whichever is longer. A djezet mass contains enough djezet to refine into up to two Djezet Doses. ## Djezet Alloy Items | Djezet Alloy Items | Hardness | HP | BT | | --- | --- | --- | --- | | **Thin Items** | | | | | Standard-grade | 5 | 20 | 10 | | High-grade | 8 | 32 | 16 | | **Items** | | | | | Standard-grade | 9 | 36 | 18 | | High-grade | 12 | 48 | 24 | | **Structures** | | | | | Standard-grade | 18 | 72 | 36 | | High-grade | 24 | 96 | 48 |"
+ },
+ {
+  "id": "djezet-shield-high-grade",
+  "name": "Djezet Shield (High-Grade)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 8800
+  },
+  "text": "Djezet Shield Source Grand Bazaar pg. 98 Usage varies by shield Base Material Djezet The burnished red faces of djezet-alloy shields attract effects made of pure magic. While you have a djezet shield Raised, you can use the Shield Block reaction when you would take energy damage in addition to the reaction's usual trigger. When taking energy damage from a spell, the shield's listed Hardness doubles. Djezet Buckler (Standard-Grade) Source Grand Bazaar pg. 98 Price 600 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements djezet worth at least 75 gp Djezet Shield (Standard-Grade) Source Grand Bazaar pg. 98 Price 660 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements djezet worth at least 82.5 gp Djezet Buckler (High-Grade) Source Grand Bazaar pg. 98 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements djezet worth at least 4,000 gp Djezet Shield (High-Grade) Source Grand Bazaar pg. 98 Price 8,800 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements djezet worth at least 4,400 gp"
+ },
+ {
+  "id": "djezet-shield-standard-grade",
+  "name": "Djezet Shield (Standard-Grade)",
+  "level": 9,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 660
+  },
+  "text": "Djezet Shield Source Grand Bazaar pg. 98 Usage varies by shield Base Material Djezet The burnished red faces of djezet-alloy shields attract effects made of pure magic. While you have a djezet shield Raised, you can use the Shield Block reaction when you would take energy damage in addition to the reaction's usual trigger. When taking energy damage from a spell, the shield's listed Hardness doubles. Djezet Buckler (Standard-Grade) Source Grand Bazaar pg. 98 Price 600 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements djezet worth at least 75 gp Djezet Shield (Standard-Grade) Source Grand Bazaar pg. 98 Price 660 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements djezet worth at least 82.5 gp Djezet Buckler (High-Grade) Source Grand Bazaar pg. 98 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements djezet worth at least 4,000 gp Djezet Shield (High-Grade) Source Grand Bazaar pg. 98 Price 8,800 gp Bulk 1 The shield has Hardness 8, HP 32, and BT 16. Craft Requirements djezet worth at least 4,400 gp"
+ },
+ {
+  "id": "djezet-weapon-high-grade",
+  "name": "Djezet Weapon (High-Grade)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 22000
+  },
+  "text": "Djezet Weapon Source Grand Bazaar pg. 98 Usage varies by weapon Bulk varies by weapon Base Material Djezet The djezet in weapons absorbs magical power. Critical hits made with a djezet weapon against a prepared or spontaneous spellcaster cause the target to lose one prepared spell or one spontaneous spell slot unless the target succeeds at a Will save (DC 30 for standard-grade or DC 40 for high-grade). The spell is randomly selected from among the caster's highest three spell levels (and then from among the spells prepared in that level, for a prepared spellcaster). Djezet Weapon (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,800 gp (+180 gp per Bulk) Craft Requirements at least 225 gp of djezet + 22.5 gp per Bulk Djezet Weapon (High-Grade) Source Grand Bazaar pg. 98 Price 22,000 gp (+2,200 gp per Bulk) Craft Requirements at least 11,000 gp of djezet + 1,100 gp per Bulk"
+ },
+ {
+  "id": "djezet-weapon-standard-grade",
+  "name": "Djezet Weapon (Standard-Grade)",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1800
+  },
+  "text": "Djezet Weapon Source Grand Bazaar pg. 98 Usage varies by weapon Bulk varies by weapon Base Material Djezet The djezet in weapons absorbs magical power. Critical hits made with a djezet weapon against a prepared or spontaneous spellcaster cause the target to lose one prepared spell or one spontaneous spell slot unless the target succeeds at a Will save (DC 30 for standard-grade or DC 40 for high-grade). The spell is randomly selected from among the caster's highest three spell levels (and then from among the spells prepared in that level, for a prepared spellcaster). Djezet Weapon (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,800 gp (+180 gp per Bulk) Craft Requirements at least 225 gp of djezet + 22.5 gp per Bulk Djezet Weapon (High-Grade) Source Grand Bazaar pg. 98 Price 22,000 gp (+2,200 gp per Bulk) Craft Requirements at least 11,000 gp of djezet + 1,100 gp per Bulk"
+ },
+ {
+  "id": "dog",
+  "name": "Dog",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "Dog Source Travel Guide pg. 103 PFS Note This animal can be purchased as a pet, but cannot be combat trained or contribute to combat in any way. Price 2 sp"
+ },
+ {
+  "id": "doll",
+  "name": "Doll",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 1
+  },
+  "text": "Dolls are found throughout Golarion in a wide variety of forms. Among the most common are miniature painted figurines, plush animals crafted from fur and stuffed with cotton, porcelain dolls with fine clothing and silky hair, fabric hand puppets, and elaborate marionettes. --- This price is for an average doll of any type."
+ },
+ {
+  "id": "doll-surprise",
+  "name": "Doll (Surprise)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 1
+  },
+  "text": "This doll contains a hidden compartment or pouch capable of holding a single object of up to light Bulk—typically a bell, rattle, or dried flowers."
+ },
+ {
+  "id": "dominant-emotion",
+  "name": "Dominant Emotion",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "emotion",
+   "mental"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Dominant Emotion Source Treasure Vault (Remastered) pg. 198 Aspect Emotion Activate (concentrate) Frequency once per hour; Trigger You would be adversely affected by an emotion effect; Effect The relic tries to neutralize the triggering effect with its own emotion, attempting a counteract check. If the check succeeds, you feel a sudden rush of the relic's emotion and the counteracted effect doesn't take hold of you."
+ },
+ {
+  "id": "doomsday-door",
+  "name": "Doomsday Door",
+  "level": 20,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical",
+   "mythic"
+  ],
+  "usage": "other",
+  "price": {},
+  "text": "Each *Doomsday Door* varies in appearance, yet all are gargantuan wooden portals affixed into a solid anchored arch. All *Doomsday Doors* have two methods of activation; both of these are downtime activities, and you can't pursue other downtime or exploration activities while using either activation. **Activate—Attune Door** 1 week (concentrate, downtime) **Effect** You attune the *Doomsday Door* to a location associated with destruction, such as the heart of an active volcano. You must know the location exists. If it is on a different plane, a planar key must be present. Each day you spend Attuning, you must spend 1 Mythic Point or your doomed condition's value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM. After seven days, the *Doomsday Door* attunes to your chosen location, then shuts. Until then, this activity can reattune to the door to a different location. You can also use this activation to negate a *Doomsday Door*'s current attunement. --- **Activate—Open Door** 1 week (concentrate, downtime) **Requirements** The *Doomsday Door* is attuned **Effect** You perform an extended rite to open the *Doomsday Door*. Each day you spend performing the rite, you must spend 1 Mythic Point or your doomed condition's value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a"
+ },
+ {
+  "id": "draconic-ascendance",
+  "name": "Draconic Ascendance",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "transmutation"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Draconic Ascendance Source Secrets of Magic pg. 231 Aspect Dragon Activate command, envision; Frequency once per hour; Effect The soul seed casts 8th-level dragon form targeting you; you must take the dragon form corresponding to the soul seed's draconic origin."
+ },
+ {
+  "id": "dragon-lotus-drum",
+  "name": "Dragon-Lotus Drum",
+  "level": 24,
+  "itemType": "equipment",
+  "traits": [
+   "artifact",
+   "magical",
+   "mythic"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "price": {},
+  "text": "This traditional barrel drum has tacked heads in the old military style of Hwanggot and is painted with a many-colored imperial dragon twined around white and pink lotuses, a symbol of long memory. The dragon holds a scroll in its two front claws that bears the inscription \"So that the memory of war may be truthfully recalled.\" A creature who activates the drum is bound to join its army after death. Once their spirit has fought in a hundred and one battles, they are freed to face whatever fate their soul has earned. However, until this duty is discharged, the dead creature cannot be resurrected, nor can their soul be captured by any other means. --- **Activate—Summon Dragon-Lotus Army** ⟨3⟩ (concentrate, incarnate, manipulate) **Frequency** once every 20 years **Effect** Spend a Mythic Point; beating the drum summons a spectral army to an area you designate within 500 feet. The army takes its Arrive action when you finish playing. At the end of your next turn, the army Strides up to 60 feet and then takes its Depart action. The Dragon-Lotus Army follows your orders and attempts to not harm you and your allies when possible. The spectral force isn't fully a creature. It can't take any other actions, nor can it be targeted or harmed by Strikes, spells, or other effects unless they would be able to target or end a spell effect (such as Dispel Magic). The army is Gargantuan, but it doesn't block movement. **Arrive** (emotion, fear, mental, sonic) *The Sound of Thunder* The beatin"
+ },
+ {
+  "id": "dragon-strike",
+  "name": "Dragon Strike",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [
+   "evocation"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "text": "Dragon Strike Source Secrets of Magic pg. 230 Aspect Dragon Activate command; Frequency once per hour; Effect Ghostly images of draconic claws form around your hands and linger in the air when you attack. For 1 minute, when you make a successful unarmed melee Strike, you deal an additional 1d6 slashing damage. At 11th level, you can use the ability once per 10 minutes instead of once per hour."
+ },
+ {
+  "id": "dragons-tongue",
+  "name": "Dragon's Tongue",
+  "level": 11,
+  "itemType": "weapon",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 1350
+  },
+  "text": "This *+2 striking longspear* was crafted by a renowned monster hunter, who designed the prototype from the bones and scales of a diabolic dragon. The drathyrican folds of a young dragon, the organ that generates their magical breath, are crucial to the operation of the spear. The mechanics of the weapon are largely based on an injection spear: when the safety is disengaged and a secondary lever is squeezed, it produces a magical effect like a dragon's breath from the hollow tip of the spear. **Activate—Breath of the Spear** ⟨2⟩ (concentrate, manipulate) The dragon's tongue releases a burst of energy that manifests as a dealing damage with a save. You can't use this activation again for 1d4 rounds. The damage type matches the breath of the dragon the weapon was made from, and this activation has the corresponding trait. --- **Craft Requirements** The initial raw materials must include the drathyrican folds of a dragon."
+ },
+ {
+  "id": "dragons-tongue-greater",
+  "name": "Dragon's Tongue (Greater)",
+  "level": 13,
+  "itemType": "weapon",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "price": {
+   "gp": 2750
+  },
+  "text": "This *+2 greater striking longspear* was crafted by a renowned monster hunter, who designed the prototype from the bones and scales of a diabolic dragon. The drathyrican folds of an adult dragon, the organ that generates their magical breath, are crucial to the operation of the spear. The mechanics of the weapon are largely based on an injection spear: when the safety is disengaged and a secondary lever is squeezed, it produces a magical effect like a dragon's breath from the hollow tip of the spear. **Activate—Breath of the Spear** ⟨2⟩ (concentrate, manipulate) The dragon's tongue releases a burst of energy that manifests as a dealing damage with a save. You can't use this activation again for 1d4 rounds. The damage type matches the breath of the dragon the weapon was made from, and this activation has the corresponding trait. --- **Craft Requirements** The initial raw materials must include the drathyrican folds of a dragon."
+ }
+]

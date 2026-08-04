@@ -1,0 +1,938 @@
+[
+ {
+  "id": "giant-killing",
+  "name": "Giant-Killing",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 450
+  },
+  "text": "This weapon features stylized etchings of giants. A giant-killing weapon deals an additional 1d6 damage on a successful Strike against a giant. On a critical hit, the giant is also Enfeebled 1 until the end of your next turn."
+ },
+ {
+  "id": "giant-killing-greater",
+  "name": "Giant-Killing (Greater)",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-a-weapon",
+  "price": {
+   "gp": 6000
+  },
+  "text": "This weapon features stylized etchings of giants. A giant-killing weapon deals an additional 2d6 damage on a successful Strike against a giant. Mental damage dealt by this weapon ignores the target's mental resistance. On a critical hit, instead of being Enfeebled 1, the giant must attempt a save with the following effects. --- **Critical Success** The giant is enfeebled 1 until the end of your next turn. **Success** The giant is Enfeebled 2 until the end of your next turn and takes 1d10 damage. **Failure** The giant is enfeebled 2 for the next minute and takes 2d10 damage. **Critical Failure** The giant is Enfeebled 4 for the next minute and takes 4d10 damage."
+ },
+ {
+  "id": "gills",
+  "name": "Gills",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 450
+  },
+  "text": "Delicate folds in the skin just behind your ears ripple as water flows over them. You can breathe underwater."
+ },
+ {
+  "id": "gingerbread-house",
+  "name": "Gingerbread House",
+  "level": 6,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "structure"
+  ],
+  "usage": "other",
+  "price": {
+   "gp": 240
+  },
+  "text": "A gingerbread house is made of magical gingerbread sweetened with honey and spices, and further decorated with candies and icing. Its roof tiles are made of sugar. It can be held safely in one hand but is very delicate; it's often stored within a wooden box of 1 Bulk. --- **Activate** 1 minute (command, envision, Interact) **Effect** The gingerbread house expands into a spacious and comfortable two-story cottage with a fenced yard. Although fully furnished with beds, chairs, tables, and so on, it and all its contents are made of magical gingerbread and candy. It includes a hearth that keeps the entire house warm but doesn't damage its composition. The house's cupboards are supplied with candy and cocoa sufficient to sustain 10 Medium creatures that eat roughly as much as a human for as long as the house remains activated. Creatures who spend an entire day and night resting in a gingerbread house recover Hit Points at twice the normal rate; if they successfully save against an affliction, they reduce the stage of that affliction by an additional step. When not activated the gingerbread house has Hardness 0, 2 Hit Points, and a BT of 1. Once activated, it has Hardness 0, 40 HP, and a BT of 20. Any damage done to the activated house-including eating any part of its structure-remains when the house returns to its un-activated size. --- **Requirements** You can attempt Cooking Lore checks instead of Crafting checks to Craft a gingerbread house."
+ },
+ {
+  "id": "glacier-hammer",
+  "name": "Glacier Hammer",
+  "level": 3,
+  "itemType": "weapon",
+  "traits": [
+   "shove"
+  ],
+  "usage": "held-in-two-hands",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 60
+  },
+  "text": "Frost covers the head of this *+1 magic maul*. Any hit with this maul deals 1 extra cold damage. You can use a special action to transform the frost into giant icicles. --- **Activate—Grow Icicles** ⟨1⟩ (concentrate) Until the end of your turn, the maul deals 1d6 extra cold damage instead of just 1. After you activate the glacier hammer, you can't activate it again for 10 minutes."
+ },
+ {
+  "id": "gliding",
+  "name": "Gliding",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "usage": "etched-onto-armor",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 450
+  },
+  "text": "The armor allows you to make a controlled descent. **Activate**⟨1⟩ (concentrate) --- **Effect** You glide slowly toward the ground, 5 feet down and up to 25 feet forward through the air. Provided you spend at least 1 action gliding on your turn and haven't yet reached the ground, you remain in the air at the end of your turn. Otherwise, you fall."
+ },
+ {
+  "id": "gliding-membranes-greater",
+  "name": "Gliding Membranes (Greater)",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 340
+  },
+  "text": "Membranes that stretch between your arms and torso help you convert a fall into a glide. Treat falls as 50 feet shorter. Even if you take fall damage, you can land on your feet by succeeding at a check."
+ },
+ {
+  "id": "gliding-membranes-lesser",
+  "name": "Gliding Membranes (Lesser)",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 50
+  },
+  "text": "Membranes that stretch between your arms and torso help you convert a fall into a glide. Treat falls as 25 feet shorter. Even if you take fall damage, you can land on your feet by succeeding at a check."
+ },
+ {
+  "id": "glittering-scarab",
+  "name": "Glittering Scarab",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "worn",
+  "price": {
+   "gp": 10
+  },
+  "text": "**Access** Member of the Esoteric Order of the Palatine Eye --- This pin is a valuable copy of a popular pin sold in markets throughout Osirion. The original pin is a solid piece, often purchased by tourists. The glittering scarab, though, can be squeezed gently, causing the wings to part and reveal an eye painted underneath them. This pin is used to gain entrance to most meetings of the Esoteric Order of the Palatine Eye. Someone who specifically examines the scarab can find the hidden eye with a successful check, though if they know about glittering scarabs, they can simply squeeze it to check for the eye."
+ },
+ {
+  "id": "gloom-blade",
+  "name": "Gloom Blade",
+  "level": 9,
+  "itemType": "weapon",
+  "traits": [
+   "agile",
+   "finesse",
+   "magical",
+   "versatile-s"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 700
+  },
+  "text": "As black as coal, this blade grows more potent in darkness. While in bright light, it functions as a *+1 shortsword* and doesn't appear to radiate a magic aura to Detect Magic or similar spells unless the spells are 4th rank or higher. In dim light or darkness, the *gloom blade* becomes a *+2 striking shortsword*. Whenever you use the *gloom blade* to attack a creature you're undetected by, you deal 1d6 additional precision damage. To upgrade the *gloom blade's* fundamental runes, start with the base *+1 shortsword*, but if you improve it beyond a *+2 striking shortsword*, the runes apply in dim light or darkness as well."
+ },
+ {
+  "id": "gloves-of-carelessness",
+  "name": "Gloves of Carelessness",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "cursed",
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "usage": "worngloves",
+  "price": {},
+  "text": "These gloves appear and function as Gloves of Storing but repel any item not stored in the gloves. When wearing them, whenever you Interact to draw or pick up an item, roll a . On a success, you do so as normal. On a failure, you instead fling the item 15 feet in a random direction. You can use a reaction to attempt a save, causing the item to land at your feet instead if you succeed. Removing the stored item from the gloves does not trigger the item's curse. The first time the curse activates, the gloves fuse to you."
+ },
+ {
+  "id": "glue-bomb-lesser",
+  "name": "Glue Bomb (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- A glue bomb is a harmless explosive mechanism bursting with sticky substances. When you hit a creature with a glue bomb, that creature takes a –10-foot status penalty to its Speeds for 1 minute. The Escape DC is 17. On a critical hit, a creature in contact with a solid surface becomes stuck to the surface and immobilized for 1 round, and a creature flying via wings has its wings tangled, causing it to fall safely to the ground and become unable to Fly again for 1 round. Glue bombs are not effective when used on a creature that is in water. The target can end any effects by Escaping or spending a total of 3 Interact actions to carefully remove the sticky substances. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "glue-bullet",
+  "name": "Glue Bullet",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 16
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (manipulate) --- These cartridges are filled with sticky clear glue. When a glue bullet hits, a syrupy webbing coats the target and sticks to the ground or a nearby surface, hindering their movement. The target takes a –10-foot circumstance penalty to its Speeds for 2d4 rounds, or until it Escapes against a DC of 18. On a critical hit, the target is also immobilized until it Escapes."
+ },
+ {
+  "id": "gluttonous-spear",
+  "name": "Gluttonous Spear",
+  "level": 6,
+  "itemType": "weapon",
+  "traits": [
+   "magical",
+   "monk",
+   "thrown-20"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {
+   "gp": 250
+  },
+  "text": "The head of this +1 striking Returning spear is wrapped in greasy hide, and its head resembles a thick, clawed finger. On a critical hit, the target is Enfeebled 1 for 1 minute, and you gain 1d8 temporary Hit Points that last for 1 minute."
+ },
+ {
+  "id": "godrending-ammunition",
+  "name": "Godrending Ammunition",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 440
+  },
+  "text": "Embedded in this piece of ammunition is a shining sliver of a warshard. When an activated godrending ammunition hits a target, the body of the struck creature attempts to tear itself apart, causing nauseating pain. Instead of its normal damage, the ammunition deals 10d8 damage. The target can attempt a saving throw; it takes a –2 circumstance penalty to this save if the Strike was a critical hit. --- **Critical Success** The foe takes the normal damage from the ammunition, instead of the 10d8 slashing damage. **Success** The foe takes half damage. **Failure** The foe takes full damage and is Sickened 1. **Critical Failure** The foe takes double damage and is Sickened 2. A creature reduced to 0 HP from this damage is ripped limb from limb, and it instantly dies; its gear remains."
+ },
+ {
+  "id": "godrending-ammunition-greater",
+  "name": "Godrending Ammunition (Greater)",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 3300
+  },
+  "text": "Embedded in this piece of ammunition is a shining sliver of a warshard. When an activated godrending ammunition hits a target, the body of the struck creature attempts to tear itself apart, causing nauseating pain. Instead of its normal damage, the ammunition deals 15d8 damage. The target can attempt a saving throw; it takes a –2 circumstance penalty to this save if the Strike was a critical hit. --- **Critical Success** The foe takes the normal damage from the ammunition, instead of the 15d8 slashing damage. **Success** The foe takes half damage. **Failure** The foe takes full damage and is Sickened 1. **Critical Failure** The foe takes double damage and is Sickened 2. A creature reduced to 0 HP from this damage is ripped limb from limb, and it instantly dies; its gear remains."
+ },
+ {
+  "id": "gold-ingot",
+  "name": "Gold (Ingot)",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "gp": 1000
+  },
+  "text": "Gold (Ingot) Source Travel Guide pg. 36 Price 1,000 gp"
+ },
+ {
+  "id": "golden-cased-bullet-greater",
+  "name": "Golden-Cased Bullet (Greater)",
+  "level": 10,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 200
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ envision --- The magic-infused metal of this bullet's golden casing allows it to curve just a bit in flight once the bullet has been fired, allowing you to ignore the bonus to AC granted to a target in standard or lesser cover."
+ },
+ {
+  "id": "golden-cased-bullet-major",
+  "name": "Golden-Cased Bullet (Major)",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 2000
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ envision --- The magic-infused metal of this bullet's golden casing allows it to curve just a bit in flight once the bullet has been fired, allowing you to ignore the bonus to AC granted to a target in greater, standard, or lesser cover."
+ },
+ {
+  "id": "golden-cased-bullet-standard",
+  "name": "Golden-Cased Bullet (Standard)",
+  "level": 4,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 20
+  },
+  "text": "**Ammunition** round **Activate** ⟨1⟩ envision --- The magic-infused metal of this bullet's golden casing allows it to curve just a bit in flight once the bullet has been fired, allowing you to ignore the bonus to AC granted to a target in lesser cover."
+ },
+ {
+  "id": "golden-chrysalis",
+  "name": "Golden Chrysalis",
+  "level": 5,
+  "itemType": "equipment",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 27
+  },
+  "text": "**Activate** ⟨1⟩ Interact --- Threads of iridescent golden silk wrap around the core of this magical sling stone. When you activate and shoot a *golden chrysalis*, rather than making an attack roll for your Strike, you cause the chrysalis to unwind in midair to reveal a magical butterfly that flies in a , scattering golden scale dust that hangs in the air for 1 minute. A creature that enters or begins its turn in the dust must attempt a or have its Invisiblity negated, becoming concealed instead of invisible. This effect applies both if the creature was already invisible and if it benefits from any new invisibility effects before the end of the invisibility negation effect from the golden chrysalis. --- **Critical Success** The target is unaffected. **Success** The target's invisibility is negated for 2 rounds. **Failure** The target is dazzled for 1 minute and its invisibility is negated for 1 minute."
+ },
+ {
+  "id": "golden-wings",
+  "name": "Golden Wings",
+  "level": 3,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "text": "Golden Wings Source High Seas pg. 50 Usage worn cloak Bulk 2 Access You're from Hermea This pair of huge wings is crafted from numerous feathers made of a lightweight, golden magical alloy. When activated, the wings emit a melodic sound and a shimmering glow. Activate—Assisted Flight (manipulate) Frequency once per day; Effect For the next 10 minutes, you can Leap 20 feet, using the wings to propel yourself. You must land on a space with solid ground. For the duration, you also emit a bright light in a 20-foot radius and dim light for the next 20 feet. You take a –2 item penalty to Stealth checks to Hide and Sneak. Golden Wings Source High Seas pg. 50 Price 60 gp Greater Golden Wings Source High Seas pg. 50 Price 350 gp When you activate the wings, for the duration, you can also use an action to flap the wings to glide slowly toward the ground, 5 feet down and up to 20 feet forward through the air. As long as you spend 1 action gliding each round and haven’t yet reached the ground, you remain in the air at the end of your turn. Major Golden Wings Source High Seas pg. 50 Price 650 gp When you activate the wings, you also gain a fly Speed of 20 feet for the duration. True Golden Wings Source High Seas pg. 50 Price 14,000 gp When you activate the wings, you also gain a fly Speed equal to your Speed or 25 feet, whichever is greater, for the duration."
+ },
+ {
+  "id": "goo-grenade-lesser",
+  "name": "Goo Grenade (Lesser)",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "usage": "held-in-one-hand",
+  "activationCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "price": {
+   "gp": 3
+  },
+  "text": "**Activate** ⟨1⟩ Strike A goo grenade is a flask filled with a fast-growing, short-lived alchemical ooze. When you hit a creature with a goo grenade, that creature takes 1d4 acid damage, 1 persistent acid damage, and 1 acid splash damage, and a -5 circumstance penalty to its Speeds from the clinging goo. The target can end any penalties, conditions, and persistent damage caused by the bomb by Escaping or spending a total of 3 Interact actions to pry themselves free of the ooze. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "goring-horn",
+  "name": "Goring Horn",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "usage": "implanted",
+  "price": {
+   "gp": 320
+  },
+  "text": "A beast's horn or horns have been grafted onto your skull. You gain a horn unarmed attack that deals 1d8 piercing damage. This horn is in the brawling group and has the forceful and shove traits."
+ },
+ {
+  "id": "grannys-hedge-trimmer",
+  "name": "Granny's Hedge Trimmer",
+  "level": 1,
+  "itemType": "weapon",
+  "traits": [
+   "magical"
+  ],
+  "usage": "held-in-one-hand",
+  "price": {},
+  "text": "**Usage** Two hands --- Granny's hedge trimmer resembles a polearm, with whirring blades attached to the end of a pole. The item can be used as a simple weapon in the polearm group that deals 1d4 damage."
+ },
+ {
+  "id": "grappling-arrow",
+  "name": "Grappling Arrow",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "This small grappling hook is designed to be tied to a rope and fired from a bow. When fired, it has half the normal range increment for the weapon."
+ },
+ {
+  "id": "grappling-bolt",
+  "name": "Grappling Bolt",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "price": {
+   "sp": 2
+  },
+  "text": "This small grappling hook is designed to be tied to a rope and fired from a crossbow. When fired, it has half the normal range increment for the weapon."
+ },
+ {
+  "id": "grappling-gun",
+  "name": "Grappling Gun",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 3
+  },
+  "text": "This wooden, pistol-like device features a large reel coiled with 100 feet of thin metal cord and can fire a grappling hook up to 100 feet. To reload the grappling gun, you must manually recoil the cord by turning the reel's crank, and then lock in the grappling hook. Reloading a grappling gun takes 1 minute."
+ },
+ {
+  "id": "grappling-gun-clockwork",
+  "name": "Grappling Gun (Clockwork)",
+  "level": 1,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-two-hands",
+  "price": {
+   "gp": 15
+  },
+  "text": "This wooden, pistol-like device features a large reel coiled with 100 feet of thin metal cord and can fire a grappling hook up to 100 feet. To reload the grappling gun, you must manually recoil the cord by turning the reel's crank, and then lock in the grappling hook. Reloading a grappling gun takes 1 minute. Clockwork controls the reel on this grappling gun, reeling the grappling hook back in when you pull a lever. Reloading a clockwork grappling gun takes three Interact actions."
+ },
+ {
+  "id": "grappling-hook",
+  "name": "Grappling Hook",
+  "level": 0,
+  "itemType": "equipment",
+  "traits": [],
+  "usage": "held-in-one-hand",
+  "price": {
+   "sp": 1
+  },
+  "text": "You can throw a grappling hook with a rope tied to it to make a climb easier. To anchor a grappling hook, make a ranged attack roll using your simple weapon proficiency against a DC depending on the target, typically at least DC 20. This attack has the secret trait. On a success, your hook has a firm hold, but on a critical failure, the hook seems like it will hold but actually falls when you're partway up"
+ },
+ {
+  "id": "gravitational-flux",
+  "name": "Gravitational Flux",
+  "level": 9,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 150
+  },
+  "text": "Gravitational Flux Source Battlecry! pg. 133 Price 150 gp Ammunition large stone sphere (heavy bombard) Small unattended objects tend to levitate slightly around this star-flecked onyx sphere. When Launched, gravity in the area of the burst is briefly inverted. Creatures in the burst must attempt a DC 25 Fortitude save with the following results. Critical Success The creature is unaffected. Success The creature is off-guard for 1 round. Failure The creature is affected by the changing gravity, causing it to be propelled 20 feet straight up. Gravity then immediately returns to normal, potentially causing the creature to fall back to the ground according to the normal falling rules. Critical Failure As failure, but the changing gravity is stronger, increasing the distance it falls up to 40 feet."
+ },
+ {
+  "id": "greater-aurochs-might-tattoo",
+  "name": "Greater Aurochs' Might Tattoo",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 20000
+  },
+  "text": "Aurochs' Might Tattoo May contain spoilers from Triumph of the Tusk Source Pathfinder #207: Resurrection Flood pg. 79 Usage tattooed on the body The auroch depicted by this tattoo is a powerful symbol of strength and resilience. When upgraded, the tattoo expands to depict an increasingly imposing herd of aurochs. Activate—Aurochs Charge (concentrate) Frequency once per day; Effect You Stride twice and make a melee Strike against a creature within your reach at any point during your movement. If the Strike hits and deals damage, the target attempts a DC 24 Fortitude save to avoid being toppled by the impact. Critical Success The target is unaffected. Success The target is off-guard until the beginning of its next turn. Failure The target is knocked prone. Critical Failure As failure, but the target also takes 2d6 bludgeoning damage. Lesser Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 475 gp Moderate Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 2,575 gp The Fortitude saving throw DC is 30, and the bludgeoning damage dealt by a critical failure is 4d6. Greater Aurochs' Might Tattoo Source Pathfinder #207: Resurrection Flood pg. 79 Price 20,000 gp The Fortitude saving throw DC is 38, and the bludgeoning damage dealt by a critical failure is 6d6."
+ },
+ {
+  "id": "greater-banner-of-creeping-death",
+  "name": "Greater Banner of Creeping Death",
+  "level": 14,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "price": {
+   "gp": 4500
+  },
+  "text": "Banner of Creeping Death Source Battlecry! pg. 138 Usage affixed or held in 1 hand Bulk L The very fabric of this off-putting magical banner seems to be rotting with a slick, foul texture. Traditionally, these banners were created from the uniforms of fallen enemy troops, but this is considered a cruel and dishonorable practice by many modern nations. While holding a banner of creeping death, you can use the following ability. Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions. All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save). Lesser Banner of Creeping Death Source Battlecry! pg. 138 Price 120 gp Moderate Banner of Creeping Death Source Battlecry! pg. 138 Price 750 gp The void damage increases to 2d4+2 and the save DC increases to 26. Greater Banner of Creeping Death Source Battlecry! pg. 138 Price 4,500 gp The void damage increases to 4d4+4 and the save DC increases to 32. Major Banner of Creeping Death Source Battlecry! pg. 138 Price 36,000 gp The void damage increases 8d4+8 and the save DC increases to 42."
+ },
+ {
+  "id": "greater-banner-of-piercing-shards",
+  "name": "Greater Banner of Piercing Shards",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "price": {
+   "gp": 2600
+  },
+  "text": "Banner of Piercing Shards Source Battlecry! pg. 138 Usage affixed or held in 1 hand Bulk L This magical banner has an intricately embroidered pattern of shards and cracks across its surface, almost like a broken mirror. Though it always feels dry to the touch, this banner from a distance gleams red as if slightly stained with the blood of your enemies. While holding a banner of piercing shards, you can use the following ability. Activate—Shards Seek Wounds (concentrate) Frequency once per minute; Effect Shards of sharpened glass violently shoot out from the magical banner into the newly opened wounds of a nearby enemy. The magical banner deals 1d4 persistent bleed damage to any enemy within the banner’s aura that has been dealt damage since the end of your last turn. Banner of Piercing Shards Source Battlecry! pg. 138 Price 465 gp Greater Banner of Piercing Shards Source Battlecry! pg. 138 Price 2,600 gp The persistent bleed damage increases to 2d4. Major Banner of Piercing Shards Source Battlecry! pg. 138 Price 22,000 gp The persistent bleed damage increases to 3d4."
+ },
+ {
+  "id": "greater-black-ash",
+  "name": "Greater Black Ash",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 200
+  },
+  "text": "Black Ash May contain spoilers from Spore War Source Pathfinder #210: Whispers in the Dirt pg. 78 Usage held in 1 hand Activate Cast a Spell On certain rare occasions, when a particularly despoiled tree or a powerful demonic fungal infestation (such as a Jeharlu Spore) is destroyed, the grimy black ash that remains behind functions as a catalyst called black ash. A wall of thorns empowered with this catalyst gains the fungus trait and appears diseased and toxic, with greasy filaments of dripping fungus growing through its vines. A creature damaged by this wall’s thorns takes an additional amount of persistent poison damage. Black Ash Source Pathfinder #210: Whispers in the Dirt pg. 78 Price 30 gp The persistent damage is 1d6 Greater Black Ash Source Pathfinder #210: Whispers in the Dirt pg. 78 Price 200 gp The persistent damage is 2d6 Major Black Ash Source Pathfinder #210: Whispers in the Dirt pg. 78 Price 1,300 gp The persistent damage is 3d6"
+ },
+ {
+  "id": "greater-blazing-banner",
+  "name": "Greater Blazing Banner",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "fire",
+   "magical"
+  ],
+  "price": {
+   "gp": 2000
+  },
+  "text": "Blazing Banner Source Battlecry! pg. 140 Usage affixed or held in 1 hand Bulk L This magical banner shimmers in a fiery array of reds, oranges, and yellows. The rampant threads catch light in the wind and give the appearance of a blazing flame. Whenever you or an ally within the banner’s aura critically succeeds with a Strike, the Strike deals an additional 1d4 persistent fire damage. Blazing Banner Source Battlecry! pg. 140 Price 100 gp Greater Blazing Banner Source Battlecry! pg. 140 Price 2,000 gp The additional persistent fire damage increases to 1d6. Major Blazing Banner Source Battlecry! pg. 140 Price 36,000 gp The additional persistent fire damage increases to 1d8."
+ },
+ {
+  "id": "greater-boots-of-the-secret-blade",
+  "name": "Greater Boots of the Secret Blade",
+  "level": 8,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 450
+  },
+  "text": "Boots of the Secret Blade Source Battlecry! pg. 149 Usage worn shoes Bulk L You pride yourself on being well prepared with weaponry for any situation. Your dark-gray boots might appear mundane, but you know that they can conjure a blade at any moment. Even the most thorough of searches can’t find a knife that doesn’t exist yet. Activate—Draw Secret Blade (manipulate) Frequency once per hour; Effect You reach down to your boot, draw a dagger from it, and make a ranged or melee Strike with it. This dagger is created magically and does not exist before being drawn. The dagger remains a physical object until the next time you use Draw Secret Blade, and it disappears as a new blade is created. Boots of the Secret Blade Source Battlecry! pg. 149 Price 30 gp Greater Boots of the Secret Blade Source Battlecry! pg. 149 Price 450 gp When you Draw Secret Blade, you draw a +1 striking dagger. Major Boots of the Secret Blade Source Battlecry! pg. 149 Price 5,500 gp When you Draw Secret Blade, you draw a +2 greater striking dagger."
+ },
+ {
+  "id": "greater-bougainvillea-blossom",
+  "name": "Greater Bougainvillea Blossom",
+  "level": 11,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 300
+  },
+  "text": "Bougainvillea Blossom May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This pink flower has long, slender thorns along the stem. The flower can be used as a catalyst when casting an entangling flora spell, which causes the affected plants to sprout long thorns and vibrant pink blossoms. The area becomes hazardous terrain, dealing the listed piercing damage to an enemy each time it enters an affected square. Lesser Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 10 gp The piercing damage of the hazardous terrain is 1. Moderate Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 60 gp The piercing damage of the hazardous terrain is 2. Greater Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 300 gp The piercing damage of the hazardous terrain is 3. Major Bougainvillea Blossom Source Pathfinder #202: Severed at the Root pg. 78 Price 1,200 gp The piercing damage of the hazardous terrain is 5."
+ },
+ {
+  "id": "greater-burrowing-bolt",
+  "name": "Greater Burrowing Bolt",
+  "level": 14,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 650
+  },
+  "text": "Burrowing Bolt Source Battlecry! pg. 132 Ammunition arrow, bolt Activate (manipulate) These arrows have tips grooved like a drill bit and angled fletching, causing them to spin quickly about their shaft when fired. When striking a structure or object of Hardness 14 or less within your first range increment, an activated burrowing bolt tunnels into the surface silently and leaves a hole behind it, burrowing through up to 5 feet of material before magically vanishing. Burrowing Bolt Source Battlecry! pg. 132 Price 55 gp Greater Burrowing Bolt Source Battlecry! pg. 132 Price 650 gp The bolt can burrow through up to 10 feet of material with Hardness 18 or less."
+ },
+ {
+  "id": "greater-chainbreaker",
+  "name": "Greater Chainbreaker",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 1750
+  },
+  "text": "Chainbreaker Source Battlecry! pg. 126 Usage held in 1 hand Bulk 1 Base Weapon Pick The head of this +1 striking pick is adorned with a detailed etching of an eagle with outstretched wings. When you use it to Strike an unattended object whose intended purpose is to restrain or confine, such as a pair of manacles or the bars of a prison cell, you ignore the first 5 points of the object’s Hardness. Activate—Liberating Strike ; Frequency once per day; Effect You Strike a creature with the chainbreaker. If you hit and deal damage, one grabbed or restrained ally within 60 feet of the target can use a reaction to attempt to Escape. Chainbreaker Source Battlecry! pg. 126 Price 150 gp Greater Chainbreaker Source Battlecry! pg. 126 Price 1,750 gp This +2 striking pick ignores 10 points of Hardness when Striking restraints."
+ },
+ {
+  "id": "greater-dragons-tongue",
+  "name": "Greater Dragon's Tongue",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "price": {
+   "gp": 2750
+  },
+  "text": "Dragon's Tongue Source Draconic Codex pg. 222 PFS Note The damage type(s) for this item must be chosen at purchase or when crafted. Usage held in 2 hands Bulk 2 Base Weapon Longspear This +2 striking longspear was crafted by a renowned monster hunter, who designed the prototype from the bones and scales of a diabolic dragon. The drathyrican folds of a young dragon, the organ that generates their magical breath, are crucial to the operation of the spear. The mechanics of the weapon are largely based on an injection spear: when the safety is disengaged and a secondary lever is squeezed, it produces a magical effect like a dragon’s breath from the hollow tip of the spear. Activate—Breath of the Spear (concentrate, manipulate) Effect The dragon’s tongue releases a burst of energy that manifests as a 30-foot cone dealing 6d6 damage with a DC 28 basic Reflex save. You can’t use this activation again for 1d4 rounds. The damage type matches the breath of the dragon the weapon was made from, and this activation has the corresponding trait. Craft Requirements The initial raw materials must include the drathyrican folds of a dragon. Dragon's Tongue Source Draconic Codex pg. 222 Price 1,350 gp Greater Dragon's Tongue Source Draconic Codex pg. 222 Price 2,750 gp Made using the drathyrican folds of an adult dragon, the longspear is a +2 greater striking longspear and the activation’s damage is 7d6 (DC 30). Major Dragon's Tongue Source Draconic Codex pg. 222 Price 55,000 gp Made using the d"
+ },
+ {
+  "id": "greater-endless-quiver",
+  "name": "Greater Endless Quiver",
+  "level": 18,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 19000
+  },
+  "text": "Endless Quiver Source Battlecry! pg. 149 Usage worn Bulk 1 Elite archers can go through countless arrows over the course of a battle. Smart ones carry an endless quiver to ensure they never run out. This quiver holds 40 mundane arrows and regenerates 10 per hour. Once an arrow is removed from the endless quiver, it dissipates after 1 minute. Activate—Convert Arrows (manipulate) Frequency once per day; Effect You tap the quiver, and the arrows inside transform into cold iron or silver. They revert to wood after 1 minute. Endless Quiver Source Battlecry! pg. 149 Price 1,200 gp Greater Endless Quiver Source Battlecry! pg. 149 Price 19,000 gp The quiver holds 100 arrows at once. You can use Convert Arrows to also transform your arrows into adamantine or dawnsilver."
+ },
+ {
+  "id": "greater-energized-shield",
+  "name": "Greater Energized Shield",
+  "level": 15,
+  "itemType": "equipment",
+  "traits": [
+   "magical"
+  ],
+  "price": {
+   "gp": 6000
+  },
+  "text": "Energized Shield Source Battlecry! pg. 124 Usage held in 1 hand Bulk 1 Base Shield Steel Shield This minor reinforcing steel shield (Hardness 8, HP 64, BT 32) is lined with pale silver that glows when struck. Whenever you use the Shield Block reaction, this shield becomes energized for 1 round. Activate—Energized Blast (force, manipulate) Frequency once per 10 minutes; Requirements The shield is energized; Effect You direct the stored energy into a short blast, targeting a creature within 15 feet. The target takes 2d10 force damage (DC 23 basic Reflex save). Lesser Energized Shield Source Battlecry! pg. 124 Price 350 gp Moderate Energized Shield Source Battlecry! pg. 124 Price 1,300 gp The damage increases to 3d10 and the DC increases to 28. Greater Energized Shield Source Battlecry! pg. 124 Price 6,000 gp The damage increases to 4d10 and the DC increases to 34. Major Energized Shield Source Battlecry! pg. 124 Price 35,000 gp The damage increases to 5d10 and the DC increases to 39."
+ },
+ {
+  "id": "greater-ethereal-crescent",
+  "name": "Greater Ethereal Crescent",
+  "level": 7,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "whetstone"
+  ],
+  "price": {
+   "gp": 320
+  },
+  "text": "Ethereal Crescent Source Battlecry! pg. 135 Usage held in 1 hand Bulk L Activate (manipulate) This crescent-shaped shard of iridescent metal is strangely translucent, fading to a blurry outline when examined for too long. A weapon under the effects of an ethereal crescent becomes a ghost touch weapon for 1 minute. Ethereal Crescent Source Battlecry! pg. 135 Price 58 gp Greater Ethereal Crescent Source Battlecry! pg. 135 Price 320 gp A weapon under the effects of a greater ethereal crescent gains the effects of an astral rune for 1 minute. This does not count against the weapon’s normal maximum number of runes."
+ },
+ {
+  "id": "greater-godrending-ammunition",
+  "name": "Greater Godrending Ammunition",
+  "level": 18,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 3300
+  },
+  "text": "Godrending Ammunition Source Shining Kingdoms pg. 52 Ammunition any Activate (manipulate) Embedded in this piece of ammunition is a shining sliver of a warshard. When an activated godrending ammunition hits a target, the body of the struck creature attempts to tear itself apart, causing nauseating pain. Instead of its normal damage, the ammunition deals 10d8 slashing damage. The target can attempt a DC 30 Fortitude saving throw; it takes a –2 circumstance penalty to this save if the Strike was a critical hit. Critical Success The foe takes the normal damage from the ammunition, instead of the 10d8 slashing damage. Success The foe takes half damage. Failure The foe takes full damage and is sickened 1. Critical Failure The foe takes double damage and is sickened 2. A creature reduced to 0 HP from this damage is ripped limb from limb, and it instantly dies; its gear remains. Godrending Ammunition Source Shining Kingdoms pg. 52 Price 440 gp Greater Godrending Ammunition Source Shining Kingdoms pg. 52 Price 3,300 gp The damage is 15d8, and the save DC is 38."
+ },
+ {
+  "id": "greater-golden-wings",
+  "name": "Greater Golden Wings",
+  "level": 7,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 350
+  },
+  "text": "Golden Wings Source High Seas pg. 50 Usage worn cloak Bulk 2 Access You're from Hermea This pair of huge wings is crafted from numerous feathers made of a lightweight, golden magical alloy. When activated, the wings emit a melodic sound and a shimmering glow. Activate—Assisted Flight (manipulate) Frequency once per day; Effect For the next 10 minutes, you can Leap 20 feet, using the wings to propel yourself. You must land on a space with solid ground. For the duration, you also emit a bright light in a 20-foot radius and dim light for the next 20 feet. You take a –2 item penalty to Stealth checks to Hide and Sneak. Golden Wings Source High Seas pg. 50 Price 60 gp Greater Golden Wings Source High Seas pg. 50 Price 350 gp When you activate the wings, for the duration, you can also use an action to flap the wings to glide slowly toward the ground, 5 feet down and up to 20 feet forward through the air. As long as you spend 1 action gliding each round and haven’t yet reached the ground, you remain in the air at the end of your turn. Major Golden Wings Source High Seas pg. 50 Price 650 gp When you activate the wings, you also gain a fly Speed of 20 feet for the duration. True Golden Wings Source High Seas pg. 50 Price 14,000 gp When you activate the wings, you also gain a fly Speed equal to your Speed or 25 feet, whichever is greater, for the duration."
+ },
+ {
+  "id": "greater-knaves-standard",
+  "name": "Greater Knave’s Standard",
+  "level": 12,
+  "itemType": "equipment",
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "price": {
+   "gp": 1800
+  },
+  "text": "Knave's Standard Source Battlecry! pg. 140 Usage affixed or held in 1 hand Bulk L This magical banner is dip-dyed in an ombre from black to red, mottled and uneven. Whenever you or an ally within the banner’s aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d4 precision damage. Knave’s Standard Source Battlecry! pg. 140 Price 100 gp Greater Knave’s Standard Source Battlecry! pg. 140 Price 1,800 gp The additional precision damage increases to 1d6. Major Knave’s Standard Source Battlecry! pg. 140 Price 36,000 gp The additional precision damage increases to 1d8."
+ },
+ {
+  "id": "greater-mitigation-mail",
+  "name": "Greater Mitigation Mail",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 3000
+  },
+  "text": "Mitigation Mail Source Battlecry! pg. 122 Usage worn armor Bulk 2 Base Armor Chain Mail This +1 resilient chain mail helps bind up your wounds when you’re injured in battle, enabling you to continue fighting. Activate—Salve (concentrate, healing, manipulate, vitality) Frequency once per day; Effect You restore 5d10+10 Hit points. Mitigation Mail Source Battlecry! pg. 122 Price 700 gp Greater Mitigation Mail Source Battlecry! pg. 122 Price 3,000 gp The armor is +2 resilient chain mail, and the healing is increased to 8d10+15 Hit Points. Major Mitigation Mail Source Battlecry! pg. 122 Price 14,000 gp The armor is +2 greater resilient chain mail, and the healing is increased to 11d10+20 Hit Points."
+ },
+ {
+  "id": "greater-moritype",
+  "name": "Greater Moritype",
+  "level": 16,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "gadget",
+   "negative",
+   "void"
+  ],
+  "price": {
+   "gp": 2000
+  },
+  "text": "Moritype May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 2 hands Bulk L Activate (manipulate) This plate of smoky glass is a variation on Dr. Krasovna Gerenevich’s krasovnatype that is imprinted with void energies. Creating the plate requires a living thing to die as part of its electrical charging; most creators use insects or lab mice. The moritype creates an image in the same way as a krasovnatype, but also siphons off part of that aura. If used on a living creature, that creature must attempt a Will save. Critical Success The creature is unaffected. Success If the creature has any innate, prepared, or spontaneous spells, they’re unable to Cast a Spell of their highest-ranked slot for 1 round. Cantrips and focus spells are unaffected. Failure As success, except they can’t cast the 2 highest ranks they have available. Critical Failure As success, except they can’t cast any spells other than cantrips and focus spells Moritype Source Rival Academies pg. 92 Price 200 gp The Will DC is 27. Greater Moritype Source Rival Academies pg. 92 Price 2,000 gp The Will DC is 35."
+ },
+ {
+  "id": "greater-necrotic-cap",
+  "name": "Greater Necrotic Cap",
+  "level": 11,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 350
+  },
+  "text": "Necrotic Cap May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L You can use this slimy, rotting mushroom as a spell catalyst when you cast an acid grip spell by tapping it against the target, causing the mushroom to release a cloud of necrotic spores. When you do, acid grip loses the acid trait, gains the fungus trait, and all acid damage the spell deals becomes void damage. On a hit, the target additionally gains the enfeebled and sickened conditions, with the listed values, as the spores consume their flesh. As long as the target is taking persistent void damage, they can’t reduce the value of their sickened condition below 1. Lesser Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 18 gp The value of the enfeebled and sickened conditions is 1. Moderate Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 80 gp The value of the enfeebled and sickened conditions is 2. Greater Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 350 gp The value of the enfeebled and sickened conditions is 3. Major Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 1,200 gp The value of the enfeebled and sickened conditions is 4."
+ },
+ {
+  "id": "greater-quartz-coil-rail-transport",
+  "name": "Greater Quartz-Coil Rail Transport",
+  "level": 14,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "electricity",
+   "gadget",
+   "teleportation"
+  ],
+  "price": {
+   "gp": 650
+  },
+  "text": "Quartz-Coil Rail Transport May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) This odd metal rod is often misinterpreted as a mechanical wand of some kind. Any gadgeteer or mage will be able to elaborate on the fact that magic wands do not need to be throughly covered in a copper wire coil and that the pointed quartz crystal at its tip thrums with electricity, not magic. When activated, electricity courses through you, allowing you to move through the voltage that arcs through the air. You instantly transport yourself and any items you’re wearing and holding from your current space to an unoccupied space up to 20 feet away that you can see. If this would bring another creature with you— even if you’re carrying it in an extradimensional container— the teleportation fails. You and all creatures in a line between your original location and your destination take 2 electricity damage. Lesser Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 20 gp Moderate Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 150 gp The distance you can teleport increases to 40 feet, and the electricty damage increases to 4. Greater Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 650 gp The distance you can teleport increases to 60 feet, and the electricty damage increases to 6. Major Quartz-Coil Rail Transport Source Rival Academies pg. 93 Price 8,000 gp The distance you can teleport increases t"
+ },
+ {
+  "id": "greater-reactive-mail",
+  "name": "Greater Reactive Mail",
+  "level": 11,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 1400
+  },
+  "text": "Reactive Mail Source Battlecry! pg. 122 Usage worn armor Bulk 2 Base Armor Chain Mail Often heavily battle scared from use, this chain mail is commonly issued to frontline soldiers who are tasked with battling through enemies to reach high-value targets across the battlefield. Activate—Quick Spike (manipulate, metal) Frequency once per hour; Trigger A creature within 15 feet uses a manipulate action; Effect An iron spike launches from your armor at the target, dealing 2d8 piercing damage to the target (DC 20 basic Reflex save). If the target critically fails, the triggering action is disrupted. Reactive Mail Source Battlecry! pg. 122 Price 160 gp Greater Reactive Mail Source Battlecry! pg. 122 Price 1,400 gp The armor is +1 resilient chain mail. The damage increases to 5d8 and the DC increases to 28. Major Reactive Mail Source Battlecry! pg. 122 Price 14,000 gp The armor is +2 greater resilient chain mail. The damage increases to 7d8 and the DC increases to 36."
+ },
+ {
+  "id": "greater-rending-gauntlets",
+  "name": "Greater Rending Gauntlets",
+  "level": 19,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "price": {
+   "gp": 32000
+  },
+  "text": "Rending Gauntlets May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Usage worn bracers Bulk L These heavy gloves are reinforced with thick animal hide and sharpened bone. Activate—Shredding Finisher (manipulate) Frequency once per hour; Requirements You hit the same creature with two unarmed Strikes in the same round; Effect The gauntlets’ spikes dig into the creature just before you tear them free, dealing the listed piercing damage. Lesser Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 130 gp The gauntlets deal 2d6 piercing damage. Moderate Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 1,700 gp The gauntlets deal 4d6 piercing damage. Greater Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 32,000 gp The gauntlets deal 6d6 piercing damage."
+ },
+ {
+  "id": "greater-roc-shaft-arrow",
+  "name": "Greater Roc-Shaft Arrow",
+  "level": 15,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 1000
+  },
+  "text": "Roc-Shaft Arrow May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Ammunition arrow Activate Interact Each of these arrows is made from an immense roc’s flight feather, most of whose vanes have been trimmed to expose the arrow’s shaft. When an activated roc-shaft arrow hits a target, the arrow briefly grows a pair of avian wings and attempts to carry off the target. The target must succeed at a Fortitude save or be moved to a space you choose within an area determined by the arrow’s type; if the target critically fails, the arrow can move them an additional 10 feet. If this would move the target into a hazardous space, this effect gains the incapacitation trait. Lesser Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 24 gp The arrow can move the target 10 feet (20 feet on a critical failure), and the Fortitude save DC is 19. Moderate Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 160 gp The arrow can move the target 15 feet (20 feet on a critical failure), and the Fortitude save DC is 27. Greater Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 1,000 gp The arrow can move the target 20 feet (30 feet on a critical failure), and the Fortitude save DC is 34."
+ },
+ {
+  "id": "greater-staff-of-arcane-might",
+  "name": "Greater Staff of Arcane Might",
+  "level": 16,
+  "itemType": "equipment",
+  "traits": [
+   "magical",
+   "staff"
+  ],
+  "price": {
+   "gp": 10000
+  },
+  "text": "Staff of Arcane Might Source GM Core pg. 279 Usage held in 1 hand Bulk 1 This staff of magically hardened wood is topped with a silver sculpture depicting magical runic symbols. A staff of arcane might is a +1 striking staff. Activate—Sunder (death, force, manipulate) Effect You destroy the staff, unleashing a blast of arcane power in a 30- foot cone, dealing 2d6 force damage per charge remaining in the staff with a DC 30 basic Reflex save. Activate Cast a Spell; Effect You expend a number of charges from the staff to cast a spell from its list. Craft Requirements Supply one casting of all listed ranks of all listed spells. Staff of Arcane Might Source GM Core pg. 279 Price 1,900 gp Cantrip detect magic 1st phantasmal minion 2nd everlight 3rd force barrage, paralyze 4th dispelling globe, mystic armor, translocate 5th fireball, force barrage, lightning bolt Greater Staff of Arcane Might Source GM Core pg. 279 Price 10,000 gp A greater staff of arcane might is a +2 greater striking staff. Sunder deals 2d8 force damage per charge and is DC 35. 6th disintegrate, mystic armor, wall of force 7th howling blizzard, fireball, lightning bolt Major Staff of Arcane Might Source GM Core pg. 279 Price 90,000 gp A major staff of arcane might is a +3 greater striking staff. Sunder deals 2d10 force damage per charge and is DC 40. 8th mystic armor, wall of force 9th dispel magic, falling stars, howling blizzard"
+ },
+ {
+  "id": "greater-swapping-stone",
+  "name": "Greater Swapping Stone",
+  "level": 17,
+  "itemType": "consumable",
+  "traits": [
+   "conjuration",
+   "consumable",
+   "magical",
+   "teleportation"
+  ],
+  "price": {
+   "gp": 3000
+  },
+  "text": "Bonmuan Swapping Stone May contain spoilers from Fists of the Ruby Phoenix Source Pathfinder #166: Despair on Danger Island pg. 75 Usage held in 1 hand Activate Interact This small, opalescent stone glows with a light that constantly shifts between colors. When you activate the stone, you throw it into a space within 100 feet. The stone then casts dimension door on you and transports you to itself. This destroys the stone. You can instead hurl the stone at a creature in an attempt to bring that creature closer to you. Make a ranged Strike against a creature using your highest proficiency with a ranged weapon. The swapping stone has a range increment of 15 feet. On a hit, the stone shatters against the creature, casting dimension door on the creature and causing it to instantly teleport to a space adjacent to you. An unwilling creature can resist this teleportation with a successful DC 28 Will save. Lesser Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 300 gp Moderate Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 600 gp The Will save DC is 31. Greater Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 3,000 gp The Will save DC is 37. Major Swapping Stone Source Pathfinder #166: Despair on Danger Island pg. 75 Price 9,000 gp The Will save DC is 43."
+ },
+ {
+  "id": "greater-toothy-knife",
+  "name": "Greater Toothy Knife",
+  "level": 15,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "magical",
+   "whetstone"
+  ],
+  "price": {
+   "gp": 1100
+  },
+  "text": "Toothy Knife Source Battlecry! pg. 137 Usage held in 1 hand Bulk L Activate (manipulate) This jagged bit of metal is pitted and worn but wickedly sharp. The DC of the flat check to end persistent bleed damage dealt by a weapon under the effects of a toothy knife is 17 (or 12 with appropriate assistance). This bleeding still typically ends on its own after 1 minute, as normal. Toothy Knife Source Battlecry! pg. 137 Price 25 gp Greater Toothy Knife Source Battlecry! pg. 137 Price 1,100 gp The DC of the flat check to end persistent bleed damage dealt by the affected weapon is 19 (or 14 with appropriate assistance)."
+ },
+ {
+  "id": "greater-trident-of-the-azarketis",
+  "name": "Greater Trident of the Azarketis",
+  "level": 13,
+  "itemType": "equipment",
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "price": {
+   "gp": 2700
+  },
+  "text": "Trident of the Azarketis Source High Seas pg. 108 Usage held in 1 hand Bulk 1 Base Weapon Trident This +2 striking trident is made of golden metal, its handle carved with reliefs of waves and seashells. These tridents are often wielded by high-ranking azarketi soldiers in the ranks of alghollthu armies. Activate—Force of the Sea (manipulate) Frequency once per day; Effect You cast a 5th-rank hydraulic torrent. The spell DC is 29. Trident of the Azarketis Source High Seas pg. 108 Price 1,300 gp Greater Trident of the Azarketis Source High Seas pg. 108 Price 2,700 gp This is a +2 greater striking trident. When you activate the trident to cast hydraulic torrent, the spell is 6th-rank (DC 31)."
+ },
+ {
+  "id": "greater-vanishing-shocker",
+  "name": "Greater Vanishing Shocker",
+  "level": 15,
+  "itemType": "consumable",
+  "traits": [
+   "consumable",
+   "electricity",
+   "gadget",
+   "illusion",
+   "magical"
+  ],
+  "price": {
+   "gp": 1300
+  },
+  "text": "Vanishing Shocker May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) The vanishing shocker is a cube with extruding spikes at each corner. This inscrutable device channels occult energy through the electricity it produces, creating the result of invisible lighting. When activated, the cube floats above your head, creating a field of invisible electricity in a 10-foot emanation that lasts for 1 round. You and creatures within the emanation are concealed. Creatures that enter or start their turn within the area must attempt a DC 22 Reflex save. Success The target is unaffected. Failure The target is off-guard for 1 round. Critical Failure The target is clumsy 1 and off-guard for 1 round. Lesser Vanishing Shocker Source Rival Academies pg. 93 Price 70 gp Moderate Vanishing Shocker Source Rival Academies pg. 93 Price 300 gp The Reflex DC is 27. Greater Vanishing Shocker Source Rival Academies pg. 93 Price 1,300 gp The Reflex DC is 33. Major Vanishing Shocker Source Rival Academies pg. 93 Price 8,000 gp The Reflex DC is 38."
+ },
+ {
+  "id": "greater-wood-rotted-root",
+  "name": "Greater Wood-Rotted Root",
+  "level": 10,
+  "itemType": "consumable",
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "price": {
+   "gp": 190
+  },
+  "text": "Wood-Rotted Root May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This palm-sized chunk of wood it rotting, and riddled with mold and fungi. You can crush this wood to use it as a spell catalyst when you cast a oaken resilience. When you do, the bark that covers your skin is rotting, and emits a small cloud of spores whenever you're hurt. For the duration, whenever you take physical damage, your rotting bark skin emits a cloud of spores in the listed emanation. Creatures in the area must attempt a Fortitude save at the listed DC to avoid taking the listed poison damage. Lesser Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 11 gp The DC is 15, the area is a 5-foot emanation, and the poison damage is 1. Moderate Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 55 gp The DC is 21, the area is a 5-foot emanation, and the poison damage is 1d4. Greater Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 190 gp The DC is 24, the area is a 10-foot emanation, and the poison damage is 1d8. Major Wood-Rotted Root Source Pathfinder #202: Severed at the Root pg. 81 Price 900 gp The DC is 29, the area is a 15-foot emanation, and the poison damage is 2d8."
+ }
+]
