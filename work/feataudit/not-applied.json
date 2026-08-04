@@ -49,6 +49,7 @@
   "giants-stature: a MISS whose fix says nothing",
   "gnoll-weapon-practicality: already has critSpec — not overwriting",
   "golden-body: mode \"golden-body\" already exists",
+  "golden-body: already has unarmedTraits — not overwriting",
   "grand-medics-mask: mode \"grand-medics-mask\" already exists",
   "grand-medics-mask: a MISS whose fix says nothing",
   "grandmaster-qi-spells: already has effectChoices — not overwriting",
@@ -92,6 +93,60 @@
   "master-red-mantis-magic: already has spellcastingGrant — not overwriting",
   "master-snowcasting: already has spellcastingGrant — not overwriting",
   "master-summoning-spellcasting: already has grantsFeats — not overwriting",
+  "metal-carapace: mode \"metal-carapace\" already exists",
+  "metal-carapace: a MISS whose fix says nothing",
+  "mighty-dragon-shape: usesUpgrade -> shape-of-the-dragon, which has no limitedUses to retune",
+  "mighty-dragonet: already has sizeOverride — not overwriting",
+  "miracle-worker: already has limitedUses — not overwriting",
+  "miraculous-possibility: The app already lets any prepared caster hold a slot open and drop ANY spell of rank <= the slot into it at any time (ManageSpellsModal's upTo[rank] pool; 'changes apply to this play session'), so the wildcard slot is already expressible.",
+  "mischievous-tail: already has unarmedTraits — not overwriting",
+  "moderate-enhance-venom: already has usesUpgrade — not overwriting",
+  "morning-side-dishes: already has advancedAlchemy — not overwriting",
+  "munitions-machinist: already has resourceMaxSet — not overwriting",
+  "murderous-thorns: already has unarmedTraits — not overwriting",
+  "mysterious-breadth: already has spellSlotBonus — not overwriting",
+  "myth-of-quick-thinking: A claimed domain changes nothing on this character's sheet — it is the deity's domain list that WORSHIPPERS draw on once you Assume Godhood; the sibling claim-cardinal-domains records nothing either.",
+  "no-hands-no-problems: already has effectChoices — not overwriting",
+  "nudge-the-scales: already has choice — not overwriting",
+  "order-cross-training: already has effectChoices — not overwriting",
+  "order-training: already has effectChoices — not overwriting",
+  "pact-of-the-final-breath: already has limitedUses — not overwriting",
+  "pain-is-temporary: mode \"pain-is-temporary\" already exists",
+  "pain-is-temporary: a MISS whose fix says nothing",
+  "poison-weapon: The feat is a table-resolved action and its free daily poisons are inventory ITEMS — the same batch ruled pilgrims-token NEEDS_NOTHING for exactly that ('no grant field for items'), and the proposed allowance has no surface outside the alchemist-gated AlchemyPanel.",
+  "polearm-tricks: already has critSpec — not overwriting",
+  "powerful-lash: already has unarmedTraits — not overwriting",
+  "predictive-purchase: already has grantsFeats — not overwriting",
+  "primal-breadth: already has spellSlotBonus — not overwriting",
+  "prolific-prophet-spellcasting: already has spellSlotBonus — not overwriting",
+  "protective-claws: already has unarmedTraits — not overwriting",
+  "qi-spells: already has effectChoices — not overwriting",
+  "quadruped: already has landSpeedMin — not overwriting",
+  "raging-intimidation: already has grantsFeats — not overwriting",
+  "reactive-striker: already has grantsFeats — not overwriting",
+  "reflective-defense: already has limitedUses — not overwriting",
+  "reminder-of-the-greater-fear: already has limitedUses — not overwriting",
+  "renewing-quills: already has limitedUses — not overwriting",
+  "replenishing-consumption: already has limitedUses — not overwriting",
+  "restoring-blood: already has limitedUses — not overwriting",
+  "rites-of-transfiguration: Over-reported. The witch is a prepared caster with no spellbook in this engine, so SpellsTab's prepare picker offers the WHOLE tradition list (SpellsTab.tsx optionsFor fallback) — cursed-metamorphosis is arcane/occult/primal, so an arcane, occult or primal witch can already prepare it, and the app lets prepared slots be re-set at will, which is the 10-minute swap. That leaves only a divine-patron witch's off-list pick, which the Overrides → Add spell rule-break already covers. The same judge ruled the identical preparation-swap shape NEEDS_NOTHING for runelord-dedication and reprepare-spell.",
+  "rope-runner: mode \"cat-rope-runner\" already exists",
+  "rope-runner: a MISS whose fix says nothing",
+  "scarred-hide: mode \"scarred-hide\" already exists",
+  "scarred-hide: a MISS whose fix says nothing",
+  "scroll-esoterica: already has choice — not overwriting",
+  "sealed-poppet: already has removesWeaknesses — not overwriting",
+  "sentinels-orbit: mode \"sentinels-orbit\" already exists",
+  "sentinels-orbit: a MISS whose fix says nothing",
+  "shooters-camouflage: already has choice — not overwriting",
+  "shore-gift: mode \"shore-gift\" already exists",
+  "shore-gift: a MISS whose fix says nothing",
+  "simple-crystal-magic: already has innateSpells — not overwriting",
+  "smoke-sight: already has senses — not overwriting",
+  "soulsight: already has senses — not overwriting",
+  "soulsight-bard: already has senses — not overwriting",
+  "soulsight-sorcerer: already has senses — not overwriting",
+  "spark-of-immortality: already has dyingThresholdBonus — not overwriting",
   "bond-companion: The designated companion is ANOTHER player character and Fortify Focus spends your action to refill THEIR Focus Point - nothing on your own sheet changes.",
   "bonded-focus: False premise: refocusRestore ('all') is a real Feat field (types.ts:733, applied build.ts:2588, rendered SpellsTab ~992) and core.json already carries refocusRestore:\"all\" on this record.",
   "brain-drain: already has limitedUses — not overwriting",
@@ -495,6 +550,71 @@
    "reason": "'During daily preparations, designate one spell slot to become TWO summoning slots of the same rank' is a real net gain of a spell slot, chosen daily and restricted to summoning/incarnate spells. No lane: spellSlotBonus can only ADD slots (perRank/byRank) with no rank choice, no slot consumed, and no restriction on what can be prepared in them; dailyChoices.ts records a morning pick but cannot alter the slot table. Needs a restricted-slot / slot-conversion lane."
   },
   {
+   "id": "miraculous-flight",
+   "name": "Miraculous Flight",
+   "reason": "Your signature vehicle gains a fly Speed. Vehicles are a real CompanionKind in this app and COMPANION_MODS already carries speeds:{fly:'land'} grants, so this is the companion-mod registry lane, not engine work."
+  },
+  {
+   "id": "modular-dynamo",
+   "name": "Modular Dynamo",
+   "reason": "Your dynamo unarmed attack gains the modular trait plus a chosen alternate configuration with its own damage die, damage type and traits (power driver, percussive striker, rotating sickle, entangling barbs, extendable baton), repeatable. unarmedTraits can only add traits to an existing strike, and grantedStrikes can't be presented as switchable configurations of one attack (the base sterling-dynamo-dedication strikes are even named 'Label'). No lane expresses a switchable strike configuration."
+  },
+  {
+   "id": "monstrous-inclinations",
+   "name": "Monstrous Inclinations",
+   "reason": "Adds Monstrosity Form to your apparition spell repertoire — a genuinely new castable spell. grantedSpells (the repertoire-grant field) exists only on subclass options in types.ts, never on feats, and spellFilter can only grant a pick as innate or focus. No feat-level repertoire-grant lane exists."
+  },
+  {
+   "id": "mysterious-repertoire",
+   "name": "Mysterious Repertoire",
+   "reason": "You may hold one spell from another tradition in your divine repertoire (swappable, cast as divine). The repertoire picker is restricted to the divine list, and no lane lets a feat widen it: grantedSpells exists only on subclass options in types.ts, and SpellChoiceFilter.grantAs allows only 'innate' or 'focus', which would grant a use-limited spell rather than a repertoire slot."
+  },
+  {
+   "id": "pack-rat",
+   "name": "Pack Rat",
+   "reason": "The app models container capacity (derive.ts computes each container's load vs item.capacity.bulk and blocks over-capacity drops), so a +50% capacity on mundane containers and vehicles is a real sheet effect. No listed field or registry expresses a container-capacity multiplier — bulkLimitBonus is the character's own Bulk limit, which this feat explicitly does not change."
+  },
+  {
+   "id": "pact-of-the-rune-dragon",
+   "name": "Pact of the Rune Dragon",
+   "reason": "You immediately learn 10 languages of your choice — a real, player-picked sheet element. No feat in core.json carries any language field and there is no language lane on feats (OpenChoiceFrom's 'language' type is not reachable from a feat record), so nothing can deliver it."
+  },
+  {
+   "id": "perfect-mutagen",
+   "name": "Perfect Mutagen",
+   "reason": "Mutagens are real consumable MODES whose drawbacks are negative modifiers on the sheet (e.g. item-bendy-arm-mutagen-lesser's -1 Athletics). This feat removes those drawbacks for mutagens you crafted, and no field or registry can suppress part of a mode."
+  },
+  {
+   "id": "plentiful-snares",
+   "name": "Plentiful Snares",
+   "reason": "Doubles the free daily prepared snares from Snarecrafter Dedication. That count IS modelled - snareAllowance() in src/rules/snareFormulas.ts returns prepared 4/6/8 by Crafting rank - but it takes only the Crafting rank, so nothing doubles it and the feat is inert. No record field expresses 'double a computed snare allowance'."
+  },
+  {
+   "id": "quick-alchemy",
+   "name": "Quick Alchemy",
+   "reason": "The archetype grants the Quick Alchemy action, which the app DOES model — but AlchemyPanel is gated on classId==='alchemist' and the versatile-vials resource only exists in CLASS_RESOURCES['alchemist'], so an archetype taker gets nothing. Needs a lane to unlock the alchemy panel/vial resource from a feat."
+  },
+  {
+   "id": "radiant-armament",
+   "name": "Radiant Armament",
+   "reason": "Adds Astral and Brilliant (plus Holy or Unholy by sanctification) to the list you pick from for Blessed Armament. Blessed Armament IS modelled (classFeature blessed-armament, choice flag blessedRune with a fixed 5-option array), but no field lets a feat ADD options to another record's choice.options, so the two-to-four extra runes are unreachable."
+  },
+  {
+   "id": "raging-thrower",
+   "name": "Raging Thrower",
+   "reason": "Rage's bonus damage must apply to THROWN weapon Strikes. derive.ts rageStrikeRider explicitly returns null for ranged Strikes (`if (opts.ranged) return null; // Rage never applies to ranged Strikes`), so a raging barbarian with this feat sees no bonus on thrown Strikes. The value is instinct- and level-scaled, so no flat field can express it — the rider needs a thrown-weapon exception gated on this feat."
+  },
+  {
+   "id": "razmiran-priest-dedication",
+   "name": "Razmiran Priest Dedication",
+   "reason": "Two real player-side grants nothing delivers: (a) you gain a Razmiri Mask item (the item exists in core.json — src/data/index.ts keeps 'razmiri-mask' — but no field lets a feat put an item in inventory), and (b) taking Cleric Dedication through this archetype re-traditions all its spells to occult with Charisma as key attribute. spellcastingGrant only creates a NEW entry; it cannot rewrite the tradition/key ability of the cleric archetype's grant, and the mask's DC = higher of class DC or spell DC has no lane either."
+  },
+  {
+   "id": "read-the-land",
+   "name": "Read the Land",
+   "reason": "'You learn the Commune ritual if you didn't know it already' — a real grant of a known ritual (commune exists in core.json spells with ritual:true), plus a reduced casting time. There is no known-rituals lane at all: src/rules/build.ts line 2998 explicitly filters ritual spells OUT of addedSpells, and innateSpells/focusSpells are the wrong shape for a ritual."
+  },
+  {
    "id": "beast-of-burden",
    "name": "Beast of Burden",
    "reason": "'Increase your maximum and encumbered Bulk limits by 4' is a permanent sheet change. derive.ts computes bulk as encumberedAt = 5+strMod and max = 10+strMod with no per-feat adjustment lane (Hefty Hauler is undelivered for the same reason), and no legal field expresses a Bulk-limit bonus."
@@ -528,6 +648,61 @@
    "id": "bloodline-wellspring",
    "name": "Bloodline Wellspring",
    "reason": "'You recover 3 Focus Points when you Refocus instead of 1' — the same undelivered lane: the Refocus control hard-restores 1 point and there is no field for a Refocus-recovery amount."
+  },
+  {
+   "id": "restorative-channel",
+   "name": "Restorative Channel",
+   "reason": "It widens what your divine-font slots may hold: a font Heal can be spent to cast Cleanse Affliction, Clear Mind, Sound Body, or Sure Footing at the sacrificed spell's rank. build.ts models the font with a fixed `allowed` list (used for Battle Creed) that no record field can extend, so the player cannot record or cast these from the sheet."
+  },
+  {
+   "id": "rod-of-rule",
+   "name": "Rod of Rule",
+   "reason": "Grants the critical specialization effects of the character's arcane bonded weapon (the second half, the -2 penalty to saves, is target-side). critSpec must be paired with critSpecWeapons, but the bonded weapon is chosen during play and cannot be enumerated in the record, so no existing field can express \"crit spec with whatever weapon is your arcane bond\"."
+  },
+  {
+   "id": "sanguimancer-dedication",
+   "name": "Sanguimancer Dedication",
+   "reason": "Grants a real player resource - sanguimancy Hit Points (temp HP equal to your level after an 8-hour rest, cap 2x level, spendable to power other feats). No field expresses a named, level-scaling, daily-refreshed temp-HP pool; limitedUses tracks fixed per-day uses only."
+  },
+  {
+   "id": "scroll-adept",
+   "name": "Scroll Adept",
+   "reason": "Grants 2 (3 at master, 4 at legendary spell DC) player-chosen temporary scrolls from your spellbook at every daily preparation - exactly the 'let them pick what the rules give them' case. There is a daily-item lane for alchemy (advancedAlchemy) but none for temporary scrolls, and no field can express a per-day count of player-chosen scrolls with rank limits."
+  },
+  {
+   "id": "second-ikon",
+   "name": "Second Ikon",
+   "reason": "Grants an additional ikon - a pick the player must make. Ikons are an extra-choice group defined per class (ChoiceGroup.pickByLevel in src/rules/types.ts); no feat-level field increases an extra-choice pick count, and effectChoices cannot enumerate 'any ikon' (there is no featFilter)."
+  },
+  {
+   "id": "shadow-spells",
+   "name": "Shadow Spells",
+   "reason": "Adds seven named spells (Shadow Blast, Shadow Siphon, Umbral Journey, Replicate, Shadow Army, Shadow Projectile, Shadow Raid) to the character's own spell list so they can be learned/prepared off-tradition. Spell pickers filter strictly by tradition and there is no spell-list-addition lane (no field, no registry) to widen that list."
+  },
+  {
+   "id": "share-eidolon-magic",
+   "name": "Share Eidolon Magic",
+   "reason": "Lets the summoner cast the eidolon's innate spells from Magical Understudy/Adept/Master (shared daily uses). No eidolon innate-spellcasting lane exists — Magical Understudy carries no field either — so there is nothing to project onto the summoner's spell list, and innateSpells cannot express it without over-granting spells the character's actual evolution feats may not include."
+  },
+  {
+   "id": "shield-warfare",
+   "name": "Shield Warfare",
+   "reason": "Increases the weapon damage die of any shield bash, shield boss, or shield spikes you wield by one step — a real, permanent damage change. Shields are modelled only as AC/Hardness/HP (deriveShield); no shield attack exists in the strikes lane and unarmedTraits.stepDie only reaches unarmed Strikes, so no field can step a shield attack's die."
+  },
+  {
+   "id": "signature-spell-expansion",
+   "name": "Signature Spell Expansion",
+   "reason": "Grants two additional signature spells of base rank 3rd or lower — a genuine player PICK. The builder stores signatures as Record<rank, spellId> (BuildState.signatures, src/rules/build.ts ~222 and Builder.tsx ~661), one per rank, so a sorcerer cannot designate a second signature at any rank ≤3 and this feat does nothing. No existing field can express extra signature slots."
+  },
+  {
+   "id": "signature-spell-expansion-psychic",
+   "name": "Signature Spell Expansion (Psychic)",
+   "reason": "Same as the sorcerer version: two additional signature spells of rank 3rd or lower. BuildState.signatures is one spell per rank, so the psychic gets nothing. No existing field expresses extra signature slots."
+  },
+  {
+   "id": "spell-combination",
+   "name": "Spell Combination",
+   "reason": "The 20th-level wizard capstone converts one prepared slot of every rank except 1st and 2nd into a combination slot that holds TWO spells at once. That is a real change to spell preparation the player cannot record: spellSlotBonus adds slots rather than re-typing them, and no field marks a slot as a combination slot or lets two spells be prepared in one."
   },
   {
    "id": "bolstered-recovery",

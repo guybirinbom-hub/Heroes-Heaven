@@ -1,0 +1,179 @@
+{
+  "rulings": [
+    {
+      "id": "powerful-lash",
+      "upheld": true,
+      "why": "Verified: thlipit-contestant-dedication carries grantedStrikes [{name:'Lash',die:'d4',group:'flail'}], feat grantedStrikes feed Character.naturalAttacks (build.ts collectGrantedNaturals ~2772) and applyUnarmedRiders (derive.ts 1723/1769) matches by name substring, so match:['lash'] + add:['sweep'] + stepDie lands on the real strike.",
+      "correction": {}
+    },
+    {
+      "id": "predictive-purchase",
+      "upheld": true,
+      "why": "The text is a flat grant of two feats that both ship in core.json (prescient-planner, prescient-consumable), and grantsFeats is the consumed lane with the same shape already used by 14 core.json feats (e.g. beneath-notice → quick-disguise/slippery-secrets).",
+      "correction": {}
+    },
+    {
+      "id": "primal-breadth",
+      "upheld": true,
+      "why": "Exactly the shape of the three shipped siblings (occult-breadth → bard-dedication-casting, divine-breadth → cleric-dedication-casting, patrons-breadth → witch-dedication-casting); build.ts 2822 ids archetype pools `${dedicationId}-casting`, and CASTER_ARCHETYPES has druid-dedication, so entryId 'druid-dedication-casting' resolves.",
+      "correction": {}
+    },
+    {
+      "id": "prolific-prophet-spellcasting",
+      "upheld": true,
+      "why": "prophet-of-kalistrade-dedication is in CASTER_ARCHETYPES with basic/expert/master-prophet-spellcasting all present in core.json, so 'prophet-of-kalistrade-dedication-casting' is a live entry id and the slot bonus applies (build.ts 2725-2747); the repertoire clause rides along because the pool's cap is its slot count.",
+      "correction": {}
+    },
+    {
+      "id": "protective-claws",
+      "upheld": true,
+      "why": "vicious-goloma carries grantedStrikes [{name:'Claw',die:'d6',group:'brawling'}] and the parry trait is added to an attack that already exists — the exact case unarmedTraits was declared for; nothing in core.json or the registries carries it today.",
+      "correction": {}
+    },
+    {
+      "id": "qi-spells",
+      "upheld": true,
+      "why": "master-qi-spells already ships effectChoices [{id:'qi-spell', spellFilter:{rank:8,traits:['monk','focus'],grantAs:'focus'}}]; rank-1 monk+focus spells in core.json are exactly inner-upheaval and qi-rush, and spellChoice.ts:41 turns grantAs:'focus' into a focus spell (which carries its Focus Point). This record was skipped.",
+      "correction": {}
+    },
+    {
+      "id": "quadruped",
+      "upheld": true,
+      "why": "The gap is real (poppet ships speeds.land 25) but the judge named the wrong lane: 'Your Speed is 30 feet' SETS the speed, which is landSpeedMin (derive.ts 1858 landFloor, explain.ts 823 names the source), not the additive landSpeedBonus documented for 'increases by N' (Fleet/Hyper Boosters).",
+      "correction": { "fix": { "landSpeedMin": 30 } }
+    },
+    {
+      "id": "quick-alchemy",
+      "upheld": true,
+      "why": "Confirmed inert for an archetype taker: MainTab.tsx:775 renders AlchemyPanel only when classId==='alchemist', and CLASS_RESOURCES.alchemist['versatile-vials'] has no `feat:` parity gate (barbarian rage and swashbuckler panache do). No record field can unlock a panel, so needsEngineWork is the honest flag — the parity entry belongs on alchemist-dedication.",
+      "correction": {}
+    },
+    {
+      "id": "quietus-strikes",
+      "upheld": true,
+      "why": "Player-side damage on the duskwalker's own Strikes, and StrikeDamageRider (types.ts 1783) really has no creature-type predicate, so an unconditional rider would add +1 void against everything; the star registry is the only truthful home and carries no entry for this id.",
+      "correction": {}
+    },
+    {
+      "id": "radiant-armament",
+      "upheld": true,
+      "why": "Verified: core.json classFeature blessed-armament carries choice{flag:'blessedRune', options:[fearsome, ghost-touch, returning, shifting, vitalizing]} — a closed array, and no field lets one record append to another record's choice.options, so the Astral/Brilliant/Holy/Unholy additions are unreachable.",
+      "correction": {}
+    },
+    {
+      "id": "raging-intimidation",
+      "upheld": true,
+      "why": "grantsFeats is the right lane and intimidating-glare is already granted unconditionally elsewhere (FEAT_FEAT_GRANTS 'battleblooded'); withholding scare-to-death (legendary Intimidation) avoids the over-grant the prerequisite clause would otherwise create.",
+      "correction": {}
+    },
+    {
+      "id": "raging-thrower",
+      "upheld": true,
+      "why": "Confirmed at derive.ts:1249 — rageStrikeRider returns null whenever opts.ranged, and ranged is `w.range != null` (derive.ts:1380), which is true for every thrown weapon in core.json (javelin 30, trident 20, dagger 10). The value is instinct- and level-scaled, so no data field can express the exception.",
+      "correction": {}
+    },
+    {
+      "id": "razmiran-priest-dedication",
+      "upheld": true,
+      "why": "Both halves check out: there is no item-grant field anywhere in types.ts (the mask ships as an item but nothing puts it in inventory), and spellcastingGrant only creates/raises an innate profile — it cannot rewrite the cleric archetype entry's tradition (divine→occult) or key attribute (Wis→Cha), so the sheet shows the wrong pool.",
+      "correction": {}
+    },
+    {
+      "id": "reactive-striker",
+      "upheld": true,
+      "why": "reactive-strike ships as a FEAT record in core.json (level 6), and avenger-of-wrath already delivers the identical text through grantsFeats:['reactive-strike'] — this record simply carries no field.",
+      "correction": {}
+    },
+    {
+      "id": "read-the-land",
+      "upheld": true,
+      "why": "A permanent knowledge grant, not a downtime action, and it is a family not a one-off: 19 core.json feats say you learn a ritual. The judge's reason is slightly off — SpellsTab does render a Rituals section — but it is fed only by build.overrides.addedSpells (build.ts:2998 filters rituals out of the derived list), so no content field can seed it.",
+      "correction": {}
+    },
+    {
+      "id": "refined-motion-in-darkness",
+      "upheld": true,
+      "why": "The speed star is an established pattern for per-action movement, not an invention: FEAT_SITUATIONAL already carries wild-stride ('+5 ft only for the two Strides of the activity') and rapid-response ('only during the Stride you make with this reaction'); 119 entries use kind:'speed'.",
+      "correction": {}
+    },
+    {
+      "id": "reflective-defense",
+      "upheld": true,
+      "why": "The printed 'Frequency once per 10 minutes' is the player's own resource, and limitedUses is applied to frequency ALONE in 543 of the 564 core.json feats that carry it (including target-side ones like enduring-debilitation); {max:1,per:'minute',every:10} is the shape the LimitedUses doc names for '10 minutes' and isSubDaily refills it on encounter reset.",
+      "correction": {}
+    },
+    {
+      "id": "reincarnated-companion",
+      "upheld": true,
+      "why": "COMPANION_MODS maturityFloor is a live lane and behold-a-pale-horse is the same sentence with the same entry; the prerequisite already requires a nimble/savage companion so 'specialized' raises exactly one rung, and the familiar branch is correctly left as note text (no mod field bumps familiar abilities).",
+      "correction": {}
+    },
+    {
+      "id": "reminder-of-the-greater-fear",
+      "upheld": true,
+      "why": "Same standard as the 543 frequency-only feats already shipping limitedUses — the effect being target-side does not move the use budget off the player's sheet, and the record carries neither `frequency` nor `limitedUses` today.",
+      "correction": {}
+    },
+    {
+      "id": "renewing-quills",
+      "upheld": true,
+      "why": "Gap real, judge's fix inert: usesUpgrade is only ever resolved against records the sheet lists as feats/class features (featUses.ts effectiveUses reads db.feats; FeatsTab.tsx:307 is the only call site), and barbed-quills lives in core.json ACTIONS granted by a heritage, so it never gets a row or a pool to retune. With no base pool to duplicate, the feat's own limit is the truthful pip.",
+      "correction": { "fix": { "limitedUses": { "max": 1, "per": "minute", "every": 10 } } }
+    },
+    {
+      "id": "replenishing-consumption",
+      "upheld": true,
+      "why": "'Once every 10 minutes' is this feat's own limit on its own healing benefit (not a retune of Consume Flesh's), and the record carries no limitedUses; the shape matches the documented 10-minute encoding.",
+      "correction": {}
+    },
+    {
+      "id": "resilient-shell",
+      "upheld": true,
+      "why": "COMPANION_MODS eidolon entries are consumed for IWR (companions.ts:787 evoIwr.push(...mod.iwr)) and the field is a display string array, so 'resistance physical (equal to its Constitution modifier)' renders correctly; no entry exists for this id.",
+      "correction": {}
+    },
+    {
+      "id": "restorative-channel",
+      "upheld": true,
+      "why": "Verified: font.allowed is set only for Battle Creed (build.ts:1869) and the font renders fixed cards named after font.type (SpellsTab.tsx ~862), so a font slot can hold nothing but Heal — no record field widens it.",
+      "correction": {}
+    },
+    {
+      "id": "restoring-blood",
+      "upheld": true,
+      "why": "The 'at most once per 10 minutes' cap is on this feat's own product (the restorative), independent of Envenom's frequency, and the record carries no limitedUses — the same frequency-only treatment 543 shipped feats get.",
+      "correction": {}
+    },
+    {
+      "id": "rites-of-transfiguration",
+      "upheld": false,
+      "why": "Over-reported. The witch is a prepared caster with no spellbook in this engine, so SpellsTab's prepare picker offers the WHOLE tradition list (SpellsTab.tsx optionsFor fallback) — cursed-metamorphosis is arcane/occult/primal, so an arcane, occult or primal witch can already prepare it, and the app lets prepared slots be re-set at will, which is the 10-minute swap. That leaves only a divine-patron witch's off-list pick, which the Overrides → Add spell rule-break already covers. The same judge ruled the identical preparation-swap shape NEEDS_NOTHING for runelord-dedication and reprepare-spell.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "rod-of-rule",
+      "upheld": true,
+      "why": "Correctly refused critSpec without critSpecWeapons (it would light up every weapon); weaponMatches (derive.ts:1295) can only filter by group/trait/base/melee, and nothing in the app tracks which item is the arcane bond, so there is genuinely no field for 'crit spec with whatever weapon is bonded'.",
+      "correction": {}
+    },
+    {
+      "id": "rope-runner",
+      "upheld": true,
+      "why": "A conditional climb Speed really is the mode lane (ModeDef.speeds, feats-gated, consumed by deriveSpeeds) — speedsIf only gates on skill rank/heritage and a bare speeds.climb would over-grant. But ModeDef.modifiers is required and the catalog keys every entry 'cat-*' with a category, so the judge's entry would not compile as written; corrected below.",
+      "correction": {
+        "fix": {
+          "mode": {
+            "id": "cat-rope-runner",
+            "name": "On Ropes (Rope Runner)",
+            "category": "Archetype",
+            "feats": ["rope-runner"],
+            "modifiers": [],
+            "speeds": { "climb": 15 },
+            "duration": "while climbing or balancing on a rope or similar object",
+            "note": "Rope Runner: a climb Speed of 15 feet, but only when climbing ropes and similar objects. You aren't off-guard while Climbing or Balancing on a rope or similar object, and a success on an Athletics check to Climb or an Acrobatics check to Balance is a critical success instead."
+          }
+        }
+      }
+    }
+  ]
+}

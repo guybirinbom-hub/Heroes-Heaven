@@ -2720,5 +2720,87 @@
     "duration": "until the end of your next turn",
     "modifiers": [],
     "note": "Infused with Belkzen's Might: expend one use of your storied skin's Living History. Your weapon and unarmed Strikes deal additional spirit damage equal to 1 plus half the number of Tattooed Historian feats you have (so 1 with one or two such feats, 2 with three or four, and so on)."
+  },
+  "metal-carapace": {
+    "id": "metal-carapace",
+    "name": "Metal Carapace",
+    "feats": [
+      "metal-carapace"
+    ],
+    "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
+    "modifiers": [],
+    "note": "Medium metal armor that uses your highest armor proficiency: AC Bonus +3, Dex Cap +2, Check Penalty -2, Speed Penalty -5 ft, Strength +2, Bulk 2, group plate, armor trait noisy. Your real armor's bonuses, runes and magical abilities are suppressed (any that could apply are replicated onto the carapace). You may also form a rusty steel shield in a free hand and Shield Block with it even without that feat, and that hand still counts as free for impulses; the shield crumbles to rust if broken or if it leaves your grasp. At every 3rd level the shield's Hardness +1, HP +4, BT +2. If you take damage from a critical hit the metal shatters and the impulse ends. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
+  },
+  "pain-is-temporary": {
+    "id": "pain-is-temporary",
+    "name": "Pain is Temporary",
+    "feats": [
+      "pain-is-temporary"
+    ],
+    "duration": "until the end of your next turn",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all",
+        "value": 10
+      }
+    ],
+    "note": "Two actions, once per 10 minutes: you gain resistance 10 to all damage until the end of your next turn."
+  },
+  "cat-rope-runner": {
+    "id": "cat-rope-runner",
+    "name": "On Ropes (Rope Runner)",
+    "category": "Archetype",
+    "feats": [
+      "rope-runner"
+    ],
+    "modifiers": [],
+    "speeds": {
+      "climb": 15
+    },
+    "duration": "while climbing or balancing on a rope or similar object",
+    "note": "Rope Runner: a climb Speed of 15 feet, but only when climbing ropes and similar objects. You aren't off-guard while Climbing or Balancing on a rope or similar object, and a success on an Athletics check to Climb or an Acrobatics check to Balance is a critical success instead."
+  },
+  "scarred-hide": {
+    "id": "scarred-hide",
+    "name": "Scarred Hide (hybrid or animal shape)",
+    "feats": [
+      "scarred-hide"
+    ],
+    "duration": "while in your hybrid or animal shape",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "slashing (except silver)",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Werecreature: while in your hybrid or animal shape you have resistance to non-silver slashing damage equal to half your level."
+  },
+  "sentinels-orbit": {
+    "id": "sentinels-orbit",
+    "name": "Sentinel's Orbit (sentinel form)",
+    "feats": [
+      "sentinels-orbit"
+    ],
+    "duration": "while in your sentinel form",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(20,@actor.speed.land)"
+    },
+    "note": "Starlit Sentinel: while in your sentinel form you have a fly Speed equal to your land Speed, or 20 feet if that is higher."
+  },
+  "shore-gift": {
+    "id": "shore-gift",
+    "name": "Shore Gift",
+    "feats": [
+      "shore-gift"
+    ],
+    "duration": "indefinite (use the action again to revert)",
+    "modifiers": [],
+    "speeds": {
+      "land": "max(0,25-@actor.speed.land)"
+    },
+    "note": "You walk on two legs: your land Speed becomes 25 feet. You lose the swim Speed from your merfolk ancestry (swim Speeds from other sources remain). Using the Shore Gift also counts as creating a disguise for Impersonate and automatically defeats Perception DCs to notice it."
   }
 }

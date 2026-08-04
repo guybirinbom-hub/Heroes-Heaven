@@ -82,8 +82,11 @@ describe('inert (recorded-only) choices', () => {
 
   it('the number of do-nothing pickers does not creep up unnoticed', () => {
     // A ceiling, like the coverage ratchet: lowering it is progress; raising it needs a reason.
+    // 47 → 48 on 2026-08-04: `scroll-esoterica`, from the full feat audit. Its daily temporary
+    // scrolls are a genuine pick whose effect the sheet cannot apply — structurally identical to
+    // `magical-adept`, already on this list. Recording the pick beats offering nothing.
     const inert = Object.values(c.feats).filter((f) => f.choice?.inert).length;
-    expect(inert, 'more records now record a pick without applying it').toBeLessThanOrEqual(47);
+    expect(inert, 'more records now record a pick without applying it').toBeLessThanOrEqual(48);
   });
 
   it('kingdom feats that ask nothing were left alone', () => {

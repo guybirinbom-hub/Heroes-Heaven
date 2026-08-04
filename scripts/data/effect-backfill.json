@@ -51712,5 +51712,537 @@
         "deadly-d12"
       ]
     }
+  },
+  {
+    "category": "feats",
+    "id": "mighty-dragonet",
+    "field": "sizeOverride",
+    "value": "small"
+  },
+  {
+    "category": "feats",
+    "id": "miracle-worker",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "mischievous-tail",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "tail"
+      ],
+      "add": [
+        "disarm",
+        "trip"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "moderate-enhance-venom",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "lesser-enhance-venom",
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "morning-side-dishes",
+    "field": "advancedAlchemy",
+    "value": {
+      "items": 5
+    }
+  },
+  {
+    "category": "feats",
+    "id": "munitions-machinist",
+    "field": "resourceMaxSet",
+    "value": {
+      "resourceId": "versatile-vials",
+      "values": [
+        4
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "murderous-thorns",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "thorns"
+      ],
+      "add": [
+        "deadly-d6"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "mysterious-breadth",
+    "field": "spellSlotBonus",
+    "value": {
+      "perRank": 1,
+      "exceptHighest": 2,
+      "entryId": "oracle-dedication-casting"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "no-hands-no-problems",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "th-tradition",
+        "prompt": "No Hands, No Problems — choose the tradition of your at-will telekinetic hand",
+        "options": [
+          {
+            "value": "arcane",
+            "label": "Arcane",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "telekinetic-hand",
+                  "tradition": "arcane",
+                  "atWill": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "occult",
+            "label": "Occult",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "telekinetic-hand",
+                  "tradition": "occult",
+                  "atWill": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "nudge-the-scales",
+    "field": "choice",
+    "value": {
+      "flag": "scales",
+      "prompt": "Nudge the Scales — which side of the scales did you place yourself on today?",
+      "kind": "array",
+      "daily": true,
+      "options": [
+        {
+          "value": "life",
+          "label": "Life",
+          "description": "You can be targeted and healed by vitality healing effects, as normal for most living creatures."
+        },
+        {
+          "value": "death",
+          "label": "Death",
+          "description": "You gain the void healing ability: you are healed by void effects and other effects that restore Hit Points to undead, rather than by vitality healing."
+        }
+      ],
+      "note": "The app cannot flip your healing type — nothing on the sheet changes when you choose death, so apply void healing by hand."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "order-cross-training",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "cross-order",
+        "prompt": "Which other Hellknight order did you train with? (Repeatable — the app records one answer; note further orders by hand.)",
+        "options": [
+          {
+            "value": "chain",
+            "label": "Order of the Chain",
+            "note": "Lesser benefit: Shackles of Law."
+          },
+          {
+            "value": "gate",
+            "label": "Order of the Gate",
+            "note": "Lesser benefit: Locate Lawbreakers."
+          },
+          {
+            "value": "godclaw",
+            "label": "Order of the Godclaw",
+            "note": "Lesser benefit: Dedication to the Five."
+          },
+          {
+            "value": "nail",
+            "label": "Order of the Nail",
+            "note": "Lesser benefit: Trailblazing Stride."
+          },
+          {
+            "value": "pyre",
+            "label": "Order of the Pyre",
+            "note": "Lesser benefit: Righteous Resistance."
+          },
+          {
+            "value": "rack",
+            "label": "Order of the Rack",
+            "note": "Lesser benefit: Disillusionment."
+          },
+          {
+            "value": "scourge",
+            "label": "Order of the Scourge",
+            "note": "Lesser benefit: Fear No Law, Fear No One."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "order-training",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "order",
+        "prompt": "Which Hellknight order do you belong to?",
+        "options": [
+          {
+            "value": "chain",
+            "label": "Order of the Chain",
+            "note": "Lesser benefit: Shackles of Law."
+          },
+          {
+            "value": "gate",
+            "label": "Order of the Gate",
+            "note": "Lesser benefit: Locate Lawbreakers."
+          },
+          {
+            "value": "godclaw",
+            "label": "Order of the Godclaw",
+            "note": "Lesser benefit: Dedication to the Five."
+          },
+          {
+            "value": "nail",
+            "label": "Order of the Nail",
+            "note": "Lesser benefit: Trailblazing Stride."
+          },
+          {
+            "value": "pyre",
+            "label": "Order of the Pyre",
+            "note": "Lesser benefit: Righteous Resistance."
+          },
+          {
+            "value": "rack",
+            "label": "Order of the Rack",
+            "note": "Lesser benefit: Disillusionment."
+          },
+          {
+            "value": "scourge",
+            "label": "Order of the Scourge",
+            "note": "Lesser benefit: Fear No Law, Fear No One."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "pact-of-the-final-breath",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "polearm-tricks",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "polearm-tricks",
+    "field": "critSpecWeapons",
+    "value": {
+      "groups": [
+        "polearm"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "powerful-lash",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "lash"
+      ],
+      "add": [
+        "sweep"
+      ],
+      "stepDie": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "predictive-purchase",
+    "field": "grantsFeats",
+    "value": [
+      "prescient-planner",
+      "prescient-consumable"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "primal-breadth",
+    "field": "spellSlotBonus",
+    "value": {
+      "perRank": 1,
+      "exceptHighest": 2,
+      "entryId": "druid-dedication-casting"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "prolific-prophet-spellcasting",
+    "field": "spellSlotBonus",
+    "value": {
+      "perRank": 1,
+      "exceptHighest": 2,
+      "entryId": "prophet-of-kalistrade-dedication-casting"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "protective-claws",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "claw"
+      ],
+      "add": [
+        "parry"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "qi-spells",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "qi-spell",
+        "prompt": "Qi Spells: choose a 1st-rank monk qi spell (Inner Upheaval, Qi Rush, or another you have access to)",
+        "spellFilter": {
+          "traits": [
+            "monk",
+            "focus"
+          ],
+          "rank": 1,
+          "grantAs": "focus"
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "quadruped",
+    "field": "landSpeedMin",
+    "value": 30
+  },
+  {
+    "category": "feats",
+    "id": "raging-intimidation",
+    "field": "grantsFeats",
+    "value": [
+      "intimidating-glare"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "reactive-striker",
+    "field": "grantsFeats",
+    "value": [
+      "reactive-strike"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "reflective-defense",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "reminder-of-the-greater-fear",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "renewing-quills",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "replenishing-consumption",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "restoring-blood",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "scroll-esoterica",
+    "field": "choice",
+    "value": {
+      "flag": "esotericaScrolls",
+      "prompt": "Today's temporary scroll(s) — a 1st-rank spell, plus a 2nd-rank spell from 8th level",
+      "kind": "open",
+      "daily": true,
+      "from": {
+        "type": "spell",
+        "minRank": 1,
+        "maxRank": 2
+      },
+      "picks": 2,
+      "distinct": true,
+      "inert": "Recorded only — the temporary scrolls aren't added to your inventory.",
+      "note": "Choose a 1st-rank spell of any tradition; from 8th level also choose a 2nd-rank spell (below 8th, fill only the first). The spell must be common or one you have access to; the list enforces neither that nor which pick is which rank. The scrolls lose their magic at your next daily preparations and can't be used to Learn a Spell."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "sealed-poppet",
+    "field": "removesWeaknesses",
+    "value": [
+      "fire"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "shooters-camouflage",
+    "field": "choice",
+    "value": {
+      "flag": "terrain",
+      "prompt": "Choose natural or urban terrain",
+      "kind": "array",
+      "options": [
+        {
+          "value": "natural",
+          "label": "Natural terrain"
+        },
+        {
+          "value": "urban",
+          "label": "Urban terrain"
+        }
+      ],
+      "note": "In the chosen terrain you can Hide and Sneak even without cover or being concealed — applied at the table."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "simple-crystal-magic",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "read-aura",
+        "tradition": "arcane",
+        "atWill": true
+      },
+      {
+        "spellId": "sigil",
+        "tradition": "arcane",
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "smoke-sight",
+    "field": "senses",
+    "value": [
+      {
+        "name": "ignores concealment from smoke"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "soulsight",
+    "field": "senses",
+    "value": [
+      {
+        "name": "spiritsense",
+        "range": 60,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "soulsight-bard",
+    "field": "senses",
+    "value": [
+      {
+        "name": "spiritsense",
+        "range": 60,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "soulsight-sorcerer",
+    "field": "senses",
+    "value": [
+      {
+        "name": "spiritsense",
+        "range": 60,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "spark-of-immortality",
+    "field": "dyingThresholdBonus",
+    "value": 1
   }
 ]

@@ -1,0 +1,366 @@
+{
+ "records": [
+  {
+   "id": "sly-disarm",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you roll Thievery in place of Athletics for the Disarm action, which the app does not roll; the off-guard result changes only the target's statistics."
+  },
+  {
+   "id": "sly-striker",
+   "verdict": "MISS",
+   "reason": "A flat 1d6 (2d6 at 14th) precision damage rider on the player's own Strikes against creatures that are NOT off-guard — nothing delivers it. It is conditional on the target's state, so it belongs in situational strikeDamage.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "you hit a creature that isn't off-guard with a sneak-attack-capable weapon",
+      "bonus": "+1d6 precision (2d6 at 14th level if you'd deal 3d6+ sneak attack)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "small-speak",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure communication flavour — talk to and Diplomacy insects, with the GM deciding which creatures qualify."
+  },
+  {
+   "id": "smash-from-the-air",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Widens the legal triggers of the Cut From the Air reaction (ranged spell attacks); a reaction resolved at the table, no sheet statistic."
+  },
+  {
+   "id": "smoke-bomb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An additive that adds a smoke cloud to a thrown bomb — it changes the area and the concealment of creatures in it, never the player's own statistics."
+  },
+  {
+   "id": "smoke-curtain",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action activity (Strike plus a smoke cloud) resolved entirely at the table."
+  },
+  {
+   "id": "smoke-sight",
+   "verdict": "MISS",
+   "reason": "You automatically succeed at the flat check to target a creature concealed only by smoke — the corpus already models exactly this as a named sense entry (ash-piercing-gaze uses senses [{name:'ignores concealment from smoke and mist'}]), and this feat has nothing. The second half (raising the DC of flat checks to target YOU in smoke to 6/12) has no lane and is left to the table.",
+   "fix": {
+    "senses": [{ "name": "ignores concealment from smoke" }]
+   }
+  },
+  {
+   "id": "smoke-through-bamboo",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes the distance of the Step action (10 feet instead of 5). Step distance is not a sheet statistic and landSpeedBonus would wrongly raise your Speed; all 34 difficult-terrain/movement-action feats in the corpus are likewise inert."
+  },
+  {
+   "id": "smokesoul",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Smoke Blending reaction — an action record (actions.smoke-blending) resolved at the table and already linked from this feat's descRefs; there is no field for granting an action."
+  },
+  {
+   "id": "smoldering-explosion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a Mist-like smoke cloud to your Fireball's area; it changes the battlefield and the targets, not your sheet."
+  },
+  {
+   "id": "smooth-hover",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered free action that stops you falling — resolved at the table, no statistic changes."
+  },
+  {
+   "id": "smoothing-stomp",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action activity that reshapes terrain and counteracts terrain effects; entirely GM/table adjudication."
+  },
+  {
+   "id": "snagging-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action Strike whose only extra effect is making the TARGET off-guard."
+  },
+  {
+   "id": "snap-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Permission to swap a ranged Strike for the melee Strike inside a reaction; action-economy substitution resolved at the table."
+  },
+  {
+   "id": "snare-crafting",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by src/rules/snareFormulas.ts — SNARE_CRAFTING_SOURCES includes 'snare-crafting', and snareAllowance/snareFormulaOptions give the four common 1st-level snare formula picks (plus the rank-based extras) through the builder's snare-formulas picker."
+  },
+  {
+   "id": "sneak-adept",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Upgrades a failure to a success on the Sneak action — a degree-of-success change on a roll the app does not make."
+  },
+  {
+   "id": "sneaky",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Sneak 5 feet farther and a cover/concealment timing allowance; both are properties of the Sneak action resolved at the table, not sheet statistics (landSpeedBonus would be an over-grant)."
+  },
+  {
+   "id": "snow-may",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Terrain and environment handling — free Cover Tracks on snow, ice not counted as uneven ground, ignore snow difficult terrain, slower cold fatigue. Exploration-mode adjudication with no field."
+  },
+  {
+   "id": "snow-step",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignores snow/ice difficult terrain and leaves no tracks — terrain handling the app does not model (consistent with the other 34 difficult-terrain feats, all inert)."
+  },
+  {
+   "id": "solar-rejuvenation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Healing gained by resting outdoors 10 minutes; a rest/downtime recovery amount, not a persistent sheet statistic, and there is no rest-healing lane."
+  },
+  {
+   "id": "solar-rejuvenation-ghoran",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same rest-based healing as solar-rejuvenation (the Ghoran-only reprint); downtime recovery with no sheet statistic to change."
+  },
+  {
+   "id": "solidarity",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activity that heals a touched OBJECT at the cost of your own Hit Points; a table-side transfer, nothing persistent."
+  },
+  {
+   "id": "solo-dancer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Permission to roll Performance for initiative (a choice of statistic, not a bonus — situationalBonuses only carries numeric initiative bonuses) plus a first-round off-guard effect on other creatures."
+  },
+  {
+   "id": "song-of-grace-and-speed",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action activity that makes you and allies quickened; quickened is a condition applied during play, and the ally half is explicitly out of scope."
+  },
+  {
+   "id": "sonic-dash",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activity (Stride twice, with awakening riders that damage other creatures and reposition allies) — resolved at the table."
+  },
+  {
+   "id": "sonic-strafe",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action activity dealing damage to creatures you fly past; affects only targets."
+  },
+  {
+   "id": "soothing-pulse",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Administer Ambient Magic action (actions.administer-ambient-magic, linked via descRefs) — an action resolved at the table; there is no field for granting an action record."
+  },
+  {
+   "id": "soul-bleed",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A critical-hit rider on the Spectral Dagger: persistent damage to the target plus temporary Hit Points that last one round — transient combat bookkeeping, not a sheet statistic."
+  },
+  {
+   "id": "soul-oubliette",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered kill effect that traps a soul; the fast healing 15 lasts only while that in-play state holds (at most 24 hours) and is resolved at the table alongside the trapped-soul bookkeeping."
+  },
+  {
+   "id": "soul-well",
+   "verdict": "ALREADY_OK",
+   "reason": "Already carries dyingThresholdBonus: 1 in core.json for the 'living creatures in the area die at dying 5 rather than dying 4' clause (you are in your own 30-foot area). The rest — difficult terrain for incorporeal undead and the extra weapon die — affects the battlefield and is left to the table."
+  },
+  {
+   "id": "soulsight",
+   "verdict": "MISS",
+   "reason": "Grants spiritsense as an imprecise sense with a 60-foot range and nothing delivers it. Custom sense names with range/acuity are established practice in the corpus (deathsense, magicsense, bloodsense, apparition sight).",
+   "fix": {
+    "senses": [{ "name": "spiritsense", "range": 60, "acuity": "imprecise" }]
+   }
+  },
+  {
+   "id": "soulsight-bard",
+   "verdict": "MISS",
+   "reason": "The bard printing of Soulsight — spiritsense, imprecise, 60 feet, with no sense field.",
+   "fix": {
+    "senses": [{ "name": "spiritsense", "range": 60, "acuity": "imprecise" }]
+   }
+  },
+  {
+   "id": "soulsight-sorcerer",
+   "verdict": "MISS",
+   "reason": "The sorcerer printing of Soulsight — spiritsense, imprecise, 60 feet, with no sense field.",
+   "fix": {
+    "senses": [{ "name": "spiritsense", "range": 60, "acuity": "imprecise" }]
+   }
+  },
+  {
+   "id": "sour-bomb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An additive that forces a save on the creature hit by your bomb — the whole effect lands on the target."
+  },
+  {
+   "id": "sow-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape action that delays a spell into a triggered plant; casting-time procedure resolved at the table."
+  },
+  {
+   "id": "space-time-shift",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free action that turns your Strides into teleports for a turn; movement handling at the table, no statistic changes."
+  },
+  {
+   "id": "spark-of-immortality",
+   "verdict": "MISS",
+   "reason": "\"You die only when you reach dying 5 (dying 6 if you have Diehard)\" — that is exactly the dyingThresholdBonus lane (diehard already carries dyingThresholdBonus: 1, so the two stack to dying 6 as printed). The no-aging and divine-resurrection clauses are narrative.",
+   "fix": {
+    "dyingThresholdBonus": 1
+   }
+  },
+  {
+   "id": "spark-of-independence",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activity that makes a touched MINION quickened; it changes another creature's statistics only."
+  },
+  {
+   "id": "speak-with-flowers",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Communication flavour — you can question and use Diplomacy with flowering plants."
+  },
+  {
+   "id": "spear-dancer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action Step-and-Strike activity; action economy resolved at the table."
+  },
+  {
+   "id": "specialized-beastmaster-companion",
+   "verdict": "MISS",
+   "reason": "Your nimble/savage Beastmaster companions become SPECIALIZED, which raises real companion statistics. COMPANION_MODS has incredible-beastmaster-companion but no entry for this feat, so the specialized rung is never applied.",
+   "fix": {
+    "companionMod": {
+     "kinds": ["animal"],
+     "maturityFloor": "specialized",
+     "note": "Specialized Beastmaster Companion: each of your nimble or savage Beastmaster companions becomes specialized, gaining one specialization of your choice — choose it per companion in Edit. Selectable more than once, a different specialization each time (three maximum per companion). Any companion that becomes specialized later also gains the chosen specializations."
+    }
+   }
+  },
+  {
+   "id": "specialized-companion-druid",
+   "verdict": "MISS",
+   "reason": "The druid's companion becomes specialized (a real statistics jump the app models via maturity), but COMPANION_MODS has no key for this feat id — only 'specialized-companion' (Animal Trainer) and 'specialized-companion-animal-trainer' exist, and the lookup is exact-id.",
+   "fix": {
+    "companionMod": {
+     "kinds": ["animal"],
+     "maturityFloor": "specialized",
+     "note": "Specialized Companion: your animal companion is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time."
+    }
+   }
+  },
+  {
+   "id": "specialized-companion-ranger",
+   "verdict": "MISS",
+   "reason": "Same gap as the druid version — the ranger's companion becomes specialized and no COMPANION_MODS entry keys off this feat id.",
+   "fix": {
+    "companionMod": {
+     "kinds": ["animal"],
+     "maturityFloor": "specialized",
+     "note": "Specialized Companion: your animal companion is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time."
+    }
+   }
+  },
+  {
+   "id": "specialized-megafauna-companion",
+   "verdict": "MISS",
+   "reason": "Your megafauna companion becomes specialized (bully, racer, tracker, or wrecker). COMPANION_MODS covers incredible-megafauna-companion and gigantic-megafauna-companion but not this feat, so the specialized rung never applies.",
+   "fix": {
+    "companionMod": {
+     "kinds": ["animal"],
+     "maturityFloor": "specialized",
+     "note": "Specialized Megafauna Companion: your megafauna companion is at least a specialized companion and gains your choice of the bully, racer, tracker, or wrecker specialization — choose it in Edit. Selectable up to three times, a different one of those four each time (three maximum)."
+    }
+   }
+  },
+  {
+   "id": "specialized-mount",
+   "verdict": "MISS",
+   "reason": "Your Cavalier mount becomes specialized. COMPANION_MODS has incredible-mount (nimble floor) but nothing keyed to specialized-mount, so the mount stops at nimble/savage.",
+   "fix": {
+    "companionMod": {
+     "kinds": ["animal"],
+     "maturityFloor": "specialized",
+     "note": "Specialized Mount: your mount is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time (three maximum)."
+    }
+   }
+  },
+  {
+   "id": "spectral-dagger",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered as a purpose-built weapon record — items.spectral-dagger, rarity unique, description \"Granted by Spectral Dagger\", agile/finesse/thrown-10/versatile-s, knife group — which the player adds to inventory; conjuring it is a 1-action activity at the table. (Data nit for a separate pass: that item is listed as 1d6 slashing, but the feat says it acts like a dagger, i.e. 1d4 piercing.)"
+  },
+  {
+   "id": "speech-of-the-mammoth-lords",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you converse with, Diplomacy, and Coerce megafauna; a communication permission the GM adjudicates."
+  },
+  {
+   "id": "speedy-rituals",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Shortens ritual casting time (days become hours) — a downtime activity the app does not model."
+  },
+  {
+   "id": "spell-combination",
+   "verdict": "MISS",
+   "reason": "The 20th-level wizard capstone converts one prepared slot of every rank except 1st and 2nd into a combination slot that holds TWO spells at once. That is a real change to spell preparation the player cannot record: spellSlotBonus adds slots rather than re-typing them, and no field marks a slot as a combination slot or lets two spells be prepared in one.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "spell-devourer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Temporary Hit Points on a successful save against a spell, sized by the incoming spell's rank and lasting one turn; a trigger-driven amount that depends on the opponent, not a sheet statistic."
+  },
+  {
+   "id": "spell-relay",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that lets an ALLY use your space as their spell's origin — it changes only the ally's casting."
+  },
+  {
+   "id": "spell-shroud",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape action that creates a concealing mist around you; concealment is battlefield state resolved at the table."
+  },
+  {
+   "id": "spell-swallow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Devour Ambient Magic action (actions.devour-ambient-magic, linked via descRefs) — an action resolved at the table with no field to express it."
+  },
+  {
+   "id": "spell-tinker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you re-pick a choice inside a spell already cast on yourself, with the GM as final arbiter."
+  },
+  {
+   "id": "spellshape-channel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you use a 1-action spellshape as a free action on Harm or Heal; pure action economy at the table."
+  },
+  {
+   "id": "spellshape-mastery",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Single-action spellshapes become free actions — action economy resolved at the table, no statistic changes."
+  },
+  {
+   "id": "spellstriker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the magus Spellstrike activity, which exists as its own record (actions.spellstrike / classFeatures.spellstrike) and is resolved at the table; the 1-minute recharge restriction is table bookkeeping and grantedFeatId/grantsFeats only reference feats."
+  },
+  {
+   "id": "spinebreaker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An Athletics-based activity whose entire result is the clumsy condition on the grabbed creature."
+  },
+  {
+   "id": "spirit-coffin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Makes your Strikes count as magical (or ghost touch if already magical) only against incorporeal creatures — a damage-typing ruling applied at the table against a specific opponent; unarmedTraits adds weapon traits, not runes, and would over-grant by applying unconditionally."
+  },
+  {
+   "id": "spirit-familiar-witch",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Your familiar gains the Shed Spirit activity (actions.shed-spirit) — an action the familiar takes at the table; it changes no statistic of yours or of the familiar block."
+  }
+ ]
+}

@@ -95,6 +95,8 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
 
 
 
+
+
   // ---- full feat audit — companion grants ----
   // 3 entries. The judge said "no lane exists"; the adversary found the lane.
   'adaptive-mask-familiar': {"kind":"familiar","label":"Adaptive Mask Familiar","abilityBudget":4,"supersedes":["mask-familiar"],"note":"Your mask familiar adapts quickly to material form: select four master and familiar abilities each day instead of two."},
@@ -192,8 +194,10 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
 
 
 
+
+
   // ---- full feat audit — companion mods ----
-  // 24 entries. The judge said "no lane exists"; the adversary found the lane.
+  // 34 entries. The judge said "no lane exists"; the adversary found the lane.
   'a-miracle-of-science': {"kinds":["animal"],"maturityFloor":"specialized","note":"A Miracle of Science!: your construct companion is at least a paragon (specialized) construct companion."},
   'advanced-construct-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Advanced Construct Companion: your construct companion is at least an advanced construct companion (the mature rung here). During an encounter, even without Command a Construct, it can still use 1 action on your turn to Stride or Strike."},
   'battle-hardened-companion': {"kinds":["animal"],"maturityFloor":"nimble","note":"Battle-Hardened Companion: the companion you gained with Commander's Companion is at least a nimble or savage animal companion — pick savage in Edit if you want that side. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike, and then gains a reaction for your tactics (that is all the actions it gets that round)."},
@@ -218,4 +222,14 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'mature-beastmaster-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Mature Beastmaster Companion: ALL of your animal companions are at least mature animal companions. During an encounter, even without Command an Animal, a companion can use 1 action on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed) — that is all the actions it gets that round."},
   'mature-dragon-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Mature Dragon Companion: your drake is at least a mature animal companion. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike — that is all the actions it gets that round."},
   'mature-megafauna-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Mature Megafauna Companion: your megafauna companion is at least a mature animal companion. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike."},
+  'natures-precision': {"kinds":["animal"],"note":"Nature's Precision: when your companion Strikes an off-guard creature with an agile or finesse unarmed attack, it deals an extra 1d4 precision damage (2d4 if the companion is specialized). If it already deals precision damage, combine the two."},
+  'pale-horse': {"kinds":["animal"],"iwr":["resistance 10 fire, poison, or void (the type you chose when you Mounted, and only while you ride it)"],"note":"Pale Horse: when you Mount your faithful steed, choose fire, poison, or void. While you ride it, the steed gains resistance 10 to that type, and any creature that touches it — including hitting it with an unarmed attack or with a melee weapon Strike while adjacent — takes 1d6 damage of that type (2d6 at 16th level, 3d6 at 20th)."},
+  'paragon-reanimated-companion': {"kinds":["animal"],"maturityFloor":"specialized","note":"Paragon Reanimated Companion: your reanimated construct companion is at least a paragon (specialized) construct companion."},
+  'reincarnated-companion': {"kinds":["animal"],"maturityFloor":"specialized","note":"Reincarnated Companion: your animal companion is at least a specialized companion, gaining one specialization of your choice — pick it in Edit. If your fated companion is a familiar instead, it gains two additional familiar abilities (add them by hand). A slain fated companion is replaced at no cost during daily preparations."},
+  'resilient-shell': {"kinds":["eidolon"],"iwr":["resistance physical (equal to its Constitution modifier)"],"note":"Resilient Shell: your eidolon has resistance to physical damage equal to its Constitution modifier."},
+  'specialized-beastmaster-companion': {"kinds":["animal"],"maturityFloor":"specialized","note":"Specialized Beastmaster Companion: each of your nimble or savage Beastmaster companions becomes specialized, gaining one specialization of your choice — choose it per companion in Edit. Selectable more than once, a different specialization each time (three maximum per companion). Any companion that becomes specialized later also gains the chosen specializations."},
+  'specialized-companion-druid': {"kinds":["animal"],"maturityFloor":"specialized","note":"Specialized Companion: your animal companion is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time."},
+  'specialized-companion-ranger': {"kinds":["animal"],"maturityFloor":"specialized","note":"Specialized Companion: your animal companion is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time."},
+  'specialized-megafauna-companion': {"kinds":["animal"],"maturityFloor":"specialized","note":"Specialized Megafauna Companion: your megafauna companion is at least a specialized companion and gains your choice of the bully, racer, tracker, or wrecker specialization — choose it in Edit. Selectable up to three times, a different one of those four each time (three maximum)."},
+  'specialized-mount': {"kinds":["animal"],"maturityFloor":"specialized","note":"Specialized Mount: your mount is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time (three maximum)."},
 };

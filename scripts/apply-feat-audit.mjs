@@ -305,6 +305,14 @@ for (const rec of records) {
       const dead = list.map((e) => ref.idOf(e)).filter((x) => x && !core[ref.coll]?.[x]);
       if (dead.length) return reject(`${field} names ${ref.coll} that do not exist: ${dead.slice(0, 3).join(', ')}`);
     }
+    // A usesUpgrade retunes a `limitedUses` pool and nothing else. Shape of the Dragon's once-per-day
+    // lives on innateSpells.usesPerDay, so Mighty Dragon Shape pointed at a pool that is not there —
+    // it would have shipped as a field that reads as done and changes nothing.
+    if (field === 'usesUpgrade') {
+      const t = value?.featId ? core.feats[value.featId] : null;
+      if (!t) return reject(`usesUpgrade names a feat that does not exist: ${value?.featId}`);
+      if (!t.limitedUses) return reject(`usesUpgrade -> ${value.featId}, which has no limitedUses to retune`);
+    }
     return false;
   });
   if (bad) continue;

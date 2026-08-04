@@ -1,0 +1,405 @@
+{
+ "rulings": [
+  {
+   "id": "metal-carapace",
+   "upheld": true,
+   "why": "Real gap, but the lane exists: the identical wood impulse hardwood-armor already ships a note-carrying MODE with the armour statistics and an 'unequip your worn armor' caveat.",
+   "correction": {
+    "fix": {
+     "mode": {
+      "id": "metal-carapace",
+      "name": "Metal Carapace",
+      "feats": [
+       "metal-carapace"
+      ],
+      "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
+      "modifiers": [],
+      "note": "Medium metal armor that uses your highest armor proficiency: AC Bonus +3, Dex Cap +2, Check Penalty -2, Speed Penalty -5 ft, Strength +2, Bulk 2, group plate, armor trait noisy. Your real armor's bonuses, runes and magical abilities are suppressed (any that could apply are replicated onto the carapace). You may also form a rusty steel shield in a free hand and Shield Block with it even without that feat, and that hand still counts as free for impulses; the shield crumbles to rust if broken or if it leaves your grasp. At every 3rd level the shield's Hardness +1, HP +4, BT +2. If you take damage from a critical hit the metal shatters and the impulse ends. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
+     }
+    }
+   }
+  },
+  {
+   "id": "mighty-dragon-shape",
+   "upheld": true,
+   "why": "effectiveUses() fills a missing base limit from the upgrade itself, and 9 shipped feats already carry both an innate cast and a use pool, so the 1/hour retune lands.",
+   "correction": {}
+  },
+  {
+   "id": "mighty-dragonet",
+   "upheld": true,
+   "why": "The dragonet ancestry is size tiny and build.ts raises body size from any feat sizeOverride (largest wins), so 'small' is read and shown.",
+   "correction": {}
+  },
+  {
+   "id": "miracle-worker",
+   "upheld": true,
+   "why": "limitedUses supports the 'every' multiplier, and the app already tracks printed frequencies of target-side abilities (mummys-despair, emit-defensive-odor).",
+   "correction": {}
+  },
+  {
+   "id": "miraculous-flight",
+   "upheld": true,
+   "why": "Gap is real but the named lane is inert: COMPANION_MODS is read only for kinds 'animal' and 'eidolon', and a vehicle renders a static VehicleBlock, so a vehicle mod would be written and never read.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "COMPANION_MODS is consumed only in deriveAnimalCompanion (mod.kinds.includes('animal')) and the eidolon pass (mod.kinds.includes('eidolon')); CompanionsTab renders a vehicle straight from content.vehicles via VehicleBlock with no mod pass at all, so a kinds:['vehicle'] entry is inert. Needs a vehicle/siege mod pass (speeds + note) before Miraculous Flight and the other vehicle feats can land."
+    }
+   }
+  },
+  {
+   "id": "miraculous-possibility",
+   "upheld": false,
+   "why": "The app already lets any prepared caster hold a slot open and drop ANY spell of rank <= the slot into it at any time (ManageSpellsModal's upTo[rank] pool; 'changes apply to this play session'), so the wildcard slot is already expressible.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "mischievous-tail",
+   "upheld": true,
+   "why": "smashing-tail grants a strike named Tail and unarmedTraits.match is a case-insensitive substring match, so the traits land only when that strike exists.",
+   "correction": {}
+  },
+  {
+   "id": "moderate-enhance-venom",
+   "upheld": true,
+   "why": "lesser-enhance-venom carries limitedUses {1,hour}, and usesUpgrade with 'every' is the shipped consistent-surge / greater-despair pattern.",
+   "correction": {}
+  },
+  {
+   "id": "modular-dynamo",
+   "upheld": true,
+   "why": "No lane holds a switchable strike configuration — and the base sterling-dynamo-dedication ships four strikes literally named 'Label', so the dynamo attack needs data repair before a configuration can attach.",
+   "correction": {}
+  },
+  {
+   "id": "monstrous-inclinations",
+   "upheld": true,
+   "why": "Verified blocked: the apparition repertoire picker offers only spells whose traditions include divine, and monstrosity-form is arcane/primal, so the player cannot even add it by hand.",
+   "correction": {}
+  },
+  {
+   "id": "morning-side-dishes",
+   "upheld": true,
+   "why": "advancedAlchemy is the daily-item-count lane the sibling advanced-alchemy carries as {items:4}; build.ts keeps the best offer, so 5 raises it without double-counting.",
+   "correction": {}
+  },
+  {
+   "id": "munitions-machinist",
+   "upheld": true,
+   "why": "resourceMaxSet raises a floor and is exactly what expert-fireworks-crafter and additional-servings carry for the same versatile-vials resource.",
+   "correction": {}
+  },
+  {
+   "id": "murderous-thorns",
+   "upheld": true,
+   "why": "hidden-thorn grants the only strike named Thorns, so the deadly d6 cannot reach a thorned-rose character who lacks that feat.",
+   "correction": {}
+  },
+  {
+   "id": "mysterious-breadth",
+   "upheld": true,
+   "why": "Three sibling breadth feats carry the identical spellSlotBonus, and build.ts builds the archetype entry id as dedicationId + '-casting' = oracle-dedication-casting.",
+   "correction": {}
+  },
+  {
+   "id": "mysterious-repertoire",
+   "upheld": true,
+   "why": "Verified blocked: the repertoire manager filters to spells whose traditions include the entry's tradition, so a cross-tradition repertoire spell cannot be recorded at all.",
+   "correction": {}
+  },
+  {
+   "id": "myth-of-quick-thinking",
+   "upheld": false,
+   "why": "A claimed domain changes nothing on this character's sheet — it is the deity's domain list that WORSHIPPERS draw on once you Assume Godhood; the sibling claim-cardinal-domains records nothing either.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "natures-precision",
+   "upheld": true,
+   "why": "COMPANION_MODS is read for kinds 'animal' and note-only entries are shipped precedent (stealthy-companion), so the companion card carries it.",
+   "correction": {}
+  },
+  {
+   "id": "no-hands-no-problems",
+   "upheld": true,
+   "why": "telekinetic-hand ships in core.spells, and EffectGrant.innateSpells from a picked option is collected by applyAlwaysOn into the innate entry, so the at-will cantrip reaches the Spells page.",
+   "correction": {}
+  },
+  {
+   "id": "nudge-the-scales",
+   "upheld": true,
+   "why": "Real pick, wrong lane: effectChoices is a BUILD-time picker, but the text says 'during your daily preparations' — choice.daily (52 shipped feats, PlayState.dailyChoices, re-asked at Rest) is the lane that fits.",
+   "correction": {
+    "fix": {
+     "choice": {
+      "flag": "scales",
+      "prompt": "Nudge the Scales — which side of the scales did you place yourself on today?",
+      "kind": "array",
+      "daily": true,
+      "options": [
+       {
+        "value": "life",
+        "label": "Life",
+        "description": "You can be targeted and healed by vitality healing effects, as normal for most living creatures."
+       },
+       {
+        "value": "death",
+        "label": "Death",
+        "description": "You gain the void healing ability: you are healed by void effects and other effects that restore Hit Points to undead, rather than by vitality healing."
+       }
+      ],
+      "note": "The app cannot flip your healing type — nothing on the sheet changes when you choose death, so apply void healing by hand."
+     }
+    }
+   }
+  },
+  {
+   "id": "oath-of-the-slayer",
+   "upheld": true,
+   "why": "Upheld, but the judge's fix mixed effectChoices with situational and the applier returns at the situational branch, silently dropping the field write — so the fix is the star pair alone, worded to carry the daily pick.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeDamage"
+        }
+       ],
+       "when": "vs your sworn kind (chosen at daily preparations; doubled after your reaction)",
+       "bonus": "+1 spirit (2 at 7th, 3 at 14th)"
+      },
+      {
+       "targets": [
+        {
+         "kind": "spellDamage"
+        }
+       ],
+       "when": "damaging devotion spells vs your sworn kind (aberration, celestial, dragon, fiend or undead)",
+       "bonus": "+1 spirit (2 at 7th, 3 at 14th)"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ongoing-strategy",
+   "upheld": true,
+   "why": "Always-on precision damage on the player's own Strikes under a stated condition — precisely the star registry's lane.",
+   "correction": {}
+  },
+  {
+   "id": "order-cross-training",
+   "upheld": true,
+   "why": "Upheld, but the Rack option was an unresolved placeholder: the order-of-the-rack class feature's Lesser Benefit is Disillusionment (the level-1 hellknight feat about quashing pointless dreams).",
+   "correction": {
+    "fix": {
+     "effectChoices": [
+      {
+       "id": "cross-order",
+       "prompt": "Which other Hellknight order did you train with? (Repeatable — the app records one answer; note further orders by hand.)",
+       "options": [
+        {
+         "value": "chain",
+         "label": "Order of the Chain",
+         "note": "Lesser benefit: Shackles of Law."
+        },
+        {
+         "value": "gate",
+         "label": "Order of the Gate",
+         "note": "Lesser benefit: Locate Lawbreakers."
+        },
+        {
+         "value": "godclaw",
+         "label": "Order of the Godclaw",
+         "note": "Lesser benefit: Dedication to the Five."
+        },
+        {
+         "value": "nail",
+         "label": "Order of the Nail",
+         "note": "Lesser benefit: Trailblazing Stride."
+        },
+        {
+         "value": "pyre",
+         "label": "Order of the Pyre",
+         "note": "Lesser benefit: Righteous Resistance."
+        },
+        {
+         "value": "rack",
+         "label": "Order of the Rack",
+         "note": "Lesser benefit: Disillusionment."
+        },
+        {
+         "value": "scourge",
+         "label": "Order of the Scourge",
+         "note": "Lesser benefit: Fear No Law, Fear No One."
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "order-training",
+   "upheld": true,
+   "why": "Upheld, but the Rack option said 'see the entry': the order-of-the-rack Lesser Benefit is Disillusionment, so the menu resolves without a placeholder.",
+   "correction": {
+    "fix": {
+     "effectChoices": [
+      {
+       "id": "order",
+       "prompt": "Which Hellknight order do you belong to?",
+       "options": [
+        {
+         "value": "chain",
+         "label": "Order of the Chain",
+         "note": "Lesser benefit: Shackles of Law."
+        },
+        {
+         "value": "gate",
+         "label": "Order of the Gate",
+         "note": "Lesser benefit: Locate Lawbreakers."
+        },
+        {
+         "value": "godclaw",
+         "label": "Order of the Godclaw",
+         "note": "Lesser benefit: Dedication to the Five."
+        },
+        {
+         "value": "nail",
+         "label": "Order of the Nail",
+         "note": "Lesser benefit: Trailblazing Stride."
+        },
+        {
+         "value": "pyre",
+         "label": "Order of the Pyre",
+         "note": "Lesser benefit: Righteous Resistance."
+        },
+        {
+         "value": "rack",
+         "label": "Order of the Rack",
+         "note": "Lesser benefit: Disillusionment."
+        },
+        {
+         "value": "scourge",
+         "label": "Order of the Scourge",
+         "note": "Lesser benefit: Fear No Law, Fear No One."
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "pack-attack",
+   "upheld": true,
+   "why": "Flat +1d4 precision on the player's own Strikes under a positional condition — the same shape as the shipped positional stars.",
+   "correction": {}
+  },
+  {
+   "id": "pack-rat",
+   "upheld": true,
+   "why": "Container capacity IS enforced (derive.ts computes each container's load against item.capacity.bulk and blocks over-capacity drops), so the +50% has a real number to change and no field to carry it.",
+   "correction": {}
+  },
+  {
+   "id": "pact-of-the-final-breath",
+   "upheld": true,
+   "why": "A once-per-day self benefit with no tracker; limitedUses {1,day} is the shipped shape for exactly this.",
+   "correction": {}
+  },
+  {
+   "id": "pact-of-the-rune-dragon",
+   "upheld": true,
+   "why": "Languages are modelled (ancestry-granted plus Int-based picks, with a rail card) and no feat can grant any — even Multilingual carries nothing, so the lane genuinely does not exist.",
+   "correction": {}
+  },
+  {
+   "id": "pain-is-temporary",
+   "upheld": true,
+   "why": "stone-body ships as a mode with the identical shape (resistances [{all,10}], duration 'until the end of your next turn', modifiers []), so this is a clone of an existing entry.",
+   "correction": {}
+  },
+  {
+   "id": "palatine-enchantment",
+   "upheld": true,
+   "why": "A conditional rune effect on the player's own Strikes; the star registry already carries phrase-shaped entries like this.",
+   "correction": {}
+  },
+  {
+   "id": "palatine-strike",
+   "upheld": true,
+   "why": "Flat +2d6 precision on the player's own Strategic Strike under a stated condition; nothing flags it today.",
+   "correction": {}
+  },
+  {
+   "id": "pale-horse",
+   "upheld": true,
+   "why": "COMPANION_MODS.iwr is read for kinds 'animal' (celestial-mount / fiendish-mount) and faithful-steed grants an animal companion, so the line lands on the steed's block.",
+   "correction": {}
+  },
+  {
+   "id": "panache-paragon",
+   "upheld": true,
+   "why": "RECORD_MARKERS already carries the identical always-on quickened mark for eternal-boost, eternal-composition and full-automation, and core.conditions.quickened exists.",
+   "correction": {}
+  },
+  {
+   "id": "paragon-reanimated-companion",
+   "upheld": true,
+   "why": "maturityFloor is read by deriveAnimalCompanion and the sibling advanced-reanimated-companion / paragon-companion entries are the same shape.",
+   "correction": {}
+  },
+  {
+   "id": "peerless-captain",
+   "upheld": true,
+   "why": "Same marker lane as the other permanent-quickened feats, with the follower condition carried in the value instead of over-claimed.",
+   "correction": {}
+  },
+  {
+   "id": "perfect-mutagen",
+   "upheld": true,
+   "why": "Mutagen drawbacks are real negative modifiers on shipped consumable modes, so with no suppression lane this alchemist's sheet shows wrong numbers.",
+   "correction": {}
+  },
+  {
+   "id": "perfect-readiness",
+   "upheld": true,
+   "why": "Permanent quickened — the RECORD_MARKERS condition lane already used by eternal-boost and full-automation.",
+   "correction": {}
+  },
+  {
+   "id": "performance-weapon-expert",
+   "upheld": true,
+   "why": "FEAT_LANE_GRANTS already carries the identical shape for diverse-weapon-expert, and the fix leaves the per-character advanced weapon ungranted.",
+   "correction": {}
+  },
+  {
+   "id": "plentiful-snares",
+   "upheld": true,
+   "why": "snareAllowance() really does return the prepared count the builder renders and takes only the Crafting rank, so the feat is provably inert — a one-line change to existing code, not a new subsystem.",
+   "correction": {}
+  },
+  {
+   "id": "poison-weapon",
+   "upheld": false,
+   "why": "The feat is a table-resolved action and its free daily poisons are inventory ITEMS — the same batch ruled pilgrims-token NEEDS_NOTHING for exactly that ('no grant field for items'), and the proposed allowance has no surface outside the alchemist-gated AlchemyPanel.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "polearm-tricks",
+   "upheld": true,
+   "why": "A flat permanent benefit, and critSpec is paired with critSpecWeapons {groups:['polearm']} so it cannot spread to every weapon — matching hobgoblin-weapon-discipline.",
+   "correction": {}
+  }
+ ]
+}

@@ -2760,8 +2760,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
 
 
 
+
+
   // ---- full feat audit (scripts/apply-feat-audit.mjs) — every never-examined feat — do not hand-edit below ----
-  // 61 feats. Selected by what the record HAS, not by whether its text matched a pattern.
+  // 76 feats. Selected by what the record HAS, not by whether its text matched a pattern.
   "abjure-the-false-kin": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a saving throw against a mental effect that doesn't deal damage", bonus: "a success becomes a critical success" }],
   "agent-of-all-holds": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'performance' }], when: "when you critically fail a Diplomacy, Intimidation, or Performance check", bonus: "critical failure becomes a failure (against a creature with the orc trait you may instead reroll as a fortune effect, still treating a critical failure as a failure)" }],
   "angel-of-vindication": [{ targets: [{ kind: 'strikeDamage' }], when: "backstabber weapon vs an off-guard undead (+4 if the weapon is a +3 weapon)", bonus: "+2 precision" }],
@@ -2823,6 +2825,21 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "just-the-facts": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "when you Recall Knowledge", bonus: "use the outcome one degree of success better; the check isn't secret, and you know which information is inaccurate" }],
   "leap-the-falls": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "while your divine spark is in this imbued ikon (immanence active)", bonus: "you gain the Powerful Leap and Quick Jump skill feats even without their prerequisites: High Jump and Long Jump each take 1 action instead of 2, and your Long Jump distance increases by 5 feet" }],
   "legendary-monster-hunter": [{ targets: [{ kind: 'strikeAttack' }], when: "vs hunted prey you critically identified (replaces Monster Hunter's +1)", bonus: "+2 circumstance" }],
+  "oath-of-the-slayer": [{ targets: [{ kind: 'strikeDamage' }], when: "vs your sworn kind (chosen at daily preparations; doubled after your reaction)", bonus: "+1 spirit (2 at 7th, 3 at 14th)" }, { targets: [{ kind: 'spellDamage' }], when: "damaging devotion spells vs your sworn kind (aberration, celestial, dragon, fiend or undea", bonus: "+1 spirit (2 at 7th, 3 at 14th)" }],
+  "ongoing-strategy": [{ targets: [{ kind: 'strikeDamage' }], when: "on a Strike you didn't Devise a Stratagem for, with an Int-eligible weapon", bonus: "precision damage equal to your strategic strike dice" }],
+  "pack-attack": [{ targets: [{ kind: 'strikeDamage' }], when: "the target is within reach of at least two of your allies", bonus: "+1d4 precision" }],
+  "palatine-enchantment": [{ targets: [{ kind: 'strikeDamage' }, { kind: 'strikeAttack' }], when: "you Devised a Stratagem vs a foe you could RK with Occultism or Religion", bonus: "the Strike counts as having a Ghost Touch or Vitalizing property rune (your choice)" }],
+  "palatine-strike": [{ targets: [{ kind: 'strikeDamage' }], when: "Strategic Strike vs a foe you've successfully RK'd with Occultism or Religion", bonus: "+2d6 precision" }],
+  "quietus-strikes": [{ targets: [{ kind: 'strikeDamage' }], when: "against living creatures (2 with a +3 potency rune)", bonus: "+1 void" }, { targets: [{ kind: 'strikeDamage' }], when: "against undead (2 with a +3 potency rune)", bonus: "+1 vitality" }],
+  "refined-motion-in-darkness": [{ targets: [{ kind: 'speed' }], when: "when you Sneak, up to your Speed", bonus: "+5 feet" }],
+  "savage-critical": [{ targets: [{ kind: 'strikeAttack' }], when: "with a weapon or unarmed attack you have legendary proficiency in", bonus: "a natural 19 that would be a success is a critical success instead" }],
+  "scalpels-point": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit with a Devised Stratagem attack dealing piercing or slashing", bonus: "+1d6 persistent bleed" }],
+  "scar-thick-skin": [{ targets: [{ kind: 'hp' }], when: "on the flat check to end persistent bleed damage", bonus: "DC 10 instead of 15 (DC 5 with especially appropriate assistance)" }],
+  "scorched-on-the-crackling-mountain": [{ targets: [{ kind: 'hp' }], when: "on the flat check to end persistent fire damage", bonus: "DC 10 instead of 15 (DC 5 with appropriate assistance)" }, { targets: [{ kind: 'hp' }], when: "the first time each day a fire effect would reduce you to 0 HP", bonus: "you remain at 1 HP and your wounded value increases by 1" }],
+  "scout-dedication": [{ targets: [{ kind: 'perception' }], when: "on initiative rolls when you used the Scout exploration activity", bonus: "+2 circumstance (instead of Scout's usual +1)" }],
+  "see-the-unseen": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting an adjacent undetected creature of your level or lower", bonus: "it is only hidden from you (DC 11 flat check) rather than undetected" }],
+  "sense-allies": [{ targets: [{ kind: 'perception' }], when: "to notice or target willing allies within 60 feet you're aware of", bonus: "they are hidden rather than undetected, and your flat check to target them is DC 5 instead of 11" }],
+  "sly-striker": [{ targets: [{ kind: 'strikeDamage' }], when: "you hit a creature that isn't off-guard with a sneak-attack-capable weapon", bonus: "+1d6 precision (2d6 at 14th level if you'd deal 3d6+ sneak attack)" }],
 };
 
 /** A StatRef, loosened so callers outside explain.ts can pass a plain object. */
@@ -2985,8 +3002,10 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
 
 
 
+
+
   // ---- full feat audit — action/condition marks ----
-  // 14 feats that change an ACTION or a CONDITION rather than a stat.
+  // 17 feats that change an ACTION or a CONDITION rather than a stat.
   'dancing-leaf': [{"on":"action","id":"leap","value":"+5 feet","note":"You jump 5 feet farther when you Leap."},{"on":"action","id":"high-jump","value":"+5 feet","note":"A successful High Jump carries you 5 feet farther."},{"on":"action","id":"long-jump","value":"+5 feet","note":"A successful Long Jump carries you 5 feet farther. When calculating falling damage, don't count any distance fallen while you are adjacent to a wall."}],
   'defy-death': [{"on":"condition","id":"dying","value":"DC 9 + dying (8 with Toughness)","note":"The DC of your recovery checks is 9 + your dying value, or 8 + your dying value if you have the Toughness general feat. Magic that returns you to life never leaves you debilitated for a week."}],
   'dwarven-doughtiness': [{"on":"condition","id":"frightened","value":"-2 per turn","note":"At the end of your turn, reduce your frightened condition by 2 instead of 1."}],
@@ -3001,6 +3020,9 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'fantastic-leaps': [{"on":"action","id":"leap","value":"+10 ft / +5 ft up","note":"Your maximum Leap distance is 10 feet farther horizontally and 5 feet higher vertically."}],
   'feather-step': [{"on":"action","id":"step","note":"You can Step into difficult terrain."}],
   'full-automation': [{"on":"condition","id":"quickened","value":"always on","note":"Full Automation: you're permanently quickened. Armor innovation - the extra action Strides, Steps, or uses a movement form your innovation provides; construct - Command your construct; weapon - Strike with your innovation."}],
+  'panache-paragon': [{"on":"condition","id":"quickened","value":"always on","note":"Panache Paragon: you are permanently quickened; the extra action can be used only to perform a bravado action."}],
+  'peerless-captain': [{"on":"condition","id":"quickened","value":"with an active follower","note":"Peerless Captain: while you have an active follower in an encounter you are quickened; the extra action can be used only to Direct your Follower."}],
+  'perfect-readiness': [{"on":"condition","id":"quickened","value":"always on","note":"Perfect Readiness: you're permanently quickened; the extra action can be used only to Step or to Interact to reload."}],
 };
 
 /**
