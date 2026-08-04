@@ -1,0 +1,957 @@
+[
+ {
+  "id": "powerful-lash",
+  "name": "Powerful Lash",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Thlipit Contestant Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to swing your lash ever faster and in wider arcs. The damage die of your lash increases to 1d6 instead of 1d4 and it gains the sweep trait."
+ },
+ {
+  "id": "powerful-leap",
+  "name": "Powerful Leap",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can jump 5 feet up with a vertical Leap without making a High Jump. You also increase the horizontal distance when you Leap, including as part of a High Jump or Long Jump, by 5 feet."
+ },
+ {
+  "id": "powerful-shove",
+  "name": "Powerful Shove",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Aggressive Block or Brutish Shove"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can push larger foes around with your attack. You can use Aggressive Block or Brutish Shove against a creature up to two sizes larger than you. When a creature you Shove or knock back with a shield, polearm, or club's critical specialization effect has to stop moving because it would hit an object, it takes damage equal to your Strength modifier (minimum 1)."
+ },
+ {
+  "id": "powerful-snares",
+  "name": "Powerful Snares",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "master in Crafting",
+   "Snare Specialist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your snares are particularly difficult for enemies to avoid. When you set a snare, the saving throw DC for that snare is equal to its normal DC or your class DC, whichever is higher."
+ },
+ {
+  "id": "powerful-sneak",
+  "name": "Powerful Sneak",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to exploit your enemies' openings. Your sneak attack damage ignores any immunity or resistance the target has to precision damage. In addition, when you Sneak, you can designate one creature you're undetected by at the end of that action. On the next attack you make against that creature before the end of your next turn, any sneak attack die you roll that's less than 3 is a 3 instead. This has no benefit if your next attack against the creature doesn't deal sneak attack damage, and if you designate a new creature you lose the benefit on any previous one."
+ },
+ {
+  "id": "practiced-defender",
+  "name": "Practiced Defender",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "After extensive practice with the Swords, you're comfortable enough with your shield to move at a normal pace with it raised. You may use the Defend exploration activity while traveling at your full travel speed instead of half your travel speed."
+ },
+ {
+  "id": "practiced-guidance",
+  "name": "Practiced Guidance",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bellflower Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Making one's way to safety can be harrowing, but you have extensive practice at helping others along that path. When you roll a success to Aid a member of your crop, you get a critical success instead."
+ },
+ {
+  "id": "practiced-reflexes",
+  "name": "Practiced Reflexes",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [
+   "Drilled Reflexes"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You snap out a quick series of signals or commands that urge your allies to act with alacrity. When you use your Drilled Reactions ability, you can give an extra reaction to up to four allies."
+ },
+ {
+  "id": "practiced-reloads",
+  "name": "Practiced Reloads",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Gunslinger Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've mastered the reloading techniques and methods usually practiced by only the most dedicated firearm professionals. You gain the slinger's reload for the way you selected with Gunslinger Dedication."
+ },
+ {
+  "id": "prayer-attack",
+  "name": "Prayer Attack",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Red Mantis Assassin Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a sawtooth saber in each hand. --- You've mastered the signature assassination style of the Red Mantis. Attempt to Feint an enemy within 30 feet. If your Feint is successful, when you use Prayer Attack on subsequent turns you automatically make the target off-guard against your melee attacks for that turn without rolling a check to Feint, so long as you remain visible to the target and the target remains within 30 feet of you. If you use your Prayer Attack against a different target, you must attempt to Feint the target normally. When you use Prayer Attack, your next successful Strike with a sawtooth saber that turn deals 2d6 persistent bleed damage to the target."
+ },
+ {
+  "id": "precious-ammunition",
+  "name": "Precious Ammunition",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "magical"
+  ],
+  "prerequisites": [
+   "Eldritch Archer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You have learned to mimic the power that lies between magic and material. You enchant a piece of ammunition on your person with the magical essence of a precious material, allowing you to leverage certain creatures' weaknesses. Choose cold iron or silver; if you shoot the arrow or bolt before the end of your turn, it counts as that material. At 14th level, add adamantine to the list of materials you can choose from."
+ },
+ {
+  "id": "precious-munitions",
+  "name": "Precious Munitions",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Munitions Machinist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You mix flecks of precious materials you've gathered on your journeys into your custom bullets to bring out those properties in your temporary ammunition. You can use advanced alchemy to create standard-grade adamantine, cold iron, or silver ammunition, spending 1 daily consumable per piece of ammunition. At 15th level, you can create high-grade adamantine, cold iron, or silver ammunition."
+ },
+ {
+  "id": "precise-debilitations",
+  "name": "Precise Debilitations",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "thief racket",
+   "Debilitating Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You attack with great precision. Add the following debilitations to the list you can choose from when you use Debilitating Strike. - **Debilitation** The target takes an additional 2d6 precision damage from your attacks. - **Debilitation** The target becomes off-guard."
+ },
+ {
+  "id": "precise-finisher",
+  "name": "Precise Finisher",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "Confident Finisher"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Even when your foe avoids your Confident Finisher, you can still hit a vital spot. On a failure with Confident Finisher, you apply your full precise strike damage instead of half."
+ },
+ {
+  "id": "predators-growl",
+  "name": "Predator's Growl",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [
+   "expert in Intimidation"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You successfully Seek a hidden or undetected creature. --- You give a throaty growl to attempt to Demoralize a creature you just found. You don't take the -4 penalty for not sharing a language with the creature."
+ },
+ {
+  "id": "predators-pounce",
+  "name": "Predator's Pounce",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "flourish",
+   "rage"
+  ],
+  "prerequisites": [
+   "animal instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are unarmored or wearing light armor --- You close the distance to your prey in a blur, pouncing on the creature before it can react. You Stride up to your Speed and make a Strike at the end of your movement."
+ },
+ {
+  "id": "predictive-purchase",
+  "name": "Predictive Purchase",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "text": "Predictive Purchase Source Player Core 2 pg. 109 Archetype Twilight Talon (Level 10) You have just the thing for the situation. You gain the Prescient Planner and Prescient Consumable feats. When using Prescient Planner, you can pull out the item as a 2-action activity to remove your backpack (or a similar container) and draw the item, rather than taking 1 minute. Predictive Purchase leads to... Implausible Purchase"
+ },
+ {
+  "id": "preparation",
+  "name": "Preparation",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You survey the battlefield, calculating the possibilities. You gain one additional reaction, which you can use before the beginning of your next turn for any rogue reaction."
+ },
+ {
+  "id": "prescient-consumable",
+  "name": "Prescient Consumable",
+  "level": 7,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [
+   "Prescient Planner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can predict which consumables you might need in advance. When using Prescient Planner, you can procure a consumable item from your backpack, instead of a piece of adventuring gear. The consumable item must still be common with a level no higher than half your level, and its Bulk must be low enough that carrying it wouldn't have made you encumbered."
+ },
+ {
+  "id": "prescient-planner",
+  "name": "Prescient Planner",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Cost** the Price of the chosen item **Requirements** You haven't used this ability since the last time you were able to purchase goods. --- You regularly create convoluted plans and contingencies, using your resources to enact them. You take 1 minute to remove your backpack, then carefully remove an item you hadn't previously declared that you purchased—you intuited that you would come to need the item and purchased it at the latest opportunity. The item must be a piece of adventuring gear, and can't be a weapon, armor, alchemical item, magic item, or other treasure. It must be common with a level no higher than half your level, and its Bulk must be low enough that carrying it wouldn't have made you encumbered."
+ },
+ {
+  "id": "preserve-the-horde",
+  "name": "Preserve the Horde",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Necrologist Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You cast summon undead. **Requirements** Your horde is raised. --- The act of summoning additional undead minions doesn't make you lose the focus required to maintain the animation of your horde. You Sustain your horde."
+ },
+ {
+  "id": "pressure-change",
+  "name": "Pressure Change",
+  "level": 8,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Pressure Change Source High Seas pg. 107 PFS Note Unclear if this ability frees a Grabbed creature. Archetype Marine Marauder Prerequisites Marine Marauder Dedication Requirements You have a swim Speed, are underwater, and have a creature grabbed or restrained. You sink or rise rapidly alongside your target, altering their internal pressure. You Swim up to your swim Speed either up or down, and the required creature moves with you and must attempt a Fortitude save. For this movement, swimming up or down isn’t difficult terrain. Success The target is unaffected Failure The target is sickened 1. Critical Failure The target is sickened 2."
+ },
+ {
+  "id": "preventative-treatment",
+  "name": "Preventative Treatment",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "secret"
+  ],
+  "prerequisites": [
+   "Medic Dedication",
+   "Treat Condition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You provide preventative remedies and care to help your patient fight off future maladies. You Treat a Condition the target doesn't yet have, naming any condition you could normally treat with Treat Condition. The counteract check gains the secret trait, so the GM rolls it secretly. The next time within the next minute the creature would be affected by that condition, your treatment immediately attempts to reduce the condition value with the effects of Treat Condition, using the secret roll result for the check. Preventative Treatment lasts on a creature for 1 minute, until the treatment is used, or until you use Preventative Treatment again on that creature, whichever comes first."
+ },
+ {
+  "id": "pride-hunter",
+  "name": "Pride Hunter",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You avoid the attention of creatures focused on your allies. You can use lesser cover from your allies to Hide."
+ },
+ {
+  "id": "pride-in-arms",
+  "name": "Pride in Arms",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "auditory",
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within 30 feet brings an enemy to 0 Hit Points. --- With a shout of triumph, you grant inspiration to an ally fight on. The triggering ally gains temporary Hit Points equal to their Constitution modifier until the end of their next turn."
+ },
+ {
+  "id": "primal-breadth",
+  "name": "Primal Breadth",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Druid Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Increase the spell slots you gain from druid archetype feats by 1 for each spell rank other than your two highest druid spell slots."
+ },
+ {
+  "id": "primal-focus",
+  "name": "Primal Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to nature is particularly strong, and the spirits of nature flock around you, helping you replenish your focus. Whenever you Refocus, completely refill your focus pool."
+ },
+ {
+  "id": "pristine-weapon",
+  "name": "Pristine Weapon",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Verdant Weapon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your verdant weapon can cut through the resistances of magical creatures. The weapon is treated as cold iron and silver. If you critically hit a creature that has a weakness to cold iron or silver, the target takes 1d6 damage as the primal energies within your weapon slow its natural healing."
+ },
+ {
+  "id": "project-persona",
+  "name": "Project Persona",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "gnome",
+   "illusion",
+   "primal",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Where others etch their armor to serve as a conduit for their imaginations, your vivid mind and bold personality allow you to project a more fitting persona over your lackluster armor. You change the shape and appearance of your armor to appear as ordinary or fine clothes of your imagining. The armor's statistics don't change. This effect lasts as long as you remain conscious and are wearing the armor. A creature can disbelieve the illusion by Seeking or touching your armor. The DC equals your Will DC."
+ },
+ {
+  "id": "projectile-snatching",
+  "name": "Projectile Snatching",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Deflect Projectile"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You pluck missiles from the air and hurl them back at their source. When you successfully deflect an attack with Deflect Projectile, as part of that same reaction, you can then immediately make a ranged Strike against the attacker using the projectile you deflected. This is a thrown weapon with the same range increment and effect on a hit as the triggering attack."
+ },
+ {
+  "id": "prolific-prophet-spellcasting",
+  "name": "Prolific Prophet Spellcasting",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Prophet Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Increase the number of spells in your repertoire and the number of spell slots you gain from prophet of Kalistrade archetype feats by 1 for each spell rank other than your two highest prophet of Kalistrade spell slots."
+ },
+ {
+  "id": "propeller-attachment",
+  "name": "Propeller Attachment",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Trapsmith Dedication",
+   "master in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've mastered attaching clockwork propellers to your daily quick-deploy snares that use gears. This allows you to place your snares in the air or underwater, where they remain in place for up to 10 minutes, after which the propeller runs out of power and they fall or sink. Unless you use additional precautions to hide it, a propeller snare's location is usually obvious."
+ },
+ {
+  "id": "propelling-sorcery",
+  "name": "Propelling Sorcery",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The force of your magic can be used to propel yourself or another. You know the following blood magic effect. **Blood Magic—Propelling Sorcery** You channel your magic outward into a rush of movement. Either you Step as a free action or move the target 5 feet in a direction of your choice."
+ },
+ {
+  "id": "prophesied-monarch-dedication",
+  "name": "Prophesied Monarch Dedication",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "destiny",
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your Calling has culminated in a destiny of rulership, and you're able to forge a mythic bond with noble knights whose destinies become intertwined with your own. Designate up to five allies as your knights; as long as you're conscious, your knights' doomed condition can't rise above 3, and if they're ever in mortal peril (such as being unconscious with the dying condition or imprisoned in an enemy fortress), you instantly receive a vision revealing their location and condition. In addition, you gain the Royal Grace exploration activity."
+ },
+ {
+  "id": "propulsive-mutation",
+  "name": "Propulsive Mutation",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ostilli Host Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ostilli can fire its dart farther. When you Spit Ambient Magic, the range increases to 60 feet."
+ },
+ {
+  "id": "protective-bond",
+  "name": "Protective Bond",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You and your eidolon are in a damaging effect's area. The power of your bond can protect you and your eidolon from harm. If you and your eidolon would take different amounts of damage from the area effect, you take the lower amount of damage instead of the greater amount of damage. --- **Special** This feat has the trait matching your eidolon's tradition (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "protective-claws",
+  "name": "Protective Claws",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "goloma"
+  ],
+  "prerequisites": [
+   "vicious goloma heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The chitin on your claws is so hard you can defend against attacks with them. Your claw unarmed attack from the vicious goloma heritage gains the parry weapon trait."
+ },
+ {
+  "id": "protective-strike",
+  "name": "Protective Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ulfen Guard Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature moves adjacent to or attempts a melee Strike against your designated ally. --- You keep harm at bay. Make a melee Strike against the triggering creature. On a critical success, you interrupt the triggering action."
+ },
+ {
+  "id": "proud-mentor",
+  "name": "Proud Mentor",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "centaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You enjoy mentoring others and take pride in your students' accomplishments. If you get a critical failure on an attempt to Aid, you get a failure instead. Whenever you successfully Aid an ally who critically succeeds on the check you Aided them on, you feel a rush of pride, gaining temporary Hit Points equal to your level, which last for 1 minute."
+ },
+ {
+  "id": "proud-nail",
+  "name": "Proud Nail",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your taunted enemy is off-guard because it didn't target you or include you in an area effect. --- When a foe ignores your taunts, you make them pay. Make a melee Strike against your taunted enemy. If this Strike hits, you deal an extra die of weapon damage. If you're at least 10th level, increase this to two extra dice, and if you're at least 18th level, increase it to three extra dice."
+ },
+ {
+  "id": "psi-catastrophe",
+  "name": "Psi Catastrophe",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mindshift",
+   "occult",
+   "psyche",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You stop holding your power back, unleashing it all in a catastrophic blast. All creatures in a take 1d6 bludgeoning damage per level with a . Your psyche subsides as your power is expended."
+ },
+ {
+  "id": "pull-together",
+  "name": "Pull Together",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "prerequisites": [],
+  "text": "Pull Together Source Kingmaker Adventure Path pg. 532 Prerequisites Trained in Politics Your people are very reliable, and their swift decision-making keeps most projects from getting too far off track. Once per Kingdom turn when you roll a critical failure on a Kingdom skill check, attempt a DC 11 flat check. If this succeeds, your citizens heed the call to put in extra work to mitigate the disaster; treat the Kingdom skill check result as failure instead. The DC of this flat check increases by 5 each time you subsequently use it, but it decreases by 1 (to a minimum of 11) for each Kingdom turn that passes when you do not use it."
+ },
+ {
+  "id": "pupils-guard",
+  "name": "Pupil's Guard",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your student would be targeted with a reaction (such as Reactive Strike) due to their Stride or manipulate action. **Requirements** You're adjacent to your student. --- You're intimately familiar with your student's motions and are ready to step in at a moment's notice should anything threaten to disrupt them. You interpose yourself between the attack and your student, becoming the target of the reaction and taking all damage and associated effects (if any) yourself. This allows your student to complete their action without interruption."
+ },
+ {
+  "id": "purifying-spell",
+  "name": "Purifying Spell",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "druid",
+   "spellshape",
+   "water"
+  ],
+  "prerequisites": [
+   "wave order"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You purify the water within a creature's body to cleanse them of illness. If the next action you use is to cast Heal targeting a single living creature, you can attempt to counteract a disease or poison affecting the target, in addition to the other benefits of *heal*. If you do, *heal* gains the water trait."
+ },
+ {
+  "id": "pyre-ant-sting",
+  "name": "Pyre Ant Sting",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Swarmkeeper Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your swarm is outside your body. --- Your swarm's stings burn with agonizing pain, much like that caused by the bright red pyre ants that make their tunnels within the parched sands of deserts like Qadira. Each creature in your swarm's space must succeed at a save against your class DC or spell DC, whichever is higher, or take damage. A creature that critically fails is also Enfeebled 1 for as long as it's taking this persistent poison damage. At 8th level and every 4 levels thereafter, the persistent poison damage increases by 1d6."
+ },
+ {
+  "id": "qi-spells",
+  "name": "Qi Spells",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have cultivated your qi to produce magical effects. You gain Inner Upheaval, Qi Rush, or another 1st-rank monk qi spell you have access to. --- **Special** You can select this feat more than once, choosing a different spell each time."
+ },
+ {
+  "id": "quadruped",
+  "name": "Quadruped",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "poppet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You were crafted in a form with four legs rather than two. Your Speed is 30 feet. **Special** You can take this feat only at 1st level, and you can't retrain into or out of this feat."
+ },
+ {
+  "id": "quaking-stomp",
+  "name": "Quaking Stomp",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "manipulate",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- You stomp the ground with such force that it creates a minor earthquake, with the effects of the Earthquake spell using your class DC."
+ },
+ {
+  "id": "quality-of-life",
+  "name": "Quality of Life",
+  "level": 7,
+  "category": "general",
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "prerequisites": [],
+  "text": "Quality of Life Source Kingmaker Adventure Path pg. 532 Your kingdom's robust economy makes the creature comforts of civilization more readily available to all, and even finer luxuries are more easily had. The first time you gain Luxury Commodities in a Kingdom turn, increase the total gained by 1. All of your settlements are treated as 1 level higher than their actual level for the purposes of determining what sorts of magic items might be offered for sale at their markets and shops."
+ },
+ {
+  "id": "quick-alchemy",
+  "name": "Quick Alchemy",
+  "level": 4,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Quick Alchemy Source Core Rulebook pg. 220 Archetype Alchemist Prerequisites Alchemist Dedication You gain the Quick Alchemy action."
+ },
+ {
+  "id": "quick-bomber",
+  "name": "Quick Bomber",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You keep your bombs and bomb-related reagents in easy-toreach pouches from which you draw without thinking. You Interact to draw a bomb, draw a versatile vial, or use Quick Alchemy to create a bomb, then Strike with the bomb. If you have the ability to create more than one bomb at a time with Quick Alchemy (such as from the double brew class feature), you can Strike with only one of the bombs you create with this action."
+ },
+ {
+  "id": "quick-coercion",
+  "name": "Quick Coercion",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Intimidation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can bully others with just a few choice implications. You can Coerce a creature after 1 round of conversation instead of 1 minute. You still can't Coerce a creature in the midst of combat, or without engaging in a conversation."
+ },
+ {
+  "id": "quick-draw",
+  "name": "Quick Draw",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "gunslinger",
+   "ranger",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You draw your weapon and attack with the same motion. You Interact to draw a weapon, then Strike with that weapon."
+ },
+ {
+  "id": "quick-juggler",
+  "name": "Quick Juggler",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Juggler Dedication",
+   "expert in Performance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you start to juggle or add another item to those you are Juggling, you add two items instead of one. Increase the maximum number of items you can Juggle by one."
+ },
+ {
+  "id": "quick-jump",
+  "name": "Quick Jump",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use High Jump and Long Jump as a single action instead of 2 actions. If you do, you don't perform the initial Stride (nor do you fail if you don't Stride 10 feet)."
+ },
+ {
+  "id": "quick-mount",
+  "name": "Quick Mount",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Cavalier Dedication",
+   "expert in Nature"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are adjacent to a creature that is at least one size larger than you and is willing to be your mount. --- You and your mount can spring into action at a moment's notice. You Mount the creature and Command an Animal to issue it an order of your choice."
+ },
+ {
+  "id": "quick-positioning",
+  "name": "Quick Positioning",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Game Hunter Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** You could see your hunted prey when you rolled initiative at the beginning of the encounter, and this is your first action on your first turn of the encounter. You're always ready to get the jump on your target. You Step up to twice."
+ },
+ {
+  "id": "quick-reversal",
+  "name": "Quick Reversal",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are flanked by at least two enemies. --- You turn your foes' flanking against them with a quick reverse. Make a melee Strike against one of the flanking enemies and make a second Strike with the same weapon or unarmed attack against a different enemy that is flanking you. This second Strike has the same multiple attack penalty of the initial attack and doesn't count toward your multiple attack penalty."
+ },
+ {
+  "id": "quick-root",
+  "name": "Quick Root",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [],
+  "prerequisites": [
+   "ardande trait, plant trait, or wood trait"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature successfully Shoves or Trips you, or you fail a saving throw against an effect that would move you or knock you prone. --- You react instinctively, sprouting roots from your legs and plunging them deep into the ground to keep your footing. If a force would move you, you move half that distance, to a minimum of 5 feet. If you would be knocked prone, resolve the effect, then you Stand. --- **Special** This feat gains the trait for your ancestry."
+ },
+ {
+  "id": "quick-setup",
+  "name": "Quick Setup",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "If you reduce the setup time for a batch of consumables at least 6 levels lower than you to less than 1 day, you can set it up in just 2 hours (allowing you to do so during an adventuring day if you have access to your tools and materials). If you rush the setup of a permanent item at least 6 levels lower than you and reduce the setup time to less than 1 day, you can perform the setup in 4 hours."
+ }
+]

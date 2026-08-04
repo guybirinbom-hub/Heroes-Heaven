@@ -1,0 +1,957 @@
+[
+ {
+  "id": "ashen-veil",
+  "name": "Ashen Veil",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "manipulate",
+   "skill"
+  ],
+  "prerequisites": [
+   "Knight Reclaimant Dedication",
+   "expert in Religion",
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "By smearing ash or tainted earth over your skin and armor, you shroud yourself from the dead. You become concealed to undead using vision or lifesense, allowing you to Hide and Sneak without other sources of cover or concealment. This effect lasts only as long as you continue to take no actions other than to Hide, Sneak, or other surreptitious actions. The GM determines which actions end the effect, but attacking, casting spells, activating items, and the like always do."
+ },
+ {
+  "id": "assassin-dedication",
+  "name": "Assassin Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in Deception",
+   "trained in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained to assassinate your foes, and you do so with tenacity and precision. You gain the Mark for Death activity."
+ },
+ {
+  "id": "assured-identification",
+  "name": "Assured Identification",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Arcana, Nature, Occultism, or Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You rarely misidentify an item. When using Arcana, Nature, Occultism, or Religion checks to Identify Magic, if you roll a critical failure, you get a failure instead. If you would misidentify a cursed item because you roll a success but not a critical success, you simply can't identify it instead."
+ },
+ {
+  "id": "assured-knowledge",
+  "name": "Assured Knowledge",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "enigma muse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can procure information with confidence. Whenever you Recall Knowledge using any skill (including Bardic Lore), you can forgo rolling your check to instead receive a result of 10 + your proficiency bonus (don't apply any other bonuses, penalties, or modifiers). As long as you are an expert in a skill, you meet the prerequisites for the Automatic Knowledge skill feat in that skill, even if you don't have Assurance in that skill."
+ },
+ {
+  "id": "athletes-ally",
+  "name": "Athlete's Ally",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "magical",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Warshard Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding your warshard weapon. --- You channel the power of your warshard through your weapon to better perform athletic maneuvers. Spend a Mythic Point. For 1 minute, when you attempt Athletics checks to Disarm, Grapple, Reposition, Shove, or Trip with your warshard weapon, you do so at mythic proficiency. Note that this ability doesn't grant additional weapon traits to your weapon, so your options for which of these maneuvers you can attempt might be limited by your weapon's existing traits."
+ },
+ {
+  "id": "athletic-might",
+  "name": "Athletic Might",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Surviving in hostile terrain has given you a great talent for mobility. Whenever you roll a success on an Athletics check to Climb or Swim, you get a critical success instead."
+ },
+ {
+  "id": "athletic-strategist",
+  "name": "Athletic Strategist",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to calculatedly manipulate joints and body weight. In addition to using an attack stratagem's roll substitution for a Strike, you can use it to modify a Disarm, Grapple, Reposition, Shove, or Trip attempt, substituting your Devise a Stratagem roll for the Athletics check. You must apply the substitution to the first eligible attack you make, whether it's a Strike or one of the Athletics actions. You can also use your Intelligence modifier instead of Strength for the Athletics check when you substitute your Devise a Stratagem roll, unless you're using a weapon for the maneuver and the weapon doesn't fit the restrictions for using Intelligence with a stratagem."
+ },
+ {
+  "id": "attuned-electroreceptors",
+  "name": "Attuned Electroreceptors",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "athamaru"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You grow specialized organs that allow you to detect even the faintest of heartbeats. You can sense living creatures and any creature with the electricity trait as an imprecise sense with a range of 20 feet. This range doubles while you are underwater, though only in the body of water you're in."
+ },
+ {
+  "id": "attuned-stride",
+  "name": "Attuned Stride",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Geomancer Dedication",
+   "expert in Nature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can move freely through terrain you're attuned to. When you gain a terrain attunement benefit, you ignore difficult terrain in the corresponding type of terrain until the end of your next turn."
+ },
+ {
+  "id": "attunement-shift",
+  "name": "Attunement Shift",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Geomancer Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Frequency** once per 10 minutes **Requirements** Your previous action was to cast a spell with the air, cold, earth, fire, plant, or water trait. --- The magic of your spell floods into you, overriding your connection to the land around you. You alter your terrain attunement to a terrain that matches a trait of the spell you just cast. You thereby gain your terrain attunement benefit when you cast further spells with the same descriptor, instead of using the terrain you're actually in. For instance, if you cast Tangle Vine, your terrain attunement switches to your choice of forest or swamp, and your terrain attunement applies when you cast another plant spell. Your terrain attunement reverts to that of the terrain you're in 1 minute after you use Attunement Shift."
+ },
+ {
+  "id": "augment-senses",
+  "name": "Augment Senses",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "fleshwarp"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You open vestigial eyes, unfurl tympanic flaps of skin, or otherwise enhance your senses. Until the start of your next turn, you gain the following benefits: you can't be flanked; when you Seek for creatures, you can scan a or a instead of the normal area; and when you Seek for hidden objects, you can search a 15-foot square instead of the normal area."
+ },
+ {
+  "id": "aura-enhancement",
+  "name": "Aura Enhancement",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Battle Harbinger Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've enhanced your training with your battle magic, allowing you access to a more potent divine font. Add Benediction and Malediction to the spells you can prepare with your additional slots from your divine font. These spells are also battle auras."
+ },
+ {
+  "id": "aura-expertise",
+  "name": "Aura Expertise",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Battle Harbinger Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn begins. --- You've become so accustomed to maintaining your battle auras that it's become second nature to you. You immediately gain the effects of the Sustain action for one of your battle auras."
+ },
+ {
+  "id": "aura-of-courage",
+  "name": "Aura of Courage",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "champion's aura",
+   "holy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You stand strong in the face of danger and inspire your allies to do the same. Whenever you become frightened, reduce the condition value by 1 (to a minimum of 0). At the end of your turn, each ally in your champion's aura reduces its frightened value by 1."
+ },
+ {
+  "id": "aura-of-despair",
+  "name": "Aura of Despair",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "champion's aura",
+   "unholy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your presence as an avatar of evil makes your foes more susceptible to terror and makes it almost impossible for them to shake off fear when you are near. Enemies in your champion's aura take a –1 circumstance penalty to saving throws against fear. In addition, an enemy that ends its turn in your champion's aura can't reduce the value of its frightened condition below 1."
+ },
+ {
+  "id": "aura-of-faith",
+  "name": "Aura of Faith",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "holy or unholy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You radiate an aura of belief that imbues your attacks and those of nearby allies with divine power. Each willing ally in your champion's aura adds the holy trait to their Strikes if you're holy or adds the unholy trait to their Strikes if you're unholy."
+ },
+ {
+  "id": "aura-of-unbreakable-virtue",
+  "name": "Aura of Unbreakable Virtue",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [],
+  "text": "Aura of Unbreakable Virtue May contain spoilers from Age of Ashes Source Pathfinder #150: Broken Promises pg. 76 Prerequisites tenets of good You are a paragon of all that is good, your overwhelming aura causing evildoers to cower. All evil creatures within 15 feet of you take a –1 status penalty to checks and DCs that target you or your allies. This penalty is –2 against creatures you have taken an oath against (such as dragons if you have the Dragonslayer Oath feat). You can choose to suppress or resume this aura as an action, which has the concentrate trait. Paragons of Promise Source Pathfinder #150: Broken Promises pg. 75 The citizens of Promise represent some of the most capable experts, greatest minds, and powerful warriors on Golarion—ideal teachers and trainers for PCs who want to maximize their own potential. If the PCs secure Visitor’s Pins or an alliance with Mengkare, their access to Promise’s trainers and records unlock all of the following uncommon class feats. Related Feats: Apex Companion, Bloodline Metamorphosis, Efficient Alchemy (Paragon), Emblazon Divinity, Enduring Debilitation, Golden Body, Song of the Fallen, Spell Mastery, Superior Sight, Ultimate Flexibility, Unstoppable Juggernaut"
+ },
+ {
+  "id": "aura-of-vengeance",
+  "name": "Aura of Vengeance",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Exalt",
+   "Vengeful Oath"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you call upon others to take retribution, you also guide their aim. When you use Retributive Strike, your allies who make Strikes take only a -2 penalty, instead of a -5 penalty."
+ },
+ {
+  "id": "automatic-psychic-action",
+  "name": "Automatic Psychic Action",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "psychic"
+  ],
+  "prerequisites": [],
+  "text": "Automatic Psychic Action Source Dark Archives (Remastered) pg. 29 Your power wants to be free. You're permanently quickened, and can use the additional action only for psyche actions."
+ },
+ {
+  "id": "autonomic-psychic-action",
+  "name": "Autonomic Psychic Action",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your power wants to be free. You're permanently quickened, and can use the additional action only for psyche actions."
+ },
+ {
+  "id": "avalanche-strike",
+  "name": "Avalanche Strike",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Mauler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You are wielding a melee weapon in two hands. --- You attack all nearby adversaries. Make a melee Strike with your two-handed weapon against each enemy within its melee reach. Each attack counts toward your multiple attack penalty, but don't increase your penalty until you have made all your attacks."
+ },
+ {
+  "id": "avatars-protection",
+  "name": "Avatar's Protection",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are critically hit by an enemy. **Requirements** You have an Avatar spell prepared. --- In moments of danger, you can call upon your god's form in an instant. You cast *avatar* from your spell slots. The triggering critical hit is reduced to a normal hit, and its damage is applied after gaining the *avatar* spell's temporary Hit Points."
+ },
+ {
+  "id": "avenge-ally",
+  "name": "Avenge Ally",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "elf",
+   "fortune"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once every 10 minutes **Requirements** You are within 30 feet of an ally with the dying condition. --- Though you know that you will eventually outlive your companions, seeing them at death's door brings clarity to your attacks. Make a Strike. Roll twice on the attack roll and use the higher result."
+ },
+ {
+  "id": "avenger-of-envy",
+  "name": "Avenger of Envy",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've become the champion of the runelords of envy. Their support gives you a heightened awareness of your own failings, but you can call their spirits to your side to protect you from harm. The first time each day you critically fail a skill check or saving throw, you gain 1 Mythic Point. You gain the Aegis of Envy activity."
+ },
+ {
+  "id": "avenger-of-gluttony",
+  "name": "Avenger of Gluttony",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've become the champion of the runelords of gluttony, and their hungry spirits are always near you. Whenever a spell or other magical effect restores Hit Points to you, you can choose to reduce the number of Hit Points you regain by any amount. The first time each day you reduce the Hit Points by an amount equal to your level, you gain 1 Mythic Point. You gain the Gluttonous Feast activity."
+ },
+ {
+  "id": "avenger-of-greed",
+  "name": "Avenger of Greed",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've become a champion of the runelords of greed. Their whispers encourage you to prepare for disasters that might never come to pass. The first time each day you touch an object worth at least 2,000 gp that you've never touched before, you gain 1 Mythic Point. You gain the Convocation of Greed activity."
+ },
+ {
+  "id": "avenger-of-lust",
+  "name": "Avenger of Lust",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've become a favorite of Sorshen, the Runelord of Lust. She watches over you wherever you go, protecting you and your companions in times of need. The first time each day you either cast or are the target of a spell of 6th rank or higher that has the emotion or healing trait, you gain 1 Mythic Point. You gain the Sorshen's Devotion reaction."
+ },
+ {
+  "id": "avenger-of-sloth",
+  "name": "Avenger of Sloth",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've become a champion of the runelords of sloth. They spur you toward idleness, and their spirits are slow to come to your aid. Once they arrive, however, their combined might is undeniable. The first time each day you spend 10 minutes resting, you gain 1 Mythic Point. During this time, you don't need to sleep, but you can't perform activities like Refocus or Treat Wounds. You gain the Summon Sloth activity."
+ },
+ {
+  "id": "avenger-of-wrath",
+  "name": "Avenger of Wrath",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've become a champion of the runelords of wrath. You gain the Reactive Strike reaction. The first time each day you score a critical hit with a Reactive Strike, you gain 1 Mythic Point. You gain the Host of Wrath activity."
+ },
+ {
+  "id": "avoid-fates-gaze",
+  "name": "Avoid Fate's Gaze",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Heroic Scion Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your past and current enemies may know you by reputation, but spying on you with magic is much more difficult. Whenever you attempt a saving throw against a scrying or effect, you do so at mythic proficiency. Scrying effects that attempt to observe you that don't allow saving throws to resist (such as or ) treat you as if you were concealed and actively trying to Hide or Sneak unless they are mythic as well."
+ },
+ {
+  "id": "awaken-others",
+  "name": "Awaken Others",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "awakened-animal"
+  ],
+  "prerequisites": [
+   "master in Nature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can awaken others just through contact and communication. You learn the Awaken Animal ritual. You use your own nature to supplement the ritual, so it costs 1/10 the value on the Creature Creation Rituals table instead of 1/5. If you would get a critical failure on the check, you instead get a failure."
+ },
+ {
+  "id": "awakened-stride",
+  "name": "Awakened Stride",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "awakened-animal"
+  ],
+  "prerequisites": [
+   "Wild Stride"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You blend your instinct and intellect to move so fast you seem to be a blur. When you use Wild Stride, you can Stride three times, and you're concealed during the movement."
+ },
+ {
+  "id": "awakened-yaoguai-heritage",
+  "name": "Awakened Yaoguai Heritage",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "yaoguai"
+  ],
+  "prerequisites": [
+   "You have a versatile heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've delved into the power of your legacy. You gain all the mechanical benefits of the yaoguai heritage you selected at first level, allowing you to take feats and gain any benefits that require a specific yaoguai heritage."
+ },
+ {
+  "id": "axe-climber",
+  "name": "Axe Climber",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Turpin Rowe Lumberjack Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you are climbing a wooden surface and have a Hatchet or Battle Axe in each hand, you have a climb Speed equal to half your normal Speed. You must still have both legs available to climb and can't use either of the axes in combat while climbing. This feat can also be used to climb a surface of ice if you have a Light Pick in each hand."
+ },
+ {
+  "id": "axe-thrower",
+  "name": "Axe Thrower",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Turpin Rowe Lumberjack Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have mastered the weight and balance of a variety of axes and can lob them with ease. Any one-handed axe weapon you wield has the thrown trait with a range of 10 feet. For axes that already have the thrown trait, the range increases by 10 feet. When you critically succeed at an attack roll with a thrown axe weapon, you apply the axe's critical specialization effect."
+ },
+ {
+  "id": "back-to-back",
+  "name": "Back to Back",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Marshal Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You excel at watching your allies' backs and helping them watch yours. Any ally adjacent to you can't be off-guard due to flanking unless you're also flanked. Similarly, while you're adjacent to at least one ally, you can't be off-guard due to flanking unless at least one ally you're adjacent to is flanked as well."
+ },
+ {
+  "id": "bamboo-and-silt-repose",
+  "name": "Bamboo and Silt Repose",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "yaksha"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "At home among mire and copse, you flit from river to tree with a dragonfly's shimmering grace. You ignore non-magical difficult terrain due to light undergrowth and shallow bogs, mud, and water, and you treat non-magical greater difficult terrain due to these features as difficult terrain instead."
+ },
+ {
+  "id": "banishing-blow",
+  "name": "Banishing Blow",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Fiendsbane Oath"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Trigger** You use your champion's reaction, triggered by a fiend within your reach. --- The erratic teleportation magic you experienced in the Kortos Mounts has taught you a few tricks. You attempt an Athletics check to Shove the fiend that triggered your champion's reaction; on a success, the target can't teleport or summon creatures for 1 minute. On a critical success, the target is also Stunned 1 and can't teleport or summon creatures for 1 hour, and if you are on your home plane and the target is a fiend of level 18 or lower from another plane, it is also banished to its home plane. Your multiple attack penalty doesn't apply to this attack."
+ },
+ {
+  "id": "banner-twirl",
+  "name": "Banner Twirl",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "brandish",
+   "commander",
+   "manipulate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You spin your banner in an elaborate pattern that your enemies find inscrutable. You and any ally adjacent to you have Concealment from ranged attacks until the start of your next turn."
+ },
+ {
+  "id": "banshee-cry-display",
+  "name": "Banshee Cry Display",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Firework Technician Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to unleash a sudden and disruptive noisemaker at just the right moment in your display, a technique that can cause a spellcaster to fumble the phrasing of their magic. You gain the Banshee Cry fireworks display."
+ },
+ {
+  "id": "bargain-hunter",
+  "name": "Bargain Hunter",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can Earn Income using Diplomacy, spending your days hunting for bargains and reselling at a profit. You can also spend time specifically sniffing out a great bargain on an item; this works as if you were using Earn Income with Diplomacy, except instead of gaining money, you purchase the item at a discount equal to the money you would have gained, gaining the item for free if your earned income equals or exceeds its cost. Finally, if you select Bargain Hunter during character creation at 1st level, you start play with an additional 2 gp."
+ },
+ {
+  "id": "barrier-of-boreal-frost",
+  "name": "Barrier of Boreal Frost",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "cold",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You form an intricate structure of ice, such as a wall of bricks made of packed snow or a screen of enormous icicles. This has the effect of a Wall of Ice spell with a spell rank equal to half your level rounded up. It can only be a wall (not a hemisphere), and you choose whether the ice is transparent or opaque. The wall lasts until the end of your next turn, but you can Sustain it up to 1 minute."
+ },
+ {
+  "id": "barrier-shield",
+  "name": "Barrier Shield",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast shield"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Shield, you can modify the spell to create a solid barrier you can use for , but not for blocking. You can't use the Shield Block reaction when the spell is modified in this way, but you (and only you) can spend an action to Take Cover to gain standard cover from it."
+ },
+ {
+  "id": "basic-animist-spellcasting",
+  "name": "Basic Animist Spellcasting",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Animist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the basic spellcasting benefits as a prepared divine caster. In addition to standard divine tradition spells, you can prepare your bonded apparition's apparition spells in your spell slots of the appropriate level from the animist archetype."
+ },
+ {
+  "id": "basic-cleric-spellcasting",
+  "name": "Basic Cleric Spellcasting",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cleric Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits. You can prepare your deity's spells in your spell slots of the appropriate rank from the cleric archetype."
+ },
+ {
+  "id": "basic-druid-spellcasting",
+  "name": "Basic Druid Spellcasting",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Druid Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "basic-magus-spellcasting",
+  "name": "Basic Magus Spellcasting",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Magus Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "basic-modification",
+  "name": "Basic Modification",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Inventor Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to modify your innovation in order to enhance its capabilities beyond what an ordinary piece of equipment can accomplish. You gain a basic modification of your choice for your innovation. Your innovation must meet any requirements for the modification you choose, as normal."
+ },
+ {
+  "id": "basic-scroll-cache",
+  "name": "Basic Scroll Cache",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Scroll Trickster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a vast and overflowing collection of scroll scraps, riddled with errors and misspellings and leaking energy like a sieve. With enough care, you can coax these scroll scraps into functioning—briefly. Each day during your daily preparations, you can create a single temporary scroll containing a 1st-rank spell. The spell must be a common spell, a spell to which you have access, or a spell you are able to cast, and you must be trained in the skill corresponding to at least one of the spell's traditions. You can use Learn a Spell to add spells to those you can use with this feat, even if you aren't a spellcaster. This scroll is an unstable, temporary item and loses its magic the next time you make your daily preparations if you haven't already used it. This temporary scroll can't be used to Learn the Spell. At 8th level, add a second temporary scroll containing a 2nd-rank spell."
+ },
+ {
+  "id": "bat-around",
+  "name": "Bat Around",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Beast Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your attack moves a foe into a position that your united companion can take full advantage of. Make a melee Strike against an enemy. As long as your Strike deals damage, you can attempt an Athletics check to either Reposition or Shove the creature you hit. Both attacks count toward your multiple attack penalty, but it doesn't increase until after you've made both attacks. If your Reposition or Shove moves the target and it ends this movement within your united companion's reach, your companion can Strike the target. Unless it critically fails, your companion can also attempt an Athletics check to Reposition or Shove the creature. These attacks affect your united companion's multiple attack penalty the same way."
+ },
+ {
+  "id": "battle-hardened-companion",
+  "name": "Battle-Hardened Companion",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [
+   "Battle-Tested Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Accompanying you across countless battlefields has allowed your companion to unleash its full potential. The companion you gained with Commander's Companion is now a nimble or savage animal companion. Your animal companion is more readily responsive to your will. During an encounter, even if you don't use the Command an Animal action, your animal companion can still use 1 action that round on your turn to Stride or Strike. If it does, it also gains a reaction it can use to respond to your tactics, but that's all the actions it gets that round—you can't Command it later."
+ },
+ {
+  "id": "battle-planner",
+  "name": "Battle Planner",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Warfare Lore"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are constantly drawing up plans and battle scenarios, assembling strategies and gathered intelligence for later use. When you scout an enemy's position or receive a detailed report from an ally who scouted the enemy's position, if you have a clear indication of the number, position, and identities of your potential foes, you can spend 1 minute to come up with a battle plan that takes such potential factors into account and reduces the role luck plays in the equation. Roll a Warfare Lore check. As long as the information was accurate and remains accurate when you roll initiative against those enemies, you can use the Warfare Lore result you previously rolled for your initiative roll; if you do, this is a fortune effect."
+ },
+ {
+  "id": "battle-scars",
+  "name": "Battle Scars",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellbreaker Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've faced enough opponents that your experience is written across your skin, toughening you against your fiendish foes. You gain resistance to bludgeoning and slashing damage from devils and creatures allied with the Chelaxian government (as determined by the GM) equal to half your level."
+ },
+ {
+  "id": "battle-tested-companion",
+  "name": "Battle-Tested Companion",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [
+   "Commander's Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your companion is a tried and tested ally of unshakable reliability. The companion you gained with Commander's Companion is now a mature animal companion. While your banner is affixed to this companion, the banner's aura is 10 feet greater than it normally is (typically this means the banner's 30-foot aura becomes a 40-foot aura)."
+ },
+ {
+  "id": "battlefield-agility",
+  "name": "Battlefield Agility",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Blackjacket Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're flanked by at least two enemies. --- Your enemies might think they have you surrounded, but you know just how to extricate yourself. Make a melee Strike against one of the enemies flanking you and Step, in any order."
+ },
+ {
+  "id": "battlefield-arcana",
+  "name": "Battlefield Arcana",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Steady Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have learned to safely cast spells even in the heat of battle. If the next action you use is to cast a wizard cantrip, or a wizard spell that is at least 2 ranks lower than the highest-rank wizard spell slot you have, that spell does not trigger reactions that normally trigger due to a spell being cast or someone using an action with the manipulate trait."
+ },
+ {
+  "id": "battleforger",
+  "name": "Battleforger",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [
+   "master in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can sharpen weapons, polish armor, and apply special techniques to temporarily gain better effects from your armaments. By spending 1 hour working on a weapon or armor, you can grant it the effects of a *+1 potency* rune until your next daily preparations, gaining a +1 item bonus to attack rolls for a weapon or increasing armor's item bonus to AC by 1. This has no effect if the weapon or armor already had a *potency* rune."
+ },
+ {
+  "id": "beacon-mark",
+  "name": "Beacon Mark",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Tracing Sigil"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Sigil, you can modify the spell to add the following heightened entry. --- **Heightened (4th)** You attune yourself to the marked target. While the spell lasts, you can spend a single action, which has the concentrate, detection, and divination traits, to attempt to locate the target, learning the direction to the target as long as you are within 1 mile of it. If the target is a creature or a creature is in possession of the target object, the creature can attempt a saving throw against your spell DC. If it succeeds, your attempt to locate the target fails and you can't attempt this again for 1 day. You can only have a single target marked with a sigil modified in this way. If you Cast this Spell again on a second target, the sigil spell on the first target ends, and your mark fades."
+ },
+ {
+  "id": "bear-empathy",
+  "name": "Bear Empathy",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a magical affinity for bears and can speak to them through sounds and body language. You can communicate with all bears, as well as other ursine creatures at the GM's discretion."
+ },
+ {
+  "id": "bear-hug",
+  "name": "Bear Hug",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful claw Strike. --- You snatch at your opponent with your claws, pulling them close in a ferocious bear hug. You make another claw Strike against the same target. If this Strike hits, the target is also grabbed."
+ }
+]

@@ -1,0 +1,969 @@
+[
+ {
+  "id": "shackles-of-law",
+  "name": "Shackles of Law",
+  "level": 1,
+  "category": "bonus",
+  "traits": [
+   "flourish"
+  ],
+  "prerequisites": [
+   "Order of the Chain"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You attempt to subdue a target with an attack and a follow‐up grab. Make a melee Strike. If it hits and deals damage, you can attempt an Athletics check to grapple the creature you hit. If you're wielding a flail or spiked chain, you can ignore Grapple's requirement that you have a hand free, and if you succeed at the Athletics check, you get a critical success instead. Both attacks count toward your multiple attack penalty, but the penalty doesn't increase until after you've made both of them."
+ },
+ {
+  "id": "shadow-blending",
+  "name": "Shadow Blending",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "fetchling",
+   "illusion",
+   "occult",
+   "shadow"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature attempts a flat check to target you while you're concealed or hidden due to dim light or darkness. --- You draw shadows close to create a shroud. Increase the DC of the flat check by 2."
+ },
+ {
+  "id": "shadow-hunter",
+  "name": "Shadow Hunter",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Camouflage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You blend in to your surroundings so well that others have trouble telling you apart from the terrain. While in natural terrain, you're always concealed from all foes if you choose to be, except for your hunted prey."
+ },
+ {
+  "id": "shadow-of-death",
+  "name": "Shadow of Death",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Avenger Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Strikes you make with your deity's favored weapon against a creature with the doomed condition have the death trait, causing the target to be instantly killed when reduced to 0 Hit Points. When killed in this way, attempts to communicate with it, return it to life, turn it into an undead, or otherwise disturb its afterlife fail unless the effect's counteract rank is higher than half your level when you killed the creature (rounded up), or originates from an artifact or a deity."
+ },
+ {
+  "id": "shadow-of-the-wilds",
+  "name": "Shadow of the Wilds",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "leshy"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "It's difficult to notice your passage through wild areas. As long as you're not in an urban environment, you're always considered to be Covering Tracks, even if you chose a different activity in exploration mode."
+ },
+ {
+  "id": "shadow-spells",
+  "name": "Shadow Spells",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Shadowcaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Hidden darkness whispers to you, teaching you secrets of shadow beyond other spellcasters of your tradition. Add Shadow Blast, Shadow Siphon, and Umbral Journey, Replicate, Shadow Army, Shadow Projectile, and Shadow Raid to your spell list. You can thus potentially learn these spells even if they aren't normally on your tradition's spell list."
+ },
+ {
+  "id": "shadow-tempo",
+  "name": "Shadow Tempo",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "wayang"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within your reach uses a move action or leaves a square during a move action they're using. --- As your ally moves past you, you match your movements to their rhythm, following them across the battlefield. You Stride up to your Speed but must follow the same path that the triggering ally takes. You must end your movement adjacent to the triggering ally (or in the last square you were able to move if your ally is able to move farther than your Speed)."
+ },
+ {
+  "id": "shadowpiercing-charge",
+  "name": "Shadowpiercing Charge",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Nidalese Horselord Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You're riding your horse and wielding a melee weapon. --- You charge into the fray on horseback, and those that lurk in the shadows will feel your wrath. You Command an Animal to have your mount Stride up to double its Speed. You can make a melee Strike at up to two enemies that are within your reach at any point during your mount's movement. Both attacks count toward your multiple attack penalty, but the penalty doesn't increase until after you've made both of them. Each Strike that hits a creature in dim light or darkness deals an additional 3d6 damage of the same type as the Strike. This additional damage increases to 4d6 at 15th level and to 5d6 at 18th level."
+ },
+ {
+  "id": "shadows-within-shadows",
+  "name": "Shadows Within Shadows",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "animist",
+   "apparition",
+   "divine",
+   "misfortune",
+   "wandering"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would be detected by an enemy Seeking you, or an enemy would succeed at a counteract check against a spell making you hidden, concealed, or undetected. **Requirements** Your attuned apparition grants Hunting Lore or Underworld Lore as one of its apparition skills. --- Your apparition possesses a furtive and elusive nature that can influence and blend with your spiritual energy to form a protective and nearly impenetrable shroud of nondetection around you. The enemy must reroll the triggering check and take the lower result."
+ },
+ {
+  "id": "shake-it-off",
+  "name": "Shake It Off",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You concentrate on your rage, overcoming fear and fighting back sickness. Reduce your frightened condition value by 1, and attempt a save to recover from the sickened condition as if you had spent an action retching; you reduce your sickened condition value by 1 on a failure (but not on a critical failure), by 2 on a success, or by 3 on a critical success."
+ },
+ {
+  "id": "shamble",
+  "name": "Shamble",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Zombie Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You may be slower than you were in life, but your pace is unfaltering. Stride twice, or three times if you spent 3 actions to Shamble. During this movement, you ignore difficult terrain and greater difficult terrain. You can choose to ignore all circumstance and status penalties to your Speed when you Shamble. If you do, you must succeed at a when you finish Shambling or your body deteriorates."
+ },
+ {
+  "id": "shambling-march",
+  "name": "Shambling March",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Necrologist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your horde is swifter, marching in time to your command. Increase the Speed of your horde by 10 feet."
+ },
+ {
+  "id": "shameless-request",
+  "name": "Shameless Request",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can downplay the consequences or outrageousness of your requests using sheer brazenness and charm. When you Request something, you reduce any DC increases for making an outrageous request by 2, and if you roll a critical failure for your Request, you get a failure instead. While this means you can never cause your target to reduce their attitude toward you by making a Request, they eventually tire of requests, even though they still have a positive attitude toward you."
+ },
+ {
+  "id": "shapechangers-intuition",
+  "name": "Shapechanger's Intuition",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "kitsune"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "A lifetime of experience helps you see through disguises. When you come within 10 feet of a creature that is transformed into another form or is Impersonating a specific creature, the GM rolls a secret Perception check for you to realize that the creature is transformed, even if you didn't spend an action to Seek against that creature."
+ },
+ {
+  "id": "shard-strike",
+  "name": "Shard Strike",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Jagged metal shards form in the air and lash out from you. You choose shards or spines, which changes the area, damage type, and critical failure effect. Each creature in the area attempts a save against your class DC. **Shards** Shards deal damage in a , and a creature that critically fails takes 1d6 damage. **Spines** Spines deal damage in a , and a creature that critically fails is Clumsy 1 until the start of your next turn. --- **Level (+2)** The damage increases by 1d6."
+ },
+ {
+  "id": "share-burden",
+  "name": "Share Burden",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Curse Maelstrom Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within 60 feet would be affected by a curse or misfortune effect, and you wouldn't be affected but you are an eligible target for the effect. --- You draw the misfortune or curse into yourself, potentially enabling you to enter your curse maelstrom state. Instead of affecting your ally, the triggering curse or misfortune effect affects you."
+ },
+ {
+  "id": "share-eidolon-magic",
+  "name": "Share Eidolon Magic",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [
+   "Magical Understudy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon shares innate spells with you. You can cast the innate spells your eidolon gained from Magical Understudy, Magical Adept, and Magical Master. You and your eidolon share the same daily uses of these innate spells."
+ },
+ {
+  "id": "share-rage",
+  "name": "Share Rage",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "barbarian",
+   "rage",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You haven't used this ability since you last Raged. --- You stoke an ally's fury. While you are raging, one willing creature within 30 feet gains the effects of the Rage action, except it can still use concentrate actions. It doesn't get any added benefits from your instinct, feats, or the like."
+ },
+ {
+  "id": "share-tincture",
+  "name": "Share Tincture",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [
+   "alchemical sciences methodology"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You use Quick Tincture, and the item you create remains potent until the start of your next turn. Then you can Interact to pass the item to another creature. If you pass it by throwing it, your ranged attack automatically succeeds. You must have a versatile vial to use Quick Tincture, as normal."
+ },
+ {
+  "id": "shared-assault",
+  "name": "Shared Assault",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "Courageous Assault"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "In the triumph of battle, you can share the glory with another ally. When the ally you chose for Courageous Assault critically succeeds at the Strike granted by that action, another ally affected by your Courageous Anthem composition spell can immediately use a reaction to make a melee Strike. This effect doesn't continue to a third ally, even if the second ally also critically succeeds."
+ },
+ {
+  "id": "shared-attunement",
+  "name": "Shared Attunement",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Geomancer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you would gain a benefit from your terrain attunement, you can grant it to one ally within 30 feet instead of yourself. This has no effect if the terrain attunement affects your foes instead of granting you a benefit."
+ },
+ {
+  "id": "shared-luck-halfling",
+  "name": "Shared Luck (Halfling)",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [
+   "Halfling Luck"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are evidence that it's lucky to travel with a halfling. You can use Halfling Luck when an ally within 30 feet fails a skill check or a saving throw to allow the ally to reroll the triggering check instead of you rerolling your own failed check. As usual, your ally must use the new result, even if it's worse than their first roll. If you have Guiding Luck, you can't use Guiding Luck's effect that applies to attack rolls and Perception checks to use Shared Luck to benefit an ally."
+ },
+ {
+  "id": "shared-mind-shared-heart",
+  "name": "Shared Mind, Shared Heart",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "mental"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your thoughts and dreams are your student's thoughts and dreams, and vice versa. You develop a permanent mental connection, allowing you to communicate telepathically as long as you're on the same plane. When one of you fails a save against a mental effect, the other can choose to take the results of the failed save instead. If both of you are targeted by the same mental effect requiring a saving throw, you and your student take the better of each of your die rolls for the save. You each still add your own save modifier to the die result. This is a fortune effect."
+ },
+ {
+  "id": "shared-overdrive",
+  "name": "Shared Overdrive",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "Overdrive Ally"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've experimented enough on your teammates to transfer a substantial number of powered-up gizmos to them, enabling one of your allies to benefit from the full effects and duration of your Overdrive. The first time you use Overdrive Ally during a given Overdrive, the effect lasts for the remainder of the duration of your Overdrive, instead of just until the end of the target's next turn. Any further uses of Overdrive Ally during the same Overdrive have their normal duration, per Overdrive Ally."
+ },
+ {
+  "id": "shared-prey",
+  "name": "Shared Prey",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Double Prey",
+   "Warden's Boon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Hunting as a duo, you and your ally both single out your prey. When you use Hunt Prey and select only one prey, you can grant your Hunt Prey benefits and hunter's edge to an ally in addition to gaining them yourself. The ally retains these benefits until you use Hunt Prey again."
+ },
+ {
+  "id": "shared-replenishment",
+  "name": "Shared Replenishment",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "Replenishment of War"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When your deity blesses your warlike acts, you can extend that favor to your allies. You can grant the temporary Hit Points from Replenishment of War to an ally within 10 feet instead of gaining them yourself. You can grant these temporary Hit Points to a different ally each time, meaning you might be able to grant them to multiple creatures in a single turn."
+ },
+ {
+  "id": "shared-sight",
+  "name": "Shared Sight",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "bard",
+   "concentrate",
+   "sorcerer",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Soulsight"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You bestow the mystical vision granted to you by your muse upon your allies. If your next action is to cast a non-cantrip spell that affects one or more of your allies, all affected allies gain your spiritsense for 1 minute."
+ },
+ {
+  "id": "shared-stratagem",
+  "name": "Shared Stratagem",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The plans you make include your allies as well as yourself. When you hit a creature with an attack on which you substituted your attack roll due to Devising a Stratagem, designate one ally. The creature you hit is off-guard to that ally on the next attack that ally makes against that creature before the start of your next turn."
+ },
+ {
+  "id": "shared-synergy",
+  "name": "Shared Synergy",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Dualistic Synergy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can grant the benefit from Dualistic Synergy to an ally within 30 feet instead of yourself, either allowing that ally to Recall Knowledge, granting that ally temporary Hit Points, or both, depending on the spell's tradition."
+ },
+ {
+  "id": "shared-tide",
+  "name": "Shared Tide",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "your animal shape has a swim Speed"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You Swim up to twice the normal distance. Any ally you pass within 30 feet of during that movement gains your swim Speed until the beginning of your next turn."
+ },
+ {
+  "id": "shark-attack",
+  "name": "Shark Attack",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Shark Attack Source High Seas pg. 107 Archetype Marine Marauder Prerequisites Marine Marauder Dedication Your swimming skills enable you to lunge through the water in a sudden attack. You Swim twice. At any point during this movement, you Strike."
+ },
+ {
+  "id": "shatter-defenses",
+  "name": "Shatter Defenses",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** A frightened creature is in your melee reach. --- Your offense exploits your enemy's fear. Make a melee Strike against a frightened creature. If you hit and deal damage, the target becomes off-guard until its frightened condition ends. If the target was already off-guard to you when you damaged it with this Strike, it can't reduce its frightened value below 1 until the start of your next turn."
+ },
+ {
+  "id": "shatter-space",
+  "name": "Shatter Space",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "amp",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The sheer power of your magic fractures reality. Use this amp in place of a psi cantrip's normal amp entry. The cantrip must be one that takes 2 or more actions to cast. --- **Amp** You or one target of the spell are surrounded by a spiral of torn space. This is an aura, and you choose the radius of the emanation, up to 20 feet. A creature that starts its turn in the aura or enters the aura during its turn takes 1d6 slashing damage for every rank of the amped psi cantrip, with a save against your spell DC. If the creature critically fails, the torn space throws it off balance and it falls prone. The aura lasts until the beginning of your next turn. You can choose whether the aura affects the creature emitting it."
+ },
+ {
+  "id": "shattering-blows",
+  "name": "Shattering Blows",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your forceful blows shatter objects with ease. While you are raging, damage from your melee Strikes ignores the first 5 Hardness of an object. If you have the Devastator class feature, the damage instead ignores the first 10 points Hardness of an object."
+ },
+ {
+  "id": "shattering-shot",
+  "name": "Shattering Shot",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a loaded firearm or loaded crossbow and are wearing or holding an alchemical bomb. --- You fling a bomb into the air and then shoot it with your gun before it falls, raining destruction down over a wide area. If necessary, you Interact to draw the bomb and regrip your weapon. You throw your bomb to the corner of a square within your firearm's first range increment and shoot it with your firearm. All creatures in a of the bomb take the bomb's normal damage with a save against your class DC. They don't take any splash or persistent damage the bomb would deal normally."
+ },
+ {
+  "id": "shattering-strike-monk",
+  "name": "Shattering Strike (Monk)",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "The force of your considered blow shatters objects and defenses alike. Make an unarmed Strike. It bypasses the target's resistances. If the target has Hardness, the Strike treats the Hardness as if it were half its value."
+ },
+ {
+  "id": "shattering-strike-weapon-improviser",
+  "name": "Shattering Strike (Weapon Improviser)",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Improvised Pummel"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An improvised weapon that you are wielding becomes broken as a result of a critical success on an Improvised Pummel. --- The improvised weapon shatters, destroying it completely but dealing an additional 3d6 damage to the creature you hit with the Improvised Pummel. This extra damage you apply on the critical hit doesn't double from the critical hit, as normal."
+ },
+ {
+  "id": "shed-tail",
+  "name": "Shed Tail",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [
+   "Iruxi Armaments (Tail)"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You become grabbed. **Requirements** You have a fully grown tail. --- You can shed a portion of your tail to escape. You cease being grabbed, then Stride without triggering any reactions from the creature that grabbed you. It takes 1 day for your tail to fully grow back. Until it does, you can't use your tail unarmed attack, and you take a –2 circumstance penalty on checks to Balance."
+ },
+ {
+  "id": "sheltering-cave",
+  "name": "Sheltering Cave",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "druid",
+   "earth",
+   "exploration",
+   "primal"
+  ],
+  "prerequisites": [
+   "stone order"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You're standing on ground composed of earth, stone, or a similar material. --- You spend 10 minutes communing with spirits of earth and stone, requesting shelter. At the end of this time, the earth rises and opens, forming a small cave or earthen mound 20 feet in diameter and 10 feet high. This cave has the structure trait and the same restrictions as structures created by magic items. The cave has a single entrance and provides shelter from the elements. The cave remains for 12 hours or until you spend 10 minutes coaxing the earth to close."
+ },
+ {
+  "id": "sheltering-slab",
+  "name": "Sheltering Slab",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The stone around you is your ally, and you have learned to use it to shore up your weaknesses. As long as you remain on the ground and are adjacent to a vertical stone wall that rises to your height or taller, you aren't off-guard against attacks as a result of being flanked. This works even if you are at the outside corner of the wall."
+ },
+ {
+  "id": "shepherd-of-desolation",
+  "name": "Shepherd of Desolation",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "aura"
+  ],
+  "prerequisites": [
+   "Knight Reclaimant Dedication",
+   "Survivor of Desolation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to keep others alive in the Gravelands' murkiest shadows. Allies within 10 feet of you gain the benefit of Survivor of Desolation. If you are a champion, this aura is a champion aura, even though you gained it from Knight Reclaimant instead of a champion feat or feature."
+ },
+ {
+  "id": "shield-block",
+  "name": "Shield Block",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** While you have your shield raised, you would take physical damage (bludgeoning, piercing, or slashing) from an attack. --- You snap your shield in place to ward off a blow. Your shield prevents you from taking an amount of damage up to the shield's Hardness. You and the shield each take any remaining damage, possibly breaking or destroying the shield."
+ },
+ {
+  "id": "shield-from-spells",
+  "name": "Shield from Spells",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [
+   "Shield from Arrows"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your prowess with a shield allows you to block magic and more. You can use Shield from Arrows against ranged spell attacks and other ranged attacks, not just physical ranged Strikes."
+ },
+ {
+  "id": "shield-of-grace",
+  "name": "Shield of Grace",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Shield Warden"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You protect an ally with both your shield and your body. Whenever you use the Shield Block reaction to prevent damage to an ally, you can evenly split the remaining damage after the Shield Block between the ally and yourself."
+ },
+ {
+  "id": "shield-of-stone",
+  "name": "Shield of Stone",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into the Mirror Aegis --- You stole a gorgon's gaze and trapped it in your ikon. You've learned how to brandish it for your advantage, subduing the rage of the trapped gaze by turning it on your enemies. **Transcendence—Brandish the Gorgon's Gaze** ⟨1⟩ (earth, transcendence, visual)"
+ },
+ {
+  "id": "shield-paragon",
+  "name": "Shield Paragon",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "blessed shield"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your shield is a vessel of divine protection. When you're wielding your chosen shield, it is always raised, even without you using the Raise a Shield action. If the shield would be destroyed, it vanishes to your deity's realm instead, where a servitor of your deity repairs it. During your next daily preparations, the shield returns to you fully repaired. While the shield is gone, you can spend 1 minute to infuse a different shield with your blessed shield benefit until your true shield returns"
+ },
+ {
+  "id": "shield-salvation",
+  "name": "Shield Salvation",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can save your shield from total destruction, even after a devastating attack. If your shield would be destroyed due to damage taken during your Shield Block, the shield remains intact at 1 Hit Point instead. Its construction is weakened until you take the time to repair it thoroughly, preventing you from using Shield Salvation to save the same shield until your next daily preparations."
+ },
+ {
+  "id": "shield-wall",
+  "name": "Shield Wall",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "champion",
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your shield is raised and an adjacent ally Raises a Shield. --- You use your shield in tandem with an ally's, forming a barricade. Both you and the triggering creature have as long as you remain adjacent to each other and you both have your shields raised; when this is no longer the case, the effect ends. You and your ally can't use this cover to Hide, as it's obvious you're standing there holding your shields, but you and your ally can use it to Take Cover. Normally, if you and your ally don't move, Shield Wall lasts until the beginning of your next turn, when your shield is no longer raised."
+ },
+ {
+  "id": "shield-warden",
+  "name": "Shield Warden",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "champion",
+   "commander",
+   "fighter"
+  ],
+  "prerequisites": [
+   "shield block"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you have a shield raised, you can use your Shield Block reaction when an attack is made against an ally adjacent to you. If you do, the shield prevents that ally from taking damage instead of preventing you from taking damage, following the normal rules for Shield Block."
+ },
+ {
+  "id": "shield-warfare",
+  "name": "Shield Warfare",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to use shields offensively far better than most. Increase the weapon damage die of any shield bash, shield boss, or shield spikes you wield by one step."
+ },
+ {
+  "id": "shielded-attrition",
+  "name": "Shielded Attrition",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a shield. --- You provoke attacks from foes that might otherwise stop your allies from moving. Raise your Shield, then choose whether to Stride up to half your Speed. This movement triggers enemies' reactions as normal. Each enemy who could have reacted to your movement is unable to react to your allies' movement until the start of your next turn (regardless of whether it chose to react to your movement)."
+ },
+ {
+  "id": "shielded-stride",
+  "name": "Shielded Stride",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When your shield is up, your enemies' blows can't touch you. When you have your shield raised, you can Stride to move half your Speed without triggering reactions that are triggered by your movement (such as Reactive Strikes). You can use Shielded Stride while Flying or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "shielded-tome",
+  "name": "Shielded Tome",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "magus"
+  ],
+  "prerequisites": [
+   "Raise a Tome"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "During your daily preparations, you can magically fuse a shield into your favorite book, where it appears as an elaborate bookmark. While the two are fused, the book shares the Hardness, Hit Points, and Broken Threshold of the shield, and it can be used to Shield Block if you have that reaction, with a requirement of \"You have Raised the Tome\" instead of the usual requirements. You can switch the fused item's form from a book to a shield with a book-shaped motif as a single action, which has the concentrate trait. When the item is in book form, you can read the book and Raise the Tome, and when it's in shield form, you can Raise the Shield, Activate it, and gain any other benefits or effects the shield normally has (such as a Spellguard Shield's bonus to saving throws against magic). The fusion lasts until your next daily preparations."
+ },
+ {
+  "id": "shielding-taunt",
+  "name": "Shielding Taunt",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a shield. --- By banging loudly on your shield, you get the attention of even the most stubborn of foes. Raise a Shield, and then Taunt a creature. Your Taunt gains the auditory trait."
+ },
+ {
+  "id": "shift-spell",
+  "name": "Shift Spell",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Access** member of the Magaambya **Requirements** You have an active spell that affects an area and you are within the spell's range. --- You move the spell's area to a new location within 120 feet. The spell's remaining duration is reduced by half. The spell no longer affects its previous area."
+ },
+ {
+  "id": "shift-the-little-ones",
+  "name": "Shift the Little Ones",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "minotaur"
+  ],
+  "prerequisites": [
+   "expert in Athletics",
+   "Friendly Nudge"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "With your large size, you need to be careful around your smaller friends. You have learned to move in such a way that it gives others the chance to make room for you. Stride up to your Speed. If you end your movement in a position where one or more of your spaces are occupied by an ally, each of those allies can immediately Step as a free action so that they are no longer occupying the same space as you. If this isn't possible, you must end your movement so that you aren't sharing a space with an ally, as normal."
+ },
+ {
+  "id": "shining-arms",
+  "name": "Shining Arms",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast light"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Light, you can modify its target to be 1 melee weapon, either unattended or possessed by you or a willing ally, and modify its duration to be 1 minute. If you do, add the following to its effects: When a creature wielding the weapon critically hits a foe, you can Dismiss the Spell as a reaction, causing the foe to be dazzled for 1 round. After you use this reaction, you can't use this modification again for 10 minutes."
+ },
+ {
+  "id": "shinstabber",
+  "name": "Shinstabber",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [
+   "Overcrowd"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As long as you're Small or smaller, you can end your movement in the same square as an ally of any size. Only two creatures total can share the same space when using this ability or a similar one."
+ },
+ {
+  "id": "ships-shadow",
+  "name": "Ship's Shadow",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Undersea Privateer Dedication",
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "After extensive training around and on board ships, you've learned how to use their size and contours to conceal yourself. When in the water within 20 feet of a sea vehicle or climbing aboard one, you can move at your full Speed while Sneaking."
+ },
+ {
+  "id": "shooters-camouflage",
+  "name": "Shooter's Camouflage",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You specialize in blending into a particular type of environment, able to disappear after taking your shot. Choose either natural or urban terrain. In the chosen terrain, you can Hide and Sneak even without cover or being concealed."
+ }
+]

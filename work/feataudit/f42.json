@@ -1,0 +1,977 @@
+[
+ {
+  "id": "unseen-shot",
+  "name": "Unseen Shot",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Crossbow Infiltrator Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your attacks are deadly, silent, and nearly untraceable. The first time each round that you attempt to Strike a target you are undetected or unnoticed by while using a weapon you have familiarity with from this archetype, you are hidden from the target after the attack, as they cannot tell where the attack came from."
+ },
+ {
+  "id": "unshakable-grit",
+  "name": "Unshakable Grit",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Grit and Tenacity"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've become hardened by conflict after everything you've faced, and you possess a certain intractable stubbornness. If the reroll granted to you by your Grit and Tenacity reaction is a success, you get a critical success instead; if it's a critical failure, you get a failure instead."
+ },
+ {
+  "id": "unsheathing-the-sword-light",
+  "name": "Unsheathing the Sword-Light",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "light",
+   "magus"
+  ],
+  "prerequisites": [
+   "aloof firmament hybrid study",
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** Your Spellstrike is charged, and you're wielding a one-handed weapon in the sword group. --- Honed through 10,000 battles, your sword's mere light can shatter ambitions and break armies. Make a melee Spellstrike with a sword, with a spell that isn't a cantrip or focus spell. Countless copies of your sword, made of light, fall around you, dealing damage equal to double the spell's rank to each creature within a of the target, excluding you and the target of the Spellstrike. The damage is of the same type dealt by your sword Strike and is treated as cold iron and silver."
+ },
+ {
+  "id": "unstable-concoction",
+  "name": "Unstable Concoction",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can mix a wondrous yet volatile liquid into an alchemical consumable if it has an initial effect that uses dice. You increase the size of any dice for the item's initial effect by one step. For instance, you could increase damage from a Moderate Alchemist Fire to 2d10 or healing from a Moderate Elixir of Life to 5d8+12. Because this affects only initial dice, it wouldn't increase unarmed attack damage from a bestial mutagen, persistent damage from an acid flask, and the like. When this item is activated, the creature activating it must succeed at a or take acid damage equal to the item's level."
+ },
+ {
+  "id": "unstable-redundancies",
+  "name": "Unstable Redundancies",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You would attempt the flat check for an unstable action, but you haven't rolled the flat check yet. --- You've built triple redundancies into your innovation and added all sorts of buffers to protect it from the harm of your unstable experiments. You automatically succeed at the triggering flat check. You can't rely on your Unstable Redundancies again until you spend 10 minutes setting them back up. If you spend 10 minutes retuning your innovation so you can use unstable actions again, you can set up your Unstable Redundancies during the same time."
+ },
+ {
+  "id": "unsteadying-strike",
+  "name": "Unsteadying Strike",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "commander",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your attack makes your opponent more susceptible to follow-up maneuvers from your allies. Make a melee Strike against an enemy within your reach. If the Strike is successful, the enemy takes a –2 circumstance penalty to their Fortitude DC to resist being Grappled, Repositioned, or Shoved and a –2 circumstance penalty to their Reflex DC to resist being Disarmed. Both penalties last until the start of your next turn."
+ },
+ {
+  "id": "untrained-improvisation",
+  "name": "Untrained Improvisation",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to handle situations when you're out of your depth. Your proficiency bonus to untrained skill checks is equal to your level –2. This improves to your level –1 at 5th level and your full level at 7th level. This doesn't allow you to use the skill's trained actions."
+ },
+ {
+  "id": "unwavering-mien",
+  "name": "Unwavering Mien",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mystic control and meditations allow you to resist external influences upon your consciousness. Whenever you are affected by a mental effect that lasts at least 2 rounds, you can reduce the duration by 1 round. You still require natural sleep, but you treat your saving throws against effects that would cause you to fall asleep as one degree of success better. This protects only against sleep effects, not against other forms of falling unconscious."
+ },
+ {
+  "id": "unyielding-disguise",
+  "name": "Unyielding Disguise",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "reflection"
+  ],
+  "prerequisites": [
+   "ability to cast humanoid form or illusory disguise"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Humanoid Form or Illusory Disguise to alter your appearance, the spell's duration is 2 hours. At the end of the duration, you can extend the spell's duration for another hour, but doing so is taxing, making you Drained 1. You can keep extending it in this way, increasing your drained condition by 1 each time, to a maximum duration of 6 hours."
+ },
+ {
+  "id": "unyielding-force",
+  "name": "Unyielding Force",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thanks to your armor, almost nothing can stop you. While you are wearing medium or heavy armor, the resistance you receive from guardian's armor increases to 6 + half your level."
+ },
+ {
+  "id": "urban-jungle",
+  "name": "Urban Jungle",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "awakened-animal"
+  ],
+  "prerequisites": [
+   "Fascinated by Society",
+   "expert in Society or Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Cities are just a new form of wilderness. You've adapted to this wilderness and now can navigate it as easily as where you once came from. When in an urban area, you can move at your full Speed while you Track and you can use your choice of Survival or Society to Track."
+ },
+ {
+  "id": "urgent-upwelling",
+  "name": "Urgent Upwelling",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wellspring Mage Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** An enemy reduces you to 0 HP, an enemy critically hits you, or you critically fail a saving throw against an enemy's effect. --- Defeat lets you to tap into your wellspring. Attempt the flat check for wellspring magic. If you critically succeed, you can choose to forgo gaining a temporary spell slot to instead have the triggering enemy undergo a wellspring surge. This surge functions just as it would for you, the only difference being that it emits from the enemy."
+ },
+ {
+  "id": "uzunjati-storytelling",
+  "name": "Uzunjati Storytelling",
+  "level": 6,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "skill"
+  ],
+  "prerequisites": [
+   "Magaambyan Attendant Dedication",
+   "Uzunjati affiliation",
+   "master in a Recall Knowledge skill"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You tell a quick story or begin telling a longer tale. This is most useful when you want to prove your scholarly credibility or impress someone quickly. Roll a check with a skill that can be used to Recall Knowledge in which you have expert proficiency, using the result entry for the Perform action. Like Performing, Storytelling rarely has an effect on its own, but it might influence the DCs of subsequent Diplomacy checks against the observers-or even change their attitudes-if the GM sees fit. This action is not a Performance and cannot be used in place of anything that requires you to Perform."
+ },
+ {
+  "id": "vacate-vision",
+  "name": "Vacate Vision",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Oozemorph Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You fail (but don't critically fail) a saving throw against an effect with the visual trait. --- You cause your eyes to liquefy and run out of your eye sockets, leaving them empty. You get a success on the save against the triggering effect, but you are blinded for the duration the effect would have had on a failure. At that time, your eyes regrow and your normal vision returns."
+ },
+ {
+  "id": "vanara-battle-clarity",
+  "name": "Vanara Battle Clarity",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "vanara"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your focus in combat is practically unshakable. While you can act, you aren't off-guard to hidden, undetected, or flanking creatures of your level or lower, or to creatures of your level or lower using surprise attack."
+ },
+ {
+  "id": "vanish-into-the-land",
+  "name": "Vanish into The Land",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Stealth",
+   "trained in Survival",
+   "Terrain Stalker"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're adept at using the land's natural features to find places to hide. When in the difficult terrain you've selected for the Terrain Stalker feat, you can Hide and Sneak even without cover or being concealed."
+ },
+ {
+  "id": "vantage-shot",
+  "name": "Vantage Shot",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sniping Duo Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your spotter take advantage of each other's attacks to momentarily hide and throw your foes off-balance against your follow-up attack. When you successfully Strike a foe using a crossbow or firearm, your spotter can use a reaction to attempt a Stealth check against the foe's Perception DC. On a success, the foe is off-guard against the spotter's next attack before the end of your spotter's next turn. Similarly, when your spotter successfully makes a ranged Strike against a foe, you can use a reaction to attempt a Stealth check against the foe's Perception DC. On a success, the foe is off-guard against your next attack against them before the end of your next turn."
+ },
+ {
+  "id": "vanths-weapon-execution",
+  "name": "Vanth's Weapon Execution",
+  "level": 5,
+  "category": "general",
+  "traits": [
+   "duskwalker"
+  ],
+  "prerequisites": [],
+  "text": "Vanth's Weapon Execution Source Ancestry Guide pg. 30 Prerequisites Vanth's Weapon Familiarity You've trained in the finer points of dealing death. Whenever you critically hit using a bo staff, longbow, composite longbow, scythe, or staff, you apply the weapon's critical specialization effect."
+ },
+ {
+  "id": "vaulting-gallop",
+  "name": "Vaulting Gallop",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cavalier Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You've trained your mount to vault over obstacles at high speeds. You Command an Animal to order your mount to Stride twice. During this movement, your mount can Leap over obstacles of its size and smaller as well as creatures up to its size, though it must end this movement on solid ground. Leaps taken as part of this activity do not provoke reactions."
+ },
+ {
+  "id": "veil-of-bugs",
+  "name": "Veil of Bugs",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swarmkeeper Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your swarm is dense, blotting out vision. You and your allies gain lesser cover when in your swarm's space."
+ },
+ {
+  "id": "vengeance-strike",
+  "name": "Vengeance Strike",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sister of the Golden Erinys Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy damages you and is within your reach. --- You lash out at the foe who dared to attack you. Make a melee Strike against the triggering enemy. If you hit and deal damage, the enemy is off-guard to you until the end of your next turn."
+ },
+ {
+  "id": "vengeful-spirit-deck",
+  "name": "Vengeful Spirit Deck",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Harrower Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have an active harrow omen. --- You manifest a ghostly deck of harrow cards. Draw a card from a harrow deck, then select a target within 60 feet. The card flies through the air to strike at that target, inflicting 4d6 damage, with a saving throw against your class DC or spell DC. The type of damage inflicted is determined by your active harrow omen; if the card drawn is in the same suit as your active harrow omen, the target takes a –2 status penalty to its saving throw. The damage increases to 6d6 if you're 10th level and 8d6 if you're 15th level. You can continue to throw cards at targets on your turn as long as you Sustain the Vengeful Spirit Deck—throwing a card takes two actions. This effect lasts as long as you Sustain it, up to 1 minute, or until you no longer have an active harrow omen. Once the effect ends, you lose your active harrow omen. **Hammers:** **Keys:** **Shields:** **Books:** **Stars:** **Crowns:**"
+ },
+ {
+  "id": "vengeful-strike",
+  "name": "Vengeful Strike",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [
+   "Come and Get Me"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach succeeds at an attack against you. **Requirements** You're under the effect of Come and Get Me. --- When struck by an enemy, you respond in turn. Make a melee Strike against the triggering creature. If the triggering attack was a critical success, you can use Vengeful Strike as a free action instead of a reaction."
+ },
+ {
+  "id": "venipuncture",
+  "name": "Venipuncture",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sanguimancer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Cost** all your remaining sanguimancy Hit Points (minimum 3) --- A shell made up of hundreds of razor-thin needles of blood forms around you before exploding outward, lacerating foes in a . The needles deal piercing damage equal to double the number of sanguimancy Hit Points you spent, to a maximum of 80 damage. Creatures caught in the blast must attempt a save. The DC for this save is your class DC or spell DC, whichever is higher."
+ },
+ {
+  "id": "venom-gulp",
+  "name": "Venom Gulp",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "nagaji"
+  ],
+  "prerequisites": [
+   "nagaji venomous spit unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can store prepared venom in your throat and spit it at your foes in addition to your own toxic spray. You can Interact to store a dose of injury or touch poison in your throat; when using this action, you do not risk envenoming yourself as long as the poison is your level or lower. The next time you attack a target with your venomous spit unarmed attack, the poison is expended. If you successfully hit the target, they are exposed to the poison in addition to the other effects of your spit. As long as you are holding venom in your throat, your speech is noticeably difficult to understand. You can hold only one dose of poison like this at a time."
+ },
+ {
+  "id": "venomous-weapons",
+  "name": "Venomous Weapons",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Poisoned Sticks and Stones"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your skill with poisons is such that your preferred weapons also contain trace amounts of it, even when you don't actively apply a dose. Blowguns and slings you are wielding have the venomous trait."
+ },
+ {
+  "id": "venture-gossip-dedication",
+  "name": "Venture-Gossip Dedication",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "member of the Pathfinder Society",
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Look, the motto of the Pathfinder Society is \"explore, report, cooperate\" and you're just reporting what you hear! Is all of it accurate or true? Maybe not, but hey, you can tell a great story and you know how to keep your readers hooked and eating out of the palm of your hand. Ambrus Valsin of the Grand Lodge may disapprove of your methods, but hey, he's not your real boss. Eando isn't either. We'll go with Zarta. Wait, no, Sheila. Sheila appreciates a good gossip column. You're now from Magnimar. Always have been. You have two identities: your day job as a Pathfinder agent, and your real job, one of the many voices that make up the Venture-Gossip tabloid. If someone attempts to figure out if you're a venture-gossip, they must use a Seek action to attempt a Perception check against one of your influence skills of your choice: Deception, Diplomacy, or Intimidation. Your DC is 20 + your proficiency modifier. If you are discovered to be part of Venture-Gossip, you can spend 1 week of downtime convincing others that you've never even read that tabloid, much less contributed to it! You gain the following action, allowing you to collect more information for your column. Tell Me More"
+ },
+ {
+  "id": "verdant-metamorphosis",
+  "name": "Verdant Metamorphosis",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "leaf order"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have turned into a plant version of yourself, gaining the plant trait and losing traits inappropriate for your new form (typically humanoid). You also gain the Verdant Rest action."
+ },
+ {
+  "id": "verduran-ambush",
+  "name": "Verduran Ambush",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Verduran Shadow Dedication",
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You prepare to ambush a foe. You Ready an activity that takes 2 actions, though that activity must either be Death from Above or an activity with the requirement that you be hidden or undetected by all your opponents (such as Scout's Pounce). After using the reaction, you cannot use this feat again for 10 minutes."
+ },
+ {
+  "id": "vermilion-threads",
+  "name": "Vermilion Threads",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "magus"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Vermilion Threads Source Tian Xia Character Guide pg. 113 Prerequisites Arcane Cascade; unfurling brocade hybrid study Trigger You use Arcane Cascade. Your Arcane Cascade sends threads to the four directions, creating a web of strings dyed by your skill and your enemies’ blood. The web fills a 15-foot burst centered on you and is difficult terrain. You can ignore the difficult terrain, and the strings can support your weight, allowing you to walk on them as though you were benefiting from fly. The web lasts for 1 minute but ends early if your Arcane Cascade ends or you leave the web. If you Cast a Spell from a spell slot while in the web, the strings glow red until the beginning of your next turn, dealing damage equal to the spell’s rank to any creature other than you that moves through the web. The damage occurs at the end of the creature’s movement, with a basic Reflex save against your spell DC. A creature can take this damage only once each round."
+ },
+ {
+  "id": "vermillion-threads",
+  "name": "Vermillion Threads",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "magus"
+  ],
+  "prerequisites": [
+   "Arcane Cascade",
+   "unfurling brocade hybrid study"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You use Arcane Cascade. --- Your Arcane Cascade sends threads to the four directions, creating a web of strings dyed by your skill and your enemies' blood. The web fills a centered on you and is difficult terrain. You can ignore the difficult terrain, and the strings can support your weight, allowing you to walk on them as though you were benefiting from Fly. The web lasts for 1 minute but ends early if your Arcane Cascade ends or you leave the web. If you Cast a Spell from a spell slot while in the web, the strings glow red until the beginning of your next turn, dealing damage equal to the spell's rank to any creature other than you that moves through the web. The damage occurs at the end of the creature's movement, with a against your spell DC. A creature can take this damage only once each round."
+ },
+ {
+  "id": "vernai-training",
+  "name": "Vernai Training",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Achaekek's Grip",
+   "Basic Red Mantis Magic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "To resurrect a creature you've slain, a spellcaster must counteract your influence on its death. The DC of this check is equal to your class DC or spell DC, whichever is higher. In addition, you've undergone training to better make use of your magic. Increase the spell slots you gain from Red Mantis assassin archetype feats by 1 for each spell rank other than your two highest Red Mantis spell slots. You can prepare only spells from the Red Mantis magic school curriculum in these extra slots."
+ },
+ {
+  "id": "versatile-blasts",
+  "name": "Versatile Blasts",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "kineticist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Accessing a wider realm of elemental manifestations, you can make blasts with rare forms of your elements. Add the following damage types to those you can choose for Elemental Blasts of that element: - **air** cold - **earth** poison - **fire** cold - **metal** electricity - **water** acid - **wood** poison"
+ },
+ {
+  "id": "versatile-font",
+  "name": "Versatile Font",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "harmful font or healing font",
+   "deity that allows clerics to have both fonts"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As you explore your deity's aspects, you move beyond restrictions on healing or harming. You can prepare either Harm or Heal in the spell slots gained from the harmful font or healing font."
+ },
+ {
+  "id": "versatile-signature",
+  "name": "Versatile Signature",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "polymath muse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While most bards are known for certain signature performances and spells, you're always tweaking your available repertoire. When you make your daily preparations, you can change one of your signature spells to a different spell of that rank from your repertoire."
+ },
+ {
+  "id": "versatile-spellstrike",
+  "name": "Versatile Spellstrike",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can channel the entire realm of possibilities of your spellbook into an attack. Once during your daily preparations, you can use a spell slot to hold that infinite potential, rather than using it to prepare a spell. When you make a Spellstrike, you can expend this special spell slot to immediately prepare and cast a spell from your spellbook at 2 levels lower than the slot's level. (As normal for preparing spells, you can use a spell of an even-lower level, heightening it accordingly.) You don't have any spell prepared in that slot until you cast from that slot."
+ },
+ {
+  "id": "very-sneaky",
+  "name": "Very Sneaky",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Taller folk rarely pay attention to the shadows at their feet, and you take full advantage of this. You can move 5 feet farther when you take the Sneak action, up to your Speed. In addition, as long as you continue to use Sneak actions and succeed at your Stealth check, you don't become observed if you don't have cover or greater cover and aren't concealed at the end of the Sneak action, as long as you have cover or greater cover or are concealed at the end of your turn."
+ },
+ {
+  "id": "very-very-sneaky",
+  "name": "Very, Very Sneaky",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "Very Sneaky"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can move up to your Speed when you use the Sneak action, and you no longer need to have cover or greater cover or be concealed to Hide or Sneak."
+ },
+ {
+  "id": "veteran-follower",
+  "name": "Veteran Follower",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Experienced Follower"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your followers' training has made them veterans of battle. They all become veteran followers."
+ },
+ {
+  "id": "vexing-tempest",
+  "name": "Vexing Tempest",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "air",
+   "archetype",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Familiar Sage Dedication",
+   "Tempest Cloud's Speed"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your familiar channels elemental air around it to unleash a disruptive gust that sends creatures flying. If the next action you use is to Cast a Spell that has the air trait, all creatures within a of your familiar must attempt a Reflex save against your spell DC or be pushed 10 feet away. On a critical failure, they're also knocked prone."
+ },
+ {
+  "id": "vibrant-display",
+  "name": "Vibrant Display",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "gnome"
+  ],
+  "prerequisites": [
+   "chameleon gnome heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Frequency** once every 10 minutes --- Whereas most gnomes' coloration is static or changes slowly, you can cause your hair, eye, and skin color to scintillate in brief and disorienting bursts. Once every 10 minutes, when you use the Feint action, you can compare your Deception check result to the Perception DCs of all adjacent creatures rather than just one creature within melee reach. It's possible to get a different degree of success for each target. These changes are imprecise and usually short-lived, so while they allow you to periodically change your appearance in unpredictable ways, they are of little use in providing camouflage or aiding a disguise."
+ },
+ {
+  "id": "vicious-critique",
+  "name": "Vicious Critique",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Crafting and Intimidation"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You are about to attempt to Coerce a merchant or crafter. --- You have an eye for detail and a mouth for pointing out flaws, which makes it all the easier to convince the merchants and crafters of King's Heart to help you. You quickly analyze the triggering creature's wares in hopes of finding something useful in your coercion and attempt a Crafting check. --- **Critical Success** You have plenty to work with and can leave your target shocked with your analysis. If you a roll a success on your Intimidation check, you get a critical success instead. If you roll a critical failure, you get a failure instead. **Success** As critical success, but you only gain the benefits when rolling a success on your Intimidation check. **Failure** You misjudge the wares, which makes you come across as unknowledgeable and less intimidating. You take a –1 circumstance penalty to your Intimidation check to Coerce. **Critical Failure** As failure, but the penalty is –2."
+ },
+ {
+  "id": "vicious-evisceration",
+  "name": "Vicious Evisceration",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You make a vicious strike that maims your enemy. Make a melee Strike. If the Strike hits and deals damage, the target is Drained 1, or Drained 2 on a critical success."
+ },
+ {
+  "id": "vicious-fangs",
+  "name": "Vicious Fangs",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Vampire Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You aim for your victim's prominent arteries. Your fangs Strike deals an additional 1d6 persistent bleed damage on a critical hit. At 14th level, the persistent bleed damage increases to 2d6, and at 20th level, the persistent bleed damage increases to 3d6."
+ },
+ {
+  "id": "vicious-incisors",
+  "name": "Vicious Incisors",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your jaws unarmed attack deals 1d6 piercing damage instead of 1d4, and gains the backstabber trait. You can file down your teeth and regrow them later on, enabling you to select this feat at any level, and to retrain into and out of this feat."
+ },
+ {
+  "id": "vicious-rend",
+  "name": "Vicious Rend",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication",
+   "animal companion with a claw, fist, pincer, or talon unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your companion sinks its claws and rips. Your companions with a qualifying unarmed attack learn the Vicious Rend activity. **Vicious Rend** ⟨2⟩ Make two claw, fist, pincer, or talon Strikes against the same target, applying the multiple attack penalty as normal. If both Strikes hit, the target takes an additional 1d6 damage. This damage increases to 2d6 if your companion is specialized."
+ },
+ {
+  "id": "vicious-swing",
+  "name": "Vicious Swing",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You unleash a particularly powerful attack that clobbers your foe but leaves you a bit unsteady. Make a melee Strike. This counts as two attacks when calculating your multiple attack penalty. If this Strike hits, you deal an extra die of weapon damage. If you're at least 10th level, increase this to two extra dice, and if you're at least 18th level, increase it to three extra dice."
+ },
+ {
+  "id": "vicious-venom",
+  "name": "Vicious Venom",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "vishkanya"
+  ],
+  "prerequisites": [
+   "Envenom"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The venom you produce is exceptionally potent and difficult to overcome. Your vishkanyan venom gains the virulent trait, requiring two consecutive saves to reduce the venom's stage by 1. A critical success reduces your venom's stage by only 1 instead of by 2."
+ },
+ {
+  "id": "victorious-vigor",
+  "name": "Victorious Vigor",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You bring a foe to 0 Hit Points --- Your victories in battle fill you with pride and imbue you with the energy to fight a bit longer despite your wounds. You gain temporary Hit Points equal to your Constitution modifier until the end of your next turn."
+ },
+ {
+  "id": "vigilante-dedication",
+  "name": "Vigilante Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have two identities, each with its own name and abilities. Your social identity is an upstanding member of society, while your vigilante identity is a skilled and cunning warrior. Neither of these identities is a false front; you really are both of these people. If someone attempts to discern your other identity, they must use a Seek action to attempt a Perception check against your Deception DC, as if you were using the Impersonate action. Your Deception DC against such attempts is 20 + your proficiency modifier instead of the normal DC. Unlike with Impersonate, you don't have to attempt a Deception check to interact with someone to conceal your other identity—a check happens only if someone else specifically tries to uncover your other identity. Changing from one identity to the other takes 1 minute and must be done out of sight from other creatures. As this process involves both physical changes such as clothing and makeup, along with an altered state of mind, other effects that change your appearance don't reduce the time required to change identities. Your two identities are completely distinct. Checks to Recall Knowledge about one of your identities don't reveal information about the other unless the person attempting the check knows both identities are the same person. Effects that detect you based on your identity work only if you are currently in the identity the effect is trying to detect; otherwise, the effect fails as if the target didn't exist. To maintain th"
+ },
+ {
+  "id": "vigils-walls-rise-anew",
+  "name": "Vigil's Walls Rise Anew!",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication",
+   "Shield Block"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "As part of daily preparation, you can drill with a number of allies up to your Charisma modifier. These allies must be present and listening during this time, but this does not otherwise impede their own preparation. When you use this feat's benefit, you and all drilled companions within 30 feet who are wielding shields Raise a Shield. Allies who Raise their Shields keep them raised until the start of their next turn, as normal."
+ },
+ {
+  "id": "vigorous-anthem",
+  "name": "Vigorous Anthem",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "bard",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You instill magical vigor in your allies when you inspire them to attack. If your next action is to cast the Courageous Anthem composition cantrip, you and all affected allies gain temporary HP equal to 3 + your Charisma modifier that last for 1 minute."
+ },
+ {
+  "id": "vigorous-health",
+  "name": "Vigorous Health",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can withstand blood loss startlingly well. Whenever you would gain the drained condition, you can attempt a . On a success, you don't gain the drained condition."
+ },
+ {
+  "id": "vile-desecration",
+  "name": "Vile Desecration",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "text": "Vile Desecration Source Advanced Player's Guide pg. 122 Prerequisites evil alignment You combine unholy might with negative energy to damage angels, archons, and other self-righteous denizens of the Outer Planes. When you cast a harm spell, you can change the damage you deal to celestial creatures to evil damage instead of negative damage."
+ },
+ {
+  "id": "vindictive-thoughts",
+  "name": "Vindictive Thoughts",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "mental",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Avenging Runelord Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You attempt a saving throw against a spell. --- Those who seek to do you personal harm with magic must suffer the same misfortune. Before you attempt your saving throw, spend a Mythic Point. You make this saving throw at mythic proficiency. On any result but a critical failure, the spell's caster takes 10d6 damage ( save against your class DC or spell DC using mythic proficiency, whichever is higher). At 18th level, the mental damage increases to 11d6, and at 20th level, the mental damage increases to 12d6."
+ },
+ {
+  "id": "vine-lash",
+  "name": "Vine Lash",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "attack",
+   "deviant",
+   "magical",
+   "plant"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a free hand. --- A long vine sprouts from your arm, which you can temporarily wield like a whip. Make a melee attack roll against a creature within 30 feet. If you succeed, the vine deals damage for every 2 levels you have to the target, or double damage on a success. **Awakening** The vine coils around your foes, squeezing them lifeless. On a successful hit, the target is grabbed by the vine. The DC to Escape the vine is equal to your Class DC or Spell DC, whichever is higher. Each round on your turn, if the target is still grabbed, the vine squeezes them, dealing damage for every 2 levels you have. **Awakening** Rather than lash at your foes with a single vine, dozens of writhing vines emerge from your hands, lashing all creatures in a large area. You can use Vine Lash as a 2-action activity to damage all creatures in a , with a save."
+ },
+ {
+  "id": "violent-unleash",
+  "name": "Violent Unleash",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "mindshift",
+   "occult",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirement** Your previous action was to Unleash your Psyche. --- The force of your mind unleashing itself wracks your enemies with a violent shockwave that batters your enemies. You deal damage to all creatures in a , with a save. At 5th level and every 2 levels thereafter, the damage increases by 1d6."
+ },
+ {
+  "id": "virulent-strike",
+  "name": "Virulent Strike",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Apocalypse Rider Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Those afflicted by certain maladies are closer to death in your presence. Make a Strike against a creature. If your attack hits, the target must attempt a new saving throw against the highest-level disease or poison that is currently affecting it, possibly progressing it to a higher stage even if the affliction's interval hasn't passed. If the target successfully saves or critically saves against the affliction, the affliction's stage isn't reduced. If your attack was a critical hit, the target takes a –4 circumstance penalty to the save."
+ },
+ {
+  "id": "vision-of-foresight",
+  "name": "Vision of Foresight",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fortune",
+   "occult",
+   "prediction"
+  ],
+  "prerequisites": [
+   "Sleepwalker Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're in a Daydream Trance --- You use your daydreams to predict the success of actions, rapidly envisioning the possibilities. Once before the end of your next turn, you can call upon these predictions before you roll a saving throw or skill check. You can roll the saving throw or skill check twice and take the better result."
+ },
+ {
+  "id": "vivacious-bravado",
+  "name": "Vivacious Bravado",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You gained Panache this turn. --- Your ego swells, granting you a temporary reprieve from your pain. You gain temporary Hit Points equal to your level plus your Charisma modifier that last until the start of your next turn."
+ }
+]

@@ -48,7 +48,7 @@ import type {
   WeaponRunes,
   PinnedDesc,
 } from './types';
-import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
+import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod } from './derive';
@@ -1709,7 +1709,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   }
 
   const spellcasting: SpellcastingEntry[] = [];
-  let focus: { current: number; max: number } | undefined;
+  let focus: FocusPool | undefined;
   if (cls?.spellcasting) {
     const sp = cls.spellcasting;
     // A subclass/choice can set the tradition (witch patron, sorcerer bloodline,
@@ -2579,6 +2579,58 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (ownedFeatureIds.has(o.id)) continue; // already resolved above
     resolvePick(o.id, content.classFeatures[o.id]?.effectChoices, applyAlwaysOn, content.classFeatures[o.id]?.name ?? o.name ?? o.id);
   }
+  // "Whenever you Refocus, you recover 3 Focus Points / completely refill your focus pool."
+  // The Refocus control restored exactly 1 point with nothing able to say otherwise, so this whole
+  // family of 18 feats was inert. Best offer wins: a full refill beats any number, else the largest.
+  // Placed after the feat list is assembled — `feats` does not exist where the pool itself is built.
+  if (focus) {
+    for (const fc of feats) {
+      const r = content.feats[fc.featId]?.refocusRestore;
+      if (r == null) continue;
+      const cur = focus.refocusRestore;
+      if (r === 'all' || (cur !== 'all' && r > (typeof cur === 'number' ? cur : 1))) {
+        focus.refocusRestore = r;
+        focus.refocusSource = content.feats[fc.featId]?.name ?? fc.featId;
+      }
+    }
+  }
+
+  // Advanced Alchemy's daily item count. The panel hardcoded `4 + Int` and blocked preparing past it,
+  // so Efficient Alchemy ("to 6 + your Intelligence modifier") and Advanced Efficient Alchemy
+  // ("to 8 + your Int, or 10 + your Int if you're 16th level or higher") were both inert.
+  let advancedAlchemy: Character['advancedAlchemy'];
+  {
+    const intMod = abilityMod(abilities.int);
+    const base = ownsClass('alchemist') ? 4 + intMod : 0;
+    let max = base;
+    let source: string | undefined;
+    for (const fc of feats) {
+      const a = content.feats[fc.featId]?.advancedAlchemy;
+      if (!a) continue;
+      const tier = a.atLevel && level >= a.atLevel.level ? a.atLevel.items : a.items;
+      const n = tier + (a.addInt ? intMod : 0);
+      if (n > max) { max = n; source = content.feats[fc.featId]?.name ?? fc.featId; }
+    }
+    if (max > 0) advancedAlchemy = { max, source };
+  }
+
+  // Repeatable feats that SET a class resource's daily maximum ("your number of versatile vials per
+  // day increases to 5", again to 6 and 7 on later takes). Indexed by how many times it was taken.
+  // Both sheet call sites read the bare formula, so these were inert.
+  let resourceFloors: Record<string, number> | undefined;
+  {
+    const takes = new Map<string, number>();
+    for (const fc of feats) takes.set(fc.featId, (takes.get(fc.featId) ?? 0) + 1);
+    for (const [featId, n] of takes) {
+      const rm = content.feats[featId]?.resourceMaxSet;
+      if (!rm?.values.length) continue;
+      const v = rm.values[Math.min(n, rm.values.length) - 1];
+      if (!Number.isFinite(v)) continue;
+      resourceFloors = resourceFloors ?? {};
+      resourceFloors[rm.resourceId] = Math.max(resourceFloors[rm.resourceId] ?? 0, v);
+    }
+  }
+
   // Ancestry Weapon Familiarity / Expertise: proficiency in NAMED weapons. Applied here (after class
   // advancement) so `mirrorBestCategory` sees the character's final weapon-category ranks — that is
   // exactly what "whenever a class feature grants you expert or greater proficiency" means.
@@ -2595,7 +2647,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const chosen = fc.choice?.value ? g?.choiceGrants?.[fc.choice.value]?.weaponFamiliarity : undefined;
       for (const wf of [g?.weaponFamiliarity, chosen]) {
         if (!wf) continue;
-        const rank = wf.mirrorBestCategory ? bestCategory : wf.rank;
+        // mirrorCategory is the precise form ("as if they were MARTIAL weapons"); mirrorBestCategory
+        // is the ancestry-Expertise form ("whenever a class feature grants you expert or greater…").
+        const rank = wf.mirrorCategory ? proficiencies.attacks[wf.mirrorCategory] : wf.mirrorBestCategory ? bestCategory : wf.rank;
         if (!rank || rank === 'untrained') continue;
         for (const w of wf.weapons) {
           if (!content.items[w]) continue;
@@ -3129,6 +3183,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     hitPoints: { current: hpMax + featHp, temp: 0 },
     heroPoints: 1,
     ...(focus ? { focus } : {}),
+    ...(advancedAlchemy ? { advancedAlchemy } : {}),
+    ...(resourceFloors ? { resourceFloors } : {}),
     conditions: [],
     classResources: initialClassResources(
       build.classId,

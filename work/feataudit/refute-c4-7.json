@@ -1,0 +1,317 @@
+{
+ "rulings": [
+  {
+   "id": "bolstered-recovery",
+   "upheld": true,
+   "why": "rest() really does compute nightly HP as level x Con mod and step Doomed/Drained down by 1 (play.ts ~1097-1123), so 'double it' is a wrong number on a modelled value with no field; the Instant Recovery action half is correctly inert.",
+   "correction": {}
+  },
+  {
+   "id": "bond-companion",
+   "upheld": false,
+   "why": "The designated companion is ANOTHER player character and Fortify Focus spends your action to refill THEIR Focus Point - nothing on your own sheet changes.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "bonded-focus",
+   "upheld": false,
+   "why": "False premise: refocusRestore ('all') is a real Feat field (types.ts:733, applied build.ts:2588, rendered SpellsTab ~992) and core.json already carries refocusRestore:\"all\" on this record.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "brain-drain",
+   "upheld": true,
+   "why": "\"You can't use Brain Drain again until after the next time you make your daily preparations\" is a hard player-side cap and limitedUses {max,per} is exactly the lane featUses.ts draws pips for; the save/stupefied half is target-side and the judge already excluded it.",
+   "correction": {}
+  },
+  {
+   "id": "brine-may",
+   "upheld": true,
+   "why": "Real self-facing upgrade, but the judge's 'situational only carries numeric bonuses' is false - the registry already stores degree-of-success prose (ladys-blessing-oil 'a failure becomes a critical failure', elements-of-creation 'outcomes one degree better'), so it is a situational entry, not engine work.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [{ "kind": "skill", "detail": "athletics" }],
+       "when": "on an Athletics check to Swim",
+       "bonus": "a success is a critical success instead; and you don't sink if you end your turn in water without having succeeded at a Swim that round"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "brinesoul",
+   "upheld": false,
+   "why": "Grants only the Salt Wound reaction - an action resolved at the table whose damage lands on the creature that hit you; no sheet value is missing.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "broken-chain-dedication",
+   "upheld": false,
+   "why": "A per-use Mythic Point spend on an Escape/Force Open check, an Ultimatum action, and a GM-adjudicated anathema - all table/GM side.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "brutal-critical",
+   "upheld": true,
+   "why": "Permanent rider on the player's own melee Strikes, and the situational registry already carries exactly this shape (chain-of-command '+1d6 mental on a critical hit'), so it is a data entry rather than engine work.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [{ "kind": "strikeDamage" }],
+       "when": "on a critical hit with a melee Strike",
+       "bonus": "one extra weapon damage die (in addition to deadly or fatal), plus persistent bleed equal to two damage dice"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "buzzing-death-cicadas",
+   "upheld": false,
+   "why": "The fly Speed goes to the swarmkeeper's SWARM, not the character, and Death Drone is an action resolved at the table.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "cackle",
+   "upheld": true,
+   "why": "Confirmed: spell id 'cackle' exists as a witch hex focus spell and no record lists it in focusSpells; focusSpells is the established lane (litany-* entries in effect-backfill.json).",
+   "correction": {}
+  },
+  {
+   "id": "calm-and-centered",
+   "upheld": false,
+   "why": "The app never decrements frightened/stupefied itself - condition values are typed in by the player and restConditions only steps Doomed/Drained - so there is no computed value this changes.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "canopy-predator",
+   "upheld": true,
+   "why": "A real climb Speed with nothing delivering it, and the fix matches ModeDef exactly (id/name/feats/duration/modifiers/speeds/note - speeds is consumed by deriveSpeeds, types.ts ~1432), terrain-gated so a mode rather than an always-on speeds field is correct.",
+   "correction": {}
+  },
+  {
+   "id": "cantorian-reinforcement",
+   "upheld": true,
+   "why": "Real permanent save upgrade, but not engine work - the situational registry stores degree-of-success prose and save detail 'all' (fury-cocktail-lesser 'on saves against magic').",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [{ "kind": "save", "detail": "all" }],
+       "when": "on a saving throw against a disease or poison",
+       "bonus": "a success is a critical success instead (and, if you also have Battle Hardened or a similar ability, a critical failure is a failure instead)"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "cantrip-casting",
+   "upheld": true,
+   "why": "Verified: cantripsKnown() is a hard-coded per-class number and build.ts:1741 SLICES the cantrip list to it, while spellSlotBonus filters r > 0 (build.ts:2714/2720) - a granted cantrip count is genuinely unreachable, and FEAT_CANTRIP_GRANTS only grants fixed-list INNATE spells, which would be the wrong cadence here.",
+   "correction": {}
+  },
+  {
+   "id": "cantrip-expansion",
+   "upheld": true,
+   "why": "Same verified gap as Cantrip Casting: the cantrip cap is a hard-coded slice and no field raises it; the extra cantrips are prepared/repertoire, so FEAT_CANTRIP_GRANTS' innate lane cannot stand in.",
+   "correction": {}
+  },
+  {
+   "id": "castigating-weapon",
+   "upheld": true,
+   "why": "A rider on the player's own Strikes; the registry already carries this exact 'after you did X, until end of turn' shape with variable wording (bullet-dancer-burn, titans-breaker), so it is a situational entry, not engine work.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [{ "kind": "strikeDamage" }],
+       "when": "until the end of your turn after you deal spirit damage with Divine Castigation",
+       "bonus": "extra spirit damage equal to the rank of the harm or heal you dealt it with, and your weapon and unarmed Strikes gain your holy or unholy trait"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "celestial-strikes",
+   "upheld": false,
+   "why": "Adding the holy and magical traits changes no number on the player's sheet - both matter only when resolving against a creature's weaknesses/resistances, on the GM's side of the screen.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "ceremony-of-fortification",
+   "upheld": false,
+   "why": "A one-Strike, one-round resistance triggered by spending another action - transient and table-resolved, exactly what this judge ruled NEEDS_NOTHING for body-barrier.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "ceremony-of-growth",
+   "upheld": true,
+   "why": "Real and CONSTANT, and the lane exists: sizeOverride + reach are Feat fields (types.ts ~280-287) already carried by bound-in-ice ('size increases to Large, reach becomes 10 feet'), jotuns-heart and strength-of-eight-legions; the +2 status melee damage and clumsy 1 stay in the printed text.",
+   "correction": {
+    "fix": {
+     "sizeOverride": "large",
+     "reach": 10
+    }
+   }
+  },
+  {
+   "id": "ceremony-of-strengthened-hand",
+   "upheld": true,
+   "why": "Ceremony of the Evened Hand really does grant the Claw d4 / Branch d6 strikes via grantedStrikes, so this feat retunes a Strike the sheet renders; grantedStrikes would over-grant (it would hand out an attack you may not have), but the display-only situational registry states it correctly.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [{ "kind": "strikeDamage" }],
+       "when": "on a critical hit with your claws unarmed attack, if you have one (it gains deadly d8)",
+       "bonus": "+1d8"
+      },
+      {
+       "targets": [{ "kind": "strikeAttack" }],
+       "when": "with your branch unarmed attack, if you have one",
+       "bonus": "it gains the shove and trip traits"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ceremony-of-the-strengthened-hand",
+   "upheld": false,
+   "why": "Duplicate record: core.json holds ceremony-of-strengthened-hand (clean, actionCost, prerequisite) plus this raw AoN dump AND aon-ceremony-of-the-strengthened-hand; the fix belongs on the canonical id only - this one needs deduplication, not data.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "champions-reaction",
+   "upheld": false,
+   "why": "Grants a REACTION resolved at the table whose benefit lands on the triggering enemy (Retributive Strike) or an ally (Glimpse of Redemption, Liberating Step) - no player-side value is missing.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "chemical-contagion",
+   "upheld": false,
+   "why": "Read the granted feature: toxicologist Greater Field Discovery sprays the poison onto ANOTHER creature adjacent to the one that failed its save - entirely target-side.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "cindersoul",
+   "upheld": true,
+   "why": "Real permanent self-facing change, and it is expressible: the situational registry carries non-roll HP-recovery prose already (godless-healing '+5 Hit Points recovered', ladys-blessing-oil's DC substitution).",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [{ "kind": "hp" }],
+       "when": "on the flat check to recover from persistent acid, bleed, or poison damage",
+       "bonus": "DC 10 instead of 15 (DC 5 with particularly effective assistance)"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "coating-of-slime",
+   "upheld": true,
+   "why": "Standing rider on the player's own unarmed Strikes; strikeDamage riders cannot express 'on a critical hit' (StrikeDamageRider has no condition), so the situational shape the judge used is the right one and matches artery-map / chain-of-command.",
+   "correction": {}
+  },
+  {
+   "id": "combination-finisher",
+   "upheld": true,
+   "why": "The sheet really does print three attack numbers with a hard-coded 4/5 MAP step (derive.ts:1371), so the feat's -4/-8 is invisible; the fix is a display-only situational note, not engine work.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [{ "kind": "strikeAttack" }],
+       "when": "on the Strike of one of your finishers",
+       "bonus": "multiple attack penalty is -4 (-3 with an agile weapon) on your second attack and -8 (-6 agile) on your third or later, instead of -5/-10"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "compliant-gold",
+   "upheld": true,
+   "why": "Reach is a real player-side value, and the ikon immanence family is already stored as situational prose (titans-breaker 'bypasses Hardness equal to your level', hands-of-the-wildling) - so it is an entry, not engine work.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [{ "kind": "strikeAttack" }],
+       "when": "while your divine spark is in this ikon (immanence active), with the imbued melee weapon",
+       "bonus": "the weapon gains the reach trait - or, if it already had reach, your reach with it increases by an additional 10 feet instead of the usual 5"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "conflux-focus",
+   "upheld": false,
+   "why": "False premise: refocusRestore is a real Feat field consumed at build.ts:2588 and core.json already carries refocusRestore:2 on this record (one of 18 such feats).",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "conflux-wellspring",
+   "upheld": false,
+   "why": "Same false premise - the record already carries refocusRestore:3, and SpellsTab reads character.focus.refocusRestore for the Refocus button label.",
+   "correction": { "verdict": "NEEDS_NOTHING" }
+  },
+  {
+   "id": "construct-shell",
+   "upheld": true,
+   "why": "Lesser cover from ALL attacks is a real +1 circumstance AC the sheet never shows, the wood-ward precedent stores cover exactly this way, and the emanation opt-out was correctly left inert.",
+   "correction": {}
+  },
+  {
+   "id": "crescent-cross-training",
+   "upheld": true,
+   "why": "Not engine work - FEAT_LANE_GRANTS' weaponFamiliarity has a mirrorCategory field built for '...as if they were <category> weapons' (featGrants.ts:126); all three crescent cross item ids verified martial in core.json.",
+   "correction": {
+    "fix": {
+     "weaponFamiliarity": {
+      "weapons": ["crescent-cross", "crescent-cross-melee", "crescent-cross-ranged"],
+      "mirrorCategory": "simple"
+     }
+    }
+   }
+  },
+  {
+   "id": "crossblooded-evolution",
+   "upheld": true,
+   "why": "All 18 option values match core.json's bloodline ids exactly, the EffectChoice shape is legal (options with value/label, grant optional), and greater-crossblooded-evolution's own inert note complains that this pick 'isn't tracked' - recording it closes that.",
+   "correction": {}
+  },
+  {
+   "id": "crossbow-crack-shot",
+   "upheld": true,
+   "why": "A real self-buff on the player's own crossbow Strike; all three entries are well-formed and both wordings have precedent (shootists-edge for range-increment prose, skinsaw-mask for per-die precision damage).",
+   "correction": {}
+  },
+  {
+   "id": "crown-of-bone",
+   "upheld": true,
+   "why": "Verified against the AoN sarangay entry (horns 1d6 piercing, shove, brawling) and nothing in core.json grants those horns, so the d8 + concussive entry is the sole delivery and cannot duplicate a base Strike.",
+   "correction": {}
+  },
+  {
+   "id": "crunch",
+   "upheld": true,
+   "why": "No record grants kholo jaws today (checked all ancestries/heritages/feats), so grantedStrikes Jaws d8 + grapple is both the only delivery and non-duplicating; shape matches zombie-dedication / werecreature-dedication.",
+   "correction": {}
+  },
+  {
+   "id": "crystal-keeper-dedication",
+   "upheld": true,
+   "why": "A flat printed resistance with nothing delivering it, and source-scoped prose resistance types are already shipped (one-among-the-masses, only-my-doom-may-claim-me); the Decipher Writing half stays inert.",
+   "correction": {}
+  }
+ ]
+}

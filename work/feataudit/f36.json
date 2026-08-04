@@ -1,0 +1,995 @@
+[
+ {
+  "id": "spirit-of-the-blade",
+  "name": "Spirit of the Blade",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Spirit Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You charge your blade with spiritual energy, allowing it to cut through spirits and fiends with fearsome efficiency. The next Strike you make with a melee weapon or fist unarmed attack deals an additional 1d6 spirit damage. This bonus damage is lost if you don't attempt a Strike before the start of your next turn. At 10th level, you deal an additional 2d6 spirit damage with this ability, and at 18th level, you deal an additional 3d6 spirit damage."
+ },
+ {
+  "id": "spirit-of-vigil",
+  "name": "Spirit of Vigil",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "No Stranger to Death"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Though the city of Vigil itself has been destroyed, you will carry on its warrior spirit to the end of your days. The value of your dying condition at which you die increases by 1 (normally to dying 5, or dying 6 if you have Diehard), and the reduction to your maximum dying value from the doomed condition is 1 less severe (to a minimum of 0)."
+ },
+ {
+  "id": "spirit-speaker",
+  "name": "Spirit Speaker",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "secret",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Nature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know that when an animal dies, its spirit lingers briefly before moving on. Using low chants, body language that shows respect, and special movements that demonstrate to the spirit that you are an ally, you glean information from a spirit before it departs. This is a 1-minute activity. You must begin the activity while adjacent to the body of an animal or beast that died within the last 1 minute. As part of the activity, you ask one simple question of the spirit. Attempt a Nature check at a DC determined by the GM (normally, this is the appropriate DC for the level of the animal or beast when it was alive). Regardless of the result of your check, the spirit immediately departs and can't be used for Spirit Speaker again. If the creature had the confused or frightened condition when it died, you can't get a result better than a critical failure. Only one creature can use Spirit Speaker on a given dead animal, as the effort takes the spirit's full attention. --- **Critical Success** The spirit answers you truthfully. The spirit's answer is likely to be terse or cryptic compared to normal communication with an animal, and it can pertain only to things the creature directly experienced or considered important. The spirit doesn't remember anything that happened more than 1 day ago. **Success** As critical success, but the spirit doesn't recall anything that happened more than 1 hour ago. **Failure** The spirit doesn't answer you. **Critical Failure** The spirit is wracked with "
+ },
+ {
+  "id": "spirit-warrior-dedication",
+  "name": "Spirit Warrior Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Tian Xia origin --- You're a warrior who trains your spirit and body to work in perfect harmony, enhancing your attacks with your spiritual energy while fighting with a ferocious martial technique that combines blade and fist. The damage die for your fist changes to 1d6 instead of 1d4, and your fist gains the parry trait. You don't take the normal –2 circumstance penalty when making a lethal attack with your fist or any other unarmed attacks. You gain the Overwhelming Combination action."
+ },
+ {
+  "id": "spirits-absolution",
+  "name": "Spirit's Absolution",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "healing",
+   "vitality"
+  ],
+  "prerequisites": [
+   "Exorcist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Cost** 1 spirit wisp or spirit remnant from your spirit dwelling **Requirements** You are holding your spirit dwelling. --- You purify a spirit by absolving it of its sins and regrets. This cathartic experience restores your Hit Points or those of an adjacent ally. If you expend a spirit wisp, the target recovers Hit Points. If you expend a spirit remnant, the target recovers 1d6 Hit Points per level of the incorporeal undead or haunt from which you gained the remnant."
+ },
+ {
+  "id": "spirits-anguish",
+  "name": "Spirit's Anguish",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "sonic"
+  ],
+  "prerequisites": [
+   "Exorcist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Cost** 1 spirit wisp or spirit remnant from your spirit dwelling **Requirements** You are holding your spirit dwelling. --- You purify a spirit by coaxing it to release its anguish in a final cathartic howl. This deals sonic damage to all creatures in a , with a save against your class DC or spell DC, whichever is higher. If you expend a spirit wisp, this deals . If you expend a spirit remnant, this deals 1d6 sonic damage per level of the incorporeal undead or haunt from which you gained the remnant."
+ },
+ {
+  "id": "spirits-interference",
+  "name": "Spirits' Interference",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "divine",
+   "rage"
+  ],
+  "prerequisites": [
+   "spirit instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You call forth protective spirits to ward off ranged attacks. Until your rage ends, anyone making a ranged attack against you must succeed at a or the attack misses with no effect."
+ },
+ {
+  "id": "spiritual-aid",
+  "name": "Spiritual Aid",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Scion of Domora Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you call your spirit guide for aid, its presence bolsters your will and agility. You gain the Spiritual Aid reaction."
+ },
+ {
+  "id": "spiritual-disruption",
+  "name": "Spiritual Disruption",
+  "level": 1,
+  "category": "bonus",
+  "traits": [],
+  "prerequisites": [
+   "Order of the Pyre"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You channel disruptive power that severs a foe's spiritual connection to their magic. Make a melee Strike. This counts as two attacks when calculating your multiple attack penalty. If the attack hits, the target takes 1d6 damage. The target is Stupefied 1 until it stops taking the persistent spirit damage."
+ },
+ {
+  "id": "spiritual-expansion-spell",
+  "name": "Spiritual Expansion Spell",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "animist",
+   "apparition",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your apparitions manifest to scatter the energy of your spell. If the next action you use is to Cast a Spell that has an area of a burst, cone, or line and does not have a duration, increase the area of that spell. Add 5 feet to the radius of a burst that normally has a radius of at least 10 feet (a burst with a smaller radius is not affected). Add 5 feet to the length of a cone or line that is normally 15 feet long or smaller, and add 10 feet to the length of a larger cone or line. You can also use this feat to increase the radius of an emanation spell with a duration by 5 feet by dedicating your primary apparition to maintaining the spellshape; dedicating the apparition to the spell prevents you from using the apparition's vessel spell, apparition skills, or Avatar form for the duration of the modified spell."
+ },
+ {
+  "id": "spiritual-explorer",
+  "name": "Spiritual Explorer",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're familiar with the danger that lingering spirits can pose to an unwary adventurer, and you're particularly attuned to their presence. Even if you aren't Searching in exploration mode, you can attempt a check to find haunts that normally require you to Search for them. You still need to meet any other requirements to find a particular haunt."
+ },
+ {
+  "id": "spiritual-flurry",
+  "name": "Spiritual Flurry",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Scion of Domora Dedication",
+   "Spiritual Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Spiritual Strike, hit targets become off-guard until the end of your current turn. In addition, the additional force damage dealt by the Strike increases by 2d6."
+ },
+ {
+  "id": "spiritual-sense",
+  "name": "Spiritual Sense",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "divine",
+   "oracle"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a vague connection to the Ethereal Plane that enables you to notice spirits. While you're exploring but not Searching, the GM rolls a secret check for you to find haunts that usually require Searching, as well as spirits, creatures on the Ethereal Plane, and beings made entirely of spiritual essence such as celestials, fiends, and monitors. You can also potentially notice ethereal creatures and spirits inside solid objects, provided they are within 30 feet of you. This applies while Searching, while Seeking, and on the automatic secret check you gain while exploring even if you aren't Searching. You can still notice spirits only on a successful check, and you can't see them if they're more than 5 feet inside an object. When you notice a creature with this sense, you also learn its location, making it hidden to you if it had been undetected."
+ },
+ {
+  "id": "spiritual-strike",
+  "name": "Spiritual Strike",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Scion of Domora Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a weapon with at least one fundamental rune and your familiar is adjacent to you or in your space. --- Your spirit guide enhances your attacks with occult power. Make a Strike with a weapon that has at least one fundamental rune. This counts as two attacks when calculating your multiple attack penalty. The Strike has the effects of the ghost touch property rune and deals an additional 2d6 force damage. If your weapon has a major striking rune, this Strike instead deals 3d6 force damage."
+ },
+ {
+  "id": "spiteful-rake",
+  "name": "Spiteful Rake",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "changeling"
+  ],
+  "prerequisites": [
+   "Claw Unarmed Attack"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have both hands free. --- Your instincts sing of spite and malice, and you've learned a devastating trick: go for the eyes. You make a claw Strike. If you hit and deal damage, the target is dazzled for 1 round. On a critical hit, the target is instead blinded for 1 round and dazzled until restored to maximum hit points."
+ },
+ {
+  "id": "splinter-faith",
+  "name": "Splinter Faith",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion",
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your faith in your deity is represented in an extremely unusual way that some might call heretical. When you select this feat, you should detail the fundamental tenets of your splinter faith, though it shouldn't affect the deity's edicts or anathema. Choose four domains. These domains must be chosen from among your deity's domains, your deity's alternate domains, and up to one domain that isn't on either list and isn't anathematic to your deity. Any domain spell you cast from a domain that isn't on either of your deity's lists is always heightened to 1 rank lower than usual for a focus spell. For the purpose of abilities that depend on your deity's domains, the four domains you chose are your deity's domains, and any of your deity's domains you didn't choose are now among your deity's alternate domains. --- **Special** Unless you take this feat at 1st level, changing the way you relate to your deity requires retraining, as described in the Changing Faith section below. If you take this feat and previously benefited from any effect that requires a domain your splinter faith doesn't include, such as a domain spell from Domain Initiate, you lose that effect. At the GM's discretion, you can take this feat with other classes or archetypes that gain access to domains through a deity."
+ },
+ {
+  "id": "spraying-mutation",
+  "name": "Spraying Mutation",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ostilli Host Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ostilli can launch a multitude of darts at once over a short distance. When you Spit Ambient Magic, you can have it affect all creatures within a instead of the normal target."
+ },
+ {
+  "id": "spring-from-the-shadows",
+  "name": "Spring from the Shadows",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You leap from hiding and assail your target. You Stride up to your Speed, but you must end your movement next to an enemy you're hidden from or undetected by. You then Strike that enemy; you remain hidden from or undetected by that creature until after you Strike. You can use Spring from the Shadows while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "springboard",
+  "name": "Springboard",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Clawdancer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your previous action was a successful spinning talon Strike against an adjacent foe. --- You use the power of your leg lashing out to spring off your foe and leap toward another, your talon descending in a crescent. You Leap, which doesn't trigger reactions from the enemy you struck. If you land within melee reach of an enemy, you can choose to make a spinning talon Strike against them."
+ },
+ {
+  "id": "springing-leaper",
+  "name": "Springing Leaper",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your powerful legs allow you to make sudden and dramatic leaps. You can Leap as a 2-action activity to double the distance you can Leap vertically, or Leap as a 3-action activity to triple the distance you can Leap vertically. You don't automatically fail Long Jump for jumping in a different direction than your Stride."
+ },
+ {
+  "id": "sprout-fruit",
+  "name": "Sprout Fruit",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "healing",
+   "magical",
+   "plant"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The plants covering your body sprout a single, ripe fruit. A creature other than you who eats this fruit as a three-action activity (1 Interact action to pluck the fruit and 2 Interact actions to eat it) is healed Hit Points for every 2 levels you have. **Awakening** The fruit is more potent. Increase the healing from d4s to d6s (). **Awakening** The fruit is plentiful. You sprout one additional fruit for every 5 levels you have beyond 2. Also, those who eat a fruit may reduce a condition affecting them by 1."
+ },
+ {
+  "id": "spyglass-modification",
+  "name": "Spyglass Modification",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Overwatch Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your enhanced visual gear includes a regulating scope and reflectors, combined in an ingenuous setup that allows you to see around corners within the area of your overwatch field. This permits your overwatch field to extend around a single corner or turn and allows you to see around that corner as well. This ability doesn't let you see through walls or other barriers. You can't use it to see around a second or further corner, and it doesn't allow you to make ranged attacks or perform other actions that require line of effect with your target."
+ },
+ {
+  "id": "spys-countermeasures",
+  "name": "Spy's Countermeasures",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lion Blade Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You succeed at a save against a detection, mental, or scrying effect. --- You've learned how to analyze and fake your responses to the most common magic used against spies. You can attempt to identify the effect via Identify Magic using the magical tradition skill of the effect or Espionage Lore, even if you didn't notice the spell being cast. If you successfully identify the triggering effect, and it would normally fail or have no effect, you can make the caster of the triggering effect think the effect or spell succeeded. If they would obtain a result, such as receive a piece of information, you decide what that result is. If the effect would influence you to take certain actions, you can make it appear as if you were affected and attempt to play along; if the effect normally establishes a mental link, it functions normally, but you can disregard any commands you receive through the link."
+ },
+ {
+  "id": "squad-tactics",
+  "name": "Squad Tactics",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are adept at working with your allies to surround an enemy. If an enemy is within reach of you and at least two of your allies, that enemy is off-guard to you."
+ },
+ {
+  "id": "squawk",
+  "name": "Squawk!",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "tengu"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You critically fail a Deception, Diplomacy, or Intimidation check against a creature that doesn't have the tengu trait. --- You let out an awkward squawk, ruffle your feathers, or fake some other birdlike tic to cover up a social misstep or faux pas. You get a failure on the triggering check, rather than a critical failure. All creatures that witnessed you Squawk are temporarily immune for 24 hours."
+ },
+ {
+  "id": "squirm-free",
+  "name": "Squirm Free",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "poppet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature grabs, immobilizes, or restrains you. --- You're used to slipping out of a bigger creature's grasp or escaping a child's overly enthusiastic hug. You attempt to Escape."
+ },
+ {
+  "id": "staff-sweep",
+  "name": "Staff Sweep",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Staff Acrobat Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding your staff. --- You sweep your foes away with your staff. Roll an Athletics check to Shove or Trip, and compare the result to the appropriate DCs of up to two foes, each of whom must be within your reach and no more than 5 feet apart."
+ },
+ {
+  "id": "stage-fighting",
+  "name": "Stage Fighting",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Gladiator Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You pull punches to give a better show. You don't take the usual -2 circumstance penalty when making a nonlethal attack with a weapon or unarmed attack that doesn't have the nonlethal trait."
+ },
+ {
+  "id": "staggering-blow",
+  "name": "Staggering Blow",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mammoth Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're riding a megafauna companion that has a melee Strike. --- You've trained your megafauna companion to stagger its enemies, impeding their ability to fight back. You Command an Animal to order your megafauna companion to spend both its actions making a single, powerful Strike. The attack deals an extra die of weapon damage, and if the attack hits and deals damage, the target is Slowed 1 until the end of its next turn."
+ },
+ {
+  "id": "staggering-fire",
+  "name": "Staggering Fire",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Archer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've learned how to fire at enemies to slow them down, allowing innocents and fellow knights alike time to escape. Make a ranged Strike with a weapon in the bow or crossbow weapon group. On a hit, the target takes a –5-foot circumstance penalty to its Speed until the end of its turn, or a –10-foot circumstance penalty on a critical hit."
+ },
+ {
+  "id": "stalwart-chant",
+  "name": "Stalwart Chant",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Stalwart Song"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know story after story of unyielding, valiant dwarven heroes whose minds were bulwarks against fear and confusion. You can use Stalwart Song when attempting a saving throw against any mental effect, and if you fail the saving throw, you gain resistance to mental damage against any resulting effect equal to half your level."
+ },
+ {
+  "id": "stand-back-im-a-doctor",
+  "name": "Stand Back, I'm a Doctor!",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lepidstadt Surgeon Dedication",
+   "master in Medicine"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are holding healer's tools, or you are wearing them and have a hand free; a creature with the dying condition is in your reach. --- You have mastered techniques to aid those at the brink of death, even if they use dangerous Stasian technology. Attempt a Medicine check on the dying creature as you deliver it a powerful shock. The DC is usually a standard-difficulty DC of a level equal to the target. On a success, the creature's dying condition is reduced by 1 (or 2 on a critical success); if this reduces the value of the dying condition to 0, the creature regains 2d8+10 Hit Points, its wounded condition doesn't increase, and it can Stand as a free action. Each creature except you adjacent to the target takes 8d6 damage ( save against your class DC or spell DC); instead of attempting this save, a creature can Step as a free action and if they end this movement not adjacent to the target, they take no damage."
+ },
+ {
+  "id": "stand-for-the-fallen",
+  "name": "Stand for the Fallen",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "divine"
+  ],
+  "prerequisites": [
+   "Mortal Herald Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally takes damage that would bring them to 0 Hit Points --- You protect your allies at the cost of your own blood, but your deity shields you from the worst of the harm. Stride twice to be adjacent to the triggering ally. You can Burrow, Climb, Fly, or Swim instead of Striding if you have the corresponding movement type. You then take the damage that would have brought your ally to 0 Hit Points, though you gain resistance to all damage against that damage equal to your level."
+ },
+ {
+  "id": "stand-still",
+  "name": "Stand Still",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach uses a move action or leaves a square during a move action it's using --- You strike out when your foe tries to flee. Make a melee Strike against the triggering creature. If the attack is a critical hit and the trigger was a move action, you disrupt that action."
+ },
+ {
+  "id": "starlit-sentinel-dedication",
+  "name": "Starlit Sentinel Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've been chosen by one of the constellations of the Tian Xia zodiac. You gain a transformation seal: a mundane-seeming item of light Bulk, such as a ring, brooch, or key, that has the arcane trait. If your seal is ever lost or destroyed, you can gain a replacement by spending 1 week of downtime in introspection to reconnect with your constellation. You, and only you, can transform into your sentinel form by Activating the seal. Starlit Transformation"
+ },
+ {
+  "id": "starshot-arrow",
+  "name": "Starshot Arrow",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "attack",
+   "centaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The greatest centaurs need not wait until their stories are over to touch the stars in the sky. You draw an arrow (or other ammunition), whisper a short invocation over it, and then Strike with a ranged weapon. The arrow becomes a bolt of starlight, changing its damage to your choice of force or spirit and granting it the effects of the *Ghost Touch* rune. When the arrow Strikes its target, it unravels into a constellation of starlight that wraps around the target's limbs, imposing a –10-foot circumstance penalty to its Speeds for 2d4 rounds or Immobilizing it if the Strike was critical hit. The target can untangle itself by spending an Interact action to break free."
+ },
+ {
+  "id": "start-the-festival",
+  "name": "Start the Festival!",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "tanuki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "No distance can stop tanuki from making their way to a good party. You whistle and point, and 808 tanuki, in their raccoon dog forms, somehow appear from the surrounding terrain and fill a within 120 feet. The tanuki scurry over the ground, leap through the air, and climb up walls and surfaces, dealing damage to all enemies in the area as they're trampled and danced upon. The tanuki continue to party in the area for the next minute, dealing damage to any enemy that ends its turn in the area and transforming the area into difficult terrain (though the tanuki allow you and your allies to pass normally). Creatures in raccoon dog form can attempt to Hide within the mass of tanuki. After 1 minute, the tanuki clap 30 times and run off to the next party. You can Dismiss the effect, though if you do, the tanuki grumble as the party ends early."
+ },
+ {
+  "id": "startling-appearance",
+  "name": "Startling Appearance",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype",
+   "emotion",
+   "fear",
+   "mental",
+   "vigilante"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Startling Appearance Source Player Core 2 pg. 219 Archetype Vigilante Prerequisites Vigilante Dedication Requirements You are unnoticed by the target creature. You can startle foes who are unaware of your presence. Make a Strike against your target. That creature is off-guard against this Strike, as normal. If your Strike hits, the target remains off-guard for the rest of your turn and is frightened 1 (frightened 2 on a critical hit). Startling Appearance leads to... Frightening Appearance, Stunning Appearance"
+ },
+ {
+  "id": "stasian-charge",
+  "name": "Stasian Charge",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "In Lightning, Life"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Charging a living body with electricity may seem like a bad idea, but you know better. When a creature gains temporary Hit Points from your In Lightning, Life, they gain the quickened condition until the end of their next turn. They can use the extra action only for Stride and Strike actions."
+ },
+ {
+  "id": "stasian-smash",
+  "name": "Stasian Smash",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sterling Dynamo Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Access** You are from Ustalav. --- You've modified your dynamo with Stasian coils, allowing you to make a powerful attack that crackles with electricity. Make a dynamo Strike. On a success, the Strike deals an additional 1d12 electricity damage to the target, as well as damage to up to two other foes within 10 feet as sparks leap across the gaps. If you critically fail your dynamo Strike, you take 1d12 damage. This counts as two attacks when calculating your multiple attack penalty. At 18th level, the additional electricity damage to the target increases to 2d12, and the additional electricity damage to the other foes increases to 2d4. Reduce the operational time of your sterling dynamo by 1 hour."
+ },
+ {
+  "id": "statement-strut",
+  "name": "Statement Strut",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "mental",
+   "visual"
+  ],
+  "prerequisites": [
+   "Celebrity Dedication or Dandy Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- You have an eye for fashion and know how to sell attitude and confidence with your walk. You Stride up to your Speed. All enemies within 30 feet of your movement are enraptured by your performance: they must succeed at a saving throw or become unable to use reactions until the end of your next turn. The DC for this save is equal to your class DC or spell DC, whichever is higher."
+ },
+ {
+  "id": "statue",
+  "name": "Statue",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Stonebound Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your body and equipment appear to be made of stone as you hold perfectly still. Until the next time you act, you appear to be a statue and do not need to eat, drink, or breathe, but you are off-guard. Your Deception DC to pass as a statue is equal to 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)."
+ },
+ {
+  "id": "stave-off-catastrophe",
+  "name": "Stave Off Catastrophe",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Shoulder Catastrophe"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You fully protect your allies from the worst blows. When you use the Shoulder Catastrophe reaction, you can choose to take the full critical damage and effects from the attack, including effects that apply on a critical hit, and have your ally take no damage and avoid the attack's effects."
+ },
+ {
+  "id": "stay-here",
+  "name": "Stay Here!",
+  "level": 8,
+  "category": "archetype",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Stay Here! Source High Seas pg. 107 Archetype Marine Marauder Prerequisites Marine Marauder Dedication You topple your foes with your legs and attack them while they’re down. You Trip a creature within reach without needing a free hand. If you succeed, you can make a melee Strike against that creature. Your multiple attack penalty doesn’t increase until after you’ve made both the Trip and Strike."
+ },
+ {
+  "id": "steadfast-ally",
+  "name": "Steadfast Ally",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "shoony"
+  ],
+  "prerequisites": [
+   "Loyal Empath"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your presence alone is enough to provide your allies with emotional support. You can use the Aid reaction to grant a bonus to another creature's Will saving throw even when you haven't prepared to help."
+ },
+ {
+  "id": "steadfast-grip",
+  "name": "Steadfast Grip",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Warshard Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The connection you have with your warshard weapon strengthens it and assists you in maintaining your grip on it in battle. Your DCs against attempts made to Disarm, Steal, or otherwise remove your warshard weapon from your possession are calculated at mythic proficiency. When you designate a warshard weapon, its Hardness increases by an amount equal to half your level, and its Hit Points increase by an amount equal to your level for as long as it is your warshard weapon."
+ },
+ {
+  "id": "steady-balance",
+  "name": "Steady Balance",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Acrobatics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can keep your balance easily, even in adverse conditions. Whenever you roll a success using the Balance action, you get a critical success instead. You're not off-guard while attempting to Balance on narrow surfaces and uneven ground."
+ },
+ {
+  "id": "steady-on-stone",
+  "name": "Steady on Stone",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "oread"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to the earth makes natural uneven surfaces less of a hindrance for you. You can ignore difficult terrain caused by rubble and uneven ground made of stone and earth. In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of stone and earth, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead."
+ },
+ {
+  "id": "steady-spellcasting",
+  "name": "Steady Spellcasting",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "bard",
+   "cleric",
+   "druid",
+   "oracle",
+   "psychic",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Confident in your technique, you don't lose spells easily. If a reaction would disrupt your spellcasting action, attempt a . If you succeed, your action isn't disrupted."
+ },
+ {
+  "id": "steady-spellcasting-magus",
+  "name": "Steady Spellcasting (Magus)",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Confident in your technique, you don't easily lose your concentration when you Cast a Spell. If a reaction would disrupt your spellcasting action, attempt a check. If you succeed, your action isn't disrupted."
+ },
+ {
+  "id": "steal-death",
+  "name": "Steal Death",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "death",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Apocalypse Rider Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Another creature within 30 feet gains the doomed or dying condition or their doomed or dying condition increases. --- As a harbinger of daemonkind, you gain authority to delay the death of others if it serves your purposes, and in doing so, you bolster the well-being of both you and your mount to allow you sow further havoc. The triggering creature reduces their doomed or dying condition by 1. For the next minute, you and your apocalypse mount gain fast healing 5 as long as you are within 10 feet of each other. If you use this reaction again within that minute, you and your mount's fast healing increases by 1, but the duration isn't increased."
+ },
+ {
+  "id": "steal-essence",
+  "name": "Steal Essence",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "legendary in Thievery",
+   "master in Arcana, Nature, Occultism, or Religion"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** A magic item is within your reach. Being in the presence of the aeon orbs as they deteriorated has taught you how to siphon energy, and you do so with the required magic item. The DC to steal the properties of a magic item is equal to the DC for the item's level or the normal DC to Steal the item, whichever is higher. The targeted item then becomes temporarily immune for 24 hours. If the object was on a creature, that creature is also temporarily immune (which prevents you from attempting to Steal the Essence of another object on it). If you successfully steal the properties of an item, it loses its magical properties for 24 hours and you can move those properties to a non-magical object of the same general kind (such as moving a hat's properties to another piece of headgear or moving a weapon's properties to another weapon) for the same length of time. If the moved properties are counteracted, they return immediately to the original item. You automatically fail to Steal the Essence of an artifact, cursed item, or similar item."
+ },
+ {
+  "id": "steal-for-the-depths",
+  "name": "Steal for the Depths",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "merfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Steal for the Depths Source High Seas pg. 20 Requirements You are swimming in water at least 10 feet deep. You reach out and grab an adjacent creature (on nearby land or in the water) and pull it below the surface. Attempt an Athletics check to Grapple the creature. On a success, if the creature is on land, in addition to the normal effects of Grapple, you pull the creature into the water in a space adjacent to you. If the creature is already in the water, on a success, in addition the normal effects of Grapple, you drag the creature 10 feet deeper into the water, moving 10 feet with the creature. Moving a creature into water or deeper into water using Steal for the Depths is forced movement for the creature but not for you."
+ },
+ {
+  "id": "steal-magic",
+  "name": "Steal Magic",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Mythic Counterspell"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You don't just counter your enemy's magic, you instantly master it and make it your own. When you successfully counterspell an enemy's spell using Mythic Counterspell, you can learn that spell as long as it's on the spell list for your tradition. If you have a spellbook, the spell is instantly scribed into the book, creating new blank pages if needed. If you have a spell repertoire, you can instantly retrain any spell currently in your repertoire to the countered spell, though if the spell you replace is one granted to you by a class feature (such as an animist's apparition spells or a sorcerer's bloodline spells), the spell reverts to the one normally granted by that class feature during your next daily preparations."
+ },
+ {
+  "id": "steal-vitality",
+  "name": "Steal Vitality",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast vampiric feast"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Vampiric Feast, you can modify its standard effects as follows: Instead of gaining temporary Hit Points, if your target fails or critically fails its saving throw, you can attempt a counteract check to remove the Clumsy 1 or Enfeebled 1 conditions on yourself, using the source of that condition to determine the counteract rank and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns at the end of your next turn."
+ },
+ {
+  "id": "stealthy-as-an-octopus",
+  "name": "Stealthy as an Octopus",
+  "level": 6,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Undersea Privateer Dedication",
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're an expert at using the dark of the ocean to conceal yourself. As long as you're separated from a creature by 20 or more feet of water, the turbulence of the water grants you enough cover to attempt to hide from that creature."
+ },
+ {
+  "id": "steam-spell",
+  "name": "Steam Spell",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "spellshape",
+   "undine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You transform your fire spells into steam, making them more effective underwater. If your next action is to Cast a Spell with the fire trait, you can cast it underwater. When you do so, it takes the form of scalding steam. Underwater creatures do not gain the normal fire resistance for being underwater against this spell, but they don't light things on fire or cause Persistent Fire Damage, nor do they add other effects that would apply to fire but not steam (at the GM's discretion)."
+ },
+ {
+  "id": "steed-form",
+  "name": "Steed Form",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon changes to make it particularly effective as your mount. While you ride it, you get your full number of actions each round instead of reducing them to 2. This applies only when you ride your eidolon, not when anyone else does. Your eidolon still must be at least one size category larger than you to ride it. Since you work together to move, your eidolon's move actions while you're mounted gain the tandem trait."
+ },
+ {
+  "id": "steeds-toppling-strike",
+  "name": "Steed's Toppling Strike",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Faithful Steed"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** An enemy triggered your champion's reaction since the end of your last turn. --- Those who defy your cause feel the powerful attacks of your mount. You Command an Animal to order your steed to Strike the enemy who triggered your champion's reaction. Your steed's unarmed attack deals one extra damage die for this Strike. If the Strike hits, the target is knocked prone."
+ },
+ {
+  "id": "steel-falcon-dedication",
+  "name": "Steel Falcon Dedication",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "expert in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** You're invited by a current member of the Eagle Knights or the People's Council. --- You serve as an envoy of the ideals of Andoran, whether it's in a foreign court or on the field of battle. Your training in the Steel Falcons enables you to anticipate the attitudes of others to achieve your goals. You gain the Size Up action. --- **Special** You can take this dedication even if you haven't taken more than two non-dedication feats from the archetype."
+ }
+]

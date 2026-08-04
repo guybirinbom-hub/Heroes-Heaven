@@ -1,0 +1,987 @@
+[
+ {
+  "id": "perfect-shot",
+  "name": "Perfect Shot",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You are wielding a loaded ranged weapon with reload 1 or more, and you have not reloaded your weapon since your last turn. --- After watching the motions of combat with incredible intensity and precision, you fire at your prey at the perfect moment to deliver maximum pain. Make a ranged Strike with the required weapon against your hunted prey. If you hit, the Strike deals maximum damage. After the Strike, your turn ends."
+ },
+ {
+  "id": "perfected-evaluations",
+  "name": "Perfected Evaluations",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [
+   "Unrivaled Analysis"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You instantly assess the strengths and weaknesses of the enemy forces. When you use Rapid Assessment, you can attempt up to six Recall Knowledge checks against enemies you are observing."
+ },
+ {
+  "id": "performance-weapon-expert",
+  "name": "Performance Weapon Expert",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Provocator Dedication",
+   "expert in any kind of weapon or unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your experience has made you better with a wide variety of weapons. Your proficiency ranks for simple weapons and martial weapons increase to expert, as does your proficiency rank for your chosen advanced weapon."
+ },
+ {
+  "id": "pernicious-poison",
+  "name": "Pernicious Poison",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can add a toxic additive to an alchemical poison to make it splash poison on its target. A poison with this additive deals an amount of poison damage equal to the poison's level if the target succeeds at its initial saving throw against it. A target that critically succeeds at its saving throw against this poison still takes no damage."
+ },
+ {
+  "id": "persistent-boost",
+  "name": "Persistent Boost",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "offensive boost"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your innovation sets foes on fire, covers them in acid, leaves barbed thorns behind, or otherwise deals persistent damage to your foes that sticks around long after you deliver your boosted attack. When you or your construct innovation damage a foe with offensive boost, that foe also takes 1d8 persistent damage of the same damage type as the offensive boost damage."
+ },
+ {
+  "id": "persistent-odor",
+  "name": "Persistent Odor",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "athamaru"
+  ],
+  "prerequisites": [
+   "Emit Defensive Odor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your pheromones now linger on creatures. When a target fails its save against your Emit Defensive Odor ability, they also take damage. The damage increases to 2d6 at 13th level and 3d6 at 17th level."
+ },
+ {
+  "id": "person-of-interest",
+  "name": "Person of Interest",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- Sometimes, you need to follow the leads as they come in the middle of an investigation. Choose a creature that you can see who isn't, to your knowledge, tied to any of your current investigations. For the next minute, you can Devise a Stratagem against that creature as a free action."
+ },
+ {
+  "id": "petal-district-socialite",
+  "name": "Petal District Socialite",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Dandy Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through your experience with the many parties held nightly in clubs and estates within the Petal District, you understand the way rumors and gossip circulate during social events. You can use the Influence Rumor activity during a social event attended by a large group of people, such as a gala or town fair, reducing the time it takes to 1d4 hours. This ability doesn't apply to secret events or other small private gatherings."
+ },
+ {
+  "id": "phalanx-breaker",
+  "name": "Phalanx Breaker",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Way of the Vanguard"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a two-handed firearm or a two-handed crossbow. --- You know that to take out an enemy formation, you must punch a hole through its center. Make a ranged Strike with the required weapon against a target within the weapon's first range increment. The target is pushed directly back 10 feet (20 feet on a critical hit), and if this pushes the target into an obstacle, the target takes bludgeoning damage equal to half your level."
+ },
+ {
+  "id": "phalanx-formation",
+  "name": "Phalanx Formation",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [
+   "Guardian or Knight Vigilant Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to clear a line of fire for your allies. You don't provide lesser cover to enemies against your allies' attacks."
+ },
+ {
+  "id": "phalanx-formation-guardian",
+  "name": "Phalanx Formation (Guardian)",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "text": "Phalanx Formation (Guardian) Source Battlecry! pg. 42 You know how to clear a line of fire for your allies. You don't provide lesser cover to enemies against your allies' attacks."
+ },
+ {
+  "id": "phalanx-formation-knight-vigilant",
+  "name": "Phalanx Formation (Knight Vigilant)",
+  "level": 8,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Phalanx Formation (Knight Vigilant) Source Knights of Lastwall pg. 74 Archetype Knight Vigilant Prerequisites Knight Vigilant You know how to clear a line of fire for your allies. You don't provide lesser cover to enemies against your allies' attacks."
+ },
+ {
+  "id": "phantom-visage",
+  "name": "Phantom Visage",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "goblin",
+   "illusion",
+   "occult",
+   "visual"
+  ],
+  "prerequisites": [
+   "dokkaebi goblin heritage"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You cloak yourself in illusions to mask your nature. Your Phantom Visage is a specific alternate form of a Small or Medium humanoid ancestry prevalent where you grew up (typically human), though it doesn't need to have analogous physical features to your natural goblin form. Your Phantom Visage counts as setting up a disguise for the Impersonate use of Deception. If you use any unarmed attacks you gained from a goblin heritage or ancestry feats while in your Phantom Visage, the illusion immediately breaks. You can maintain your Phantom Visage indefinitely, and you can shift back to your true goblin form by using this action again."
+ },
+ {
+  "id": "phase-out",
+  "name": "Phase Out",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [
+   "your eidolon is a phantom"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Your eidolon phases out of reality slightly, gaining resistance to all damage (except force and negative) equal to half your level. It's not incorporeal, but it can't use Strikes or actions that require a fully physical form, such as Grapple, Shove, or Trip. Your eidolon can return to its normal form with a single action, which has the concentrate trait."
+ },
+ {
+  "id": "pheromonal-message",
+  "name": "Pheromonal Message",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "athamaru",
+   "olfactory"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your communicative pheromones are particularly well developed from years of living with other athamarus. You send a brief message to one ally within 60 feet, or 120 feet in water. No other creature can understand the message. The message must be short and simple, and can't convey ideas that would require complex or novel wording if spoken, such a creature's name or proper nouns."
+ },
+ {
+  "id": "phonetic-training",
+  "name": "Phonetic Training",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Linguist Dedication",
+   "expert in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can pronounce and repeat words with near-perfect accuracy even if you don't understand their meaning, and you can write them down in a phonetic script that allows you or another creature with Phonetic Training to read it later. Even if the words are in a language with sound you can't pronounce, you can faithfully transcribe them. Memorizing long sequences of words remains just as difficult as it is normally."
+ },
+ {
+  "id": "pick-up-the-pace",
+  "name": "Pick Up the Pace",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [
+   "Constitution +2"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You lead by example and can help others push themselves beyond their normal limits. When Hustling in a group during exploration mode, your group can Hustle for as long as the member who could Hustle longest on their own."
+ },
+ {
+  "id": "pickpocket",
+  "name": "Pickpocket",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Thievery"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can Steal or Palm an Object that's closely guarded, such as in a pocket, without taking the –5 penalty. You can't steal objects that would be extremely noticeable or time consuming to remove (like worn shoes or armor or actively wielded objects). If you're a master in Thievery, you can attempt to Steal from a creature in combat or otherwise on guard. When doing so, Stealing requires 2 actions instead of 1, and you take a –5 penalty."
+ },
+ {
+  "id": "pierce-the-eye",
+  "name": "Pierce The Eye",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a ranged weapon. --- You aim a shot from your weapon directly at a foe's eye, blinding them in the process. Make a ranged Strike. On a hit, the target additionally takes 2d8 persistent bleed damage. The target must also attempt a save against your class DC with the following effects. --- **Critical Success** The target is unaffected. **Success** The target is blinded until the end of its next turn. **Failure** The target is blinded for as long as they are taking the persistent bleed damage and for 1 additional round thereafter. **Critical Failure** As failure, but the target also takes a –2 circumstance penalty to the flat check to remove the persistent bleed damage; a creature Administering First Aid to stop this persistent bleed damage takes a –2 circumstance penalty to the Medicine check."
+ },
+ {
+  "id": "piercing-critical",
+  "name": "Piercing Critical",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your attacks with your preferred weapons deal especially devastating wounds. When you Strike with a firearm or crossbow for which you have legendary proficiency, you critically succeed if you roll a 19 on the die, as long as that result is a success."
+ },
+ {
+  "id": "piercing-doom",
+  "name": "Piercing Doom",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Warrior of Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are Doomed 2 or greater. --- You have grown accustomed to the curse that comes with your blessing, able to channel its effects through your attacks and forestall your own demise. Make a melee Strike; on a success, the target takes an additional 1d10 damage and your doomed value is reduced by 1."
+ },
+ {
+  "id": "piercing-quills",
+  "name": "Piercing Quills",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "shisk"
+  ],
+  "prerequisites": [
+   "Spine Stabber"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your quills can dig particularly deep into the flesh of your opponents. Your quills unarmed attack deals 1d4 on a critical hit."
+ },
+ {
+  "id": "pilgrims-token",
+  "name": "Pilgrim's Token",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Religion",
+   "follower of a specific religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You carry a small token of protection from a site holy to your faith. You gain a wooden religious symbol for your deity for free. As long as this religious symbol is in your possession, when you tie an adversary's initiative roll, you go first. If you lose this religious symbol, you must purchase or Craft a replacement and attune it. Such a token usually costs at least 1 sp, and the attunement takes 10 minutes of prayer. You can also attune a different religious symbol with the same amount of time, but you lose the benefit of the previous religious symbol."
+ },
+ {
+  "id": "pin-to-the-spot",
+  "name": "Pin to the Spot",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Provocator Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You Strike a target within reach. If you hit and deal damage, the target is also restrained as if you had critically succeeded at an Athletics check to Grapple."
+ },
+ {
+  "id": "pinning-fire",
+  "name": "Pinning Fire",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You use Flurry of Blows to make two ranged piercing weapon Strikes against the same target. --- You target your opponent's clothing, equipment, or loose flesh with piercing projectiles to pin them to the ground or a nearby surface. If both your attacks hit, the target must succeed at a Reflex save against your class DC or become immobilized until it or an adjacent creature succeeds at a check to remove the pinning projectiles. The creature doesn't become stuck if it is incorporeal, is liquid (like a water elemental or some oozes), or could otherwise escape without effort."
+ },
+ {
+  "id": "pinpoint-poisoner",
+  "name": "Pinpoint Poisoner",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Unsuspecting targets are especially vulnerable to your poisons. When you successfully Strike an off-guard creature with a poisoned weapon or expose an off-guard creature to an inhaled poison, that creature takes a –2 circumstance penalty to its initial save against that poison."
+ },
+ {
+  "id": "pistol-twirl",
+  "name": "Pistol Twirl",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a loaded one-handed ranged weapon. --- Your quick gestures and flair for performance distract your opponent, leaving it vulnerable to your follow-up attacks. You Feint against an opponent within the required weapon's first range increment, rather than an opponent within melee reach. If you succeed, the foe is off-guard against your melee and ranged attacks, rather than only your melee attacks. On a critical failure, you're off-guard against the target's melee and ranged attacks, rather than only its melee attacks."
+ },
+ {
+  "id": "piston-punch",
+  "name": "Piston Punch",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sterling Dynamo Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You lash out with a powerful punch, extending your dynamo to a greater length in order to attack two creatures in a row. Make a single bludgeoning or piercing dynamo Strike and compare the attack roll result to the ACs of up to two foes. The first foe must be within your melee reach and the second foe must be adjacent to the first foe in a straight line away from you. Roll damage only once and apply it to each creature you hit. A Piston Punch counts as two attacks for your multiple attack penalty. Reduce the operational time of your sterling dynamo by 1 hour."
+ },
+ {
+  "id": "pit-of-snakes",
+  "name": "Pit of Snakes",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "nagaji",
+   "occult"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Mundane serpents obey your summons. You call forth a writhing mass of snakes, raising your hands to cause the snakes to emerge from the ground in a within 120 feet. The snakes appear on all squares of the ground in the area and remain for 1 minute. When you use Pit of Snakes, all creatures in the area must attempt a save against the higher of your class DC or spell DC. Any creature that fails is grabbed by a snake and takes damage. Whenever a creature ends its turn in the area, the snakes attempt to Grab that creature if they aren't already grabbing it. Any creature already grabbed instead takes damage. The snakes' Escape DC is equal to the higher of your class DC or spell DC. A creature can attack a snake in an attempt to release its grip. The snake's AC is equal to the higher of your class DC or spell DC, and it's destroyed if it takes 12 or more damage. Even if a specific snake is destroyed, additional snakes continue to cavort in the area until the duration ends. You can Dismiss the effect."
+ },
+ {
+  "id": "plague-rat",
+  "name": "Plague Rat",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "curse",
+   "disease",
+   "primal"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "wererat"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your bites carry a cursed infection. When you hit and deal damage to a creature with a jaws Strike while in hybrid or rat shape, the creature is cursed until the start of your next turn. Whenever they regain Hit Points during that time, they must attempt a save against your class DC or spell DC, whichever is higher. --- **Success** The creature regains Hit Points normally. **Failure** The creature regains half the normal Hit Points. **Critical Failure** The creature regains no Hit Points."
+ },
+ {
+  "id": "planar-survival",
+  "name": "Planar Survival",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can Subsist using Survival on different planes, even those without resources or natural phenomena you normally need. For instance, you can forage for food without penalty even if the plane lacks food that could normally sustain you. A success on your check to Subsist also prevents damage done by the plane to you and anyone else you support with Subsist. This applies only to damage dealt by the general conditions of the plane, not smaller hazards."
+ },
+ {
+  "id": "plane-hop",
+  "name": "Plane Hop",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "jotunborn",
+   "teleportation"
+  ],
+  "prerequisites": [
+   "Plane-Stepping Dash"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- The spaces between planes are obvious to you, and you can use them to move in unexpected ways. You instantly teleport to any point you could reach with your Speed."
+ },
+ {
+  "id": "plane-step",
+  "name": "Plane Step",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "jotunborn",
+   "move",
+   "occult",
+   "teleportation"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You temporarily move just beyond the threshold of the current plane, granting you Concealment until the end of your next turn. You remain clearly visible while stepping outside of a plane in this way and you can't use this concealment to Hide or Sneak."
+ },
+ {
+  "id": "plant-banner",
+  "name": "Plant Banner",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "commander",
+   "manipulate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You plant your banner to inspire your allies to hold the line. Plant your banner in a corner of your square. Each ally within a centered on your banner immediately gains 4 temporary Hit Points, plus an additional 4 temporary Hit Points at 4th level and every 4 levels thereafter. These temporary Hit Points last for 1 round; each time an ally starts their turn within the burst, their temporary Hit Points are renewed for another round. While your banner is planted, you must signal your tactics abilities using only auditory signals. If your banner is attached to a weapon, you cannot wield that weapon while your banner is planted. While your banner is planted, any effects that normally happen in an emanation around your banner instead happen in a burst that is 10 feet larger (so a becomes a ). The weapon or pole your banner is attached to gains an amount of additional Hardness equal to your level + your Intelligence modifier. You can use this action again while adjacent to your banner to retrieve it. An enemy adjacent to the square you planted your banner in can remove your banner as an Interact action, ending this effect and preventing you and your allies from gaining any of your banner's other benefits until you have successfully retrieved it."
+ },
+ {
+  "id": "plant-empathy",
+  "name": "Plant Empathy",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a connection to flora that allows you to communicate with them on a rudimentary level. You can ask questions of, receive answers from, and use the Diplomacy skill with plants and fungus."
+ },
+ {
+  "id": "plant-evidence",
+  "name": "Plant Evidence",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "Pickpocket"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can put a single item you're holding of light or negligible Bulk onto a person without them noticing by succeeding at a check against their Perception DC. If you have the ruffian racket, you can do this as a free action when you successfully Shove a target."
+ },
+ {
+  "id": "plate-in-treasure",
+  "name": "Plate in Treasure",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Precious metal flows from your fingers to plate an object. This has the effects of a Clad In Metal spell with a rank equal to half your level rounded up. While you're wearing or holding an item of light Bulk or greater that's Plated in Treasure, any metal created by one of your impulses is plated with the metal. If you use Plate in Treasure again, any previous one ends."
+ },
+ {
+  "id": "play-dead",
+  "name": "Play Dead",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "skeleton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You lie prone and pretend to be an ordinary skeleton. As long as you don't move or take any actions requiring anything other than your mind, you appear dead. To see through your ruse, another creature must succeed at a check against your Deception DC, either by Seeking or Recalling Knowledge (typically using Religion or an appropriate Lore skill). This ability doesn't work against creatures that already know you're an animate undead unless you have changed your appearance."
+ },
+ {
+  "id": "play-to-the-crowd-dandy",
+  "name": "Play to the Crowd (Dandy)",
+  "level": 12,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Dandy Dedication",
+   "master in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a knack for knowing just how to manipulate groups by saying exactly what needs to be said. When you Lie in a public area in front of a crowd, you can gauge the reactions of the crowd as you speak to know how your Lie is working, and Lie loses its secret trait. You gain the Reactive Falsehood reaction."
+ },
+ {
+  "id": "plentiful-snares",
+  "name": "Plentiful Snares",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Snarecrafter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can prepare incredible numbers of snares each day out of simple ingredients. Double the number of prepared snares granted by Snarecrafter Dedication."
+ },
+ {
+  "id": "pluck-from-the-sky",
+  "name": "Pluck From the Sky",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Access** tengu, strix, or awakened animal (flying animal) ancestry --- The skies are your rightful place, and you will not suffer another to occupy them. Make a Strike against a flying creature. If the attack deals damage, the target must attempt a save against your class DC. --- **Critical Success** No effect. **Success** The target falls 15 feet but doesn't take damage if it reaches the ground. **Failure** The target falls 30 feet but doesn't take damage if it reaches the ground. **Critical Failure** As failure, but the target takes falling damage."
+ },
+ {
+  "id": "plum-deluge",
+  "name": "Plum Deluge",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You have at least three of the same contact poison. --- You have learned to saturate an area with poison in imitation of the techniques of your rival, Blue Viper. As part of this ability, you Interact to draw three vials of the same contact poison and throw them in the air, where they shatter and spread a poisonous deluge affecting a within 60 feet. All creatures in the burst are automatically exposed to the poison, immediately bypassing any onset time, and must attempt a saving throw against that poison. The three vials must be identical, even if the poison can come in multiple types or different levels."
+ },
+ {
+  "id": "poison-coat",
+  "name": "Poison Coat",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Poisoner Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "In nature, certain animals are covered in venomous spines, and just brushing against them can prove deadly. You expend a contact or injury poison and spend 10 minutes brushing that poison onto your clothing or weaving sharp, poisoned needles into the garment's fabric. You can have only one poison suffused into your clothing at a time. You can use the Once Bitten reaction while you have a poison suffused in this way."
+ },
+ {
+  "id": "poison-weapon",
+  "name": "Poison Weapon",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a weapon. --- You apply a contact poison or injury poison to the required weapon; if you have a free hand, you can Interact to draw a poison as part of this action. This poison can be one of the simple injury poisons you can create due to this feat, or another contact or injury poison you've acquired. --- **Special** During your daily preparations, you can prepare a number of simple injury poisons equal to your level. These follow the rules for injury poisons, except that they deal 1d4 damage with no saving throw. Only you can apply these poisons properly, and they expire the next time you prepare."
+ },
+ {
+  "id": "poisoners-twist",
+  "name": "Poisoner's Twist",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Poisoner Dedication",
+   "trained in Medicine"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful melee Strike that dealt damage against a target afflicted by a poison, and you know which poison. Poisons attack specific parts of the body—one venom might target the lungs, another the circulatory system, while another deteriorates the nerves. You know how to take advantage of such weaknesses. You deal 1d6 damage of the required Strike's damage type and 1d6 damage to the target. If you're at least 18th level, you deal 2d6 damage of each type."
+ },
+ {
+  "id": "polearm-tricks",
+  "name": "Polearm Tricks",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Polearm Tricks Source Secrets of Magic pg. 240 Archetype Runelord Prerequisites Runelord Dedication Your connection to rune magic has revealed tricks to make polearms deadlier in your hands. You gain the critical specialization effects of polearms."
+ },
+ {
+  "id": "polished-distraction",
+  "name": "Polished Distraction",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "incapacitation",
+   "light",
+   "visual"
+  ],
+  "prerequisites": [
+   "Golden Legionnaire Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You aren't in dim light or darkness. --- You take pride in the sheen of your armor, and how useful it is at distracting your enemies when you reflect light from it. Creatures within a that can see you must attempt a save against your class DC. Once a creature attempts a save against this effect, it's temporarily immune for 24 hours. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 round. **Failure** The creature is blinded for 1 round and dazzled for 2 rounds. **Critical Failure** The creature is blinded for 2 rounds and dazzled for 1 minute."
+ },
+ {
+  "id": "pollinate",
+  "name": "Pollinate",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [],
+  "prerequisites": [
+   "ardande trait, plant trait, or wood trait"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You take bludgeoning damage. --- As you're hit, you emit a dense cloud of pollen, obscuring you from sight. You become concealed until the beginning of your next turn. --- **Special** This feat gains the trait for your ancestry."
+ },
+ {
+  "id": "polymorphic-escape",
+  "name": "Polymorphic Escape",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "yaoguai"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would become grabbed, immobilized, prone, or restrained. --- You polymorph into a tiny vermin, a cloud of leaves, or another shape that allows you to escape. Attempt a ; on a success, you ignore the triggering effect and can Step. You then return to your humanoid shape."
+ },
+ {
+  "id": "ponpoko",
+  "name": "Ponpoko",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tanuki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "No true tanuki would ever be caught without a musical instrument to play under the full moon. You can attempt Performance checks and cast spells by drumming on your belly; this requires that you have at least one hand free, and like playing an instrument, it grants the Perform action the auditory and manipulate traits. When Casting a Spell, your gestures can include drumming your belly. If you do, any attempt to recognize a spell cast this way gains a -2 circumstance penalty."
+ },
+ {
+  "id": "ponpoko-pon",
+  "name": "Ponpoko-pon!",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "primal",
+   "sonic",
+   "tanuki"
+  ],
+  "prerequisites": [
+   "Ponpoko"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Whether it's because you play especially vigorously or are simply off-key, the music of your belly drum can physically wound your foes. You deal damage to all creatures in a , with a save equal to your spell DC or class DC, whichever is higher. Such vigorous drumming does leave your belly a bit sore, though, preventing you from using this ability again for 1d4 rounds. At 15th level and every 2 levels thereafter, the damage increases by 1d4."
+ },
+ {
+  "id": "portentous-spell",
+  "name": "Portentous Spell",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "mental",
+   "oracle",
+   "spellshape",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your spellcasting is rife with strange lights, mild fumes, and other captivating effects that befuddle your foes. If the next action you use is to Cast a Spell, any creature that attempts to use a reaction triggered by your Cast a Spell activity takes a –2 circumstance penalty to attack rolls and skill checks rolled as part of the reaction. In addition, if the spell includes a spell attack or requires a saving throw, creatures you hit or that fail their saves are fascinated with you until the start of your next turn."
+ },
+ {
+  "id": "portents-of-the-haruspex",
+  "name": "Portents of the Haruspex",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "prediction",
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within 30 feet is reduced to 0 Hit Points in a way that doesn't destroy their body. --- Although the divinations of a haruspex traditionally require organs and lengthy interpretation, you've learned how to glimpse the future in a more simple fashion by reading creatures' wounds. The glimpse of the future gives guidance on what tools are best to use next. Roll 1d12 to determine the damage type favored by your prediction. The next time before the end of your next turn that you or your allies deals that damage type to an enemy, that enemy has weakness equal to your level against that damage. | D12 | Damage Type | | --- | --- | | 1 | acid | | 2-3 | bludgeoning | | 4 | cold | | 5 | electricity | | 6 | fire | | 7 | mental | | 8-9 | piercing | | 10 | poison | | 11-12 | slashing |"
+ },
+ {
+  "id": "positioning-assault",
+  "name": "Positioning Assault",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a two-handed melee weapon and your target is within your reach. --- With punishing blows, you force your opponent into position. Make a Strike with the required weapon. If you hit, you Reposition the target 5 feet."
+ },
+ {
+  "id": "potent-poisoner",
+  "name": "Potent Poisoner",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [
+   "Powerful Alchemy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By concentrating your poisons' toxic components, you make them harder for victims to resist. When you craft an alchemical item with the poison trait by any means, the DC is increased by up to 4, to a maximum of your class DC."
+ },
+ {
+  "id": "poultice-preparation",
+  "name": "Poultice Preparation",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Herbalist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you create an herbal elixir, you can prepare it as a poultice instead. A poultice gains the oil trait (but remains alchemical, not magical) and loses the elixir and ingested traits. You can apply a poultice by Interacting with one hand. When you apply a poultice, in addition to the item's normal effects, the recipient can attempt an immediate flat check to recover from a single source of persistent acid, bleed, or fire damage, with the DC reduction from appropriate assistance."
+ },
+ {
+  "id": "pounce-mimicry",
+  "name": "Pounce Mimicry",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Wild Mimic Dedication",
+   "you have seen a creature use an ability that lets them Stride and Strike as a single action (such as Pounce) or have identified a creature with such an ability in combat"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're unarmored or wearing light armor. --- You have mastered the art of stalking your prey and striking when they are most vulnerable. You Stride and then Strike. If you began this action hidden, you remain hidden until after the Strike. You can use Pounce Mimicry while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "pouncing-transformation",
+  "name": "Pouncing Transformation",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "your animal shape has a land Speed only"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "By transforming as you move, you attack from odd angles. You Change Shape or Dismiss the change then Stride. Any creature adjacent to you at the end of your movement is off-guard until the end of your turn and is then temporarily immune for 1 hour."
+ },
+ {
+  "id": "power-slide",
+  "name": "Power Slide",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "move",
+   "reckless"
+  ],
+  "prerequisites": [
+   "Trick Driver Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are piloting a vehicle. --- You throw the vehicle into a barely controlled skid, turning sharply to evade pursuit or bring your weapons to bear. You Drive with a –2 penalty to your piloting check, gaining the effects of the Drive action for the same number of actions you spent to Power Slide. At the end of the movement, if you succeed, you can turn the vehicle up to 90 degrees. If you critically succeed at your piloting check, you can instead turn the vehicle up to 180 degrees."
+ },
+ {
+  "id": "powerful-guts",
+  "name": "Powerful Guts",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "fleshwarp"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your stomach is particularly durable. When you succeed at a Fortitude save to reduce your sickened value, you reduce it by 2 (or by 3 on a critical success)."
+ }
+]

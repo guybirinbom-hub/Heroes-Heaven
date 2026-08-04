@@ -1,0 +1,973 @@
+[
+ {
+  "id": "ongoing-strategy",
+  "name": "Ongoing Strategy",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [
+   "strategic strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're constantly studying small aspects of everyone's movements, even if you don't have a stratagem in place ahead of time. On any Strike for which you didn't Devise a Strategem, you still deal precision damage equal to your number of strategic strike damage dice so long as the weapon or unarmed attack you used is one that would have let you use your Intelligence modifier had you Devised a Stratagem."
+ },
+ {
+  "id": "oni-rampage",
+  "name": "Oni Rampage",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "hungerseed"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You're reduced to less than half your maximum Hit Points by a creature within your reach. --- Nothing invigorates you more than your own freshly spilled blood. You gain the effects of Haste for 1 minute."
+ },
+ {
+  "id": "only-the-worthy",
+  "name": "Only the Worthy",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can designate your ikons as movable by only your own hand, leaving them fixed in place as surely as if they were lodged in stone. Whenever you Release an ikon, you can spend an action to command it to remain motionless. While motionless, the ikon can be moved only if 8,000 pounds of pressure are applied to it or if a creature uses Athletics to Force Open the ikon with a DC equal to your class DC. You can Release your ikon over an adjacent prone enemy to hold them down with the ikon's motionlessness—while so Released, you can't use the ikon, but the enemy must succeed at the Athletics check to Stand or to move. The ikon automatically flies back to your hand when the effect is broken or if you spend an Interact action to hold out a hand and draw it back."
+ },
+ {
+  "id": "ooze-empathy",
+  "name": "Ooze Empathy",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Oozemorph Dedication",
+   "at least two other class feats from the Oozemorph archetype"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can connect with oozes (and other amorphous aberrations, at the GM's discretion) on a rudimentary level. You can use Diplomacy to Make an Impression on oozes and to make very simple Requests of them. In most instances, oozes will give you time to make your case."
+ },
+ {
+  "id": "opportune-backstab",
+  "name": "Opportune Backstab",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your melee reach is hit by a melee attack from one of your allies. --- When your enemy is hit by your ally, you capitalize upon the distraction. Make a Strike against the triggering creature."
+ },
+ {
+  "id": "opportune-opening",
+  "name": "Opportune Opening",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Blackjacket Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally lands a critical hit on a creature within your melee reach. --- Your combat training taught you to capitalize on any moment of weakness from your foe. You make a melee Strike against the same creature your ally just hit. The creature is off-guard against this Strike"
+ },
+ {
+  "id": "opportune-throw",
+  "name": "Opportune Throw",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "legendary in Performance",
+   "Juggler Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** You are Juggling a thrown weapon. **Trigger** A creature within 10 feet of you uses a manipulate action or a move action, makes a ranged attack, or leaves a square during a move action it's using. --- You make a thrown ranged Strike with the required weapon against the triggering creature. If you critically succeed and the trigger was a manipulate action, you disrupt that action. This Strike doesn't count against your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "opportunistic-grapple",
+  "name": "Opportunistic Grapple",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bounty Hunter Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your prey critically fails on an attack roll against you with a melee Strike. **Requirements** Your prey is within your reach, you have one free hand, and your target is no more than one size larger than you. --- You use an opening to capture your prey. You attempt an Athletics check to Grapple your prey."
+ },
+ {
+  "id": "order-cross-training",
+  "name": "Order Cross-Training",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellknight Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the lesser order benefit of a Hellknight order other than the one to which you belong. This represents your time spent training with members of that order to learn their techniques and teachings. If you aren't in good standing with a given order, you can't receive their training. --- **Special** You can select this feat multiple times, gaining the lesser order benefit from a different order each time by training with members of that order."
+ },
+ {
+  "id": "order-training",
+  "name": "Order Training",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellknight Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the lesser order benefit for the Hellknight order to which you belong."
+ },
+ {
+  "id": "orthographic-mastery",
+  "name": "Orthographic Mastery",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Loremaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You understand the principles that underlie all written words, allowing you to read nearly any text. You can attempt to decipher-writing skill=loremaster-lore using Loremaster Lore in place of the required skill."
+ },
+ {
+  "id": "ostentatious-arrival",
+  "name": "Ostentatious Arrival",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "spellshape",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "If the next action you take is to Manifest your Eidolon as a three-action activity, or to Cast a three-action summoning Spell, the creature appears in an explosion. All creatures except you in a around the creature you summoned or manifested take 1d4 fire damage per spell rank for a summoning spell, or 1d4 damage per 2 levels for Manifesting your Eidolon. If the creature you summoned or manifested has the acid, cold, electricity, fire, sonic, or water trait, the damage is that type instead (or cold damage for the water trait). If the creature has more than one of these traits, you choose which damage type to deal."
+ },
+ {
+  "id": "ouroboric-pact",
+  "name": "Ouroboric Pact",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "occult"
+  ],
+  "prerequisites": [
+   "Pactbinder Dedication",
+   "master in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've studied pacts at Cobyslarni, or learned under someone who has, and understand them to not only create a bargain between individuals, but a separate entity altogether: the pact itself. You gain the Entreat Pact action, which you can use in association with any pact from the pactbinder archetype. For example, if you have the Pact of Draconic Fury, you could Entreat Pact to aid a skill check to obtain an item the dragon desires. --- **Special** Your pacts continually enforce themselves in a circular magical loop. You lose the ability to retrain out of any feats from the pactbinder archetype."
+ },
+ {
+  "id": "out-of-hand",
+  "name": "Out of Hand",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Zombie Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Even when your limbs are severed, they remain a part of you. When an arm is severed from your body, it gains the minion trait. While severed, your limb has the statistics of a familiar without any familiar or master abilities, except its Speed is 5 feet, it can't move further than 100 feet from you, it can Interact with things, and it can still make any unarmed Strikes it could have made while attached to you (usually a fist Strike). Any Strikes it makes share your multiple attack penalty and use your attack bonus and damage. If your arm is reduced to 0 HP or is ever more than 100 feet from you, it becomes inert until reattached. The GM might allow you to detach other limbs that have unarmed attacks using the below action (for example, if you're a tiefling with Form of the Fiend, giving you a tail unarmed attack). You gain the Lay Down Arms action."
+ },
+ {
+  "id": "overcrowd",
+  "name": "Overcrowd",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As long as you are Small, you can end your movement in the same square as a Small ally. Only two creatures total can share the same space when using this ability or a similar one."
+ },
+ {
+  "id": "overdrive-ally",
+  "name": "Overdrive Ally",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Overdrive"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are currently in overdrive. --- You quickly fling some of your powered-up mechanisms to an ally, sharing your benefits with them briefly. Choose an ally within 30 feet. Until the end of their next turn, that ally's Strikes deal additional damage equal to half your Intelligence modifier, or your full Intelligence modifier if you were in critical overdrive. The ally doesn't gain the increased damage from expert, master, or legendary overdrive."
+ },
+ {
+  "id": "overextending-feint",
+  "name": "Overextending Feint",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You goad a foe into overextending. On a successful Feint, you can use the following success and critical success effects instead of any other effects that would occur when you Feint. --- **Critical Success** The target takes a –2 circumstance penalty to all attack rolls against you before the end of its next turn. **Success** The target takes a –2 circumstance penalty to its next attack roll against you before the end of its next turn."
+ },
+ {
+  "id": "overpowering-charge",
+  "name": "Overpowering Charge",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "fighter"
+  ],
+  "prerequisites": [
+   "Barreling Charge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You trample your foes as you charge past them. When you use Barreling Charge and successfully move through a creature's space, that creature takes bludgeoning damage equal to your Strength modifier. If you critically succeed, the creature takes double this amount of damage and becomes off-guard until the end of your next turn."
+ },
+ {
+  "id": "oversized-throw",
+  "name": "Oversized Throw",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have one or more hands free. --- With a great heave, you seize a piece of your surroundings, such as a boulder, log, table, wagon, or chunk of earth, and hurl it at your foes. The object must be your size or one size smaller than you, and it must not have too much Bulk for you to lift it in the first place. Make a ranged Strike with the object; regardless of the result, the object takes the same amount of damage it would deal on a success. The object is a simple ranged weapon that deals 1d10 bludgeoning damage, has a range increment of 20 feet, and has the thrown weapon trait. The damage increases to 2d10 bludgeoning damage if you have Weapon Specialization in simple weapons, or 3d10 bludgeoning if you have Greater Weapon Specialization."
+ },
+ {
+  "id": "overwhelming-blow",
+  "name": "Overwhelming Blow",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You throw your weight into a powerful attack that leaves you vulnerable. Make a melee Strike. This counts as three attacks when calculating your multiple attack penalty. If this Strike hits, you get a critical hit. If you roll a critical hit, your weapon or unarmed attack also gains the deadly d12 trait (this replaces any deadly trait it already has). Whether or not you hit, you become Stunned 1 and are off-guard until the start of your next turn."
+ },
+ {
+  "id": "overwhelming-breath",
+  "name": "Overwhelming Breath",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "monk",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Qi Spells"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You control your breathing and align it with your qi, exhaling with controlled force in order to overcome your opponent's resistance. If you use your next action to Cast a Spell that has the monk trait and no duration, the spell and any Strikes you make as a result of casting it ignore an amount of the target's resistance to physical damage equal to your level."
+ },
+ {
+  "id": "overwhelming-energy",
+  "name": "Overwhelming Energy",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "druid",
+   "manipulate",
+   "sorcerer",
+   "spellshape",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Druid** With a complex gesture, you call upon the primal power of your spell to overcome enemies' resistances. **Sorcerer** You alter your spells to tear through an enemy's defenses. **Wizard** Multiple circles of runes rotate around your hand as you overcharge your spell to tear through your enemy's defenses. --- If the next action you use is to Cast a Spell, the spell ignores an amount of the target's resistance to acid, cold, electricity, fire, or sonic damage equal to your level. This applies to all damage the spell deals, including persistent damage and damage caused by an ongoing effect of the spell, such as the wall created by Wall of Fire. A creature's immunities are unaffected."
+ },
+ {
+  "id": "overwhelming-spellstrike",
+  "name": "Overwhelming Spellstrike",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** Your Spellstrike is charged. --- You pierce through your foe's resistance. Make a Spellstrike. The spell you cast as part of the Spellstrike ignores an amount of the target's resistance to acid, cold, electricity, fire, or sonic damage equal to your level. This applies to all damage the spell deals, including persistent damage and damage caused by an ongoing effect of the spell. A creature's immunities are unaffected."
+ },
+ {
+  "id": "pack-attack",
+  "name": "Pack Attack",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "werewolf"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have mastered techniques for hunting alongside your pack. Your Strikes deal an additional 1d4 precision damage to creatures within reach of at least two of your allies."
+ },
+ {
+  "id": "pack-movement",
+  "name": "Pack Movement",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You and your companion move to take down a common enemy. You and your animal companion both Stride. If both of you end your movement within reach of the same creature, you and your animal companion each make a melee Strike against the creature. You can use Pack Movement to Burrow, Climb, Fly, or Swim instead of Stride if both you and your animal companion have the corresponding movement type."
+ },
+ {
+  "id": "pack-performance",
+  "name": "Pack Performance",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "zoophonia muse"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature counteracts or disrupts the spell you're casting. **Requirements** You have an animal minion within 30 feet of you. --- When you and animals sing together, your words ring even brighter and bolder, cutting through disruptions. The animal assisting you can Stride and Strike the triggering creature. If the attack succeeds, your action isn't counteracted or disrupted."
+ },
+ {
+  "id": "pack-rat",
+  "name": "Pack Rat",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to cram vast quantities into small spaces. You can fit an additional 50% of the listed Bulk capacity into mundane storage containers or vehicles. For example, you can fit 6 Bulk in a backpack, or 12 Bulk in a chest. This doesn't alter the items' Bulk, nor does it change how much you can store in a magical or extradimensional storage space, such as a *spacious pouch*."
+ },
+ {
+  "id": "pack-tactics",
+  "name": "Pack Tactics",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "beastkin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have mastered how to hunt with your pack. If an enemy is within reach of you and at least two of your allies, that enemy is off-guard against you."
+ },
+ {
+  "id": "pack-takedown",
+  "name": "Pack Takedown",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Lead the Pack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You have two active companions. --- The pack is strongest when it acts as one, and like a group of hungry wolves, you work together to bring down a single target. If you and both of your active companions threaten the same creature, each of you makes a melee Strike against it. The creature is off-guard against all of these attacks. If more than one attack hits, combine the damage from all successful Strikes, and apply resistances and weaknesses only once."
+ },
+ {
+  "id": "packed-with-flavor",
+  "name": "Packed with Flavor",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wandering Chef Dedication",
+   "expert in Crafting or Cooking Lore"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Edible morsels you create are particularly potent and bursting with flavor. When you Craft alchemical food or magical morsels that allow a saving throw, or that grants an ability that allows a saving throw, you can change its DC to your class DC or spell DC, whichever is higher. When a creature consumes alchemical food, magical morsels, or potions made by you, it also gains 5 temporary Hit Points that last for 1 hour. If you're a master in Crafting, it gains 10 temporary Hit Points instead."
+ },
+ {
+  "id": "pact-of-draconic-fury",
+  "name": "Pact of Draconic Fury",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pactbinder Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've sworn a pact with a dragon, giving you the ability to tap into the dragon's immeasurable power in exchange for adding to their hoard. You gain the Dragon Breath activity. In exchange, you promise to search for objects the dragon wants for their hoard upon request. These requests might be extremely specific unique objects, or they might be a broad category of objects. While the dragon agrees to pay you a fair price for the item you retrieve, the pact requires you to give your time and service."
+ },
+ {
+  "id": "pact-of-the-crossroads",
+  "name": "Pact of the Crossroads",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "primal"
+  ],
+  "prerequisites": [
+   "Pactbinder Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've sworn a pact with Ng the Hooded, the Eldest known as the Lord of the Crossroads, though your only sign of Ng's acknowledgment is the benefits you receive. Anyone tracking you must succeed at a check against the higher of your class DC and spell DC. Creatures attempting to remember your features after the first time meeting you must succeed at a save against the same DC. If they fail, they recall the meeting but none of your features. In exchange, you must continue your wanderings, never settling in one place for longer than one month, or you lose the benefits of this feat until you begin your travels again. If you ever willingly tell anyone you've formed a pact with Ng, you lose the benefits of this feat permanently, though you can share vague information about the pact's effects."
+ },
+ {
+  "id": "pact-of-the-fey-paths",
+  "name": "Pact of the Fey Paths",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "primal"
+  ],
+  "prerequisites": [
+   "Pactbinder Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've sworn a pact with a powerful fey creature that longs to see the wonders of the Universe. You gain the Fey Jump ability. In exchange, you can no longer see the moon or stars as the fey steals those wonders from your eyes, and you must gaze at the empty sky for at least 10 minutes each night. If you do not, the fey revokes your benefits for the next day. If you go a week without gazing, the fey revokes your benefits until you atone."
+ },
+ {
+  "id": "pact-of-the-final-breath",
+  "name": "Pact of the Final Breath",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine"
+  ],
+  "prerequisites": [
+   "Pactbinder Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've sworn a pact with a powerful psychopomp—typically an olethros advocate or yamaraj judge—granting you a reprieve before your soul will be collected in exchange for respect for the dead and assistance against the undead. As long as you keep your end of the bargain, you live twice as long as you normally would before dying of natural causes. Additionally, the first time each day that you would be reduced to 0 Hit Points and gain the dying condition, you instead regain a number of Hit Points equal to twice your level (starting from 0 HP), remain conscious, and gain fast healing equal to your level for 3 rounds. In exchange, you swear to treat the dead you come across with respect, performing last rites and final dispositions to ensure their spirits rest in peace and are less likely to rise as undead. Furthermore, you swear to destroy undead you come across, so long as it's within your power to do so without inordinate risk to yourself. Violating your part of the pact causes its protections to immediately end. If at that point you'd already lived beyond your natural lifespan, the psychopomps typically give you a few moments to make any last farewells, and then you simply breathe your final breath and pass on."
+ },
+ {
+  "id": "pact-of-the-living-pact",
+  "name": "Pact of the Living Pact",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pactbinder Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've sworn a pact with a pact that has somehow survived long after the death of the original pactbinder. You gain the Forced Pact action. In exchange, this and any other pact you have made seek longevity. Whenever you become Dying 3 or higher, all of your pacts abandon you and flee to the nearest safe space. You can sense their direction at all times, and if you find them, you regain all of your pacts."
+ },
+ {
+  "id": "pact-of-the-rune-dragon",
+  "name": "Pact of the Rune Dragon",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pactbinder Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While the students of Cobyslarni are taught to make pacts with many kinds of dragons, a pact with a rune dragon is somewhat more frequent due to their interest in the accomplishments of various academies. You immediately learn 10 languages chosen from common languages, uncommon languages, and any others the dragon has access to. Additionally, you can Identify Magic at a range of 30 feet as a single action ability with the concentrate trait. In exchange, the rune dragon requires you to research a topic and send a detailed report each year. Year to year, the dragon may change the interest of your research as they see fit. If you fail to send an appropriately detailed report, you lose this ability unless you spend one week serving the dragon."
+ },
+ {
+  "id": "pain-is-temporary",
+  "name": "Pain is Temporary",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "reincarnated"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- Sangpotshi practitioners know that suffering is a fleeting sensation that ultimately strengthens the soul and prepares it for a new reincarnation. Bolstered by this understanding, you've learned to temporarily steel yourself against all forms of pain. You gain resistance 10 to all damage until the end of your next turn."
+ },
+ {
+  "id": "paired-link",
+  "name": "Paired Link",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "esoterica",
+   "fortune",
+   "occult",
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You break a trinket, such as a lodestone or jade pendant, in two, creating a sympathetic link between the halves that bridges distance. During your daily preparations, you perform a short ceremony where you gift one of the two halves to a willing ally. On that ally, you can cast spells and use thaumaturge abilities targeting your paired ally as though you are adjacent to each other, and the ally can cast spells targeting you in the same way. These effects last as long as you and the ally have their half; if either half leaves either of your possessions for even a moment, or if you establish a link with a new ally during your next daily preparations, the link breaks."
+ },
+ {
+  "id": "paired-shots",
+  "name": "Paired Shots",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding two weapons, each of which can be either a loaded one-handed firearm or loaded one-handed crossbow. --- Your shots hit simultaneously. Make two Strikes, one with each of your two ranged weapons, each using your current multiple attack penalty. Both Strikes must have the same target. If both attacks hit, combine their damage and then add any applicable effects from both weapons. You add any precision damage, only once, to the attack of your choice. Combine the damage from both Strikes and apply resistances and weaknesses only once. This counts as two attacks when calculating your multiple attack penalty."
+ },
+ {
+  "id": "palatine-enchantment",
+  "name": "Palatine Enchantment",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Palatine Detective Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have found yourself facing supernatural beings often and have learned how to combat them. Whenever you Devise a Stratagem against a creature about which you could Recall Knowledge using Occultism or Religion, you can make the subsequent Strike against that creature as if the weapon has either a Ghost Touch or Vitalizing property rune."
+ },
+ {
+  "id": "palatine-strike",
+  "name": "Palatine Strike",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Palatine Detective Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your strikes are particularly deadly against supernatural creatures. Whenever you deal precision damage with Strategic Strike to a creature about which you have successfully used Occultism or Religion to Recall Knowledge, you deal an additional 2d6 precision damage with your strategic strike."
+ },
+ {
+  "id": "pale-horse",
+  "name": "Pale Horse",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Faithful Steed",
+   "unholy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mount becomes a grotesque creature of foreboding when you ride it. Its appearance transforms as flames erupt from its skin, a whorl of void energy surrounds it, or poison leaks from its flesh. When you Mount your faithful steed, you can choose fire, poison, or void. As long as you ride it, your steed gains resistance 10 to the chosen damage type, and any creature that touches your steed takes 1d6 damage of the chosen type; this includes hitting the steed with an unarmed attack or with a melee weapon Strike while adjacent to the steed. This damage increases to 2d6 at 16th level and 3d6 at 20th level."
+ },
+ {
+  "id": "palm-leaf-silhouette",
+  "name": "Palm-leaf Silhouette",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "exploration",
+   "extradimensional",
+   "occult",
+   "wayang"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can make yourself as flat as a paper doll or shadow. You can spend 1 minute in motionless meditation before performing an odd step that takes you partially out of this plane, leaving your body completely flat. In this state, you can slip under doors, through tiny cracks, or anywhere a single sheet of paper could, but you can't cast spells, activate items, or use actions that have the attack or manipulate traits. You remain in this state for 1 minute unless you choose to return to normal sooner as an action, which has the concentrate trait."
+ },
+ {
+  "id": "panache-paragon",
+  "name": "Panache Paragon",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You find opportunities to perform stylish feats in the moments between others' heartbeats and eye blinks. You are permanently quickened. You can use the extra action only to perform a bravado action."
+ },
+ {
+  "id": "paragon-reanimated-companion",
+  "name": "Paragon Reanimated Companion",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Incredible Reanimated Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have reached the pinnacle of necromantic science, creating a mechanical zombie unlike any the world has seen before. Your reanimated construct companion becomes a paragon construct companion."
+ },
+ {
+  "id": "parting-shot",
+  "name": "Parting Shot",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a loaded ranged weapon or a ranged weapon with reload 0. --- You jump back and make a quick shot that catches your opponent by surprise. You Step and then make a ranged Strike with the required weapon. Your target is off-guard against the attack."
+ },
+ {
+  "id": "party-crasher",
+  "name": "Party Crasher",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Dandy Dedication",
+   "master in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You attend all the fashionable society parties, no matter how exclusive they might be. Any time you encounter a social event you would ordinarily be denied access to, such as a coronation, royal gala, or other society function, you can spend 1d4 hours to secure entry without the need for a skill check. You find invitations, invitees looking for fashionable dates, temporary jobs with the caterers, event staff willing to look the other way, or some other mode of access for yourself and your allies. This ability doesn't apply to secret events or other small private gatherings with no staff, dates, or outsiders involved."
+ },
+ {
+  "id": "pass-through",
+  "name": "Pass Through",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "master in Acrobatics",
+   "Ghost Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Frequency** once per 10 minutes --- Filtering your form through the substance of an object, you can pass through walls, doors, and more. You Fly up to your Speed. During this movement, you can try to move through one object. Attempt an Acrobatics check as you try to enter its space. The DC is typically 30 to move through a wall of up to 5 feet, 15 for an ordinary door, and 10 for thinner structures like windows; the GM might set the DC higher for especially dense materials like adamantine or lead, or for barriers that are magically reinforced. You can't Pass Through an obstacle made of magical force, such as a Wall of Force. Move through wall Move through door Move through window **Success** You move through the object, treating the square within it as difficult terrain. If you end your turn inside an object, you can move out of it only if you Pass Through again or use some other means of moving through a solid object. As normal for being incorporeal, starting your turn inside an object makes you Slowed 1 for that turn. **Failure** Your movement ends, and you trigger reactions as if you moved out of the square you started in."
+ },
+ {
+  "id": "peerless-captain",
+  "name": "Peerless Captain",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Captain Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you have an active follower in an encounter, you are quickened; you can use the extra action only to Direct your Follower."
+ },
+ {
+  "id": "penetrating-projectile",
+  "name": "Penetrating Projectile",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "flourish",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a ranged or thrown weapon that deals piercing damage. --- Your projectiles are unhindered by flesh and bone. Make a ranged Strike with a ranged or thrown weapon that deals piercing damage against each creature in a (this uses only one projectile despite the number of Strikes). These Strikes ignore all cover granted by creatures. Roll damage only once and apply it to each creature you hit. Each attack counts toward your multiple attack penalty, but don't increase your penalty until you have made all your attacks."
+ },
+ {
+  "id": "penetrating-shot",
+  "name": "Penetrating Shot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a ranged weapon. --- You shoot clear through an intervening creature to hit your prey. Choose a target that is giving lesser cover to your hunted prey. Make a single ranged Strike with the required weapon against the chosen target and your hunted prey. This attack ignores any lesser cover the chosen target provides your hunted prey. Roll damage only once, and apply it to each creature you hit. A Penetrating Shot counts as two attacks for your multiple attack penalty."
+ },
+ {
+  "id": "perfect-debilitation",
+  "name": "Perfect Debilitation",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have perfected the formulas for bombs that impede your enemies. When you use Debilitating Bomb, your target avoids the condition the bomb imposes only if it critically succeeds at its saving throw."
+ },
+ {
+  "id": "perfect-distraction",
+  "name": "Perfect Distraction",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "legendary in Deception"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You use clever tactics to mislead your foes as you sneak away. You Sneak while leaving a decoy behind. The decoy acts as the spell Mislead, though you aren't invisible, just undetected. You can continue to concentrate to move your decoy, as with the spell, whether or not you remain hidden throughout the duration. Once you use Perfect Distraction, you need to spend 10 minutes to set up another decoy before you can use it again."
+ },
+ {
+  "id": "perfect-dive",
+  "name": "Perfect Dive",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "azarketi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You dive into the water with exceptional skill and connection to the waves, urging the water itself to cushion your fall. You intentionally Leap or otherwise fall into the water, taking no falling damage regardless of the distance."
+ },
+ {
+  "id": "perfect-finisher",
+  "name": "Perfect Finisher",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "fortune",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You focus your panache into an impeccable assault. Make a Strike, rolling the attack roll twice and using the better result."
+ },
+ {
+  "id": "perfect-form-control",
+  "name": "Perfect Form Control",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Form Control",
+   "Strength +4"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thanks to magic and muscle memory, you can stay in your alternate shapes indefinitely. When you use Form Control, instead of lasting 1 hour, Untamed Form duration is unlimited (you can still Dismiss it)."
+ },
+ {
+  "id": "perfect-mutagen",
+  "name": "Perfect Mutagen",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have enhanced the formulas for your mutagens, aligning them perfectly to your physiology. When under the effect of a mutagen you crafted, you do not suffer its drawback."
+ },
+ {
+  "id": "perfect-pitch",
+  "name": "Perfect Pitch",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Celebrity or Dandy Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ear for harmony has enhanced your ability with musical magic. You can use Performance to Learn a Spell or Identify Magic spells and effects that are musical in nature. In addition, you gain the Pitch-Perfect Projection action."
+ },
+ {
+  "id": "perfect-protection",
+  "name": "Perfect Protection",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your armor protects you from the deadliest hits. Each time you're critically hit while wearing the medium or heavy armor, attempt a . On a success, it becomes a normal hit. --- **Special** If your armor has a rune, you roll only one flat check, but the DC is 12 (or 10 if it's a Greater Fortification rune)."
+ },
+ {
+  "id": "perfect-readiness",
+  "name": "Perfect Readiness",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You prepare to fire with an instinctive speed and muscle memory that go beyond your conscious thoughts. You're permanently quickened. You can use your extra action only to Step or Interact to reload."
+ }
+]

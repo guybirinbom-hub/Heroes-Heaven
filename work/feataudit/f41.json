@@ -1,0 +1,959 @@
+[
+ {
+  "id": "tunnel-roll",
+  "name": "Tunnel Roll",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "move",
+   "surki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You can more easily navigate underground tunnels by rolling up into a ball. You roll up and move up to four times your Speed in a straight line down an incline. If you reach the bottom of the incline or hit an obstacle during this first turn of movement, you stop rolling. Otherwise, you automatically keep rolling at this Speed during subsequent turns until you hit the bottom of the incline or an obstacle ends this movement (which can happen in the middle of your turn). You're Slowed 2 each turn after the first that you keep rolling; if you hit an obstacle on a turn after the first, you and the obstacle both take 4d6 damage, and you stop rolling."
+ },
+ {
+  "id": "turn-away-misfortune",
+  "name": "Turn Away Misfortune",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "esoterica",
+   "fortune",
+   "manipulate",
+   "occult",
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would attempt a roll affected by a misfortune effect. --- You perform a superstition, such as casting salt over your shoulder to ward off bad luck. Turn Away Misfortune's fortune trait cancels out the misfortune effect, causing you to roll normally. As normal, you can apply only one fortune ability to a roll, so if you Turned Away Misfortune on an attack roll, you couldn't also use an ability like Halfling Luck to alter the roll further."
+ },
+ {
+  "id": "turn-the-wheel-of-seasons",
+  "name": "Turn the Wheel of Seasons",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "The seasons shift rapidly. This impulse affects a cube 100 feet in each dimension within 1,000 feet. Choose the starting season. The impulse lasts for 4 rounds, proceeding to the next season at the start of each of your turns. You can't use this impulse again until the previous one ends. **Spring** Each ally in the cube gains 20 temporary HP that last until the start of your next turn. Any dying ally rolls a recovery check, but can't get worse than a success. **Summer** (light) Each enemy in the area is exposed to sunlight and must attempt a save against your class DC. It's unaffected on a critical success, dazzled until the start of your next turn on a success, or blinded until the start of your next turn on a failure. **Autumn** Leaves and rain make everything in the area concealed until the start of your next turn, and a cold wind makes each enemy in the area Slowed 1 until the start of your next turn unless it succeeds at a save against your class DC. **Winter** Each enemy in the aura takes damage with a save against your class DC. A creature that fails its save also takes 2d6 damage."
+ },
+ {
+  "id": "twin-distraction",
+  "name": "Twin Distraction",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "Twin Feint"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You are wielding two melee weapons, each in a different hand. --- Your movements with two weapons are so swift and disorienting that they befuddle your opponent. When using Twin Feint, if both your Strikes deal damage to a targeted creature, the target must succeed at a saving throw against your class DC or become Stupefied 1 until the end of your next turn."
+ },
+ {
+  "id": "twin-eidolon",
+  "name": "Twin Eidolon",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "polymorph",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can transform to match your eidolon. When you Manifest your Eidolon, you can call upon its powers to transform yourself into a duplicate until it unmanifests. You can't use this if you Manifest your Eidolon in an unusual way, such as Meld into Eidolon. While using Twin Eidolon, you use your eidolon's statistics other than your mental ability modifiers, including its evolutions. You can't cast spells (except spells your eidolon could cast), Activate or otherwise benefit from magic items that normally benefit you and not your eidolon, or use other actions it can't perform. Any of its spells you cast with limited uses count against your eidolon's uses. You can Manifest your Eidolon again to end this effect. --- **Special** This feat has the trait matching your eidolon's tradition (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "twin-feint",
+  "name": "Twin Feint",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding two melee weapons, each in a different hand. --- You use an attack with one weapon to distract your foe from a second attack coming at a different angle. Make one Strike with each of your two melee weapons, both against the same target. The target is automatically off-guard against the second attack. Apply your multiple attack penalty to the Strikes normally."
+ },
+ {
+  "id": "twin-psyche",
+  "name": "Twin Psyche",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've segmented your psyche so it can operate in tandem. When you Unleash your Psyche, you can double its duration."
+ },
+ {
+  "id": "twin-riposte",
+  "name": "Twin Riposte",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach critically fails to Strike you. **Requirements** You are benefiting from Twin Parry. --- A clever parry with one weapon leaves your opponent open to an attack with the other weapon. Make a melee Strike or Disarm action against the triggering opponent."
+ },
+ {
+  "id": "twin-shot-knockdown",
+  "name": "Twin Shot Knockdown",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a loaded crossbow or loaded firearm in each hand. --- You fire at an enemy while targeting a part of its anatomy that will disrupt its balance. Make two Strikes against the same target, one with each of the required weapons. If both Strikes are successful, the target is also knocked prone."
+ },
+ {
+  "id": "twin-stars",
+  "name": "Twin Stars",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a one-handed weapon ikon --- Your divine spark embodies a primordial duality, and your ikon splits itself accordingly into two corresponding halves. You can use an Interact action to split the imbued ikon into two copies of itself, which both gain the twin trait; these copies are identical except for one mirrored feature, such as a sun motif on one and a moon motif on another. You can use this ability again to fuse the two halves back into their original form. As these are both manifestations of the same object, your divine spark empowers the two halves as if they were a single ikon."
+ },
+ {
+  "id": "twin-takedown",
+  "name": "Twin Takedown",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding two melee weapons, each in a different hand. --- You swiftly attack your hunted prey with each of your weapons, potentially combining their damage into a single devastating attack. Make two Strikes against your hunted prey, one with each of the required weapons. If both hit the same hunted prey, combine their damage for the purpose of its resistances and weaknesses. Apply your multiple attack penalty to each Strike normally."
+ },
+ {
+  "id": "twin-weakness",
+  "name": "Twin Weakness",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "esoterica",
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "mortal weakness or personal antithesis"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're holding an implement and a weapon, you are using Exploit Vulnerability with mortal weakness or personal antithesis, and the target creature is within reach of both your implement and weapon. --- As you make an attack augmented by your esoterica, you also press your implement against the creature, applying its weakness as your implement's energies sear the creature's flesh. Make a melee Strike against the target of your Exploit Vulnerability. On any attack roll result but a critical failure, you also press your implement against the creature, automatically dealing the additional damage from Exploit Vulnerability. This is in addition to any damage from your Strike, including the weakness the Strike applies from Exploit Vulnerability. This counts as two attacks when calculating your multiple attack penalty."
+ },
+ {
+  "id": "twirl-through",
+  "name": "Twirl Through",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Fan Dancer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You sweep across the battlefield in a fluttering of movement honed from years of coordinating perfectly spaced movements alongside fellow dancers. When you attempt to Tumble Through an enemy's space, you can use Performance instead of Acrobatics."
+ },
+ {
+  "id": "twirling-strike",
+  "name": "Twirling Strike",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Fan Dancer Dedication",
+   "Twirl Through"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a fan. --- Your fans, one raised up alongside your head and the other alongside your hip, become a blur as you twirl across the battlefield. Attempt to Tumble Through an enemy's space using Performance; on a success, you can make a melee Strike against the enemy with a fan you're wielding at any point during the movement. On a critical success, the enemy is off-guard against this attack."
+ },
+ {
+  "id": "twirling-throw",
+  "name": "Twirling Throw",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "Flying Blade"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your thrown weapons seem to defy physics as they soar through the air and spin back to you after a strike. Make a thrown weapon strike, ignoring the penalty for making ranged attacks within the second and third range increment. The weapon returns to your hand after the attack unless you critically failed on the attack roll."
+ },
+ {
+  "id": "twist-healing",
+  "name": "Twist Healing",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "dhampir"
+  ],
+  "prerequisites": [
+   "ability to cast heal and harm"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to both life and undeath lets you twist the healing power of magic items to suit your own needs and aims. Whenever you Activate an Item to cast a Heal spell, you can invert its energy to produce the effects of an equivalent Harm spell instead."
+ },
+ {
+  "id": "twist-the-knife",
+  "name": "Twist The Knife",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a melee Strike that dealt sneak attack damage to an off-guard target. --- After stabbing your opponent in a weak spot, you tear the wound open. You deal persistent bleed damage to the target equal to your number of sneak attack damage dice."
+ },
+ {
+  "id": "two-truths",
+  "name": "Two-Truths",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "reflection"
+  ],
+  "prerequisites": [
+   "master in Deception"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your ability to imitate your progenitor is so strong, you can even convince yourself. When you use this action, you alter your thought processes to your progenitor or from your progenitor back to yourself. As long as what you say is true from the point of view of your current identity, you can say it even under effects like Ring of Truth that force you to speak truly."
+ },
+ {
+  "id": "two-weapon-flurry",
+  "name": "Two-Weapon Flurry",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding two weapons, each in a different hand. --- Using the momentum of your prior attack, you lash out with both your weapons in a sudden frenzy. Strike twice, once with each weapon."
+ },
+ {
+  "id": "two-weapon-fusillade",
+  "name": "Two-Weapon Fusillade",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding two weapons, each in a different hand. At least one of these weapons must be a loaded firearm or loaded crossbow. --- You attack with both your weapons in a furious barrage. Strike twice, once with each weapon."
+ },
+ {
+  "id": "ubiquitous-gadgets",
+  "name": "Ubiquitous Gadgets",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "Gadget Specialist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "They thought you had used up all your devices, but they thought wrong! You have a few more gadgets up your sleeve than others expect. Increase the number of temporary gadgets you can create each day by 2. --- **Special** You can select this feat a second time if you are 14th level or higher."
+ },
+ {
+  "id": "ubiquitous-snares",
+  "name": "Ubiquitous Snares",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Snare Specialist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can prepare a seemingly impossible number of snares in advance, and you're ready to spring them on unsuspecting foes. Double the number of prepared snares from Snare Specialist."
+ },
+ {
+  "id": "ubiquitous-weakness",
+  "name": "Ubiquitous Weakness",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Share Weakness"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've nurtured your bonds with your comrades, allowing you to share the benefits of your esoterica. When you use Exploit Vulnerability and choose mortal weakness, select any number of allies within 30 feet of you. Their Strikes apply the weakness from mortal weakness the same way your Strikes do. This benefit ends when you stop benefiting from Exploit Vulnerability. Since this effect depends on magically strengthening your bond to your allies, only allies with whom you've developed a rapport over the course of one or more days gain the benefit."
+ },
+ {
+  "id": "ultimate-mercy",
+  "name": "Ultimate Mercy",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Mercy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mercy transcends the bounds of life and death. Add ultimate mercy to the types of mercy you can provide. When you use Mercy, you can target a creature that died since your last turn to return it to life. The target returns to life with 1 Hit Point and becomes Wounded 1. You can't return the target to life if it died from or a death effect. The creature gains the other benefits of Lay on Hands after it returns to life."
+ },
+ {
+  "id": "ultimate-polymath",
+  "name": "Ultimate Polymath",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "polymath muse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can flexibly cast all of your spells, granting a dizzying array of possible options. All of the spells in your repertoire are signature spells for you."
+ },
+ {
+  "id": "ultimate-skirmisher",
+  "name": "Ultimate Skirmisher",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "unimpeded journey"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are so skilled at navigating the wild, your movement is completely unaffected by terrain. You ignore the effects of all difficult terrain, greater difficult terrain, and hazardous terrain, and you don't trigger traps and hazards that are triggered by moving into an area (such as trip wires and pressure plates), unless you want to."
+ },
+ {
+  "id": "unbalancing-appearance",
+  "name": "Unbalancing Appearance",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Rose Warden Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** A creature within your reach is off-guard to you, and you are unnoticed by that creature. --- When you attack from the shadows, your foes are thrown off balance. Make a melee Strike against the creature. If your Strike hits, the target remains off-guard for the rest of your turn and is Clumsy 1 (Clumsy 2 on a critical hit) until the beginning of your next turn."
+ },
+ {
+  "id": "unbalancing-blow",
+  "name": "Unbalancing Blow",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "thief racket"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Interweaving attacks, you unbalance your foes. Whenever your Strike is a critical hit and deals damage, the target is off-guard against your attacks until the end of your next turn."
+ },
+ {
+  "id": "unbalancing-finisher",
+  "name": "Unbalancing Finisher",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You attack with a flashy assault that leaves your target off balance. Make a melee Strike. If you hit and deal damage, the target is off-guard until the end of your next turn."
+ },
+ {
+  "id": "unbelievable-interception",
+  "name": "Unbelievable Interception",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy you're observing attempts to Strike an ally you can also observe. --- You move with unbelievable alacrity to intercept an enemy's attack. Spend a Mythic Point; stride twice directly toward the triggering enemy. If you end within the attack's range or reach, you become the target of the triggering Strike, using the original attack roll and comparing the result to your AC. If the enemy's attack fails and the enemy is within your reach, you can immediately attempt a melee Strike against the enemy at mythic proficiency."
+ },
+ {
+  "id": "unbelievable-luck",
+  "name": "Unbelievable Luck",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Unexpected Sharpshooter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While no one, not even you, might appear to understand why, you demonstrate a greater ability to hit your targets regardless of the obstacles in your way. You can use the Accidental Shot activity granted to you by the Unexpected Sharpshooter Dedication once per hour instead of once per day."
+ },
+ {
+  "id": "unbelievably-believable",
+  "name": "Unbelievably Believable",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your words echo with soothing and convincing power. When you attempt a check to Gather Information, Make an Impression, make a Request, or Lie, you can spend a Mythic Point to attempt the check at mythic proficiency."
+ },
+ {
+  "id": "unbound-freedom",
+  "name": "Unbound Freedom",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "vanara"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your future is no other person's to control, and the cycles of your fate sometimes step in to protect you when that control would be taken from you. Whenever you would gain the controlled condition, you can attempt a . On a success, you don't gain the condition."
+ },
+ {
+  "id": "unbound-leaper",
+  "name": "Unbound Leaper",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your jumping prowess is unmatched. You can Leap up to 30 feet in any direction without touching the ground and without requiring an Athletics check; when doing so, you must land on a space of solid ground within 30 feet of you, or else you fall after using your next action. You can exceed your normal Speed while Leaping. --- **Special** If you have the Fantastic Leaps feat, the total distance you can Leap horizontally is 40 feet, and the total distance you can Leap vertically is 35 feet."
+ },
+ {
+  "id": "unbowed-unbroken",
+  "name": "Unbowed, Unbroken",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "ardande",
+   "lineage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to elemental wood manifests as resilience—towering trees, rough bark, deep roots, and patient determination. You gain the Unwavering Resilience reaction."
+ },
+ {
+  "id": "unbreakable-bond",
+  "name": "Unbreakable Bond",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "primal"
+  ],
+  "prerequisites": [
+   "Mammoth Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your megafauna companion are bound together; as long as you live, it's much harder for your companion to die. If your megafauna companion gains the dying condition, it automatically succeeds at the recovery check to stabilize at 0 Hit Points on its turn. Additionally, your megafauna companion only dies at dying 5 rather than dying 4. Finally, the first time each day your megafauna companion would reach dying 5 and die, as long as you're still alive, your companion's dying value decreases to 0 instead."
+ },
+ {
+  "id": "unbreakable-er-goblin",
+  "name": "Unbreakable-er Goblin",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "unbreakable goblin heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As hard as most unbreakable goblins are to break, you are that much harder to break. You gain 20 Hit Points from your ancestry instead of 10. When you fall, you take no falling damage. If you have the Bouncy Goblin feat, after falling or jumping from a height of at least 20 feet, you can bounce back into the air, up to half the distance you fell (and half as far forward if you jumped). These bounces continue until you bounce less than 20 feet."
+ },
+ {
+  "id": "unbreakable-resolve",
+  "name": "Unbreakable Resolve",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "fortune",
+   "reincarnated"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** You fail a Will save. --- The experience of coming back after death has granted you a strong sense of resolve; devilish words, slick spells, and conniving trickery can't easily catch you unprepared. Reroll the triggering save, using the second result only if it's better."
+ },
+ {
+  "id": "unburdened-iron",
+  "name": "Unburdened Iron",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned techniques first devised by your ancestors during their ancient wars, allowing you to comfortably wear massive suits of armor. Ignore the reduction to your Speed from any armor you wear. In addition, any time you're taking a penalty to your Speed for some other reason (such as from the encumbered condition or from a spell), deduct 5 feet from the penalty. For example, the encumbered condition normally gives a –10-foot penalty to Speed, but this feat would reduce it to a –5-foot penalty. If your Speed is taking multiple penalties, pick only one penalty to reduce."
+ },
+ {
+  "id": "uncanny-awareness",
+  "name": "Uncanny Awareness",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "fleshwarp"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a keen sense of movement around you. You gain motion sense as an imprecise sense out to 30 feet. Motion sense allows you to detect nearby motion through vibration and air movement."
+ },
+ {
+  "id": "uncanny-vitae",
+  "name": "Uncanny Vitae",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your warrior spirit is infused with a potent vital essence that imbues your gear. Any shield you wield treats its Hardness as 5 higher against damage dealt by undead creatures."
+ },
+ {
+  "id": "undead-companion",
+  "name": "Undead Companion",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dhampir"
+  ],
+  "prerequisites": [
+   "an animal companion or familiar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your companion is also touched by undeath, a mix of a traditional companion and a skeleton, zombie, or stranger form of unlife. Your companion gains the undead trait instead of the animal trait and gains void healing. It otherwise uses the normal rules for an animal companion or familiar; that means it can still be affected by many conditions or effects to which most undead are immune."
+ },
+ {
+  "id": "undead-empathy",
+  "name": "Undead Empathy",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "skeleton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your relationship with undeath gives you a stronger bond with other undead. You can use Diplomacy to Make an Impression on mindless undead or make simple requests of them. As long as there aren't living creatures nearby, they usually let you speak. If the undead creature currently is in the thrall of a creature whose level is higher than yours, you typically need a critical success on your Diplomacy skill check."
+ },
+ {
+  "id": "underhanded-assault",
+  "name": "Underhanded Assault",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "trained in Stealth"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You capitalize on the distraction provided by an ally. You sneak options=underhanded-assault up to a foe adjacent to one of your allies. You can roll against the foe you're Sneaking up on, even if it's currently observing you, as though you were hidden. You take a –2 penalty on your Stealth check. If your Stealth check against the chosen foe succeeds, you can make a melee Strike against that foe at the end of your Sneak."
+ },
+ {
+  "id": "underwater-marauder",
+  "name": "Underwater Marauder",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to fight underwater. You are not off-guard while in water, and you don't take the usual penalties for using a bludgeoning or slashing melee weapon in water."
+ },
+ {
+  "id": "undying-beast",
+  "name": "Undying Beast",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can be injured by non-silver sources but recover with staggering speed. When you are reduced to 0 Hit Points by non-silver damage and don't immediately die from a death effect or a high dying value, you stabilize immediately afterward. You gain the wounded condition as normal."
+ },
+ {
+  "id": "undying-ferocity",
+  "name": "Undying Ferocity",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [
+   "Orc Ferocity"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You resist death's clutches with supernatural vigor, daring death to claim you while promising that any such attempt will surely fail. When you use Orc Ferocity, you gain temporary Hit Points equal to your level."
+ },
+ {
+  "id": "uneasy-rest",
+  "name": "Uneasy Rest",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast sleep"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Sleep, you can modify the spell to add the following to its standard effects: Subjects of your spell experience troubled dreams. When a target that failed or critically failed its saving throw wakes up, it is Frightened 1."
+ },
+ {
+  "id": "unerring-shot",
+  "name": "Unerring Shot",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your senses are finely tuned to the slightest variations in the air, so much that you can place your shot exactly where you intend to aim it from any range possible with your weapon. When attacking with a ranged weapon in which you have master or greater proficiency, ignore the penalty from its range increment. (The weapon's maximum range is unchanged.) In addition, if your target has cover against your attack with such a weapon, it doesn't gain the bonus to AC if it has lesser cover, gets only the bonus of lesser cover if it has standard cover, or gains only the bonus of standard cover if it has greater cover."
+ },
+ {
+  "id": "unfettered-halfling",
+  "name": "Unfettered Halfling",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You were either pressed into indentured servitude or shackled in a prison, but you've since escaped and have trained to ensure you'll never be caught again. Whenever you roll a success on a check to Escape or a saving throw against an effect that would impose the grabbed, immobilized, or restrained condition on you, you get a critical success instead. Whenever a creature rolls a failure on a check to Grapple you, it gets a critical failure instead."
+ },
+ {
+  "id": "unified-theory",
+  "name": "Unified Theory",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Arcana"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You understand the common underpinnings of the four traditions of magic and magical essences, allowing you to understand them all through an arcane lens. Whenever you use a skill action or a skill feat that requires a Nature, Occultism, or Religion check, depending on the magic tradition, you can use Arcana instead. If you would normally take a penalty or have a higher DC for using Arcana on other magic (such as when using Identify Magic), you no longer do so."
+ },
+ {
+  "id": "unimpeded-step",
+  "name": "Unimpeded Step",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "liberation cause"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With a burst of divine liberation, your ally's movement from your Liberating Step is unaffected by difficult terrain, greater difficult terrain, narrow surfaces, and uneven ground. If you have the exalted reaction benefit, this applies to everyone who Steps."
+ },
+ {
+  "id": "united-front",
+  "name": "United Front",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Broken Chain Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thanks to your powerful speeches, your movement finds allies in all sectors of society and even across enemy lines, all eager to help you accomplish your goals. If you spend a Mythic Point when you use Ultimatum of Liberation, you can ask four questions related to that creature, as if you succeeded at four Recall Knowledge checks. This information comes to you over the course of the next 1 to 2 hours, representing tidbits of information you glean from local supporters. After receiving this information, the first time you roll Initiative in an encounter with the target of your Ultimatum of Liberation or their allies, you and all your allies can make your Initiative check with mythic proficiency."
+ },
+ {
+  "id": "unleash-the-blight",
+  "name": "Unleash the Blight",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "magical",
+   "void"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You unleash the rot infecting you, spreading the blight to those nearby. All living creatures in a take 1d6 void damage for every 2 levels you have, with a save. **Awakening** The blight is infectious. Creatures damaged by your blight take an additional 1d6 damage, as they begin to decompose. **Awakening** The blight is debilitating. Creatures damaged become Drained 1 for one round on a success, drained 1 for 1 minute on a failure, and Drained 2 for 1 minute on a critical failure."
+ },
+ {
+  "id": "unnerving-expansion",
+  "name": "Unnerving Expansion",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Curse Maelstrom Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You gather your curse around you and impel it to pour outward, expanding your maelstrom. The radius of the emanation of your curse maelstrom state increases by 5 feet until the end of your curse maelstrom state. The outpouring of the curse is unnerving. You attempt to Demoralize a creature within the emanation of your curse maelstrom; you don't take penalties for not sharing a language with that creature."
+ },
+ {
+  "id": "unnerving-prowess",
+  "name": "Unnerving Prowess",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Aldori Duelist Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You critically succeed at a Strike or Disarm with your Aldori Dueling Sword, or succeed at a Strike or Disarm attempt with your Aldori dueling sword against an opponent during your first turn of an encounter. --- Your incredible skill with your blade unnerves your foes. You attempt to Demoralize the target of your Strike or Disarm. This Demoralize attempt does not have the auditory trait, nor do you take a penalty to the check if the target doesn't understand your language."
+ },
+ {
+  "id": "unobstructed-shot",
+  "name": "Unobstructed Shot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Archer Dedication",
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With a quick use of brute force, you remove an obstacle and take a calculated shot as part of the same motion. Attempt to Shove or Trip one adjacent creature, then make a ranged Strike with a bow or crossbow you're wielding. The Strike is made at the same multiple attack penalty as the Shove or Trip attempt, and this activity counts as one attack when calculating your multiple attack penalty."
+ },
+ {
+  "id": "unravel-mysteries",
+  "name": "Unravel Mysteries",
+  "level": 8,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in a Decipher Writing skill",
+   "Scrollmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can understand the true meaning of texts quickly, and even when you get lost or hit a dead end, you aren't discouraged from making further attempts to get to the bottom of things. When you Decipher Writing, you need only half as long as usual (reducing the time from about 1 minute to about half a minute per page), and if you fail, you don't take the usual -2 circumstance penalty to further checks to decipher that text."
+ },
+ {
+  "id": "unrivaled-analysis",
+  "name": "Unrivaled Analysis",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [
+   "Rapid Assessment"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your experience allows you to derive even more information about your opponents from a mere glance. When you use Rapid Assessment, you can attempt up to four checks to Recall Knowledge about creatures you are observing."
+ },
+ {
+  "id": "unrivaled-retort",
+  "name": "Unrivaled Retort",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are about to attempt a Fortitude or Reflex save against an area effect and are wielding a ranged weapon. --- You defy the death and destruction around you while using it to fuel your mythic power, spurring you on to acts of incredible speed and empowering a mighty ranged counterattack. Spend a Mythic Point and attempt the triggering save at mythic proficiency. If the save is successful, you can immediately reload and make a ranged Strike targeting the originator of the triggering effect."
+ }
+]

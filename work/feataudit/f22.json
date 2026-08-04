@@ -1,0 +1,984 @@
+[
+ {
+  "id": "levering-strike",
+  "name": "Levering Strike",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "press"
+  ],
+  "prerequisites": [
+   "Staff Acrobat Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding your staff. --- Make a Strike with your staff. As long as you don't critically fail, the target becomes off-guard and takes a -2 circumstance penalty to its DC against Shove, Trip, and Tumble Through attempts until the start of your next turn."
+ },
+ {
+  "id": "liberating-stride",
+  "name": "Liberating Stride",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "liberator cause"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Instead of you taking a Step at the end of your Liberating Step, the triggering ally can Stride up to half their Speed. Even if you have Exalt, only the triggering ally gains this benefit."
+ },
+ {
+  "id": "lich-dedication",
+  "name": "Lich Dedication",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "living creature",
+   "ability to cast 6th-rank or higher spells from spell slots",
+   "expert in Crafting",
+   "completed ritual to become a lich and crafted a soul cage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "After years of study and careful planning, you finally completed a soul cage to house your soul and successfully performed a ritual to transform yourself into a lich. Now, neither death nor time can prevent you from pursuing your studies and achieving your grand ambitions. You gain the undead trait and the basic undead benefits. Your undead craving is for knowledge. You gain a unique *Soul Cage*—a magic item that houses your soul. Whenever you would die, your soul flees to the soul cage to allow you to be rebuilt. As long as your soul cage exists, you can't truly be destroyed."
+ },
+ {
+  "id": "lie-to-me",
+  "name": "Lie to Me",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use Deception to weave traps to trip up anyone trying to deceive you. If you can engage in conversation with someone trying to Lie to you, use your Deception DC if it is higher than your Perception DC to determine whether they succeed. This doesn't apply if you don't have a back-and-forth dialogue, such as when someone attempts to Lie during a long speech."
+ },
+ {
+  "id": "life-leap",
+  "name": "Life Leap",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "gnome",
+   "move",
+   "teleportation"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You must be adjacent to a living creature. --- You phase through a space that a living creature occupies in a flash, spontaneously appearing on the opposite side of it in a vibrant display of colorful light. You move from your current location to another location that's still adjacent to the same living creature, but on the opposite side or corner of the creature's space. To determine whether a position is valid, use the same rules as for flanking: a line through the center of the two spaces must pass through opposite sides or corners of the creature's space. You pass through the creature's life force, appearing in the selected location; this doesn't trigger reactions based on movement. You must be able to see your destination, and you can't move farther than your Speed would allow."
+ },
+ {
+  "id": "light-paws",
+  "name": "Light Paws",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You can balance on your toes to step carefully over obstructions. You Stride and then Step, or Step and then Stride, ignoring difficult terrain during this movement."
+ },
+ {
+  "id": "light-step",
+  "name": "Light Step",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You aren't bothered by tricky footing. When you Stride or Step, you can ignore difficult terrain."
+ },
+ {
+  "id": "lightless-litheness",
+  "name": "Lightless Litheness",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "fetchling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body is almost as flexible as your shadow. When you critically fail at Squeezing, you get a failure instead. Additionally, when you roll a success at an Escape check, you get a critical success instead; if you roll a critical success, you can Step instead of Striding up to 5 feet."
+ },
+ {
+  "id": "lightning-dash",
+  "name": "Lightning Dash",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "air",
+   "electricity",
+   "impulse",
+   "kineticist",
+   "move",
+   "overflow",
+   "polymorph",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "For an instant, you transform yourself into a being of pure lightning and fly forward, shocking anyone in your way. You propel yourself forward in a . You can move through creatures during this movement, and this movement doesn't trigger reactions that are triggered by movement. Each creature you move through takes damage with a save against your class DC. You return to your normal form in the final square of the line. If you're in the air, you fall unless you have a fly Speed. --- **Level (+3)** The length of the line increases by 5 feet, and the damage increases by 1d12."
+ },
+ {
+  "id": "lightning-qi",
+  "name": "Lightning Qi",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Frequency** Once per 10 minutes --- Qi flows freely from within you. If your next action is to cast a qi spell that takes at least two actions to cast, reduce the number of actions to cast it by 1 (minimum 1 action)."
+ },
+ {
+  "id": "lightning-rings-intervention",
+  "name": "Lightning Rings' Intervention",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "electricity",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Familiar Sage Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your familiar learns to empower spells with an electrical discharge. Your familiar gains the Lightning Needles ability."
+ },
+ {
+  "id": "lightning-rings-overcharge",
+  "name": "Lightning Rings' Overcharge",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "electricity",
+   "magical"
+  ],
+  "prerequisites": [
+   "Familiar Sage Dedication",
+   "Lightning Rings' Intervention"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your familiar can adopt an electrical form to empower weapon strikes. Your familiar gains the Lightning Armillary ability."
+ },
+ {
+  "id": "lightning-rod",
+  "name": "Lightning Rod",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "air",
+   "composite",
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You smash a metal rod into your foe and call lightning to it. Attempt a 2-action melee or ranged Elemental Blast using the metal element. On a hit, the target takes an additional damage and is skewered with a metal rod, which gives it a –1 circumstance penalty to AC and saves against electricity; the penalty is –2 if the creature also has the metal trait, is made of metal, or is wearing metal armor. The creature can attempt to pull the rod free using an Interact action, but must succeed at a check. --- **Level (+6)** The electricity damage increases by 1d12."
+ },
+ {
+  "id": "lightning-snares",
+  "name": "Lightning Snares",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Snarecrafter Dedication",
+   "master in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can rig a trap with incredible speed. When you create a snare that normally takes 1 minute to Craft, you can Craft it using a single Interact action instead."
+ },
+ {
+  "id": "lightning-swap",
+  "name": "Lightning Swap",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Exemplar** You have practiced quickly switching between combat styles and the equipment needed for them, especially if you wield more than one weapon ikon. You Interact to stow any number of items from your hands, then draw up to two weapons or a shield and a weapon. **Fighter** You have practiced quickly switching between combat styles and the equipment needed for them. You Interact to stow any number of items from your hands, then draw up to two weapons or a shield and a weapon."
+ },
+ {
+  "id": "lightning-tongue",
+  "name": "Lightning Tongue",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your tongue darts out faster than the eye can see to retrieve loose objects. You Interact to pick up a single unattended object of light Bulk or less within 10 feet of you. If you don't have enough hands free to hold the object, it falls to the ground in your space."
+ },
+ {
+  "id": "lightspeed-assault",
+  "name": "Lightspeed Assault",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You zoom from enemy to enemy, striking each in an instant. Stride to an enemy and attempt a Strike against it. If successful, you can add another action to Lightspeed Assault. Stride again and attempt another Strike; if this second Strike is successful, you can spend another action to Stride again and attempt a third Strike. You can use Lightspeed Assault while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type. You attempt a backlash check for your deviation only once, regardless of how many actions you end up spending on your Lightspeed Assault. **Awakening** Your speed allows you to slip the bonds of space. Instead of Striding, you simply teleport to your desired destination. Lightspeed Assault gains the teleportation trait. **Awakening** You move so quickly that you might as well be in multiple places at once. When you use Lightspeed Assault, you can decide to spend one, two, or three actions up front, selecting your targets ahead of time. You can flank with yourself for any of these Strikes, and if you deal damage to a target more than once, you can add all the damage together for the purpose of overcoming resistances, if it would be more beneficial to you."
+ },
+ {
+  "id": "lingering-breath",
+  "name": "Lingering Breath",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "dragonblood"
+  ],
+  "prerequisites": [
+   "Breath of the Dragon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your draconic breath destroys the surrounding environment and leaves your enemies in pain. When you use Breath of the Dragon, the area of your breath becomes difficult terrain for 1 minute. In addition, a creature who fails or critically fails its saving throw takes 2d6 persistent damage of the same type."
+ },
+ {
+  "id": "lingering-flames",
+  "name": "Lingering Flames",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast fireball"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Fireball, you can modify its effects, decreasing the base damage to 5d6 and causing it to deal 2 persistent fire damage to creatures that fail their save, doubled as normal on a critical failure. If you do, replace its heightened entry with the following. --- **Heightened (+1)** The damage is increased by 1d6 and the persistent fire damage is increased by 2."
+ },
+ {
+  "id": "link-focus",
+  "name": "Link Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [
+   "link spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your focus recovers faster. If you have spent at least 2 Focus Points since the last time you Refocused, you recover 2 Focus Points when you Refocus instead of 1."
+ },
+ {
+  "id": "link-wellspring",
+  "name": "Link Wellspring",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [],
+  "text": "Link Wellspring Source Secrets of Magic pg. 73 Prerequisites Link Focus Your bond replenishes your focus. If you have spent at least 3 Focus Points since the last time you Refocused, you recover 3 Focus Points when you Refocus instead of 1."
+ },
+ {
+  "id": "liquidate-resources",
+  "name": "Liquidate Resources",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "prerequisites": [],
+  "text": "Liquidate Resources Source Kingmaker Adventure Path pg. 532 Prerequisites Economy 14 Your kingdom's economy can liquidate resources in an emergency when funding runs out. The first time during a Kingdom turn in which you are forced to spend RP as the result of a failed skill check or a dangerous event, and that expense reduces you to 0 RP, you may instead reduce your RP to 1 and treat the expense as if it were paid in full. At the start of your next Kingdom turn, roll 4 fewer Resource Dice than normal."
+ },
+ {
+  "id": "live-ammunition",
+  "name": "Live Ammunition",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Artillerist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "There are generally few things as ill-advised as being shot out of a cannon or launched by a trebuchet, but people use the tactic every so often in a desperate situation. While it's more humane to use this strategy with mindless constructs or undead, occasionally an exceedingly foolhardy adventurer demands the opportunity to try it. Loading a creature requires two additional Load actions, which you must conduct personally. The creature must be willing, unconscious, or restrained throughout the process, and the siege weapon must be physically capable of firing the creature in question, based on their size and shape. Typically, that means ballistae don't qualify, for example—nor do auto-catapults which require specifically-sized balls—but normal catapults and onagers work just fine. When you Launch the weapon, if the weapon usually targets an area, you target a single 5-foot square instead. The siege weapon deals its normal damage to its target, or to the modified area, and to the creature fired."
+ },
+ {
+  "id": "live-the-creed",
+  "name": "Live the Creed",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Battle Harbinger Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- You've become an unparalleled figure among your faith, able to align your divine abilities with unparalleled swiftness. You cast a battle aura using one of your divine font slots."
+ },
+ {
+  "id": "living-bonfire",
+  "name": "Living Bonfire",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "composite",
+   "fire",
+   "impulse",
+   "kineticist",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Roots and branches of living wood writhe in elemental fire at your command, forming a bonfire fearsome enough to scare off predators in the night. You conjure a bonfire in an unoccupied 10-foot-square space within 30 feet. The bonfire burns for 10 hours, providing all the benefits of a normal campfire. If you use this impulse again, any previous one ends. When you make a wood ranged Elemental Blast, you can have it come from the bonfire instead of you, flinging burning logs. This blast deals an additional damage. Each time you do this, the size of the bonfire is reduced by one 5-foot square. If all the squares are removed, the impulse ends. --- **Level (+5)** The fire damage increases by 1d6."
+ },
+ {
+  "id": "living-rune",
+  "name": "Living Rune",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Runescarred Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've bridged a connection between the runes on your body and the magic of runestones, allowing you to place an armor rune on your living flesh. Your body can hold a single property rune; you can't etch a property rune on your body if it has requirements on the type or category of armor or if the property would affect the armor instead of its wearer. If you wear armor, you gain the property rune's effects in addition to any effects of that armor."
+ },
+ {
+  "id": "living-vessel-dedication",
+  "name": "Living Vessel Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether willingly or not, you've become a vessel for a being of unimaginable power. You and your GM should work together to determine the being's nature and decide how much you know and how much remains a mystery to you for now. Some decisions might influence your options later. You might need to decide whether the entity is a demon, for instance, to know if you qualify for later feats. You need to spend at least an hour each day assuaging the entity within you or you take a –1 penalty to Will saves for 24 hours. The process of assuaging the entity is determined together between you and the GM. It might be as simple as meditating with the entity to learn more about them, but it might be as extreme as committing gruesome, unspeakable sacrifices to keep their unknowable blessings. After a full week of failing to assuage your entity, you become Doomed 1, and you can't remove or ameliorate the condition until you allow your entity to take full possession of your body for 24 hours, during which time it pursues its own agenda. You also gain the Entity's Resurgence reaction, allowing you to unleash your entity in lieu of falling unconscious, though at the risk of letting it enact its will."
+ },
+ {
+  "id": "lobbed-attack",
+  "name": "Lobbed Attack",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "master in Performance",
+   "Juggler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are Juggling a thrown weapon. --- You make a thrown ranged Strike with the required weapon, using the weapon's normal range increment. This attack doesn't trigger reactions, and if the target has never seen you use this feat before, the target is off-guard against this attack."
+ },
+ {
+  "id": "lonely-army",
+  "name": "Lonely Army",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Guerrilla Weaponry"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You are in your favored location; you are currently hidden, unobserved, or unnoticed by all enemies; and you are not fatigued. --- You move and attack with deadly silence, unbelievable speed, and unlimited ferocity. Strike with a blowgun or sling; if the Strike is successful, the enemy cannot tell where it came from and you remain hidden. Immediately after the successful Strike, you can Sneak to a new location, Interact to reload a blowgun or sling, and Strike again, remaining hidden on a successful Strike. If the second Strike is successful, you can Sneak, Interact to reload, and then Strike with a sling or blowgun a third time, remaining hidden after a successful Strike. After using Lonely Army, you are fatigued for 1 minute."
+ },
+ {
+  "id": "long-distance-taunt",
+  "name": "Long-distance Taunt",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can draw the wrath of your foes even at a great distance. When you use Taunt, you can choose a target within 120 feet."
+ },
+ {
+  "id": "long-tongue",
+  "name": "Long Tongue",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [
+   "snaptongue tripkee"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to stretch your exceptionally long tongue beyond its original limits. When you use your tongue to deliver touch-range spells or perform very simple Interact actions, you can do so at a distance that is 5 feet beyond your usual reach."
+ },
+ {
+  "id": "lord-of-the-fiends",
+  "name": "Lord of the Fiends",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Archfiend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You consider every fiend a future subject and can assess them at a glance. Spend a Mythic Point. Attempt a check at mythic proficiency to Recall Knowledge about every fiend you can see. For the next hour, whenever you roll a success on a Deception, Diplomacy, or Intimidation check against a fiend, you get a critical success instead."
+ },
+ {
+  "id": "lose-your-chains",
+  "name": "Lose Your Chains",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "linguistic",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Broken Chain Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally gains the grabbed or restrained condition. --- You rouse rebellion in the hearts of your allies, inspiring them to break free of their bonds. The triggering ally can make a check to Escape at mythic proficiency."
+ },
+ {
+  "id": "lotus-above-the-mud",
+  "name": "Lotus Above the Mud",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Lotus Above the Mud Source Tian Xia Character Guide pg. 114 Archetype Cultivator Prerequisites Immortal Lightness Your qi, dancing ever diligently toward cultivation, eludes the grasp of the world’s muck and mire. When you cast your adapt self or athletic rush focus spells, you ignore difficult terrain until the end of your next turn."
+ },
+ {
+  "id": "lotus-above-the-wind",
+  "name": "Lotus Above the Wind",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Immortal Lightness"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your qi, dancing ever diligently toward cultivation, eludes the grasp of the world's muck and mire. When you cast your Adapt Self or Athletic Rush focus spells, you ignore difficult terrain until the end of your next turn."
+ },
+ {
+  "id": "loud-singer",
+  "name": "Loud Singer",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "Goblin Song"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Staying on pitch, proper breath control, and remembering the words are all less important than the real measure of a good singer: volume! The range of your Goblin Song is increased to 60 feet, and you can target one additional enemy when you use it."
+ },
+ {
+  "id": "loyal-empath",
+  "name": "Loyal Empath",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "shoony"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have incredible empathy for your friends and family, and you have an innate timing for helping others in distress. You can use the Aid reaction to grant a bonus to another creature's Will saving throw. As usual for Aid, you need to prepare by using an action on your turn to encourage the creature to bravely withstand the effect."
+ },
+ {
+  "id": "loyal-warhorse",
+  "name": "Loyal Warhorse",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Faithful Steed"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The loyalty you and your mount share is unbreakable. The mount you gained with Faithful Steed is now a mature animal companion. In addition, your mount never attacks you, even if it is magically compelled to do so."
+ },
+ {
+  "id": "luck-of-the-clowder",
+  "name": "Luck of the Clowder",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [
+   "Cat's Luck"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Cat's Luck to reroll, any creatures you choose within 10 feet who also just failed against the same effect (such as a single spell) can also reroll their saving throws and use the better result."
+ },
+ {
+  "id": "lunge",
+  "name": "Lunge",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a melee weapon. --- You attack an enemy at the edge of your reach. Make a Strike with a melee weapon, increasing your reach by 5 feet for that Strike. If the weapon has the disarm, shove, or trip trait, you can use the corresponding action instead of a Strike."
+ },
+ {
+  "id": "lunging-spellstrike",
+  "name": "Lunging Spellstrike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike",
+   "twisting tree hybrid study"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a staff. --- Your spell unwinds the structure of your staff to make it exceptionally long, or even separate it into shards held together by magical power. Make a Spellstrike with a staff, with a spell that isn't a cantrip or focus spell. Increase the staff's reach by 5 feet × the spell's rank."
+ },
+ {
+  "id": "lurching-chomp",
+  "name": "Lurching Chomp",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "dragonet",
+   "mental",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Lurching Chomp Source Draconic Codex pg. 213 Through your wiles, charm, or a little bit of magic, you lure in a foe for a closer look—and a quick bite! Choose a creature within 30 feet. It must attempt a Will save against your class DC or spell DC, whichever is higher. If the target fails its save, you pull it up to 30 feet. If the target ends this movement in reach of your jaws, you can attempt a jaws Strike against it. Regardless of the result of its save, the target is temporarily immune for 24 hours."
+ },
+ {
+  "id": "luring-chomp",
+  "name": "Luring Chomp",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "dragonet",
+   "mental",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Through your wiles, charm, or a little bit of magic, you lure in a foe for a closer look—and a quick bite! Choose a creature within 30 feet. It must attempt a save against your class DC or spell DC, whichever is higher. If the target fails its save, you pull it up to 30 feet. If the target ends this movement in reach of your jaws, you can attempt a jaws Strike against it. Regardless of the result of its save, the target is temporarily immune for 24 hours."
+ },
+ {
+  "id": "mage-hunter",
+  "name": "Mage Hunter",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [
+   "superstition instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You've seen the target Cast a Spell --- You use your hatred of magic to lash out at a known spellcaster. Make a melee Strike against the required creature. If you hit and deal damage, the target is Stupefied 1, or Stupefied 2 on a critical hit, until the beginning of your next turn."
+ },
+ {
+  "id": "mages-field-dressing",
+  "name": "Mage's Field Dressing",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "War Mage Dedication",
+   "Battle Medicine"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your previous action was to Cast a Spell from a wizard spell slot, and the spell affected an ally within 60 feet. --- As your spell takes hold on your ally, you use some of its magic to quickly dress their wounds. You use Battle Medicine on one ally affected by the required spell. You do not need to be holding or wearing a Healer's Toolkit, as you conjure glowing threads, bandages, or similar supplies out of pure magic, which adds the arcane trait to Battle Medicine."
+ },
+ {
+  "id": "magic-rider",
+  "name": "Magic Rider",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your people used powerful magic to travel between distant worlds in the distant past, and the remnants of that magic make such transportation easier for you. When you are the target of a teleportation spell that transports more than one person, it can affect an additional person beyond the normal limit, chosen by the caster. Additionally, when you're the target of a Teleport spell, you and the other targets arrive no farther than 1 mile off target, regardless of distance traveled."
+ },
+ {
+  "id": "magic-sense",
+  "name": "Magic Sense",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "detection",
+   "oracle",
+   "sorcerer",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a literal sixth sense for ambient magic in your vicinity. You can sense the presence of magic auras as though you were always using a 1st-rank Detect Magic spell. This detects magic in your field of vision only. When you Seek, you gain the benefits of a 3rd-rank *detect magic* spell on things you see (in addition to the normal benefits of Seeking). You can turn this sense off and on with a free action at the start or the end of your turn. --- **Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, primal, or occult)."
+ },
+ {
+  "id": "magic-sense-magus",
+  "name": "Magic Sense (Magus)",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "detection",
+   "magus"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a literal sixth sense for ambient magic in your vicinity. You can sense the presence of magic auras as though you were always using a 1st-rank Detect Magic spell. This detects magic in your field of vision only. When you Seek, you gain the benefits of a 3rd-rank *detect magic* spell on things you see (in addition to the normal benefits of Seeking). You can turn this sense off and on with a free action at the start or the end of your turn."
+ },
+ {
+  "id": "magical-crafting",
+  "name": "Magical Crafting",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can Craft magic items, though some have other requirements. When you select this feat, you gain formulas for four common magic items of 2nd level or lower."
+ },
+ {
+  "id": "magical-edification",
+  "name": "Magical Edification",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Loremaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned those tidbits of magic that are most conducive to furthering your acquisition and transmission of knowledge. You gain Guidance, Message, and Sigil as innate occult cantrips."
+ },
+ {
+  "id": "magical-trickster",
+  "name": "Magical Trickster",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether you're using magic items, wielding innate magic, or dabbling in spellcasting, you can sneak spells past your foes' defenses as easily as any blade. When you succeed at a spell attack roll against an off-guard foe's AC and the spell deals damage, you can add your sneak attack damage to the damage roll. If your single spell leads to multiple separate damage rolls, apply your sneak attack damage only once per target."
+ },
+ {
+  "id": "magitaxis",
+  "name": "Magitaxis",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "surki"
+  ],
+  "prerequisites": [
+   "Vestigial Magicsense"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you could reach with a Stride action Casts a Spell from the tradition matching your magiphage ability. --- You move reflexively toward the source of magic you most consumed as a larva. You Stride, and you must end your movement adjacent to the triggering creature. You then can't use Magitaxis against the triggering creature for 24 hours as your reflexes reacclimate, though you can use it against other creatures. You can use Magitaxis while Burrowing, Climbing, Flying, or Swimming instead of Striding (changing the trigger accordingly) if you have the corresponding movement type."
+ },
+ {
+  "id": "magpie-manor-recovery",
+  "name": "Magpie Manor Recovery",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Dandy Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Though you're hardly ready to retire from the social life, you appreciate the luxury the older wealthy elite enjoy within the private social club of Magpie Manor in Absalom's Petal District. And you try to bring that luxury even to the wilds of the world. If you have a four-person tent and spend at least 10 minutes setting it up to your level of comfort before taking an 8-hour period of rest, you regain an additional number Hit Points equal to double your level and reduce the severity of your drained condition by 2 instead of 1. Up to three other Medium or smaller creatures can share the tent with you and gain these benefits."
+ },
+ {
+  "id": "magpie-snatch",
+  "name": "Magpie Snatch",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tengu"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You move quickly, snatching a shiny item that catches your eye. Stride twice, and you can Interact to pick up an unattended object at any point during your movement."
+ },
+ {
+  "id": "majestic-proclamation",
+  "name": "Majestic Proclamation",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Starlit Sentinel Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're in your sentinel form. --- You announce your name to your enemies, bringing your constellation to bear in a blinding display. Attempt to Demoralize all enemies within 30 feet. Demoralize loses the auditory trait and gains the visual trait when used this way. In addition to the regular effects of Demoralize, enemies become dazzled for 1 minute on a successful check (and also blinded for 1 round on a critical success). You can use Majestic Proclamation as a single action if your previous action was Starlit Transformation."
+ },
+ {
+  "id": "make-do",
+  "name": "Make Do",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Twilight Talon Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're holding a broken tool or weapon. --- You sometimes need to act in a pinch, even if you haven't had the time to repair your gear. For the next minute, you ignore the broken condition of the tool or weapon you're holding. You can't use Make Do again on that item for 24 hours."
+ },
+ {
+  "id": "makeshift-strike",
+  "name": "Makeshift Strike",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Weapon Improviser Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You quickly snatch up whatever is nearby and then attack with it as an improvised weapon. You Interact to pick up an unattended object in reach you could use as an improvised weapon, then Strike with that improvised weapon."
+ },
+ {
+  "id": "malleable-movement",
+  "name": "Malleable Movement",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Mind Smith Dedication",
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You Leap. --- You shift the shape of your weapon to help you Leap farther and faster. You shift your weapon into a long flexible pole, climbing hook, or similar aid, adding an extra 5 feet to the distance you're able to Leap. As normal, this can't increase the distance of your Leap beyond your Speed."
+ },
+ {
+  "id": "mammoth-charge",
+  "name": "Mammoth Charge",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Mammoth Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are riding your megafauna companion. --- You Command an Animal to order your megafauna companion to Stride twice. At any point during this movement, you can make a melee Strike against one enemy within reach."
+ },
+ {
+  "id": "maneuvering-spell",
+  "name": "Maneuvering Spell",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sixth Pillar Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You begin to Cast a Spell that requires at least 2 actions to cast. You instantly tap into the magical power of a spell you're casting to quickly pounce around the battlefield. You Step, Leap, or Stand. This action can be before or after you Cast the Spell."
+ }
+]

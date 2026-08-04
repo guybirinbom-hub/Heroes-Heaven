@@ -1,0 +1,981 @@
+[
+ {
+  "id": "flying-kick",
+  "name": "Flying Kick",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You launch yourself at a foe. Make a Leap or attempt a High Jump or Long Jump. At the end of the jump, if you're adjacent to a foe, you can immediately Strike that foe with an unarmed attack, even if the foe is in midair. You fall to the ground after the Strike. If the distance you fall is no more than the height of your jump, you land upright and take no damage."
+ },
+ {
+  "id": "flying-tackle",
+  "name": "Flying Tackle",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You barrel forward, gathering enough momentum to take down a threatening foe. Stride and then Leap, or attempt to High Jump or Long Jump. If you end your movement adjacent to a foe, you can attempt to Trip that foe. If you succeed at the Athletics check to Trip, you get a critical success instead. You can use Flying Tackle while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "focus-ally",
+  "name": "Focus Ally",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An adjacent ally fails, but doesn't critically fail, a saving throw against an effect with the incapacitation trait. --- You're so focused on your allies that you can help them to recenter when something would take them out of the fight. Your ally rerolls the failed saving throw. That ally must take the second result."
+ },
+ {
+  "id": "focused-cat-nap",
+  "name": "Focused Cat Nap",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [
+   "Cat Nap",
+   "Focus Pool"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you Cat Nap, you can also Refocus as you dream of a relevant activity."
+ },
+ {
+  "id": "focused-fascination",
+  "name": "Focused Fascination",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "Fascinating Performance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Fascinating Performance in a combat encounter, you need only a success, rather than a critical success, to Fascinate your target. This works only if you're attempting to fascinate one target. For example, if you were an expert in Performance, you could choose to target multiple creatures normally or target one creature and fascinate it on a success."
+ },
+ {
+  "id": "focused-fire",
+  "name": "Focused Fire",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Munitions Master Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You limit the blast of your shot for accuracy. You Launch your light mortar, targeting a single square. The blast is limited to the targeted square but deals one additional die of damage."
+ },
+ {
+  "id": "focused-juggler",
+  "name": "Focused Juggler",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Juggler Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn begins. --- You continue Juggling until the end of your next turn. Increase the maximum number of items you can juggle by one."
+ },
+ {
+  "id": "fog-cloak",
+  "name": "Fog Cloak",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "text": "Fog Cloak Source High Seas pg. 65 Access member of the Red Mantis assassins When you are concealed by mist or fog, you’re hidden until a creature successfully Seeks to find you."
+ },
+ {
+  "id": "foil-senses",
+  "name": "Foil Senses",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are adept at foiling creatures' special senses and cautious enough to safeguard against them at all times. Whenever you use the Avoid Notice, Hide, or Sneak actions, you are always considered to be taking precautions against special senses."
+ },
+ {
+  "id": "folk-dowsing",
+  "name": "Folk Dowsing",
+  "level": 3,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can find what you're looking for using a dowsing rod or pendulum. If you Search while wielding a dowsing rod or pendulum, in addition to the normal checks for Searching, the GM rolls a secret Survival check for you to detect the largest source of water, oil, or another natural non-bodily fluid in the area. Even if the liquid is concealed from you—for example, if it stems from an underground spring or is piped through a wall—this technique points you in the right direction. The GM determines the DC, which is usually the trained simple DC with a hard or very hard adjustment if the source of water is small. If you're an expert in Survival, the GM also makes a Survival check for you to detect sizable deposits of metal, minerals, and nearby graves. The DC is usually the expert simple DC, with DC adjustments for smaller deposits."
+ },
+ {
+  "id": "folklorist-dedication",
+  "name": "Folklorist Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in Performance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are a master archivist and entertainer, capable of pulling wisdom from the tales you tell and weaving your allies and enemies into a powerful narrative. You gain the Spin Tale action."
+ },
+ {
+  "id": "follow-the-threads-of-fate",
+  "name": "Follow the Threads of Fate",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "fortune",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a worn ikon made of cloth or a weapon ikon with a tassel, wrapping, or similar feature. --- A norn's thread—spun from fate itself—runs through or wraps around your ikon. **Transcendence—Unravel the Future** ⟨1⟩ (fortune, transcendence)"
+ },
+ {
+  "id": "follow-up-assault",
+  "name": "Follow-up Assault",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You used your previous action to make a melee Strike that missed. --- Even in the face of failure you press the attack, determined to succeed. Make a Strike with the same weapon, adding the backswing and forceful weapon traits to that Strike."
+ },
+ {
+  "id": "follow-up-strike",
+  "name": "Follow-up Strike",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Martial Artist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a missed Strike with a melee unarmed attack. --- You have trained rigorously to use all parts of your body as a weapon, and when you miss with an attack, you can usually continue the attack with a different body part and still deal damage. Make another Strike with a melee unarmed attack, using the same multiple attack penalty as the missed Strike, if any."
+ },
+ {
+  "id": "following-smite",
+  "name": "Following Smite",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine",
+   "sanctified"
+  ],
+  "prerequisites": [
+   "Herald's Weapon"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a Strike made with a weapon or unarmed attack empowered by Herald's Weapon. --- You call upon your deity's power and channel it through your weapon. The creature you hit in your previous action must attempt a saving throw against the higher of your class DC or your spell DC. --- **Critical Success** The target is unaffected. **Success** The target takes spirit damage equal to half your level. **Failure** The target takes spirit damage equal to your level and is knocked prone. **Critical Failure** The target takes spirit damage equal to twice your level, is knocked prone, and becomes Clumsy 1 until the beginning of your next turn."
+ },
+ {
+  "id": "font-of-knowledge",
+  "name": "Font of Knowledge",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Scrollmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Experience or focused study have granted you mastery of a number of topics. When you know about something, you know about it in great detail. When you succeed at a check to Recall Knowledge, you gain additional information or context. When you critically succeed at a check to Recall Knowledge, at the GM's discretion, you might gain even more additional information or context than normal."
+ },
+ {
+  "id": "fools-fleeting-plan",
+  "name": "Fool's Fleeting Plan",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When Aercelys, hero-god of fools and fire, dove into the funeral pyre of his beloved daughter, he seemed a fool without thought for his safety. Yet when he returned with her body, he showed the slow rise of her chest, and those who doubted became the fools. You carry Aercelys's spark within you, which protects you from rash decisions. You do not trigger reactions when you use an action that you gained from being quickened."
+ },
+ {
+  "id": "for-the-fallen",
+  "name": "For the Fallen!",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish",
+   "press"
+  ],
+  "prerequisites": [
+   "Starstone Aspirant Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "So many other hopefuls have attempted the Test of the *Starstone* before you and failed. Whether they were killed or disappeared, you vow to honor their memories by succeeding where they failed. This drive allows to push forward after you've already made an attack. You Step and then Strike."
+ },
+ {
+  "id": "force-of-nature",
+  "name": "Force of Nature",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "healing",
+   "primal"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're a nigh-unstoppable killing machine, with only silver able to quell your rampage. When in hybrid or animal shape, you gain fast healing 5. If you take damage from a silver weapon, your fast healing deactivates until the end of your next turn."
+ },
+ {
+  "id": "forceful-push",
+  "name": "Forceful Push",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "attack"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast mage hand"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Telekinetic Hand, you can modify its target to be 1 creature. If you do, replace its standard effects with the following: You push your foe telekinetically. Make a spell attack roll against the target's Fortitude DC. On a success, you push the target 5 feet away from you. On a critical success, you push the target 10 feet away from you."
+ },
+ {
+  "id": "forceful-shot",
+  "name": "Forceful Shot",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "attack",
+   "press"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your ranged attacks push your foes away from your allies. Make a ranged Strike, adding the following effects in addition to the normal effects of the Strike. --- **Critical Success** The target is pushed 10 feet away from you. **Success** The target is pushed 5 feet away from you. **Failure** The target is off-guard for 1 round."
+ },
+ {
+  "id": "forensic-countermeasures",
+  "name": "Forensic Countermeasures",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "text": "Forensic Countermeasures Source High Seas pg. 65 Prerequisites empiricism methodology Access member of the Red Mantis assassins Your knowledge of deductive reasoning allows you to derail fellow investigators. Over the course of a minute, you can tamper with a single location (such as a small room) to either obscure evidence or add misleading evidence. If you add misleading evidence, you choose what incorrect details it implies. A creature can see through these countermeasures with a successful Recall Knowledge check against your Deception DC, and only if they actively look for tampering."
+ },
+ {
+  "id": "foresee-danger",
+  "name": "Foresee Danger",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature targets you with an attack and you can see the attacker. --- You perceive every possible way your foe's attack could land and attempt to avoid them all. The triggering attack roll targets your Perception DC instead of your AC. Though this allows you to avoid taking penalties to your AC, it doesn't remove any conditions or other effects causing such penalties. For example, an enemy with sneak attack would still deal extra damage to you for being off-guard, even though you wouldn't take the –2 circumstance penalty when defending against the attack."
+ },
+ {
+  "id": "forest-passage",
+  "name": "Forest Passage",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "leaf order"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can always find a path, almost as if foliage parted before you. You ignore any difficult terrain caused by plants and fungi, such as bushes, vines, and undergrowth."
+ },
+ {
+  "id": "forest-stealth",
+  "name": "Forest Stealth",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [
+   "Expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are in a forest or jungle environment near an environmental feature that would allow you to Take Cover. --- You are skilled at quickly hiding behind bits of underbrush or foliage. You Take Cover and then use that cover to Hide."
+ },
+ {
+  "id": "forgotten-presence",
+  "name": "Forgotten Presence",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The world conspires to keep you forgotten and unnoticed—memories cloud, ink stains out your name in ledgers, and portraits of you crack and warp over your face. Characters attempting to Recall Knowledge about you take a –2 circumstance penalty. Add Rewrite Memory to your spell list as a primal spell."
+ },
+ {
+  "id": "form-control",
+  "name": "Form Control",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "druid",
+   "manipulate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Untamed Form"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "With additional care and effort, you can take on an alternate shape for a longer period of time. If your next action is to cast untamed form, the spell's rank is 2 lower than normal (minimum 1st rank), but you can remain transformed for up to 1 hour or the listed duration (whichever is longer). You can still Dismiss untamed form as normal."
+ },
+ {
+  "id": "form-lock",
+  "name": "Form Lock",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "attack",
+   "monk"
+  ],
+  "prerequisites": [
+   "Wrestler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- Your ability to manipulate your enemy's entire body is potent enough that you can tear and break apart alternate forms. Attempt an Athletics check to counteract a polymorph effect currently affecting the creature you have grabbed or restrained. If the target is somehow under the effect of multiple polymorph effects, you can choose which one to attempt to counteract; the GM chooses randomly if the separate effects aren't obvious. The target is then temporarily immune for 1 day."
+ },
+ {
+  "id": "form-retention",
+  "name": "Form Retention",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have trained your mind and body to tolerate polymorph magic for longer periods of time, so long as you prepare for the change appropriately. When preparing a polymorph spell that lasts 1 minute and grants a battle form, you can prepare the spell in a slot 2 ranks higher than normal. This doesn't grant any of the normal benefits of heightening a spell, but the spell lasts up to 10 minutes. For example, if you prepared animal form in a 4th-rank slot with Form Retention, you would cast a 2nd-rank Animal Form that lasts for up to 10 minutes. If the spell can be Dismissed, that doesn't change."
+ },
+ {
+  "id": "formidable-breath",
+  "name": "Formidable Breath",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dragonblood"
+  ],
+  "prerequisites": [
+   "Breath of the Dragon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thanks to rigorous breathing exercises and a diet similar to that of your lineage, your magical breath is more powerful. The area of your Breath of the Dragon increases to 30 feet for a cone or 60 feet for a line, and the damage dice are d6s instead of d4s."
+ },
+ {
+  "id": "fortified-mind",
+  "name": "Fortified Mind",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "kashrishi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mind is unusually resilient and resistant to influence. When you would gain the fascinated or stupefied condition, you can attempt a . On a success, you don't gain the fascinated or stupefied condition."
+ },
+ {
+  "id": "fortuitous-shift",
+  "name": "Fortuitous Shift",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "gnome"
+  ],
+  "prerequisites": [
+   "Unexpected Shift"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have grown more comfortable with your penchant for supernatural disappearance. The flat check DC of your Unexpected Shift feat decreases to , and you are no longer dazzled if you succeed."
+ },
+ {
+  "id": "fortunate-blow",
+  "name": "Fortunate Blow",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "commander",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Guiding Shot or Set-Up Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You set an enemy up for a devastating follow-through from your allies. When you successfully damage an opponent with either Guiding Shot or Set-Up Strike, the next creature other than you to attack the same target before the start of your next turn rolls twice on their attack roll and takes the higher result."
+ },
+ {
+  "id": "fortunate-relief",
+  "name": "Fortunate Relief",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "fortune"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your god favors your attempts to remove afflictions and conditions. When you cast a healing spell that attempts to counteract an effect, you can roll the counteract check twice and take the higher value."
+ },
+ {
+  "id": "four-winds",
+  "name": "Four Winds",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "air",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Mimicking the anemoi-monarchs of the four winds-you propel four creatures. Target up to four willing creatures within 30 feet of you. Each of those creatures can Stride up to half its Speed. If it has a fly Speed, it can instead Fly up to half its fly Speed. --- **Level (10th)** The targets move up to full Speed instead of half."
+ },
+ {
+  "id": "fracture-time-flow",
+  "name": "Fracture Time Flow",
+  "level": 18,
+  "category": "mythic",
+  "traits": [
+   "incapacitation",
+   "mythic",
+   "occult"
+  ],
+  "prerequisites": [],
+  "text": "Fracture Time Flow Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 83 Archetype Timewracked Prerequisites Timewracked Dedication Your ability to interact with and even observe the flow of time allows you to fracture it slightly in a localized place whenever you land a particularly solid blow on a foe. Whenever you achieve a critical success with a Strike, the target of that Strike must also attempt a Will save against your class DC or spell DC, whichever is higher. Critical Success The target is unaffected by the fractured timeflow. Success The target is slowed 1 for 1 round. Failure The target is slowed 2 for 1 round. Critical Failure The target is stunned 3, then slowed 2 for 1 round after they recover from being stunned."
+ },
+ {
+  "id": "fracture-timeflow",
+  "name": "Fracture Timeflow",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "incapacitation",
+   "mythic",
+   "occult"
+  ],
+  "prerequisites": [
+   "Timewracked Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ability to interact with and even observe the flow of time allows you to fracture it slightly in a localized place whenever you land a particularly solid blow on a foe. Whenever you achieve a critical success with a Strike, the target of that Strike must also attempt a save against your class DC or spell DC, whichever is higher. --- **Critical Success** The target is unaffected by the fractured timeflow. **Success** The target is Slowed 1 for 1 round. **Failure** The target is Slowed 2 for 1 round. **Critical Failure** The target is Stunned 3, then slowed 2 for 1 round after they recover from being stunned."
+ },
+ {
+  "id": "friendly-fling",
+  "name": "Friendly Fling",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "manipulate",
+   "minotaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are adjacent to an ally. --- You can scoop up your friends with your horns to hurl them across the battlefield. Pick up an adjacent willing ally who is smaller than you and toss them to an unoccupied space you can see within 20 feet. Since you are using your horns, you don't need to have any hands free to do this. Your ally's movement doesn't trigger reactions. Your ally ends this movement on their feet and doesn't take damage from the fall but takes 1d6 damage from your horns. If your ally ends this movement within melee reach of at least one enemy, they can make a melee Strike against an enemy within their reach as a reaction."
+ },
+ {
+  "id": "friendly-nudge",
+  "name": "Friendly Nudge",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "minotaur"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You don't always have time to wait for your allies to make room, so it's best to politely move them yourself. Attempt an Athletics check to Shove an ally. You don't need to have a free hand to attempt this check. If your ally is willing, treat the result as one degree of success higher."
+ },
+ {
+  "id": "friendly-toss",
+  "name": "Friendly Toss",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "manipulate",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are adjacent to an ally and have one or more hands free. --- You toss your friends around the battlefield. Pick up an adjacent ally of your size or smaller and throw them to an unoccupied space you can see within 30 feet. Their movement doesn't trigger reactions. Your ally ends this movement on their feet and doesn't take damage from the fall. If your ally ends this movement within melee reach of at least one enemy, they can use their reaction to make a melee Strike against such an enemy."
+ },
+ {
+  "id": "frighten-undead",
+  "name": "Frighten Undead",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Undead Slayer Dedication",
+   "trained in Intimidation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your very presence chills creatures of the night down to their core and you can use the spiritual power and faithful life force of religious verses to frighten even mindless undead. Attempt to Demoralize an undead target using your Religion modifier instead of your Intimidation modifier if it's higher. If you use your Religion modifier, the Demoralize action loses the emotion and mental traits, as your faith connects to the undead on an instinctual level."
+ },
+ {
+  "id": "frightening-appearance",
+  "name": "Frightening Appearance",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "expert in Intimidation",
+   "Startling Appearance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your dramatic appearances can frighten bystanders. When you make a Startling Appearance, you can also attempt to Demoralize each opponent within 10 feet to whom you were unnoticed before your Strike."
+ },
+ {
+  "id": "frightful-condemnation",
+  "name": "Frightful Condemnation",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "emotion",
+   "fear",
+   "mental",
+   "vigilante"
+  ],
+  "prerequisites": [
+   "Vigilante Dedication",
+   "Member of the Grey Gardeners",
+   "Harsh Judgement"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You hit your condemned foe with a melee Strike in the same turn during which you condemned it with Harsh Judgment. **Requirements** You have condemned a foe to death with Harsh Judgment. --- Your willingness to follow through on your pitiless judgment is frightful to the person you have condemned, and they begin to dread what you will do to them next. Your condemned foe is Frightened 1, or Frightened 2 if the triggering Strike was a critical hit."
+ },
+ {
+  "id": "frog-geyser",
+  "name": "Frog Geyser",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Frog Geyser Source High Seas pg. 21 Requirements Your mouth is full of water. You can spray a powerful steam of water from your mouth to push your foes around. Filling your mouth with water for your stream requires using an Interact action while next to a source of at least 1 gallon of water. You can hold water in your mouth indefinitely, but while you do, you’re unable to speak. When you use Frog Geyser, you shoot water in a 20-foot line. All creatures in the line must attempt a Fortitude save against your class DC or spell DC, whichever is higher. Critical Success The creature is unaffected. Success The creature is pushed back 5 feet. Failure The creature is pushed back 10 feet. Critical Failure The creature is pushed back 10 feet and knocked prone."
+ },
+ {
+  "id": "frozen-breadth",
+  "name": "Frozen Breadth",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your attunement to arcane cold enhances the depths of your growing power. Increase the number of spells in your repertoire and number of spell slots you gain from *gelid shard* archetype feats by 1 for each spell rank other than your two highest *gelid shard* spell slots."
+ },
+ {
+  "id": "full-automation",
+  "name": "Full Automation",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "armor, construct, or weapon innovation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You become so entwined with your innovations that you can use them without a second thought. You're permanently quickened. How you can use the extra action depends on your innovation. - **Armor** Your armor responds to the most subtle stimuli to move you in the right direction as long as you are wearing it. You can use the extra action to Stride, Step, or use a form of movement provided by your innovation (such as Fly or Swim). - **Construct** Your ability to command your construct becomes instinctive. You can use the extra action to Command your construct innovation (or to provide 1 of the actions if you choose to spend 2 actions to Command your construct). - **Weapon** Your weapon becomes easier to wield with deadly efficacy, almost as if it is an extension of your body. It speeds effortlessly toward whatever target you choose as long as you are holding it. You can use the extra action to Strike with your innovation."
+ },
+ {
+  "id": "furious-focus",
+  "name": "Furious Focus",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Vicious Swing"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to maintain your balance even when swinging furiously. When you make a Vicious Swing with a melee weapon you're wielding in two hands, it counts as one attack toward your multiple attack penalty instead of two."
+ },
+ {
+  "id": "furious-grab",
+  "name": "Furious Grab",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful Strike, and either you have a hand free or your Strike used a grapple weapon. --- You grab your foe while it's distracted by your attack. The foe you hit becomes grabbed, as if you had succeeded at an Athletics check to Grapple the foe."
+ },
+ {
+  "id": "furious-sprint",
+  "name": "Furious Sprint",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You rush forward. Stride up to five times, or up to eight times if you used 3 actions. All this movement must be in a straight line (though the GM might allow reasonable variance). You can replace any of these Strides with a Balance action if you need to, which you attempt using an Athletics check instead of an Acrobatics check, using the same DC."
+ },
+ {
+  "id": "furious-vengeance",
+  "name": "Furious Vengeance",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [
+   "fury instinct"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy within your melee reach critically hits you with a melee Strike. --- Your enemy's blow fuels your rage and provokes your immediate retaliation. Make a melee Strike against the triggering enemy."
+ },
+ {
+  "id": "fused-polearm",
+  "name": "Fused Polearm",
+  "level": 10,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Fused Polearm Source Secrets of Magic pg. 241 Archetype Runelord Prerequisites Runelord Dedication Requirements Your arcane bonded item is a polearm. During your daily preparations, you can magically fuse your arcane bonded weapon and a magical staff together into one item, with the staff making up the haft of the weapon. You prepare the staff at the same time you do this, and you can do this only with a staff you're able to prepare. This fusion lasts until the next time you make your daily preparations. The staff and the weapon share their fundamental runes, using whichever weapon potency and whichever striking rune is higher level. They don’t share any other runes or specific abilities; use the polearm's. While the two are fused, the weapon’s haft takes on aesthetic aspects of the staff, and it can't change forms, such as with the shifting rune."
+ },
+ {
+  "id": "gallop-across-shadow",
+  "name": "Gallop Across Shadow",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "occult"
+  ],
+  "prerequisites": [
+   "Nidalese Horselord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Though your enemy wields shadow and darkness as weapons, they are no impediment to you when you ride your trusted horse. To that end, your mount can step onto patches of darkness as if they were solid. When your horse moves through an area of darkness, it can treat empty spaces as solid ground. This allows your horse to move across gaps bridged by darkness or even into the air, ascending or descending at a maximum of a 45-degree angle. If your horse isn't on actual solid ground and the area your horse is in becomes dim light or brighter, your horse falls."
+ },
+ {
+  "id": "gang-up",
+  "name": "Gang Up",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your allies harry an opponent in concert. You can flank an enemy if it's within reach of both of you and an ally—you and your ally don't have to be on opposite sides. This benefits your allies as well as you, but only if they're flanking with you, not each other. The other requirements for flanking must still be met."
+ },
+ {
+  "id": "gear-gnash",
+  "name": "Gear Gnash",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Trapsmith Dedication",
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Snares you create have complicated inner workings that are quite difficult to disable. Creatures attempting to Disable your snares that use gears must succeed at an additional Thievery check in order to disable the snare. On a failed check, while the snare doesn't fully trigger, the grinding mechanisms deal bludgeoning damage to the creature equal to half your level. The snare still triggers on a critical failure, as normal."
+ },
+ {
+  "id": "generals-gambit",
+  "name": "General's Gambit",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Marshal Dedication",
+   "Strategist Stance"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You move strategically forward to draw the enemy's attention away from your allies. You Stride toward an enemy and attempt to Create a Diversion, except you can use Society or Warfare Lore instead of Deception. On a success, in addition to the normal outcome for Creating a Diversion, the enemy becomes fascinated with you until the start of your next turn and can't use reactions against allies in your aura. On a critical success, the enemy becomes fascinated with you until the end of your next turn."
+ },
+ {
+  "id": "gentle-death-and-rebirth",
+  "name": "Gentle Death and Rebirth",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "occult",
+   "yaoguai"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You were once born from the energies of the land and nature, and by their power, you can return to life again. Once per year, when you die, your remains become protected as if under the effects of a 5th-rank Peaceful Rest spell. If your remains are brought and buried within 1 mile of where you were born, after a week, you return to life with the effects of a successful (but not critically successful) 9th-rank Resurrect ritual."
+ },
+ {
+  "id": "get-behind-me",
+  "name": "Get Behind Me!",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [
+   "Intercept Attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When saving your allies from harm, you push them behind you to better protect them. When you use Intercept Attack to protect an ally, you can move that ally up to 10 feet if they're willing. You can't move the ally to a position outside your reach, you can't move them into or through obstacles, and you must move them farther away from the source of the attack if possible. This movement doesn't trigger reactions."
+ },
+ {
+  "id": "get-used-to-disappointment",
+  "name": "Get Used to Disappointment",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "bravado",
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "expert in Intimidation"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** Your turn begins, and one target within 30 feet failed an attack roll or skill check against you on its last turn. --- You capitalize on an opponent's failure with smug attitude and swagger, reminding them of the gap in skill between you and your opponent. You attempt to demoralize traits=bravado the opponent. Regardless of the result, the target becomes temporarily immune for 1 minute."
+ },
+ {
+  "id": "ghost-eater-dedication",
+  "name": "Ghost Eater Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in Occultism or Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have trained as a ghost eater, a hunter specialized in the destruction of spirits. You know how to channel your own spiritual energy to harm spirits. Your weapon and unarmed attack Strikes become magical. Against incorporeal creatures, they also gain the effects of a Ghost Touch property rune."
+ },
+ {
+  "id": "ghost-hunter",
+  "name": "Ghost Hunter",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "duskwalker"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to the Boneyard ensures that your blows strike true against spectral beings. Your weapon and unarmed Strikes against incorporeal creatures become magical. If they are already magical, they instead gain the effects of a *ghost touch* property rune."
+ }
+]

@@ -1,0 +1,987 @@
+[
+ {
+  "id": "grippli-weapon-innovator",
+  "name": "Grippli Weapon Innovator",
+  "level": 5,
+  "category": "general",
+  "traits": [
+   "grippli"
+  ],
+  "prerequisites": [],
+  "text": "Grippli Weapon Innovator Source The Mwangi Expanse pg. 120 Prerequisites Grippli Weapon Familiarity You've learned devious ways to make the most of your grippli weapons. Whenever you critically hit using a blowgun, hatchet, scythe, shortbow, composite shortbow, or grippli weapon, you apply the weapon's critical specialization effect."
+ },
+ {
+  "id": "group-aid",
+  "name": "Group Aid",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "human"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your upbringing emphasized teamwork, and helping your allies comes naturally to you. After you Aid an ally at a skill check that doesn't have the attack trait, you can also Aid any other ally who attempts the same skill check for the same purpose that round. You do so as a free action rather than a reaction. The preparation you did to help must still apply to the other allies, and you can Aid each ally only once. For example, if you helped lift up an ally to Aid them on an Athletics check to scale a wall, you could keep the same posture to give a boost to other allies attempting to scale the wall in the same round."
+ },
+ {
+  "id": "grovel",
+  "name": "Grovel",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "auditory",
+   "concentrate",
+   "emotion",
+   "kobold",
+   "mental"
+  ],
+  "prerequisites": [
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You convince your foe you're less of a threat. You attempt to Feint against a creature. Unlike a normal Feint, the creature can be within 30 feet instead of in your melee reach, and you make your check against its Will DC instead of its Perception DC."
+ },
+ {
+  "id": "grow-tool",
+  "name": "Grow Tool",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "plant",
+   "primal"
+  ],
+  "prerequisites": [
+   "ardande trait, plant trait, or wood trait"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You grow a simple tool from your own body, coaxing flowers, vines, roots, and wood to grow and sprout from your flesh into the desired shape. You create a one level 0 common simple tool with no intricate parts or written text, such as a crowbar, rope, or shovel. You can't replicate a tool kit or weapon with this ability. This item lasts for 1 minute, or until you create another tool with this ability, whichever comes first. When duration runs out, the item crumbles to mulch. --- **Special** This feat gains the trait for your ancestry."
+ },
+ {
+  "id": "growth-spell",
+  "name": "Growth Spell",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "spellshape",
+   "wood"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication",
+   "wood is in your elemental philosophy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You enhance your spell with elemental wood, causing your magic to expand and grow beyond its original limitations. If the next action you use this turn is to Cast a non-cantrip Spell that affects an area, expand the area of the spell. For bursts, expand the radius by 5 feet; for cones, expand the cone by 10 feet; and for lines, expand the length by 15 feet. The spell gains the wood trait."
+ },
+ {
+  "id": "guarded-advance",
+  "name": "Guarded Advance",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You slowly advance on the battlefield, taking utmost caution. You Raise a Shield and Step twice, in any order."
+ },
+ {
+  "id": "guarded-advance-guardian",
+  "name": "Guarded Advance (Guardian)",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Guarded Advance (Guardian) Source Battlecry! pg. 43 You slowly advance on the battlefield, taking utmost caution. You Raise a Shield and Step twice, in any order."
+ },
+ {
+  "id": "guarded-advance-knight-vigilant",
+  "name": "Guarded Advance (Knight Vigilant)",
+  "level": 12,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Guarded Advance (Knight Vigilant) Source Knights of Lastwall pg. 75 Archetype Knight Vigilant Prerequisites Knight Vigilant You slowly advance on the battlefield, taking utmost caution. You either Step and Raise a Shield or Raise a Shield and Step."
+ },
+ {
+  "id": "guarded-advance-knight-vigilante",
+  "name": "Guarded Advance (Knight Vigilante)",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You slowly advance on the battlefield, taking utmost caution. You either Step and Raise a Shield or Raise a Shield and Step."
+ },
+ {
+  "id": "guarded-thoughts",
+  "name": "Guarded Thoughts",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "nagaji"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mind, like a dark naga's, foils attempts to read your thoughts. Any effect that specifically attempts to read your mind to glean information must succeed at a counteract check against the higher of your class DC or your spell DC to do so successfully; otherwise, it gains no information. The counteract rank is equal to half your level rounded up."
+ },
+ {
+  "id": "guardian-ghosts",
+  "name": "Guardian Ghosts",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine"
+  ],
+  "prerequisites": [
+   "Undead Master Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** You would take damage from a Strike while one of your undead companions is adjacent to you. --- You magically divert some of the harm from an incoming attack away from yourself, forcing your undead companion to take it in your stead. Reduce the damage you take from the triggering Strike by 2 + your level. Your adjacent undead companion loses a number of Hit Points equal to the amount of damage reduced. If you have more than one adjacent undead companion, you choose which one loses Hit Points. You can't divert the damage to a temporary fragment from Their Master's Call."
+ },
+ {
+  "id": "guardian-lion-roar",
+  "name": "Guardian Lion Roar",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "inventor",
+   "sonic"
+  ],
+  "prerequisites": [
+   "armor, construct, or weapon innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your innovation is augmented with plates shaped to resemble the gaping maws of guardian lions, which you can energize to expel a stream of sonic energy reminiscent of a lion's powerful roar. All creatures in a from your innovation take damage with a against your class DC. Creatures that fail this save become off-guard for 1 round. The damage from this effect increases by 1d8 at 10th level and every 2 levels thereafter. **Unstable Function** You press concealed switches in the guardian lions' plates, extending their reach and power. Add the unstable trait to Guardian Lion Roar. The range of your roar increases to a . Creatures that succeed (but not critically succeed) at their save also become off-guard for 1 round. On a critical failure when attempting the flat check for this unstable action, you take sonic damage equal to your level instead of fire damage. --- **Special** If your innovation is a minion, it can take this action rather than you."
+ },
+ {
+  "id": "guardian-resiliency",
+  "name": "Guardian Resiliency",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Guardian Dedication",
+   "class granting no more Hit Points per level than 10 + your Constitution modifier"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain 3 additional Hit Points for each guardian archetype class feat you have. As you continue selecting guardian archetype class feats, you continue to gain additional Hit Points in this way."
+ },
+ {
+  "id": "guardians-intercept",
+  "name": "Guardian's Intercept",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Guardian Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use the Intercept Attack reaction once per 10 minutes."
+ },
+ {
+  "id": "guards-fury",
+  "name": "Guard's Fury",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ulfen Guard Dedication",
+   "you can't already use the Rage action"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Some Ulfen Guards tap into a well of fury to protect their charges. You can use the Rage action. While raging, you take a –1 penalty to AC. If you're adjacent to your designated ally while raging, increase the additional damage from Rage from 2 to 4."
+ },
+ {
+  "id": "guerrilla-weaponry",
+  "name": "Guerrilla Weaponry",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Guerrilla Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are especially skilled in transforming simple weapons that can be easily assembled from readily available materials into deadly weapons. In your hands, a blowgun's base damage increases from 1 to a 1d4 damage die, and it gains the deadly d4 trait. In addition, you gain the Guerrilla Assault action."
+ },
+ {
+  "id": "guided-hover",
+  "name": "Guided Hover",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wing Rider"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your turn ends. **Requirements** Your airborne dragon mount has not used the Fly action this turn. --- You guide your draconic companion, whose outstretched wings fill with unseen thermals. Your mount hovers without needing to use a Fly action to stay in place."
+ },
+ {
+  "id": "guiding-finish",
+  "name": "Guiding Finish",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a single one-handed melee weapon and hold nothing else in your hands. --- Using your weapon as a lever, you force your opponent to end up right where you want them. Make a Strike with a one-handed melee weapon. If the Strike hits, you can Reposition the target up to 10 feet. You can move the target through your space during this movement. Your Strike gains the following failure effect. **Failure** You can force the creature to move as you would on a success, but you can move the target only 5 feet."
+ },
+ {
+  "id": "guiding-luck",
+  "name": "Guiding Luck",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [
+   "Halfling Luck"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your luck guides you to look the right way and aim your blows unerringly. You can use Halfling Luck twice per day: once in response to its normal trigger, and once when you fail a Perception check or attack roll instead of the normal trigger."
+ },
+ {
+  "id": "guiding-riposte",
+  "name": "Guiding Riposte",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Dueling Riposte"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By shifting your weight and angling your weapon, you guide your opponent to a more favorable position. When you use Dueling Riposte to Strike and you hit, you can Reposition up to 10 feet."
+ },
+ {
+  "id": "gusting-spell",
+  "name": "Gusting Spell",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "air",
+   "archetype",
+   "manipulate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You manipulate the currents of your spell's energy, allowing you to gracefully glide with your wings. If the next action you use is to Cast a Spell with the air or electricity trait, you can Fly up to 10 feet before or after the spell is cast."
+ },
+ {
+  "id": "hail-of-splinters",
+  "name": "Hail of Splinters",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "A fusillade of jagged splinters flies from you. Creatures in a take damage with a save against your class DC. --- **Level (+2)** Each type of damage increases by 1d4."
+ },
+ {
+  "id": "hair-trigger",
+  "name": "Hair Trigger",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "initial deed that allows you to Interact to draw a weapon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "No one can react faster than you can pull your trigger. When using your initial deed, instead of Interacting to draw a weapon, you can Strike with a firearm or crossbow you're already wielding. If this Strike hits, the target is also off-guard until the end of your first turn of the encounter. --- **Special** If your initial deed allows you to Interact to draw a weapon more than once, this feat allows you to replace one of these Interact actions and use the other one to draw a weapon. You can't replace both Interact actions with Strikes, but you can draw a loaded firearm or crossbow with one of the actions and immediately shoot it with the other."
+ },
+ {
+  "id": "half-truths",
+  "name": "Half-Truths",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Deception and Diplomacy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are able to weave your words in such a way that you never use actual lies, but still mislead people to certain conclusions. You can attempt to make a Request of a creature using Deception instead of Diplomacy. You can attempt to Lie to a creature using Diplomacy instead of Deception. If you fail your check to Lie, the creature realizes that you were twisting words to fool them without outright lying."
+ },
+ {
+  "id": "hallucinogenic-ink",
+  "name": "Hallucinogenic Ink",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "merfolk"
+  ],
+  "prerequisites": [],
+  "text": "Hallucinogenic Ink Source High Seas pg. 20 Prerequisites Spray Ink; Cecaelia Merfolk heritage Your defensive ink spray has developed the capacity to cause haunting hallucinations. A creature sprayed with your ink must attempt a Will saving throw against either your class DC or spell DC, whichever is higher. On a failure, the creature also becomes frightened 1 (frightened 2 on a critical failure)."
+ },
+ {
+  "id": "halo",
+  "name": "Halo",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a halo of light and goodness that sheds light with the effects of a divine Light cantrip. A cantrip is heightened to a spell rank equal to half your level rounded up. You can Sustain to suppress or reestablish the halo."
+ },
+ {
+  "id": "halyard-strike",
+  "name": "Halyard Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish",
+   "gunslinger",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Halyard Strike Source High Seas pg. 93 Access You're from the Shackles Requirements A rope is within your reach, or you have a rope or grappling weapon in your hand. You’ve learned to fight confidently while swinging from a line. You take hold of a nearby rope, throw a rope from your hand, or fire a grappling weapon at a solid surface, and then swing up to twice your Speed. You can make a Strike using a one-handed weapon or unarmed attack at any point during this movement. If you critically fail on this Strike, your movement ends at the point you attempted the Strike. Special If you have Pirate Dedication and you boarded or disembarked from a boat or similar vehicle during this movement, the Strike deals one additional weapon damage die."
+ },
+ {
+  "id": "hammer-quake",
+  "name": "Hammer Quake",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Mauler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You're wielding a non-finesse melee weapon in two hands. --- You smash the ground with your weapon, knocking nearby creatures to the ground. Choose a square within your reach, including your own space. If there's an enemy in the chosen square, you can Strike that enemy with your two-handed weapon. Regardless of whether you attempted a Strike, you then attempt to Trip every enemy in the chosen square plus each square adjacent to that square, ignoring Trip's requirement that you have a hand free. Hammer Quake counts as three attacks toward your multiple attack penalty, but the penalty doesn't increase until after you've made the Strike, if any, and all the Trip attempts."
+ },
+ {
+  "id": "hand-of-the-lich",
+  "name": "Hand of the Lich",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lich Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Void energy intensifies your undead form and makes your very touch the antithesis of life. You gain the Advanced Undead Benefits The damage die for your fist increases to 1d6 instead of 1d4, it deals void damage instead of bludgeoning damage, and it loses the nonlethal trait. Your fist becomes magical. When you critically hit a living creature with your fist Strike, the creature is Slowed 1 until the end of your next turn unless it succeeds at a save against your spell DC. This is a critical specialization effect."
+ },
+ {
+  "id": "hands-that-unweave-disaster",
+  "name": "Hands that Unweave Disaster",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Thief's Calling"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your hands move with uncanny sureness, dismantling danger. When you attempt an Acrobatics check to Grab an Edge, you can spend a Mythic Point to attempt the check at mythic proficiency. You can expend a Mythic Point when attempting to Disable a Device to attempt the check at mythic proficiency. As normal when attempting a check with mythic proficiency, this allows you to attempt to Disable a Device even if the check normally requires expert or greater proficiency."
+ },
+ {
+  "id": "haphazard-repair",
+  "name": "Haphazard Repair",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "unstable"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You quickly fix your innovation, at the cost of its stability. You Repair your innovation almost immediately. You don't have to place the innovation on a flat surface, but you do need to be adjacent to it (including holding or wearing it), as well as having a repair kit as normal."
+ },
+ {
+  "id": "hardwood-armor",
+  "name": "Hardwood Armor",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Wood and bark grow over your body like armor. This hardwood armor is medium armor but uses your highest armor proficiency. The wooden armor's statistics are: AC Bonus +3; Dex Cap +2; Check Penalty –2; Speed Penalty –5 feet; Strength +2; Bulk 1; Group wood TV. Any bonuses, runes, and magical abilities of your actual armor are suppressed, but any runes that could apply to the hardwood armor are replicated onto it. When you use this impulse, you can also create a wooden shield in a free hand. You can Shield Block with this shield even if you don't have that feat. The hand wielding this shield counts as a free hand for using impulses. The shield decays in an instant if it becomes broken or leaves your grasp. The armor lasts for 10 minutes, and you can Dismiss this impulse. If you use this impulse again, any existing one ends. --- **Level (+3)** The shield's Hardness increases by 1, its HP by 4, and its BT by 2."
+ },
+ {
+  "id": "harming-hands",
+  "name": "Harming Hands",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "harmful font"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The mordant power of your void energy grows. When you cast Harm, you roll d10s instead of d8s."
+ },
+ {
+  "id": "harmonize",
+  "name": "Harmonize",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "bard",
+   "concentrate",
+   "manipulate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "maestro muse"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can perform multiple compositions simultaneously, typically by performing in multiple ways at the same time, using special vocal techniques to double your voice, or creating occult magic that replicates your song or speech. If your next action is to cast a composition, it becomes a harmonized composition. Unlike a normal composition, a harmonized composition doesn't end if you cast another composition, and you can cast another composition on the same turn as a harmonized one. Casting another harmonized composition ends any harmonized composition you already have in effect."
+ },
+ {
+  "id": "harrying-strike",
+  "name": "Harrying Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "attack",
+   "press"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your attack prevents a foe from pursuing your allies. Make a melee Strike, adding the following effects in addition to the normal effects of the Strike. --- **Critical Success** The target takes a –15-foot status penalty to its Speeds until the start of your next turn. **Success** The target takes a –10-foot status penalty to its Speeds until the start of your next turn. **Failure** The target takes a –5-foot status penalty to its Speeds until the start of your next turn."
+ },
+ {
+  "id": "haughty-obstinacy",
+  "name": "Haughty Obstinacy",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "human"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your powerful ego makes it harder for others to order you around. If you roll a success on a saving throw against a mental effect that attempts to directly control your actions, you critically succeed instead. If a creature rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (so it can't try to Coerce you again for 1 week)."
+ },
+ {
+  "id": "haunt-ingenuity",
+  "name": "Haunt Ingenuity",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "detection",
+   "divine",
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your cunning knowledge grants you the ability to notice the emotional echo of a soul that passed on, leaving a haunt in its wake. Even when you aren't Searching while in exploration mode, the GM rolls a secret check for you to notice haunts that usually require you to be Searching. You can disable haunts that require master proficiency in a skill as long as you're at least trained in the skill. If you have master proficiency in the skill, you can disable haunts that require a proficiency rank of legendary instead."
+ },
+ {
+  "id": "head-of-the-night-parade",
+  "name": "Head of the Night Parade",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You remember the revelry of the Night Parade and call them to your aid in a riotous display. You Perform and cast 8th-rank Mad Monkeys three times, except that the spell calls various apparitions such as dancing tsukumogami or drinking oni rather than monkeys. Each casting can produce a different kind of mischief. You can Sustain all three Spells each round using a single Perform action."
+ },
+ {
+  "id": "head-stomp",
+  "name": "Head Stomp",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Make an unarmed melee Strike against a prone target. If it hits, until the end of your next turn the target is Stupefied 1 (or Stupefied 2 on a critical hit) and off-guard."
+ },
+ {
+  "id": "headless-haunt",
+  "name": "Headless Haunt",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghost Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** You were executed with a Final Blade. --- You were condemned to death and executed with one of Galt's infamous *final blades*, where your soul was trapped for years or even decades. You might have been released alongside a host of other spirits when your prison was destroyed after the Night of the Gray Death, or powerful magic or other unique circumstances might have facilitated your escape. Whatever the method, you have unfinished business preventing you from passing on to the afterlife. You gain the Remove Head action."
+ },
+ {
+  "id": "heal-mount",
+  "name": "Heal Mount",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Faithful Steed",
+   "lay on hands"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your devotion to your mount manifests as a surge of vital energy. When you cast Lay on Hands on your mount, instead of the normal amount, the spell restores 10 Hit Points, plus 10 for each heightened rank."
+ },
+ {
+  "id": "healing-bomb",
+  "name": "Healing Bomb",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can add a foamy catalyst to an Elixir of Life to turn it into a topical projectile. You can throw the elixir at a creature within 20 feet as an Interact action to heal that creature and those near it. The target is affected as though it drank the elixir, and each living creature adjacent to it regains HP from the bomb equal to the elixir's number of damage dice (3 HP for a lesser elixir of life, for example)."
+ },
+ {
+  "id": "healing-hands",
+  "name": "Healing Hands",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "healing font"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your vitality is even more vibrant and restorative. When you cast Heal, you roll d10s instead of d8s."
+ },
+ {
+  "id": "healing-sanctuary",
+  "name": "Healing Sanctuary",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine"
+  ],
+  "prerequisites": [
+   "Shield the Faithful"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you call upon your deity's power, you also radiate a sense of safety that fortifies your allies. An ally who begins their turn in your Shield the Faithful aura gains 10 temporary Hit Points that last for 1 round."
+ },
+ {
+  "id": "healing-transformation",
+  "name": "Healing Transformation",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "druid",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can take advantage of shapechanging magic to close wounds and patch injuries. If your next action is to cast a non-cantrip polymorph spell that targets only one creature, your polymorph spell also restores 1d6 Hit Points per spell rank to that creature. This is a healing effect."
+ },
+ {
+  "id": "heat-wave",
+  "name": "Heat Wave",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "naari"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An effect would deal fire damage to you, even if you resist all the damage. **Frequency** once per 10 minutes --- You harness the oncoming flames and twist them into a screen of heat and smoke, granting you Concealment until the beginning of your next turn."
+ },
+ {
+  "id": "heatwave",
+  "name": "Heatwave",
+  "level": 5,
+  "category": "general",
+  "traits": [
+   "ifrit"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Heatwave Source Ancestry Guide pg. 103 Frequency once per 10 minutes Trigger An effect would deal fire damage to you, even if you resist all the damage. You harness the oncoming flames and twist them into a screen of heat and smoke, granting you concealment until the beginning of your next turn."
+ },
+ {
+  "id": "heavens-thunder",
+  "name": "Heaven's Thunder",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "electricity",
+   "sonic"
+  ],
+  "prerequisites": [
+   "Jalmeri Heavenseeker Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Until the end of your next turn, your unarmed attacks and any monk weapons you wield deal additional electricity and sonic damage; the amount of each damage type is equal to the number of damage dice for the weapon or unarmed attack. Any creature who successfully Grapples you or is successfully Grappled by you takes this damage immediately after the Grapple check is resolved (using the number of damage dice of your unarmed attack to determine the damage dealt). If you also know the Ki Blast ki spell, you can choose to deal either electricity or sonic damage with the spell instead of force while this effect is active (*ki blast* loses the force trait and gains the electricity or sonic trait instead)."
+ },
+ {
+  "id": "hedge-maze",
+  "name": "Hedge Maze",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "plant",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You sculpt a manicured maze of hedges. Up to 10 hedges spring from the ground where you choose in a 30-foot-square area within 120 feet. Each is 10 feet long, 5 feet wide, and 15 feet tall. The hedges grant standard cover, are difficult terrain, and have a Climb DC of 15. They last until the end of your next turn, and you can Sustain the impulse up to 1 minute. You can spend 10 minutes using this impulse as an exploration activity to instead create a cozy cabin with hedges for walls. It lasts for 12 hours, but ends if you use the impulse again."
+ },
+ {
+  "id": "hefty-hauler",
+  "name": "Hefty Hauler",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can carry more than your frame implies. Increase your maximum and encumbered Bulk limits by 2."
+ },
+ {
+  "id": "heightened-instincts",
+  "name": "Heightened Instincts",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've worked to sharpen your companions' instincts to supernatural levels. When one of your companions rolls a success on a saving throw, it gets a critical success instead."
+ },
+ {
+  "id": "hell-of-1-000-000-needles",
+  "name": "Hell of 1,000,000 Needles",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "The landscape fills with monumental filaments of metal. The needles lance into a cube 30 feet on a side within 500 feet. Each creature in the area takes damage, with a save against your class DC. Each creature that fails its save is impaled, becoming immobilized until it Escapes (the DC is your class DC); a creature that critically failed is also off-guard as long as it's impaled. The hell remains until the end of your next turn, but you can Sustain it up to 1 minute. Using this impulse again ends any previous one. The first time you Sustain it each round, lightning crisscrosses the needles. Each creature in the area takes damage with a save against your class DC. Squares in the area are hazardous terrain. A creature takes damage for every square of the area it moves through. --- **Level (20th)** The initial damage is 17d6, and the hazardous terrain damage is 7."
+ },
+ {
+  "id": "hellknight-errant",
+  "name": "Hellknight-Errant",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellknight Dedication",
+   "you’ve refused to take or have failed the Hellknight Test"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Either through unfortunate circumstances or your own choice, you remain a Hellknight armiger instead of entering the true ranks of your order, though you still believe in the tenets of law and order. You likely take on an adventuring life with a group of like-minded individuals who aren't Hellknights. The resistance to mental damage you gained from the Hellknight Dedication feat increases to 5 + your number of archetype class feats from the Hellknight archetype. You also gain the Warding Shift action, which allows you to keep your allies from harm. --- **Special** You can't take both this feat and Hellknight Preferment or Hellknight Signifer Preferment."
+ },
+ {
+  "id": "hellknight-mobility",
+  "name": "Hellknight Mobility",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellknight Dedication",
+   "expert in Hellknight half plate or Hellknight plate"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how best to move in your heavy armor. When wearing heavy armor, if you meet the Strength requirement, instead of reducing the movement penalty by 5 feet, you reduce the penalty by 10 feet (typically reducing the penalty to 0). If you're a dwarf with the Unburdened Iron feat, increase your Speed by 5 feet."
+ },
+ {
+  "id": "hells-armaments",
+  "name": "Hell's Armaments",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellknight Preferment",
+   "expert in at least one of your order's favored weapons"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained relentlessly with your order's weapon to maximize their deadliness. When you get a critical success on a Strike with one of your order's favored weapons, the target must attempt a save against your class DC. If you have access to that weapon's critical specialization effect, you must choose whether to use that effect or this one. --- **Critical Success** The target is unaffected. **Success** The target takes a –10-foot circumstance penalty to its Speeds until the end of your next turn. **Failure** As success, and the target is Slowed 1 until the end of your next turn. **Critical Failure** As success, and the target is Slowed 2 until the end of your next turn."
+ },
+ {
+  "id": "herbal-forager",
+  "name": "Herbal Forager",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "centaur"
+  ],
+  "prerequisites": [
+   "Skilled Herbalist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your skill with herbs has improved. Each day as part of your daily preparations, you can harvest ingredients from your surroundings to craft one temporary alchemical item you know the formula for. This alchemical item must have the healing trait. If not consumed by your next daily preparations, the item is rendered inert."
+ },
+ {
+  "id": "heroic-weakness",
+  "name": "Heroic Weakness",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Godling Dedication",
+   "hero-god accomplishment"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As word of your faith spreads, so too does word of your foibles and weaknesses. Where originally these disadvantages may have been myths themselves, or simply manifestations of ill fortune or chance, when you take this feat, one of those weaknesses becomes real. Work with your GM to choose your heroic weakness—it must be to a specific damage type and must be associated with a specific condition, both of which must be elements that are going to be significant parts of your story's future. For example, you could choose for a weakness to be spirit damage caused to you by a follower of a rival god, physical damage from a specific category of weapon, void damage caused by a specific kind of undead, or fire damage taken in a certain part of the world or from creatures from that part of the world. The amount of weakness you gain to this damage is equal to twice your level. But with this new weakness comes a new source of power, for when your foes would take advantage of your weakness, you can use the pain and humiliation to bolster your own resolve. You gain the Makes Me Stronger reaction."
+ },
+ {
+  "id": "hex-focus",
+  "name": "Hex Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your patron's teachings have allowed you to achieve a deeper focus. Whenever you Refocus, completely refill your focus pool."
+ },
+ {
+  "id": "hey-over-here",
+  "name": "Hey! Over Here!",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory"
+  ],
+  "prerequisites": [
+   "Venture-Gossip Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within 30 feet rolls a saving throw against an auditory effect. --- Hey! Don't listen to that! That's bad sounds! Listen to me! Would you like to hear about how the high priest of the Abadaran church in Absalom's Petals District is having an affair with an Urgathoan cleric? Yeah, I'm thinking about calling the article \"Boney Money!\" Your targeted ally treats the result of their saving throw as one degree of success better. Once an ally has been targeted by this effect, they're immune for 24 hours."
+ },
+ {
+  "id": "hidden-hoard",
+  "name": "Hidden Hoard",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Draconic Acolyte Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your *draconic gift* is the key to a repository of treasure that only you can access. You create an extradimensional space that can hold up to 100 Bulk worth of objects. The space functions as a spacious pouch, but has no Bulk, and can be Interacted with using only one hand by touching your draconic gift. You can normally store and retrieve items that could fit through the opening of a bag (as spacious pouch). However, you can store an unattended item larger than would normally fit (but no larger than 10 Bulk) by spending 1 minute concentrating on your *draconic gift* as you press it against the object. Retrieving it takes 1 minute and causes the item to appear in the closest unoccupied space."
+ }
+]

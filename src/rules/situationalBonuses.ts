@@ -2757,6 +2757,36 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "ursine-avenger-hood": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Command an Animal (+2 if the animal is a bear)", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Gather Information or Make an Impression after 5+ days in a city, no wilderness", bonus: "-1 item (penalty)" }],
   "verdant-staff-greater": [{ targets: [{ kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'lore:*' }], when: "to identify plants and fungi, while wielding the staff", bonus: "+2 circumstance" }],
   "whirling-throw": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on the Whirling Throw check, by the target's size relative to yours", bonus: "+2 circumstance one size smaller, +4 if smaller than that; -2 one size larger, -4 if larger than that" }],
+
+  // ---- full feat audit (scripts/apply-feat-audit.mjs) — every never-examined feat — do not hand-edit below ----
+  // 27 feats. Selected by what the record HAS, not by whether its text matched a pattern.
+  "abjure-the-false-kin": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a saving throw against a mental effect that doesn't deal damage", bonus: "a success becomes a critical success" }],
+  "agent-of-all-holds": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'performance' }], when: "when you critically fail a Diplomacy, Intimidation, or Performance check", bonus: "critical failure becomes a failure (against a creature with the orc trait you may instead reroll as a fortune effect, still treating a critical failure as a failure)" }],
+  "angel-of-vindication": [{ targets: [{ kind: 'strikeDamage' }], when: "backstabber weapon vs an off-guard undead (+4 if the weapon is a +3 weapon)", bonus: "+2 precision" }],
+  "assured-identification": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'occultism' }, { kind: 'skill', detail: 'religion' }], when: "when you Identify Magic", bonus: "critical failure becomes a failure; you never misidentify a cursed item" }],
+  "athletic-might": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on Athletics checks to Climb or Swim", bonus: "a success becomes a critical success" }],
+  "athletic-strategist": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "Disarm/Grapple/Reposition/Shove/Trip via a Devise a Stratagem substitution", bonus: "substitute the stratagem roll and use Int instead of Str for the check" }],
+  "avoid-fates-gaze": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against a scrying spell or effect", bonus: "roll at mythic proficiency" }],
+  "become-shadow": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "when you spend a Mythic Point to Hide, Sneak, or roll Stealth for initiative", bonus: "roll at mythic proficiency, and you become concealed" }],
+  "between-the-scales": [{ targets: [{ kind: 'strikeDamage' }], when: "vs an off-guard foe, with an agile+finesse melee or unarmed attack", bonus: "+1 (backstabber; +2 with a greater striking rune)" }],
+  "binds-that-tie": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "when you spend a Mythic Point to Grapple a foe an ally already grabbed", bonus: "roll at mythic proficiency (on a success, +2x Str mod bludgeoning damage)" }],
+  "blessed-medicine": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "you fail a check to Treat a Disease inflicted by an undead", bonus: "fortune: reroll and use the new result" }],
+  "brine-may": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on an Athletics check to Swim", bonus: "a success is a critical success instead; and you don't sink if you end your turn in water without having succeeded at a Swim that round" }],
+  "brutal-critical": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit with a melee Strike", bonus: "one extra weapon damage die (in addition to deadly or fatal), plus persistent bleed equal to two damage dice" }],
+  "cantorian-reinforcement": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a saving throw against a disease or poison", bonus: "a success is a critical success instead (and, if you also have Battle Hardened or a similar ability, a critical failure is a failure instead)" }],
+  "castigating-weapon": [{ targets: [{ kind: 'strikeDamage' }], when: "until the end of your turn after you deal spirit damage with Divine Castigation", bonus: "extra spirit damage equal to the rank of the harm or heal you dealt it with, and your weapon and unarmed Strikes gain your holy or unholy trait" }],
+  "ceremony-of-strengthened-hand": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit with your claws unarmed attack, if you have one (it gains deadly d8)", bonus: "+1d8" }, { targets: [{ kind: 'strikeAttack' }], when: "with your branch unarmed attack, if you have one", bonus: "it gains the shove and trip traits" }],
+  "cindersoul": [{ targets: [{ kind: 'hp' }], when: "on the flat check to recover from persistent acid, bleed, or poison damage", bonus: "DC 10 instead of 15 (DC 5 with particularly effective assistance)" }],
+  "coating-of-slime": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit with an unarmed attack", bonus: "1d4 persistent acid" }],
+  "combination-finisher": [{ targets: [{ kind: 'strikeAttack' }], when: "on the Strike of one of your finishers", bonus: "multiple attack penalty is -4 (-3 with an agile weapon) on your second attack and -8 (-6 agile) on your third or later, instead of -5/-10" }],
+  "compliant-gold": [{ targets: [{ kind: 'strikeAttack' }], when: "while your divine spark is in this ikon (immanence active), with the imbued melee weapon", bonus: "the weapon gains the reach trait - or, if it already had reach, your reach with it increases by an additional 10 feet instead of the usual 5" }],
+  "construct-shell": [{ targets: [{ kind: 'ac' }], when: "while mounted on your construct innovation (lesser cover from all attacks)", bonus: "+1 circumstance" }],
+  "crossbow-crack-shot": [{ targets: [{ kind: 'strikeDamage' }], when: "on your next Strike after the first time each round you Interact to reload a wielded cross", bonus: "+1 precision damage per weapon damage die" }, { targets: [{ kind: 'strikeAttack' }], when: "on that same Strike, the crossbow's range increment is 10 feet longer", bonus: "+10 ft range increment" }, { targets: [{ kind: 'strikeDamage' }], when: "on that Strike vs an off-guard target if the crossbow has backstabber (replaces backstabbe", bonus: "+2 precision damage per weapon damage die" }],
+  "disillusionment": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against an illusion or dream effect", bonus: "success is a critical success; critical failure is a failure" }, { targets: [{ kind: 'perception' }], when: "to disbelieve an illusion", bonus: "success is a critical success; critical failure is a failure" }],
+  "distant-archer": [{ targets: [{ kind: 'strikeAttack' }], when: "with bow-group weapons beyond your first range increment (penalty reduction, min 0)", bonus: "+1 untyped" }],
+  "eliminate-red-herrings": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge about one of your active investigations", bonus: "critical failure becomes a failure" }],
+  "emerald-boughs-accustomation": [{ targets: [{ kind: 'skill', detail: 'society' }], when: "to Subsist", bonus: "critical failure becomes a failure; success becomes a critical success" }, { targets: [{ kind: 'skill', detail: 'society' }], when: "to Subsist, on a critical success", bonus: "you provide for one additional creature" }, { targets: [{ kind: 'skill', detail: 'society' }], when: "to Recall Knowledge about cultural practices", bonus: "critical failure becomes a failure" }],
+  "empathy-incarnate": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression or Request", bonus: "+2 (the check's DC is reduced by 2)" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression or Request vs a lower-level creature", bonus: "any success becomes a critical success" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Gather Information", bonus: "you can't critically fail" }],
 };
 
 /** A StatRef, loosened so callers outside explain.ts can pass a plain object. */
@@ -2896,6 +2926,10 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
 "black-powder-boost": [{ on: 'action', id: 'leap', value: "+10 feet", note: "Discharging a loaded firearm as you Leap adds a +10-foot status bonus to the distance…" }],
   "elemental-blast": [{ on: 'action', id: 'elemental-blast', value: "2 actions: +Con to damage", note: "Spending 2 actions adds a status bonus to the blast's damage equal to your Constitution…" }],
   "face-your-fears": [{ on: 'condition', id: 'frightened', value: "-1", note: "Once per hour you can reduce your frightened value by 1…" }],
+  // The feat audit's adversary identified this lane but would not author into a key it had not been
+  // handed, so it is written here. Only the PLAYER half is modelled — the aura also steps each ally's
+  // frightened value down at the end of your turn, and an ally's conditions are not this sheet.
+  "aura-of-courage": [{ on: 'condition', id: 'frightened', value: "-1", note: "Whenever you become frightened, reduce the value by 1 (minimum 0). Allies in your champion's aura also step theirs down at the end of your turn." }],
   "magic-hands": [{ on: 'action', id: 'treat-wounds', value: "d10", note: "On a success you roll d10s instead of d8s and add a status bonus to the healing equal to…" }],
   "reach-for-the-stars": [{ on: 'action', id: 'leap', value: "up to +50 feet", note: "Only when using Black Powder Boost: each extra dose of black powder or piece of…" }],
   "the-survivor": [{ on: 'condition', id: 'dying', value: "+2 (+3 at 17th)", note: "While invested: +2 item bonus to recovery checks if you already have Diehard…" }],
@@ -2912,6 +2946,14 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   "the-fool": [{ on: 'condition', id: 'stupefied', value: "-1", note: "While The Fool is invested, any stupefied condition you gain has its value reduced by 1." }],
   "vicious-vengeance": [{ on: 'action', id: 'destructive-vengeance', value: "+ its number of damage dice", note: "Vicious Vengeance: the ENEMY takes a circumstance bonus to the damage equal to the…" }],
   "wand": [{ on: 'action', id: 'fling-magic', value: "+your level status to damage", note: "Wand implement, Intensify Vulnerability: Fling Magic against the target of your Exploit…" }],
+
+  // ---- full feat audit — action/condition marks ----
+  // 5 feats that change an ACTION or a CONDITION rather than a stat.
+  'dancing-leaf': [{"on":"action","id":"leap","value":"+5 feet","note":"You jump 5 feet farther when you Leap."},{"on":"action","id":"high-jump","value":"+5 feet","note":"A successful High Jump carries you 5 feet farther."},{"on":"action","id":"long-jump","value":"+5 feet","note":"A successful Long Jump carries you 5 feet farther. When calculating falling damage, don't count any distance fallen while you are adjacent to a wall."}],
+  'defy-death': [{"on":"condition","id":"dying","value":"DC 9 + dying (8 with Toughness)","note":"The DC of your recovery checks is 9 + your dying value, or 8 + your dying value if you have the Toughness general feat. Magic that returns you to life never leaves you debilitated for a week."}],
+  'dwarven-doughtiness': [{"on":"condition","id":"frightened","value":"-2 per turn","note":"At the end of your turn, reduce your frightened condition by 2 instead of 1."}],
+  'eagle-eyes': [{"on":"condition","id":"off-guard","note":"While you and your Sniping Duo partner can see or hear each other, neither of you is off-guard to hidden, undetected, or flanking creatures of your level or lower, or to their surprise attacks (they can still help allies flank)."}],
+  'eclipsed-vitality': [{"on":"action","id":"hide","note":"You're always taking precautions to foil lifesense when you Hide, and you're concealed to any creature using only precise lifesense to observe you."},{"on":"action","id":"sneak","note":"You're always taking precautions to foil lifesense when you Sneak."},{"on":"action","id":"avoid-notice","note":"You're always taking precautions to foil lifesense when Avoiding Notice."}],
 };
 
 /**

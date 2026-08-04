@@ -1,0 +1,943 @@
+[
+ {
+  "id": "sly-disarm",
+  "name": "Sly Disarm",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can Disarm a creature through sleight of hand rather than brute force. You can use Thievery instead of Athletics when you attempt a Disarm. When you use Thievery to attempt a Disarm and succeed, the target is off-guard against the next attack you make before the end of your turn."
+ },
+ {
+  "id": "sly-striker",
+  "name": "Sly Striker",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "sneak attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your attacks deal more damage, even against creatures that aren't off-guard. When you succeed or critically succeed at a Strike against a creature that isn't off-guard, you also deal 1d6 precision damage. This applies only if you're using a weapon or unarmed attack you could deal sneak attack damage with. At 14th level, if you would normally deal 3d6 or more sneak attack damage to off-guard creatures, you deal 2d6 precision damage to creatures that aren't off-guard."
+ },
+ {
+  "id": "small-speak",
+  "name": "Small Speak",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "surki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You understand the languages of most small insects and can speak to them. You can ask questions of, receive answers from, and use the Diplomacy skill with insects, arthropods, and terrestrial invertebrates. The GM determines which creatures count for this ability."
+ },
+ {
+  "id": "smash-from-the-air",
+  "name": "Smash from the Air",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Cut From the Air"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your expertise enables you to knock away spells. You can use Cut From the Air against ranged spell attacks."
+ },
+ {
+  "id": "smoke-bomb",
+  "name": "Smoke Bomb",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can add a tarry additive to an alchemical bomb to make it emit smoke. When thrown, in addition to its normal effects, the bomb creates a cloud of smoke in a . You choose which corner of the target's space (or the space in which the bomb lands) the cloud is centered on. Creatures within that area have the concealed condition, and all other creatures are concealed to them. The smoke lasts for 1 minute or until dissipated by a strong wind."
+ },
+ {
+  "id": "smoke-curtain",
+  "name": "Smoke Curtain",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a loaded firearm and are wearing or holding a dose of black powder. --- You load an extra dose of powder into your shot, causing it to belch a cloud of smoke. You make a Strike with your firearm and create a cloud of smoke in a centered on your location. Creatures are concealed while within the smoke, and creatures outside the area are concealed to creatures within the smoke. The smoke dissipates at the start of your next turn. If your Strike is a critical failure, your firearm misfires."
+ },
+ {
+  "id": "smoke-sight",
+  "name": "Smoke Sight",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** You are from Dongun Hold or Alkenstar. --- You're used to fighting and hiding in a haze of smoke and flame. You automatically succeed at the to target a concealed creature if that creature is concealed only by smoke. When you are concealed or hidden in smoke, increase the DC of the flat check to target you to 6 if you're concealed or 12 if you're hidden."
+ },
+ {
+  "id": "smoke-through-bamboo",
+  "name": "Smoke Through Bamboo",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "sarangay"
+  ],
+  "prerequisites": [
+   "new moon sarangay"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've spent significant time slipping silently between bamboo thickets, and your light-footedness allows you to navigate even the thickest forests and brush with ease. When you Step, you can move 10 feet instead of 5. This enables you to Step into and within difficult terrain as long as you can meet the extra movement cost."
+ },
+ {
+  "id": "smokesoul",
+  "name": "Smokesoul",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lineage",
+   "sylph"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a connection to smoke and haze. You gain the Smoke Blending reaction."
+ },
+ {
+  "id": "smoldering-explosion",
+  "name": "Smoldering Explosion",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast fireball"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Fireball heightened to at least 4th rank, you can modify the spell to add the following to its standard effects: Your fireball leaves behind a brief cloud of smoke in its area. While it's smoke instead of mist, this cloud otherwise has the effects of Mist, except that it lasts only 1 round."
+ },
+ {
+  "id": "smooth-hover",
+  "name": "Smooth Hover",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You're airborne at the end of your turn. --- You remain airborne through sheer effort. You don't fall, even if you didn't use Fly or a similar action this turn."
+ },
+ {
+  "id": "smoothing-stomp",
+  "name": "Smoothing Stomp",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "jotunborn",
+   "manipulate",
+   "occult"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You stomp and unleash a wave of the magic of creation in a that transforms non-magical difficult terrain and greater difficult terrain into normal terrain. This terrain transformation remains in place for 1 minute, after which the terrain returns to its original state. Your stomp can also counteract magical difficult terrain and magical greater difficult terrain. Your stomp's counteract rank equals half your level (rounded up), and for the roll, use either your class DC – 10 or your spellcasting attribute modifier plus your spellcasting proficiency bonus. If you successfully counteract the triggering effect, you suppress the effect for 1 minute, after which the effect returns if its duration hasn't expired."
+ },
+ {
+  "id": "snagging-strike",
+  "name": "Snagging Strike",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have one hand free, and your target is within reach of that hand. --- You combine an attack with quick grappling moves to throw an enemy off balance as long as it stays in your reach. Make a Strike while keeping one hand free. If this Strike hits, the target is off-guard until the start of your next turn or until it's no longer within the reach of your hand, whichever comes first."
+ },
+ {
+  "id": "snap-shot",
+  "name": "Snap Shot",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can react with ranged weapons when a creature is in close quarters. You can use a reaction that normally allows you to make a melee weapon Strike to instead make a ranged weapon Strike. You must be Striking an adjacent target. If necessary for the reaction's trigger, you treat your ranged weapon as if it had a reach of 5 feet. If the reaction has other requirements, such as wielding a specific kind of weapon, Snap Shot doesn't allow you to ignore them; it allows you only to replace a melee weapon Strike with a ranged weapon Strike."
+ },
+ {
+  "id": "snare-crafting",
+  "name": "Snare Crafting",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use the Craft activity to create snares. When you select this feat, you add the formulas for four common 1st-level snares to your formula book."
+ },
+ {
+  "id": "sneak-adept",
+  "name": "Sneak Adept",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "It's almost impossible to spot you. When you roll a failure on a Sneak action, you get a success instead. You can still critically fail."
+ },
+ {
+  "id": "sneaky",
+  "name": "Sneaky",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Stealth is an important tool in your arsenal. You can move 5 feet farther when you take the Sneak action, up to your Speed. In addition, as long as you continue to use Sneak actions and succeed at your Stealth check, you don't become observed if you don't have cover or greater cover and aren't concealed at the end of the Sneak action, as long as you have cover or greater cover or are concealed at the end of your turn."
+ },
+ {
+  "id": "snow-may",
+  "name": "Snow May",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "changeling",
+   "lineage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're the child of a winter hag, with one blue-white eye and an affinity for rime and snow. When moving over ice or snow in arctic terrain, you always gain the benefits of the Cover Tracks action without needing to use the activity or having to move half your Speed. You don't treat icy terrain as uneven ground (though it's still difficult terrain for you), and you ignore difficult terrain caused by snow. Cold precipitation and environmental cold effects don't alter the time it takes for you to become fatigued."
+ },
+ {
+  "id": "snow-step",
+  "name": "Snow Step",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Snow and ice are no hindrance to you. You ignore difficult terrain caused by snow and ice, treat greater difficult terrain created by snow and ice as difficult terrain, and leave no tracks when moving through areas of snow or ice."
+ },
+ {
+  "id": "solar-rejuvenation",
+  "name": "Solar Rejuvenation",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "ghoran",
+   "leshy"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Ghoran** - The warmth and light of the sun gives you life. If you rest outdoors for 10 minutes during the day, you regain Hit Points equal to your Constitution modifier × half your level. You gain this benefit in addition to any healing from Treat Wounds. **Leshy** - If you rest outdoors for 10 minutes during the day, you regain Hit Points equal to your Constitution modifier × half your level. You gain this benefit in addition to any healing from Treat Wounds. Leshies whose plant nourishment does not rely on photosynthesis require a similarly suitable environment. For example, fungus leshies need dark, damp environments and a pile of decaying plant matter."
+ },
+ {
+  "id": "solar-rejuvenation-ghoran",
+  "name": "Solar Rejuvenation (Ghoran)",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "ghoran"
+  ],
+  "prerequisites": [],
+  "text": "Solar Rejuvenation (Ghoran) Source Impossible Lands pg. 39 The warmth and light of the sun gives you life. If you rest outdoors for 10 minutes during the day, you regain Hit Points equal to your Constitution modifier × half your level. You gain this benefit in addition to any healing from Treat Wounds."
+ },
+ {
+  "id": "solidarity",
+  "name": "Solidarity",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "poppet"
+  ],
+  "prerequisites": [
+   "tsukumogami poppet heritage"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- You bestow some of your own life energies to mend damage. You touch a non-magical object of 2 Bulk or less, or a magical object of 1 Bulk or less, and you restore Hit Points to the target equal to twice your level. You lose as many Hit Points as the target regained. This direct transfer of vitality means that no effects apply that would increase the Hit Points the target regains or decrease the Hit Points you lose. This transfer also ignores any temporary Hit Points you or the target have. You can't reduce your Hit Points below 1 using Solidarity. You can't replace lost pieces or repair an object that has been completely destroyed. --- **Special** If you have the Minuscule Mentee feat, you can use Solidarity to heal your familiar."
+ },
+ {
+  "id": "solo-dancer",
+  "name": "Solo Dancer",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Fan Dancer Dedication",
+   "expert in Performance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You often dance alone with a grace exceeding that of most other performers, carrying yourself with a poise and confidence that draws the attention of those around you. You can always roll Performance for initiative, and during the first round of combat, creatures that act after you are off-guard to you."
+ },
+ {
+  "id": "song-of-grace-and-speed",
+  "name": "Song of Grace and Speed",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory"
+  ],
+  "prerequisites": [
+   "Nantambu Chime-Ringer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You instill great swiftness into your allies. You and all allies within 30 feet become quickened for 1 minute and can use the additional action to Strike, Stride, or Step."
+ },
+ {
+  "id": "sonic-dash",
+  "name": "Sonic Dash",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You bounce up and down once, then sprint forward. You Stride twice in a straight line. You can use Sonic Dash while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type. **Awakening** Your Sonic Dash generates a sonic boom, dealing 1d4 sonic damage for every two levels you have () to all creatures other than you in a at the point you end your Sonic Dash, with a save. Creatures that fail are deafened for 1 round, or 1 minute on a critical failure. **Awakening** Your speed generates a slipstream that allows you to reposition your allies. You can dash through a willing ally's space during your Sonic Dash, causing them to be drawn by winds alongside you. You deposit them in any unoccupied space adjacent to you at the end of your Sonic Dash."
+ },
+ {
+  "id": "sonic-strafe",
+  "name": "Sonic Strafe",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "air",
+   "archetype",
+   "sonic"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You currently have a fly Speed. --- You can now achieve such flight speeds that your passage splits the very air. Fly twice. Any creature that is adjacent to you at any point during your movement takes 10d6 damage ( save against your class DC). On a critical failure, the creature is also deafened for 1 hour."
+ },
+ {
+  "id": "soothing-pulse",
+  "name": "Soothing Pulse",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ostilli Host Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ostilli can use its stored magic to help staunch your wounds, granting you the Administer Ambient Magic action."
+ },
+ {
+  "id": "soul-bleed",
+  "name": "Soul Bleed",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spectral Dagger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your blade can rupture an enemy's very soul, draining away its essence to empower you. When you score a critical hit with your Spectral Dagger, you deal 1d6 persistent spirit damage. If the target wasn't already taking persistent spirit damage when you scored the critical hit, you gain temporary Hit Points equal to the spirit damage dealt by the attack that last until the beginning of your next turn."
+ },
+ {
+  "id": "soul-oubliette",
+  "name": "Soul Oubliette",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "occult",
+   "unholy"
+  ],
+  "prerequisites": [
+   "Spectral Dagger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Trigger** You reduce a creature to 0 Hit Points with an attack from your spectral dagger. **Requirements** Your splinter of finality doesn't contain a trapped soul. --- Your mortal strike wrenches the soul from your victim's body and imprisons it in your splinter of finality, with the effects of seize soul. The splinter of finality can only hold one soul at a time, but you can release a trapped soul as a free action. If you don't free a soul willingly, it escapes automatically after 24 hours. However, if you touch the splinter of finality to an unbroken final blade while a soul is trapped within, the soul is transferred to the final blade and imprisoned indefinitely. While your splinter of finality contains a trapped soul, you gain fast healing 15."
+ },
+ {
+  "id": "soul-well",
+  "name": "Soul Well",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate",
+   "occult"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your brush your fingers across your splinter of finality, momentarily creating a metaphysical vortex from which mortal spirits struggle to escape. For the next minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain and living creatures within the same area die from the dying condition at dying 5 rather than dying 4. As it comes close to tasting a living soul, the splinter of finality is empowered. If a living creature's dying value increases while within your Soul Well, your spectral dagger deals one additional weapon die of damage until the end of your next turn."
+ },
+ {
+  "id": "soulsight",
+  "name": "Soulsight",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "bard",
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "text": "Soulsight Source Player Core pg. 105 Your muse has opened your senses to the world beyond. You gain spiritsense as an imprecise sense with a range of 60 feet. Spiritsense enables you to sense the spirits of creatures, including living creatures, most non-mindless undead, and haunts within the listed range. As with your hearing and other imprecise senses, you still need to Seek to locate an undetected creature. As spiritsense detects spiritual essence, not physical bodies, it can detect spirits projected by spells such as project image or possessing otherwise soulless objects. It can’t detect soulless bodies, constructs, or objects, and like most senses, it doesn’t penetrate through solid objects."
+ },
+ {
+  "id": "soulsight-bard",
+  "name": "Soulsight (Bard)",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your muse has opened your senses to the world beyond. You gain spiritsense as an imprecise sense with a range of 60 feet. Spiritsense enables you to sense the spirits of creatures, including living creatures, most non-mindless undead, and haunts within the listed range. As with your hearing and other imprecise senses, you still need to seek to locate an undetected creature. As spiritsense detects spiritual essence, not physical bodies, it can detect spirits projected by spells such as Project Image or possessing otherwise soulless objects. It can't detect soulless bodies, constructs, or objects, and like most senses, it doesn't penetrate through solid objects."
+ },
+ {
+  "id": "soulsight-sorcerer",
+  "name": "Soulsight (Sorcerer)",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [
+   "bloodline that grants divine or occult spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The spiritual essence in your blood has opened your senses to the world beyond. You gain spiritsense as an imprecise sense with a range of 60 feet. Spiritsense enables you to sense the spirits of creatures, including living creatures, most non-mindless undead, and haunts within the listed range. As with your hearing and other imprecise senses, you still need to seek to locate an undetected creature. As spiritsense detects spiritual essence, not physical bodies, it can detect spirits projected by spells such as Project Image or possessing otherwise soulless objects. It can't detect soulless bodies, constructs, or objects, and like most senses, it doesn't penetrate through solid objects."
+ },
+ {
+  "id": "sour-bomb",
+  "name": "Sour Bomb",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist",
+   "olfactory"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can mix ingredients with a powerful sour smell into an alchemical bomb to make its explosion an overpowering stench. Any creature hit by the bomb must attempt a save against your class DC in addition to the bomb's normal effects. **Success** The creature is unaffected beyond a strong craving for pickles. **Failure** The creature is Sickened 1. **Critical Failure** The creature is Sickened 2, and fleeing for 1 round from the smell."
+ },
+ {
+  "id": "sow-spell",
+  "name": "Sow Spell",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "druid",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You fold your spell into a seed. If your next action is to Cast a Spell using 1 action or 2 actions, the spell instead plants itself in an adjacent square. You must make all decisions regarding the spell at the time you cast it. Within the next 10 minutes, you can direct your sown spell to sprout and produce the spell's effects as a reaction, which is triggered when a creature enters the sown spell's space or a square adjacent to it. You can have only one sown spell at a time, and if you don't trigger the spell within 10 minutes, it dissipates and the spell is lost. A creature can notice the sown spell with a successful check against your spell DC."
+ },
+ {
+  "id": "space-time-shift",
+  "name": "Space-Time Shift",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Chronoskimmer Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** Your turn begins. --- You travel just a few moments into the future to immediately arrive at your destination. Your Strides are augmented until the end of your turn, allowing you to instantly teleport to any point you could reach with your Stride instead of traversing normally to the location. Your augmented Strides have the teleportation trait and don't trigger reactions that can be triggered by move actions or upon leaving or entering a square. You also augment your Burrow, Climb, Fly, or Swim actions in this way if you have the corresponding movement type."
+ },
+ {
+  "id": "spark-of-immortality",
+  "name": "Spark of Immortality",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Mortal Herald Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have become a divine entity, no longer entirely mortal. You no longer age, and you die only when you reach dying 5 (dying 6 if you have Diehard). Upon your death, your body and soul are transported to bask in the presence of your deity. Your god can decide to rebuild your mortal form and return you to the point of your death or some other safe location, or allow you to rest as an honored guest in their realm until you are needed once more. Typically, your god restores you if whatever quest you're undertaking, such as defeating a malevolent tyrant or returning a stolen artifact, remains incomplete."
+ },
+ {
+  "id": "spark-of-independence",
+  "name": "Spark of Independence",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "poppet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You touch a creature with the minion trait and share the heightened sense of autonomy you've discovered. The minion is quickened for 1 round and is then temporarily immune for 10 minutes. It can use this extra action to Step, Stride, or Strike."
+ },
+ {
+  "id": "speak-with-flowers",
+  "name": "Speak with Flowers",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "ghoran"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "At your very heartwood, you're a flower animated by elder magic, and with a little effort, you can speak to your kindred. You can ask questions of, receive answers from, and use the Diplomacy skill with flowering plants of all types."
+ },
+ {
+  "id": "spear-dancer",
+  "name": "Spear Dancer",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a weapon from the spear or polearm group --- You favor weapons that allow you to lash out viciously while keeping enemies at bay, giving you an opportunity to strike without fear of reprisal. You Step and then Strike with a spear or polearm you are wielding, or Strike with the spear or polearm and then Step."
+ },
+ {
+  "id": "specialized-beastmaster-companion",
+  "name": "Specialized Beastmaster Companion",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Incredible Beastmaster Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your nimble and savage animal companions become cunning enough to become specialized. Each companion gains one specialization of your choice. Choose the specialization separately for each companion, including any companion that becomes specialized after you take this feat. --- **Special** You can select this feat more than once. Each time, add a different specialization to your nimble and savage companions. Your nimble and savage companions can have up to three specializations each."
+ },
+ {
+  "id": "specialized-companion-druid",
+  "name": "Specialized Companion (Druid)",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Incredible Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your animal companion continues to grow in power and ability. It gains one specialization of your choice --- **Special** You can select this feat up to three times. Each time, add a different specialization to your companion."
+ },
+ {
+  "id": "specialized-companion-ranger",
+  "name": "Specialized Companion (Ranger)",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Incredible Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your animal companion continues to grow in power and ability, and it is now cunning enough to become specialized. Your animal companion gains one specialization of your choice. --- **Special** You can select this feat up to three times. Each time, add a different specialization to your companion."
+ },
+ {
+  "id": "specialized-megafauna-companion",
+  "name": "Specialized Megafauna Companion",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mammoth Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained your mammoth or other megafauna companion to perform in unusual or extreme situations, granting it abilities far beyond others of its kind. Your megafauna gains your choice of the bully, racer, tracker, or wrecker specialization. **Special** You can select this feat up to three times. Each time, add a different specialization of the ones listed above to your megafauna companion. Your megafauna can't have more than three specializations."
+ },
+ {
+  "id": "specialized-mount",
+  "name": "Specialized Mount",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Incredible Mount"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained your mount to perform in unusual or even extreme circumstances, granting it abilities far beyond others of its kind. Your mount gains one specialization of your choice. **Special** You can select this feat up to three times. Each time, add a different specialization to your mount. You mount can't have more than three specializations."
+ },
+ {
+  "id": "spectral-dagger",
+  "name": "Spectral Dagger",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "You have a hand free and aren't already wielding a spectral dagger."
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "By touching the splinter of finality in your neck, you conjure a Spectral Dagger into your hand that resembles the splinter wrapped in a crude hilt. This weapon acts like a *+1 ghost touch dagger*, and each successful Strike with it deals 1 additional spirit damage. If the attack is a critical hit, this damage increases to 1d6. If the *spectral dagger* ever leaves your hand, it vanishes and you must spend an action to conjure it again. If this occurs as the result of you making a ranged thrown Strike with the dagger, you resolve the attack before the weapon vanishes. You can increase the power of your *spectral dagger* with runes like you can other weapons, transferring the rune from a *runestone* or other weapon by meditating over the rune as a downtime activity that takes 1 day."
+ },
+ {
+  "id": "speech-of-the-mammoth-lords",
+  "name": "Speech of the Mammoth Lords",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Mammoth Lord Dedication",
+   "Master in Diplomacy or Intimidation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned the ancient tongue spoken by the creatures of the far north. You can ask questions of, receive answers from, use the Diplomacy skill with, and Coerce megafauna. In most cases, megafauna of the Realm of the Mammoth Lords will hear you out."
+ },
+ {
+  "id": "speedy-rituals",
+  "name": "Speedy Rituals",
+  "level": 14,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Speedy Rituals Source Advanced Player's Guide pg. 187 Archetype Ritualist Prerequisites Efficient Rituals You can perform rituals in only a fraction of the usual time. If a ritual has a casting time measured in days, you can cast it in an equal number of hours. If this results in a ritual longer than 8 hours, you split the ritual between multiple days, as normal for a ritual."
+ },
+ {
+  "id": "spell-combination",
+  "name": "Spell Combination",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can merge spells, producing multiple effects with a single casting. One slot of each rank of spell you can cast, except 2nd rank and 1st rank, becomes a spell combination slot (this doesn't apply to cantrips). When you prepare your spells, you can fill a combination slot with a combination of two spells. Each spell in the combination must be 2 or more spell ranks below the slot's rank, and both must target only one creature or object or have the option to target only one creature or object. Each spell in the combination must also have the same means of determining whether it has an effect—both spells must require a ranged spell attack, require the same type of saving throw, or automatically affect the target. When you cast a combined spell, it affects only one target, even if the component spells normally affect more than one. If any spell in the combination has further restrictions (such as targeting only living creatures), you must abide by all restrictions. The combined spell uses the shorter of the component spells' ranges. Resolve a combined spell as if were a single spell, but apply the effects of both component spells. For example, if the spell's target succeeded at the save against a combined spell, it would apply the success effect of each spell, and if it critically failed, it would apply the critical failure effect of both spells."
+ },
+ {
+  "id": "spell-devourer",
+  "name": "Spell Devourer",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [
+   "Pervasive Superstition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You don't just resist magic; you devour it. Whenever you succeed at a saving throw against a spell or magical effect, you gain temporary Hit Points equal to double the spell's rank, or equal to the level if the magical effect isn't a spell. These temporary Hit Points last until the end of your next turn."
+ },
+ {
+  "id": "spell-relay",
+  "name": "Spell Relay",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally Casts a Spell and you are within that spell's range. --- You open the power in your blood to your ally's spellcasting, using your magic to boost their range. Your ally can use you as the point of origin for their spell, calculating range and cover from your space instead of their own."
+ },
+ {
+  "id": "spell-shroud",
+  "name": "Spell Shroud",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "sorcerer",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your spell shrouds you in a billowing cloud. If your next action is to Cast a Spell that targets you, you surround yourself in a of dense magical mist that lasts until the start of your next turn. All creatures within the cloud become concealed, and all creatures outside the cloud are concealed to creatures within it."
+ },
+ {
+  "id": "spell-swallow",
+  "name": "Spell Swallow",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ostilli Host Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ostilli has grown strong enough to completely consume a spell cast at you, granting you the Devour Ambient Magic action."
+ },
+ {
+  "id": "spell-tinker",
+  "name": "Spell Tinker",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You've learned to alter choices you make when casting spells on yourself. After casting a spell on only yourself that offers several choices of effect (such as resist energy or a polymorph spell that offers several potential forms), you can alter the choice you made when Casting the Spell (for instance, choosing a different type of damage for resist energy). You can't use this feat if the benefits of the spell have already been used up or if the effects of the first choice would persist in any way after switching (for instance, if one of the choices was to create a consumable item you already used, or to heal you), or if the feat would create an effect more powerful than that offered by the base spell. The GM is the final arbiter of what Spell Tinker can be applied to."
+ },
+ {
+  "id": "spellshape-channel",
+  "name": "Spellshape Channel",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "Deep understanding of divine revelations into the nature of vital essence allows you to freely manipulate the energy of life and death. Use one spellshape action you can perform that normally takes 1 action and can be applied to the Harm or Heal spell. If you use it in this way, its effects apply only to a *harm* or *heal* spell."
+ },
+ {
+  "id": "spellshape-mastery",
+  "name": "Spellshape Mastery",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "sorcerer",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Altering your spells doesn't take any longer than casting them normally. You can use spellshape single actions as free actions."
+ },
+ {
+  "id": "spellstriker",
+  "name": "Spellstriker",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Magus Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the magus's Spellstrike activity. You can recharge it only as an activity that takes 1 minute. This restriction applies even if you gain another ability that recharges Spellstrike."
+ },
+ {
+  "id": "spinebreaker",
+  "name": "Spinebreaker",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wrestler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- You squeeze your opponent in a vicious bear hug, putting intense pressure on their nerves, joints, or other pain points. Attempt an Athletics check to grapple a creature you have grabbed or restrained, with the following additional effects if you succeed. --- **Critical Success** The target is Clumsy 2 until the end of its next turn and Clumsy 1 for 1 minute. **Success** The target is clumsy 1 until the end of its next turn."
+ },
+ {
+  "id": "spirit-coffin",
+  "name": "Spirit Coffin",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [
+   "bakuwa lizardfolk heritage or Tian Xia origin"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "A hump forms on your back that allows you to attack and trap spirits. Your weapon and unarmed attack Strikes against incorporeal creatures become magical. If they're already magical, they instead gain the effects of a Ghost Touch rune. --- **Special** If you have access to this feat but aren't a bakuwa lizardfolk, your body doesn't change when you take this feat. You must instead wear a physical coffin, which is a small wooden chest of light Bulk that you specially anoint during your daily preparations. If your chest is missing or destroyed, you lose the benefits of spirit coffin until you've replaced and re-anointed it."
+ },
+ {
+  "id": "spirit-familiar-witch",
+  "name": "Spirit Familiar (Witch)",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "divine or occult patron"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your familiar can subsume its body to become pure spirit. Your familiar gains the Shed Spirit activity."
+ }
+]

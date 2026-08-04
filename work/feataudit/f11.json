@@ -1,0 +1,973 @@
+[
+ {
+  "id": "eerie-flicker",
+  "name": "Eerie Flicker",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy's Strike would hit you and you weren't already concealed, hidden, or undetected by that enemy. --- Your body flickers momentarily into the Ethereal Plane. You become concealed for 1 round, and the flat check for concealment applies to the Strike that would have hit you. If the flat check fails, the Strike misses you. --- **Awakening** When your body flickers, you momentarily assume a terrifying form. If a creature fails the flat check against concealment from your Eerie Flicker, it becomes Frightened 1, and it doesn't reduce the frightened condition from this effect at the end of the same turn it gained the condition. --- **Awakening** You can choose to compress your flickering movement into a single moment, increasing your chance to avoid the triggering attack in exchange for a shorter-lived effect. If you choose to do so, the flat check for concealment against the triggering attack increases to , but the concealment affects only the triggering Strike."
+ },
+ {
+  "id": "eerie-traces",
+  "name": "Eerie Traces",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "druid",
+   "exploration",
+   "move",
+   "ranger"
+  ],
+  "prerequisites": [
+   "trained in Intimidation",
+   "trained in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The tracks you leave behind are strange, somehow disconcerting and unnerving—they might travel backward, or through places no one would think to pass through. You change your tracks into eerie traces, moving up to half your travel speed as you do so. You don't need to attempt a Survival check to change your tracks, but anyone tracking you must attempt a Will save against the higher of your class DC or spell DC. **Success** The tracker is unaffected. **Failure** The tracker becomes Frightened 1 for as long as it follows your tracks. This condition doesn't decrease until the tracker stops following you, and it comes back if the tracker resumes following your tracks. If the tracker enters into an encounter with you after following your tracks, it begins the encounter frightened 1. **Critical Failure** As failure, but your disturbing traces cause the tracker to be Frightened 2 instead."
+ },
+ {
+  "id": "efficient-alchemy",
+  "name": "Efficient Alchemy",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "text": "Efficient Alchemy Source Player Core 2 pg. 64 Prerequisites advanced alchemy Thanks to the time you've spent studying and experimenting, you know how to scale your formulas into larger batches that don't require any additional attention. Increase the number of items you can create each day with advanced alchemy to 6 + your Intelligence modifier. In addition, when you Craft alchemical consumables during downtime, you can produce twice as many alchemical items in a single batch without spending additional preparatory time. For instance, if you are creating elixirs of life, you can craft up to eight elixirs in a single batch using downtime, rather than four. This doesn't change the amount of alchemical reagents or other ingredients required to craft each item, nor does it change your rate of progress for days past the base downtime spent. Efficient Alchemy leads to... Advanced Efficient Alchemy"
+ },
+ {
+  "id": "efficient-alchemy-paragon",
+  "name": "Efficient Alchemy (Paragon)",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your daily preparations are particularly efficient and plentiful. When using your infused reagents to create alchemical items during your daily preparations, you make a batch of three of a given item instead of a batch of two, or a batch of four if your field normally lets you create three of that item. --- *Note: This feat is incompatible with the Alchemist class presented in Player Core 2, and is not automated as a result.*"
+ },
+ {
+  "id": "efficient-controls",
+  "name": "Efficient Controls",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Vehicle Mechanic Dedication",
+   "master in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By reducing redundant systems and streamlining essential functions, you have made it easier for the vehicle to operate with fewer crew. Reduce the number of crew required to operate your signature vehicle by 25%. For example, you would reduce a sailing ship from needing 1 pilot and 8 crew to 1 pilot and 6 crew. This adjustment only affects the number of crew needed to operate the vehicle; it doesn't reduce the vehicle's need for a pilot."
+ },
+ {
+  "id": "efficient-preparation",
+  "name": "Efficient Preparation",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've developed techniques for drilling your allies on multiple tactics in a succinct and efficient manner. Increase the number of tactics you can have prepared by 1."
+ },
+ {
+  "id": "efficient-rituals",
+  "name": "Efficient Rituals",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ritualist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can perform particularly extensive rituals in less time. If the ritual normally requires 1 day to cast, you can cast it in 4 hours. If it takes longer than 1 day, you cast it in half the number of days, rounded up. At 14th level, if a ritual has a casting time measured in days, you can cast it in an equal number of hours. If this results in a ritual longer than 8 hours, you split the ritual between multiple days, as normal for a ritual."
+ },
+ {
+  "id": "effortless-concentration",
+  "name": "Effortless Concentration",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "bard",
+   "druid",
+   "sorcerer",
+   "summoner",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn begins. --- You maintain your active spells with hardly a thought. You immediately gain the effects of a Sustain action for one of your active class spells."
+ },
+ {
+  "id": "effortless-reach",
+  "name": "Effortless Reach",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Focusing the powers of your ki to augment your blows, you stretch and lengthen your body in ways that defy logic. Your unarmed attacks gain the reach trait."
+ },
+ {
+  "id": "eidetic-memorization",
+  "name": "Eidetic Memorization",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Pathfinders are often asked to study the intricacies of ancient history under less than ideal conditions, and you've trained your brain to make the most of your limited time. You quickly memorize an inscription, scroll, or other piece of writing you can clearly see whose length is equivalent to no more than one page. You can then accurately recreate this writing using a writing kit, wax tablet, or other writing medium, once you have reached safety. You don't need to understand the writing or identify the language to reproduce it. Your memory lasts until the next time you make your daily preparations; if you have not written down or otherwise recreated what you saw by this point, your memory fades and any attempt to recreate what you saw is garbled and unintelligible. You can have only one piece of writing memorized at a time; any previous memorization fades the next time you use this ability."
+ },
+ {
+  "id": "eidolons-opportunity",
+  "name": "Eidolon's Opportunity",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "eidolon",
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your eidolon's reach uses a manipulate action or a move action, makes a ranged attack, or leaves a square during a move action it's using. Your eidolon makes a melee Strike against the triggering creature. If the attack is a critical hit and the trigger was a manipulate action, your eidolon disrupts that action. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "elaborate-flourish",
+  "name": "Elaborate Flourish",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "sorcerer",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You embellish your spellcasting with entrancing flourishes and grand pronouncements, making it harder to identify or counter. If the next action you use is to Cast a Spell, creatures with the ability to Cast that Spell don't automatically know what the spell is. In addition, creatures that witness your spellcasting take a -2 circumstance penalty to checks to identify the spell with Recall Knowledge and checks to counteract the spell during its casting (such as with Counterspell)."
+ },
+ {
+  "id": "elaborate-scroll-esoterica",
+  "name": "Elaborate Scroll Esoterica",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Scroll Esoterica"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've picked up more scraps of magic texts, improving your makeshift scrolls. In addition to your daily scrolls from Scroll Esoterica, add a scroll with a 3rd-rank spell. At 14th level, add a scroll with a 4th-rank spell. At 16th level, add a scroll with a 5th-rank spell."
+ },
+ {
+  "id": "elaborate-talisman-esoterica",
+  "name": "Elaborate Talisman Esoterica",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Talisman Esoterica"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As you continue to collect talismanic esoterica, you improve your ability to create temporary talismans. You can create four temporary talismans each day instead of two. --- **Special** You can select this feat a second time if you are 14th level or higher, allowing you to create six talismans each day instead of four."
+ },
+ {
+  "id": "eldritch-debilitations",
+  "name": "Eldritch Debilitations",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "eldritch trickster racket",
+   "Debilitating Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to apply debilitations that are particularly troublesome for spellcasters. Add the following debilitations to the list you can choose from when you use Debilitating Strike. - **Debilitation** The target is Stupefied 1. - **Debilitation** The target can't Step."
+ },
+ {
+  "id": "eldritch-reload",
+  "name": "Eldritch Reload",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Eldritch Archer Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** Your last action this turn was to make an Eldritch Shot, Cast a Spell from a spell slot, or activate a piece of magical ammunition; this can't have been a free action or reaction. --- You integrate your talent for magic into your use of reloading weapons. You Interact to reload a weapon you are wielding."
+ },
+ {
+  "id": "electrify-armor",
+  "name": "Electrify Armor",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "armor innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wearing your armor innovation. --- You electrify your armor to punish foes who dare to attack you. For 1 round, any creature that touches you, or that hits you with a melee unarmed attack or a non-reach melee weapon attack, takes damage. The effect ends if you cease wearing your armor innovation. If you have the revolutionary innovation class feature, the damage increases to 2d4. **Unstable Function** You create an unstable chain reaction, sending countless sparks dancing across your armor. Add the unstable trait to Electrify Armor. The effects last for 1 minute instead of 1 round, and the damage dice increase from d4s to d12s."
+ },
+ {
+  "id": "electrogenesis",
+  "name": "Electrogenesis",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "electricity",
+   "primal"
+  ],
+  "prerequisites": [
+   "Wild Mimic Dedication",
+   "you have seen a creature deal electricity damage with an unarmed Strike or have identified a creature capable of dealing electricity damage with an unarmed Strike in combat"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- Some animals and beasts have electric organs in their body that they can use to jolt their prey. You may not have the requisite physiology to do the same, but a touch of primal magic can achieve the same effect. Make a melee unarmed Strike against a creature. If the Strike hits, it deals an additional 1d12 electricity damage, and the creature must make a save against the higher of your class DC or spell DC. --- **Critical Success** The creature is unaffected. **Success** The creature is Clumsy 1 for 1 round. **Failure** The creature is Clumsy 2 for 1 round. **Critical Failure** The creature is Clumsy 3 for 1 round."
+ },
+ {
+  "id": "elemental-artillery",
+  "name": "Elemental Artillery",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "attack",
+   "composite",
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Spinning wood and metal together, you create a rugged wooden ballista. The ballista is Medium and appears in an unoccupied space within 30 feet. It immediately shoots a bolt with a jagged tip of elemental metal. Make an impulse attack roll against the AC of a target within 120 feet. The target takes damage on a hit (or double damage on a critical hit). The ballista can be shot again, but it must first be reloaded with two Interact actions. The ballista lasts until the end of your next turn, and you can Sustain the impulse. Each time you Sustain it, you can roll the ballista up to 20 feet, shoot it if it's loaded, or contribute 1 action toward reloading it. --- **Level (+3)** The damage increases by 1d12."
+ },
+ {
+  "id": "elemental-explosion",
+  "name": "Elemental Explosion",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "primal",
+   "rage"
+  ],
+  "prerequisites": [
+   "elemental instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're raging, and you haven't used this ability since you last Raged. --- You unleash the energy roiling within you, exploding elemental matter in a . Each creature in the area takes 1d8 damage per level you possess, with the same type you chose for elemental rage. Each creature in the area must attempt a . Elemental Explosion gains the trait of your element."
+ },
+ {
+  "id": "elemental-familiar",
+  "name": "Elemental Familiar",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication",
+   "Familiar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your familiar becomes an elemental spirit capable of taking on aspects of the elements. Other than taking the form of an elemental instead of an animal, this familiar continues to use all the same rules as other familiars. Your familiar gains one additional familiar ability each day, which must be one of the following elemental familiar abilities. While your familiar has an elemental familiar ability, your familiar is composed of the associated elemental matter and gains the matching elemental trait. You can't select more than one elemental familiar ability at a time. - **Air** If your familiar stays completely still for 1 round, it becomes invisible until it next takes an action. Any motion, even being moved or carried by another creature, ends this effect. - **Earth** Your familiar gains resistance to physical damage (except adamantine) equal to half your level. - **Fire** Your familiar sheds bright light in a 20-foot radius (and dim light for the next 20 feet) and emits warmth. Creatures that remain within a don't take damage from severe environmental cold. - **Metal** Your familiar gains resistance to physical damage from metal weapons equal to half your level. - **Water** Your familiar can move through a gap at least 2 inches wide without Squeezing and can Squeeze through a gap at least 1 inch wide. - **Wood** If your familiar remains in bright light for 1 round, it gains fast healing equal to half your level. Once it is out of bright light, this effect ends."
+ },
+ {
+  "id": "elemental-fist",
+  "name": "Elemental Fist",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Inner Upheaval"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can color your qi in bright elemental energy. When you cast Inner Upheaval, in addition to the damage types normally available, you can deliver the extra damage with elemental magic, adding the element's trait and changing the damage type to the listed one: **air** electricity (sparking gust), **earth** bludgeoning (chunk of stone), **fire** fire (flickering flame), **metal** slashing (flying metal shards), **water** cold (wave of frigid water), or **wood** bludgeoning (pummeling pine cones)."
+ },
+ {
+  "id": "elemental-summons",
+  "name": "Elemental Summons",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can call the elements to you. You can spend 10 minutes in concert with nature to replace a spell you've prepared in one of your druid spell slots with a Summon Elemental spell of the same rank."
+ },
+ {
+  "id": "elf-step",
+  "name": "Elf Step",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You move in a graceful dance, and even your steps are broad. You Step 5 feet twice."
+ },
+ {
+  "id": "eliminate-red-herrings",
+  "name": "Eliminate Red Herrings",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a keen sense for avoiding spurious lines of inquiry. When you roll a critical failure on a skill check to Recall Knowledge related to a question about one of your active investigations, you get a failure instead."
+ },
+ {
+  "id": "elucidating-mercy",
+  "name": "Elucidating Mercy",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [],
+  "text": "Elucidating Mercy Source Advanced Player's Guide pg. 120 Archetype Blessed One (Level 12) Prerequisites Mercy Your mercy grants clarity to those around you just when they need it most. When you use Mercy, you can instead attempt a counteract check to remove the confused or stupefied conditions, using the source of that condition to determine the counteract level and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns at the end of your next turn."
+ },
+ {
+  "id": "elucidation",
+  "name": "Elucidation",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "yaoguai"
+  ],
+  "prerequisites": [
+   "Brilliant Vision"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You succeed at a saving throw to disbelieve an illusion. --- You can cut through illusions with such precision that all those around you find their senses sharpened as well. Whenever you disbelieve an illusion, all allies within 15 feet can use a free action to attempt a saving throw to disbelieve the illusion as well."
+ },
+ {
+  "id": "elude-trouble",
+  "name": "Elude Trouble",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature missed you with a melee attack. --- Stride up to your Speed. This movement doesn't trigger reactions from the creature that missed you."
+ },
+ {
+  "id": "elven-aloofness",
+  "name": "Elven Aloofness",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As much as you might care for them, you've come to terms with the ephemeral nature of non-elves, and it makes their threats feel less troublesome. If a non-elf rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (and thus can't try to Coerce you again for 1 week). When a non-elf attempts to Demoralize you, you become temporarily immune for 1 day, instead of 10 minutes."
+ },
+ {
+  "id": "emancipators-mask",
+  "name": "Emancipator's Mask",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "druid",
+   "wizard"
+  ],
+  "prerequisites": [
+   "Druid Dedication or Wizard Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mask grants you the abilities of Whistling Kite, the Vigilant Seer, who emancipated thousands. When you are attempting a check to free someone else from an effect that immobilizes, paralyzes, or controls them, roll twice and take the higher result; this is a fortune effect. The GM might decide that this fortune effect applies when attempting checks to remove other conditions or effects to free another. Immediately after you Cast a non-cantrip Spell that targets only one creature, you can choose to permit the target to make an attempt to Escape."
+ },
+ {
+  "id": "embed-aeon-stone",
+  "name": "Embed Aeon Stone",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "downtime",
+   "skill"
+  ],
+  "prerequisites": [
+   "Runelord Dedication",
+   "trained in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You discover the secrets to embedding aeon stones into your flesh. You spend 1 day attuning to an aeon stone and physically embedding it in your skin. While the stone is embedded this way, you gain the benefits of the aeon stone as if it were orbiting above your head, but it protects the stone from being noticed or stolen as easily. Aeon stones in your flesh must be invested to function, as usual. You can also use this activity to safely remove an embedded aeon stone in 1 day. Someone without this feat can attempt to surgically remove it safely by spending 1 day and succeeding at a check, or hastily by simply ripping it from a corpse."
+ },
+ {
+  "id": "embodiment-of-the-balance",
+  "name": "Embodiment Of The Balance",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "animist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your place in the balance between the forces of life and entropy expands the spells you can pull from the spirit realms. You add Heal and Harm to your apparition spell repertoire, allowing you to cast them with your apparition spellcasting."
+ },
+ {
+  "id": "embrace-the-pain",
+  "name": "Embrace the Pain",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach damages you with a melee attack. --- Ignoring your pain, you reach out and grab the creature or weapon that caused you harm. Attempt an Athletics check to Grapple the triggering creature or to Disarm the creature of the weapon it damaged you with."
+ },
+ {
+  "id": "emerald-boughs-accustomation",
+  "name": "Emerald Boughs Accustomation",
+  "level": 6,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Magaambyan Attendant Dedication",
+   "Emerald Boughs Affiliation",
+   "expert in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are comfortable and socially capable in almost any cultural context. When you use the Society skill to Subsist, if you roll a critical failure, you get a failure instead; if you roll a success, you get a critical success instead; and if you roll a critical success, you can provide for another additional creature. Furthermore, when you attempt a Society check to Recall Knowledge about cultural practices and roll a critical failure, you get a failure instead."
+ },
+ {
+  "id": "emerald-boughs-hideaway",
+  "name": "Emerald Boughs Hideaway",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Magaambyan Attendant Dedication",
+   "Emerald Boughs affiliation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You use Emerald Bough techniques to create a small extradimensional space called a hideaway that lasts as long as you are conscious. The hideaway functions as a Bag of Holding (Type I), but has no Bulk and takes no hands; it holds one object with a maximum Bulk equal to your highest mental ability score modifier; as you open the hideaway with pure thought, activating it to retrieve an item is a free action with the envision component instead of a single action with the Interact component. The hideaway's access point appears as an obviously magical gap within 1 foot of your body. Only you can access the hideaway; you can you use an Interact action each round to physically hold it open for another person. A successful dispel magic spell or similar effect against your spell DC and the hideaway's counteract rank of 2 expels the object; the object is also expelled if you become unconscious. After a successful dispel magic spell or when you become conscious again, the hideaway immediately reforms with no additional action from you. You can also dismiss the hideaway (if it is empty) or re-form it using a single action with the envision component."
+ },
+ {
+  "id": "emergency-medical-assistance",
+  "name": "Emergency Medical Assistance",
+  "level": 12,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "manipulate",
+   "skill"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication",
+   "master in Medicine"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** An adjacent ally is suffering persistent damage. --- You've learned a variety of methods for helping allies who are bleeding, burning, or otherwise suffering persistent damage, from brushing off acid to patting down fires. Your ally immediately attempts a flat check to remove all types of persistent damage, and your use of this feat automatically counts as especially effective aid, reducing the DC from 15 to 10 for all future flat checks to remove the persistent damage."
+ },
+ {
+  "id": "emissary-of-peace",
+  "name": "Emissary of Peace",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication",
+   "master in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Even when bloodshed is inevitable, you would rather see your foes surrender. You attempt a Diplomacy check to Make an Impression against a single foe whose Hit Points are at less than half of their maximum value, followed by an immediate Request to convince that creature to cease fighting. You take a -5 penalty to your Diplomacy check. The GM sets the DC of the Request based on the circumstances; it's generally at least a very hard DC for the creature's level. Some creatures might simply refuse, and those who agree to parley might find your arguments lacking and start fighting again."
+ },
+ {
+  "id": "emotional-push",
+  "name": "Emotional Push",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "bard",
+   "concentrate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy you're aware of fails its save against an emotion spell. --- You prepare to take advantage of your enemy's sudden change in emotions. The target is off-guard against your next attack before the end of your next turn."
+ },
+ {
+  "id": "empathetic-envoy",
+  "name": "Empathetic Envoy",
+  "level": 4,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Empathetic Envoy Source Gatewalkers (Hardcover) pg. 242 Archetype Twilight Speaker Prerequisites Twilight Speaker Dedication You believe that treating others with respect is the fastest way into their hearts, and in turn others are more likely to believe in your good intentions and write off bad first impressions as flukes. If a creature’s attitude toward you becomes lower over the course of a social interaction (for example, from friendly to indifferent, or from indifferent to unfriendly), their impression of you returns to its starting level an hour after the social interaction ends. This ability has no effect if the creature you are interacting with becomes hostile."
+ },
+ {
+  "id": "empathic-envoy",
+  "name": "Empathic Envoy",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Twilight Speaker Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You believe that treating others with respect is the fastest way into their hearts, and in turn others are more likely to believe in your good intentions and write off bad first impressions as flukes. If a creature's attitude toward you becomes lower over the course of a social interaction (for example, from friendly to indifferent, or from indifferent to unfriendly), their impression of you returns to its starting level an hour after the social interaction ends. This ability has no effect if the creature you are interacting with becomes hostile."
+ },
+ {
+  "id": "empathy-incarnate",
+  "name": "Empathy Incarnate",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "reincarnated"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Reincarnation has given you a compassionate perspective and enabled you to relate to almost everyone you speak with, putting them at ease and quickly generating trust. Whenever you attempt a Diplomacy check to Make an Impression or Request something, the DC is reduced by 2, and if the creature you're speaking with is lower level than you, any success is a critical success. Whenever you attempt a Diplomacy check to Gather Information, you can't critically fail."
+ },
+ {
+  "id": "empyreal-aura",
+  "name": "Empyreal Aura",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "aura"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication",
+   "legendary in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As an ultimate foe of evil and protector of the innocent, your very presence is a ward against evil. Each evil creature within 30 feet of you at the end of your turn must succeed at a save against the higher of your class DC or spell DC or else become Slowed 1 (Slowed 2 on a critical failure). On a successful save, the creature is temporarily immune for 10 minutes."
+ },
+ {
+  "id": "enchanting-shot",
+  "name": "Enchanting Shot",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "emotion",
+   "magical",
+   "mental"
+  ],
+  "prerequisites": [
+   "Eldritch Archer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With a single whisper carried on the wind, you enchant your ammunition to make a foe more vulnerable to your attacks. Make a bow or crossbow Strike. On a hit, the target takes an additional 2d6 mental damage. On a critical hit, the target also becomes Stunned 1. The mental damage increases to 3d6 if your weapon has a *greater striking rune*, or to 4d6 if your weapon has a *major striking rune*."
+ },
+ {
+  "id": "endure-anarchy",
+  "name": "Endure Anarchy",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "prerequisites": [],
+  "text": "Endure Anarchy Source Kingmaker Adventure Path pg. 531 Prerequisites Loyalty 14 Your kingdom holds together even in the midst of extreme peril. If your kingdom's Unrest is 6 or higher and you use a kingdom activity that decreases Unrest, decrease the Unrest by an additional 1. You do not fall into anarchy unless your kingdom's Unrest reaches 24 (see last paragraph of Step 2: Adjust Unrest on page 538)."
+ },
+ {
+  "id": "enduring-alchemy",
+  "name": "Enduring Alchemy",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to make your personal energy last just a little bit longer when quickly brewing ad hoc concoctions. When using Quick Alchemy to create an alchemical tool or elixir, that tool or elixir remains potent until the end of your next turn, instead of losing its potency at the start of your next turn."
+ },
+ {
+  "id": "enduring-quickness",
+  "name": "Enduring Quickness",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You move as fast and as high as the wind itself. You're permanently quickened. You can use your extra action to Stride or Leap, to provide one of the actions needed for a High Jump or Long Jump"
+ },
+ {
+  "id": "energetic-resonance",
+  "name": "Energetic Resonance",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would take acid, cold, electricity, fire, or sonic damage from a spell. **Requirements** You have an unexpended spell slot of a rank equal to or higher than the triggering spell. --- Your blood resonates with magical energy, mitigating the effects of harmful spells. Expend one of your spell slots of a rank equal to or higher than that of the triggering spell. You gain resistance to one of the triggering effect's damage types equal to twice the expended spell slot's rank."
+ },
+ {
+  "id": "energize-bite",
+  "name": "Energize Bite",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dragonblood"
+  ],
+  "prerequisites": [
+   "Breath of the Dragon",
+   "jaws unarmed attack"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** Your most recent action was to use Breath of the Dragon. --- The deadly energy of your breath remains in your jaws to empower your attacks. Until the end of your turn, your jaws unarmed attack deals an extra 1d6 damage of a type matching that of your draconic benefactor. This ability has the trait associated with the type of damage it deals."
+ },
+ {
+  "id": "energize-wings",
+  "name": "Energize Wings",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "morph",
+   "primal",
+   "sprite"
+  ],
+  "prerequisites": [
+   "Evanescent Wings"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your magic energizes your wings, allowing you to fly farther. The fly Speed you gain from Evanescent Wings increases to 25 feet."
+ },
+ {
+  "id": "energy-ablation",
+  "name": "Energy Ablation",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "spellshape",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "As you direct destructive energy at a foe, you can divert some of its power into a protective barrier that shields you from harm. If your next action is to Cast a Spell that deals at least one type of energy damage (acid, cold, electricity, fire, force, sonic, vitality, or void), you gain resistance to an energy damage type of your choice equal to the spell's rank. The resistance lasts until the end of your next turn. You get the resistance regardless of whether or not your spell dealt damage."
+ },
+ {
+  "id": "energy-blessed",
+  "name": "Energy Blessed",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [
+   "elemental heart dwarf heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Energy runs through your blood more powerfully. When you use Energy Emanation, you can create an emanation of 5 feet, 10 feet, or 15 feet. The damage increases to 6d6 plus an additional 1d6 for every level you have above 9th, instead of 1d6 plus an additional 1d6 for every 2 levels above 1st."
+ },
+ {
+  "id": "energy-interceptor",
+  "name": "Energy Interceptor",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [
+   "Intercept Attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Though other guardians understand how to anticipate the flow of martial combat, you predict blasts of magical lightning, blazing trap runes, and more. You can use Intercept Attack when an ally would take acid, cold, electricity, fire, or sonic damage, not only when they would take physical damage."
+ },
+ {
+  "id": "energy-resistance",
+  "name": "Energy Resistance",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [
+   "Energy Heart"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon has stronger resistance. Its resistance from Energy Heart and Dual Energy Heart increase to your level."
+ },
+ {
+  "id": "enervating-wail",
+  "name": "Enervating Wail",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You release a terrible wail that tears at the spirits of all nearby. All living creatures in a take damage with a save. The damage is 4d6, plus 1d6 for every level you have beyond 6th. --- **Awakening** Your scream echoes in the mind. You can choose to emit a silent psychic wail instead, which changes the damage type to , changes the save to a save, removes the auditory trait, and adds the mental trait. --- **Awakening** Your wail saps your foes' strength. In addition to the normal effects, living creatures in the area are Enfeebled 1 for 1 round on a success (but not a critical success), enfeebled 1 for 1 minute on a failure, and Enfeebled 2 for 1 minute on a critical failure."
+ },
+ {
+  "id": "enforced-order",
+  "name": "Enforced Order",
+  "level": 13,
+  "category": "general",
+  "traits": [
+   "aasimar"
+  ],
+  "prerequisites": [],
+  "text": "Enforced Order Source Ancestry Guide pg. 11 Prerequisites Lawbringer You never fail to strike down the ever-expanding reaches of chaos. All your weapon and unarmed Strikes deal 1 additional lawful damage and have the lawful and magical traits."
+ },
+ {
+  "id": "enhanced-familiar",
+  "name": "Enhanced Familiar",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "animist",
+   "druid",
+   "magus",
+   "sorcerer",
+   "thaumaturge",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [
+   "a familiar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Animist** You are able to materialize more of your attuned apparition's essence, creating a more powerful vessel for it to inhabit and aid you with. **Druid** You infuse your familiar with additional primal energy, increasing its abilities. **Magus** You infuse your familiar with more magical energy. **Sorcerer, Wizard, Witch** You infuse your familiar with additional magical energy. **Thaumaturge** By applying the best of multiple traditions of magic, you've found a more efficient way for your familiar to store its energy. --- You can select four familiar or master abilities each day, instead of two. --- **Special** Add the bonus familiar abilities you gain for being a witch to this amount. If your arcane thesis is Improved Familiar Attunement, your familiar's base number of familiar abilities, before adding any extra abilities from the arcane thesis, is four."
+ },
+ {
+  "id": "enlarged-chassis",
+  "name": "Enlarged Chassis",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "automaton"
+  ],
+  "prerequisites": [
+   "Medium or Small size"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've empowered your core to support a larger body, granting you size and additional reach. You gain the effects of enlarge constantly. **Enhancement** Your core's empowerment has stabilized, allowing for greater support. You are no longer clumsy due to the effects of enlarge."
+ },
+ {
+  "id": "enshroud-soul-cage",
+  "name": "Enshroud Soul Cage",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lich Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You wreathe your soul cage in an ever-growing collection of obfuscating illusions and protective abjurations to hide it from your enemies. You disguise the soul cage as any non-magical object of the same Bulk, and it gains the effects of the Disguise Magic and Veil of Privacy spells. The effects have unlimited durations, are heightened to half your level rounded up, and use your spell DC against any attempt to counteract them. The magic aura makes your soul cage appear non-magical. You can ignore the effects of any of these spells when dealing with your own soul cage. You are mentally alerted whenever your soul cage is damaged."
+ },
+ {
+  "id": "ensnaring-disarm",
+  "name": "Ensnaring Disarm",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your last action was a critical success to Disarm. **Requirements** Your student is within 15 feet of the Disarmed creature. --- You smack your foe's item out of their hand so that your student can grab it. Instead of the item falling to the ground in the target's space, you aim your blow to send the disarmed item flying, allowing your student to immediately catch it as a free action; they must have a free hand to do so."
+ },
+ {
+  "id": "ensnaring-wrappings",
+  "name": "Ensnaring Wrappings",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mummy Dedication",
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your Strike deals physical damage to a creature that is within reach of your arms and isn't more than one size larger than you. --- Some of your wrappings come loose to ensnare a creature you recently damaged. You attempt to Grapple the creature you damaged."
+ }
+]

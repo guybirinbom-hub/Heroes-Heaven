@@ -1,0 +1,399 @@
+{
+ "records": [
+  {
+   "id": "all-in-your-head",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction that swaps which save you roll against a triggering effect; the substitution is resolved at the table, not a sheet value."
+  },
+  {
+   "id": "all-shall-end-in-flames",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "3-action impulse: area damage and a save against your class DC, all landing on targets; the self-resurrection is a GM-adjudicated narrative outcome."
+  },
+  {
+   "id": "along-the-deep-river",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Once-per-year post-death reincarnation; pure narrative, nothing on the living sheet changes."
+  },
+  {
+   "id": "alter-admixture",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "10-minute exploration activity that swaps one advanced-alchemy item for a similar one; item swapping is done by hand in the inventory and the GM adjudicates 'similar'."
+  },
+  {
+   "id": "ambersoul",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The -1 circumstance penalty lands on the attacking creature's weapon, i.e. only on a target's statistics."
+  },
+  {
+   "id": "ambush-bladderwort",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Impulse that plants a hazard: everything (immobilize, Escape DC, the plant's AC/HP, the fruit's healing) resolves on the battlefield/targets."
+  },
+  {
+   "id": "ambush-hunter",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets two exploration activities (Scout + Avoid Notice) run together; the app does not model exploration-activity slots."
+  },
+  {
+   "id": "ambushing-knockdown",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants an activity (Stride then Strike, knocking the target prone); prone lands on the target and the routine is resolved at the table."
+  },
+  {
+   "id": "ammunition-thaumaturgy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hands/free-hand rules exception for reloading; the app does not track which hand holds what during Interact."
+  },
+  {
+   "id": "amp-focus",
+   "verdict": "MISS",
+   "reason": "Refocus should restore ALL Focus Points instead of 1. The sheet's Refocus control hardcodes +1 (src/sheet/SpellsTab.tsx, className 'refocus-btn', title 'Refocus (restore 1 focus point)'), and no legal field changes the refocus amount — a refocus-recovery lane is missing.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "amphibious-form",
+   "verdict": "MISS",
+   "reason": "Eidolon evolution: swim Speed equal to its land Speed capped at 25 ft (or a land Speed if it is aquatic), plus the amphibious trait. The companion-mod lane exists and the code comment in src/rules/companionGrants.ts line 123 literally cites 'Amphibious Form' as the reason for the 'land:25' shape, but COMPANION_MODS has no 'amphibious-form' entry (siblings airborne-form and burrowing-form are there). Add {kinds:['eidolon'],speeds:{swim:'land:25'},note:'…amphibious: breathes air and water, no -2 for bludgeoning/slashing unarmed Strikes underwater'} — a registry entry, not a core.json field.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "analyze-weakness",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action buff to the very next sneak-attack Strike against one identified creature; it is an action whose extra 2d6/3d6/4d6 precision is added when that damage is rolled."
+  },
+  {
+   "id": "ancestral-linguistics",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a temporary daily-prep language. Languages are a display list with no derived statistic, and the feat explicitly bars using it as a prerequisite, so nothing computed changes."
+  },
+  {
+   "id": "ancestral-mind",
+   "verdict": "MISS",
+   "reason": "Ancestry/heritage innate spells become occult and use the psychic spellcasting attribute for spell attack and spell DC. build.ts computes the innate entry's profile from the granting source (Charisma by default) and there is no field that retunes an existing innate entry's tradition/key attribute — an innate-entry retune lane is missing.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "ancillary-motes",
+   "verdict": "MISS",
+   "reason": "One extra daily use of Crystalline Dust (the Extraplanar Haze activity). extraplanar-haze carries limitedUses {max:1,per:'day'}, and the usesUpgrade lane (18 feats, e.g. incredible-luck-halfling → halfling-luck) exists for exactly this; ancillary-motes has no fields at all. Note it is repeatable (maxTakable:null) — max:2 is the value for a single take.",
+   "fix": {
+    "usesUpgrade": {
+     "featId": "extraplanar-haze",
+     "max": 2,
+     "per": "day"
+    }
+   }
+  },
+  {
+   "id": "angel-of-death",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds the death trait to Strikes against your mark and blocks its resurrection; both effects resolve entirely on the target."
+  },
+  {
+   "id": "angel-of-vindication",
+   "verdict": "MISS",
+   "reason": "Player-side damage increase: a backstabber weapon deals 3 extra precision instead of 1 (6 instead of 2 if the weapon is a +3 weapon) against off-guard undead. Conditional, so it belongs in the situational lane; the rest of the feat (instant destruction, blocked rejuvenation, Assassinate) is target-side.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeDamage"
+       }
+      ],
+      "when": "backstabber weapon vs an off-guard undead (+4 if the weapon is a +3 weapon)",
+      "bonus": "+2 precision"
+     }
+    ]
+   }
+  },
+  {
+   "id": "animal-empathy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you use Diplomacy on animals; no bonus or proficiency change, and who you may talk to is roleplay the GM adjudicates."
+  },
+  {
+   "id": "animal-empathy-druid",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate printing of Animal Empathy; same reason — Diplomacy usable on animals, no numeric or proficiency change."
+  },
+  {
+   "id": "animal-empathy-ranger",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ranger version: Make an Impression / simple Requests on animals; no bonus or proficiency change, GM-adjudicated roleplay."
+  },
+  {
+   "id": "animal-fleetness",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Increases the Speeds granted by the werecreature animal shape, and the app does not model that polymorph shape or its Speeds at all — there is no Speed on the sheet for this to raise, and a landSpeedBonus would be a flat over-grant."
+  },
+  {
+   "id": "animate-net",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rewrites what your Animate Rope does to a target (off-guard, Speed penalty, immobilized, Escape DC); every effect lands on the target."
+  },
+  {
+   "id": "ankle-bite",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction granting a jaws Strike outside the multiple attack penalty; the jaws attack itself comes from the prerequisite heritage/feat and the Strike resolves at the table."
+  },
+  {
+   "id": "annihilating-swing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action Strike that ignores resistances and can destroy objects; resistance-ignoring and object destruction are resolved against the target/scenery."
+  },
+  {
+   "id": "annotate-composition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "10-minute exploration crafting of a one-off composition scroll paid for with Focus Points; the app does not model annotated-composition consumables and the Performance check is a secret GM roll."
+  },
+  {
+   "id": "anoint-ally",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Redirects your blood magic effect to an ally — it changes only an ally's statistics."
+  },
+  {
+   "id": "antagonize",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes how the frightened condition decays on a creature you Demoralized; entirely a target-side condition rule."
+  },
+  {
+   "id": "anthropomorphic-shape",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds the Humanoid Form shapes to the Untamed Form spell's list; the app resolves polymorph forms from the spell text rather than tracking a per-character shape list."
+  },
+  {
+   "id": "anticipate-ambush",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Exploration activity: travel at half Speed, roll Perception for initiative, and enemies take -2 to Stealth initiative — an exploration mode plus an enemy-side penalty."
+  },
+  {
+   "id": "antler-rush",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action activity (Stride twice, then Disarm/Shove/Strike) resolved at the table."
+  },
+  {
+   "id": "aon-ggghhhjjjjjk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Junk record scraped from AoN ('You have JBNNNMBMM.') with no rules content at all; nothing to deliver. Worth suppressing from the feat list rather than modelling."
+  },
+  {
+   "id": "aon-harbinger-s-claw",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction that makes the target roll its triggering check twice and take the lower result; misfortune applied to a target."
+  },
+  {
+   "id": "aphet-flash",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Swarm action that dazzles creatures in its space and lights the swarm; effects land on targets and the battlefield."
+  },
+  {
+   "id": "apparition-cloud",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction: concealed from one triggering attack, familiar untargetable, adjacent squares become difficult terrain for enemies — a momentary reaction resolved at the table, not a sheet value."
+  },
+  {
+   "id": "apparition-sense",
+   "verdict": "MISS",
+   "reason": "Grants a named imprecise sense — apparition sight, 30 feet, detects invisible/hidden spirits, haunts and undead. The senses lane already carries free-text senses with range/acuity (magicsense on vestigial-magicsense, deathsense on pact-of-the-death-hunter), so this belongs on the sheet's senses line. The medium/spirit-relay activity below it is GM-adjudicated and needs nothing.",
+   "fix": {
+    "senses": [
+     {
+      "name": "apparition sight",
+      "range": 30,
+      "acuity": "imprecise"
+     }
+    ]
+   }
+  },
+  {
+   "id": "aquatic-camouflage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Removes the cover requirement for Hide/Sneak while submerged and observed from 20+ feet; a positional rules exception the GM adjudicates, with no numeric bonus."
+  },
+  {
+   "id": "aquatic-passage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignores non-magical difficult terrain underwater; the app does not model terrain, and no Speed value changes."
+  },
+  {
+   "id": "arcane-breadth",
+   "verdict": "MISS",
+   "reason": "Adds 1 spell slot per rank other than your two highest wizard-archetype ranks. The spellSlotBonus lane already models exactly this for the sibling Breadth feats (bloodline-breadth and the animist one use {perRank:1,exceptHighest:2}; occult-breadth/patrons-breadth add an entryId), but arcane-breadth carries no field.",
+   "fix": {
+    "spellSlotBonus": {
+     "perRank": 1,
+     "exceptHighest": 2
+    }
+   }
+  },
+  {
+   "id": "arcane-communication",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Touch telepathy (10 ft with the enhancement) — a communication method with no check, sense, or statistic attached."
+  },
+  {
+   "id": "arcane-safeguards",
+   "verdict": "MISS",
+   "reason": "Grants the Resist Magic reaction, whose printed effect is a +1 circumstance bonus to a save against a harmful magical effect (and success→critical success vs arcane). The action record exists in core.json (actions.resist-magic) but it is not a feat, so grantsFeats cannot deliver it; the save bonus is conditional, which is what the situational lane is for. The enhancement's temporary HP equal to the triggering spell's rank has no lane and stays a note.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+     ],
+      "when": "Resist Magic reaction, vs a harmful magical effect",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "arcane-sensitivity",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a non-magical action that mimics Detect Magic; it is an action resolved at the table and is explicitly not a spell, so an innateSpells entry would misrepresent it."
+  },
+  {
+   "id": "arcane-sight",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Folds Detect Magic into the Search exploration activity; exploration-activity stacking is not modelled and no statistic changes."
+  },
+  {
+   "id": "architect-of-flame",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Impulse that creates a Wall of Fire on the battlefield; the damage and area land on targets."
+  },
+  {
+   "id": "armament-paragon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Expands the property-rune list available to the champion's blessed armament and lets you swap the day's rune. The app has no blessed-armament rune lane (build.ts only references the Foundry class-feature path); runes are applied to the weapon through the item editor's etch/attach flow, so there is nothing extra to grant."
+  },
+  {
+   "id": "armed-and-armored",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free-hand rules exception for reloading with the shield hand; the app does not track hand occupancy during Interact."
+  },
+  {
+   "id": "armor-assist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A downtime/out-of-combat check against a GM-set DC to halve donning time; the app does not model armor donning time."
+  },
+  {
+   "id": "armor-break",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action attack that damages nearby enemies and self-inflicts the broken condition; the damage and forced movement are target-side, and the broken armor with its suspended Speed penalty is set by hand on the item."
+  },
+  {
+   "id": "armor-in-earth",
+   "verdict": "MISS",
+   "reason": "Conjures temporary stone armor with printed statistics (medium, AC +4, Dex cap +1, check -2, Speed -10, Str +3, Bulk 1, plate group, using your highest armor proficiency; heavy with AC +5 and bulwark at 3rd), suppressing your worn armor's bonuses. This REPLACES the worn armor's numbers, and no field (or mode, whose modifiers only add) can express a temporary replacement armor — a conjured-armor lane is missing.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "armor-regiment-training",
+   "verdict": "MISS",
+   "reason": "Treats heavy armor as 1 Bulk lighter. Bulk and encumbrance are computed and warned on (bulk carried vs encumberedAt), but no legal field lets a feat adjust an item category's Bulk — a feat→Bulk lane is missing. (The rest — resting in armor and exploration travel Speed — legitimately needs nothing.) Duplicate record of armored-regiment-training; fix both together.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "armor-specialist",
+   "verdict": "MISS",
+   "reason": "Grants the armor specialization effects for every armor you are proficient with — real defensive benefits (e.g. plate's physical resistance, chain's crit-to-hit conversion) that depend on the worn armor's group. Nothing in src models armor specialization at all (no match for 'armor specialization' anywhere in src), and no legal field expresses an armor-group-conditional defence.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "armored-counterattack",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Free action granting a Strike plus a Taunt after Intercept Attack; the Strike and the Taunt land on the enemy."
+  },
+  {
+   "id": "armored-rebuff",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction granting an Athletics Shove without a free hand; the Shove is resolved at the table against the foe."
+  },
+  {
+   "id": "armored-regiment-training",
+   "verdict": "MISS",
+   "reason": "Duplicate printing of Armor Regiment Training: treating heavy armor as 1 Bulk lighter is a real change to the tracked Bulk/encumbrance total and no field lets a feat adjust armor Bulk. Resting in armor and the exploration travel-Speed clause need nothing.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "armored-resistance",
+   "verdict": "MISS",
+   "reason": "Player-side resistance to physical damage equal to half your level when you take an ally's damage with Intercept Attack while in medium or heavy armor. An unconditional resistances field would be a large over-grant, but the mode lane carries resistances (adept-benefit-amulet is the same shape: a reaction-scoped resistance the player toggles), so it belongs there, off by default.",
+   "fix": {
+    "mode": {
+     "id": "armored-resistance",
+     "name": "Armored Resistance",
+     "feats": [
+      "armored-resistance"
+     ],
+     "duration": "while you Intercept an Attack in medium or heavy armor",
+     "modifiers": [],
+     "resistances": [
+      {
+       "type": "physical",
+       "value": "floor(@actor.level/2)"
+      }
+     ],
+     "note": "Armored Resistance: this resistance applies ONLY to the damage you take in your ally's place with Intercept Attack, and only while you wear medium or heavy armor. Switch it on when you Intercept."
+    }
+   }
+  },
+  {
+   "id": "armored-rest",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Removes the fatigue from sleeping in armor; the app does not model overnight rest conditions."
+  },
+  {
+   "id": "arms-that-cut-the-waves",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both benefits cost a Mythic Point at the moment of use (roll Swim at mythic proficiency; hold breath 10 more rounds); a spend-to-activate one-off with no standing sheet value."
+  },
+  {
+   "id": "army-of-one",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 3-action mythic activity: Strike every enemy in your nimbus with a deferred multiple attack penalty; resolved at the table against targets."
+  },
+  {
+   "id": "ascended-dragonet-heritage",
+   "verdict": "ALREADY_OK",
+   "reason": "It re-grants 'all the mechanical benefits of the dragonet heritage you selected at first level'. Those heritages are real records the app already applies through heritage selection (heritages fey-dragonet, pearl-dragonet, tidepool-dragonet under the dragonet ancestry); the remaining clause only makes you eligible for heritage-gated feats, which the builder surfaces as a prerequisite note rather than a hard block."
+  },
+  {
+   "id": "ash-piercing-gaze",
+   "verdict": "MISS",
+   "reason": "Automatic success on the flat check to target a creature concealed only by smoke or mist — a standing perception benefit the sheet should show. The senses lane already carries exactly this as a free-text sense on brilliant-vision ({name:'ignores concealment from clouds, dust, fog, mist, and smoke'}); this feat has no field.",
+   "fix": {
+    "senses": [
+     {
+      "name": "ignores concealment from smoke and mist"
+     }
+    ]
+   }
+  },
+  {
+   "id": "ash-strider",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action impulse: move ignoring reactions/terrain, damage the first creature you pass through, and be concealed until your next turn — a momentary movement action resolved at the table."
+  }
+ ]
+}

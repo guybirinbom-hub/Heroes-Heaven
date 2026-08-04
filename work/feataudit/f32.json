@@ -1,0 +1,979 @@
+[
+ {
+  "id": "sanctify-armament",
+  "name": "Sanctify Armament",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "divine"
+  ],
+  "prerequisites": [
+   "holy or unholy trait"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You touch a weapon and bring it into concordance with your deity. For 1 round, that weapon gains your holy or unholy trait. It also deals an additional 2d6 spirit damage to creatures of the opposed trait. For example, if you are holy, the weapon would deal an extra 2d6 spirit damage to unholy creatures. If you use Sanctify Armament again, any previous use of it expires."
+ },
+ {
+  "id": "sand-snatcher",
+  "name": "Sand Snatcher",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "A figure of sand with grasping arms arises in an unoccupied square within 30 feet. You can choose to make it Small or Medium size, and it can flank. When the sand snatcher appears, you can have it attempt to Grapple one creature adjacent to it that's no more than one size larger than it. This Grapple uses your impulse attack roll instead of an Athletics check and shares your multiple attack penalty. The sand snatcher lasts until the end of your next turn, and you can Sustain the impulse up to 1 minute. Each time you Sustain the impulse, you can have the sand snatcher either Grapple again or Burrow, Climb, or Stride up to 20 feet. Attempts to Escape its grasp use your class DC. --- **Level (10th)** You can also choose Large size. **Level (14th)** You can also choose Large or Huge size."
+ },
+ {
+  "id": "sanguimancer-dedication",
+  "name": "Sanguimancer Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "dedication"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The life essence in your blood recovers naturally over time. You gain a special type of temporary Hit Points called sanguimancy Hit Points that follow the normal rules for temporary Hit Points with two exceptions: you can spend them to power some sanguimancy feats, and you can never have a greater number of sanguimancy Hit Points than double your level. After a full 8-hour rest, you gain sanguimancy HP equal to your level that last for 8 hours. If someone successfully restores HP to you with Treat Wounds, you also gain 1 sanguimancy HP for every 10 Hit Points recovered (minimum 1 sanguimancy HP). --- **Special** Sanguimancer actions have the trait matching your spellcasting tradition; if you don't have one, choose divine or occult when you select the Sanguimancer Dedication."
+ },
+ {
+  "id": "sanguine-evasion",
+  "name": "Sanguine Evasion",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "occult",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Sanguine Evasion Source High Seas pg. 65 Access member of the Red Mantis assassins Trigger You’re reduced to 0 Hit Points and are not already wounded. You avoid death by turning into a spray of red mist. You remain at 1 Hit Point and transform into a vaporous state with the effects of vapor form, except your fly Speed is equal to your land Speed and you can occupy the same space as another creature. Creatures in the same space as you in this form are concealed. You can Dismiss this form, returning to your normal form with 1 Hit Point and becoming wounded 1. If you don’t Dismiss this form within 1 minute, you return to your normal form with 0 Hit Points and become dying 1."
+ },
+ {
+  "id": "sanguivolent-roots",
+  "name": "Sanguivolent Roots",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "plant",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Blood-drinking vines grow from the ground in a within 120 feet. Each living enemy in the area has its blood drained, taking damage with a save against your class DC. Each time the vines drink blood, living creatures in the area who aren't your enemies regain HP equal to half the damage a single creature took; calculate this using the highest damage a single creature took. This is a healing vitality effect. Your enemies with void healing in the area take vitality damage in the same amount as the healing. The vines last until the end of your next turn, and you can Sustain the impulse. The first time you Sustain the impulse on subsequent turns, you can repeat the effect. --- **Level (+2)** The damage increases by 1d6."
+ },
+ {
+  "id": "savage-critical",
+  "name": "Savage Critical",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The wounds you inflict are grievous. When you Strike with a weapon or unarmed attack for which you have legendary proficiency, you critically succeed if you roll a 19 on the die as long as that result would be a success. This has no effect on a 19 if the result would be a failure."
+ },
+ {
+  "id": "saving-slash",
+  "name": "Saving Slash",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Aldori Duelist Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An opponent critically hits you with a melee attack. --- You quickly whirl your blade, trying to deflect enough momentum to avoid the worst of the attack. Attempt a . If you succeed, the attack becomes a normal hit, instead of a critical hit."
+ },
+ {
+  "id": "sawtooth-grapple",
+  "name": "Sawtooth Grapple",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Sawtooth Grapple Source High Seas pg. 65 Prerequisites trained in sawtooth sabers Access member of the Red Mantis assassins Your sawtooth saber training enables you to pin down an enemy using your twin blades. Make a Strike with each weapon against the same creature. If you deal sneak attack damage, you can immediately attempt to Grapple the creature, even if you don’t have a hand free. If you dealt damage with both Strikes, your multiple attack penalty is not applied to the Grapple attempt. Special You’re wielding two weapons, at least one of which is a sawtooth saber. Sawtooth Grapple leads to... Cutthroat Grapple"
+ },
+ {
+  "id": "say-that-again",
+  "name": "Say that Again!",
+  "level": 6,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An opponent gets a critical failure when attempting to Demoralize you or Lie to you. --- The world is full of obnoxious weasels who think they can pull one over on you-put them in their place! When an adjacent creature attempts to Lie to you or to Demoralize you and gets a critical failure on the roll, you can use your reaction to make a Shove attempt against that opponent. If combat results, you can roll Intimidation for your initiative check."
+ },
+ {
+  "id": "scalpels-point",
+  "name": "Scalpel's Point",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [
+   "forensic medicine methodology"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your stratagems benefit from your precise knowledge of anatomy. When you critically hit with an attack on which you substituted your attack roll due to Devising a Strategem, if your attack dealt piercing or slashing damage, you also deal 1d6 to your target."
+ },
+ {
+  "id": "scar-thick-skin",
+  "name": "Scar-Thick Skin",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Glorious, storied scars cover and protect much of your body, girding you in fleshly armor that resists any wound weaker than those you have already survived. Your DC on flat checks to end persistent bleed damage is reduced from 15 to 10, or from 10 to a after receiving especially appropriate assistance."
+ },
+ {
+  "id": "scarred-hide",
+  "name": "Scarred Hide",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your hide is an impenetrable mass of scars, accrued over countless bloody conflicts. When in your hybrid or animal shape, you gain resistance to non-silver slashing damage equal to half your level."
+ },
+ {
+  "id": "scatter-blast",
+  "name": "Scatter Blast",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a loaded firearm that has the scatter trait. --- You pack your weapon with additional shot and powder, creating a risky but devastating wave of destruction. Make a ranged Strike with the firearm. The firearm's range increment increases by 20 feet and the radius of its scatter increases by 20 feet. The Strike gains the following failure conditions. **Failure** The firearm misfires, but it doesn't cause the other critical failure effects listed below. **Critical Failure** The firearm misfires and also explodes. It becomes broken, and it deals its normal weapon damage to all creatures in a centered on the firearm, with a basic Reflex save against your class DC. This damage includes any from the weapon's fundamental and property runes."
+ },
+ {
+  "id": "scatter-swarm",
+  "name": "Scatter Swarm",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "magical",
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your patron reaches through your familiar to magically disperse a group of smaller threats. A swarm that shares a space with your familiar takes damage equal to the swarm's weakness to area damage. You choose whether this is acid, cold, electricity, or fire damage, and this action gains the trait of the damage type you choose."
+ },
+ {
+  "id": "scattered-fire",
+  "name": "Scattered Fire",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast fireball"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Fireball, you can modify its area to be two non-overlapping 10-foot bursts."
+ },
+ {
+  "id": "scattering-charge",
+  "name": "Scattering Charge",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You are wearing medium or heavy armor. --- You charge into a group of enemies to send them flying. Stride up to your Speed. At the end of your movement, you can Shove up to three creatures within your reach. You don't need a hand free to do so. You attempt a separate Athletics check for each one; each attempt counts toward your multiple attack penalty, but the penalty doesn't increase until after you've made all the attempts. Regardless of your results, you can't Stride to follow any of the targets."
+ },
+ {
+  "id": "scattering-shout",
+  "name": "Scattering Shout",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "With a flex of your mighty thews and a guttural bellow that can make ears bleed, you drive back any enemies surrounding you. Each enemy within a must attempt a saving throw against your class DC. --- **Critical Success** The creature is unaffected. **Success** The creature is pushed 5 feet away from you. **Failure** The creature is pushed 10 feet away from you and takes damage. **Critical Failure** The creature is pushed 15 feet away from you and takes damage."
+ },
+ {
+  "id": "scholastic-identification",
+  "name": "Scholastic Identification",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Archaeologist Dedication",
+   "master in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have the knowledge needed to understand ancient texts and cultural artifacts. You can use Society when Deciphering Writing, no matter the type of writing you are examining. You can also use Society to identify-magic skill=society when examining a magic item or location with cultural significance."
+ },
+ {
+  "id": "school-counterspell",
+  "name": "School Counterspell",
+  "level": 12,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "School Counterspell Source Secrets of Magic pg. 241 Archetype Runelord Prerequisites Counterspell; Runelord Dedication Your intricate knowledge of your school lets you easily negate spells from that school. Instead of being able to counter a foe's spell with Counterspell only if you have the same spell prepared, if the foe casts a spell from the school matching your specialization, you can Counterspell it with any other spell of the same school."
+ },
+ {
+  "id": "school-spell-redirection",
+  "name": "School Spell Redirection",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Counterspell",
+   "Runelord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you Counterspell a spell with a school matching your specialization, if you critically succeed at your counteract check, or if you succeed while using a spell of a higher level than the spell you countered, you can redirect the spell you countered. You choose the target, area, and other aspects of the spell and use your own spell DC, spell attack roll, or other statistics as appropriate to determine the effects."
+ },
+ {
+  "id": "schooled-in-secrets",
+  "name": "Schooled in Secrets",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You notice the signs and symbols that members of mystery cults and other secret societies use to declare their affiliation to fellow members. You can use Occultism in place of Diplomacy to Gather Information about such groups and in place of Deception to Impersonate a member of these groups. If you belong to a secret cult, lodge, sect, or similar organization, you automatically recognize members of your group unless they are specifically attempting to conceal their presence from you. They also recognize your standing unless you are specifically concealing it."
+ },
+ {
+  "id": "scintillating-spell",
+  "name": "Scintillating Spell",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "light",
+   "sorcerer",
+   "spellshape",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your spells become a radiant display of light and color. If your next action is to Cast a Spell that doesn't have the darkness trait, has no duration, and requires creatures to attempt a Reflex save, the spell explodes in a spray of scintillating lights, in addition to its other effects. Each creature that failed its Reflex save against the spell is dazzled for 1 round, and those who critically failed are instead blinded for 1 round."
+ },
+ {
+  "id": "scorched-on-the-crackling-mountain",
+  "name": "Scorched on the Crackling Mountain",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "tanuki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By ritualistically marking your fur with fire, like an infamous tanuki of legend, you protect yourself against future flames. You gain a black stripe down your back that looks charred. Your flat check to remove persistent fire damage is DC 10 instead of DC 15, which can be reduced to DC 5 with appropriate assistance. The first time each day you would be reduced to 0 Hit Points by a fire effect, you avoid being knocked out and remain at 1 Hit Point, and your wounded condition increases by 1. Two hairs plucked from your tail can be used as flint and steel to create a fire, emitting a strange crackling sound as they ignite."
+ },
+ {
+  "id": "scorching-column",
+  "name": "Scorching Column",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "With an upward gesture, you shape a vertical column of extreme heat. The cylinder is 10 feet in diameter and 30 feet high, and the bottom must be within 60 feet of you. Each creature in the area takes damage with a save against your class DC. The flame remains briefly, making all squares in the column hazardous terrain until the end of your next turn, and you can Sustain the impulse up to 1 minute. A creature takes damage each time it moves into one of these squares. --- **Level (+3)** The initial damage increases by 1d6, and the hazardous terrain damage increases by 2."
+ },
+ {
+  "id": "scoundrels-surprise",
+  "name": "Scoundrel's Surprise",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You drop your disguise at the right moment and surprise your target. After you Impersonate someone else using a disguise kit, you can remove your disguise with a dramatic gesture. Any creatures that previously failed to see through your disguise are off-guard against the next attack you make before the end of your turn."
+ },
+ {
+  "id": "scouring-rage",
+  "name": "Scouring Rage",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [
+   "an instinct that allows you to change your additional damage from Rage to a different damage type"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You Rage. --- You emit a powerful surge of instinctual energy when you unleash your anger. Each enemy within 20 feet takes damage equal to your level ( save against your class DC) of the same type as your additional damage during that Rage."
+ },
+ {
+  "id": "scout-dedication",
+  "name": "Scout Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in Stealth and Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are a highly skilled scout, capable of guiding your allies, detecting imminent threats, and avoiding the attention of dangerous enemies. You can perform the Scout exploration activity at the same time as the Avoid Notice exploration activity. The bonus to initiative you grant when you Scout is +2 instead of +1."
+ },
+ {
+  "id": "scouts-pounce",
+  "name": "Scout's Pounce",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Scout Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are hidden from or undetected by all of your opponents, and you aren't within 10 feet of any enemy. --- You leap from the shadows to strike your foes. Stride up to your Speed, then Strike twice. If you were hidden or unnoticed by the target of these Strikes, your foe is off-guard against both attacks. Your multiple attack penalty applies normally for both attacks."
+ },
+ {
+  "id": "scroll-adept",
+  "name": "Scroll Adept",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "During your daily preparations, you can create two temporary scrolls containing arcane spells from your spellbook. Each scroll must be of a different spell rank, and both spell ranks must be 2 or more ranks lower than your highest-rank spell. Any scrolls you create this way become non-magical the next time you make your daily preparations. A temporary scroll has no value if sold. As normal for a scroll, these are consumable items of light Bulk, and someone holding the item in one hand can Cast the Spell from it if it's on their spell list, using their spell attack modifier and spell DC. If you have master proficiency in spell DC, you can create three temporary scrolls during your daily preparations, and if you have legendary proficiency, you can create four temporary scrolls."
+ },
+ {
+  "id": "scroll-esoterica",
+  "name": "Scroll Esoterica",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "esoterica",
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Scroll Thaumaturgy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your esoterica includes scraps of scriptures, magic tomes, druidic markings, and the like, which you can use to create temporary scrolls. Each day during your daily preparations, you can create a single temporary scroll containing a 1st-rank spell of any tradition. The spell must be common, or you must otherwise have access to it. This scroll is an unstable, temporary item and loses its magic the next time you make your daily preparations if you haven't used it by then. It can't be used to Learn the Spell. At 8th level, add a second temporary scroll containing a 2nd-rank spell."
+ },
+ {
+  "id": "sculpt-shadows",
+  "name": "Sculpt Shadows",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "fetchling",
+   "occult",
+   "shadow"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You coax nearby shadows into the shape of a simple weapon or a simple tool or item, using a tiny piece of your shadow to make it solid; in doing so, you lose 1 Hit Point. You can create only level-0 common, non-consumable weapons, or adventuring gear with no intricate parts, written text, or other complicated components. The item lasts until used for a single activity, until you Sculpt Shadows again, or for 1 minute, whichever comes first. Once the duration expires, the object dissipates, and you regain the lost Hit Point unless the item was Broken or Destroyed. As the object holds a tiny sliver of your shadow, you can't recover the lost Hit Point until after the object dissipates."
+ },
+ {
+  "id": "scurry",
+  "name": "Scurry!",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "awakened-animal"
+  ],
+  "prerequisites": [
+   "Tiny size"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- Your instincts to move to safety are strong. You Stride; you must end your movement in a location where you have cover from at least one enemy you can see, and you can't take this action if it's impossible for you to do so. You can Climb, Fly, or Swim instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "sea-swarmer",
+  "name": "Sea Swarmer",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "athamaru",
+   "locathah"
+  ],
+  "prerequisites": [],
+  "text": "Sea Swarmer Source High Seas pg. 18 You’ve learned how to hunt with others, whether above or below the surface. If an enemy is within reach of you and at least two of your allies, that enemy is off-guard against you."
+ },
+ {
+  "id": "sealed-poppet",
+  "name": "Sealed Poppet",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "poppet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've reinforced your interior parts with sealant or other flame-retardant materials, protecting you from fire. You no longer have the weakness to fire from the flammable ability. **Special** You can't take this feat if you're a stuffed poppet."
+ },
+ {
+  "id": "searing-restoration",
+  "name": "Searing Restoration",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fire",
+   "healing",
+   "inventor",
+   "manipulate",
+   "unstable"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "They told you there was no way that explosions could heal people, but they were fools… Fools who didn't understand your brilliance! You create a minor explosion from your innovation, altering the combustion to cauterize wounds using vaporized medicinal herbs. You or a living creature adjacent to you regains Hit Points. In addition, the creature you heal can attempt an immediate flat check to recover from a single source of persistent bleed damage, with the DC reduction from appropriate assistance. At 3rd level, and every 2 levels thereafter, increase the healing by 1d10. --- **Special** If your innovation is a minion, it can take this action rather than you, though because it's not a living creature, it can't use the ability on itself."
+ },
+ {
+  "id": "second-ikon",
+  "name": "Second Ikon",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Exemplar Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain an additional ikon. When you Spark Transcendence, your spark moves automatically from the ikon you just used to the other ikon."
+ },
+ {
+  "id": "second-shield",
+  "name": "Second Shield",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Viking Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your Shield Block causes your shield to break or be destroyed. --- You're used to your shield breaking in the middle of battle, and you're prepared to use a backup or any convenient nearby object to defend yourself. You can Interact to draw a shield on your person or an unattended shield within your reach. If there is an object within your reach that could serve as an improvised shield-for example, a table or chair-you can Interact to draw it with this feat. The GM determines if something can be used as an improvised shield. Your new shield isn't raised until you use the Raise a Shield action, as normal."
+ },
+ {
+  "id": "second-sight",
+  "name": "Second Sight",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic",
+   "prediction"
+  ],
+  "prerequisites": [
+   "Timewracked Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You peer into the next several seconds to watch the potential timelines around a nearby creature unfold. Spend a Mythic Point, then make a check to Recall Knowledge at mythic proficiency about a creature you can see. This check gains the following additional effects. --- **Critical Success** You learn all the actions the creature will take on its next turn (or in the first round of combat if combat hasn't begun), such as \"Stride toward Seelah\" or \"Cast shield.\" These actions are locked in and the creature must attempt them, even if the situation changes, though it need not perform the actions in the order stated. For instance, if the creature locked in the actions \"Stride toward Seelah,\" \"Make a longsword Strike against Seelah,\" and \"Raise a shield,\" and Seelah spent her turn moving adjacent to the creature, the creature can make the longsword Strike as its first action if it wishes. If the creature is unable to fulfill an action it committed to, it loses that action as it reels from a temporal paradox. **Success** You gain one additional piece of information about the creature, as if you had critically succeeded at the Recall Knowledge check. If the situation changes drastically (perhaps Seelah becomes invisible and the creature is unaware where Seelah is), the GM determines what happens."
+ },
+ {
+  "id": "second-sting",
+  "name": "Second Sting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "press",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding two melee weapons, each in a different hand. --- You read your prey's movements and transform them into openings, so failures with one weapon set up glancing blows with the other. Make a melee Strike with one of the required weapons against your hunted prey. The Strike gains the following failure effect. **Failure** You deal the damage the other required weapon would have dealt on a hit, excluding all damage dice. (This removes dice from weapon runes, spells, and special abilities, not just weapon damage dice.)"
+ },
+ {
+  "id": "second-wind",
+  "name": "Second Wind",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can enter a second rage, but afterward you need to catch your breath. When you Rage, you can choose to gain temporary HP from the Rage even if 1 minute hasn't passed (or a full turn if you have the Revitalizing Rage class feature). If you do, once this Rage ends you become fatigued until you rest for 10 minutes."
+ },
+ {
+  "id": "secondary-detonation-array",
+  "name": "Secondary Detonation Array",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "spellshape",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You divert some of your spell's energy into an unstable runic array. If your next action is to Cast a Spell that deals damage, has no duration, and affects an area, a glowing magic circle appears in a within that area. At the beginning of your next turn, the circle detonates, dealing 1d6 damage per rank of the spell to all creatures within the circle, with a basic Reflex save against your spell DC. If the spell dealt a different type of damage, the circle deals this type of damage instead (or one type of your choice if the spell could deal multiple types of damage)."
+ },
+ {
+  "id": "see-the-unseen",
+  "name": "See the Unseen",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "goloma"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You notice things that others can't see at all. While you're adjacent to an undetected creature of your level or lower, it is instead only hidden from you. You only need a successful to target a hidden creature."
+ },
+ {
+  "id": "seize",
+  "name": "Seize",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Zombie Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful fist Strike against a creature no more than one size larger than you. --- You seize your foe and pull it close. The foe you hit is grabbed as if you succeeded at an Athletics check to Grapple the foe."
+ },
+ {
+  "id": "seize-advantage",
+  "name": "Seize Advantage",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your student critically succeeds at a Strike or spell attack roll. --- You take the openings granted by your student's success to reposition yourself. You Step or Stride up to your Speed."
+ },
+ {
+  "id": "seize-an-advantage",
+  "name": "Seize an Advantage",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "gunslinger",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Seize an Advantage Source High Seas pg. 93 Prerequisites Dirty Trick Access You're from the Shackles Requirements Your last action this turn was to attempt a Dirty Trick against a foe. You take any momentary advantage you can when fighting dirty. You make a ranged Strike or Interact to Reload; doing so does not trigger any reactions from the required foe. If you succeeded or critically succeeded on your Dirty Trick, making ranged attacks and Interacting to Reload do not trigger reactions from that foe for as long as they remain clumsy because of your Dirty Trick."
+ },
+ {
+  "id": "selective-energy",
+  "name": "Selective Energy",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As you call down divine power, you can prevent some enemies from benefiting or some allies from being hurt. When you cast a version of Harm or Heal that has an area, you can designate up to 5 creatures in the area. They are not targeted by the spell."
+ },
+ {
+  "id": "self-destruct",
+  "name": "Self-Destruct",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Clockwork Reanimator Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your reanimated clockwork companion is reduced to 0 Hit Points. **Requirements** You're within 60 feet of your reanimated clockwork companion. --- You've installed a self-destruct device within your construct companion, which you can trigger with a special device from up to 60 feet away. When you activate the device, your reanimated construct companion explodes, dealing 2d6 fire damage per level () to all creatures in a 30-foot radius. Creatures caught in the blast can attempt a save, with a DC equal to the higher of your class DC or spell DC."
+ },
+ {
+  "id": "semblance-of-life",
+  "name": "Semblance of Life",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine",
+   "illusion",
+   "visual"
+  ],
+  "prerequisites": [
+   "Mummy Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You deal damage to a living creature with your fist Strike or with Desiccating Inhalation. --- You draw the moisture you've drained from others into your own flesh, temporarily taking on the appearance of life. This has the effects of Illusory Disguise, except you can appear only as yourself while you were a living humanoid."
+ },
+ {
+  "id": "sense-alignment",
+  "name": "Sense Alignment",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "secret"
+  ],
+  "prerequisites": [
+   "Edgewatch Detective Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You read the body language of an intelligent creature within 30 feet and pick up on subtle cues to detect its general propensity for good or evil and law or chaos. The GM rolls a secret check, comparing the result against the target's Deception DC. --- **Critical Success** You ascertain the target's alignment. **Success** You ascertain the target's alignment, but only along one axis (your choice of either the good-evil axis or the lawful-chaotic axis). **Failure** You do not learn the target's alignment. **Critical Failure** You incorrectly ascertain the target's alignment, misidentifying their alignment along either one axis or both (GM's choice)."
+ },
+ {
+  "id": "sense-allies",
+  "name": "Sense Allies",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "human"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Like many humans raised in a close-knit community, you have always been strongly attuned to the presence of others. Willing allies that you are aware of within 60 feet that would otherwise be undetected by you are instead hidden from you. The flat check for you to target willing allies within 60 feet that are hidden from you is instead of 11."
+ },
+ {
+  "id": "sense-for-trouble",
+  "name": "Sense for Trouble",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [
+   "Cat's Luck"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can tell when something's off. You can trigger Cat's Luck after you roll initiative, in addition to its normal trigger, to reroll your Initiative and take the higher of the two results. This still counts against Cat's Luck's frequency, as normal."
+ },
+ {
+  "id": "sense-the-strike",
+  "name": "Sense the Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Verduran Shadow Dedication",
+   "master in Survival"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature targets you with an attack and you can see the attacker. --- You sense how an incoming attack moves through ambient primal energy, predicting how best to dodge. The triggering attack targets your Survival DC instead of your AC. Though this allows you to avoid taking penalties to your AC, it doesn't remove any conditions or other effects causing such penalties. For example, an enemy with sneak attack would still deal extra damage to you for being off-guard, even though you wouldn't take the –2 circumstance penalty when defending against the attack."
+ },
+ {
+  "id": "sense-the-unseen",
+  "name": "Sense the Unseen",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "investigator",
+   "ranger",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You fail a check to Seek. --- When you look for foes, you can catch even the slightest cues, such as their minute movements or the shifting of air currents on your skin. Even though you failed at the triggering check, you automatically sense any undetected creatures in the area where you're Seeking, making them merely hidden to you."
+ },
+ {
+  "id": "sentinels-orbit",
+  "name": "Sentinel's Orbit",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Starlit Sentinel Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Just as your constellation traverses the sky, so too can you. When in your sentinel form, you gain a fly Speed equal to your land Speed or 20 feet, whichever is higher."
+ },
+ {
+  "id": "sepulchral-sublimation",
+  "name": "Sepulchral Sublimation",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate",
+   "oracle",
+   "spellshape",
+   "wizard"
+  ],
+  "prerequisites": [
+   "ability to permanently create or control undead",
+   "cleric with a negative font, oracle of bones, or necromancer wizard"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have at least one undead minion that you permanently control. --- You repurpose the void energy that flows through your minions at a moment's notice. Instantly destroy one undead minion within 60 feet that is permanently under your control. If your next action is to cast a necromancy spell from a spell slot, you don't expend the slot. The spell's rank must be half the destroyed minion's level or lower and the spell can't have a duration. **Special** This feat has the trait matching your spellcasting tradition."
+ },
+ {
+  "id": "set-up-strike",
+  "name": "Set-up Strike",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "commander",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your attack makes it difficult for your enemy to defend themselves against your allies' attacks. Attempt a Strike against an enemy. If the Strike is successful, the target is off-guard against the next attack that one of your allies attempts against it before the start of your next turn."
+ },
+ {
+  "id": "seven-colored-cosmic-bridge",
+  "name": "Seven-Colored Cosmic Bridge",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a melee weapon ikon --- Your divine spark shines in a riot of shimmering colors, capable of carrying you through the world as fast as light itself. The imbued ikon gains the following abilities. **Immanence** (light, teleportation) Your weapon scatters rainbow-colored light across nearby surroundings, each a possible destination. When you successfully Strike an enemy, you can choose to teleport to an unoccupied location within 10 feet as a free action. **Transcendence—Fleeting Arc through Heaven and Earth** ⟨3⟩ (light, spirit, teleportation, transcendence)"
+ },
+ {
+  "id": "seven-part-link",
+  "name": "Seven-Part Link",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Paired Link"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Many traditions hold the number seven as significant. By exchanging pieces of a seven-part set of esoterica, you create a magical web by which your allies can affect each other at a distance. When you use Paired Link during your daily preparations, you can exchange linking esoterica with up to six willing allies, keeping one piece for yourself. In addition to the normal effects of Paired Link, if a linked ally casts a spell with a range of touch, they can target linked allies within 30 feet with that spell."
+ },
+ {
+  "id": "sever-magic",
+  "name": "Sever Magic",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "esoterica",
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're holding an implement. --- You apply a frayed thread, a pinch of fulu ash, or a similar undone charm to your weapon, and swing to break a spell. Make a Strike against an enemy. If you hit and deal damage, you attempt to counteract a single spell active on the target (your choice). Your counteract rank is equal to half your level (rounded up), and your counteract check modifier is equal to your class DC - 10."
+ },
+ {
+  "id": "sever-space",
+  "name": "Sever Space",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish",
+   "teleportation"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a weapon that deals slashing damage or have an unarmed Strike that deals slashing damage. --- You destroy the space between you and your targets, allowing you to strike with your melee weapons at great range. Make a melee Strike with the required weapon or unarmed attack. The attack gains an 80-foot reach for this Strike. After the Strike, regardless of whether it succeeded, the world rushes to fill the space you destroyed, bringing you and the target adjacent to each other. You can choose to teleport to the closest space adjacent to the target or to attempt to teleport the target adjacent to you. If you choose the target, they can negate the teleportation if they succeed at a Fortitude save against your class DC."
+ }
+]

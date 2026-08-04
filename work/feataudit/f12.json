@@ -1,0 +1,947 @@
+[
+ {
+  "id": "enterprising-ritualist",
+  "name": "Enterprising Ritualist",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ritualist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Elegant and expensive components are no replacement for your skill and practice at ritual casting. If a ritual has a Cost entry that has a value in gp, reduce the amount you need to spend by 10%. If you critically succeed at the primary check for a ritual, the gp value of components the ritual consumes is reduced by the same amount. For example, using resurrect to bring back a 14th-level creature normally costs 1,050 gp, but would cost you only 945 gp; and if you critically succeeded at the primary Religion check, you would spend only 840 gp."
+ },
+ {
+  "id": "enticing-dwelling",
+  "name": "Enticing Dwelling",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Exorcist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your spirit dwelling is particularly inviting to spirit wisps. During your daily preparations, and whenever you spend 10 minutes to find more wisps, you entice two wisps into your spirit dwelling instead of one."
+ },
+ {
+  "id": "entitys-strike",
+  "name": "Entity's Strike",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Living Vessel Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The more you try to force your body to stay yours, the more it warps to channel the energy flowing through you. Whether you grow horns to match the wild hunt fey within you, develop a claw like that of the treachery demon sharing your soul, or feel a tentacle rip out of you from the outer being that imprinted itself on your psyche, the entity within you refuses to be contained. You gain an unarmed attack of your choice with its type determined by your entity. It deals 1d6 damage of a damage type appropriate for the unarmed attack (such as bludgeoning for the tentacle). This unarmed attack is in the brawling weapon group and has the agile, finesse, and magical traits."
+ },
+ {
+  "id": "envenom-strike",
+  "name": "Envenom Strike",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "nagaji"
+  ],
+  "prerequisites": [
+   "you possess a Strike from a nagaji heritage or ancestry feat that deals poison damage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You spit venom onto a weapon you're holding or a weapon held by a willing creature within 30 feet; you can also use this ability to envenom your nagaji fangs unarmed attack. If the next Strike with the chosen weapon before the start of your next turn hits and deals damage, the Strike deals an additional 2d6 poison damage."
+ },
+ {
+  "id": "envenomed-edge",
+  "name": "Envenomed Edge",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With a combination of your poison glands and herbal concoctions, you can consistently deliver venomous attacks when you hit an enemy's weak points. When you critically hit using a Strike with a weapon or unarmed attack and deal slashing or piercing damage with that Strike, you deal an additional 1d4 persistent poison damage to your target."
+ },
+ {
+  "id": "environmental-explorer",
+  "name": "Environmental Explorer",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've traversed enough untamed wilderness to gain an intuitive understanding of the dangers that exist in such places. Your extensive familiarity means you sometimes notice perils even when you're not trying to. Even if you aren't Searching in exploration mode, you can attempt a check to find environmental hazards that normally require you to Search for them. You still need to meet any other requirements to find a particular hazard."
+ },
+ {
+  "id": "environmental-grace",
+  "name": "Environmental Grace",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [],
+  "text": "Environmental Grace Source Gods & Magic pg. 105 Prerequisites Master in Survival; deity who grants the cold, fire, nature, or travel domain You rapidly adapt to environments through a combination of skill, meditation, and divine grace. After spending an hour in an environment of severe cold or colder, you are protected from the effects of severe cold until you leave that environment. After spending an hour in an environment of severe heat or hotter, you are protected from the effects of severe heat until you leave that environment."
+ },
+ {
+  "id": "eschew-materials",
+  "name": "Eschew Materials",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [],
+  "text": "Eschew Materials Source Core Rulebook pg. 209 You can use clever workarounds to replicate the arcane essence of certain materials. When Casting a Spell that requires material components, you can provide these material components without a material component pouch by drawing intricate replacement sigils in the air. Unlike when providing somatic components, you still must have a hand completely free. This doesn't remove the need for any materials listed in the spell's cost entry."
+ },
+ {
+  "id": "esoteric-reflexes",
+  "name": "Esoteric Reflexes",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "an implement that grants a reaction"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Reacting with an implement becomes instinct. At the start of your turn, you gain an additional reaction, which you can use for only reactions granted by your implements."
+ },
+ {
+  "id": "essence-overflow",
+  "name": "Essence Overflow",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Draconic Acolyte Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are Channeling Draconic Essence. --- Uncontainable power explodes from your spectral dragon. Your Channel Draconic Essence ends, and all creatures (except you) in a from your spectral dragon take damage with a save against the higher of your class DC or spell DC. The damage's type matches the breath of your draconic benefactor. You then can't use Essence Overflow again for 1d4 rounds. At 8th level and every 2 levels thereafter, the damage increases by 1d6."
+ },
+ {
+  "id": "esteemed-visitor",
+  "name": "Esteemed Visitor",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "shoony"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your polite manners and natural ability to comfort others make it easy for you to break down cultural barriers and earn strangers' trust. While you are in a settlement, when you roll a critical failure on a Diplomacy check to Gather Information or Make an Impression, you get a failure instead."
+ },
+ {
+  "id": "eternal-bane",
+  "name": "Eternal Bane",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "unholy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your life has made you a nexus for your deity's vile power. You're continuously surrounded by a Bane spell, with a spell rank equal to half your level (rounded up). The radius is 15 feet, and you can't increase it. You can Dismiss the spell; if you do, it returns automatically after 1 minute."
+ },
+ {
+  "id": "eternal-blessing",
+  "name": "Eternal Blessing",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "holy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your deeds have brought your deity's grace to you for all of eternity. You're continuously surrounded by a Bless spell, with a spell rank equal to half your level (rounded up). The radius is 15 feet, and you can't increase it. You can Dismiss the spell; if you do, it returns automatically after 1 minute."
+ },
+ {
+  "id": "eternal-boost",
+  "name": "Eternal Boost",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your link with your eidolon is so intense that you continuously reinforce its abilities. You are permanently quickened; you can use your extra action only to cast Boost Eidolon or Reinforce Eidolon. While in exploration mode, you can declare that you are also continually casting *boost eidolon* or *reinforce eidolon* even while using a different exploration activity. If you do, even before your first turn in a combat encounter, that cantrip is active as if you had cast it on your previous turn."
+ },
+ {
+  "id": "eternal-composition",
+  "name": "Eternal Composition",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "maestro muse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The world is a stage upon which you are always playing. You are permanently quickened; you can use your extra action only to cast a composition cantrip that requires 1 action to cast. While in exploration mode, you can declare that you are performing an eligible composition cantrip while using any exploration tactic. Even before your first turn in a combat encounter, that cantrip is active as if you had cast it on your previous turn."
+ },
+ {
+  "id": "eternal-elixir",
+  "name": "Eternal Elixir",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [
+   "Extend Elixir"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body readily accepts and retains minor changes. When you drink one of your alchemical items that has the elixir and infused traits and a duration of 1 minute or more, you can make the elixir's duration indefinite. This can exceed the 10-minute limit of an item made with Quick Alchemy. You can do so only if the elixir's level is half your level or lower. If you later consume a different elixir and make it indefinite, the effect of the previous indefinite elixir ends."
+ },
+ {
+  "id": "eternal-torch",
+  "name": "Eternal Torch",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "light",
+   "manipulate",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You open a connection to your kinetic gate, large enough for a torch flame to flow. You create a magical, torch-like flame within 120 feet in any color you choose. It's as bright and hot as a torch. You can have it orbit a target willing creature or emit from a target object that's unattended or attended by a willing creature. If you create a flame on a weapon, you still need to use it as an improvised weapon to attack with the flame, just as with a torch. The flame has an unlimited duration. You can have a maximum number of Eternal Torches equal to your Constitution modifier, and you can Dismiss each torch individually. --- **Level (8th)** All your torches—even ones you already created—shed bright light in a 60-foot radius (and dim light for the next 60 feet)."
+ },
+ {
+  "id": "eternity-incinerating-blaze",
+  "name": "Eternity-Incinerating Blaze",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon",
+   "void"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a weapon ikon --- The blaze of your divine spark is hot enough that it burns in not just the present, but the past and future as well. Whenever you score a critical hit with the imbued ikon, the target becomes Doomed 1 or increases its doomed condition by 1. If the target's maximum dying value is reduced to 0 by this ability, it immediately dies in a flash of spiritual fire that reduces its body to ash. This effect applies even when the ikon is not empowered. The ikon also gains the following transcendence ability. **Transcendence—Burn out of Time** ⟨2⟩ (spirit, transcendence, void)"
+ },
+ {
+  "id": "evade-doom",
+  "name": "Evade Doom",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can elude supernatural disaster. When you would gain the doomed condition, you can attempt a check. On a success, you don't gain the doomed condition."
+ },
+ {
+  "id": "evanescent-wings",
+  "name": "Evanescent Wings",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "sprite"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've manifested wings that can flutter for brief spurts. You Fly. If you don't normally have a fly Speed, you gain a fly Speed of 15 feet for this movement. If you aren't on solid ground at the end of this movement, you fall."
+ },
+ {
+  "id": "even-the-odds",
+  "name": "Even the Odds",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** Your turn begins. **Requirements** You are being flanked. --- You shine brightest in desperate moments. You flash a confident smile or pose, and you gain panache until the end of your turn."
+ },
+ {
+  "id": "ever-dreaming",
+  "name": "Ever Dreaming",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sleepwalker Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You draw no distinction between the sleeping and waking worlds. Your Daydream Trance has an unlimited duration, and you no longer need to take an action to enter it. If you're unconscious due to sleep, you don't take the –4 penalty to AC, Perception, and Reflex saves, and don't have the off-guard condition. You're still blinded while asleep. You can act on your turn while asleep, though you're Slowed 2 until you fully awaken."
+ },
+ {
+  "id": "everdistant-defense",
+  "name": "Everdistant Defense",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "champion",
+   "divine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your aura is targeted by a ranged attack or a creature moves through your aura. **Requirements** You have at least one aura from a champion feat or feature. --- The spatial barrier of Syndara's Island has taught you that distance can foil enemies better than any armor. You warp space, causing each square within your aura that the attack or creature would move through to count as triple the distance. If this reaction is used on a ranged attack, the attack takes range increment penalties based on the adjusted range and fails if this would cause it to exceed its maximum range."
+ },
+ {
+  "id": "everstand-strike",
+  "name": "Everstand Strike",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "champion",
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [
+   "Everstand Stance"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a shield in two hands. --- Your follow-up blow leaves you an opening to set your shield. Make a Strike with the wielded shield. If the Strike hits and deals damage, you also Raise your Shield."
+ },
+ {
+  "id": "everyday-form",
+  "name": "Everyday Form",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "tanuki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "There's nothing better than being a tanuki, but sometimes you need a less conspicuous form when going into the big city or other crowded places. When you Change Shape, you can assume the form of a common Small or Medium humanoid ancestry prevalent where you grew up, typically human. This everyday form is a specific form with the same age and body type as your true tanuki form and has roughly analogous physical traits, such as hair color."
+ },
+ {
+  "id": "everyone-duck",
+  "name": "Everyone Duck!",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You fail, but don't critically fail, an attempt to Disable a Device on a trap. --- You intentionally set off the trap, but you take special precautions to protect yourself and your allies from the trap's effects. For the next 2 rounds, if the trap rolls a critical success on an attack roll, it gets a normal success instead, and if anyone rolls a critical failure on their saving throw against the trap, they get a normal failure instead."
+ },
+ {
+  "id": "everyones-a-suspect",
+  "name": "Everyone's a Suspect",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are so suspicious of everyone you meet that you keep mental notes on how to defeat them all-even your own allies. After interacting with a creature for at least 1 minute, you automatically Pursue a Lead with that creature as the subject. You can have any number of such leads at any given time, and when you Pursue a Lead again, you don't give up any of these automatic subjects."
+ },
+ {
+  "id": "exacting-strike",
+  "name": "Exacting Strike",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You make a controlled follow-up attack, fully accounting for your momentum. Make a Strike. The Strike gains the following failure effect. **Failure** This attack doesn't count toward your multiple attack penalty."
+ },
+ {
+  "id": "exaltation-overwhelming",
+  "name": "Exaltation Overwhelming",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "emotion",
+   "fear",
+   "mental",
+   "mythic",
+   "visual"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Raising your weapon or fist aloft, you begin to gleam with dazzling radiance. You fulminate with power and glory, making it clear to all who see you that your legend is real and possibly even greater than purported. Spend a Mythic Point. All enemies who can see you must succeed at a saving throw against your class DC or become Frightened 3 (Frightened 4 on a critical failure). You and any ally who can see you may choose to Strike or Stride as a free action. Any of these Strikes are made at mythic proficiency."
+ },
+ {
+  "id": "exceptional-follower",
+  "name": "Exceptional Follower",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Veteran Follower"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your followers' abilities have soared to new heights. All your followers become exceptional followers."
+ },
+ {
+  "id": "exemplar-expertise",
+  "name": "Exemplar Expertise",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Exemplar Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your soul has been further tempered in divine power. Your proficiency in exemplar class DC increases to expert."
+ },
+ {
+  "id": "exorcist-dedication",
+  "name": "Exorcist Dedication",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in Occultism or Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to attract, quell, and purify spirits, housing them in a special receptacle called a *spirit dwelling* until they're ready to move on. Through the power of prayers or ritual incantations, one mundane object in your possession becomes a *spirit dwelling*. Your *spirit dwelling* functions as a lure for lost spirits weakened by their time on the Material Plane. Each day during your daily preparations, your *spirit dwelling* attracts a spirit wisp who comes to dwell inside. If your *spirit dwelling* contains no wisps, you can spend 10 minutes in a minor ritual to cast your *spirit dwelling* around an area and attract another wisp. You can also capture stronger spirit remnants from vanquished undead spirits. As long as your *spirit dwelling* contains any spirits, it glows faintly, casting dim light in a 10-foot radius. As an exorcist, you do more than just collect spirits: you also help rid them of their burdens and lingering resentments, aiding their transition from the Material Plane. Every day, before your daily preparations, any spirit wisps and remnants remaining within your *spirit dwelling* from the previous day are purified and can join the River of Souls in their final journey to Pharasma's Boneyard. You can also learn abilities that let you purify a spirit in your *spirit dwelling* immediately in a cathartic surge, granting you a helpful effect as they depart for the afterlife. Any actions you gain from the exorcist archetype gain either the divine or occu"
+ },
+ {
+  "id": "expand-spiral",
+  "name": "Expand Spiral",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spiral Sworn"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your prayers encompass your companions, granting you the ability to share Pharasma's blessings. When you use Spiral Sworn, you can spend 2 actions instead of 1 to grant the benefits to all allies who are in the light of your spiral when you take the action."
+ },
+ {
+  "id": "expanded-swarm",
+  "name": "Expanded Swarm",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swarmkeeper Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your hive has grown to the point where it is difficult to keep your swarm contained within your body. When you release your swarm with Swarm Forth, you can choose for it to be Huge instead of Large."
+ },
+ {
+  "id": "expansive-spellstrike",
+  "name": "Expansive Spellstrike",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can blast the energy of a spell out around the target of your attack. When you Spellstrike with a spell that has an area of a burst, cone, or line, the spell creates an area instead of affecting only the target. The target must be in the area. A burst is centered on a corner of the target's square; if the target is Large or larger, the burst use the square corner closest to the center of the target and choose the corner if more than one is eligible. A cone or line emits from you and must include the target; if you're not adjacent to the target (using a reach weapon or starlit span, for example), choose any square adjacent to the target as the source. The spell affects all creatures in the area as normal, but the Strike still targets only one creature."
+ },
+ {
+  "id": "experienced-follower",
+  "name": "Experienced Follower",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Captain Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your followers' skills have developed over the course of your adventures. All your followers become experienced followers. Additionally, your followers have grown accustomed to the perils of battle, developing the confidence to attack foes without your direction. During an encounter, even if you don't use the Direct Follower action, your active follower spend can still use 1 action that round on your turn to Stride or Strike. They can do this at any point during your turn, as long as you aren't currently taking an action. If they do, that's all the actions they get that round—you can't Direct them later."
+ },
+ {
+  "id": "experienced-harrower",
+  "name": "Experienced Harrower",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Harrower Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you perform the Harrowing ritual, the DC for the Primary Check is never more than the standard DC by level, and the cost for the ritual is halved. If you use a fine harrow deck, the cost for the ritual is removed entirely."
+ },
+ {
+  "id": "experienced-professional",
+  "name": "Experienced Professional",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Lore"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You carefully safeguard your professional endeavors to prevent disaster. When you use Lore to Earn Income, if you roll a critical failure, you instead get a failure. If you're an expert in Lore, you gain twice as much income from a failed check to Earn Income, unless it was originally a critical failure."
+ },
+ {
+  "id": "expert-alchemy",
+  "name": "Expert Alchemy",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Expert Alchemy Source Core Rulebook pg. 220 Archetype Alchemist Prerequisites Alchemist Dedication; Expert in Crafting Your advanced alchemy level increases to 3. At 10th level, it increases to 5. Expert Alchemy leads to... Master Alchemy"
+ },
+ {
+  "id": "expert-animist-spellcasting",
+  "name": "Expert Animist Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Animist Spellcasting",
+   "master in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the expert spellcasting benefits as a prepared divine caster."
+ },
+ {
+  "id": "expert-backstabber",
+  "name": "Expert Backstabber",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Assassin Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You excel at quickly dispatching your foes. When you Strike an off-guard foe with a weapon that has the backstabber weapon trait, you deal 2 extra precision damage instead of 1. If the weapon is a *+3 weapon*, you deal 4 extra precision damage instead of 2."
+ },
+ {
+  "id": "expert-bard-spellcasting",
+  "name": "Expert Bard Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Bard Spellcasting",
+   "master in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-beast-gunner-spellcasting",
+  "name": "Expert Beast Gunner Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Beast Gunner Spellcasting or Basic Wizard Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned the deeper secrets of beast guns, making you an expert in the magic they grant you. You gain the ."
+ },
+ {
+  "id": "expert-cathartic-spellcasting",
+  "name": "Expert Cathartic Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Cathartic Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-cleric-spellcasting",
+  "name": "Expert Cleric Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Cleric Spellcasting",
+   "master in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-combat-eidolon",
+  "name": "Expert Combat Eidolon",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Summoner Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon advances its capabilities in combat. Your eidolon becomes an expert in unarmed attacks. If you are an expert in unarmored defense, your eidolon also becomes an expert in unarmored defense. If you have weapon specialization, your eidolon also gains weapon specialization."
+ },
+ {
+  "id": "expert-druid-spellcasting",
+  "name": "Expert Druid Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Druid Spellcasting",
+   "master in Nature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-eldritch-archer-spellcasting",
+  "name": "Expert Eldritch Archer Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Eldritch Archer Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You learn additional eldritch archer magic. You gain the benefits."
+ },
+ {
+  "id": "expert-fireworks-crafter",
+  "name": "Expert Fireworks Crafter",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Firework Technician Dedication",
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're particularly adept at crafting fireworks, allowing you to create more fireworks than you otherwise could. Your number of versatile vials per day increases to 5."
+ },
+ {
+  "id": "expert-herbalism",
+  "name": "Expert Herbalism",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Expert Herbalism Source Advanced Player's Guide pg. 176 Archetype Herbalist Prerequisites Herbalist Dedication; Expert in Nature Your advanced alchemy level for herbalism increases to your level – 3. You gain the formulas for elixirs of life as soon as your advanced alchemy level is high enough to create them: lesser at 8th level, moderate at 12th level, greater at 16th level, and major at 18th level."
+ },
+ {
+  "id": "expert-kinetic-control",
+  "name": "Expert Kinetic Control",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Kineticist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You become an expert in kineticist class DC and impulse attack rolls."
+ },
+ {
+  "id": "expert-magus-spellcasting",
+  "name": "Expert Magus Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Magus Spellcasting",
+   "master in Arcana"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-oracle-spellcasting",
+  "name": "Expert Oracle Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Oracle Spellcasting",
+   "master in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-poisoner",
+  "name": "Expert Poisoner",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Expert Poisoner Source Advanced Player's Guide pg. 186 Archetype Poisoner Prerequisites Poisoner Dedication; Expert in Crafting Your advanced alchemy level for poison increases to your level – 3."
+ },
+ {
+  "id": "expert-prophet-spellcasting",
+  "name": "Expert Prophet Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Prophet Spellcasting",
+   "master in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the ."
+ },
+ {
+  "id": "expert-psychic-spellcasting",
+  "name": "Expert Psychic Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Psychic Spellcasting",
+   "master in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-red-mantis-magic",
+  "name": "Expert Red Mantis Magic",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Red Mantis Magic",
+   "master in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the expert spellcasting benefits."
+ },
+ {
+  "id": "expert-rivethun-spellcasting",
+  "name": "Expert Rivethun Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Rivethun Spellcasting",
+   "master in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the ."
+ },
+ {
+  "id": "expert-scroll-cache",
+  "name": "Expert Scroll Cache",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Scroll Cache"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your scroll collection has vastly grown, both in size and potency. In addition to your daily scrolls from Basic Scroll Cache, add a scroll with a 3rd-rank spell. At 14th level, add a scroll with a 4th-rank spell. At 16th level, add a scroll with a 5th-rank spell."
+ },
+ {
+  "id": "expert-snowcasting",
+  "name": "Expert Snowcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You draw ever more magical cold into your being, learning how to manipulate it to your whims. You gain the benefits."
+ }
+]

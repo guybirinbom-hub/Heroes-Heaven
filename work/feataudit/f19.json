@@ -1,0 +1,972 @@
+[
+ {
+  "id": "improved-familiar",
+  "name": "Improved Familiar",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Improved Familiar Source Player Core 2 pg. 200 Archetype Familiar Master Prerequisites Familiar Master Dedication You find it easy to attract a powerful and unusual familiar to your side. The number of abilities required to make your familiar a specific familiar is two lower than normal."
+ },
+ {
+  "id": "improved-familiar-witch",
+  "name": "Improved Familiar (Witch)",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You find it easy to attract a powerful and unusual familiar to your side. The number of abilities required to make your familiar a specific familiar is two lower than normal."
+ },
+ {
+  "id": "improved-hijack-undead",
+  "name": "Improved Hijack Undead",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Clockwork Reanimator Dedication",
+   "Hijack Undead"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Undead creatures find it all but impossible to resist your commands. When you use Hijack Undead, if the undead fails its save, it becomes your minion for 10 minutes. If it critically fails, it becomes your minion for 24 hours."
+ },
+ {
+  "id": "improved-knockback",
+  "name": "Improved Knockback",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Knockback Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you successfully Shove a creature, increase both the distance you can push the creature and the distance you can move to follow along with the target by 5 feet on a success or 10 feet on a critical success. If you push the target into another creature or obstacle, they both take 1d6 damage per 5 feet of movement that was prevented."
+ },
+ {
+  "id": "improved-poison-weapon",
+  "name": "Improved Poison Weapon",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "Poison Weapon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You deliver poisons in ways that maximize their harmful effects. When you apply a simple poison with Poison Weapon, the poison deals 2d4 damage instead of 1d4 poison damage. You don't waste a poison you apply with Poison Weapon on a critically failed attack roll."
+ },
+ {
+  "id": "improved-reflexive-shield",
+  "name": "Improved Reflexive Shield",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "guardian"
+  ],
+  "prerequisites": [
+   "Reflexive Shield"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your shield can help save nearby allies from danger. When you use Shield Block against damage resulting from a Reflex save, adjacent allies who would take damage due to Reflex saves against the same effect also benefit from the damage reduction."
+ },
+ {
+  "id": "improved-signature-weapon",
+  "name": "Improved Signature Weapon",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "yaoguai"
+  ],
+  "prerequisites": [
+   "Signature Weapon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your signature weapon takes on the properties of mystical materials renowned for defeating undead, spirits, and other such creatures. Your signature weapon is treated as dawnsilver, duskwood, and peachwood for the purposes of overcoming resistance."
+ },
+ {
+  "id": "improved-swift-banishment",
+  "name": "Improved Swift Banishment",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "Swift Banishment"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You easily banish creatures with your weapon. You can use Swift Banishment as long as you have a spell slot of 5th rank or higher remaining, even if you don't have Banishment prepared. You must sacrifice a prepared spell of 5th rank or higher, and the *banishment* effect you create is heightened to the rank of that spell. The target takes a –2 circumstance penalty to its save as though you'd paid the extra cost for *banishment*."
+ },
+ {
+  "id": "improved-twin-riposte-fighter",
+  "name": "Improved Twin Riposte (Fighter)",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Twin Riposte"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your weapons are a blur, blocking and biting at your foes. You can use Twin Riposte even if you aren't benefiting from Twin Parry. At the start of each of your turns, you gain an additional reaction that you can use only to make a Twin Riposte."
+ },
+ {
+  "id": "improved-twin-riposte-ranger",
+  "name": "Improved Twin Riposte (Ranger)",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Twin Riposte"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "At the start of each of your turns, you gain an additional reaction that you can use only to perform a Twin Riposte. You can use Twin Riposte even if you aren't benefiting from Twin Parry (though you must be wielding two melee weapons, one in each hand)."
+ },
+ {
+  "id": "improvisational-defender",
+  "name": "Improvisational Defender",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "shoony"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are always prepared for fights that frequently disrupt seemingly peaceful times. When you use an improvised weapon or a shoddy weapon, you don't take the -2 item penalty to attack rolls."
+ },
+ {
+  "id": "improvisational-warrior",
+  "name": "Improvisational Warrior",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "shoony"
+  ],
+  "prerequisites": [
+   "Improvisational Defender"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use an improvised weapon, you apply the critical specialization of a brawling weapon to it. Depending on the shape and nature of the improvised weapon, your GM might determine another weapon group's critical specialization is more appropriate."
+ },
+ {
+  "id": "improvise-tool",
+  "name": "Improvise Tool",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can jury-rig solutions when you don't have the proper tools on hand. You can attempt to Repair damaged items without a repair kit. If you have the raw materials available, you can Craft a basic Caltrop set, Candle, Compass, Crowbar, Fishing Tackle, Flint and Steel, Hammer, Ladder, Piton, Rope, Ten-Foot Pole, Replacement Thieves Picks, Long Tool or Short Tool, or Torch as if you had their formulas."
+ },
+ {
+  "id": "improvised-crafting",
+  "name": "Improvised Crafting",
+  "level": 8,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "exploration",
+   "manipulate",
+   "skill"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication",
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to repair your equipment even in challenging circumstances, making use of what you have available. You can attempt to Repair an item without a repair kit, instead improvising tools out of your gear or found items. This adds 5 minutes to the time it takes to Repair the item. You can also Repair an item while on the move without needing a stable surface. This adds 10 minutes to the times it takes to Repair the item."
+ },
+ {
+  "id": "improvised-repair",
+  "name": "Improvised Repair",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You can hastily patch damaged equipment together, but the temporary fix lacks the full care required for lasting repairs. You patch together a broken item possessed by you or an adjacent willing creature. Until the item takes damage again, it still functions as a shoddy item of its type. If it's a magic item or another item with activations, it can't be activated while patched together, but can be used for normal functions (such as Striking with a weapon or using Shield Block with a shield). This activity restores no Hit Points, so the item is easy to destroy. Once the item is Repaired normally such that it is no longer broken, it is also no longer shoddy."
+ },
+ {
+  "id": "in-plain-sight",
+  "name": "In Plain Sight",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Alter Ego Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "People often only see what they want to see, a weakness you know how to take full advantage of. While you've Assumed a Role, you can use Deception in place of Stealth when using the Avoid Notice exploration activity in an area where someone with your role wouldn't be unusual, such as when impersonating a sailor or fisher when infiltrating the docks."
+ },
+ {
+  "id": "in-the-hordes-grip",
+  "name": "In the Horde's Grip",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Grasping Corpses"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "When your skeletons and zombies attack, their skeletal claws and rotting hands clutch and tear flesh. Weaker foes are caught in their grip. You command your horde to perform a Mobbing Assault. Instead of being off-guard, a creature who takes physical damage from failing the saving throw is grabbed by your horde (restrained on a critical failure). The DC to Escape from your horde is equal to your spell DC. Creatures grabbed by your horde that fail a saving throw against the horde's Mobbing Assault take 2d6 damage."
+ },
+ {
+  "id": "in-tune",
+  "name": "In Tune",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "bard",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "maestro muse"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You attune your great skill in performing to another, granting them a small measure of your skill as though anyone could do it. If your next action is casting a composition spell with an emanation area, its area spreads from a willing ally of your choice within 60 feet instead of you. If you have Directed Audience, you can have that cone originate from the ally instead."
+ },
+ {
+  "id": "incredible-beastmaster-companion",
+  "name": "Incredible Beastmaster Companion",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mature Beastmaster Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mature animal companions continue to grow and develop. Each of them becomes a nimble or savage animal companion, gaining additional capabilities determined by the type of companion. You choose nimble or savage individually for each companion, including any companion that becomes mature after you take this feat."
+ },
+ {
+  "id": "incredible-companion-druid",
+  "name": "Incredible Companion (Druid)",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Mature Animal Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your animal companion continues to grow and develop. It becomes either a nimble or savage animal companion, gaining additional capabilities determined by the type."
+ },
+ {
+  "id": "incredible-companion-ranger",
+  "name": "Incredible Companion (Ranger)",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Mature Animal Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your animal companion continues to grow and develop. It becomes a nimble or savage animal companion (your choice), gaining additional capabilities determined by the type of companion."
+ },
+ {
+  "id": "incredible-construct-companion",
+  "name": "Incredible Construct Companion",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "Advanced Construct Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thanks to your continual tinkering, your construct companion has advanced to an astounding new stage of engineering, enhancing all its attributes. Your construct companion becomes an incredible construct companion."
+ },
+ {
+  "id": "incredible-dragon-companion",
+  "name": "Incredible Dragon Companion",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mature Dragon Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mature dragon companion develops further, becoming more robust and formidable. Your dragon companion becomes a nimble or savage animal companion, gaining additional capabilities determined by the type of companion."
+ },
+ {
+  "id": "incredible-familiar-familiar-master",
+  "name": "Incredible Familiar (Familiar Master)",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Familiar Master Dedication",
+   "Enhanced Familiar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your familiar is infused with even more magic than other familiars. You can select six familiar or master abilities each day, instead of four."
+ },
+ {
+  "id": "incredible-investiture",
+  "name": "Incredible Investiture",
+  "level": 11,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [
+   "Charisma +3"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have an incredible ability to invest more magic items. Increase your limit on invested items from 10 to 12."
+ },
+ {
+  "id": "incredible-mount",
+  "name": "Incredible Mount",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Impressive Mount"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Under your care and training, your mount has realized its innate potential. The mount you gained through the Cavalier Dedication feat becomes a nimble or savage animal companion (your choice), gaining additional capabilities determined by the type of companion."
+ },
+ {
+  "id": "incredible-reanimated-companion",
+  "name": "Incredible Reanimated Companion",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Advanced Reanimated Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You imbue the necrotized flesh of your reanimated construct companion with strange chemicals and fine-tune the clockwork within, enhancing all its capabilities. It becomes an incredible construct companion."
+ },
+ {
+  "id": "incredible-recollection",
+  "name": "Incredible Recollection",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Eldritch Researcher Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can sift through knowledge locked within your mind at an incredible pace. You instantly use up to 5 Recall Knowledge actions. If you have any special abilities or free actions that would normally be triggered when you Recall Knowledge, you can't use them for these actions."
+ },
+ {
+  "id": "incredible-ricochet",
+  "name": "Incredible Ricochet",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [
+   "Incredible Aim"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "After your first shot singles out your opponent's position, you direct another that ricochets around obstacles and strikes unerringly. Make a ranged weapon Strike against a creature you previously attacked this turn. You ignore the target's concealed condition and all cover."
+ },
+ {
+  "id": "incredible-sprint",
+  "name": "Incredible Sprint",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "centaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You push yourself, unleashing a burst of sudden speed. You Stride three times."
+ },
+ {
+  "id": "inertial-barrier",
+  "name": "Inertial Barrier",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "amp",
+   "occult",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your spell leaves behind barriers that reduce shock and motion. Use this amp in place of a psi cantrip's normal amp entry. --- **Amp** You or one target of the spell gains resistance to physical damage equal to 2 + the spell's rank until the start of your next turn."
+ },
+ {
+  "id": "inescapable-grasp",
+  "name": "Inescapable Grasp",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wrestler Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your grasp has a supernatural quality to it, preventing your foes from easily escaping—with or without magical assistance. If a creature you have grabbed attempts to use a teleportation spell or effect, it must succeed at a or the spell fails. If a creature you have grabbed attempts to Escape while under the effect of Unfettered Movement or a similar effect, it must succeed at a or be forced to roll the Escape attempt normally, rather than automatically succeeding."
+ },
+ {
+  "id": "inexhaustible-countermoves",
+  "name": "Inexhaustible Countermoves",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can react whenever a foe leaves a gap in their defenses. At the start of each enemy's turn, you gain an extra reaction you can use only during that turn to perform an Opportune Riposte, or an Reactive Strike if you have that reaction."
+ },
+ {
+  "id": "infectious-emotions",
+  "name": "Infectious Emotions",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cathartic Mage Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Catharsis, one ally within 30 feet gains the catharsis activation benefits in addition to you. If these benefits require an emotional focus, they use your emotional focus as they're experiencing an empathic imprint of your emotions. Depending on the activation benefit, it might be impossible to grant it to an ally; for instance, pride could only have an effect for an ally if both you and the ally critically failed the same saving throw against the same effect."
+ },
+ {
+  "id": "infernal-interference",
+  "name": "Infernal Interference",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Hellknight Preferment"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding your order's favored weapon. --- Your attacks force a foe to glimpse the iron, soul-wrenching landscapes of Hell. Strike an enemy with the required weapon twice. If either Strike hits, the target is Stupefied 1 and can't use reactions until the beginning of your next turn. If both Strikes hit, the target is Stupefied 3 instead."
+ },
+ {
+  "id": "infiltration-assassination",
+  "name": "Infiltration Assassination",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Crossbow Infiltrator Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wearing a loaded gauntlet bow. --- With a high-priority target in reach, you quickly move to eliminate them. Make a melee Strike using your gauntlet bow as a gauntlet. If the Strike is successful, you automatically latch onto the target, giving them the grabbed condition, then make a ranged Strike against them with your gauntlet bow. This Strike does not trigger reactions normally triggered by ranged attacks. If you are holding or wearing an injury poison, you can apply it to the bolt used in the attack as a free action before making the ranged Strike."
+ },
+ {
+  "id": "infiltrators-reload",
+  "name": "Infiltrator's Reload",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Crossbow Infiltrator Dedication",
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You specialize in reloading while preparing for the next step in your infiltration. Interact to reload a weapon you have familiarity with from this archetype, then either Hide, Sneak, or Take Cover."
+ },
+ {
+  "id": "infinite-blades-celestial-arrow",
+  "name": "Infinite Blades Celestial Arrow",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a ranged weapon ikon --- Each shot you launch multiplies itself with spiritual blades, rings, and other missiles that shower upon your foes. Your weapon ikon gains the following abilities. **Immanence** Whenever you successfully Strike an enemy with your weapon ikon, up to two enemies adjacent to the target take spirit damage equal to your weapon ikon's damage dice as they are struck by duplicated missiles. **Transcendence—Heaven Rains an Ending** ⟨3⟩ (transcendence)"
+ },
+ {
+  "id": "infinite-expanse-of-bluest-heaven",
+  "name": "Infinite Expanse of Bluest Heaven",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "air",
+   "illusion",
+   "impulse",
+   "kineticist",
+   "mental",
+   "overflow",
+   "primal",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "An illusion of a limitless expanse with an impossibly blue sky makes all within feel the sensation of falling... forever. The vision appears in a within 100 feet. The illusion lasts until the end of your next turn, but you can Sustain it up to 1 minute. Using this impulse again ends any previous one. Each creature in the area or that later enters it must attempt a save against your class DC. Creatures with the air trait are immune. Any effect of the illusion ends for a creature as soon as it leaves the illusion's area or the impulse ends, and the creature then becomes temporarily immune for 1 hour. --- **Critical Success** The creature is unaffected. **Success** The creature is off-guard. **Failure** The creature is off-guard. It is fleeing from the illusory sky but is also disoriented; any time it uses an action to attempt to flee, it must succeed at a or flee to a space that's still within the illusion. The GM determines where the creatures ends up, but the creature can't stay stationary if it's able to move."
+ },
+ {
+  "id": "infinite-possibilities",
+  "name": "Infinite Possibilities",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can prepare a spell slot that exists in your mind as many different possibilities at once. Once during your daily preparations, you can use a spell slot to hold that infinite potential, rather than using it to prepare a spell. You can use this spell slot to cast any spell from your spellbook that's at least 2 ranks lower than the slot you designate; the spell acts in all ways as a spell of 2 ranks lower. You don't have any particular spell prepared in that slot until you cast it."
+ },
+ {
+  "id": "inflame-crowd",
+  "name": "Inflame Crowd",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Performance",
+   "Impressive Performance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your performances are a call to action for the crowds who listen to you. For 1 hour after you successfully Make an Impression using Performance, you can make a Request of a member of the affected audience using Performance instead of Diplomacy."
+ },
+ {
+  "id": "infused-with-belkzens-might",
+  "name": "Infused with Belkzen's Might",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Tattooed Historian Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your tattoos immortalize the conquests of orc war leaders, such as Belkzen besieging the dwarven Sky Citadel of Koldukar. You can expend one use of your storied skin's Living History ability to channel this power into your own weapons. Until the end of your next turn, you deal additional spirit damage with weapons and unarmed attacks equal to 1 plus half the number of Tattooed Historian feats you have."
+ },
+ {
+  "id": "inhale-exhale",
+  "name": "Inhale, Exhale!",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "dragonet"
+  ],
+  "prerequisites": [
+   "Dragonet Breath"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You take an especially deep breath as a prelude to unleashing your dragonet breath on your foes. If your next action is to use your Dragonet Breath, add 5 feet to the length of the cone or line. If your breath deals damage, you also deal one additional die of damage."
+ },
+ {
+  "id": "initial-eidolon-ability",
+  "name": "Initial Eidolon Ability",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Summoner Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your link to your eidolon becomes stronger, granting it a new ability. Your eidolon gains the initial ability for an eidolon of its type."
+ },
+ {
+  "id": "inner-breath",
+  "name": "Inner Breath",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "sylph"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body is capable of recycling its own air. When you hold your breath, you can do so for an additional hour. At the end of this hour, your body needs to rest before it can recycle air again. This rest requires 10 minutes of exposure to breathable air."
+ },
+ {
+  "id": "inner-sea-privateer",
+  "name": "Inner Sea Privateer",
+  "level": 4,
+  "category": "archetype",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [],
+  "text": "Inner Sea Privateer Source High Seas pg. 92 Archetype Pirate Prerequisites Pirate Dedication; Expert in Sailing Lore Access You're from the Shackles You make your living as a pirate, as well as a little extra by hiring out your services to Andoran, Cheliax, or Mbe’ke. You need to recognize which ships are legitimate targets and which you need to play nice with. You can use Sailing Lore to Recall Knowledge about creatures native to the High Seas and flags, ships, and sailors in the region. If a ship is using a false flag or other disguise to hide its true allegiances, the GM will roll a secret Sailing Lore check for you to recognize it, typically against a standard DC for the level of the ship’s captain."
+ },
+ {
+  "id": "inner-strength",
+  "name": "Inner Strength",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "prerequisites": [
+   "spirit instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your strength is part of your rage. As long as your anger remains, you can gather your strength and rage to overcome any sort of enfeeblement. You reduce your enfeebled condition's value by 1."
+ },
+ {
+  "id": "inoculation-subroutine",
+  "name": "Inoculation Subroutine",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "android"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your nanites reject diseases with ease. Each time you succeed at a Fortitude save against an ongoing disease, you reduce its stage by 2, or by 1 against a virulent disease. Each critical success you achieve against an ongoing disease reduces its stage by 3, or by 2 against a virulent disease."
+ },
+ {
+  "id": "insect-shape",
+  "name": "Insect Shape",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Untamed Form"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your understanding of life expands, allowing you to mimic a wider range of creatures. Add the shapes in Insect Form to your Untamed Form list. Whenever you use *untamed form* to polymorph into the non-flying insect shapes listed in pest form, the duration is 24 hours instead of 10 minutes."
+ },
+ {
+  "id": "insistent-command",
+  "name": "Insistent Command",
+  "level": 8,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Nature",
+   "Animal Trainer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you roll a success to Command an Animal, you get a critical success; if you roll a critical failure, you get a failure."
+ },
+ {
+  "id": "inspirational-focus",
+  "name": "Inspirational Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to your muse has granted you unusual focus. Whenever you Refocus, completely refill your focus pool."
+ },
+ {
+  "id": "inspire-imitation",
+  "name": "Inspire Imitation",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "aiuvarin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your actions inspire your allies to great achievements. Whenever you critically succeed at a skill check, you automatically qualify to use the Aid reaction when attempting to help an ally using the same skill, even without spending an action to prepare to do so."
+ },
+ {
+  "id": "instant-armor",
+  "name": "Instant Armor",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "A knight is nothing without their armor, and you know how to keep yours ready. You can perform a 10-minute ritual, which has the conjuration and magical traits, to divert a set of heavy armor you are wearing into an extradimensional space connected to you. While the armor is in this space, you can use a three-action activity, which has the concentrate, conjuration, and teleportation traits, to phase the armor back and instantly don it. The armor automatically phases away if you don another set of armor, if you become unconscious, or if you die. If you are incapable of wearing the armor when it phases back, it appears in your square instead."
+ },
+ {
+  "id": "instant-backup",
+  "name": "Instant Backup",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your attack with a firearm misfires. --- Even as your firearm misfires, you quickly draw a backup. Release the misfired weapon and Interact to draw a different weapon that requires the same number of hands or fewer."
+ },
+ {
+  "id": "instant-credentials",
+  "name": "Instant Credentials",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Fabricated Credentials",
+   "Talon’s Mark"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "In a pinch, ink from your tattoo arranges itself into a temporary pass, writ of authority, or similar document. If you're in possession of a blank page of paper, you can create-forgery traits=concentrate,occult as a single action with the concentrate and occult traits. The forgery lasts for 1 minute, and during this time, you can't use any of the other abilities of your Talon's Mark. You can Dismiss the forgery, leaving the paper blank once again."
+ },
+ {
+  "id": "instant-opening",
+  "name": "Instant Opening",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You distract your opponent with a few choice words or a rude gesture. Choose a target within 30 feet. It's off-guard against your attacks until the end of your next turn. Depending on the way you describe your distraction, this action gains either the auditory or visual trait."
+ },
+ {
+  "id": "instant-return",
+  "name": "Instant Return",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy misses you with a ranged attack using a type of ammunition appropriate to your weapon (a bullet if you're wielding a firearm). **Requirements** You're wielding an unloaded firearm or crossbow. --- With a single fluid gesture, you catch a projectile out of the air, load it in your weapon, and shoot it back at the attacker. Interact to load the projectile into your weapon, then make a Strike with the required weapon against the triggering opponent. Since you're using the foe's ammunition, this Strike applies any special effects that ammunition would have (for instance, if it was Explosive Ammunition, it would explode in a burst of fire if your Strike hits)."
+ },
+ {
+  "id": "instinct-ability",
+  "name": "Instinct Ability",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Barbarian Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the instinct ability for the instinct you chose for Barbarian Dedication."
+ },
+ {
+  "id": "instinctive-support",
+  "name": "Instinctive Support",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Animal Companion"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You Cast a non-cantrip spell that targets only your animal companion. --- When you support your animal companion, your companion supports you in turn. After your spell takes place, your companion gains its actions for the turn, as if you Commanded it, and one of the actions must be Support. If the companion has used any other actions already, it can't Support you, as normal."
+ },
+ {
+  "id": "instinctual-interception",
+  "name": "Instinctual Interception",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication",
+   "Interrupt Charge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You react to movement with hardly a thought, seeming constantly poised to spring. At the start of each of your turns, you gain an additional reaction that you can use only to Interrupt Charge."
+ }
+]

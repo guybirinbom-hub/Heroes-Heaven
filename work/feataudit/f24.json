@@ -1,0 +1,976 @@
+[
+ {
+  "id": "merciless-rend",
+  "name": "Merciless Rend",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "eidolon",
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** Your eidolon hit the same enemy with two consecutive Strikes with its secondary attack this turn and dealt slashing damage with both. --- Your eidolon rends its foes. It automatically deals the damage from its secondary attack to the enemy."
+ },
+ {
+  "id": "metabolic-control",
+  "name": "Metabolic Control",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "nagaji"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're able to better control your body's metabolism to preserve energy. After eating a proper meal, you can go without food and water for 1 week before taking damage from starvation and thirst. You aren't fatigued during this week."
+ },
+ {
+  "id": "metabolize-element",
+  "name": "Metabolize Element",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You take damage from a foe's spell or magical ability with a trait of one of the elements in your elemental philosophy. --- You rapidly metabolize the elemental particles in your opponent's spell to gain a boost of energy. You gain the quickened condition until the end of your next turn. You can use the extra action only to Step or Stride."
+ },
+ {
+  "id": "metal-carapace",
+  "name": "Metal Carapace",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Sheets of bent and rusted metal cover you in an armored shell. The carapace is medium armor but uses your highest armor proficiency. The carapace's statistics are: AC Bonus +3; Dex Cap +2; Check Penalty –2; Speed Penalty –5 feet; Strength +2; Bulk 2; Group plate; Armor Traits noisy. Any bonuses, runes, and magical abilities of your actual armor are suppressed, but any that could apply to the metal carapace are replicated onto it. When you use this impulse, you can also create a rusty steel shield in a free hand, which uses the statistics of a regular steel shield. You can Shield Block with this shield even if you don't have that feat. The hand wielding this shield counts as a free hand for using impulses. The shield crumbles to flakes of rust if it becomes broken or leaves your grasp. The impulse lasts for 10 minutes, and you can Dismiss this impulse. If you use this impulse again, any existing one ends. The metal is rusted and fragile. If you take damage from a critical hit, the metal shatters and the impulse ends. --- **Level (+3)** The shield's Hardness increases by 1, its HP by 4, and its BT by 2."
+ },
+ {
+  "id": "metallic-envisionment",
+  "name": "Metallic Envisionment",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mind Smith Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You always account for every weakness, allowing your mind to imagine just the right physical form to take advantage of your opponents. Choose between cold iron or silver; all your mind weapon Strikes are treated as the chosen type of metal."
+ },
+ {
+  "id": "meteoric-spellstrike",
+  "name": "Meteoric Spellstrike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike",
+   "starlit span hybrid study"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a ranged or thrown weapon, or have a ranged unarmed attack. --- A trail of energy flows from your target back to you. Make a Spellstrike with a ranged weapon or ranged unarmed attack against a target within the ranged weapon or unarmed attack's first range increment. The spell you cast for the Spellstrike can't be a cantrip or focus spell. Each creature in a line between you and the target, excluding you and the target, takes damage equal to double the spell's rank. Determine the damage type as described in Arcane Cascade."
+ },
+ {
+  "id": "might-of-the-realm",
+  "name": "Might of the Realm",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Prophesied Monarch Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Bolstered by the presence of your knights, you strike a mighty blow in the name of your rule. Strike an enemy. This counts as two attacks when calculating your multiple attack penalty. If this Strike hits, you deal an additional amount of damage equal to double the number of your designated knights whom you can see. If the Strike is a critical hit, the target is also Enfeebled 1 until the start of your next turn."
+ },
+ {
+  "id": "mighty-bear",
+  "name": "Mighty Bear",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Great Bear"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The power of the bear within you can expand your physical presence even further. The Enlarge spell you cast with your Great Bear feat is heightened to 4th level."
+ },
+ {
+  "id": "mighty-dragon-shape",
+  "name": "Mighty Dragon Shape",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Shape of the Dragon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've practiced and increased your draconic might, allowing you to take your draconic form more often. You can use Shape of the Dragon once per hour instead of once per day."
+ },
+ {
+  "id": "mighty-dragonet",
+  "name": "Mighty Dragonet",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "dragonet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've grown especially large and now tower over your fellow dragonets. Instead of Tiny, your size is Small. --- **Special** Though you can grow larger at a higher level than 1st, you can't retrain out of this feat."
+ },
+ {
+  "id": "mind-shards",
+  "name": "Mind Shards",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "magical",
+   "mental"
+  ],
+  "prerequisites": [
+   "Mind Smith Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With a swing and a thought, you detonate your mind weapon into a burst of psychic shards that shred the mind. You concentrate and unleash a that deals damage to all creatures in the area, with a save against the higher of your class DC or spell DC. After the attack, your mind weapon automatically re-forms, and you can't use this ability again for 1 minute. Mind Shards' damage increases by 1d6 at level 7 and every two levels thereafter."
+ },
+ {
+  "id": "mineral-deposits",
+  "name": "Mineral Deposits",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dragonblood"
+  ],
+  "prerequisites": [
+   "Terra Dragonblood"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Precious metals from your bloodstream line your claws, jaws, or the tip of your tail, and you're able call upon your blood to surge and empower your attacks. Choose cold iron or silver and a claw, jaws, or tail unarmed attack that you have. Until the end of your turn, your Strikes with the chosen unarmed attack count as being made of the chosen metal. At 17th level, you can choose adamantine."
+ },
+ {
+  "id": "miniaturize",
+  "name": "Miniaturize",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [
+   "Shrink Down"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon can shrink even further. When using Shrink Down, your eidolon can reduce its size to Tiny. When Tiny, its reach is 0 feet."
+ },
+ {
+  "id": "minion-guise",
+  "name": "Minion Guise",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill",
+   "social"
+  ],
+  "prerequisites": [
+   "animal companion or familiar",
+   "expert in Deception",
+   "Vigilante Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you are in your social identity, you can also grant a social identity to an animal companion, familiar, or other minion you gained from a class feature. When changing to your social identity, you also change your minion's appearance to that of a socially acceptable creature of its type, such as grooming a wolf to appear as a large dog or disguising a familiar to appear as an exotic pet. Commanding your minion to use unusual magical or combat abilities it gained from your class features or feats while in this social identity risks exposing your vigilante identity."
+ },
+ {
+  "id": "miracle-worker",
+  "name": "Miracle Worker",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Frequency** once every 10 minutes --- Your alchemical mastery can resuscitate the recently slain. You can administer a major or true elixir of life to a creature who has been dead for no more than 2 rounds. When you do, that creature is immediately returned to life with 1 Hit Point and becomes Wounded 1."
+ },
+ {
+  "id": "miraculous-flight",
+  "name": "Miraculous Flight",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "magical"
+  ],
+  "prerequisites": [
+   "Vehicle Mechanic Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With superior engineering and magical application, you have freed your signature vehicle from the bonds of gravity, allowing it to soar through the sky like a dragon. The vehicle gains magical propulsion and a fly Speed equal to its fastest current Speed. If your signature vehicle already had a fly Speed, reduce the distance the vehicle needs to make a 90-degree turn to half the usual length (typically half the length of the vehicle)."
+ },
+ {
+  "id": "miraculous-intervention",
+  "name": "Miraculous Intervention",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion",
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An adjacent fiend or undead begins to use a reaction. --- Through divine intervention or whispered prayers, you foil an enemy's response. If the triggering creature's level is equal to or lower than yours, you disrupt the triggering reaction. If the triggering creature's level is higher than yours, you must make an attack roll or spell attack roll against its AC (your choice). On a success, you disrupt the reaction."
+ },
+ {
+  "id": "miraculous-possibility",
+  "name": "Miraculous Possibility",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your deity empowers you to perform minor miracles, allowing you to readily adapt to the fluctuating needs of your duties. Once during your daily preparations, you can use a spell slot to hold sheer divine potential, rather than using it to prepare a spell. You can use this spell slot to cast any spell you know from the divine spell list that's at least 2 ranks lower than the slot you designate. The spell acts in all ways as a spell of 2 ranks lower. You don't have any particular spell prepared in that slot until you cast it."
+ },
+ {
+  "id": "mirror-risen",
+  "name": "Mirror-Risen",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lineage",
+   "reflection"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You were created from magic involving mirrors and still retain some ability to seek refuge in reflected illusions. You gain the Mirror-Trickery reaction."
+ },
+ {
+  "id": "mischievous-tail",
+  "name": "Mischievous Tail",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [
+   "Skillful Tail"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your tail can bedevil your foes. You can Disarm and Trip creatures with your tail, even if you don't have a free hand. All restrictions of Skillful Tail otherwise continue to apply. If you have Smashing Tail, your tail unarmed attack gains the disarm and trip traits."
+ },
+ {
+  "id": "mist-child",
+  "name": "Mist Child",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "changeling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You blend in with unnatural subtlety. When you are concealed or hidden, increase the DC of the flat check to target you to 6 if you're concealed or 12 if you're hidden."
+ },
+ {
+  "id": "mist-escape",
+  "name": "Mist Escape",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Coffin Bound",
+   "Turn to Mist"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You are reduced to 0 HP. --- As you fall, your body reacts to defend itself. You Turn to Mist. This doesn't expend a use of Turn to Mist, and you can use Mist Escape even if you've already Turned to Mist in the same day. You take move actions to move directly toward your coffin even though you are at 0 HP, though you aren't conscious and don't have control over how you do so. While at 0 HP in this form, you are unaffected by further damage. You automatically return to your corporeal form, unconscious, if you reach your coffin or after 1 hour when you are destroyed, whichever one comes first."
+ },
+ {
+  "id": "mist-strider",
+  "name": "Mist Strider",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "azarketi"
+  ],
+  "prerequisites": [
+   "Water Strider"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You condense the moisture in the air, solidifying it so it can hold your weight. When you use Water Strider, you can walk on air. You can ascend and descend at a maximum of a 45-degree angle. You still fall at the end of your movement if you don't end on a surface that can support you, as normal for Water Strider."
+ },
+ {
+  "id": "mistsoul",
+  "name": "Mistsoul",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lineage",
+   "undine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a connection to vaporous forms of water, such as fog and mist. You gain the Mist Blending reaction."
+ },
+ {
+  "id": "mixed-maneuver",
+  "name": "Mixed Maneuver",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "master in Athletics"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You leverage your knowledge of martial arts to mix different maneuvers together into a single flowing combination. Choose any two of Grapple, Reposition, Shove, and Trip. Attempt both of the attacks you chose against the same or different creatures, but don't apply the multiple attack penalty until after resolving both attacks."
+ },
+ {
+  "id": "mobile-finisher",
+  "name": "Mobile Finisher",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You attack in motion. Stride and then Strike. You can use Mobile Finisher while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "mobile-magical-combat",
+  "name": "Mobile Magical Combat",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Spellmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a melee weapon and have Cast a Spell requiring at least 1 action this turn. --- You dart around the battlefield, casting spells while you carefully make melee attacks with your weapon. Stride once. If you end your movement within melee reach of at least one enemy, you can make a melee Strike against that enemy. You can use Mobile Magical Combat while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "mobile-swarm",
+  "name": "Mobile Swarm",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swarmkeeper Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The clicking of fast-moving legs accompanies your swarm in all kinds of environments. Your swarm's land and climb Speeds increase to 20 feet, and the swarm gains a 20-foot Swim speed."
+ },
+ {
+  "id": "mobility",
+  "name": "Mobility",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You move without leaving an opening. When you Stride and move half your Speed or less, that movement does not trigger reactions. You can use Mobility when Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "moderate-enhance-venom",
+  "name": "Moderate Enhance Venom",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "vishkanya"
+  ],
+  "prerequisites": [
+   "Lesser Enhance Venom"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You upgrade the vishkanyan venom you can apply with Envenom to moderate vishkanyan venom. Envenom's frequency becomes once per 10 minutes. **Moderate Vishkanyan Venom** (level 9) **Frequency** once per 10 minutes **Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 3d6 damage (1 round) **Stage 2** 4d6 damage (1 round) **Stage 3** 5d6 damage (1 round)"
+ },
+ {
+  "id": "modular-dynamo",
+  "name": "Modular Dynamo",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sterling Dynamo Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your dynamo has modular configurations, allowing you to swap between various different possibilities with ease in order to adapt to various situations in combat. Your dynamo attack gains the modular trait, as well as one of the following configurations of your choice: power driver (1d6 bludgeoning damage; shove), percussive striker (1d4 bludgeoning damage; agile, finesse), rotating sickle (1d6 slashing damage; trip), or entangling barbs (1d6 piercing damage; grapple). If you have a manually controlled dynamo, these damage dice increase by 1 size, as usual, and you can also choose the extendable baton (1d4 bludgeoning damage; finesse, reach), which has the damage increase already factored in. When you use an Interact action to switch configurations using the modular trait, you switch between the initial configuration of dynamo you chose with the Sterling Dynamo Dedication and the new configuration you chose with Modular Dynamo. --- **Special** You can select this feat multiple times. Each time, you choose another configuration and add it to the list of options you can choose when you use an Interact action with the modular trait."
+ },
+ {
+  "id": "moldersoul",
+  "name": "Moldersoul",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "ardande",
+   "lineage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your connection to elemental wood asserts itself in the form of decay, like forgotten logs left to rot and the char that remains after a forest fire, cycles of devastation clearing away what was to make room for the next generation of life. You gain the Decompose action."
+ },
+ {
+  "id": "molten-wire",
+  "name": "Molten Wire",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "attack",
+   "composite",
+   "fire",
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Spinning molten iron through a vortex of fire, you trap your foe in searing wires. Make an impulse attack roll against a creature within 15 feet. On a success, the target takes damage and is wrapped in molten wire for 1 minute. It is Clumsy 1 and takes damage at the start of each of its turns, with a basic Reflex save. The wire's Escape DC is your class DC. The wire has AC 10 and 75 HP. The impulse ends if the creature Escapes or the wire is destroyed. --- **Level (+4)** The slashing damage increases by 1d6, the fire damage increases by 1d4, and the wire's HP increases by 25."
+ },
+ {
+  "id": "moment-of-clarity",
+  "name": "Moment of Clarity",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You push back your rage for a moment in order to think clearly. Until the end of this turn, you can use actions with the concentrate trait even if those actions don't have the rage trait."
+ },
+ {
+  "id": "momentum-strike",
+  "name": "Momentum Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Putting your weight behind your weapon's swing, you can push one enemy into another. Make a melee Strike against an enemy of your size or smaller. If you hit and deal damage, you can move the enemy up to 5 feet (up to 10 feet on a critical hit) in a direction of your choice. It must remain within your reach during this movement, and you can't move it into or through obstacles. You can move the target into another creature's space. If you do, the second creature takes bludgeoning damage equal to double your Strength modifier and is pushed away from the target until it's no longer in the same space. If there's no room for the second creature to move, you can't move the target into it."
+ },
+ {
+  "id": "monk-resiliency",
+  "name": "Monk Resiliency",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Monk Dedication",
+   "class granting no more Hit Points per level than 8 + your Constitution modifier"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain 3 additional Hit Points for each monk archetype class feat you have. As you continue selecting monk archetype class feats, you continue to gain additional Hit Points in this way."
+ },
+ {
+  "id": "monks-flurry",
+  "name": "Monk's Flurry",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Monk Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Flurry of Blows action. Your fists' power, however, exceeds your conditioning; once you use Flurry of Blows, you can't use it again for 1d4 rounds as your muscles recover."
+ },
+ {
+  "id": "monster-crafting",
+  "name": "Monster Crafting",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use the parts of monsters to aid in crafting. You can use the body of a monster to help Craft items, using Survival instead of Crafting for the Craft activity when you do so. If parts of the monster's body are valuable, you can expend them toward the item's raw material cost as well. (The GM makes the determination if the monster's entry doesn't list any valuable materials from its body.) If you spend additional days working on the item, reduce the Price using the monster's level instead of your own. Certain items may require specific creatures in their Craft requirement."
+ },
+ {
+  "id": "monstrosity-shape",
+  "name": "Monstrosity Shape",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Untamed Form"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can transform into a powerful magical creature. Add the cave worm and sea serpent shapes listed in Monstrosity Form to your Untamed Form list. If you have Soaring Shape, also add the phoenix shape to your *untamed form* list."
+ },
+ {
+  "id": "monstrous-inclinations",
+  "name": "Monstrous Inclinations",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "animist",
+   "apparition",
+   "wandering"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** Your attuned apparition grants Forest Lore or Ocean Lore as one of its apparition skills. --- Your apparitions share with you the monstrous nature of those creatures who dwell in deep seas or ancient woods. You add Monstrosity Form to your apparition spell repertoire, allowing you to cast it with your apparition spellcasting. --- **Special** If you are attuned to a stalker in darkened boughs, add the phoenix form from *monstrosity form* to your available Darkened Forest Form options when you cast the spell heightened to 8th rank. If you are attuned to a lurker in devouring dark, add the cave worm and sea serpent forms to your Devouring Dark Form options as a polymorph effect when you cast the spell heightened to 8th rank."
+ },
+ {
+  "id": "moray-ambush",
+  "name": "Moray Ambush",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "athamaru"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are hidden and a creature who hasn't detected you passes within 20 feet of you. --- Like the moray eels athamaru communities raise and train, you know how to quickly strike from hiding. Stride or Swim directly toward the triggering creature and make a melee Strike against it. The target creature is off-guard to this attack. --- **Special** If you're mounted on an eel, you can have the eel move instead of yourself."
+ },
+ {
+  "id": "morning-side-dishes",
+  "name": "Morning Side Dishes",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wandering Chef Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know a proper breakfast should have a variety of sides. You gain the , and you can create 5 alchemical food consumables during your daily preparations."
+ },
+ {
+  "id": "mortal-healing",
+  "name": "Mortal Healing",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "Godless Healing",
+   "You follow the Laws of Mortality"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You grant greater healing when the gods don't interfere. When you roll a success to Treat Wounds for a creature that hasn't regained Hit Points from divine magic in the past 24 hours, you get a critical success on your check instead and restore the corresponding amount of Hit Points."
+ },
+ {
+  "id": "motionless-cutter",
+  "name": "Motionless Cutter",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a melee weapon ikon that deals slashing damage --- Your weapon is so sharp even an insect alighting upon its still blade would be severed. Your weapon ikon gains the following ability. **Transcendence—Sever Four Dragonfly Wings** ⟨3⟩ (transcendence)"
+ },
+ {
+  "id": "mountains-stoutness",
+  "name": "Mountain's Stoutness",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your hardiness lets you withstand more punishment than most. Increase your maximum Hit Points by your level. When you have the Dying 1 condition, the DC of your recovery checks is equal to 9 + your dying value (instead of 10 + your dying value). If you also have the Toughness feat, the Hit Points gained from it and this feat are cumulative, and the DC of your recovery checks is equal to 6 + your dying value."
+ },
+ {
+  "id": "mounting-leap",
+  "name": "Mounting Leap",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Cavalier Dedication",
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're within 10 feet of a creature that is at least one size larger than you and is willing to be your mount. --- You jump atop your mount from afar, landing comfortably astride it. Leap toward the creature and Mount it."
+ },
+ {
+  "id": "muckraking",
+  "name": "Muckraking",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "emotion",
+   "mental"
+  ],
+  "prerequisites": [
+   "Venture-Gossip Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "It seems like your knowledge has come in handy after all and you have your enemy at your feet. Pulling out your fan mail, you read your fans' scathing remarks about your enemy to their face, letting them feel just how much everyone hates them and everything that they've done. They hate the way that they walk, they hate the way that they talk. Your enemy takes 10d10 damage, with a save. On a critical failure, they're off-guard until the beginning of your next turn and lose all reactions, except to cry, loudly."
+ },
+ {
+  "id": "mud-boats-passage",
+  "name": "Mud Boat's Passage",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "primal",
+   "tanuki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You instinctively create magical boats that keep your feet dry (mostly). You can walk on the surface of water and other non-damaging liquids, moving at half your normal Speed, as a magical boat forms under your feet to carry you. Unfortunately, this magical boat is made out of mud, so you can't get very far—if you end your turn without reaching solid ground, the boat dissolves, and you sink."
+ },
+ {
+  "id": "muddle-through",
+  "name": "Muddle Through",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "prerequisites": [],
+  "text": "Muddle Through Source Kingmaker Adventure Path pg. 532 Prerequisites Trained in Wilderness Your people are independent-minded and take care of the small things around the kingdom, not letting them pile up into bigger problems. Increase two of your Ruin thresholds by 1 and one of them by 2."
+ },
+ {
+  "id": "mug",
+  "name": "Mug",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You make a quick attack and rob your foe in the process. Make a melee Strike against an adjacent enemy. If you hit and deal sneak attack damage, you can also attempt to steal from the target, even if the target is in combat."
+ },
+ {
+  "id": "munitions-machinist",
+  "name": "Munitions Machinist",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Munitions Crafter",
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits, creating up to 4 versatile vials during your daily preparations. You can use Quick Alchemy only to create bombs or alchemical ammunition. Using Quick Alchemy to create alchemical ammunition also counts as 1 action toward activating that ammunition."
+ },
+ {
+  "id": "munitions-master-dedication",
+  "name": "Munitions Master Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "class",
+   "dedication"
+  ],
+  "prerequisites": [
+   "light mortar innovation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have drilled enough with your light mortar to operate it with unrivaled efficiency. You gain the Engineer's Efficiency action."
+ },
+ {
+  "id": "murderers-circle",
+  "name": "Murderer's Circle",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Provocator Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You Strike a target within reach and then Step to any other open space adjacent to that target. Your target is then off-guard against your next Strike this turn."
+ },
+ {
+  "id": "murderous-thorns",
+  "name": "Murderous Thorns",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "ghoran"
+  ],
+  "prerequisites": [
+   "Hidden Thorn or thorned rose"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your thorns are many, vicious, and sharp. If you have the Hidden Thorn feat, your thorn attack gains the deadly d6 trait. If you have the thorned rose heritage, you can use the Wicked Thorns reaction once every hour."
+ },
+ {
+  "id": "murksight",
+  "name": "Murksight",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your vision pierces through non-magical fog, mist, rain, and snow. You don't take circumstance penalties to ranged attacks or Perception checks caused by non-magical precipitation, and your targeted attacks don't require a flat check to succeed against a target concealed only by such effects."
+ },
+ {
+  "id": "musical-summons",
+  "name": "Musical Summons",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "zoophonia muse"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Your studies have given you a deeper understanding of animals and beasts, allowing you to call them to your side as you cast your spell. You cast summon animal and a one-action composition spell."
+ },
+ {
+  "id": "my-kingdom-my-blood",
+  "name": "My Kingdom, My Blood",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Prophesied Monarch Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "The health of the ruler is the health of the kingdom, and the health of the kingdom is that of its ruler, each bound to the other inextricably. Stride. You can Burrow, Climb, Fly, or Swim instead of Striding if you have the corresponding movement type. You then plant your fist or weapon into the ground at your feet, creating a in an aura around you that lasts for 1 minute. Whenever an ally within this aura takes damage, you can use your reaction to take half the damage in their stead while they take the remainder. When you take damage through this link, you don't apply any resistances, weaknesses, or other abilities you have to that damage; you simply take that amount of damage. Whenever you take damage while this effect is active, an ally within the aura can use their reaction to take half the damage for you in the same manner. The effect ends immediately if you're reduced to 0 Hit Points."
+ },
+ {
+  "id": "myriad-forms",
+  "name": "Myriad Forms",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "kitsune"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With a bit of self-discovery, you find a new form. You gain the alternate form of a kitsune heritage other than your own, adding it to the options for your Change Shape."
+ },
+ {
+  "id": "mysterious-breadth",
+  "name": "Mysterious Breadth",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Oracle Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Increase the number of spells in your repertoire and number of spell slots you gain from oracle archetype feats by 1 for each spell rank other than your two highest oracle spell slots."
+ },
+ {
+  "id": "mysterious-repertoire",
+  "name": "Mysterious Repertoire",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "oracle"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mystery holds unknowable depths of magic not always associated with the divine. You can have one spell in your spell repertoire not on the divine spell list, in addition to spells you've added to your spell list from abilities like divine access. You cast that spell as a divine spell. You can swap which spell you add and from which tradition as you could any other oracle spell, but you can't use this feat to have more than one spell from another tradition in your spell repertoire at the same time"
+ }
+]

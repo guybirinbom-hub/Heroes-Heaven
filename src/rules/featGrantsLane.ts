@@ -34,4 +34,9 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
   // Ancestry weapon familiarity: named weapons, not a whole category. All ten ids verified in core.json.
   'vanara-weapon-familiarity': { weaponFamiliarity: { weapons: ['bo-staff', 'chakram', 'katar', 'panabas', 'urumi'], rank: 'trained' } },
   'vishkanya-weapon-familiarity': { weaponFamiliarity: { weapons: ['blowgun', 'fighting-fan', 'kris', 'kukri', 'shuriken'], rank: 'trained' } },
+
+  // ---- full feat audit (scripts/apply-feat-audit.mjs) ----
+  // 2 entries. The judge said "no lane exists"; the adversary found the lane.
+  'crescent-cross-training': {"weaponFamiliarity":{"weapons":["crescent-cross","crescent-cross-melee","crescent-cross-ranged"],"mirrorCategory":"simple"}},
+  'eagle-eye': {"perception":"master"},
 };

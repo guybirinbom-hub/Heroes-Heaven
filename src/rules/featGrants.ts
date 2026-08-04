@@ -117,6 +117,13 @@ export interface FeatGrant {
     weapons: string[];
     rank?: ProficiencyRank;
     mirrorBestCategory?: boolean;
+    /**
+     * "…as if they were MARTIAL weapons" (Advanced Bow Training, Advanced Monastic Weaponry, …) —
+     * mirrors that ONE category's rank rather than the best of the three. `mirrorBestCategory` is
+     * wrong for these: a cleric with Archer Dedication is trained in martial but expert in simple,
+     * so the best-of rule would make their advanced bows expert when the feat says martial.
+     */
+    mirrorCategory?: WeaponCategory;
   };
   /**
    * The feat grants a BONUS skill feat the player picks (Rogue Dedication: "You gain a skill feat").
@@ -218,6 +225,24 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
     choiceGrants: {
       'battle-axe': { weaponFamiliarity: { weapons: ['battle-axe'], rank: 'trained' } },
       longsword: { weaponFamiliarity: { weapons: ['longsword'], rank: 'trained' } },
+    },
+  },
+  // "You gain proficiency with all advanced <X> as if they were martial <X>." The feat audit flagged
+  // all four; every weapon list below is enumerated from core.json (category 'advanced' + the stated
+  // group or trait) rather than from the feat's prose, because the prose names no weapons at all.
+  'advanced-bow-training': { weaponFamiliarity: { weapons: ['daikyu', 'hongali-hornbow', 'phalanx-piercer'], mirrorCategory: 'martial' } },
+  'advanced-monastic-weaponry': { weaponFamiliarity: { weapons: ['butterfly-sword', 'feng-huo-lun', 'heavenly-rolling-flames', 'hook-sword'], mirrorCategory: 'martial' } },
+  'advanced-firearm-familiarity': {
+    weaponFamiliarity: {
+      weapons: ['animate-dreamer', 'barricade-buster', 'dwarven-scattergun', 'explosive-dogslicer', 'explosive-dogslicer-ranged', 'flingflenser', 'ghosthands-comet', 'kaldemashs-lament', 'rowan-rifle'],
+      mirrorCategory: 'martial',
+    },
+  },
+  // Firearms AND crossbows — the only one of the four that spans two groups.
+  'advanced-shooter': {
+    weaponFamiliarity: {
+      weapons: ['animate-dreamer', 'barricade-buster', 'dwarven-scattergun', 'explosive-dogslicer', 'explosive-dogslicer-ranged', 'flingflenser', 'ghosthands-comet', 'kaldemashs-lament', 'rowan-rifle', 'repeating-crossbow', 'repeating-hand-crossbow', 'taw-launcher'],
+      mirrorCategory: 'martial',
     },
   },
 };

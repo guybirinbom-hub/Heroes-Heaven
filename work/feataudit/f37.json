@@ -1,0 +1,957 @@
+[
+ {
+  "id": "steel-on-steel",
+  "name": "Steel on Steel",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a melee weapon ikon or worn ikon made of metal, stone, or a similarly hard material --- The ring of divinely empowered steel assails your enemies. **Transcendence—Ringing Challenge** ⟨2⟩ (sonic, spirit, transcendence)"
+ },
+ {
+  "id": "steel-skin",
+  "name": "Steel Skin",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Survival",
+   "Sentinel Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You wear your armor like a second skin, taking comfort in the protection it offers. You don't become fatigued if you sleep while wearing armor."
+ },
+ {
+  "id": "steel-your-resolve",
+  "name": "Steel Your Resolve",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "general",
+   "stamina"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Cost** 1 Resolve Point --- Regain Stamina Points equal to half your maximum. Steel Your Resolve"
+ },
+ {
+  "id": "steelhoof",
+  "name": "Steelhoof",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "centaur"
+  ],
+  "prerequisites": [
+   "ironhoof centaur heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've girded your hooves in steel or other reinforcements aimed to inflict maximum damage. Your hoof attack deals 1d8 bludgeoning damage instead of 1d6."
+ },
+ {
+  "id": "stellas-stab-and-snag",
+  "name": "Stella's Stab and Snag",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue",
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "expert in Thievery"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a piercing or slashing melee weapon. --- You dart towards your opponent, seeking to stab them and slice their purse-strings with a single movement. Stride up to your Speed; this movement does not trigger reactions triggered by movement. At any point during this movement you can Strike an opponent within reach. If this Strike is successful, you can attempt a Thievery check to Steal from the target."
+ },
+ {
+  "id": "step-lively",
+  "name": "Step Lively",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A Large or larger enemy ends a move action adjacent to you. --- You are an expert at avoiding the lumbering footsteps of larger creatures. You Step to another space adjacent to the enemy."
+ },
+ {
+  "id": "stepping-stones",
+  "name": "Stepping Stones",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Disks of rock fly to points that you designate to make a new path. You can set them horizontally to make a path across the ground or atop a liquid, or anchor them into a vertical surface to make steps. The path can be up to 20 feet (4 squares) long, and steps can extend up to 10 feet up the side of the surface. All squares must be contiguous and within 60 feet of you. Moving across the path lets a creature ignore difficult terrain and hazardous terrain from the ground beneath it. The disks last until the end of your next turn, but you can Sustain the impulse. --- **Level (+2)** Increase the length of the path by 10 feet or the height of the steps by 5 feet, and increase the maximum distance away from you a square can be by 10 feet."
+ },
+ {
+  "id": "sticky-bomb",
+  "name": "Sticky Bomb",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can mix in a sticky additive to an alchemical bomb to make its contents adhere and continue to deal damage. A creature hit by a sticky bomb also takes persistent damage equal to and of the same type as the bomb's splash damage. Use the splash damage amount listed in the bomb's stat block, even if you used an ability to change the splash damage dealt. If the bomb already deals persistent damage, combine the two amounts."
+ },
+ {
+  "id": "sticky-poison",
+  "name": "Sticky Poison",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "A combination of additional viscosity and careful application keeps your weapons poisoned even when suffering significant wear and tear. If your Strike with a poisoned weapon would expend its poison without your target attempting an initial save (due to resistance or your Strike being a critical failure, for example), attempt a . On a success, your weapon remains poisoned. If your Strike with a poisoned weapon succeeds, attempt a . On a success, your weapon remains poisoned until the end of your next turn."
+ },
+ {
+  "id": "stitch-flesh",
+  "name": "Stitch Flesh",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Medicine"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use Treat Wounds to restore Hit Points to undead creatures, not just living ones. The techniques you use to do so vary, but all require sutures, bandages, and other tools included in healer's tools. Some conditions that might raise the DC of treating undead's wounds differ from that of living creatures. For instance, the GM might increase the DC if the undead being treated is in a church of Pharasma or the wounds were caused by powerful vitality energy."
+ },
+ {
+  "id": "stitched-familiar",
+  "name": "Stitched Familiar",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "arcane or primal patron"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your familiar can shed its material form, becoming a mass of animated magic. Your familiar gains the Stitching Strike activity."
+ },
+ {
+  "id": "stomp-ground",
+  "name": "Stomp Ground",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You bring your booted foot down on the ground with enough force to rattle your foes. Each creature in a must attempt a saving throw against your class DC. --- **Critical Success** The creature is unaffected. **Success** The creature is off-guard until the end of your turn. **Failure** The creature is knocked prone. **Critical Failure** The creature is knocked prone and takes damage from the fall."
+ },
+ {
+  "id": "stone-blood",
+  "name": "Stone Blood",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ka Stone Ritual"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can selectively stop your bleeding with ease. Reduce the DC of flat checks to stop persistent bleed damage you have from 15 to 10, and you can use a single action that has the concentrate trait to gain an early flat check without physically binding the wounds. You recover naturally from the drained condition twice as quickly as normal."
+ },
+ {
+  "id": "stone-blood-stonebound",
+  "name": "Stone Blood (Stonebound)",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Stonebound Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your blood becomes thick and sluggish, but no less effective at oxygenating your cells. You can selectively stop your bleeding with ease. Reduce the DC of flat checks to stop persistent bleed damage from 15 to 10, and you can use a single action that has the concentrate trait to gain an early flat check without physically binding the wounds. You recover from the drained condition twice as quickly as normal."
+ },
+ {
+  "id": "stone-bones",
+  "name": "Stone Bones",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are struck by a critical hit that deals physical damage. --- Your intractable nature can help you shrug off even the most grievous injuries. Attempt a . If you are successful, the attack becomes a normal hit."
+ },
+ {
+  "id": "stonebane",
+  "name": "Stonebane",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Stone Brawler Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your stonestrike attacks deal 1d6 additional damage against constructs, creatures with the earth trait, and earthen objects, such as a stone door."
+ },
+ {
+  "id": "stonewall",
+  "name": "Stonewall",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "dwarf",
+   "earth",
+   "polymorph"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy or hazard's effect hits you or you fail a Fortitude save against one. --- The strength of stone overcomes you so strongly that it replaces your stout body. You become petrified until the end of the current turn. You don't take any damage from the triggering effect or any other ill effects that couldn't affect stone."
+ },
+ {
+  "id": "storied-companion",
+  "name": "Storied Companion",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fortune",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Handler's Calling",
+   "you have an animal companion or pet"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your animal companion or pet would fail a saving throw. --- Your companion is an integral part of your story, and you can expend your mythic power to protect it, defying events that would prevent it from being so. Spend a Mythic Point; your companion rerolls the triggering save at mythic proficiency and gains temporary Hit Points equal to twice your level that last for 1 minute."
+ },
+ {
+  "id": "storm-born",
+  "name": "Storm Born",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "storm order"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are at home out in the elements, reveling in the power of nature unleashed. You do not take circumstance penalties to ranged spell attacks or Perception checks caused by weather, and your targeted spells don't require a flat check to succeed against a target concealed by weather (such as fog)."
+ },
+ {
+  "id": "storm-retribution",
+  "name": "Storm Retribution",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "storm order",
+   "tempest surge order spell"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An opponent adjacent to you critically hits you with a melee weapon or melee unarmed attack. **Requirements** You have at least 1 available Focus Point. --- You lash out, directing a burst of storming fury toward a creature that has harmed you. You cast Tempest Surge on the triggering opponent and push that creature, moving it 5 feet away from you if it fails its Reflex save, or 10 feet if it critically fails. This movement is forced movement."
+ },
+ {
+  "id": "storm-spiral",
+  "name": "Storm Spiral",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "air",
+   "electricity",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "sonic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Dark thunderclouds swirl in a miniature storm, crisscrossed with lightning bolts; a tremendous thunderclap fills the air. The storm appears in a within 60 feet. Each creature in the area takes damage, with a save against your class DC. A creature that fails its save is deafened until the end of its next turn (or for 1 minute on a critical failure). A creature wearing metal armor or made of metal takes a -1 circumstance penalty to its save. --- **Level (+3)** The electricity damage increases by 1d12."
+ },
+ {
+  "id": "storming-breath",
+  "name": "Storming Breath",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You spit out a freezing breath or sonic scream. You deal 4d6 damage, plus 1d6 damage for every level you have beyond 6th (), to all creatures in a , with a save. --- **Awakening** Your blast powerfully batters your foes. A creature that critically fails its save is knocked prone. --- **Awakening** The kickback of your blast helps you make a speedy escape. When you use this ability, you Fly backward 15 feet in a straight line directly opposite your blast. This movement doesn't trigger reactions based on movement."
+ },
+ {
+  "id": "storming-gaze",
+  "name": "Storming Gaze",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "hungerseed",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You can open or energize a notable third eye on your forehead to strike with storming power. You deal 3d4 electricity or 3d4 sonic damage in a ; Storming Gaze gains this trait. Each creature in the area must attempt a saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1d4 rounds. At 7th level and every 2 levels thereafter, the damage increases by 1d4."
+ },
+ {
+  "id": "strand-strider",
+  "name": "Strand Strider",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "anadi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eight legs serve you well when climbing walls and webs alike. You gain a climb speed of 25 feet in your spider shape."
+ },
+ {
+  "id": "strategic-assessment",
+  "name": "Strategic Assessment",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You learn your foes' strengths and weaknesses by watching them move. When you hit a creature with a Strike on which you substituted your attack roll due to Devising a Stratagem, the GM chooses one of the following pieces of information about the enemy to tell you. - Which of the enemy's weaknesses is highest - Which of the enemy's resistances is highest - Which of the enemy's saving throws is lowest - One immunity the enemy has The GM can choose deliberately or at random, but they can't choose information that doesn't apply (such as choosing an immunity for an enemy that has no immunities). This applies only the first time you hit a given creature."
+ },
+ {
+  "id": "strategic-bypass",
+  "name": "Strategic Bypass",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your plans account for your foes' resistances, enabling you to strike a telling blow. When you hit with a Strike on which you substituted your attack roll due to Devise a Strategem, you ignore an amount of resistance equal to your Intelligence modifier for each resistance that applies against your attack."
+ },
+ {
+  "id": "strategic-repose",
+  "name": "Strategic Repose",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "investigator",
+   "vitality"
+  ],
+  "prerequisites": [
+   "trained in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained extensively in fighting the undead and have learned to infuse a small amount of vitality energy into your weapon. When you deal precision damage with strategic strike, you may choose for that damage to be vitality damage instead."
+ },
+ {
+  "id": "streetwise",
+  "name": "Streetwise",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know about life on the streets and feel the pulse of your local settlement. You can use your Society modifier instead of your Diplomacy modifier to Gather Information. In any settlement you frequent regularly, you can use the Recall Knowledge action with Society to know the same sorts of information that you could discover with Diplomacy to Gather Information. The DC is usually significantly higher, but you know the information without spending time gathering it. If you fail to recall the information, you can still subsequently attempt to Gather Information normally."
+ },
+ {
+  "id": "strix-vengeance",
+  "name": "Strix Vengeance",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "emotion",
+   "mental",
+   "strix"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** You, or a strix ally you can see, are damaged by an enemy's critical hit. --- You dedicate yourself to destroying those who harm your kin. Until the end of your next turn, you deal an additional +1d6 damage on Strikes against the triggering enemy. The bonus increases to +2d6 damage if you use a Striking weapon or unarmed attack and +3d6 damage if you use a Striking (Major) weapon or unarmed attack."
+ },
+ {
+  "id": "strong-arm",
+  "name": "Strong Arm",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you Strike with a thrown weapon, the weapon's range increment increases by 10 feet."
+ },
+ {
+  "id": "strong-of-wing",
+  "name": "Strong of Wing",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "awakened-animal"
+  ],
+  "prerequisites": [
+   "Take Flight"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can fly with a greater distance. The fly Speed you gain from Take Flight increases to 25 feet."
+ },
+ {
+  "id": "stronger-debilitating-venom",
+  "name": "Stronger Debilitating Venom",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "vishkanya"
+  ],
+  "prerequisites": [
+   "Debilitating Venom",
+   "Moderate Enhance Venom"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Add one of the following to the debilitations from which you can choose when you Envenom. These debilitations reduce the damage of all stages as noted. - **Bungling** (level 13) Reduce damage by 1 die **Stage 1** no effect **Stage 2** Clumsy 1 **Stage 3** Clumsy 2 - **Devitalizing** (level 13) Reduce damage by 3 dice **Stage 1** no effect **Stage 2** Drained 1 **Stage 3** Drained 2 - **Nauseating** (level 13) Reduce damage by 2 dice **Stage 1** no effect **Stage 2** Sickened 1 **Stage 3** Sickened 2 - **Weakening** (level 13) Reduce damage by 1 die **Stage 1** Enfeebled 1 **Stage 2** enfeebled 1 **Stage 3** Enfeebled 2 **Special** You can select this feat multiple times, choosing a different debilitation each time."
+ },
+ {
+  "id": "stubborn-persistence",
+  "name": "Stubborn Persistence",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "human"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Humans are renowned for their ability to persist through the most grueling of trials that would leave others ready to drop. When you would become fatigued, attempt a . On a success, you aren't fatigued. If the fatigued condition has an underlying cause that you don't address, such as lack of rest, you must attempt the check again at an interval determined by the GM until you fail the flat check or address the underlying cause."
+ },
+ {
+  "id": "student-of-the-canon",
+  "name": "Student of the Canon",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've researched many faiths enough to recognize notions about them that are unlikely to be true. If you roll a critical failure at a Religion check to Decipher Writing of a religious nature or to Recall Knowledge about the tenets of faiths, you get a failure instead. When attempting to Recall Knowledge about the tenets of your own faith, if you roll a failure, you get a success instead, and if you roll a success, you get a critical success instead."
+ },
+ {
+  "id": "student-of-water",
+  "name": "Student of Water",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "monk",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Following your studies of water, your qi stirs the water of the natural world. If you're underwater, you have cover against creatures outside of the water. As soon as you meet the prerequisites for Underwater Marauder and Water Sprint, you gain those feats."
+ },
+ {
+  "id": "stumbling-finisher",
+  "name": "Stumbling Finisher",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your excellent display of fighting prowess leaves your opponent stumbling back. Make a Strike. If you hit, the target is pushed 5 feet back (or 10 feet on a critical hit)."
+ },
+ {
+  "id": "stunning-appearance",
+  "name": "Stunning Appearance",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "vigilante"
+  ],
+  "prerequisites": [
+   "Startling Appearance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your sudden appearance leaves your foe unable to respond. When you use Startling Appearance, if your foe's level is equal to or lower than yours, they are also Stunned 1 on a hit, or Stunned 2 on a critical hit."
+ },
+ {
+  "id": "stunning-blows",
+  "name": "Stunning Blows",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Flurry of Blows"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The focused power of your flurry threatens to overwhelm your opponent. When you target the same creature with two Strikes from your Flurry of Blows, you can try to stun the creature. If either Strike hits and deals damage, the target must succeed at a Fortitude save against your class DC or be Stunned 1 (or Stunned 3 on a critical failure). This is an incapacitation effect."
+ },
+ {
+  "id": "stunning-finisher",
+  "name": "Stunning Finisher",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You attempt a dizzying blow. Make a melee Strike. If you hit, your foe must attempt a save against your class DC with the following results; the save has the incapacitation trait. --- **Critical Success** The target is unaffected. **Success** The target can't use reactions until its next turn. **Failure** The target is Stunned 1. **Critical Failure** The target is Stunned 3."
+ },
+ {
+  "id": "sturdy-bindings",
+  "name": "Sturdy Bindings",
+  "level": 1,
+  "category": "bonus",
+  "traits": [],
+  "prerequisites": [
+   "Order of the Chain"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your grapples are incredibly reliable. When you roll a critical failure on a check to grapple a target, you get a failure instead. In addition, when a creature you have grabbed rolls a failure on its check to Escape, it gets a critical failure instead, and if it rolls a critical success, it gets a success instead."
+ },
+ {
+  "id": "subjective-truth",
+  "name": "Subjective Truth",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Deception",
+   "Vigilante Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your disparate identities allow you to defeat magic that detects lies. As long as what you say is true from the point of view of your current identity, you can deceive effects like Ring of Truth that reveal lies."
+ },
+ {
+  "id": "submission-hold",
+  "name": "Submission Hold",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wrestler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- Your iron grip saps your opponent's strength. Attempt an Athletics check to grapple the creature you have grabbed or restrained, with the following additional effects if you succeed. --- **Critical Success** The target is Enfeebled 2 until the end of its next turn and Enfeebled 1 for 1 minute. **Success** The target is enfeebled 1 until the end of its next turn."
+ },
+ {
+  "id": "subtle-shank",
+  "name": "Subtle Shank",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Access** Help either the Washboard Dogs or the Diobel Sweepers destroy their rival. **Requirements** You have a melee weapon of light bulk concealed on your person via the Stealth skill, and the target isn't aware of it. --- You draw a concealed weapon, attack with it, and then hide it away again in one smooth motion. Interact to draw the weapon, Strike with that weapon, and then Conceal it with a Stealth check. The target is off-guard for this attack."
+ },
+ {
+  "id": "subtle-theft",
+  "name": "Subtle Theft",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Thievery"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you successfully Steal something, observers (creatures other than the creature you stole from) take a –2 circumstance penalty to their Perception DCs to detect your theft. Additionally, if you first Create a Diversion using Deception, taking a single Palm an Object or Steal action doesn't end your undetected condition."
+ },
+ {
+  "id": "sudden-charge",
+  "name": "Sudden Charge",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With a quick sprint, you dash up to your foe and swing. Stride twice. If you end your movement within melee reach of at least one enemy, you can make a melee Strike against that enemy. You can use Sudden Charge while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "sudden-leap",
+  "name": "Sudden Leap",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Barbarian** You swing at a foe while mid-leap. **Fighter** You make an impressive leap and swing while you soar. Make a Leap, High Jump, or Long Jump and attempt one melee Strike at any point during your jump. Immediately after the Strike, you fall to the ground if you're in the air, even if you haven't reached the maximum distance of your jump. If the distance you fall is no more than the height of your jump, you take no damage and land upright. When attempting a High Jump or Long Jump during a Sudden Leap, determine the jump distance using Long Jump's rules, and change your maximum distance to double your Speed. --- **Special** If you have Felling Strike, you can use Felling Strike instead of a normal Strike. This doesn't change the number of actions Sudden Leap takes."
+ },
+ {
+  "id": "sudden-mindfulness",
+  "name": "Sudden Mindfulness",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "vanara"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You roll a success on a saving throw against an effect that would make you fascinated or dazzled. --- Your mind retains full awareness despite the best attempts of others, and your focus throws others off-balance. You get a critical success on the triggering saving throw, and if the triggering effect was caused by a creature, that creature is off-guard to you until the end of your next turn."
+ },
+ {
+  "id": "summoners-call",
+  "name": "Summoner's Call",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "summoner",
+   "teleportation"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You or your eidolon take damage from a foe or hazard. **Requirements** Your eidolon is manifested more than 5 feet away. In a moment of danger, you call your eidolon to your side. Your eidolon teleports to an open space adjacent to you. --- **Special** This feat has the trait matching your eidolon's tradition (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "sunder-enchantment",
+  "name": "Sunder Enchantment",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [
+   "Sunder Spell"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can focus your superstition to break the magic of an item, in addition to destroying freestanding spells and those active on creatures. When you Sunder a Spell, you can instead attempt to counteract either an unattended magic item or one of your target's magic items. If your counteract attempt succeeds, the item becomes a mundane item of its type for 10 minutes. If you target an artifact, an intelligent item, or a similarly particularly powerful item, your counteract attempt automatically fails."
+ },
+ {
+  "id": "sunlit-vitality",
+  "name": "Sunlit Vitality",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "ardande"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain nourishment through photosynthesis, like trees and other green plants. You typically don't need to pay for food, though you begin to starve if you go without sunlight for 1 week. You can derive nourishment from specially formulated bottles of sunlight instead of natural sunlight, but these bottles cost 10 times as much as standard rations (4 gp per week)."
+ },
+ {
+  "id": "sunwrecker",
+  "name": "Sunwrecker",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into any weapon ikon --- Your weapon has the might of legends, capable of shooting or striking any light out of the sky. The imbued ikon gains the following abilities. **Immanence** (darkness) on a successful critical hit with the weapon, the weapon casts 2nd-rank Darkness centered on the target of the attack. **Transcendence—Break the Sun's Legs** ⟨2⟩ (cold, concentrate, darkness, transcendence)"
+ },
+ {
+  "id": "superior-bond",
+  "name": "Superior Bond",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [
+   "arcane bond"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you draw upon your bonded item, you can leave a bit of energy within it for later use. You can use Drain Bonded Item one additional time per day, but only to cast a spell 2 or more ranks lower than your highest-rank wizard spell slot."
+ },
+ {
+  "id": "suplex",
+  "name": "Suplex",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wrestler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- Flexing your entire body, you heave your opponent over your head and slam them into the ground. Make an unarmed melee Strike against the creature you have grabbed or restrained; on a success, the target lands prone, and on a critical success, the target lands prone and takes an additional 2d6 damage. Regardless of whether the Strike is successful, you immediately release your hold on the target."
+ },
+ {
+  "id": "supreme-psychic-center",
+  "name": "Supreme Psychic Center",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Psychic Duelist Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn in a psychic duel begins. --- With the merest thought, you realign your mental defenses to your duel's circumstances. You Recenter."
+ },
+ {
+  "id": "supreme-spellstrike",
+  "name": "Supreme Spellstrike",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've made it almost effortless to combine spells and attacks. You're permanently quickened. You can use your extra action only to Strike or to recharge Spellstrike."
+ },
+ {
+  "id": "sure-feet",
+  "name": "Sure Feet",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether keeping your balance or climbing, your feet easily find purchase. If you roll a success on an Acrobatics check to Balance or an Athletics check to Climb, you get a critical success instead. You're not off-guard when you attempt to Balance or Climb."
+ },
+ {
+  "id": "sure-footed",
+  "name": "Sure-Footed",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Even if you're knocked off balance, your armor continues to protect you. You don't take a penalty to AC from the clumsy condition if you're wearing medium or heavy armor. Your clumsy condition still applies to other Dexterity-based checks and DCs, and this benefit is negated if the armor is broken."
+ },
+ {
+  "id": "surface-rush",
+  "name": "Surface Rush",
+  "level": 4,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Surface Rush Source High Seas pg. 106 Archetype Marine Marauder Prerequisites Marine Marauder Dedication You make a dedicated dash to enter the water or emerge onto land. If you begin on land when using this ability, you Stride, then Swim twice if you are in water. If you begin in water when using this ability, you Swim, then Stride twice if you are on land."
+ },
+ {
+  "id": "surface-skimmer",
+  "name": "Surface Skimmer",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "azarketi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By sinking gently beneath the waves, you obscure your presence and utilize the water as a barrier between you and land combatants. While you are submerged just below the water's surface, you have cover from attacks made by creatures out of the water."
+ },
+ {
+  "id": "surface-tension",
+  "name": "Surface Tension",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "magus",
+   "water"
+  ],
+  "prerequisites": [
+   "resurgent maelstrom hybrid study"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a broken weapon. --- You encase the pieces of your broken weapon together with water you pull from the surrounding environment. The weapon's broken condition is temporarily suppressed, and the weapon deals an additional amount of bludgeoning damage equal to twice the number of weapon damage dice; this damage can't be changed to any other type. The weapon also gains the deadly d8 trait; if the weapon already had the deadly trait, the damage die increases by one step or to d8, whichever is higher. The first time you use this weapon to Spellstrike or get a critical success on an attack with it, the weapon is completely destroyed. If the weapon has a Hardness greater than your level, or if it's an artifact, cursed item, or other item that's difficult to break or destroy, it is not destroyed, and this ability only lasts until the end of your turn."
+ }
+]

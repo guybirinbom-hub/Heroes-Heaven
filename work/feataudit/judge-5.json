@@ -1,0 +1,328 @@
+{
+ "records": [
+  {
+   "id": "called-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike activity whose entire payload is conditions and penalties applied to the TARGET; nothing changes on the gunslinger's own sheet."
+  },
+  {
+   "id": "calm-and-centered",
+   "verdict": "MISS",
+   "reason": "Real self-facing mechanic: the character's own frightened/stupefied values drop by 2 instead of 1 each time they would decrease. No field expresses a change to condition-value recovery rate, and situational only carries numeric check bonuses.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "camoflage-coat",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only removes the cover/concealment requirement for Hide and Sneak in a chosen terrain; no sheet number or proficiency changes and cover state is table-adjudicated."
+  },
+  {
+   "id": "camouflage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only removes the cover/concealment requirement for Hide and Sneak in natural terrain; permission to use an action, not a sheet value."
+  },
+  {
+   "id": "camouflage-coat",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the misspelled duplicate: lifts the cover/concealment requirement on Hide and Sneak in the selected terrain; no sheet statistic involved."
+  },
+  {
+   "id": "cannibalize-magic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action activity resolved at the table: HP regained and the counteract bonus both depend on the level of whichever invested item is drained at that moment, so there is no static value to record."
+  },
+  {
+   "id": "cannon-corner-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reshapes a siege weapon's area (burst to line and back) during play; area geometry is GM/table-side and the app does not model siege firing areas on the character sheet."
+  },
+  {
+   "id": "cannonball-fall",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An action whose effects are a Reflex save and damage against the ENEMY landed on; the character's own falling damage follows the normal rules."
+  },
+  {
+   "id": "canopy-predator",
+   "verdict": "MISS",
+   "reason": "Grants an actual climb Speed of 15 feet while moving through foliage, plus a critical-success upgrade on Climb/Balance in trees and off-guard immunity while doing so. The speed is a real sheet value with no delivery; it is terrain-conditional, so it belongs in a toggleable mode rather than an always-on speeds field.",
+   "fix": {
+    "mode": {
+     "id": "canopy-predator",
+     "name": "Canopy Predator",
+     "feats": ["canopy-predator"],
+     "duration": "while moving through trees, vines, and other foliage",
+     "modifiers": [],
+     "speeds": { "climb": 15 },
+     "note": "A success on an Athletics check to Climb a tree or an Acrobatics check to Balance on a branch is a critical success instead, and you aren't off-guard while Climbing or Balancing on a tree."
+    }
+   }
+  },
+  {
+   "id": "cant-you-see",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything it does happens on the other side of the table: enemies' Point Out and Seek attempts fail or misplace you. No statistic of the character changes."
+  },
+  {
+   "id": "cantorian-reinforcement",
+   "verdict": "MISS",
+   "reason": "A permanent defensive upgrade to the character's own saves: success becomes critical success against disease and poison (and critical failure becomes failure if stacked with Battle Hardened). Degree-of-success upgrades have no field — situational only carries numeric bonuses.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "cantrip-casting",
+   "verdict": "MISS",
+   "reason": "Grants two additional cantrips from the matching tradition — a real spellcasting resource the player should be able to PICK. spellSlotBonus cannot deliver it: build.ts filters slot grants to ranks > 0, so rank-0 (cantrip) counts are unreachable, and no other field expresses a cantrip-count increase.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "cantrip-expansion",
+   "verdict": "MISS",
+   "reason": "Two extra cantrips prepared per day (prepared casters) or two extra cantrips added to the repertoire (spontaneous) — a picked spellcasting resource. Same missing lane as Cantrip Casting: spellSlotBonus explicitly skips rank 0, so nothing can grant cantrip capacity.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "caravan-leader",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extends how long the GROUP can Hustle in exploration mode — a travel/exploration-pace rule the app does not model, and it affects the party rather than the character's sheet."
+  },
+  {
+   "id": "careful-explorer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a GM-rolled trap-detection check while not Searching; exploration-mode adjudication with no sheet statistic."
+  },
+  {
+   "id": "carried-with-the-swarm",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Positioning only — the swarm carries you as it Strides. Movement/positioning is resolved at the table and grants no speed or other sheet value."
+  },
+  {
+   "id": "cartwheel-dodge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that lets you Step up to 10 feet; an action resolved at the table with no persistent statistic change."
+  },
+  {
+   "id": "cascading-ray",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A follow-up spell attack that deals damage to a NEW target after a Spellstrike; nothing on the magus's own sheet changes."
+  },
+  {
+   "id": "cast-down",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape that knocks the TARGET prone and can penalize the target's Speed; entirely target-side."
+  },
+  {
+   "id": "castigating-weapon",
+   "verdict": "MISS",
+   "reason": "After Divine Castigation, the character's own weapon and unarmed Strikes gain the holy/unholy trait and extra spirit damage until end of turn — a real change to the player's Strike line. No lane exists: modes carry only fixed numeric modifiers, and this rider's value equals the rank of the harm/heal that was cast, plus a trait grant no field can express.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "catch-and-kill",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction Strike that grabs or slows the triggering creature; effects land on the target, and the multiple-attack-penalty exemption is a per-action rule resolved when the Strike is rolled."
+  },
+  {
+   "id": "catfolk-weapon-rake",
+   "verdict": "ALREADY_OK",
+   "reason": "The legacy APG version of a crit-spec grant its own prerequisite already delivers: core.json's catfolk-weapon-familiarity carries critSpec:true, critSpecLevel:5 and critSpecWeapons {traits:['catfolk'], bases:['kama','kukri','scimitar','sickle']} — exactly this feat's effect for any character eligible to take it."
+  },
+  {
+   "id": "cattle-speech",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you converse with and use Diplomacy on herd animals, with the GM deciding which animals qualify; pure roleplay/GM adjudication, no sheet statistic."
+  },
+  {
+   "id": "cauldron",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A crafting/daily-preparation ability: formulas learned and temporary oils and potions brewed each day. The app has no formula-book lane and the created consumables are just inventory items the player adds; nothing derives from the feat itself."
+  },
+  {
+   "id": "cauterize",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike plus an immediate flat check to end persistent bleed on yourself or an ally; a table-rolled flat check with no persistent sheet value."
+  },
+  {
+   "id": "cautious-word",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free action that lets you cast shield when its cooldown would forbid it; the shield spell and its AC bonus already exist, and this only changes when you may cast it."
+  },
+  {
+   "id": "ceaseless-shadows",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Removes the cover/concealment requirement for Hide and Sneak and upgrades cover degree; cover is table state the app does not track and no sheet statistic changes."
+  },
+  {
+   "id": "celestial-cacophony",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A three-action area attack: fire and sonic damage plus difficult terrain against creatures in a cone. All effects are target- and battlefield-side."
+  },
+  {
+   "id": "celestial-strikes",
+   "verdict": "MISS",
+   "reason": "A permanent, always-on change to the character's own attacks: all weapon and unarmed Strikes gain the holy and magical traits (which drives weaknesses and damage-type interactions on the Strikes page). No field adds traits to existing Strikes — grantedStrikes only creates new ones.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "cellular-reconstruction",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A death-triggered reaction that restores Hit Points and reduces wounded during play; current-HP and condition changes are entered through the sheet's HP control at the table, not derived from a static field."
+  },
+  {
+   "id": "ceremonial-knife",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A daily-preparation ritual that turns a mundane dagger into a wand-like item; the resulting knife is tracked as an inventory item with charges, and the feat itself confers no sheet statistic."
+  },
+  {
+   "id": "ceremony-of-fortification",
+   "verdict": "MISS",
+   "reason": "Grants the character resistance equal to half their level to a player-chosen physical damage type against the next Strike after using Ceremony of Protection — a real defensive value. No lane fits: an always-on resistances field would massively over-grant, and a mode cannot carry a pick-one-of-three damage type for a single-Strike, one-round window.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "ceremony-of-growth",
+   "verdict": "MISS",
+   "reason": "The character constantly has the effects of Enlarge (Large size, +5 feet reach, +2 status bonus to melee damage, clumsy 1), dismissable and resumable as an action. That is a stack of real sheet changes with no delivery; the size/reach lanes are always-on only and cannot be combined with the clumsy penalty and the dismiss/resume toggle.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "ceremony-of-strengthened-hand",
+   "verdict": "MISS",
+   "reason": "Adds the deadly d8 trait to the character's claws unarmed attack and shove/trip to their branch unarmed attack — real changes to Strike lines the sheet renders. No field modifies the traits of an already-granted unarmed Strike.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "ceremony-of-sunlight",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only changes the dice rolled by another ability (Sunlight Healing recovers 1d8 per level); healing is rolled and applied at the table, not a derived sheet statistic."
+  },
+  {
+   "id": "ceremony-of-the-strengthened-hand",
+   "verdict": "MISS",
+   "reason": "Legacy duplicate of Ceremony of Strengthened Hand: adds deadly d8 to claws and shove/trip to branch unarmed attacks. Same missing lane — nothing can amend the traits of an existing unarmed Strike.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "certain-stratagem",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A miss rider: half Strategic Strike damage on a missed Devise a Stratagem attack. The amount is half a value the sheet already shows and it applies only to a rolled outcome, so nothing static changes."
+  },
+  {
+   "id": "certain-strategem",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Misspelled duplicate of Certain Stratagem; same miss-damage rider resolved when the Strike is rolled, derived from the strategic strike damage the sheet already displays."
+  },
+  {
+   "id": "certain-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a failure effect to one Strike (damage minus all damage dice); an outcome rule applied when the attack is rolled, not a change to any sheet value."
+  },
+  {
+   "id": "chain-infusion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Chains an Elemental Blast between targets, rolling damage once; entirely target-side attack sequencing resolved at the table."
+  },
+  {
+   "id": "chain-reaction",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A chain of Strikes against successive enemies; all effects land on targets and the sequence is resolved at the table."
+  },
+  {
+   "id": "champion-resiliency",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered: the core.json record already carries maxHpBonus {\"perArchetypeFeat\":3,\"archetype\":\"champion\"}, so the sheet gains 3 HP per champion archetype feat automatically."
+  },
+  {
+   "id": "champions-reaction",
+   "verdict": "MISS",
+   "reason": "Grants the champion reaction tied to the character's chosen cause (retributive-strike / glimpse-of-redemption / liberating-step all exist as classFeatures in core.json), but nothing wires the feat to them. grantedFeatId/grantsFeats reference FEATS only, so there is no lane to grant a class feature, nor to key that grant off the cause picked at Champion Dedication.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "change-of-face",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Removes the disguise-kit requirement for Impersonate and adds the occult trait to that activity; an equipment/trait note on a table-resolved skill activity, with no bonus or sheet value."
+  },
+  {
+   "id": "channel-rot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only widens which of your own weapons Accursed Touch applies to; the underlying effect is a curse applied to the creature you hit and is resolved at the table."
+  },
+  {
+   "id": "channel-smite",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An action that spends a Harm or Heal slot to damage the TARGET with a Strike; the spell and its damage already exist and no statistic of the cleric changes."
+  },
+  {
+   "id": "channeling-block",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raises a shield's Hardness by 1d8 per spell rank for a single Shield Block, at the cost of a spell slot; a rolled, per-use value rather than a standing shield statistic."
+  },
+  {
+   "id": "chaotic-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape that randomizes a spell's damage type and adds a rider condition to each creature DAMAGED by it; all effects are target-side."
+  },
+  {
+   "id": "charged-creation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets line and cone spells originate from your persistent creation; a targeting/geometry permission resolved on the battle map, with no sheet value."
+  },
+  {
+   "id": "chastise",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action attack: the frightened target saves against your existing class or spell DC and takes persistent spirit damage. Entirely target-side; the DCs it uses are already on the sheet."
+  },
+  {
+   "id": "cheat-death",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that keeps you at 1 HP and inflicts doomed 1 on yourself; current HP and conditions are tracked in play at the table, not derived from a field."
+  },
+  {
+   "id": "cheaters-always-prosper",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relaxes the free-hand requirement for Dirty Trick and lets you drop a weapon to downgrade a critical failure; action requirements and outcome downgrades resolved at the table, with no sheet statistic."
+  },
+  {
+   "id": "cheek-pouches",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A storage quirk — four light-Bulk items held in the mouth, retrieved with Interact actions. Flavour and inventory handling; no bonus, capacity formula, or sheet value the engine computes."
+  },
+  {
+   "id": "chemical-contagion",
+   "verdict": "MISS",
+   "reason": "Explicitly grants a named ability the character should own and see: the toxicologist's Greater Field Discovery, which exists in core.json as the classFeature greater-field-discovery-toxicologist. Nothing links them, and no field grants a CLASS FEATURE (grantedFeatId/grantsFeats take feat ids only).",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "choking-smoke",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Trades Fireball damage for a lingering Stinking Cloud in the spell's area; a per-cast modification whose effects land on creatures in the area."
+  },
+  {
+   "id": "chromotherapy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action Medicine activity that gives an ALLY an assisted recovery from persistent damage at range; the benefit is entirely on the target's side."
+  },
+  {
+   "id": "cindersoul",
+   "verdict": "MISS",
+   "reason": "A permanent self-facing defensive change: the character's own flat-check DC to recover from persistent acid, bleed and poison damage is 10 instead of 15. Nothing delivers it — situational carries numeric check bonuses only, and no field alters a persistent-damage recovery DC.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "claim-the-field",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes where the banner may be planted and forces enemies who attack it to save against your existing class DC; battlefield placement plus target-side saves."
+  },
+  {
+   "id": "clang",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction to Strike or Stride toward the triggering enemy, possibly making it off-guard; an action resolved at the table with all effects on the enemy."
+  },
+  {
+   "id": "clean-take",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A fortune reaction to reroll a failed Deception or Performance check and take the second result; a reroll permission, not a bonus or sheet value."
+  }
+ ]
+}

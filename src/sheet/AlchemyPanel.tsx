@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { AbilityId, Character, ContentDatabase } from '../rules/types';
 import { abilityMod } from '../rules/derive';
-import { CLASS_RESOURCES, resourceMax } from '../rules/classResources';
+import { CLASS_RESOURCES, resourceMaxFor } from '../rules/classResources';
 import { setAlchemyItem, quickAlchemy, type PlayUpdater } from '../rules/play';
 import { PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
@@ -21,10 +21,14 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
   const [descNode, setDescNode] = useState<DescNode | null>(null);
 
   const intMod = abilityMod(character.abilities.int);
-  const budget = 4 + intMod; // Advanced Alchemy: 4 + Int items during daily prep
+  // Advanced Alchemy: 4 + Int items during daily prep, unless a feat raised it (Efficient Alchemy →
+  // 6 + Int; Advanced Efficient Alchemy → 8 + Int, 10 + Int from 16th). This was a hardcoded 4 + Int,
+  // which is why owning either feat changed nothing on this panel.
+  const budget = character.advancedAlchemy?.max ?? 4 + intMod;
+  const budgetSource = character.advancedAlchemy?.source;
   const vialDef = (CLASS_RESOURCES['alchemist'] ?? []).find((r) => r.id === 'versatile-vials');
   const abilityMods = Object.fromEntries(Object.entries(character.abilities).map(([k, v]) => [k, abilityMod(v as number)])) as Record<AbilityId, number>;
-  const vialMax = vialDef ? resourceMax(vialDef, character.level, abilityMods) : 2 + intMod;
+  const vialMax = vialDef ? resourceMaxFor(vialDef, character, abilityMods) : 2 + intMod;
   const vialsCur = character.classResources?.['versatile-vials'] ?? vialMax;
   const prep = character.alchemyPrep ?? {};
   const preparedCount = Object.values(prep).reduce((a, b) => a + b, 0);
@@ -60,7 +64,7 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
     <div className="alchemy-panel">
       <div className="alchemy-head">
         <span className="alchemy-title">Alchemy</span>
-        <span className="alchemy-meta">
+        <span className="alchemy-meta" title={budgetSource ? `Daily maximum raised to ${budget} by ${budgetSource}` : undefined}>
           Versatile Vials {vialsCur}/{vialMax} · prepared {preparedCount}/{budget}
         </span>
       </div>

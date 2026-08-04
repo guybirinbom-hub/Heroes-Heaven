@@ -1,0 +1,994 @@
+[
+ {
+  "id": "bear-hug-ursine-avenger",
+  "name": "Bear Hug (Ursine Avenger)",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Bear Hug (Ursine Avenger) Source Treasure Vault (Remastered) pg. 183 Archetype Ursine Avenger Hood Requirements Your last action was a successful claw Strike. You snatch at your opponent with your claws, pulling them close in a ferocious bear hug. You make another claw Strike against the same target. If this Strike hits, the target is also grabbed."
+ },
+ {
+  "id": "bear-hug-werecreature",
+  "name": "Bear Hug (Werecreature)",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "werebear"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're in bear or hybrid shape, and your last action was a successful claw Strike. --- You hug your opponent. You make another claw Strike against the same target. If this Strike hits, the target is grabbed until the end of your next turn, unless you move or your target Escapes."
+ },
+ {
+  "id": "beast-dynamo-howl",
+  "name": "Beast Dynamo Howl",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sterling Dynamo Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** You are from Arcadia. --- You've incorporated beast tech from Arcadia into your dynamo, adding in components from various terrifying creatures to enhance your prosthesis's capabilities. The beast parts can unleash a disturbing howl as you make a powerful attack with your dynamo. Attempt Intimidation checks to Demoralize against each enemy within 30 feet; you don't take a penalty when you attempt to Demoralize a creature that doesn't understand your language. Then, make a dynamo Strike. Reduce the operational time of your sterling dynamo by 1 hour."
+ },
+ {
+  "id": "beast-of-burden",
+  "name": "Beast of Burden",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "minotaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your broad frame can allow you to carry weights that immobilize smaller creatures. Increase your maximum and encumbered Bulk limits by 4. You can rest normally while wearing medium armor."
+ },
+ {
+  "id": "beastkin-resilience",
+  "name": "Beastkin Resilience",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "primal"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "beastkin"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've regained beastkin protections after becoming a full werecreature. You no longer gain silver weakness from Werecreature Dedication."
+ },
+ {
+  "id": "become-destiny",
+  "name": "Become Destiny",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "You defy any external force blocking your mythic purpose. Spend a Mythic Point, and remove any one condition you're afflicted with, end the ongoing effects of any one spell you're currently affected by, or free yourself from the effects of any one trap or hazard (such as a snare or bottomless pit). When freeing yourself from a hazard in this way, you immediately move to the nearest safe location adjacent to the hazard."
+ },
+ {
+  "id": "become-shadow",
+  "name": "Become Shadow",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You unleash your mythic power to shroud yourself in darkness and silence to stalk your prey. When you attempt a check to Hide or Sneak, or when you roll Stealth for initiative, you can spend a Mythic Point to become concealed and to attempt the check or roll using mythic proficiency."
+ },
+ {
+  "id": "behold-a-pale-horse",
+  "name": "Behold, A Pale Horse",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Apocalypse Rider Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your apocalypse mount becomes worthier of an eventual Rider of the Apocalypse. Your apocalypse mount gains one specialization of your choice. --- **Special** You can select this feat up to three times. Each time, add a different specialization to your apocalypse mount. Your apocalypse mount can't have more than three specializations."
+ },
+ {
+  "id": "behold-my-creation",
+  "name": "Behold My Creation!",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Let My Creature Live!"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have rebuilt your creation once more. It is greater now, more than it once was. Soon, it shall be greater still. Your construct companion becomes an incredible construct companion."
+ },
+ {
+  "id": "belay-that",
+  "name": "Belay That!",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory"
+  ],
+  "prerequisites": [
+   "Blackjacket Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within 30 feet of you critically fails a Strike. --- You can recognize when a strategy isn't working and advise your ally to change course. The next Strike the triggering ally makes before the end of their turn has the same multiple attack penalty as the critically failed Strike, but it counts toward their multiple attack penalty as normal."
+ },
+ {
+  "id": "benefactors-strike",
+  "name": "Benefactor's Strike",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [
+   "dragonscaled kobold heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your benefactor's blood flows through your veins, and you channel their power into your body. When you critically hit with an unarmed Strike, the target takes an additional 1 persistent damage of the same type as the damage dealt by the breath of your draconic benefactor."
+ },
+ {
+  "id": "benefactors-wings",
+  "name": "Benefactor's Wings",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Draconic Acolyte Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are holding or wearing your *draconic gift*. --- Calling on your draconic gift, spectral wings carry you to your destination. You Fly. If you don't normally have a fly Speed, you gain a fly Speed of 20 feet for this movement. If your spectral dragon shares your space, this fly Speed is instead 30 feet, and your spectral dragon moves with you. If you aren't on solid ground at the end of this movement, you fall."
+ },
+ {
+  "id": "bestial-brutality",
+  "name": "Bestial Brutality",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [
+   "Bestial Manifestation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your animalistic unarmed attack grows more dangerous. The unarmed attack you chose for Bestial Manifestation gains the deadly d6 trait. Whenever you score a critical hit with this unarmed attack, you get the brawling critical specialization effect."
+ },
+ {
+  "id": "bestial-protection",
+  "name": "Bestial Protection",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication",
+   "animal companion that's Large or greater"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your companion's mere presence is enough to rattle creatures that fall under its shadow. When a creature adjacent to your animal companion that's smaller than it targets you with an attack, that creature becomes Frightened 1."
+ },
+ {
+  "id": "betraying-shank",
+  "name": "Betraying Shank",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Twilight Speaker Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are within melee reach of a target, but it is not in combat with you. --- While your usual diplomacy is well intentioned, you know that sometimes those same skills will need to be turned to deception. In a flash, you draw a sheathed or concealed agile or finesse weapon and make a melee Strike. The target is off-guard against your Strike. You then roll Deception for initiative."
+ },
+ {
+  "id": "between-the-scales",
+  "name": "Between the Scales",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to take advantage of slips in your foes' defenses. When you Strike an off-guard creature using a melee weapon or unarmed attack that has the agile and finesse traits, it gains the backstabber trait."
+ },
+ {
+  "id": "big-game-trapper",
+  "name": "Big Game Trapper",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Snare Crafting",
+   "Game Hunter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can set snares specifically for big prey, leaving smaller creatures unscathed. Each time you set a snare, you can choose Small, Medium, Large, or Huge. That snare can be triggered only by creatures of that size or larger."
+ },
+ {
+  "id": "big-mouth",
+  "name": "Big Mouth",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [
+   "Cheek Pouches"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Instead of storing up to four items of Light Bulk in your cheek pouches, you can store up to 1 Bulk worth of items. The maximum size of a given item is unchanged."
+ },
+ {
+  "id": "billowing-wings",
+  "name": "Billowing Wings",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "air",
+   "archetype"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication",
+   "animal companion with wings"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained your winged companions to gather air in their wings, whipping up a concentrated gust of wind at opponents, potentially staggering them. Your companions with wings gain a gust ranged unarmed attack, which deals 1d4 bludgeoning damage with a range of 30 feet and has the air and propulsive traits. On a critical hit, the target is pushed back 5 feet. This is forced movement."
+ },
+ {
+  "id": "binding-serpents-celestial-arrow",
+  "name": "Binding Serpents Celestial Arrow",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a ranged weapon ikon, or a melee weapon ikon with the thrown trait --- As you prepare to shoot your weapon, you invoke divine serpents that bind your enemies. The imbued ikon gains the following ability. **Transcendence—Coiling Serpents** ⟨2⟩ (transcendence)"
+ },
+ {
+  "id": "binds-that-tie",
+  "name": "Binds that Tie",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You excel at assisting in capturing your foes. When you attempt a check to Grapple an opponent who's already grabbed by an ally, you can spend a Mythic Point to attempt the check at mythic proficiency. On a success, you deal additional bludgeoning damage to the target equal to twice your Strength modifier."
+ },
+ {
+  "id": "bizarre-magic",
+  "name": "Bizarre Magic",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can draw upon strange variations in your spellcasting, whether or not you can cast occult spells. The DCs to Recognize Spells you cast and Identify Magic you use increase by 5."
+ },
+ {
+  "id": "bizarre-transformation",
+  "name": "Bizarre Transformation",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "druid",
+   "manipulate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Untamed Form"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The forms you take on defy belief—chimerical sights of twisted antlers or acidic drool. If your next action is to cast Untamed Form, you can change the damage type of a single unarmed attack granted by *untamed form* to one of the following: acid, bludgeoning, cold, electricity, fire, poison, piercing, or slashing. The chosen attack gains the appropriate trait."
+ },
+ {
+  "id": "black-powder-blaze",
+  "name": "Black Powder Blaze",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bullet Dancer Dedication",
+   "Black Powder Boost"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a loaded firearm. --- You launch yourself across the battlefield. Stride and use Black Powder Boost. Make a melee Strike with an attached weapon or the required weapon's combination melee form, at any point during the Black Powder Boost. --- **Special** If you have Bullet Dancer Burn, apply the additional fire damage to the granted Strike."
+ },
+ {
+  "id": "black-powder-embodiment",
+  "name": "Black Powder Embodiment",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "teleportation"
+  ],
+  "prerequisites": [
+   "Spellshot Dedication",
+   "master in Arcana"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a loaded magical firearm or crossbow. --- You merge your body with your ammunition, enabling you to travel the same path as your bolt or bullet. Strike a creature with the required weapon. On a success, if the target was within 120 feet, you and all your gear are teleported to an open space of your choice within 10 feet of the target."
+ },
+ {
+  "id": "blade-brake",
+  "name": "Blade Brake",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "manipulate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would be moved by a forced movement effect. **Requirements** You are wielding a melee weapon and are within reach of a hard surface. --- You plow your weapon into a floor, wall, or another sturdy surface, anchoring yourself in place. If you would be moved 20 feet or more, you are moved only 5 feet. Otherwise, you don't move at all."
+ },
+ {
+  "id": "blade-of-justice",
+  "name": "Blade of Justice",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Blade of Justice Source Core Rulebook pg. 113 Prerequisites tenets of good You call upon divine power and make a weapon or unarmed Strike against a foe you have witnessed harming an ally or innocent. The Strike deals two extra weapon damage dice if the target of your Strike is unholy. Whether or not the target is unholy, you can convert all the physical damage from the attack into spirit damage, and if you are a paladin, the Strike applies all effects that normally apply on a Retributive Strike (such as divine smite)."
+ },
+ {
+  "id": "blade-of-law",
+  "name": "Blade of Law",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellknight Preferment"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** The target has attempted a hostile action against you since your previous turn. --- You call upon the power of law against a foe who would dare stand against you. Make a weapon or unarmed Strike against the target. This counts as two Strikes for your multiple attack penalty. The Strike deals one extra weapon damage die and 1d8 spirit damage. At 18th level, this spirit damage increases to 2d8."
+ },
+ {
+  "id": "blade-of-the-crimson-oath",
+  "name": "Blade of the Crimson Oath",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Reclaimant Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You call upon the Crimson Oath to smite undead and then make a weapon or unarmed Strike against an undead foe. The Strike deals two extra weapon damage dice, and you can convert all the physical damage from the attack into vitality damage."
+ },
+ {
+  "id": "blade-of-the-heart",
+  "name": "Blade of the Heart",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "emotion"
+  ],
+  "prerequisites": [
+   "Starlit Sentinel Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The bonds of the heart are stronger than any steel, more powerful than any magic. You plunge your transformed weapon into the heart of a willing adjacent ally, where it phases harmlessly into their body. As you pull the weapon out, your ally's heart inscribes one of the following weapon property runes on your weapon: Corrosive, Flaming, Frost, Shock, Thundering, or Vitalizing. The first time you use Blade of the Heart with a given ally, the GM should decide which rune best represents your shared relationship (such as elegant frost for a respected mentor or brash thundering for a boisterous sparring partner); thereafter, each time you use Blade of the Heart with that ally, you draw the same rune. This rune lasts for as long as you remain in sentinel form and counts toward your maximum limit of runes as normal. At 16th level, you draw the greater version of the rune instead."
+ },
+ {
+  "id": "blank-slate",
+  "name": "Blank Slate",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "legendary in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your deceptions confound even the most powerful magic that could spy on you. Detection, revelation, and scrying effects pass right over you, your possessions, and your auras, detecting nothing unless the detecting effect has a counteract rank of 10 or higher. For example, Detect Magic would still detect other magic in the area but not any magic on you, Truesight wouldn't reveal you, Locate or Scrying wouldn't find you, and so on."
+ },
+ {
+  "id": "blast-lock",
+  "name": "Blast Lock",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "attack",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a loaded firearm. --- Sometimes taking the shortest distance between two points involves removing an obstacle or two. You shoot your firearm at a lock within 10 feet. Make an attack roll against the DC required to Pick the Lock --- **Critical Success** You open the lock, or you achieve two successes toward opening a complex lock. **Success** You open the lock, or you achieve one success toward opening a complex lock. **Failure** You fail to open the lock, and your shot makes it harder to open. Future attempts to Pick the Lock or Blast the Lock take a -2 circumstance penalty. **Critical Failure** You fail to open the lock, and your shot makes it much harder to open. Future attempts to Pick the Lock or Blast the Lock take a -4 circumstance penalty."
+ },
+ {
+  "id": "blast-tackle",
+  "name": "Blast Tackle",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "way of the vanguard"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a two-handed crossbow or a firearm that has the kickback or scatter trait. --- You throw yourself at an enemy, bracing your weapon against it and pulling it close before releasing a destructive shot. Attempt to Grapple; if you're wielding your weapon in both hands, you Release one hand to do so. If your Grapple succeeds, you can immediately Strike the target of the Grapple with the required weapon, even if it's a two-handed weapon you're holding in one hand. This Strike deals an additional 3d6 precision damage. As long the creature remains grabbed or restrained, you can use just one hand to reload the weapon and Strike that creature with it."
+ },
+ {
+  "id": "blasting-beams",
+  "name": "Blasting Beams",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "attack",
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a free hand. --- A directed beam of heat or an arc of lightning is one of the simplest ways to project energy. You fire a blast or beam from one hand. Make an attack roll against a creature within 30 feet. If you succeed, the beam deals 1d6 damage for every 2 levels you have to the target, or double damage on a critical success. --- **Awakening** Your beams blast through targets. Instead of making an attack roll to damage a single creature within 30 feet, you can use Blasting Beams as a 2-action activity to damage all creatures in a , with a save. --- **Awakening** You can choose to launch smaller, quicker beams from your eyes instead. These deal d4s instead of d6s, but the attack has the agile trait, and you don't need a hand free to make it, though your eyes must be uncovered."
+ },
+ {
+  "id": "blazing-spirit",
+  "name": "Blazing Spirit",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "animist",
+   "apparition",
+   "divine",
+   "fire",
+   "wandering"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** A creature damages you with a melee attack. **Requirements** Your attuned apparition grants Battlegrounds Lore or Volcano Lore as an apparition skill. --- Your apparition grants fiery defenses. You gain resistance equal to your level against the triggering damage, and the triggering creature takes damage. This damage increases to 2d6 fire damage and 2 persistent fire damage at 12th level, and 3d6 fire damage and 3 persistent fire damage at 18th level."
+ },
+ {
+  "id": "blazing-wave",
+  "name": "Blazing Wave",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Flames flow out of you in a cascade, engulfing everyone in a . Each creature in the area takes damage with a save against your class DC. A creature that critically fails its save is knocked prone. --- **Level (+2)** The damage increases by 1d6."
+ },
+ {
+  "id": "bleed-out",
+  "name": "Bleed Out",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "attack",
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your most recent action was to cast a non-cantrip spell that granted you a blood magic effect. --- You channel the residual energy from the last spell you cast into a ranged bloodletting. Make a ranged spell attack roll against the AC of a target within 60 feet. This attack deals persistent bleed damage equal to the rank of the spell you just cast."
+ },
+ {
+  "id": "bleeding-finisher",
+  "name": "Bleeding Finisher",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your blow inflicts profuse bleeding. Make a slashing or piercing Strike. If you hit, the target also takes persistent bleed damage equal to your precise strike finisher damage."
+ },
+ {
+  "id": "bless-shield",
+  "name": "Bless Shield",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication",
+   "you worship a good-aligned deity"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your uttered prayers become an aegis, drawing the blessing of your deity across the surface of your shield. Until the beginning of your next turn your shield, any shield boss, or shield spikes gain the effects of a ghost touch property rune. Additionally, damage you take as a result of an incorporeal creature's Strike can trigger your Shield Block reaction, even if the damage isn't physical damage."
+ },
+ {
+  "id": "blessed-blood-sorcerer",
+  "name": "Blessed Blood (Sorcerer)",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [
+   "bloodline that grants divine spells",
+   "you follow a deity"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your deity's blessings manifest in your blood-borne power. Add up to three of your deity's spells (spells your deity grants to clerics) to your spell list. They are not automatically added to your repertoire, but you can select them just as you would spells normally on the divine spell list."
+ },
+ {
+  "id": "blessed-counterstrike",
+  "name": "Blessed Counterstrike",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion",
+   "flourish"
+  ],
+  "prerequisites": [
+   "champion's reaction that grants an ally resistance to an enemy's damage (including the grandeur, justice, liberation, and redemption causes)"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** An enemy triggered your champion's reaction since the end of your last turn. --- You call upon divine power and make a weapon or unarmed Strike against the enemy who triggered your champion's reaction. The Strike deals one extra weapon damage die. If this Strike hits, until the start of your next turn, the target gains weakness equal to half your level to all Strikes made by you and your allies."
+ },
+ {
+  "id": "blessed-medicine",
+  "name": "Blessed Medicine",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "fortune",
+   "skill"
+  ],
+  "prerequisites": [
+   "Undead Slayer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Trigger** You fail a check to Treat a Disease that was inflicted by an undead (such as ghoul fever or mummy rot). --- Your experience battling undead has uniquely prepared you to fight the diseases they inflict on the survivors, and you know that leaving these maladies untreated for long will eventually lead to more undead. Reroll the failed check and use the new result."
+ },
+ {
+  "id": "blessed-sentinel",
+  "name": "Blessed Sentinel",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Wylderheart Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You infuse a weapon with the blessing of Ketephys and attack. Make a Strike. This Strike gains the holy trait and deals an additional 1d4 spirit damage, or 2d4 spirit damage against fiends. This counts as two attacks for your multiple attack penalty."
+ },
+ {
+  "id": "blessed-spell",
+  "name": "Blessed Spell",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Blessed One Dedication",
+   "ability to cast spells from spell slots",
+   "Mercy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- When you focus your magic on an ally, you can remove harmful conditions. If your next action is to Cast a Spell from a spell slot, and that spell targets only a single ally, you can also attempt to remove a harmful condition from that ally. The condition must be one that could be removed by your Mercy feat, including those granted by later feats such as Greater Mercy. Attempt a counteract check based on the spell's DC and level. This effect is in addition to the normal effects of your spell."
+ },
+ {
+  "id": "blessed-thorn-strike",
+  "name": "Blessed Thorn Strike",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine",
+   "flourish",
+   "sanctified"
+  ],
+  "prerequisites": [
+   "Rose Warden Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You witnessed an enemy harm an ally with a Strike or spell last round. --- When you see a foe hurt one of your allies, your righteous retribution causes your weapon to sprout holy thorns. Make a Strike against the triggering enemy. If you hit and deal damage, the target must also succeed at a saving throw against your class DC or spell DC, whichever is higher, or become Enfeebled 1 (or Enfeebled 2 on a critical failure)."
+ },
+ {
+  "id": "blind-fight",
+  "name": "Blind-Fight",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "investigator",
+   "ranger",
+   "rogue"
+  ],
+  "prerequisites": [
+   "master in Perception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Fighter, Rogue, Investigator** Your battle instincts make you more aware of concealed and invisible opponents. **Ranger** Your heightened senses allow you to instinctively detect unseen opponents. --- You don't need to succeed at a flat check to target concealed creatures. You're not off-guard to creatures that are hidden from you (unless you're off-guard to them for reasons other than the hidden condition), and you need only a successful to target a hidden creature. While you're adjacent to an undetected creature of your level or lower, it is instead only hidden from you."
+ },
+ {
+  "id": "blood-ascendancy",
+  "name": "Blood Ascendancy",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [
+   "Blood Rising"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you would benefit from a blood magic effect through Blood Rising, you can choose to benefit from two different blood magic effects you know. The effects follow the same rules as given in Blood Rising, and each effect can have a different target."
+ },
+ {
+  "id": "blood-calls-blood",
+  "name": "Blood Calls Blood",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Bloodrager Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You fail a flat check to Cast a Spell or your spell would be disrupted by another creature's reaction. --- The magical potency of your blood will not be denied. You finish Casting the Spell, then become Drained 1 or increase the value of your drained condition by 1."
+ },
+ {
+  "id": "blood-component-substitution",
+  "name": "Blood Component Substitution",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can bypass the need for incantations and gestures by drawing energy directly from your blood, causing you to visibly glow the color of your blood and crackle with magical energy. When you Cast a Spell, you can replace all verbal, material, or somatic spellcasting components with a blood component. To use a blood component, you lose Hit Points equal to twice the spell's rank as the energy in your blood is depleted, and you can't decrease the Hit Points lost in any way. As usual for altering components, this has no effect on the number of actions required to Cast the Spell, and your Cast a Spell activity gains the concentrate trait but not the manipulate trait. You can't use blood components to replace any required part of a spell's cost."
+ },
+ {
+  "id": "blood-frenzy",
+  "name": "Blood Frenzy",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "eidolon",
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [
+   "Bloodletting Claws"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** Your eidolon's last action dealt bleed damage to a living creature. Your eidolon flies into a frenzy. It gains the benefits of *boost eidolon* and gains temporary HP equal to your level, but takes a -2 penalty to AC. It can't voluntarily end the frenzy or start another frenzy while in the frenzy. The frenzy lasts for 1 minute, after which your eidolon is fatigued for 1 minute and can't start another frenzy for 1 minute."
+ },
+ {
+  "id": "blood-in-the-air",
+  "name": "Blood in the Air",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** An enemy you've damaged with a ranged weapon during the last minute is concealed or hidden from you. --- Once you've locked on to a target, little can obscure your aim. Make a ranged weapon Strike against the required target. This Strike ignores the target's concealed condition and reduces the flat check for the hidden condition from 11 to 5."
+ },
+ {
+  "id": "blood-like-water",
+  "name": "Blood Like Water",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "samsaran"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The watery fluid in your veins doesn't flow in the same way as traditional blood. Your DC on flat checks to end persistent bleed damage is reduced from 15 to 10, or from 10 to 5 after receiving especially appropriate assistance."
+ },
+ {
+  "id": "blood-rising",
+  "name": "Blood Rising",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature targets you with a spell of the same tradition as your bloodline. --- The magic in your blood surges in response to your foe's spell. You generate a blood magic effect you know, even if you are already under the effects of blood magic. The target must be either you or the creature that triggered Blood Rising. If the blood magic effect grants you a bonus to AC or the appropriate saving throw, that bonus applies against the triggering spell. If the effect has a duration, it instead lasts until the beginning of your next turn. --- **Special** This feat has the trait corresponding to the tradition of your bloodline."
+ },
+ {
+  "id": "blood-sovereignty",
+  "name": "Blood Sovereignty",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You wield blood magic masterfully. When you would benefit from a blood magic effect, you can choose to lose Hit Points equal to twice the spell's rank as the energy of your blood is drawn out. This takes no extra action, and you benefit from two different blood magic effects you know as a result. The two effects can have different targets."
+ },
+ {
+  "id": "bloodletting-fangs",
+  "name": "Bloodletting Fangs",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dhampir"
+  ],
+  "prerequisites": [
+   "fangs unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You emulate your vampiric parent's techniques for drawing blood from a victim. Your fangs Strikes deal an additional 1d4 persistent bleed damage on a critical hit."
+ },
+ {
+  "id": "bloodline-focus",
+  "name": "Bloodline Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [
+   "bloodline spell"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By listening to the beating of your heart, your focus recovers faster. Whenever you Refocus, completely refill your focus pool."
+ },
+ {
+  "id": "bloodline-wellspring",
+  "name": "Bloodline Wellspring",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "text": "Bloodline Wellspring Source Core Rulebook pg. 201 Prerequisites Bloodline Focus Your blood’s power replenishes your focus. If you have spent at least 3 Focus Points since the last time you Refocused, you recover 3 Focus Points when you Refocus instead of 1."
+ },
+ {
+  "id": "bloody-blows",
+  "name": "Bloody Blows",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your lethal unarmed attacks leave bloody gouges or cause severe internal bleeding. When you critically hit with a Strike using an unarmed attack that isn't nonlethal, the target takes 1d4 persistent bleed damage. This can be because you're taking the penalty to use a fist for a lethal attack or because you have an unarmed attack without the nonlethal trait due to Tusks or a similar ability."
+ },
+ {
+  "id": "bloody-debilitation",
+  "name": "Bloody Debilitation",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "trained in Medicine",
+   "Debilitating Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your attacks slice arteries and veins. Add the following debilitation to the list you can choose from when you use Debilitating Strike. - **Debilitation** The target takes 3d6 damage."
+ },
+ {
+  "id": "bloody-denial",
+  "name": "Bloody Denial",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You strike a foe with force to prevent them from reacting. Make a Strike. If you hit, the target must attempt a saving throw against your class DC. If your Strike was a critical hit, the result of the save is one degree of success worse. --- **Critical Success** The creature is unaffected. **Success** Choose an ally. Until the start of your next turn, the creature can't use reactions against that ally. **Failure** The creature can't use reactions until the start of your next turn. **Critical Failure** As failure, plus the creature is Stunned 1."
+ }
+]

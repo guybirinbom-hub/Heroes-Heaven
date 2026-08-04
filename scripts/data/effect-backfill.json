@@ -50753,5 +50753,434 @@
         ]
       }
     ]
+  },
+  {
+    "category": "feats",
+    "id": "conflux-focus",
+    "field": "refocusRestore",
+    "value": 2
+  },
+  {
+    "category": "feats",
+    "id": "crimson-oath-devotion",
+    "field": "refocusRestore",
+    "value": 2
+  },
+  {
+    "category": "feats",
+    "id": "link-focus",
+    "field": "refocusRestore",
+    "value": 2
+  },
+  {
+    "category": "feats",
+    "id": "bloodline-wellspring",
+    "field": "refocusRestore",
+    "value": 3
+  },
+  {
+    "category": "feats",
+    "id": "conflux-wellspring",
+    "field": "refocusRestore",
+    "value": 3
+  },
+  {
+    "category": "feats",
+    "id": "link-wellspring",
+    "field": "refocusRestore",
+    "value": 3
+  },
+  {
+    "category": "feats",
+    "id": "meditative-wellspring",
+    "field": "refocusRestore",
+    "value": 3
+  },
+  {
+    "category": "feats",
+    "id": "amp-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "bloodline-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "bonded-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "devoted-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "domain-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "hex-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "inspirational-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "meditative-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "primal-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "revelations-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "wardens-focus",
+    "field": "refocusRestore",
+    "value": "all"
+  },
+  {
+    "category": "feats",
+    "id": "efficient-alchemy",
+    "field": "advancedAlchemy",
+    "value": {
+      "items": 6,
+      "addInt": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "advanced-efficient-alchemy",
+    "field": "advancedAlchemy",
+    "value": {
+      "items": 8,
+      "addInt": true,
+      "atLevel": {
+        "level": 16,
+        "items": 10
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "advanced-alchemy",
+    "field": "advancedAlchemy",
+    "value": {
+      "items": 4
+    }
+  },
+  {
+    "category": "feats",
+    "id": "additional-servings",
+    "field": "resourceMaxSet",
+    "value": {
+      "resourceId": "versatile-vials",
+      "values": [
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "advanced-qi-spells",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "advanced-qi-spell",
+        "prompt": "Advanced Qi Spells: choose a 3rd-rank qi spell (such as Qi Blast or Shrink the Span)",
+        "spellFilter": {
+          "traits": [
+            "monk"
+          ],
+          "rank": 3,
+          "grantAs": "focus"
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "ancillary-motes",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "extraplanar-haze",
+      "max": 2,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "apparition-sense",
+    "field": "senses",
+    "value": [
+      {
+        "name": "apparition sight",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "arcane-breadth",
+    "field": "spellSlotBonus",
+    "value": {
+      "perRank": 1,
+      "exceptHighest": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "ash-piercing-gaze",
+    "field": "senses",
+    "value": [
+      {
+        "name": "ignores concealment from smoke and mist"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "divine-breadth",
+    "field": "spellSlotBonus",
+    "value": {
+      "perRank": 1,
+      "exceptHighest": 2,
+      "entryId": "cleric-dedication-casting"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "attuned-electroreceptors",
+    "field": "senses",
+    "value": [
+      {
+        "name": "lifesense",
+        "range": 20,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "avenger-of-wrath",
+    "field": "grantsFeats",
+    "value": [
+      "reactive-strike"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "brain-drain",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "cackle",
+    "field": "focusSpells",
+    "value": [
+      "cackle"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "ceremony-of-growth",
+    "field": "sizeOverride",
+    "value": "large"
+  },
+  {
+    "category": "feats",
+    "id": "ceremony-of-growth",
+    "field": "reach",
+    "value": 10
+  },
+  {
+    "category": "feats",
+    "id": "crossblooded-evolution",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "crossblooded-bloodline",
+        "prompt": "Crossblooded Evolution: choose another bloodline whose blood magic effect you gain (recorded only — blood magic effects are prose; if it has a 1st-level sub-choice such as the elemental bloodline's elemental influence, decide it now)",
+        "options": [
+          {
+            "value": "aberrant",
+            "label": "Aberrant"
+          },
+          {
+            "value": "aesir",
+            "label": "Aesir"
+          },
+          {
+            "value": "angelic",
+            "label": "Angelic"
+          },
+          {
+            "value": "demonic",
+            "label": "Demonic"
+          },
+          {
+            "value": "diabolic",
+            "label": "Diabolic"
+          },
+          {
+            "value": "draconic",
+            "label": "Draconic"
+          },
+          {
+            "value": "elemental",
+            "label": "Elemental"
+          },
+          {
+            "value": "fey",
+            "label": "Fey"
+          },
+          {
+            "value": "genie",
+            "label": "Genie"
+          },
+          {
+            "value": "hag",
+            "label": "Hag"
+          },
+          {
+            "value": "harrow",
+            "label": "Harrow"
+          },
+          {
+            "value": "imperial",
+            "label": "Imperial"
+          },
+          {
+            "value": "nymph",
+            "label": "Nymph"
+          },
+          {
+            "value": "phoenix",
+            "label": "Phoenix"
+          },
+          {
+            "value": "psychopomp",
+            "label": "Psychopomp"
+          },
+          {
+            "value": "shadow",
+            "label": "Shadow"
+          },
+          {
+            "value": "undead",
+            "label": "Undead"
+          },
+          {
+            "value": "wyrmblessed",
+            "label": "Wyrmblessed"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "crown-of-bone",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Horns",
+        "die": "d8",
+        "damageType": "piercing",
+        "traits": [
+          "unarmed",
+          "shove",
+          "concussive"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "crunch",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Jaws",
+        "die": "d8",
+        "damageType": "piercing",
+        "traits": [
+          "unarmed",
+          "grapple"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "crystal-keeper-dedication",
+    "field": "resistances",
+    "value": [
+      {
+        "type": "damage from hazards associated with crystals",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "deadly-butterfly",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "deadly-butterfly",
+    "field": "critSpecWeapons",
+    "value": {
+      "bases": [
+        "butterfly-sword"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "enforced-order",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "lawful",
+        "flat": 1,
+        "appliesTo": "all",
+        "note": "Enforced Order"
+      }
+    ]
   }
 ]

@@ -1,0 +1,990 @@
+[
+ {
+  "id": "cleansing-spell",
+  "name": "Cleansing Spell",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mythic",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Ascended Celestial Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Infused with celestial light, your magic can more effectively heal wounds and purge afflictions. If your next action is to Cast a Spell with the healing trait on a living creature, one target of that spell regains a number of Hit Points equal to your level (in addition to any Hit Points they would normally gain). In addition, you can attempt to counteract a disease or poison affecting one target of that spell. These two targets can be the same creature or different creatures, as long as they are both targets of the healing spell."
+ },
+ {
+  "id": "cleansing-subroutine",
+  "name": "Cleansing Subroutine",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "android"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your nanites help purge your body of harmful chemicals and toxins. Each time you succeed at a Fortitude save against an ongoing poison, you reduce its stage by 2, or by 1 against a virulent poison. Each critical success you achieve against an ongoing poison reduces its stage by 3, or by 2 against a virulent poison."
+ },
+ {
+  "id": "cleansing-transformation",
+  "name": "Cleansing Transformation",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Healing Transformation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You learn to cleanse bodily toxins alongside the transformations of your shape-changing magic. When you use Healing Transformation, your polymorph spell can also attempt to counteract one disease or poison afflicting the target. If you don't successfully counteract it, you can't use Cleansing Transformation against that specific affliction for 24 hours."
+ },
+ {
+  "id": "clear-as-air",
+  "name": "Clear as Air",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "air",
+   "illusion",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Compact layers of air diffract and bend light around your body, making you appear as clear as the sky on a perfect day. You become invisible until the end of your next turn. You can Sustain the impulse. If you use a hostile action, the impulse ends after that action is completed. If you activate your kinetic aura, the impulse conceals its elements, though any special effects of your aura might give away your location. This impulse weakens if you use it too frequently. Using it again within 10 minutes makes you concealed instead of invisible. --- **Level (10th)** The impulse doesn't end if you take a hostile action, but if you're invisible, you become concealed instead of invisible until the start of your next turn. **Level (16th)** Taking a hostile action has no effect on the impulse."
+ },
+ {
+  "id": "clear-the-way",
+  "name": "Clear the Way",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mauler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a melee weapon in two hands. --- You put your body behind your massive weapon and swing, shoving enemies to clear a wide path. You attempt to Shove up to five creatures adjacent to you, rolling a separate Athletics check for each target and ignoring the requirement that you have a hand free. Then Stride up to half your Speed. This movement doesn't trigger reactions from any of the creatures you successfully Shoved. Each attack counts toward your multiple attack penalty, but don't increase your penalty until you have made all your attacks."
+ },
+ {
+  "id": "cleave",
+  "name": "Cleave",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your melee Strike reduces an enemy to 0 Hit Points, and another enemy is adjacent to that creature. --- You swing clear through one foe and into another. Make a melee Strike against the second enemy."
+ },
+ {
+  "id": "clever-counterspell",
+  "name": "Clever Counterspell",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [
+   "Counterspell",
+   "Quick Recognition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You creatively apply your prepared spells to Counterspell a much wider variety of your opponents' magic. Instead of being able to counter a foe's spell with Counterspell only if you have that same spell prepared, you can use Counterspell as long as you have the spell the foe is casting in your spellbook. When you use Counterspell in this way, you must still expend a prepared spell; the prepared spell you expend must share a trait with the triggering spell other than concentrate, manipulate, or its tradition trait. The GM might allow you to instead use a spell that has an opposing trait or that otherwise logically would counter the triggering spell (such as using a cold or water spell to counter Fireball or using Clear Mind to counter a fear spell)."
+ },
+ {
+  "id": "clever-gambit",
+  "name": "Clever Gambit",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "mastermind racket"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your Strike critically hits and deals damage to a creature you've identified with Recall Knowledge. --- Your battle tactics are aided by assessing your foe's capabilities and range. You Step or Stride; this movement doesn't trigger reactions from the triggering creature."
+ },
+ {
+  "id": "clever-shadow",
+  "name": "Clever Shadow",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "fetchling",
+   "occult",
+   "shadow"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can perform simple Interact actions with your shadow, such as opening an unlocked door. Anything your shadow Interacts with must be within your reach. Your shadow can't perform actions that require significant manual dexterity, including any action that would require a check to accomplish, and you can't use it to hold items."
+ },
+ {
+  "id": "climate-adaptation",
+  "name": "Climate Adaptation",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "leshy"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Like evergreen trees, which stay healthy and vibrant from winter through summer, you too can adapt to a variety of extreme climates. You're unaffected by mild cold or heat environmental effects, and when you're in severe cold or heat, you take the effects of mild cold or heat instead. This doesn't protect you from extreme or incredible cold or heat."
+ },
+ {
+  "id": "clinch-strike",
+  "name": "Clinch Strike",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wrestler Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you had grabbed or restrained successfully Escapes. --- Your opponents can't slip your grasp without receiving further punishment. Make an unarmed melee Strike against the triggering creature."
+ },
+ {
+  "id": "cling",
+  "name": "Cling",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful Strike and you have a free hand. --- You hang onto a foe to harry them into submission. If your target moves while you're hanging onto it, you can choose to move with the target. The target is released if you choose not to move with it, at the start of your next turn, or if the target Escapes. Attempts to Escape from a Cling are made against your Acrobatics DC, but they end the Cling instead of the conditions normally ended by the Escape action. --- **Special** You can use this action without a free hand if your preceding Strike was made with your jaws or a similar unarmed attack you could use to hang on. The GM determines which unarmed attacks apply. Hanging on in this way prevents you from using that unarmed attack."
+ },
+ {
+  "id": "cloaking-pulse",
+  "name": "Cloaking Pulse",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ostilli Host Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ostilli can emit illusion magic to mask your position, granting you the Drape Ambient Magic action."
+ },
+ {
+  "id": "clobber",
+  "name": "Clobber",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wearing medium or heavy armor. --- With a mighty blow, you send an enemy flying backward and onto the ground. Strike a foe. This Strike deals an extra die of weapon damage. If you hit and deal damage, you can automatically Shove the target, with the same benefits as the Shove action (including the critical success effect, if your Strike was a critical hit). The target then falls prone. This counts as two attacks when calculating your multiple attack penalty."
+ },
+ {
+  "id": "clockwork-celerity",
+  "name": "Clockwork Celerity",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "manipulate",
+   "unstable"
+  ],
+  "prerequisites": [
+   "armor, construct, or weapon innovation"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn begins. --- You can use unstable clockwork devices in your innovation to push your invention to act more quickly. You are quickened for this turn. How you can use the extra action depends on your innovation. - **Armor** You can use the extra action to Step, Stride, or use another movement action granted by your innovation (such as Swim if you have the Diving Armor feat). - **Construct** You can use the extra action to Command your construct innovation (or to provide 1 of the actions if you spend 2 actions to Command your construct). - **Weapon** You can use the extra action to Strike with your innovation or Reload your innovation."
+ },
+ {
+  "id": "clone-risen",
+  "name": "Clone-Risen",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lineage",
+   "reflection"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You were formed from a clone ritual or alchemical experiment. Created as a vessel for another creature, you can suppress your sentience momentarily, making your mind harder to alter. You gain the Empty Vessel reaction."
+ },
+ {
+  "id": "close-contract",
+  "name": "Close Contract",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Mercenary Motivation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have completed your active course of action but haven't Dismissed it or chosen a new one. --- You're bolstered when a plan comes together. You Dismiss your current course of action and gain 15 temporary Hit Points that last for 1 hour. The number of temporary Hit Points increases by 5 at 12th level and every 2 levels thereafter."
+ },
+ {
+  "id": "close-quarters",
+  "name": "Close Quarters",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "If you're Small or smaller, you can end your movement in the same square as a Small or smaller ally. No more than two creatures can share the same space when using this ability or a similar one."
+ },
+ {
+  "id": "clotting-elixirs",
+  "name": "Clotting Elixirs",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your restorative concoctions have a clotting effect on the drinker's blood. When a living creature drinks an infused elixir with the healing trait that you have created, it can immediately attempt a to remove any persistent bleed damage."
+ },
+ {
+  "id": "cloud-gazer",
+  "name": "Cloud Gazer",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "sylph"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to air allows you to see through obscuring mists. You can see well enough through fog, mist, and clouds that would normally cause creatures to be concealed that you don't need to succeed at a flat check to target creatures benefiting from such concealment."
+ },
+ {
+  "id": "cloud-jump",
+  "name": "Cloud Jump",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your unparalleled athletic skill allows you to jump impossible distances. Triple the distance you jump on a successful Long Jump (so you could jump 90 feet with an Athletics result of 30). When you successfully High Jump, use the distance jumped and distance limit for a Long Jump but don't triple the distance. You can jump a distance greater than your Speed by spending additional actions when you Long Jump or High Jump. For each additional action spent, add your Speed to the distance limit."
+ },
+ {
+  "id": "cloud-step",
+  "name": "Cloud Step",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "legendary in Acrobatics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Using fantastic acrobatic skill, you can walk for brief stretches across insubstantial surfaces. When you Stride, you can move across water, air, and solid surfaces that can hold only limited weight as if they were normal ground. If you Stride over a trap with a weight-sensitive pressure plate, you don't trigger it. At the end of your turn, you sink, fall, break fragile surfaces, or trigger traps as normal for your current location."
+ },
+ {
+  "id": "coating-of-slime",
+  "name": "Coating of Slime",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "fleshwarp"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "An acidic ooze coats your limbs. Your unarmed attacks deal an additional 1d4 persistent acid damage on a critical hit."
+ },
+ {
+  "id": "cobble-dancer",
+  "name": "Cobble Dancer",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to take advantage of foes thrown off-balance by unstable flooring, loose cobblestones, or similar impediments. While in an outdoor urban environment, you can Step into difficult terrain and enemies in difficult terrain are off-guard to you."
+ },
+ {
+  "id": "coerce-the-current",
+  "name": "Coerce the Current",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "athamaru",
+   "locathah",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Coerce the Current Source High Seas pg. 18 PFS Note Can be used in less than 20 feet of water, ending its effect at the water line. Requirements You are swimming in water. With a flick of your tail, you direct the water around you to move creatures. You move water in a 20-foot line; this line must be entirely in water. Each creature in this line must attempt a Fortitude save against your class DC or spell DC, whichever is higher. A creature can choose to fail the save. Critical Success The creature is unaffected. Success The creature is pushed or pulled 5 feet in the direction of your choice. All creatures must be moved in the same direction. Failure As success, but the creature is pushed or pulled 10 feet. Critical Failure As success, but the creature is pushed or pulled 10 feet, and the creature is off-guard until the end of your next turn."
+ },
+ {
+  "id": "coffin-bound",
+  "name": "Coffin Bound",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine",
+   "void"
+  ],
+  "prerequisites": [
+   "Vampire Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You bind your spirit to a coffin filled with soil of your homeland, making it a place of recovery. If you rest inside your coffin for 10 minutes, you regain Hit Points equal to your Constitution modifier x half your level. You can still be healed in other ways during that time, though you're unconscious and therefore unable to heal yourself. The GM might allow you to Refocus while resting, depending on whether it's a type of Refocusing you can achieve while you slumber. If you would be destroyed, you instead remain near death. This doesn't change your dying or wounded value, and you remain unconscious. After 1 hour, you're destroyed. If returned to your coffin before that hour is up, you avoid destruction; if you spend 1 hour resting in your coffin, you regain 1 HP and lose the dying and wounded conditions. You can't be healed in any other way when near death. Your coffin can't heal you if you're staked through the chest. You can be staked only if unconscious, and it takes three actions. You lose all benefits of this feat if your coffin is destroyed or the soil is lost. You must procure a new coffin and fill it with soil of your homeland to restore the feat's function."
+ },
+ {
+  "id": "cognitive-loophole",
+  "name": "Cognitive Loophole",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your turn ends. **Requirements** You are currently affected by a mental effect. --- You can find a loophole in a mental effect to temporarily overcome it. Until the end of your next turn, you ignore a single mental effect. You can suppress a particular effect using Cognitive Loophole only once. You can't use Cognitive Loophole to suppress an effect you chose to have affect you. --- **Special** You can use this reaction even if the mental effect is preventing you from using reactions."
+ },
+ {
+  "id": "collapse",
+  "name": "Collapse",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "skeleton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** An enemy's Strike against you is a critical hit. --- You collapse into a pile of bones, mitigating the worst of the damage you would have taken, and the triggering attack deals only the amount it would deal on a hit (typically full damage instead of double damage). Any other effects caused by a critical hit still occur. While collapsed, you're off-guard and can't act except to Stand, which re-forms you into a skeleton in a standing position."
+ },
+ {
+  "id": "collapse-armor",
+  "name": "Collapse Armor",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "manipulate",
+   "modification"
+  ],
+  "prerequisites": [
+   "armor innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wearing your armor innovation, or holding it in both hands in its compact form (see text). --- You've modified your armor innovation to collapse into a more compact form so you can don or remove it in an instant. If you're wearing your innovation when you Collapse your Armor, you remove it instantly, and it compresses into its compact form, after which it latches onto your body, typically by attaching to a belt, bandolier, or other convenient carrying surface as a nondescript satchel. If your armor is stowed and carried on your person in its compact form when you take this action, it unfolds back into its armor form onto your body. In compact form, your armor innovation is easier to carry, with a Bulk 1 lower than the Bulk listed for it, to a minimum of light Bulk (carried armor normally has a Bulk 1 higher than listed in the armor entry)."
+ },
+ {
+  "id": "collapse-construct",
+  "name": "Collapse Construct",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "manipulate",
+   "modification"
+  ],
+  "prerequisites": [
+   "construct innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've modified your construct companion and built it out of light materials, enabling you to collapse it into a carrying case or other compact and innocuous form. Either your construct or you (if you're adjacent to it) can Collapse your Construct to turn it into its compact form or back into its normal form. In compact form, your construct can't act but is easily carried, with a Bulk of 2 if it's Small, 4 if it's Medium, or 8 if it's Large. The compact form has wheels, so you can easily drag it behind you at half your Speed (rather than the usual slower Speed for dragging)."
+ },
+ {
+  "id": "collapse-wall",
+  "name": "Collapse Wall",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Demolitionist Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature moves into the bombs' splash area. **Requirements** You're within 30 feet of an area where you rigged bombs on a wall, cliff face, or similar vertical surface with Set Explosives or Demolition Charge. --- You detonate the required bombs in order to bring a wall down on a creature. If your bombs deal enough damage to reduce the wall's Hit Points below its Broken Threshold, the wall partially collapses on the creature. The creature takes bludgeoning damage equal to the damage dealt to the wall (basic Reflex save; the DC for this save is equal to your class DC or spell DC, whichever is higher). On a failure, they must spend an Interact action to dig themselves out of the collapse, and on a critical failure, they must spend 2 Interact actions to do so."
+ },
+ {
+  "id": "collateral-thrash",
+  "name": "Collateral Thrash",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [
+   "Thrash"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You smack the foe you're thrashing into someone else. When you Thrash, choose another enemy adjacent to the grabbed enemy. That enemy also takes your Thrash damage, with a save against your class DC."
+ },
+ {
+  "id": "combat-climber",
+  "name": "Combat Climber",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your techniques allow you to fight as you climb. You're not off-guard while Climbing and can Climb with a hand occupied. You must still use another hand and both legs to Climb."
+ },
+ {
+  "id": "combat-grab",
+  "name": "Combat Grab",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have one hand free, and your target is within reach of that hand. --- Using your prior attack to shift your opponent's guard, you take another swing and grab them. Make a melee Strike while keeping one hand free. If the Strike hits, you grab the target using your free hand. The creature remains grabbed until the end of your next turn or until it Escapes, whichever comes first."
+ },
+ {
+  "id": "combination-finisher",
+  "name": "Combination Finisher",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You combine a series of attacks with a powerful finishing blow. Your finishers' Strikes have a lower multiple attack penalty: -4 (or -3 with an agile weapon) if it's the second attack on your turn, or -8 (or -6 with an agile weapon) if it's the third or subsequent attack on your turn, instead of -5 and -10, respectively."
+ },
+ {
+  "id": "combined-form",
+  "name": "Combined Form",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "polymorph",
+   "tanuki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within 30 feet uses a polymorph effect. --- Cooperation and coordination are the secrets to getting by in tanuki society. When the triggering ally transforms, you Stride to their square and join shape with them, melding into their transformation. While you're melded in this way, you grant them the effects of either a 2nd- or 4th-rank enlarge spell as well as temporary Hit Points equal to your level; if their polymorph effect would normally grant them temporary Hit Points, you increase the amount by your level instead. While you're melded, you can't be separately targeted and you can't act except to speak or to use Change Shape to exit the Combined Form, which ends the effects of enlarge on your ally and removes any remaining temporary Hit Points they received from this ability at the time. If the triggering ally becomes unconscious or the triggering polymorph effect ends, you automatically exit the Combined Form."
+ },
+ {
+  "id": "come-at-me",
+  "name": "Come at Me!",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Pistolero's Challenge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're a legendary duelist, welcoming all challengers, enabling you to challenge many foes even while other challenges are active. There is no longer a limit to the number of Pistolero's Challenges you can have in effect at one time."
+ },
+ {
+  "id": "comforting-presence",
+  "name": "Comforting Presence",
+  "level": 10,
+  "category": "skill",
+  "traits": [
+   "concentrate",
+   "emotion",
+   "general",
+   "mental",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Occultism"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An adjacent ally becomes frightened or stupefied. --- You use your occult connection to your allies to take on the fear and confusion they feel. Focus on your own calmness and pull in your nearby allies' emotions. Reduce the frightened and stupefied condition values of adjacent allies by 1, and increase your frightened and stupefied condition values by the same amount."
+ },
+ {
+  "id": "command-attention",
+  "name": "Command Attention",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "aura",
+   "concentrate",
+   "emotion",
+   "mental",
+   "visual"
+  ],
+  "prerequisites": [
+   "Celebrity Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You command the attention of all around you with style, ensuring their gaze falls only upon you until the end of your next turn. Whenever a creature in a around you attempts a saving throw against a different visual effect, it gets a result one degree of success better than it rolled. This is a fortune effect. When an enemy within the aura attempts to use a visual effect that involves focusing its attention on a particular creature (such as a medusa's Focus Gaze), it must succeed at a save against your class DC or spell DC, whichever is higher, in order to target any creature except you. Allies in the aura can attempt to Hide even if they don't have cover, as you are continually providing a distraction."
+ },
+ {
+  "id": "command-undead",
+  "name": "Command Undead",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "harmful font",
+   "evil alignment"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You grasp the animating force within an undead creature and bend it to your will. If the next action you use is to cast Harm targeting one undead creature, you transform the effects of that *harm* spell. Instead of harm's normal effects, the target becomes controlled by you if its level is equal to or lower than your level - 3. It can attempt a Will saving throw to resist being controlled by you. If the target is already under someone else's command, the controlling creature also rolls a saving throw, and the undead uses the better result. --- **Critical Success** The target is unaffected and is temporarily immune for 24 hours. **Success** The target is unaffected. **Failure** The undead creature becomes a minion under your control. The spell gains a duration of 1 minute, but it is dismissed if you or an ally attacks the minion undead. **Critical Failure** As failure, but the duration is 1 hour."
+ },
+ {
+  "id": "commitment-to-valor",
+  "name": "Commitment to Valor",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Golden Legionnaire Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would gain the fleeing condition. --- While fear might distract you from your duty, it'll never cause you to abandon it. Instead of becoming fleeing, you become Stupefied 1 for as long you would be fleeing. If you have the frightened condition, decrease its value by 1."
+ },
+ {
+  "id": "communal-healing",
+  "name": "Communal Healing",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "healing",
+   "vitality"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're an exceptional conduit for vitality and, as you channel it through you, you can divert some to heal yourself or another creature. When you cast the Heal spell to heal a single creature, choose another willing living creature within range of your *heal* to regain Hit Points equal to the *heal* spell's rank."
+ },
+ {
+  "id": "communal-tale",
+  "name": "Communal Tale",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Folklorist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Stories are an experience meant to be shared as a group. When you Spin a Tale, you can designate up to six non-minion allies as the heroes of your story. Each hero, once during the tale, can continue the story in your stead by spending an action to Spin the Tale; if they do, the story continues for another round, as if you had Spun the Tale at the start of your turn. This could allow the story to continue for up to 6 additional rounds, if all possible allies Spin the Tale, though you can continue to Spin the Tale on your own as normal."
+ },
+ {
+  "id": "companions-cry",
+  "name": "Companion's Cry",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "an animal companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can urge your companion to do its utmost. You can spend 2 actions to Command an Animal instead of 1 when commanding your animal companion. If you do, your animal companion uses an additional action."
+ },
+ {
+  "id": "competitive-eater",
+  "name": "Competitive Eater",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Glutton for Flesh"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Gorging on flesh after your stomach is full fortifies you, making you hardy enough to withstand more punishment. When you become fully satiated, you gain an amount of temporary Hit Points equal to 10 + your level."
+ },
+ {
+  "id": "complete-the-heros-journey",
+  "name": "Complete the Hero's Journey",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "healing",
+   "transcendence"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes **Requirements** You have Sparked Transcendence of at least two different ikons in the last 10 minutes, and your divine spark currently dwells in a third ikon. --- As your divine spark travels through each of your ikons in turn, it gains power, culminating its journey when it enters your third ikon. You Spark Transcendence of your final ikon, but instead of its normal effect, the item casts the 3-action version of Harm or Heal heightened to half your level rounded up."
+ },
+ {
+  "id": "compliant-gold",
+  "name": "Compliant Gold",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a melee weapon ikon --- You can command your weapon to shrink or grow, for convenience or power. Even when your ikon is not empowered, you can shrink it to a miniature size (with negligible Bulk) and keep it tucked behind an ear, in your hair, or in a similar discreet location. You can shrink your weapon or regrow it to its normal size as part of drawing it, putting it away, swapping it, or picking it up. **Immanence** Your ikon gains the reach trait. If it already had the reach trait, it instead increases your reach by an additional 10 feet, instead of the usual additional 5 feet. **Transcendence—Topple the Pillar of Heaven** ⟨2⟩ (transcendence)"
+ },
+ {
+  "id": "conceal-spell",
+  "name": "Conceal Spell",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "animist",
+   "concentrate",
+   "spellshape",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Animist** You speak with the unheard voice of the spirits. **Witch** Through sheer mental effort, you can simplify the incantations and gestures needed to spellcast, leaving them barely noticeable. **Wizard** By shaping the magical energies and parameters of your spells all in your head through sheer concentration, you can simplify the incantations and gestures needed to spellcast, leaving them barely noticeable. --- If the next action you use is to Cast a Spell, the spell gains the subtle trait, hiding the shining runes, sparks of magic, and other manifestations that would usually give away your spellcasting. The trait hides only the spell's spellcasting actions and manifestations, not its effects, so an observer might still see a ray streak out from you or see you vanish into thin air."
+ },
+ {
+  "id": "concealing-currents",
+  "name": "Concealing Currents",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Concealing Currents Source High Seas pg. 106 Archetype Marine Marauder Prerequisites Marine Marauder Dedication You use currents of water to conceal a projectile, preventing your enemy from predicting its trajectory. If you’re in water, creatures that are above you or on land are off-guard against your ranged attacks."
+ },
+ {
+  "id": "concealing-legerdemain",
+  "name": "Concealing Legerdemain",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Thievery"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Rather than hide an object somewhere the inspectors won't search, you're skilled at keeping the object on the move so it's never where they look. When you Conceal an Object of light Bulk or less, you can use Thievery instead of Stealth for your checks and for the DC of an active searcher's Perception check. You roll the check only once, but you must continue to use actions to Conceal an Object throughout the process."
+ },
+ {
+  "id": "concentrated-assault",
+  "name": "Concentrated Assault",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sniping Duo Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your spotter combine your efforts to bring down your target. If you and your spotter both use the Ready activity to make a Strike against the same opponent and choose the same trigger for the readied action, resolve your attacks at the same time. Each of you can use the higher of the two attack rolls for your Strikes, each using your own modifier; this is a fortune effect. If both attacks are successful, total the damage for both attacks for the purpose of resistances and weaknesses."
+ },
+ {
+  "id": "conductive-sphere",
+  "name": "Conductive Sphere",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "electricity",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "metal",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "A floating metal ball forms in a space within 30 feet, flashing with electricity. It can't be targeted or damaged. Any of your allies adjacent to it gain resistance to electricity equal to your level and add the *Shock* rune to all their Strikes with metal objects. The sphere lasts until the end of your next turn, but you can Sustain it up to 1 minute. When you conjure the sphere and the first time you Sustain the impulse on subsequent rounds, you can either have it Fly up to 20 feet or deal damage to an adjacent creature with a save against your class DC. --- **Level (+3)** The damage dealt by the sphere increases by 1d12."
+ },
+ {
+  "id": "conductors-redirection",
+  "name": "Conductor's Redirection",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "talos"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are hit by an attack, spell, or other effect that deals electricity damage. --- You conduct the damage through your body, taking damage as normal (if applicable) and redirecting it at one target within 10 feet that you can see. That target takes an equal amount of damage with a save against the higher of your class DC or spell DC. The damage they take is based on the triggering damage, not modified by your degree of success, resistances, and so forth."
+ },
+ {
+  "id": "conduit-of-void-and-vitality",
+  "name": "Conduit of Void and Vitality",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "divine",
+   "oracle"
+  ],
+  "prerequisites": [
+   "any oracle mystery"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have Heal or Harm as a signature spell and an available spell slot to cast it with. --- You use the unstable energy of your curse to manipulate the most basic of divine magic. You cast a 3-action *heal* or *harm* spell, expending the slot as normal. If the spell restores Hit Points to one or more creatures, then one creature healed by this spell regains a number of additional Hit Points equal to 1d8 × your cursebound value; if the spell damages one or more creatures, then one creature harmed by this spell takes additional damage equal to 1d8 × your cursebound value."
+ },
+ {
+  "id": "conflux-focus",
+  "name": "Conflux Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "conflux spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You imagine how you'll weave magic and combat into future battles, improving your focus. If you have spent at least 2 Focus Points since the last time you Refocused, you recover 2 Focus Points when you Refocus instead of 1."
+ },
+ {
+  "id": "conflux-wellspring",
+  "name": "Conflux Wellspring",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "Conflux Focus"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've achieved perfect magical and physical balance, allowing magic to flow into and through you more easily. You can recover 3 Focus Points when you Refocus instead of 1 if you have spent at least 3 Focus Points since the last time you Refocused."
+ },
+ {
+  "id": "consecrate-spell",
+  "name": "Consecrate Spell",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate",
+   "oracle",
+   "sorcerer",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "ability to cast focus spells",
+   "divine spells"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You infuse a spell with the power of your faith, consecrating it. If the next action you use is to Cast a Spell that targets a single undead, you can expend a Focus Point, channeling the power of your focus spells into the primary spell. If you do, the spell you cast deals additional spirit or vitality damage (your choice) equal to the rank of your focus spells. As normal for additional damage, this additional damage is doubled if the spell cast requires an attack roll and the result of the attack roll is a critical hit, or if the spell cast requires a saving throw and the result of the saving throw is a critical failure."
+ },
+ {
+  "id": "consecrated-aura",
+  "name": "Consecrated Aura",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "aura",
+   "vitality"
+  ],
+  "prerequisites": [
+   "Hallowed Necromancer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body radiates vitality energy, making your very presence disorienting to undead and encouraging them to move away from you. The effect plays upon the instincts flowing through their bodies from void energy and can thus affect even mindless creatures. You gain an aura of vitality energy in a . Each undead creature that ends its turn in your aura must succeed at a Will save against your spell DC or become Frightened 1 (Frightened 2 on a critical failure). A creature that succeeds at its save is temporarily immune for 1 minute. **Special** Your aura gains the trait of the magical tradition for the spells you used to qualify for Hallowed Necromancer Dedication."
+ },
+ {
+  "id": "constant-gaze",
+  "name": "Constant Gaze",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "goloma"
+  ],
+  "prerequisites": [
+   "Watchful Gaze"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eyes keep a continual watch for dangers from all sides. You can't be flanked by creatures of your level or lower, even when you haven't used Watchful Gaze."
+ },
+ {
+  "id": "constricting-hold",
+  "name": "Constricting Hold",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "eidolon",
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your eidolon has a creature grabbed or restrained. Your eidolon constricts the creature, dealing bludgeoning damage equal to your eidolon's level plus its Strength modifier, with a basic Fortitude save against your spell DC."
+ }
+]

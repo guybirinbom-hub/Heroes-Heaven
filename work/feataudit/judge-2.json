@@ -1,0 +1,391 @@
+{
+ "records": [
+  {
+   "id": "ashen-veil",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 3-action activity granting concealment only against undead; concealment is not a sheet value and the text hands the GM the call on which actions end it."
+  },
+  {
+   "id": "assassin-dedication",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its only content is the Mark for Death activity, which exists as a core.json action linked from the description and is resolved at the table."
+  },
+  {
+   "id": "assured-identification",
+   "verdict": "MISS",
+   "reason": "A printed degree-of-success change on the player's own skill checks that nothing records. The situational lane already carries exactly this shape (paragon-benefit-regalia: 'critical failure becomes failure'; familiar-foe on Recall Knowledge).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       { "kind": "skill", "detail": "arcana" },
+       { "kind": "skill", "detail": "nature" },
+       { "kind": "skill", "detail": "occultism" },
+       { "kind": "skill", "detail": "religion" }
+      ],
+      "when": "when you Identify Magic",
+      "bonus": "critical failure becomes a failure; you never misidentify a cursed item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "assured-knowledge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Choosing to forgo the roll for 10 + proficiency is a roll-time option; the app models Assurance itself only as a recorded pick with nothing computed, and the Automatic Knowledge prerequisite waiver is builder-advisory (Overrides covers it)."
+  },
+  {
+   "id": "athletes-ally",
+   "verdict": "MISS",
+   "reason": "A 1-minute activated change to the proficiency your Athletics maneuvers roll at, and nothing records it. Mythic proficiency is not a number the engine can add, but the situational lane takes a printed phrase (staff-acrobat-dedication uses 'success -> critical success').",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "athletics" }],
+      "when": "Disarm/Grapple/Reposition/Shove/Trip with your warshard weapon, 1 min",
+      "bonus": "roll at mythic proficiency (costs 1 Mythic Point)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "athletic-might",
+   "verdict": "MISS",
+   "reason": "Printed degree-of-success upgrade on two Athletics uses with nothing recording it; identical in shape to gorilla-stance and steadying-stone, which the situational lane already carries.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "athletics" }],
+      "when": "on Athletics checks to Climb or Swim",
+      "bonus": "a success becomes a critical success"
+     }
+    ]
+   }
+  },
+  {
+   "id": "athletic-strategist",
+   "verdict": "MISS",
+   "reason": "It lets the investigator roll the listed Athletics maneuvers off Devise a Stratagem and use Intelligence instead of Strength for that check — a printed alternate attribute for an Athletics check that the sheet never mentions.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "athletics" }],
+      "when": "Disarm/Grapple/Reposition/Shove/Trip via a Devise a Stratagem substitution",
+      "bonus": "substitute the stratagem roll and use Int instead of Str for the check"
+     }
+    ]
+   }
+  },
+  {
+   "id": "attuned-electroreceptors",
+   "verdict": "MISS",
+   "reason": "Grants a permanent imprecise sense for living creatures at 20 feet and the record carries no senses field. Lifesense is the engine's sense for detecting living creatures; range/acuity are kept so it can't read as unlimited. The electricity-trait creatures and the underwater doubling have no sense id and stay prose.",
+   "fix": {
+    "senses": [{ "name": "lifesense", "range": 20, "acuity": "imprecise" }]
+   }
+  },
+  {
+   "id": "attuned-stride",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignoring difficult terrain is a movement-cost rule with no sheet value, gated on the Geomancer terrain-attunement subsystem the app does not model."
+  },
+  {
+   "id": "attunement-shift",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free action that re-points which terrain attunement applies; the attunement subsystem is table-side and moves no sheet number."
+  },
+  {
+   "id": "augment-senses",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-round action: 'can't be flanked' and enlarged Seek areas are positional encounter rules, and it grants no sense the senses field names."
+  },
+  {
+   "id": "aura-enhancement",
+   "verdict": "MISS",
+   "reason": "Adds two named spells (Benediction, Malediction) to the pool you can prepare in your divine font slots. No allowed field adds specific spells to a prepared pool, and the Battle Harbinger font is not built at all — battle-harbinger-dedication is absent from CASTER_ARCHETYPES and its registry entries only grant Toughness plus a skill.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "aura-expertise",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free Sustain at the start of your turn — pure action economy, resolved at the table."
+  },
+  {
+   "id": "aura-of-courage",
+   "verdict": "MISS",
+   "reason": "Every frightened condition YOU gain is reduced by 1 — the same shape the app already models in the condition-marker lane (the-fool: 'any stupefied condition you gain has its value reduced by 1'; face-your-fears on frightened). No allowed field expresses a condition marker, so it needs the registry lane. The allies' end-of-turn reduction is correctly ally-side.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "aura-of-despair",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything it does is a penalty on enemies in your aura; no statistic of yours changes."
+  },
+  {
+   "id": "aura-of-faith",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a trait to willing ALLIES' Strikes; your own sheet is untouched."
+  },
+  {
+   "id": "aura-of-unbreakable-virtue",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A status penalty imposed on evil creatures near you — it moves their checks and DCs, not yours."
+  },
+  {
+   "id": "aura-of-vengeance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only reduces the penalty on ALLIES' Retributive Strike Strikes; ally-side only."
+  },
+  {
+   "id": "automatic-psychic-action",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Permanent quickened restricted to psyche actions: quickened is play-state the player marks, and action economy is not a sheet value the builder holds."
+  },
+  {
+   "id": "autonomic-psychic-action",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same text as Automatic Psychic Action — a restricted extra action; quickened is player-toggled play state and action economy is not modelled."
+  },
+  {
+   "id": "avalanche-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 3-action activity making Strikes against every enemy in reach; entirely resolved at the table under the normal multiple-attack-penalty rules."
+  },
+  {
+   "id": "avatars-protection",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that casts an already-prepared spell from your own slots and downgrades an incoming critical hit; resolved in play."
+  },
+  {
+   "id": "avenge-ally",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action fortune Strike rolled at the table; its once-per-10-minutes cadence isn't expressible in limitedUses and it grants nothing standing."
+  },
+  {
+   "id": "avenger-of-envy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Aegis of Envy activity (a core.json action linked from the description) plus a once-per-day Mythic Point trigger — a resource event, not a sheet statistic."
+  },
+  {
+   "id": "avenger-of-gluttony",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Gluttonous Feast activity; choosing to reduce healing you receive and the resulting Mythic Point are in-play decisions."
+  },
+  {
+   "id": "avenger-of-greed",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Convocation of Greed activity; the Mythic Point trigger is a GM-adjudicated in-world event."
+  },
+  {
+   "id": "avenger-of-lust",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Sorshen's Devotion reaction plus an in-play Mythic Point trigger; nothing standing changes on the sheet."
+  },
+  {
+   "id": "avenger-of-sloth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Summon Sloth activity and a rest-based Mythic Point trigger; the resting clause is downtime the app does not model."
+  },
+  {
+   "id": "avenger-of-wrath",
+   "verdict": "MISS",
+   "reason": "It flatly grants the Reactive Strike reaction, and reactive-strike exists as a feat record — a plain feat grant nothing currently delivers. (Host of Wrath and the Mythic Point trigger are correctly table-side.)",
+   "fix": { "grantsFeats": ["reactive-strike"] }
+  },
+  {
+   "id": "avoid-fates-gaze",
+   "verdict": "MISS",
+   "reason": "A standing change to the proficiency you roll saves against scrying at, recorded nowhere. Mythic proficiency isn't a number, but the situational lane takes the printed phrase. The concealed-vs-scrying half is GM-side and stays out of the fix.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "all" }],
+      "when": "against a scrying spell or effect",
+      "bonus": "roll at mythic proficiency"
+     }
+    ]
+   }
+  },
+  {
+   "id": "awaken-others",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Learning a ritual, its reduced cost, and the crit-fail protection are all downtime ritual mechanics the app does not model."
+  },
+  {
+   "id": "awakened-stride",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Modifies the Wild Stride action (three Strides, concealed during the move); movement and concealment are resolved at the table."
+  },
+  {
+   "id": "awakened-yaoguai-heritage",
+   "verdict": "MISS",
+   "reason": "It grants a versatile-heritage character the full mechanical benefits of a yaoguai heritage (and unlocks heritage-gated feats). No allowed field grants a heritage's benefits and there is no second-heritage lane.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "axe-climber",
+   "verdict": "MISS",
+   "reason": "Grants a real climb Speed of half your Speed, but only while climbing wood with two axes (or ice with two light picks) — exactly the wield-conditional shape the app already handles with a mode (close-formation), and the speed-formula syntax is already accepted.",
+   "fix": {
+    "mode": {
+     "id": "axe-climber",
+     "name": "Axe Climbing",
+     "feats": ["axe-climber"],
+     "duration": "while climbing wood with an axe in each hand (or ice with two light picks)",
+     "modifiers": [],
+     "speeds": { "climb": "floor(@actor.speed.land/2)" },
+     "note": "Climbing a wooden surface with a Hatchet or Battle Axe in each hand (or ice with a Light Pick in each hand) gives you a climb Speed equal to half your Speed. You still need both legs free and can't use either axe in combat while climbing."
+    }
+   }
+  },
+  {
+   "id": "axe-thrower",
+   "verdict": "MISS",
+   "reason": "Two real grants, neither expressible: every one-handed axe you wield GAINS the thrown trait (10 feet) and already-thrown axes get +10 feet of range — there is no weapon-trait or range-increment lane — and the critical specialization applies only to THROWN axe attacks, which critSpec/critSpecWeapons would over-grant to melee axe crits.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "back-to-back",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Off-guard-from-flanking depends on where allies stand on the map; it changes no sheet statistic."
+  },
+  {
+   "id": "bamboo-and-silt-repose",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignoring and downgrading specific non-magical difficult terrain is map movement with no sheet value and no field."
+  },
+  {
+   "id": "banishing-blow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A rider on the champion's reaction; every effect (Shove, no teleport/summon, stunned, banishment) lands on the target."
+  },
+  {
+   "id": "banner-twirl",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action, one-round concealment from ranged attacks for you and adjacent allies; concealment is applied in play, not a sheet value."
+  },
+  {
+   "id": "banshee-cry-display",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Banshee Cry fireworks display, an action record linked from the description whose effect is resolved at the table."
+  },
+  {
+   "id": "bargain-hunter",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An Earn Income / bargain-hunting downtime activity the app does not model; the one-time 2 gp at character creation goes in the free-form currency field and has no expressing field."
+  },
+  {
+   "id": "barrier-of-boreal-frost",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An impulse that creates a Wall of Ice effect on the battlefield; nothing on your own sheet changes."
+  },
+  {
+   "id": "barrier-shield",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Alters how a cast Shield spell may be used (cover instead of Shield Block); resolved when the spell is cast, no standing sheet change."
+  },
+  {
+   "id": "basic-animist-spellcasting",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by src/rules/casterArchetypes.ts: animist-dedication is in CASTER_ARCHETYPES and mk() derives basicId 'basic-animist-spellcasting', which unlocks the archetype spell slots. Only the apparition-spell preparation nuance stays prose."
+  },
+  {
+   "id": "basic-cleric-spellcasting",
+   "verdict": "ALREADY_OK",
+   "reason": "src/rules/casterArchetypes.ts: cleric-dedication mk('divine','wis',2,'cleric') with basicId 'basic-cleric-spellcasting' — the archetype slot ladder keys off this feat id."
+  },
+  {
+   "id": "basic-druid-spellcasting",
+   "verdict": "ALREADY_OK",
+   "reason": "src/rules/casterArchetypes.ts: druid-dedication mk('primal','wis',2,'druid'); the basic tier is keyed by this feat id."
+  },
+  {
+   "id": "basic-magus-spellcasting",
+   "verdict": "ALREADY_OK",
+   "reason": "src/rules/casterArchetypes.ts: magus-dedication mk('arcane','int',4,'magus'); the basic tier is keyed by this feat id."
+  },
+  {
+   "id": "basic-modification",
+   "verdict": "MISS",
+   "reason": "It is a PICK (a basic innovation modification) the builder never offers: inventorModificationOptions / INVENTOR_TIER_LEVEL and build.inventorModifications are gated on the inventor CLASS and an innovation subclass, so an Inventor-archetype character gets no choice. effectChoices can't express it — the legal options are classFeatures filtered by innovation type and the armor sub-gate, not a fixed list.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "basic-scroll-cache",
+   "verdict": "MISS",
+   "reason": "A daily-preparations PICK (one common 1st-rank spell, plus a 2nd-rank one at 8th level) that becomes a temporary scroll; nothing offers it. effectChoices' spellFilter can only grant a spell as innate or focus, which would misrepresent it — a scroll is read at the scroll's own rank/DC and works for non-casters — so this needs a temporary-consumable daily-choice lane.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "bat-around",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action Strike-plus-maneuver activity that also directs your companion; all of it resolves at the table against a target."
+  },
+  {
+   "id": "battle-hardened-companion",
+   "verdict": "MISS",
+   "reason": "Your Commander's Companion becomes a nimble or savage animal companion — a real stat-block upgrade the app models elsewhere via COMPANION_MODS.maturityFloor (incredible-megafauna-companion, paragon-companion, advanced-reanimated-companion all have entries), but this feat has none, so the companion never advances. The free 1-action-per-round clause is table-side.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "battle-planner",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pre-rolling Warfare Lore to substitute for initiative is a fortune effect resolved at the table on GM-supplied scouting information."
+  },
+  {
+   "id": "battle-scars",
+   "verdict": "MISS",
+   "reason": "Grants real level-scaling resistance the record does not carry, but only against devils and Chelaxian-allied creatures (the GM decides who counts). Writing it as plain resistances would be a large over-grant, so it belongs in the toggleable mode lane, off by default.",
+   "fix": {
+    "mode": {
+     "id": "battle-scars",
+     "name": "Battle Scars (vs. devils)",
+     "feats": ["battle-scars"],
+     "duration": "while taking bludgeoning or slashing damage from devils or Chelaxian-allied creatures",
+     "modifiers": [],
+     "resistances": [
+      { "type": "bludgeoning", "value": "floor(@actor.level/2)" },
+      { "type": "slashing", "value": "floor(@actor.level/2)" }
+     ],
+     "note": "Resistance to bludgeoning and slashing damage equal to half your level, but ONLY from devils and creatures allied with the Chelaxian government (the GM determines which creatures qualify). Leave the mode off against anything else."
+    }
+   }
+  },
+  {
+   "id": "battle-tested-companion",
+   "verdict": "MISS",
+   "reason": "Your Commander's Companion becomes a MATURE animal companion — a real stat-block change with a matching lane (COMPANION_MODS.maturityFloor, used by advanced-reanimated-companion for exactly this rung) — but there is no entry for this feat. The +10-foot banner aura is ally-facing and stays prose.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "battlefield-agility",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action Strike-and-Step activity gated on being flanked; resolved at the table."
+  },
+  {
+   "id": "battlefield-arcana",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape that stops a cast from triggering enemy reactions — an encounter interaction, not a sheet value."
+  },
+  {
+   "id": "battleforger",
+   "verdict": "ALREADY_OK",
+   "reason": "Implemented in src/sheet/ItemEditorModal.tsx: the feat (yours or a party member's) unlocks a per-item 'battleforged' toggle that applies the +1 potency effect and goes inert when the item already has a potency rune."
+  },
+  {
+   "id": "beacon-mark",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a heightened entry to the Sigil spell and an in-play locate action; the target's save is GM-side and nothing on your sheet changes."
+  },
+  {
+   "id": "bear-empathy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure communication flavour, extended to other ursine creatures at the GM's discretion."
+  },
+  {
+   "id": "bear-hug",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action follow-up claw Strike; the grabbed condition it inflicts lands on the target."
+  }
+ ]
+}

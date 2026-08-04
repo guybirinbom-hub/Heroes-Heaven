@@ -1,0 +1,958 @@
+[
+ {
+  "id": "deitys-protection",
+  "name": "Deity's Protection",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "Advanced Domain"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you call upon your deity's power to fulfill the promise of their domain, you gain divine protection. After you cast a domain spell, you gain resistance to all damage until the start of your next turn. The amount of resistance is equal to the rank of the domain spell you cast."
+ },
+ {
+  "id": "delay-trap",
+  "name": "Delay Trap",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A trap within your reach is triggered. --- You try to jam the workings of a trap to delay its effects. Attempt a Thievery check to Disable a Device on the trap with the following results instead of the normal ones for the action. --- **Critical Success** You either prevent the trap from being triggered or delay the activation until the start or end of your next turn. **Success** As above, but the GM chooses whichever is worse for you. **Failure** No effect. **Critical Failure** You're off-guard until the start of your next turn."
+ },
+ {
+  "id": "demanding-challenge",
+  "name": "Demanding Challenge",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Boaster's Challenge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "If your skill check to challenge a foe is a success, the target of your challenge takes a -1 circumstance penalty to attack rolls (or -2 if you critically succeed) until the end of your next turn."
+ },
+ {
+  "id": "demolish-defenses",
+  "name": "Demolish Defenses",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With a powerful blow, you crack a foe's armor or tough hide, opening it up for further attacks. Make a melee Strike. This Strike deals one additional weapon die of damage; if the target is your taunted enemy, this increases to two additional weapon die of damage. This counts as two attacks for the purposes of calculating your multiple attack penalty. If you hit and deal damage, the target must attempt a saving throw against your class DC. --- **Critical Success** The target takes no additional effect. **Success** The target is off-guard until the end of your next turn. **Failure** The target is Clumsy 2 until the end of your next turn. Once it loses this clumsy condition, it's off-guard for 1 round. **Critical Failure** As failure, but the target is Clumsy 3."
+ },
+ {
+  "id": "demolishing-knockback",
+  "name": "Demolishing Knockback",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You make a forceful attack that has the power to push your foe through walls. Spend a Mythic Point and make a Strike at mythic proficiency. If you hit and deal damage to the target, you push them up to 15 feet away from you. If this movement would cause the target to collide with an object that has a hardness of 5 or less, the object breaks and the target is pushed through the object's space for the remainder of the forced movement, taking an additional 2d6 damage (the GM can decide that this is a different type of damage depending on the object the target was pushed through; for instance, slashing damage if the target is pushed through a pane of glass). If the forced movement doesn't cause the target to collide with an object, the target must succeed at a saving throw against your class DC or be knocked prone at the end of the movement."
+ },
+ {
+  "id": "demolition-charge",
+  "name": "Demolition Charge",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can rig your bombs to inanimate objects in order to cause destruction to the surrounding area. As an activity that takes 1 minute, you attach between one and four bombs to an inanimate object within your reach, such as a chest, door, wall, or column. This creates a hazard in one square occupied by or adjacent to the inanimate object, and the hazard's Stealth DC to detect it and Thievery DC to disable it are equal to your class DC. The hazard has the following reaction, which you can also trigger as a single action so long as you are within 30 feet of the hazard. The hazard retains its potency until it's triggered, until the inanimate object moves from its space, or until you make your next daily preparations, whichever comes first. --- **Fire in the Hole** ⟨5⟩ **Trigger** A creature moves into the hazard's space --- **Effect** The hazard explodes, dealing the bombs' damage and splash damage to the inanimate object. Combine this damage for the purpose of resistances and weaknesses, and this damage ignores an amount of the object's Hardness equal to your level. Any creatures adjacent to the hazard take the bombs' splash damage, similarly combined for the purpose of resistances and weaknesses. As a reminder, since you didn't throw the bombs, Calculated Splash and similar effects don't apply."
+ },
+ {
+  "id": "demolitionist",
+  "name": "Demolitionist",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** You are from Dongun Hold or Alkenstar. --- You know how to destroy objects with a well-placed explosion. Whenever you hit with a bomb Strike against a trap or an unattended object, you ignore the first 5 points of the object's Hardness."
+ },
+ {
+  "id": "demons-hair",
+  "name": "Demon's Hair",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "Living Hair"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your hair constantly wriggles and writhes like that of your rival, Syu Tak-nwa. Your damage die of your hair unarmed Strike increases by one step and it gains the reach and versatile slashing traits. Your familiar assumes partial control over your hair; as long as your familiar is alive and within 30 feet, you are permanently quickened, and you can use the extra action only to make a hair Strike. You can deliver hexes through your hair. When you successfully cast a non-cantrip hex that requires 2 or more actions to cast and that doesn't require a spell attack roll, if your target is within your reach, as part of the spellcasting activity you can make a hair Strike against them before applying any effects of the hex. If this Strike misses, the hex has no effect. **Special** If your hair already has the reach trait, it instead gains the sweep trait."
+ },
+ {
+  "id": "denier-of-destruction",
+  "name": "Denier of Destruction",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "healing font"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** You have a Heal spell prepared and you aren't off-guard to the source of the damage. **Trigger** Any ally within 30 feet that you can heal with your *heal* spell would take damage from an attack or effect from a source you can observe. --- You can manipulate the same energies that the *aeon orbs* use to sustain life. You cast *heal* on the triggering target. Instead of its normal effects, the *heal* spell reduces the triggering damage by an amount equal to the Hit Points a 1-action *heal* spell of that rank would have recovered. As usual, if this reduces the damage to 0, it might also remove additional effects of the triggering attack, such as injury poisons."
+ },
+ {
+  "id": "deny-support",
+  "name": "Deny Support",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Help either the Washboard Dogs or the Diobel Sweepers destroy their rival. --- When you succeed or critically succeed at a Deception check to Feint an opponent, that target can't flank with their allies until the beginning of your next turn."
+ },
+ {
+  "id": "desperate-finisher",
+  "name": "Desperate Finisher",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You complete the last action on your turn, and your turn has not ended yet. --- You throw everything you have into one last, reckless press. Use a single action that you know with the press trait. You forgo the ability to use reactions until the start of your next turn. This press uses your multiple attack penalty, as normal."
+ },
+ {
+  "id": "destructive-block",
+  "name": "Destructive Block",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bastion Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can protect yourself more effectively, at the expense of your shield. When you Shield Block, you can reduce the damage to yourself by double the shield's Hardness, but if you do, the shield takes double the normal amount of damage it would have taken (before applying its Hardness). You can't use Destructive Block if your shield can't typically be broken or destroyed, such as if you're using an Indestructible Shield."
+ },
+ {
+  "id": "determined-dash",
+  "name": "Determined Dash",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Nothing can keep you from your enemy. Stride twice. During this movement you ignore difficult terrain, greater difficult terrain, and any effects that would impose a penalty to Speed. You can attempt an Athletics check instead of an Acrobatics check to Balance when moving across narrow surfaces or uneven ground, using the same DC. This doesn't prevent you from being harmed by hazardous terrain. You can increase the number of actions this activity takes to 3 to Stride three times instead."
+ },
+ {
+  "id": "detonating-spell",
+  "name": "Detonating Spell",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate",
+   "oracle",
+   "sorcerer",
+   "spellshape",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your spell becomes volatile and explosive. If the next action you use is to Cast a Spell that deals damage to a single target and the spell successfully damages that target, the spell explodes, dealing splash damage equal to the rank of the spell cast to adjacent creatures. Unlike normally, this splash damage doesn't apply to the target. The splash damage dealt is of the same type the spell deals."
+ },
+ {
+  "id": "devastating-duelist",
+  "name": "Devastating Duelist",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Aldori Duelist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You pointedly note your enemy's deficiencies, filling them with fear and dismay. Strike an opponent with your Aldori Dueling Sword. If the Strike is successful, attempt a Dueling Lore check against the target's Will DC. On a success, the target becomes Frightened 2. This is an emotion, fear, and mental effect."
+ },
+ {
+  "id": "devastating-weaponry",
+  "name": "Devastating Weaponry",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "weapon innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You release a volley of projectiles from your weapon, or power it to fly in every direction across the battlefield and Strike multiple creatures. Make a Strike with your weapon innovation against each foe within 30 feet of you. Don't increase your multiple attack penalty until after making all the attacks. If your innovation is a melee weapon and any of the attacks are outside your reach, you Release the weapon before the Strikes, and it returns to your grasp after all of them. If your hands are full when the weapon returns, it falls to the ground in your space. As normal, if your weapon innovation requires one or more actions to reload between Strikes, you can't use it to make multiple attacks with Devastating Weaponry."
+ },
+ {
+  "id": "devoted-focus",
+  "name": "Devoted Focus",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "devotion spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your devotion is strong enough to increase your focus to incredible heights. Whenever you Refocus, completely refill your focus pool."
+ },
+ {
+  "id": "devrins-dazzling-diversion",
+  "name": "Devrin's Dazzling Diversion",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue",
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Devrin Arlos has a habit of using whatever is at hand to temporarily blind others in combat. Copying his technique, you make use of your cloak, the light reflecting from your weapon, a handful of flower petals, or some other physical distraction as part of your feint, leaving your opponent unable to see for a moment. When you successfully Feint a creature, it becomes dazzled until the end of your turn. If you critically succeed, the creature is dazzled until the start of your next turn. The creature can use an Interaction to remove the dazzled condition. As normal, you can dazzle only creatures that use vision or a similar sense, as determined by the GM."
+ },
+ {
+  "id": "diabolic-certitude",
+  "name": "Diabolic Certitude",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Hellknight Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn begins, and you can observe a devil. --- Your Hellknight training drilled details of Hell's denizens deep into your mind. Attempt a check to Recall Knowledge about a devil you're observing. If you critically fail this check, you fail instead. If you succeed at this check, you critically succeed instead."
+ },
+ {
+  "id": "diamond-fists",
+  "name": "Diamond Fists",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body hardens as you combine your attacks, making your finishing blows more damaging. Your unarmed attacks gain the forceful and deadly d10 traits. Any that already had one or both of these traits increase their weapon damage dice by one step."
+ },
+ {
+  "id": "didactic-strike",
+  "name": "Didactic Strike",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [
+   "Shared Stratagem"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you find a glaring weakness, you can set your allies up to annihilate your foe. When you use Shared Stratagem, you can designate up to 10 allies instead of just one. The foe is off-guard against the first attack from each designated ally before your next turn, and each ally's first attack deals an extra 2d6 precision damage to the target if it hits."
+ },
+ {
+  "id": "diehard",
+  "name": "Diehard",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "It takes more to kill you than most. You die from the dying condition at dying 5, rather than dying 4."
+ },
+ {
+  "id": "dig-quickly",
+  "name": "Dig Quickly",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "manipulate",
+   "shoony"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are standing on dirt, sand, snow, or similar particulate material. --- Your hands work as effectively as shovels when you need to dig a quick hole. You dig a shallow pit in the square you currently occupy, turning the square into difficult terrain (including for you). In addition, you also kick up a cloud of grit in a direction of your choice. The cloud extinguishes small, unattended, non-magical fires and helps smother the flames on burning creatures located within the cone; creatures in this cone that are taking Persistent Fire Damage can immediately attempt an additional flat DC 15 check to end the persistent damage."
+ },
+ {
+  "id": "dimensional-disappearance",
+  "name": "Dimensional Disappearance",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "dimensional assault focus spell",
+   "laughing shadow hybrid study"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You take advantage of teleportation to better hide your position. When you cast Dimensional Assault, you're affected by an spell at the end of the teleport. You can choose not to make the Strike that is normally part of *dimensional assault*. If you do make the Strike, your *invisibility* ends after the Strike, as normal for *invisibility*."
+ },
+ {
+  "id": "dire-form",
+  "name": "Dire Form",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "beastkin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your hybrid shape is a hulking beast. While in your hybrid shape, you gain the effects of Enlarge."
+ },
+ {
+  "id": "dire-growth",
+  "name": "Dire Growth",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "primal"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "your animal shape is not Small"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You transform into a primal reflection of your animal shape. If you aren't already in your animal shape from Werecreature Dedication, you Change Shape into it. As long as you stay in animal shape, you have the effects of Enlarge."
+ },
+ {
+  "id": "directed-audience",
+  "name": "Directed Audience",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can shape the area of your composition spells. Whenever you cast a composition spell whose area is an emanation, you can change the spell's area to a cone 10 feet larger, to a maximum of twice the original area. For example, you could modify a composition spell that affects a to affect a , but a could only become a ."
+ },
+ {
+  "id": "directed-channel",
+  "name": "Directed Channel",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can shape the energy you channel in a single direction. When you cast a version of Harm or Heal that has an area, you can make its area a instead of a ."
+ },
+ {
+  "id": "directional-bombs",
+  "name": "Directional Bombs",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can lob bombs with great force and a precise trajectory to angle the splash in a cone that sprays in a single direction, potentially allowing you to avoid allies and splash deeper into enemy lines. When throwing an alchemical bomb with the splash trait, instead of splashing all squares adjacent to the target, you can create a splash in a . You choose the cone's direction, but its first square must be a square in the target's space. --- **Special** If you have the Expanded Splash feat or another ability that increases the radius of splash damage, you can have the splash damage be a ."
+ },
+ {
+  "id": "disarming-assault",
+  "name": "Disarming Assault",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "flourish",
+   "rage"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You attack with enough force to knock the weapon out of your foe's hands. Make a melee Strike; if you hit, you can attempt an Athletics check to Disarm that enemy."
+ },
+ {
+  "id": "disarming-block",
+  "name": "Disarming Block",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bastion Dedication",
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You Shield Block a melee Strike made with a held weapon. --- With deft and practiced movement, you block at an angle to potentially dislodge the weapon. You attempt to Disarm the creature whose attack you blocked of the weapon they attacked you with. You can do so even if you don't have a hand free."
+ },
+ {
+  "id": "disarming-flair",
+  "name": "Disarming Flair",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You knock weapons from the hands of your foes with style. When you Disarm, the action gains the bravado trait."
+ },
+ {
+  "id": "disciples-breath",
+  "name": "Disciple's Breath",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Dragon Disciple Dedication",
+   "dragon breath sorcerer bloodline spell"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You unleash your breath weapon without spending focus. This has the effects of your Dragon Breath sorcerer bloodline spell, though it deals 9d6 damage instead of its usual damage, and you don't have to cast it or spend a Focus Point. You can't use Disciple's Breath again for 1d4 rounds."
+ },
+ {
+  "id": "discordant-voice",
+  "name": "Discordant Voice",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "bard",
+   "sonic"
+  ],
+  "prerequisites": [
+   "courageous anthem"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your Courageous Anthem lets loose a discordant shriek that imbues your allies' attacks with powerful sonic reverberations. While your allies are affected by your *courageous anthem*, their weapon Strikes and unarmed attacks deal an additional 1d6 sonic damage."
+ },
+ {
+  "id": "discreet-inquiry",
+  "name": "Discreet Inquiry",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Deception or Diplomacy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are subtle in your efforts to learn the things you need to know. When Gather Information, you can hide the true subject of your inquiry among other topics of little interest to you without increasing the difficulty of the check or taking more time to Gather Information. Anyone trying to Gather Information to determine if someone else was asking around about the topic in question must exceed your Deception DC or the normal DC to Gather Information about your inquiries, whichever is higher, or else they don't learn of your efforts."
+ },
+ {
+  "id": "disillusionment",
+  "name": "Disillusionment",
+  "level": 1,
+  "category": "bonus",
+  "traits": [],
+  "prerequisites": [
+   "Order of the Rack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Dreams are pointless illusions you seek to quash. If you roll a success on a saving throw against an illusion or dream effect or a Perception check to disbelieve an illusion, you get a critical success instead. If you roll a critical failure on any of those checks, you get a failure instead."
+ },
+ {
+  "id": "dismounting-strike",
+  "name": "Dismounting Strike",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Nidalese Horselord Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are mounted on your horse, and your last action was to Command an Animal to order your horse to Stride at least once. --- You leap from your horse, using the momentum of its movement to deal a devastating blow with your melee weapon. You use the Mount action to dismount your horse but can move to any space within 10 feet of your mount, as long as your horse moved at least 15 feet. You then make a melee Strike. This counts as two attacks when calculating your multiple attack penalty. If this Strike hits, you deal an extra die of weapon damage. If you're at least 14th level, increase this to two extra dice."
+ },
+ {
+  "id": "disorienting-opening",
+  "name": "Disorienting Opening",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Reactive Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You use your foes' openings to expose even greater weaknesses. When you hit a creature as part of a Reactive Strike, that creature becomes off-guard until the start of your next turn."
+ },
+ {
+  "id": "disorienting-venom",
+  "name": "Disorienting Venom",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "anadi"
+  ],
+  "prerequisites": [
+   "Venomous Anadi"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The venom injected by your fangs disorients your foes. A creature damaged by your Anadi Venom must attempt a save against your class or spell DC, whichever is higher, or become off-guard for 1 round."
+ },
+ {
+  "id": "dispelling-slice",
+  "name": "Dispelling Slice",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your sneak attack slices through the threads binding magic to a target. Make a Strike against an off-guard creature. If your Strike deals sneak attack damage, you attempt to counteract a single spell of your choice active on the target. Your counteract rank is equal to half your level (rounded up), and your counteract check modifier is equal to your class DC – 10."
+ },
+ {
+  "id": "dispelling-spellstrike",
+  "name": "Dispelling Spellstrike",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** Your Spellstrike is charged. --- The spell you deliver tries to force out magic affecting your enemy. Make a Spellstrike. If it hits, you also attempt to counteract a single spell (of your choice) active on the target. The counteract rank is half your level rounded up, and the counteract check modifier is the standard modifier for counteracting with a spell (your Intelligence modifier plus your spellcasting proficiency bonus, plus any bonuses or penalties that specifically apply to counteract checks)."
+ },
+ {
+  "id": "disrupt-prey",
+  "name": "Disrupt Prey",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your hunted prey is within your reach, and it uses a manipulate action, uses a move action, or leaves a square during a move action it's using. --- Make a melee Strike against your prey. If the attack is a critical hit, you disrupt the triggering action."
+ },
+ {
+  "id": "disrupt-qi",
+  "name": "Disrupt Qi",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "monk",
+   "void"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You carefully target a creature's pressure points to block its inner life force. Make an unarmed Strike. If it deals damage to a living creature, that creature takes damage and is Enfeebled 1 until the persistent damage ends. If you're 18th level or higher, the persistent void damage increases to 3d6."
+ },
+ {
+  "id": "disrupting-strikes",
+  "name": "Disrupting Strikes",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghost Eater Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You call forth vitality energy from within to help you destroy undead. Your weapon and unarmed Strikes gain the effects of a *disrupting* property rune until the start of your next turn. If you're 14th level or higher, your Strikes instead gain the effects of a *greater disrupting property rune*. The DC for the rune's effect is equal to your class DC or spell DC, whichever is higher."
+ },
+ {
+  "id": "disruptive-blur",
+  "name": "Disruptive Blur",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "way of the drifter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You use cacophonous blasts from your gun or distracting shots from your crossbow to cause momentary diversions, letting you move about the battlefield with impunity. After you make a Strike with a firearm or crossbow, creatures can't take reactions that would be triggered by your movement for the rest of your turn."
+ },
+ {
+  "id": "disruptive-stare",
+  "name": "Disruptive Stare",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "mental",
+   "nagaji",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within 30 feet attempts to Cast a Spell with the concentrate trait. --- Your frigid gaze can turn a foe's blood to ice. The triggering creature must attempt a save against your class DC or spell DC, whichever is higher. It then becomes temporarily immune for 24 hours. --- **Failure** The triggering spell takes a –2 status penalty to its spell attack rolls and DCs. **Critical Failure** The triggering spell is disrupted."
+ },
+ {
+  "id": "dissolutions-clarity",
+  "name": "Dissolution's Clarity",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "wayang"
+  ],
+  "prerequisites": [
+   "focus pool"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** You're in an area of darkness. --- The Dissolution teaches that darkness can bring clarity and focus, serenity and strength—and so you draw on nearby shadows to replenish your magic. You regain 1 Focus Point, up to your usual maximum."
+ },
+ {
+  "id": "distant-archer",
+  "name": "Distant Archer",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "centaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained to harry your foes from great distances, using your swiftness to maintain distance and keen eyesight to stay on target. You reduce the penalty for attacking beyond your first range increment by 1, to a minimum of 0, when using weapons in the bow weapon group."
+ },
+ {
+  "id": "distant-waterbirds-poise",
+  "name": "Distant Waterbird's Poise",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "magus"
+  ],
+  "prerequisites": [
+   "aloof firmament hybrid study",
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You hit a target with a Spellstrike. --- You flow around your foe, using the magic of your attack to carry you away. You Leap, High Jump, or Long Jump, and this movement doesn't trigger reactions from the creature you hit. If you High Jump or Long Jump, you don't have to perform the initial Stride (nor do you fall if you don't Stride 10 feet). The lightness of your steps persists after the jump, granting you the ability to land on or walk on the surface of water or other liquids until the end of your next turn."
+ },
+ {
+  "id": "distracting-bites",
+  "name": "Distracting Bites",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swarmkeeper Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to take advantage of those your swarm has attacked. A creature who has taken damage from your swarm's Bite and Sting is off-guard against the first Strike you make against it in the same turn."
+ },
+ {
+  "id": "distracting-explosion",
+  "name": "Distracting Explosion",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "offensive boost"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach uses a concentrate action. --- Your enemies think they can concentrate on something else while you're nearby? Oh, you'll give them a distraction, all right! Make a melee Strike against the triggering creature with a weapon or unarmed attack that is benefiting from your offensive boost. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike. **Unstable Function** You pull out all the stops to create an explosive distraction. Add the unstable trait to Distracting Explosion. If the attack hits, you disrupt the triggering concentrate action. --- **Special** If your innovation is a minion, it can take this reaction instead of you, even though minions can't normally take reactions or act when it's not their turn. It uses your reaction for the turn to do so."
+ },
+ {
+  "id": "distracting-feint",
+  "name": "Distracting Feint",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "scoundrel racket"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your Feints are far more distracting than normal. While a creature is off-guard by your Feint, it also takes a –2 circumstance penalty to Perception checks and Reflex saves."
+ },
+ {
+  "id": "distracting-performance",
+  "name": "Distracting Performance",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Performance"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your performances are especially distracting, allowing your allies to Sneak away with ease. You create-a-diversion statistic=performance, except you roll a Performance check instead of Deception, and the benefits of successful checks apply to an ally of your choice instead of you. The effects of a success last until the end of that ally's turn, and can end early based on the ally's actions. You don't need to be observing your ally or know where they are, but you need to know they're present to choose them."
+ },
+ {
+  "id": "distracting-shadows",
+  "name": "Distracting Shadows",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have learned to remain hidden by using larger folk as a distraction to avoid drawing attention to yourself. You can use creatures that are at least one size larger than you (usually Medium or larger) as cover for the Hide and Sneak actions, though you still can't use such creatures as cover for other uses, such as the Take Cover action."
+ },
+ {
+  "id": "distracting-shot",
+  "name": "Distracting Shot",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The sheer power of your attacks, or the overwhelming number of them, leaves an enemy flustered. If you critically hit your hunted prey with a ranged weapon, or hit it at least twice on the same turn with a ranged weapon, it's off-guard until the start of your next turn."
+ },
+ {
+  "id": "distracting-toss",
+  "name": "Distracting Toss",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "bravado",
+   "flourish",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You toss one weapon into the air as a distraction as you throw another. Choose a creature within 30 feet and feint traits=bravado against it; you can attempt this Feint even if the target is not within melee range, and if the target becomes off-guard as a result of the Feint, this applies to your thrown weapon attacks for the duration. Regardless of the result, you can then Interact to draw a thrown weapon and make a thrown weapon Strike against the target. If you have an open hand, you then catch the weapon you originally tossed into the air unless you critically failed at your attempt to Feint, in which case it lands on the ground at your feet."
+ },
+ {
+  "id": "dive-of-the-divine",
+  "name": "Dive of the Divine",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine",
+   "sanctified"
+  ],
+  "prerequisites": [
+   "Mortal Herald Dedication",
+   "fly Speed of at least 20 feet"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are at least 20 feet above the ground. --- You dive from the sky, bringing down the might of the divine with you. You Fly straight down, landing safely in the nearest unoccupied space directly below you. When you land, all creatures in a take damage ( save against the higher of your class DC or spell DC). On a failure, the target is pushed 5 feet (or 10 feet on a critical failure). At 20th level, the spirit damage increases to 10d10."
+ },
+ {
+  "id": "diverse-lore",
+  "name": "Diverse Lore",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your wandering studies mean you've heard rumors or theories about almost every topic... though admittedly, your sources aren't always the most reliable. You can take a -2 penalty to your check to Recall Knowledge with Esoteric Lore to Recall Knowledge about any topic, not just the usual topics available for Esoteric Lore. Additionally, when you succeed at your check to Exploit a Vulnerability, compare the result of your Esoteric Lore check to the DC to Recall Knowledge for that creature; if that number would be a success or a critical success, you gain information as if you had succeeded at the Recall Knowledge check."
+ },
+ {
+  "id": "divert-destiny",
+  "name": "Divert Destiny",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** An attack or effect would reduce you to 0 Hit Points or kill you outright. --- You defy the fate before you, calling on wells of mythic vitality to sustain your life and allow you to persevere. You expend 1 Mythic Point and survive the triggering attack or effect, lose the wounded or dying conditions entirely, don't increase your doomed condition, and are conscious and standing with a number of Hit Points equal to 10 + your level, regardless of how many Hit Points you had before."
+ },
+ {
+  "id": "divert-streamflow",
+  "name": "Divert Streamflow",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You're damaged by a melee Strike by a creature in your reach. --- With a brief gesture, you adapt swiftly to an attack like a flowing stream. Attempt an Athletics check to Reposition the creature who dealt the triggering damage. If you're successful, you can Step as a free action."
+ }
+]

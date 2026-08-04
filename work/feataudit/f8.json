@@ -1,0 +1,969 @@
+[
+ {
+  "id": "cutting-heaven-crushing-earth",
+  "name": "Cutting Heaven, Crushing Earth",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spirit Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your skill in combining fist and blade has grown into a seamless art where each attack makes an opponent more vulnerable to the next. As long as you have invested and are wearing a set of handwraps of mighty blows, you also apply their runes to a single weapon you're wielding that can be used with your Overwhelming Combination ability. You gain the following benefits. - When you successfully Strike an opponent with this weapon, it's off-guard to the next Strike you make against it with a fist unarmed attack before the end of your next turn. - When you successfully Strike an opponent with your fist unarmed attack, it's off-guard to the next Strike you make against it with a one-handed, agile, or finesse melee weapon before the end of your next turn."
+ },
+ {
+  "id": "cyclonic-ascent",
+  "name": "Cyclonic Ascent",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "air",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Whorls of wind surround your lower body, forming a cyclone that lifts you into the air. You gain a fly Speed equal to your land Speed or 30 feet, whichever is greater, for 10 minutes. Unlike with a normal fly Speed, you can move upward without treating it as difficult terrain. In addition, you can remain in the air at the end of your turn if you used an air impulse during that turn, even if you didn't use a Fly action that turn. --- **Level (14th)** You can target up to five additional creatures, each of which gains a fly Speed equal to its land Speed or 30 feet, whichever is greater. They don't gain the other benefits."
+ },
+ {
+  "id": "dalangs-ally",
+  "name": "Dalang's Ally",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "occult",
+   "shadow",
+   "wayang"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You move your shadow as a master puppeteer, allowing it to dance around your enemies and serve you in combat. Until the start of your next turn, your shadow darts around with your foes, providing flanking for you against all enemies within your reach. Flanking with your shadow is the same as flanking with an ally and so is subject to effects like all-around vision or the deny advantage class feature."
+ },
+ {
+  "id": "dance-underfoot",
+  "name": "Dance Underfoot",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [
+   "Step Lively"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You dart under the legs of your enemies in combat. You can end a successful Tumble Through action in a Large or larger enemy's space. Also, when using the Step Lively feat, you can Step into the triggering enemy's space. The enemy must have limbs or otherwise leave you enough room for this maneuver, as determined by the GM. For instance, you could share space with a giant or dragon, but not an ooze."
+ },
+ {
+  "id": "dancing-leaf",
+  "name": "Dancing Leaf",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are as light as a leaf whirling in the breeze. When you Leap or succeed at a High Jump or Long Jump, increase the distance you jump by 5 feet. When calculating the damage you take from falling, don't count any distance fallen while you are adjacent to a wall."
+ },
+ {
+  "id": "dangle",
+  "name": "Dangle",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can hang by your tail from any suitable anchor point, such as a tree branch, balcony, or rocky outcropping (subject to the GM's discretion), typically while climbing. While hanging, you have free use of all your other limbs, so you can perform tasks that require both hands, such as firing a bow or swinging a greatsword."
+ },
+ {
+  "id": "dangle-vanara",
+  "name": "Dangle (Vanara)",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "move",
+   "vanara"
+  ],
+  "prerequisites": [
+   "Climbing Tail"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can hang by your tail from any suitable anchor point, such as a tree branch, balcony, or rocky outcropping (subject to the GM's discretion), typically while climbing. While hanging, you have free use of all your other limbs, so you can perform tasks that require both hands, such as firing a bow or swinging a bo staff. You can Release your tail to drop down, and you cease hanging if you take an action with the move trait."
+ },
+ {
+  "id": "danse-macabre",
+  "name": "Danse Macabre",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "flourish",
+   "manipulate",
+   "visual"
+  ],
+  "prerequisites": [
+   "Necrologist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes **Requirements** Your horde is raised. --- Your horde can drag unwilling victims along with it as it shambles forward. Your horde Strides up to its Speed and can move through the spaces of Large and smaller creatures, but it must end its movement in an unoccupied space. Each creature whose space it moves through is subjected to the horde's Mobbing Assault, attempting a basic Reflex save as usual. A creature who fails the saving throw is also Repositioned to an unoccupied square of your choice adjacent to the horde's final position. You can't move the creature into or through obstacles."
+ },
+ {
+  "id": "daring-flourish",
+  "name": "Daring Flourish",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Daring Act"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You make quick use of an opening from your daring stunts. At the end of a successful Daring Act, you can make a melee Strike against the target or attempt to Disarm the target. The target is off-guard against the Strike you make during Daring Act as well as the next melee attack you attempt against it before the end of your turn."
+ },
+ {
+  "id": "darting-monkey",
+  "name": "Darting Monkey",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "vanara"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a heightened awareness in combat, and your darting strikes prevent your foes from distracting you or breaking your focus. When you hit a creature of your level or lower while that creature is flanking you, flanking doesn't make you off-guard to that creature. This benefit lasts until the start of your next turn or until the creature moves, whichever comes first. The creature can still help its other allies flank."
+ },
+ {
+  "id": "dashing-pickup",
+  "name": "Dashing Pickup",
+  "level": 6,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Cavalier Dedication",
+   "expert in Acrobatics or Athletics"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You Command an Animal to order your mount to Stride (or to Burrow, Climb, Fly, or Swim if it has the corresponding movement type). At any point during this movement, it must move adjacent to you. As it passes you, you Mount your mount. You can increase the number of actions you use with Dashing Pickup to 2 to make your mount Stride twice, or to 3 to make your mount Stride four times; you must use enough actions to ensure your mount is able to move adjacent to you at some point during this movement, and you cannot use this activity if it is not possible for your mount to do so."
+ },
+ {
+  "id": "dashing-strike",
+  "name": "Dashing Strike",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are adjacent to an enemy. --- Springing away from one foe, you Strike at another. Stride up to your Speed, but you must end that movement within melee reach of a different enemy. At the end of your movement, make a melee Strike against an enemy now within reach. You can use Dashing Strike while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "dastardly-dash",
+  "name": "Dastardly Dash",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You dash past an opponent, confounding them with underhanded tactics. Stride up to half your speed. You can attempt a Trip or a Dirty Trick (if you have that action) against one opponent you pass within range of at any point during your movement."
+ },
+ {
+  "id": "daunting-spell",
+  "name": "Daunting Spell",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mythic",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Heroic Scion Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your enemies feel the inevitability of defeat once they feel the potency of your magic. If your next action is to Cast a Spell that allows a saving throw, your spell gains the emotion, fear, and mental traits. The spell gains the following success and failure effects in addition to any other effects it would normally have. If the target is your nemesis or an ally of your nemesis, use mythic proficiency to determine your spell's attack bonus and save DC; if the spell has multiple targets, all targets must be your nemesis or allied with your nemesis for you to use mythic proficiency. --- **Critical Success** The target is unaffected by the daunting spell. **Success** The target is Frightened 1. **Failure** The target is Frightened 2 and Stupefied 1 for as long as they remain frightened. If the daunting spell has a duration, the affected creature can't reduce their frightened condition from this effect below 1 until the spell's duration ends. **Critical Failure** As failure, but Frightened 3 and Stupefied 2."
+ },
+ {
+  "id": "daywalker",
+  "name": "Daywalker",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "dhampir"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether through painstaking exposure, devoted prayer, or simple luck, you've found a greater affinity for life through the sun's light. When in an area of direct natural sunlight, your void healing is suppressed, meaning you are healed by vitality healing effects and harmed by void energy."
+ },
+ {
+  "id": "daywalker-vampire",
+  "name": "Daywalker (Vampire)",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine"
+  ],
+  "prerequisites": [
+   "Vampire Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through a profane pledge or a bloodline quirk, you can tolerate the sun's light. You gain the Advanced Undead Benefits and can't be destroyed by sunlight. This doesn't prevent you from becoming slowed by exposure to the sun."
+ },
+ {
+  "id": "dazing-blow",
+  "name": "Dazing Blow",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a creature grabbed. --- You pummel a held foe, hoping to stagger them. Make a melee Strike against a creature you have grabbed. The weapon damage from this Strike is bludgeoning damage. If the Strike hits, the creature must attempt a save against your class DC; this is an incapacitation effect. --- **Critical Success** The creature is unaffected. **Success** The creature is Stunned 1. **Failure** The creature is Stunned 2. **Critical Failure** The creature is Stunned 3."
+ },
+ {
+  "id": "dazzling-dragonet-disappearance",
+  "name": "Dazzling Dragonet Disappearance",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "dragonet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An adjacent enemy hits you with an attack. --- A brilliant sheen on your scales flashes when you're hit, then you're nowhere to be found. The triggering enemy becomes dazzled for 1 round, and you become affected by a 4th-rank spell."
+ },
+ {
+  "id": "dead-reckoning",
+  "name": "Dead Reckoning",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "skill"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication",
+   "trained in Survival"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You've trained yourself to maintain a strong sense of direction at all times, even when you can't use a compass or see the sky above. You immediately intuit which direction is north (assuming the concept of north exists at your current location)."
+ },
+ {
+  "id": "deadeye",
+  "name": "Deadeye",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You relax your eyes, taking in the smallest movements of objects, stirring of grass and leaves, and other signs of the presence of hidden things, granting you the ability to locate invisible creatures. Until the start of your next turn, you can see invisible creatures and objects as silhouettes defined by the movement of air, slight depressions in the ground, and other tells that less-keen eyes would overlook, which makes them merely concealed from you."
+ },
+ {
+  "id": "deadly-aspect",
+  "name": "Deadly Aspect",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dragonblood"
+  ],
+  "prerequisites": [
+   "Draconic Aspect"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have honed the unarmed attack your draconic heritage has granted you to a lethal degree. The unarmed attack you gained from Draconic Aspect gains the deadly d8 trait."
+ },
+ {
+  "id": "deadly-butterfly",
+  "name": "Deadly Butterfly",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Butterfly Blade Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain access to the butterfly sword's critical specialization effect. If you already had access to the critical specialization effect or you gain the effect at a later time, you also gain the critical specialization effect for knives when you critically hit with a butterfly sword. You can benefit from only one critical specialization effect at a time."
+ },
+ {
+  "id": "deadly-casework",
+  "name": "Deadly Casework",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "text": "Deadly Casework Source High Seas pg. 65 PFS Note Planning assassinations is anathema to the Pathfinder Society. Prerequisites member of the Red Mantis assassins Access member of the Red Mantis assassins You treat a well-planned assassination with the diligence that you would bring to any investigation. You can Pursue a Lead and open an investigation regarding a target you want to assassinate. This investigation doesn’t count against the number of active investigations you can have at a time, but you can only have one assassination investigation. Your Skill Stratagem bonus increases by 1 when investigating details about your assassination target."
+ },
+ {
+  "id": "deadly-grace",
+  "name": "Deadly Grace",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your graceful attacks are especially powerful. When you score a critical hit with an agile or finesse melee weapon that has the deadly trait, you double the number of dice from that trait. When you wield an agile or finesse melee weapon that doesn't have the deadly trait, it gains the deadly d8 trait instead."
+ },
+ {
+  "id": "deadly-mutation",
+  "name": "Deadly Mutation",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ostilli Host Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The dart fired by your ostilli is more dangerous. The damage dice of your Spit Ambient Magic increase to d8s, and when a target critically fails its save against the ability, it also takes 1d6 persistent bleed damage. If you dealt a type of energy damage with Spit Ambient Magic (such as when dealing fire damage with Versatile Mutation), the persistent damage is damage of that type instead of bleed."
+ },
+ {
+  "id": "deadly-poison-weapon",
+  "name": "Deadly Poison Weapon",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "Improved Poison Weapon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your poisons are devastatingly potent. When you apply a simple poison with Poison Weapon, the poison deals 4d4 damage instead of 1d4 poison damage. When you apply an injury poison to your weapon, the DC to resist that poison increases by 2, to a maximum of your class DC."
+ },
+ {
+  "id": "deadly-simplicity",
+  "name": "Deadly Simplicity",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "deity with a simple or unarmed attack favored weapon",
+   "trained with your deity's favored weapon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you are wielding your deity's favored weapon, increase the damage die size of that weapon by one step. If your deity's favored weapon is an unarmed attack (such as a fist, if you worship Irori) and its damage die is smaller than d6, instead increase its damage die size to d6."
+ },
+ {
+  "id": "deadly-strikes",
+  "name": "Deadly Strikes",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have honed your body to attack with lethal focus. Your unarmed attacks gain the deadly d10 trait, or you increase their deadly trait to d10 if the unarmed attack is already deadly with a smaller die size."
+ },
+ {
+  "id": "death-from-above-eternal-legend",
+  "name": "Death from Above (Eternal Legend)",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are adjacent to a climbable surface at least 10 feet tall. --- Seemingly to defy gravity, you use a nearby vertical surface to propel yourself upward and then strike downward like the driving rain. Stride up to half your Speed upward on the required surface; if you have a climb Speed, you may use your full climb Speed instead. The surface does not need to span the full height of your Stride. You can then either make a ranged Strike at a target within your weapon's first range increment and land in the space you began (or an adjacent space) without taking falling damage, or you can land in a space adjacent to a creature within 10 feet of the required surface without taking falling damage and make a melee Strike against that creature. Either Strike deals an extra two dice of weapon damage. In addition, the target dealt damage by your Strike must succeed at a saving throw against your class DC or become Stunned 1."
+ },
+ {
+  "id": "death-rattle",
+  "name": "Death Rattle",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "magical"
+  ],
+  "prerequisites": [
+   "Necrologist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your horde is raised. --- When the time comes for your horde to be returned to its temporary rest, its departure carries those nearby closer to death. Dismiss your raised horde, which draws life energy toward it as it crumbles to the ground and fades away. Each living creature within your horde's space or in a around it must attempt a saving throw against your spell DC or become Drained 1 (Drained 2 on a critical failure)."
+ },
+ {
+  "id": "deathguard",
+  "name": "Deathguard",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Necrologist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The twisting rotted limbs, clattering bones, or swirling ectoplasm of your horde can hide you from others' vision. You and your allies can occupy the same space as your horde, becoming concealed to all creatures when you do so."
+ },
+ {
+  "id": "deaths-door",
+  "name": "Death's Door",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** You take damage that would reduce you to 0 Hit Points. --- You continue to fight when others would fall. Just before taking the triggering damage, you gain temporary Hit Points equal to twice your level. If you have Hit Points remaining after gaining these temporary Hit Points, you aren't knocked unconscious, nor do you suffer the other effects of being reduced to 0 Hit Points. Any temporary Hit Points that remain after applying the damage last for up to 4 rounds."
+ },
+ {
+  "id": "debilitating-bomb",
+  "name": "Debilitating Bomb",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can add a crystalline additive to an alchemical bomb to have it undermine your enemy. Choose dazzled, deafened, off-guard, or a –5-foot status penalty to Speeds. If the attack with the bomb hits, in addition to the bomb's normal effects, the target must succeed at a saving throw or take that effect until the start of your next turn. Use your class DC for this saving throw, even if someone else throws the bomb."
+ },
+ {
+  "id": "debilitating-breath",
+  "name": "Debilitating Breath",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "dragonblood"
+  ],
+  "prerequisites": [
+   "Breath of the Dragon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your breath causes lasting hindrance to those it harms. Creatures who fail their saves against your Breath of the Dragon gain one of the following conditions, based on the damage type of your breath: Clumsy 1 (electricity, cold, fire, or sonic damage), Enfeebled 1 (acid, physical, or poison damage), or Stupefied 1 (force, mental, spirit, vitality, or void damage). The condition lasts until the end of your next turn."
+ },
+ {
+  "id": "debilitating-dichotomy",
+  "name": "Debilitating Dichotomy",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "cursebound",
+   "divine",
+   "mental",
+   "oracle"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You reveal a glimpse of the impossible conflicts between the divine anathema behind your curse, forcing you to reckon with another's conflicts as well. You and one creature within 30 feet each take damage with a save, and the target is Stunned 1 if it critically fails its save. You get a degree of success one better than you rolled for your saving throw. At 10th level, and every 2 levels thereafter, the damage increases by 3d6."
+ },
+ {
+  "id": "debilitating-shot",
+  "name": "Debilitating Shot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Aiming for a weak point, you impede your foe with a precise shot. Make a ranged weapon Strike. If it hits and deals damage, the target is Slowed 1 until the end of its next turn."
+ },
+ {
+  "id": "deceptive-deduction",
+  "name": "Deceptive Deduction",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Twilight Talon Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you can see uses Recall Knowledge. --- You've had to take on many roles while working undercover, so you're practiced at following the example of those around you to pretend expertise in a variety of fields. You learn what skill the creature was using to Recall Knowledge and whether that creature is trained in the skill. If it's trained, you can use Deception to Recall Knowledge as if it were that skill for the next minute."
+ },
+ {
+  "id": "deceptive-worship",
+  "name": "Deceptive Worship",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Members of your cult frequently pass themselves off as worshippers of other religions. You can use Occultism instead of Deception to Impersonate a typical worshipper of another faith or to Lie specifically to claim you are a member of the faith you are Impersonating. You still need to use the Deception skill to Impersonate a specific worshipper or to perform other deceptive actions, such as attempting to Lie about any other matter."
+ },
+ {
+  "id": "decisive-swimmer",
+  "name": "Decisive Swimmer",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "athamaru",
+   "locathah"
+  ],
+  "prerequisites": [],
+  "text": "Decisive Swimmer Source High Seas pg. 18 Prerequisites Trained in Athletics You are a talented athlete trained to compete in swimming competitions, and would sometimes be asked to help your community settle disputes with others by participating in swimming races. When settling disputes with other aquatic or amphibious people, you can use Athletics instead of Diplomacy to Request."
+ },
+ {
+  "id": "decree-of-execution",
+  "name": "Decree of Execution",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "death",
+   "incapacitation",
+   "mythic",
+   "spirit"
+  ],
+  "prerequisites": [
+   "Prophesied Monarch Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You proclaim that a foe has violated the sanctity of your realm and must die. Speak your decree; a creature you designate within 60 feet who can hear your decree must attempt a saving throw against your class DC or spell DC, whichever is higher. Once targeted, the creature is temporarily immune for 1 year. Whether the target perishes or is marked for death depends on their level and the result of their saving throw. **Critical Success** The target is unaffected. **Success** If the target is 14th level or lower, it drops to 1 Hit point. If the target is 15th level or higher, it takes 50 damage. **Failure** If the target is 14th level or lower, it dies instantly. If the target is 15th level or higher, it takes 50 damage; if this damage brings it to 0 Hit Points, it dies instantly. Otherwise, it gains weakness 20 to all damage for 1 minute. **Critical Failure** As failure, but a target who survives the damage is Stunned 1 for 1 minute. When you speak a Decree of Execution, you can spend a Mythic Point as part of the action to remove the incapacitation trait."
+ },
+ {
+  "id": "decry-thief",
+  "name": "Decry Thief",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Zephyr Guard Dedication",
+   "trained in Intimidation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you attempt to Demoralize, you can make it harder for the target to flee, in place of the action's normal effects. --- **Critical Success** For 1 round, the target takes a –10-foot status penalty to Speed and a -4 status penalty to Stealth. **Success** For 1 round, the target takes a –5-foot status penalty to Speed and a -2 status penalty to Stealth."
+ },
+ {
+  "id": "deduce-habits",
+  "name": "Deduce Habits",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "investigator",
+   "prediction"
+  ],
+  "prerequisites": [],
+  "text": "Deduce Habits Source High Seas pg. 65 Prerequisites Plot the Future Access member of the Red Mantis assassins When you use Plot the Future, you can instead contemplate a person that you’ve gotten to observe within 30 feet for at least 1 minute. You deduce places they will habitually be in the next week and what time of day they’ll be there. For each location, you deduce the likelihood that they will be two of the following: alone, unarmed, or unaware. You also gain a piece of advice for each location suggesting a course of action you or your allies could take that might make it more or less likely for them to be in the chosen states. The GM determines the locations the person will visit and when, as well as the likelihood they’ll be alone, unarmed, or unaware."
+ },
+ {
+  "id": "deep-roots",
+  "name": "Deep Roots",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mind-control spells send burrowing mental roots that tear at your target's mind when they're removed or run their course. When you Cast a Spell that imposes the controlled condition or otherwise forces the target to take certain actions (such as Command), you can choose one target that critically failed its save. When that target finishes fulfilling any commands issued by your spell, or when the spell is dispelled or counteracted, the target takes 1d6 damage per rank of the spell."
+ },
+ {
+  "id": "deeper-dabbler",
+  "name": "Deeper Dabbler",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Talisman Dabbler Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With some streamlining to your process and a deeper collection of talisman materials, you make a greater number of talismans every day. You can create two additional talismans during your daily preparations. **Special** You can select this feat a second time if you are 14th level or higher."
+ },
+ {
+  "id": "defend-mount",
+  "name": "Defend Mount",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cavalier Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy makes a Strike or spell attack against your mount while you're riding it. --- You interpose yourself between an attacker and your mount, defending your mount from harm. Use your own defense against the triggering attack instead your mount's defense. If the triggering attack hits, you take the effects of the attack instead of your mount."
+ },
+ {
+  "id": "defend-our-union",
+  "name": "Defend Our Union",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Beast Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You and your companion are within 15 feet of each other, and a foe successfully Strikes your united companion. --- You can protect your companion from danger with a well-timed attack. You can immediately Stride toward the triggering enemy and can make a Strike against them if they would be in the first range increment of your ranged weapon or within your melee reach. If this Strike is successful, reduce the damage to your companion by your level, or twice your level if the Strike was a critical success."
+ },
+ {
+  "id": "defensive-advance",
+  "name": "Defensive Advance",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion",
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With the protection of your shield, you dive into battle! You Raise your Shield and Stride. If you end your movement within melee reach of at least one enemy, you can make a melee Strike against that enemy. You can use Defensive Advance while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "defensive-dismissal",
+  "name": "Defensive Dismissal",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you're aware of critically succeeds on a Strike against you. **Requirements** You're under a polymorph effect that you can Dismiss. --- You change your form as a means of evading a potentially fatal blow. You Dismiss the polymorph effect you're under, and the result of the triggering Strike becomes a success instead of a critical success. If you would no longer fit in your space as a result of returning to your normal form, this action fails and you don't Dismiss the polymorph effect."
+ },
+ {
+  "id": "defensive-growth",
+  "name": "Defensive Growth",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You're the target of a physical attack. --- You grow a shield of woven flowers and branches, then Raise that Shield to defend yourself from the triggering attack. If you would take damage from the attack, you immediately Shield Block. This is a Wooden Shield (Hardness 3, HP 12, BT 6). The shield remains in your possession for a number of rounds equal to your level, or until it's destroyed. **Awakening** The shield becomes stronger. It has Hardness 5, HP 40, BT 20. **Awakening** The shield takes on a mind of its own and lashes out vengefully when destroyed. When the shield is destroyed, is explodes, dealing 4d6 damage to your attacker, with a save."
+ },
+ {
+  "id": "defensive-needles",
+  "name": "Defensive Needles",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "leshy"
+  ],
+  "prerequisites": [
+   "Cactus Leshy or Pine Leshy heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body is covered in sharp needles or spines which you can use to defend yourself. Each time you become grabbed by a creature or an adjacent creature hits you with an unarmed attack, you twist and thrash your body around, dealing 2 piercing damage to that creature. This damage increases to 3 at 9th level, 4 at 13th level, and 5 at 17th level. Leveled damage"
+ },
+ {
+  "id": "defensive-roll",
+  "name": "Defensive Roll",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** A physical attack would reduce you to 0 Hit Points. --- Dropping into a roll to disperse the force of the blow, you can partially evade a lethal attack and stay conscious. You take half damage from the triggering attack"
+ },
+ {
+  "id": "defensive-swap",
+  "name": "Defensive Swap",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You or an adjacent willing ally are the target of an attack. --- You and your allies work together selflessly to protect each other from harm. You and the required ally immediately swap positions with each other, and whichever of you was not the target of the triggering attack becomes the target instead. --- *PFS Note:* This feat can be used by prone PCs, but not PCs who are grabbed, immobilized, or otherwise unable to move of their own volition."
+ },
+ {
+  "id": "defiance-unto-death",
+  "name": "Defiance Unto Death",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Spiresworn elf --- You loathe the alghollthus and their mind magic, and you've been trained to be willing to die rather than give into mental manipulation. If you would start your turn confused, controlled, or fleeing due to a failed Will save, you can attempt a Will save against the same DC; on a success, you become paralyzed until your next turn, rather than act against your will."
+ },
+ {
+  "id": "defiant-banner",
+  "name": "Defiant Banner",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "brandish",
+   "commander",
+   "flourish",
+   "manipulate",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You vigorously wave your banner to remind yourself and your allies that you can and must endure. You and all allies within the aura of your commander's banner when you use this action gain resistance to bludgeoning, piercing, and slashing damage equal to your Intelligence modifier until the start of your next turn."
+ },
+ {
+  "id": "define-report",
+  "name": "Define \"Report\"",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Venture-Gossip Dedication",
+   "master in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "Look, getting caught in a lie is a normal part of venture-gossip life. Sometimes you have to give a sheepish smile and apologize for what you've done. When you fail a Deception check, reroll with your Diplomacy modifier. On a success, there are no hard feelings and the other person's attitude condition doesn't worsen. On a critical success, you can attempt the Deception again with no consequences."
+ },
+ {
+  "id": "deflecting-pulse",
+  "name": "Deflecting Pulse",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ostilli Host Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ostilli can use its stored magic to protect you from other magic, granting you the Turn Aside Ambient Magic action."
+ },
+ {
+  "id": "deflecting-wave",
+  "name": "Deflecting Wave",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would take acid, bludgeoning, fire, or slashing damage from an enemy's attack, spell, or other hostile effect. **Requirements** You're aware of the hostile effect, and you aren't off-guard against it. --- A cascade of water blunts or disperses the incoming attack. You gain resistance to damage from the triggering effect equal to your level if it's bludgeoning or slashing, or double your level if it's acid or fire damage. If the effect deals more than one applicable type of damage, apply the highest resistance, but apply it only once."
+ },
+ {
+  "id": "defy-death",
+  "name": "Defy Death",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [
+   "Orc Ferocity"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're exceptionally difficult to kill. The DC of your recovery checks is equal to 9 + your dying value, or 8 + your dying value if you have the Toughness general feat. In addition, whenever someone returns you to life using magic that would normally leave you debilitated for a week (such as Raise Dead or the resurrect ritual), you don't suffer that condition."
+ },
+ {
+  "id": "defy-fey",
+  "name": "Defy Fey",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "gunslinger",
+   "investigator",
+   "ranger"
+  ],
+  "prerequisites": [
+   "Greenwatch Initiate"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are keen to the wiles of the fey and can usually shake off their magic. Whenever you fail, but don't critically fail, a save against a spell with a duration of at least 1 round cast by a fey creature, you can attempt a second save against the original DC at the start of your next turn to end any lingering effects the spell might have. This can end persistent damage caused by a spell but can't reverse any effects that have been resolved already (such as damage dealt when the spell was cast)."
+ },
+ {
+  "id": "defy-sorrow",
+  "name": "Defy Sorrow",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Rivethun Invoker Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You're dealt mental damage or spirit damage or you fail or critically fail a saving throw against a mental effect. --- You draw on this spiritual pain to push your body to greater heights. You gain the quickened condition until the end of your next turn. You can use the extra action only to Step or Stride."
+ }
+]

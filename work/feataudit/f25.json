@@ -1,0 +1,976 @@
+[
+ {
+  "id": "mystery-conduit",
+  "name": "Mystery Conduit",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "oracle",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "The power of your mystery enables you access to myriad magic. If your next action is to Cast a Spell of 5th rank or lower that has no duration, you do not expend a spell slot."
+ },
+ {
+  "id": "myth-hunter",
+  "name": "Myth Hunter",
+  "level": 1,
+  "category": "skill",
+  "traits": [],
+  "prerequisites": [
+   "trained in Hero-God Lore or Legendary Beast Lore"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You successfully Recall Knowledge to identify a creature that has the mythic trait. **Frequency** once per 10 minutes --- Your ancestors confronted and bested mythic beasts of Iblydan antiquity. Through a combination of hearing these tales and channeling a hint of those warriors' mythic power, you've developed a knack for bypassing a mythic creature's fabled defenses. The next time you successfully Strike the triggering creature, your Strike treats its mythic resistance as 2 lower. You treat its resistance as 4 lower if your Hero-God Lore or Legendary Beast Lore proficiency rank is expert, 6 lower if your rank is master, and 8 lower if your rank is legendary. If your Strike would already ignore mythic resistance (because you are a mythic character or wield a mythic weapon), your next successful Strike against the creature instead deals an additional 1d6 precision damage. This additional damage increases to 1d8 if your Hero-God Lore or Legendary Beast Lore proficiency rank is expert, 1d10 if your rank is master, or 1d12 if your rank is legendary."
+ },
+ {
+  "id": "myth-of-quick-thinking",
+  "name": "Myth of Quick-Thinking",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Godling Dedication",
+   "hero-god accomplishment"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your myth includes amusing parables of clever plans and sly maneuvers, often applied to small things in life such as disguising yourself as a sheep to ambush a wolf or tricking a snake into shedding its skin. You can Lie as a two-action activity, regardless of how elaborate your tale. When you attempt a Deception check, you can spend a Mythic Point to do so at mythic proficiency. If you succeed at a Deception check while in the presence of your hierophant, any of your worshippers that you can see automatically succeed at an attempt to Impersonate or Lie in such a way that supports your story (for example, the target of your Lie claiming you are a teacher sees all of your worshippers as students). You also lay claim to one of the following domains of your choice: confidence, secrecy, or trickery."
+ },
+ {
+  "id": "mythic-casting",
+  "name": "Mythic Casting",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "mythic",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can infuse mythic power directly into your spells to make them exceptionally potent. Spend a Mythic Point; if the next action you use is to Cast a Spell, use mythic proficiency to determine your spell attack rolls and save DC for that spell. --- *Note:* PFS 6-09 allows for the action you use next to be a kineticist impulse, using your mythic proficiency instead of impulse attack rolls and save DC."
+ },
+ {
+  "id": "mythic-containment",
+  "name": "Mythic Containment",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Artisan's Calling"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You infuse a receptacle, such as a normal bag, sack, or box, with mythic power, transforming it into a prison into which you can command a creature. Spend a Mythic Point, and attempt a , , or check at mythic proficiency against the Will DC of a creature within 30 feet to trick, convince, or command it into entering the receptacle. The receptacle can hold a creature of any size, and the creature enters the receptacle if your check is successful. The creature is grabbed, is Slowed 1, and has to hold its breath or start suffocating. A creature trapped in the receptacle can attempt to Escape; use the skill you used to lure the creature into the bag for the DC, and calculate the DC using mythic proficiency. The trapped creature is automatically freed after 1 minute, but you can spend an additional Mythic Point as a free action to prolong the duration of the containment for an additional minute when it would expire."
+ },
+ {
+  "id": "mythic-counter",
+  "name": "Mythic Counter",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Wildspell Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can overwhelm the magical designs of others with sheer magic power. When you attempt a counteract check against a spell, you can spend a Mythic Point to attempt the check at mythic proficiency. If the target of the counteract check is within your Spellsurge aura, critical failures on this check are treated as failures."
+ },
+ {
+  "id": "mythic-counterspell",
+  "name": "Mythic Counterspell",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Quick Recognition",
+   "ability to cast spells from spell slots",
+   "Sage's Calling"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature Casts a Spell, you've successfully Recognized the Spell, and you have either a prepared spell or an unexpended spell slot of equal or greater rank. --- You quench and counter your enemy's magic with potent spellcraft amplified and enhanced by carefully deployed mythic power. Spend a Mythic Point, and expend a prepared spell or unexpended spell slot of the same rank as the triggering spell or higher. You lose your spell slot as if you'd cast the triggering spell. You then attempt to counteract the triggering spell using mythic proficiency to determine your spellcasting proficiency bonus for the counteract check."
+ },
+ {
+  "id": "mythic-refocus",
+  "name": "Mythic Refocus",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "You have a focus pool."
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "As your ability to control your mythic power grows, you learn to channel it to restore and reinforce other forms of power at your command. Spend a Mythic Point; you immediately recover all your Focus Points, filling your focus pool to its current maximum."
+ },
+ {
+  "id": "mythic-strike",
+  "name": "Mythic Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You infuse your weapon or unarmed attack with mythic power before lashing out at an enemy with devastating force. Spend a Mythic Point and then Strike a creature with a weapon you're wielding or an unarmed attack you have available. This Strike is made at mythic proficiency, and the weapon or unarmed attack counts as a mythic weapon for the purposes of overcoming mythic resistance or mythic immunity."
+ },
+ {
+  "id": "mythic-weapon-specialization",
+  "name": "Mythic Weapon Specialization",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication",
+   "greater weapon specialization"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you fully embrace your Calling, your blows hit with incredible force that can fell even the mightiest of creatures. When you make a Strike with mythic proficiency, your additional damage from weapon specialization increases to 12."
+ },
+ {
+  "id": "narrative-conduit",
+  "name": "Narrative Conduit",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "linguistic",
+   "magical"
+  ],
+  "prerequisites": [
+   "Folklorist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You act as a conduit for your companions just as your stories are a conduit between teller and listener. When you Spin a Tale and the hero of your tale Casts a Spell against the villain, you warp the world, allowing the hero to calculate range and cover to the villain from your space instead of their own if they prefer. The hero must choose to calculate both range and cover from the same space; they can't use one space for range and the other for cover."
+ },
+ {
+  "id": "native-waters",
+  "name": "Native Waters",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "undine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You were born with or obtained a special connection to either fresh water or salt water. Once made, this decision can't be changed. Whenever you take your full rest in a natural body of water of the type corresponding to your connection, you recover additional Hit Points equal to your level, and if you have the doomed or fatigued conditions, you reduce them by 2 instead of 1."
+ },
+ {
+  "id": "natural-conduit",
+  "name": "Natural Conduit",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "ranger",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "warden spells"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have line of effect to your animal companion or another friendly animal within 60 feet. --- You can use an animal as a conduit for your magic. If the next action you use is to Cast a Spell that has a range, the spell uses the animal as its origin point."
+ },
+ {
+  "id": "natural-orienteering",
+  "name": "Natural Orienteering",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "minotaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "There are few twisting paths that can disorient you. When you roll a success on a Survival check to Sense Direction or Track, you get a critical success instead."
+ },
+ {
+  "id": "nature-prowler",
+  "name": "Nature Prowler",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you begin your turn hidden or unnoticed by your hunted prey, that creature is off-guard to you until the end of your turn. If you're in natural surroundings, you can Avoid Notice and Sneak at full speed."
+ },
+ {
+  "id": "natures-precision",
+  "name": "Nature's Precision",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication",
+   "animal companion with an agile or finesse unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your companions pick at an enemy's weak points. When your companion strikes a off-guard creature with an agile or finesse unarmed attack, it deals an additional 1d4 precision damage (2d4 if the animal companion is specialized). If the companion already deals precision damage, combine the precision damage."
+ },
+ {
+  "id": "necromantic-tenacity",
+  "name": "Necromantic Tenacity",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Necromantic Resistance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your training against necromantic effects allows you to escape the worst of their touch. If you roll a success on a saving throw against a necromancy effect, you get a critical success instead; if you roll a critical failure on such a save, you get a failure instead."
+ },
+ {
+  "id": "necrotic-infusion",
+  "name": "Necrotic Infusion",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate",
+   "metamagic",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Necrotic Infusion Source Core Rulebook pg. 123 Prerequisites harmful font; evil alignment You pour negative energy into your undead subject to empower its attacks. If the next action you use is to cast harm to restore Hit Points to a single undead creature, the target then deals an additional 1d6 negative damage with its melee weapons and unarmed attacks until the end of its next turn. If the harm spell is at least 5th level, this damage increases to 2d6, and if the harm spell is at least 8th level, the damage increases to 3d6."
+ },
+ {
+  "id": "needle-in-the-gods-eyes",
+  "name": "Needle In The God's Eyes",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With sinews of bronze and thews of iron, you leap to the heavens, piercing the arrogant eyes of the gods. Leap up to your total Speed, either horizontally or vertically, and Strike twice at any point or points during the Leap. Each attack counts toward your multiple attack penalty, but don't increase your penalty until you have made both attacks."
+ },
+ {
+  "id": "negate-damage",
+  "name": "Negate Damage",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "armor innovation"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would take damage. --- Your armor innovation activates various devices you prepared ahead of time, and you use one of them to reduce the damage you would take by 15. **Unstable Function** You activate all the precautions at once, violently repelling the incoming attack to blunt its force. Add the unstable trait to Negate Damage and reduce the damage you would take by 50."
+ },
+ {
+  "id": "never-tire",
+  "name": "Never Tire",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Celebrity Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would gain the fatigued condition. **Requirements** You are observed by at least three creatures who aren't enemies. --- As long as you have an audience, you can continue to perform even when you are on the brink of collapse. Indeed, you must—you have an obligation to your fans! You delay the effects of the fatigued condition for 1 minute or until you are no longer observed by at least three creatures who aren't enemies, whichever comes first. If the fatigued condition has a duration, the duration begins to elapse only after the delay. You can't further delay or prevent the fatigued condition after this ability ends."
+ },
+ {
+  "id": "nightwave-springing-reload",
+  "name": "Nightwave Springing Reload",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Training with the crew of the Nightwave has taught you their technique for reloading while leaping to board another ship. You Leap and then Interact to reload, or Interact to reload and then Leap. You can perform this ability as a 2-action activity to use your Leap to High Jump or Long Jump without needing to Stride at least 10 feet first."
+ },
+ {
+  "id": "nimble-reprisal",
+  "name": "Nimble Reprisal",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "justice cause"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use Retributive Strike at greater distance. You can use a ranged weapon to make a ranged Strike instead of a melee Strike for Retributive Strike. The enemy needs to be in range, but not in reach, and it must still be in your champion's aura. You can also make melee Strikes against enemies a bit farther away. If the enemy that triggered your reaction is outside your reach but is within 5 feet of your reach, as part of your reaction you can Step to put the enemy in your reach before making a melee Retributive Strike."
+ },
+ {
+  "id": "nimble-shield-hand",
+  "name": "Nimble Shield Hand",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bastion Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are so used to wielding a shield that you can do so even while using the hand that's holding it for other tasks that require the dexterity of a hand. The hand you use to wield a shield counts as a free hand for the purposes of the Interact action. You can also hold another object in this hand (but you still can't use it to wield a weapon). This benefit doesn't apply to tower shields, which are still too cumbersome."
+ },
+ {
+  "id": "nimble-strike",
+  "name": "Nimble Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're cunning enough to find an opening in an opponent's attack. When you use your Nimble Dodge reaction, you can make a melee Strike against the triggering creature. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike. If you use the Nimble Roll feat, you can make this Strike at any point during your roll."
+ },
+ {
+  "id": "no",
+  "name": "No!!!",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A non-minion ally within 60 feet is reduced to 0 Hit Points. --- The shock of seeing your ally near death breaks whatever limits exist in your mind, sending your power spilling forth. If your psyche is currently unleashed, you can immediately use a psyche action that takes 1 action or less to use. If your psyche is not currently unleashed, you Unleash your Psyche, which remains unleashed until the end of your next turn. You can ignore Unleash Psyche's requirement of needing to have Cast a Spell on your previous turn, but you still can't Unleash your Psyche if you're stupefied or for 2 rounds after your psyche subsides."
+ },
+ {
+  "id": "no-escape",
+  "name": "No Escape",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy within reach attempts to move away from you. --- You keep pace with a retreating foe. Stride up to your Speed, following the enemy and keeping it in reach throughout its movement until it stops moving or you've moved your full Speed. You can use No Escape to Burrow, Climb, Fly, or Swim instead of Stride if you have the corresponding movement type."
+ },
+ {
+  "id": "no-evidence",
+  "name": "No Evidence",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [
+   "expert in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You leave little sign when attempting to remain unseen. When you Avoid Notice, you also gain the benefits of Cover Tracks unless you choose not to."
+ },
+ {
+  "id": "no-hands-no-problems",
+  "name": "No Hands, No Problems",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "poppet"
+  ],
+  "prerequisites": [],
+  "text": "No Hands, No Problems Source Tian Xia Character Guide pg. 49 Prerequisites Tsukumogami Poppet heritage After a lifetime of using temporary, ghostly limbs to manipulate objects, you hardly need real hands. You can extend your limbs to perform simple Interact actions at a range 5 feet beyond your normal range, after which your limbs contract back to their normal length. You can also cast the telekinetic hand cantrip as an arcane or occult innate spell at will, which always takes the ghostlike form of telekinetic hand and is tethered to your body via a snaking, illusory arm. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "no-hard-feelings",
+  "name": "No Hard Feelings",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Unexpected Sharpshooter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Despite the devastation your weapons tend to inflict upon their targets or the destruction you might unleash upon an area, your foes still manage to walk away at the end of a fight-at least sometimes. You can choose to add the nonlethal trait to your ranged weapons, making the choice of whether to add the trait or not just before each Strike."
+ },
+ {
+  "id": "no-need-to-fear",
+  "name": "No Need to Fear",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "linguistic",
+   "mental"
+  ],
+  "prerequisites": [
+   "Commitment to Valor"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You or an ally within 60 feet attempts a saving throw against a fear effect. --- With a simple reminder of perseverance, you bolster the bravery of yourself and your allies. You attempt to counteract the triggering effect with a check, using half your level rounded up as the counteract rank."
+ },
+ {
+  "id": "noble-sacrifice",
+  "name": "Noble Sacrifice",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Prophesied Monarch Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** One of your designated knights is within 15 feet of you and would take damage from an enemy's Strike. --- As your knights devote their lives and swords to you, so too do you return their devotion with your own fierce protection. Spend a Mythic Point. The knight Steps as a free action, and you Stride into the space previously occupied by the knight; this movement ignores difficult terrain and greater difficult terrain. You then take the triggering damage instead. If you have a shield raised and have the Shield Block reaction, you can use it as part of this ability, applying damage to the shield as though you were the original target of the attack. The enemy whose Strike triggered this reaction is off-guard until the end of your next turn."
+ },
+ {
+  "id": "nodal-healing",
+  "name": "Nodal Healing",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "surki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can induce wound repair by circulating magic throughout your body. If you rest for 10 minutes, you regain Hit Points equal to your Constitution modifier × half your level. This is a magical healing effect and is cumulative with any healing you receive from Treat Wounds."
+ },
+ {
+  "id": "nonlethal-spell",
+  "name": "Nonlethal Spell",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "spellshape",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can alter offensive spells to be less deadly. If your next action is to Cast a Spell that deals damage and doesn't have the death or void trait, that spell gains the nonlethal trait."
+ },
+ {
+  "id": "nonlethal-takedown",
+  "name": "Nonlethal Takedown",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You prefer to use nonlethal means against living opponents, but the weapons you carry are lethal enough to destroy undead. You don't take the normal -2 circumstance penalty when attacking nonlethally with a weapon that lacks the nonlethal trait."
+ },
+ {
+  "id": "nothing-personal",
+  "name": "Nothing Personal",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Mercenary Motivation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have an active course of action planned. --- When you're on a job, you can't allow anyone to stop you. Designate a single creature you can see as being an impediment to your active course of action. The first time you Strike your impediment in a round, you deal an extra die of weapon damage. At 14th level, this increases to two extra dice, and at 20th level, this increases to three extra dice. You can have only one creature designated as an impediment at a time. If you use Nothing Personal against a creature when you already have a creature designated, the prior creature loses the designation, and the new impediment gains the designation. Otherwise, your designation lasts for 1 hour."
+ },
+ {
+  "id": "nourishing-symbiosis",
+  "name": "Nourishing Symbiosis",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "yaksha"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As you recuperate from your wounds, life energy flows from you to the land and back to you again. During downtime mode, when you take the Long-Term Rest activity, you regain an additional 24 Hit Points after the first 24 hours of rest. You can use the Subsist activity during a long-term rest and don't need to spend any additional time to do so. When you do so, fruits, nuts, and vegetables sufficient to feed 5 people flourish overnight around you, ripe for the picking."
+ },
+ {
+  "id": "now-you-see-me",
+  "name": "Now You See Me",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "mythic",
+   "occult"
+  ],
+  "prerequisites": [
+   "Timewracked Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You flash through several possible timelines as you move. Stride up to your Speed. This movement doesn't provoke reactions, and you are concealed until the end of your turn. All creatures are off-guard to you until the end of your turn. You can use Now You See Me while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "noxious-odor",
+  "name": "Noxious Odor",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "athamaru",
+   "poison"
+  ],
+  "prerequisites": [
+   "Emit Defensive Odor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have developed your skill with your defensive pheromones and have concentrated them into a noxious form. A creature that fails its save against your Emit Defensive Odor action also becomes Sickened 1 (or Sickened 2 on a critical failure)."
+ },
+ {
+  "id": "nudge-the-scales",
+  "name": "Nudge the Scales",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "divine",
+   "healing",
+   "oracle",
+   "spirit"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You lay a finger on the scales of life and death to heal a creature, regardless of whether it's living or undead. You restore Hit Points to one creature within 30 feet. In addition, you can mediate during your daily preparations to place yourself on one side of the scales. Choose life or death. If you align yourself with life, you can be targeted and healed by vitality healing effects, as normal for most living creatures; if you align yourself with death, you gain the void healing ability, and can instead be targeted and healed by void effects and other effects that restore Hit Points to undead creatures.."
+ },
+ {
+  "id": "numbing-spice-exhalation",
+  "name": "Numbing Spice Exhalation",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can mix alchemically preserved peppers into an alchemical food consumable to spice it up with alchemical fire. When the modified alchemical food is consumed, the user's mouth goes numb temporarily. Once within the next hour, they can spend a single action to breathe a gout of flame in a . Each creature in the cone takes 1d6 fire damage for every two levels you have with a save against your class DC."
+ },
+ {
+  "id": "oath-of-the-avenger",
+  "name": "Oath of The Avenger",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "champion",
+   "oath"
+  ],
+  "prerequisites": [
+   "lay on hands"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've sworn an oath to punish wicked acts you witness. You gain the edict \"hunt down those who have harmed innocents or committed heinous atrocities.\" When you see a creature harm an ally, an innocent, or a noncombatant, you can invoke your oath against that creature. Like speaking, this doesn't require an action. Most champions choose to invoke these oaths out loud if they're able. The invocation lasts indefinitely, though you can choose to end if you are satisfied that the target has reformed, atoned, or been forgiven. You can use Lay on Hands to damage a creature you have invoked your oath against as if it were undead; in this case, *lay on hands* deals spirit damage instead of vitality damage, gains the spirit trait, and loses the vitality trait. This doesn't prevent you from healing such a creature with *lay on hands* if you so choose."
+ },
+ {
+  "id": "oath-of-the-slayer",
+  "name": "Oath of The Slayer",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "champion",
+   "oath"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "During your daily preparations, you can swear an oath to defeat, topple, or destroy a certain kind of enemy during your deeds that day. Choose aberrations, celestials, dragons, fiends, or undead. You can't choose celestials if you're holy, nor can you choose fiends if you're unholy. You gain an edict to banish or slay creatures of that kind. Your Strikes and devotion spells that deal damage do an additional 1 spirit damage against a creature with the chosen trait. This damage increases to 2 at 7th level and 3 at 14th level. If a creature with the chosen trait triggers your champion's reaction, this additional damage doubles until the end of your next turn."
+ },
+ {
+  "id": "obscured-emergence",
+  "name": "Obscured Emergence",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are, by nature, a thing of gloomy woods and barren wilds, and when you choose show yourself, a bit of this gloom clings to you, obscuring your form with strange distortions or mist. When you stop being hidden due to your own actions (not due to someone successfully finding you), you gain concealment until the start of your next turn as people's eyes find it oddly hard to focus on you. As usual for concealment involving an obvious visual manifestation, you can't use this concealment to hide."
+ },
+ {
+  "id": "obscured-terrain",
+  "name": "Obscured Terrain",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast obscuring mist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Mist, you can modify the spell to replace its standard effects with the following: You cause a cloud of thick fog to blanket the area, making it difficult to see the ground. The area within the fog is difficult terrain for creatures that can't see through fog or mist. You can Dismiss the cloud."
+ },
+ {
+  "id": "observant-explorer",
+  "name": "Observant Explorer",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thanks to the time you've spent wandering through wild and untamed environments, you've gained an intuitive sense about creatures. You sometimes notice them before they attack, or spot them nearby even if they weren't planning on attacking. You can attempt a check to notice hidden creatures attempting to Avoid Notice nearby even if you aren't actively Searching for them. You still need to meet any other requirements to notice a particular creature."
+ },
+ {
+  "id": "offensive-odor",
+  "name": "Offensive Odor",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "athamaru"
+  ],
+  "prerequisites": [
+   "Emit Defensive Odor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've mastered your defensive pheromones and have nearly complete control over them. When you Emit Defensive Odor, you can either choose to increase the damage dealt to a single target by changing the damage dice to d8s (), or leave the damage unchanged but spray your pheromones in a ."
+ },
+ {
+  "id": "officers-protection",
+  "name": "Officer's Protection",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Commitment to Protection"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Commitment to Protection, you can target all allies within 30 feet. If you have Lasting Protection, the effects on all allies apply until the beginning of your next turn."
+ },
+ {
+  "id": "oil-fire",
+  "name": "Oil Fire",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fire",
+   "inventor",
+   "manipulate",
+   "unstable"
+  ],
+  "prerequisites": [
+   "armor innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a foe grabbed. --- Your armor includes flame-resistant gauntlets with oil-filled finger joints. These joints can split apart, dousing your opponent in flammable oil and then igniting it. The opponent must attempt a save against your class DC. --- **Critical Success** The grab ends. **Success** The grab ends, and the target takes 1 damage. **Failure** The target takes damage equal to half your level. **Critical Failure** The target takes damage equal to your level."
+ },
+ {
+  "id": "omnikinesis",
+  "name": "Omnikinesis",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "kineticist"
+  ],
+  "prerequisites": [
+   "reflow elements"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can realign your kinetic gate with a thought. Replace one of your impulse feats using the same process as reflow elements. You can replace only one, even if you have double reflow."
+ },
+ {
+  "id": "once-and-future",
+  "name": "Once and Future",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Prophesied Monarch Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Though foul treachery might lay you low or dark magic still your heart, when the people cry out for you in desperate need, you shall rise to protect them. You can't die except due to old age as long as one of your knights is alive and within 30 feet; if your dying or doomed condition would increase to a high enough value to kill you, it doesn't increase, and any effect that would instantly kill you instead just reduces you to 0 Hit Points. The first time each year you would die for any reason other than old age, you instead return to life and consciousness with a number of Hit Points equal to twice your level and gain a Mythic Point. If you ever truly die and aren't returned to life within 1 year, you're reborn as a child into a new mortal body somewhere in the world where stories of your accomplishments are still told. You don't complete your journey along the River of Souls until all mortal memory of you has vanished."
+ },
+ {
+  "id": "one-for-all",
+  "name": "One For All",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "concentrate",
+   "emotion",
+   "linguistic",
+   "mental",
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "trained in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "With precisely the right words of encouragement, you bolster an ally's efforts. Designate an ally within 30 feet; this action counts as sufficient preparation to Aid that ally. When you use the Aid reaction to help that ally, you can roll in place of the usual check and the action gains the bravado trait"
+ },
+ {
+  "id": "one-inch-punch",
+  "name": "One-inch Punch",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "expert strikes"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You put all your force into a single mighty, carefully controlled blow. Make an unarmed Strike. If you spend two actions and this Strike hits, you deal an extra die of weapon damage. You can instead spend 3 actions to perform an even more powerful attack, dealing a second additional die of weapon damage on a hit. If you're at least 10th level, the number of additional dice you add from this feat doubles, for a total of 2 additional dice if you spend 2 actions or 4 additional dice if you spend 3 actions. If you're at least 18th level, the number of additional dice you add from this feat triples, for a total of 3 additional dice if you spend 2 actions or 6 additional dice if you spend 3 actions."
+ },
+ {
+  "id": "one-life-two-vessels",
+  "name": "One Life, Two Vessels",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Beast Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The minds of you and your companion are so intertwined that, so long as one of you lives, the other continues to exist in the living one's mind. If your united companion ever dies or is destroyed and it is within 30 feet of you, its consciousness is drawn into your mind, where it can communicate with you normally and remains there until your next daily preparations. During your next daily preparations, you can call upon your union to restore your companion to life again in a ritual that takes 1 hour. Your restored united companion returns whole-bodied, at their maximum Hit Point total, and cured of any afflictions that may have been afflicting it when it died. If you would ever die or be destroyed and you are within 30 feet of your united companion, you consciousness flows into your companion for 3 days. During this time, you can perform actions as if you are your united companion using its abilities and characteristics for any actions you perform. After spending 3 days in this state, you are returned to life with a number of Hit Points equal to twice your level and regain a Mythic Point. If you or your united companion die while sharing your body with the other's consciousness, you truly die, but if you are not returned to life within 1 year, you are both reincarnated as children (or in a similarly immature state) in a location near where you first became companions. Neither you nor your companion complete your journeys along the River of Souls, nor do you possess any knowle"
+ },
+ {
+  "id": "one-millimeter-punch",
+  "name": "One-millimeter Punch",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "One-Inch Punch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your punches have incredible force and control. When you damage a target using One-Inch Punch, you can focus your qi to send the foe flying. If you do, the target must attempt a save against your class DC. --- **Critical Success** The target is unaffected. **Success** The target is pushed back 5 feet. **Failure** The target is pushed back 10 feet. **Critical Failure** The target is pushed back 10 feet for each action you spent on One-Inch Punch."
+ },
+ {
+  "id": "one-with-the-land",
+  "name": "One with the Land",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mummy Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to your bound terrain strengthens, making you unhindered by local weather. When in your bound terrain, you ignore the effects of non-magical difficult terrain. In addition, your experience from your bound terrain lets you ignore circumstance penalties to visual Perception checks and ignore concealment caused by certain environmental effects. The types you ignore depend on your bound terrain. **Arctic** Ice or snow **Desert** Dust or sand **Mountain** Clouds or mist **Swamp** Rain or murky water"
+ },
+ {
+  "id": "one-with-the-wild",
+  "name": "One with the Wild",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [],
+  "prerequisites": [
+   "Wilderness Born"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You naturally blend in with the wilderness, becoming camouflaged. In natural terrain, you can Hide and Sneak even without cover or being concealed. --- **Special** This feat gains the trait for your ancestry."
+ },
+ {
+  "id": "oneiric-influence",
+  "name": "Oneiric Influence",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "incapacitation",
+   "mental",
+   "occult"
+  ],
+  "prerequisites": [
+   "Infiltrate Dream"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While Infiltrating a Dream, you can also implant a suggestion in the target's mind. The target must attempt a save against your class DC or spell DC, whichever is higher, to resist your modification, which has the effects of a Subconscious Suggestion spell, but even on a critical success, the target doesn't realize you were trying to control them and might not recognize your presence in the dream. The suggestion remains in the target's subconscious for 1 week or until triggered. Their memories of carrying out the suggestion are hazy and dreamlike, and they might not remember doing it unless later reminded."
+ },
+ {
+  "id": "ongoing-investigation",
+  "name": "Ongoing Investigation",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're always investigating what's around you, even as you perform other activities. You can move at full Speed while using the Investigate exploration activity, and you can use another exploration activity while Investigating."
+ },
+ {
+  "id": "ongoing-selfishness",
+  "name": "Ongoing Selfishness",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "desecration cause"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your powerful personality and incredible ego demand that you protect yourself above all else. After you use Selfish Shield, you gain resistance to all further damage from the triggering enemy until the end of the turn on which you used the reaction. This resistance is equal to half your Selfish Shield resistance."
+ }
+]

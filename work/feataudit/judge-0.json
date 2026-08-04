@@ -1,0 +1,373 @@
+{
+  "records": [
+    {
+      "id": "a-home-in-every-port",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Downtime lodging/meals for free; no sheet statistic changes and the app does not model downtime cost of living."
+    },
+    {
+      "id": "a-miracle-of-science",
+      "verdict": "MISS",
+      "reason": "Upgrades the construct companion to a paragon construct companion (a real companion stat-block rank change on the sheet); no field in the legal set expresses a companion maturity/rank upgrade.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "a-tale-to-believe-in",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Grants an action that counteracts a mental effect on an ALLY; it changes an ally's condition, not the player's statistics."
+    },
+    {
+      "id": "a-thousand-cries-for-help",
+      "verdict": "MISS",
+      "reason": "You are affected by a constant Truespeech spell (permanent comprehension/speech of all languages, a sheet-visible language change). innateSpells only models per-day/at-will casts, and there is no language-grant field; the Mythic Point proficiency swap is table-side.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "abjure-harm",
+      "verdict": "MISS",
+      "reason": "Grants the player resistance to physical damage equal to their level for a stated duration (until the beginning of their next turn) — a defence the IWR panel should show; nothing delivers it.",
+      "fix": {
+        "mode": {
+          "id": "abjure-harm",
+          "name": "Abjure Harm",
+          "feats": ["abjure-harm"],
+          "duration": "until the beginning of your next turn",
+          "modifiers": [],
+          "resistances": [{ "type": "physical", "value": "@actor.level" }],
+          "note": "After spending 1 Mythic Point on Abjure Harm, the triggering critical Strike becomes a regular hit and you have resistance to physical damage equal to your level until the beginning of your next turn."
+        }
+      }
+    },
+    {
+      "id": "abjure-the-false-kin",
+      "verdict": "MISS",
+      "reason": "A success on a save against a non-damaging mental effect becomes a critical success — a degree-of-success upgrade on the player's own saves. situational only carries numeric bonuses, so no legal field expresses it.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "abscission-shards",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An action that deals extra damage to the struck target; it changes only the target's statistics and is resolved at the table."
+    },
+    {
+      "id": "absolve-sins",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An action that deals damage to enemies in an area with a save against an already-derived DC; entirely target-side."
+    },
+    {
+      "id": "absorb-toxin",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A reaction whose counteract check and –2 one-off save penalty are resolved at the table for a single triggering effect, and whose main benefit ends the effect for other creatures."
+    },
+    {
+      "id": "acclimated-mount",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The benefit (ignoring difficult terrain in one chosen terrain) applies to the MOUNT and covers GM-adjudicated terrain the app does not model; a companion-only pick with no sheet statistic behind it."
+    },
+    {
+      "id": "acclimatization",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Gated on being in a GM-adjudicated Favored Terrain and applies to environmental damage and temperature severity — neither environments nor temperature effects are modelled, and 'environmental' is not a damage type the resistances field takes."
+    },
+    {
+      "id": "accommodating-mount",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Changes the action economy of the ALLY riding you; nothing on your own sheet changes."
+    },
+    {
+      "id": "accurate-flurry",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Restructures the multiple attack penalty only inside the Impossible Flurry activity, whose attack sequence is resolved at the table."
+    },
+    {
+      "id": "accursed-claws",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A critical-hit rider that puts persistent mental damage on the target; it changes only the target's statistics."
+    },
+    {
+      "id": "accursed-touch",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A critical-hit rider that inflicts persistent void damage and stupefied on the target; target-side only (it is called a critical specialization effect, it does not grant critical specialization)."
+    },
+    {
+      "id": "acquired-tolerance",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A reaction that rerolls one failed save; a fortune reroll resolved at the table, with a per-poison-type usage rule limitedUses cannot express."
+    },
+    {
+      "id": "acute-scent",
+      "verdict": "MISS",
+      "reason": "While raging you gain imprecise scent 30 feet — a sense the sheet should list while the rage toggle is on; nothing delivers it.",
+      "fix": {
+        "mode": {
+          "id": "acute-scent",
+          "name": "Acute Scent (Raging)",
+          "feats": ["acute-scent"],
+          "duration": "while you are raging",
+          "modifiers": [],
+          "senses": [{ "name": "scent", "range": 30, "acuity": "imprecise" }],
+          "note": "While raging, you gain imprecise scent with a range of 30 feet."
+        }
+      }
+    },
+    {
+      "id": "acute-vision",
+      "verdict": "MISS",
+      "reason": "While raging you gain darkvision — a sense the sheet should list while the rage toggle is on; nothing delivers it.",
+      "fix": {
+        "mode": {
+          "id": "acute-vision",
+          "name": "Acute Vision (Raging)",
+          "feats": ["acute-vision"],
+          "duration": "while you are raging",
+          "modifiers": [],
+          "senses": [{ "name": "darkvision" }],
+          "note": "While raging, your visual senses improve, granting you darkvision."
+        }
+      }
+    },
+    {
+      "id": "adamantine-body",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A reaction that applies resistance to a single triggering damage instance only; there is no duration to toggle, so it is resolved when the reaction is used."
+    },
+    {
+      "id": "adamantine-fists",
+      "verdict": "MISS",
+      "reason": "Your stonestrike unarmed attacks count as adamantine — a material property of the player's own strikes that the strike breakdown and IWR bypass logic use; no legal field tags a strike's precious material.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "adaptive-mask-familiar",
+      "verdict": "MISS",
+      "reason": "You select four master and familiar abilities each day instead of two — a real increase in the number of familiar-ability picks the builder offers; no legal field sets the familiar ability count.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "adaptive-stratagem",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A free action at initiative that swaps one already-prepared tactic for another in your folio; an in-encounter swap resolved at the table."
+    },
+    {
+      "id": "additional-circus-trick",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Adds a trait to a signature trick and adjusts Perform a Trick penalties inside the Circus subsystem, which the app does not model; the checks are resolved at the table."
+    },
+    {
+      "id": "additional-follower",
+      "verdict": "MISS",
+      "reason": "Grants an additional novice follower with the minion trait (repeatable up to four) — followers are real companion-side entities the app carries data for, and this record grants none.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "additional-ikon",
+      "verdict": "MISS",
+      "reason": "Grants a fourth ikon of any type — an extra exemplar ikon selection the builder should offer; effectChoices has no ikon filter and the ikon list is too large to enumerate as options.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "additional-recollection",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A free action granting an extra Recall Knowledge check; resolved at the table with no sheet statistic change."
+    },
+    {
+      "id": "additional-servings",
+      "verdict": "MISS",
+      "reason": "Raises versatile vials per day to 5 (then 6, then 7 on repeat takes) — a tracked daily resource count on the sheet; no legal field sets a class resource total.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-alchemy",
+      "verdict": "MISS",
+      "reason": "Lets you create 4 alchemical consumables during daily preparations — the app models Advanced Alchemy, and this record sets no item count for the dedication.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-bow-training",
+      "verdict": "MISS",
+      "reason": "Grants proficiency with all advanced bows as if they were martial weapons; without it the app computes untrained attack bonuses for advanced bows. No legal field expresses a weapon-category proficiency grant.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-construct-companion",
+      "verdict": "MISS",
+      "reason": "Upgrades the construct companion to an advanced construct companion (a real companion stat change) and grants it a free action each round; no legal field expresses a companion maturity upgrade.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-efficient-alchemy",
+      "verdict": "MISS",
+      "reason": "Raises the advanced alchemy item maximum to 8 + Int (10 + Int at 16th) — a number the modelled Advanced Alchemy panel should show; no legal field sets it.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-firearm-familiarity",
+      "verdict": "MISS",
+      "reason": "Treats advanced firearms as martial for proficiency and grants access to all uncommon firearms — both a strike attack-bonus change and an item-access change; no legal field expresses either.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-first-aid",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Expands what Administer First Aid can do for an ALLY (reducing frightened/sickened); an ally-side skill action resolved at the table."
+    },
+    {
+      "id": "advanced-herbalism",
+      "verdict": "MISS",
+      "reason": "Raises herbal items created per day with advanced alchemy to 6 (8 on a second take) — a tracked daily item count; no legal field sets it.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-monastic-weaponry",
+      "verdict": "MISS",
+      "reason": "Treats advanced monk weapons as martial monk weapons for proficiency, changing the attack bonus on those strikes; no legal field expresses a weapon-category proficiency grant.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-order-training",
+      "verdict": "MISS",
+      "reason": "Grants the greater order benefit of whichever Hellknight order you belong to — a concrete benefit conditional on an earlier choice; nothing grants it and no legal field expresses a choice-dependent grant of another record.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-poisoncraft",
+      "verdict": "MISS",
+      "reason": "Raises poisons created per day with advanced alchemy to 6 (8 on a second take) — a tracked daily item count; no legal field sets it.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "advanced-qi-spells",
+      "verdict": "MISS",
+      "reason": "You gain a 3rd-rank qi spell of your choice (Qi Blast, Shrink the Span, or another) — a focus-spell pick the builder should offer; nothing offers it.",
+      "fix": {
+        "effectChoices": [
+          {
+            "id": "advanced-qi-spell",
+            "prompt": "Advanced Qi Spells: choose a 3rd-rank qi spell (such as Qi Blast or Shrink the Span)",
+            "spellFilter": {
+              "traits": ["monk"],
+              "rank": 3,
+              "grantAs": "focus"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "advanced-shooter",
+      "verdict": "MISS",
+      "reason": "Grants proficiency with all advanced firearms as martial firearms and all advanced crossbows as martial crossbows, changing strike attack bonuses; no legal field expresses a weapon-category proficiency grant.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "aegis-of-arnisant",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A 2-action ability that temporarily makes the Absorb into the Aegis reaction available; an in-encounter action grant resolved at the table."
+    },
+    {
+      "id": "aeon-resonance",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The benefit is whatever resonant power the aeon stone you own provides; it is an item-driven daily selection from inventory, not a fixed grant this record can express."
+    },
+    {
+      "id": "aerial-boomerang",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An impulse that deals area damage to creatures with a save against an already-derived class DC; entirely target-side."
+    },
+    {
+      "id": "aerial-piledriver",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An attack action with extra damage and prone/grab outcomes on the target; resolved at the table, target-side."
+    },
+    {
+      "id": "affliction-mercy",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Extends Mercy to counteract afflictions on the ally you touch; it changes an ally's conditions, not your statistics."
+    },
+    {
+      "id": "after-you",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An initiative-time free action to act last and gain panache; initiative order and panache are toggled in play, not derived on the sheet."
+    },
+    {
+      "id": "agent-of-all-holds",
+      "verdict": "MISS",
+      "reason": "Turns your own critical failures on Diplomacy, Intimidation, and Performance checks into failures (with a fortune reroll versus orcs) — a degree-of-success adjustment on the player's own skill checks that no legal field expresses.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "aggravating-scratch",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A critical-hit rider adding persistent poison damage to the target; target-side only."
+    },
+    {
+      "id": "aggressive-block",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A free action after Shield Block that Shoves the triggering enemy or makes it off-guard; entirely target-side."
+    },
+    {
+      "id": "agile-grace",
+      "verdict": "MISS",
+      "reason": "Your multiple attack penalty with agile weapons and agile unarmed attacks becomes –3/–6 instead of –4/–8 — the strike breakdown shows MAP, so this is a wrong number without a fix; no legal field alters MAP.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "agile-maneuvers",
+      "verdict": "MISS",
+      "reason": "Disarm, Grapple, Reposition, Shove, and Trip use –4/–8 MAP even with non-agile weapons, and –3/–6 with an agile weapon while you have panache; a real change to the player's own attack math that no legal field expresses.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "agile-shield-grip",
+      "verdict": "MISS",
+      "reason": "A toggled grip that drops shield boss/shield spikes damage dice to 1d4 and gives those Strikes the agile trait — it rewrites the player's own strike line, and modes carry only numeric modifiers, not weapon damage dice or traits.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "agonizing-rebuke",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A successful Demoralize makes the enemy take recurring damage; the damage and its scaling land entirely on the target."
+    },
+    {
+      "id": "air-cushion",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A reaction that slows another creature's fall; falling damage for a target is resolved at the table."
+    },
+    {
+      "id": "alchemical-assessment",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Changes Identify Alchemy from 10 minutes to a single action; an action-economy change to a skill use resolved at the table."
+    },
+    {
+      "id": "alchemical-crafting",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Permits Crafting alchemical items and adds four formulas to a formula book; Craft is a downtime activity and the app models no formula book (only free-text craftRequirements)."
+    },
+    {
+      "id": "alchemical-power",
+      "verdict": "MISS",
+      "reason": "You become an EXPERT in the alchemist class DC — a proficiency rank on a derived sheet number (the class DC shown for the dedication); nothing raises it, and no legal field sets class DC proficiency.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "alchemical-shot",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A 2-action Strike that converts a consumed bomb into damage and persistent damage on the target; resolved at the table."
+    },
+    {
+      "id": "aldori-riposte",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A reaction to make a Strike or Disarm attempt against the triggering opponent; resolved at the table with no sheet change."
+    },
+    {
+      "id": "aldori-swordlord",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Free lodging is flavour, the Dueling Lore-for-Diplomacy substitution is GM-adjudicated by target, and the 5/10 temporary HP is gained per successful Strike during play (temporary HP is entered in play, not derived)."
+    },
+    {
+      "id": "aldoris-retort",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Grants an extra reaction each turn usable only for specific dueling reactions; reaction economy is tracked at the table, not on the sheet."
+    }
+  ]
+}

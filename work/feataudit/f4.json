@@ -1,0 +1,986 @@
+[
+ {
+  "id": "bloom-of-health",
+  "name": "Bloom of Health",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Prophesied Monarch Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You shout a rallying cry that inspires the well-being of your kingdom's protectors. All your knights who hear your cry gain fast healing equal to half your level for 1 minute."
+ },
+ {
+  "id": "body-barrier",
+  "name": "Body Barrier",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You and at least one ally are in the area of an effect that requires a Reflex save. --- When your allies are in danger, you don't hesitate to take the brunt of the blow for them. You grant all allies in the area standard cover against the triggering effect, and you gain weakness to all damage against the triggering effect equal to twice the number of allies that gain cover in this way."
+ },
+ {
+  "id": "body-of-air",
+  "name": "Body of Air",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "air",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "polymorph",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "⟨5⟩ or ⟨2⟩ **Trigger** An enemy you can observe targets you with an attack or other damaging effect. --- Your gathered air consumes your body, leaving only a cloud of living vapor. This has the same effects on you as Vapor Form. The effect lasts until the end of your next turn, but you can Sustain the form up to 5 minutes. If you activate your kinetic aura, Body of Air ends. You can use Body of Air as a reaction only when the trigger is met, but you can use it as a 2-action activity without the trigger being met. --- **Level (+1)** The resistance increases by 1."
+ },
+ {
+  "id": "bold-defiance",
+  "name": "Bold Defiance",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "yaoguai"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** You Change Shape. --- You harden your form as you dance between shapes. You gain temporary Hit Points equal to your level that last for 1 minute."
+ },
+ {
+  "id": "bolster-ally",
+  "name": "Bolster Ally",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory"
+  ],
+  "prerequisites": [
+   "Eagle Knight Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** One of your allies within 30 feet is targeted by a spell or ability that allows a saving throw. --- You shout encouragement to your embattled ally. The ally can use your saving throw modifier instead of their own against the triggering spell."
+ },
+ {
+  "id": "bolster-soul-cage",
+  "name": "Bolster Soul Cage",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lich Dedication",
+   "legendary in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your constant efforts to augment and perfect your soul cage have bolstered its efficiency. Your soul cage has Hardness equal to your level and HP equal to four times your level. The time it takes your soul cage to rebuild your body is reduced to 1d6 days rather than 1d10 days. At 20th level, the time it takes your soul cage to rebuild your body is reduced to 2d12+12 hours."
+ },
+ {
+  "id": "bolstered-recovery",
+  "name": "Bolstered Recovery",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "healing",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Timewracked Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whenever you rest, you recover with remarkable speed. Double the number of Hit Points you regain and the amount by which condition values are reduced from a full night's rest. You gain the Instant Recovery action."
+ },
+ {
+  "id": "bombing-run",
+  "name": "Bombing Run",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You currently have a fly Speed. --- Using your elevation and speed to your advantage, you deliver aerial payloads with greater force. You Fly and can Interact to draw a bomb. At any point during your movement, you can also make a Strike with an alchemical bomb. The bomb deals its splash damage to every creature within 10 feet of the target."
+ },
+ {
+  "id": "bond-companion",
+  "name": "Bond Companion",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dragonet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You form a close bond with a companion, similar to that of a master and familiar, that lets you gift them with a touch of your inherent magic. You can spend time with another player character during your daily preparations to make them your designated companion for that day. That player must have a Focus Point pool. You gain the Fortify Focus activity."
+ },
+ {
+  "id": "bond-conservation",
+  "name": "Bond Conservation",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "spellshape",
+   "wizard"
+  ],
+  "prerequisites": [
+   "arcane bond"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** The last action you used was to Cast a Spell enabled by Drain Bonded Item. --- By efficiently and carefully manipulating the arcane energies unleashed by your bonded item, you can conserve just enough power to cast another spell, though this second spell is slightly weaker. You gain an extra use of Drain Bonded Item. You can use it to cast a spell 2 or more ranks lower than the previous spell, and must use it before the end of your next turn or you lose it."
+ },
+ {
+  "id": "bonded-focus",
+  "name": "Bonded Focus",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [
+   "arcane bond"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to your bonded item increases your focus pool. Whenever you Refocus while your bonded item is in your possession, you completely refill your focus pool."
+ },
+ {
+  "id": "bone-missile",
+  "name": "Bone Missile",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "skeleton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can remove your ribs to use them as arrows or bolts. When you draw a rib, you lose HP, and the projectile deals 2 extra void damage if you Strike with it before the end of your next turn. The HP loss and extra damage both increase to 3 at 12th level and 4 at 19th level. Your rib cage magically replenishes, and any rib you draw crumbles to dust after being used for a Strike or at the end of your next turn, whichever comes first."
+ },
+ {
+  "id": "boost-summons",
+  "name": "Boost Summons",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Augmenting your eidolon extends to creatures you summon. When you cast Boost Eidolon, in addition to your eidolon, it also targets your summoned creatures within 60 feet."
+ },
+ {
+  "id": "boulder-roll",
+  "name": "Boulder Roll",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [
+   "Rock Runner"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your dwarven build allows you to push foes around, just like a mighty boulder tumbles through a subterranean cavern. Take a Step into the square of a foe that is your size or smaller, and the foe must move into the empty space directly behind it. The foe must move even if doing so places it in harm's way. The foe can attempt a saving throw against your Athletics DC to block your Step. If the foe attempts this saving throw, it takes bludgeoning damage equal to your level plus your Strength modifier unless it critically succeeds. If the foe can't move into an empty space (if it is surrounded by solid objects or other creatures, for example), your Boulder Roll has no effect."
+ },
+ {
+  "id": "brain-drain",
+  "name": "Brain Drain",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "mental",
+   "occult",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With a wresting of will, you siphon off a creature's mental energy to replenish your own. One non-mindless creature within 30 feet must attempt a save against your spell DC. --- **Success** The creature is unaffected. **Failure** The creature is Stupefied 1 for 1 minute, and you regain 1 Focus Point, up to your normal maximum. You can't use Brain Drain again until after the next time you make your daily preparations. **Critical Failure** As failure, but the creature is Stupefied 2."
+ },
+ {
+  "id": "branched-tree-of-pain",
+  "name": "Branched Tree Of Pain",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a weapon ikon that deals piercing or slashing damage --- The blade of your ikon takes one or more notches, capable of dealing mortal pain to your foes. **Immanence** When you Strike with the ikon, you critically succeed if you roll a 19 on the die as long as that result would be a success. This has no effect on a 19 if the result would be a failure. **Transcendence—Plant Thirty Barbs** ⟨1⟩ (death, transcendence)"
+ },
+ {
+  "id": "branding-spell",
+  "name": "Branding Spell",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "curse",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "The flames of your magic mark a target as an enemy of order. If your next action is to Cast a non-cantrip Spell that deals fire damage, that spell brands the target with a mark only you can see if it fails its saving throw. This brand lasts for 1 week. For as long as the target is branded, you always know the general direction and approximate distance of the target's current location, as long as it's on the same plane. You also know the direction the branded target is currently moving, if any, as well as any conditions affecting it. You can have only one brand active at a time."
+ },
+ {
+  "id": "brandish-authority",
+  "name": "Brandish Authority",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "mythic",
+   "visual"
+  ],
+  "prerequisites": [
+   "Archfiend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With a terrifying pronouncement, you manifest a visible sign of your authority and fiendish power, such as a crown of flame upon your brow, a scepter forged of solidified souls, or a throne comprised of a dozen dragon skulls. This object appears in your space or in your hand, as appropriate, and remains for 1 minute. When your sign of power appears, attempt an Intimidation check to Demoralize each enemy within 30 feet who can see or hear you. These Demoralize attempts don't take any penalty for not sharing a language. As long as your sign of power remains manifested, your enemies can't reduce the value of their frightened condition below 1. You can spend 1 Mythic Point as part of performing this action; if you do, frightened creatures grovel before you, in awe of your terrible power. At the beginning of their turn, a creature that has the frightened condition from Brandish Authority must attempt a saving throw against your class DC or spell DC, whichever is higher. On failure, they must Drop Prone. On a critical failure, they must Drop Prone and can't Stand this turn."
+ },
+ {
+  "id": "brandishing-draw",
+  "name": "Brandishing Draw",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You draw and attack with the same motion. You Interact to draw a weapon, then either Strike or use a one-action finisher. You must still meet any other requirements to use a finisher, and any Strike you make must be made with the weapon you drew."
+ },
+ {
+  "id": "brastlewark-snare-engineering",
+  "name": "Brastlewark Snare Engineering",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Magical Crafting",
+   "Snarecrafter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained with the Brastlewark gnomes or studied their teachings, and learned the art of crafting their more magical snares. You learn the formulas for crafting the pit illusion snare and the shadow cloak snare or two uncommon magical snares of your level or lower that you have access to. When you set a magical snare, the DC of any saving throw it requires uses your spell DC if that's higher. When you craft a non-magical snare, you can choose to give it the magical trait. When you do so and the snare is one that normally deals damage, it deals an additional amount of force damage equal to its level."
+ },
+ {
+  "id": "bravos-determination",
+  "name": "Bravo's Determination",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "expert in Deception",
+   "Firebrand Braggart Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A foe's Strike reduces you to 0 Hit Points; you were not at 1 Hit Point and you would not be killed. --- Your confidence borders on self-delusion, but it keeps you going against overwhelming odds. Attempt a Deception check against the attack DC of the triggering Strike. You take a penalty to this check equal to twice your wounded value, if any. If the triggering attack was a critical hit, use the result one degree of success worse than what you rolled. --- **Critical Success** You avoid being knocked out and remain at 1 Hit Point. **Success** You avoid being knocked out and remain at 1 Hit Point, but you increase your wounded value by 1."
+ },
+ {
+  "id": "breath-of-the-dragon",
+  "name": "Breath of the Dragon",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "dragonblood",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Breath of the Dragon Source Player Core 2 pg. 45 Tapping into the physiology of your draconic ancestor, you can exhale a torrent of energy in a 15-foot cone or a 30-foot line, dealing 1d4 damage. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1d4 rounds. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar (see above). This ability has the trait associated with the type of damage it deals. Breath of the Dragon leads to... Debilitating Breath, Energize Bite, Formidable Breath, Lingering Breath"
+ },
+ {
+  "id": "breath-of-the-dragon-dragonblood",
+  "name": "Breath of the Dragon (Dragonblood)",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "dragonblood",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Tapping into the physiology of your draconic ancestor, you can exhale a torrent of energy in a or a , dealing 1d4 damage. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1d4 rounds. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar. This ability has the trait associated with the type of damage it deals."
+ },
+ {
+  "id": "breath-unleashed",
+  "name": "Breath Unleashed",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [
+   "Kobold Breath"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're able to channel more of your draconic benefactor's power and focus it into your Kobold Breath, increasing its effectiveness but requiring more time to recover. When you use Kobold Breath, you can increase the damage dice to d8s and increase the area to 30 feet for a cone or 60 feet for a line. If you do, you can't use Kobold Breath again for 1 hour. During this time, Kobold Breath cannot be recharged using Kobold Momentum."
+ },
+ {
+  "id": "briar-battler",
+  "name": "Briar Battler",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you're in difficult terrain from an environmental feature, you can Take Cover, even if the feature wouldn't ordinarily be large enough for you to Take Cover."
+ },
+ {
+  "id": "brilliant-flash",
+  "name": "Brilliant Flash",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "grandeur cause"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your light cleanses souls of fear. When you use Flash of Grandeur, the attacker is also off-guard for 1 round."
+ },
+ {
+  "id": "brine-may",
+  "name": "Brine May",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "changeling",
+   "lineage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mother was a sea hag, granting you one sea-green or blue eye. You find comfort both in the sea and on the shore. Whenever you roll a success on an Athletics check to Swim, you get a critical success instead. If you end your turn in water without having succeeded at a Swim action that round, you don't sink (but you might still be moved by the current)."
+ },
+ {
+  "id": "brinesoul",
+  "name": "Brinesoul",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lineage",
+   "undine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your elemental ancestor's legacy asserts itself as brackish water, like the seawater of the ocean. You gain the Salt Wound reaction."
+ },
+ {
+  "id": "broad-snare",
+  "name": "Broad Snare",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Snarecrafter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can create longer snares for quick deployment, creating lines on the battlefield. When you prepare snares for quick deployment, you can prepare some of them as broad snares. A broad snare takes up a starting from the square in which you craft the snare but it costs two of your quick deployment snares. A broad snare can trigger from a creature entering any portion of its area, and all its effects apply over the full area."
+ },
+ {
+  "id": "broadside-buckos",
+  "name": "Broadside Buckos",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pirate Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Shimali Manux trains every Salt Breaker to fight in the cramped quarters below deck, and you've learned how to use these techniques with your crew. During your daily preparations, you can name up to five crewmates you will be working with that day. If an enemy is within reach of you and at least two of your crewmates, that enemy is off-guard against you."
+ },
+ {
+  "id": "broken-chain-dedication",
+  "name": "Broken Chain Dedication",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "destiny",
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your Calling was sparked by your outrage at tyrants, after having witnessed a brutal act of oppression that you could no longer abide. You may spend a Mythic Point when you attempt an Escape or Force Open check to do so at mythic proficiency. Additionally, you gain the Ultimatum of Liberation action, but you also gain the anathema, \"You must not use Ultimatum of Liberation on a creature you don't believe to be oppressing others or who has conceded their power\". If you break this anathema, you lose access to abilities granted by this archetype until you atone or make amends. Your GM has final say about what constitutes oppression, which can be a difficult and sometimes nebulous concept. In general, oppression is the cruel and unjust use of authority or power. Some examples include performing acts of violence against those without power, removing an individual's agency through mind control magic, and engaging in organized mistreatment or exploitation of others. When the members of a royal guard assault a beggar just to get him off the street, that is oppression. When a tax collector levies higher charges against the less fortunate because it's the law, they are participating in a system of oppression."
+ },
+ {
+  "id": "brutal-beating",
+  "name": "Brutal Beating",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "emotion",
+   "fear",
+   "mental",
+   "rogue"
+  ],
+  "prerequisites": [
+   "ruffian racket"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your critical hits shakes your foes' confidence. Whenever your Strike is a critical hit and deals damage, the target is Frightened 1."
+ },
+ {
+  "id": "brutal-bully",
+  "name": "Brutal Bully",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You push your foes around and leave bruises. While raging, when you successfully Disarm, Grapple, Reposition, Shove, or Trip an enemy, you deal that enemy bludgeoning damage equal to your Strength modifier; add this to the damage from a critical success to Trip."
+ },
+ {
+  "id": "brutal-critical",
+  "name": "Brutal Critical",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your critical hits are particularly devastating. On a critical hit with a melee Strike, add one extra damage die. This is in addition to any extra dice you gain if the weapon is deadly or fatal. The target also takes persistent bleed damage equal to two damage dice."
+ },
+ {
+  "id": "brutal-crush",
+  "name": "Brutal Crush",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "druid",
+   "mental"
+  ],
+  "prerequisites": [
+   "animal instinct or untamed order"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action dealt bludgeoning damage using an unarmed Strike granted by a morph or polymorph effect. --- You've learned how to cloud your foes' minds with the brutal impact of your repeated attacks. Make an unarmed Strike against the same target. If the Strike hits and deals bludgeoning damage, the target is Stupefied 2 for 1 round (Stupefied 3 on a critical hit)."
+ },
+ {
+  "id": "brutal-finish",
+  "name": "Brutal Finish",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a melee weapon in two hands. --- Your final blow can make an impact even if it rebounds off a foe's defenses. Make a Strike with a melee weapon you're wielding in two hands. After the Strike, your turn ends. The Strike deals one additional weapon damage die, or two additional weapon damage dice if you're at least 18th level. The Strike also gains the following failure effect. **Failure** You deal damage equal to one weapon damage die of the required weapon. Increase this to two dice if you're at least 18th level."
+ },
+ {
+  "id": "brutish-shove",
+  "name": "Brutish Shove",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a two-handed melee weapon. --- Using the momentum of your last attack to throw your weight into another, you make your opponent stumble back. Make a Strike with a two-handed melee weapon. If you hit a target that is your size or smaller, that creature is off-guard until the end of your current turn, and you can automatically Shove it, with the same benefits as the Shove action (including the critical success effect, if your Strike was a critical hit). If you move to follow the target, your movement doesn't trigger reactions. This Strike has the following failure effect. **Failure** The target becomes off-guard until the end of your current turn."
+ },
+ {
+  "id": "bullet-and-a-broadside",
+  "name": "Bullet and a Broadside",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Bullet and a Broadside Source High Seas pg. 92 PFS Note Pathfinder Society does not use siege weaponry. Access You're from the Shackles Requirements You’re wielding a firearm or crossbow and are adjacent to a siege weapon. You’re familiar with ranged weapons of all sizes, and can efficiently move to use them in tandem. If you spent one action, you Launch the siege weapon and Strike with your firearm or crossbow in any order, using the same multiple attack penalty for both attacks. If you spent two actions, you Load the siege engine and Interact to reload your firearm or crossbow in any order, and don’t need a free hand to do so."
+ },
+ {
+  "id": "bullet-split",
+  "name": "Bullet Split",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a firearm or crossbow in one hand and a slashing (or versatile S) melee weapon in the other. --- You carefully align your weapon with the edge of your blade, splitting the projectile in two as you fire to attack two different targets. Make two Strikes, one each against two separate targets. The targets must be adjacent to each other and within your weapon's maximum range. Each of these attacks takes a –2 penalty to the attack roll, but the two count as only one attack when calculating your multiple attack penalty."
+ },
+ {
+  "id": "bullying-staff",
+  "name": "Bullying Staff",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Staff Acrobat Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You are wielding your staff. --- You can attempt to Shove or Trip creatures up to two sizes larger than you. If you have master proficiency with your staff, you can attempt to Shove or Trip creatures up to three sizes larger than you."
+ },
+ {
+  "id": "burning-demand",
+  "name": "Burning Demand",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "fire",
+   "impulse",
+   "kineticist",
+   "linguistic",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You create a faintly glowing sigil (shedding normal light in a 5-foot radius) on the target's body, after which you command the target to approach you, run away (as if it had the fleeing condition), release what it's holding, drop prone, or stand in place. The target then attempts a save against your class DC. --- **Critical Success** The sigil immediately vanishes, and the creature is unaffected. **Success** The sigil acts as a magnet for your fiery attacks, granting the creature a –1 penalty to its saves and AC against your fire impulses. The sigil lasts until the end of your next turn or until the creature spends at least 1 action obeying your command, whichever happens first. **Failure** At the start of the creature's next turn, if it doesn't use their first action to obey the command, the sigil ignites as it vanishes, dealing damage and damage to the creature. **Critical Failure** The creature must spend the first action of its next turn to obey your command; it can't Delay. The sigil vanishes at the end of its turn; it ignites if the creature didn't use all its remaining actions to continue to obey your command, dealing damage and damage to the creature. --- **Level (+2)** The damage increases by 1d6, and the persistent damage increases by 1d6."
+ },
+ {
+  "id": "burning-jet",
+  "name": "Burning Jet",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "A condensed burst of flame shoots behind you, propelling you forward with its sheer force. Stride up to 40 feet in a straight line. Movement from this impulse ignores difficult terrain and doesn't trigger reactions. --- **Level (6th)** The maximum distance of the Stride is 60 feet. You can choose to Leap up to 40 feet in any direction instead of Striding. If you're in the air at the end of this Leap, you fall normally. **Level (10th)** As 6th level, but you hover briefly after leaping into the air. If you Leap, you don't fall until the end of your next turn. If you use Burning Jet again on a subsequent turn, you remain airborne."
+ },
+ {
+  "id": "burning-spell",
+  "name": "Burning Spell",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fire",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication",
+   "fire is in your elemental philosophy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You enhance your spell with elemental fire, causing it to set the target on fire. If the next action you use is to Cast a non-cantrip Spell that deals damage at a single target, the spell deals additional Persistent Fire Damage equal to the spell rank, in addition to its other effects. This has no effect if the spell already deals persistent fire damage. The spell gains the fire trait."
+ },
+ {
+  "id": "burning-surge",
+  "name": "Burning Surge",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Wildspell Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature Casts a Spell within your Spellsurge aura. --- You cause a surge of magical energy to flare up, harming that creature and those near it. The triggering creature and all creatures adjacent to it take 1d6 damage per rank of the spell ( save against your class DC or spell DC, whichever is higher). The damage is of the same type as dealt by the spell (or one type of damage of your choosing if the spell deals multiple types of damage). If the spell doesn't deal damage, the damage is mental. The effect gains the trait of the damage dealt. If you spend a Mythic Point as part of using this reaction, calculate the DC with mythic proficiency; you can also choose to deal acid, cold, electricity, or fire damage instead of the type that would normally be dealt, and creatures that fail the saving throw take persistent damage of the same type as the base effect equal to the rank of the triggering creature's spell."
+ },
+ {
+  "id": "burrow-elocutionist",
+  "name": "Burrow Elocutionist",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "gnome"
+  ],
+  "prerequisites": [],
+  "text": "Burrow Elocutionist Source Core Rulebook pg. 44 You recognize the chittering of ground creatures as its own peculiar language. You can ask questions of, receive answers from, and use the Diplomacy skill with animals that have a burrow Speed, such as badgers, ground squirrels, moles, and prairie dogs. The GM determines which animals count for this ability. Burrow Elocutionist leads to... Animal Elocutionist"
+ },
+ {
+  "id": "burrowing-shot",
+  "name": "Burrowing Shot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Munitions Master Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You tune your light mortar to maximize penetration into hard surfaces. You Launch your light mortar, dealing half the normal amount of damage to creatures in the area of the blast but double damage to objects and structures."
+ },
+ {
+  "id": "butterflys-kiss",
+  "name": "Butterfly's Kiss",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Butterfly Blade Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can make nonlethal Strikes with a butterfly sword without taking a penalty."
+ },
+ {
+  "id": "buzzing-death-cicadas",
+  "name": "Buzzing Death Cicadas",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Swarmkeeper Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your swarm takes on characteristics of the death cicadas of the Mana Wastes, whose distinctive buzz is said to be a herald of imminent demise. The inclusion of these death cicadas grants your swarm a fly Speed of 20 feet. You also gain the Death Drone action."
+ },
+ {
+  "id": "cackle",
+  "name": "Cackle",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your patron's power fills you with confidence, letting you sustain a magical working even as a quick burst of laughter leaves your lips. You learn the Cackle hex."
+ },
+ {
+  "id": "calcifying-sand",
+  "name": "Calcifying Sand",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "incapacitation",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature damages you with an attack using an unarmed attack or a non-reach melee weapon. --- Your flesh gives way as you're struck, becoming coarse sand that can magically turn your enemy to stone. You gain resistance equal to your level to physical damage from the triggering attack. The attacking creature must attempt a save against your class DC. Regardless of the result, that creature can't trigger Calcifying Sand again for 1 hour. --- **Success** The creature is unaffected. **Failure** The creature is Slowed 1 until the end of its next turn. **Critical Failure** The creature is petrified until the end of its next turn."
+ },
+ {
+  "id": "calculated-splash",
+  "name": "Calculated Splash",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have calculated all the angles to maximize a bomb's splash. When you throw an alchemical bomb with the splash trait, you can cause the bomb to deal splash damage equal to your Intelligence modifier (minimum 0) instead of the normal amount."
+ },
+ {
+  "id": "call-and-response",
+  "name": "Call and Response",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "bard",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your composition takes the form of a call-and-response chant that lets your allies continue the effect without you. If your next action is to cast a composition cantrip with a duration of 1 round, it becomes a call. While the spell is active, one ally of your choice affected by the spell can respond to your call as a single action that has the auditory and concentrate traits to extend the spell's duration by 1 round. Only one ally can respond to a given call, and responding to the ally's response has no additional effect."
+ },
+ {
+  "id": "call-from-deaths-door",
+  "name": "Call from Death's Door",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Caretaker's Calling"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** The dying condition of an ally you're observing would increase. --- Even death halts in the face of your power. Spend a Mythic Point; the triggering ally loses the dying condition, their wounded condition doesn't increase, and they heal a number of Hit Points equal to twice your level."
+ },
+ {
+  "id": "call-implement",
+  "name": "Call Implement",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "manipulate",
+   "teleportation",
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a free hand. --- You can tug on the bonds of ownership between yourself and your implement, causing it to find its way back to you. You look down and find that your implement has mysteriously appeared in your free hand, as long as the implement was within 1 mile and on the same plane of existence. If your implement is attended by another creature, that creature can prevent the implement from teleporting away if it succeeds at a save against your class DC. If the creature succeeds, you can't attempt to Call that Implement again until midnight."
+ },
+ {
+  "id": "call-of-the-wild",
+  "name": "Call of the Wild",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You call upon the creatures of nature to come to your aid. You can spend 10 minutes in concert with nature to replace a spell you've prepared in one of your druid spell slots with a Summon Animal or Summon Plant or Fungus spell of the same rank."
+ },
+ {
+  "id": "call-the-hunt",
+  "name": "Call The Hunt",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Vindicator Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are observing your hunted prey. --- You instruct your allies on how best to defeat your prey. Until the start of your next turn, whenever your hunted prey is within reach of you and at least one of your allies, it is off-guard to all melee attacks. If you are sanctified, the unarmed attacks and weapon Strikes of you and all your allies gain the benefits of your sanctification against your hunted prey."
+ },
+ {
+  "id": "call-the-hurricane",
+  "name": "Call the Hurricane",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Massive waves spiral around you, with you as the eye of the hurricane. The waves appear in a , or a if you're in a body of water. Each creature in the area takes damage with a save against your class DC. A creature that fails its save is battered by the waves and pushed 10 feet (or 20 feet on a critical failure). --- **Level (+2)** The damage increases by 1d8."
+ },
+ {
+  "id": "call-to-battle",
+  "name": "Call to Battle",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [
+   "Battleblooded"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You lose the unconscious condition. --- You channel the undying spirit of the einherjar to join to fight. You Stand. This movement doesn't trigger reactions."
+ },
+ {
+  "id": "call-wizardly-tools",
+  "name": "Call Wizardly Tools",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "teleportation",
+   "wizard"
+  ],
+  "prerequisites": [
+   "arcane bond"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You're mystically connected to your wizardly tools, ensuring you can always find them when you've misplaced them. You teleport your bonded item or spellbook to you. It arrives in your hand if you have a free hand or at your feet if you don't. The item must be within 1 mile and have 1 Bulk or less."
+ },
+ {
+  "id": "call-your-shot",
+  "name": "Call Your Shot",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Play to the Crowd"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you successfully Play to the Crowd, add the following to the list of benefits you can choose from: - Choose a creature within 30 feet that can see you to become Frightened 2. This effect has the emotion, fear, mental, and visual traits."
+ }
+]

@@ -1,0 +1,79 @@
+{"rulings":[
+ {"id":"cutting-heaven-crushing-earth","upheld":true,"why":"The lead-in clause redirects invested handwraps runes onto a wielded weapon (a real attack/striking/property change); derive.ts bestHandwrapsRunes applies them to unarmed only and no legal field redirects them, so engine work is right.","correction":{}},
+
+ {"id":"cyclonic-ascent","upheld":true,"why":"Self fly Speed for 10 minutes; mode.speeds is a real ModeDef field and \"max(30,@actor.speed.land)\" matches the shipped item-soaring-wings-major formula exactly, with the 14th-level ally clause correctly excluded.","correction":{}},
+
+ {"id":"dancing-leaf","upheld":true,"why":"Real player-side +5 feet, but NOT engine work — RECORD_MARKERS already carries this exact lane (black-powder-boost: on:'action', id:'leap', value:'+10 feet'), and leap/high-jump/long-jump all exist as action ids in core.json.","correction":{"fix":{"situational":[{"on":"action","id":"leap","value":"+5 feet","note":"You jump 5 feet farther when you Leap."},{"on":"action","id":"high-jump","value":"+5 feet","note":"A successful High Jump carries you 5 feet farther."},{"on":"action","id":"long-jump","value":"+5 feet","note":"A successful Long Jump carries you 5 feet farther. When calculating falling damage, don't count any distance fallen while you are adjacent to a wall."}]}}},
+
+ {"id":"deadeye","upheld":true,"why":"A 1-action self toggle granting a sense; mode.senses is a real ModeDef field and \"see-invisibility\" is the shipped vocabulary entry (item-clockwork-goggles-major), with the printed 1-round duration on the pill.","correction":{}},
+
+ {"id":"deadly-aspect","upheld":true,"why":"Injects deadly d8 onto a strike another record granted; derive.ts reads deadly-dN off the strike's own traits and no field edits an already-granted strike, so re-granting it via grantedStrikes would duplicate the attack. Engine work stands.","correction":{}},
+
+ {"id":"deadly-butterfly","upheld":true,"why":"Record carries no critSpec; the fix pairs critSpec with critSpecWeapons (34 shipped `bases` precedents, cf. tengu-weapon-familiarity), butterfly-sword is a real item id, and the follow-on knife clause is correctly withheld.","correction":{}},
+
+ {"id":"deadly-grace","upheld":true,"why":"Grants deadly d8 to wielded agile/finesse melee weapons and doubles deadly dice on a crit — both change the printed crit line, and no field injects a weapon trait or alters deadly-dice multiplication.","correction":{}},
+
+ {"id":"deadly-strikes","upheld":true,"why":"Unconditional deadly d10 (or an upgrade) on every unarmed Strike; the crit line is computed from strike traits and no legal field adds one.","correction":{}},
+
+ {"id":"defiant-banner","upheld":true,"why":"Self resistance set with a real duration; mode.resistances accepts formula strings and derive.ts substituteTokens resolves @actor.abilities.int.mod, with the identical ally-aura benefit correctly excluded.","correction":{}},
+
+ {"id":"defy-death","upheld":true,"why":"Real, but NOT engine work — the app computes no recovery DC anywhere, and RECORD_MARKERS is the shipped surface for exactly this (the-survivor / draddeths-edge / hero-gods-bond all mark on:'condition', id:'dying' with recovery-check text).","correction":{"fix":{"situational":[{"on":"condition","id":"dying","value":"DC 9 + dying (8 with Toughness)","note":"The DC of your recovery checks is 9 + your dying value, or 8 + your dying value if you have the Toughness general feat. Magic that returns you to life never leaves you debilitated for a week."}]}}},
+
+ {"id":"deitys-protection","upheld":true,"why":"Self resistance to all damage; resistance type \"all\" has shipped precedent (stone-body), and floor((@actor.level+1)/2) is exact because domain focus spells are always auto-heightened to half your level rounded up, so it cannot over-grant.","correction":{}},
+
+ {"id":"demons-hair","upheld":true,"why":"Steps up the hair Strike's damage die and adds reach + versatile slashing to it — a printed change to a granted unarmed attack that no field expresses (the quickened clause alone would not have carried the MISS).","correction":{}},
+
+ {"id":"devoted-focus","upheld":true,"why":"Refocus refilling the whole pool is a change to a resource the app actually tracks; SpellsTab's Refocus restores exactly 1 and focusPoolBonus only raises the maximum. No src reference to the feat exists.","correction":{}},
+
+ {"id":"diamond-fists","upheld":true,"why":"Text confirmed: forceful and deadly d10 on all unarmed attacks, with a damage-die step-up for any that already had one. Traits on unarmed strikes have no field and no registry lane.","correction":{}},
+
+ {"id":"diehard","upheld":true,"why":"Verified: conditions.ts dyingDeathThreshold returns Math.max(1, 4 - doomed) with no Diehard term, and src references diehard only as a grant target in featFeatGrants.ts. The number is computed and wrong.","correction":{}},
+
+ {"id":"dire-form","upheld":true,"why":"Text confirms a shape-gated Enlarge; ModeModifier {value,type,target,appliesWhen} is the legal shape and target 'damage' is a legal ModeTargetKind, with size/reach/clumsy carried in the note.","correction":{}},
+
+ {"id":"dire-growth","upheld":true,"why":"Same shape-gated Enlarge, same well-formed mode; the duration correctly reads 'while you remain in your animal shape'.","correction":{}},
+
+ {"id":"disillusionment","upheld":true,"why":"Permanent degree-of-success upgrade on the player's own saves and Perception; the FEAT_SITUATIONAL shape {targets,when,bonus} is correct, non-numeric bonus strings are already shipped, and the feat is absent from the registry.","correction":{}},
+
+ {"id":"distant-archer","upheld":true,"why":"Text confirms a printed -1 to the range-increment penalty with bow-group weapons; the situational entry is well-formed, kind 'strikeAttack' is legal, and the condition is stated in `when` so it cannot over-grant.","correction":{}},
+
+ {"id":"divine-breadth","upheld":true,"why":"Verified: the record carries no spellSlotBonus, occult-breadth/patrons-breadth ship the identical {perRank,exceptHighest,entryId} shape, build.ts consumes exceptHighest, and build.ts stamps archetype pools `${dedicationId}-casting` so 'cleric-dedication-casting' resolves.","correction":{}},
+
+ {"id":"dogfang-bite","upheld":true,"why":"A printed trait added to an already-granted unarmed attack; grantedStrikes can only create a new strike, so re-granting the beak would duplicate it. No field or registry edits an existing strike's traits.","correction":{}},
+
+ {"id":"domain-focus","upheld":true,"why":"Same verified gap as devoted-focus: the Refocus control restores exactly 1 point and no field or flag tells it to refill the pool.","correction":{}},
+
+ {"id":"dragon-arcana","upheld":true,"why":"Confirmed real: the repertoire/preparation picker filters on s.traditions.includes(entry.tradition) (SpellsTab), so a non-arcane Dragon Disciple genuinely cannot reach Haste, Chromatic Wall etc. No field widens a spell list.","correction":{}},
+
+ {"id":"dwarven-doughtiness","upheld":true,"why":"A recovery-rate change to a modelled condition; the RecordMarker shape {on,id,value,note} is exact, 'frightened' is a real condition id, and face-your-fears is the shipped precedent for the same lane.","correction":{}},
+
+ {"id":"eagle-eye","upheld":true,"why":"Unconditional 'master in Perception' and the feat is absent from featGrants/featGrantsAuto/featGrantsLane — but this is NOT engine work: FeatGrant.perception already exists and three master-spotter entries already use it, so it is a one-line FEAT_LANE_GRANTS row.","correction":{"fix":{"perception":"master"}}},
+
+ {"id":"eagle-eyes","upheld":true,"why":"A standing defensive state for the player; RECORD_MARKERS already ships the identical Deny Advantage wording for uncanny-dodge on:'condition', id:'off-guard', and eagle-eyes has no entry.","correction":{}},
+
+ {"id":"echolocation","upheld":true,"why":"Real, but the judge's premise is wrong — 'echolocation' with acuity 'precise' is already in the shipped senses vocabulary, and mode.senses + a duration gates it behind the Seek exactly as printed, so no engine work is needed.","correction":{"fix":{"mode":{"id":"echolocation","name":"Echolocation","feats":["echolocation"],"duration":"until the start of your next turn","modifiers":[],"senses":[{"name":"echolocation","range":40,"acuity":"precise"}],"note":"Switch this on after you Seek: until the start of your next turn you can use hearing as a precise sense with a range of 40 feet. You can also use this sense while you Search."}}}},
+
+ {"id":"eclectic-skill","upheld":true,"why":"Sets the proficiency bonus for every untrained skill to your level — every untrained modifier on the sheet is wrong without it. No field expresses a proficiency rule and the feat is absent from src.","correction":{}},
+
+ {"id":"eclipsed-vitality","upheld":true,"why":"A standing benefit to the player's own Hide/Sneak/Avoid Notice; the RecordMarker action ids hide, sneak and avoid-notice all exist in core.json and quick-refugee ships the identical lane.","correction":{}},
+
+ {"id":"efficient-alchemy","upheld":true,"why":"Verified: AlchemyPanel.tsx line 24 hardcodes `const budget = 4 + intMod` and lines 52/105 block the player past it, so the printed 6 + Int is actively denied. No field raises the budget.","correction":{}},
+
+ {"id":"efficient-preparation","upheld":true,"why":"Verified: build.ts:3041 sets preparedMax: 3 unconditionally, so the printed +1 prepared tactic never arrives and no field raises the count.","correction":{}},
+
+ {"id":"effortless-reach","upheld":true,"why":"Reach on all unarmed attacks with no strike-trait field; the judge is right to reject the feat-level `reach` field, which types.ts documents as natural body reach and would wrongly extend wielded weapons too.","correction":{}},
+
+ {"id":"eliminate-red-herrings","upheld":true,"why":"Permanent degree-of-success upgrade on the player's own Recall Knowledge checks, well-formed in the FEAT_SITUATIONAL shape and correctly scoped by `when` to active investigations.","correction":{}},
+
+ {"id":"embodiment-of-the-balance","upheld":true,"why":"Permanent repertoire access to Heal and Harm; build.ts assembles the apparition repertoire only from attuned apparitions' grantedSpells, and innateSpells/focusSpells would deliver the wrong thing (per-day casts, not repertoire).","correction":{}},
+
+ {"id":"emerald-boughs-accustomation","upheld":true,"why":"Text confirms all three clauses land on the player's own Society checks; the situational entries are well-formed and scoped, and the feat is absent from the registry.","correction":{}},
+
+ {"id":"empathy-incarnate","upheld":true,"why":"Text confirms an always-on Diplomacy DC reduction plus two degree upgrades on the player's own checks; the situational entries are well-formed and the feat is absent from the registry.","correction":{}},
+
+ {"id":"enduring-quickness","upheld":false,"why":"Per-turn action economy, which the app does not model — the same judge ruled divine-reflexes (an extra reaction each turn) NEEDS_NOTHING for exactly this reason, and quickened already exists as a play-state toggle the player can simply leave on.","correction":{"verdict":"NEEDS_NOTHING"}},
+
+ {"id":"enforced-order","upheld":true,"why":"Real and unconditional, but a display star under-delivers: strikeDamage is a genuine feat field consumed for feats at derive.ts:1280 and appended to every Strike's damage line, so the number can actually be paid.","correction":{"fix":{"strikeDamage":[{"type":"lawful","flat":1,"appliesTo":"all","note":"Enforced Order"}]}}},
+
+ {"id":"enlarged-chassis","upheld":true,"why":"Constant enlarge; sizeOverride/reach could carry only half of it and the +2 status to melee damage plus clumsy 1 have no permanent (non-mode) lane, so the package genuinely cannot be expressed as data.","correction":{}}
+]}

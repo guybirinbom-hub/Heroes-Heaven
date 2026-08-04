@@ -1,0 +1,976 @@
+[
+ {
+  "id": "hidden-magic",
+  "name": "Hidden Magic",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Arcana, Nature, Occultism, or Religion",
+   "Vigilante Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to hide the magical auras of your gear. During your daily preparations, you carefully tweak any or all of your magic items to appear non-magical. Objects adjusted in this way remain so until your next preparations. A spellcaster using Detect Magic or Read Aura must succeed at a Perception check against your Deception DC to see through your obfuscations."
+ },
+ {
+  "id": "hideous-ululation",
+  "name": "Hideous Ululation",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Oozemorph Dedication",
+   "trained in Performance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your throat has multiple separate chambers that can give your voice an eerie echo. You can be clearly heard at distances of up to 300 feet regardless of ambient sound, although your voice doesn't penetrate a magical Silence effect."
+ },
+ {
+  "id": "high-quality-scrounger",
+  "name": "High-Quality Scrounger",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "High-Quality Scrounger Source Advanced Player's Guide pg. 190 Archetype Scrounger Prerequisites Scrounger Dedication When you Craft a temporary item using Scrounger Dedication, it can be an item of up to 3rd level (though the item must still be a weapon, armor, or a nonconsumable piece of adventuring gear). You can instead Craft it for someone else's use, allowing them to avoid taking the penalty for using a shoddy item when using it, but causing you to take the penalty if you use it."
+ },
+ {
+  "id": "hilt-hammer",
+  "name": "Hilt Hammer",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Reclaimant Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to turn any weapon into a bone-crushing implement of skeletal destruction. Melee weapons you wield gain the versatile B trait. You can use the weapon only to deal bludgeoning damage when making melee attacks. At the GM's discretion, specific weapons might not be able to gain the versatile B trait."
+ },
+ {
+  "id": "history-of-violence",
+  "name": "History of Violence",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic",
+   "void"
+  ],
+  "prerequisites": [
+   "Apocalypse Rider Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- Your attacks bring with them echoes of previous battles, calling the unquiet victims of your most brutal acts to savage your opponents. Make a Strike. If this Strike hits, you deal additional void damage equal to your key attribute modifier to the target and all enemies within 30 feet. If your attack is a critical hit, you deal twice as much damage instead, and the target of your Strike takes persistent void damage equal to your key attribute modifier as your fallen foes attempt to drag the target into oblivion with them. This Strike counts as two attacks for calculating your multiple attack penalty."
+ },
+ {
+  "id": "hit-and-run",
+  "name": "Hit and Run",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Guerrilla Dedication",
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are unnoticed or undetected by your target. --- Leaping from a hiding place, you quickly attack your foe before retreating. You Stride or Step, then attempt a melee or ranged Strike against a creature. After your Strike, you Sneak away. None of the movement taken as part of this activity triggers reactions."
+ },
+ {
+  "id": "hoarders-craw",
+  "name": "Hoarder's Craw",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [
+   "dragonscaled kobold heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your draconic features include a pouch inside your body that you use to store food prior to digestion. However, instead of swallowing rocks or other minerals to help grind your food, you swallow gold and other precious ores for the same purpose. Inside your craw, you can store up to 100 coins (of any type) or an amount of precious material that's light Bulk (usually a chunk). Items can be concealed inside your craw or regurgitated as an Interact action. Instead of precious material or coins, you can also use your craw to conceal an item of light Bulk but can only do so for up to 1 hour before you must regurgitate it. While carrying anything other than precious material or coins in your craw, you become Clumsy 1 due to the discomfort."
+ },
+ {
+  "id": "hobgoblin-weapon-discipline",
+  "name": "Hobgoblin Weapon Discipline",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "text": "Hobgoblin Weapon Discipline Source Character Guide pg. 51 Prerequisites Hobgoblin Weapon Familiarity You know how to efficiently utilize the weapons soldiers use in close quarters. Whenever you score a critical hit using a weapon of the polearm, spear, or sword group, you apply the weapon’s critical specialization effect."
+ },
+ {
+  "id": "hobnobber",
+  "name": "Hobnobber",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are skilled at learning information through conversation. The Gather Information exploration activity takes you half as long as normal (typically reducing the time to 1 hour). If you're a master in Diplomacy and roll a critical failure to Gather Information, you get a failure instead. There is still no guarantee that a rumor you learn with Gather Information is accurate."
+ },
+ {
+  "id": "holistic-care",
+  "name": "Holistic Care",
+  "level": 6,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Diplomacy",
+   "Treat Condition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You provide emotional and spiritual care. Add frightened, stupefied, and stunned to the list of conditions you can reduce with Treat Condition. If the stunned condition has a duration instead of a value, you can't use Treat Condition to reduce it."
+ },
+ {
+  "id": "holy-light",
+  "name": "Holy Light",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "champion",
+   "cleric",
+   "concentrate",
+   "divine",
+   "light"
+  ],
+  "prerequisites": [
+   "you follow a good-aligned deity"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You raise your arms to the sky and pray fervently, surrounding yourself in a beacon of holy light. The beacon sheds bright light in a 30-foot-radius, 100-foot-high cylinder centered on you until the beginning of your next turn. Evil creatures in the area must succeed at a save equal to your class DC or spell DC (whichever is higher) or become dazzled for 1 round."
+ },
+ {
+  "id": "homing-shot",
+  "name": "Homing Shot",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "magical"
+  ],
+  "prerequisites": [
+   "Eldritch Archer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your shots zip around corners and fly at impossible angles to reach your target. Make a bow or crossbow Strike against a foe you can see; the ammunition travels to your target, even going around corners. You ignore the target's concealed condition and all cover."
+ },
+ {
+  "id": "hook-em",
+  "name": "Hook 'Em",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Pirate Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** A rope is within your reach, or you have a rope or grappling weapon in your hand. --- The Salt Breakers learned to use whatever they could during the Vidric Revolution, and they quickly mastered the art of making a rope into a useful tool in combat. You take hold of a nearby rope, throw a rope from your hand, or fire a grappling weapon at a solid surface—and then swing up to twice your Speed. If you end your movement next to an enemy, attempt an Athletics check to Grapple that enemy, tying them up in your rope."
+ },
+ {
+  "id": "hop-up",
+  "name": "Hop Up",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You lose the unconscious condition. --- Your frog-like agility awakens as soon as you do. You Stand. This movement doesn't trigger reactions."
+ },
+ {
+  "id": "hopping-stride",
+  "name": "Hopping Stride",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dhampir"
+  ],
+  "prerequisites": [
+   "Ru-Shi"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've internalized the hopping gait of your vampiric forebear. Stride up to a distance equal to your Speed - 10 feet. During this Stride, instead of moving through each space normally, you hop over every other square between your starting space and your ending space. These hops aren't high enough to jump over a creature or other significant obstacle in your way, but they avoid difficult terrain, hazardous terrain, pressure plates, or hazards on the ground or up to a foot above it in the spaces you hopped over."
+ },
+ {
+  "id": "hot-foot",
+  "name": "Hot Foot",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pistol Phenom Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a loaded firearm. --- Using a carefully aimed shot, you make a creature \"dance.\" You shoot at the ground near a target's feet, causing them to react involuntarily; even mindless creatures have unconscious responses to dodge an attack, and you can capitalize off those uncontrollable reflexes to achieve your aim. As they dance to the sweet tune of your pistol's retort, you ensure your foe can't use whatever nasty surprise they had planned in store for you and your allies. Make an attack roll against the Reflex DC of a target creature within your firearm's first range increment. --- **Critical Success** The creature can't use reactions, is off-guard, and takes a -2 circumstance penalty to Reflex saves. These effects last until the start of its next turn. **Success** The creature can't use reactions until the start of its next turn."
+ },
+ {
+  "id": "house-of-imaginary-walls",
+  "name": "House of Imaginary Walls",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You erect an imaginary barrier others believe to be real. You learn the House of Imaginary Walls composition cantrip."
+ },
+ {
+  "id": "hulking-size",
+  "name": "Hulking Size",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon grows substantially. Your eidolon becomes Large, instead of its previous size, and its reach increases to 10 feet. This doesn't change any of its other statistics."
+ },
+ {
+  "id": "hungry-goblin",
+  "name": "Hungry Goblin",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "Fang Sharpener"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You'll eat anything and anyone. Whenever you inflict Persistent Bleed Damage with your jaws unarmed attack, you gain temporary Hit Points equal to half your level for 1 minute."
+ },
+ {
+  "id": "hunted-shot",
+  "name": "Hunted Shot",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a ranged weapon with reload 0. --- You take two quick shots against the one you hunt. Make two Strikes against your hunted prey with the required weapon. If both hit the same creature, combine their damage for the purpose of resistances and weaknesses. Apply your multiple attack penalty to each Strike normally."
+ },
+ {
+  "id": "hunters-sanctum",
+  "name": "Hunter's Sanctum",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Undead Slayer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You establish a safe house where you can prepare for your hunt. The sanctum is roughly the size of a 20-foot cube. This sanctum is in a location you have access to and can be part of a larger structure, such as the basement of a temple or hidden room of a library. Setting up or moving your sanctum takes a week of downtime. Your sanctum protects objects and people inside it from magical detection and the prying eyes of undead. This has the effects of Veil of Privacy, using your Religion modifier for the counteract DC and half your level rounded up for the counteract rank. Additionally, undead attempting to locate the entrance to your sanctum via mundane Perception must succeed against either your Religion DC or the normal DC to find the sanctum, whichever is higher."
+ },
+ {
+  "id": "hunting-snag",
+  "name": "Hunting Snag",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Clawdancer Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach uses a move action or leaves a square during a move action it's using. --- Learning from nature's predators has taught you how to keep your prey close. Make a claw or talon unarmed Strike on the triggering creature. If it's a critical hit and the trigger is a move action, disrupt that action. If it hits and the creature left a square adjacent to you, you can Step into that square."
+ },
+ {
+  "id": "hurl-at-the-horizon",
+  "name": "Hurl at the Horizon",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a thrown or melee weapon ikon --- Your weapon flies from your hand as if propelled under its own power. The imbued ikon gains the following ability. **Immanence** Your weapon gains the thrown 15 feet trait, or increases its thrown distance by 10 feet if it already has the thrown trait."
+ },
+ {
+  "id": "hurling-charge",
+  "name": "Hurling Charge",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Viking Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You make a ranged Strike with a thrown weapon you already have in your hand, Stride, and then Interact to draw another weapon. --- **Special** If you are Raging, and end the Stride adjacent to an enemy, that enemy is off-guard against the next Strike you make against it with the weapon you drew before the end of your next turn."
+ },
+ {
+  "id": "hybrid-form",
+  "name": "Hybrid Form",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "kitsune"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you Change Shape, you retain elements of your kitsune form, allowing you to speak in a fox form, use kitsune unarmed attacks in a tailless form, or gain a tail in your tailless form to use abilities that require one. You can Change Shape to alter the details of your hybrid form without fully changing into your true form or your alternate form. While in hybrid form, your foxlike features make it obvious that you aren't a normal humanoid."
+ },
+ {
+  "id": "hybrid-shape",
+  "name": "Hybrid Shape",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "anadi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Mastery of your shapeshifting lets you combine the best features of your humanoid and spider forms. When using your Change Shape ability, you can assume a bipedal hybrid shape. This form gains all the benefits of your spider shape as well as the ability to use items and take manipulate actions just as easily as your human shape."
+ },
+ {
+  "id": "i-am-the-weapon",
+  "name": "I Am the Weapon",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Warshard Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your supernatural bond with your weapon infuses it with a powerful echo of your sentience, your memory, and even fragments of your very soul. When you would be killed while wielding your warshard weapon, you instead disappear and your warshard weapon falls to the ground. You reappear adjacent to your warshard weapon as soon as any sapient creature picks it up. If the creature is a close ally (such as another PC), you return to life with only 1 Hit Point. However, if a stranger does so, you return to life with full Hit Points. At your discretion, you can delay your return to life for up to 24 hours after a creature picks up the weapon, but you still return to life adjacent to your weapon (or as close to it as possible). If no one picks up your weapon within a week of your death, your soul enters the River of Souls, and you can be brought back to life using other means. No matter how you're brought back to life, you can Call Warshard Weapon as a free action as soon as you regain consciousness. Alternatively, if no one picks up your warshard weapon within a week of your death, you can choose to fuse with your weapon rather than entering the River of Souls. You can no longer be brought back to life, but your soul remains bound to the weapon, and together you are an intelligent item, gaining the same Perception modifier, senses, communication, languages, attribute modifiers, and Will save as you. You retain the same Intelligence-, Wisdom-, and Charisma-based skills. You must still"
+ },
+ {
+  "id": "igneogenesis",
+  "name": "Igneogenesis",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You can create a permanent stone object, either sculpting stone pulled directly from your kinetic gate or manipulating earth and stone around you. It must fit within one 5-foot cube that's adjacent to you and on solid ground, and you can make the object large enough to occupy the square. If you create the object underneath you or another willing creature, you cause the target to rise on top of the object; you can't create it under an unwilling creature. This impulse has an unlimited duration, but if you use Igneogenesis again, the object returns to its original location or form. You can spend 1 hour to use Igneogenesis as an exploration activity; in this case, the object is permanent and non-magical. The object can't include any intricate parts or moving pieces. You can attempt a Crafting skill check as part of using this impulse to add details to your creation, such as a symbol, short message, or pattern (with the DC determined by the GM). --- **Level (+3)** You can add an additional 5-foot cube to the object. Each cube must be contiguous."
+ },
+ {
+  "id": "iivlars-deflection",
+  "name": "Iivlar's Deflection",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "jotunborn"
+  ],
+  "prerequisites": [
+   "keeper jotunborn heritage"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are struck by a critical hit that deals physical damage. --- You're able to use the silk woven into your skin to deflect attacks, reducing the deadliness of grievous blows. Attempt a . If you are successful, the attack becomes a normal hit."
+ },
+ {
+  "id": "illimitable-finisher",
+  "name": "Illimitable Finisher",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "flourish",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your strikes flow endlessly. Step and attempt a single one-action finisher. This Strike gains the bravado trait, possibly replenishing your Panache; if you regain panache, you can immediately attempt another finisher as part of this action, ignoring the restriction of using actions with the attack trait after a finisher."
+ },
+ {
+  "id": "imbue-mindlessness",
+  "name": "Imbue Mindlessness",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Command Corpse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You grasp the mind of an undead creature and temporarily wipe it as empty as a zombie's brain. You can target any undead with your divine innate Harm spell, not just mindless undead. When you target one non-mindless undead creature with this spell, you can transform its effects. Instead of harm's normal effects, the target must attempt a Will save. --- **Critical Success** The target is unaffected. **Success** The target is Stupefied 1 for 1 round. **Failure** The target is Stupefied 2 for 1 minute. While it is stupefied, you can use your Corpse Tender feats on the target as though it were mindless. **Critical Failure** As failure, except the target is Stupefied 3 for 10 minutes."
+ },
+ {
+  "id": "immediate-rebuke",
+  "name": "Immediate Rebuke",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Commitment to Justice",
+   "Reactive Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use Reactive Strike when a creature within your reach Strikes one of your allies."
+ },
+ {
+  "id": "immortal-bear",
+  "name": "Immortal Bear",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ursine Avenger Form"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body thrums with the primal vitality of the greatest of the ursine beasts. When in Ursine Avenger Form, you gain fast healing 5."
+ },
+ {
+  "id": "immortal-ruin",
+  "name": "Immortal Ruin",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Apocalypse Rider Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your commitment to ending all life earns you a measure of immortality, setting the stage for you to become a true Rider of the Apocalypse, possibly supplanting one of the Four. You gain the daemon, fiend, and unholy traits, and so does your apocalypse mount, but your fates are ever more entwined. As long as your apocalypse mount lives, you don't age and whenever your doomed or dying condition would increase to 4 or more, it doesn't increase. If you would be killed in any other way, you are instead reduced to 0 Hit Points, become unconscious, and if your apocalypse mount is conscious, it instantly teleports to your side, picks you up, and attempts to flee the scene of danger. While you are conscious and within 30 feet of your apocalypse mount, it can't be killed. If your apocalypse mount is reduced to 0 Hit Points, it immediately stabilizes and its dying condition can't increase. If its doomed condition would increase to 4 or more, it doesn't increase. However, if you move more than 30 feet away from your apocalypse mount or go unconscious during this time, your apocalypse mount loses these benefits and might die. Finally, when a living creature within 60 feet of you dies, it must attempt a saving throw against your class DC or spell DC, whichever is higher. This is an incapacitation effect. On a failure, that creature can't be brought back to life for 24 hours. On a critical failure, you can chose to have that creature's soul coalesce into a fist-sized soul gem (Hardness 2, H"
+ },
+ {
+  "id": "impaling-finisher",
+  "name": "Impaling Finisher",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You stab two foes with a single thrust or bash them together with one punch. Make a bludgeoning or piercing melee Strike and compare the attack roll result against the AC of up to two foes. One foe must be adjacent to you, and the other foe must be adjacent to and directly behind the first foe, in a straight line from your space. Roll damage once and apply it to each creature you hit. An Impaling Finisher counts as two attacks when calculating your multiple attack penalty."
+ },
+ {
+  "id": "impaling-thrust",
+  "name": "Impaling Thrust",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a melee weapon that deals piercing damage. --- You impale your enemy and hold it in place with your weapon, and leave it bleeding when it gets free. Make a melee Strike with a melee weapon that deals piercing damage. If the Strike hits and deals damage, your target is grabbed until it successfully Escapes, you attack with the weapon again, or you Release the required weapon, whichever comes first. When the target is no longer grabbed, it takes persistent bleed damage equal to the weapon's number of weapon damage dice."
+ },
+ {
+  "id": "impeccable-crafting",
+  "name": "Impeccable Crafting",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Crafting",
+   "Specialty Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You craft flawless creations with great efficiency. Whenever you roll a success at a Crafting check to make an item of the type you chose with Specialty Crafting, you get a critical success instead."
+ },
+ {
+  "id": "impenetrable-fog",
+  "name": "Impenetrable Fog",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Fog condenses in a chaotic, swirling pattern, thick enough that it seems to push back against you. You call forth a fog bank in a within 120 feet. All creatures in the fog are concealed, and all creatures outside the fog become concealed to creatures within it. The fog is so magically dense it impedes movement, making the area difficult terrain. The fog lasts until the end of your next turn, and you can Sustain the impulse up to 1 minute. --- **Level (+3)** You can make the radius of the burst larger. Increase its maximum size by 5 feet."
+ },
+ {
+  "id": "imperial-dragon-potion",
+  "name": "Imperial Dragon Potion",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [
+   "heavenscribe kobold heritage",
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "During your daily preparations, you can spend 10 minutes to create a variant *energy breath potion*, which has the kobold trait in addition to its normal traits. The variant potion is influenced by imperial dragon magic, granting it the effect corresponding to your dragon benefactor; the DC for the breath is the higher of your class DC or spell DC. The potion becomes inert if not used by your next daily preparations, so it has no value if sold. | Dragon | Effect (Save) | | --- | --- | | Forest | Insects dealing piercing damage in a () | | Sea | Water dealing bludgeoning damage in a () | | Sky | Lightning dealing electricity damage in a () | | Sovereign | A psychic roar dealing mental damage in a () | | Underworld | Flames that deal fire damage in a () |"
+ },
+ {
+  "id": "implausible-infiltration",
+  "name": "Implausible Infiltration",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "magical",
+   "move",
+   "rogue"
+  ],
+  "prerequisites": [
+   "legendary in Acrobatics",
+   "Quick Squeeze"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are adjacent to a floor or vertical wall. --- You find tiny imperfections and somehow fit yourself through them, possibly moving directly through the wall or floor. Your movement attempt fails if the wall or floor is made of something other than wood, plaster, or stone; is thicker than 10 feet; or contains even a thin layer of metal. If you have a climb Speed, you can use this ability to attempt to move through a ceiling."
+ },
+ {
+  "id": "implausible-purchase",
+  "name": "Implausible Purchase",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "text": "Implausible Purchase Source Player Core 2 pg. 113 Archetype Twilight Talon (Level 18) Prerequisites Predictive Purchase It seems impossible, but you've analyzed every angle and are able to just keep pulling out exactly the item you need, even in far-flung locations. You can use Prescient Planner even if you have already used it after purchasing goods, and you can use it as a single action instead of a 2-action activity, during which you Interact to draw the item. In addition, five times per day, you can use Prescient Planner to pull out a common consumable item up to 6 levels lower than your level."
+ },
+ {
+  "id": "implausible-purchase-rogue",
+  "name": "Implausible Purchase (Rogue)",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "Predictive Purchase"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use Prescient Planner even if you have already used it after purchasing goods, and you can Interact to draw the item as a single action instead of a 2-action activity. In addition, five times per day, you can use Prescient Planner to pull out a common consumable item up to 6 levels lower than your level."
+ },
+ {
+  "id": "implement-initiate",
+  "name": "Implement Initiate",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Thaumaturge Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Mastery of an implement is the sign of a studied thaumaturge. You gain your implement's initiate benefit. If the benefit affects the target of Exploit Vulnerability, for you it affects the target of Glimpse Vulnerability instead."
+ },
+ {
+  "id": "implements-assault",
+  "name": "Implement's Assault",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "magical",
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You're holding an implement. --- Your implement supercharges your weapon to shoot an impossible volley or carve through your foes. Make a Strike with your weapon against each enemy within 30 feet of you. You don't increase your multiple attack penalty until after making all the attacks. If your weapon is a melee weapon and any of the attacks are outside your reach, you Release the weapon before the Strikes, and it returns to your grasp after all of them. If your hands are full when the weapon returns, it falls to the ground in your space."
+ },
+ {
+  "id": "impose-order-psychic",
+  "name": "Impose Order (Psychic)",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "fortune",
+   "psyche",
+   "psychic"
+  ],
+  "prerequisites": [
+   "precise discipline subconscious mind"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You bring discipline to your mind and magic, ensuring that you don't under-perform. Until the end of your turn, instead of rolling dice for damage, count each damage die as average damage rounded up (3 for d4, 4 for d6, 5 for d8, 6 for d10, and 7 for d12)."
+ },
+ {
+  "id": "imposing-destrier",
+  "name": "Imposing Destrier",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Loyal Warhorse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Under your care, your mount has realized its innate potential. The mount you gained with Faithful Steed is now a nimble or savage animal companion. Your animal companion has greater independence. During an encounter, even if you don't use the Command an Animal action, your animal companion can still use 1 action that round on your turn to Stride or Strike. It can do this at any point during your turn, as long as you aren't currently taking an action. If it does, that's all the actions it gets that round—you can't Command it later."
+ },
+ {
+  "id": "impossible-flurry",
+  "name": "Impossible Flurry",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You are wielding two melee weapons, each in a different hand. --- You forgo precision to attack at an impossible speed. Make three melee Strikes with each of the required weapons. Your first attack with each weapon takes the multiple attack penalty as though you had already made one attack this turn. All of the remaining Strikes take the maximum multiple attack penalty."
+ },
+ {
+  "id": "impossible-riposte",
+  "name": "Impossible Riposte",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "Opportune Riposte"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ripostes can deflect attacks back at their source. You can use Opportune Riposte with a trigger of \"A foe outside of your reach critically fails an attack roll against you\" in addition to its usual trigger. When you use Opportune Riposte with this new trigger against a ranged attack, your Strike deflects some of the triggering effect back toward its source. Compare the result of your attack roll to the AC of the triggering foe. On a hit, you deal the normal amount of damage for your Strike, but the damage type changes to that of the triggering attack. For instance, if you used Opportune Riposte to deflect a Blazing Bolt, your Strike would deal fire damage instead of its normal damage type."
+ },
+ {
+  "id": "impossible-striker",
+  "name": "Impossible Striker",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "Sly Striker"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Nothing can prevent you from making a sneak attack, even if your opponent can see every blow coming. Instead of dealing the damage from Sly Striker, you can deal your full sneak attack damage to a target even if the target isn't off-guard."
+ },
+ {
+  "id": "impossible-technique",
+  "name": "Impossible Technique",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "fortune",
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy's attack hits you or you fail a saving throw against an enemy's ability. **Requirements** You are not armored or fatigued. --- You execute a maneuver that defies possibility. If the triggering effect was an enemy's attack hitting you, the enemy rerolls the attack roll and uses the lower result. If the triggering effect was you failing a saving throw, you reroll the saving throw and use the higher result."
+ },
+ {
+  "id": "impossible-volley",
+  "name": "Impossible Volley",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You are wielding a ranged weapon with the volley trait and reload 0. --- You fire a volley at all foes in an area. Make one Strike with a –2 penalty against each enemy within a centered at or beyond your weapon's volley range. Roll the damage only once for all targets. Each attack counts toward your multiple attack penalty, but do not increase your penalty until you have made all your attacks."
+ },
+ {
+  "id": "impressive-landing",
+  "name": "Impressive Landing",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You fall at least 10 feet and land on a solid surface. --- You slam into the ground, shattering it around you. Treat the fall as 10 feet shorter. You land on your feet. The ground in a becomes difficult terrain. Any creature in the emanation when you land takes damage as the debris hits it and is off-guard until the start of its next turn."
+ },
+ {
+  "id": "impressive-mount",
+  "name": "Impressive Mount",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cavalier Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained your mount to become a powerful force on the battlefield. The mount you gained through the Cavalier Dedication feat becomes a mature animal companion, granting it additional capabilities. Your mount has greater independence. During an encounter, even if you don't use the Command an Animal action, your mount can still use 1 action that round on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed). It can do this at any point during your turn, as long as you aren't currently taking an action. If it does, that's all the actions it gets that round—you can't Command it later."
+ },
+ {
+  "id": "impressive-performance",
+  "name": "Impressive Performance",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Performance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your performances inspire admiration and win you fans. You can make-an-impression skill=performance using Performance instead of Diplomacy. If you spend at least 10 minutes performing in front of an audience, you can Make an Impression targeting up to 10 members of the audience who were there for the whole performance, without taking the normal penalty. The number of targets increases to 20 for a 1-hour performance and 50 for a 2-hour performance."
+ },
+ {
+  "id": "improved-command-corpse",
+  "name": "Improved Command Corpse",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Command Corpse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Command Undead on a mindless undead, if the undead succeeds at its save but doesn't critically succeed, it becomes your minion for 1 round. If the undead fails its save, it becomes your minion for 1 hour. If it critically fails, it becomes your minion for 24 hours."
+ },
+ {
+  "id": "improved-command-undead",
+  "name": "Improved Command Undead",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "harmful font",
+   "Command Undead",
+   "evil alignment"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Undead creatures find it all but impossible to resist your commands. When you use Command Undead, if the undead succeeds at its save but doesn't critically succeed, it is your minion for 1 round. If the undead fails its save, it is your minion for 10 minutes. If it critically fails, it is your minion for 24 hours."
+ },
+ {
+  "id": "improved-communal-healing",
+  "name": "Improved Communal Healing",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "text": "Improved Communal Healing Source Core Rulebook pg. 123 Prerequisites Communal Healing You can direct excess channeled energy outward to benefit an ally. You can grant the Hit Points you would regain from Communal Healing to any one creature within the range of your heal spell instead of yourself. You can also use Communal Healing when you target only yourself with a heal spell, though if you do, you must grant the additional healing to someone other than yourself."
+ },
+ {
+  "id": "improved-dueling-riposte",
+  "name": "Improved Dueling Riposte",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Dueling Riposte"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your weapon whirls and darts, striking foes whenever the slightest opening or moment of weakness presents itself. You can use Dueling Riposte even if you aren't benefiting from Dueling Parry (though you must be wielding a single one-handed weapon and nothing else). At the start of each of your turns, you gain an additional reaction that you can use only to make a Dueling Riposte."
+ },
+ {
+  "id": "improved-elemental-blast",
+  "name": "Improved Elemental Blast",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Kineticist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The power of your elemental blast improves. The damage of your elemental blast increases by one die. --- **Special** You can take Improved Elemental Blast a second time at 14th level to increase your Elemental Blast to three damage die, and a third time at 18th level to increase your Elemental Blast to four damage die."
+ },
+ {
+  "id": "improved-elemental-bulwark",
+  "name": "Improved Elemental Bulwark",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "suli"
+  ],
+  "prerequisites": [
+   "Elemental Bulwark"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain resistance 10 from Elemental Bulwark instead of 5."
+ }
+]

@@ -1,0 +1,121 @@
+{"records":[
+ {"id":"cutting-heaven-crushing-earth","verdict":"MISS","reason":"While you wear invested handwraps of mighty blows, their runes also apply to one wielded weapon usable with Overwhelming Combination - a real change to that weapon's attack bonus, striking dice and property runes on the Strikes page. derive.ts:1005 (bestHandwrapsRunes) applies handwraps runes to unarmed Strikes only, and no legal field redirects them to a carried weapon. The two off-guard clauses are target-side and correctly ignored.","fix":{"needsEngineWork":true}},
+
+ {"id":"cyclonic-ascent","verdict":"MISS","reason":"A 2-action impulse that gives YOU a fly Speed equal to your land Speed or 30 feet for 10 minutes - a toggleable self Speed, exactly the toggle-modes lane (cf. item-soaring-wings-major, speeds.fly \"max(20,@actor.speed.land)\"). The 14th-level clause only grants fly to other creatures, so it is ally-side and stays out of the fix.","fix":{"mode":{"id":"cyclonic-ascent","name":"Cyclonic Ascent","feats":["cyclonic-ascent"],"duration":"10 minutes","modifiers":[],"speeds":{"fly":"max(30,@actor.speed.land)"},"note":"Fly Speed equal to your land Speed or 30 feet, whichever is greater, for 10 minutes. You can move upward without treating it as difficult terrain, and you can stay aloft at the end of your turn if you used an air impulse that turn. At 14th level you can also give up to five other creatures a fly Speed - that is ally-side, not on your sheet."}}},
+
+ {"id":"dalangs-ally","verdict":"NEEDS_NOTHING","reason":"Grants flanking against enemies in your reach for a round - a positional battlefield state resolved at the table that changes only the targets' off-guard status."},
+
+ {"id":"dance-underfoot","verdict":"NEEDS_NOTHING","reason":"Lets you end a Tumble Through or Step in a Large creature's space, explicitly at GM discretion; pure positioning, no sheet value."},
+
+ {"id":"dancing-leaf","verdict":"MISS","reason":"A flat +5 feet to the distance of every Leap, High Jump and Long Jump, plus ignoring wall-adjacent distance when computing falling damage. Both are concrete printed numbers the player is owed, but the engine has no jump-distance or falling-damage lane - jump feats appear only as situational Athletics CHECK bonuses (situationalBonuses.ts), which is a different thing and would be the wrong fix here.","fix":{"needsEngineWork":true}},
+
+ {"id":"dangle","verdict":"NEEDS_NOTHING","reason":"Permission to hang by your tail with your hands free, subject to GM discretion; no statistic changes."},
+
+ {"id":"dangle-vanara","verdict":"NEEDS_NOTHING","reason":"Same GM-adjudicated hanging permission as Dangle, packaged as a 1-action; no statistic changes."},
+
+ {"id":"danse-macabre","verdict":"NEEDS_NOTHING","reason":"Moves your raised horde and forces Reflex saves and Repositions on creatures it passes - entirely target-side and resolved in play."},
+
+ {"id":"daring-flourish","verdict":"NEEDS_NOTHING","reason":"Adds a Strike or Disarm at the end of Daring Act and makes the TARGET off-guard; both resolve in play on the enemy's side."},
+
+ {"id":"darting-monkey","verdict":"NEEDS_NOTHING","reason":"Suppresses the off-guard you would take from one flanking creature after you hit it; flanking and off-guard are positional states the sheet never tracks, and it is not a numeric bonus."},
+
+ {"id":"dashing-pickup","verdict":"NEEDS_NOTHING","reason":"An activity that Commands your mount to move and lets you Mount mid-movement; mount handling and positioning are resolved at the table."},
+
+ {"id":"dashing-strike","verdict":"NEEDS_NOTHING","reason":"An action that combines a Stride with a melee Strike; no statistic changes."},
+
+ {"id":"dastardly-dash","verdict":"NEEDS_NOTHING","reason":"An action combining a half Stride with a Trip or Dirty Trick attempt; resolved in play."},
+
+ {"id":"daunting-spell","verdict":"NEEDS_NOTHING","reason":"A spellshape that adds traits and frightened/stupefied riders to the SPELL'S TARGETS; the mythic-proficiency swap applies only when every target is your nemesis, a GM-adjudicated condition, and is not a persistent sheet value."},
+
+ {"id":"daywalker","verdict":"NEEDS_NOTHING","reason":"Suppresses your void healing only while you stand in direct natural sunlight - an environmental, GM-called flip of the dhampir healing rule; no legal field expresses a healing-polarity switch and no number changes."},
+
+ {"id":"daywalker-vampire","verdict":"ALREADY_OK","reason":"The mechanical payload is the undead benefits package, whose immunity set is already on the sheet: vampire-dedication carries immunities [\"death effects\",\"disease\",\"paralyzed\",\"poison\",\"sleep\"]. The rest only removes the sunlight-destruction drawback (and explicitly not the slowed condition), which the app does not model as a statistic."},
+
+ {"id":"dazing-blow","verdict":"NEEDS_NOTHING","reason":"A Strike against a grabbed creature that stuns the TARGET on a failed save; entirely target-side."},
+
+ {"id":"dazzling-dragonet-disappearance","verdict":"NEEDS_NOTHING","reason":"A reaction that dazzles the triggering enemy (target-side) and puts a momentary 4th-rank spell effect on you; it is not a per-day innate spell you cast and leaves no persistent sheet value."},
+
+ {"id":"dead-reckoning","verdict":"NEEDS_NOTHING","reason":"You intuit which way is north - pure information, adjudicated by the GM."},
+
+ {"id":"deadeye","verdict":"MISS","reason":"For 1 round you perceive invisible creatures and objects, which become merely concealed to you - precisely the see-invisibility sense the data already uses (core.json, toggle-modes.json), granted by a 1-action toggle. Nothing on the record delivers it.","fix":{"mode":{"id":"deadeye","name":"Deadeye","feats":["deadeye"],"duration":"until the start of your next turn","modifiers":[],"senses":[{"name":"see-invisibility"}],"note":"Until the start of your next turn you see invisible creatures and objects as silhouettes, making them merely concealed from you rather than undetected."}}},
+
+ {"id":"deadly-aspect","verdict":"MISS","reason":"The unarmed attack granted by Draconic Aspect permanently gains the deadly d8 trait, which changes the crit damage line the Strikes page prints (derive.ts:1421 reads deadly-dN off the strike's traits). No legal field injects a trait onto an already-granted strike.","fix":{"needsEngineWork":true}},
+
+ {"id":"deadly-butterfly","verdict":"MISS","reason":"Grants the butterfly sword's critical specialization effect; the record carries no critSpec at all (items.butterfly-sword exists, group sword). The follow-on knife-group clause only triggers if you already had the effect and only one crit spec can apply at a time, so it is deliberately left out rather than over-granted.","fix":{"critSpec":true,"critSpecWeapons":{"bases":["butterfly-sword"]}}},
+
+ {"id":"deadly-casework","verdict":"NEEDS_NOTHING","reason":"Extends Pursue a Lead to an assassination target and raises the Skill Stratagem bonus only while investigating that GM-defined target; the lead/investigation subsystem and its target are not sheet values."},
+
+ {"id":"deadly-grace","verdict":"MISS","reason":"Any agile or finesse melee weapon you wield that lacks the deadly trait gains deadly d8, and deadly dice double on a crit - both change the crit line the Strikes page prints, and no field injects a weapon trait or alters deadly-dice multiplication.","fix":{"needsEngineWork":true}},
+
+ {"id":"deadly-mutation","verdict":"NEEDS_NOTHING","reason":"Upgrades the damage dice and adds persistent damage to Spit Ambient Magic's targets; damage dealt by a granted action is resolved when that action is used and appears nowhere on the sheet."},
+
+ {"id":"deadly-poison-weapon","verdict":"NEEDS_NOTHING","reason":"Raises the damage and the resist DC of poisons you apply to a weapon - both are target-side numbers resolved when the poison is used."},
+
+ {"id":"deadly-simplicity","verdict":"ALREADY_OK","reason":"Delivered by the engine: rules/derive.ts:916 deadlySimplicityDie(), gated on the feat at derive.ts:930, applied to the favored weapon at derive.ts:1383 and to unarmed at derive.ts:1569, with the favored-weapon prerequisite gate at rules/build.ts:2205 and 3583."},
+
+ {"id":"deadly-strikes","verdict":"MISS","reason":"All your unarmed attacks gain (or upgrade to) deadly d10, changing the crit damage line printed for every unarmed Strike; no legal field injects a deadly trait onto unarmed attacks.","fix":{"needsEngineWork":true}},
+
+ {"id":"death-from-above-eternal-legend","verdict":"NEEDS_NOTHING","reason":"An activity combining vertical movement with a Strike that deals extra dice and may stun the target; all of it resolves in play against the target."},
+
+ {"id":"death-rattle","verdict":"NEEDS_NOTHING","reason":"Dismisses your horde and drains nearby creatures on a failed save - entirely target-side."},
+
+ {"id":"deathguard","verdict":"NEEDS_NOTHING","reason":"You and your allies become concealed while sharing the horde's space; a positional battlefield state, not a sheet value."},
+
+ {"id":"deaths-door","verdict":"NEEDS_NOTHING","reason":"A once-per-10-minutes reaction granting temporary Hit Points when a blow would drop you; temp HP is entered on the HP control when it happens, and 'per 10 minutes' is not an expressible limitedUses period."},
+
+ {"id":"debilitating-bomb","verdict":"NEEDS_NOTHING","reason":"An additive that makes a bomb impose dazzled/deafened/off-guard/-5 Speed on the TARGET after a failed save; the choice and the effect are entirely target-side."},
+
+ {"id":"debilitating-breath","verdict":"NEEDS_NOTHING","reason":"Applies clumsy/enfeebled/stupefied to creatures that fail their save against your breath weapon - target-side only."},
+
+ {"id":"debilitating-dichotomy","verdict":"NEEDS_NOTHING","reason":"A cursebound activity that damages you and one target with a save; the self-damage is applied by hand when used and no persistent statistic changes."},
+
+ {"id":"debilitating-shot","verdict":"NEEDS_NOTHING","reason":"A 2-action ranged Strike that slows the target on a hit; target-side."},
+
+ {"id":"deceptive-deduction","verdict":"NEEDS_NOTHING","reason":"A reaction revealing which skill another creature used, then letting you Recall Knowledge with Deception in its place for a minute; skill substitution has no field and the information is GM-supplied."},
+
+ {"id":"deceptive-worship","verdict":"NEEDS_NOTHING","reason":"Lets you roll Occultism in place of Deception for narrow Impersonate/Lie uses; the engine has no skill-substitution lane and no bonus or proficiency changes."},
+
+ {"id":"decisive-swimmer","verdict":"NEEDS_NOTHING","reason":"Lets you Request with Athletics instead of Diplomacy in one narrow social situation; a skill substitution with no numeric change and no field to hold it."},
+
+ {"id":"decree-of-execution","verdict":"NEEDS_NOTHING","reason":"A mythic activity whose entire effect (death, damage, weakness, stunned, 1-year immunity) lands on the target."},
+
+ {"id":"decry-thief","verdict":"NEEDS_NOTHING","reason":"Replaces Demoralize's outcome with Speed and Stealth penalties on the TARGET; target-side only."},
+
+ {"id":"deduce-habits","verdict":"NEEDS_NOTHING","reason":"A prediction yielding GM-authored information about where an observed person will be; pure information, nothing to compute."},
+
+ {"id":"deep-roots","verdict":"NEEDS_NOTHING","reason":"Deals damage to a target that critically failed against your mind-control spell when the effect ends; target-side damage resolved in play."},
+
+ {"id":"deeper-dabbler","verdict":"NEEDS_NOTHING","reason":"Lets you make two extra talismans during daily preparations; the Talisman Dabbler daily talisman count is not modelled anywhere in the app (no talisman-dabbler reference in src/), and the feat changes no statistic."},
+
+ {"id":"defend-mount","verdict":"NEEDS_NOTHING","reason":"A reaction substituting your defenses for your MOUNT'S against one attack; it changes the mount's side of an attack resolution, not your sheet."},
+
+ {"id":"defend-our-union","verdict":"NEEDS_NOTHING","reason":"A reaction that Strides, Strikes, and reduces damage dealt to your COMPANION; companion-side and resolved in play."},
+
+ {"id":"defensive-advance","verdict":"NEEDS_NOTHING","reason":"An activity bundling Raise a Shield, a Stride, and a Strike; each component already exists and no statistic changes."},
+
+ {"id":"defensive-dismissal","verdict":"NEEDS_NOTHING","reason":"A reaction that Dismisses a polymorph effect to downgrade a critical hit to a hit; a one-off attack-resolution change made at the table."},
+
+ {"id":"defensive-growth","verdict":"NEEDS_NOTHING","reason":"A reaction conjuring a temporary wooden shield with printed Hardness/HP/BT and Shield Blocking with it; a transient conjured item resolved in play, not a shield in your inventory."},
+
+ {"id":"defensive-needles","verdict":"NEEDS_NOTHING","reason":"Deals 2 (up to 5) piercing damage to a creature that grabs or unarmed-strikes you - damage applied to the attacker, i.e. target-side."},
+
+ {"id":"defensive-roll","verdict":"NEEDS_NOTHING","reason":"A once-per-10-minutes free action halving the damage of one lethal attack; a per-incident damage adjustment made at the table, and 'per 10 minutes' is not an expressible limitedUses period."},
+
+ {"id":"defensive-swap","verdict":"NEEDS_NOTHING","reason":"A reaction swapping your position with an ally and redirecting the attack's target; positional and ally-side."},
+
+ {"id":"defiance-unto-death","verdict":"NEEDS_NOTHING","reason":"Grants an extra Will save at the start of your turn to become paralyzed instead of confused/controlled/fleeing; a re-save option resolved in play, not a bonus or statistic."},
+
+ {"id":"defiant-banner","verdict":"MISS","reason":"A 1-action brandish giving YOU resistance to bludgeoning, piercing and slashing equal to your Intelligence modifier until the start of your next turn - a toggleable self resistance set, and the engine already resolves \"@actor.abilities.int.mod\" (derive.ts:610). Nothing delivers it. The identical benefit to allies in the banner's aura is ally-side and left out.","fix":{"mode":{"id":"defiant-banner","name":"Defiant Banner","feats":["defiant-banner"],"duration":"until the start of your next turn","modifiers":[],"resistances":[{"type":"bludgeoning","value":"@actor.abilities.int.mod"},{"type":"piercing","value":"@actor.abilities.int.mod"},{"type":"slashing","value":"@actor.abilities.int.mod"}],"note":"Resistance to bludgeoning, piercing and slashing equal to your Intelligence modifier until the start of your next turn. Allies inside your banner's aura gain the same resistance - that belongs on their sheets, not yours."}}},
+
+ {"id":"define-report","verdict":"NEEDS_NOTHING","reason":"A fortune effect rerolling a failed Deception check with your Diplomacy modifier; a reroll is resolved at the table and is not a bonus to any statistic."},
+
+ {"id":"deflecting-pulse","verdict":"NEEDS_NOTHING","reason":"Grants the Turn Aside Ambient Magic action, whose resistance is chosen and applied when the action is used; the record already links the action (descRefs -> actions: Turn Aside Ambient Magic) and there is no persistent statistic to set."},
+
+ {"id":"deflecting-wave","verdict":"NEEDS_NOTHING","reason":"A reaction granting resistance only against the one triggering effect; it is not a standing resistance and is applied while that damage is resolved."},
+
+ {"id":"defy-death","verdict":"MISS","reason":"Your recovery-check DC becomes 9 + dying value (8 with Toughness) instead of the standard 10 + dying value - a real player-side number the app already surfaces for the dying condition (situationalBonuses.ts carries on:'condition', id:'dying' entries), but no legal field expresses a recovery-DC change. The Raise Dead clause is GM-side and needs nothing.","fix":{"needsEngineWork":true}},
+
+ {"id":"defy-fey","verdict":"NEEDS_NOTHING","reason":"Grants a second save at the start of your next turn against a fey spell you failed; a re-save option resolved in play, not a bonus."},
+
+ {"id":"defy-sorrow","verdict":"NEEDS_NOTHING","reason":"A reaction granting the quickened condition usable only to Step or Stride; a temporary condition applied in play."}
+]}

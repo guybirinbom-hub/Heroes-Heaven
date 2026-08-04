@@ -1,0 +1,739 @@
+[
+ {
+  "id": "whispers-of-warning",
+  "name": "Whispers of Warning",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "animist",
+   "apparition",
+   "divine",
+   "misfortune",
+   "wandering"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** You would be hit, but not critically hit, by an attack. --- Your protective apparitions alert you to an incoming attack. The attacker must roll its attack roll a second time and take the lower result."
+ },
+ {
+  "id": "wide-overwatch",
+  "name": "Wide Overwatch",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Overwatch Dedication",
+   "master in Perception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through a variety of perceptive techniques, careful routines, and upgrades to your enhanced visual gear, you have become able to observe and maintain your overwatch at a much greater distance. Increase the size of your overwatch field from 30 feet to 60 feet."
+ },
+ {
+  "id": "widen-spell",
+  "name": "Widen Spell",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "druid",
+   "manipulate",
+   "oracle",
+   "sorcerer",
+   "spellshape",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You manipulate the energy of your spell, causing it to spread out and affect a wider area. If the next action you use is to Cast a Spell that has an area of a burst, cone, or line and does not have a duration, increase the area of that spell. Add 5 feet to the radius of a burst that normally has a radius of at least 10 feet (a burst with a smaller radius is not affected). Add 5 feet to the length of a cone or line that is normally 15 feet long or smaller, and add 10 feet to the length of a larger cone or line."
+ },
+ {
+  "id": "widen-the-gap",
+  "name": "Widen the Gap",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Turpin Rowe Lumberjack Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Once you have penetrated a foe's defenses, you can home in on the same spot to exploit your opponent's wound and deal some serious damage. The second time you hit and deal damage with a melee axe Strike to the same opponent or object during your turn, you ignore half of the opponent's or object's Hardness, if any. If you hit and deal damage with a melee axe Strike to the same opponent or object a third or fourth time during your turn, you ignore all of its Hardness, if any."
+ },
+ {
+  "id": "wild-lights",
+  "name": "Wild Lights",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast dancing lights"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Light, you can modify its duration to be 1 minute and modify its standard effects to create a single floating light in the shape of a Tiny creature, instead of up to four floating lights. The creature hovers over your head unless you spend a single action that has the concentrate trait to direct the light to move up to 30 feet, in which case it remains there until you direct it again. If you direct it back to your head, it hovers there and follows you again until you direct it elsewhere. If the light ever moves beyond 120 feet of you, it winks out immediately."
+ },
+ {
+  "id": "wiles-on-the-wind",
+  "name": "Wiles on the Wind",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "air",
+   "auditory",
+   "illusion",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Speaking lies, you set them loose upon a drifting wind. You create an auditory illusion that comes from a square within 500 feet and can be as loud as four normal humans talking. The sound can be intricate, including speech or music, though the GM might require you to attempt a check or know a language for it to be convincing. The illusion lasts until the end of your next turn, and you can Sustain the impulse. You can have any creature within 40 feet of the illusion, or that comes within 40 feet of it during the duration, attempt a save against your class DC. This is a mental effect. --- **Success** The creature is unaffected, disbelieves the illusion, and is temporarily immune for 1 hour. **Failure** The creature is fascinated with the source of the sound until the end of its next turn. When the fascination ends, the creature is temporarily immune for 1 hour. **Critical Failure** As failure, but the creature is fascinated for 1 minute or until it disbelieves."
+ },
+ {
+  "id": "wind-tossed-spell",
+  "name": "Wind-Tossed Spell",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "air",
+   "archetype",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication",
+   "air is in your elemental philosophy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You enhance your spell with elemental air, using the wind to find your target and carry your magic around cover. If the next action you use is to Cast a Spell that requires a spell attack roll, you ignore the target's concealed condition and any cover they have from you. The spell gains the air trait."
+ },
+ {
+  "id": "windborne-shove",
+  "name": "Windborne Shove",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "guardian's Calling"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The hero-god of phalanxes and winds, grand Konebrys, led a force of dozens against an army of thousands. They gathered their soldiers in tight ranks, then marched against the wind to take the enemy by surprise. When a gust pushed the foes back, they struck their victorious blow. You emulate Konebrys's tactics in pushing small forces against mighty foes. Whenever you are adjacent to an ally, creatures that attempt to Tumble Through your space take a –2 circumstance penalty to their Acrobatics check. When you critically succeed on a melee Strike against an enemy, you can immediately attempt to Shove your target as a free action. You can spend a Mythic Point on this Shove attempt to do so at mythic proficiency."
+ },
+ {
+  "id": "wing-bounce",
+  "name": "Wing Bounce",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You rush forward, flapping your wings for a bit of lift, and can use that momentum to knock down a foe. Leap, and if you land within melee reach of at least one enemy, you can attempt to Trip that enemy. You don't need to have one hand free. If you successfully knock the target prone, you can Leap again. If you have a fly Speed, you can Fly instead of Leap."
+ },
+ {
+  "id": "wing-shove",
+  "name": "Wing Shove",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're flanked by at least two enemies. --- You spread your wings wide, pushing foes away from you. Attempt to Shove one of the flanking enemies, and then make a second Shove attempt against a different enemy that is flanking you. You don't need one hand free. The second Shove attempt has the same multiple attack penalty as the first and doesn't count toward your multiple attack penalty. On a success or critical success, you can't Stride after a target, but that target is also off-guard until the beginning of their next turn. On a critical failure, you're off-guard until the beginning of your next turn instead of falling prone."
+ },
+ {
+  "id": "wing-step",
+  "name": "Wing Step",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "strix"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "With a sharp flap of your wings, you stay light on your feet as you move. You Step 5 feet twice."
+ },
+ {
+  "id": "winged-leap",
+  "name": "Winged Leap",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Drake Rider Dedication",
+   "dragon companion with the mount special ability"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While drakes and dragons are able flyers, they're uncomfortable carrying a rider in the air without special training. Through hard work, nerves of steel, and the deep bond you share with your draconic companion, your companion has learned to carry you skyward, if only briefly. Your dragon companion gains the Winged Leap action."
+ },
+ {
+  "id": "winged-warrior-dedication",
+  "name": "Winged Warrior Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "you have permanent wings (such as from an ancestry or graft)"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through rigorous training, you have strengthened your wings, granting you enough thrust to gain additional altitude. When you make a horizontal Leap, increase the distance by 10 feet up to a maximum of your Speed. Any fly Speed granted by ancestry feats and other permanent wings increases by 5 feet."
+ },
+ {
+  "id": "winglets",
+  "name": "Winglets",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through the lingering influence of your warren's patron, you've sprouted a small set of wings. While not suitable for full flight, these weak wings can help you jump further with a small flap. When Leaping horizontally, you move an additional 5 feet. This additional distance isn't cumulative with the increased Leap distance from the Powerful Leap feat. In addition, when you attempt a Long Jump, you can jump a distance up to 10 feet farther than you normally would based on the result of your Athletics check, though you still can't jump farther than your Speed. You don't automatically fail your checks to High Jump or Long Jump if you don't Stride at least 10 feet first."
+ },
+ {
+  "id": "wings-of-the-moon",
+  "name": "Wings of the Moon",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "your animal shape has a fly Speed"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can stay aloft with Fly normally when using the fly Speed from your animal shape, letting you fly long distances without breaks."
+ },
+ {
+  "id": "winter-cat-senses",
+  "name": "Winter Cat Senses",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [
+   "Winter Catfolk Heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eyes are keen and accustomed to winter conditions. You ignore concealment caused by ice and snow."
+ },
+ {
+  "id": "winters-clutch",
+  "name": "Winter's Clutch",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "cold",
+   "impulse",
+   "kineticist",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Gleaming flakes of chilling snow fall in a within 60 feet. Each creature in the area takes damage with a save against your class DC. The ground in the area is covered in a snow drift, which is difficult terrain. Each square of the drift lasts until it melts, either naturally or until fire damage is dealt in that square. --- **Level (+2)** The damage increases by 1d4."
+ },
+ {
+  "id": "witchs-communion",
+  "name": "Witch's Communion",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "Witch's Charge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can keep watch over multiple charges. Each day during your preparations, you can designate a number of charges equal to your Intelligence modifier instead of just one."
+ },
+ {
+  "id": "witchs-hut",
+  "name": "Witch's Hut",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your home is an animated structure that obeys your commands. By performing a rite that takes 1 day, you create an animated object from a hut, small house, covered wagon, tent, or similar construction of up to Huge size. The hut uses your AC, saving throw modifiers, and Perception modifier and has 150 HP and Hardness 10. It has the construct armor ability, meaning once it's reduced to less than half its Hit Points, or immediately upon being damaged by a critical hit, its AC is reduced by 4 until it is repaired. The hut can't attack or attempt skill checks. You can give the hut a command as a single action, which has the auditory and concentrate traits; after 1 round of reconfiguring itself, the hut then follows that command until you give it a different command. - **Guard** The hut watches for trespassers within 120 feet using your Perception modifier and screams if it spots any. - **Hide** The hut appears to be a normal, mundane object of its type. This is a 10th-rank illusion effect. - **Leap** The hut spins around or leaps into the air, then casts 10th-rank Teleport, transporting itself and all creatures within it. - **Lock** With a slam, each entrance to the hut becomes sealed with a lock spell. You can give this command again to unlock its entrances. - **Move** The hut gains a Speed of 60 feet, growing giant bird or bone legs, if necessary, and follows an extremely basic movement command you give it, such as \"follow me\" or \"move that direction.\" While perfectly suitable f"
+ },
+ {
+  "id": "witchwood-seed",
+  "name": "Witchwood Seed",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "plant",
+   "polymorph",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You touch a creature to implant a malignant seed in its body. The creature takes damage and other effects depending on its save against your class DC. The creature is then temporarily immune for 24 hours. Creatures with the fungus, plant, or wood trait are immune. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage and takes a –10-foot status penalty to all its Speeds until the end of its next turn. **Failure** The target takes full damage and is Clumsy 2 and immobilized until the end of its next turn. **Critical Failure** The target takes double damage and is clumsy 2 and immobilized. It attempts a new save at the end of each of its turns, ending the effect if it succeeds. --- **Level (+4)** The damage increases by 1d10."
+ },
+ {
+  "id": "withstand-death",
+  "name": "Withstand Death",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication",
+   "Necromantic Resistance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through repeated exposure, you've trained to resist the damage wrought by undead. Your resistance to void damage also applies to damage dealt by the attacks and abilities of undead creatures, regardless of damage type."
+ },
+ {
+  "id": "witness-of-earth",
+  "name": "Witness of Earth",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "primal",
+   "yaksha"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The primal magic in your soul offers the patient earth's timeless counsel. You learn the Atone ritual. When you use the *atone* ritual on yakshas and you roll a critical failure, you get a failure instead, and if you roll a success, you get a critical success instead."
+ },
+ {
+  "id": "wolf-in-sheeps-clothing",
+  "name": "Wolf in Sheep's Clothing",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Trained in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With a bit of hide, some antlers, and some cast-off fur, you can create a disguise that will fool even an experienced hunter. You can Impersonate creatures with the animal, beast, or plant traits, so long as they are either the same size or one size larger than you and have a body shape that conforms at least vaguely to your own (in other words, a typical humanoid could Impersonate a bear or an arboreal, but not a horse, giant scorpion, or assassin vine). Impersonating a larger creature doesn't change your actual size."
+ },
+ {
+  "id": "woodcraft",
+  "name": "Woodcraft",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a innate familiarity with forested areas. When in a forest or jungle environment, if you roll a critical failure on a Survival skill check to Sense Direction, Subsist, or Cover Tracks, you get a failure instead, and if you roll a success, you get a critical success instead."
+ },
+ {
+  "id": "work-yourself-up",
+  "name": "Work Yourself Up",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Cathartic Mage Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have a reaction available and aren't prevented from using Catharsis. --- You concentrate on your mental state, tapping into that raw emotional energy. Take your Catharsis reaction, causing the catharsis activation and entering your emotional fervor as normal. The fervor lasts only until the end of your turn. At the end of your emotional fervor, you experience the effects of your emotional fallout, as normal."
+ },
+ {
+  "id": "world-wise-vigilance",
+  "name": "World-Wise Vigilance",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Twilight Speaker Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your keen study of other cultures gives you insights into the ways those cultures fight. When you use Perception to roll initiative and none of your enemies have the elf trait, you can choose to roll Society instead."
+ },
+ {
+  "id": "worm-caller-dedication",
+  "name": "Worm Caller Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in Nature or Cave Worm Lore"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You pledge yourself to understanding and emulating one of the most powerful creatures of the Darklands: the mighty cave worm. You gain the Shake It Off reaction."
+ },
+ {
+  "id": "worm-empathy",
+  "name": "Worm Empathy",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Worm Caller Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can connect with cave worms (and other worm-related creatures, at the GM's discretion) on a rudimentary level. You can use Diplomacy to Make an Impression on cave worms and to make simple Requests of them. In most cases, the cave worm's starting attitude is indifferent and they will give you time to establish contact."
+ },
+ {
+  "id": "wortwitch",
+  "name": "Wortwitch",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a particular affinity for leafy plants. Your patron grants you a leshy familiar. If you already had a familiar, this leshy replaces your previous familiar, as if your previous familiar had been slain. In addition, you gain the ability to see through leaves, vines, and other foliage. You don't take circumstance penalties to ranged spell attacks or Perception checks caused by foliage, and your targeted attacks don't require a flat check to succeed against a target concealed only by such vegetation."
+ },
+ {
+  "id": "wounded-party",
+  "name": "Wounded Party",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ulfen Guard Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You or your designated ally takes damage, and you're capable of entering a Rage. --- Harm to either you or your allies awakens your fury. You Rage."
+ },
+ {
+  "id": "wounded-rage",
+  "name": "Wounded Rage",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You take damage and are capable of entering a rage --- You roar in pain, awakening the rage within you. You Rage."
+ },
+ {
+  "id": "wrapped-in-smoke",
+  "name": "Wrapped in Smoke",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Munitions Master Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You ignite a small portion of powder in a rapid, inefficient burn, creating a hazy cloud. You create a cloud of smoke in a centered on your innovation, which lasts for 1 minute. All creatures and objects within the smoke become concealed, and those outside the smoke become concealed to those within."
+ },
+ {
+  "id": "wrath-against-the-divine",
+  "name": "Wrath Against the Divine",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pure Legion Enforcer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You channel your commitment to removing the divine from the world as you recite the Laws of Mortality. Strike a foe that can cast divine spells. The Strike deals two extra weapon damage dice. The target must also attempt a save against your class DC. On a failure, it loses its highest-rank available divine spell prepared or its highest unused spell slot to cast a divine spell. If it has multiple spells at its highest rank available, it randomly selects which spell is lost. On a critical failure, it also can't cast divine spells until the start of your next turn."
+ },
+ {
+  "id": "wrath-of-the-hold",
+  "name": "Wrath of the Hold",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "occult"
+  ],
+  "prerequisites": [
+   "Tattooed Historian Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your tattoos carry the strength of an innumerable horde, and you can expend one use of your storied skin's Living History ability to animate your tattoos as ghostly assailants that swarm your foes. These spirits attack all foes in a , dealing damage. The damage increases by 1d6 at 10th level and every 2 levels thereafter. Each affected creature must attempt a saving throw against the higher of your class DC or spell DC."
+ },
+ {
+  "id": "writhing-runelord-weapon",
+  "name": "Writhing Runelord Weapon",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "arcane",
+   "flourish",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Avenging Runelord Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a polearm or spear. --- Your prowess with long-hafted weapons catches your opponents by surprise, as it bends or elongates in an obviously supernatural manner. Spend a Mythic Point. Your weapon gains the reach trait until the end of your turn, if it doesn't have it already. You can Stride and Strike twice, in any order. The movement from your Stride doesn't provoke reactions. Your Strikes are made at mythic proficiency and gain the critical specialization effect of the weapon. Apply your multiple attack penalty to your Strikes as normal, but the target of your second Strike is off-guard to it."
+ },
+ {
+  "id": "wukong-extension",
+  "name": "Wukong Extension",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "manipulate",
+   "unstable"
+  ],
+  "prerequisites": [
+   "weapon innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Access** Tian Xia origin or worshipper of Sun Wukong --- Invoking the name of Sun Wukong's extending cudgel, Ruyi Bang, you activate hidden levers and cranks in your innovation, making it swiftly extend outward like a battering ram. Make a melee Strike with your weapon innovation; your reach for that Strike is 30 feet."
+ },
+ {
+  "id": "xidao-sea-mine-drop",
+  "name": "Xidao Sea Mine Drop",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "Diving Armor"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Access** Tian Xia origin --- You've rigged your armor innovation with a gizmo that can safely synthesize two sea mines a day, holding them in a protected compartment. You must be submerged in water to use this action, and the mines only detonate if they're underwater. You off-load a mine onto an unoccupied square within your reach. The mine is primed to explode when a Small or larger creature moves into its square, or when you Interact to Activate your gizmo's remote detonation button, which explodes a single mine up to 50 feet away. As a 1-minute activity, you can hide a mine. Creatures can detect a hidden mine as they would any trap or hazard, using your Craft DC as the Stealth DC. If you don't Conceal the mine, its position is obvious. Any creature in a around the mine when it detonates takes damage, with a against your class DC. The bludgeoning damage of your mines increases by 1d4 at 8th level and every 2 levels thereafter. Any mines that haven't detonated when you make your daily preparations become inert and harmless. **Unstable Function** You push the safety limits of your gizmo, forcing it to synthesize and launch additional sea mines, exceeding the daily limit. Add the unstable trait to Xidao Sea Mine Drop. You create up to 3 additional sea mines that you can immediately deploy in different unoccupied spaces up to 30 feet away."
+ },
+ {
+  "id": "you-cant-hide-from-us",
+  "name": "You Can't Hide From Us",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Beast Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your united companion made a successful Strike against a creature this round. --- When you and your companion attack together, you can ensure that escape is but a whispered dream. Strike the same creature that your united companion hit. If your Strike is successful, the targeted creature has been marked for death by you and your companion and can't become hidden or concealed to you and your companion for 1 minute or until it moves more than 60 feet away from either you or your companion, whichever comes first. If the triggering creature is under an effect or spell that would normally grant it this condition, you can immediately attempt to counteract the effect. Your counteract rank is half your level rounded up, and your counteract check modifier is equal to the higher of your class DC –10 or spell DC –10."
+ },
+ {
+  "id": "you-failed-to-account-for-this",
+  "name": "You Failed to Account for… This!",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you can see targets you with an attack against your AC. --- When your foes try to attack you, you always seem to have some outlandish invention you can pull out at the last second to protect you from whatever attack they throw at you. Describe a device you're attempting to use to protect yourself from the foe's attack—for instance, when attacked by an elemental hurricane's lightning lash Strike, you might pull out a specially grounded lightning rod from that time you tried to power an invention by harnessing a thunderstorm! Using an invention to defend in this way means that the attack roll for the triggering attack targets your Crafting DC instead of your AC. Since you're using your Crafting DC instead of your AC, any penalties to your AC don't apply, but this doesn't remove any conditions or other effects that are causing you such penalties. For instance, if you were off-guard and used an invention to defend against a sneak attack, you'd still take the extra precision damage if you were hit, even though the –2 penalty to AC from being off-guard wouldn't apply to your Crafting DC."
+ },
+ {
+  "id": "zealous-inevitability",
+  "name": "Zealous Inevitability",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Avenger Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding your deity's favored weapon --- You channel your zeal through a sacred weapon, bringing a foe closer to their demise. Strike a target with the required weapon. on a success, the target becomes Doomed 1 or increases the value of their doomed condition by 1 (most living creatures die when they've reached doomed 4). Creatures doomed in this way take a status penalty to their saving throws against divine spells equal to their doomed value. A creature that would become doomed 4 by this Strike can attempt a saving throw against your class DC to avoid increasing the value of their doomed condition. When this occurs, this ability gains the incapacitation trait."
+ },
+ {
+  "id": "zealous-rush",
+  "name": "Zealous Rush",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You cast a divine spell that takes 1 action or more to cast and that affects only you or your equipment. --- You bless yourself on the move. Stride up to 10 feet. If the spell took 2 or more actions, you can Stride up to your full Speed instead."
+ },
+ {
+  "id": "zip-zoom",
+  "name": "Zip! Zoom!",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dragonet"
+  ],
+  "prerequisites": [
+   "Take Wing"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can fly longer distances before you need to land. The fly Speed you gain from Take Wing increases to 25 feet."
+ },
+ {
+  "id": "zoophonic-communication",
+  "name": "Zoophonic Communication",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "zoophonia muse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your studies have expanded your ability to parley and negotiate into the animal realm. You can Request from animals using Performance instead of Diplomacy as though you shared a language, although this gives you no special ability to understand their responses. You can also use Performance instead of Nature to Command an Animal."
+ },
+ {
+  "id": "zoophonic-composition",
+  "name": "Zoophonic Composition",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "zoophonia muse"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** Your most recent action was to cast a composition spell. --- When the inspiration strikes, you can weave messages for animals into your compositions. You Sustain a summon animal spell or Command an Animal."
+ }
+]

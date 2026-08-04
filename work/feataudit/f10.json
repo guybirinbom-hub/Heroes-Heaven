@@ -1,0 +1,994 @@
+[
+ {
+  "id": "divide-and-conquer",
+  "name": "Divide and Conquer",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Warshard Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a melee warshard weapon. --- When you face multiple foes, you wield your warshard weapon with vigor. Spend 1 Mythic Point, then Step to a space where you threaten at least two opponents with your warshard weapon. Attempt two Strikes at mythic proficiency, each against a different target. If you hit with both Strikes, you gain an additional effect based on the type of damage you inflict with your weapon. Both attacks count toward your multiple attack penalty, but the penalty doesn't increase until after you've made both of them. If your weapon doesn't deal one of these three damage types, you can't use it to Divide and Conquer, and if you deal two different types of damage to each target, you don't gain any additional effect. - **Bludgeoning** You knock your enemies around. Each damaged target becomes off-guard until the start of your next turn. - **Piercing** Your strikes punch through your enemies, leaving bloody wounds. Each damaged target takes 1d8 damage. - **Slashing** Your slashes leave particularly painful wounds. Each damaged target becomes Sickened 2."
+ },
+ {
+  "id": "divine-breadth",
+  "name": "Divine Breadth",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Cleric Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As your understanding increases, your god grants you more divine spells each day. Increase the spell slots you gain from cleric archetype feats by 1 for each spell rank other than your two highest cleric spell slots."
+ },
+ {
+  "id": "divine-castigation",
+  "name": "Divine Castigation",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "holy or unholy trait"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your deity's grace doesn't extend to your sworn enemies. When you cast a Harm or Heal spell, you can add your holy or unholy trait to it. If you do, the spell deals damage to creatures with the opposing trait, even if it wouldn't normally damage them. The spell deals spirit damage when used this way. For example, if you are holy, you could add the holy trait to a *heal* spell and deal spirit damage to a fiend that has the unholy trait."
+ },
+ {
+  "id": "divine-infusion",
+  "name": "Divine Infusion",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You pour energy into the subject of your healing to empower its attacks. If the next action you use is to cast Harm or Heal to restore Hit Points to a single creature, the target then deals an additional 1d6 damage with its melee weapons and unarmed attacks until the end of its next turn. The damage type is void if you cast *harm* and vitality if you cast *heal*. If the spell cast is at least 5th rank, this damage increases to 2d6, and if the spell is at least 8th rank, the damage increases to 3d6."
+ },
+ {
+  "id": "divine-reflexes",
+  "name": "Divine Reflexes",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "At the start of each of your turns, you gain an additional reaction that you can use only for your champion's reaction."
+ },
+ {
+  "id": "divine-wall",
+  "name": "Divine Wall",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You are wielding a shield. --- You use your shield to harry your enemies, preventing them from stepping away from or around you. All spaces adjacent to you are difficult terrain for your enemies."
+ },
+ {
+  "id": "dizzying-spin-dance",
+  "name": "Dizzying Spin Dance",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Fan Dancer Dedication",
+   "Twirling Strike"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You're wielding a fan. --- You're practiced in using your fans to spin with dizzying speed. Tumble Through an opponent's space, and then Strike that opponent. If both the Tumble Through and Strike are successful, the opponent is off-guard to the next attack made against it before the start of your next turn, and you can attempt to Tumble Through the space of a different opponent and Strike again with the same effect. If this second Tumble Through and Strike are successful, you can repeat these actions a third time against a third opponent."
+ },
+ {
+  "id": "doctors-visitation",
+  "name": "Doctor's Visitation",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Medic Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You move to provide immediate care to those who need it. You Stride, then use Battle Medicine or Treat Poison. You can spend 2 actions for Doctor's Visitation to instead Stride and then use either Administer First Aid or Treat Condition (if you have that feat)."
+ },
+ {
+  "id": "dodging-roll",
+  "name": "Dodging Roll",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "master in Acrobatics"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You take damage from an area effect that allows a Reflex save. --- You dodge a blow at the last possible moment. You Step and gain resistance to all damage equal to your level against the triggering effect. If your Step moves you out of the triggering effect's area, this resistance is instead equal to your level plus your Dexterity modifier."
+ },
+ {
+  "id": "dogfang-bite",
+  "name": "Dogfang Bite",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tengu"
+  ],
+  "prerequisites": [
+   "dogtooth tengu heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can swing your beak to slash your foes when piercing attacks won't do. Your beak unarmed attack gains the versatile S weapon trait."
+ },
+ {
+  "id": "domain-focus",
+  "name": "Domain Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "one or more domain spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your devotion to your deity's domains grows greater, and so does the power granted to you. Whenever you Refocus, completely refill your focus pool."
+ },
+ {
+  "id": "domino-effect",
+  "name": "Domino Effect",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Brastlewark Snare Engineering"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature triggers a magical snare you crafted. --- You've learned to pull the invisible strings of magic to affect targets that wouldn't normally be. A creature you choose within 15 feet of the triggering creature is affected by the same snare as if they had also triggered it."
+ },
+ {
+  "id": "double-double",
+  "name": "Double, Double",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "Cauldron"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "For each temporary oil or potion you brew during your daily preparations, you brew two copies of it. This allows you to brew two temporary oils or potions each day, four if you have master proficiency in spell DC, or six if you have legendary proficiency."
+ },
+ {
+  "id": "double-poison",
+  "name": "Double Poison",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can apply two different infused injury poisons to the same weapon, though not to a piece of ammunition. Each poison's level must be 2 or more levels lower than your level. You have to apply the two poisons individually. Once you've applied both, the poisons merge into a double poison that uses the lower of the two poisons' DCs and number of stages. If the poisons require different types of saving throws (such as Fortitude and Will), choose which of them the double poison uses. This double poison is virulent only if both poisons were virulent. Combine the effects of each stage of the poison on any creature affected by it. For each stage of the poison, use the effects of both poisons and the longer interval for that stage among the two poisons."
+ },
+ {
+  "id": "double-shot",
+  "name": "Double Shot",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a ranged weapon with reload 0. --- You shoot twice in blindingly fast succession. Make two Strikes, each against a separate target and with a –2 penalty. Both attacks count toward your multiple attack penalty, but the penalty doesn't increase until after you've made both of them."
+ },
+ {
+  "id": "double-slice",
+  "name": "Double Slice",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding two melee weapons, each in a different hand. --- You lash out at your foe with both weapons. Make two Strikes, one with each of your two melee weapons, each using your current multiple attack penalty. Both Strikes must have the same target. If the second Strike is made with a weapon that doesn't have the agile trait, it takes a –2 penalty. If both attacks hit, combine their damage, and then add any other applicable effects from both weapons. You add any precision damage only once, to the attack of your choice. Combine the damage from both Strikes and apply resistances and weaknesses only once. This counts as two attacks when calculating your multiple attack penalty."
+ },
+ {
+  "id": "doublespeak",
+  "name": "Doublespeak",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master at Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are skilled at saying one thing while meaning something different. You disguise your true meaning behind other words and phrases, relying on subtle emphasis and shared experience to convey meaning that only your allies understand. Any allies who have traveled alongside you for at least 1 full week automatically discern your meaning. Other observers must succeed at a Perception check against your Deception DC to realize you are passing a secret message, and they must critically succeed to understand the message itself."
+ },
+ {
+  "id": "dousing-spell",
+  "name": "Dousing Spell",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "spellshape",
+   "water"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication",
+   "water is in your elemental philosophy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You enhance your spell with elemental water, soaking the target. If the next action you use is to Cast a Spell targeting a single creature, you soak the target of the spell with water. If the target has Persistent Acid or Fire Damage, the DC to end those conditions is reduced to 10, and the creature can attempt a flat check to end those types of persistent damage immediately. The spell gains the water trait (causing it to deal extra damage to creatures with weakness to water)."
+ },
+ {
+  "id": "draconic-fury",
+  "name": "Draconic Fury",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Draconic Acolyte Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are holding or wearing your draconic gift. --- You briefly summon spectral claws that lash out in a flurry. All creatures in a take damage with a save against the higher of your class DC or spell DC. A creature that critically fails the save also takes damage. If you are Channeling Draconic Essence, your spectral dragon's space can be the origin of the cone. At 8th level and every 4 levels thereafter, the initial damage increases by 1d6 and the persistent bleed damage on a critical failure increases by 1d4."
+ },
+ {
+  "id": "drag-down",
+  "name": "Drag Down",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "azarketi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "While swimming in water at least 10 feet deep, you grab an adjacent creature (on nearby land or in the water) and pull it below the surface. Attempt an Athletics check to Grapple the creature. On a success, if the creature is on land, in addition to the normal effects of Grapple, you pull the creature into the water in a space adjacent to you. If the creature is already in the water, on a success, in addition the normal effects of Grapple, you drag the creature 10 feet deeper into the water, moving 10 feet with the creature. Moving a creature into water or deeper into water using Drag Down is forced movement for the creature but not for you."
+ },
+ {
+  "id": "dragging-strike",
+  "name": "Dragging Strike",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You aim your weapon to snag a foe's armor, clothing, or flesh to pull them closer. Make a melee Strike. If you hit a target that is your size or smaller, that creature is off-guard until the end of your current turn, and you can move it 5 feet toward you. When you move the creature, you can move the same distance in the same direction as it, even if you're adjacent to the target. This movement doesn't trigger reactions. This Strike has the following failure effect. **Failure** The target becomes off-guard until the end of your current turn."
+ },
+ {
+  "id": "dragon-arcana",
+  "name": "Dragon Arcana",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "ability to cast spells from spell slots",
+   "Dragon Disciple Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've discovered how to add the magic of dragons to your tradition. Add the draconic bloodline's granted spells to your spell list; you must still learn them or add them to your repertoire as normal. These spells are Shield, Sure Strike, Resist Energy, Haste, Spell Immunity, Chromatic Wall, Dragon Form, Mask of Terror, Prismatic Wall, and Overwhelming Presence."
+ },
+ {
+  "id": "dragons-journey",
+  "name": "Dragon's Journey",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "air",
+   "archetype",
+   "flourish",
+   "move"
+  ],
+  "prerequisites": [
+   "Fan Dancer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding two fans, one in each hand. --- Your movements are like that of a dragon weaving a serpentine path between your enemies and allies. Using your fans, you slice the air and create a path of least resistance, allowing you to move across the battlefield with an ethereal grace. You Stride, your movement doesn't trigger enemy reactions, and any allies you pass within 5 feet of can immediately use their reaction to Stride, moving in the same direction. Allies must end their movement as close as possible to you or another ally who benefited from this ability. During Dragon's Journey, ally movement doesn't trigger reactions."
+ },
+ {
+  "id": "dragons-rage-breath",
+  "name": "Dragon's Rage Breath",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "prerequisites": [
+   "dragon instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- You breathe deeply and exhale powerful energy in a , dealing damage to each creature in the area with a save against your class DC. The damage type matches your instinct's dragon breath, and this action gains the trait of your dragon instinct's tradition."
+ },
+ {
+  "id": "drain-emotion",
+  "name": "Drain Emotion",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "mental"
+  ],
+  "prerequisites": [
+   "Fey Influence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You touch an adjacent creature and attempt to draw out its excess emotion. Attempt a counteract check against a single emotion or fear effect affecting the touched creature. If you succeed, you gain temporary Hit Points equal to your level for a number of rounds equal to your Charisma modifier (minimum 1 round). --- **Special** This feat gains the trait appropriate for your ancestry (human for human, goblin for goblin, etc.)."
+ },
+ {
+  "id": "draining-touch",
+  "name": "Draining Touch",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "attack",
+   "cold",
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You reach out your arm, grasping hungrily for a source of energy. Attempt a melee Strike. If you succeed, you deal 1d8 cold damage for every 2 levels you have to the target (), or double damage on a critical success. **Awakening** You drain enough energy from a creature to leave it with lingering aftereffects. Your Draining Touch also leaves a creature Clumsy 1, or Clumsy 2 if your attack was a critical success. **Awakening** You can pull away not just physical energy, but a creature's spirit as well. Your Draining Touch can deal your choice of cold, spirit, or void damage, changing the cold trait to spirit or void as appropriate."
+ },
+ {
+  "id": "draw-from-the-land",
+  "name": "Draw from the Land",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Geomancer Dedication",
+   "expert in Nature"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You gained a terrain attunement benefit this turn, and it matched the terrain you're in. --- You pull strength from the surrounding terrain. You gain temporary Hit Points equal to your level. They last for 1 round. If you previously gained the plains terrain attunement effect this turn, combine the temporary Hit Points together."
+ },
+ {
+  "id": "dread-blade",
+  "name": "Dread Blade",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spectral Dagger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your strikes with your conjured dagger impart the chill of the grave. When you successfully Strike with your *spectral dagger* and damage a foe with the frightened condition, they can't reduce their frightened condition below 1 before the end of your next turn."
+ },
+ {
+  "id": "dread-striker",
+  "name": "Dread Striker",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You capitalize on your enemies' fear to slip past their defenses. Any creature that has the frightened condition is also off-guard against your attacks."
+ },
+ {
+  "id": "dream-guise",
+  "name": "Dream Guise",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "illusion",
+   "occult",
+   "psyche",
+   "psychic"
+  ],
+  "prerequisites": [
+   "wandering reverie subconscious mind"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You Stride into a willing ally's space, at which point both of your appearances shift into a shared third appearance, usually one that looks like a mix of the two of you. Then, either you or your ally Strides. You each maintain the merged appearance. Creatures who are observing this know what happened, but still must Seek or otherwise engage with the illusion to attempt to disbelieve it and determine which of you is which. Otherwise, they can't tell the difference and have an equal chance to target each of you (). This illusion ends as soon as either you or the ally you're merged with acts."
+ },
+ {
+  "id": "drifters-juke",
+  "name": "Drifter's Juke",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Way of the Drifter"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a firearm or crossbow in one hand, and your other hand is either wielding a melee weapon or is empty. --- You move in and out of range to complement your attacks. You Step, make a Strike, Step, and make another Strike. One Strike must be a ranged Strike using your firearm or crossbow, and the other must be a melee Strike using your melee weapon or unarmed attack. You can choose not to take one or both Steps."
+ },
+ {
+  "id": "drilled-reflexes",
+  "name": "Drilled Reflexes",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [
+   "drilled reactions"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You leave a lasting impression on your squadmates that makes them particularly adept at following your commands. When you use your Drilled Reactions ability, you can give an extra reaction to up to two allies instead of only one."
+ },
+ {
+  "id": "drive-back",
+  "name": "Drive Back",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bastion Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy within your reach Strikes an ally adjacent to you. **Requirements** You have your shield raised. --- You push the enemy back and attempt to intercede between the foe and your ally. You attempt to Shove the triggering enemy with your shield just as it attacks, pushing it back just after the attempt. Your shield has the shove trait for this Shove attempt. If the shove succeeds, you throw off your enemy's timing, and the enemy takes a -1 circumstance penalty on its attack roll against your ally."
+ },
+ {
+  "id": "drive-by-attack",
+  "name": "Drive-By Attack",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Trick Driver Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are piloting a vehicle. --- You can smoothly line up an attack without disrupting your control.You Drive, gaining the effects of the Drive action for the same number of actions you spent to Drive-By Attack. At any point during your vehicle's movement, you Strike."
+ },
+ {
+  "id": "driving-rain",
+  "name": "Driving Rain",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Heavy drops of rain batter down, hitting like sling stones and impeding vision. Each creature in a within 120 feet takes damage with a save against your class DC. Until the start of your next turn, all creatures are concealed while in the area, and all creatures outside the area are concealed to creatures within it. --- **Level (+2)** The damage increases by 1d8."
+ },
+ {
+  "id": "dual-finisher",
+  "name": "Dual Finisher",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You wield two melee weapons, one in each hand. --- You split your attacks. Make two melee Strikes, one with each required weapon, each against a different foe. If the second Strike is made with a non-agile weapon, it takes a -2 penalty. Increase your multiple attack penalty only after attempting both Strikes."
+ },
+ {
+  "id": "dual-thrower",
+  "name": "Dual Thrower",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Dual-Weapon Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to throw two weapons as easily as strike with them. Whenever a feat you gained from the dual-weapon warrior archetype allows you to make a melee Strike, you can instead make a ranged Strike with a thrown weapon or a one-handed ranged weapon you are wielding (weapons that need \"1+\" hand, such as longbows, don't qualify). Any effects from these feats that apply to one-handed melee weapons or melee Strikes also apply to one-handed ranged weapons and ranged Strikes."
+ },
+ {
+  "id": "dual-weapon-blitz",
+  "name": "Dual-Weapon Blitz",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Dual-Weapon Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding two one-handed melee weapons, each in a different hand. --- You attack as you weave your way around the battlefield. Stride up to your Speed. During this movement, you can Strike once with each of the two one-handed melee weapons. Each of these Strikes can be made at any point during your movement."
+ },
+ {
+  "id": "dual-weapon-reload",
+  "name": "Dual-Weapon Reload",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Gunslinger or Dual-Weapon Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You carry your ammunition in a way that allows you to reload while holding two weapons. While you're wielding two one-handed weapons, each in a different hand, you don't need a free hand to reload a one-handed ranged weapon you're wielding."
+ },
+ {
+  "id": "dual-weapon-reload-gunslinger",
+  "name": "Dual-Weapon Reload (Gunslinger)",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "text": "Dual-Weapon Reload (Gunslinger) Source Guns & Gears (Remastered) pg. 111 PFS Note The Dual-Weapon Reload gunslinger feat should not have the action symbol. Requirements You are wielding two one-handed weapons, each in a different hand, one of which is a ranged weapon. You carry your ammunition in a way that allows you to reload while holding two weapons. While you’re wielding two one-handed weapons, each in a different hand, you don’t need a free hand to reload a one-handed ranged weapon you’re wielding."
+ },
+ {
+  "id": "dubious-knowledge",
+  "name": "Dubious Knowledge",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in a skill with the Recall Knowledge action"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're a treasure trove of information, but not all of it comes from reputable sources. When you fail (but don't critically fail) a Recall Knowledge check using any skill, you learn the correct answer and an erroneous answer, but you don't have any way to differentiate which is which. This can occur as knowing something is significant, but not whether it's good or bad."
+ },
+ {
+  "id": "duck",
+  "name": "Duck!",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your long experience with your erratic patrons and their peers has given you a lot of practice in hitting the deck when you hear the rumbling of a powerful entity. When you roll a critical failure on a Reflex saving throw against an ability that targets an area and was caused by a Huge or larger creature, you get a failure instead, and when you roll a success against such an effect, you get a critical success instead."
+ },
+ {
+  "id": "dueling-acumen",
+  "name": "Dueling Acumen",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Aldori Duelist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're always ready for a new duel, and you've been trained to start and end fights quickly. When you're in a duel or can see exactly one creature, you can always roll Dueling Lore for initiative. If you do so while in a duel, you must choose from either Deception, Intimidation, or Perception when you roll for initiative; you're considered to have rolled the chosen skill for initiative for the purpose of dueling actions."
+ },
+ {
+  "id": "dueling-riposte",
+  "name": "Dueling Riposte",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Dueling Parry"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach critically fails a Strike against you. **Requirements** You are benefiting from Dueling Parry. --- You elegantly counterattack against your flailing enemy. Make a melee Strike against or attempt to Disarm the triggering creature."
+ },
+ {
+  "id": "duo-dragon-kick",
+  "name": "Duo Dragon Kick",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "construct innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** Your construct innovation is adjacent to you. --- You've practiced an impressive spin technique with your construct, automatically attacking in tandem as you launch each other through the air. You Command your construct companion to fight alongside you, after which you both Leap in the same direction, making an unarmed Strike at the start or end of the Leap; this uses your companion's actions for the turn. If the Strikes both hit the same creature, combine their damage for the purposes of resistances and weaknesses. **Unstable Function** You spin farther and higher, though the extreme movement risks discombobulating your innovation. Add the unstable trait to Duo Dragon Kick. Increase the distance of your Leaps by 10 feet if horizontal or 5 feet if vertical."
+ },
+ {
+  "id": "dwarven-doughtiness",
+  "name": "Dwarven Doughtiness",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are naturally calm and collected in the face of imminent danger. At the end of your turn, reduce your frightened condition by 2 instead of 1."
+ },
+ {
+  "id": "eagle-eye",
+  "name": "Eagle Eye",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Gunslinger Dedication",
+   "expert in Perception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your practice with crossbows and firearms has sharpened your attention to detail. You become a master in Perception."
+ },
+ {
+  "id": "eagle-eyes",
+  "name": "Eagle Eyes",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "visual"
+  ],
+  "prerequisites": [
+   "Sniping Duo Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your spotter are adept at watching out for one another. As long as you can see or hear each other, neither of you is off-guard to hidden, undetected, or flanking creatures of your level or lower, or to creatures of your level or lower using a surprise attack. However, they can still help their allies flank."
+ },
+ {
+  "id": "ears-that-hear-the-truth",
+  "name": "Ears that Hear the Truth",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have an acute understanding of the rhythms of living things, and you never miss the quaver that betrays a spoken lie. When you attempt to Sense Motive, or when you roll Perception for initiative, you can spend a Mythic Point to attempt the check or roll at mythic proficiency."
+ },
+ {
+  "id": "earth-to-heavens-strike",
+  "name": "Earth to Heavens Strike",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your blows hamper both a foe's mobility and cognitive functions by focusing first on their lower extremities and then their head. Make a Strike; if you hit and deal damage, the creature is also Clumsy 1 until the end of your next turn. Then, make another Strike against the same creature. If that Strike hits and deals damage, the creature is also Stupefied 1 until the end of your next turn. If both Strikes hit and deal damage, the duration of both conditions increases to 1 minute. Each Strike counts toward your multiple attack penalty, but you don't increase your multiple attack penalty until after you've made both Strikes."
+ },
+ {
+  "id": "easily-dismissed",
+  "name": "Easily Dismissed",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Chelaxian nationality --- You are practiced at blending into the background of the streets and halls of larger folk to ensure that you are overlooked. When you are in a crowd or well trafficked urban area, you can attempt to Hide and Sneak, even when observed. On a success, you aren't hidden or undetected, but other creatures simply don't take particular notice of you, even though they can see you. You can't use this ability on observers who have already seen you perform obtrusive or notable actions. If you perform any action other than to Hide or Sneak or otherwise take particularly salient actions (GM's discretion), observers notice you right away."
+ },
+ {
+  "id": "echoing-fury",
+  "name": "Echoing Fury",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Temporal Fury"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You cheat the rules of time to co-locate during your attack. When you use Temporal Fury, your Step can be up to 15 feet. If your second Strike is against the same creature as your first Strike, your second Strike deals an additional die of weapon damage; if both Strikes hit, you combine their damage for the purpose of resistances and weaknesses."
+ },
+ {
+  "id": "echolocation",
+  "name": "Echolocation",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "werebat"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you take the Seek action, you can use hearing as a precise sense with a range of 40 feet until the start of your next turn. You can also use this sense while you Search."
+ },
+ {
+  "id": "eclectic-polymath",
+  "name": "Eclectic Polymath",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "Esoteric Polymath"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your flexible mind can quickly shift from one spell to another. If you add a spell to your repertoire during your daily preparations using Esoteric Polymath, when you prepare again, you can choose to keep the new spell from Esoteric Polymath in your repertoire and instead lose access to another spell of the same rank in your repertoire."
+ },
+ {
+  "id": "eclectic-skill",
+  "name": "Eclectic Skill",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "polymath muse",
+   "master in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your broad experiences translate to a range of skills. Your proficiency bonus to untrained skill checks is equal to your level. You can attempt any skill check that normally requires you to be trained, even if you are untrained. If you have legendary proficiency in Occultism, you can attempt any skill check that normally requires you to have expert proficiency, even if untrained or trained."
+ },
+ {
+  "id": "eclectic-sword-mastery",
+  "name": "Eclectic Sword Mastery",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "tengu"
+  ],
+  "prerequisites": [
+   "Eclectic Sword Training"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You instinctively learn how to use a sword with just a few practice swings. You change one of the swords designated in your Tengu Weapon Familiarity to a new one that you're wielding, provided the sword meets the specifications of Tengu Weapon Familiarity. You can Interact to draw a sword as part of this activity, designating the sword as part of drawing it; disrupting that Interact action prevents you from designating it as one of your swords. This designation lasts until your next daily preparations."
+ },
+ {
+  "id": "eclipsed-vitality",
+  "name": "Eclipsed Vitality",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Assassin Dedication or Scout Dedication",
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You shroud yourself in ashes that hide the vital essence sought by life-sensing undead. You're always taking precautions when Avoiding Notice, Hiding, and Sneaking to foil lifesense, and you're concealed to any creature using only precise lifesense to observe you."
+ },
+ {
+  "id": "educated-assessment",
+  "name": "Educated Assessment",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "secret"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You attempt to Recall Knowledge about a creature, and the GM uses the same secret roll result against the creature's Deception or Stealth DC, giving you the information from a Battle Assessment. You might get a different degree of success on the Recall Knowledge check than what you get for the Battle Assessment. If you have the Battle Assessment feat, you gain the effects of Educated Assessment whenever you Recall Knowledge (such as with the Automatic Knowledge feat)."
+ },
+ {
+  "id": "eerie-compression",
+  "name": "Eerie Compression",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "fleshwarp"
+  ],
+  "prerequisites": [
+   "Medium Size"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your limbs and even your torso can collapse in on themselves, allowing you to fit through tight spaces as though you were a Small creature. You can move at full Speed while Squeezing."
+ },
+ {
+  "id": "eerie-environs",
+  "name": "Eerie Environs",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "druid",
+   "ranger"
+  ],
+  "prerequisites": [
+   "trained in Intimidation",
+   "trained in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The natural world can be scary to those not used to it—and you make it scarier still. If you're hidden from a creature, you can attempt to demoralize it without losing your hidden condition—imitating the sounds of strange beasts or causing the foliage to rustle menacingly. When you do so, you don't take a penalty to your check if the target doesn't understand your language."
+ }
+]

@@ -1,0 +1,984 @@
+[
+ {
+  "id": "expert-sorcerer-spellcasting",
+  "name": "Expert Sorcerer Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Sorcerer Spellcasting",
+   "master in Arcana, Nature, Occultism, or Religion, depending on bloodline"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-spellcasting",
+  "name": "Expert Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "pervasive-magic"
+  ],
+  "prerequisites": [
+   "Basic Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the archetype benefits."
+ },
+ {
+  "id": "expert-summoner-spellcasting",
+  "name": "Expert Summoner Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Summoner Spellcasting",
+   "master in the skill associated with your eidolon's tradition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-witch-spellcasting",
+  "name": "Expert Witch Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Witch Spellcasting",
+   "master in the skill associated with your patron's tradition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-wizard-spellcasting",
+  "name": "Expert Wizard Spellcasting",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Wizard Spellcasting",
+   "master in Arcana"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "exploit-blunder",
+  "name": "Exploit Blunder",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you Devised a Stratagem against on your most recent turn fails or critically fails a Strike against you. --- By watching your foes closely, you can make the most out of their mistakes. You Step."
+ },
+ {
+  "id": "explosion",
+  "name": "Explosion",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Inventor Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your innovation can explode on command. You gain the Explode action."
+ },
+ {
+  "id": "explosion-of-power",
+  "name": "Explosion of Power",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your magic explodes. You know the following blood magic effect. **Blood Magic—Explosion of Power** Raw power explodes outward from you. Each creature within a takes 1d6 damage per rank of the spell you just cast (basic Reflex save). The type of damage depends on the tradition of your bloodline. If you cast arcane spells, you deal force damage. If you cast divine spells, you deal spirit damage. If you cast occult spells, you deal mental damage. If you cast primal spells, you deal fire damage."
+ },
+ {
+  "id": "explosive-arrival",
+  "name": "Explosive Arrival",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "spellshape",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "Your summoned creature appears in a detonation of arcane runes. If your next action is to Cast a Spell with the summon trait, all creatures in a around the creature you summoned take 1d4 fire damage per spell rank. If the creature summoned has the acid, cold, electricity, sonic, or spirit trait, you can deal damage of that type instead."
+ },
+ {
+  "id": "explosive-leap",
+  "name": "Explosive Leap",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "fire",
+   "inventor",
+   "move",
+   "unstable"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You aim an explosion from your innovation downward to launch yourself into the air. You jump up to 30 feet in any direction without touching the ground. You must land on a space of solid ground, or else you fall after using your next action. As normal for effects where you fall after using your next action, you still fall at the end of your turn, even if you don't use any further actions that turn. --- **Special** If your innovation is a minion, it can take this action rather than you."
+ },
+ {
+  "id": "explosive-maneuver",
+  "name": "Explosive Maneuver",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "weapon innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful Strike against a foe using your weapon innovation. --- Thanks to a hidden experimental feature you built into your weapon, your weapon explosively deploys levers, tangling hooks, or similar mechanisms to provide significant assistance when you perform a combat maneuver. When you use Explosive Maneuver, choose Grapple, Shove, or Trip. Your weapon innovation must have a weapon trait that matches the action you chose (for instance, to choose Grapple, your weapon must have the grapple trait). You take the chosen action against the same foe as your previous successful Strike, using the same multiple attack penalty as your previous successful Strike. You still increase your multiple attack penalty after the Grapple, Shove, or Trip, as normal."
+ },
+ {
+  "id": "explosive-metamorphosis",
+  "name": "Explosive Metamorphosis",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "druid",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You use additional primal energy to transform, creating a burst of elemental energy to complement your transformation. If your next action is to cast a non-cantrip morph or polymorph spell, select acid, cold, electricity, or fire. Your transformation creates a around your new form that deals 1d6 damage of that type per rank of the spell. Each creature in that area attempts a basic Reflex save against your spell DC. If your polymorph action had a trait corresponding to an energy type, you must select that one if possible. This action gains the trait corresponding to the energy type selected."
+ },
+ {
+  "id": "explosive-savant",
+  "name": "Explosive Savant",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** You are from Dongun Hold or Alkenstar. --- You've spent a lifetime wielding guns and explosive ordinance. You have familiarity with bombs and firearms; for the purposes of proficiency you treat bombs and martial firearms as simple weapons, and advanced firearms as martial weapons."
+ },
+ {
+  "id": "express-driver",
+  "name": "Express Driver",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "exploration"
+  ],
+  "prerequisites": [
+   "Trick Driver Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can optimize your vehicle's performance, coaxing extra speed and choosing paths to avoid slowdowns. When calculating your travel speed for the day while piloting a vehicle, you can attempt a Driving Lore check to increase your vehicle's travel speed. The DC is determined by the GM but is typically based on the vehicle's piloting DC or a difficulty based on the environment, whichever is harder. On a success, increase your vehicle's travel speed by half. This has no effect on your vehicle's movement in encounters."
+ },
+ {
+  "id": "express-rider",
+  "name": "Express Rider",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "exploration",
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Nature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can encourage your mount to cover ground quickly. When calculating your travel Speed for the day while mounted, you can attempt a Nature check to Command an Animal to increase your mount's travel Speed. The DC is determined by the GM, but is typically based on the mount's level or the difficulty of the environment, whichever is harder. On a success, increase your mount's travel Speed by half. This has no effect on your mount's movement in encounters. This benefit extends to up to six other allies traveling with you, as long as all such allies are also mounted, or are quadrupeds with a Speed of at least 30 feet."
+ },
+ {
+  "id": "extend-elixir",
+  "name": "Extend Elixir",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Integrating your own personal energy into the elixirs you create causes them to affect you for longer. When you consume one of your alchemical items that has the elixir and infused traits and a duration of 1 minute or longer, that elixir's duration is doubled. If you created the item with Quick Alchemy, this can't cause it to exceed the 10-minute duration limit."
+ },
+ {
+  "id": "extend-surge",
+  "name": "Extend Surge",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Wildspell Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your Spellsurge aura is active. --- You tap deeper into the vortex of magical energy within you. Until the start of your next turn, the radius of your *spellsurge* aura increases to 30 feet. If you spend a Mythic Point as part of this action, the radius increases to 60 feet instead until the start of your next turn and is then 30 feet for the duration of the spell."
+ },
+ {
+  "id": "extended-kinesis",
+  "name": "Extended Kinesis",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "kineticist"
+  ],
+  "prerequisites": [
+   "Base Kinesis"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've refined the control you can exert over your elements. Add the following options to Base Kinesis. - **Proliferate** You cause an existing element to expand. This works like the generate option, except that you can either create an equal quantity of the element in the same square as its source or in an adjacent square, or cause the element to expand to fill its square (making a flame bigger or turning a twig into a small tree, for example). After you proliferate an element, it reacts to the environment naturally—water you proliferated into thin air would splash back down, for example. This affects only natural forms of the element, not durable, crafted goods. - **Regulate** (air, fire, metal, or water only) You change the temperature of an existing element, making it colder or warmer. This can snuff out a flame or turn water to ice or steam. After this change, the element cools or warms naturally unless you Sustain the impulse. An item that gets cold or hot enough (as determined by the GM) can be used as an improvised weapon that deals 1 damage or 1 damage in addition to the damage the GM determines for the improvised weapon. - **Sculpt** (earth, metal, or wood only) Reshape an existing element into a small object of a design you choose. It looks crude and artificial on close examination. The sculpted element can be shaped into a functional short tool (or a long tool if your Base Kinesis can affect 1 Bulk or greater). It's too fragile and artificial to be used as a weapo"
+ },
+ {
+  "id": "extinguish-light",
+  "name": "Extinguish Light",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "darkness",
+   "fetchling",
+   "occult"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once every 10 minutes --- You wrap shadow around a single unattended light source within 120 feet that's no larger than a torch. Any non-magical light source you target is automatically extinguished. For magical light sources, attempt a counteract check using your Fortitude or Thievery modifier against the target's DC. Your counteract rank is equal to half your level rounded up. Successfully counteracting the light source suppresses its ability to produce light for 1 minute, but not any other effects. If you're in dim light or darkness when you Extinguish Light, its range is 240 feet."
+ },
+ {
+  "id": "extradimensional-stash",
+  "name": "Extradimensional Stash",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "extradimensional",
+   "rogue"
+  ],
+  "prerequisites": [
+   "legendary in Thievery"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you perform sleight of hand, you fold space so that objects really do disappear. You create a small extradimensional space somewhere within in your clothing that can hold up to 5 Bulk worth of objects. The space functions as a bag of holding, but can hold only up to 5 Bulk, has no Bulk of its own, and can be Interacted with using only one hand. In addition, when you Palm an Object, you can place it directly into this extradimensional space as long as the space has sufficient free space to hold the object. Extradimensional Stash"
+ },
+ {
+  "id": "extraplanar-cloud",
+  "name": "Extraplanar Cloud",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [
+   "Extraplanar Haze"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Extraplanar Haze, you can spend 1 additional action to disperse the particles as a cloud centered on you instead of as a haze; the activity gains the concentrate trait. All creatures within the cloud become concealed, and all creatures outside the cloud become concealed to creatures within it."
+ },
+ {
+  "id": "exude-demonic-corruption",
+  "name": "Exude Demonic Corruption",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate",
+   "poison"
+  ],
+  "prerequisites": [
+   "Living Vessel Dedication",
+   "your entity is a demon"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Most of the changes from the demon within you have harmed you so far, but you've found a way to expel some of the corruption within you to poison others. Until the beginning of your next turn, you and your weapons are covered in toxic sludge or another similar manifestation of the demonic corruption; your melee Strikes deal an additional 1d6 damage, and each time a creature hits you with a melee unarmed attack or otherwise touches you, it takes 1d6 damage. At 14th level, the poison damage increases to 2d6, and at 20th level, the poison damage increases to 3d6."
+ },
+ {
+  "id": "exult-in-violence",
+  "name": "Exult in Violence",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "divine",
+   "exemplar",
+   "light",
+   "spirit"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You critically hit an enemy this turn. --- You let out a war cry as your blow lands true, and judgment descends on an enemy. A pillar of light deals damage with a save against your class DC to a different enemy selected at random within 30 feet of the target struck. This damage increases to 7d6 if you are 12th level and 10d6 if you are 17th level."
+ },
+ {
+  "id": "eye-for-weakness",
+  "name": "Eye for Weakness",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sister of the Golden Erinys Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you successfully Recall Knowledge about a creature you can see, you automatically learn if it has a weakness to holy or unholy in addition to any other results. If you critically succeed at the check to Recall Knowledge, that creature is off-guard to you until the end of your turn."
+ },
+ {
+  "id": "eyes-that-see-eternity",
+  "name": "Eyes that See Eternity",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Mythic power opens your eyes to the secrets of reality and eternity. Spend a Mythic Point; for the next minute, you gain the effects of Truesight and roll all Perception checks with mythic proficiency."
+ },
+ {
+  "id": "fading",
+  "name": "Fading",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "teleportation"
+  ],
+  "prerequisites": [
+   "Crimson Shroud"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per Crimson Shroud **Trigger** You are targeted with a Strike by someone you can detect. **Requirements** Your Crimson Shroud is active. --- You partially fade from reality. The attacker must attempt a ; on a failure, the attack passes harmlessly through the image of your body that remains behind. An instant later you return to reality, and your Crimson Shroud ends."
+ },
+ {
+  "id": "faith-in-the-fallen",
+  "name": "Faith in the Fallen",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Magaambyan Attendant Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** You're a member of the Vellumis Scholars. --- The Gravelands are full of fallen spirits seeking to move on, and you consider it your obligation to assist in that regard. You gain the ability to store spirit wisps in your body, becoming a living *spirit dwelling* (see the archetype). Each day during your daily preparations, your *spirit dwelling* attracts a spirit wisp who comes to dwell inside. If your *spirit dwelling* contains no wisps, you can spend 10 minutes in a minor ritual to cast your *spirit dwelling* around an area and attract another wisp. Additionally, you gain a spirit wisp when a haunt or incorporeal undead creature is destroyed within 30 feet of you. You gain the Spirit Sanctification action. Every day before your daily preparations, any spirit wisps remaining within your *spirit dwelling* from the previous day are purified and can continue along the River of Souls."
+ },
+ {
+  "id": "faithful-stride",
+  "name": "Faithful Stride",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "champion",
+   "magical"
+  ],
+  "prerequisites": [
+   "Faithful Steed"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are riding your mount. --- Confident in your faith, you Command an Animal to order your mount to Stride up to twice its Speed (or up to three times its Speed if you used 3 actions for Faithful Stride). During this movement, your mount can Stride across liquid and other surfaces that don't support its weight. If your mount ends its movement on a surface that can't support it, your mount (and you) fall in or it collapses as normal."
+ },
+ {
+  "id": "falcon-swoop",
+  "name": "Falcon Swoop",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You currently have a fly Speed. --- Like the fastest of predatory birds, you soar toward your prey at great speeds. Fly twice. At any point during this movement, you can make a Strike against one enemy within reach or within the first range increment of a ranged weapon. That enemy is off-guard against the Strike if you're attacking them from above."
+ },
+ {
+  "id": "false-faith",
+  "name": "False Faith",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "worshipper of Droskar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Droskar knows you may need to disguise yourself in societies that oppose your faith. After spending 1 hour in prayer to Droskar, you can cast spells using the religious symbol of a different deity as your divine focus, and you can address verbal prayers to that deity. Droskar intercepts your prayers and answers them without the named god knowing. This ability applies to the religious symbol of only one god at a time-making a different religious symbol work in this fashion requires another hour of prayer and causes the old one to cease functioning. You can always use a religious symbol of Droskar without affecting this ability."
+ },
+ {
+  "id": "false-priest-form",
+  "name": "False Priest Form",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tanuki"
+  ],
+  "prerequisites": [
+   "Everyday Form"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Nobody respects tanuki, but most everyone respects an esteemed priest, so what better form to take if you want to get by a little easier? When you Change Shape, you can assume the shape of a priest or other religious official from a religion of your choosing. While in your false priest form, you can attempt Deception checks to Recall Knowledge about Religion, and you can cast Divine Lance and Haunting Hymn as primal innate cantrips. If you critically fail at a Deception check while in your false priest form, your transformation is broken, returning you to your tanuki form, and you're so embarrassed that you can't resume your False Priest Form until your next daily preparations, after you've taken a night to sleep on it."
+ },
+ {
+  "id": "fame-and-fortune",
+  "name": "Fame and Fortune",
+  "level": 11,
+  "category": "general",
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "prerequisites": [],
+  "text": "Fame and Fortune Source Kingmaker Adventure Path pg. 531 Your kingdom's reputation has spread far and wide, bringing in visitors to behold the spectacle of your greatness and pay their respects. Whenever you achieve a critical success on any Kingdom skill check during the Activity phase of a Kingdom turn, gain 1 bonus Resource Die at the start of your next Kingdom turn."
+ },
+ {
+  "id": "familiar-conduit",
+  "name": "Familiar Conduit",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Familiar Master Dedication",
+   "able to cast spells"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have line of effect to your familiar. --- Under your tutelage, your familiar has grown attuned to the hidden currents of the world and can serve as a conduit for your magic. If the next action you use is to Cast a Spell that has a range, the spell uses the familiar as its origin point."
+ },
+ {
+  "id": "familiar-mascot",
+  "name": "Familiar Mascot",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Familiar Master Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When selecting master abilities, you can choose an ally to benefit from any specific master ability. Each master ability can benefit only a single character, and you can select a specific master ability only once unless the ability says otherwise."
+ },
+ {
+  "id": "familiar-ritualist",
+  "name": "Familiar Ritualist",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Familiar Sage Dedication",
+   "ability to cast a ritual"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your familiar's magical presence can serve as an aspect of a ritual. When you cast a ritual, your familiar can serve as a secondary caster, fulfilling any requirements for the secondary caster as well as a secondary check. You can't replace a secondary caster who's the target of the spell."
+ },
+ {
+  "id": "familiars-language",
+  "name": "Familiar's Language",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "a familiar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to speak with your familiar and other creatures like it. You can ask questions of, receive answers from, and use the Diplomacy skill with creatures of the same family of animals as your familiar. For example, if your familiar were a cat, you could gain the effects of Speak with Animals for any felines (including leopards, lions, and tigers, among others). This ability doesn't make them more friendly than normal. If your familiar ever changes to a different creature, you can't use this ability for 1 week while you absorb your new familiar's language. --- **Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "fancy-moves",
+  "name": "Fancy Moves",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Gladiator Dedication",
+   "expert in Performance"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You show off your fighting style to discourage your foes. You can use Performance to Demoralize."
+ },
+ {
+  "id": "fanes-escape",
+  "name": "Fane's Escape",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have a deck of playing cards in your possession. --- A good getaway requires a good distraction. You Interact to draw a deck of cards and flip it in a fluttering explosion, causing you to become briefly hidden to all other creatures using vision as their precise sense, and then you Sneak. You have enough cover to Sneak until the end of your turn. This leaves all of the cards from the deck scattered about the room; collecting them into a deck again takes several minutes."
+ },
+ {
+  "id": "fantastic-leap",
+  "name": "Fantastic Leap",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You launch yourself through the air at a foe. Attempt a High Jump or Long Jump. If you attempt a High Jump, determine the height of your jump as though determining the length of a Long Jump. At the end of your jump, you can make a melee Strike. After your Strike, you fall to the ground if you're in the air. If the distance of your fall is no more than the height of your jump, you take no damage and land upright."
+ },
+ {
+  "id": "fantastic-leaps",
+  "name": "Fantastic Leaps",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your leaps seem to defy gravity as you soar through the air in a single bound. When Leaping, increase the maximum distance you can Leap horizontally by 10 feet, and the maximum distance you can Leap vertically by 5 feet."
+ },
+ {
+  "id": "far-lobber",
+  "name": "Far Lobber",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to throw a longer distance. When you throw an alchemical bomb, it has a range increment of 30 feet instead of the usual 20 feet."
+ },
+ {
+  "id": "far-shot",
+  "name": "Far Shot",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your experience in the field has taught you how to focus your aim at a distance, increasing your accuracy. Double your weapons' range increments."
+ },
+ {
+  "id": "far-throw",
+  "name": "Far Throw",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you Strike with a thrown weapon, you take only a –1 penalty for each additional range increment between you and the target, rather than a –2 penalty."
+ },
+ {
+  "id": "fast-channel",
+  "name": "Fast Channel",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "harmful font or healing font"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Divine power is always at your fingertips, swiftly responding to your call. When you cast Harm or Heal by spending 2 actions, you can get the effects of the 3-action version instead of the 2-action version. You can do this with *harm* if you have harmful font or *heal* if you have healing font (or both if you have Versatile Font)."
+ },
+ {
+  "id": "fast-recovery",
+  "name": "Fast Recovery",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [
+   "Constitution +2"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body quickly bounces back from afflictions. You regain twice as many Hit Points from resting. Each time you succeed at a Fortitude save against an ongoing disease or poison, you reduce its stage by 2, or by 1 against a virulent disease or poison. Each critical success you achieve against an ongoing disease or poison reduces its stage by 3, or by 2 against a virulent disease or poison. In addition, you reduce the severity of your drained condition by 2 when you rest for a night instead of by 1."
+ },
+ {
+  "id": "fast-swimmer",
+  "name": "Fast Swimmer",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Undersea Privateer Dedication",
+   "you have a swim Speed"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You move more quickly underwater. Your swim Speed increases by 5 feet."
+ },
+ {
+  "id": "fatal-bullet",
+  "name": "Fatal Bullet",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're especially talented at striking your enemies in their most vulnerable areas. When you critically hit with a fatal firearm, you deal an additional die of the appropriate size and damage type for the fatal trait after doubling the weapon's damage. For example, after getting a critical hit with a fatal d12 weapon, you add a total of 2d12 additional damage to the attack after doubling its damage."
+ },
+ {
+  "id": "faultless-defense",
+  "name": "Faultless Defense",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would take damage from a Strike made by a creature. --- As you are struck, your steely determination reminds those who fight you that they are destined to be no more than footnotes in your tale. Spend a Mythic Point to gain resistance equal to half your level to the triggering damage, and then attempt a Strike at mythic proficiency against the creature that attacked you. If the Strike hits and deals damage, the creature is also Slowed 1."
+ },
+ {
+  "id": "faultspawn",
+  "name": "Faultspawn",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lineage",
+   "nephilim"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You bear a grudge, inherited from a blasphemous asura forebear in your bloodline, against a particular deity and their works. You gain the Find Fault reaction."
+ },
+ {
+  "id": "fautless-defense",
+  "name": "Fautless Defense",
+  "level": 14,
+  "category": "mythic",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Fautless Defense Source War of Immortals pg. 127 Archetype Eternal Legend Prerequisites Eternal Legend Dedication Trigger You would take damage from a Strike made by a creature. As you are struck, your steely determination reminds those who fight you that they are destined to be no more than footnotes in your tale. Spend a Mythic Point to gain resistance equal to half your level to the triggering damage, and then attempt a Strike at mythic proficiency against the creature that attacked you. If the Strike hits and deals damage, the creature is also slowed 1."
+ },
+ {
+  "id": "favorable-winds",
+  "name": "Favorable Winds",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "air",
+   "changeling",
+   "concentrate",
+   "occult"
+  ],
+  "prerequisites": [
+   "Virga May"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You wrap a shell of favorable wind around a weapon you wield. On your next Strike with a ranged weapon before the start of your next turn, you don't take circumstance penalties on the attack roll due to wind. In addition, if that weapon has a range increment of 10 feet or less, increase its range increment by 10 feet for that Strike."
+ },
+ {
+  "id": "fear-no-law-fear-no-one",
+  "name": "Fear No Law, Fear No One",
+  "level": 1,
+  "category": "bonus",
+  "traits": [
+   "emotion",
+   "flourish",
+   "mental",
+   "visual"
+  ],
+  "prerequisites": [
+   "Order of the Scourge"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "When your allies see you stand up to fear, they become similarly emboldened. Make a Strike. If you hit and deal damage, each ally within a around you who can see you reduces the value of their frightened condition by 1. If the target of your Strike was the source of their frightened condition, they reduce the value by 2 instead."
+ },
+ {
+  "id": "fearsome-fangs",
+  "name": "Fearsome Fangs",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your claws and jaws are brutally powerful and efficient, even by ursine standards. The base damage of your jaws unarmed attack from Ursine Avenger Form increases to 1d12. The base damage of your claws unarmed attack from Ursine Avenger Form increases to 1d8."
+ },
+ {
+  "id": "feast",
+  "name": "Feast",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Zombie Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are adjacent to a restrained or unconscious creature, or a deceased creature that died in the past hour. --- You feast upon an adjacent restrained or unconscious creature, or a deceased creature that died in the past hour. If the creature is alive, you deal damage equal to your jaws damage. Whether it's alive or not, you gain a number of temporary Hit Points equal to half your level that last for 1 minute. You can instead choose to gain temporary Hit Points equal to double your level, but if you do, you must succeed at a or your body deteriorates."
+ },
+ {
+  "id": "feast-planner",
+  "name": "Feast Planner",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wandering Chef Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You learn the Fortifying Brew ritual, but you instead prepare dishes for a lavish meal that have the same effect as the drinks from the normal version of the ritual. You perform both aspects of the ritual yourself, acting as both primary and a secondary caster. You must still attempt the secondary check normally performed by a secondary caster. In addition, you can use Crafting or Cooking Lore for both the primary and secondary checks. The ritual gains the primal trait as nature spirits attend to you and your guests."
+ },
+ {
+  "id": "feather-step",
+  "name": "Feather Step",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [
+   "Dexterity +2"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You step carefully and quickly. You can Step into difficult terrain."
+ },
+ {
+  "id": "feathered-flechettes",
+  "name": "Feathered Flechettes",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Unfurling your wings in a quick snap, you send feathers scattering in all directions. Creatures in a take damage ( save against your class DC). This increases to if your unarmed attacks have a greater striking rune, such as by etching it onto Handwraps of Mighty Blows, and if they have a major striking rune."
+ },
+ {
+  "id": "feed-the-void",
+  "name": "Feed the Void",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "extradimensional",
+   "magical",
+   "mental",
+   "spirit"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "The void within you manages to manifest itself temporarily, a black hole opening over your heart and threatening to draw everything in. A becomes filled with screaming winds that rush in toward you. All creatures in the cone must attempt a Fortitude saving throw. --- **Critical Success** The creature is unaffected. **Success** The creature is pulled 10 feet toward you. **Failure** The creature is pulled 20 feet toward you. **Critical Failure** The creature is pulled 30 feet toward you. Creatures that would be pulled into your square contact the void, which deals damage with no saving throw, and are then spat back out in a square adjacent to you of your choice. At 12th level, and every 2 levels thereafter, the damage increases by 1d6. **Awakening** The void feeds upon the creature's spirit, transferring you some of their vitality. If one or more creatures are pulled into the void, you gain temporary Hit Points equal to the level of the highest-level creature pulled in. These temporary Hit Points last for 10 minutes. **Awakening** The void's suction draws in heat and light as well. The first 30 feet of the cone becomes covered in ice as temperatures drop, making the area difficult terrain, and is also plunged into darkness, with the effects of darkness heightened to half your level. Both effects last until the beginning of your next turn."
+ },
+ {
+  "id": "feet-that-stride-the-sky",
+  "name": "Feet that Stride the Sky",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Acrobat's Calling"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You feel the call of the sky, or perhaps a desperate urge to test the limits of the earth's hold on you. When you or a creature you're mounted on attempts a High Jump or Long Jump, you can spend a Mythic Point to allow you or the mount to attempt the check at mythic proficiency; determine the DC using the Long Jump DCs, and increase your maximum distance to double your Speed."
+ },
+ {
+  "id": "felicitous-riposte",
+  "name": "Felicitous Riposte",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "fortune",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You take advantage of your foe's openings with uncanny odds. When you make an Opportune Riposte, roll twice on the attack roll and take the better result."
+ }
+]

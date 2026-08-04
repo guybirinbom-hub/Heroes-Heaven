@@ -1,0 +1,964 @@
+[
+ {
+  "id": "manifold-edge",
+  "name": "Manifold Edge",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "hunter's edge",
+   "masterful hunter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to leverage every possible edge. When you use Hunt Prey, you can gain a different hunter's edge benefit instead of the one you selected at 1st level. If you do, you don't gain the additional benefit from Masterful Hunter."
+ },
+ {
+  "id": "manipulate-realm",
+  "name": "Manipulate Realm",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Archfiend Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thanks to your continued belief in your ultimate transformation, you have learned greater control over your manifested realm. If you spend a Mythic Point when you Manifest your Realm, you can use the Drain Realm, Spread Realm, and Unleash Realm free actions."
+ },
+ {
+  "id": "many-guises",
+  "name": "Many Guises",
+  "level": 8,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Many Guises Source Player Core 2 pg. 219 Archetype Vigilante Prerequisites Vigilante Dedication; Master in Deception You can take on any number of mundane guises. Whenever you change your identity, instead of taking on your social or vigilante identity, you can become someone completely ordinary. This identity isn't a specific individual—rather, you become a nondescript member of your ancestry, of any gender, and from a mundane occupation such as common laborer, farmer, or peasant. Spells and abilities detect you as if you were this ordinary identity, rather than either of your two real identities, unless they succeed at a counteract check against the same Deception DC used for Vigilante Dedication. Using class or dedication abilities ends this disguise."
+ },
+ {
+  "id": "many-guises-vigilante",
+  "name": "Many Guises (Vigilante)",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "master in Deception",
+   "Vigilante Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can take on any number of mundane guises. Whenever you change your identity, instead of taking on your social or vigilante identity, you can become someone completely ordinary. This identity isn't a specific individual—rather, you become a nondescript member of your ancestry, of any gender, and from a mundane occupation such as common laborer, farmer, or peasant. Spells and abilities detect you as if you were this ordinary identity, rather than either of your two real identities, unless they succeed at a counteract check against the same Deception DC used for Vigilante Dedication. Using class or dedication abilities ends this disguise."
+ },
+ {
+  "id": "marine-combat-training",
+  "name": "Marine Combat Training",
+  "level": 4,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Marine Combat Training Source High Seas pg. 106 Archetype Marine Marauder Prerequisites Marine Marauder Dedication You’re skilled with weapons that can be easily handled underwater. You have familiarity with harpoons and tridents, treating them as simple weapons for the purposes of proficiency. Additionally, you don’t halve the range increment of harpoons and spear weapons when throwing them underwater. At 5th level, whenever you get a critical hit with one of these weapons, you get its critical specialization effect."
+ },
+ {
+  "id": "marine-jet",
+  "name": "Marine Jet",
+  "level": 10,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Marine Jet Source High Seas pg. 107 Archetype Marine Marauder Prerequisites Marine Marauder Dedication; you have a swim Speed You shoot through the water at a great speed. Swim up to five times, or up to eight times if you used 3 actions. All this movement must be in a straight line (though the GM might allow reasonable variance). If you are moving up or down in this way, you aren’t considered to be moving through difficult terrain while doing so."
+ },
+ {
+  "id": "mark-of-the-sage",
+  "name": "Mark of The Sage",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a worn ikon --- Your ikon gains a pin, stripe, or similar marking showing you as a master of your craft. The imbued ikon gains the following ability. **Transcendence—A Challenge for Heroes** ⟨2⟩ (concentrate, mental, spirit, transcendence)"
+ },
+ {
+  "id": "marsh-runner",
+  "name": "Marsh Runner",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [
+   "You have a swim Speed"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use the Step action, you can ignore difficult terrain caused by flooding, swamps, or quicksand. In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven marshy ground, you aren't off-guard, and if you roll a success on the Acrobatics check, you get a critical success instead."
+ },
+ {
+  "id": "martial-artist-dedication",
+  "name": "Martial Artist Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have trained to use your fists as deadly weapons and can deliver devastatingly powerful blows with them. The damage die for your fist unarmed attacks becomes 1d6 instead of 1d4. You don't take the –2 circumstance penalty for making a lethal attack with your nonlethal unarmed attacks."
+ },
+ {
+  "id": "martial-performance",
+  "name": "Martial Performance",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "warrior muse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your muse has taught you how to handle a wider variety of weapons than most bards, empowering you to effortlessly blend your performance into combat tools. When you have a Courageous Anthem composition cantrip active, and you damage an enemy with a Strike, the spell's duration is extended by 1 round. You can extend an individual casting only once in this way. If you gain the Rallying Anthem or Song of Strength composition cantrips, you can apply this benefit to those cantrips as well."
+ },
+ {
+  "id": "martyr",
+  "name": "Martyr",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "divine font"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You go to extreme lengths to support your allies, even when it means bringing harm to yourself. If your next action is to cast Harm or Heal to restore Hit Points to a single ally, you can channel your own vitality along with the spell. You lose 1d8 Hit Points per rank of the spell, which can't be reduced or mitigated in any way, and your ally regains an equal number of Hit Points."
+ },
+ {
+  "id": "mask-of-fear",
+  "name": "Mask of Fear",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [
+   "Orc Warmask"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You start your turn with the frightened condition. **Requirements** You're wearing your *warmask*. --- Your *warmask* burns off of your face, releasing your apprehension. You remove the frightened condition. Your *warmask* is destroyed, and you can't reapply it until your next daily preparations. --- **Special** You can use this free action even if you have a condition tied to the frightened condition that would normally prevent you from using a free action, such as \"fleeing as long as you're frightened\" or \"paralyzed as long as you're frightened.\""
+ },
+ {
+  "id": "mass-delusion",
+  "name": "Mass Delusion",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Fabricate Truth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You wave around fabricated evidence that contradicts what your enemies know to be true. When you Fabricate Truth, you can affect all enemies within 30 feet of you. Compare your Deception check result to the Will DCs of all targets. It is possible to get a different degree of success for each target."
+ },
+ {
+  "id": "master-alchemy",
+  "name": "Master Alchemy",
+  "level": 12,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Master Alchemy Source Core Rulebook pg. 220 Archetype Alchemist Prerequisites Expert Alchemy; Master in Crafting Your advanced alchemy level increases to 7. For every level you gain beyond 12th, your advanced alchemy level increases by 1."
+ },
+ {
+  "id": "master-animist-spellcasting",
+  "name": "Master Animist Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Animist Spellcasting",
+   "legendary in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the master spellcasting benefits as a prepared divine caster."
+ },
+ {
+  "id": "master-bard-spellcasting",
+  "name": "Master Bard Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Bard Spellcasting",
+   "legendary in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-beast-gunner-spellcasting",
+  "name": "Master Beast Gunner Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Beast Gunner Spellcasting or Expert Wizard Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned the final truth of beast guns, making you a master in the magic they grant you. You gain the ."
+ },
+ {
+  "id": "master-cathartic-spellcasting",
+  "name": "Master Cathartic Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Cathartic Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-cleric-spellcasting",
+  "name": "Master Cleric Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Cleric Spellcasting",
+   "legendary in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-druid-spellcasting",
+  "name": "Master Druid Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Druid Spellcasting",
+   "legendary in Nature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-eldritch-archer-spellcasting",
+  "name": "Master Eldritch Archer Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Eldritch Archer Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-magus-spellcasting",
+  "name": "Master Magus Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Magus Spellcasting",
+   "legendary in Arcana"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-merchant",
+  "name": "Master Merchant",
+  "level": 14,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Prophet of Kalistrade Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Kalistrade teaches that setbacks are only temporary and that perseverance is a treasured virtue. When you fail, but not critically fail, at a Society or Mercantile Lore check to Earn Income at a specific task and are allowed to continue working at that task on subsequent days, you can choose to attempt the skill check again the next day. If you succeed, you get a critical success and continue to earn that amount on further days spent working at the task, if the task lasts that long."
+ },
+ {
+  "id": "master-monster-hunter",
+  "name": "Master Monster Hunter",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "master in Nature",
+   "Monster Hunter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a nearly encyclopedic knowledge of all creatures of the world. You can use Nature to Recall Knowledge to identify any creature. In addition, you gain the benefits of Monster Hunter (and Monster Warden, if you have it) on a success as well as a critical success."
+ },
+ {
+  "id": "master-of-apprentice",
+  "name": "Master of Apprentice",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Crafting, Performance, or a Lore skill"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Teaching is a difficult art form, but you've gotten a pretty good handle on it. When you Craft or Earn Income during downtime, you can also attempt to Aid another creature doing the same with the same skill if they have a lower proficiency bonus than you. If you succeed, they can use the better result between your check and their own check."
+ },
+ {
+  "id": "master-oracle-spellcasting",
+  "name": "Master Oracle Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Oracle Spellcasting",
+   "legendary in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-prophet-spellcasting",
+  "name": "Master Prophet Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Prophet Spellcasting",
+   "legendary in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the ."
+ },
+ {
+  "id": "master-psychic-spellcasting",
+  "name": "Master Psychic Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Psychic Spellcasting",
+   "legendary in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-qi-spells",
+  "name": "Master Qi Spells",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Qi Spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have achieved near-total mastery of your qi. You gain Medusa's Wrath, Touch of Death, or another 8th-rank qi spell you have access to. --- **Special** You can select this feat more than once, choosing a different spell each time."
+ },
+ {
+  "id": "master-red-mantis-magic",
+  "name": "Master Red Mantis Magic",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "legendary in Religion",
+   "Expert Red Mantis Magic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the master spellcasting benefits."
+ },
+ {
+  "id": "master-rivethun-spellcasting",
+  "name": "Master Rivethun Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Rivethun Spellcasting",
+   "legendary in Religion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the ."
+ },
+ {
+  "id": "master-scroll-cache",
+  "name": "Master Scroll Cache",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Scroll Cache"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your scroll collection is incredible, brimming with eldritch power, and you can prepare far more of them than an ordinary scroll trickster. In addition to your daily scrolls from the Basic and Expert Scroll Caches, add a single scroll with a 6th-rank spell. At 20th level, add a scroll with a 7th-rank spell."
+ },
+ {
+  "id": "master-siege-engineer",
+  "name": "Master Siege Engineer",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Artillerist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "What you don't know about artillery isn't worth knowing and your mastery allows you to perform an impossible number of actions as part of a siege weapon's crew. You're permanently quickened. You can only use the extra action to Aim or Launch a siege weapon."
+ },
+ {
+  "id": "master-snowcasting",
+  "name": "Master Snowcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have unlocked the deeper magic of your *gelid shard*, gaining access to new ranks of spells. You gain the benefits."
+ },
+ {
+  "id": "master-sorcerer-spellcasting",
+  "name": "Master Sorcerer Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Sorcerer Spellcasting",
+   "legendary in Arcana, Nature, Occultism, or Religion depending on bloodline"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-spellcasting",
+  "name": "Master Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "pervasive-magic"
+  ],
+  "prerequisites": [
+   "Expert Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the archetype benefits."
+ },
+ {
+  "id": "master-summoner",
+  "name": "Master Summoner",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "During daily preparations, you can designate one of your spell slots to become two summoning slots of the same spell rank, from which you can cast only summoning or incarnate spells."
+ },
+ {
+  "id": "master-summoner-spellcasting",
+  "name": "Master Summoner Spellcasting",
+  "level": 18,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Master Summoner Spellcasting Source Secrets of Magic pg. 77 Archetype Summoner Prerequisites Expert Summoner Spellcasting; legendary in the skill associated with your eidolon's tradition You gain the master bounded spellcasting benefits."
+ },
+ {
+  "id": "master-summoning-spellcasting",
+  "name": "Master Summoning Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Summoner Spellcasting",
+   "legendary in the skill associated with your eidolon's tradition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-witch-spellcasting",
+  "name": "Master Witch Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Witch Spellcasting",
+   "legendary in the skill associated with your patron's tradition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "master-wizard-spellcasting",
+  "name": "Master Wizard Spellcasting",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Expert Wizard Spellcasting",
+   "legendary in Arcana"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "masterful-companion",
+  "name": "Masterful Companion",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "masterful hunter",
+   "Animal Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your animal companion shares your incredible hunting skills, allowing it to take down your shared prey with ease. When you Hunt Prey, your animal companion gains the Masterful Hunter benefit associated with your hunter's edge, rather than just your original hunter's edge benefit."
+ },
+ {
+  "id": "masterminds-eye",
+  "name": "Mastermind's Eye",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Butterfly Blade Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you succeed at identifying a creature using Recall Knowledge, that creature is off-guard against your attacks until the start of your next turn; if you critically succeed, it's off-guard against your attacks for 1 minute. This feat serves as the rogue's Mastermind racket for the purpose of meeting prerequisites."
+ },
+ {
+  "id": "masters-counterspell",
+  "name": "Master's Counterspell",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spellmaster Dedication",
+   "master in spell attack rolls and spell DCs"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature Casts a Spell that you have prepared, and that spell was cast or created with a tradition of magic in which you have master proficiency in spell attack rolls and spell DCs. --- When a foe Casts a Spell and you can see its manifestations, you can use your magic to disrupt it. If you're a prepared caster, you can expend a prepared spell to counter the triggering creature's casting of a spell. If you're a spontaneous caster, you can expend a spell slot. The level of the prepared spell or spell slot must be at least as high as the triggering spell's rank. You lose your prepared spell or spell slot as if you had Cast the Spell. You then attempt to counteract the triggering spell, and you take a -2 penalty to your counteract check; for prepared casters, the GM might waive the penalty if the spell you're expending to counterspell is especially appropriate-such as countering with the same spell, or using a Cone of Cold to counteract a Fireball."
+ },
+ {
+  "id": "mature-animal-companion-druid",
+  "name": "Mature Animal Companion (Druid)",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Animal Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your animal companion has grown up over the course of your adventures, becoming a mature animal companion and gaining additional capabilities. Your animal companion has greater independence. During an encounter, even if you don't use the Command an Animal action, your animal companion can still use 1 action that round on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed). It can do this at any point during your turn, as long as you aren't currently taking an action. If it does, that's all the actions it gets that round—you can't Command it later."
+ },
+ {
+  "id": "mature-animal-companion-ranger",
+  "name": "Mature Animal Companion (Ranger)",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Animal Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your animal companion becomes a mature animal companion and gains additional capabilities. Your animal companion has greater independence.During an encounter, even if you don't use the Command an Animal action, your animal companion can still use 1 action that round on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed). It can do this at any point during your turn, as long as you aren't currently taking an action. If it does, that's all the actions it gets that round—you can't Command it later."
+ },
+ {
+  "id": "mature-beastmaster-companion",
+  "name": "Mature Beastmaster Companion",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "All of your animal companions grow up, becoming mature animal companions and gaining additional capabilities. Your animal companion has greater independence. During an encounter, even if you don't use the Command an Animal action, your animal companion can still use 1 action that round on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed). It can do this at any point during your turn, as long as you aren't currently taking an action. If it does, that's all the actions it gets that round—you can't Command it later."
+ },
+ {
+  "id": "mature-dragon-companion",
+  "name": "Mature Dragon Companion",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Drake Rider Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your dragon companion matures and the bond you share is strengthened. The dragon companion you gained with your Drake Rider Dedication is now a mature animal companion. Your dragon companion gains greater independence. During an encounter, even if you don't use the Command an Animal action, your dragon companion can still use 1 action that round on your turn to Stride or Strike. It can do this at any point during your turn, as long as you aren't currently taking an action. If it does, that's all the actions it gets that round—you can't Command it later."
+ },
+ {
+  "id": "mature-megafauna-companion",
+  "name": "Mature Megafauna Companion",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mammoth Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've raised your megafauna companion to be a more powerful force on the battlefield than most of its kind. The companion you gained through the Mammoth Lord Dedication feat becomes a mature animal companion, granting it additional capabilities. During an encounter, even if you don't use the Command an Animal action, your megafauna animal companion can still use 1 action on your turn to Stride or Strike."
+ },
+ {
+  "id": "medical-researcher",
+  "name": "Medical Researcher",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Medicine"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Kassi has taught you not only how to apply medicines with your medical skills but how to craft them as well. When you Craft healer's kits, vaccines, addiction suppressants, antidotes, antiplagues, elixirs of life, or other non-magical medical or healing items, you can use Medicine instead of Crafting."
+ },
+ {
+  "id": "meditate-on-this",
+  "name": "Meditate on This!",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "emotion",
+   "incapacitation",
+   "mental",
+   "rage"
+  ],
+  "prerequisites": [
+   "trained in Medicine or Tian Xia Lore"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Access** Tian Xia origin --- You meditate to alter your qi, coloring it with your resentment and anger. Until the start of your next turn, whenever you hit a creature with an unarmed Strike, or an adjacent creature deals piercing, slashing, or bleed damage to you, the creature that you hit or that damaged you must attempt a save against your class DC. The creature is then temporarily immune for 1 minute. --- **Critical Success** The creature is unaffected. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is Frightened 3 and fleeing until the end of its next turn."
+ },
+ {
+  "id": "meditative-focus",
+  "name": "Meditative Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Qi Spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your meditation is so effective that you can achieve a deep focus with the world around you. When you Refocus, you regain all your Focus Points instead of 1."
+ },
+ {
+  "id": "meditative-wellspring",
+  "name": "Meditative Wellspring",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "text": "Meditative Wellspring Source Core Rulebook pg. 165 Prerequisites Meditative Focus When you clear your mind, your focus comes flowing back in a powerful rush. If you have spent at least 3 Focus Points since the last time you Refocused, you recover 3 Focus Points when you Refocus instead of 1."
+ },
+ {
+  "id": "mega-bomb",
+  "name": "Mega Bomb",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "additive",
+   "alchemist",
+   "manipulate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can add a highly explosive additive to an alchemical bomb to turn it into a mega bomb. Throwing this bomb takes a 2-action activity instead of a Strike. This isn't a Strike, and you don't make an attack roll. The mega bomb explodes in a within 60 feet. It deals damage as if each creature were the primary target, with a save. On a failed save, a creature also takes any extra effects that affect a primary target (such as off-guard from bottled lightning). Though all targets in the area take splash damage as primary targets, there is no further splash beyond that area."
+ },
+ {
+  "id": "megaton-strike",
+  "name": "Megaton Strike",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "armor, construct, or weapon innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You activate gears, explosives, and other hidden mechanisms in your innovation to make a powerful attack. You make a Strike, dealing an extra die of weapon damage. If you're at least 10th level, increase this to two extra dice, and if you're at least 18th level, increase it to three extra dice. The type of Strike you can make depends on your innovation. - **Armor** You Strike with a melee unarmed attack or a melee weapon. To use a melee weapon for this, you must have prepared it in advance with special contraptions when you make your daily preparations. - **Construct** Your minion innovation Strikes. - **Weapon** You Strike with your weapon innovation. **Unstable Function** You put even more force into the Strike, though you risk stress fractures to your innovation. Add the unstable trait to Megaton Strike. The Strike deals another extra damage die, for a total of two extra dice at 4th level, three at 10th level, and four at 18th level. --- **Special** If your innovation is a minion, it can take this action rather than you."
+ },
+ {
+  "id": "meld-into-eidolon",
+  "name": "Meld into Eidolon",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Your physical form can combine with that of your eidolon, granting benefits but limiting your capabilities. You Manifest your Eidolon, but instead of summoning it into an adjacent open space, you become it. You can also Meld Into Eidolon while the eidolon is already manifested as long as it's adjacent to you. While Manifested in this way, you use its statistics, and you can't act except to direct it to use Manifest an Eidolon to unmanifest it. Since you can't act, you can't Cast Spells, activate or benefit from magic items that normally benefit you and not your eidolon, perform actions that have the tandem trait, or use other abilities that require you, and not the eidolon, to act. You can't be separately targeted while you are melded into it. When you reach 0 HP, your eidolon unmanifests, leaving your body behind, unconscious and dying."
+ },
+ {
+  "id": "melodious-spell",
+  "name": "Melodious Spell",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "bard",
+   "concentrate",
+   "manipulate",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You subtly weave your spellcasting into a performance. If the next action you use is to Cast a Spell, the spell gains the subtle trait, hiding the shining runes, sparks of magic, and other manifestations that would usually give away your spellcasting. The trait hides only the spell's spellcasting actions and manifestations, not its effects, so an observer might still see a ray streak out from you or see you vanish into thin air. As part of using Melodious Spell, you can choose to Create a Diversion, Demoralize, Perform, or Request. If you do so, the spell you cast must have the auditory, emotion, sonic, or visual trait to gain the subtle trait."
+ },
+ {
+  "id": "memory-of-nothing",
+  "name": "Memory of Nothing",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "mental",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Apocalypse Rider Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With a look and a gesture, you turn a thinking creature's mind against itself, causing the creature to struggle to remember how to perform more complex actions. Choose a target within 30 feet and spend a Mythic Point. The target must attempt a save against your class DC or spell DC (whichever is higher) at mythic proficiency. --- **Critical Success** The target is unaffected. **Success** For the next 3 rounds, if the target performs an activity that requires three or more actions, they take 12d8 damage. **Failure** For the next 3 rounds, if the target performs an activity that requires two or more actions, they take 12d8 mental damage. **Critical Failure** As failure, but the target is also Stunned 1 as its mind struggles to function."
+ },
+ {
+  "id": "mental-static",
+  "name": "Mental Static",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "mental",
+   "nonlethal",
+   "occult",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You roll a critical success on a Will save against a mental effect from a creature. --- Your thoughts sting back when a lesser mind tries to invade your own. You deal mental damage equal to your level to the triggering creature. If you so desire, you can also send the creature a single mental image to coincide with the damage, such as a watchful eye or the dread of floating in an infinite sea."
+ },
+ {
+  "id": "mental-sustenance",
+  "name": "Mental Sustenance",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "kashrishi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can sustain yourself with the power of your mind. You need only a single serving of food and water each week to avoid starvation or dehydration. You can hold your breath for an additional 5 rounds before running out of air."
+ }
+]

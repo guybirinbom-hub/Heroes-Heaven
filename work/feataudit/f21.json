@@ -1,0 +1,981 @@
+[
+ {
+  "id": "kneecap",
+  "name": "Kneecap",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You deliver a punishing blow to an enemy's knee, shin, or other vulnerable anatomy within your reach. Make a melee Strike with a melee weapon or melee unarmed attack. This attack doesn't deal damage. On a hit, the target takes a –10-foot status penalty to its Speed (or a –15-foot status penalty on a critical hit). The penalty lasts for 1 round. This penalty applies only if the target has a land Speed and depends on legs or other targetable appendages to use its land Speed. As with all penalties to Speed, this can't reduce a creature's Speed below 5 feet."
+ },
+ {
+  "id": "kneel-for-no-god",
+  "name": "Kneel for No God",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [
+   "ancient-blooded dwarf heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Vahird ethnicity --- Your ancestors' defiance of magic and your people's strictly egalitarian mindset mean that certain forms of magic have little effect on you. When you use your Call on Ancient Blood reaction against a divine spell and roll a critical failure on the saving throw against that spell, you get a failure instead."
+ },
+ {
+  "id": "knight-in-shining-armor",
+  "name": "Knight in Shining Armor",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant",
+   "expert in light armor, medium armor, or unarmored defense",
+   "trained in heavy armor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As a knight in shining armor, you train daily in the heaviest armor, expanding your expertise to heavy armor. You gain expert proficiency in heavy armor."
+ },
+ {
+  "id": "knight-vigilant",
+  "name": "Knight Vigilant",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [],
+  "text": "Knight Vigilant Source Character Guide pg. 94 Archetype Knight Vigilant Prerequisites Trained in Religion; any good alignment; member of the Knights of Lastwall of knight rank Access A character who is a member of the Knights of Lastwall has access to this option. You are dedicated to the cause of the Shining Sentinels. You gain expert proficiency in Religion. When you are between an ally and a foe and would provide lesser cover to your ally against the foe’s attacks, you twist to become even more obtrusive, providing standard cover instead. Special You cannot select another dedication feat until you have gained two other feats from the Knight Vigilant archetype. Knight Vigilant leads to... Aegis of Arnisant, Body Barrier, Divine Healing, Emissary of Peace, Empyreal Aura, Endure Death's Touch, Guarded Advance (Knight Vigilant), Instant Armor, Instinctual Interception, Interrupt Charge, Keep up the Good Fight, Knight in Shining Armor, Lead the Way, Phalanx Formation (Knight Vigilant), Preternatural Polish, Rallying Charge, Stalwart Standard, Tower Shield Mastery, Unshakable Idealism, Vigil's Walls Rise Anew!, Vigilant Benediction"
+ },
+ {
+  "id": "knights-retaliation",
+  "name": "Knight's Retaliation",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An undead creature within your reach critically fails a Strike against you. --- You knock the enemy's blow aside and twist, unbalancing your foe. You attempt to Disarm, Shove, or Trip the triggering creature."
+ },
+ {
+  "id": "knock-sense",
+  "name": "Knock Sense",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "champion",
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You attack carefully to knock some sense into a creature whose actions aren't their own. Make a Strike against a confused ally. The Strike is nonlethal and doesn't take a -2 penalty for using a weapon without the nonlethal trait; if you hit and deal damage, your ally automatically succeeds at the flat check to remove the confused condition when taking damage."
+ },
+ {
+  "id": "knockback",
+  "name": "Knockback",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful Strike --- The weight of your swing drives your enemy back. You push the enemy back 5 feet, with the effects of a successful Shove. You can follow the enemy as normal for a successful Shove."
+ },
+ {
+  "id": "knockback-strike",
+  "name": "Knockback Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You focus your strength into a blow powerful enough to push an enemy away from you. Make an unarmed Strike. If you hit, attempt an Athletics check to Shove the target. This attack uses the same multiple attack penalty as your Strike, and doesn't count toward your multiple attack penalty."
+ },
+ {
+  "id": "know-it-all",
+  "name": "Know-It-All",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "bard",
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "enigma muse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Bard** When you succeed at a check to Recall Knowledge, you gain additional information or context. When you critically succeed at a check to Recall Knowledge, you get additional information or context or can ask an additional follow-up question (the GM chooses which). **Thaumaturge** Having heard and scrutinized every rumor or story in the book, you know for a fact that if you've heard something at all, you've probably heard about it at great length. When you succeed or critically succeed at a check to Recall Knowledge, you can ask an additional follow-up question. At the GM's discretion, you might gain even more additional context than normal."
+ },
+ {
+  "id": "know-it-all-eldritch-researcher",
+  "name": "Know It All (Eldritch Researcher)",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Eldritch Researcher Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your knowledge of abstruse topics is unparalleled. When you succeed at a check to Recall Knowledge, you gain additional information or context. When you critically succeed at a Knowledge check, at the GM's discretion you might gain even more additional information or context than normal."
+ },
+ {
+  "id": "know-your-own",
+  "name": "Know Your Own",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've spent countless hours studying the history of elves on your world and beyond and are a studied expert in your people's ways. If you critically fail a check to Recall Knowledge about elves, elven society, or elven history, you get a failure instead."
+ },
+ {
+  "id": "knowledge-is-power-wizard",
+  "name": "Knowledge is Power (Wizard)",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your academic knowledge about a creature allows you to subtly alter your magic to defeat them. When you critically succeed at a Recall Knowledge check about a creature, you can invoke your knowledge to make the creature take a –1 circumstance penalty to either AC and saves against the next attack you make against it, or the next spell you cast that it needs to defend against. The creature takes the same penalty to its attack or DC the next time it attacks against you or causes you to attempt a save against one of its effects. If you share this information with your allies, they gain the benefits as well. If not used, the bonuses end after 1 minute."
+ },
+ {
+  "id": "knowledge-of-shapes",
+  "name": "Knowledge of Shapes",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "oracle",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Reach Spell or Widen Spell"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "Inspiration lets you surpass your preconceptions of your spells' limits. You use Reach Spell or Widen Spell as a free action."
+ },
+ {
+  "id": "kobold-breath",
+  "name": "Kobold Breath",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "kobold",
+   "magical"
+  ],
+  "prerequisites": [
+   "dragonscaled kobold heritage"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You channel the power of your draconic benefactor to expel a torrent of energy from your mouth that manifests as a or a , dealing damage. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1d4 rounds. At 3rd level and every 2 levels after that, the damage increases by 1d4. The breath shape, damage type, and the saving throw match those of your draconic benefactor, such as those shown on the table. This activity has the traits associated with the magical tradition of your draconic benefactor and the type of damage the breath deals. ---"
+ },
+ {
+  "id": "kobold-momentum",
+  "name": "Kobold Momentum",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [
+   "Kobold Breath"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You possess the confidence of a dragon, and your success emboldens you to draw on power reserves you didn't know you had. You recharge your Kobold Breath whenever you score a critical hit with a Strike. In addition, if you score a critical hit with a Strike and then use your Kobold Breath on the same turn, you can reroll any 1s on the damage dice. You must use the new result, even if it's a 1."
+ },
+ {
+  "id": "kobold-weapon-innovator",
+  "name": "Kobold Weapon Innovator",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [],
+  "text": "Kobold Weapon Innovator Source Ancestry Guide pg. 38 Prerequisites Kobold Weapon Familiarity You've learned devious tactics with your kobold weapons. Whenever you critically hit with a crossbow, greatpick, light pick, pick, spear, or kobold weapon, you apply the weapon's critical specialization effect."
+ },
+ {
+  "id": "koi-secrets",
+  "name": "Koi Secrets",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "kobold"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Tian Xia origin --- Due to their beautiful colors, ornamental koi are often found in parks and gardens where townsfolk roam. They hear the gossip and rumors that folks above the water spread. You can ask questions of, receive answers from, and use the Diplomacy skill with fish. As you are a friend of koi—who also strive to be a mighty being one day—koi (as well as carp and goldfish) have a starting attitude toward you of one step better (typically making them friendly)."
+ },
+ {
+  "id": "land-legs",
+  "name": "Land Legs",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "awakened-animal"
+  ],
+  "prerequisites": [
+   "swimming animal heritage, aquatic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are comfortable on land for a short time. You gain a land Speed of 20 and can breathe air for 10 minutes."
+ },
+ {
+  "id": "landscape-form",
+  "name": "Landscape Form",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "tanuki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While walking down the road on a moonlit night, one might be puzzled to find a shop or hill that wasn't there before. In reality, this is a tanuki at the height of their power. When you Change Shape, you can transform into a building or terrain feature up to 50 feet tall and up to 50 feet on a side. Mundane features of your landscape form function as normal—for instance, if you transform into a hot spring, the hot spring contains relaxing hot water, and if you transform into an inn, the inn contains bedrooms, beds, and delicious food—though no aspect of your landscape form can be an active hazard that can cause damage or impose conditions, and any objects created within your landscape form turn into leaves if taken outside of it. You can speak while in landscape form, but you can't attack, cast spells, or move. You can remain in landscape form for up to 8 hours, and when you exit landscape form, it dissolves around anyone who was inside of it."
+ },
+ {
+  "id": "larcenous-hand",
+  "name": "Larcenous Hand",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Agile Hand",
+   "Pickpocket skill feat"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Telekinetic Hand, you can remove its duration, modify its range to 20 feet, and modify its target to be an attended object within the spell's Bulk limit that wouldn't be time-consuming to remove. Add the following to the spell's standard effects: If the creature attending the object is willing to have you take the item, *Telekinetic Hand* carries the item to you. If the creature is unwilling, you must attempt to Steal the target object with a Thievery check. The usual restrictions on attempts to Steal an object apply, including the restrictions that you can't steal objects that would be extremely noticeable or time-consuming to remove (like worn shoes or armor or actively wielded objects) and you can't Steal from a creature in combat or otherwise on guard. On a successful Steal check, the *Telekinetic Hand* carries the item to you, and on a critical failure, you can't use this modification again for 1 hour. If you're a master in Thievery, you can attempt to Steal from a creature in combat or otherwise on guard, though if you do so, the spell's casting time increases by 1 action."
+ },
+ {
+  "id": "larcenous-tail",
+  "name": "Larcenous Tail",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [
+   "Skillful Tail"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can perform minor mischief with your tail. You can use your tail to Steal an object, though your tail still can't hold onto it at the end of your action. If you have a hand free, you can transfer the stolen object to your hand. Otherwise, your tail surreptitiously drops it on the ground in your space, where you can grab it later. Observers other than your target who haven't witnessed you stealing something with your tail are usually distracted, meaning the GM will usually decrease their Perception DCs, as normal for Stealing something."
+ },
+ {
+  "id": "larger-than-life-guardian",
+  "name": "Larger than Life (Guardian)",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you're clad in the heaviest of armors, you have an outsized presence. Though you don't get any larger, you're treated as one size larger for the purposes of affecting other creatures with actions like Disarm, Grapple, Reposition, Shove, and Trip while wearing heavy armor. Similarly, you're treated as one size larger for the purposes of creatures affecting you with those same actions, as well as with Swallow Whole and similar actions, while wearing heavy armor."
+ },
+ {
+  "id": "lasting-armament",
+  "name": "Lasting Armament",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "Sanctify Armament"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you sanctify a weapon, it remains sanctified for an extended period. The duration of Sanctify Armament is increased to 1 hour, but it still ends if you use Sanctify Armament on another weapon."
+ },
+ {
+  "id": "lasting-doubt",
+  "name": "Lasting Doubt",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "redeemer cause"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast doubt upon your foes, the effect lasts longer than usual. After being enfeebled 2 by your Glimpse of Redemption, the foe is enfeebled 1 for 1 minute. If you have Weight of Guilt, after being stupefied 2 by your Glimpse of Redemption, the foe is stupefied 1 for 1 minute or until the flat check from stupefied causes it to lose a spell, whichever comes first."
+ },
+ {
+  "id": "lasting-protection",
+  "name": "Lasting Protection",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Commitment to Protection"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Commitment to Protection, the effects on your ally apply to all attacks the creature or hazard makes until the beginning of your next turn."
+ },
+ {
+  "id": "lastwall-warden",
+  "name": "Lastwall Warden",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You use your shield to protect your allies, not just yourself, especially against the undead. When you have a shield raised, you can use your Shield Block reaction when an attack is made against an ally adjacent to you, in addition to its usual trigger. If you do, the shield prevents that ally from taking damage instead of you, following the normal rules for a Shield Block. If an undead makes an attack against an ally within 10 feet, you can Step to become adjacent to your ally and then use Shield Block as part of the same reaction."
+ },
+ {
+  "id": "late-awakener",
+  "name": "Late Awakener",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "awakened-animal"
+  ],
+  "prerequisites": [
+   "You have a versatile heritage."
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether due to a more gradual process or your animal and sapient sides being especially in conflict, your awakening was a little slower than most, but your eyes are now fully open and your abilities have returned. You gain all the mechanical benefits of the awakened animal heritage you selected at 1st level, allowing you to take feats and gain any benefits that require a specific awakened animal heritage."
+ },
+ {
+  "id": "lead-climber",
+  "name": "Lead Climber",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When climbing, you can prepare routes for others to follow, and you can pull your allies up to avoid disaster. When your allies attempt to Climb a route you set using the Follow the Expert exploration activity, if any of them critically fail their checks to Climb, you can attempt an Athletics check against the same DC. If you succeed, your ally only fails instead of critically failing. If you also critically fail, you both experience the consequences of the critical failure."
+ },
+ {
+  "id": "leap-and-fire",
+  "name": "Leap and Fire",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Hit the Dirt!"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're quick enough to line up a shot even while diving to the ground. When you use your Hit the Dirt! reaction, at any point during your Leap you can also make a ranged Strike with a loaded firearm or crossbow, targeting the creature whose attack triggered the reaction."
+ },
+ {
+  "id": "leap-the-falls",
+  "name": "Leap the Falls",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a body ikon --- Reinforcing your legs with divine energy, you can leap the battlefield as powerfully as a salmon clearing a waterfall. The imbued ikon gains the following ability. **Immanence** You gain the Powerful Leap and Quick Jump skill feats, allowing you to jump further and faster, even if you do not meet the prerequisites for them."
+ },
+ {
+  "id": "leaping-hedgehog-strike",
+  "name": "Leaping Hedgehog Strike",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You pounce toward an enemy and then barrel them over with one fluid movement, ending this maneuver with an attack that may catch them off-balance. Leap horizontally toward an enemy you can see; treat your Speed as 30 feet or more for this Leap if it is less than 30 feet. If you end this movement adjacent to that enemy, attempt an Acrobatics check to Tumble Through that enemy's space. On a success, the target is also knocked prone. You then Strike that same enemy. If the target has been knocked prone, you can spend 1 Mythic Point as part of this Strike to make it at mythic proficiency."
+ },
+ {
+  "id": "leave-an-opening",
+  "name": "Leave An Opening",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you hit hard enough, you leave an opening so your ally can jump in on the action. Whenever you critically hit an off-guard opponent with a melee attack and deal damage, the target triggers a Reactive Strike reaction from one ally of your choice who has that reaction, as if the enemy had used a manipulate action."
+ },
+ {
+  "id": "legacy-of-monarchs",
+  "name": "Legacy of Monarchs",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Prophesied Monarch Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "No matter what might happen to you, your legacy shall never die. If you're slain, any of your knights who touches your corpse can choose to take up your mantle; over the course of 10 minutes, they don your equipment, replace their attribute modifiers with yours, replace their skills and feats with yours, and become you for all intents and purposes, retaining only their ancestry, heritage, and ancestry feats. If you're later returned to life, you can choose to reclaim your mantle from your former knight; if you do so, they revert to their previous state, and you reclaim all that was yours. Otherwise, you can choose to live a new life, retraining all your skills and feats while adopting a new name and identity."
+ },
+ {
+  "id": "legend-of-combat",
+  "name": "Legend of Combat",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can deliver a lightning-fast series of blows and strikes, bringing all the strength of your legend to bear against those who have yet to experience your prowess. Spend a Mythic Point. For the next minute, you gain an extra reaction at the start of each of your turns. You also gain the Speed of Arms reaction."
+ },
+ {
+  "id": "legendary-codebreaker",
+  "name": "Legendary Codebreaker",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your skill with languages and codes is so great that you can decipher information with little more than a quick read through a text. You can Decipher Writing using Society while reading at normal speed. If you slow down and spend the full amount of time that's ordinarily required and roll a success, you get a critical success; if you critically succeed while spending the normal amount of time, you gain a nearly word-for-word understanding of the document."
+ },
+ {
+  "id": "legendary-laugh",
+  "name": "Legendary Laugh",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "kholo"
+  ],
+  "prerequisites": [
+   "Laughing Kholo"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your laugher echoes in the minds of your enemies. You can Demoralize creatures up to 60 feet away. Additionally, whenever you successfully Demoralize a creature, it takes 3d8 damage (or 6d8 damage on a critical success)."
+ },
+ {
+  "id": "legendary-linguist",
+  "name": "Legendary Linguist",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Society",
+   "Multilingual"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're so skilled with languages you can create a pidgin instantly. You can always talk to any creature that has a language—even a language you don't know—by creating a new pidgin language that uses simplified terms and conveys basic concepts. To do so, you must first understand at least what medium of communication the creature uses (speech, sign language, and so on)."
+ },
+ {
+  "id": "legendary-monster-hunter",
+  "name": "Legendary Monster Hunter",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "legendary in Nature",
+   "Master Monster Hunter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your knowledge of monsters is so incredible that it reveals glaring flaws in your prey. Your bonus from Monster Hunter (and the bonus from Monster Warden if you have it) increases from +1 to +2 for you and any allies who benefit."
+ },
+ {
+  "id": "legendary-negotiation",
+  "name": "Legendary Negotiation",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You can negotiate incredibly quickly in adverse situations. You attempt to Make an Impression and then Request your opponent cease their current activity and engage in negotiations. You take a –5 penalty to your Diplomacy check. Generally, the DC of this check is the creature's Will DC, although your GM may modify it based on the situation. Some creatures may be unable to stop regardless of their personal desires, and even those who agree to parley might ultimately find your arguments lacking and return to violence."
+ },
+ {
+  "id": "legendary-performer",
+  "name": "Legendary Performer",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Performance",
+   "Virtuosic Performer"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your fame has spread throughout the lands. Creatures who have any listed skill in Society have heard of you and usually have an attitude toward you one step better than normal, depending on your reputation and the creature's disposition. For instance, if you're well-known for cruel and demanding behavior, creatures might be intimidated by you, rather than be friendly toward you. When you Earn Income with Performance, you attract higher-level audiences than your location would allow, as audiences flock to see you. For instance, rulers and angels might travel to your small tower in the woods to hear you perform. Typically, this increases the audiences available to your level or by two levels, whichever is higher."
+ },
+ {
+  "id": "legendary-professional",
+  "name": "Legendary Professional",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Lore"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your fame has spread throughout the lands (for instance, if you have Warfare Lore, you might be a legendary general or tactician). This works as Legendary Performer, except you gain higher-level jobs when you Earn Income with Lore."
+ },
+ {
+  "id": "legendary-rider",
+  "name": "Legendary Rider",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cavalier Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your mount move like one being, effortlessly reading each other's signals and synchronizing even in the thick of battle. Whenever you are riding your mount, you are quickened; you can use the extra action only to command your mount using the Command an Animal skill action."
+ },
+ {
+  "id": "legendary-shot",
+  "name": "Legendary Shot",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "masterful hunter",
+   "legendary in Perception",
+   "Far Shot"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You focus on your hunted prey, perceiving angles, air resistance, and every variable that would affect your ranged attack. If you have master proficiency with your ranged weapon, you can ignore the penalty for attacking up to five range increments away when attacking your hunted prey."
+ },
+ {
+  "id": "legendary-sneak",
+  "name": "Legendary Sneak",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Stealth",
+   "Swift Sneak"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're always sneaking unless you choose to be seen, even when there's nowhere to hide. You can Hide and Sneak even without cover or being concealed. When you employ an exploration tactic other than Avoiding Notice, you also gain the benefits of Avoiding Notice unless you choose not to."
+ },
+ {
+  "id": "legendary-summoner",
+  "name": "Legendary Summoner",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [
+   "Master Summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ability to summon extends past your other spellcasting. When you sacrifice a 9th-rank spell slot to gain two summoning slots using Master Summoner, you can use those slots to cast summoning spells heightened to 10th rank. You can't use these spell slots for any purpose other than casting the summoning spells, and you don't count as having 10th-rank spell slots for other abilities or rules."
+ },
+ {
+  "id": "legendary-survivalist",
+  "name": "Legendary Survivalist",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can survive indefinitely without food or water and can endure severe, extreme, and incredible cold and heat without taking damage from doing so."
+ },
+ {
+  "id": "legendary-thief",
+  "name": "Legendary Thief",
+  "level": 15,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "legendary in Thievery",
+   "Pickpocket"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ability to Steal defies belief. You can attempt to Steal something that is actively wielded or that would be extremely noticeable or time consuming to remove (like worn shoes or armor). You must do so slowly and carefully, spending at least 1 minute (and significantly longer for items that are normally time consuming to remove, like armor). Throughout this duration you must have some means of staying hidden, such as the cover of darkness or a bustling crowd. Even if you succeed, if the item is extremely prominent—like a suit of full plate armor—onlookers will quickly notice it's gone after you steal it."
+ },
+ {
+  "id": "legions-aim",
+  "name": "Legion's Aim",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Golden Legionnaire Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Long hours of experimentation with the Platinum Wing have familiarized you with experimental weaponry. You have familiarity with martial firearms and alchemical bombs, treating them as simple weapons for the purposes of proficiency. You ignore the penalty for making ranged attacks within your second range increment with alchemical bombs. You gain access to uncommon firearms and alchemical bombs."
+ },
+ {
+  "id": "lengthy-diversion",
+  "name": "Lengthy Diversion",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you critically succeed to Create a Diversion, you continue to remain hidden after the end of your turn. This effect lasts for an amount of time that depends on the diversion and situation, as determined by the GM (minimum 1 additional round)."
+ },
+ {
+  "id": "leshy-glide",
+  "name": "Leshy Glide",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "leshy"
+  ],
+  "prerequisites": [
+   "leaf leshy heritage or Cat Fall skill feat"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Using your own leaves, you can control your descent. You glide slowly toward the ground, 5 feet down and up to 25 feet forward through the air. As long as you spend at least 1 action gliding each round and have not yet reached the ground, you remain in the air at the end of your turn."
+ },
+ {
+  "id": "lesson-of-bonded-eyes",
+  "name": "Lesson of Bonded Eyes",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your student share an understanding of your surroundings. As long as you and your student can see (giving this effect the visual trait) or hear (giving this effect the auditory trait) each other, if a hidden creature is observed by either of you, it's observed by both of you."
+ },
+ {
+  "id": "lesson-of-mutual-gambits",
+  "name": "Lesson of Mutual Gambits",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a success to Feint. --- You create an opening for your student, setting them up for their own attack. The creature you Feinted is off-guard to the first Strike or spell attack roll your student makes against it before the end of your next turn."
+ },
+ {
+  "id": "lesson-of-sympathetic-vulnerability",
+  "name": "Lesson of Sympathetic Vulnerability",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Trigger** Your student triggered a creature's weakness to energy damage with a Strike or spell on their previous turn. --- You temporarily borrow the essence of your student's attack to infuse yourself. Until the end of your current turn, damage you deal to enemies from Strikes and spells is the same type that triggered the creature's weakness instead of its usual type."
+ },
+ {
+  "id": "lesson-of-the-circling-gale",
+  "name": "Lesson of the Circling Gale",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You and your student have trained with footwork drills to mirror each other's movements. You Step, and your student can immediately Step as a reaction."
+ },
+ {
+  "id": "lesson-of-the-hurricanes-might",
+  "name": "Lesson of the Hurricane's Might",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lesson of the Circling Gale"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your student enact a graceful dance of battle. When you use Lesson of the Circling Gale, you can Strike as a free action after you Step. Your multiple attack penalty applies to this Strike as normal. Your student can Strike after they Step as part of their reaction. This Strike doesn't count toward your student's multiple attack penalty, and their multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "lesson-of-the-splintered-aegis",
+  "name": "Lesson of the Splintered Aegis",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a Strike that dealt damage to an enemy. --- With your attack, you demonstrate to your student a hole in your enemy's defenses. Before the beginning of your next turn, your student can roll their next Strike or spell attack roll against that same enemy twice and take the better result."
+ },
+ {
+  "id": "lesson-of-unified-elusion",
+  "name": "Lesson of Unified Elusion",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your student react as one to common threats. When you and your student are both targeted by the same effect that requires a Reflex saving throw, you and your student take the better of each of your die rolls for the save. You each still add your own Reflex save modifier to the die result."
+ },
+ {
+  "id": "let-my-creature-live",
+  "name": "Let my Creature Live!",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Rise, My Creature!"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You continue to tinker with your creation's muscles and rudimentary mind, granting it a limited form of autonomy. Your construct companion becomes an advanced construct companion. During an encounter, even if you don't use the Command a Minion action, your construct companion can still use 1 action on your turn that round to Stride or Strike."
+ },
+ {
+  "id": "lethal-edge",
+  "name": "Lethal Edge",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spectral Dagger"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your Strike with your spectral dagger hits a frightened creature and deals spirit damage. --- When the terrified are struck by your spectral weapon, they feel the anguish of every life taken by Silent Lenore. You apply one of the following effects, which lasts until the end of your next turn. - The target can't use reactions. - The target is Enfeebled 1."
+ },
+ {
+  "id": "lethal-finisher",
+  "name": "Lethal Finisher",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "death",
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "precise strike 6d6"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You stab your foe in a vital organ, possibly killing them outright. Make a Strike. On a success, you forego your precise strike damage from the finisher. Instead, your target takes additional precision damage based on a save against your class DC. If your Strike was a critical hit, the target's saving throw outcome is one degree worse. --- **Critical Success** You deal 6 precision damage. **Success** You deal 6d6 precision damage. **Failure** You deal 12d6 precision damage. **Critical Failure** You deal 18d6 precision damage."
+ }
+]

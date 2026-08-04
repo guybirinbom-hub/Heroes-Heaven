@@ -1,0 +1,121 @@
+{"records":[
+ {"id":"divide-and-conquer","verdict":"NEEDS_NOTHING","reason":"Mythic activity: two Strikes plus conditions/extra damage imposed on the TARGETS; nothing changes on the player's own sheet."},
+
+ {"id":"divine-breadth","verdict":"MISS","reason":"Grants +1 spell slot of each rank except the two highest from the cleric archetype casting entry; the record carries no spellSlotBonus. Sibling breadth feats (occult-breadth, patrons-breadth) already use exactly this shape, and casterArchetypes.ts registers the cleric archetype pool as 'cleric-dedication-casting'.","fix":{"spellSlotBonus":{"perRank":1,"exceptHighest":2,"entryId":"cleric-dedication-casting"}}},
+
+ {"id":"divine-castigation","verdict":"NEEDS_NOTHING","reason":"Adds the holy/unholy trait to a cast Harm/Heal so it damages opposing-trait creatures — a change to how the spell resolves against a TARGET, not to the caster's statistics."},
+
+ {"id":"divine-infusion","verdict":"NEEDS_NOTHING","reason":"Spellshape: the extra 1d6-3d6 damage is granted to the creature you healed (the TARGET's attacks), and only until the end of its next turn."},
+
+ {"id":"divine-reflexes","verdict":"NEEDS_NOTHING","reason":"Grants an extra reaction each turn for the champion's reaction; the app does not model per-turn action/reaction economy, so there is no statistic to change."},
+
+ {"id":"divine-wall","verdict":"NEEDS_NOTHING","reason":"Makes the spaces around you difficult terrain for ENEMIES — it changes their movement, not any value on your sheet."},
+
+ {"id":"dizzying-spin-dance","verdict":"NEEDS_NOTHING","reason":"Activity chaining Tumble Through and Strikes; all results (off-guard, repeat attempts) are resolved at the table against targets."},
+
+ {"id":"doctors-visitation","verdict":"NEEDS_NOTHING","reason":"Compound action (Stride + Battle Medicine / Treat Poison / Administer First Aid); it re-packages existing actions and grants no bonus or new statistic."},
+
+ {"id":"dodging-roll","verdict":"NEEDS_NOTHING","reason":"Reaction granting resistance only against the single triggering area effect; it is momentary and not a standing resistance the sheet can carry."},
+
+ {"id":"dogfang-bite","verdict":"MISS","reason":"Your beak unarmed attack gains the versatile S trait — a permanent change to a Strike the player uses. grantedStrikes can only CREATE an unarmed attack with traits; there is no lane to add a trait to an unarmed Strike granted elsewhere (the tengu beak), and the dogtooth-tengu heritage's own 'deadly d8' is unmodelled for the same reason.","fix":{"needsEngineWork":true}},
+
+ {"id":"domain-focus","verdict":"MISS","reason":"Refocus completely refills your focus pool instead of restoring 1 point. The sheet has a real Refocus control (SpellsTab.tsx: 'Refocus (restore 1 focus point)'), but there is no field or flag that tells it to restore the whole pool, so this feat is inert.","fix":{"needsEngineWork":true}},
+
+ {"id":"domino-effect","verdict":"NEEDS_NOTHING","reason":"Reaction that applies your snare to a second creature — entirely a TARGET-side effect."},
+
+ {"id":"double-double","verdict":"NEEDS_NOTHING","reason":"Doubles the number of temporary oils/potions the witch Cauldron brews during daily preparations; the app does not model Cauldron's temporary-item brewing, so there is no count to change."},
+
+ {"id":"double-poison","verdict":"NEEDS_NOTHING","reason":"Permission to combine two applied injury poisons on one weapon; the merged DC/stages/interval are adjudicated when the poison is used against a target."},
+
+ {"id":"double-shot","verdict":"NEEDS_NOTHING","reason":"Two-action Strike activity with a -2 penalty and a MAP timing exception; both are resolved when rolling attacks at the table."},
+
+ {"id":"double-slice","verdict":"NEEDS_NOTHING","reason":"Two-weapon Strike activity; the -2 non-agile penalty, damage combination and MAP handling are per-attack resolution, not sheet values."},
+
+ {"id":"doublespeak","verdict":"NEEDS_NOTHING","reason":"Social ability: allies auto-understand you and OBSERVERS roll Perception against your existing Deception DC — no bonus or statistic accrues to you."},
+
+ {"id":"dousing-spell","verdict":"NEEDS_NOTHING","reason":"Spellshape that soaks the spell's TARGET (lowers its persistent-damage flat-check DC and adds the water trait to the spell)."},
+
+ {"id":"draconic-fury","verdict":"NEEDS_NOTHING","reason":"Two-action area attack dealing damage to creatures in a cone against your existing class/spell DC; nothing on your own sheet changes."},
+
+ {"id":"drag-down","verdict":"NEEDS_NOTHING","reason":"Underwater Grapple variant using your existing Athletics; all effects are forced movement of the TARGET."},
+
+ {"id":"dragging-strike","verdict":"NEEDS_NOTHING","reason":"Strike that makes the target off-guard and moves it 5 feet; the rider lands on the TARGET and the incidental movement is resolved at the table."},
+
+ {"id":"dragon-arcana","verdict":"MISS","reason":"Adds ten named draconic-bloodline spells to your spell LIST, widening what you may learn or add to your repertoire. This is exactly the 'let the player pick what the rules give them' case, but no field expands a character's available spell list (innateSpells grants casts, effectChoices/spellFilter picks a specific spell) — the descRefs on this record are display links only.","fix":{"needsEngineWork":true}},
+
+ {"id":"dragons-journey","verdict":"NEEDS_NOTHING","reason":"You Stride without triggering reactions and ALLIES may react to Stride with you; the benefit is movement permission plus an ally effect."},
+
+ {"id":"dragons-rage-breath","verdict":"NEEDS_NOTHING","reason":"Rage activity dealing area damage against your class DC; the damage type follows the instinct already recorded, and the effect is entirely on targets."},
+
+ {"id":"drain-emotion","verdict":"NEEDS_NOTHING","reason":"Two-action counteract attempt; the temporary Hit Points are gained in play from a successful use, not a standing sheet value."},
+
+ {"id":"draining-touch","verdict":"NEEDS_NOTHING","reason":"Deviant attack action: a melee Strike dealing scaling cold damage and conditions to the target; it uses attacks you already have and its results land on the target."},
+
+ {"id":"draw-from-the-land","verdict":"NEEDS_NOTHING","reason":"One-action activity granting temporary HP equal to your level for 1 round; a transient in-play gain, not a persistent statistic."},
+
+ {"id":"dread-blade","verdict":"NEEDS_NOTHING","reason":"Prevents the TARGET from lowering its frightened value below 1 — purely a condition floor on the enemy."},
+
+ {"id":"dread-striker","verdict":"NEEDS_NOTHING","reason":"Makes frightened creatures off-guard against you — it changes the TARGET's condition/AC, not any number on your sheet."},
+
+ {"id":"dream-guise","verdict":"NEEDS_NOTHING","reason":"Illusion activity merging appearances with a willing ALLY; targeting confusion is adjudicated at the table."},
+
+ {"id":"drifters-juke","verdict":"NEEDS_NOTHING","reason":"Two-action Step/Strike/Step/Strike activity using weapons already on the sheet; no bonus or new statistic."},
+
+ {"id":"drilled-reflexes","verdict":"NEEDS_NOTHING","reason":"Upgrades Drilled Reactions to give an extra reaction to two ALLIES instead of one."},
+
+ {"id":"drive-back","verdict":"NEEDS_NOTHING","reason":"Reaction Shove that imposes a -1 circumstance penalty on the ENEMY's attack roll against your ally."},
+
+ {"id":"drive-by-attack","verdict":"NEEDS_NOTHING","reason":"Vehicle activity combining Drive and a Strike; action-economy repackaging with no sheet value."},
+
+ {"id":"driving-rain","verdict":"NEEDS_NOTHING","reason":"Kineticist impulse: area damage against your class DC plus concealment inside the area for everyone; nothing accrues to your sheet."},
+
+ {"id":"dual-finisher","verdict":"NEEDS_NOTHING","reason":"Finisher activity: two Strikes with the standard -2 non-agile penalty and MAP timing, all resolved when attacking."},
+
+ {"id":"dual-thrower","verdict":"NEEDS_NOTHING","reason":"Permission to substitute ranged/thrown Strikes for the melee Strikes required by other dual-weapon-warrior feats; it grants no number, option, or new statistic."},
+
+ {"id":"dual-weapon-blitz","verdict":"NEEDS_NOTHING","reason":"Stride-and-Strike-twice activity; movement and attacks use values already on the sheet."},
+
+ {"id":"dual-weapon-reload","verdict":"NEEDS_NOTHING","reason":"Removes the free-hand requirement for reloading while dual-wielding; the app does not model hand allocation during reload, so nothing on the sheet changes."},
+
+ {"id":"dual-weapon-reload-gunslinger","verdict":"NEEDS_NOTHING","reason":"Gunslinger printing of the same rule (no free hand needed to reload while dual-wielding); hand/reload economy is not a modelled statistic."},
+
+ {"id":"dubious-knowledge","verdict":"NEEDS_NOTHING","reason":"Changes what the GM tells you on a failed Recall Knowledge check — pure GM adjudication, no roll or statistic changes."},
+
+ {"id":"duck","verdict":"NEEDS_NOTHING","reason":"Shifts the DEGREE OF SUCCESS on Reflex saves against area effects from Huge or larger creatures; it adds no modifier, and the sheet computes modifiers rather than roll outcomes."},
+
+ {"id":"dueling-acumen","verdict":"NEEDS_NOTHING","reason":"Lets you roll Dueling Lore (or a chosen skill) for initiative in a duel; initiative skill selection is made at the table and the Lore itself comes from the dedication."},
+
+ {"id":"dueling-riposte","verdict":"NEEDS_NOTHING","reason":"Reaction granting a Strike or Disarm against a creature that critically failed against you; resolved at the table with existing attack values."},
+
+ {"id":"duo-dragon-kick","verdict":"NEEDS_NOTHING","reason":"Activity combining a Command of your construct companion with paired Leaps and unarmed Strikes; the Unstable variant only extends Leap distance during the activity."},
+
+ {"id":"dwarven-doughtiness","verdict":"MISS","reason":"At the end of your turn you reduce frightened by 2 instead of 1 — a recovery-rate change to a condition the app models as a valued penalty (conditions.ts). Nothing records it. The situational registry already carries this exact lane for condition-value modifiers (face-your-fears, the-fool use on:'condition').","fix":{"situational":[{"on":"condition","id":"frightened","value":"-2 per turn","note":"At the end of your turn, reduce your frightened condition by 2 instead of 1."}]}},
+
+ {"id":"eagle-eye","verdict":"MISS","reason":"\"You become a master in Perception\" — an unconditional proficiency grant. FEAT_GRANTS (src/rules/featGrants.ts) already supports `perception?: ProficiencyRank`, but this feat has no entry in featGrants.ts / featGrantsAuto.ts / featGrantsLane.ts, so Perception stays at the class rank. Fix = add { perception: 'master' } for 'eagle-eye'; no core.json field expresses proficiency, so the change lives in the registry.","fix":{"needsEngineWork":true}},
+
+ {"id":"eagle-eyes","verdict":"MISS","reason":"While you and your spotter can perceive each other, neither of you is off-guard to hidden, undetected, or flanking creatures of your level or lower — a standing defensive state for YOU. Nothing records it, though the identical Deny Advantage wording is already delivered for uncanny-dodge via the situational condition lane.","fix":{"situational":[{"on":"condition","id":"off-guard","note":"While you and your Sniping Duo partner can see or hear each other, neither of you is off-guard to hidden, undetected, or flanking creatures of your level or lower, or to their surprise attacks (they can still help allies flank)."}]}},
+
+ {"id":"ears-that-hear-the-truth","verdict":"NEEDS_NOTHING","reason":"Optional Mythic Point spend to roll one Sense Motive or Perception-for-initiative check at mythic proficiency; a per-roll election made at the table, not a standing proficiency."},
+
+ {"id":"earth-to-heavens-strike","verdict":"NEEDS_NOTHING","reason":"Two Strikes that inflict clumsy and stupefied on the TARGET, with a MAP timing exception resolved when attacking."},
+
+ {"id":"easily-dismissed","verdict":"NEEDS_NOTHING","reason":"Lets you Hide/Sneak while observed in a crowd, with explicit GM discretion over what counts as a notable action; no bonus or statistic."},
+
+ {"id":"echoing-fury","verdict":"NEEDS_NOTHING","reason":"Improves the Temporal Fury activity (longer Step, an extra damage die on the second Strike); both apply only while resolving that other feat's action."},
+
+ {"id":"echolocation","verdict":"MISS","reason":"After you Seek you can use hearing as a PRECISE sense out to 40 feet (and while you Search) — a sense the player gains, which the sheet's senses list should show. The senses vocabulary has no hearing/echolocation entry and no way to gate a sense behind an action, so a permanent `senses` entry would over-grant.","fix":{"needsEngineWork":true}},
+
+ {"id":"eclectic-polymath","verdict":"NEEDS_NOTHING","reason":"Daily-preparation bookkeeping: lets you keep the Esoteric Polymath spell and drop another of the same rank; repertoire contents are already player-edited."},
+
+ {"id":"eclectic-skill","verdict":"MISS","reason":"Sets your proficiency bonus for UNTRAINED skill checks equal to your level and lets you attempt trained-only (and, at legendary Occultism, expert-only) checks. Every untrained skill modifier on the sheet is wrong without it, and the same lane is missing for Untrained Improvisation (which appears in src only as a feat-grant target, never as a proficiency rule).","fix":{"needsEngineWork":true}},
+
+ {"id":"eclectic-sword-mastery","verdict":"NEEDS_NOTHING","reason":"Re-designates which sword counts for Tengu Weapon Familiarity during play; that feat's benefit is already modelled (critSpec/critSpecWeapons on tengu-weapon-familiarity) and this only swaps the designation until the next daily preparations."},
+
+ {"id":"eclipsed-vitality","verdict":"MISS","reason":"You always take precautions against lifesense when Avoiding Notice, Hiding and Sneaking, and you are CONCEALED to creatures relying on precise lifesense — a standing defensive benefit for you. The situational action lane already delivers the identical Quick Refugee wording (on:'action', id:'hide'/'sneak'), but this feat has no entry.","fix":{"situational":[{"on":"action","id":"hide","note":"You're always taking precautions to foil lifesense when you Hide, and you're concealed to any creature using only precise lifesense to observe you."},{"on":"action","id":"sneak","note":"You're always taking precautions to foil lifesense when you Sneak."},{"on":"action","id":"avoid-notice","note":"You're always taking precautions to foil lifesense when Avoiding Notice."}]}},
+
+ {"id":"educated-assessment","verdict":"NEEDS_NOTHING","reason":"The GM reuses your secret Recall Knowledge roll against the creature's Deception or Stealth DC to give Battle Assessment information — entirely GM-side information delivery."},
+
+ {"id":"eerie-compression","verdict":"NEEDS_NOTHING","reason":"Lets you Squeeze through tight spaces as a Small creature and move at full Speed while Squeezing; Squeezing is a GM-adjudicated terrain activity and your Speed value itself is unchanged."},
+
+ {"id":"eerie-environs","verdict":"NEEDS_NOTHING","reason":"Lets you Demoralize while remaining hidden and drops the shared-language penalty; the -4 language penalty is applied by the GM when the action is used, and the hidden condition is table state."}
+]}

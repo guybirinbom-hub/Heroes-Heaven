@@ -1,0 +1,951 @@
+[
+ {
+  "id": "all-in-your-head",
+  "name": "All in your Head",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "psyche",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You're about to attempt a Fortitude save or a Reflex save. --- Flames scouring at your body, venom coursing through your veins-you refuse to believe they exist, and nothing can affect you if you don't believe in it. You attempt a Will save against the triggering effect, instead of a Reflex or Fortitude save. You don't gain the benefits of Fortress of Will or Walls of Will on this save."
+ },
+ {
+  "id": "all-shall-end-in-flames",
+  "name": "All Shall End in Flames",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "death",
+   "fire",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "White-hot fire consumes everything in a cataclysmic sphere of death. The fire fills your choice of a within 500 feet or a . This deals damage with a save against your class DC. Any creature dropped to 0 HP by this fire dies, reduced to a pile of ash. If you die to this impulse, you return to life at the start of your next turn in the same space. When you return, you have Hit Points equal to double your level. --- **Level (20th)** The damage is 15d6."
+ },
+ {
+  "id": "along-the-deep-river",
+  "name": "Along the Deep River",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "sprite"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Tian Xia origin, or you're a follower of Sangpotshi. --- Once per year, when you die, you turn into an immaterial ball of light. After a week, you return to life with the effects of a successful (but not critically successful) 9th-rank Reincarnate ritual. You always reincarnate into a sprite, but you *reincarnate* as a randomly selected sprite heritage."
+ },
+ {
+  "id": "alter-admixture",
+  "name": "Alter Admixture",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "alchemist",
+   "exploration"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You are holding or wearing an alchemist's toolkit. --- Sometimes, you need to adapt your alchemical mixtures to new situations. In a process that takes 10 minutes, you change an item you created with advanced alchemy into a similar item. You can change an alchemical bomb into another type of alchemical bomb, an elixir into another type of elixir, or a poison into another type of poison. If it's unclear whether two alchemical consumables are similar, the GM decides. You must know the formula for the new item, and the new item must be of the same or lower item level than the original item. The new item still keeps the infused trait, and it remains potent as long as the original item would have."
+ },
+ {
+  "id": "ambersoul",
+  "name": "Ambersoul",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "ardande",
+   "lineage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your elemental heritage is reflected in the oils and fragrances of plants, in tree resin that fossilizes into amber, or in the gentle smell of a flower. Sticky, golden sap runs through your veins instead of blood. Each time a creature deals slashing or piercing damage to you with a melee Strike, your sap coats its weapon or unarmed attack. The creature takes a –1 circumstance penalty on attack rolls with that weapon or unarmed attack until the end of its turn."
+ },
+ {
+  "id": "ambush-bladderwort",
+  "name": "Ambush Bladderwort",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "composite",
+   "impulse",
+   "kineticist",
+   "plant",
+   "primal",
+   "water",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You plant the seed of a giant bladderwort in an unoccupied square of ground or water within 30 feet. It lasts for 10 minutes. Using this impulse again ends any previous one. If a creature enters its square, the seed erupts into a voluminous, translucent plant that seals tight around the triggering creature and fills with water. Unless the creature succeeds at a save against your class DC, it's immobilized within the bladderwort and must hold its breath or begin drowning. The Escape DC is also your class DC. The plant has AC 10 and 50 Hit Points. If a creature dies inside it, the plant shrinks down, converting itself and the remains into a watery fruit. A creature can eat this consumable to regain HP, after which that creature is temporarily immune for 10 minutes. This fruit rots after 1 hour. --- **Level (+4)** The bladderwort's HP increase by 25 and the fruit's healing increases by 1d8+4."
+ },
+ {
+  "id": "ambush-hunter",
+  "name": "Ambush Hunter",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "kholo"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are always searching for the perfect opportunity to ambush your enemies. You can perform the Scout exploration activity at the same time as the Avoid Notice exploration activity."
+ },
+ {
+  "id": "ambushing-knockdown",
+  "name": "Ambushing Knockdown",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "Ruffian Rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Side with the Washboard Dogs in the gang conflict. **Requirements** You're wielding a melee weapon that deals bludgeoning damage and you're hidden from or undetected by an enemy. --- You emerge from hiding and deliver a blow that can knock an enemy sprawling to the ground. You Stride up to half your Speed, but you must end your movement next to a foe you're hidden from or undetected by. You then Strike that enemy with the required weapon; if you hit, the target is knocked prone."
+ },
+ {
+  "id": "ammunition-thaumaturgy",
+  "name": "Ammunition Thaumaturgy",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're so used to handling your implement, weapon, and esoterica in the heat of combat that adding a few bullets or arrows to the mix is no extra burden. You can Interact to reload a weapon using the hand holding your implement."
+ },
+ {
+  "id": "amp-focus",
+  "name": "Amp Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've glimpsed the furthest recesses of your mind. When you Refocus, you regain all your Focus Points (even if you spent them on something other than amps)."
+ },
+ {
+  "id": "amphibious-form",
+  "name": "Amphibious Form",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon adapts to life on land and underwater. It gains the amphibious trait, allowing it to breathe in water and air and to avoid the normal -2 penalty for making bludgeoning and slashing unarmed Strikes underwater. It gains a swim Speed equal to its land Speed or 25 feet, whichever is less; or if it is normally aquatic, it gains a land Speed equal to its swim Speed or 25 feet, whichever is less."
+ },
+ {
+  "id": "analyze-weakness",
+  "name": "Analyze Weakness",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "sneak attack 2d6"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have identified a creature with Recall Knowledge. --- Your knowledge of a creature's physiology helps you attack with pinpoint accuracy. You carefully study a creature that you've identified to scope out particularly weak points in its positioning or physical form. The next time you deal sneak attack damage to the chosen creature with a Strike before the end of your turn, add an additional 2d6 precision damage. At 11th level, the additional damage becomes 3d6, and at 17th level it becomes 4d6."
+ },
+ {
+  "id": "ancestral-linguistics",
+  "name": "Ancestral Linguistics",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [
+   "at least 100 years old"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Over your extensive lifespan, you've studied many languages. During your daily preparations, you can recede into old memories to become fluent in one common language or one other language you have access to. You know this language until you prepare again. Since this knowledge is temporary, you can't use it as a prerequisite for a permanent character option."
+ },
+ {
+  "id": "ancestral-mind",
+  "name": "Ancestral Mind",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By unraveling memories and connections passed down from your progenitors and buried within your unconscious mind, you learn to convert your inherent magic into psychic power. You can cast any innate spells you know from an ancestry feat or heritage using your psychic spellcasting and thoughtforms. When you do so, the spell's tradition becomes occult, if it wasn't already, and you can use your psychic spellcasting attribute modifier instead of Charisma to determine your spell attack modifier and spell DC."
+ },
+ {
+  "id": "ancillary-motes",
+  "name": "Ancillary Motes",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [
+   "Extraplanar Haze"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use Crystalline Dust one more time per day. --- **Special** You can take this feat more than once, gaining one more use of Crystalline Dust per day each time."
+ },
+ {
+  "id": "angel-of-death",
+  "name": "Angel of Death",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Assassin Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "All your Strikes against a creature you have Marked for Death have the death trait, causing the mark to be instantly killed when reduced to 0 Hit Points. In addition, if the creature is killed this way, attempts to communicate with it, return it to life, turn it into an undead, or otherwise disturb its afterlife fail unless the effect's counteract rank is higher than half your level rounded up, or originates from an artifact or a deity. Use the level you were when you killed the creature, even if your level is higher at the time the attempt was made."
+ },
+ {
+  "id": "angel-of-vindication",
+  "name": "Angel of Vindication",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Assassin Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** Your mark is an undead creature. --- To aid with your mission of destroying undead, you've specialized in techniques to destroy them, much as other assassins learn to kill the living. When you Strike an off-guard undead foe with a weapon that has the backstabber weapon trait, you deal 3 extra precision damage instead of 1. If the weapon is a +3 weapon, you deal 6 extra precision damage instead of 2. If you have the Angel of Death feat, your attacks also instantly destroy undead at 0 Hit Points, and attempts for the undead to rejuvenate-such as via a lich's soul cage or a ghost's rejuvenation ability-fail unless the effect's counteract rank is higher than half your level when you killed the creature (rounded up), or originates from an artifact or deity. Finally, if you have the Assassinate feat and an undead mark critically fails its save against your Assassinate, it is destroyed."
+ },
+ {
+  "id": "animal-empathy",
+  "name": "Animal Empathy",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a connection to the creatures of the natural world that allows you to communicate with them on a rudimentary level. You can ask questions of, receive answers from, and use the Diplomacy skill with animals. In most cases, wild animals will give you time to make your case."
+ },
+ {
+  "id": "animal-empathy-druid",
+  "name": "Animal Empathy (Druid)",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "text": "Animal Empathy (Druid) Source Player Core pg. 127 Archetypes Beastmaster (Level 4), Mammoth Lord (Level 4) You have a connection to the creatures of the natural world that allows you to communicate with them on a rudimentary level. You can ask questions of, receive answers from, and use the Diplomacy skill with animals. In most cases, wild animals will give you time to make your case."
+ },
+ {
+  "id": "animal-empathy-ranger",
+  "name": "Animal Empathy (Ranger)",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a connection to the creatures of the natural world that allows you to communicate with them on a rudimentary level. You can use Diplomacy to Make an Impression on animals and to make very simple Requests of them. In most cases, wild animals will give you time to make your case."
+ },
+ {
+  "id": "animal-fleetness",
+  "name": "Animal Fleetness",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're adept at using your animal shape's natural means of locomotion. While you're in animal shape, the Speeds granted by that shape increases by 10 feet."
+ },
+ {
+  "id": "animate-net",
+  "name": "Animate Net",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast animate rope"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Animate Rope, you can modify its target to be 1 Net. If you do, replace the spell's standard effects with the following: You cause a net to animate and throw itself at a Medium or smaller creature within 20 feet of the net. Attempt a spell attack roll against the target's Reflex DC. On a success, the target is off-guard and takes a –10-foot circumstance penalty to its Speeds until it Escapes; on a critical success, it's also immobilized until it Escapes. The Escape DC is equal to your spell DC as long as the spell lasts. Once the spell ends, the Escape DC returns to the normal DC for a net (usually 16), and a creature adjacent to the target can Interact to remove the net."
+ },
+ {
+  "id": "ankle-bite",
+  "name": "Ankle Bite",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "Fang Sharpener or razortooth goblin heritage"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A foe gives you the grabbed or restrained condition using a part of its body. --- Whenever someone grabs onto you, you instinctively bite down hard. Sometimes that makes them let go, and sometimes it just makes them angrier, but either way, it's both satisfying and tasty. Make a jaws Strike against the triggering foe. On a critical hit, you are no longer grabbed. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "annihilating-swing",
+  "name": "Annihilating Swing",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You have embraced brute destructive power. You make a melee Strike that ignores any resistances the target has. If you target a solid unattended object or surface with your Strike, you might automatically destroy it without an attack roll. If you target any object or surface with Hardness 20 or less that isn't a magic item or the effect of a spell, you destroy it. If the target object or surface is a magic item or the effect of a spell, you attempt to counteract it using your attack bonus with the Strike for the counteract check. Your counteract rank is 10th. On a successful counteract check, you destroy the object or surface unless it has Hardness greater than 20, in an artifact, or is similarly difficult to destroy. You destroy up to a 5-foot cube of an object or surface larger than Medium."
+ },
+ {
+  "id": "annotate-composition",
+  "name": "Annotate Composition",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "bard",
+   "exploration",
+   "linguistic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By putting composition to paper, you can create a source of stirring words or song that others can read and understand. You spend 10 minutes and 1 Focus Point to transpose a composition spell on a special scroll that you or another creature can later activate. This composition spell must take a single action to cast. If the chosen composition spell requires a Performance check as part of the casting, the GM rolls this check as a secret check when you annotate your score. If you have Fortissimo Composition or Lingering Composition, you can also use one of those spells to modify the annotated composition, provided the annotated composition can benefit from the modification. The GM rolls the secret Performance check. If you do, you spend an additional Focus Point, even if the secret check fails. Any creature that can read the language you used when annotating your composition can Activate the Item by spending a single action, which has the concentrate trait. This produces the effects of the composition as though the activating creature had Cast the Spell. A composition you create this way loses its power the next time you make your daily preparations. While the composition is in your possession, you can render it inert using a single action that has the concentrate trait. You can't regain the Focus Points you spent to create the annotated composition until it is activated or loses its magic."
+ },
+ {
+  "id": "anoint-ally",
+  "name": "Anoint Ally",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You forge a mystical connection with an ally using your body as a focus, allowing them to benefit from your magic. You place a blood rune on an adjacent ally that lasts for 1 minute. When you would gain a blood magic effect, you can forgo it, granting it to your ally instead. You can anoint only one ally at a time; if you place another rune, your previous designation ends."
+ },
+ {
+  "id": "antagonize",
+  "name": "Antagonize",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your taunts and threats earn your foes' ire. When you successfully Demoralize a creature, its frightened condition can't decrease to less than 1 at the end of its turn until it either uses a hostile action against you or can no longer observe or sense you for at least 1 round."
+ },
+ {
+  "id": "anthropomorphic-shape",
+  "name": "Anthropomorphic Shape",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Untamed Form"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Humanoids' supposed place apart from animals is folly—taking on their forms just requires some extra practice. You add the shapes listed in Humanoid Form to your Untamed Form list."
+ },
+ {
+  "id": "anticipate-ambush",
+  "name": "Anticipate Ambush",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "exploration",
+   "rogue"
+  ],
+  "prerequisites": [
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You keep watch for any hidden creatures or dangerous sites, moving at half your travel Speed. If you're Anticipating an Ambush at the start of an encounter, you roll a Perception check for initiative, and all enemies rolling Stealth for initiative take a –2 circumstance penalty to their Stealth checks."
+ },
+ {
+  "id": "antler-rush",
+  "name": "Antler Rush",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "weremoose"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're in your moose or hybrid shape. --- Stride twice. If you end your movement within your antlers' reach of an enemy, you can Disarm, Shove, or Strike with your antlers."
+ },
+ {
+  "id": "aon-ggghhhjjjjjk",
+  "name": "GGGHhhjjjJJK",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [
+   "Pet"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have JBNNNMBMM ."
+ },
+ {
+  "id": "aon-harbinger-s-claw",
+  "name": "Harbinger's Claw",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "auditory",
+   "divine",
+   "misfortune",
+   "tengu"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "You caw ominously, cursing the creature with misfortune. The target creature must roll the triggering check twice and take the lower result."
+ },
+ {
+  "id": "aphet-flash",
+  "name": "Aphet Flash",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Swarmkeeper Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your swarm is outside your body. --- Your swarm can emit a bright flash, much like aphet beetles, a genus of flash beetles once used by Osirian miners as sources of light. Each creature in its space must succeed at a save against your class DC or spell DC, whichever is higher, or be dazzled for 1 round (2 rounds on a critical failure). The swarm then glows with light like a torch until it returns to your body."
+ },
+ {
+  "id": "apparition-cloud",
+  "name": "Apparition Cloud",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "animist",
+   "misfortune",
+   "wandering"
+  ],
+  "prerequisites": [
+   "Spirit Familiar"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are targeted by an attack. **Requirements** Your familiar is adjacent to you or in your space. --- With a mere thought, you discorporate your familiar into a thousand shards of spiritual magic, protecting both it and yourself from physical harm while making it difficult for enemies to move near you. You are concealed from the triggering attack. Until the start of your next turn, your familiar can't be targeted and your enemies treat all spaces adjacent to you as difficult terrain."
+ },
+ {
+  "id": "apparition-sense",
+  "name": "Apparition Sense",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "animist",
+   "divine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can see and interact with things others can't. You have apparition sight, an imprecise sense that allows you to detect the presence of invisible or hidden spirits, haunts, and undead within 30 feet of you. You can allow a spirit or undead otherwise incapable of speech to speak through you as long as you are in direct contact with it. As an activity that takes 10 minutes, you can act as a link between disembodied souls and their mortal bodies. As long as you are in contact with both a spirit and a living body that belonged to it in life during that entire time, the spirit can use you to return to that body; this does not allow you to bring the dead back to life, but can assist in restoring a disembodied soul to a still-living body. If the body is occupied by another spirit or soul, that entity must succeed at a Will save against your spell DC or be cast from the body when its original owner is returned."
+ },
+ {
+  "id": "aquatic-camouflage",
+  "name": "Aquatic Camouflage",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "azarketi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You blend into the waves. While fully submerged in water, as long as an observer is at least 20 feet away from you, you don't need cover from that observer to Hide or Sneak."
+ },
+ {
+  "id": "aquatic-passage",
+  "name": "Aquatic Passage",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Aquatic Passage Source High Seas pg. 106 Archetype Marine Marauder Prerequisites Marine Marauder Dedication You can move through water as easily as you walk on land. You ignore non-magical difficult terrain while underwater and from water-like terrain like swamps or slippery liquids. Moving up or down while underwater is still difficult terrain for you."
+ },
+ {
+  "id": "arcane-breadth",
+  "name": "Arcane Breadth",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Basic Wizard Spellcasting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your thorough studies allow you to cast more arcane spells each day. Increase the spell slots you gain from wizard archetype feats by 1 for each spell rank other than your two highest wizard spell slots."
+ },
+ {
+  "id": "arcane-communication",
+  "name": "Arcane Communication",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "automaton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can deliver silent messages. You gain touch telepathy, allowing you to communicate silently and mentally with any creature you're touching, as long as you share a language. **Enhancement** You can send your messages even further. Your telepathy gains a range of 10 feet, but you still have to share a language with your target."
+ },
+ {
+  "id": "arcane-safeguards",
+  "name": "Arcane Safeguards",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "automaton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The magic powering you makes it difficult for outside magic to affect you. You gain the Resist Magic reaction. **Enhancement** Your safeguards improve. When you Resist Magic, you gain a number of temporary Hit Points equal to the spell rank of the triggering effect."
+ },
+ {
+  "id": "arcane-sensitivity",
+  "name": "Arcane Sensitivity",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Edgewatch Detective Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can sense the presence of the supernatural, even if you don't have any magical ability yourself. You can spend a single action (this action has the concentrate trait) to determine if any magical auras are present in the area. This has the effects of a 1st-rank Detect Magic spell but isn't magical. By straining, you can also discover the source of the magic and its school (with the effect of a 4th-rank *detect magic* spell), but doing so prevents you from using this ability again until you've rested for 8 hours."
+ },
+ {
+  "id": "arcane-sight",
+  "name": "Arcane Sight",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "goloma"
+  ],
+  "prerequisites": [
+   "ability to cast the detect magic cantrip"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained yourself to constantly be on the lookout for magical effects, even when focusing on looking out for other things. When you are Searching, you also gain the benefits of Detect Magic unless you choose not to."
+ },
+ {
+  "id": "architect-of-flame",
+  "name": "Architect of Flame",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Flames rise and shape to your will, forming a wall or dome of your design. You create a Wall of Fire within 120 feet. In addition to the normal choices, you can make the wall up to 10 feet long and 60 feet high. The wall lasts until the end of your next turn, but you can Sustain it up to 1 minute. --- **Level (+3)** The damage increases by 1d6."
+ },
+ {
+  "id": "armament-paragon",
+  "name": "Armament Paragon",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "blessed armament"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Add the following property runes to the list you can choose for your blessed armament: Animated, Greater Fearsome, Grievous, Keen, and Greater Vitalizing. If you have the Radiant Armament feat, add greater Greater Astral and Greater Brilliant to the list as well. In addition, you can change the rune you've selected for the day to a different rune from your list as a single action that has the concentrate and divine traits. Changing the rune doesn't restore abilities that can be used only a limited number of times."
+ },
+ {
+  "id": "armed-and-armored",
+  "name": "Armed and Armored",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Golden Legionnaire Dedication",
+   "trained in martial firearms"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're used to juggling defensive equipment and your firearms. You can Interact to reload a weapon using the hand holding your shield."
+ },
+ {
+  "id": "armor-assist",
+  "name": "Armor Assist",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Athletics or Warfare Lore"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "After your service aiding armored combatants, you are practiced in helping yourself and others don heavy gear. You can attempt an Athletics or Warfare Lore check with a DC determined by the GM (but usually 15 for common armor, DC 20 for uncommon armor, and DC 25 for rare armor) to halve the time you take to don armor. You can halve an ally's time to don armor by working with them to don the armor and succeeding at an Athletics or Warfare Lore check against the same DC."
+ },
+ {
+  "id": "armor-break",
+  "name": "Armor Break",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wearing medium or heavy armor that doesn't have the broken condition, and your current Hit Points are at half your maximum or lower. --- You flex your muscles to crack your damaged armor, blasting jagged shards into nearby enemies. Each enemy in a takes damage with a save against your class DC. You can push any enemy that fails its save 5 feet away from you (or up to 10 feet on a critical failure). The damage increases by 1d6 per level beyond 14th. Your armor gains the broken condition. While your armor remains broken due to Armor Break, you don't take its penalty to Speed. In addition, if the broken armor has the bulwark trait, you retain its bonus to Reflex saves, but the bonus is reduced by 1."
+ },
+ {
+  "id": "armor-in-earth",
+  "name": "Armor in Earth",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Stone encases you like armor. The stone armor is medium armor but uses your highest armor proficiency. The stone armor's statistics are: AC Bonus +4; Dex Cap +1; Check Penalty –2; Speed Penalty –10 feet; Strength +3; Bulk 1; Group plate. You gain its armor specialization effect. Any bonuses, runes, and magical abilities of your actual armor are suppressed, but any runes that could apply to the stone armor are replicated onto it. The stone armor lasts for 10 minutes, and you can Dismiss this impulse. If you use this impulse again, any existing one ends. --- **Level (3rd)** The armor becomes heavy armor. Its AC Bonus becomes +5, and it gains the bulwark armor trait."
+ },
+ {
+  "id": "armor-regiment-training",
+  "name": "Armor Regiment Training",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [],
+  "text": "Armor Regiment Training Source Battlecry! pg. 30 You've trained for grueling marches in full battle kit. You treat heavy armor as being 1 Bulk lighter than it actually is, and you can rest normally while wearing armor of any type. In exploration mode, you and your allies use your normal Speeds without including your armors' Speed penalties to determine your travel Speed."
+ },
+ {
+  "id": "armor-specialist",
+  "name": "Armor Specialist",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sentinel Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have trained hard to optimize your armor's unique protective qualities to maximize the materials used in its creation. You gain the armor specialization effects for all armors you are proficient with."
+ },
+ {
+  "id": "armored-counterattack",
+  "name": "Armored Counterattack",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [
+   "Intercept Attack"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You use Intercept Attack against a melee Strike and are adjacent to the creature that made the Strike. --- With the might of your armor behind you, you hit back at a foe who would dare try to hurt your allies. After Intercepting the Attack, make your own Strike against the triggering enemy. If your Strike hits, you Taunt the target; this Taunt gains the visual trait."
+ },
+ {
+  "id": "armored-rebuff",
+  "name": "Armored Rebuff",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sentinel Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An adjacent foe critically fails an attack roll to Strike you with a melee weapon or unarmed attack. **Requirements** You are wearing medium armor or heavier. --- You rebuff puny attacks with your armor, knocking back your foe. Attempt an Athletics check to Shove the triggering foe, even if you don't have a hand free. If you succeed, you can't Stride to follow the foe, as you're knocking the foe back with the rebounded attack, not by physically moving towards them."
+ },
+ {
+  "id": "armored-regiment-training",
+  "name": "Armored Regiment Training",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained for grueling marches in full battle kit. You treat heavy armor as being 1 Bulk lighter than it actually is, and you can rest normally while wearing armor of any type. In exploration mode, you and your allies use your normal Speeds without including your armors' Speed penalties to determine your travel Speed."
+ },
+ {
+  "id": "armored-resistance",
+  "name": "Armored Resistance",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Guardian's Intercept"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While you are wearing medium or heavy armor, you gain resistance to physical damage equal to half your character level when you use the Intercept Attack reaction to take damage instead of your ally."
+ },
+ {
+  "id": "armored-rest",
+  "name": "Armored Rest",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication",
+   "trained in light, medium, or heavy armor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've slept many nights in your armor and gotten used to it. You can sleep in armor overnight without being fatigued the next day. If you were already fatigued before sleeping, the armor doesn't prevent you from recovering from being fatigued."
+ },
+ {
+  "id": "arms-that-cut-the-waves",
+  "name": "Arms that Cut the Waves",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "River, lake, sea, or ocean, the water calls to you, and you don't fear its depths. When you attempt an Athletics check to Swim, you can spend a Mythic Point to attempt the check at mythic proficiency. When you would run out of air and begin suffocating, you can instead spend a Mythic Point to hold your breath for 10 more rounds."
+ },
+ {
+  "id": "army-of-one",
+  "name": "Army of One",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "flourish",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Ascended Celestial Dedication",
+   "Celestial Armaments"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** Your nimbus is active. --- Even alone, you're a force to be reckoned with—an army of one, so long as you have your celestial armaments. Spend 1 Mythic Point. If you're not currently wielding your celestial armament, it immediately teleports into your hand. With a gesture and a whispered prayer, you launch your celestial armament into the air, where it flies with a mind of its own, attacking every enemy within your nimbus. Make a Strike with that weapon against each enemy in the bright light of your nimbus. Each attack counts toward your multiple attack penalty, but your penalty doesn't increase until you have made all your attacks. After these attacks are complete, your weapon returns to your hand."
+ },
+ {
+  "id": "ascended-dragonet-heritage",
+  "name": "Ascended Dragonet Heritage",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dragonet"
+  ],
+  "prerequisites": [
+   "You have a versatile heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've awoken the power of your draconic heritage. You gain all the mechanical benefits of the dragonet heritage you selected at first level, allowing you to take feats and gain any benefits that require a specific dragonet heritage."
+ },
+ {
+  "id": "ash-piercing-gaze",
+  "name": "Ash-piercing Gaze",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "yaksha"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Neither cinders nor winds shall prevent you from seeing those who need help. You automatically succeed at the flat check to target a concealed creature if that creature is concealed only by smoke or mist."
+ },
+ {
+  "id": "ash-strider",
+  "name": "Ash Strider",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "air",
+   "composite",
+   "fire",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "polymorph",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You discorporate into a cloud of whirling ash and Stride. If you have a fly Speed, you can Fly instead. This movement doesn't trigger reactions, you can move through occupied spaces and tiny cracks, and you ignore any difficult terrain and greater difficult terrain that wouldn't impede smoke. The first creature you pass through during this movement takes damage with a save against your class DC. Ash lingers around you after your movement is complete, making you concealed until the start of your next turn. --- **Level (+2)** The damage increases by 1d6."
+ }
+]

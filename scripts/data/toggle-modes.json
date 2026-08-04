@@ -2364,5 +2364,186 @@
       }
     ],
     "note": "A surge from your relic grants +1 status to Deception checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "armored-resistance": {
+    "id": "armored-resistance",
+    "name": "Armored Resistance",
+    "feats": [
+      "armored-resistance"
+    ],
+    "duration": "while you Intercept an Attack in medium or heavy armor",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Armored Resistance: this resistance applies ONLY to the damage you take in your ally's place with Intercept Attack, and only while you wear medium or heavy armor. Switch it on when you Intercept."
+  },
+  "echolocation": {
+    "id": "echolocation",
+    "name": "Echolocation",
+    "feats": [
+      "echolocation"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "echolocation",
+        "range": 40,
+        "acuity": "precise"
+      }
+    ],
+    "note": "Switch this on after you Seek: until the start of your next turn you can use hearing as a precise sense with a range of 40 feet. You can also use this sense while you Search."
+  },
+  "axe-climber": {
+    "id": "axe-climber",
+    "name": "Axe Climbing",
+    "feats": [
+      "axe-climber"
+    ],
+    "duration": "while climbing wood with an axe in each hand (or ice with two light picks)",
+    "modifiers": [],
+    "speeds": {
+      "climb": "floor(@actor.speed.land/2)"
+    },
+    "note": "Climbing a wooden surface with a Hatchet or Battle Axe in each hand (or ice with a Light Pick in each hand) gives you a climb Speed equal to half your Speed. You still need both legs free and can't use either axe in combat while climbing."
+  },
+  "battle-scars": {
+    "id": "battle-scars",
+    "name": "Battle Scars (vs. devils)",
+    "feats": [
+      "battle-scars"
+    ],
+    "duration": "while taking bludgeoning or slashing damage from devils or Chelaxian-allied creatures",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "bludgeoning",
+        "value": "floor(@actor.level/2)"
+      },
+      {
+        "type": "slashing",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Resistance to bludgeoning and slashing damage equal to half your level, but ONLY from devils and creatures allied with the Chelaxian government (the GM determines which creatures qualify). Leave the mode off against anything else."
+  },
+  "canopy-predator": {
+    "id": "canopy-predator",
+    "name": "Canopy Predator",
+    "feats": [
+      "canopy-predator"
+    ],
+    "duration": "while moving through trees, vines, and other foliage",
+    "modifiers": [],
+    "speeds": {
+      "climb": 15
+    },
+    "note": "A success on an Athletics check to Climb a tree or an Acrobatics check to Balance on a branch is a critical success instead, and you aren't off-guard while Climbing or Balancing on a tree."
+  },
+  "cyclonic-ascent": {
+    "id": "cyclonic-ascent",
+    "name": "Cyclonic Ascent",
+    "feats": [
+      "cyclonic-ascent"
+    ],
+    "duration": "10 minutes",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(30,@actor.speed.land)"
+    },
+    "note": "Fly Speed equal to your land Speed or 30 feet, whichever is greater, for 10 minutes. You can move upward without treating it as difficult terrain, and you can stay aloft at the end of your turn if you used an air impulse that turn. At 14th level you can also give up to five other creatures a fly Speed - that is ally-side, not on your sheet."
+  },
+  "deadeye": {
+    "id": "deadeye",
+    "name": "Deadeye",
+    "feats": [
+      "deadeye"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "see-invisibility"
+      }
+    ],
+    "note": "Until the start of your next turn you see invisible creatures and objects as silhouettes, making them merely concealed from you rather than undetected."
+  },
+  "defiant-banner": {
+    "id": "defiant-banner",
+    "name": "Defiant Banner",
+    "feats": [
+      "defiant-banner"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "bludgeoning",
+        "value": "@actor.abilities.int.mod"
+      },
+      {
+        "type": "piercing",
+        "value": "@actor.abilities.int.mod"
+      },
+      {
+        "type": "slashing",
+        "value": "@actor.abilities.int.mod"
+      }
+    ],
+    "note": "Resistance to bludgeoning, piercing and slashing equal to your Intelligence modifier until the start of your next turn. Allies inside your banner's aura gain the same resistance - that belongs on their sheets, not yours."
+  },
+  "deitys-protection": {
+    "id": "deitys-protection",
+    "name": "Deity's Protection",
+    "feats": [
+      "deitys-protection"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all",
+        "value": "floor((@actor.level+1)/2)"
+      }
+    ],
+    "note": "Turn this on after you cast a domain spell. The resistance equals the rank of the domain spell you cast; domain focus spells are automatically heightened to half your level rounded up."
+  },
+  "dire-form": {
+    "id": "dire-form",
+    "name": "Dire Form (hybrid shape)",
+    "feats": [
+      "dire-form"
+    ],
+    "duration": "while you are in your hybrid shape",
+    "modifiers": [
+      {
+        "target": "damage",
+        "type": "status",
+        "value": 2,
+        "appliesWhen": "melee damage rolls"
+      }
+    ],
+    "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
+  },
+  "dire-growth": {
+    "id": "dire-growth",
+    "name": "Dire Growth (animal shape)",
+    "feats": [
+      "dire-growth"
+    ],
+    "duration": "while you remain in your animal shape",
+    "modifiers": [
+      {
+        "target": "damage",
+        "type": "status",
+        "value": 2,
+        "appliesWhen": "melee damage rolls"
+      }
+    ],
+    "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
   }
 }

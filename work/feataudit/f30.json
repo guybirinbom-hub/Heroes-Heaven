@@ -1,0 +1,970 @@
+[
+ {
+  "id": "recognize-threat",
+  "name": "Recognize Threat",
+  "level": 8,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in a Recall Knowledge skill",
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** You have master proficiency in a skill to identify the triggering creature. **Trigger** Your first turn of an encounter begins, and you can see a creature. --- You quickly assess the threat so you can relay the information to your team. Attempt a Recall Knowledge check against the triggering creature."
+ },
+ {
+  "id": "recoiling-relocation",
+  "name": "Recoiling Relocation",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish",
+   "unstable"
+  ],
+  "prerequisites": [
+   "Munitions Master Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You Launch your light mortar. **Requirements** You are adjacent to your light mortar. --- Your innovation contains a chamber to store a small amount of compressed exhaust gas from your Launches. You can release this gas coinciding with the recoil to propel your mortar and yourself through the air to reach a better firing position. You and your light mortar move up to the light mortar's Speed in the direction of your choice. You must end this movement adjacent to your innovation."
+ },
+ {
+  "id": "recollect-studies",
+  "name": "Recollect Studies",
+  "level": 12,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication",
+   "expert in a skill used to Recall Knowledge"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're fighting a creature of your level or lower that could be identified by Recall Knowledge with a skill in which you're an expert. --- You paid attention during your studies and remember the right way to attack various creatures. Choose a creature that meets the requirements. You learn the resistances, immunities, or weaknesses of the creature (your choice) without needing to successfully Recall Knowledge."
+ },
+ {
+  "id": "reconstruct-the-scene",
+  "name": "Reconstruct The Scene",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "investigator",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You spend 1 minute surveying a small location (such as a single room) to get an impression of events that occurred there in the last day. This involves moving about the area and studying footprints, spilled drinks or blood, and so forth. You get an indistinct mental impression of significant events that happened there. This gives you clues and details of the past, including the overall events and their time frame, but it's not a perfect record. This also isn't enough to identify who was involved in these events if you weren't already aware the person was there. As determined by the GM, you also pick out various seemingly small details that could serve as important clues, like a memorable weapon someone used for a murder or the type of cloak someone wore when passing through."
+ },
+ {
+  "id": "recover-spell",
+  "name": "Recover Spell",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Spellmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** An enemy's action disrupted your attempts to Cast a Spell since the beginning of your last turn. --- You recover the energy of a recently disrupted spell, allowing you to cast it again as long as you do so immediately before the energy dissipates. You regain the use of a spell that was disrupted since the beginning of your last turn, but you must immediately Cast the Spell again with your next action or else you lose the spell; as normal for spellshapes, this must be on the same turn that you use Recover Spell. You can change the area, targets, and other variables, including the number of actions used to Cast the Spell if the spell allows, such as when casting Heal or Force Barrage."
+ },
+ {
+  "id": "recycled-cogwheel",
+  "name": "Recycled Cogwheel",
+  "level": 8,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Recycled Cogwheel Source Guns & Gears (Remastered) pg. 54 Archetype Trapsmith Prerequisites Trapsmith Dedication You're able to scavenge the cogwheels from your daily quick-deploy snares that use gears. This allows you to deconstruct a snare that didn't trigger in order to set the snare up somewhere else. Doing so takes the same number of actions as setting the snare did. When you do, you recover the snare and can deploy it in another location."
+ },
+ {
+  "id": "recycled-cogwheels",
+  "name": "Recycled Cogwheels",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Trapsmith Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're able to scavenge the cogwheels from your daily quick-deploy snares that use gears. This allows you to deconstruct a snare that didn't trigger in order to set the snare up somewhere else. Doing so takes the same number of actions as setting the snare did. When you do, you recover the snare and can deploy it in another location."
+ },
+ {
+  "id": "red-gold-mortality",
+  "name": "Red-Gold Mortality",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon",
+   "void"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a weapon ikon --- By channeling your divinity into a creature along with a strike, you can disrupt their ability to recover. The imbued ikon gains the following ability. **Immanence** When you successfully damage an enemy with the ikon, a marking appears around the wound, painted in the red of mortal blood and the gold of divine ichor. When the target would regain Hit Points, such as from a healing effect or an ability like fast healing or regeneration, it must attempt a save against your class DC to determine the effects, and then the marking fades. The marking otherwise fades after 1 minute. --- **Success** The creature regains the full number of Hit Points that would be healed. **Failure** The creature regains only half the number of Hit Points as the contradictory energies swirl within it. **Critical Failure** The creature doesn't regain any Hit Points."
+ },
+ {
+  "id": "redirect-attention",
+  "name": "Redirect Attention",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "reflection"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through your strong connection with your progenitor, you're able to redirect those attempting to spy on you. Whenever you would be directly targeted with a scrying effect, the effect must attempt a counteract check against the higher of your spell DC or class DC. If the check fails, the effect targets your progenitor instead of you."
+ },
+ {
+  "id": "redirect-elements",
+  "name": "Redirect Elements",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** The spell attack roll for a foe's spell with an elemental trait targeting you fails or critically fails, and the elemental trait is in your elemental philosophy. --- You seize the elemental essence of an incoming spell and redirect the spell to a creature of your choice within the spell's area. The attacker rerolls the spell's attack roll against the new target."
+ },
+ {
+  "id": "redirecting-shot",
+  "name": "Redirecting Shot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "fortune",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally misses with a ranged attack that uses a thrown weapon or ammunition. The ally must be willing to accept your assistance, you must see the attack's target, and the attack's target must be within the first range increment of your firearm or crossbow. **Requirements** You're wielding a loaded firearm or crossbow. --- Seeing your ally's attack about to go astray, you fire your weapon to right its course. Discharge your firearm and roll a d20. Your ally uses this roll instead of their own, and the attack ignores any bonuses the target would gain against the attack from lesser or standard cover, as well as the flat check if the target is concealed."
+ },
+ {
+  "id": "reel-em-in",
+  "name": "Reel 'Em In",
+  "level": 10,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Reel 'Em In Source High Seas pg. 107 Archetype Marine Marauder Prerequisites Marine Marauder Dedication Requirements You’re wielding a harpoon, a spear weapon, or a net attached to a rope. You’ve developed combat techniques inspired by the methods fishermen use to catch large fish. Make a Strike with a required weapon or Grapple with a net. If the attack hits, you can attempt an Athletics check against the target’s Fortitude DC. On a success, you pull the target 10 feet closer to you."
+ },
+ {
+  "id": "refined-motion-in-darkness",
+  "name": "Refined Motion in Darkness",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "wayang"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The ability to move elegantly and undetected through darkness aided your people as they fled the Netherworld. You can move 5 feet farther when you take the Sneak action, up to your Speed. In addition, as long as you continue to use Sneak actions and succeed at your Stealth check, you don't become observed if you end a Sneak action in dim light or darkness, as long as you have cover or greater cover or are concealed at the end of your turn."
+ },
+ {
+  "id": "reflect-harm",
+  "name": "Reflect Harm",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can wrap your magic around you like a cloak that causes those who dare to target you with spells to suffer a similar fate. You know the following blood magic effect. **Blood Magic—Reflect Harm** Your blood ensures that those who harm you with magic are harmed in return. The first time you take damage from a spell before the beginning of your next turn, attempt spell attack roll against the creature who cast the triggering spell. On a hit, the creature takes the same amount and type of damage that you just took. If you critically hit, the creature takes twice the damage."
+ },
+ {
+  "id": "reflect-spell",
+  "name": "Reflect Spell",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [
+   "Counterspell"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you successfully use Counterspell to counteract a spell that affects targeted creatures or an area, you can turn that spell's effect back on its caster. When reflected, the spell affects only the original caster, even if it's an area spell or it would normally affect more than one creature. The original caster can attempt a save and use other defenses against the reflected spell as normal."
+ },
+ {
+  "id": "reflecting-riposte",
+  "name": "Reflecting Riposte",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Dueling Riposte, Mirror Shield, or Twin Riposte"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An opponent casts a spell and you critically succeed at a saving throw against it. **Requirements** You have a shield raised or are benefiting from Dueling Parry or Twin Parry. --- You attempt to counteract the triggering spell using powerful magical techniques observed in the Kortos Mounts. Use your attack roll modifier with your shield or parrying weapon for your counteract check. If you counteract the spell, it is reflected upon the caster. If the spell targeted individual creatures, it targets the caster only. If the spell targeted an area centered on a point, the new area is centered on the caster. If the spell was a cone or line, the cone or line emanates from you toward the caster. If the spell has a save DC, it uses your class DC, and if it requires a spell attack roll, use the same attack roll modifier as the counteract check."
+ },
+ {
+  "id": "reflective-defense",
+  "name": "Reflective Defense",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "light",
+   "talos"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** A creature within 30 feet of you targets you, and you can see the attacker. **Requirements** You are in dim or bright light. --- Your body's natural luster has been polished to a gleaming shine. You use this to reflect light back into your enemy's eyes, disrupting its aim and focus; it must succeed at a Reflex save against your class DC or be dazzled until the end of your next turn."
+ },
+ {
+  "id": "reflexive-catch",
+  "name": "Reflexive Catch",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "expert in Acrobatics",
+   "Juggler Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** The item or thrown weapon is of a Bulk you can Juggle. If the trigger was a thrown weapon attack targeting you, you can't be off-guard to the attack. If you were already Juggling, you can't be Juggling your maximum number of items. **Trigger** An item falls within your reach or an attacker fails an attack roll to hit you or a creature within your reach with a thrown weapon. --- You grab the triggering item. If you are Juggling, you can immediately add the item to the objects you're Juggling as a free action, which has the concentrate and manipulate traits."
+ },
+ {
+  "id": "reflexive-courage",
+  "name": "Reflexive Courage",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "bard",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "warrior muse"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach uses an auditory effect, manipulate action, or move action; makes a ranged attack; or leaves a square during its move action. **Requirements** You are affected by Courageous Anthem. --- You bellow a ferocious call to arms, inspiring yourself to lash out at a foe. Make a melee Strike against the triggering creature. If the attack is a critical hit and the trigger was a manipulate action, the action is disrupted."
+ },
+ {
+  "id": "reflexive-devotion",
+  "name": "Reflexive Devotion",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Draconic Acolyte Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- The power of dragons flows through you at the merest thought. You Channel Draconic Essence."
+ },
+ {
+  "id": "reflexive-grapple",
+  "name": "Reflexive Grapple",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Thlipit Contestant Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've honed your reflexes so well that your lash can begin closing around a target as soon as it makes contact. Make a lash Strike; if the Strike hits, you can immediately attempt to Grapple the target. Both actions count toward your multiple attack penalty, but don't increase your penalty until you've made both attacks."
+ },
+ {
+  "id": "reflexive-riposte",
+  "name": "Reflexive Riposte",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "Opportune Riposte"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can riposte almost without a thought. At the start of each of your turns when you regain your actions, you gain an additional reaction that can be used only to perform an Opportune Riposte."
+ },
+ {
+  "id": "regurgitate-mutagen",
+  "name": "Regurgitate Mutagen",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "alchemist",
+   "manipulate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are under the effects of a mutagen. --- You redirect a mutagen within your body to spit a stream of stomach acid at a foe. A creature within 30 feet takes 1d6 acid damage for every 2 levels you have (), with a save against your class DC. On a failure, the creature is also Sickened 1 (or Sickened 2 on a critical failure). The mutagen's duration immediately ends."
+ },
+ {
+  "id": "reincarnated-companion",
+  "name": "Reincarnated Companion",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Heroic Scion Dedication",
+   "familiar or nimble or savage animal companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're not alone in having a legendary past life—so too does your companion. This previous life might be the return of an animal companion or familiar a previous PC of yours had that perished, or it could be the reincarnation of an entirely different legendary creature. It could even be the returning spirit of a close friend or ally who stood by your side. If you have an animal companion, it gains one specialization of your choice. If you have a familiar, it gains two additional familiar abilities. If your fated companion is slain, you can replace it at no cost when you perform your daily preparations."
+ },
+ {
+  "id": "rejuvenating-touch",
+  "name": "Rejuvenating Touch",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "lay on hands"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your healing energies linger after you cast, providing continual benefits. An ally that recovers Hit Points from your Lay on Hands gains 10 temporary Hit Points immediately and at the start of their turn during each of the next 10 rounds. These temporary HP last until the start of the creature's next turn. This effect ends if the ally is knocked unconscious."
+ },
+ {
+  "id": "rejuvenation",
+  "name": "Rejuvenation",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghost Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The call of your unfinished business recreates you after destruction. When you're destroyed, you reform after 2d4 days within your bound site, fully healed. If your unfinished business is resolved while you're waiting, you pass on immediately unless you and the GM determine you have new unfinished business."
+ },
+ {
+  "id": "rejuvenation-token",
+  "name": "Rejuvenation Token",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "skeleton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You tie yourself to the Material Plane by implanting a piece of your consciousness into a weapon, piece of armor, or other item that's precious to you. As long as this object is intact, even if your body is destroyed, you can be restored to the exact state you were in the last time you made daily preparations with this object in your possession. The soulbound object can be used as a special focus for Raise Dead, Resurrect, or similar magic. This warps the spell to bring you back in your skeletal undead state rather than bringing you back to life. Pharasma can't prevent you from returning when the spell is modified in this way. When you return, you permanently lose a memory that was precious to you, in addition to any other side effects of the spell that brought you back. Your soulbound object becomes inert until you spend 1 week of downtime to anchor yourself to it again, further fragmenting your mind."
+ },
+ {
+  "id": "rekindled-light",
+  "name": "Rekindled Light",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "healing",
+   "kitsune",
+   "vitality"
+  ],
+  "prerequisites": [
+   "Star Orb"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You or an ally within 30 feet of your Star Orb familiar would be reduced to 0 Hit Points but not immediately killed. --- You temporarily drain your star orb familiar's energy to save an ally. The target avoids being knocked out and remains at 1 Hit Point, and their wounded condition increases by 1. The target then regains Hit Points equal to your level. When the familiar's energy is drained, it becomes dormant until your next daily preparations."
+ },
+ {
+  "id": "release-spores",
+  "name": "Release Spores",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "fungus",
+   "magical",
+   "poison"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You create a miasma of spores. These spores fill a within 100 feet and remain for 1 round per level you have. All creatures within the spores become concealed, and all creatures outside the spores become concealed to creatures within it. You can see through the spores without difficulty. You can Dismiss the spores. **Awakening** The spores smell disgusting. Creatures in the area are Sickened 1 for as long as they remain in the area, plus 2 rounds. **Awakening** The spores are toxic. The miasma deals damage per 2 levels you have to creatures in the area when you Release Spores, to creatures who begin their turn in the area, and to creatures who enter the area."
+ },
+ {
+  "id": "relentless-stalker",
+  "name": "Relentless Stalker",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "move",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An adjacent creature you are hunting attempts to move away from you using an action that has the move trait --- Your hunted prey cannot escape your relentless pursuit. Stride up to your Speed in tandem with the triggering creature, remaining adjacent to the foe throughout its movement until it stops moving or you run out of movement. You can ignore difficult terrain during this movement unless the difficult terrain is caused by a magical effect."
+ },
+ {
+  "id": "reloading-trick",
+  "name": "Reloading Trick",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Crossbow Infiltrator Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding an unloaded hand crossbow or an unloaded gauntlet bow. --- You can fire off a single shot even when it seems like you are unprepared. You Interact to reload your hand crossbow or gauntlet bow and attempt a ranged Strike with it. --- **Special** If you have the Repeating Hand Crossbow Training feat, you can use this feat with a repeating hand crossbow to load an entire magazine, but the speed means you can fire only one bolt before the magazine jams and becomes useless. You must fully replace a magazine as normal before firing with a repeating hand crossbow after using this ability."
+ },
+ {
+  "id": "reminder-of-the-greater-fear",
+  "name": "Reminder of the Greater Fear",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "vigilante"
+  ],
+  "prerequisites": [
+   "Vigilante Dedication",
+   "master in Intimidation"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** Another creature within 30 feet of you that can see you would gain the frightened condition. --- You give a target a stern glower to remind them that it is you, and no one else, they should truly fear. Reduce the value of the frightened condition the creature would take by 1."
+ },
+ {
+  "id": "remorseless-lash",
+  "name": "Remorseless Lash",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're skilled at beating an enemy when their morale is already breaking. When you succeed at a melee weapon Strike against a frightened enemy, that enemy can't reduce their frightened condition below 1 until the beginning of your next turn."
+ },
+ {
+  "id": "remote-trigger",
+  "name": "Remote Trigger",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Snarecrafter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to trigger snares from afar, creating ranged hazards to assail your opponents and allowing you to disarm enemies' snares harmlessly. You can Strike a snare to trigger it prematurely. If you crafted the snare, you automatically hit. If someone else crafted it, attempt a ranged Strike against the Crafting DC, triggering the snare only if you hit."
+ },
+ {
+  "id": "remove-presence",
+  "name": "Remove Presence",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "amp",
+   "illusion",
+   "mental",
+   "occult",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your spell reaches into the mind of a creature and removes you from it. The amped cantrip must be one that has one or more targets and must either require a spell attack roll or have a saving throw. Use this amp in place of the psi cantrip's normal amp entry. --- **Amp** Choose one target of the spell or one creature in its area. If that enemy fails its save or the spell hits it, you become undetected by that creature, disappearing from its senses for 1 minute or until you use a hostile action. This is similar to being invisible, but effects like *see the unseen *don't reveal you-you're affecting the target's mind, not its vision. *Truesight* can still see through this illusion if the counteract check succeeds."
+ },
+ {
+  "id": "rend-armor",
+  "name": "Rend Armor",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Hellbreaker Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a critical Strike that dealt bludgeoning or piercing damage. --- Your enemies' defenses are no match for you as you wrench your weapon to compromise their armor. The creature takes a –2 circumstance penalty to their AC that lasts until they can take 10 minutes to repair their armor. The creature can also Interact to adjust their armor, which removes this penalty for 1 minute."
+ },
+ {
+  "id": "rend-mimicry",
+  "name": "Rend Mimicry",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Wild Mimic Dedication",
+   "you have seen a creature use Rend or have identified a creature that has Rend in combat"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have hit the same enemy with two consecutive melee Strikes that each dealt slashing damage. --- Taking advantage of the brutal efficiency of hacking away at a target with two slashing attacks, you've mastered the art of punishing a foe caught between your slices. You deal damage to the target. This damage increases to 2d6 at 10th level and to 3d6 at 16th level."
+ },
+ {
+  "id": "renewed-vigor",
+  "name": "Renewed Vigor",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Through the haze of battle, you quickly recover your raging vigor. You gain temporary Hit Points equal to half your level plus your Constitution modifier. If you made an attack action this turn, increase the number of temporary Hit Points to your level plus your Constitution modifier. These temporary Hit Points last until the end of your rage."
+ },
+ {
+  "id": "renewing-quills",
+  "name": "Renewing Quills",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "shisk"
+  ],
+  "prerequisites": [
+   "quillcoat shisk heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your spines grow back much faster than other shisks. You can use the Barbed Quills reaction once every 10 minutes."
+ },
+ {
+  "id": "repeat-lesson",
+  "name": "Repeat Lesson",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your student fails or critically fails an Athletics check to Disarm, Grapple, Reposition, Shove, or Trip a target within your reach. --- Upon seeing your student falter, you demonstrate the proper technique. Attempt the same action that your student failed against the same target. You must meet the action's requirements."
+ },
+ {
+  "id": "repeating-hand-crossbow-training",
+  "name": "Repeating Hand Crossbow Training",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Crossbow Infiltrator Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The specific needs of your organization or mission warrant your use of the latest in ingenious crossbow technology. You gain access to repeating hand crossbows and repeater bandoliers. If you have Running Reload or a similar feat that allows you to reload and perform another action or activity as a single action, you can use that action more efficiently with a repeating weapon. You can use the action as a 3-action activity to reload a magazine into a repeating weapon after you perform its other granted action, or as a 2-action activity if you use a magazine from a repeater bandolier."
+ },
+ {
+  "id": "repel-assault",
+  "name": "Repel Assault",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Guardian's Calling"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy's attack would deal damage equal to or greater than your level to you or an adjacent ally. --- Your Calling demands that you defy danger and injury to yourself or those who rely on you while allowing you to respond to the originators of such aggression with ferocious and unrivaled fury. Spend a Mythic Point; you gain resistance to the triggering attack equal to your level. If you Strike the enemy that made the attack before the end of your next turn, you can make that Strike at mythic proficiency. This benefit applies only to the first Strike you make against that enemy."
+ },
+ {
+  "id": "repelling-enforcer",
+  "name": "Repelling Enforcer",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pure Legion Enforcer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your conviction reflects damage from the divine. Whenever you are dealt damage by a creature that can cast divine spells, that creature takes 5d6 damage that ignores any resistance to spirit damage the creature has (but not immunity)."
+ },
+ {
+  "id": "replenishing-consumption",
+  "name": "Replenishing Consumption",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghoul Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you devour corpses and satiate your hunger, you also recover from some of your wounds, your necrotized blue flesh knitting back together almost immediately as soon as you begin shoveling the chunks of dead flesh down your throat. Once every 10 minutes, when you Consume Flesh, you regain 1d6 Hit Points for every 2 levels you have, rounded up. Leveled Healing"
+ },
+ {
+  "id": "replenishing-hydration",
+  "name": "Replenishing Hydration",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "azarketi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You draw life from the water around you. If you submerge in water and rest for 10 minutes, you regain Hit Points equal to your Constitution modifier × half your level."
+ },
+ {
+  "id": "replenishment-of-war",
+  "name": "Replenishment of War",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "expert in your deity's favoured weapon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Striking out against your enemies draws praise and protection from your deity. When you damage a creature with a Strike using your deity's favored weapon, you gain a number of temporary Hit Points equal to half your level, or equal to your level if the Strike was a critical hit. These temporary Hit Points last until the start of your next turn."
+ },
+ {
+  "id": "reprepare-spell",
+  "name": "Reprepare Spell",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've discovered how to reuse some of your spell slots over and over. You can spend 10 minutes to prepare a spell that you already cast today, regaining access to that spell slot. The spell must be of 4th rank or lower and can't have a duration. You can reprepare a spell in this way even if you've already reprepared that spell previously in the same day. If you have the Spell Substitution arcane thesis, you can instead prepare a different spell in an expended slot, as long as the new spell doesn't have a duration. You can use spell substitution on that slot again, but you remain restricted to preparing only spells without a duration in that slot until the next time you make your daily preparations."
+ },
+ {
+  "id": "reptile-speaker",
+  "name": "Reptile Speaker",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You hear the sounds of reptiles as language. You can ask questions of, receive answers from, and use the Diplomacy skill with animals that are reptiles (the GM determines which animals count as reptiles)."
+ },
+ {
+  "id": "repulse-the-wicked",
+  "name": "Repulse the Wicked",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An undead within your reach critically fails an attack roll targeting you. --- You use your foe's failure as an opening to push them away. You attempt to Shove the undead."
+ },
+ {
+  "id": "repulse-the-wicken",
+  "name": "Repulse the Wicken",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Repulse the Wicken Source Knights of Lastwall pg. 79 Archetype Lastwall Sentry Prerequisites Lastwall Sentry Dedication Trigger An undead within your reach critically fails an attack roll targeting you. You use your foe's failure as an opening to push them away. You attempt to Shove the undead."
+ },
+ {
+  "id": "repurposed-parts",
+  "name": "Repurposed Parts",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Trapsmith Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are familiar with the fittings and cogwheels of your snares and can repurpose parts from prepared quick-deploy snares to assemble a new creation on the fly. Using two of the snares you prepared for quick deployment during daily preparations, you can quickly deploy a different snare that you know how to Craft, even if you didn't prepare that snare during your daily preparations."
+ },
+ {
+  "id": "resilient-shell",
+  "name": "Resilient Shell",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon is resilient against attacks. It gains resistance to physical damage equal to its Constitution modifier."
+ },
+ {
+  "id": "resolute-defender",
+  "name": "Resolute Defender",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You hold your shield together with the power of your faith and conviction, refusing to let wood splinter and steel shatter until the day's battles are won. If a shield would be destroyed due to damage taken during your Shield Block, the shield remains intact at 1 Hit Point instead. Its construction is weakened until you repair it, preventing you from using Resolute Defender to save the same shield again until your next daily preparations."
+ },
+ {
+  "id": "resounding-blow",
+  "name": "Resounding Blow",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a melee weapon that deals bludgeoning damage. --- You strike your enemy in the head with such force that their ears ring. Make a melee Strike. If the Strike hits and deals damage, the target is deafened until the start of your next turn (or for 1 minute on a critical hit)."
+ },
+ {
+  "id": "resounding-finale",
+  "name": "Resounding Finale",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "bard",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "maestro muse"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You or an ally benefiting from your composition spell would take sonic damage. --- You bring your performance to a sudden, dramatic finish, drowning out other sounds. Your composition spell ends immediately, and all allies that had been benefiting from the spell's effects gain sonic resistance against the triggering damage equal to twice the composition spell's rank."
+ },
+ {
+  "id": "restorative-channel",
+  "name": "Restorative Channel",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "healing font"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can remove conditions with divine grace. You can sacrifice one Heal spell you've prepared in your extra slots from your healing font to cast one of the following spells instead: Cleanse Affliction, Clear Mind, Sound Body, or Sure Footing. The spell is heightened to the same rank as the spell you sacrificed."
+ },
+ {
+  "id": "restore-omen",
+  "name": "Restore Omen",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "exploration",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Harrower Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You do not have an active harrow omen. --- You spend 10 minutes meditating with your harrow deck, then draw a card. The suit of the card grants you a new harrow omen."
+ },
+ {
+  "id": "restoring-blood",
+  "name": "Restoring Blood",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "vishkanya"
+  ],
+  "prerequisites": [
+   "Envenom"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body can process an alternative to your venom that heals wounds. You can use your Envenom action to produce a blood restorative instead of vishkanyan venom. You can make a blood restorative at most once per 10 minutes, even if your Envenom action can be used more frequently. You or an adjacent creature can Interact to consume the restorative to regain Hit Points. This is a vitality healing effect. A restorative spoils at the start of your next turn. When you reach 15th level, the restorative restores 5d6 Hit Points instead."
+ },
+ {
+  "id": "resurrectionist",
+  "name": "Resurrectionist",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can cause a creature you bring back from the brink of death to thrive and continue healing. When you restore Hit Points to a dying creature or bring a dead creature back to life and restore Hit Points to it, you grant that creature fast healing 5 for 1 minute. This fast healing ends if the creature is knocked unconscious."
+ },
+ {
+  "id": "retaliatory-cleansing",
+  "name": "Retaliatory Cleansing",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would take damage from an adjacent creature's Strike. **Requirements** You're holding holy water or a bomb that deals vitality damage in one of your hands. --- You twist your hand in front of the blow, ensuring the enemy's attack shatters the required holy water or bomb. The creature takes the on-hit and splash damage from the holy water or required bomb, not counting any additional effects you would add or apply when you throw the bomb, such as weapon specialization or Calculated Splash. You're splashed by the holy water or required bomb, although since vitality damage harms only undead and creatures with void healing, it's unlikely you will take damage."
+ }
+]

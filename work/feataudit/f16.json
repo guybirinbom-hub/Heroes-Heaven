@@ -1,0 +1,975 @@
+[
+ {
+  "id": "ghost-path-epiphany",
+  "name": "Ghost-path Epiphany",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cultivator Dedication",
+   "you aren't holy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Deviating from the orthodox path, you tread an inauspicious descent littered with flowers of death; this heretical choice will, in time, earn you the enmity and fear of more traditional cultivators. You become sanctified with the unholy trait. You also learn the Call Spirit and Commune rituals, which can be used to contact only undead or entities from the Void or the Netherworld. When you cast a ritual, you can reduce the number of secondary casters by 1 as you direct decaying fragments of your own soul, felled by your proximity to death, to assist with the ritual. When you do, you must fulfill any requirements for the secondary caster, and you attempt the secondary check normally performed by that secondary caster. You can't replace a secondary caster who's the target of the spell (as in the atone ritual)."
+ },
+ {
+  "id": "ghost-wrangler",
+  "name": "Ghost Wrangler",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "divine",
+   "rage"
+  ],
+  "prerequisites": [
+   "spirit instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Spirits around you coalesce upon your fists, enabling you to seize and harm other ghosts and spirits. Until the beginning of your next turn, your fists gain the effects of the ghost touch property rune, and you can make Strength-based skill checks against incorporeal creatures."
+ },
+ {
+  "id": "ghostly-condemnation",
+  "name": "Ghostly Condemnation",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "divine",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "prerequisites": [
+   "Headless Haunt"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You shriek a death sentence upon a single target within 120 feet, forcing it to experience the final moments of your mortal life as you were dragged through a howling mob and forced to kneel before the final blade that took your life and head. The target is subject to the effects of a 5th-rank Vision of Death with a DC equal to your class DC or spell DC, whichever is higher. If you slay a significant foe with this ability, its physical body is gruesomely decapitated, forcing its allies within 15 feet to attempt a Will save against the same DC or be Frightened 1 (Frightened 2 on a critical failure)."
+ },
+ {
+  "id": "ghostly-grasp",
+  "name": "Ghostly Grasp",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghost Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your control over your ghostly form grows. You gain the Advanced Undead Benefits and can interact with physical objects, with limits. You can attempt Strength-based skill checks against physical creatures and objects. You can Interact with physical objects, but the action has no effect unless you succeed at a or check."
+ },
+ {
+  "id": "ghostly-grasp-deviant",
+  "name": "Ghostly Grasp (Deviant)",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "An invisible arm extends from you to grab and manipulate objects. The arm reaches up to 15 feet, grabs an unattended object of 1 Bulk or less, and immediately deposits it in one of your free hands or at your feet. Alternatively, it reaches up to 15 feet and performs a simple Interact action like pushing open a window, though it can't perform actions that require significant mechanical dexterity. For every 5 levels you have, the amount the hand can lift increases by 1 Bulk, and the arm's range increases by 15 feet. Being ghostly, the arm can affect ghosts, spirits, and other incorporeal entities, though in most cases, you need an awakening for this to be useful. --- **Awakening** Your invisible arm can grab on to an unsuspecting target. You can modify the power's target to be 1 creature within range. You make an attack roll against the creature's Fortitude DC and add the attack trait to the action. On a success, the target is grabbed by the arm (or restrained on a critical success). This lasts for 1 round or until the creature Escapes. --- **Awakening** You summon additional ghostly arms that entwine together to push targets. You can modify the power's target to be 1 creature within range. You make an attack roll against the creature's Fortitude DC and add the attack trait to the action. On a success, you can move the target 5 feet in any direction (10 feet on a critical success)."
+ },
+ {
+  "id": "ghostly-grasp-ghost",
+  "name": "Ghostly Grasp (Ghost)",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Ghostly Grasp (Ghost) Source Book of the Dead pg. 47 Archetype Ghost Prerequisites Ghost Dedication Your control over your ghostly form grows. You gain the advanced undead benefits and can interact with physical objects, with limits. You can attempt Strength-based skill checks against physical creatures and objects. You can Interact with physical objects, but the action has no effect unless you succeed at a DC 20 Athletics or DC 20 Thievery check."
+ },
+ {
+  "id": "giant-hunter",
+  "name": "Giant Hunter",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have studied giants and hunt them with efficiency. When you roll initiative and can see a giant, you can Hunt Prey as a free action, designating that enemy as your prey. You can use this free action even if you haven't identified the giant yet with Recall Knowledge. The benefit doesn't apply against giants disguised as other creatures, and the GM determines whether it applies against a creature disguised as a giant."
+ },
+ {
+  "id": "giant-slayer",
+  "name": "Giant Slayer",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your well-placed blows can fell mighty giants. If you critically hit the same giant twice on the same turn, the target must succeed at a saving throw or die. Use your class DC for this saving throw."
+ },
+ {
+  "id": "giant-snare",
+  "name": "Giant Snare",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Snarecrafter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can create bigger snares for quick deployment, making it more likely for a creature to walk into your snares. When you prepare snares for quick deployment, you can prepare some of them as giant snares. A giant snare takes up a 10-foot-by-10-foot area but costs two of your quick deployment snares. A giant snare can trigger from a creature entering any portion of its area, and all its effects apply over the full area."
+ },
+ {
+  "id": "giants-lunge",
+  "name": "Giant's Lunge",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "prerequisites": [
+   "giant instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You extend your body and prepare to attack foes outside your normal reach. Until your rage ends, all your melee weapons and unarmed attacks gain a reach of 10 feet. This doesn't increase the reach of any weapon or unarmed attack that already has the reach trait, but it does combine with abilities that increase your reach due to increased size, such as Giant's Stature."
+ },
+ {
+  "id": "giants-stature",
+  "name": "Giant's Stature",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "polymorph",
+   "primal",
+   "rage"
+  ],
+  "prerequisites": [
+   "giant instinct"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are Medium or smaller. --- You grow to incredible size. You become Large, increasing your reach by 5 feet and gaining the Clumsy 1 condition until you stop raging. Your equipment grows with you."
+ },
+ {
+  "id": "gift-of-the-immortal-herb",
+  "name": "Gift of the Immortal Herb",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "healing",
+   "ikon",
+   "light",
+   "vitality"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a body ikon --- Your blood turns a divine gold, shining in moments its spilled and begetting new life. The imbued ikon gains the following effects. **Immanence** If your divine spark remains in your body ikon for 10 continuous minutes, you regrow one damaged or ruined limb or organ. **Transcendence—Shed the Mortal Skin** ⟨1⟩ (healing, light, transcendence, vitality)"
+ },
+ {
+  "id": "gifted-power",
+  "name": "Gifted Power",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "oracle"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mystery grants you additional magic. You have an extra spell slot of your highest rank, which you can use only to cast one of your mystery's granted spells, heightened to this rank. --- **Special** If you have the divine access class feature or Mysterious Repertoire feat, you can cast spells that you learned from those abilities using the additional spell slot from Gifted Power."
+ },
+ {
+  "id": "gigantic-megafauna-companion",
+  "name": "Gigantic Megafauna Companion",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mammoth Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The mammoths and other megafauna ridden by your people are larger than any ordinary beast. Your megafauna companion increases in size to Huge but doesn't otherwise change its statistics."
+ },
+ {
+  "id": "gigaton-strike",
+  "name": "Gigaton Strike",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "Megaton Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use a full-power Megaton Strike, you can knock your foe back. When you succeed at your Strike while using an unstable Megaton Strike, your target must attempt a save against your class DC. --- **Critical Success** The creature is unaffected. **Success** The creature is pushed back 5 feet. **Failure** The creature is pushed back 10 feet. **Critical Failure** The creature is pushed back 20 feet. --- **Special** If your innovation is a minion, this benefit applies on its unstable Megaton Strikes."
+ },
+ {
+  "id": "gigavolt",
+  "name": "Gigavolt",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "Megavolt"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you unleash electricity from your innovation, you can bounce it off obstacles, creating a field of electric death. When you use Megavolt, each time your line of electricity hits a solid barrier, such as a wall, it bounces off at an angle of your choice and continues until you have reached the full length of the line. Even if a creature is in the area from multiple bounces, it takes the damage only once."
+ },
+ {
+  "id": "glad-hand",
+  "name": "Glad-Hand",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "First impressions are your strong suit. When you meet someone in a casual or social situation, you can immediately attempt a Diplomacy check to Make an Impression on that creature rather than needing to converse for 1 minute. If you fail, you can engage in 1 minute of conversation and attempt a new check at the end of that time rather than accepting the failure or critical failure result."
+ },
+ {
+  "id": "glider-form",
+  "name": "Glider Form",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "eidolon",
+   "evolution",
+   "move",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your eidolon evolves wings, a buoyant body, or some other means to control descent. It glides slowly toward the ground, 5 feet down and up to 25 feet forward through the air. As long as it spends at least 1 action gliding each round and has not yet reached the ground, it remains in the air at the end of your turn."
+ },
+ {
+  "id": "gnaw",
+  "name": "Gnaw",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [
+   "Vicious Incisors"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "With enough time and determination, you can chew through nearly anything. You deal double your jaws damage to an unattended, inanimate object."
+ },
+ {
+  "id": "gnoll-weapon-practicality",
+  "name": "Gnoll Weapon Practicality",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "gnoll",
+   "kholo"
+  ],
+  "prerequisites": [],
+  "text": "Gnoll Weapon Practicality Source The Mwangi Expanse pg. 113 Prerequisites Gnoll Weapon Familiarity Whenever you critically hit using flails, khopeshes, mambeles, spears, and war flails, you apply the weapon's critical specialization effect. Gnoll Weapon Practicality leads to... Gnoll Weapon Expertise"
+ },
+ {
+  "id": "gnome-polyglot",
+  "name": "Gnome Polyglot",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "gnome"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your extensive travels, curiosity, and love of learning help you to learn languages quickly. You learn three new languages, chosen from common languages and uncommon languages you have access to. These languages take the same form (signed or spoken) as your other languages. When you select the feat, you learn three new languages instead of two."
+ },
+ {
+  "id": "goading-feint",
+  "name": "Goading Feint",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your tricks make foes overextend their attacks. On a feint options=goading-feint, you can use the following success and critical success effects instead of any other effects you would gain when you Feint; if you do, other abilities that adjust the normal effects of your Feint no longer apply. You can choose whether to use the Goading Feint benefits or the normal benefits each time you Feint a given foe. --- **Critical Success** The target takes a –2 circumstance penalty to all attack rolls against you before the end of its next turn. **Success** The target takes a –2 circumstance penalty to its next attack roll against you before the end of its next turn."
+ },
+ {
+  "id": "goblin-jubilee-display",
+  "name": "Goblin Jubilee Display",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Firework Technician Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Flames and explosions sear the air in a riot of color and devastation that rivals that wrought by even the wildest goblin party. The display is both so beautiful and chaotic that, while mesmerizing, it poses a significant risk to the physical health, sight, and hearing of anyone who gets too close. You gain the Goblin Jubilee fireworks display."
+ },
+ {
+  "id": "goblin-scuttle",
+  "name": "Goblin Scuttle",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally ends a move action adjacent to you. --- You take advantage of your ally's movement to adjust your position. You Step."
+ },
+ {
+  "id": "godbreaker",
+  "name": "Godbreaker",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Crushing Grab",
+   "Whirling Throw"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- You have mastered an ultimate grappling technique capable of breaking even the mightiest of foes. You hurl the creature 20 feet into the air, following behind it with a powerful jump, and then make an unarmed Strike. If the Strike is successful, you can repeat this process up to two more times, moving the creature an additional 20 feet directly up into the air with each Strike; the creature keeps the grabbed or restrained condition throughout the sequence. If you miss with any of the Strikes, Godbreaker and the grabbed or restrained condition immediately end and both you and the opponent fall, taking falling damage as normal for the total height of your jump. If all three Strikes are successful, you immediately grab the creature and bring it crashing to the ground, dealing your unarmed Strike damage plus falling damage to it. You land on your feet adjacent to the creature, you take no damage from the fall, and the creature remains grabbed or restrained by you."
+ },
+ {
+  "id": "gods-palm",
+  "name": "Gods' Palm",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Spirit Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You control your spirit energy when you attack, using it to reinforce yourself or to thrust past your enemy's physical defenses. Make a fist Strike; on a success, you can choose to either deal all damage from the attack as spirit damage, or deal damage as normal but gain a number of temporary Hit Points equal to half your level that last for 1 round."
+ },
+ {
+  "id": "golden-body",
+  "name": "Golden Body",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You perfect your body, refining the flex of every muscle and the bend of every joint to maximum efficiency. Your unarmed Strikes gain the deadly d12 trait, and you have fast healing 20, causing you to regain 20 HP at the start of each of your turns provided you have at least 1 HP."
+ },
+ {
+  "id": "golden-dragons-bounty",
+  "name": "Golden Dragon's Bounty",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Familiar Sage Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your familiar alters the material of a spell into that of a precious metal. If the next action you use is to Cast a Spell that deals bludgeoning, piercing, or slashing damage, that damage is your choice of cold iron, silver, or steel for the purposes of weaknesses, resistances, vulnerabilities, and the like. At 14th level, adamantine is added to the list of metal choices. The spell gains the metal trait."
+ },
+ {
+  "id": "goring-charge",
+  "name": "Goring Charge",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "minotaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Driven by the momentum of your thundering steps and powerful mass, your horns can pierce your foes. Stride twice, then make a horns Strike. If you moved at least 20 feet from your starting position, your horns Strike also deals 1d6 persistent bleed damage."
+ },
+ {
+  "id": "graceful-guidance",
+  "name": "Graceful Guidance",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can demonstrate how to quickly twist out of the way of dangerous effects. You can use the Aid reaction to grant a bonus to an ally's Reflex save. As usual for Aid, you need to prepare by using an action on your turn to encourage the ally."
+ },
+ {
+  "id": "graceful-leaper",
+  "name": "Graceful Leaper",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Acrobat Dedication",
+   "Master in Acrobatics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Mass and muscle are meaningless when you propel yourself through the air; only grace and balance matter. You can roll an Acrobatics check instead of an Athletics check when making a high-jump skill=acrobatics or long-jump skill=acrobatics."
+ },
+ {
+  "id": "grand-medics-mask",
+  "name": "Grand Medic's Mask",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "druid",
+   "wizard"
+  ],
+  "prerequisites": [
+   "Druid Dedication or Wizard Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mask is infused with restorative magic associated with Ibex, the Flourishing Field, so it constantly repairs itself. You gain fast healing 5. If you lose a limb or other body part, it regrows within 1 day. Immediately after you Cast a non-cantrip Spell that targets only one creature, you can choose to have the spell also give that creature temporary Hit Points equal to the spell's rank until the start of your next turn."
+ },
+ {
+  "id": "grand-scroll-esoterica",
+  "name": "Grand Scroll Esoterica",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Elaborate Scroll Esoterica"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've completed the third and final step in your assimilation of scroll esoterica, granting you daily scrolls of incredible power. In addition to your daily scrolls from Scroll Esoterica and Elaborate Scroll Esoterica, add a single scroll with a 6th-rank spell. At 20th level, add a scroll with a 7th-rank spell."
+ },
+ {
+  "id": "grand-talisman-esoterica",
+  "name": "Grand Talisman Esoterica",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Talisman Esoterica"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've gained the ability to place multiple talismans on an item. Normally, affixing more than one talisman to an item causes the talismans to be suppressed, but when you Affix a Talisman, you can specially treat one item you're working on, allowing it to have two active talismans at once. This special treatment ends if you use Affix a Talisman to treat a new item with this ability."
+ },
+ {
+  "id": "grandmaster-qi-spells",
+  "name": "Grandmaster Qi Spells",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Qi Spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have unlocked a qi technique achievable only by those who attain complete mastery of both their body and their spirit. You gain Embrace Nothingness, Qi Form, or another 9th-rank qi spell you have access to. --- **Special** You can select this feat more than once, choosing a different spell each time."
+ },
+ {
+  "id": "grasping-corpses",
+  "name": "Grasping Corpses",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Necrologist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your foes are left reeling from the attacks made by the zombies or skeletons of your horde. A creature that is damaged by your horde's Mobbing Assault is off-guard until the beginning of your next turn."
+ },
+ {
+  "id": "grasping-reach",
+  "name": "Grasping Reach",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "leshy"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can extend a tangle of vines or tendrils to support your arms and extend your reach. When you wield a melee weapon that requires two hands, doesn't have reach, and deals at least 1d6 damage, you can change between a typical two-handed grip and an extended two-handed grasp using an Interact action. Weapons wielded in your extended grasp gain reach of 10 feet. This grasp is less stable and powerful than a typical grip, reducing the weapon's damage die by 1 step."
+ },
+ {
+  "id": "grasping-spirits-spell",
+  "name": "Grasping Spirits Spell",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "animist",
+   "apparition",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- Gaining substance from your magic, your apparitions increase the range of your spells, which then pull your enemy closer. If the next action you use is to Cast a Spell that has a range and targets one creature, increase that spell's range by 30 feet. As is standard for increasing spell ranges, if the spell normally has a range of touch, you extend its range to 30 feet. In addition to the normal effects of the spell, your apparitions briefly take on semi-physical forms and attempt to drag the target toward you. The target must attempt a Fortitude saving throw against your spell DC; on a failure, it is pulled up to 30 feet directly toward you."
+ },
+ {
+  "id": "grave-mummification",
+  "name": "Grave Mummification",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mummy Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Exposure to the elements, magic, alchemy, and other phenomena intensified the changes from your mummification. You gain the Advanced Undead Benefits. In addition, you gain resistance equal to half your level against any damage you'd take from your bound terrain, including its dangerous temperatures, weather, hazardous terrain, and environmental hazards."
+ },
+ {
+  "id": "grave-sight",
+  "name": "Grave Sight",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication",
+   "Grave Sense"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ability to sense undead has improved. You sense undead as an imprecise sense with a range of 60 feet: an uncomfortable sensation brushes against your spirit and stinks of rot. When in proximity to an undead, you can sense its presence, but it has the hidden condition instead of the observed condition. An undead using a disguise or otherwise trying to hide its presence must attempt a Deception or Stealth check against your Perception DC to hide its presence from you. If the creature succeeds, it's undetected, and you have to use the Seek basic action to detect the creature. As with hearing and other imprecise senses, you still need to Seek to locate an undetected creature."
+ },
+ {
+  "id": "grave-threat",
+  "name": "Grave Threat",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Reaper of Repose"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You use your imposing demeanor to set up the undead for defeat. Make a Strike against an undead creature using a weapon with which you have master proficiency. If you hit, all Strikes against that creature gain the benefits of Reaper of Repose for 1 round."
+ },
+ {
+  "id": "graves-voice",
+  "name": "Grave's Voice",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghost Hunter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use your choice of Spirit Lore or Haunt Lore to Make an Impression or Request things of incorporeal creatures. At the GM's discretion, an incorporeal spirit might be willing to hear you out."
+ },
+ {
+  "id": "great-cleave",
+  "name": "Great Cleave",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [
+   "Cleave"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your fury carries your weapon through multiple foes. When you Cleave, if your Strike also reduces its target to 0 HP, you can continue to make melee Strikes until you make a Strike that doesn't reduce a creature to 0 HP, or until there are no creatures adjacent to the most recent creature you attacked while Cleaving, whichever comes first."
+ },
+ {
+  "id": "greater-armament",
+  "name": "Greater Armament",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Harbinger's Armament"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your weapons have greater power available to them. Add Brilliant, Corrosive, Flaming, Frost, Holy, Shock, Thundering, and Unholy to the list of property runes you can add to your weapon during your daily preparations."
+ },
+ {
+  "id": "greater-cruelty",
+  "name": "Greater Cruelty",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Cruelty"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The extent of your corruption devastates your foes' minds and reflexes. When you use Cruelty, you can choose to make the target clumsy or stupefied instead, with the same condition value. Make the choice when you Cast the Spell (before you know the result of the target's save)."
+ },
+ {
+  "id": "greater-debilitating-bomb",
+  "name": "Greater Debilitating Bomb",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [
+   "Debilitating Bomb"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have learned enhanced techniques and alchemical secrets that allow you to expand the range of effects you can impose with your bombs. When you use Debilitating Bomb, add the following to the list you can choose from: Clumsy 1, Enfeebled 1, Stupefied 1, or –10-foot status penalty to Speeds."
+ },
+ {
+  "id": "greater-distracting-shot",
+  "name": "Greater Distracting Shot",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Distracting Shot"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Even a single missile can throw off your enemy's balance, and more powerful attacks leave it flustered for longer. If you hit your hunted prey with a ranged weapon, it's off-guard until the start of your next turn. If you critically hit your prey or hit it twice on the same turn with a ranged weapon, it's off-guard until the end of your next turn instead."
+ },
+ {
+  "id": "greater-interpose",
+  "name": "Greater Interpose",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Sacrifice Armor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your divine grace empowers you to avoid hits when you otherwise could not. You can use Sacrifice Armor to reduce any type of damage from an attack or effect requiring a Reflex save. When you use Sacrifice Armor against a critical hit or a critical failure on a Reflex save that would otherwise cause you to take double damage, you take the normal amount of damage instead."
+ },
+ {
+  "id": "greater-merciful-elixir",
+  "name": "Greater Merciful Elixir",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [
+   "Merciful Elixir"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your additives contain panaceas that can remedy a plethora of maladies. When you use Merciful Elixir, your elixir can instead attempt to counteract the blinded, deafened, sickened, or slowed condition."
+ },
+ {
+  "id": "greater-mercy",
+  "name": "Greater Mercy",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Mercy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your faith enhances your ability to remove conditions. Add the following options to the list of conditions you can counteract for any type of mercy you can grant. - **Mercy of the Body** drained, slowed; if you're 16th level, add stunned - **Mercy of Grace** immobilized, restrained, slowed; if you're 12th level, add petrified; if you're 16th level, add stunned - **Mercy of the Mind** confused, controlled, slowed; if you're 16th level, add doomed and stunned."
+ },
+ {
+  "id": "greater-security",
+  "name": "Greater Security",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Security"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Shield in hand, you offer your ally its full protection you do yourself. While the companion shield is in effect, if your shield is raised, the ally with the companion shield gets the same bonus to AC your shield grants, and you can trigger Shield Block if that ally would meet the trigger. This uses your shield's statistics and applies damage to your shield."
+ },
+ {
+  "id": "greater-snow-step",
+  "name": "Greater Snow Step",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can't be impeded by environmental effects that rely on cold or its byproducts. You ignore greater difficult terrain caused by snow and ice."
+ },
+ {
+  "id": "greater-spiritual-evolution",
+  "name": "Greater Spiritual Evolution",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [
+   "Divine Evolution or Occult Evolution"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your magical blood allows your spells to be fully effective against incorporeal creatures. Your spells have the effects of a Ghost Touch property rune. They can target or affect a creature projecting its consciousness (such as via Project Image) or possessing another creature, even if its body is elsewhere, though you must know about the possession or projection and choose to do so. Your spells can affect creatures on the Ethereal Plane, though this doesn't grant you the ability to locate them."
+ },
+ {
+  "id": "greater-transformation",
+  "name": "Greater Transformation",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "hungerseed"
+  ],
+  "prerequisites": [
+   "Oni Form"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can assume your oni form more easily, and with greater benefits. Your oni form lasts for 10 minutes without the need to Sustain it. While in your oni form, your reach increases by 5 feet."
+ },
+ {
+  "id": "green-tongue",
+  "name": "Green Tongue",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Green Empathy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You share a special kinship with all things green and living. You (and your leshy familiar, if you have one) are constantly under the effects of Speak with Plants. Most non-creature plants recognize you as a druid of the leaf order and are friendly to you."
+ },
+ {
+  "id": "greenwatch-veteran",
+  "name": "Greenwatch Veteran",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "gunslinger",
+   "investigator",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn starts, and you're in combat against a creature you spent at least 10 minutes Tracking. --- Your time spent tracking your target allows you to quickly identify its weaknesses and relay them to your allies. Attempt a Recall Knowledge check against the creature you were Tracking. On a success, you always know the creature's greatest weakness and highest resistance or immunity, in addition to any other information the check would typically provide. You immediately use a quick series of hand gestures to signal this information to any allies who can see you."
+ },
+ {
+  "id": "greenwatcher",
+  "name": "Greenwatcher",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "gunslinger",
+   "investigator",
+   "ranger"
+  ],
+  "prerequisites": [
+   "Defy Fey"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your experience fighting against and alongside fey creatures is nearly unrivaled. Any weapon you wield or unarmed attack you make against a fey creature is treated as cold iron. Whenever you critically fail a save against a spell cast by a fey creature, it's instead treated as a normal failure. Whenever you critically succeed on a Strike against a fey creature, the target is immediately subject to the effects of a Faerie Fire spell. For the purposes of counteracting this effect, it's an innate 2nd-rank primal spell."
+ },
+ {
+  "id": "grievous-blow",
+  "name": "Grievous Blow",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Martial Artist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You know how to deliver focused, powerful blows that bypass your enemies' resistances. Make an unarmed melee Strike. If this Strike hits, it deals two additional weapon damage dice and ignores an amount of resistance to physical damage (or to a specific physical damage type) equal to your level. This Strike counts as two attacks when calculating your multiple attack penalty. If you are at least 18th level, increase the additional damage to three weapon damage dice."
+ },
+ {
+  "id": "grim-insight",
+  "name": "Grim Insight",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "gnome"
+  ],
+  "prerequisites": [
+   "umbral gnome heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Others' attempts to scare you often grant you insights about your would-be bullies that you can then exploit. If you roll a success on a saving throw against a fear effect, you get a critical success instead, and the source of the fear effect is off-guard to you until the end of your next turn."
+ },
+ {
+  "id": "grippli-glide",
+  "name": "Grippli Glide",
+  "level": 5,
+  "category": "general",
+  "traits": [
+   "grippli"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Grippli Glide Source The Mwangi Expanse pg. 120 Prerequisites Windweb Grippli heritage Requirements You must have at least one hand free. You can use your webbed feet to guide your fall. You glide slowly toward the ground, 5 feet down (10 feet if you don't have both hands free) and up to 25 feet forward through the air. As long as you spend at least 1 action gliding each round and have not yet reached the ground, you remain in the air at the end of your turn."
+ }
+]

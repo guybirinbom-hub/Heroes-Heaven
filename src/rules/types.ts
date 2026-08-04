@@ -727,6 +727,24 @@ export interface Feat extends ContentBase, DefenseGrants {
   /** Focus pool points this feat adds when it grants/expands a pool but names no single focus spell
    *  (e.g. a choice-gated "increase your focus pool by 1" feat). */
   focusPoolBonus?: number;
+  /** "Whenever you Refocus, you recover N Focus Points / completely refill your pool" — Domain Focus,
+   *  Bloodline Focus, Conflux Focus, Amp Focus, Bloodline Wellspring. `'all'` refills to max.
+   *  The highest value across everything the character owns wins; see FocusPool.refocusRestore. */
+  refocusRestore?: number | 'all';
+  /**
+   * "Increase the number of items you can create each day with advanced alchemy to 6 + your
+   * Intelligence modifier." `addInt` adds the modifier to `items`; `atLevel` is the higher printed
+   * figure that kicks in later (Advanced Efficient Alchemy: 8 + Int, or 10 + Int from 16th).
+   * The best offer across everything owned wins, so taking both Efficient feats is not additive.
+   */
+  advancedAlchemy?: { items: number; addInt?: boolean; atLevel?: { level: number; items: number } };
+  /**
+   * "Your number of versatile vials per day increases to 5 … a second time to increase it to 6 …
+   * a third time to 7." A repeatable feat that SETS a class resource's daily maximum, so `values` is
+   * indexed by how many times the character has taken it. It raises a floor rather than replacing the
+   * formula — a resource that already scales higher is never pulled down.
+   */
+  resourceMaxSet?: { resourceId: string; values: number[] };
   /** Innate spells this feat grants (cast at a fixed tradition; cantrips at-will, else 1/day). */
   innateSpells?: InnateSpellGrant[];
   /** Max-HP modifier (Toughness/Mountain's Stoutness = perLevel 1; Thick Hide Mask = flat 20;
@@ -1619,6 +1637,22 @@ export interface HitPoints {
 export interface FocusPool {
   current: number;
   max: number;
+  /**
+   * How many points one Refocus restores. 1 by RAW; a whole family of feats raises it (Domain Focus,
+   * Bloodline Focus, Conflux Focus and Amp Focus refill the POOL; the Wellspring feats give 3).
+   * `'all'` means refill to max. Absent = 1.
+   *
+   * A numeric value carries its own printed threshold — "recover 3 Focus Points when you Refocus
+   * instead of 1, if you have spent at least 3" — and in every printed case the threshold equals the
+   * amount, so the rule is "N if you spent at least N, else 1". No separate field is needed.
+   *
+   * The Refocus button used to add exactly 1 with no way to say otherwise, so every one of those
+   * feats was inert — a player could own a pool-refilling feat and still have to click Refocus three
+   * times.
+   */
+  refocusRestore?: number | 'all';
+  /** The feat or feature that raised it, for the button's tooltip. */
+  refocusSource?: string;
 }
 
 /** A condition currently affecting the character (value for valued ones). */
@@ -2147,6 +2181,12 @@ export interface Character {
   activeStance?: string;
   /** Alchemist: infused items made today (itemId → qty on hand); overlaid from play-state. */
   alchemyPrep?: Record<string, number>;
+  /** How many items Advanced Alchemy makes during daily preparations, and what set it. The panel used
+   *  to hardcode 4 + Int, so Efficient Alchemy and Advanced Efficient Alchemy did nothing at all. */
+  advancedAlchemy?: { max: number; source?: string };
+  /** Minimum daily maximum for a class resource, set by a feat (Additional Servings → 5 versatile
+   *  vials). Read through resourceMaxFor(), never resourceMax() directly, or the feat is inert. */
+  resourceFloors?: Record<string, number>;
   /** Answers to daily-preparation choices, keyed `${recordId}:${flag}`; overlaid from play-state. */
   dailyChoices?: Record<string, string>;
   /** Uses spent against each feat's `limitedUses`, by feat id; overlaid from play-state. */

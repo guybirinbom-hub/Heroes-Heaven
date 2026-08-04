@@ -1,0 +1,520 @@
+{
+  "rulings": [
+    {
+      "id": "a-miracle-of-science",
+      "upheld": true,
+      "why": "Real companion-maturity upgrade, but the lane already exists — COMPANION_MODS.maturityFloor (see 'paragon-companion', which maps paragon to the specialized rung).",
+      "correction": {
+        "fix": {
+          "companionMod": {
+            "kinds": ["animal"],
+            "maturityFloor": "specialized",
+            "note": "A Miracle of Science!: your construct companion is at least a paragon (specialized) construct companion."
+          }
+        }
+      }
+    },
+    {
+      "id": "a-thousand-cries-for-help",
+      "upheld": false,
+      "why": "Constant Truespeech is a language grant, and languages are a display list with no derived statistic (the same call judge-1 made for ancestral-linguistics); the Mythic Point clause is a spend-to-activate Diplomacy option.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "abjure-harm",
+      "upheld": false,
+      "why": "actionCost is 'reaction' — a Mythic-Point reaction resolved at the table for one triggering Strike, exactly what judge-0 itself refuted for adamantine-body.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "abjure-the-false-kin",
+      "upheld": true,
+      "why": "Real degree-of-success upgrade on the player's own saves, but 'no legal field' is wrong — FEAT_SITUATIONAL carries printed phrases (paragon-benefit-regalia, steadying-stone), so it is a situational entry, not engine work.",
+      "correction": {
+        "fix": {
+          "situational": [
+            {
+              "targets": [{ "kind": "save", "detail": "all" }],
+              "when": "on a saving throw against a mental effect that doesn't deal damage",
+              "bonus": "a success becomes a critical success"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "acute-scent",
+      "upheld": false,
+      "why": "The record ALREADY carries whileActive [{state:'rage', senses:[{name:'scent',range:30,acuity:'imprecise'}]}], consumed by activeStateGrants in derive.ts.",
+      "correction": { "verdict": "ALREADY_OK" }
+    },
+    {
+      "id": "acute-vision",
+      "upheld": false,
+      "why": "The record ALREADY carries whileActive [{state:'rage', senses:[{name:'darkvision',acuity:'precise'}]}], consumed by activeStateGrants in derive.ts.",
+      "correction": { "verdict": "ALREADY_OK" }
+    },
+    {
+      "id": "adamantine-fists",
+      "upheld": false,
+      "why": "Precious-material tagging only matters when it meets a target's resistances — it resolves on the GM's side of the screen, and no player-side number changes.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "adaptive-mask-familiar",
+      "upheld": true,
+      "why": "Real familiar-ability count change, but the lane exists — FEAT_COMPANION_GRANTS.abilityBudget with supersedes, exactly the enhanced-psychopomp-familiar shape.",
+      "correction": {
+        "fix": {
+          "companionGrant": {
+            "kind": "familiar",
+            "label": "Adaptive Mask Familiar",
+            "abilityBudget": 4,
+            "supersedes": ["mask-familiar"],
+            "note": "Your mask familiar adapts quickly to material form: select four master and familiar abilities each day instead of two."
+          }
+        }
+      }
+    },
+    {
+      "id": "additional-follower",
+      "upheld": true,
+      "why": "Followers are a real CompanionKind the Companions tab renders, so this is a FEAT_COMPANION_GRANTS entry, not engine work.",
+      "correction": {
+        "fix": {
+          "companionGrant": {
+            "kind": "follower",
+            "label": "Additional Follower",
+            "note": "Another novice follower with the minion trait joins you. Repeatable up to four followers in total — add the further ones by hand in the Companions tab."
+          }
+        }
+      }
+    },
+    {
+      "id": "additional-ikon",
+      "upheld": true,
+      "why": "A fourth exemplar ikon is a real builder pick (ikons are a modelled extra-choice group in build.ts) and no field or registry can add a slot to a class choice group.",
+      "correction": {}
+    },
+    {
+      "id": "additional-servings",
+      "upheld": true,
+      "why": "Versatile vials per day is a tracked CLASS_RESOURCES counter (maxBase 2 + Int) and no feat lane can raise a class resource's max.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-alchemy",
+      "upheld": true,
+      "why": "A real daily-prep item budget the app models only for the alchemist CLASS (AlchemyPanel is gated on classId==='alchemist' and hardcodes 4+Int); the dedication's count reaches nothing.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-bow-training",
+      "upheld": false,
+      "why": "Already delivered: featGrants.ts line 233 carries weaponFamiliarity {weapons:['daikyu','hongali-hornbow','phalanx-piercer'], mirrorCategory:'martial'}.",
+      "correction": { "verdict": "ALREADY_OK" }
+    },
+    {
+      "id": "advanced-construct-companion",
+      "upheld": true,
+      "why": "Real maturity upgrade, but COMPANION_MODS.maturityFloor already models it — advanced-reanimated-companion maps 'advanced construct companion' to the mature rung.",
+      "correction": {
+        "fix": {
+          "companionMod": {
+            "kinds": ["animal"],
+            "maturityFloor": "mature",
+            "note": "Advanced Construct Companion: your construct companion is at least an advanced construct companion (the mature rung here). During an encounter, even without Command a Construct, it can still use 1 action on your turn to Stride or Strike."
+          }
+        }
+      }
+    },
+    {
+      "id": "advanced-efficient-alchemy",
+      "upheld": true,
+      "why": "AlchemyPanel hardcodes a 4+Int Advanced Alchemy budget, so this alchemist-class feat leaves a wrong number on a panel the app really renders.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-firearm-familiarity",
+      "upheld": false,
+      "why": "Already delivered: featGrants.ts line 235 carries a weaponFamiliarity grant with mirrorCategory 'martial'; the uncommon-item access clause is a shopping permission, not a statistic.",
+      "correction": { "verdict": "ALREADY_OK" }
+    },
+    {
+      "id": "advanced-herbalism",
+      "upheld": true,
+      "why": "A tracked per-day item count for the Herbalist archetype that no field sets and no panel renders.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-monastic-weaponry",
+      "upheld": false,
+      "why": "Already delivered: featGrants.ts line 234 carries weaponFamiliarity {weapons:['butterfly-sword','feng-huo-lun','heavenly-rolling-flames','hook-sword'], mirrorCategory:'martial'}.",
+      "correction": { "verdict": "ALREADY_OK" }
+    },
+    {
+      "id": "advanced-order-training",
+      "upheld": true,
+      "why": "A concrete greater-order benefit the player gains; the Hellknight order itself is not a modelled choice (hellknight-dedication carries no choice), so nothing can resolve or grant it.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-poisoncraft",
+      "upheld": true,
+      "why": "A tracked per-day poison count for the Poisoner archetype that no field sets and no panel renders.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-qi-spells",
+      "upheld": true,
+      "why": "A real focus-spell pick; the effectChoices spellFilter shape is legal (traits + rank + grantAs:'focus') and qi-blast/shrink-the-span are rank-3 spells carrying the monk trait, so the filter resolves.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-shooter",
+      "upheld": false,
+      "why": "Already delivered: featGrants.ts line 242 carries a weaponFamiliarity grant with mirrorCategory 'martial' for the advanced firearms/crossbows.",
+      "correction": { "verdict": "ALREADY_OK" }
+    },
+    {
+      "id": "agent-of-all-holds",
+      "upheld": true,
+      "why": "Real degree-of-success change on the player's own skill checks, but the situational lane already carries exactly this (paragon-benefit-regalia: 'critical failure becomes failure'), so it is not engine work.",
+      "correction": {
+        "fix": {
+          "situational": [
+            {
+              "targets": [
+                { "kind": "skill", "detail": "diplomacy" },
+                { "kind": "skill", "detail": "intimidation" },
+                { "kind": "skill", "detail": "performance" }
+              ],
+              "when": "when you critically fail a Diplomacy, Intimidation, or Performance check",
+              "bonus": "critical failure becomes a failure (against a creature with the orc trait you may instead reroll as a fortune effect, still treating a critical failure as a failure)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "agile-grace",
+      "upheld": true,
+      "why": "MAP is a real displayed number — derive.ts computes strike.mapStep and explain.ts prints the second/third-attack penalties — so agile strikes show -4/-8 where the feat says -3/-6.",
+      "correction": {}
+    },
+    {
+      "id": "agile-maneuvers",
+      "upheld": false,
+      "why": "It lowers MAP only for Disarm/Grapple/Reposition/Shove/Trip, which the app resolves as table-side Athletics actions with no computed MAP (mapStep exists only on strikes).",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "agile-shield-grip",
+      "upheld": false,
+      "why": "A 1-action grip change with requirements, toggled at the table; the damage die and traits it edits belong to the shield boss/spikes ITEM, which the item editor already owns.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "alchemical-power",
+      "upheld": true,
+      "why": "The app really derives a secondary alchemist class DC (build.ts classDcGrant → secondaryClassDcs, trained), and classDcGrant carries no rank, so the expert upgrade lands nowhere.",
+      "correction": {}
+    },
+    {
+      "id": "amp-focus",
+      "upheld": true,
+      "why": "Confirmed: SpellsTab's Refocus button hardcodes setFocusUsed(p, used - 1, fmax); no field or registry changes the recovery amount.",
+      "correction": {}
+    },
+    {
+      "id": "amphibious-form",
+      "upheld": false,
+      "why": "Already delivered — companions.ts line 794 special-cases featIdSet.has('amphibious-form') and pushes 'swim 25 feet (amphibious)' onto the eidolon's speeds; the missing COMPANION_MODS row is cosmetic.",
+      "correction": { "verdict": "ALREADY_OK" }
+    },
+    {
+      "id": "ancestral-mind",
+      "upheld": true,
+      "why": "Retunes an existing innate entry's tradition and key attribute — real spell attack/DC numbers — and no field or registry re-points a granted innate entry.",
+      "correction": {}
+    },
+    {
+      "id": "ancillary-motes",
+      "upheld": true,
+      "why": "Verified: extraplanar-haze carries limitedUses {max:1,per:'day'} and effectiveUses() in featUses.ts reads usesUpgrade by featId, so the proposed fix delivers.",
+      "correction": {}
+    },
+    {
+      "id": "angel-of-vindication",
+      "upheld": true,
+      "why": "A player-side precision-damage increase on their own Strikes; conditional, so the situational lane (strikeDamage target kind is legal) is the right shape and nothing records it.",
+      "correction": {}
+    },
+    {
+      "id": "apparition-sense",
+      "upheld": true,
+      "why": "The record carries no senses field, and the free-text senses lane with range/acuity is established (vestigial-magicsense, pact-of-the-death-hunter); the fix is well-formed.",
+      "correction": {}
+    },
+    {
+      "id": "arcane-breadth",
+      "upheld": true,
+      "why": "Verified against the sibling: bloodline-breadth carries exactly {perRank:1,exceptHighest:2} and build.ts reads feat.spellSlotBonus, while arcane-breadth carries no fields at all.",
+      "correction": {}
+    },
+    {
+      "id": "arcane-safeguards",
+      "upheld": false,
+      "why": "The feat grants only the Resist Magic REACTION; its +1 applies to one triggering effect when the reaction is spent — a table-resolved reaction, as judge-1 itself ruled for apparition-cloud.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "armor-in-earth",
+      "upheld": false,
+      "why": "A 1-action kineticist impulse with a Dismiss clause — an activated effect resolved in play, not a standing sheet value.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "armor-regiment-training",
+      "upheld": true,
+      "why": "Bulk and encumbrance are computed and warned on in derive.ts, and no field or registry lets a feat adjust an armor's Bulk.",
+      "correction": {}
+    },
+    {
+      "id": "armor-specialist",
+      "upheld": true,
+      "why": "Armor specialization is modelled nowhere in src, so a real armor-group-conditional defence (plate resistance, chain crit conversion) reaches the sheet from nothing.",
+      "correction": {}
+    },
+    {
+      "id": "armored-regiment-training",
+      "upheld": true,
+      "why": "Duplicate printing of the same real Bulk adjustment; same missing lane, so it stands with its twin.",
+      "correction": {}
+    },
+    {
+      "id": "armored-resistance",
+      "upheld": true,
+      "why": "Passive feat, and the mode lane genuinely carries resistances with @actor formulas (adept-benefit-amulet is the same reaction-scoped shape); no mode references this feat today.",
+      "correction": {}
+    },
+    {
+      "id": "ash-piercing-gaze",
+      "upheld": true,
+      "why": "Verified precedent: brilliant-vision carries senses [{name:'ignores concealment from clouds, dust, fog, mist, and smoke'}]; this record carries nothing.",
+      "correction": {}
+    },
+    {
+      "id": "assured-identification",
+      "upheld": true,
+      "why": "A passive degree-of-success change on the player's own Arcana/Nature/Occultism/Religion checks; the situational lane carries this shape and the record has no entry.",
+      "correction": {}
+    },
+    {
+      "id": "athletes-ally",
+      "upheld": false,
+      "why": "actionCost is 1 action with a 'wielding your warshard weapon' requirement and a Mythic Point cost — an activity resolved at the table, not a standing check change.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "athletic-might",
+      "upheld": true,
+      "why": "Passive success→critical-success on the player's own Climb/Swim checks; identical in shape to gorilla-stance and steadying-stone, and no entry exists.",
+      "correction": {}
+    },
+    {
+      "id": "athletic-strategist",
+      "upheld": true,
+      "why": "Passive feat that changes which attribute the player's own Athletics check uses (Int instead of Str) — a real check change the sheet never mentions.",
+      "correction": {}
+    },
+    {
+      "id": "attuned-electroreceptors",
+      "upheld": true,
+      "why": "A permanent imprecise sense with a range; the record carries no senses field and the fix keeps range/acuity so it cannot read as unlimited.",
+      "correction": {}
+    },
+    {
+      "id": "aura-enhancement",
+      "upheld": true,
+      "why": "A real spell-access grant into a prepared pool; no field adds specific spells to a prepared pool and battle-harbinger-dedication is absent from CASTER_ARCHETYPES.",
+      "correction": {}
+    },
+    {
+      "id": "aura-of-courage",
+      "upheld": true,
+      "why": "Real self-facing condition reduction, and the lane is RECORD_MARKERS in situationalBonuses.ts ({on:'condition',id:'frightened',value:'-1'}, exactly face-your-fears' shape) rather than a core.json field.",
+      "correction": {}
+    },
+    {
+      "id": "avenger-of-wrath",
+      "upheld": true,
+      "why": "reactive-strike exists as a feat record and grantsFeats is a live core.json field (hellknight-dedication uses it), so the fix delivers a plain feat grant that nothing currently gives.",
+      "correction": {}
+    },
+    {
+      "id": "avoid-fates-gaze",
+      "upheld": true,
+      "why": "Passive, standing change to the proficiency the player's own saves use against scrying; the situational lane takes the printed phrase and no entry exists.",
+      "correction": {}
+    },
+    {
+      "id": "awakened-yaoguai-heritage",
+      "upheld": true,
+      "why": "Grants a second heritage's full mechanical benefits to a versatile-heritage character; no field or registry grants a heritage.",
+      "correction": {}
+    },
+    {
+      "id": "axe-climber",
+      "upheld": true,
+      "why": "A real climb Speed; the mode lane accepts speeds with @actor formulas (item-winged uses min(25,@actor.speed.land)) and floor() is supported by derive.ts, so the fix is well-formed.",
+      "correction": {}
+    },
+    {
+      "id": "axe-thrower",
+      "upheld": true,
+      "why": "Adds the thrown trait and +10 feet of range to the player's own axes — player-side weapon properties with no trait/range lane — and the judge correctly declined critSpec, which would over-grant to melee axe crits.",
+      "correction": {}
+    },
+    {
+      "id": "basic-modification",
+      "upheld": true,
+      "why": "A real builder pick the Inventor-archetype path never offers (inventorModificationOptions is gated on the inventor class + an innovation subclass); effectChoices cannot express the innovation-type filter.",
+      "correction": {}
+    },
+    {
+      "id": "basic-scroll-cache",
+      "upheld": true,
+      "why": "A daily-preparations pick that yields a usable temporary scroll; spellFilter's only outputs are innate/focus, both of which would misrepresent a scroll, so no legal shape delivers it.",
+      "correction": {}
+    },
+    {
+      "id": "battle-hardened-companion",
+      "upheld": true,
+      "why": "Real maturity upgrade, but COMPANION_MODS.maturityFloor is the existing lane (incredible-megafauna-companion is the same nimble/savage-choice shape) — not engine work.",
+      "correction": {
+        "fix": {
+          "companionMod": {
+            "kinds": ["animal"],
+            "maturityFloor": "nimble",
+            "note": "Battle-Hardened Companion: the companion you gained with Commander's Companion is at least a nimble or savage animal companion — pick savage in Edit if you want that side. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike, and then gains a reaction for your tactics (that is all the actions it gets that round)."
+          }
+        }
+      }
+    },
+    {
+      "id": "battle-scars",
+      "upheld": true,
+      "why": "Real level-scaling resistance, correctly kept out of the unconditional resistances field; the mode lane carries resistances with floor(@actor.level/2) formulas and no mode references this feat.",
+      "correction": {}
+    },
+    {
+      "id": "battle-tested-companion",
+      "upheld": true,
+      "why": "Real maturity upgrade with an existing lane — COMPANION_MODS.maturityFloor 'mature', the same rung advanced-reanimated-companion registers.",
+      "correction": {
+        "fix": {
+          "companionMod": {
+            "kinds": ["animal"],
+            "maturityFloor": "mature",
+            "note": "Battle-Tested Companion: the companion you gained with Commander's Companion is at least a mature animal companion. While your banner is affixed to it, the banner's aura is 10 feet greater than normal."
+          }
+        }
+      }
+    },
+    {
+      "id": "beast-of-burden",
+      "upheld": true,
+      "why": "derive.ts computes encumberedAt = 5+strMod and max = 10+strMod with no per-feat adjustment, so a flat +4 to both limits reaches nothing.",
+      "correction": {}
+    },
+    {
+      "id": "beastkin-resilience",
+      "upheld": true,
+      "why": "Verified: werecreature-dedication really carries weaknesses [{type:'silver',value:'floor(@actor.level/2)'}], and no field or registry removes an already-granted weakness.",
+      "correction": {}
+    },
+    {
+      "id": "become-shadow",
+      "upheld": true,
+      "why": "Passive feat (actionCost passive) whose benefit lands on the player's own Stealth check; Mythic-Point situational entries are established (prescient-parry, mythic-allies) and no entry exists.",
+      "correction": {}
+    },
+    {
+      "id": "behold-a-pale-horse",
+      "upheld": true,
+      "why": "Real companion advance with an existing lane — COMPANION_MODS.maturityFloor 'specialized', exactly what 'specialized-companion' registers.",
+      "correction": {
+        "fix": {
+          "companionMod": {
+            "kinds": ["animal"],
+            "maturityFloor": "specialized",
+            "note": "Behold, A Pale Horse: your apocalypse mount is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time (three maximum)."
+          }
+        }
+      }
+    },
+    {
+      "id": "behold-my-creation",
+      "upheld": true,
+      "why": "Real maturity upgrade with an existing lane — COMPANION_MODS.maturityFloor; 'incredible' is the nimble/savage rung between advanced-reanimated-companion (mature) and paragon-companion (specialized).",
+      "correction": {
+        "fix": {
+          "companionMod": {
+            "kinds": ["animal"],
+            "maturityFloor": "nimble",
+            "note": "Behold My Creation!: your construct companion is at least an incredible construct companion — the nimble/savage rung here; pick savage in Edit if that fits your build better."
+          }
+        }
+      }
+    },
+    {
+      "id": "bestial-brutality",
+      "upheld": true,
+      "why": "deadly d6 on the player's own granted unarmed attack is a crit rider the strike engine really computes, and there is no lane to add a trait to one already-granted strike; the judge correctly refused the over-granting critSpec route.",
+      "correction": {}
+    },
+    {
+      "id": "between-the-scales",
+      "upheld": true,
+      "why": "Extra damage on the player's own Strikes, conditional on an off-guard foe and an agile+finesse weapon — the situational strikeDamage shape is legal and nothing records it.",
+      "correction": {}
+    },
+    {
+      "id": "billowing-wings",
+      "upheld": true,
+      "why": "Companion strikes are rendered by companions.ts, and CompanionMod carries only senses/speeds/iwr/strikeRider/maturityFloor/skillGrants — there is genuinely no attack-grant field to write.",
+      "correction": {}
+    },
+    {
+      "id": "binds-that-tie",
+      "upheld": true,
+      "why": "Passive feat whose benefit is on the player's own Athletics check; the situational lane records Mythic-Point-gated benefits already and this record has no entry.",
+      "correction": {}
+    },
+    {
+      "id": "blessed-blood-sorcerer",
+      "upheld": true,
+      "why": "A build-time expansion of the legal repertoire picks; spellFilter would wrongly put the spells in the repertoire for free, so no legal shape expresses a spell-LIST expansion.",
+      "correction": {}
+    },
+    {
+      "id": "blessed-medicine",
+      "upheld": true,
+      "why": "A fortune reroll on the player's own Medicine check; pure-reroll situational entries are established (acrobats-staff, grit-and-tenacity) and no entry exists.",
+      "correction": {}
+    },
+    {
+      "id": "bloodline-focus",
+      "upheld": true,
+      "why": "Confirmed against SpellsTab: the Refocus control restores exactly 1 point (setFocusUsed(p, used - 1, fmax)); focusPoolBonus only enlarges the pool.",
+      "correction": {}
+    },
+    {
+      "id": "bloodline-wellspring",
+      "upheld": true,
+      "why": "Same hardcoded Refocus recovery; no field or registry sets a Refocus-recovery amount.",
+      "correction": {}
+    }
+  ]
+}

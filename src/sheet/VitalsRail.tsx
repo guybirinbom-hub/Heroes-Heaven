@@ -38,7 +38,7 @@ import {
 } from '../rules/play';
 import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
 import { CATALOG_MODES, modeTargetLabel, playerModeLibrary } from '../rules/modes';
-import { resourcesForCharacter, resourceMax } from '../rules/classResources';
+import { resourcesForCharacter, resourceMaxFor } from '../rules/classResources';
 import { explainDefense, nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatBreakdown, type StatRef } from '../rules/explain';
 import { StatDetailModal } from './StatDetailModal';
 import { ConditionsModal } from './ConditionsModal';
@@ -809,7 +809,7 @@ export function VitalsRail({
                 </div>
               );
             }
-            const max = resourceMax(r, character.level, abilityMods);
+            const max = resourceMaxFor(r, character, abilityMods);
             return (
               <div className="rail-kv" key={r.id}>
                 <span className="kv-label" title={r.note}>

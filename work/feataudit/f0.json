@@ -1,0 +1,964 @@
+[
+ {
+  "id": "a-home-in-every-port",
+  "name": "A Home in Every Port",
+  "level": 11,
+  "category": "general",
+  "traits": [
+   "downtime",
+   "general"
+  ],
+  "prerequisites": [
+   "Charisma +3"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a reputation in towns and villages you've visited, and residents are always willing to open their doors to you. When in a town or village, during downtime, you can spend 8 hours to locate a resident willing to provide lodging for you and up to six allies for up to 24 hours at no charge. The standard of living within the acquired lodging is comfortable, and square meals are provided at no cost. After 24 hours, you must pay standard prices for further lodging and meals or use this feat again to find a new resident willing to host you."
+ },
+ {
+  "id": "a-miracle-of-science",
+  "name": "A Miracle of Science!",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Behold My Creation!"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Once, you dreamed of creating life. Now you know that merely creating life lacks ambition. No, you have taken life and improved upon it. Your construct companion becomes a paragon construct companion."
+ },
+ {
+  "id": "a-tale-to-believe-in",
+  "name": "A Tale to Believe In",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental"
+  ],
+  "prerequisites": [
+   "Field Propagandist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You recite a tale of prowess that rewrites the combat unfolding around you. You can attempt a counteract check against a mental effect that's currently affecting an ally within 30 feet, using Deception for the counteract check and half your level as the counteract rank."
+ },
+ {
+  "id": "a-thousand-cries-for-help",
+  "name": "A Thousand Cries For Help",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Ascended Celestial Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to communicate with creatures from all over the world, overcoming language barriers to lend a hand and help where you're needed. You're affected by a constant Truespeech spell. When you attempt a Diplomacy check to Make an Impression or Request, you can spend 1 Mythic Point to make the check at mythic proficiency."
+ },
+ {
+  "id": "abjure-harm",
+  "name": "Abjure Harm",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Ascended Celestial Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would take damage from an enemy's critical Strike. --- You're nigh invincible, and it's clear that your foe is so far beneath you that they have no hope of winning. Spend 1 Mythic Point. The triggering Strike becomes a regular hit instead of a critical hit and you gain resistance to physical damage equal to your level until the beginning of your next turn. During your next turn, if you attempt a Demoralize check against the triggering creature, you do so at mythic proficiency."
+ },
+ {
+  "id": "abjure-the-false-kin",
+  "name": "Abjure the False Kin",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "yaksha"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your vow reminds you that there can be brackish vinegar hiding within honeyed words, helping you detect attempts to influence your mind. If you roll a success on a saving throw against a mental effect that doesn't deal damage, you get a critical success instead."
+ },
+ {
+  "id": "abscission-shards",
+  "name": "Abscission Shards",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Clawdancer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful frenzied claw or spinning talon Strike. --- You twist your claw, breaking off a piece in your target. The shard deals 1d6 damage. This increases to 2d6 if your unarmed attacks deal three weapon damage dice, such as under a greater striking rune, and 3d6 if they deal four weapon damage dice."
+ },
+ {
+  "id": "absolve-sins",
+  "name": "Absolve Sins",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mental",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Godling Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your forgiveness is without limit, though the path to penitence can be painful, especially against those who have trespassed against your current mortal form. Spend a Mythic Point; each enemy within a takes damage ( save against your class DC or spell DC, whichever is higher) as you force them to reflect upon their sins and misdeeds. Any creature who dealt damage to you or your hierophant since the end of your previous turn uses the outcome one degree of success worse than the result of their saving throw."
+ },
+ {
+  "id": "absorb-toxin",
+  "name": "Absorb Toxin",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [
+   "You are not immune to diseases or poisons"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You attempt a saving throw against a disease or poison effect that affects an area. --- Your skin readily absorbs poison and can consciously draw toxins into your body to spare others. Attempt a counteract check against the triggering effect; your counteract rank equals half your level (rounded up), and for the roll use either your class DC – 10 or your spellcasting attribute modifier plus your spellcasting proficiency bonus. If you counteract the triggering effect, you end the effect for all other creatures in the area; however, you must still save against the effect with a –2 penalty to the initial save."
+ },
+ {
+  "id": "acclimated-mount",
+  "name": "Acclimated Mount",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Faithful Steed",
+   "trained in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By the grace of your god, your mount can overcome the natural challenges and hazards present in a specific terrain. Choose aquatic, arctic, desert, forest, mountain, plains, sky, swamp, or underground. Your mount must have a swim Speed to select aquatic, and a fly Speed to select sky. Your mount ignores the effects of difficult terrain while in the selected terrain. If you become an expert in Survival, you can pray during your daily preparations each day to change the type of terrain to which your mount is acclimated."
+ },
+ {
+  "id": "acclimatization",
+  "name": "Acclimatization",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Horizon Walker Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your time spent in the hostile parts of the world has inured you to extreme climates. In your Favored Terrain, you gain resistance equal to half your level to all environmental damage and are affected by temperature effects as though they were one step less severe (incredible heat or cold becomes extreme, extreme heat or cold becomes severe, and so on). When other creatures Follow the Expert with you as a guide in your favored terrain, they too treat temperature effects as one step less severe."
+ },
+ {
+  "id": "accommodating-mount",
+  "name": "Accommodating Mount",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "centaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained to serve as a mount, if only for your most trusted allies. When another PC rides you as a mount, your expert coordination allows them to gain three actions at the start of their turn, rather than the two they normally would for riding another PC. You still gain only two actions at the start of your turn, instead of three, as you spend one action keeping them balanced on your back and ensuring they're firmly mounted."
+ },
+ {
+  "id": "accurate-flurry",
+  "name": "Accurate Flurry",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Impossible Flurry"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You are wielding two melee weapons, each in a different hand. --- You refine the precision of your unbelievable storm of blows. When you perform an Impossible Flurry, your first attack with each weapon instead takes the multiple attack penalty as though you had already made one attack this turn. All subsequent attacks take the maximum multiple attack penalty, as though you had already made two or more attacks this turn."
+ },
+ {
+  "id": "accursed-claws",
+  "name": "Accursed Claws",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "changeling"
+  ],
+  "prerequisites": [
+   "claw unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your claws carry your mother's hag magic. When you critically hit with a claw Strike, the target takes an additional 1d4 persistent mental damage."
+ },
+ {
+  "id": "accursed-touch",
+  "name": "Accursed Touch",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mummy Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to harness the supernatural curse that animates you, imbuing your most powerful attacks with a terrible curse. When you critically hit with a fist Strike, void energy binds to it; this is a curse and a disease. The creature takes 2d6 persistent void damage. While the creature has this persistent damage, it's also Stupefied 1. The persistent damage increases to 3d6 at 14th level and 4d6 at 20th level. This is a critical specialization effect."
+ },
+ {
+  "id": "acquired-tolerance",
+  "name": "Acquired Tolerance",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Poisoner Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You fail a save against a poison. --- A small amount of poison, taken at nonlethal doses, can help the body build up resistance against a more deadly dosage. Reroll the triggering check and use the second result. Once you use Acquired Tolerance, you can continue to use it against the same type of poison that day, but you can't use it against a different type of poison until after you make your next daily preparations. For instance, if you used the reaction on a save against Giant Scorpion Venom, you could use it again against giant scorpion venom even if it came from a different source, but you couldn't use it against Wyvern Poison."
+ },
+ {
+  "id": "acute-scent",
+  "name": "Acute Scent",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When your anger is heightened, your sense of smell improves. While you're raging, you gain imprecise scent with a range of 30 feet."
+ },
+ {
+  "id": "acute-vision",
+  "name": "Acute Vision",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you are raging, your visual senses improve, granting you darkvision."
+ },
+ {
+  "id": "adamantine-body",
+  "name": "Adamantine Body",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Martial Artist Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An attack or effect would deal damage to you. --- With your strong will and even stronger body, you shrug off an otherwise devastating blow. You gain resistance equal to 2 + half your level against all damage from the triggering attack or effect."
+ },
+ {
+  "id": "adamantine-fists",
+  "name": "Adamantine Fists",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ore Fists"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You imbue your unarmed strikes with one of the strongest metals. Your stonestrike attacks are treated as adamantine."
+ },
+ {
+  "id": "adaptive-mask-familiar",
+  "name": "Adaptive Mask Familiar",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mask Familiar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mask familiar adapts quickly to material form, allowing it to gain more familiar and master abilities. You select four master and familiar abilities each day instead of two."
+ },
+ {
+  "id": "adaptive-stratagem",
+  "name": "Adaptive Stratagem",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- Your constant training and strong bond with your allies allow you to change tactics on the fly. Replace one of your prepared expert, mobility, or offensive tactics with another tactic in your folio."
+ },
+ {
+  "id": "additional-circus-trick",
+  "name": "Additional Circus Trick",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "circus",
+   "general"
+  ],
+  "prerequisites": [
+   "You must have a signature trick"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your signature trick can have one additional trait beyond the normal number. If the trick trait has an associated skill (such as Intimidation with the fire trait) and that skill is one of your trick checks, your checks with that skill to Perform a Trick aren't penalized if you Perform a Trick using a different skill. For example, if your signature trick has Acrobatics and Intimidation as trick checks and you take this feat to add the fire trait, you can Perform a Trick using Acrobatics (at no penalty), then Acrobatics again (at a -5 penalty), and then Intimidation (at no penalty)."
+ },
+ {
+  "id": "additional-follower",
+  "name": "Additional Follower",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Captain Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Another follower joins you in your travels. They are a novice follower that has the minion trait. --- **Special** You can select this feat more than once, gaining an additional follower each time, to a maximum of four total followers."
+ },
+ {
+  "id": "additional-ikon",
+  "name": "Additional Ikon",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "exemplar"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your story has grown rich enough that three ikons can't contain its full complexity. You gain a fourth ikon, which can be of any type."
+ },
+ {
+  "id": "additional-recollection",
+  "name": "Additional Recollection",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You succeed or critically succeed at a check to Recall Knowledge on your hunted prey. --- You scan the battlefield quickly, remembering critical details about multiple opponents you face. You immediately attempt a check to Recall Knowledge about a different creature you can perceive."
+ },
+ {
+  "id": "additional-servings",
+  "name": "Additional Servings",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wandering Chef Dedication",
+   "expert in Crafting or Cooking Lore"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your number of versatile vials per day increases to 5. --- **Special** At 12th level or higher, you can select this feat a second time to increase your number of versatile vials per day to 6. At 18th level or higher, you can select this feat a third time to increase your number of versatile vials per day to 7."
+ },
+ {
+  "id": "advanced-alchemy",
+  "name": "Advanced Alchemy",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Alchemist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the benefits, and you can create 4 alchemical consumables during your daily preparations."
+ },
+ {
+  "id": "advanced-bow-training",
+  "name": "Advanced Bow Training",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Advanced Bow Training Source Advanced Player's Guide pg. 157 Archetype Archer Prerequisites Archer Dedication Through constant practice and the crucible of experience, you increase your skill with advanced bows. You gain proficiency with all advanced bows as if they were martial weapons in the bow weapon group."
+ },
+ {
+  "id": "advanced-construct-companion",
+  "name": "Advanced Construct Companion",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "inventor"
+  ],
+  "prerequisites": [
+   "construct companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've upgraded your construct companion's power and decision-making ability. It becomes an advanced construct companion. During an encounter, even if you don't use the Command a Construct action, your construct companion can still use 1 action on your turn that round to Stride or Strike."
+ },
+ {
+  "id": "advanced-efficient-alchemy",
+  "name": "Advanced Efficient Alchemy",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [
+   "Efficient Alchemy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You make an even-larger batch of alchemical items each morning. Increase the maximum number of items you can create with advanced alchemy to 8 + your Intelligence modifier, or to 10 + your Intelligence modifier if you're 16th level or higher."
+ },
+ {
+  "id": "advanced-firearm-familiarity",
+  "name": "Advanced Firearm Familiarity",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Gunslinger Dedication",
+   "expert in any kind of weapon or unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have familiarity with advanced firearms, treating them as martial weapons for the purposes of proficiency. You gain access to all uncommon firearms."
+ },
+ {
+  "id": "advanced-first-aid",
+  "name": "Advanced First Aid",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "healing",
+   "manipulate",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Medicine"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You use your medical training to ameliorate sickness or assuage fears. When you use Medicine to Administer First Aid, instead of Stabilizing a character or Stopping Bleeding, you can reduce an ally's frightened or sickened condition by 2, or remove either of those conditions entirely on a critical success. You can remove only one condition at a time. The DC for the Medicine check is usually the DC of the effect that caused the condition."
+ },
+ {
+  "id": "advanced-herbalism",
+  "name": "Advanced Herbalism",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Herbalist Dedication",
+   "expert in Nature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your herbalist talents continue to grow with use and you have become potent at making even more remedies from less. You can create up to 6 herbal items per day with advanced alchemy. --- **Special** At 10th level or higher, you can select this feat a second time to increase the number to 8."
+ },
+ {
+  "id": "advanced-monastic-weaponry",
+  "name": "Advanced Monastic Weaponry",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Monastic Weaponry"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your rigorous training regimen allows you to wield complex weaponry with ease. For the purposes of proficiency, you treat advanced monk weapons as if they were martial monk weapons."
+ },
+ {
+  "id": "advanced-order-training",
+  "name": "Advanced Order Training",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellknight Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the greater order benefit for the Hellknight order to which you belong."
+ },
+ {
+  "id": "advanced-poisoncraft",
+  "name": "Advanced Poisoncraft",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Poisoner Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can create up to 6 poisons per day with advanced alchemy. --- **Special** At 10th level or higher, you can select this feat a second time to increase the number to 8."
+ },
+ {
+  "id": "advanced-qi-spells",
+  "name": "Advanced Qi Spells",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [
+   "Qi Spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your talent at controlling your qi has reached new heights. You gain Qi Blast, Shrink the Span, or another 3rd-rank qi spell you have access to. --- **Special** You can select this feat more than once, choosing a different spell each time."
+ },
+ {
+  "id": "advanced-shooter",
+  "name": "Advanced Shooter",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've dedicated your training to mastering even the most complex and weird firearms and crossbows from across the world. You gain proficiency with all advanced firearms as if they were martial firearms and with all advanced crossbows as if they were martial crossbows."
+ },
+ {
+  "id": "aegis-of-arnisant",
+  "name": "Aegis of Arnisant",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant",
+   "Shield Block",
+   "master in Religion"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a shield. --- Inspired by the tale of Arnisant, you transform your shield into a magic ward. Until the beginning of your next turn, you gain the Absorb into the Aegis reaction."
+ },
+ {
+  "id": "aeon-resonance",
+  "name": "Aeon Resonance",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Embed Aeon Stone"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the resonant power of one embedded aeon stone as if it were placed in a Wayfinder. While you can embed multiple aeon stones in your flesh, you can gain the resonance power from only one embedded stone at a time, selected each day when you make your daily preparations. --- **Special** At 8th level, you can take this feat again. If you do, you gain the resonance powers of up to four invested aeon stones instead of only one. --- *PFS Note:* This feat acts as if an aeon stone was embedded in a *wayfinder*, and thus would not allow a second aeon stone to provide its resonance power from being embedded in a *wayfinder*."
+ },
+ {
+  "id": "aerial-boomerang",
+  "name": "Aerial Boomerang",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "air",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "A blade of shearing wind races away from you in a . Each creature in the area takes damage with a save against your class DC. In the final square of the line, the boomerang whirls in place until the end of your next turn. Any creature that ends its turn in that square has to save against the boomerang. On your next turn, you can use a single action, which has the concentrate trait, to return the boomerang to you. It returns in a line from its square to your current location, with the same effect as the initial line, then the impulse ends. You must have line of effect to the boomerang and be within 60 feet of it. --- **Level (+2)** The damage increases by 1d4."
+ },
+ {
+  "id": "aerial-piledriver",
+  "name": "Aerial Piledriver",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "attack"
+  ],
+  "prerequisites": [
+   "Wrestler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- Heaving both yourself and your opponent into the air, you bring them crashing to the ground. Make an unarmed melee Strike against the creature you have grabbed or restrained. This Strike deals 1d6 additional damage per weapon damage die, and it has the following additional effects on a success, failure, and critical failure. **Success** The target lands prone. **Failure** You lose your grip on the target, and it is no longer grabbed or restrained by you. **Critical Failure** You lose both your grip on the target and your balance. You fall prone, and the target is no longer grabbed or restrained by you."
+ },
+ {
+  "id": "affliction-mercy",
+  "name": "Affliction Mercy",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Mercy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The divine grace that flows through you grants reprieve from an affliction. Add mercy of recuperation to the types of Mercy you can provide, allowing you to counteract an affliction instead of an effect causing a condition (typically an affliction is a curse, disease, or poison)."
+ },
+ {
+  "id": "after-you",
+  "name": "After You",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You're about to roll initiative. --- You allow your foes to make the first move in a show of incredible confidence. You don't roll initiative; instead you voluntarily go last. You gain panache. If more than one character uses this ability or another ability to go last, use the normal rules for resolving a tie: NPCs and monsters act before PCs, and within those groups, the creatures can choose whichever order they want."
+ },
+ {
+  "id": "agent-of-all-holds",
+  "name": "Agent of All Holds",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Tattooed Historian Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Trigger** You critically fail a Diplomacy, Intimidation, or Performance check. --- Orcs across Belkzen recognize you as an honored lorekeeper. You're adept at leveraging this status and showing off your tattoos to resolve conflicts, change minds, or distract others from a faux pas. You get a failure on the check, rather than a critical failure. If the triggering check was made against a creature with the orc trait, you can instead add the fortune trait to this ability and reroll the check, treating any critical failure as a failure."
+ },
+ {
+  "id": "aggravating-scratch",
+  "name": "Aggravating Scratch",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "catfolk",
+   "disease"
+  ],
+  "prerequisites": [
+   "claw unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your claws carry an irritant that is harmless to you but can be damaging to others. Your claw Strikes deal an additional 1d4 persistent poison damage on a critical hit."
+ },
+ {
+  "id": "aggressive-block",
+  "name": "Aggressive Block",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You use the Shield Block reaction, and the opponent that triggered Shield Block is adjacent to you and is your size or smaller. --- You push back as you block, knocking your foe away or off balance. You use your shield to push the triggering creature, either automatically Shoving it 5 feet or causing it to become off-guard until the start of your next turn. The triggering creature chooses whether to be moved or become off-guard. If it chooses to be moved, you choose the direction. If the Shove would cause it to hit a solid object, enter a square of difficult terrain, or enter another creature's space, it must become off-guard instead of being moved."
+ },
+ {
+  "id": "agile-grace",
+  "name": "Agile Grace",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your graceful moves with agile weapons are beyond compare. Your multiple attack penalty with agile weapons and agile unarmed attacks becomes –3 for your second attack and –6 for subsequent attacks (rather than –4 and –8)."
+ },
+ {
+  "id": "agile-maneuvers",
+  "name": "Agile Maneuvers",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your easily maneuver against your foes. Your Disarm, Grapple, Reposition, Shove, and Trip actions have a lower multiple attack penalty. Even if your weapon or unarmed attack doesn't have the agile trait, the penalty is –4 if the action is your second attack on your turn, or –8 if it's your third or subsequent attack. If your weapon or unarmed attack is agile and you have panache, the penalty is reduced further, to –3 if it's the second attack on your turn or –6 if it's the third or subsequent."
+ },
+ {
+  "id": "agile-shield-grip",
+  "name": "Agile Shield Grip",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion",
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a shield with a shield boss or shield spikes in one hand. --- You change your grip on the shield, allowing you to combine rapid attacks with your shield boss or shield spikes and your main weapon's Strikes in a series of swift motions. You reduce your shield boss and shield spikes weapon damage die to 1d4. As long as the weapon damage die is 1d4, your shield boss and shield spike Strikes gain the agile weapon trait. You can use Agile Shield Grip again to switch to a normal grip, returning the damage to the usual amount and removing the agile trait."
+ },
+ {
+  "id": "agonizing-rebuke",
+  "name": "Agonizing Rebuke",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you terrorize your enemies, you also cause them painful mental distress. When you successfully Demoralize an enemy, that enemy takes damage at the start of each of its turns. This effect ends if the creature loses the frightened condition, if it is more than 30 feet away from you, or if 1 minute passes, whichever comes first. If you have master proficiency in Intimidation, the damage increases to 2d4, and if you have legendary proficiency, the damage increases to 3d4."
+ },
+ {
+  "id": "air-cushion",
+  "name": "Air Cushion",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "air",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within 60 feet is falling. --- Air currents flow upward to slow the target's fall to 60 feet per round. The cushion ends when the target reaches the ground, and the creature takes no damage from the fall. The cushion expires if the creature doesn't reach the ground within 1 minute, but any distance it fell during that minute doesn't count for any damage the creature would take from the fall. You can't use Air Cushion again while you have one in effect. --- **Level (8th)** The range is 120 feet, and you can create cushions for up to 5 falling creatures with one reaction."
+ },
+ {
+  "id": "alchemical-assessment",
+  "name": "Alchemical Assessment",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [
+   "trained in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can identify alchemical items quickly. When using the Crafting skill to Identify Alchemy on an alchemical item you hold, you can do so as a single action, rather than spending 10 minutes."
+ },
+ {
+  "id": "alchemical-crafting",
+  "name": "Alchemical Crafting",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use the Craft activity to create alchemical items. When you select this feat, you immediately add the formulas for four common 1st-level alchemical items to your formula book."
+ },
+ {
+  "id": "alchemical-power",
+  "name": "Alchemical Power",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Alchemist Dedication",
+   "master in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You become an expert in the alchemist class DC. When you create an infused alchemical item that allows a saving throw, you can change its DC to your class DC."
+ },
+ {
+  "id": "alchemical-shot",
+  "name": "Alchemical Shot",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have an alchemical bomb worn or in one hand, and are wielding a firearm or crossbow. --- You've practiced a technique for mixing alchemical bombs with your loaded shot. You Interact to retrieve the bomb (if it's not already in your hand) and pour its contents onto your ammunition, consuming the bomb, then resume your grip on the required weapon. Next, Strike with your firearm. The Strike deals damage of the same type as the bomb (for instance, fire damage for alchemist's fire), and it deals an additional 1d6 persistent damage of the same type as the bomb. If the Strike is a failure, you take 1d6 damage of the same type as the bomb you used, and the firearm misfires. The persistent damage increases to 2d6 if the bomb is 11th level or higher, or 3d6 if it's 17th level or higher."
+ },
+ {
+  "id": "aldori-riposte",
+  "name": "Aldori Riposte",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Aldori Parry"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An opponent within your reach critically fails a Strike against you. **Requirements** You are using an Aldori Dueling Sword to parry. --- You riposte with your Aldori dueling sword when your enemy leaves an opening. Make a melee Strike against or attempt to Disarm the triggering opponent using your Aldori dueling sword."
+ },
+ {
+  "id": "aldori-swordlord",
+  "name": "Aldori Swordlord",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Aldori Duelist Dedication",
+   "you have taken the last name of Aldori, sworn to the Aldori swordpact, and demonstrated skill at swordplay by winning a duel using only a sword in the presence of an Aldori swordlord."
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are an Aldori swordlord. You can always obtain free room and board at the Aldori Academy for yourself and your allies. You can use Dueling Lore instead of Diplomacy to Make an Impression or Request provided that the target you are Making an Impression on would be aware of the Aldori swordlords or your Request is related to your standing as a swordlord. Whenever you successfully Strike a creature with an Aldori Dueling Sword, you gain 5 temporary Hit Points (or 10 temporary Hit Point on a critical success) that last for 1 round. --- **Special** You can't take both this feat and Swordlord Exile."
+ },
+ {
+  "id": "aldoris-retort",
+  "name": "Aldori's Retort",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Aldori Duelist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can flow through combat reactions with graceful ease. At the start of each of your turns, you gain an additional reaction that you can use only for Aldori Riposte, Saving Slash, or any dueling action."
+ }
+]

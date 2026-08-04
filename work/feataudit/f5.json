@@ -1,0 +1,949 @@
+[
+ {
+  "id": "called-shot",
+  "name": "Called Shot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You target a specific area of your foe's anatomy to debilitating effect. Declare a part of your foe's anatomy to target and make a ranged weapon Strike. If you hit and deal damage, the target takes one of the following effects, based on the body part you targeted. The GM should use the stated effects as a guideline when attacking creatures with stranger anatomy-for instance, applying the \"arms\" effect to a creature's tentacles if those are what the creature uses to attack. - **Arms** The target is Enfeebled 2 until the end of your next turn. On a critical hit, it's also Enfeebled 1 for 1 minute. - **Head** The target is Stupefied 2 until the end of your next turn. On a critical hit, it's also Stupefied 1 for 1 minute. - **Legs** The target takes a –10-foot status penalty to its Speeds until the end of your next turn. On a critical hit, it also takes a –5-foot penalty to its Speeds for 1 minute. - **Wings** If the target is flying using its wings, it immediately falls 20 feet, or 40 feet on a critical hit. The fall is gradual enough that if the target hits the ground, it takes no damage from the fall."
+ },
+ {
+  "id": "calm-and-centered",
+  "name": "Calm and Centered",
+  "level": 8,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your occult connection to the world helps you deal with being frightened or stupefied. When your frightened or stupefied condition values would decrease, decrease the value by 2."
+ },
+ {
+  "id": "camoflage-coat",
+  "name": "Camoflage Coat",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "centaur"
+  ],
+  "prerequisites": [],
+  "text": "Camoflage Coat Source Howl of the Wild pg. 33 Prerequisites Mottle-Coat Centaur heritage You've learned to use your natural camouflage to your advantage, enhancing your ability to blend with your surroundings through careful movements and additional markings or attire. In your selected terrain, you can Hide or Sneak without cover or being concealed."
+ },
+ {
+  "id": "camouflage",
+  "name": "Camouflage",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You alter your appearance to blend in to the wilderness. In natural terrain, you can Hide and Sneak even without cover or being concealed."
+ },
+ {
+  "id": "camouflage-coat",
+  "name": "Camouflage Coat",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "centaur"
+  ],
+  "prerequisites": [
+   "mottle-coat centaur heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to use your natural camouflage to your advantage, enhancing your ability to blend with your surroundings through careful movements and additional markings or attire. In your selected terrain, you can Hide or Sneak without cover or being concealed."
+ },
+ {
+  "id": "cannibalize-magic",
+  "name": "Cannibalize Magic",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [],
+  "prerequisites": [
+   "Fey Influence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "The fey magic inside of you is a vital part of your body, and you can steal other sources of magic to replenish yours. You can draw power from your magical equipment to replenish your health. You drain one of your invested items, in the process regaining Hit Points equal to double the item's level. In addition, you can attempt a counteract check with a total bonus equal to 10 + the drained item's level against one effect that gave you the drained, doomed, enfeebled, fatigued, or slowed condition. If you succeed, you reduce the chosen condition's value by 1. An item drained by this action becomes non-magical until the next time you make your daily preparations. --- **Special** This feat gains the trait appropriate for your ancestry (human for human, goblin for goblin, etc.)."
+ },
+ {
+  "id": "cannon-corner-shot",
+  "name": "Cannon Corner Shot",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Artillerist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "By loading special ammunition in a particular way, you can make your siege weapons do all manner of tricks that other siege engineers can barely even imagine. If you personally contribute an additional Load action to the siege weapon's loading, above the minimum, you can change a burst into a line twice as long as the size of the burst, or vice versa (so a turns into a , or a turns into a )."
+ },
+ {
+  "id": "cannonball-fall",
+  "name": "Cannonball Fall",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "gunslinger",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Cannonball Fall Source High Seas pg. 93 Prerequisites Trained in Acrobatics or Trained in Athletics Access You're from the Shackles Requirements You are above an enemy. You’ve learned how to make a quick descent with a sudden stop—directly on an enemy. You intentionally fall onto an enemy within 10 feet of you horizontally and can accurately target them from up to a height equal to 5 feet times your level. You take damage as normal; the enemy must attempt a Reflex save against your class DC with the following results, instead of the usual rules for falling on a creature. If an ability reduces the amount of damage you take from falling, the enemy’s damage is based on the damage you would have taken before that reduction. In addition, if you have a means of controlling your descent, such as holding onto a rope or sliding down an adjacent wall, you do not land prone even if you take damage from the fall. Critical Success The enemy takes no damage. Success The enemy takes bludgeoning damage equal to one quarter the falling damage you took. Failure The creature takes bludgeoning damage equal to half the falling damage you took and is knocked prone. Critical Failure The creature takes the same amount of bludgeoning damage you took from the fall, is knocked prone, and is stunned 1."
+ },
+ {
+  "id": "canopy-predator",
+  "name": "Canopy Predator",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Verduran Shadow Dedication",
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are as at home in the treetops as you are beneath their branches. You gain a climb Speed of 15 feet when moving through trees, vines, and other foliage. Whenever you succeed at an Athletics check to Climb a tree or an Acrobatics check to Balance on a branch, you get a critical success instead. You aren't off-guard while Climbing or Balancing on a tree."
+ },
+ {
+  "id": "cant-you-see",
+  "name": "Can't You See?",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "druid",
+   "ranger"
+  ],
+  "prerequisites": [
+   "trained in Occultism",
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The eye rebels, the mind recoils—no matter how much those who can see you try to explain what's there, their friends' gazes just skitter over you, like a bird afraid to land. A character who attempts to Point Out your location must attempt a . If they fail, their allies misunderstand them and aren't sure where you are. On a critical failure, their allies think they pointed you out in a different location entirely, chosen by the GM. Similarly, when a creature critically fails to seek you while you're hidden to or undetected by it, it thinks you're in a different location chosen by the GM. In either case, you appear to be hidden to a creature that thinks you're in a different location, though you're actually undetected by it for targeting and further uses of the Seek action."
+ },
+ {
+  "id": "cantorian-reinforcement",
+  "name": "Cantorian Reinforcement",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The life energy that helped create the first hobgoblins is particularly potent in you, protecting you from ongoing maladies. If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead."
+ },
+ {
+  "id": "cantrip-casting",
+  "name": "Cantrip Casting",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "pervasive-magic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You increase your ability to cast simple spells. You gain two additional cantrips from the tradition matching your trait."
+ },
+ {
+  "id": "cantrip-expansion",
+  "name": "Cantrip Expansion",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "bard",
+   "cleric",
+   "magus",
+   "oracle",
+   "psychic",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Bard, Oracle, Sorcerer** Study broadens your range of simple spells. **Cleric** You study a wider range of simple spells. **Magus, Wizard** Dedicated study allows you to prepare a wider range of simple spells for every situation. **Psychic** You expand what your mind can accomplish. **Witch** Your patron recognizes your need for flexibility and versatility, and grants you the power to prepare a wider range of simple spells. --- **Prepared** You can prepare two additional cantrips each day. **Spontaneous** Add two additional cantrips from your spell list to your repertoire."
+ },
+ {
+  "id": "caravan-leader",
+  "name": "Caravan Leader",
+  "level": 11,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [
+   "Pick Up the Pace"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to get the most effort out of your allies on the road. Your group can Hustle for an additional 20 minutes beyond the length of time that the member who could Hustle longest on their own."
+ },
+ {
+  "id": "careful-explorer",
+  "name": "Careful Explorer",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've explored enough dusty tombs and hidden vaults to gain a sixth sense about traps, and you sometimes notice them even when you're not trying to. Even if you aren't Searching in exploration mode, you get a check to find traps that normally require you to Search for them. You still need to meet any other requirements to find the trap."
+ },
+ {
+  "id": "carried-with-the-swarm",
+  "name": "Carried with the Swarm",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swarmkeeper Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When your swarm is sharing your space and Strides, you can choose to have your swarm carry you with it. You stay in the same basic position within its space while it moves and when you arrive at your new location (with your exact location determined by the GM if it's unclear). Because you're moving voluntarily, your movement isn't forced movement and therefore still triggers reactions based on movement. If your swarm Flies, and you don't have a fly Speed, you fall at the end of this movement."
+ },
+ {
+  "id": "cartwheel-dodge",
+  "name": "Cartwheel Dodge",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Provocator Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** You aren't encumbered or overburdened. **Trigger** You succeed or critically succeed at a Reflex saving throw. --- You Step up to 10 feet."
+ },
+ {
+  "id": "cascading-ray",
+  "name": "Cascading Ray",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "attack",
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was a successful Spellstrike, and the spell you cast dealt energy damage (acid, cold, electricity, fire, force, sonic, vitality, or void). --- Magical energy spills out to extend beyond the creature you struck. The flowing energy forms a ray with a range of 60 feet from the creature you damaged. You can't target any of the creatures you damaged with your Spellstrike with the ray. Make a spell attack roll against the new target's AC, at the same multiple attack penalty as the Strike. On a hit, the target of the ray takes 1d4 damage per spell rank of the same type of energy damage the spell deals (double damage on a critical hit). If you cast the spell in your Spellstrike from a spell slot, the damage from Cascading Ray increases to 1d8 damage per spell rank. If the spell deals more than one type of energy damage, you choose only one for the ray. This ray has the attack trait, the school and tradition traits of the original spell, and the trait matching the damage type."
+ },
+ {
+  "id": "cast-down",
+  "name": "Cast Down",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "harmful font or healing font"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The sheer force of your faith can bring a foe crashing down. If the next action you use is to cast Harm or Heal to damage one creature, the target is knocked prone if it takes any damage from the spell. If the target critically fails its save against the spell, it also takes a –10-foot status penalty to its Speed for 1 minute."
+ },
+ {
+  "id": "castigating-weapon",
+  "name": "Castigating Weapon",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "Divine Castigation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The force of your deity's castigation strengthens your body so you can strike down the enemy and its allies. After you deal spirit damage due to Divine Castigation, your weapon or unarmed Strikes gain your holy or unholy trait and deal additional spirit damage until the end of your turn. The spirit damage is equal to the rank of harm or heal you dealt spirit damage with, and is in addition to any spirit damage the weapon already deals (such as from a holy rune)."
+ },
+ {
+  "id": "catch-and-kill",
+  "name": "Catch and Kill",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Venture-Gossip Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach uses a move action, or leaves a square during a move action it's using. --- When you've decided to quash a story, no one can escape from you with any incriminating information. Make a melee Strike against the triggering creature. On a hit, the triggering creature is Grabbed, and on a critical hit, they're Slowed 1. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "catfolk-weapon-rake",
+  "name": "Catfolk Weapon Rake",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [],
+  "text": "Catfolk Weapon Rake Source Advanced Player's Guide pg. 10 Prerequisites Catfolk Weapon Familiarity You know how to efficiently use weapons that rake across your enemies. Whenever you critically hit using a catfolk weapon or one of the weapons listed in Catfolk Weapon Familiarity, you apply the weapon's critical specialization effect."
+ },
+ {
+  "id": "cattle-speech",
+  "name": "Cattle Speech",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "minotaur"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can understand the lowing of cattle and similar animals as its own language. You can ask questions of, receive answers from, and use the Diplomacy skill with cattle, bison, antelopes, and other grazing mammals that travel in herds. The GM determines which other animals count for this ability."
+ },
+ {
+  "id": "cauldron",
+  "name": "Cauldron",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can brew magic in your cauldron, creating useful magical concoctions. You can use the Craft activity to create oils and potions. You immediately gain the formulas for four common 1st-level oils or potions. At 4th level and every 2 levels beyond that, you gain the formula for a common oil or potion of that level or lower (a 4th-level potion if you're 4th level, a 6th-level potion if you're 6th level, and so on). If you have a familiar, you can have your familiar learn these formulas rather than storing them in a formula book. Your familiar can learn new formulas in the same way it learns new spells, and these formulas are transferred from a slain familiar to a new familiar in the same way spells are. During your daily preparations, you can create one temporary oil or potion using a formula you know. If you have master proficiency in spell DC, you can create a batch of two temporary oils or potions during your daily preparations, and if you have legendary proficiency, you can create a batch of three. Any items you create this way become inert bottles of liquid the next time you make your daily preparations, and any remaining effects of the temporary items end. A temporary oil or potion has no value."
+ },
+ {
+  "id": "cauterize",
+  "name": "Cauterize",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a loaded firearm and you or an adjacent ally are taking persistent bleed damage. --- You use the smoking barrel of your firearm to sear shut a bleeding wound. Make a Strike with your firearm. You then press the heated barrel to the wounds of you or an ally within reach that is taking persistent bleed damage, giving an immediate flat check to end the bleed with the lower DC for particularly effective assistance."
+ },
+ {
+  "id": "cautious-word",
+  "name": "Cautious Word",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Uzunjati Storytelling",
+   "ability to cast shield"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** An enemy hits you with a Strike. **Requirements** You're currently unable to cast Shield because you used Shield Block with it. --- You let your words defend you, just as your allies in the Vellumis Scholars defend through knowledge. You immediately cast *shield* and gain its bonus to AC even though you normally couldn't cast it, and you become Slowed 1 for 1 round."
+ },
+ {
+  "id": "ceaseless-shadows",
+  "name": "Ceaseless Shadows",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [
+   "Distracting Shadows"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You excel at going unnoticed, especially among a crowd. You no longer need to have cover or be concealed to Hide or Sneak. If you would have lesser cover from a creature, you gain standard cover instead and can Take Cover; if you would have standard cover from a creature, you gain greater cover instead."
+ },
+ {
+  "id": "celestial-cacophony",
+  "name": "Celestial Cacophony",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "fire",
+   "inventor",
+   "manipulate",
+   "sonic",
+   "visual"
+  ],
+  "prerequisites": [
+   "weapon innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Access** Tian Xia origin --- Your weapon contains a detonation chamber that launches fireworks, sparklers, and black powder pellets that sizzle, twist, and scatter on the ground in a cacophonous manner liable to annoy the entire Celestial Court. All creatures in a extending from your innovation take damage with a save against your class DC; both the fire and sonic damage increase by 1d4 at 14th level and every 2 levels thereafter. The area affected by the cone becomes difficult terrain until the start of your next turn. Creatures moving through this area must succeed at a save against your class DC or take 2d4 damage. **Unstable Function** You rattle your weapon violently to make it belch out even more pyrotechnics. Add the unstable trait to Celestial Cacophony. The area increases to a , and all damage dice increase from d4s to d8s."
+ },
+ {
+  "id": "celestial-strikes",
+  "name": "Celestial Strikes",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to good arms all your attacks against forces of evil. All your weapon and unarmed Strikes gain the holy and magical traits."
+ },
+ {
+  "id": "cellular-reconstruction",
+  "name": "Cellular Reconstruction",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "healing"
+  ],
+  "prerequisites": [
+   "Ostilli Host Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Your ostilli takes control of your nervous system and kicks your cellular functions into overdrive when you're about to die. You regain Hit Points equal to your level. For the next 2 rounds, at the start of your turn, you regain Hit Points equal to half your level. The first time you regain Hit Points at the start of your turn, you reduce your wounded condition by 1."
+ },
+ {
+  "id": "ceremonial-knife",
+  "name": "Ceremonial Knife",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have prepared a special knife to direct energies when spellcasting. During your daily preparations, you and your familiar can perform a short ritual over a weapon in the knife group—typically a dagger. This causes the knife to function as a magic wand, containing any one 1st-rank spell your familiar knows. You, and only you, can Activate the knife to Cast the Spell within it, as normal for a wand. You can attempt to overcharge the knife, and this can break or destroy the knife as normal. You can have only one ceremonial knife at a time. At 8th level, and every 2 levels thereafter, the maximum rank of spell your ceremonial knife can hold increases by 1."
+ },
+ {
+  "id": "ceremony-of-fortification",
+  "name": "Ceremony of Fortification",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "conrasu"
+  ],
+  "prerequisites": [
+   "Ceremony of Protection"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your exoskeleton arranges itself into an optimal defensive shape. When you use your Ceremony of Protection, you also gain resistance to either bludgeoning, piercing, or slashing damage equal to half your level against the next Strike that hits you and deals one of those types of damage until the start of your next turn."
+ },
+ {
+  "id": "ceremony-of-growth",
+  "name": "Ceremony of Growth",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "conrasu"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can alter your exoskeleton's size. You constantly gain the effects of Enlarge. You can dismiss or resume these effects as an action, which has the concentrate trait."
+ },
+ {
+  "id": "ceremony-of-strengthened-hand",
+  "name": "Ceremony of Strengthened Hand",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "conrasu"
+  ],
+  "prerequisites": [
+   "Ceremony of the Evened Hand"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your exoskeleton's weapons are even more potent. If you have a claws unarmed attack, it gains the deadly d8 trait. If you have a branch unarmed attack, it gains the shove and trip traits."
+ },
+ {
+  "id": "ceremony-of-sunlight",
+  "name": "Ceremony of Sunlight",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "conrasu"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have learned how to master the power contained within sunlight, just like the trees that form your body. Your Sunlight Healing recovers 1d8 Hit Points per level."
+ },
+ {
+  "id": "ceremony-of-the-strengthened-hand",
+  "name": "Ceremony of the Strengthened Hand",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "conrasu"
+  ],
+  "prerequisites": [],
+  "text": "Ceremony of the Strengthened Hand Source The Mwangi Expanse pg. 109 Prerequisites Ceremony of the Evened Hand Your exoskeleton's weapons are even more potent. If you have a claws unarmed attack, it gains the deadly d8 trait. If you have a branch unarmed attack, it gains the shove and trip traits."
+ },
+ {
+  "id": "certain-stratagem",
+  "name": "Certain Stratagem",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know exactly where to strike a foe to target their weak spots. When you make a Strike that you're adding your Intelligence modifier to due to Devising a Stratagem and miss, you deal half of your Strategic Strike damage to the target. This damage type is that of the weapon or unarmed attack you used for the Strike."
+ },
+ {
+  "id": "certain-strategem",
+  "name": "Certain Strategem",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "text": "Certain Strategem Source Player Core 2 pg. 107 You know exactly where to strike a foe to target their weak spots. When you make a Strike that you're adding your Intelligence modifier to due to Devising a Stratagem and miss, you deal half of your strategic strike damage to the target. This damage type is that of the weapon or unarmed attack you used for the Strike."
+ },
+ {
+  "id": "certain-strike",
+  "name": "Certain Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Even when you don't hit squarely, you can still score a glancing blow. Make a melee Strike. It gains the following failure effect. **Failure** Your attack deals any damage it would have dealt on a hit, excluding all damage dice. (This removes damage dice from weapon runes, spells, and special abilities, in addition to weapon damage dice.)"
+ },
+ {
+  "id": "chain-infusion",
+  "name": "Chain Infusion",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "infusion",
+   "kineticist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The elemental matter in your blast keeps reconstituting itself to travel onward, no matter how many bodies it collides with. If your next action is an Elemental Blast and it hits, attempt a new ranged Elemental Blast from the target against a different creature that's within the blast's range, measuring from the creature you hit. You can keep chaining the blast in this way each time you hit. Your multiple attack penalty applies normally to any blasts in the chain after the first. You can make up to five blasts total, but you can't target the same creature more than once. Roll damage only once and apply it to each creature you hit. (If you start with a melee blast, you still add your Strength to only that blast, not the successive ranged blasts.)"
+ },
+ {
+  "id": "chain-reaction",
+  "name": "Chain Reaction",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Unexpected Sharpshooter Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Frequency** once per 10 minutes --- You fire your gun once, creating a devastating and unpredictable chain of events; perhaps your bullet strikes exactly the right spot on a water tower, causing it to flood and incite a stampede of horses which knock over a lantern that sets a city on fire. Whatever the exact chain reaction, and no matter how improbable, the indiscriminate catastrophe creates significant challenges for your enemies across a wide area while leaving everyone else alone. Make a Strike with a ranged weapon, and if you hit, you can make another Strike at a target within 30 feet of the first target. If you hit the second target, attempt to Strike a third target within 30 feet of the second target, and so on, continuing until you miss a target. You can cease the chain at any point; otherwise, it ends when you first miss an attack. However, you can't target the same creature more than once; each time you move to a new target, it must be a target you haven't made a Strike against yet during this particular use of Chain Reaction. This damage is caused by some improbable set of events that injures one target after another, rather than from actually making several shots. Perhaps you shot at a tree branch that then fell on the targets, or one target's scream caused another to accidentally set off their gun and shoot themselves in the foot. This means that only the first target suffers any special effects tied to the bullet (if it was magical ammunition, for example), bu"
+ },
+ {
+  "id": "champion-resiliency",
+  "name": "Champion Resiliency",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Champion Dedication",
+   "class granting no more Hit Points per level than 8 + your Constitution modifier"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain 3 additional Hit Points for each champion archetype class feat you have. As you continue selecting champion archetype class feats, you continue to gain additional Hit Points in this way."
+ },
+ {
+  "id": "champions-reaction",
+  "name": "Champion's Reaction",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Champion Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use the champion's reaction associated with your cause."
+ },
+ {
+  "id": "change-of-face",
+  "name": "Change of Face",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Alter Ego Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know that for the best disguise to work, one requires not only the right skills but also the right look—luckily you can copy both using special magical techniques. When you Impersonate, you don't need a disguise kit; instead, simple illusions or temporary transformations ripple over your body like mirror shards, providing the supplies that the kit ordinarily would. When you Impersonate in this way, your Impersonate activity gains the occult trait."
+ },
+ {
+  "id": "channel-rot",
+  "name": "Channel Rot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Accursed Touch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to channel your curse through weapons you wield instead of solely through your flesh. The benefits of Accursed Touch apply to any melee weapon you wield instead of only your fist Strikes."
+ },
+ {
+  "id": "channel-smite",
+  "name": "Channel Smite",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "divine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Cost** Expend a Harm or Heal spell. --- You siphon the energies of life and death through a melee attack and into your foe. Make a melee Strike. On a hit, you cast the 1-action version of the expended spell to damage the target, in addition to the normal damage from your Strike. The target automatically gets a failure on its save (or a critical failure if your Strike was a critical hit). The spell doesn't have the manipulate trait when cast this way. The spell is expended with no effect if your Strike fails or hits a creature that isn't damaged by that energy type (such as if you hit a non-undead creature with a *heal* spell)."
+ },
+ {
+  "id": "channeling-block",
+  "name": "Channeling Block",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "Shield Block"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You pour divine energy into a desperate block. When you Shield Block, you can expend a Harm or Heal spell. Roll 1d8 for each rank of the spell, and increase the shield's Hardness by the total for this block."
+ },
+ {
+  "id": "chaotic-spell",
+  "name": "Chaotic Spell",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "bard",
+   "manipulate",
+   "oracle",
+   "sorcerer",
+   "spellshape",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "This is the secret of chaotic magic - your foe can hardly predict and counter your moves if you yourself have no idea what will happen. If the next action you use is to Cast a Spell that deals acid, cold, electricity, fire, or sonic damage, roll a d6. The spell's damage type changes to the type below associated with the result of the roll, and each creature who is damaged by the spell takes the listed additional effect. **1 (Acid):** Sickened 1 **2 (Cold):** –10 ft. penalty to all Speeds until the end of your next turn **3 (Electricity):** off-guard until the end of your next turn **4 (Fire):** Persistent fire damage equal to the spell's rank **5 (Force):** No added effect **6 (Sonic):** deafened for 2 rounds"
+ },
+ {
+  "id": "charged-creation",
+  "name": "Charged Creation",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Persistent Creation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your magic is drawn to your persistent creations. While you are within 30 feet of and have line of effect to your persistent creation, you can use it as the origin point for your line or cone spells. For instance, a Lightning Bolt could originate from the persistent creation rather than from you."
+ },
+ {
+  "id": "chastise",
+  "name": "Chastise",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "sanctified"
+  ],
+  "prerequisites": [
+   "Fear of God"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With but a mere word from your deity, you exploit a foe's fear to see their inner being brought low. You chastise the spirit of a foe within 30 feet that has the frightened condition. The target must attempt a saving throw against the higher of your class DC or spell DC. The target is then temporarily immune for 1 hour. --- **Critical Success** The target is unaffected. **Success** The target takes 2 damage. The first time the creature fails their flat check to recover from this, the persistent spirit damage doubles. **Failure** The target takes 4 damage. The first time the creature fails their flat check to recover from this, the persistent spirit damage doubles. **Critical Failure** The target takes 6 damage. The first time the creature fails their flat check to recover from this, the persistent spirit damage doubles."
+ },
+ {
+  "id": "cheat-death",
+  "name": "Cheat Death",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You take damage that would reduce you to 0 Hit Points. --- Somehow you always escape the reaper by a hair's breadth. You avoid being knocked out or killed and remain at 1 Hit Point and gain panache, but you become Doomed 1 (or increase your doomed value by 1 if you were already doomed). You can't reduce or ignore the doomed condition from Cheating Death. The doomed condition from Cheating Death lasts for 10 minutes, though this doesn't affect the duration of any other doomed condition you have."
+ },
+ {
+  "id": "cheaters-always-prosper",
+  "name": "Cheaters Always Prosper",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "text": "Cheaters Always Prosper Source High Seas pg. 92 Prerequisites Dirty Trick Access You're from the Shackles You’re no champion of justice and are perfectly willing to fight dirty if it helps you survive. You can attempt a check to perform a Dirty Trick using your melee weapon even if you don’t have a free hand. If you critically fail a check to Dirty Trick using a weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+ },
+ {
+  "id": "cheek-pouches",
+  "name": "Cheek Pouches",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your cheeks are stretchy, and you can store up to four items of light Bulk or less in these cheek pouches. None of these items can have a dimension longer than 1 foot. As long as you have at least one item in your cheek pouches, your speech is noticeably difficult to understand. Placing an item in your cheek pouch or retrieving one is an Interact action. You can empty your mouth with a single action, causing everything you had stored in your cheek pouches to fall to the ground in your square."
+ },
+ {
+  "id": "chemical-contagion",
+  "name": "Chemical Contagion",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Poisoner Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your injury poisons can spray onto creatures. You gain the toxicologist alchemist's Greater Field Discovery."
+ },
+ {
+  "id": "choking-smoke",
+  "name": "Choking Smoke",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Smoldering Explosion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Fireball heightened to at least 6th level, you can modify the spell's standard effects as follows: Reduce the spell's damage by 6d6. Your fireball leaves behind a lingering cloud of toxic smoke in its area. While it's smoke instead of mist, this cloud otherwise has the effects of Stinking Cloud."
+ },
+ {
+  "id": "chromotherapy",
+  "name": "Chromotherapy",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "healing",
+   "manipulate",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Medicine"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You firmly believe in the technique of strengthening one's life force, spiritual energies, and bodily fluids through the application of colored light. When using a torch, lantern, or other artificial light source to illuminate an area of dim light or darker, you use a combination of alchemical reagents, medicinal components, and colored lenses to turn that light one of seven colors, allowing you to help an ally recover from persistent damage. You give that target an assisted recovery, but the target can be anywhere within the bright light of the light source instead of needing to be adjacent to you. Ambient bright light (like sunlight) drowns out your artificial illumination and prevents you from using Chromotherapy. The color of the light you choose determines the type of persistent damage from which you help the target recover. | Color | Description | | --- | --- | | Red | You increase blood flow to heat the body, attempting to end persistent cold damage. | | Orange | You cancel out electric charge, attempting to end persistent electricity damage. | | Yellow | You reduce pain and mental stress, attempting to end persistent mental damage. | | Green | You promote blood flow in a way that helps clot wounds, attempting to end persistent bleed damage. | | Blue | You cool the body, attempting to end persistent fire damage. | | Indigo | You render acids inert, attempting to end persistent acid damage. | | Violet | You purify the body, attempting to end persistent poison damage. |"
+ },
+ {
+  "id": "cindersoul",
+  "name": "Cindersoul",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "lineage",
+   "naari"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The fire of your elemental ancestor manifests like dying embers of a blaze, and your inner charcoal helps staunch bleeding, purify simple poisons, and absorb acid. The DC for you to recover from persistent acid, bleed, and poison damage is 10 instead of 15 (or if you have particularly effective assistance)."
+ },
+ {
+  "id": "claim-the-field",
+  "name": "Claim the Field",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [
+   "Plant Banner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** Your banner is attached to a thrown weapon. --- You hurl your banner forward with precision, claiming the battlefield for yourself and your allies. You Plant the Banner, but you can place it at any corner within the required weapon's first range increment, rather than the corner of your square. The calculated confidence of this brash maneuver unnerves your enemies; any enemy who attempts to damage or remove your banner while it is planted in this way must succeed at a save against your class DC or the attempt fails. On a critical failure, the enemy is fleeing for 1 round. This is an incapacitation and mental effect."
+ },
+ {
+  "id": "clang",
+  "name": "Clang!",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy critically misses a Strike or spell attack roll against your AC. --- You make a foe pay for attacking you as its blow or spell glances off your armor. Either Strike the triggering enemy or Stride up to your Speed toward the triggering enemy. If you Stride and end your movement adjacent to the triggering enemy, it's off-guard until the end of your next turn."
+ },
+ {
+  "id": "clean-take",
+  "name": "Clean Take",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Kitharodian Actor Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You fail, but don't critically fail, a Deception or Performance check to portray a famous figure. --- Thanks to many long hours of rehearsals, your acting skill is infinitely adaptable. Even when your impressions don't quite hit the mark, you're able to refine and tweak your performance on the spot. Reroll the triggering check and take the second result."
+ }
+]

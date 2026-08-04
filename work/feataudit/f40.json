@@ -1,0 +1,1002 @@
+[
+ {
+  "id": "thundering-surge",
+  "name": "Thundering Surge",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic",
+   "sonic",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Wildspell Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your Spellsurge aura is active. --- Your magic explodes in bursts of excess energy, creating thunderous waves. If your next action is to Cast a Spell, attempt a . **Critical Success** Enemies within a 10-foot radius burst centered on the target of the spell or within the spell's area of effect take sonic damage equal to twice your level ( saving throw against your class DC or spell DC, whichever is higher). Those who fail the save are also knocked prone. **Success** Enemies within a 10-foot radius burst centered on the target of the spell or within the spell's area of effect take sonic damage equal to your level (basic Fortitude saving throw against your class DC or spell DC, whichever is higher). Those who critically fail the save are also knocked prone. **Failure** All creatures within a 10-foot radius burst centered on you take sonic damage equal to your level (basic Fortitude saving throw against your class DC or spell DC, whichever is higher). Those who fail the save are also knocked prone."
+ },
+ {
+  "id": "thunderous-landing",
+  "name": "Thunderous Landing",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Winged Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You currently have a fly Speed and are airborne. --- You hurl away enemies with the force of your landing. You Fly and, if you end your movement on a solid surface, your landing sends out a shock wave of air. Each creature within 10 feet of your landing position must succeed at a save against your class DC or be pushed 10 feet away. This is forced movement."
+ },
+ {
+  "id": "tidal-hands",
+  "name": "Tidal Hands",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With an emphatic gesture, you create waves that rush out from you in the shape of your hands. You either form two 15-foot cones that don't overlap or you combine the hands into one . Each creature in a wave takes damage with a save against your class DC. If a creature critically fails, you also push that creature 5 feet. --- **Level (+2)** The damage increases by 1d8."
+ },
+ {
+  "id": "tidal-wave",
+  "name": "Tidal Wave",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Undersea Privateer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Like the ocean in a storm, you overwhelm your opponents with speed and force. Move up to your Speed and make two Strikes. These Strikes can happen at any point during your movement. If either Strike reduces a target to 0 Hit Points, you gain the quickened condition for 1 round. You can only use the extra action to Stride or Swim."
+ },
+ {
+  "id": "tight-follower",
+  "name": "Tight Follower",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ulfen Guard Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your designated ally moves and ends that movement more than 10 feet from you. --- You keep up as a protector. Stride up to your Speed closer to your designated ally. Your movement must end within 10 feet of your designated ally."
+ },
+ {
+  "id": "tikling-bird-twirl",
+  "name": "Tikling Bird Twirl",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "sarangay"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You roll a critical hit on a melee Strike against an enemy. --- You trained your footwork by dancing to music between snapping bamboo poles, and your increased mobility helps you succeed when hunting dangerous beasts or fighting multiple opponents. This style of bobbing and weaving and alternating fight and flight disorients your enemies and allows you to choose your engagements. After resolving your attack, you can immediately Step, Stride, or Swim."
+ },
+ {
+  "id": "tillers-aid",
+  "name": "Tiller's Aid",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bellflower Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use the Aid reaction to help a member of your crop even if you haven't prepared to do so."
+ },
+ {
+  "id": "timber-sentinel",
+  "name": "Timber Sentinel",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "plant",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "A slim, symmetrical tree travels from the Plane of Wood. You conjure a tree within 30 feet, as a Protector Tree spell of a rank equal to half your level rounded up. If you use this impulse again, any previous one ends, and an ordinary tree remains."
+ },
+ {
+  "id": "time-dilation-cascade",
+  "name": "Time Dilation Cascade",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You borrow a bit of time from the future to act now. Make six Strikes. Your multiple attack penalty applies normally to these Strikes. If you successfully hit a creature with multiple Strikes, combine those Strikes' damage for the purpose of resistances and weaknesses. On your next turn, you regain 1 action instead of 3. This is before any alteration in your actions due to the quickened, slowed, and stunned conditions."
+ },
+ {
+  "id": "titan-slinger",
+  "name": "Titan Slinger",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have learned how to use your sling to fell enormous creatures. When you hit on an attack with a weapon of the sling group against a Large or larger creature, increase the size of the weapon damage die by one step."
+ },
+ {
+  "id": "titan-swing",
+  "name": "Titan Swing",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your limbs tense as you deliver a mighty swing. Make a melee Strike. If it hits, you deal an extra die of weapon damage and push the target back by 5 feet. If you're at least 10th level, increase this to two extra dice and push the target by 10 feet, and if you're at least 18th level, increase it to three extra dice and push the target by 15 feet. --- **Awakening** On a critical hit, you push the target back double the normal distance and knock it prone. --- **Awakening** On a hit, you deal 1d6 bleed damage. This increases to 2d6 at 10th level and 3d6 at 18th level."
+ },
+ {
+  "id": "titans-stature",
+  "name": "Titan's Stature",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [
+   "Giant's Stature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You grow to even greater size. When using Giant's Stature, you can instead become Huge (increasing your reach by 10 feet if you were Medium or smaller)."
+ },
+ {
+  "id": "to-thine-own-self",
+  "name": "To Thine Own Self",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Heroic Scion Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You fail a saving throw against an effect that would alter your memory or cause you to become controlled by another creature. --- Awareness of your past perils protects you from those who would manipulate your thoughts. Attempt to counteract the triggering effect using your Incarnation Lore modifier as your counteract modifier and half your level as your counteract rank."
+ },
+ {
+  "id": "tomb-watchers-glare",
+  "name": "Tomb-Watcher's Glare",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "divine",
+   "dwarf"
+  ],
+  "prerequisites": [
+   "death warden dwarf heritage"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you critically hit an undead creature, or an undead creature critically fails a saving throw against one of your abilities, you drive your divine wrath home in your enemy's heart. The undead is Enfeebled 1 for 1 round."
+ },
+ {
+  "id": "tongue-disarm",
+  "name": "Tongue Disarm",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [
+   "trained in Athletics",
+   "Lightning Tongue"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You lash out with your tongue to disarm your foe. You attempt to Disarm a creature within 10 feet, ignoring the requirement that you must have at least one hand free."
+ },
+ {
+  "id": "tongue-of-sun-and-moon",
+  "name": "Tongue of Sun and Moon",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have transcended the barriers between words and meaning. You can speak and understand all spoken languages."
+ },
+ {
+  "id": "tongue-tether",
+  "name": "Tongue Tether",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [
+   "snaptongue tripkee"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your tongue can momentarily latch on as readily as your hands. So long as you can freely open your mouth, you do not need free hands in order to Disarm, Grab an Edge, Reposition, or Trip. If you have the Long Tongue feat, you can Disarm, Grab an Edge, Reposition, and Trip with your tongue at a distance that is 5 feet beyond your normal reach."
+ },
+ {
+  "id": "too-angry-to-die",
+  "name": "Too Angry to Die",
+  "level": 12,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Intimidation"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** you stand up from prone after waking up from being unconscious --- You refuse to yield the battle, even after you've been knocked off your feet and nearly killed. For you, such a brush with death is less something to fear and more a thing to become infuriated by. As you stand up, you roar in defiance and can attempt to Demoralize a foe."
+ },
+ {
+  "id": "too-much-to-swallow",
+  "name": "Too Much to Swallow",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Untamed Form"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You're subject to an effect you could attempt to Escape. --- While you might be small enough to grab normally, you can change that at a moment's notice. You cast Untamed Form. If you took on a new form that's too large for the effect, you automatically escape. Otherwise, you attempt to Escape. If this ends an effect where you entered the creature's space, such as Swallow Whole, exit that creature to an adjacent area where your new form could fit."
+ },
+ {
+  "id": "tools-of-the-trade",
+  "name": "Tools of the Trade",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bounty Hunter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're well-versed in weapons that allow you to bring bounties back in one piece, or at least alive. You have familiarity with the Bola, Sap, and Whip; for the purposes of proficiency, you treat these weapons as simple weapons. You deal an additional 1d4 precision damage with these weapons when using them to make nonlethal Strikes against your prey while they're off-guard to you. In addition, you take no penalty when making a nonlethal attack with a weapon without the nonlethal trait."
+ },
+ {
+  "id": "topple-foe",
+  "name": "Topple Foe",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Marshal Dedication",
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally succeeds at a melee Strike against an enemy you are both adjacent to. --- You take advantage of the opening created by your ally to tip your foe off their feet. Attempt an Athletics check to Trip the target of the triggering attack."
+ },
+ {
+  "id": "toppling-dance",
+  "name": "Toppling Dance",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [
+   "Dance Underfoot"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While sharing a creature's space using Dance Underfoot, your melee weapons and unarmed attacks gain the trip trait, but only against the creature whose space you share. You can be in the same space as a Large or larger prone creature, even if it's not your ally."
+ },
+ {
+  "id": "toppling-tentacles",
+  "name": "Toppling Tentacles",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast black tentacles"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Black Tentacles, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to Trip each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked prone and takes 3d6 damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 damage to any creature already prone. Creatures treat the spell's area as difficult terrain."
+ },
+ {
+  "id": "toppling-transformation",
+  "name": "Toppling Transformation",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your size increases due to a polymorph effect. --- You use your body's expansion as leverage to displace a nearby creature. You attempt to Shove or Trip an adjacent creature. For the purposes of determining what size creature you can affect, use your final size after the triggering effect."
+ },
+ {
+  "id": "torch-goblin",
+  "name": "Torch Goblin",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "charhide goblin heritage"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've spent enough time on fire that you know how to use it to your advantage. You can light yourself thoroughly on fire with a held torch, a bottle of alchemist's fire, or a similar incendiary, dealing yourself 1d6 damage. As long as you are suffering persistent fire damage, all your melee attacks against adjacent creatures deal an additional 1 fire damage per weapon damage die. Any creature that successfully Grapples, Shoves, or Trips you takes 1d6 damage; if it uses a weapon for that action, the weapon takes the damage instead. You must still attempt the flat check to remove the Persistent Fire Damage each round, as normal."
+ },
+ {
+  "id": "torrential-backlash",
+  "name": "Torrential Backlash",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Curse Maelstrom Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are in a curse maelstrom state. --- Calling upon forbidden practices, you release the curse from within yourself, allowing it free rein to destroy everything around you. All creatures within your curse maelstrom emanation except you take 1d6 void damage for each level you have, with a save. Your curse maelstrom state then ends."
+ },
+ {
+  "id": "touch-of-lunacy",
+  "name": "Touch of Lunacy",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "curse",
+   "morph",
+   "primal"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "In moments of viciousness, your curse can partially infect your prey. Whenever you critically succeed with an unarmed attack from the werecreature archetype, the target must attempt a save against the higher of your class DC or spell DC, or become Clumsy 2 until the beginning of your next turn as their bones elongate and form warps. On a critical failure, the target is also Clumsy 1 for one minute as the transformation lingers."
+ },
+ {
+  "id": "toughness",
+  "name": "Toughness",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body can withstand more punishment than most before succumbing. Increase your maximum Hit Points by your level. You reduce the DC of recovery checks by 1."
+ },
+ {
+  "id": "tower-shield-mastery",
+  "name": "Tower Shield Mastery",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to maximize the defensive abilities of your tower shield. You are constantly quickened and can use the additional action only to Take Cover behind your tower shield after you have Raised it."
+ },
+ {
+  "id": "towering-size",
+  "name": "Towering Size",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [
+   "Hulking Size"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your eidolon becomes even bigger. It becomes Huge, instead of Large, and the reach on all its attacks increases to 15 feet."
+ },
+ {
+  "id": "towering-transformation",
+  "name": "Towering Transformation",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "druid",
+   "emotion",
+   "fear",
+   "mental",
+   "rage",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your size increases due to a polymorph effect. --- The physical growth of your transformation is a spectacle that shakes foes to their core. Each enemy smaller than your new size within 30 feet of you must attempt a save against your class DC or spell DC, whichever is higher. --- **Success** The creature is unaffected. **Failure** The creature becomes Frightened 1. **Critical Failure** The creature becomes Frightened 2, and you can push it up to 10 feet from you. This is forced movement."
+ },
+ {
+  "id": "tracing-sigil",
+  "name": "Tracing Sigil",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast sigil"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Sigil, you can modify the spell to add the following to its standard effects: The target leaves a magical trail that you and others can try to follow. You and other creatures can attempt to Track the target, substituting an Arcana, Nature, Occultism, or Religion check (whichever matches the magical tradition of your sigil spell) for the Survival check. Much like Tracking with Survival, this must take place somewhere the target has been and follow the trail; it doesn't allow anyone to find the target from a distance. You can only have a single target marked with a modified sigil in this way. If you use this ability again on a second target, the sigil spell on the first target ends, and your mark fades."
+ },
+ {
+  "id": "tragic-lament",
+  "name": "Tragic Lament",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "linguistic",
+   "mental"
+  ],
+  "prerequisites": [
+   "Celebrity or Dandy",
+   "legendary in Performance"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you're aware of critically succeeds on a Strike against you and would deal damage to you. **Frequency** once per 10 minutes --- You dramatically cry out in poetic verse about the tragedies that led to your doom at this very moment, instilling guilt in your attacker. The Strike deals normal damage rather than critical damage as your foe relents on their attack at the last moment as they're moved by your words, though other effects that happen on a critical hit still occur. The creature that made the triggering Strike must then succeed on a save against your Class DC or be Slowed 1 for 1 round by guilt at its actions against you."
+ },
+ {
+  "id": "trample-summoner",
+  "name": "Trample (Summoner)",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "eidolon",
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Your eidolon Strides up to double its Speed and can move through the spaces of creatures at least one size smaller, Trampling each creature whose space it enters. It can attempt to Trample the same creature only once in a single Trample. It deals bludgeoning damage equal to the damage of its secondary attack against these creatures, which can attempt a basic Reflex save against your spell DC."
+ },
+ {
+  "id": "trampling-charge",
+  "name": "Trampling Charge",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Cavalier Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You are riding a mount that has a melee Strike using its legs (claw, talons, hoof, etc.). --- You urge your mount to charge into the fray, trampling all enemies who stand in your path. You command your mount to Stride up to double its Speed (or to Burrow, Climb, Fly, or Swim, if it has the corresponding movement type), moving through the spaces of any foes in your path up to one size smaller than your mount. Your mount deals the damage of one of its melee Strikes to each creature whose space you move through, with a basic Reflex save against your mount's Athletics DC. On a critical failure, the creature also becomes off-guard until the end of your next turn. Roll the damage only once. You can damage a given creature only once during this movement."
+ },
+ {
+  "id": "transcendent-deflection",
+  "name": "Transcendent Deflection",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spirit Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** An enemy within your reach would damage you or your ally with an attack. **Requirements** You're wielding a one-handed, agile, or finesse melee weapon. --- You charge your weapon with spiritual energy and intercept the attack. The weapon becomes broken, and the target is unharmed by the attack. If you're carrying another one-handed, agile, or finesse melee weapon, you can immediately Swap it for the broken weapon."
+ },
+ {
+  "id": "transfusion",
+  "name": "Transfusion",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sanguimancer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Cost** 5 or more sanguimancy Hit Points --- You bring forth the regenerative properties of blood on behalf of an ally or yourself. You touch a willing creature and grant them fast healing 1 for 5 rounds. You can spend an additional 5 sanguimancy Hit Points to increase the fast healing by 1, to a maximum of 8."
+ },
+ {
+  "id": "translucent-skin",
+  "name": "Translucent Skin",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "undine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body is translucent while underwater. Whenever you are fully submerged in water, you can Hide from other creatures even if you don't have cover against them and aren't concealed from them."
+ },
+ {
+  "id": "transpose",
+  "name": "Transpose",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "summoner",
+   "teleportation"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You switch places with your eidolon. You each teleport to the other's position. --- **Special** This feat has the trait matching your eidolon's tradition (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "trapsmith-dedication",
+  "name": "Trapsmith Dedication",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "Snarecrafter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You use glimmering gears and gnashing mechanisms to manufacture snares using specialized parts. Your snares include clockwork and steam-powered cogwheels and gears, and their gush of steam can hinder those you ensnare. If you choose to construct a snare using gears and a creature fails their saving throw against the snare, all creatures are concealed to that creature for 1 round, as a burst of steam obscures its vision. --- **Special** You can select the dedication feat for the archetype even if you haven't yet gained three feats from the archetype."
+ },
+ {
+  "id": "treacherous-earth",
+  "name": "Treacherous Earth",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "oread"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once every 10 minutes --- You have the power to shatter the earth into a shape of your devising. You crack the ground beneath you, creating difficult terrain in a centered on one corner of your space."
+ },
+ {
+  "id": "treespeech",
+  "name": "Treespeech",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "ardande"
+  ],
+  "prerequisites": [
+   "You speak Muan"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to elemental wood allows you to communicate with trees in the Universe in Muan, the language of wood elementals. You can ask questions of, receive answers from, and use the Diplomacy skill with woody plants like trees and shrubs."
+ },
+ {
+  "id": "tremor",
+  "name": "Tremor",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You unleash a small, localized tremor in a within 30 feet. Each creature in the area takes damage with a save against your class DC. A creature that critically fails is knocked prone. Earth and stone in the area is difficult terrain until the start of your next turn. --- **Level (+2)** The damage increases by 1d8."
+ },
+ {
+  "id": "trespass-teleportation",
+  "name": "Trespass Teleportation",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "occult",
+   "teleportation",
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Exploit Vulnerability"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** You are benefiting from Exploit Vulnerability. **Trigger** The target of your Exploit Vulnerability is within 120 feet and uses a teleportation effect. --- You can hunt your foe to the ends of creation. You teleport along with the enemy, appearing the same direction and distance from it as you were before it teleported (or the nearest unoccupied space if your destination is occupied). Any allies affected by Share Weakness or Ubiquitous Weakness, if you have those abilities, can spend their reaction to teleport along with the enemy if they're within 120 of the enemy and choose to do so."
+ },
+ {
+  "id": "trial-by-skyfire",
+  "name": "Trial by Skyfire",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "divine",
+   "fire",
+   "oracle"
+  ],
+  "prerequisites": [
+   "cosmos or flames mystery"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your lips murmur as you portend a great disaster, one you hope you survive. A rain of blazing bolts begins to fall from the heavens in a , centered on you, that deals damage to all creatures in the emanation at the end of each of your turns ( save); you can't exclude yourself from the emanation. The skyfire persists for 1 minute; while you can't Dismiss it, you can suppress the effect for 1 round with a Sustain action. The rain of fire is suppressed if you fall unconscious. If you become Cursebound 3 or 4 at any point during Trial by Skyfire's duration, the emanation increases to 15 feet and the damage increases to ."
+ },
+ {
+  "id": "triangulate",
+  "name": "Triangulate",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "visual"
+  ],
+  "prerequisites": [
+   "Sniping Duo Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your spotter's quick signals help you make even difficult shots seem simple. As long as both you and your spotter can see the target of your attacks, you don't take a penalty for attacking within your second range increment with a crossbow or firearm. The penalty you take for firing into further range increments is –3 for the third range increment, with an additional –2 penalty for each additional increment beyond the third (–5 for the fourth range increment, –7 for the fifth, and –9 for the sixth)."
+ },
+ {
+  "id": "trick-shot",
+  "name": "Trick Shot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a loaded crossbow or firearm. --- You shoot not at your foe but at an object nearby. Make a Strike with your firearm against an AC equal to an easy DC for your level. On a success, instead of hitting your foe, your attack hits an object behind or to the side of your target, creating one of the following effects. The GM might determine that a different AC is appropriate or that a particular effect isn't a valid option, such as using the explosive barrel option when there's no such object on the battlefield. The GM should inform you if a Trick Shot is feasible before you spend your actions, since your trained eye can easily recognize loose or volatile objects. - **Dislodge Object** Your attack knocks an unattended object of no more than 2 Bulk out of position, moving it up to 10 feet in a direction of your choice. For example, the weapon could knock a wizard's crystal ball off a table. - **Explosive Barrel** Your attack strikes a barrel of expensive rum, a vial of volatile alchemical fluids, a demonic pustule erupting from the earth, or some other explosive object. The object explodes in a , and creatures in the area take damage with a save against your class DC. The damage type is chosen by the GM, based on the exploding object. Increase the damage by 1d6 for every 2 levels you have above 10th."
+ },
+ {
+  "id": "tripkee-glide",
+  "name": "Tripkee Glide",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [
+   "windweb tripkee"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You must have at least one hand free. --- You can use your webbed feet to guide your fall. You glide slowly toward the ground, 5 feet down (10 feet if you don't have both hands free) and up to 25 feet forward through the air. As long as you spend at least 1 action gliding each round and have not yet reached the ground, you remain in the air at the end of your turn."
+ },
+ {
+  "id": "triple-shot",
+  "name": "Triple Shot",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [
+   "Double Shot"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can quickly fire multiple shots with greater control. When you use Double Shot, you can make the attacks against the same target. You can add an additional action to Double Shot to make three ranged Strikes instead of two. If you do, the penalty is –4. All attacks count toward your multiple attack penalty, but the penalty doesn't increase until after you've made all of them."
+ },
+ {
+  "id": "triple-threat",
+  "name": "Triple Threat",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Shared Prey"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can divide your attention three ways when hunting. When you use Hunt Prey, you can designate three creatures as prey, designate two creatures as prey and share the effect with one ally (as Shared Prey), or designate one creature as prey and share the effect with two allies."
+ },
+ {
+  "id": "triumphant-inspiration",
+  "name": "Triumphant Inspiration",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "warrior muse"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You critically hit a foe with a melee weapon Strike or a melee unarmed attack. --- With a triumphant shout, you inspire your allies. You cast a composition cantrip you know that normally takes a single action to cast."
+ },
+ {
+  "id": "true-debilitating-bomb",
+  "name": "True Debilitating Bomb",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [
+   "Greater Debilitating Bomb"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have discovered increasingly devastating ways for your bombs to impede your foes. When you use Debilitating Bomb, add the following to the list of effects you can choose from: Enfeebled 2, Stupefied 2, or a –15-foot status penalty to Speeds."
+ },
+ {
+  "id": "true-hypercognition",
+  "name": "True Hypercognition",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "enigma muse"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your mind works at an incredible pace. You instantly use up to five Recall Knowledge actions. If you have any special abilities or free actions that would normally be triggered when you Recall Knowledge, you can't use them for these actions."
+ },
+ {
+  "id": "true-perception",
+  "name": "True Perception",
+  "level": 19,
+  "category": "general",
+  "traits": [
+   "general",
+   "revelation"
+  ],
+  "prerequisites": [
+   "legendary in Perception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your perceptive abilities and ability to process sensory information are so far beyond the pale that you notice minute discrepancies in all sorts of illusions and physical transformations. You are constantly under the effects of a 6th-rank Truesight spell, using your Perception modifier for the counteract check."
+ },
+ {
+  "id": "true-transmogrification",
+  "name": "True Transmogrification",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You transmogrify your eidolon each day. During your daily preparations, you can swap out any number of your evolution feats, each for a different evolution feat of an appropriate level for which you meet the prerequisites. These swaps last until your next daily preparations."
+ },
+ {
+  "id": "tumble-behind-rogue",
+  "name": "Tumble Behind (Rogue)",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You tumble under and behind your foe, your rapid movement letting you catch them off guard. When you successfully tumble-through, the foe whose space you passed through is off-guard against the next attack you make before the end of your turn."
+ },
+ {
+  "id": "tumble-behind-swashbuckler",
+  "name": "Tumble Behind (Swashbuckler)",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your tumbling puts your foes on the back foot. When you Tumble Through successfully, the foe you Tumbled Through is off-guard against the next attack you make before the end of your turn."
+ },
+ {
+  "id": "tumbling-lumber",
+  "name": "Tumbling Lumber",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "A slew of logs eject from the Plane of Wood and slam into your enemies. They roll in a 10-foot-wide, 30-foot-long line. Non-magical difficult terrain on any ground the logs roll over is smashed flat; greater difficult terrain remains. Each creature in the area takes damage and might be moved by the logs, depending on its save against your class DC. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage. **Failure** The creature takes full damage and is pushed out of the line in the most direct path available. **Critical Failure** The creature takes double damage and is knocked prone. --- **Level (+3)** The damage increases by 1d8."
+ },
+ {
+  "id": "tumbling-strike",
+  "name": "Tumbling Strike",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish",
+   "move"
+  ],
+  "prerequisites": [
+   "Acrobat Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are adjacent to an enemy. --- You deftly dive through a gap left by a foe to deliver an advantageous blow. Attempt an Acrobatics check against the Reflex DC of an enemy adjacent to you. **Critical Success** You move through the enemy's space to an unoccupied space on the other side of the enemy from your starting position. This movement doesn't trigger reactions. You can't move farther than your Speed, and you must end your movement adjacent to the enemy whose space you moved through. After moving, you make a melee Strike against the enemy whose space you moved through, and the enemy is off-guard against that Strike. **Success** As critical success, but the enemy isn't off-guard against the Strike. **Failure** You remain in your original space but can still Strike. **Critical Failure** You neither move nor Strike."
+ },
+ {
+  "id": "tumbling-teamwork",
+  "name": "Tumbling Teamwork",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Acrobatics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your tumbling distracts a foe enough to create an advantage for one of your allies. When you successfully Tumble Through an enemy's space, an ally who is adjacent to that enemy can Step as a reaction, but they must remain adjacent to that enemy."
+ }
+]

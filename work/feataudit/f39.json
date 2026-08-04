@@ -1,0 +1,991 @@
+[
+ {
+  "id": "tandem-onslaught",
+  "name": "Tandem Onslaught",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Battle Harbinger Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have trained your body and mind to work in tandem, and you can combine your combat and spellcasting prowess to better support yourself in battle. The first time each round that you successfully hit and deal damage to an enemy creature with a Strike using a weapon or unarmed attack, you can automatically Sustain a single battle aura that you currently have active, applying any additional effects that come with Sustaining the spell."
+ },
+ {
+  "id": "tandem-strike",
+  "name": "Tandem Strike",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "summoner",
+   "tandem"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** A creature is in your and your eidolon's reach. You and your eidolon each attack, seamlessly targeting the same foe without interfering with each other's movements. Your eidolon makes a melee Strike, and then you make a melee Strike against the same creature. Both attacks count toward your multiple attack penalty, but the penalty doesn't increase until after both attacks have been made."
+ },
+ {
+  "id": "tangle-of-battle",
+  "name": "Tangle of Battle",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You critically hit an adjacent enemy. --- Your vicious strike pulls your foe closer, giving you the opportunity to grab them. Attempt to Grapple the triggering enemy."
+ },
+ {
+  "id": "tap-into-blood",
+  "name": "Tap Into Blood",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are benefiting from a blood magic effect --- The power in your blood allows you to perform minor feats of magic. You can perform one of the following actions depending on the tradition of your bloodline. - **Arcane** Your mind temporarily opens to the secrets of the world. Attempt to Recall Knowledge; you can use Arcana instead of the skill normally needed for that subject. If you critically fail at this check, you get a failure instead. - **Divine** Whatever divine provenance is in your lineage guides you to instinctively move yourself or others out of harm's way. You Step, or you Reposition a target within your reach using Religion for the check. - **Occult** Strange mists or swirling colors hide your movement. You Step up to 10 feet. - **Primal** The immense power of nature echoes in your voice. You can attempt a Nature check to Demoralize a target."
+ },
+ {
+  "id": "target-of-opportunity",
+  "name": "Target of Opportunity",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Marshal Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally succeeds at a ranged Strike against an opponent in your weapon's first range increment. **Requirements** You have a ranged or thrown weapon in hand. --- You capitalize on your ally's attack and use the opportunity to secure a blow of your own, adding to the oncoming barrage. Make a ranged Strike with a –2 penalty against the opponent targeted by the triggering attack. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike. If this Strike is successful, combine the damage from the attack with the damage from your ally's attack for the purpose of resistances and weaknesses."
+ },
+ {
+  "id": "target-of-psychic-ire",
+  "name": "Target of Psychic Ire",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "amp",
+   "occult",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your magic saturates your surroundings with hateful psychic energy. Use this amp in place of a psi cantrip's normal amp entry. The cantrip must be one that takes 2 or more actions to cast and targets a creature. --- **Amp** Choose one target of the spell. Psychic phenomena turn themselves on the target-typically, objects fling themselves at the creature. At the beginning of each of the target's turns, it takes 1d4 bludgeoning damage for each spell rank of the psi cantrip this amp was added to, with a save. The target remains marked by psychic ire for 3 rounds. The effect persists even if you fall unconscious or leave the area."
+ },
+ {
+  "id": "targeted-redirection",
+  "name": "Targeted Redirection",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sniping Duo Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You aim a shot at your spotter, intending for your spotter to redirect that shot off their own weapon or shield to hit your foe from a better angle, and avoid your foe's cover. If your next action is to make a ranged Strike, you treat your spotter's position as your own for the purposes of determining cover and range. Your spotter must be within your weapon's first range increment and they must use their reaction to redirect your shot."
+ },
+ {
+  "id": "targeting-shot",
+  "name": "Targeting Shot",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "press",
+   "ranger"
+  ],
+  "prerequisites": [
+   "Hunter's Aim"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You carefully track your prey's position and defenses, allowing you to follow up around obstacles that block your shot. Make a ranged weapon Strike against your hunted prey. You ignore the target's concealed condition and all cover."
+ },
+ {
+  "id": "targeting-strike",
+  "name": "Targeting Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [
+   "Guiding Shot or Set-Up Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your attack creates an opening in your target's defenses for your allies to capitalize on. When you successfully damage an opponent with either Guiding Shot or Set-Up Strike, the next creature other than you to attack the same target before the start of your next turn deals an amount of additional precision damage equal to your Intelligence modifier."
+ },
+ {
+  "id": "taunting-strike",
+  "name": "Taunting Strike",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The force of your blow causes your enemy to focus their attention on you. Make a Strike. Regardless of whether the Strike hits, you Taunt the target. Your Taunt gains the visual trait."
+ },
+ {
+  "id": "teakettle-form",
+  "name": "Teakettle Form",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "tanuki"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your shapeshifting is advanced enough to take the form of not just creatures, but objects as well. When you Change Shape, you can assume the form of a simple tool or object of 1 Bulk or less, such as a teakettle or umbrella. When transformed into an object, you can function as that object for allies to use; for instance, turning into a crowbar so you can help an ally pry open a crate. You can speak while in object form, but you can't attack, cast spells, or move except to Crawl (usually by hopping or flopping across the ground in an undignified manner)."
+ },
+ {
+  "id": "telepathic-union",
+  "name": "Telepathic Union",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "linguistic",
+   "mental",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Beast Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your union is so strong, you can communicate with each other without uttering a word, even across vast distances. You and your united companion can communicate telepathically while within 1 mile of each other as if you were speaking your shared language. You and your companion can also sense each other's general emotions as long as you are on the same plane, allowing you to know if the other is in peril or under great distress."
+ },
+ {
+  "id": "telling-blow",
+  "name": "Telling Blow",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Heroic Scion Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your determination empowers a telling blow to defeat your most powerful enemies. Spend a Mythic Point. Make a Strike at mythic proficiency. If the Strike hits, you deal an extra die of weapon damage. You can spend additional Mythic Points after determining the outcome of the attack to deal one more die of weapon damage per extra Mythic Point spent. If the target of your attack is your nemesis or an ally of your nemesis, you gain two die of weapon damage per extra Mythic Point spent. If you have no Mythic Points remaining after using this ability, you gain the fatigued condition."
+ },
+ {
+  "id": "temperature-adjustment",
+  "name": "Temperature Adjustment",
+  "level": 7,
+  "category": "skill",
+  "traits": [],
+  "prerequisites": [
+   "master in Crafting, Herbalism Lore, or Medicine"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** Hwanggot origin --- You learn Hwan temperature classifications for the elements—wood and water are cold elements, while fire, earth, and metal are hot elements. When you Prepare Elemental Medicine, you can alter the environmental effects on the recipient's body. If you created hot elemental medicine, the recipient ignores the effects of severe cold while the medicine lasts. If you created cold elemental medicine, the recipient ignores the effects of severe heat while the medicine lasts."
+ },
+ {
+  "id": "tempest-clouds-speed",
+  "name": "Tempest Cloud's Speed",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "air",
+   "archetype",
+   "magical"
+  ],
+  "prerequisites": [
+   "Familiar Sage Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You aren't encumbered. --- You and your familiar coordinate to channel elemental air. Your familiar gains the Path of the Tempest ability."
+ },
+ {
+  "id": "tempest-gaze",
+  "name": "Tempest Gaze",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "hungerseed"
+  ],
+  "prerequisites": [
+   "Storming Gaze"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your third eye grows stronger and more powerful. When you use Storming Gaze, you can increase the area to a and double the number of damage dice; half deal electricity damage, and half deal sonic damage. If you Storming Gaze in this way, you can't use it again for 1 hour."
+ },
+ {
+  "id": "tempest-sun-redirection",
+  "name": "Tempest-Sun Redirection",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Magaambyan Attendant Dedication",
+   "Tempest-Sun Mages affiliation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "If the next action you use is to Cast a Spell from your spell slots that damages other creatures, you can bend some of that spell's offensive energy, protecting allies in the area and boosting your own defenses against certain foes. Select any number of targets of the spell and reduce the spell's damage to those targets by an amount equal to the spell's rank. Until your next turn, when one of those targets damages you, that damage is reduced by twice the spell's rank."
+ },
+ {
+  "id": "tempest-sun-shielding",
+  "name": "Tempest-Sun Shielding",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Tempest-Sun Redirection"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You or an ally within 30 feet takes damage. --- You transform unrealized spell energy into a protective shield. If you're a spontaneous spellcaster, expend a spell slot; if you're a prepared spellcaster, expend a spell prepared in a spell slot. Reduce the triggering damage by an amount equal to four times the level of the expended slot or spell."
+ },
+ {
+  "id": "tempo-duelist",
+  "name": "Tempo Duelist",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Aldori Duelist Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You move with an unpredictable tempo, shifting between unnervingly slow and rapid movements. You are concealed for 1 round. As the nature of this effect still leaves your location obvious, you can't use this concealment to Hide or Sneak."
+ },
+ {
+  "id": "temporal-fury",
+  "name": "Temporal Fury",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic",
+   "occult"
+  ],
+  "prerequisites": [
+   "Timewracked Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You shift and skip through time, vanishing during your movement to appear in unexpected and advantageous locations for combat. Spend a Mythic Point. Strike, then Step up to 10 feet. This movement is affected normally by barriers and difficult terrain; you still move physically through the area, just so swiftly that it appears that you've teleported. Then, make another Strike. Apply your multiple attack penalty to both Strikes normally, but this second Strike is made at mythic proficiency and your target is off-guard against it."
+ },
+ {
+  "id": "ten-lives",
+  "name": "Ten Lives",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [
+   "Evade Doom"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When your character would die, you can attempt a . On a success, you're instead reduced to 0 HP and a dying value 1 less than what would normally kill you (typically dying 3). This doesn't change the result for any other creature affected."
+ },
+ {
+  "id": "tenacious-endurance",
+  "name": "Tenacious Endurance",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "emotion",
+   "mental"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You encourage your companion to refuse to yield, against even the mightiest of foes. When one of your animal companions is reduced to 0 Hit Points, if it isn't wounded, it can remain standing with 1 Hit Point and become Wounded 1."
+ },
+ {
+  "id": "tenacious-jaws",
+  "name": "Tenacious Jaws",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dragonblood"
+  ],
+  "prerequisites": [
+   "Draconic Aspect",
+   "jaws unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your teeth are curved or hooked to hold on to your enemies. Your jaws unarmed attack gains the grapple trait. When you use your Breath of the Dragon, an opponent grabbed or restrained in your jaws uses the outcome one degree of success worse than the result of their saving throw."
+ },
+ {
+  "id": "tenacious-net",
+  "name": "Tenacious Net",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Escaping your nets is no simple task. The Athletics DC to Force Open or Escape your nets increases from 16 to 18. After a creature you grabbed with a net Escapes or Forces Open the net, stray strands of the net cling to the creature, causing them to remain off-guard until the beginning of their next turn."
+ },
+ {
+  "id": "tenacious-toxins",
+  "name": "Tenacious Toxins",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "alchemist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your victims tend to expire long before your poisons, since the latter have been specifically formulated to last longer. The maximum duration of any poison you create increases by an amount equal to the poison's stage 1 interval, to a maximum of twice the poison's maximum duration."
+ },
+ {
+  "id": "tengu-weapon-study",
+  "name": "Tengu Weapon Study",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "tengu"
+  ],
+  "prerequisites": [],
+  "text": "Tengu Weapon Study Source Advanced Player's Guide pg. 27 Prerequisites Tengu Weapon Familiarity You've learned techniques for using blades and other tengu weapons. Whenever you critically hit using one of the weapons from your Tengu Weapon Familiarity, you apply the weapon's critical specialization effect."
+ },
+ {
+  "id": "tense-negotiator",
+  "name": "Tense Negotiator",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication",
+   "master in Diplomacy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You often find that the best way to win a conflict means avoiding a fight in the first place. You're good at talking to potential opponents without making things worse. If you would critically fail at a check to Make an Impression, you instead fail. You can attempt checks to make Requests of creatures who're indifferent or unfriendly toward you."
+ },
+ {
+  "id": "terraforming-spell",
+  "name": "Terraforming Spell",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "earth",
+   "metamagic",
+   "sorcerer",
+   "spellshape",
+   "transmutation"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Terraforming Spell Source Advanced Player's Guide pg. 141 You capture transformative fragments of magic and slam them into the ground, creating a shock wave that alters your surroundings. If your next action is to Cast a non-cantrip transmutation Spell, either each space adjacent to you becomes difficult terrain, or each space adjacent to you is no longer difficult terrain. This doesn't have any effect on greater difficult terrain and doesn't remove the damaging effects of hazardous terrain."
+ },
+ {
+  "id": "terraforming-trickery",
+  "name": "Terraforming Trickery",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "earth",
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to channel the transformative aspects of your blood magic to alter your surroundings. You know the following blood magic effect. **Blood Magic—Terraforming Trickery** Either each space adjacent to you becomes difficult terrain, or each space adjacent to you is no longer difficult terrain. This doesn't have any effect on greater difficult terrain and doesn't remove the damaging effects of hazardous terrain."
+ },
+ {
+  "id": "terrain-advantage",
+  "name": "Terrain Advantage",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Non-lizardfolk creatures in difficult terrain are off-guard to you. If you have a swim Speed, non-lizardfolk creatures that are in water and lack a swim Speed are also off-guard to you."
+ },
+ {
+  "id": "terrain-ghost",
+  "name": "Terrain Ghost",
+  "level": 18,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Guerrilla Dedication",
+   "master in Stealth and Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You move through your territory like a living shadow. Within your favored location, you're permanently under the effect of Vanishing Tracks, and you're always concealed from all foes unless you choose not to be."
+ },
+ {
+  "id": "terrain-master",
+  "name": "Terrain Master",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "master in Survival",
+   "Favored Terrain"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are able to adapt to your surroundings in any natural terrain. You can spend 1 hour practicing in your current terrain in order to make it your favored terrain, replacing your current favored terrain temporarily. If you spend a full day out of the new favored terrain, your favored terrain reverts back to your original choice when you took the Favored Terrain feat."
+ },
+ {
+  "id": "terrain-shield",
+  "name": "Terrain Shield",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Geomancer Dedication",
+   "master in Nature"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** A Strike would damage you. **Requirements** You gained a terrain attunement benefit since the start of your most recent turn and that attunement matches the terrain you're in. --- You're so attuned to the land that it rises up to protect you from a potentially fatal blow in a seeming coincidence. For instance, a branch suddenly falls from a nearby tree to take the brunt of a sword swing or a surprising change of current disrupts an enemy's attack. You gain resistance to physical damage equal to double your level against the triggering Strike."
+ },
+ {
+  "id": "terrible-transformation",
+  "name": "Terrible Transformation",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ursine Avenger Form"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You let out a mighty roar as part of your transformation. When you use Ursine Avenger Form, you can make an Intimidation check to Demoralize against each enemy within 30 feet that can see you, and you don't take a penalty to your Demoralize check if the creature doesn't understand your language."
+ },
+ {
+  "id": "terrified-retreat",
+  "name": "Terrified Retreat",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Intimidation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you critically succeed at the Demoralize action, if the target's level is lower than yours, the target is fleeing for 1 round."
+ },
+ {
+  "id": "terrifying-croak",
+  "name": "Terrifying Croak",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [
+   "trained in Intimidation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You release a haunting croak that reminds those around you of their fears. Attempt an Intimidation check to Demoralize a creature within 30 feet; you do not take a penalty to this check for not speaking a language. If the check is successful, the target cannot reduce their frightened condition below 1 for 1 round."
+ },
+ {
+  "id": "terrifying-mien",
+  "name": "Terrifying Mien",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication",
+   "master in Intimidation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether they have heard of your legend or seen your prowess on the field of battle, those already quaking in their boots grow weak when forced to stand against you. You gain resistance against bludgeoning, piercing, and slashing damage against Strikes made by creatures with the frightened condition. This resistance is equal to four times the value of that creature's frightened condition. When this resistance applies to at least one of a creature's Strikes during their turn, that creature doesn't reduce the value of their frightened condition at the end of their turn."
+ },
+ {
+  "id": "text-decoder",
+  "name": "Text Decoder",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Palatine Detective Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thanks to your constant involvement with cryptic texts, you have attained an almost-supernatural ability to decipher complex codes and understand ancient writings. You can always use Occultism or Religion when you Decipher Writing, no matter the subject matter. In addition, you can ignore language constraints when Deciphering Writing, and when you critically fail to Decipher Writing, you get a failure instead."
+ },
+ {
+  "id": "the-bitter-scholars-promotion",
+  "name": "The Bitter Scholar's Promotion",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghost-Path Epiphany"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Tian Xia's shining cities belie its empires' long shadow of death, darkened by thousands of years of suffering and injustice. You pursue immortality not through tuft-hunting with Heaven's dragons or their imperial brats; yours is the power to crack its corrupt wheel, for you can now release the ghost gates to expedite the dead's revenge at being cheated of their fates. You cease aging and, regardless of your actual existential state, now register as an undead to effects that can detect undead (such as lifesense or spiritsense). In addition, you learn Create Undead rituals for Gashadokuro, Jiang-shi, and Shui Gui. On a success with one of these rituals, you gain the effects of a critical success instead."
+ },
+ {
+  "id": "the-dead-walk",
+  "name": "The Dead Walk",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "divine",
+   "oracle"
+  ],
+  "prerequisites": [
+   "ancestors or battle mystery"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You beseech warrior spirits to come forth and aid you. Two ghostly warriors manifest within a of you and each attempt a Strike against an adjacent enemy, using your spell attack modifier. The warriors' Strikes each deal 4d6 damage and the warriors can flank with one another and with you and your allies. If you are Cursebound 2 when you use The Dead Walk, you instead summon three warriors, and if you are cursebound 3, you instead summon four warriors. The warriors disappear at the start of your next turn."
+ },
+ {
+  "id": "the-harder-they-fall",
+  "name": "The Harder They Fall",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You make your foes fall painfully when you trip them. When you successfully Trip an off-guard foe, your target takes 1d6 bludgeoning damage. On a critical success, the target takes 1d6 bludgeoning damage plus your sneak attack damage."
+ },
+ {
+  "id": "the-harder-they-fall-rogue",
+  "name": "The Harder They Fall (Rogue)",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "text": "The Harder They Fall (Rogue) Source Player Core pg. 172 You make your foes fall painfully when you trip them. When you successfully Trip an off-guard foe, your target takes 1d6 bludgeoning damage. On a critical success, the target takes 1d6 bludgeoning damage plus your sneak attack damage."
+ },
+ {
+  "id": "the-immortal-attains-the-summit",
+  "name": "The Immortal Attains the Summit",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Three Pecks of Dew"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your cultivation bearing glorious fruit, you behold Heaven's will. Returning from your vision of the Holy Mountain, you become an immortal with mystic potency over the terrestrial realms of wind and water. You cease aging and, regardless of your actual existential state, now register as a living being to effects that can detect living creatures (such as lifesense or spiritsense). In addition, you learn the Control Weather and Plant Growth rituals. You can use Occultism instead of Nature for these rituals. On a success with one of these rituals, you gain the effects of a critical success instead."
+ },
+ {
+  "id": "the-shattered-mountain-weeps",
+  "name": "The Shattered Mountain Weeps",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "A massive sphere of rock explodes, unleashing a cataclysm of falling debris and deadly shrapnel. Its destruction falls in a within 120 feet. Creatures in the area take damage with a save against your class DC. Those who fail are knocked prone. For the next minute, rocks continue to fall, making the area difficult terrain and dealing damage to any creature that ends its turn in the area. If you use this impulse again, any previous one ends. --- **Level (20th)** The initial damage is 10d10, and the area damage is 4d10."
+ },
+ {
+  "id": "the-tyrant-falls",
+  "name": "The Tyrant Falls!",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Reclaimant Dedication",
+   "Invoke the Crimson Oath"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You've reached the apex of the Crimson Oath's power. The oath's power is overwhelming—too much for a mortal frame—but victory is worth any price. When you use this feat, you cry out the final line of the Crimson Oath, unleashing unbridled power for 1 minute. You can Dismiss this effect. While this effect is active, you gain the following effects: - At the beginning of each of your turns, you become Drained 1 or increase the value of your drained condition by 1 if you are already drained. You can't reduce the value of your drained condition or remove it while The Tyrant Falls! is active. While The Tyrant Falls! is active, your drained condition does not penalize your Fortitude save. - You can cast Invoke the Crimson Oath at will without expending Focus Points. When you do, increase the area to a . - You gain resistance to all damage equal to half your character level. - Any melee weapon you wield gains the reach trait if it didn't already possess it, or increases its reach by 5 feet if it already has the reach trait. Your Strikes with that weapon deal an extra 2d6 vitality or void damage (whichever is more effective against the target)."
+ },
+ {
+  "id": "their-masters-call",
+  "name": "Their Master's Call",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "divine"
+  ],
+  "prerequisites": [
+   "Undead Master Dedication",
+   "Call Companion",
+   "at least one inactive undead companion whose remains or anchor are currently in your possession."
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "In a pinch, you pull one of your inactive companions from their rest to provide a companion's support benefit. A fragment of your companion materializes or assembles itself in an unoccupied square of your choice within 30 feet of you, grants you its support benefit, and then disappears on your next turn. If it takes any damage before your next turn, it disappears or collapses (as applicable) and the support benefit ends immediately."
+ },
+ {
+  "id": "thick-hide-mask",
+  "name": "Thick Hide Mask",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "druid",
+   "wizard"
+  ],
+  "prerequisites": [
+   "Druid Dedication or Wizard Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mask grants you the toughness of Elephant, the Conjured Chronicle. Increase your maximum number of Hit Points by 20. Immediately after you Cast a non-cantrip Spell that targets only you, you gain resistance 10 to all physical damage until the start of your next turn."
+ },
+ {
+  "id": "thorn-in-hells-side",
+  "name": "Thorn in Hell's Side",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Defy Hell"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your devotion to the ideals of justice, freedom, and revolution allow you to truly punish those who stand in your way. When you critically succeed at a Hellbreaker Strike, the target must succeed at a save against your class DC or spell DC, whichever is higher, or become Stunned 1 (Stunned 2 on a critical failure). This effect has the incapacitation trait."
+ },
+ {
+  "id": "thorned-seedpod",
+  "name": "Thorned Seedpod",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "leshy"
+  ],
+  "prerequisites": [
+   "Seedpod"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When your seedpods strike a felling blow, they burst into viciously thorny vines. When you critically succeed at a seedpod Strike, vines twist and stab your foe, dealing 1d4 persistent piercing damage."
+ },
+ {
+  "id": "thorough-research",
+  "name": "Thorough Research",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have comprehensive knowledge in your fields of interest. When you succeed at a Recall Knowledge check, you gain additional information or context. When you critically succeed at a check to Recall Knowledge, you get additional information or context or can ask an additional follow-up question (the GM chooses which)."
+ },
+ {
+  "id": "thousand-visions",
+  "name": "Thousand Visions",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "oracle",
+   "prediction"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "You open your senses to numerous visions of the immediate future. The visions grant you subtle details of your immediate surroundings within 30 feet. Within this range, you don't need to succeed at a flat check to target a concealed creature, you're not off-guard to creatures that are hidden from you (unless you're off-guard to them for reasons other than the hidden condition), and you need only a successful to target a hidden creature. Beyond 30 feet, the visions become overwhelmed with too many possible futures, making all of your senses imprecise beyond this range. The visions persist for 1 minute."
+ },
+ {
+  "id": "thrash",
+  "name": "Thrash",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have an enemy grabbed or restrained. --- You thrash your foe around. An enemy you have grabbed or restrained takes bludgeoning damage equal to your Strength modifier plus your weapon specialization damage plus your Rage damage, with a save against your class DC."
+ },
+ {
+  "id": "three-pecks-of-dew",
+  "name": "Three Pecks of Dew",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cultivator Dedication",
+   "you aren't unholy"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "At this stage of cultivation, your body is as much spirit as flesh. While still fettered to the physical realm, your form flourishes without needing conventional food or drink, and your natural healing now rivals that brought by scalpel and suture. You become sanctified with the holy trait. When you perform the Subsist downtime activity, you can use Occultism for the skill check (instead of the skills normally associated with your environment). If you do so, this activity gains the vitality trait as you subsist on ambient qi within your environment's dew-laden air and create shelter from solidified emanations of qi. Additionally, when you Refocus, you can also Treat Wounds at the same time. If you do so, you can use Occultism for checks to Treat Wounds and disregard the need for a Healer's Toolkit; this activity gains the vitality trait as you circulate healing qi through your own body or transfuse your ally with healing qi."
+ },
+ {
+  "id": "throat-pocket",
+  "name": "Throat Pocket",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "nagaji"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've trained to use unique nagaji eating habits to your advantage. By manipulating your throat muscles, you can create a pocket of air to store up to four items of light Bulk or less without risk of dissolving. None of these items can have a dimension longer than 1 foot. As long as you have at least one item in your throat pocket, your speech is noticeably difficult to understand, and you have a visible bulge in your neck. Placing an item in your throat pocket or retrieving one is an Interact action. You can empty your throat pocket with a single action, causing everything you had stored in it to fall to the ground in your square. Any item that was covered in dirt or grime comes out clean."
+ },
+ {
+  "id": "throttle-the-divine",
+  "name": "Throttle the Divine",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "misfortune"
+  ],
+  "prerequisites": [
+   "Pure Legion Enforcer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You grasp the godly by their throats and damage their connection to their deities. When you have a creature grabbed, it must roll its flat check to use manipulate actions with the divine trait twice and take the worse result. Each time it attempts such an action while you have it grabbed, you tighten your grip further, dealing bludgeoning damage equal to 2d6 + your Strength modifier to that target."
+ },
+ {
+  "id": "through-spell",
+  "name": "Through Spell",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Spells you cast can transform briefly into vital essence, traveling harmlessly through living and undead creatures between you and your target, blocked only by solid objects. If the next action you use is to Cast a Spell that requires a spell attack roll, your targets don't benefit from cover provided by living or undead creatures."
+ },
+ {
+  "id": "through-the-needles-eye",
+  "name": "Through the Needle's Eye",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a weapon ikon --- Your weapon strikes with the perfection your will demands. **Transcendence—Blinding of the Needle** ⟨2⟩ (transcendence)"
+ },
+ {
+  "id": "throw-and-catch",
+  "name": "Throw and Catch",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Warshard Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You are wielding a melee warshard weapon. --- You hurl your warshard weapon at an opponent, even though the weapon isn't designed to be thrown. Spend a Mythic Point. Your weapon gains the thrown trait with a range increment of 40 feet; if your weapon already has the thrown trait, increase its range increment by 40 feet. Make a ranged Strike at mythic proficiency at an opponent within range. For this ranged Strike, apply your full Strength modifier to the damage, as if it were a melee Strike. After the Strike resolves, the weapon flies back to your hand, and you can then attempt a melee Strike (at your normal proficiency, not mythic proficiency) against a target in reach of your weapon. Both attacks count toward your multiple attack penalty, but the penalty doesn't increase until after you've made both attacks."
+ },
+ {
+  "id": "thunder-clap",
+  "name": "Thunder Clap",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "sonic"
+  ],
+  "prerequisites": [
+   "Powder Punch Stance"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You slam your hands together to unleash a deafening blast. Creatures in a cone take damage, with a against your class DC. Creatures that critically fail their save are also deafened for 1 minute. You can't use this ability again for 1d4 rounds as your hands recover from the thunderous vibrations. At 8th level, and every 2 levels thereafter, the damage from Thunder Clap increases by 1d6."
+ },
+ {
+  "id": "thunderclap-spell",
+  "name": "Thunderclap Spell",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "druid",
+   "sonic",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "storm order"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your lightning splits the air, generating a booming shock wave. If your next action is to Cast a Spell that has the electricity trait or deals electricity damage, has no duration, and requires creatures to attempt a saving throw, the force of the spell's lightning creates a thunderclap, in addition to its other effects. Each creature that failed its Reflex save against the spell is deafened for 1 round, and those who critically failed are also knocked prone."
+ }
+]

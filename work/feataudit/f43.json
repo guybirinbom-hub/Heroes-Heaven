@@ -1,0 +1,1010 @@
+[
+ {
+  "id": "vivacious-conduit",
+  "name": "Vivacious Conduit",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "gnome"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to the First World has grown, and its vital energy flows into you rapidly. If you rest for 10 minutes, you regain Hit Points equal to your Constitution modifier × half your level. This is a healing vitality effect and is cumulative with any healing you receive from Treat Wounds."
+ },
+ {
+  "id": "voice-cold-as-death",
+  "name": "Voice Cold as Death",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "emotion",
+   "fear",
+   "mental",
+   "skill"
+  ],
+  "prerequisites": [
+   "Knight Reclaimant Dedication",
+   "master in Intimidation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are not fatigued. --- Channeling the energy of the Crimson Oath into your voice, you pronounce a threat in a tone so icy it freezes the blood. Attempt an Intimidation check to Demoralize; you don't suffer a penalty if the target doesn't understand the language you're speaking, but this otherwise functions as normal. You can't use Intimidating Glare or any other effect that would cause your Demoralize attempt to lose the auditory trait as part of using this feat. If you critically succeed at your Intimidation check, the target becomes Stunned 1, or Stunned 2 if the target is undead. After using this feat, you are fatigued until the end of your next turn, and you can't use this feat again until the end of your next turn."
+ },
+ {
+  "id": "voice-of-authority",
+  "name": "Voice of Authority",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "vigilante"
+  ],
+  "prerequisites": [
+   "Vigilante Dedication",
+   "Member of the Grey Gardeners",
+   "expert in Intimidation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You easily command the attention of others, and when the time comes to turn threats into action, your authoritative voice causes foes to falter. Your voice be heard easily by any creatures within 300 feet if you wish, regardless of the level of ambient noise, although your voice can't penetrate Silence or similar effect. If you roll Intimidation for initiative, on the first round of combat, creatures that haven't acted yet are off-guard to you."
+ },
+ {
+  "id": "void-siphon",
+  "name": "Void Siphon",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The raw energy of the Void saps the essence of the living. Any living creature that critically fails its save against a Harm spell you cast is Drained 1."
+ },
+ {
+  "id": "volcanic-escape",
+  "name": "Volcanic Escape",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy in your kinetic aura damages you. --- Lava reflexively explodes underneath you and the creature that hurt you. The triggering enemy takes damage with a save against your class DC. You Leap up to half your Speed in any direction; this movement doesn't trigger reactions. --- **Level (+4)** The damage increases by 1d6."
+ },
+ {
+  "id": "voluminous-vials",
+  "name": "Voluminous Vials",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Alchemist Dedication",
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your number of versatile vials per day increases to 5. --- **Special** At 12th level or higher, you can select this feat a second time to increase your number of versatile vials per day to 6. At 18th level or higher, you can select this feat a third time to increase your number of versatile vials per day to 7."
+ },
+ {
+  "id": "vow-of-mortal-defiance",
+  "name": "Vow of Mortal Defiance",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "concentrate",
+   "exemplar",
+   "linguistic",
+   "mental"
+  ],
+  "prerequisites": [
+   "You are not sanctified with the holy or unholy trait"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Having seen the wreckage left by the gods and their servitors as they play in their great war of good and evil, you've come to the only reasonable conclusion: they all must be cut from their silken thrones. You swear a vow to defeat one creature within 60 feet that has the holy or unholy trait. The first time each round that you deal damage to that creature, you deal an additional 1d6 spirit damage. You can't use Vow of Mortal Defiance again until you or the target is defeated, flees, or the encounter ends. --- **Special** If you take this feat, you can't become sanctified with the holy or unholy trait. Retraining out of this feat typically requires a major change of philosophy."
+ },
+ {
+  "id": "vulpine-scamper",
+  "name": "Vulpine Scamper",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "kitsune"
+  ],
+  "prerequisites": [
+   "fox alternate form"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're especially nimble while in your full fox shape. While you've Changed Shape into a fox, you gain the following benefits. - You can use your own Speed if it's higher than 20 feet. - You can use your own Athletics modifier for checks to High Jump or Long Jump. - You can scale short distances with a bit of a running start. When you attempt to Climb, and your previous action was to Stride at least 20 feet along solid ground, you gain a climb Speed of 20 feet for the duration of that Climb action."
+ },
+ {
+  "id": "wailing-dead",
+  "name": "Wailing Dead",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "emotion",
+   "fear",
+   "flourish",
+   "magical",
+   "mental"
+  ],
+  "prerequisites": [
+   "Ghostsong"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes **Requirements** Your horde is raised and consists of spirits. --- The voices of the spirits you command spark fear in the hearts of your enemies. You Sustain your horde and command those spirits to shriek in unison. Each living enemy within a from your horde takes damage, depending on its saving throw against your spell DC. This damage increases by 1d10 at 14th level and every 2 levels thereafter. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage and is Frightened 1. **Failure** The creature takes full damage and is Frightened 2. **Critical Failure** The creature takes double damage and is Frightened 3."
+ },
+ {
+  "id": "wake-to-strife",
+  "name": "Wake to Strife",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "monk",
+   "occult",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** A creature within your reach is prone or swimming. --- You summon the explosive power of a geyser beneath a foe. The required creature must attempt a save against your class DC as elemental water confounds their senses; if the creature is prone, they can Stand as a free action. --- **Critical Success** The target is unaffected. **Success** The target is Sickened 1. **Failure** The target is Sickened 2. If you have a free hand and they are not larger than you, you can attempt an Athletics check to Grapple them as a free action. **Critical Failure** As failure, but if you succeed at the Athletics check to Grapple them, you get a critical success instead."
+ },
+ {
+  "id": "walk-on-the-wind",
+  "name": "Walk on the Wind",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "aftermath",
+   "air",
+   "magical"
+  ],
+  "prerequisites": [
+   "You've been brought to 0 Hit Points by an enemy that has the air trait or an enemy's ability that has the air trait"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "A flighty breeze follows you wherever you go, granting a dramatic flair to everything you do. You're light on your feet, your voice gains an airy quality that allows it to travel further than normal, and your clothing and hair rustle gently around you at all times. You can Stride at half your land Speed across calm air. If you attempt to carry another creature with you while walking on air, even if it's in an extradimensional space, you fall."
+ },
+ {
+  "id": "walk-the-wilds",
+  "name": "Walk the Wilds",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "animist"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know the ways of birds and beasts and have gained the right to wear their forms. You add Animal Form to your apparition spell repertoire, allowing you to cast it with your apparition spellcasting. --- **Special** If you cast the Darkened Forest Form focus spell to turn into a form granted by *animal form*, you can Sustain it up to 5 minutes instead of its normal duration."
+ },
+ {
+  "id": "walk-through-the-conflagration",
+  "name": "Walk Through the Conflagration",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "teleportation"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You fall through your own kinetic gate, leaving behind an effigy of flame and reappearing majestically near another fire. You instantly transport yourself, and any items you're wearing and holding, from your current space to a clear space within 120 feet you can observe that's adjacent to an open flame or a creature taking persistent fire damage. If this would bring another creature with you—even if you're carrying it in an extradimensional container—the action fails. A whorl of fire surrounds you in a either before you depart or after you arrive. Each creature in the area takes damage with a save against your class DC. --- **Level (+3)** The fire damage increases by 1d6."
+ },
+ {
+  "id": "wall-run",
+  "name": "Wall Run",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You defy gravity, traversing vertical planes as easily as the ground. Stride up to your Speed. You must start your movement on a horizontal surface. During this movement, you can run up vertical surfaces, like walls, at your full Speed. If you end the Stride off the ground, you fall after taking your next action or when your turn ends, whichever comes first (though you can Grab an Edge, if applicable). If you have Water Step or a similar ability, Wall Run lets you run along flimsy vertical surfaces, as well as vertical liquids, such as a waterfall."
+ },
+ {
+  "id": "wandering-heart",
+  "name": "Wandering Heart",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [
+   "arctic elf, cavern elf, desert elf, woodland elf, or any other elf heritage based on adapting to an environment"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While all elves adapt to their environments over time, you have traveled so widely and become attuned to so many environs that your body now changes more rapidly than other elves. After spending a week in an environment associated with an elf heritage (such as snow for arctic elf, or a forest or jungle for woodland elf) your heritage automatically changes to become that heritage. This never causes you to change to an elf heritage that isn't related to an environment, such as Ancient Elf, Seer Elf, or Whisper Elf."
+ },
+ {
+  "id": "ward-casting",
+  "name": "Ward Casting",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spellmaster Dedication",
+   "Steady Spellcasting"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You attempt a flat check for Steady Spellcasting, but you haven't rolled yet. --- You carefully ward your spell by drawing from a mantle of magical energy you prepared to protect your casting, increasing your chance of retaining the spell. You reduce the DC of the flat check for Steady Spellcasting from 15 to 10."
+ },
+ {
+  "id": "ward-mind",
+  "name": "Ward Mind",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Scrollmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** You're currently affected by a mental effect that you gained by failing, but not critically failing, a saving throw. **Trigger** Your turn ends. --- To protect the knowledge within your mind from intrusion or erasure, you ward yourself against a mental attack, temporarily delaying its effects. Until the end of your next turn, you ignore a single mental effect that meets the requirement. You can suppress a particular effect using Ward Mind or Cognitive Loophole only once, even if you have both feats. --- **Special** You can use this reaction even if the mental effect prevents you from using reactions."
+ },
+ {
+  "id": "wardens-boon",
+  "name": "Warden's Boon",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You point out vulnerabilities present in your hunted prey, granting the benefits listed in Hunt Prey and your hunter's edge to an ally until the end of their next turn. Depending on whether you call out or use gestures, this action gains either the auditory or visual trait."
+ },
+ {
+  "id": "wardens-focus",
+  "name": "Warden's Focus",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "warden spells"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection with your surroundings deepens and expands, allowing you to draw in more of nature's primal power as you focus. When you Refocus, you regain all your Focus Points instead of 1."
+ },
+ {
+  "id": "wardens-guidance",
+  "name": "Warden's Guidance",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You convey your prey's location to your allies with a series of careful words or gestures. As long as your hunted prey is observed by you, all your allies who roll failures and critical failures when Seeking it get a success instead. Your allies need to be able to see or hear you to gain this benefit. You have to be able to call out or make visible gestures for your allies to get this benefit."
+ },
+ {
+  "id": "wardens-step",
+  "name": "Warden's Step",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can guide your allies to move quietly through the wilderness. When you Avoid Notice during exploration in natural terrain, you can designate any number of your allies to gain the benefits as if they were using that activity during that exploration. This requires no action on their part."
+ },
+ {
+  "id": "warding-light",
+  "name": "Warding Light",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bright Lion Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain a tattoo that serves as a special ward to defend you against Walkena's forces. The tattoo allows you to cast the Light cantrip as a divine innate spell at will. The cantrip is heightened to a spell rank equal to half your level rounded up. If you die, the tattoo immediately casts Peaceful Rest on your corpse, heightened to the same spell rank."
+ },
+ {
+  "id": "warning-shot",
+  "name": "Warning Shot",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "trained in Intimidation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a loaded firearm. --- Who needs words when the roar of a gun is so much more succinct? You attempt to Demoralize a foe by firing your weapon into the air, using the firearm's maximum range rather than the usual range of 30 feet. This check doesn't take the –4 circumstance penalty if the target doesn't share a language with you."
+ },
+ {
+  "id": "warp-space",
+  "name": "Warp Space",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "amp",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You use your magic to bend space, causing your spell to strike from a strange vector. Use this amp in place of a psi cantrip's normal amp entry. The amped psi cantrip must have a range. --- **Amp** Choose a square within 30 feet to which you have line of effect and line of sight. Determine your spell's line of effect and line of sight from there, as well as whether creatures have cover against the spell. The spell can exceed its normal range as measured from you, as long as it's within its normal range from the square you chose."
+ },
+ {
+  "id": "warped-by-rage",
+  "name": "Warped by Rage",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon",
+   "morph"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a body or worn ikon --- Rage courses through your body, transforming you into a beast of battle. The imbued ikon gains the following abilities. **Immanence** You're affected by a 4th-rank Enlarge spell. You can choose to forgo this effect when your body ikon becomes empowered. **Transcendence—Spasm of the Berserker** ⟨1⟩ (transcendence)"
+ },
+ {
+  "id": "warped-constriction",
+  "name": "Warped Constriction",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Living Vessel Dedication",
+   "your entity is an aberration or outer entity"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have an enemy grabbed or restrained. --- The entity inhabiting your body is an aberrant being with unfathomable motivations, and when you hold a foe close, tendrils and tentacles unfurl from your body to crush your foe and pollute it with alien wrongness. Your grabbed or restrained foe takes bludgeoning damage equal to your level and mental damage equal to your highest mental attribute modifier. The creature attempts a basic Will save that applies to both types of damage and uses the higher of your class DC or spell DC."
+ },
+ {
+  "id": "wary-skulker",
+  "name": "Wary Skulker",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "catfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can perform the Scout exploration activity at the same time as the Avoid Notice exploration activity."
+ },
+ {
+  "id": "wash-out",
+  "name": "Wash Out",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "poppet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Toxins seep out of your artificial body quickly. Each time you succeed at a Fortitude save against an ongoing poison, you reduce its stage by 2, or by 1 against a virulent poison. Each critical success you achieve against an ongoing poison reduces its stage by 3, or by 2 against a virulent poison."
+ },
+ {
+  "id": "watch-and-learn",
+  "name": "Watch and Learn",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Pathfinder Agent Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally you can see succeeds or critically succeeds at a Strength- or Dexterity-based skill check, using a skill in which you are untrained. --- Pathfinder agents serve as members of diverse teams with complementary skill sets. You are practiced at following the example of a more skilled ally to accomplish a wide variety of tasks. For the next minute you can add your level as a proficiency bonus to the observed skill check, even though you are untrained. This does not allow you to attempt trained actions using that skill unless you would otherwise be able to do so."
+ },
+ {
+  "id": "watch-this",
+  "name": "Watch This!",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion"
+  ],
+  "prerequisites": [
+   "Duelist Dedication or Pirate Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally misses or critically misses an enemy you can see with their attack. --- A common saying among Firebrands is, \"There's always a fool who thinks they can do it better—and they're often right.\" You verbally commit to using an action on your next turn to make a melee Strike against the same enemy your ally has missed. If your attack hits, you deal additional damage equal to twice the number of damage dice."
+ },
+ {
+  "id": "watch-your-back-golden-legionnaire",
+  "name": "Watch Your Back (Golden Legionnaire)",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "linguistic",
+   "mental"
+  ],
+  "prerequisites": [
+   "Golden Legionnaire Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You shout a warning to an ally about encroaching foes. Choose a target ally within 60 feet. Until the beginning of your next turn, the target can't be off-guard due to flanking."
+ },
+ {
+  "id": "watcher-on-the-wall",
+  "name": "Watcher on the Wall",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Seneschal Witch Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You claim a patron's symbol that you can etch onto any surface. Etch a symbol onto an adjacent surface; you can see and hear what you could from the symbol's location as long as you are on the same plane. This effect lasts until you place another symbol or the surface is destroyed."
+ },
+ {
+  "id": "watchful-gaze",
+  "name": "Watchful Gaze",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "goloma"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You use your many eyes to look in all directions at once, making you extremely observant for a short period of time. You gain All-Around Vision until the start of your next turn. This lets you see in all directions and prevents you from being flanked."
+ },
+ {
+  "id": "water-dancer",
+  "name": "Water Dancer",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "azarketi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You glide through the water with graceful ease. When in an aquatic or swamp environment, you ignore the effects of non-magical difficult terrain. In addition, swimming up or down isn't difficult terrain for you."
+ },
+ {
+  "id": "water-step",
+  "name": "Water Step",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can Stride across liquid and surfaces that don't support your weight. This benefit lasts only during your movement. If you end your movement on a surface that can't support you, you fall in or it collapses as normal."
+ },
+ {
+  "id": "water-strider",
+  "name": "Water Strider",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "azarketi",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Water cradles your every step, allowing you to walk on its surface. Stride up to your Speed. During your movement, you can move across liquids that don't support your weight. If you end your movement on a surface that can't support you, you fall into the liquid at the end of your movement. You can increase the number of actions to 3 to Stride up to three times your Speed."
+ },
+ {
+  "id": "water-walker",
+  "name": "Water Walker",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "oracle"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When in the throes of your curse, your steps take on a supernatural buoyancy. When you are Cursebound 1, you can Stride across liquids that don't support your weight, but you must end your movement on a surface that can support you or you fall into the liquid as normal. When you are cursebound 2 or worse, you gain the effects of water walk."
+ },
+ {
+  "id": "waters-of-creation",
+  "name": "Waters of Creation",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "divine",
+   "healing",
+   "oracle",
+   "vitality",
+   "water"
+  ],
+  "prerequisites": [
+   "life or tempest mystery"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Water is the source of life, and you draw upon this primordial force to heal your allies' wounds. A gentle ring ripples out from you in a , restoring Hit Points to creatures in the area. At 12th level and every two levels thereafter, the amount restored increases by 1d6. If you are Cursebound 3 when you use Waters of Creation, the amount healed increases to ."
+ },
+ {
+  "id": "wave-dashes-rocks",
+  "name": "Wave Dashes Rocks",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "monk",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- You slam an unlucky foe with the tremendous power of a plunging wave. Make a melee Strike against the required creature, after which they are no longer grabbed or restrained by you. This Strike must be made with an unarmed attack or a monk weapon. If you deal damage with this Strike, the target is knocked prone and is Clumsy 1 and Enfeebled 1 until the end of its next turn."
+ },
+ {
+  "id": "wave-speaker",
+  "name": "Wave Speaker",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "merfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Being part fish yourself, you can speak the language of the sea. You can ask questions of, receive answers from, and use the Diplomacy skill with animals that have the amphibious trait, aquatic trait, or a swim Speed, such as fish, crabs, and some seabirds (like penguins). The GM determines which animals count for this ability."
+ },
+ {
+  "id": "we-are-one",
+  "name": "We are One",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Beast Lord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your companion move as one, never tripping each other up. This fluid movement throws your enemies off balance. You and your united companion can share each other's spaces. When you do so, both you and your united companion provide to one another. You and your united companion also count as being adjacent to one another when sharing each other's spaces. A target is automatically off-guard against the first Strike each round each of you and your united companion make while sharing one another's spaces; this benefit also applies if you are mounted on your united companion."
+ },
+ {
+  "id": "weakening-assault",
+  "name": "Weakening Assault",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "With a barrage of blows, you diminish an enemy's strength. Strike an enemy affected by your Taunt twice. If either Strike hits, the target is Enfeebled 1 until the beginning of your next turn. If both Strikes hit, the target is Enfeebled 3 instead."
+ },
+ {
+  "id": "weapon-improviser-dedication",
+  "name": "Weapon Improviser Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in all martial weapons"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You don't take the normal –2 penalty to attack rolls with improvised weapons. Improvised weapons you use have a minimum weapon damage die of 1d6, or 1d4 if the improvised weapon is agile."
+ },
+ {
+  "id": "weapon-supremacy",
+  "name": "Weapon Supremacy",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your skill with weapons bends the laws of reality, allowing you to continuously attack with speed that would normally require magical assistance. You're permanently quickened. You can use your extra action only to Strike."
+ },
+ {
+  "id": "webslinger",
+  "name": "Webslinger",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "anadi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Frequency** once per 10 minutes --- Your natural ability to create silken webs blends with your magical powers, allowing you to create impossibly large webs with great frequency. This has the effects of a 2nd-rank Web spell using your class or spell DC, whichever is higher."
+ },
+ {
+  "id": "weft-and-warp",
+  "name": "Weft and Warp",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Eternal Legend Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "With graceful poise, you perform a dance of dangerous attacks. Stride up to half your speed toward an enemy; if you end this movement adjacent to them make a melee Strike against that foe. If you hit, you can Reposition the target into your square at the same time that you Step into their square. You then make another Strike against the same target, who is off-guard to the attack. Finally, you can Step away from that enemy."
+ },
+ {
+  "id": "weight-of-guilt",
+  "name": "Weight of Guilt",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "redemption cause"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Guilt clouds the minds of those who ignore your Glimpse of Redemption. Instead of making the triggering creature enfeebled 2, you can make it Stupefied 2 for the same duration."
+ },
+ {
+  "id": "weight-of-stone",
+  "name": "Weight of Stone",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "A packed cloud of thundering boulders descends from the sky, beating down everyone in its path. The rain of stone falls in a cylinder 20 feet in diameter and 80 feet high, and the bottom must be within 120 feet of you. Each creature in the area takes damage and might be pushed downward, depending on its save against your class DC. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage. **Failure** The creature takes full damage and is pushed downward 40 feet without taking falling damage. If it reaches the bottom of the cylinder or the ground, the push ends. If the creature is pushed to the ground, it can't Fly, Levitate, or otherwise leave the ground for 1 round. **Critical Failure** As failure, but double damage and the distance the creature is pushed is 80 feet. --- **Level (+2)** The damage increases by 1d8."
+ },
+ {
+  "id": "well-armed",
+  "name": "Well-armed",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "skeleton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your detachable limbs offer flexibility. You Interact to remove your arm and wield it in the other one, increasing your reach by 5 feet for any one-handed weapon held in that arm. If your next action is a Strike with that weapon, creatures that were outside your reach that you can now hit are off-guard against your first attack. You don't have a free hand while holding the arm. You can Interact to reattach the arm while holding it."
+ },
+ {
+  "id": "wellspring-control",
+  "name": "Wellspring Control",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "prerequisites": [
+   "Wellspring Mage Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you generate a wellspring surge, roll twice on the Wellspring Surges table and take the result of your choice. This doesn't apply when you cause another creature to generate a wellspring surge."
+ },
+ {
+  "id": "wellspring-mage-dedication",
+  "name": "Wellspring Mage Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "class",
+   "dedication"
+  ],
+  "prerequisites": [
+   "wellspring magic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "There's no longer a limit on how many temporary spell slots you can gain per day from wellspring magic. **Special** You can't select another dedication feat until you gain two other feats from the archetype."
+ },
+ {
+  "id": "were-on-the-list",
+  "name": "We're on the List",
+  "level": 3,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Alter Ego Dedication or Archaeologist Dedication",
+   "trained in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Trigger** An ally you can see and hear is about to attempt a Deception check to Impersonate someone or Lie. --- Emulating Shensen whenever she arrives at a show, you share your knowledge of the region and drop a few important local names to make a good impression and help your allies do the same. Attempt a Society check to Aid your ally. If you succeed, you recall a few specific details about local culture and personalities to help support your ally's deception. In addition to the benefits of your Aid, the triggering ally rolls their Deception check twice and takes the better result. This is a fortune effect."
+ },
+ {
+  "id": "weve-met-before",
+  "name": "We've Met Before",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You've spent at least 1 minute in mutual conversation with a creature. --- Your ability to discern information about those you interact with is without peer. Spend a Mythic Point to gain a Lore skill specific to the required creature for the next 24 hours; you have mythic proficiency with that skill and can use it to Recall Knowledge about the creature, Decipher Writings created by the creature, Earn Income or Subsist in areas ruled by the creature, or perform other appropriate tasks as determined by the GM."
+ },
+ {
+  "id": "whats-that-up-your-sleeve",
+  "name": "What's That up Your Sleeve?",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Gambling Lore"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether as a dealer or player, you've learned to spot cheaters. When another creature attempts to Conceal an Object from you, use your Gambling Lore DC if it's higher than your Perception DC to determine whether they succeed. When you search a creature for a concealed object, you can use Gambling Lore in place of Perception."
+ },
+ {
+  "id": "whirlpools-pull",
+  "name": "Whirlpool's Pull",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "magus"
+  ],
+  "prerequisites": [
+   "resurgent maelstrom hybrid study"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You briefly conjure a tendril of water that allows you to grab an improvised weapon and then subsume that water to power your magic. You Interact to pick up an unattended object within 15 feet you could use as an improvised weapon and then Cast a Spell that is a cantrip or conflux spell that takes 1 action to cast."
+ },
+ {
+  "id": "whirlwind-spell",
+  "name": "Whirlwind Spell",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "magus"
+  ],
+  "prerequisites": [
+   "Spellstrike"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** Your Spellstrike is charged. --- You combine the might of a multitarget spell with a whirling flurry of attacks. You use Spellstrike, making a melee Strike against each enemy within your reach instead of against one enemy. If your spell can affect multiple targets, your spell affects all foes you hit, not just the first target, up to the spell's normal maximum targets. If you Strike more foes than the spell could target, choose which foes are affected by the spell. Each attack counts toward your multiple attack penalty but doesn't increase your penalty until you've made all your attacks. If you use Expansive Spellstrike to Spellstrike with an area spell, apply the area as described in Expansive Spellstrike, choosing one of the creatures you Strike to determine the area and whether the spell fails due to a critically failed Strike. If you use Expansive Spellstrike to Spellstrike with a targeted spell, each creature you critically fail to Strike is unaffected by the spell, but the spell isn't lost completely from a single critical failure. You can use this activity with only melee Strikes, even if you have the starlit span hybrid study or a similar ability."
+ },
+ {
+  "id": "whirlwind-strike",
+  "name": "Whirlwind Strike",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You attack all nearby adversaries. Make a melee Strike against each enemy within your melee reach. Each attack counts toward your multiple attack penalty, but don't increase your penalty until you have made all your attacks."
+ },
+ {
+  "id": "whirlwind-toss",
+  "name": "Whirlwind Toss",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "prerequisites": [
+   "Collateral Thrash"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You whirl a foe to smash into all nearby creatures before throwing them far away. You Thrash. During this Thrash, your Collateral Thrash feat applies to all other enemies adjacent to you. You can then throw the grabbed creature 10 feet, where they fall prone. If the enemy you choose for Collateral Thrash is also adjacent to you, it attempts only one save and takes the damage only once."
+ },
+ {
+  "id": "whisper-of-warning",
+  "name": "Whisper of Warning",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "animist",
+   "apparition",
+   "divine",
+   "misfortune",
+   "wandering"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Whisper of Warning Source War of Immortals pg. 26 Frequency once per 10 minutes Trigger You would be hit, but not critically hit, by an attack. Your protective apparitions alert you to an incoming attack. The attacker must roll its attack roll a second time and take the lower result."
+ },
+ {
+  "id": "whisper-on-the-wind",
+  "name": "Whisper on the Wind",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "air",
+   "auditory",
+   "illusion",
+   "impulse",
+   "kineticist",
+   "linguistic",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You speak in a whisper, a soft wind carrying your words far away. This has the effect of the Message spell with a range of 500 feet, and it can target only a creature surrounded by air. If you start your message with the target's name, you and the target don't need to be able to see each other, nor do you need line of effect. --- **Level (4th)** The range is 1 mile. **Level (14th)** The range is planetary plus the Plane of Air."
+ }
+]

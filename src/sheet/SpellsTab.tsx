@@ -988,11 +988,22 @@ export function SpellsTab({
           {onPlay && (character.focus?.current ?? 0) < (character.focus?.max ?? 0) && (
             <button
               className="refocus-btn"
-              title="Refocus (restore 1 focus point)"
+              title={
+                character.focus?.refocusRestore
+                  ? `Refocus (${character.focus.refocusRestore === 'all' ? 'refill your pool' : `restore ${character.focus.refocusRestore} Focus Points`}${character.focus.refocusSource ? ` — ${character.focus.refocusSource}` : ''})`
+                  : 'Refocus (restore 1 focus point)'
+              }
               onClick={() => {
                 const fmax = character.focus?.max ?? 0;
                 const used = fmax - (character.focus?.current ?? 0);
-                onPlay((p) => setFocusUsed(p, used - 1, fmax));
+                // Domain/Bloodline/Conflux/Amp Focus refill the whole pool; the Wellspring feats give
+                // N. Every printed N carries the same threshold ("recover 3 … if you have spent at
+                // least 3"), so falling back to 1 below N is the rule, not a clamp — a character who
+                // spent 2 with Bloodline Wellspring gets 1, exactly as written.
+                const back = character.focus?.refocusRestore;
+                const n = typeof back === 'number' ? back : 1;
+                const restored = back === 'all' ? used : used >= n ? n : 1;
+                onPlay((p) => setFocusUsed(p, used - restored, fmax));
               }}
             >
               <i className="ti ti-refresh" style={{ fontSize: 12 }} aria-hidden="true" /> Refocus

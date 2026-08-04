@@ -1,0 +1,1005 @@
+[
+ {
+  "id": "retch-rust",
+  "name": "Retch Rust",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You exhale tendrils formed from flakes of rusted metal. All creatures in a take damage with a save against your class DC. A metal creature that fails its save also takes damage. --- **Level (+2)** The cloud's slashing damage increases by 1d10 and the persistent damage increases by 1d4."
+ },
+ {
+  "id": "retreating-finisher",
+  "name": "Retreating Finisher",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You make a calculated attack without letting down your guard. Make a melee Strike with the following failure effect. **Failure** You Step as a free action."
+ },
+ {
+  "id": "return-to-the-seed",
+  "name": "Return to the Seed",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "leshy"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Once per month, when you die, you can instead choose to fade away. Your corpse is swallowed by the earth, leaving behind only a seed. This seed is very fragile with an AC of 10 and only 1 Hit Point. Another creature can spend 1 minute to plant the seed in a safe space and water it. If so cared for, the next morning a tree grows from it with a single large fruit or flower bud that splits open to reveal you, alive and returned to maximum Hit Points."
+ },
+ {
+  "id": "returning-throw",
+  "name": "Returning Throw",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You have mastered the technique of arcing a projectile so that it returns to your hand after being thrown, though this requires a moment to precisely calculate the trajectory and possible ricochets. Make a ranged Strike with a thrown weapon. Once the Strike is complete, the weapon arcs or ricochets back to your hand. If your hands are full when the weapon returns, it falls to the ground in your space."
+ },
+ {
+  "id": "reveal-beasts",
+  "name": "Reveal Beasts",
+  "level": 1,
+  "category": "bonus",
+  "traits": [],
+  "prerequisites": [
+   "Order of the Nail"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're adept at revealing—or creating—fear among those who threaten civilization. If you succeed at a check to Recall Knowledge to identify an animal, beast, fungus, or plant, you get a critical success instead. Additionally, whenever you critically succeed at a check to Recall Knowledge against an animal, beast, fungus, or plant, that creature becomes Frightened 1."
+ },
+ {
+  "id": "revealing-stab",
+  "name": "Revealing Stab",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a melee weapon that can deal piercing damage. --- You drive your piercing weapon into an imperceptible foe, revealing its location to your allies. Make a Strike with a piercing melee weapon. If the target is concealed, you don't need to attempt a flat check to target it, and if it's hidden, the DC of the flat check to target it is 5. If you hit and deal damage, you can drive the weapon you attacked with into the target (if it's corporeal), revealing its current position. You Release the weapon, and it becomes lodged in the target. If the target is concealed, no flat check is needed to target it, and if it's hidden, the DC of the flat check to target it is 5, and the creature can't become undetected. These benefits apply only for observers who can see your weapon stuck in the target. If the target is invisible, the weapon remains visible while lodged in it. This benefit lasts until the weapon is removed from the creature. An adjacent creature or the target can remove the weapon with two Interact actions."
+ },
+ {
+  "id": "revelations-focus",
+  "name": "Revelation's Focus",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "oracle"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The further extents of your mystery provide an endless wellspring of magic. When you Refocus, you regain all your Focus Points instead of 1."
+ },
+ {
+  "id": "reverberate",
+  "name": "Reverberate",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature or hazard would deal sonic damage to you. --- You can manipulate the acoustics around you to deflect sonic damage back at its source. Attempt a Performance check against the Will DC of the creature or Fortitude DC of a hazard. If the damage came from a spell, use the creature's spell DC if it's lower. --- **Critical Success** You reduce the triggering damage by an amount up to four times your level. The creature takes sonic damage equal to the amount of damage you reduced in this way. **Success** As critical success, but you reduce the triggering damage by an amount up to twice your level."
+ },
+ {
+  "id": "reverberating-spell",
+  "name": "Reverberating Spell",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "metal",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication",
+   "metal is in your elemental philosophy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your spell disorients your targets with a metallic clangor. If the next action you use this turn is to Cast a non-cantrip Spell that deals damage in an area (such as a burst, line, or cone), the spell deals an additional 1d8 damage and all creatures who fail their save against the spell are deafened for 1 round. Targets who critically fail their saves against this spell are instead deafened for 1 minute. The spell gains the sonic trait."
+ },
+ {
+  "id": "reverse-curse",
+  "name": "Reverse Curse",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Counter Curse"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you counter a curse or misfortune effect, you send it back to destroy its originator. Whenever you succeed at the counteract check to Counter Curse, the creature is affected by its own curse or misfortune effect, attempting a saving throw against its own DC if the effect allows a saving throw. In the case of a constant ability, such as a misfortune aura, the creature is affected only until the beginning of its next turn, when the ability reasserts itself."
+ },
+ {
+  "id": "reversing-charge",
+  "name": "Reversing Charge",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Chronoskimmer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You dive into the fray before rewinding yourself to safety. Stride up to your Speed. If you end your movement within melee reach of at least one enemy, you can make a melee Strike against that enemy. You then teleport back to the square from which you began your Reversing Charge. You can use Reversing Charge while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "revitalizing-finisher",
+  "name": "Revitalizing Finisher",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your swagger instills confidence in you and your allies. Make a Strike. On a hit, you and all allies within 30 feet gain temporary Hit Points equal to half your level. **Failure** You gain temporary Hit Points equal to half your level."
+ },
+ {
+  "id": "revivifying-mutagen",
+  "name": "Revivifying Mutagen",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "alchemist",
+   "concentrate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are under the effects of a mutagen. --- You metabolize a mutagen to heal yourself. You regain 1d6 Hit Points for every 2 levels you have, but the mutagen's duration immediately ends."
+ },
+ {
+  "id": "ricochet-legend",
+  "name": "Ricochet Legend",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Ricochet Master"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The more obstacles between you and your target, the deadlier your shots become, as you ricochet off multiple surfaces to hit them. When using Ricochet Shot, your shot can bounce off of any surface within your weapon's first three range increments and the target can't benefit from cover unless they have total cover on all sides. In addition, a creature must attempt a save against your class DC the first time in an encounter you attack it with a Ricochet Shot. If it fails, it's Stunned 2 and is unable to determine where your shot originated."
+ },
+ {
+  "id": "ricochet-master",
+  "name": "Ricochet Master",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Ricochet Shot"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have an eye for angles and can find shots that others believe are impossible. When using Ricochet Shot, you can bounce your bullet off up to two solid surfaces within your weapon's first range increment instead of just one. In addition, a creature is off-guard the first time you attack it with a Ricochet Shot during an encounter."
+ },
+ {
+  "id": "riddle-the-sphinx",
+  "name": "Riddle the Sphinx",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a body ikon --- You've learned the secrets of the sphinx's riddles and empowered your ikon with them. You can voice these mysteries, forcing others to overcome them as you did. **Transcendence—Tangle in Riddle** ⟨1⟩ (auditory, mental, transcendence)"
+ },
+ {
+  "id": "ride",
+  "name": "Ride",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you Command an Animal you're mounted on to take a move action (such as Stride), you automatically succeed instead of needing to attempt a check. Any animal you're mounted on acts on your turn, like a minion. If you Mount an animal in the middle of an encounter, it skips its next turn and then acts on your next turn."
+ },
+ {
+  "id": "ride-the-tsunami",
+  "name": "Ride the Tsunami",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Booming, crashing walls of water, enough to fill a harbor, smash out ahead of you, overwhelming all in their path. The waves move forward in your choice of a or . If you're in water, you can increase these waves to a or . Each creature in the area takes damage with a save against your class DC. A creature that fails its save is pushed 20 feet (or 40 feet on a critical failure). Any unattended object of 1 Bulk or less in the area is pushed to the far edge of the area. The sheer mass of water extinguishes all non-magical flames in the area. As the wave crashes down, you can catch it to your destination. After the impulse deals damage, you can Swim in a straight line to any point in its area before the water disappears."
+ },
+ {
+  "id": "right-where-you-want-them",
+  "name": "Right Where you Want Them",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [
+   "master in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether with a weapon or your bare hands, you keep your opponents in their place. Increase the maximum distance you can Reposition or Shove an opponent to 10 feet on a success or 15 feet on a critical success."
+ },
+ {
+  "id": "ring-their-bell",
+  "name": "Ring their Bell",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian",
+   "incapacitation"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wearing medium or heavy armor, and your taunted enemy is off-guard because it didn't target you or include you in an area effect. --- Using your armor, you pummel a foe that isn't focused on you in the head or face to stagger them. Make a fist Strike against your taunted enemy even if you don't have a hand free; if you're wielding a Gauntlet or Spiked Gauntlet, you can make a Strike with one of those weapons instead. If the Strike hits and deals damage, the creature must attempt a save against your class DC; this is an incapacitation effect. --- **Critical Success** The creature is unaffected. **Success** The creature is Stunned 1. **Failure** The creature is Stunned 2. **Critical Failure** The creature is Stunned 3."
+ },
+ {
+  "id": "ringmasters-introduction",
+  "name": "Ringmaster's Introduction",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "auditory",
+   "bard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** The ally hasn't acted in the current combat. **Trigger** An ally's turn begins. --- You announce the triggering ally with a litany of their legendary achievements, spurring them to action. The target is quickened this turn and can spend the extra action to Stride, Strike, Demoralize, Feint, or Perform."
+ },
+ {
+  "id": "rip-and-tear",
+  "name": "Rip and Tear",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "druid"
+  ],
+  "prerequisites": [
+   "animal instinct or untamed order"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action dealt piercing or slashing damage using an unarmed Strike granted by a morph or polymorph effect. --- You've learned to debilitate your enemies in the same way a hunter tears at their prey. Make an unarmed Strike against the same target. If the Strike hits and deals piercing or slashing damage, the target takes an additional 1d6 persistent bleed damage. If you're at least 12th level, increase this to 2d6 persistent bleed damage."
+ },
+ {
+  "id": "riptide",
+  "name": "Riptide",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "azarketi"
+  ],
+  "prerequisites": [
+   "Drag Down",
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** You are within 10 feet of water at least 10 feet deep, and your Speed is sufficient to reach the water in one Stride. **Trigger** You successfully Grapple a creature of the same size as you or smaller. --- You Stride up to 10 feet to enter the water, bringing the grabbed creature with you into the water."
+ },
+ {
+  "id": "riptide-mount",
+  "name": "Riptide Mount",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "athamaru"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are underwater and adjacent to a creature that is at least one size larger than you, has a swim Speed, and is willing to be your mount. --- After working with aquatic beasts of burden for years, you have learned how to easily mount and dismount them. You Mount the creature and Command an Animal to issue it an order of your choice."
+ },
+ {
+  "id": "rise-up",
+  "name": "Rise Up!",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "divine",
+   "linguistic"
+  ],
+  "prerequisites": [
+   "Rose Warden Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Sometimes, you must even slip the chains of gravity to rebel. You shout a brief call to Milani, and you and two allies within 60 feet who can hear and understand you can Stand as a free action without triggering reactions. All targets then gain a fly Speed equal to their Speed or 20 feet, whichever is greater, for 1 minute."
+ },
+ {
+  "id": "rising-hurricane",
+  "name": "Rising Hurricane",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "air",
+   "composite",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "A hurricane lifts your enemies into the air before bringing them crashing down in a bloody rain. Your hurricane appears in a cylinder that's 40 feet tall, has a 30-foot diameter, and is within 120 feet. All creatures in the area take damage with a save against your class DC. Lift any creature that fails its save to any height you choose within the area, move it up to 5 feet in any direction, then drop it. It takes falling damage normally unless it has a fly Speed. --- **Level (+3)** The rain damage increases by 1d6, and the cylinder's height increases by 5 feet."
+ },
+ {
+  "id": "risky-reload",
+  "name": "Risky Reload",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a firearm. --- You've practiced a technique for rapidly reloading your firearm, but attempting to use this technique is a dangerous gamble with your firearm's functionality. Interact to reload a firearm, then make a Strike with that firearm. If the Strike fails, the firearm misfires."
+ },
+ {
+  "id": "rites-of-transfiguration",
+  "name": "Rites of Transfiguration",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can adapt your patron's power to transform other creatures into forms more befitting their behavior or your whims. Your familiar learns Cursed Metamorphosis, even if *cursed metamorphosis* isn't on your tradition's spell list. By spending 10 minutes in communion with your familiar, you can replace one spell of 6th-rank or higher you've prepared in one of your witch spell slots with a *cursed metamorphosis* spell of the same rank."
+ },
+ {
+  "id": "ritual-reversion",
+  "name": "Ritual Reversion",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "leshy",
+   "polymorph",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can temporarily revert to a less conspicuous form without diminishing your senses. You take the form of an ordinary specimen of the type of plant or fungus that most closely resembles you, reverting to your body's appearance just before your spirit joined with it. This otherwise has the effects of One with Plants, except that your size remains Small."
+ },
+ {
+  "id": "roadkill",
+  "name": "Roadkill",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Trick Driver Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You are piloting a vehicle. --- In your hands, any vehicle is a weapon. When you use Run Over, you can use your class DC in place of the vehicle's collision DC. Your vehicle can Run Over any number of creatures up to one Size smaller than the vehicle or ram any one target creature or object in your path up to the size of your vehicle."
+ },
+ {
+  "id": "roar-mimicry",
+  "name": "Roar Mimicry",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "primal",
+   "sonic"
+  ],
+  "prerequisites": [
+   "Wild Mimic Dedication",
+   "you have been targeted by a creature's auditory ability that affects an area or have identified a creature with an auditory ability that affects an area"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- You unleash a roar so loud that it's felt as deeply as it's heard. All creatures within a take damage and must attempt a save against the higher of your class DC or spell DC. This damage increases by 2d6 at 14th level and every 2 levels thereafter. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage. **Failure** The creature takes full damage and is Stunned 1. If the creature is adjacent to you, they're also deafened for 1 round. **Critical Failure** The creature takes double damage and is Stunned 2. If the creature is adjacent to you, they're also deafened for 1 minute."
+ },
+ {
+  "id": "roaring-heart",
+  "name": "Roaring Heart",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "animist",
+   "apparition",
+   "divine",
+   "wandering"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** Your attuned apparition grants Mountain Lore as an apparition skill. --- You surge forward inexorably. You Stride twice. At any point during this movement, you can Shove up to two creatures you pass adjacent to. When you end the movement, the turbulent spirits you're attuned to reward you for acting in an appropriately fierce manner: you and each ally in a gain temporary Hit Points equal to half your level if you successfully Shoved at least one enemy, or equal to your level if you succeeded at Shoving both. These temporary Hit Points last until the beginning of your next turn."
+ },
+ {
+  "id": "rock-rampart",
+  "name": "Rock Rampart",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Drawing on your connection to the Plane of Earth, you form a wall of rock and earth. This has the effect of Wall of Stone, but the wall's maximum length is 40 feet. The wall lasts until the end of your next turn, but you can Sustain it up to 1 minute. --- **Level (+4)** The maximum length of the wall increases by 10 feet, and the Hit Points of each section increase by 5."
+ },
+ {
+  "id": "rock-runner",
+  "name": "Rock Runner",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "dwarf"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your innate connection to stone makes you adept at moving across uneven surfaces. You can ignore difficult terrain caused by stone (such as rubble or gravel) and uneven ground made of stone and earth. In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of stone or earth, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead."
+ },
+ {
+  "id": "rock-the-boat",
+  "name": "Rock the Boat",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Rock the Boat Source High Seas pg. 93 Access You're from the Shackles Trigger A creature within your reach causes you to fall or knocks you prone. You know how easy it is for a falling person to cause another to lose their footing at the same time, and how to use that to your advantage. As you fall, you grab onto an enemy using your hands or legs, and pull them down with you. Attempt an Athletics check against the triggering creature’s Reflex DC. On a success, the creature falls with you (though it can still attempt to Grab an Edge) or is also knocked prone."
+ },
+ {
+  "id": "rockslide-spell",
+  "name": "Rockslide Spell",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "earth",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Elementalist Dedication",
+   "earth is in your elemental philosophy"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You enhance your spell with elemental earth, causing chunks of stone to litter the ground. If the next action you use is to Cast a non-cantrip Spell that affects an area, a number of 5-foot squares in the area equal to the spell rank become difficult terrain for 1 round. These squares must be on the ground, and the entire area of difficult terrain must be contiguous. The spell gains the earth trait."
+ },
+ {
+  "id": "rod-of-rule",
+  "name": "Rod of Rule",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Runelord Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your personal rune is connected more closely to your arcane bond. You gain the critical specialization effects of your arcane bonded weapon. In addition, whenever you critically hit a creature with your arcane bonded weapon, they begin to feel the pull of your sin, imposing a –2 circumstance penalty to saves against any of your curriculum or sin spells until the end of your next turn."
+ },
+ {
+  "id": "roiling-mudslide",
+  "name": "Roiling Mudslide",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "composite",
+   "earth",
+   "impulse",
+   "kineticist",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You form water and earth into a mudslide that smashes your opponents and coats them in mud. Each creature in a takes damage with a save against your class DC. A creature that fails is also pushed 5 feet (or 10 feet on a critical failure) and coated in mud until the end of its next turn. While coated in mud, the creature falls prone at the end of its movement any time it ends a move action other than a Crawl or Step. The creature can attempt an Acrobatics check or save against your class DC, avoiding the fall if it succeeds. --- **Level (+4)** The damage increases by 1d8."
+ },
+ {
+  "id": "roll-the-bones-of-fate",
+  "name": "Roll the Bones of Fate",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "cursebound",
+   "divine",
+   "oracle",
+   "prediction"
+  ],
+  "prerequisites": [
+   "bones or lore mystery"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- You roll a handful of bones to learn (or perhaps influence) the future course of events. Roll 1d4 and use the corresponding result below. Whenever you Roll the Bones of Fate, any effects from a previous usage immediately end. --- **1 Good** You or an ally within 30 feet can roll twice on your next attack roll or skill check, taking the higher result. This is a fortune effect. **2 Bad** One creature you are observing within 30 feet must succeed at a Will save against your spell DC; on a failure, the target must roll twice on their next attack roll or skill check that takes at least one action to perform, taking the lower result. This is a misfortune effect. **3 Mixed** You gain the benefits of rolling both a 1 and a 2. **4 Cursed Possibilities** Your attempts to meddle in the forces of prophecy bring dire consequences for all. Every creature within 30 feet of you when you perform the augury rolls twice on their next attack roll or skill check that takes at least one action to perform; if the highest number rolled is odd, they take the lower result, and if the highest number rolled is even, they take the higher result. If they took the lower result, this effect has the misfortune trait for them, and if they took the higher result, it has the fortune trait."
+ },
+ {
+  "id": "roll-with-it",
+  "name": "Roll with It",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "unbreakable goblin heritage",
+   "Bouncy Goblin"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A foe hits you with a melee weapon or unarmed attack. --- When you take a big hit, your foe bounces you around like a rubber ball, but you escape the worst of the blow. Your foe can move you any distance of its choice up to 30 feet in a direction of its choice (this is not forced movement, and it triggers reactions as normal). You fall prone and are Stunned 1. Attempt a . On a success, you take minimum damage from the attack, and on a critical success, if the attack was a critical hit, you don't take double damage from the critical hit."
+ },
+ {
+  "id": "roll-with-it-goblin",
+  "name": "Roll with It (Goblin)",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Roll with It (Goblin) Source Character Guide pg. 39 Prerequisites Unbreakable Goblin heritage; Bouncy Goblin Trigger A foe hits you with a melee weapon or unarmed attack. When you take a big hit, your foe bounces you around like a rubber ball, but you escape the worst of the blow. Your foe can move you any distance of its choice up to 30 feet in a direction of its choice (this is not forced movement, and it triggers reactions as normal). You fall prone and are stunned 1. Attempt a DC 6 flat check. On a success, you take minimum damage from the attack, and on a critical success, if the attack was a critical hit, you don’t take double damage from the critical hit."
+ },
+ {
+  "id": "roll-with-it-kingmaker",
+  "name": "Roll with it (Kingmaker)",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "Giant Hunter"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your hunted prey, which must be a giant, hits you with a melee attack. --- You can dodge attacks from giants. Attempt a Reflex save using 10 + the giant's attack bonus as the save DC. If the result allows you to Stride as part of the reaction, you may instead Fly or Swim if you have the corresponding movement type. --- **Critical Success** The attack misses you (or if the attack was a critical hit, it becomes a regular hit). You can Stride up to 10 feet as part of the reaction; if you do so, the reaction gains the move trait. **Success** The attack deals half damage. You can Stride up to 5 feet as part of the reaction, but you must end this movement adjacent to the triggering giant. If you do so, the reaction gains the move trait. **Critical Failure** You fail to avoid the attack and are knocked prone by the blow."
+ },
+ {
+  "id": "rolling-white-bottle-form",
+  "name": "Rolling White Bottle Form",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "tanuki"
+  ],
+  "prerequisites": [
+   "Teakettle Form"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You Drop Prone or otherwise become prone. --- As you fall to the ground, you transform into a white bottle, gourd, or sake jar, then roll away before anyone can pick you up. You Crawl up to two times, and your movement doesn't provoke reactions—you somehow always roll just out of reach. When you come to a stop, you return to your tanuki form, face down on the ground."
+ },
+ {
+  "id": "root-to-life",
+  "name": "Root to Life",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "esoterica",
+   "manipulate",
+   "primal",
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "⟨1⟩ or ⟨2⟩ --- Marigold, spider lily, pennyroyal-many primal traditions connect flowers and plants with the boundary between life and death, and you can leverage this association to keep an ally on this side of the line. You place a small plant or similar symbol on an adjacent dying creature, immediately stabilizing them; the creature is no longer dying and is instead unconscious at 0 Hit Points. If you spend 2 actions instead of 1, you empower the act further by uttering a quick folk blessing to chase away ongoing pain, adding the auditory trait to the action. When you do so, attempt flat checks to remove each source of persistent damage affecting the target; due to the particularly effective assistance, the DC is 10 instead of the usual 15."
+ },
+ {
+  "id": "rope-mastery",
+  "name": "Rope Mastery",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Golden League Xun Dedication",
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Ropes are your tool of choice, and you deploy them in versatile ways. When Climbing a rope, you move 5 more feet on a success and 10 more feet on a critical success, to a maximum of your Speed. This additional movement stacks with the effects of Quick Climb. In addition, you can use a rope to hamper your foes. When holding a rope, you can attempt an Athletics check to Disarm, Grapple, or Trip a creature up to 10 feet away instead of only adjacent creatures. If you critically fail such a check while holding a rope, you can drop the rope to take the effects of a failure instead of a critical failure."
+ },
+ {
+  "id": "rope-runner",
+  "name": "Rope Runner",
+  "level": 4,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Acrobatics",
+   "trained in Athletics",
+   "Pirate Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You run and climb across ropes and rigging almost as easily as on the ground. You gain a climb Speed of 15 feet, but only when climbing ropes and similar objects. Whenever you succeed at an Athletics check to Climb or an Acrobatics check to Balance, you get a critical success instead. You aren't off-guard while Climbing or Balancing on a rope or similar object."
+ },
+ {
+  "id": "rotten-slurry",
+  "name": "Rotten Slurry",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "attack",
+   "deviant",
+   "magical"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You expel a glob of rotten, foul-smelling slurry from your torso, hand, or mouth at a foe. Make a ranged attack roll against a creature within 30 feet. If you succeed, the slurry deals damage to the target for every two levels you have, or double damage on a critical success. A creature that's damaged by the attack is Sickened 1 (Sickened 2 on a critical success). **Awakening** The slurry bursts, showering bystanders. The attack deals an additional 1d4 poison splash damage for every four levels you have. **Awakening** The slurry is caustic, and bores into the flesh of those it touches. The attack deals an additional 1d4 damage."
+ },
+ {
+  "id": "rouse-the-forests-fury",
+  "name": "Rouse the Forest's Fury",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "plant",
+   "primal",
+   "wood"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Terrifying trees attack your enemies. Three Large trees appear in unoccupied spaces within 500 feet, at least 15 feet from one another. Each tree has AC 40, Fortitude +33, Reflex +24, Will +30, and 200 HP. The trees can flank, but are unable to move. When the trees appear, each makes a Strike; they share a multiple attack penalty. The tree's melee Strike is a branch that has reach 10 feet; on a hit, the target is grabbed by the tree (escape dc=40). The ranged Strike is a hurled fruit, gourd, seed, or stone with a range increment of 60 feet. Either Strike has a +30 attack modifier and deals damage. The trees last until the end of your next turn, and you can Sustain the impulse. Each time you Sustain the impulse, you can have one tree make a Strike. --- **Level (20th)** The attack modifier is +32 and the Strike damage is 5d10+9."
+ },
+ {
+  "id": "rugged-survivalist",
+  "name": "Rugged Survivalist",
+  "level": 12,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication",
+   "master in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've studied survival skills with the School of Swords experts and are comfortable spending long periods of time in the wilderness. You don't get fatigued more quickly due to precipitation during overland travel, though you can otherwise be fatigued as normal. You can go 3 days + your Constitution modifier without water before you take damage from thirst and you can go 5 days + your Constitution modifier without food before you take damage from starvation."
+ },
+ {
+  "id": "runelord-dedication",
+  "name": "Runelord Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "class",
+   "dedication"
+  ],
+  "prerequisites": [
+   "runelord"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to your sin suffuses all magic you use. When you contemplate or indulge in your sin to Refocus, you can also exchange one spell you have prepared for one of your curriculum or sin spells of the same rank."
+ },
+ {
+  "id": "running-kick",
+  "name": "Running Kick",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication",
+   "animal companion with a foot, hoof, or talon unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your companion weaves in and out of combat, swiftly attacking before getting to a better position. Your companions with a qualifying unarmed attack learn the Running Kick activity. **Running Kick** ⟨2⟩ This companion Strides up to twice its Speed and makes a hoof, foot, or talon Strike at any point during the movement. This movement doesn't provoke reactions from a creature damaged by the Strike."
+ },
+ {
+  "id": "running-reload",
+  "name": "Running Reload",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "gunslinger",
+   "ranger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can reload your weapon on the move. You Stride, Step, or Sneak, then Interact to reload."
+ },
+ {
+  "id": "running-tackle",
+  "name": "Running Tackle",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wrestler Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You charge, throwing your body at your foe in a vicious tackle. Stride twice or make a High Jump or Long Jump, then attempt to Grapple or Shove. If you made a High Jump or Long Jump, you can make the grapple or shove at any point in the jump, but you can't travel any farther on the jump after you do."
+ },
+ {
+  "id": "rushing-boar",
+  "name": "Rushing Boar",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "emotion",
+   "mental"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication",
+   "wereboar"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** You're in boar or hybrid shape. **Trigger** An attack from a creature that isn't adjacent to you damaged you. --- You embrace the pain of the triggering attack, allowing it to drive you into a violent rush. You Stride in a straight line toward the triggering creature."
+ },
+ {
+  "id": "sacred-armaments",
+  "name": "Sacred Armaments",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lastwall Sentry Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through the power of your faith or the blessing of a priest, your weapons are fully effective against incorporeal creatures. Weapons you wield have the effects of a *Ghost Touch* property rune for as long as you wield them."
+ },
+ {
+  "id": "sacred-ground",
+  "name": "Sacred Ground",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "cleric",
+   "consecration",
+   "divine",
+   "exploration"
+  ],
+  "prerequisites": [
+   "harmful font or healing font"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Frequency** once per 10 minutes --- You pray continuously for 1 minute to call a subtle shadow of your deity's realm over a centered on you. It lasts for 10 minutes, and a creature that remains in the area for the entire 10 minutes regains Hit Points equal to your level. If you have a healing font, this activity has the healing and vitality traits and heals living creatures. If you have a harmful font, this activity has the healing and void traits and heals undead creatures (or other creatures with void healing). Clerics with Versatile Font can choose either or both. It can't damage creatures in any case."
+ },
+ {
+  "id": "sacred-ki",
+  "name": "Sacred Ki",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "text": "Sacred Ki Source Gods & Magic pg. 105 Prerequisites Ki Strike; you follow a deity The power of your faith suffuses your ki. When you select this feat, choose chaos, evil, good, or law. Your choice must match one of your deity’s alignment components. When you cast the ki strike focus spell and damage a creature whose alignment is opposite your chosen alignment, you can choose for the ki strike damage to be of the chosen type. Additionally, you can substitute the damage from ki blast (or other ki spells that deal force damage, at the GM’s discretion) with damage of your chosen alignment."
+ },
+ {
+  "id": "sacred-weapon",
+  "name": "Sacred Weapon",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wylderheart Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're a living weapon honed to destroy fiends. Whenever you critically Strike a fiend, your attack deals an extra weapon damage die, and the fiend is Enfeebled 2 and Clumsy 2 until the beginning of your next turn."
+ },
+ {
+  "id": "sacrifice-armor",
+  "name": "Sacrifice Armor",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are hit by a Strike that deals physical damage. --- With divine awareness, you twist your body to lessen the impact of an attack. Reduce the damage you take by an amount equal to twice your armor's level. Your armor becomes broken, reducing its Hit Points to its Broken Threshold. If your armor was already damaged, it is destroyed instead."
+ },
+ {
+  "id": "safeguard-spell",
+  "name": "Safeguard Spell",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "sorcerer",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You are inured to the effects of your own spells. If the next action you take is to Cast a Spell with an area, you aren't affected by the spell even if you are within the area."
+ }
+]

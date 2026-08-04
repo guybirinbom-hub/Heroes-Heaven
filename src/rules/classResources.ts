@@ -112,6 +112,22 @@ export function resourceMax(r: ClassResource, level: number, abilityMods: Record
   return Math.max(0, base);
 }
 
+/**
+ * A resource's daily maximum for a SPECIFIC character — the formula above, raised by any feat that
+ * prints a bigger figure (Additional Servings: "your number of versatile vials per day increases
+ * to 5", again to 6 at 12th and 7 at 18th).
+ *
+ * Prefer this to resourceMax() anywhere a real character is in hand. Both sheet call sites used the
+ * bare formula, so a feat whose entire content is a larger number had no effect anywhere.
+ */
+export function resourceMaxFor(
+  r: ClassResource,
+  character: { level: number; resourceFloors?: Record<string, number> },
+  abilityMods: Record<AbilityId, number>,
+): number {
+  return Math.max(resourceMax(r, character.level, abilityMods), character.resourceFloors?.[r.id] ?? 0);
+}
+
 /** A resource's starting/refreshed value: toggles off, meters empty, pools full. */
 export function resourceInitial(r: ClassResource, level: number, abilityMods: Record<AbilityId, number>): number {
   if (r.kind === 'toggle' || r.meter) return 0;

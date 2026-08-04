@@ -1,0 +1,969 @@
+[
+ {
+  "id": "surging-blood-magic",
+  "name": "Surging Blood Magic",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Rising Blood Magic",
+   "master in Arcana or Religion, depending on your chosen tradition"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your blood courses with magic. You gain the benefits. In addition, when you Cast a Spell from your repertoire and you are at least Drained 2, increase the extra damage dealt by that spell from Rage by an additional 2 (for a total of 3)."
+ },
+ {
+  "id": "surging-interference",
+  "name": "Surging Interference",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Wildspell Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature Casts a Spell within your Spellsurge aura. --- You absorb the scattered energy of others' failed spells, using it to recharge your own magic. You attempt to counteract the spell. If you're successful, you absorb the dispersed magical energy, regaining one spell or spell slot of 8th rank or lower of your choice. If you spend a Mythic Point when you successfully counteract the triggering creature's spell, you instead regain a 9th-rank spell or spell slot of your choice."
+ },
+ {
+  "id": "surging-might",
+  "name": "Surging Might",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "manipulate",
+   "oracle",
+   "spellshape"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You focus the power of your spell to overcome enemies' resistances. If the next action you use is to Cast a Spell, the spell ignores an amount of the target's resistance equal to your level against the following types of damage: spirit, vitality, and void. This applies to all damage the spell deals, including persistent damage and damage caused by an ongoing effect of the spell. This doesn't cause the spell to ignore immunities, only resistances."
+ },
+ {
+  "id": "surprise-attack",
+  "name": "Surprise Attack",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Assassin Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You act before foes can react. On the first round of combat, if you roll Deception or Stealth for initiative, creatures that haven't acted are off-guard to you."
+ },
+ {
+  "id": "surprise-snare",
+  "name": "Surprise Snare",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Snarecrafter Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You install one of your snares prepared for quick deployment in a space that's occupied by an opponent. It must be a snare that normally takes 1 minute or less to Craft. The snare automatically triggers."
+ },
+ {
+  "id": "surprise-strike",
+  "name": "Surprise Strike",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Weapon Improviser Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whenever you make a Strike with an improvised weapon against a creature that hasn't seen you make a Strike using an improvised weapon or that is otherwise ignorant of your skill with improvised weapons, the creature is off-guard against you for that Strike."
+ },
+ {
+  "id": "surrounding-flames",
+  "name": "Surrounding Flames",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast wall of fire"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Wall of Fire, you can modify its standard effects as follows: Instead of a 5-foot-thick, 10-foot-radius ring of flame, you can form the wall into a 10-foot-radius hemisphere of fire."
+ },
+ {
+  "id": "survey-wildlife",
+  "name": "Survey Wildlife",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Survival"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can study details in the wilderness to determine the presence of nearby creatures. You can spend 10 minutes assessing the area around you to find out what creatures are nearby, based on nests, scat, and marks on vegetation. Attempt a Survival check against a DC determined by the GM based on how obvious the signs are. On a success, you can attempt a Recall Knowledge check with a –2 penalty to learn more about the creatures just from these signs. If you're a master in Survival, you don't take the penalty."
+ },
+ {
+  "id": "suspect-of-opportunity",
+  "name": "Suspect of Opportunity",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [
+   "Person of Interest"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature who isn't, to your knowledge, tied to any of your active investigations takes a hostile action against you in combat. --- Sometimes something intrudes upon your case unexpectedly, such as an ambush sent to bring your investigation to a close. You use Person of Interest against the triggering creature. This doesn't allow you to use Person of Interest more frequently than normal."
+ },
+ {
+  "id": "swamp-stealth",
+  "name": "Swamp Stealth",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "elf"
+  ],
+  "prerequisites": [
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are in a swamp environment near an environmental feature that would allow you to Take Cover. --- In swamplands, you are particularly skilled at quickly hiding behind bits of underbrush or foliage, or moving quietly through murky water. You Take Cover and then use that cover to Hide."
+ },
+ {
+  "id": "swan-dive",
+  "name": "Swan Dive",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "bravado",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Swan Dive Source High Seas pg. 92 Access You're from the Shackles You soar through the air and into the water, using your momentum to propel yourself forward. You intentionally Leap or otherwise fall into a body of water, taking no falling damage regardless of the distance, and then Swim up to your Speed. Until the end of your turn, when you roll a success on an Athletics check to Swim you get a critical success instead, and when you roll a critical failure you get a failure instead."
+ },
+ {
+  "id": "swap-reflections",
+  "name": "Swap Reflections",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "extradimensional",
+   "incapacitation",
+   "occult",
+   "teleportation"
+  ],
+  "prerequisites": [
+   "Alter Ego Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- You've learned how to use even your reflection to your advantage. You send your own reflection to forcibly swap places with the reflection of an enemy, pulling each of you through opposite ends and switching places. The enemy must be within 120 feet, you must both be adjacent to reflective surfaces (such as glass, mirrors, or calm water), and you must be able to see the target's reflection and have line of effect to it. The target attempts a save against your spell DC or class DC, whichever is higher. --- **Critical Success** The spell has no effect. **Success** You swap positions with your target or arrive adjacent to your target, whichever your target prefers. **Failure** You swap positions with your target or arrive adjacent to your target, whichever you prefer. **Critical Failure** You instantaneously swap positions with your target, and the target becomes trapped in its own reflection for 1 minute. Once on each of its turns, the target can spend 1 action to attempt another Will save to escape. If the save succeeds, the effect ends early."
+ },
+ {
+  "id": "swashbucklers-riposte",
+  "name": "Swashbuckler's Riposte",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swashbuckler Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to riposte against ill-conceived attacks. You gain the Opportune Riposte reaction."
+ },
+ {
+  "id": "sweeping-fan-redirection",
+  "name": "Sweeping Fan Redirection",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Fan Dancer Dedication",
+   "Sweeping Fan Block"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Requirements** You're wielding two fans, one in each hand. --- You can redirect ammunition back at the creature that fired it with sweeping gusts of wind. When Sweeping Fan Block prevents an attack from hitting you, instead of recovering the ammunition, you can make a ranged Strike against the triggering target using the normal attack bonus and damage of your fans as part of the same reaction. You also apply any special effects the ammunition might have."
+ },
+ {
+  "id": "sweeping-tail",
+  "name": "Sweeping Tail",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication",
+   "animal companion with a tail unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your companion swings its tail powerfully. Your companions with a qualifying unarmed attack learn the Sweeping Tail activity. **Sweeping Tail** ⟨2⟩ This companion makes two tail Strikes against different creatures within its reach, increasing its multiple attack penalty as normal. On a hit, it pushes a target back 5 feet or 10 feet on a critical hit. This is forced movement."
+ },
+ {
+  "id": "swift-application",
+  "name": "Swift Application",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "vishkanya"
+  ],
+  "prerequisites": [
+   "Envenom"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You expertly combine the motions of attacking and coating your weapon with venom. You Envenom a weapon or piece of ammunition, and then Strike with that weapon. This counts against your uses of Envenom normally and can't be used if your venom is exhausted."
+ },
+ {
+  "id": "swift-banishment",
+  "name": "Swift Banishment",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You critically hit a creature that is not on its home plane. **Requirements** You have a Banishment spell prepared. --- The force of your blow sends your victim back to its home plane. You expend a *banishment* spell you have prepared, affecting the creature you critically hit without needing to cast the spell. The creature can attempt to resist the spell as normal."
+ },
+ {
+  "id": "swift-guardian",
+  "name": "Swift Guardian",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication",
+   "Call Companion"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- When danger appears, you quickly send away your active companion and call in a different animal ally. You use Call Companion. The new animal companion typically arrives in the same location as the one that departed, though the GM might adjust this depending on the circumstances and Speeds of the animals. If you have Lead the Pack, you can swap one of your two active companions for an inactive companion."
+ },
+ {
+  "id": "swift-intervention",
+  "name": "Swift Intervention",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Overwatch Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within your overwatch field fails in their attempt to Arrest a Fall, Balance, Grab an Edge, or Maneuver in Flight. **Requirements** You are wielding a ranged weapon. --- You're burdened with noticing potential threats at all times. Because of this, you've learned that a well-placed shot can prevent disaster. You make a shot to either pin an ally's clothing to stop a fall or secure them against a ledge, or you bounce an attack off their armor to correct their course as they stumble while attempting to balance or fly. Make a single ranged attack roll against the DC of the triggering check; your ally uses the result of your ranged attack roll in place of their original roll. You must have line of effect to your ally, and your attack roll includes any normal bonuses or penalties for a ranged attack with that weapon (such as the penalty for making a ranged attack beyond your first range increment)."
+ },
+ {
+  "id": "swift-leap",
+  "name": "Swift Leap",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghoul Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your undead physiology allows you to leap quickly toward or away from your opponent. You Leap. This movement doesn't trigger reactions. If you are satiated, you can choose to end your satiation to instead High Jump or Long Jump without triggering reactions, as you take a quick, enormous jump before any foe can react to your movement."
+ },
+ {
+  "id": "swift-paragon",
+  "name": "Swift Paragon",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "blessed swiftness"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The movement of you and your allies is swift and decisive as the judgment of your deity. If your ally starts a move action in your champion's aura, their movement during that action doesn't trigger reactions. In addition, you're permanently quickened. You can use your extra action only to Step or Stride. If you have a fly Speed, add Fly to this list. If you have an animal companion and are mounted on it at the start of your turn, you can have your mount be quickened that turn instead of you."
+ },
+ {
+  "id": "swift-retribution",
+  "name": "Swift Retribution",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "champion's reaction"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The transgressions of your enemies fuel you to retaliate with divine speed. When an enemy triggers your champion's reaction, you are quickened on your next turn. You can use the extra action to move closer to that enemy or to Strike that enemy."
+ },
+ {
+  "id": "swift-river",
+  "name": "Swift River",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn ends and you have a status penalty to your Speed or are immobilized or slowed --- You flow like water, avoiding all restraints. End one status penalty to your speed, or end one immobilized or slowed condition affecting you."
+ },
+ {
+  "id": "swift-sneak",
+  "name": "Swift Sneak",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can move your full Speed when you Sneak. You can use Swift Sneak while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "swift-tracker",
+  "name": "Swift Tracker",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "expert in Survival",
+   "Experienced Tracker"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your keen eyes catch signs of passage even when you're moving. You can move at your full Speed while you Track. If you have master proficiency in Survival, you don't need to attempt a new Survival check every hour while Tracking. If you have legendary proficiency in Survival, you can use another exploration activity while Tracking. If you roll Survival for initiative while tracking your hunted prey, when you start your first turn of the encounter, you can Stride toward your hunted prey as a free action."
+ },
+ {
+  "id": "swim-through-earth",
+  "name": "Swim Through Earth",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "The earth parts before you, letting you swim through it. You gain a burrow Speed equal to your land Speed and can immediately Burrow once. You don't gain the ability to breathe while in the earth, so you must hold your breath. The impulse ends at the end of your next turn, but you can Sustain it up to 1 minute. If you're inside the earth when the impulse ends, you immediately return to the surface directly above you, fall prone when you reach the surface, and are Slowed 1 until the end of your next turn. --- **Level (14th)** You can burrow through rock and similar dense earthen matter, leaving no tunnels or signs of your passing."
+ },
+ {
+  "id": "swimmers-guidance",
+  "name": "Swimmer's Guidance",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "merfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're always ready to help those floundering in the water. Any ally who starts their turn within 30 feet of you and in the same body of water gains a 10-foot swim Speed until the end of their turn. If any ally affected by Swimmer's Guidance rolls a critical failure on an Athletics check to Swim, they get a failure instead."
+ },
+ {
+  "id": "swimming-charge",
+  "name": "Swimming Charge",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "athamaru",
+   "locathah"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Swimming Charge Source High Seas pg. 18 PFS Note Add the Attack trait to Swimming Charge. Requirements You are swimming in water. You swim directly into a foe, attempting to push them out of the way. Swim up to your Speed, attempting to enter the space of a foe that’s your size or smaller. Roll an Athletics check and compare the result of the Fortitude DC of the target creature. If the foe can’t move into an empty space (if it is surrounded by solid objects or other creatures, for example), you automatically critically fail this check. Critical Success The target takes bludgeoning damage equal to your level plus twice your Strength modifier and must move into the empty space directly behind it; you move into the space it vacated. The target must move even if doing so places it in harm’s way. Success As critical success, but the damage is equal to your level plus your Strength modifier. Failure The target takes bludgeoning damage equal to your Strength modifier and you end your movement before entering its space. Critical Failure The target is unaffected and you end your movement before entering its space."
+ },
+ {
+  "id": "swipe",
+  "name": "Swipe",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You make a wide, arcing swing. Make a single melee Strike and compare the attack roll result to the ACs of up to two enemies, each of whom must be within your melee reach and adjacent to the other. Roll damage only once and apply it to each creature you hit. A Swipe counts as two attacks for your multiple attack penalty. If you're using a weapon with the sweep trait, its modifier applies to all your Swipe attacks."
+ },
+ {
+  "id": "swipe-souvenir",
+  "name": "Swipe Souvenir",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're grabbed or restrained by a creature. --- When you wriggle free from an enemy's grasp, you take something of theirs with you. You attempt to Escape from being grabbed or restrained by a creature. If you succeed, you can also attempt to Steal from the creature, even if the creature is in combat."
+ },
+ {
+  "id": "switcheroo",
+  "name": "Switcheroo",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You are targeted by a ranged attack. **Requirements** You are adjacent to an enemy and have Panache. --- You attempt to deftly swap places with an adjacent enemy to avoid the attack. Choose an adjacent enemy and attempt to Reposition it. Instead of the normal results of Reposition, use the following. --- **Critical Success** You swap places with the target enemy and the enemy becomes the target of the triggering attack. **Success** As critical success, except the target has lesser cover against the triggering attack, and you lose your panache. **Failure** You lose your panache. **Critical Failure** You become off-guard against the triggering attack, and you lose your panache."
+ },
+ {
+  "id": "sword-and-pistol",
+  "name": "Sword and Pistol",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're comfortable wielding a firearm or crossbow in one hand and a melee weapon in the other, combining melee attacks with shots from the firearm. When you make a successful ranged Strike against an enemy within your reach with your one-handed firearm or one-handed crossbow, that enemy is off-guard against your next melee attack with a one-handed melee weapon. When you make a successful melee Strike against an enemy with your one-handed melee weapon, the next ranged Strike you make against that enemy with a one-handed firearm or one-handed crossbow doesn't trigger reactions that would trigger on a ranged attack but not a melee attack, such as Reactive Strike. Either of these benefits is lost if not used by the end of your next turn."
+ },
+ {
+  "id": "sword-light-wave",
+  "name": "Sword-light Wave",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spirit Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You channel spiritual energy through your weapon, unleashing it as a torrent of devastating power. Make a ranged Strike against an opponent within 60 feet using a one-handed, agile, or finesse melee weapon, or your fist unarmed attack. The attack is made at your normal proficiency with the chosen weapon or fist unarmed attack and has the same traits, damage dice, and runes, but all damage dealt by the attack is spirit damage."
+ },
+ {
+  "id": "sword-of-sealing",
+  "name": "Sword of Sealing",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spirit Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your spiritual power pierces both body and soul, pinning your foe in place. Make a melee Strike with a one-handed, agile, or finesse weapon, or your fist unarmed attack. On a successful hit, the target must succeed at a save against the higher of your class DC or your spell DC, or become immobilized. The target can end this immobilization with a successful Escape attempt using the higher of your class DC or your spell DC as the Escape DC."
+ },
+ {
+  "id": "swordlord-exile",
+  "name": "Swordlord Exile",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Aldori Duelist Dedication",
+   "you have broken or forsaken the Aldori swordpact"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are a swordlord exile. You have abandoned or been abandoned by the Aldori Academy. Aldori swordlords are honor-bound to challenge you on sight. Additionally, your unbridled skill strikes terror in those around you. You can use Dueling Lore instead of Intimidation to Coerce and Demoralize while your Aldori Dueling Sword is visible to the target of your attempt. With broken pride, your blade is now a disgraced tool used to remove obstacles between you and your goals, whatever they may be. The first time you hit a creature with an Aldori dueling sword each round, you deal 5 additional precision damage. --- **Special** You can't take both this feat and Aldori Swordlord."
+ },
+ {
+  "id": "sympathetic-vulnerabilities",
+  "name": "Sympathetic Vulnerabilities",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [
+   "Exploit Vulnerability",
+   "mortal weakness or personal antithesis"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you apply your will to invoke a vulnerability, the result is more powerful, and the vulnerability ripples out in a web from your main target to affect a broader range of creatures. This has one of two effects, based on the type of vulnerability you invoked. While you have mortal weakness applied, your Strikes also apply that weakness against any creature that has that weakness, not just creatures of the exact same kind. For instance, if you used mortal weakness against a cinder dragon to apply its weakness to cold to your Strikes, those Strikes would also apply to the weakness to cold of fire elementals or any other creature with a weakness to cold. While you have personal antithesis applied to a non-humanoid creature, you can apply your custom weakness to all creatures of the exact same kind. For example, if you used personal antithesis against an ort, the custom weakness would apply to other orts but not to other types of devils."
+ },
+ {
+  "id": "symphony-of-the-muse",
+  "name": "Symphony of the Muse",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [
+   "Harmonize"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have learned how to weave countless performances together into a solo symphony with multitudinous effects. You are no longer limited to a single composition each turn or a single composition at a time; when you use a new composition, all previous compositions' effects continue for their remaining duration."
+ },
+ {
+  "id": "symphony-of-the-unfettered-heart",
+  "name": "Symphony of the Unfettered Heart",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "bard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You learn the Symphony of the Unfettered Heart composition spell, which enables you to protect an ally against incapacitating conditions."
+ },
+ {
+  "id": "synchronous-slither",
+  "name": "Synchronous Slither",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "nagaji"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within your reach leaves a square during a move action they're using and ends their movement adjacent to an enemy. --- You've learned to travel at your ally's rhythm and use their movement to adjust your own position. You Stride up to half your speed. This movement doesn't trigger reactions from the enemy your ally moved adjacent to."
+ },
+ {
+  "id": "syu-tak-nwas-deadly-hair",
+  "name": "Syu Tak-Nwa's Deadly Hair",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "Living Hair"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your hair unarmed attack deals 1d6 bludgeoning damage and gains the grapple trait."
+ },
+ {
+  "id": "syu-tak-nwas-hexed-locks",
+  "name": "Syu Tak-Nwa's Hexed Locks",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "Living Hair"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your hair unarmed attack gains the reach trait. You can deliver hexes through your hair. When you successfully cast a hex focus spell that requires 2 or more actions to cast and that doesn't require a spell attack roll, if your target is within your reach, as part of the spellcasting activity you can make a hair Strike against the foe before applying any effects of the hex. If this Strike misses, the hex has no effect."
+ },
+ {
+  "id": "syu-tak-nwas-skillful-tresses",
+  "name": "Syu Tak-Nwa's Skillful Tresses",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "witch"
+  ],
+  "prerequisites": [
+   "Living Hair"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can expertly control your living hair and use it to perform various tasks. You can perform simple Interact actions with your hair such as opening an unlocked door or picking up objects. Your hair can't perform actions that require fingers or significant manual dexterity, including any action that would require a check to accomplish. Your hair can hold items of up to 1 Bulk, but can't Activate or attack with any items it's holding."
+ },
+ {
+  "id": "tactical-cadence",
+  "name": "Tactical Cadence",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Cadence Call"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your remarkable breath control and concise instructions allow you to coordinate your allies more effectively, even in desperate situations. When you grant allies the quickened condition using Cadence Call, they can use the extra action to either Stride or Strike, and they aren't Slowed 1 on their following turn if they use the extra action."
+ },
+ {
+  "id": "tactical-debilitations",
+  "name": "Tactical Debilitations",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "scoundrel racket",
+   "Debilitating Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You learn new debilitations that grant you tactical advantages against your foes. Add the following debilitations to the list you can choose from when you use Debilitating Strike. - **Debilitation** The target can't use reactions. - **Debilitation** The target can't flank or contribute to allies' flanking."
+ },
+ {
+  "id": "tactical-entry",
+  "name": "Tactical Entry",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "master in Stealth"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** You rolled Stealth for initiative in this encounter, and neither you nor any enemies have acted yet. --- You Stride. This movement doesn't trigger any reactions."
+ },
+ {
+  "id": "tactical-excellence",
+  "name": "Tactical Excellence",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Commander Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You add two new mobility or offensive tactics to your folio and increase your maximum number of tactics prepared by 1. --- **Special** You can select this feat a second time at 8th level; when you do, you may choose your new tactics from either mobility or offensive tactics you do not already know or from any of the expert tactics you have access to."
+ },
+ {
+  "id": "tactical-expansion",
+  "name": "Tactical Expansion",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your folio is filled with tactics and techniques you've devised based on study and experience. Add two additional tactics you qualify for to your folio. --- **Special** You can take this feat multiple times, adding two new tactics to your folio each time."
+ },
+ {
+  "id": "tactical-guidance",
+  "name": "Tactical Guidance",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Captain Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can provide tactical guidance to help your follower act more efficiently. You can spend 2 actions to Direct your Follower instead of 1. If you do, your follower gains an additional action."
+ },
+ {
+  "id": "tactical-reflexes",
+  "name": "Tactical Reflexes",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "fighter"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are particularly swift at punishing foes who leave you openings. At the start of each of your turns when you regain your actions, you gain an additional reaction that can be used only to make a Reactive Strike."
+ },
+ {
+  "id": "tag-team",
+  "name": "Tag Team",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Sniping Duo Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You or your spotter misses with a Strike against a creature, and the creature is within the other's melee reach or first range increment. --- Your skilled teamwork with your spotter enables you both to assist one another when you falter, using either other's failures as opportunities to strike. If you used Tag Team after your spotter missed the triggering Strike, make a ranged Strike against the same target with a -2 penalty. If you used this reaction after you missed the triggering Strike, your spotter can use their reaction to make a melee or ranged Strike against the same target. Strikes granted by this feat don't count toward your or your spotter's multiple attack penalty and your or your spotter's multiple attack penalty doesn't apply to the granted Strike."
+ },
+ {
+  "id": "tail-guard",
+  "name": "Tail Guard",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Thlipit Contestant Dedication",
+   "unarmed attack with your tail"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature enters a square that would flank you. --- Enemies who attempt to stab you in the back will be unhappy to find your lashing tail on guard. Make a melee Strike against the triggering creature. If your attack is a critical hit, the movement is disrupted. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "tail-snatch",
+  "name": "Tail Snatch",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "vanara"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can whip your tail around to lash items from the unwary's grip. You attempt to Disarm a creature, ignoring the requirement that you must have at least one hand free. As normal, your tail can't hold the items it disarms."
+ },
+ {
+  "id": "tail-spin",
+  "name": "Tail Spin",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "tailed goblin heritage",
+   "Hard Tail"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You excel at using your tail as a weapon to upend your foes. Attempt a single Athletics check to Trip: Athletics up to two adjacent creatures. If you roll a success against a target, you get a critical success against that target instead."
+ },
+ {
+  "id": "take-in-the-catch",
+  "name": "Take in the Catch",
+  "level": 12,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Take in the Catch Source High Seas pg. 107 Archetype Marine Marauder Prerequisites Marine Marauder Dedication Requirements You’re holding a net. Your skills in marine fishing can also be applied to combat. Attempt to Grapple a creature with your net, with the normal results. Then you Step, Interact to draw a weapon, and Strike the creature you attempted to grapple. If you succeeded on your check to Grapple, the creature remains grabbed after your Step."
+ },
+ {
+  "id": "take-the-wheel",
+  "name": "Take the Wheel",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Trick Driver Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are adjacent to a vehicle's point of entry. --- Diving into a moving vehicle and seizing the controls is nothing new for you. You Board and Take Control of the adjacent vehicle."
+ },
+ {
+  "id": "takedown-expert",
+  "name": "Takedown Expert",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've mastered combat practices that let you get up close and bring down perpetrators alive. You can use your Intelligence modifier on attack rolls for an attack stratagem if you're using a weapon of the club group in one hand (like a club or staff), in addition to the usual weapons, and those Strikes qualify for your strategic strike. Additionally, you can make any of your Strikes nonlethal without taking the normal –2 penalty."
+ },
+ {
+  "id": "talisman-esoterica",
+  "name": "Talisman Esoterica",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "esoterica",
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to assemble the supernatural objects in your esoterica into a number of temporary talismans. Each day during your daily preparations, you can make two talismans with an item level no higher than half your level. You must know each talisman's formula. A talisman created this way is a temporary item and loses its magic the next time you make your daily preparations. You know the formulas for all common talismans in GM Core of your level or lower. You remember your talisman formulas through oral tradition or mnemonics, so you don't need a formula book for them."
+ },
+ {
+  "id": "talismanic-sage",
+  "name": "Talismanic Sage",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Talisman Dabbler Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Normally, affixing more than one talisman to an item causes the talismans to be suppressed, but when you Affix a Talisman, you can specially treat one item you're working on, allowing it to have two active talismans at once. This special treatment ends if you use Affix a Talisman to treat a new item for this ability."
+ },
+ {
+  "id": "tandem-auras",
+  "name": "Tandem Auras",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Battle Harbinger Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to maintain multiple auras at once, reinforcing them simultaneously. When you Sustain a battle aura, you can also Sustain a different battle aura you have active."
+ },
+ {
+  "id": "tandem-movement",
+  "name": "Tandem Movement",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "summoner",
+   "tandem"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You and your eidolon move together. You each use a single action to Stride. Either of you that has the corresponding movement type can Burrow, Climb, Fly, or Swim instead."
+ }
+]

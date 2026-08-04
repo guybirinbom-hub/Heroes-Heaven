@@ -1,0 +1,952 @@
+[
+ {
+  "id": "instrument-of-slaughter",
+  "name": "Instrument of Slaughter",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "champion's reaction that grants extra damage with your Strikes (including the desecration, iniquity, and obedience causes)"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your blessed armament thirsts for the blood of your foes. Whenever you critically hit an enemy with a Strike that has the extra damage from your champion's reaction, the target also takes persistent bleed damage equal to two of the weapon's damage dice."
+ },
+ {
+  "id": "instrument-of-zeal",
+  "name": "Instrument of Zeal",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "Blessed Counterstrike feat or Retributive Strike reaction, champion's reaction that grants an ally resistance to an enemy's damage (including the grandeur, justice, liberation, and redemption causes)"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Divine energy fills your weapon. Whenever you critically hit an enemy with Blessed Counterstrike or Retributive Strike, your attack deals an extra weapon damage die, and the target is Slowed 1 on its next turn"
+ },
+ {
+  "id": "insulated-poppet",
+  "name": "Insulated Poppet",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "poppet"
+  ],
+  "prerequisites": [
+   "tsukumogami poppet heritage",
+   "you have a metal or ceramic body"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've used insulating wraps or special glazes to reduce your weakness to current and temperature. You no longer have the weakness to either electricity or cold caused by your tsukumogami heritage."
+ },
+ {
+  "id": "integrated-armament",
+  "name": "Integrated Armament",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "automaton"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mechanical body houses a weapon or shield that you can quickly draw and stow, leaving you prepared for combat at all times. You can use a 1-minute activity, which has the manipulate trait, to integrate a single, one-handed weapon or shield into one of your arms. You can draw or stow this item as an Interact action. Creatures don't automatically see this integrated item when it's stowed and must actively Seek in order to find it. They take a –2 circumstance penalty to any checks to do so. While you are wielding the item, it can't be Disarmed and you can't drop or Release it; you must Interact to store the weapon and free that hand. A creature determined to retrieve the item can do so, but it requires either 1 minute to remove it or extreme violence to your arm—such as physically removing portions of the limb. You can only have one integrated armament at a time, though you can use the 1-minute activity to replace the item or swap the arm in which it's stored. **Enhancement** Your body has more space for integration. You can now either integrate two one-handed weapons, a one-handed weapon and a shield, or a single two-handed weapon which is split across both arms. You can use a single Interact action to draw or store both integrated armaments. When you draw a single weapon, you can choose to hold it with either one hand or both hands."
+ },
+ {
+  "id": "intense-implement",
+  "name": "Intense Implement",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have an exceptional link to your third implement. You gain the adept benefit for your third implement."
+ },
+ {
+  "id": "intensify-investiture",
+  "name": "Intensify Investiture",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "thaumaturge"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Frequency** once per 10 minutes --- Your bond to your invested items enables you to put more of yourself into them. If you next action is to activate an invested item that has a saving throw DC, you can use your thaumaturge class DC instead of the item's DC if it is higher."
+ },
+ {
+  "id": "intercepting-hand",
+  "name": "Intercepting Hand",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spirit Warrior Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your particular martial art includes various defensive actions designed to remove your opponent's ability to cause harm. Your fist unarmed attack gains the disarm trait. You gain the Disarming Interception action."
+ },
+ {
+  "id": "interfering-surge",
+  "name": "Interfering Surge",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Wellspring Mage Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you can see Casts a Spell. **Requirements** You have an unexpended spell slot and can see the triggering spell's manifestations. --- You overcharge the triggering spell with magic. You expend a spell slot and attempt to counteract the triggering spell using the energy of the expended slot. If the triggering spell is in your repertoire and the spell slot you expended was a high enough level to cast it, you take no penalty. Otherwise, you take a -2 penalty to the counteract check if the triggering spell was cast using the same magical tradition you cast, or a -5 penalty if it was cast using a different tradition. If the triggering spell is successfully counteracted, it creates a wellspring surge from its caster in addition to the normal effects of being counteracted. If it isn't counteracted, your expended spell slot creates a wellspring surge from you. --- **Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, primal, or occult)."
+ },
+ {
+  "id": "internal-dialogue",
+  "name": "Internal Dialogue",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "fortune",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Heroic Scion Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** You fail a skill check. --- Past experiences or even past selves whisper words of advice and encouragement when you need them. Roll an Incarnation Lore check and use that result instead of your failed skill check result."
+ },
+ {
+  "id": "internal-respirator",
+  "name": "Internal Respirator",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "android"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body can internally synthesize oxygen for limited periods of time. When you hold your breath, you can do so for an additional hour due to your internal air reservoirs. At the end of this hour, your air reservoirs are expended. Refilling your empty air reservoirs takes 10 minutes of exposure to breathable air."
+ },
+ {
+  "id": "interpose",
+  "name": "Interpose",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Eagle Knight Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You put yourself between an ally and danger. Stride up to your Speed. You must end your movement adjacent to an ally. You and your ally then swap positions with each other. After changing positions, you can make a melee Strike against an enemy within your reach."
+ },
+ {
+  "id": "interposing-crowd",
+  "name": "Interposing Crowd",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Lost in the Crowd"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your enemies can't stop you when there's a host of people between you. Your movement actions don't trigger reactions as long as you remain in a crowd for the entire duration of the action."
+ },
+ {
+  "id": "interrupt-charge",
+  "name": "Interrupt Charge",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A foe within reach attempts to move away from you. **Requirements** You have a hand free. --- You attempt to snag the foe before they run away. Attempt an Athletics check against the higher of the triggering creature's Athletics DC or Fortitude DC. --- **Critical Success** You disrupt the movement. **Success** You are able to slow the triggering creature down. It takes a –10-foot circumstance penalty to its Speed for the rest of its triggering movement. This penalty might cause the triggering creature's movement to end immediately based on its affected Speed. **Failure** As success, but the creature instead takes a –5-foot circumstance penalty to its Speed."
+ },
+ {
+  "id": "interweave-dispel",
+  "name": "Interweave Dispel",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "sorcerer",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "dispel magic in your spell repertoire"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You weave dispelling energy into a spell. If your next action is to cast a single-target spell against an enemy, and you either hit the enemy with the spell attack roll or the enemy fails its saving throw, you can cast Dispel Magic on the enemy as a free action, expending a spell slot as normal and targeting one spell effect affecting the enemy."
+ },
+ {
+  "id": "intimidating-glare",
+  "name": "Intimidating Glare",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Intimidation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can Demoralize with a mere glare. When you do, Demoralize loses the auditory trait and gains the visual trait, and you don't take a penalty if the creature doesn't understand your language."
+ },
+ {
+  "id": "intimidating-spell",
+  "name": "Intimidating Spell",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "emotion",
+   "mental",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "War Mage Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The devastation wrought by your large-scale spells is particularly terrifying. If the next action you use is to Cast a Spell that deals damage in an area, any target who fails their saving throw is also Frightened 1 (or Frightened 2 on a critical failure)."
+ },
+ {
+  "id": "intimidating-strike",
+  "name": "Intimidating Strike",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "emotion",
+   "fear",
+   "fighter",
+   "mental"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your blow not only wounds creatures but also shatters their confidence. Make a melee Strike. If you hit and deal damage, the target is Frightened 1, or Frightened 2 on a critical hit."
+ },
+ {
+  "id": "into-the-fray",
+  "name": "Into the Fray",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Viking Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a one-handed melee weapon in one hand and a shield in another hand. --- You charge into battle with shield-splintering fury. You Leap, Stride, or Swim. Make two melee Strikes during this movement, one with your one-handed melee weapon and one with your shield or a weapon attached to the shield (like a shield boss or shield spikes). You can make these Strikes at any points during your movement, and each must target a different enemy. Both attacks count toward your multiple attack penalty, but don't increase your penalty until you have made both attacks."
+ },
+ {
+  "id": "into-the-future",
+  "name": "Into the Future",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Time Mage Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You know your spell will be needed not now but in a few moments, so you cast your magic into the future. If your next action is to Cast a Spell that takes 1 or 2 actions to cast, the spell's effects occur 1 round later, at the beginning of your next turn, rather than immediately. Targets and choices about the spell must be determined when the spell is cast, and requirements, such as line of sight and line of effect, must be valid both when the spell is cast and when its effects occur. Consequences for the action of Casting the Spell itself, such as a Reactive Strike reaction or ending a foe's fascinated condition by taking a hostile action, aren't delayed."
+ },
+ {
+  "id": "into-the-storm",
+  "name": "Into the Storm",
+  "level": 4,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "text": "Into the Storm Source High Seas pg. 92 Archetype Pirate Prerequisites Pirate Dedication Access You're from the Shackles Many Shackles pirates use the Eye of Abendego to great effect, but none have more familiarity with the storm than the Master of the Gales, ruler of Drenchport and five-time winner of the Free Captains’ Regatta. You’ve learned his crew’s techniques for fighting in severe weather. You reduce circumstance penalties to ranged weapon attacks due to wind or precipitation by 2. You can also use weapons you’re a master in with a –4 circumstance penalty (–2 if you’re legendary) even if wind or precipitation would normally prevent it, such as the effects of wall of wind."
+ },
+ {
+  "id": "inured-to-alchemy",
+  "name": "Inured to Alchemy",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "alchemist",
+   "barbarian",
+   "fighter"
+  ],
+  "prerequisites": [
+   "expert in Fortitude saves"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Access** You're from Alkenstar or the Mana Wastes. --- You've developed control over how your body processes alchemical poisons and drugs. Each of your successful saving throws against an alchemical poison, a drug, or an addiction reduces the stage by 2, or by 1 for a virulent alchemical poison, drug, or addiction. Each critical success reduces the stage by 3, or by 2 for a virulent alchemical poison, drug, or addiction."
+ },
+ {
+  "id": "inventive-offensive",
+  "name": "Inventive Offensive",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "gnome"
+  ],
+  "prerequisites": [
+   "trained in Crafting"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You can jury-rig your weapons to perform in unexpected ways. When you use this ability, add one of the following weapon traits to a melee weapon you wield: deadly d6, disarm, nonlethal, shove, trip, versatile B, versatile P, or versatile S. You cannot add a trait that the weapon already has. The weapon retains this trait until you a successfully hit and deal damage with the weapon. The weapon retains this trait only while you wield it, and you can have only one weapon modified in this way at any time. If you have expert proficiency in Crafting, you can use this feat as a 2-action activity. If you have legendary proficiency in Crafting, you can apply two weapon traits from the list when using this feat."
+ },
+ {
+  "id": "inventor",
+  "name": "Inventor",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "downtime",
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Crafting"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are a genius at Crafting, easily able to determine how things are made and create new inventions. You can spend downtime to invent a common formula that you don't know. This works just like the Craft activity: you spend half the Price of the formula up front, attempt a Crafting check, and on a success either finish the formula by paying the difference or work for longer to decrease the Price. The difference is that you spend the additional time in research, design, and development, rather than in creating an item. Once it's complete, you add the new formula you invented to your formula book. The GM might allow you to invent uncommon or rare formulas, typically with an increased DC. You need the Alchemical Crafting feat to invent alchemical formulas and the Magical Crafting feat to invent magical formulas."
+ },
+ {
+  "id": "investigators-stratagem",
+  "name": "Investigator's Stratagem",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Investigator Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You play out battles in your head, allowing you to Strike when the time is right. You gain the Devise a Strategem action; however, when you substitute its result for your attack roll, you can't use your Intelligence modifier in place of your Strength or Dexterity modifier. You also can't use your Intelligence modifier on other rolls from abilities that expand Devise a Stratagem, such as the Athletic Strategist feat."
+ },
+ {
+  "id": "invigorating-mercy",
+  "name": "Invigorating Mercy",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [],
+  "text": "Invigorating Mercy Source Advanced Player's Guide pg. 119 Archetype Blessed One (Level 8) Prerequisites Mercy Your divine touch rejuvenates the weak and tired. When you use Mercy, you can instead attempt a counteract check to remove the clumsy or enfeebled conditions, using the source of that condition to determine the counteract level and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns at the end of your next turn."
+ },
+ {
+  "id": "invigorating-surge",
+  "name": "Invigorating Surge",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Wildspell Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your Spellsurge aura is active. --- You alter the aura of magic surrounding you to protect a nearby ally. You grant one creature within your *spellsurge* aura temporary Hit Points equal to your level. These temporary Hit Points last for as long as the target is in the aura. Using this ability again cancels the temporary Hit Points from any previous usage. If you spend a Mythic Point as part of this action, you grant the temporary Hit Points to a number of creatures up to half your level that are within the aura."
+ },
+ {
+  "id": "inviolable",
+  "name": "Inviolable",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your deity punishes creatures that harm you. Creatures that hit you with an attack take 3d6 damage every time they do. If you have the holy or unholy trait, you can apply it to this damage."
+ },
+ {
+  "id": "invoke-offense",
+  "name": "Invoke Offense",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "morph",
+   "spirit"
+  ],
+  "prerequisites": [
+   "Rivethun Invoker Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're under the effects of Enter Spirit Trance. --- You manifest a physical attack of the spirits all around you, such as the claw of an animal spirit or the whipping vine of a nature spirit. You gain an unarmed attack that deals 1d8 spirit damage for the duration of your spirit trance. This unarmed attack is in the brawling weapon group and has the agile, finesse, and magical traits. At 5th level, this unarmed attack gains the benefits of a striking rune. At 12th level, this unarmed attack gains the benefits of a greater striking rune. At 20th level, this unarmed attack gains the benefits of a major striking rune."
+ },
+ {
+  "id": "iron-fists",
+  "name": "Iron Fists",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your fists have been forged by battle, your naturally tough skin and dense bone further hardened by conflict. Your fist unarmed attacks no longer have the nonlethal trait and gain the shove weapon trait."
+ },
+ {
+  "id": "iron-lung",
+  "name": "Iron Lung",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Golem Grafter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your lungs are infused with the resilience of iron. Treat the result of your save against an inhaled poison as one degree of success better than you rolled. Additionally, you gain the Exhale Poison ability."
+ },
+ {
+  "id": "iron-repercussions",
+  "name": "Iron Repercussions",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "obedience cause"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Disobeying your Iron Command has lasting consequences. If an enemy refuses to kneel to you, you can deal persistent mental damage instead of normal mental damage. You must decide whether the mental damage will be persistent before your enemy chooses whether to kneel or not. The amount of damage is unchanged."
+ },
+ {
+  "id": "irrepressible",
+  "name": "Irrepressible",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "text": "Irrepressible Source Player Core pg. 61 You are easily able to ward off attempts to play on your fears and emotions. When you roll a success on a saving throw against an emotion effect, you get a critical success instead. If your heritage is gutsy halfling, when you roll a critical failure on a saving throw against an emotion effect, you get a failure instead."
+ },
+ {
+  "id": "irrepressible-ganzi",
+  "name": "Irrepressible (Ganzi)",
+  "level": 1,
+  "category": "general",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [],
+  "text": "Irrepressible (Ganzi) Source War of Immortals pg. 53 Your slight otherworldly nature allows you to easily brush off emotional manipulation. When you roll a success on a save against an emotion effect, you get a critical success instead."
+ },
+ {
+  "id": "irrepressible-halfling",
+  "name": "Irrepressible (Halfling)",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "halfling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are easily able to ward off attempts to play on your fears and emotions. When you roll a success on a saving throw against an emotion effect, you get a critical success instead. If your heritage is gutsy halfling, when you roll a critical failure on a saving throw against an emotion effect, you get a failure instead."
+ },
+ {
+  "id": "irrepressible-nephilim",
+  "name": "Irrepressible (Nephilim)",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "nephilim"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your slight otherworldly nature allows you to easily brush off emotional manipulation. When you roll a success on a save against an emotion effect, you get a critical success instead."
+ },
+ {
+  "id": "iruxi-glide",
+  "name": "Iruxi Glide",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [
+   "cloudleaper lizardfolk heritage"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You glide slowly toward the ground, 5 feet down and up to 25 feet forward through the air. As long as you spend at least 1 action gliding each round and haven't yet reached the ground, you remain in the air at the end of your turn."
+ },
+ {
+  "id": "iruxi-spirit-strike",
+  "name": "Iruxi Spirit Strike",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your iruxi unarmed attacks channel the spiritual energy of your ancestors. Any unarmed attacks you acquire from the lizardfolk ancestry, lizardfolk heritages, or lizardfolk ancestry feats gain the effects of a *ghost touch* property rune."
+ },
+ {
+  "id": "iruxi-unarmed-cunning",
+  "name": "Iruxi Unarmed Cunning",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [],
+  "text": "Iruxi Unarmed Cunning Source Character Guide pg. 59 You make the most of your iruxi unarmed attacks. Whenever you score a critical hit with a claw or an unarmed attack you gained from a lizardfolk ancestry feat, you apply the unarmed attack’s critical specialization effect."
+ },
+ {
+  "id": "its-alive",
+  "name": "It's Alive!",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Clockwork Reanimator Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've mastered the use of electrical energy to power your clockwork creations. Whenever your construct companion takes electricity damage, it gains temporary Hit Points equal to either half the electricity damage it took or your level, whichever is lower. These temporary Hit Points last for up to 1 minute."
+ },
+ {
+  "id": "ive-had-many-jobs",
+  "name": "I've Had Many Jobs",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "downtime",
+   "reincarnated"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Finding and excelling at odd jobs is child's play to one who has worked many occupations during many lives. When you attempt to Earn Income, you function as if you were trained in the skill used. If you're at least an expert in the skill used, the DC for your skill check is reduced by 2."
+ },
+ {
+  "id": "ivy-district-influencer",
+  "name": "Ivy District Influencer",
+  "level": 3,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Dandy Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "After mingling alongside the tastemakers of the Ivy District, you understand how rumors spread through larger settlements. When you use the Influence Rumor downtime activity in a city or metropolis, decrease the DC of the check by 5. When you're in the metropolis of Absalom, the DC is reduced by an additional 5. At the GM's discretion, this second reduction might apply to the DC of Influence Rumor's skill check when you manipulate a rumor outside of Absalom but among a group of Absalomians."
+ },
+ {
+  "id": "ivy-playhouse-strike",
+  "name": "Ivy Playhouse Strike",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Dandy Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've spent so many hours at the Ivy Playhouse or sparring with the Street Performers and Actors' Guild that you've picked up some stage combat techniques. In a fight, you can apply these approaches to make an attack less harmful but more confounding to your foes. Make a melee Strike. If you hit, you take a circumstance penalty to damage equal to the number of weapon damage dice, and the damage gains the nonlethal trait. However, the target is perplexed by the theatricality of your attack and becomes Clumsy 1 until the end of your next turn."
+ },
+ {
+  "id": "jealous-grip",
+  "name": "Jealous Grip",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "dragonet"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature in your reach that you're aware of attempts to Disarm you, or damage or Steal an item in your possession. --- You are protective of your hoard, and woe betide anyone who tries to take what's yours. Make a melee Strike against the triggering creature. If your attack is a critical hit and the triggering action was a manipulate action, you disrupt that action. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "jotunborn-weapon-familiarity",
+  "name": "Jotunborn Weapon Familiarity",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "jotunborn"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain access to all uncommon weapons with the jotunborn trait. You have familiarity with weapons with the jotunborn trait plus the bola, greataxe, halberd, maul, longspear, and war flail—for the purpose of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons."
+ },
+ {
+  "id": "jotuns-boost",
+  "name": "Jotun's Boost",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "jotunborn",
+   "manipulate"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have at least one hand free and are adjacent to an ally. --- Your giant might allows you to pick up your allies and hurl them across the battlefield. Pick up an adjacent willing ally who is smaller than you and toss them to an unoccupied space you can see within 25 feet; if you have two hands free, you can instead toss them into a space within 30 feet. Your ally's movement doesn't trigger reactions. Your ally ends this movement on their feet and doesn't take damage from the fall. If your ally ends this movement within melee reach of at least one enemy, they can make a melee Strike against an enemy within their reach as a reaction."
+ },
+ {
+  "id": "jotuns-grasp",
+  "name": "Jotun's Grasp",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "jotunborn"
+  ],
+  "prerequisites": [
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've mastered a technique that allows you to close the gap on foes and wrestle them into submission. You Step and attempt an Athletics check to Grapple a creature."
+ },
+ {
+  "id": "journey-of-the-sky-chariot",
+  "name": "Journey Of the Sky Chariot",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a body ikon or worn ikon --- Small wings, flaming wheels, or another signifier of flight sprout from your ikon as it gains the power to lift you from the ground. Your ikon gains the following effects. **Immanence** Your ikon keeps you hovering even without conscious effort. You can remain in the air at the end of this turn, even if you didn't use a Fly action. **Transcendence—Race the Skies** ⟨1⟩ (concentrate, transcendence)"
+ },
+ {
+  "id": "jousting-mount",
+  "name": "Jousting Mount",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Apocalypse Rider Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While riding your apocalypse mount, any two-handed weapon you wield gains the jousting trait with a die size equal to one die size lower than the weapon's normal damage die."
+ },
+ {
+  "id": "juggernaut-charge",
+  "name": "Juggernaut Charge",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wearing medium or heavy armor. --- As you move forward in a rush, you put the weight of your armor behind an attack that can drag a foe with you. You Stride. If you end your movement within melee reach of at least one enemy, you can make a melee Strike against that enemy, then Stride again. If your Strike hit and dealt damage, that enemy is pulled with you and is moved the same direction and distance as your second Stride."
+ },
+ {
+  "id": "juggle",
+  "name": "Juggle",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "concentrate",
+   "general",
+   "manipulate",
+   "skill"
+  ],
+  "prerequisites": [
+   "Dexterity +3",
+   "trained in Performance"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can Juggle items and still use your hands between tosses. You can use the Juggle action in several ways. You can start to Juggle with a single stored item, an item you were carrying, or an unattended item within your reach. The item must be of light or negligible Bulk. You Juggle the item until the end of your next turn, unless you use this feat against next turn to continue Juggling (see below). While you are Juggling, you can use this action again to add another item to the Juggle, which must meet all the same requirements. You can Juggle a number of items equal to one more than the number of hands you are using to Juggle. You can also use this action to continue Juggling as long as you aren't fatigued. When you do, you continue to Juggle until the end of your next turn. If you do not continue Juggling by the end of your turn, you cease Juggling and you drop all the items. You become fatigued if you continue Juggling for more than 10 minutes (60 rounds) within the course of an hour. As long as you're Juggling fewer than your maximum number of items, you have a free hand. You can wield weapons you are Juggling (but not shields or other items) as long as they can be wielded in one hand. For example, while you Juggle a dagger in one hand and wield a shield in the other, you are wielding the dagger but still have a free hand to Cast a Spell with a material component. Juggling two or more weapons with one hand doesn't allow you to use feats that require two weapons each held"
+ },
+ {
+  "id": "jumping-jenny-display",
+  "name": "Jumping Jenny Display",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Firework Technician Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "This multi-sequence rocket blasts confetti at a series of altitudes. While the design is intended to delight children of all ages, you've found it has an unexpected side effect of confounding enemy fliers. You gain the Jumping Jenny fireworks display."
+ },
+ {
+  "id": "jungle-runner",
+  "name": "Jungle Runner",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "vanara"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You run through the jungle as easily as you would through an open field. You ignore difficult terrain from underbrush within forests and jungles. You can always use the Take Cover action when you're within forest or jungle terrain to gain cover, even if you aren't adjacent to an obstacle you can Take Cover behind."
+ },
+ {
+  "id": "jungle-strider",
+  "name": "Jungle Strider",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "tripkee"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You are adept at dodging roots, foliage, and other jungle obstacles. You ignore difficult terrain in forests and jungles. In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of plant material, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead."
+ },
+ {
+  "id": "junk-tinker",
+  "name": "Junk Tinker",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can make useful tools out of even twisted or rusted scraps. When using the Crafting skill to Craft, you can make level 0 items, including weapons and armor, out of junk. This reduces the Price to one-quarter the usual amount but always results in a shoddy item. Shoddy items normally give a penalty, but you don't take this penalty when using shoddy items you made (nor does the worse check penalty of shoddy armor you made apply to you). You can also incorporate junk to save money while you Craft any item. This grants you a discount on the item as if you had spent 1 additional day working to reduce the cost, but the item is obviously made of junk. At the GM's discretion, this might affect the item's resale value depending on the buyer's tastes."
+ },
+ {
+  "id": "just-the-facts",
+  "name": "Just the Facts",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [
+   "Thorough Research"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You fundamentally understand everything to the point where your research can't possibly be wrong. You are permanently quickened and can use the extra action to Recall Knowledge. In addition, you gain the following benefits with Recall Knowledge. - Your checks to Recall Knowledge are no longer secret. - When you Recall Knowledge, you use the outcome for one degree of success better than the result of your check. - If an effect (such as Dubious Knowledge) would give you inaccurate information from your Recall Knowledge check, you know which information is inaccurate. - When one of your allies Recalls Knowledge and gains false information, you also know that information is inaccurate if they share it with you"
+ },
+ {
+  "id": "just-the-tool",
+  "name": "Just the Tool",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "prerequisites": [
+   "Mind Smith Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You temporarily change your weapon's shape to assist you in the field. You morph your weapon into a single simple tool, such as a shovel or crowbar, to help with a mundane task. You can't replicate entire toolkits with this ability. You can use this action again to change your mind weapon back to a weapon."
+ },
+ {
+  "id": "kaleidoscopic-entreaty",
+  "name": "Kaleidoscopic Entreaty",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "concentrate",
+   "spellshape",
+   "visual"
+  ],
+  "prerequisites": [
+   "Rivethun Emissary Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "If your next action is to cast Entreat Spirit, you can cause that spirit to unleash a brilliant display of color, light, and sound in a centered on you. Each creature in the area must attempt a save against your class DC or spell DC with the following results. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 round. **Failure** The creature is dazzled for 1 minute. **Critical Failure** The creature is blinded for 1 round and dazzled for 1 minute."
+ },
+ {
+  "id": "keen-magical-detection",
+  "name": "Keen Magical Detection",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "fortune",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You sense magical dangers. When using the Detect Magic exploration activity, you can roll initiative twice and use the better result so long as at least one opponent has a magical effect or magic item and is in range of your Detect Magic."
+ },
+ {
+  "id": "keep-pace",
+  "name": "Keep Pace",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bounty Hunter Dedication or Game Hunter Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your prey is within reach and attempts to move away from you. --- **Bounty Hunter** Once you are upon your prey, they can't escape. **Game Hunter** When your hunted prey tries to bolt, you follow. Stride up to your Speed, following the foe and keeping it in reach throughout its movement until it stops moving or you've moved your full Speed. You can use Keep Pace to Burrow, Climb, Fly, or Swim instead of Stride if you have the corresponding movement type."
+ },
+ {
+  "id": "kip-up",
+  "name": "Kip Up",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Acrobatics"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "You stand up. This movement doesn't trigger reactions."
+ }
+]

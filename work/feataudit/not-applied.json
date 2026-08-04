@@ -1,0 +1,298 @@
+{
+ "skipped": [
+  "a-thousand-cries-for-help: Constant Truespeech is a language grant, and languages are a display list with no derived statistic (the same call judge-1 made for ancestral-linguistics); the Mythic Point clause is a spend-to-activate Diplomacy option.",
+  "abjure-harm: actionCost is 'reaction' — a Mythic-Point reaction resolved at the table for one triggering Strike, exactly what judge-0 itself refuted for adamantine-body.",
+  "acute-scent: The record ALREADY carries whileActive [{state:'rage', senses:[{name:'scent',range:30,acuity:'imprecise'}]}], consumed by activeStateGrants in derive.ts.",
+  "acute-vision: The record ALREADY carries whileActive [{state:'rage', senses:[{name:'darkvision',acuity:'precise'}]}], consumed by activeStateGrants in derive.ts.",
+  "adamantine-fists: Precious-material tagging only matters when it meets a target's resistances — it resolves on the GM's side of the screen, and no player-side number changes.",
+  "advanced-bow-training: Already delivered: featGrants.ts line 233 carries weaponFamiliarity {weapons:['daikyu','hongali-hornbow','phalanx-piercer'], mirrorCategory:'martial'}.",
+  "advanced-firearm-familiarity: Already delivered: featGrants.ts line 235 carries a weaponFamiliarity grant with mirrorCategory 'martial'; the uncommon-item access clause is a shopping permission, not a statistic.",
+  "advanced-monastic-weaponry: Already delivered: featGrants.ts line 234 carries weaponFamiliarity {weapons:['butterfly-sword','feng-huo-lun','heavenly-rolling-flames','hook-sword'], mirrorCategory:'martial'}.",
+  "advanced-qi-spells: already has effectChoices — not overwriting",
+  "advanced-shooter: Already delivered: featGrants.ts line 242 carries a weaponFamiliarity grant with mirrorCategory 'martial' for the advanced firearms/crossbows.",
+  "agile-maneuvers: It lowers MAP only for Disarm/Grapple/Reposition/Shove/Trip, which the app resolves as table-side Athletics actions with no computed MAP (mapStep exists only on strikes).",
+  "agile-shield-grip: A 1-action grip change with requirements, toggled at the table; the damage die and traits it edits belong to the shield boss/spikes ITEM, which the item editor already owns.",
+  "amphibious-form: Already delivered — companions.ts line 794 special-cases featIdSet.has('amphibious-form') and pushes 'swim 25 feet (amphibious)' onto the eidolon's speeds; the missing COMPANION_MODS row is cosmetic.",
+  "ancillary-motes: already has usesUpgrade — not overwriting",
+  "apparition-sense: already has senses — not overwriting",
+  "arcane-breadth: already has spellSlotBonus — not overwriting",
+  "arcane-safeguards: The feat grants only the Resist Magic REACTION; its +1 applies to one triggering effect when the reaction is spent — a table-resolved reaction, as judge-1 itself ruled for apparition-cloud.",
+  "armor-in-earth: A 1-action kineticist impulse with a Dismiss clause — an activated effect resolved in play, not a standing sheet value.",
+  "armored-resistance: mode \"armored-resistance\" already exists",
+  "ash-piercing-gaze: already has senses — not overwriting",
+  "divine-breadth: already has spellSlotBonus — not overwriting",
+  "echolocation: mode \"echolocation\" already exists",
+  "enduring-quickness: Per-turn action economy, which the app does not model — the same judge ruled divine-reflexes (an extra reaction each turn) NEEDS_NOTHING for exactly this reason, and quickened already exists as a play-state toggle the player can simply leave on.",
+  "athletes-ally: actionCost is 1 action with a 'wielding your warshard weapon' requirement and a Mythic Point cost — an activity resolved at the table, not a standing check change.",
+  "attuned-electroreceptors: already has senses — not overwriting",
+  "avenger-of-wrath: already has grantsFeats — not overwriting",
+  "axe-climber: mode \"axe-climber\" already exists",
+  "battle-scars: mode \"battle-scars\" already exists",
+  "bond-companion: The designated companion is ANOTHER player character and Fortify Focus spends your action to refill THEIR Focus Point - nothing on your own sheet changes.",
+  "bonded-focus: False premise: refocusRestore ('all') is a real Feat field (types.ts:733, applied build.ts:2588, rendered SpellsTab ~992) and core.json already carries refocusRestore:\"all\" on this record.",
+  "brain-drain: already has limitedUses — not overwriting",
+  "brinesoul: Grants only the Salt Wound reaction - an action resolved at the table whose damage lands on the creature that hit you; no sheet value is missing.",
+  "broken-chain-dedication: A per-use Mythic Point spend on an Escape/Force Open check, an Ultimatum action, and a GM-adjudicated anathema - all table/GM side.",
+  "buzzing-death-cicadas: The fly Speed goes to the swarmkeeper's SWARM, not the character, and Death Drone is an action resolved at the table.",
+  "cackle: already has focusSpells — not overwriting",
+  "calm-and-centered: The app never decrements frightened/stupefied itself - condition values are typed in by the player and restConditions only steps Doomed/Drained - so there is no computed value this changes.",
+  "canopy-predator: mode \"canopy-predator\" already exists",
+  "celestial-strikes: Adding the holy and magical traits changes no number on the player's sheet - both matter only when resolving against a creature's weaknesses/resistances, on the GM's side of the screen.",
+  "ceremony-of-fortification: A one-Strike, one-round resistance triggered by spending another action - transient and table-resolved, exactly what this judge ruled NEEDS_NOTHING for body-barrier.",
+  "ceremony-of-growth: already has sizeOverride — not overwriting",
+  "ceremony-of-the-strengthened-hand: Duplicate record: core.json holds ceremony-of-strengthened-hand (clean, actionCost, prerequisite) plus this raw AoN dump AND aon-ceremony-of-the-strengthened-hand; the fix belongs on the canonical id only - this one needs deduplication, not data.",
+  "champions-reaction: Grants a REACTION resolved at the table whose benefit lands on the triggering enemy (Retributive Strike) or an ally (Glimpse of Redemption, Liberating Step) - no player-side value is missing.",
+  "chemical-contagion: Read the granted feature: toxicologist Greater Field Discovery sprays the poison onto ANOTHER creature adjacent to the one that failed its save - entirely target-side.",
+  "conflux-focus: False premise: refocusRestore is a real Feat field consumed at build.ts:2588 and core.json already carries refocusRestore:2 on this record (one of 18 such feats).",
+  "conflux-wellspring: Same false premise - the record already carries refocusRestore:3, and SpellsTab reads character.focus.refocusRestore for the Refocus button label.",
+  "crossblooded-evolution: already has effectChoices — not overwriting",
+  "crown-of-bone: already has grantedStrikes — not overwriting",
+  "crunch: already has grantedStrikes — not overwriting",
+  "crystal-keeper-dedication: already has resistances — not overwriting",
+  "cyclonic-ascent: mode \"cyclonic-ascent\" already exists",
+  "deadeye: mode \"deadeye\" already exists",
+  "deadly-butterfly: already has critSpec — not overwriting",
+  "defiant-banner: mode \"defiant-banner\" already exists",
+  "deitys-protection: mode \"deitys-protection\" already exists",
+  "dire-form: mode \"dire-form\" already exists",
+  "dire-growth: mode \"dire-growth\" already exists"
+ ],
+ "engineWork": [
+  {
+   "id": "additional-ikon",
+   "name": "Additional Ikon",
+   "reason": "Grants a fourth ikon of any type — an extra exemplar ikon selection the builder should offer; effectChoices has no ikon filter and the ikon list is too large to enumerate as options."
+  },
+  {
+   "id": "additional-servings",
+   "name": "Additional Servings",
+   "reason": "Raises versatile vials per day to 5 (then 6, then 7 on repeat takes) — a tracked daily resource count on the sheet; no legal field sets a class resource total."
+  },
+  {
+   "id": "advanced-alchemy",
+   "name": "Advanced Alchemy",
+   "reason": "Lets you create 4 alchemical consumables during daily preparations — the app models Advanced Alchemy, and this record sets no item count for the dedication."
+  },
+  {
+   "id": "advanced-efficient-alchemy",
+   "name": "Advanced Efficient Alchemy",
+   "reason": "Raises the advanced alchemy item maximum to 8 + Int (10 + Int at 16th) — a number the modelled Advanced Alchemy panel should show; no legal field sets it."
+  },
+  {
+   "id": "advanced-herbalism",
+   "name": "Advanced Herbalism",
+   "reason": "Raises herbal items created per day with advanced alchemy to 6 (8 on a second take) — a tracked daily item count; no legal field sets it."
+  },
+  {
+   "id": "advanced-order-training",
+   "name": "Advanced Order Training",
+   "reason": "Grants the greater order benefit of whichever Hellknight order you belong to — a concrete benefit conditional on an earlier choice; nothing grants it and no legal field expresses a choice-dependent grant of another record."
+  },
+  {
+   "id": "advanced-poisoncraft",
+   "name": "Advanced Poisoncraft",
+   "reason": "Raises poisons created per day with advanced alchemy to 6 (8 on a second take) — a tracked daily item count; no legal field sets it."
+  },
+  {
+   "id": "agile-grace",
+   "name": "Agile Grace",
+   "reason": "Your multiple attack penalty with agile weapons and agile unarmed attacks becomes –3/–6 instead of –4/–8 — the strike breakdown shows MAP, so this is a wrong number without a fix; no legal field alters MAP."
+  },
+  {
+   "id": "alchemical-power",
+   "name": "Alchemical Power",
+   "reason": "You become an EXPERT in the alchemist class DC — a proficiency rank on a derived sheet number (the class DC shown for the dedication); nothing raises it, and no legal field sets class DC proficiency."
+  },
+  {
+   "id": "amp-focus",
+   "name": "Amp Focus",
+   "reason": "Refocus should restore ALL Focus Points instead of 1. The sheet's Refocus control hardcodes +1 (src/sheet/SpellsTab.tsx, className 'refocus-btn', title 'Refocus (restore 1 focus point)'), and no legal field changes the refocus amount — a refocus-recovery lane is missing."
+  },
+  {
+   "id": "ancestral-mind",
+   "name": "Ancestral Mind",
+   "reason": "Ancestry/heritage innate spells become occult and use the psychic spellcasting attribute for spell attack and spell DC. build.ts computes the innate entry's profile from the granting source (Charisma by default) and there is no field that retunes an existing innate entry's tradition/key attribute — an innate-entry retune lane is missing."
+  },
+  {
+   "id": "armor-regiment-training",
+   "name": "Armor Regiment Training",
+   "reason": "Treats heavy armor as 1 Bulk lighter. Bulk and encumbrance are computed and warned on (bulk carried vs encumberedAt), but no legal field lets a feat adjust an item category's Bulk — a feat→Bulk lane is missing. (The rest — resting in armor and exploration travel Speed — legitimately needs nothing.) Duplicate record of armored-regiment-training; fix both together."
+  },
+  {
+   "id": "armor-specialist",
+   "name": "Armor Specialist",
+   "reason": "Grants the armor specialization effects for every armor you are proficient with — real defensive benefits (e.g. plate's physical resistance, chain's crit-to-hit conversion) that depend on the worn armor's group. Nothing in src models armor specialization at all (no match for 'armor specialization' anywhere in src), and no legal field expresses an armor-group-conditional defence."
+  },
+  {
+   "id": "armored-regiment-training",
+   "name": "Armored Regiment Training",
+   "reason": "Duplicate printing of Armor Regiment Training: treating heavy armor as 1 Bulk lighter is a real change to the tracked Bulk/encumbrance total and no field lets a feat adjust armor Bulk. Resting in armor and the exploration travel-Speed clause need nothing."
+  },
+  {
+   "id": "dogfang-bite",
+   "name": "Dogfang Bite",
+   "reason": "Your beak unarmed attack gains the versatile S trait — a permanent change to a Strike the player uses. grantedStrikes can only CREATE an unarmed attack with traits; there is no lane to add a trait to an unarmed Strike granted elsewhere (the tengu beak), and the dogtooth-tengu heritage's own 'deadly d8' is unmodelled for the same reason."
+  },
+  {
+   "id": "domain-focus",
+   "name": "Domain Focus",
+   "reason": "Refocus completely refills your focus pool instead of restoring 1 point. The sheet has a real Refocus control (SpellsTab.tsx: 'Refocus (restore 1 focus point)'), but there is no field or flag that tells it to restore the whole pool, so this feat is inert."
+  },
+  {
+   "id": "dragon-arcana",
+   "name": "Dragon Arcana",
+   "reason": "Adds ten named draconic-bloodline spells to your spell LIST, widening what you may learn or add to your repertoire. This is exactly the 'let the player pick what the rules give them' case, but no field expands a character's available spell list (innateSpells grants casts, effectChoices/spellFilter picks a specific spell) — the descRefs on this record are display links only."
+  },
+  {
+   "id": "eclectic-skill",
+   "name": "Eclectic Skill",
+   "reason": "Sets your proficiency bonus for UNTRAINED skill checks equal to your level and lets you attempt trained-only (and, at legendary Occultism, expert-only) checks. Every untrained skill modifier on the sheet is wrong without it, and the same lane is missing for Untrained Improvisation (which appears in src only as a feat-grant target, never as a proficiency rule)."
+  },
+  {
+   "id": "efficient-alchemy",
+   "name": "Efficient Alchemy",
+   "reason": "src/sheet/AlchemyPanel.tsx hardcodes `const budget = 4 + intMod` and blocks preparing past it, so a character with this feat is still capped at 4 + Int instead of the printed 6 + Int; no listed field raises the Advanced Alchemy daily budget."
+  },
+  {
+   "id": "efficient-preparation",
+   "name": "Efficient Preparation",
+   "reason": "build.ts sets `commanderTactics = { ..., preparedMax: 3 }` unconditionally, so the extra prepared tactic never arrives; no listed field raises a prepared-tactic count."
+  },
+  {
+   "id": "effortless-reach",
+   "name": "Effortless Reach",
+   "reason": "Permanently adds the reach trait to all your unarmed attacks — a real change to every unarmed strike line — but the strike builder reads traits from the weapon/unarmed record only, and no listed field adds a trait to a character's strikes (the existing feat-level `reach` field sets natural body reach, which would wrongly extend wielded weapons too)."
+  },
+  {
+   "id": "embodiment-of-the-balance",
+   "name": "Embodiment Of The Balance",
+   "reason": "Adds Heal and Harm to the apparition spell repertoire — real, permanent spell access the player never receives; build.ts assembles that repertoire solely from the attuned apparition options' `grantedSpells`, and no listed field lets a FEAT add spells to a repertoire."
+  },
+  {
+   "id": "enlarged-chassis",
+   "name": "Enlarged Chassis",
+   "reason": "Constant enlarge is a real permanent package (Large size, +5 feet reach, +2 status to melee damage, clumsy 1 until the Enhancement removes it) and none of it reaches the sheet — the id appears only as a label in the automaton core-feat option list. The feat fields sizeOverride/reach in build.ts would carry the size and reach half, but the melee-damage bonus and the clumsy have no lane."
+  },
+  {
+   "id": "aura-enhancement",
+   "name": "Aura Enhancement",
+   "reason": "Adds two named spells (Benediction, Malediction) to the pool you can prepare in your divine font slots. No allowed field adds specific spells to a prepared pool, and the Battle Harbinger font is not built at all — battle-harbinger-dedication is absent from CASTER_ARCHETYPES and its registry entries only grant Toughness plus a skill."
+  },
+  {
+   "id": "aura-of-courage",
+   "name": "Aura of Courage",
+   "reason": "Every frightened condition YOU gain is reduced by 1 — the same shape the app already models in the condition-marker lane (the-fool: 'any stupefied condition you gain has its value reduced by 1'; face-your-fears on frightened). No allowed field expresses a condition marker, so it needs the registry lane. The allies' end-of-turn reduction is correctly ally-side."
+  },
+  {
+   "id": "awakened-yaoguai-heritage",
+   "name": "Awakened Yaoguai Heritage",
+   "reason": "It grants a versatile-heritage character the full mechanical benefits of a yaoguai heritage (and unlocks heritage-gated feats). No allowed field grants a heritage's benefits and there is no second-heritage lane."
+  },
+  {
+   "id": "axe-thrower",
+   "name": "Axe Thrower",
+   "reason": "Two real grants, neither expressible: every one-handed axe you wield GAINS the thrown trait (10 feet) and already-thrown axes get +10 feet of range — there is no weapon-trait or range-increment lane — and the critical specialization applies only to THROWN axe attacks, which critSpec/critSpecWeapons would over-grant to melee axe crits."
+  },
+  {
+   "id": "basic-modification",
+   "name": "Basic Modification",
+   "reason": "It is a PICK (a basic innovation modification) the builder never offers: inventorModificationOptions / INVENTOR_TIER_LEVEL and build.inventorModifications are gated on the inventor CLASS and an innovation subclass, so an Inventor-archetype character gets no choice. effectChoices can't express it — the legal options are classFeatures filtered by innovation type and the armor sub-gate, not a fixed list."
+  },
+  {
+   "id": "basic-scroll-cache",
+   "name": "Basic Scroll Cache",
+   "reason": "A daily-preparations PICK (one common 1st-rank spell, plus a 2nd-rank one at 8th level) that becomes a temporary scroll; nothing offers it. effectChoices' spellFilter can only grant a spell as innate or focus, which would misrepresent it — a scroll is read at the scroll's own rank/DC and works for non-casters — so this needs a temporary-consumable daily-choice lane."
+  },
+  {
+   "id": "beast-of-burden",
+   "name": "Beast of Burden",
+   "reason": "'Increase your maximum and encumbered Bulk limits by 4' is a permanent sheet change. derive.ts computes bulk as encumberedAt = 5+strMod and max = 10+strMod with no per-feat adjustment lane (Hefty Hauler is undelivered for the same reason), and no legal field expresses a Bulk-limit bonus."
+  },
+  {
+   "id": "beastkin-resilience",
+   "name": "Beastkin Resilience",
+   "reason": "'You no longer gain silver weakness from Werecreature Dedication' must remove a weakness the app really applies — werecreature-dedication carries weaknesses [{type:'silver',value:'floor(@actor.level/2)'}]. There is no negation/removal lane for an already-granted weakness."
+  },
+  {
+   "id": "bestial-brutality",
+   "name": "Bestial Brutality",
+   "reason": "The Bestial Manifestation unarmed attack gains the deadly d6 trait (the app does compute deadly crit riders on strikes) and gets brawling critical specialization, but only for that one attack. There is no lane to add a trait to an already-granted strike, and critSpec + critSpecWeapons {groups:['brawling']} would hand brawling crit spec to every brawling attack the character has — an over-grant."
+  },
+  {
+   "id": "billowing-wings",
+   "name": "Billowing Wings",
+   "reason": "Grants your winged animal companions a gust ranged unarmed attack (1d4 bludgeoning, 30 ft, air and propulsive). Companion strikes are rendered on the sheet (companions.ts formats them), but COMPANION_MODS has no attack-grant field — only strikeRider, senses, speeds, and note — so the companion attack lane is missing."
+  },
+  {
+   "id": "blessed-blood-sorcerer",
+   "name": "Blessed Blood (Sorcerer)",
+   "reason": "'Add up to three of your deity's spells to your spell list' is a build-time player pick that nothing offers. effectChoices/spellFilter cannot model it, because that would put the spells in the repertoire for free while the feat only makes them selectable with normal repertoire slots — the spell-LIST expansion lane does not exist."
+  },
+  {
+   "id": "bloodline-focus",
+   "name": "Bloodline Focus",
+   "reason": "'Whenever you Refocus, completely refill your focus pool' changes a resource the app really tracks — the SpellsTab Refocus control restores exactly 1 Focus Point and nothing overrides that amount. focusPoolBonus only enlarges the pool, so no legal field expresses a Refocus-recovery change."
+  },
+  {
+   "id": "bloodline-wellspring",
+   "name": "Bloodline Wellspring",
+   "reason": "'You recover 3 Focus Points when you Refocus instead of 1' — the same undelivered lane: the Refocus control hard-restores 1 point and there is no field for a Refocus-recovery amount."
+  },
+  {
+   "id": "bolstered-recovery",
+   "name": "Bolstered Recovery",
+   "reason": "Grants the Instant Recovery action and doubles rest recovery. Instant Recovery exists only in content.actions (no feat record), and grantsFeats resolves solely against content.feats (src/rules/build.ts ~2343), so the granted action can never reach the sheet; there is also no lane for scaling nightly rest recovery."
+  },
+  {
+   "id": "cantrip-casting",
+   "name": "Cantrip Casting",
+   "reason": "Grants two additional cantrips from the matching tradition — a real spellcasting resource the player should be able to PICK. spellSlotBonus cannot deliver it: build.ts filters slot grants to ranks > 0, so rank-0 (cantrip) counts are unreachable, and no other field expresses a cantrip-count increase."
+  },
+  {
+   "id": "cantrip-expansion",
+   "name": "Cantrip Expansion",
+   "reason": "Two extra cantrips prepared per day (prepared casters) or two extra cantrips added to the repertoire (spontaneous) — a picked spellcasting resource. Same missing lane as Cantrip Casting: spellSlotBonus explicitly skips rank 0, so nothing can grant cantrip capacity."
+  },
+  {
+   "id": "cutting-heaven-crushing-earth",
+   "name": "Cutting Heaven, Crushing Earth",
+   "reason": "While you wear invested handwraps of mighty blows, their runes also apply to one wielded weapon usable with Overwhelming Combination - a real change to that weapon's attack bonus, striking dice and property runes on the Strikes page. derive.ts:1005 (bestHandwrapsRunes) applies handwraps runes to unarmed Strikes only, and no legal field redirects them to a carried weapon. The two off-guard clauses are target-side and correctly ignored."
+  },
+  {
+   "id": "deadly-aspect",
+   "name": "Deadly Aspect",
+   "reason": "The unarmed attack granted by Draconic Aspect permanently gains the deadly d8 trait, which changes the crit damage line the Strikes page prints (derive.ts:1421 reads deadly-dN off the strike's traits). No legal field injects a trait onto an already-granted strike."
+  },
+  {
+   "id": "deadly-grace",
+   "name": "Deadly Grace",
+   "reason": "Any agile or finesse melee weapon you wield that lacks the deadly trait gains deadly d8, and deadly dice double on a crit - both change the crit line the Strikes page prints, and no field injects a weapon trait or alters deadly-dice multiplication."
+  },
+  {
+   "id": "deadly-strikes",
+   "name": "Deadly Strikes",
+   "reason": "All your unarmed attacks gain (or upgrade to) deadly d10, changing the crit damage line printed for every unarmed Strike; no legal field injects a deadly trait onto unarmed attacks."
+  },
+  {
+   "id": "demons-hair",
+   "name": "Demon's Hair",
+   "reason": "Self-facing package: your hair unarmed Strike's damage die steps up and it gains reach and versatile slashing (or sweep if it already had reach), and you are permanently quickened (extra action limited to a hair Strike) while your familiar is alive within 30 feet. No legal field upgrades a granted unarmed attack's damage die, adds weapon traits to it, or grants standing quickened."
+  },
+  {
+   "id": "devoted-focus",
+   "name": "Devoted Focus",
+   "reason": "Refocus completely refills your focus pool instead of restoring 1 point - a permanent change to a resource the app tracks; the Refocus button in src/sheet/SpellsTab.tsx restores exactly 1 point. focusPoolBonus only raises the maximum, so no legal field expresses this."
+  },
+  {
+   "id": "diamond-fists",
+   "name": "Diamond Fists",
+   "reason": "All your unarmed attacks gain the forceful and deadly d10 traits, and any that already had one increase their weapon damage dice by one step - a permanent change to every unarmed Strike shown on the Strikes tab. No legal field adds weapon traits to unarmed attacks or steps up their damage dice."
+  },
+  {
+   "id": "diehard",
+   "name": "Diehard",
+   "reason": "You die at dying 5 instead of dying 4. The app computes this exact number - dyingDeathThreshold() in src/rules/conditions.ts returns Math.max(1, 4 - doomed) and src/rules/play.ts drives the dying tracker from it - and Diehard appears only as a granted feat in src/rules/featFeatGrants.ts, never raising the base 4."
+  }
+ ],
+ "unresolved": []
+}

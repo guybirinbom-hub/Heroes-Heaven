@@ -1,0 +1,979 @@
+[
+ {
+  "id": "shore-gift",
+  "name": "Shore Gift",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "concentrate",
+   "merfolk",
+   "polymorph",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Using old magic, you slip off your tail like an item of clothing and walk on two feet, resembling a humanoid ancestry, usually human but possibly elf, half-elf, or something stranger. You're still recognizably yourself, as the Shore Gift doesn't change your upper body. While transformed, you lose your swim Speed from your ancestry (though you might still have a swim Speed from other sources) but gain a land Speed of 25 feet. Using the Shore Gift also counts as creating a disguise when using Deception to Impersonate, and your transformation automatically defeats Perception DCs to determine if you're a normal member of whatever ancestry you appear to be; only creatures actively rolling Perception to examine you might notice the disguise. You can remain in your alternate form indefinitely and can shift back to your merfolk form by using this action again."
+ },
+ {
+  "id": "shore-step",
+  "name": "Shore Step",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "wave order"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The shallows and tide pools have always called to you and let you pass unhindered. You ignore difficult terrain resulting from shallow water. In addition, if you roll a success on an Acrobatics check to Balance on a slippery or wet surface, or on an Athletics check to Swim, you get a critical success instead."
+ },
+ {
+  "id": "shorthanded",
+  "name": "Shorthanded",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Artillerist Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Typically, a siege weapon is meant to be run by a crew with a very specific minimum number of members designed to ensure that your crew can account for every possible variable and necessity in loading, aiming, and firing the weapon. In a pinch, however, you can operate it with fewer people, provided you know what you're doing. You can operate a siege weapon with fewer than the minimum number of crew, at an increasing penalty. You and your crew take a –2 penalty to checks to Load, Aim, Launch, move, or Repair the weapon for each person below the minimum crew. The maximum number of missing minimum crew members you can handle with this feat is 5. For example, if a siege weapon had a minimum crew size of 8, you would still need a crew of 3, and you would take a –10 penalty when doing so."
+ },
+ {
+  "id": "shoulder-catastrophe",
+  "name": "Shoulder Catastrophe",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy critically succeeds at a Strike against an adjacent ally. --- You've trained to protect your allies by diverting the worst attacks to yourself. The enemy doesn't double the damage from the triggering Strike but instead applies the normal damage to both you and your ally. Both of you take any effects that would happen on a hit that dealt damage, such as poison, but neither of you are subject to any effects that would happen only on a critical success."
+ },
+ {
+  "id": "shoulder-check",
+  "name": "Shoulder Check",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wearing medium or heavy armor. --- You hit a foe with your armor to throw them off balance. Make a fist Strike even if you don't have a hand free; if you're wielding a Gauntlet or Spiked Gauntlet, you can make a Strike with one of those weapons instead. The Strike gains the following additional results. --- **Critical Success** The target is off-guard against melee attacks you attempt against it until the end of your next turn. **Success** The target is off-guard against the next melee attack you attempt against it before the end of your current turn. **Critical Failure** You are off-guard against melee attacks the target attempts against you until the end of your next turn."
+ },
+ {
+  "id": "shove-down",
+  "name": "Shove Down",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Requirements** Your last action was a successful Shove. --- You leverage your weight to topple foes that you move. You attempt to trip the target, even if the target is no longer in your reach."
+ },
+ {
+  "id": "shoving-sweep",
+  "name": "Shoving Sweep",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Mauler Dedication",
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy within your reach leaves a square during a move action it's using. **Requirements** You are wielding a melee weapon in two hands. --- You swing your weapon at your foe, rebuffing them back. You attempt to Shove the triggering creature, ignoring the requirement that you have a hand free. Unless you critically succeed at your check, the creature continues its movement after the Shove."
+ },
+ {
+  "id": "showstopper",
+  "name": "Showstopper",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [
+   "Pistol Twirl",
+   "master in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your twirling weapons create a grand distraction that's difficult to look away from. When using Pistol Twirl to Feint, you can target all enemies within your weapon's first range increment who you can perceive and who can see you. You roll one Deception check and compare it against each target's Perception DC."
+ },
+ {
+  "id": "shrink-down",
+  "name": "Shrink Down",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "eidolon",
+   "evolution",
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your eidolon can shrink to fit into small spaces. Your eidolon reduces in size, to a minimum of size Small. It can use this action again while shrunk to return to its normal size. Its reach becomes 5 feet, or 10 feet if shrinking to Large with Towering Size."
+ },
+ {
+  "id": "shroud-of-ghosts",
+  "name": "Shroud of Ghosts",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued into a worn ikon --- Your ikon is connected to the world of the spirits, allowing you to partially fade into their realm. The imbued ikon gains the following ability. **Transcendence—Skirt the Underworld** ⟨2⟩ (concentrate, illusion, incapacitation, transcendence)"
+ },
+ {
+  "id": "shroud-of-the-seas",
+  "name": "Shroud of the Seas",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Undersea Privateer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to camouflage yourself among the shadows and currents of the ocean so you're hard to see from above. When you're fully underwater, you're concealed to all opponents who are out of the water, and hidden to those who are out of the water and more than 10 feet away from you."
+ },
+ {
+  "id": "sickening-bite",
+  "name": "Sickening Bite",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghoul Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your saliva causes severe nausea and mild fever in the living, weakening them so that you can more easily finish them off. When you critically hit a creature with your jaws, the creature is Sickened 1. This is a disease effect. If you are satiated, you can end your satiation to make the target Sickened 1 on a regular hit instead."
+ },
+ {
+  "id": "side-by-side-druid",
+  "name": "Side by Side (Druid)",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "druid"
+  ],
+  "prerequisites": [
+   "Animal Companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your animal companion fight in tandem, distracting your foes and keeping them off balance. Whenever you and your animal companion are adjacent to the same foe, you are both flanking that foe with each other, regardless of your actual positions."
+ },
+ {
+  "id": "side-by-side-ranger",
+  "name": "Side by Side (Ranger)",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "an animal companion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You and your animal companion fight in tandem. Whenever you and your animal companion are adjacent to the same foe, you are both flanking that foe with each other, regardless of your actual positions."
+ },
+ {
+  "id": "sidestep",
+  "name": "Sidestep",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** The attack roll for a Strike targeting you fails or critically fails. --- You deftly step aside and gently redirect an attack. You redirect the triggering attack to a creature of your choice that is adjacent to you and within the attack's reach or maximum range. The attacker rerolls the Strike's attack roll against the new target."
+ },
+ {
+  "id": "siege-celerity",
+  "name": "Siege Celerity",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate",
+   "unstable"
+  ],
+  "prerequisites": [
+   "Munitions Master Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** Your turn begins. --- You push yourself and your light mortar beyond your limits. You are quickened for this turn. You can use the extra action to Load or Launch your light mortar. This doesn't allow you bypass the normal limit of one Launch per round."
+ },
+ {
+  "id": "sign-language",
+  "name": "Sign Language",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You learn the sign languages associated with the languages you know, allowing you to sign and understand signs. Sign languages typically require both hands to convey more complex concepts, and they are visual rather than auditory. Sign language is difficult to understand during combat due to the level of attention needed, unlike basic gestures like pointing at a foe to suggest a target. Sign language is hard to use in areas of low visibility, just like speech is difficult in a noisy environment."
+ },
+ {
+  "id": "signature-spell-expansion",
+  "name": "Signature Spell Expansion",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "sorcerer"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your innate connection to magic lets you cast more spells with greater freedom. You gain two additional signature spells, each of which must have a base rank of 3rd or lower."
+ },
+ {
+  "id": "signature-spell-expansion-psychic",
+  "name": "Signature Spell Expansion (Psychic)",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your direct mental grasp of your power lets you cast more spells with greater freedom. You gain two additional signature spells, each of which must have a minimum rank of 3rd or lower."
+ },
+ {
+  "id": "signifer-armor-expertise",
+  "name": "Signifer Armor Expertise",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Hellknight Signifer Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've spent enough time helping your comrades equip medium and heavy armor that you spread your own expertise to those armors as well. If you have expert proficiency in any armor or unarmored defense, you also gain expert proficiency in medium and heavy armor."
+ },
+ {
+  "id": "silence-heresy",
+  "name": "Silence Heresy",
+  "level": 1,
+  "category": "bonus",
+  "traits": [],
+  "prerequisites": [
+   "Order of the Rack"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You channel a power that stifles dangerous words. Make a melee Strike. If the attack hits, the target is unable to speak in a voice louder than a whisper for 1 round. This prevents the target from using most auditory effects involving its voice, and it must succeed at a to Cast a Spell with a verbal component or the spell is disrupted. If your Strike is a critical hit, the target is entirely unable to speak for 1 round and is limited to a whisper for 1 minute thereafter. Once a creature has been affected by this ability, it is temporarily immune for 1 minute."
+ },
+ {
+  "id": "silence-the-profane",
+  "name": "Silence the Profane",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Avenger Dedication or Vindicator Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature you can observe within reach of your deity's favored weapon casts a spell. **Requirements** You are wielding your deity's favored weapon. --- Your training included instruction on how to prevent enemy priests from using their magic against you, a technique you have mastered and adapted. Make a Strike with your deity's favored weapon against the triggering creature. On a success, the target is off-guard until the end of your next turn. The triggering spell is disrupted on a critical success, or on a success if the target is your hunted prey and the spell is a divine spell. --- **Special** If your deity's favored weapon is a ranged weapon, this reaction can trigger if the target is within its first range increment and you can make a ranged Strike instead of a melee Strike."
+ },
+ {
+  "id": "silence-the-profane-avenger",
+  "name": "Silence the Profane (Avenger)",
+  "level": 8,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Silence the Profane (Avenger) Source War of Immortals pg. 59 Archetype Avenger Prerequisites Avenger Dedication Trigger A creature you can observe within reach of your deity’s favored weapon casts a spell. Requirements You are wielding your deity’s favored weapon Your training included instruction on how to prevent enemy priests from using their magic against you, a technique you have mastered and adapted. Make a Strike with your deity's favored weapon against the triggering creature. On a success, the target is off-guard until the end of your next turn. The triggering spell is disrupted on a critical success, or on a success if the target is your hunted prey and the spell is a divine spell. Special If your deity’s favored weapon is a ranged weapon, this reaction can trigger if the target is within its first range increment and you can make a ranged Strike instead of a melee Strike."
+ },
+ {
+  "id": "silence-the-profane-vindicator",
+  "name": "Silence the Profane (Vindicator)",
+  "level": 8,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Silence the Profane (Vindicator) Source War of Immortals pg. 65 Archetype Vindicator Prerequisites Vindicator Dedication Trigger A creature you can observe within reach of your deity’s favored weapon casts a spell. Requirements You are wielding your deity’s favored weapon. Your training included instruction on how to prevent enemy priests from using their magic against you, a technique you have mastered and adapted. Make a Strike with your deity’s favored weapon against the triggering creature. On a success, the target is off-guard until the end of your next turn. The triggering spell is disrupted on a critical success, or on a success if the target is your hunted prey and the spell is a divine spell. Special If your deity’s favored weapon is a ranged weapon, this reaction can trigger if the target is within its first range increment and you can make a ranged Strike instead of a melee Strike."
+ },
+ {
+  "id": "silencing-strike",
+  "name": "Silencing Strike",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "incapacitation",
+   "rage"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "A quick strike to the face or mouth silences your opponent. Make a melee Strike against an enemy. If it hits, the enemy must succeed at a save against your class DC. --- **Success** The target is unaffected. **Failure** The target is dazed and can barely vocalize. It's Stunned 1 and its speech is raspy and hard to understand. It must succeed at a to use linguistic actions or Cast a Spell, unless the spell has the subtle trait. **Critical Failure** As failure, but the creature is Stunned 3 instead of stunned 1."
+ },
+ {
+  "id": "silent-step",
+  "name": "Silent Step",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "catfolk",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You Step, then Hide or Sneak. You still need to meet the requirements to Hide or Sneak, as normal."
+ },
+ {
+  "id": "silk-bracelet",
+  "name": "Silk Bracelet",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "inventor",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "armor, construct, or weapon innovation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Access** Tian Xia origin --- Taking inspiration from Desna's image as a giant silk moth in Tian Xia, you've attached a bracelet to your innovation that generates ultra-strong silk strands mixed with venom. You can unleash this substance as part of an attack. Make a melee Strike. If it hits, the target takes damage from the Strike as normal and must attempt a save against your class DC with the following effects. --- **Critical Success** The target is unaffected. **Success** The silk imposes a –10 foot status penalty to all the target's Speeds for 1 round. **Failure** As success, and the target takes an additional damage. The poison damage increases to 2d4 at 12th level and 3d4 at 18th level. **Critical Failure** As failure, and the target is immobilized until the end of their next turn. --- **Special** If your innovation is a minion, it can take this action rather than you."
+ },
+ {
+  "id": "simple-crystal-magic",
+  "name": "Simple Crystal Magic",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Crystal Keeper Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As long as you meditate before a gemstone worth at least 10 gp as part of your daily preparations, you are capable of seeing magic as flowing runes that reveal information about magic objects, and you can scribe a personal rune that represents you. You gain the Read Aura and Sigil cantrips. You cast these cantrips as arcane innate spells at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "simultaneous-strike",
+  "name": "Simultaneous Strike",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "prerequisites": [
+   "Iridian Choirmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Moving in unison, you and your student unleash an attack against a foe. Strike a creature, and your student can use their reaction to make a Strike against the same creature. If both attacks are successful, total the damage for the two attacks for the purpose of resistances and weaknesses."
+ },
+ {
+  "id": "sin-counterspell",
+  "name": "Sin Counterspell",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Runelord Dedication",
+   "Counterspell"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your deep connection to a specific sin allows you to easily negate spells that sin opposes. Instead of being able to counter a foe's spell with Counterspell only if you have the same spell prepared, you can Counterspell it with any of your curriculum spells if the spell cast would violate your sin's anathema."
+ },
+ {
+  "id": "sinbladed-spell",
+  "name": "Sinbladed Spell",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "spellshape"
+  ],
+  "prerequisites": [
+   "Runelord Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are holding a weapon in the polearm or spear group. --- You punctuate your spellcasting with a flourish of your weapon, imparting physical force to your magic. If the next spell you cast is a non-cantrip sin or curriculum spell that affects a single target, and you either succeed on your attack roll or the target fails its saving throw against the spell, a wound in the shape of your personal rune appears on the target, dealing additional persistent bleed damage equal to the spell's rank, in addition to its regular effects."
+ },
+ {
+  "id": "sing-to-the-steel",
+  "name": "Sing to the Steel",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "auditory"
+  ],
+  "prerequisites": [
+   "Nantambu Chime-Ringer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You strike magical tones that can turn the tide of combat. You and your allies within 30 feet gain the effects of one of the following runes until the end of your next turn: Corrosive, Vitalizing, Flaming, Frost, Ghost Touch, Shock, or Thundering. The effects apply to a single weapon the creature is holding or one of the creature's unarmed attacks. You choose the rune and the effect applies to all creatures. You can use an action, which has the concentrate trait, to extend the duration of the rune for 1 additional round up to a maximum of 1 minute. If this would give a weapon or unarmed attack more property runes than its normal maximum, an existing property rune (as the creature chooses) is suppressed until the spell ends."
+ },
+ {
+  "id": "sinking-jaws",
+  "name": "Sinking Jaws",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Beastmaster Dedication",
+   "animal companion with a jaws or fangs unarmed attack"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Like how a constrictor wraps itself around its next meal, your companion tightens its teeth around its constrained prey to squeeze the life out of it. Your companions with a qualifying unarmed attack learn the Sinking Jaws activity. **Sinking Jaws** ⟨1⟩ **Requirements** This companion has a creature grabbed or restrained with its jaws or fangs --- **Effect** This companion's grabbed or restrained foe takes piercing damage equal to the companion's level plus Strength modifier."
+ },
+ {
+  "id": "siphon-life",
+  "name": "Siphon Life",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "aftermath",
+   "flourish",
+   "magical",
+   "void"
+  ],
+  "prerequisites": [
+   "You've been reduced to 0 Hit Points by an enemy with the void trait"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Experiences with necromantic energy have left a permanent mark on you, casting you in a deathlike pallor, chilling your body temperature to be ice-cold, turning your very blood black, and giving you the power to rip out an enemy's life force. Strike with an unarmed attack. If you hit and the target is a living creature, it takes an additional 4d6 damage, depending on its Fortitude save. If the target takes any void damage, you gain an equal number of temporary Hit Points, which last for 1 minute. --- **Critical Success** The target takes no additional void damage and becomes temporarily immune for 1 minute. **Success** The target takes half the additional void damage. **Failure** The target takes full additional void damage. **Critical Failure** The target takes double the additional void damage."
+ },
+ {
+  "id": "siphon-magic",
+  "name": "Siphon Magic",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "rage"
+  ],
+  "prerequisites": [
+   "Bloodrager Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action was to Harvest the Blood of a creature that can cast spells --- You gorge upon the magical energies of your foe's blood. You regain one expended spell slot that must be of a lower rank than the highest rank spell you can cast. You become Drained 1 or increase the value of your drained condition by 1."
+ },
+ {
+  "id": "siphoning-touch",
+  "name": "Siphoning Touch",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Spell Trickster Dedication",
+   "ability to cast vampiric touch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you cast Vampiric Feast, you can modify its standard effects as follows: Instead of gaining the temporary Hit Points yourself, you can grant the temporary Hit Points to an ally within 30 feet. After 1 minute, the ally loses any of these temporary Hit Points that remain."
+ },
+ {
+  "id": "sixth-sense",
+  "name": "Sixth Sense",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "occult",
+   "psychic"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your psychic abilities also allow you to detect the lingering thoughts of spirits and similar entities. While you're exploring but not Searching, the GM rolls a secret check for you to find haunts that usually require Searching, as well as spirits, creatures on the Ethereal Plane, and beings made entirely of spiritual essence, such as celestials, fiends, and monitors. You can also potentially notice ethereal creatures and spirits inside solid objects, provided they are within 30 feet of you. This applies while Searching, Seeking, and on the automatic secret check from Sixth Sense. You can still notice spirits only on a successful check, and you can't see them if they're more than 5 feet inside an object. When you notice a creature with your Sixth Sense, you also learn its location, making it hidden to you if it had been undetected."
+ },
+ {
+  "id": "skilled-swimmer",
+  "name": "Skilled Swimmer",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "athamaru"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You move through the water with ease, mastering your movements with years of practice. When in an aquatic environment, you ignore difficult terrain. In addition, swimming up or down isn't difficult terrain for you."
+ },
+ {
+  "id": "skillful-tail",
+  "name": "Skillful Tail",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "ardande",
+   "naari",
+   "nephilim",
+   "oread",
+   "suli",
+   "sylph",
+   "talos",
+   "undine"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Geniekin** You were born with a tail, and with practice you've learned how to perform simple Interact actions with it, such as opening an unlocked door. Your tail can't perform actions that require fingers or significant manual dexterity, including any action that would require a check to accomplish, and you can't use it to hold items. --- **Nephilim** You've always had a tail, but with practice, you've learned to use it for more than signaling your mood. You can perform simple Interact actions with your tail, such as opening an unlocked door. Your tail can't perform actions that require fingers or significant manual dexterity, including any action that would require a check to accomplish, and you can't use it to hold items."
+ },
+ {
+  "id": "skirmish-strike",
+  "name": "Skirmish Strike",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "ranger",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your feet and weapon move in tandem. Either Step and then Strike, or Strike and then Step."
+ },
+ {
+  "id": "skitter",
+  "name": "Skitter",
+  "level": 3,
+  "category": "general",
+  "traits": [
+   "general"
+  ],
+  "prerequisites": [
+   "Dexterity +3",
+   "Fleet"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can scoot swiftly across the ground. You can Crawl up to half your Speed."
+ },
+ {
+  "id": "skittering-scuttle",
+  "name": "Skittering Scuttle",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "goblin"
+  ],
+  "prerequisites": [
+   "Goblin Scuttle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can scuttle farther and faster when maneuvering alongside allies. When you use Goblin Scuttle, you can Stride up to half your Speed instead of Stepping."
+ },
+ {
+  "id": "skittering-sneak",
+  "name": "Skittering Sneak",
+  "level": 13,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You squish, slink, and skitter from cover to cover with great speed and stealth. You can move up to your full Speed when you Sneak."
+ },
+ {
+  "id": "skittertalk",
+  "name": "Skittertalk",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "anadi"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can ask questions of, receive answers from, and use the Diplomacy skill with spiders and other arachnids. The GM determines which creatures count for this ability."
+ },
+ {
+  "id": "slam-down",
+  "name": "Slam Down",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [
+   "trained in Athletics"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You make an attack to knock a foe off balance, then follow up immediately with a sweep to topple them. Make a melee Strike. If it hits and deals damage, you can attempt an Athletics check to trip the creature you hit. If you're wielding a two-handed melee weapon, you can ignore Trip's requirement that you have a hand free. Both attacks count toward your multiple attack penalty, but the penalty doesn't increase until after you've made both of them."
+ },
+ {
+  "id": "slayers-blessing",
+  "name": "Slayer's Blessing",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Slayer's Strike"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You carry scraps of materials dangerous to undead and can apply them to your weapon. When you use Slayer's Strike, before making the Strike, you can choose either the *Ghost Touch* property rune or a precious material: cold iron, duskwood, or silver. Any Strike that gets extra vitality damage from this use of Slayer's Strike also gets the benefits of the rune or counts as that material. At 14th level, add adamantine and dawnsilver to the list of materials you can choose from."
+ },
+ {
+  "id": "slayers-presence",
+  "name": "Slayer's Presence",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Frighten Undead"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your very presence strikes fear into the undead. When you use Slayer's Identification and succeed at your check, you can Frighten Undead as a free action, targeting the creature you identified. Any time you get a critical success to Frighten Undead, if the target's level is lower than yours, the target is fleeing for 1 round."
+ },
+ {
+  "id": "slayers-strike",
+  "name": "Slayer's Strike",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "flourish",
+   "occult",
+   "vitality"
+  ],
+  "prerequisites": [
+   "Undead Slayer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You've dedicated yourself to studying ancient techniques and memorized minor prayers against undead to swiftly dispatch them. Make a Strike against a creature you know is undead. This counts as two attacks when calculating your multiple attack penalty. If this Strike hits, you deal one extra die of vitality damage, with the same die size as the weapon or unarmed attack you used. Any further Strikes you make against the same creature before the start of your next turn using the same weapon or unarmed attack deal extra vitality damage equal to the number of weapon dice. As normal, the vitality damage harms only undead and creatures with void healing. If you're at least 10th level, increase this to two extra dice, and if you're at least 18th level, increase it to three extra dice."
+ },
+ {
+  "id": "sleek-reposition",
+  "name": "Sleek Reposition",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are wielding a finesse weapon or polearm. --- While your opponent is still recovering from your prior attack, you snag its armor, clothing, or flesh to move it as you please. Make a melee Strike with a finesse weapon or polearm. If you hit a target that is your size or smaller, you can automatically Reposition it, with the same benefits as the Reposition action (including the critical success effect, if your Strike was a critical hit). If you used a weapon with reach, use the weapon's reach for this Reposition. If you're wielding a polearm, you can ignore Reposition's requirement that you have a hand free. This Strike has the following failure effect. **Failure** The target becomes off-guard until the end of your current turn."
+ },
+ {
+  "id": "sleep-of-the-reborn",
+  "name": "Sleep of the Reborn",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "reincarnated"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Philosophers compare the cycle of life, death, and rebirth to sleeping, dreaming, and waking. You take it to another level by reliving previous lives in dreams, always waking invigorated and thankful for a new chance at life. Whenever you rest for 8 hours, you gain the effects of a long-term rest. If you're an ancestry that neither sleeps nor dreams, you still receive this benefit by entering a reflective, meditative state during rest."
+ },
+ {
+  "id": "sleeper-hold",
+  "name": "Sleeper Hold",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "incapacitation",
+   "monk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- You pinch crucial points of your target's nervous system, impeding its ability to function. Attempt an Athletics check to Grapple the creature, with the following success and critical success effects instead of the usual effects. --- **Critical Success** The target falls unconscious for 1 minute, though it remains standing and doesn't drop what it holds. **Success** The target is Clumsy 1 until the end of its next turn."
+ },
+ {
+  "id": "sleepwalker-dedication",
+  "name": "Sleepwalker Dedication",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "expert in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned to manipulate states of consciousness, beginning with your own. You can send yourself into a half-awake, daydreaming state and gain the Daydream Trance action."
+ },
+ {
+  "id": "slice-and-swipe",
+  "name": "Slice and Swipe",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "flourish",
+   "manipulate",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Access** Help either the Washboard Dogs or the Diobel Sweepers destroy their rival. **Requirements** You're wielding a melee weapon that deals slashing damage and you have a free hand. --- You attempt a melee Strike with the required weapon. If you hit and deal damage and the result of your attack roll exceeds the target's Perception DC, you Steal a small object from the target (as if you had succeeded at that task using the Thievery skill). Depending on the object, the target might realize that it has been stolen, and onlookers might realize you have stolen the object if the attack roll doesn't exceed their Perception DCs."
+ },
+ {
+  "id": "slingers-readiness",
+  "name": "Slinger's Readiness",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Gunslinger Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned a gunslinger's tricks for staking out your territory in a fight. You gain the initial deed for the way you selected with Gunslinger Dedication."
+ },
+ {
+  "id": "slingers-reflexes",
+  "name": "Slinger's Reflexes",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your ability to react to unexpected circumstances is preternaturally sharp. At the start of each creature's turn, you gain an additional reaction you can use on only that turn to use a gunslinger reaction."
+ },
+ {
+  "id": "slingshot-maneuver",
+  "name": "Slingshot Maneuver",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Thlipit Contestant Dedication"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A willing ally enters a space within your lash's reach using a move action. --- You spin your lash out for your ally to grab on to, giving them a boost to their movement. You move the ally 15 feet into a square of their choice that is within reach of your lash. If the ally has movement remaining, they can continue their movement after completing the Slingshot Maneuver."
+ },
+ {
+  "id": "slink",
+  "name": "Slink",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "fetchling"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can move through gloom with the speed of darkness. You can move 5 feet farther when you take the Sneak action, up to your Speed. In addition, as long as you continue to use Sneak actions and succeed at your Stealth check, you don't become observed if you end a Sneak action in dim light or darkness, as long as you have cover or greater cover or are concealed at the end of your turn."
+ },
+ {
+  "id": "slip-into-shadow",
+  "name": "Slip into Shadow",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "dhampir"
+  ],
+  "prerequisites": [
+   "ability to cast at least one spell with the darkness trait"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your shadow magic bleeds into the space around you. Whenever you cast a spell with the darkness trait, a lingering aura of shadows reduces bright light within a around you to dim light until the end of your turn. Like in natural dim light, you can use these shadows to Hide, but the aura still makes your overall position obvious, so you can't become undetected through the use of these shadows alone."
+ },
+ {
+  "id": "slip-the-grasp",
+  "name": "Slip the Grasp",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "fleshwarp",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You are grabbed, immobilized, or restrained. --- You have some feature that allows you to quickly evade effects that restrain you. Attempt a check to Escape. If you succeed, you can Stride, Step, or make a Strike with a melee unarmed attack targeting the creature you Escaped from. If you fail, you instead attempt to Escape a second time. You increase your multiple attack penalty as appropriate for the actions you took, but only after completing both actions."
+ },
+ {
+  "id": "slippery-secrets",
+  "name": "Slippery Secrets",
+  "level": 7,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "master in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You elude and evade attempts to uncover your true nature or intentions. When a spell or magical effect tries to read your mind, detect whether you are lying, or reveal your identity, you can attempt a Deception check against the spell or effect's DC. If you succeed, the effect reveals nothing."
+ }
+]

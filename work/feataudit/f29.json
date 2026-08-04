@@ -1,0 +1,1005 @@
+[
+ {
+  "id": "quick-shield-block",
+  "name": "Quick Shield Block",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "champion",
+   "fighter"
+  ],
+  "prerequisites": [
+   "shield block"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can bring your shield into place with hardly a thought. At the start of each of your turns, you gain an additional reaction that you can use only to Shield Block."
+ },
+ {
+  "id": "quick-shot",
+  "name": "Quick Shot",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Archer Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You draw your bow and attack with the same action. You Interact to draw a weapon from the bow or crossbow weapon group that is loaded or has reload 0, then Strike with that weapon."
+ },
+ {
+  "id": "quick-snares",
+  "name": "Quick Snares",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "ranger"
+  ],
+  "prerequisites": [
+   "expert in Crafting",
+   "Snare Specialist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can rig a snare in only moments. You can Craft snares that normally take 1 minute to Craft with 3 Interact actions, even if you haven't prepared them."
+ },
+ {
+  "id": "quick-spring",
+  "name": "Quick Spring",
+  "level": 13,
+  "category": "skill",
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "prerequisites": [
+   "Acrobat Dedication",
+   "master in Acrobatics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Ishii Bunji is a skilled tumbler, and learning his technique allows you to push yourself off a foe and propel yourself across the battlefield faster. If you succeed at an Acrobatics check to Tumble Through an enemy's space, you can Stride again as a free action after you complete your current movement."
+ },
+ {
+  "id": "quick-stow-swordmaster",
+  "name": "Quick Stow (Swordmaster)",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "manipulate"
+  ],
+  "prerequisites": [
+   "Swordmaster Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You know that situations can change rapidly and might leave you needing to change equipment in the middle of combat. Your training has taught you how to swap your equipment on the fly. You Interact to stow a weapon and then Interact again to draw a readied item or weapon."
+ },
+ {
+  "id": "quick-vengeance",
+  "name": "Quick Vengeance",
+  "level": 18,
+  "category": "class",
+  "traits": [
+   "guardian"
+  ],
+  "prerequisites": [
+   "Intercept Attack or Shield Block"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Indignant at any who would strike you or your allies, you get your revenge. When you use Intercept Attack or Shield Block, you are quickened on your next turn. You can use the extra action only to Stride closer to the enemy whose attack triggered that reaction or to Strike that enemy."
+ },
+ {
+  "id": "quickening-banner",
+  "name": "Quickening Banner",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "brandish",
+   "commander",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- The sight of your banner urges your allies to strike now. Each ally within the aura of your commander's banner is quickened for 1 round and can use this extra action to Strike or Stride."
+ },
+ {
+  "id": "quiet-allies",
+  "name": "Quiet Allies",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Stealth"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're skilled at moving with a group. When you are Avoiding Notice and your allies Follow the Expert, you and those allies can roll a single Stealth check, using the lowest modifier, instead of rolling separately. This doesn't apply for initiative rolls."
+ },
+ {
+  "id": "quietus-strikes",
+  "name": "Quietus Strikes",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "duskwalker"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your connection to the Boneyard empowers you to bring death to all forms of life and unlife, exploiting their weaknesses. All your weapon and unarmed Strikes are magical and deal 1 additional void damage to living creatures and 1 additional vitality damage to undead. The extra damage increases to 2 if the Strike has a *+3 potency rune*."
+ },
+ {
+  "id": "rabid-sprint",
+  "name": "Rabid Sprint",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "flourish",
+   "kholo"
+  ],
+  "prerequisites": [
+   "dog kholo heritage"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You have both your hands free. --- You run on all fours as fast as you can. Stride three times."
+ },
+ {
+  "id": "radiant-armament",
+  "name": "Radiant Armament",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "champion"
+  ],
+  "prerequisites": [
+   "blessed armament"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your blessed armament radiates power, further enhancing your chosen weapon. When you choose the weapon for your blessed armament during your daily preparations, add the Astral and Brilliant property runes to the list of effects you can choose from. If you're holy, also add the Holy rune, and if you're unholy, also add the Unholy rune. In addition, you can change the rune you've selected for the day to a different rune from your list as a 10-minute activity that has the concentrate, divine, and exploration traits. Changing the rune doesn't restore abilities that can be used only a limited number of times, such as Holy Healing for the *holy* rune"
+ },
+ {
+  "id": "radiant-circuitry",
+  "name": "Radiant Circuitry",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "android",
+   "concentrate",
+   "light"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your biological circuitry emits light like a torch, casting bright light in a 20-foot radius (and dim light for the next 20 feet). The light shuts off when you take this action again or are knocked unconscious."
+ },
+ {
+  "id": "raging-intimidation",
+  "name": "Raging Intimidation",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your fury fills your foes with fear. While you are raging, your Demoralize and Scare to Death actions (from the Intimidation skill and an Intimidation skill feat, respectively) gain the rage trait, allowing you to use them while raging. As soon as you meet the prerequisites for the skill feats Intimidating Glare and Scare to Death, you gain these feats."
+ },
+ {
+  "id": "raging-thrower",
+  "name": "Raging Thrower",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "barbarian"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Thrown weapons become especially deadly in your fury. You apply the additional damage from Rage to your thrown weapon attacks. If you have the Brutal Critical feat or the Devastator class feature, apply their benefits to thrown weapon attacks."
+ },
+ {
+  "id": "rain-of-razors",
+  "name": "Rain of Razors",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Razor-sharp slivers of metal fall from the sky. Each creature in a within 60 feet takes damage with a save against your class DC. The razors embed in all surfaces in the area, making them hazardous terrain for 1 minute. A creature that moves through this hazardous terrain takes damage for every square of the area it moves into. --- **Level (+2)** The initial damage increases by 1d6 and the hazardous terrain damage increases by 1."
+ },
+ {
+  "id": "rain-of-rust",
+  "name": "Rain of Rust",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "composite",
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal",
+   "water"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You conjure a red raincloud in a within 60 feet, which pours rust-colored rain directly below it. Any creature in the rain with the metal trait, that is made of metal, or is wearing metal armor is covered in corrosive build-up. Any such creature is Clumsy 1 as long as it remains in the area. If such a creature is in the rain at the start of its turn, it takes damage with a save against your class DC, plus damage if it fails. Damage from this impulse ignores Hardness. The cloud lasts 1 minute but ends if you use the impulse again. --- **Level (+2)** The initial damage increases by 1d6."
+ },
+ {
+  "id": "rain-scribe-mobility",
+  "name": "Rain-Scribe Mobility",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Magaambyan Attendant Dedication",
+   "Rain-Scribes affiliation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You surround yourself in a mantle of Rain-Scribe magic and Stride twice; difficult terrain does not reduce your Speed, even if the difficult terrain has been manipulated by magic. Your magic clears the difficult terrain in each square you entered; until your next turn, those squares aren't difficult terrain for any creature walking through them (or are normal difficult terrain if they were previously greater difficult terrain)."
+ },
+ {
+  "id": "rain-scribe-sustenance",
+  "name": "Rain-Scribe Sustenance",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Magaambyan Attendant Dedication",
+   "Rain Scribes affiliation"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You use the power of your Rain-Scribe magic to draw on a stream of primal power for sustenance. You don't need to eat or drink and need only 6 hours of rest to feel well rested. You must still rest at least 8 hours and spend 1 hour of preparation to regain resources usable only a limited number of times per day, such as spell slots. You can draw on primal power to stay awake and alert while otherwise resting your body and mind, gaining the full benefits of an 8-hour rest without falling asleep. When you do, you lose the other benefits of Rain- Scribe Sustenance for 1 week while your primal energies recharge."
+ },
+ {
+  "id": "rallying-banner",
+  "name": "Rallying Banner",
+  "level": 8,
+  "category": "class",
+  "traits": [
+   "brandish",
+   "commander",
+   "emotion",
+   "healing",
+   "mental",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- Your banner waves high, reminding your allies that the fight can still be won. You restore Hit Points to each ally within the aura of your commander's banner. This healing increases by an additional 1d6 at 10th level and every 2 levels thereafter. Since this healing relies on drawing from your allies' morale and adrenaline, the healing it grants is halved when used outside of combat."
+ },
+ {
+  "id": "rallying-charge",
+  "name": "Rallying Charge",
+  "level": 6,
+  "category": "archetype",
+  "traits": [
+   "archetype",
+   "visual"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Rallying Charge Source Player Core 2 pg. 205 Archetype Marshal Prerequisites Marshal Dedication Your fearless charge into battle reinvigorates your allies to carry on the fight. You Stride up to your Speed and make a melee Strike. If your Strike hits and damages an enemy, each ally within 60 feet who saw you hit gains temporary Hit Points equal to your Charisma modifier. These temporary Hit Points last until the start of your next turn."
+ },
+ {
+  "id": "rallying-charge-knight-vigilant",
+  "name": "Rallying Charge (Knight Vigilant)",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Vigilant Dedication",
+   "Lead the Way"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you lead your allies to the front lines, you leave no one behind. When you Lead the Way, instead of choosing one ally that has a reaction available, you can choose any number of allies within 10 feet of you. Any chosen allies that use their reaction to immediately Stride as part of you Leading the Way can end their Stride anywhere within 10 feet of you."
+ },
+ {
+  "id": "rallying-charge-marshal",
+  "name": "Rallying Charge (Marshal)",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "visual"
+  ],
+  "prerequisites": [
+   "Marshal Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your fearless charge into battle reinvigorates your allies to carry on the fight. You Stride up to your Speed and make a melee Strike. If your Strike hits and damages an enemy, each ally within 60 feet who saw you hit gains temporary Hit Points equal to your Charisma modifier. These temporary Hit Points last until the start of your next turn."
+ },
+ {
+  "id": "rampaging-ferocity",
+  "name": "Rampaging Ferocity",
+  "level": 17,
+  "category": "ancestry",
+  "traits": [
+   "orc"
+  ],
+  "prerequisites": [
+   "Orc Ferocity"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You use Orc Ferocity. --- You lash out viciously even as you fend off death. Make a single melee Strike. If this Strike brings a foe to 0 Hit Points, this activation of Orc Ferocity doesn't count against its frequency."
+ },
+ {
+  "id": "ranged-disarm",
+  "name": "Ranged Disarm",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Bullet Dancer Dedication",
+   "Trick Shot"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a simple firearm or simple combination weapon. --- When using a simple firearm, you can shoot objects right out of your enemy's hands. Attempt to Disarm the target using a ranged attack roll with the required firearm or combination weapon, instead of attempting an Athletics check against the target's Reflex DC."
+ },
+ {
+  "id": "ranger-resiliency",
+  "name": "Ranger Resiliency",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ranger Dedication",
+   "class granting no more Hit Points per level than 8 + your Constitution modifier"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain 3 additional Hit Points for each ranger archetype class feat you have. As you continue selecting ranger archetype class feats, you continue to gain additional Hit Points in this way."
+ },
+ {
+  "id": "rapid-assessment",
+  "name": "Rapid Assessment",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "commander"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- You quickly evaluate your enemies. Attempt a check to Recall Knowledge against one creature you are observing."
+ },
+ {
+  "id": "rapid-hybridization",
+  "name": "Rapid Hybridization",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Werecreature Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- When danger threatens, your instincts kick in, and you can assume a different shape at a moment's notice. You use Change Shape to enter your hybrid shape."
+ },
+ {
+  "id": "rapid-manifestation",
+  "name": "Rapid Manifestation",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Soulforger Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative or a hazard attacks you. --- Your unwavering soul brings up your defenses as soon as you're in danger. You Manifest your Soulforged Armament."
+ },
+ {
+  "id": "rapid-mantel",
+  "name": "Rapid Mantel",
+  "level": 2,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "expert in Athletics"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You easily pull yourself onto ledges. When you Grab an Edge, you can pull yourself onto that surface and stand. You can use Athletics instead of a Reflex save to Grab an Edge. If you Climb or Leap to within 5 feet beneath the top of an edge, you can pull yourself onto the surface and stand as part of that action."
+ },
+ {
+  "id": "rapid-reattunement",
+  "name": "Rapid Reattunement",
+  "level": 14,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "exploration",
+   "kineticist"
+  ],
+  "prerequisites": [
+   "reflow elements"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You spend 10 minutes realigning your elemental connections in an elemental trance. Replace one of your impulse feats using the same process as reflow elements. If you have double reflow, you can replace two impulse feats instead of one."
+ },
+ {
+  "id": "rapid-retraining",
+  "name": "Rapid Retraining",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "downtime",
+   "reincarnated"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Some feel trapped by their choices and have a tough time reinventing themselves. To you, this dilemma is just a natural part of reincarnation. Retraining other feats or skill increases during downtime only takes 4 days instead of a week, and class features that require a choice can be retrained in a week instead of a month. You also never need to find a teacher to retrain, as the memories of abilities you possessed in past lives are superior to any instructor."
+ },
+ {
+  "id": "ratfolk-roll",
+  "name": "Ratfolk Roll",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "move",
+   "ratfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You roll up into a ball and move up to four times your Speed in a straight line down an incline. If you reach the bottom of the incline or hit an obstacle during this first turn of movement, you stop rolling safely. Otherwise, you automatically keep rolling at this Speed during subsequent turns until you hit the bottom of the incline or an obstacle ends this movement (which can happen in the middle of your turn). You're Slowed 2 each turn after the first that you keep rolling, and if you hit an obstacle on a turn after the first, you and the obstacle both take 4d6 damage and you stop rolling."
+ },
+ {
+  "id": "ratspeak",
+  "name": "Ratspeak",
+  "level": 1,
+  "category": "ancestry",
+  "traits": [
+   "ratfolk"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can ask questions of, receive answers from, and use the Diplomacy skill with rodents, including beavers, mice, porcupines, rats, and squirrels, but not with other mammals, such as dogs or bats. The GM determines which animals count as rodents."
+ },
+ {
+  "id": "rattle-the-earth",
+  "name": "Rattle The Earth",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Striking the ground with the gravity of the deepest rocks, you cause an earthquake. This has the effects of Earthquake but comes from you, with an area of a or an emanation with the same size as your kinetic aura. You and your space are unaffected by the quake. The fissures are only 10 feet deep, and the DC of the flat check for a collapse is 4 higher. --- **Level (16th)** Fissures are 20 feet deep, and the DC of the flat check is 2 higher. **Level (20th)** The fissures and flat check are unchanged from the spell."
+ },
+ {
+  "id": "ravenous-charge",
+  "name": "Ravenous Charge",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Zombie Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Hungry for the flesh of the living, you hurl yourself into the fray, teeth gnashing. You Stride. If you end your movement within melee reach of a living creature, you can make an Athletics check to Grapple that creature. If you succeed, you then make a jaws Strike against that creature."
+ },
+ {
+  "id": "razmiran-priest-dedication",
+  "name": "Razmiran Priest Dedication",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "prerequisites": [
+   "trained in Crafting",
+   "trained in Deception"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have earned entry to the priesthood of Razmir, either at the Exalted Lodge or another temple where Razmir's holy masks are forged. You gain a Razmiri Mask and can Craft a replacement in 4 hours if yours is ever damaged or lost. There is no value in selling your *Razmiri mask*, and only you gain its benefits. The abilities of your *Razmiri mask* use the higher of your class DC or spell DC. You can take the Cleric Dedication feat without needing to meet its prerequisites and before you take two other feats from the Razmiran priest archetype, but you must choose Razmir as your deity. All spells granted by the cleric archetype when gained in this way are occult spells instead of divine spells, and cleric feats that normally have the divine trait instead have the occult trait. Your key spellcasting attribute for these spells is Charisma, rather than Wisdom."
+ },
+ {
+  "id": "reach-beyond",
+  "name": "Reach Beyond",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Ghost Eater Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've learned to move your spiritual energy past yourself to attack spirits where others can't. You can make melee Strikes against incorporeal creatures that are inside solid objects as long as the object is within your reach. An incorporeal creature inside of a solid object is hidden, requiring you to succeed at a when you target it. You can spend an action, which has the concentrate trait, to focus on a creature inside of a solid object. If you do, the next melee Strike you make this turn requires you to succeed at only a to affect the creature."
+ },
+ {
+  "id": "reach-spell",
+  "name": "Reach Spell",
+  "level": 1,
+  "category": "class",
+  "traits": [
+   "bard",
+   "cleric",
+   "concentrate",
+   "druid",
+   "oracle",
+   "sorcerer",
+   "spellshape",
+   "witch",
+   "wizard"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can extend your spells' range. If the next action you use is to Cast a Spell that has a range, increase that spell's range by 30 feet. As is standard for increasing spell ranges, if the spell normally has a range of touch, you extend its range to 30 feet."
+ },
+ {
+  "id": "reactive-dismissal",
+  "name": "Reactive Dismissal",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "summoner"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your eidolon would take damage. You abruptly dismiss your eidolon to reduce the damage it takes, though this makes summoning it again more difficult. Reduce the triggering damage to your eidolon by double your level, and your eidolon unmanifests. You can't Manifest your Eidolon again until after the end of your next turn."
+ },
+ {
+  "id": "reactive-distraction",
+  "name": "Reactive Distraction",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "rogue"
+  ],
+  "prerequisites": [
+   "legendary in Deception",
+   "Perfect Distraction"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You would be hit by an attack or targeted by an effect, or you are within an effect's area. **Requirements** You have Perfect Distraction ready to use. --- You reactively switch with your decoy to foil your foe. You use Perfect Distraction, even if you were observed, as long as you end the movement of your Sneak while concealed or in a location with cover or greater cover. Your decoy is targeted by the attack or effect instead of you. In the case of an area effect, if your Sneak doesn't move you out of the area, both you and the decoy are targeted by the effect."
+ },
+ {
+  "id": "reactive-interference",
+  "name": "Reactive Interference",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "commander",
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An adjacent enemy begins to use a reaction. --- **Commander** Your own tactical expertise allows you to quickly identify and prevent enemy responses. If the triggering creature's level is equal to or lower than yours, you disrupt the triggering reaction. If the triggering creature's level is higher than yours, make an attack roll against its AC. On a success, you disrupt the reaction. **Rogue** Grabbing a sleeve, swiping with your weapon, or creating another obstruction, you reflexively foil an enemy's response. If the triggering creature's level is equal to or lower than yours, you disrupt the triggering reaction. If the triggering creature's level is higher than yours, you must make an attack roll against its AC. On a success, you disrupt the reaction."
+ },
+ {
+  "id": "reactive-pursuit",
+  "name": "Reactive Pursuit",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "rogue"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An adjacent foe moves away from you, and you can reach at least one space adjacent to the foe with a Stride action. --- You keep pace with a retreating foe. You Stride, but you must end your movement adjacent to the triggering enemy. Your move does not trigger reactions from the triggering enemy. You can use Reactive Pursuit to Burrow, Climb, Fly, or Swim instead of Stride if you have the corresponding movement type."
+ },
+ {
+  "id": "reactive-strike",
+  "name": "Reactive Strike",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "barbarian",
+   "champion",
+   "commander",
+   "exemplar",
+   "guardian",
+   "magus",
+   "swashbuckler"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature within your reach uses a manipulate action or a move action, makes a ranged attack, or leaves a square during a move action it's using. --- You swat a foe that leaves an opening. Make a melee Strike against the triggering creature. If your attack is a critical hit and the trigger was a manipulate action, you disrupt that action. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "reactive-striker",
+  "name": "Reactive Striker",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Fighter Dedication"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Reactive Strike reaction."
+ },
+ {
+  "id": "reactive-tangle",
+  "name": "Reactive Tangle",
+  "level": 4,
+  "category": "archetype",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "Reactive Tangle Source High Seas pg. 106 Archetype Marine Marauder Prerequisites Marine Marauder Dedication Trigger A Medium or smaller creature within your reach uses a move action or leaves a square during a move action it’s using. Requirements You’re holding a net. You wrap the net around the creature’s feet to prevent it from escaping. Use the net to Grapple the triggering creature. This has the effects of using a net that’s attached to a rope to Grapple, except that the creature must remain within your reach instead of within 10 feet for you to continue to Grapple it."
+ },
+ {
+  "id": "read-lips",
+  "name": "Read Lips",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Society"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can read lips of others nearby who you can clearly see. The language read must be one that you know. When you're at your leisure, you can do this automatically. In encounter mode or when attempting a more difficult feat of lipreading, you're fascinated and off-guard during each round in which you focus on lip movements, and you must succeed at a Society check (DC determined by the GM) to successfully read someone's lips."
+ },
+ {
+  "id": "read-psychometric-resonance",
+  "name": "Read Psychometric Resonance",
+  "level": 1,
+  "category": "skill",
+  "traits": [
+   "concentrate",
+   "emotion",
+   "exploration",
+   "general",
+   "mental",
+   "occult",
+   "skill"
+  ],
+  "prerequisites": [
+   "trained in Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With a touch, you can read the psychic impressions left on objects by their previous owners. This exploration activity functions similarly to Detect Magic in that you move at half your travel speed or slower while looking for psychometric resonance. You must brush your bare hands over any objects you pass while you do this. This detects objects with significant emotional resonance attached to them, such as the joy from a child's beloved teddy bear, the sorrow from a widower's wedding ring, or the fear from a victim's murder weapon. If you're looking for a particular type of emotional resonance, you can choose to ignore other emotions. If you find an item with that resonance, you can explore that resonance with the Psychometric Assessment action."
+ },
+ {
+  "id": "read-the-dust",
+  "name": "Read the Dust",
+  "level": 6,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** an undead creature is reduced to zero Hit Points or a haunt is disabled within 60 feet of you --- You watch the creature or hazard as it collapses, careful for any sign it may return. You immediately learn if the creature or hazard has an ability that will restore it, like rejuvenation or a haunt's reset. If it can return, you also learn the time span before its return and how to prevent that return in broad terms, such as \"lay its body to rest\" or \"destroy its armor.\" If this requires any people or objects that aren't already present, you also learn the direction towards each missing piece from the dust's movement."
+ },
+ {
+  "id": "read-the-land",
+  "name": "Read the Land",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Geomancer Dedication",
+   "master in Nature"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to commune with the land to learn information. You learn the Commune ritual if you didn't know it already. You can perform this ritual with a casting time of 1 hour instead of 1 day and without a secondary caster."
+ },
+ {
+  "id": "read-the-stars",
+  "name": "Read the Stars",
+  "level": 9,
+  "category": "ancestry",
+  "traits": [
+   "lizardfolk"
+  ],
+  "prerequisites": [
+   "trained in Astrology Lore or Occultism"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're incredibly skilled in iruxi astrology, and you can gain useful (if cryptic) hints from the stars' alignment. Once per night, if you can clearly see the stars, you can spend 1 hour reading the heavens to see how they relate to a particular goal, event, or activity that will occur within 1 week. The GM rolls a secret check, either a check or a check. On a success, you learn a cryptic clue or piece of advice that could help with the chosen event, and on a critical failure, you learn a misleading cryptic clue or piece of advice."
+ },
+ {
+  "id": "read-the-wind",
+  "name": "Read The Wind",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "mythic"
+  ],
+  "prerequisites": [
+   "Hunter's Calling"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can derive meaning from the tiniest details when tracking an enemy. Whenever you succeed at a check to Track at mythic proficiency, you can immediately attempt a check to Recall Knowledge about the creature you're tracking, also at mythic proficiency and with a suitable skill determined by the GM."
+ },
+ {
+  "id": "reaper-of-repose",
+  "name": "Reaper of Repose",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Knight Reclaimant Dedication",
+   "master proficiency in a weapon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your skill and fervor allow you to pierce undead defenses and exploit their weaknesses. When you make an attack using a weapon with which you have master proficiency and hit an undead creature, you ignore 5 points of the creature's resistances, and the undead's weaknesses are 2 higher against your attack."
+ },
+ {
+  "id": "reason-rapidly",
+  "name": "Reason Rapidly",
+  "level": 12,
+  "category": "class",
+  "traits": [
+   "investigator"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your mind works through clues at an unbelievable speed. You instantly use up to five Recall Knowledge actions. If you have any special abilities or free actions that would normally be triggered when you Recall Knowledge, you can't use them for these actions."
+ },
+ {
+  "id": "rebels-map",
+  "name": "Rebel's Map",
+  "level": 4,
+  "category": "class",
+  "traits": [
+   "archetype"
+  ],
+  "prerequisites": [
+   "Horizon Walker Dedication or Scout Dedication"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- Rebellions require an intricate knowledge of one's surroundings—because you might need to escape at any moment. You remember the locations of escape routes, ambush spots, and cover from a scouting expedition or a previous visit to the area. Roll a d20. At any point during the subsequent combat, you can substitute the result of this roll instead of rolling a d20 on one Deception check to Create a Diversion or on one Stealth check to Hide."
+ },
+ {
+  "id": "rebounding-assault",
+  "name": "Rebounding Assault",
+  "level": 10,
+  "category": "class",
+  "traits": [
+   "gunslinger"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're wielding a loaded firearm or loaded crossbow in one hand and a bludgeoning or slashing melee weapon in the other. --- You hurl your melee weapon at an opponent, then fire a bullet into the weapon's hilt, making it bounce back to your grasp. Make a thrown ranged Strike with the melee weapon, then a ranged Strike with your firearm. This counts as two attacks for your multiple attack penalty, but you don't apply the penalty until after you've completed both attacks. If the melee weapon doesn't already have the thrown trait, it gains the thrown 10 feet trait during a Rebounding Assault. If both attacks are successful, the bolt or bullet hits the thrown melee weapon instead of your target, adding its force into one attack. Combine the damage from both Strikes, using the thrown weapon's damage type, and add an additional 1d6 precision damage. The impact sends the melee weapon rebounding off the target and back to your hand. In any circumstance other than both attacks hitting, carry out the individual Strikes normally. The thrown weapon doesn't rebound and remains in the target's space as normal for thrown weapons."
+ },
+ {
+  "id": "rebounding-smite",
+  "name": "Rebounding Smite",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "cleric"
+  ],
+  "prerequisites": [
+   "Channel Smite"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** You miss with your Strike during Channel Smite. --- The energy from your smite persists for a moment, allowing you to pass it to a new target. Cast the 1-action version of the Harm or Heal spell you expended, targeting a creature other than the target of your Strike."
+ },
+ {
+  "id": "rebounding-toss",
+  "name": "Rebounding Toss",
+  "level": 2,
+  "category": "class",
+  "traits": [
+   "fighter",
+   "flourish"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are wielding a thrown weapon. --- You bounce your weapon off one foe to strike another. Make a ranged Strike with a thrown weapon. If this Strike hits, the weapon rebounds toward an enemy within 10 feet of the original target. Make an additional Strike against this second target. Both attacks count toward your multiple attack penalty, but the penalty doesn't increase until after you've made both attacks."
+ },
+ {
+  "id": "recharging-transference",
+  "name": "Recharging Transference",
+  "level": 16,
+  "category": "class",
+  "traits": [
+   "concentrate",
+   "mythic"
+  ],
+  "prerequisites": [
+   "Wildspell Dedication"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You can break your spells down into raw magical potential and transfer it to an ally. Expend one prepared spell, spell slot, or Focus Point, and choose an adjacent ally or an ally within your Spellsurge aura. If you expended a spell or spell slot, the ally regains one expended spell or spell slot with a rank equal to or lower than the spell or spell slot you expended. If you expended a Focus Point, the ally regains a Focus Point. This feat can't grant more spell slots or Focus Points than the target can normally possess. You can't target yourself with this ability. Only one spell, spell slot, or Focus Point can be transferred with each use of this ability."
+ },
+ {
+  "id": "reclaim-spell",
+  "name": "Reclaim Spell",
+  "level": 20,
+  "category": "class",
+  "traits": [
+   "wizard"
+  ],
+  "prerequisites": [
+   "Reprepare Spell"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have learned to manipulate reflections of magic, similar to the resonant reflections. You reclaim the magic of an ongoing spell, using it reprepare a spell with a duration. You Dismiss a Spell of 4th level or lower that you cast today from a spell slot with at least half its duration remaining, even if that spell can't normally be Dismissed. You can then spend 10 minutes to reprepare the spell in that spell slot, as Reprepare Spell."
+ },
+ {
+  "id": "recognize-ambush",
+  "name": "Recognize Ambush",
+  "level": 5,
+  "category": "ancestry",
+  "traits": [
+   "hobgoblin"
+  ],
+  "prerequisites": [],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- Your combat training has honed you to be ready for an attack at all times. You Interact to draw a weapon."
+ }
+]

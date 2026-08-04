@@ -92,6 +92,11 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   'star-orb': { kind: 'familiar', label: 'Star Orb', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'undead-master-dedication': { kind: 'animal', label: 'Undead Master Dedication', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'witch-dedication': { kind: 'familiar', label: 'Witch Dedication', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
+
+  // ---- full feat audit — companion grants ----
+  // 2 entries. The judge said "no lane exists"; the adversary found the lane.
+  'adaptive-mask-familiar': {"kind":"familiar","label":"Adaptive Mask Familiar","abilityBudget":4,"supersedes":["mask-familiar"],"note":"Your mask familiar adapts quickly to material form: select four master and familiar abilities each day instead of two."},
+  'additional-follower': {"kind":"follower","label":"Additional Follower","note":"Another novice follower with the minion trait joins you. Repeatable up to four followers in total — add the further ones by hand in the Companions tab."},
 };
 
 /** The companion grants active on a character, given its taken feat ids. Deduped via `supersedes`
@@ -181,4 +186,13 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'specialized-spirit-companion': {"kinds":["animal"],"strikeRider":"ghost touch","note":"Spirit-blessed: Strikes gain ghost touch."},
   'vibration-sense': {"kinds":["eidolon"],"senses":["tremorsense (imprecise 30 ft)"],"note":"Vibration Sense: tremorsense as an imprecise sense, range 30 feet. An aquatic eidolon gains wavesense (imprecise 30 ft) instead; an amphibious eidolon gains both."},
   'wing-rider': {"kinds":["animal"],"speeds":{"fly":25},"note":"Wing Rider: your dragon companion has a fly Speed of 25 feet at all times."},
+
+  // ---- full feat audit — companion mods ----
+  // 6 entries. The judge said "no lane exists"; the adversary found the lane.
+  'a-miracle-of-science': {"kinds":["animal"],"maturityFloor":"specialized","note":"A Miracle of Science!: your construct companion is at least a paragon (specialized) construct companion."},
+  'advanced-construct-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Advanced Construct Companion: your construct companion is at least an advanced construct companion (the mature rung here). During an encounter, even without Command a Construct, it can still use 1 action on your turn to Stride or Strike."},
+  'battle-hardened-companion': {"kinds":["animal"],"maturityFloor":"nimble","note":"Battle-Hardened Companion: the companion you gained with Commander's Companion is at least a nimble or savage animal companion — pick savage in Edit if you want that side. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike, and then gains a reaction for your tactics (that is all the actions it gets that round)."},
+  'battle-tested-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Battle-Tested Companion: the companion you gained with Commander's Companion is at least a mature animal companion. While your banner is affixed to it, the banner's aura is 10 feet greater than normal."},
+  'behold-a-pale-horse': {"kinds":["animal"],"maturityFloor":"specialized","note":"Behold, A Pale Horse: your apocalypse mount is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time (three maximum)."},
+  'behold-my-creation': {"kinds":["animal"],"maturityFloor":"nimble","note":"Behold My Creation!: your construct companion is at least an incredible construct companion — the nimble/savage rung here; pick savage in Edit if that fits your build better."},
 };
