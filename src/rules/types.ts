@@ -247,6 +247,24 @@ export interface IwrEntry {
 /** Innate defenses (senses + IWR) a content item grants. Mixed into Heritage,
  *  Feat, and ClassFeature; parsed from Foundry rule elements at import. */
 export interface DefenseGrants {
+  /**
+   * A lower multiple attack penalty. The strike line computes MAP as 5 (4 with agile) with no way to
+   * change it, so Agile Grace ("–3 and –6 rather than –4 and –8") and the ranger's Flurry moved
+   * nothing at all.
+   *
+   * `step` is the SECOND attack's penalty; the third is always twice it, which matches every printed
+   * case. `whileState` gates it on a toggle the sheet already tracks — Flurry applies only against
+   * your hunted prey, and applying it unconditionally would over-grant on every other target.
+   */
+  mapReduction?: {
+    /** Penalty for the second attack on a non-agile Strike. Omitted = leave non-agile alone. */
+    step?: number;
+    /** Penalty for the second attack on an agile Strike. Omitted = leave agile alone. */
+    agileStep?: number;
+    whileState?: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche';
+    /** Short label for the strike breakdown. */
+    note?: string;
+  };
   senses?: SenseEntry[];
   resistances?: IwrEntry[];
   weaknesses?: IwrEntry[];
@@ -754,6 +772,12 @@ export interface Feat extends ContentBase, DefenseGrants {
   /** "Increase the number of tactics you can have prepared by 1" (Efficient Preparation). The
    *  commander's preparedMax was an unconditional 3, so the feat never arrived. */
   preparedTacticsBonus?: number;
+  /**
+   * "Your proficiency bonus to untrained skill checks is equal to your level –2" (Untrained
+   * Improvisation) or "…equal to your level" (Eclectic Skill). `levelMinus` is what the text
+   * subtracts. An untrained skill scored a flat 0 proficiency, so both feats were inert.
+   */
+  untrainedProficiency?: { levelMinus: number };
   /** "You treat heavy armor as if it were 1 Bulk lighter" (Armor Regiment Training). Reduces the Bulk
    *  counted for WORN armor of the listed categories, never below 0 (Bulk 'L' armor stays L). */
   armorBulkReduction?: { by: number; categories?: ArmorCategory[] };

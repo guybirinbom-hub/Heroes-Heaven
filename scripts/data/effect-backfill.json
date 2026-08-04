@@ -51288,5 +51288,41 @@
     "id": "efficient-preparation",
     "field": "preparedTacticsBonus",
     "value": 1
+  },
+  {
+    "category": "feats",
+    "id": "agile-grace",
+    "field": "mapReduction",
+    "value": {
+      "agileStep": 3,
+      "note": "Agile Grace"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "flurry",
+    "field": "mapReduction",
+    "value": {
+      "step": 3,
+      "agileStep": 2,
+      "whileState": "hunt-prey",
+      "note": "Flurry (hunted prey)"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "untrained-improvisation",
+    "field": "untrainedProficiency",
+    "value": {
+      "levelMinus": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "eclectic-skill",
+    "field": "untrainedProficiency",
+    "value": {
+      "levelMinus": 0
+    }
   }
 ]

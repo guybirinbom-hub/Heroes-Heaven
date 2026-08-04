@@ -295,15 +295,38 @@ export function derivePerception(c: Character, db?: ContentDatabase): StatLine {
   return { rank, modifier };
 }
 
+/**
+ * The proficiency bonus an UNTRAINED skill check gets — 0 by RAW, but Untrained Improvisation makes
+ * it "your level –2" and Eclectic Skill makes it your level. Returns null when nothing applies.
+ *
+ * Skipped under Proficiency Without Level: that variant re-bases every rank, and "equal to your
+ * level" has no meaning in it. Better to leave the variant's own number alone than to invent one.
+ */
+export function untrainedSkillBonus(c: Character, db?: ContentDatabase): number | null {
+  if (!db || pwl(c)) return null;
+  let best: number | null = null;
+  for (const fc of c.feats ?? []) {
+    const u = db.feats[fc.featId]?.untrainedProficiency;
+    if (!u) continue;
+    const v = c.level - u.levelMinus;
+    if (best == null || v > best) best = v;
+  }
+  return best;
+}
+
 export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatabase): StatLine {
   const rank = c.proficiencies.skills[key] ?? 'untrained';
   const ability = skillAbility(key);
   // Item bonus: the best of an ABP skill item, a Monster-Parts refined skill item, a passive skill item
   // (Cloak of Social Graces), and a dynamic bloodline/deity skill item (Sanguine Pendant). Don't stack.
   const itemBonus = Math.max(abpSkillBonus(c, key), mpSenseSkillItemBonus(c, 'skill', key), passiveItemBonus(c, db, 'skill', key), dynamicItemSkillBonus(c, db, key));
+  // An untrained skill normally contributes 0 proficiency; Untrained Improvisation and Eclectic Skill
+  // replace that with your level (minus what they print). Never LOWERS it.
+  const untrained = rank === 'untrained' ? untrainedSkillBonus(c, db) : null;
+  const prof = untrained != null ? Math.max(profBonus(rank, c.level, pwl(c)), untrained) : profBonus(rank, c.level, pwl(c));
   let modifier =
     abilityMod(c.abilities[ability]) +
-    profBonus(rank, c.level, pwl(c)) +
+    prof +
     poolTypedMods([
       { type: 'item', value: itemBonus },
       ...conditionTypedMods(c.conditions, ability, 'skill'),
@@ -458,6 +481,28 @@ export function activeStateGrants(c: Character, db: ContentDatabase): NonNullabl
   if (c.heritageId) scan(db.heritages[c.heritageId]);
   for (const fid of ownedFeatureIds(c, db)) scan(db.classFeatures[fid]);
   return out;
+}
+
+/**
+ * The multiple attack penalty for a Strike: 5, or 4 with agile, unless a feat lowers it.
+ *
+ * The two steps were hardcoded at both strike call sites, so Agile Grace ("–3 and –6 rather than –4
+ * and –8") and the ranger's Flurry printed a number the sheet never showed. A state-gated reduction
+ * only counts while that toggle is on — Flurry applies against your hunted prey and nothing else.
+ */
+export function mapStepFor(c: Character, db: ContentDatabase, traits: string[]): number {
+  const agile = traits.includes('agile');
+  let step = agile ? 4 : 5;
+  const on = (state?: string) => !state || (c.classResources?.[state] ?? 0) > 0;
+  const consider = (g: DefenseGrants | undefined) => {
+    const r = g?.mapReduction;
+    if (!r || !on(r.whileState)) return;
+    const candidate = agile ? r.agileStep : r.step;
+    if (candidate != null && candidate < step) step = candidate;
+  };
+  for (const f of c.feats ?? []) consider(db.feats[f.featId]);
+  for (const fid of ownedFeatureIds(c, db)) consider(db.classFeatures[fid]);
+  return step;
 }
 
 export function deriveAc(c: Character, db: ContentDatabase): AcResult {
@@ -1368,7 +1413,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     // Weapon potency (item), condition penalties, and mode modifiers pool by type across sources.
     poolTypedMods([{ type: 'item', value: potencyBonus }, ...condMods, ...modeTypedMods(c.activeModes, { kind: 'attack' })]);
 
-  const step = w.traits.includes('agile') ? 4 : 5;
+  const step = mapStepFor(c, db, w.traits);
   const attack = [base, base - step, base - step * 2];
 
   const strikingExtra = Math.max(
@@ -1586,7 +1631,7 @@ function deriveUnarmedStrike(
       ...conditionTypedMods(c.conditions, atkAbility, 'attack'),
       ...modeTypedMods(c.activeModes, { kind: 'attack' }),
     ]);
-  const step = p.traits.includes('agile') ? 4 : 5;
+  const step = mapStepFor(c, db, p.traits);
   const attack = [base, base - step, base - step * 2];
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
   // Thief racket also applies to a finesse UNARMED attack (thief.json selector melee-strike-damage) —
