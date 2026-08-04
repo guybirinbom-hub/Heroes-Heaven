@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { ContentDatabase } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
+import { rememberPartyCapabilities } from '../data/partyCapabilities';
 import { fetchParty, fetchMemberSheet, currentUserId, kickFromParty, subscribeParty, type PartyMember } from '../data/party';
 import type { PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
@@ -124,7 +125,11 @@ export function PartyMembers({
       setError('');
       fetchParty(campaignId)
         .then((list) => {
-          if (!cancelled) setMembers(list);
+          if (cancelled) return;
+          setMembers(list);
+          // Cache the party's SHARED capabilities (Battleforger). The item editor renders
+          // synchronously and cannot await the party, so it reads what the last fetch saw.
+          rememberPartyCapabilities(campaignId, list.map((m) => m.summary));
         })
         .catch(() => {
           if (!cancelled) setError("Couldn't load the party. Check your connection, or that the campaign SQL has been run.");

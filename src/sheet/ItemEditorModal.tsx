@@ -1,4 +1,5 @@
 import { type ReactNode, useId, useMemo, useState } from 'react';
+import { partyHasFeat } from '../data/partyCapabilities';
 import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import { canAttachTo } from '../rules/attachments';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
@@ -1183,7 +1184,11 @@ function BattleforgerRow({
   if (!onPlay || !character) return null;
   const isWeaponOrArmor = item.itemType === 'weapon' || item.itemType === 'armor';
   if (!isWeaponOrArmor) return null;
-  if (!character.feats.some((f) => f.featId === 'battleforger')) return null;
+  // Yours, or a party member's — Battleforger prepares ANOTHER character's gear, so one person in
+  // the party having the feat enables the control for everyone. The party flag is cached from the
+  // last party fetch, because this renders synchronously and cannot await the server.
+  const canForge = character.feats.some((f) => f.featId === 'battleforger') || partyHasFeat('battleforger');
+  if (!canForge) return null;
 
   const existing = (inv.runes as { potency?: number } | undefined)?.potency ?? 0;
   const on = !!inv.battleforged;

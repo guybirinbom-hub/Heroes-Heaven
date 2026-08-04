@@ -16,9 +16,16 @@ export interface PartySummary {
   perception: number;
   conditions: { name: string; value?: number }[];
   modes: string[];
+  /** Feats the PARTY shares rather than the individual: a capability any member can use because one
+   *  member has it. Battleforger is the first — it prepares another character's gear, so the control
+   *  belongs on everyone's items once one person in the party has the feat. */
+  sharedFeats?: string[];
   /** Compressed portrait (synced copy) for the card avatar, when the character has one. */
   portrait?: string;
 }
+
+/** Feats whose benefit reaches the whole party, so a teammate having one enables it for everyone. */
+export const PARTY_SHARED_FEATS = ['battleforger'];
 
 function cap(s: string): string {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
@@ -44,6 +51,7 @@ export function computeSummary(c: Character, content: ContentDatabase): PartySum
     hpTemp: c.hitPoints?.temp || undefined,
     ac: safe(() => deriveAc(c, content).value, 10),
     perception: safe(() => derivePerception(c).modifier, 0),
+    sharedFeats: PARTY_SHARED_FEATS.filter((f) => (c.feats ?? []).some((x) => x.featId === f)),
     conditions: (c.conditions ?? []).map((cond) => ({
       name: content.conditions?.[cond.id]?.name ?? cap(cond.id),
       value: cond.value,
