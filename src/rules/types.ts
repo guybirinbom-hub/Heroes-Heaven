@@ -778,6 +778,12 @@ export interface Feat extends ContentBase, DefenseGrants {
    * subtracts. An untrained skill scored a flat 0 proficiency, so both feats were inert.
    */
   untrainedProficiency?: { levelMinus: number };
+  /**
+   * Weakness types this feat REMOVES ("you no longer gain silver weakness from Werecreature
+   * Dedication"). Every other field adds; there was no way to take one away, so a feat whose whole
+   * point is undoing an earlier drawback left the drawback on the sheet.
+   */
+  removesWeaknesses?: string[];
   /** "You treat heavy armor as if it were 1 Bulk lighter" (Armor Regiment Training). Reduces the Bulk
    *  counted for WORN armor of the listed categories, never below 0 (Bulk 'L' armor stays L). */
   armorBulkReduction?: { by: number; categories?: ArmorCategory[] };

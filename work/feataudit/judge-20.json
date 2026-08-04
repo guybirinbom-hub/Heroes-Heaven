@@ -1,0 +1,501 @@
+{
+ "records": [
+  {
+   "id": "instrument-of-slaughter",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds persistent bleed to the TARGET on a critical hit; nothing on the player's own sheet changes."
+  },
+  {
+   "id": "instrument-of-zeal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extra damage die and Slowed 1 apply to the target of a critical hit with a specific reaction; table-resolved, target-side."
+  },
+  {
+   "id": "insulated-poppet",
+   "verdict": "MISS",
+   "reason": "The feat REMOVES the electricity/cold weakness the tsukumogami-poppet heritage grants through its poppet-material effectChoice. Every IWR field is additive (weaknesses only add entries); there is no lane for a feat that cancels a weakness granted by a heritage, so the sheet keeps showing weakness 5.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "integrated-armament",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes how a weapon/shield is drawn, stowed, hidden and Disarmed — item handling adjudicated at the table, no statistic changes."
+  },
+  {
+   "id": "intense-implement",
+   "verdict": "MISS",
+   "reason": "Grants the ADEPT benefit of the thaumaturge's THIRD implement. build.ts's implement pipeline (~3040-3061) only ever assigns adept to the first two implements ('never the third implement'), and no feat field can push an implement benefit, so the third implement's adept benefit never appears.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "intensify-investiture",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free action that swaps an activated item's save DC for your class DC on the next activation; chosen and resolved at the table."
+  },
+  {
+   "id": "intercepting-hand",
+   "verdict": "MISS",
+   "reason": "Your fist unarmed attack permanently gains the disarm trait, which nothing delivers — the derived baseline Fist has agile/finesse/nonlethal/unarmed only. The Disarming Interception action needs nothing. Modelled the way petrified-skin models its stone fist: a granted natural attack carrying the printed traits.",
+   "fix": {
+    "grantedStrikes": [
+     {
+      "name": "Intercepting Fist",
+      "die": "d4",
+      "damageType": "bludgeoning",
+      "traits": [
+       "agile",
+       "finesse",
+       "nonlethal",
+       "disarm",
+       "unarmed"
+      ],
+      "group": "brawling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "interfering-surge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that expends a slot to attempt a counteract check with situational penalties; entirely table-resolved against another creature's spell."
+  },
+  {
+   "id": "internal-dialogue",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-10-minutes reaction to substitute an Incarnation Lore roll for a failed check; rolled at the table, no stat changes."
+  },
+  {
+   "id": "internal-respirator",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extends how long you can hold your breath — exploration/GM timekeeping the app does not model."
+  },
+  {
+   "id": "interpose",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action movement/swap-positions activity ending in a Strike; positional, resolved at the table."
+  },
+  {
+   "id": "interposing-crowd",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Suppresses reactions to your movement while in a crowd — a positional circumstance the GM adjudicates; no statistic changes."
+  },
+  {
+   "id": "interrupt-charge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction whose whole effect is an Athletics check imposing a Speed penalty on the TRIGGERING creature."
+  },
+  {
+   "id": "interweave-dispel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape action that lets you follow a landed spell with Dispel Magic as a free action; sequencing resolved at the table."
+  },
+  {
+   "id": "intimidating-glare",
+   "verdict": "MISS",
+   "reason": "Demoralize loses auditory / gains visual and ignores the –4 for not sharing a language — a real removal of a penalty the player would otherwise take. Exactly the shape already delivered for intimidating-prowess and animal-call in situationalBonuses.ts.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "intimidation"
+       }
+      ],
+      "when": "when you Demoralize",
+      "bonus": "Demoralize is visual instead of auditory and ignores the not-sharing-a-language penalty"
+     }
+    ]
+   }
+  },
+  {
+   "id": "intimidating-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape that makes TARGETS who fail their save frightened; entirely target-side."
+  },
+  {
+   "id": "intimidating-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action Strike that leaves the TARGET frightened; an action resolved at the table."
+  },
+  {
+   "id": "into-the-fray",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A movement-plus-two-Strikes activity with special multiple-attack-penalty ordering; resolved at the table."
+  },
+  {
+   "id": "into-the-future",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape that delays when a spell's effects occur; timing only, no statistic changes."
+  },
+  {
+   "id": "into-the-storm",
+   "verdict": "MISS",
+   "reason": "Reduces the circumstance penalty to ranged attacks from wind or precipitation by 2 and lets you use mastered weapons weather would otherwise forbid — a real, repeatable benefit to the player's own attack rolls that nothing surfaces.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "ranged attacks hindered by wind or precipitation",
+      "bonus": "wind/precipitation circumstance penalty reduced by 2; you can still use weapons you're a master in at –4 (–2 if legendary) even when weather would prevent it"
+     }
+    ]
+   }
+  },
+  {
+   "id": "inured-to-alchemy",
+   "verdict": "MISS",
+   "reason": "Every successful Fortitude save against an alchemical poison, drug or addiction reduces the stage by more than the normal 1. The app doesn't track poison stages, but the same 'degree/track improvement on a save' shape is already delivered as a situational note (cantorian-reinforcement, hydra-mutagen), and this feat has nothing at all.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude"
+       }
+      ],
+      "when": "against an alchemical poison, drug, or addiction",
+      "bonus": "each success reduces the stage by 2 (1 if virulent); each critical success by 3 (2 if virulent)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "inventive-offensive",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 3-action (or 2-action) activity that temporarily adds one player-chosen weapon trait until you next hit; a transient, table-tracked weapon modification."
+  },
+  {
+   "id": "inventor",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A downtime Crafting activity (inventing formulas) the app does not model."
+  },
+  {
+   "id": "investigators-stratagem",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Devise a Stratagem action, explicitly WITHOUT the Intelligence substitution; an action rolled at the table, no statistic changes."
+  },
+  {
+   "id": "invigorating-mercy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes what your Mercy can remove from an ALLY (a counteract check against clumsy/enfeebled); ally-side."
+  },
+  {
+   "id": "invigorating-surge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants temporary Hit Points to another creature in your aura; ally-side."
+  },
+  {
+   "id": "inviolable",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Deals 3d6 damage to any creature that hits you — damage applied to the ATTACKER, resolved at the table; nothing on your sheet changes."
+  },
+  {
+   "id": "invoke-offense",
+   "verdict": "MISS",
+   "reason": "Grants a real unarmed attack (1d8 spirit, brawling, agile/finesse/magical, gaining striking-rune dice at 5/12/20) but ONLY for the duration of Enter Spirit Trance. grantedStrikes is permanent (build.ts collectGrantedNaturals) and ModeDef carries no grantedStrikes field, so there is no way to express a Strike that exists only while a mode/trance is on without over-granting it permanently.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "iron-fists",
+   "verdict": "MISS",
+   "reason": "Your fist unarmed attacks permanently lose nonlethal and gain shove; the derived baseline Fist still shows nonlethal and no shove. Same modelling petrified-skin already uses (a granted brawling natural attack with the printed traits).",
+   "fix": {
+    "grantedStrikes": [
+     {
+      "name": "Iron Fist",
+      "die": "d4",
+      "damageType": "bludgeoning",
+      "traits": [
+       "agile",
+       "finesse",
+       "shove",
+       "unarmed"
+      ],
+      "group": "brawling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "iron-lung",
+   "verdict": "MISS",
+   "reason": "One degree of success better on saves against inhaled poison — a permanent improvement to the player's own saves that nothing surfaces. (The Exhale Poison ability is an action and needs nothing.)",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against an inhaled poison",
+      "bonus": "treat your result as one degree of success better"
+     }
+    ]
+   }
+  },
+  {
+   "id": "iron-repercussions",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you make Iron Command's mental damage persistent instead; the damage is dealt to the enemy and the amount is unchanged."
+  },
+  {
+   "id": "irrepressible",
+   "verdict": "MISS",
+   "reason": "A permanent degree-of-success upgrade on the player's own saves against emotion effects (plus the gutsy-halfling critical-failure clause). Nothing delivers it; the identical shape is already delivered for disillusionment and cantorian-reinforcement as a situational note on saves.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against an emotion effect",
+      "bonus": "a success is a critical success instead (and, with the gutsy halfling heritage, a critical failure is a failure instead)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "irrepressible-ganzi",
+   "verdict": "MISS",
+   "reason": "Permanent degree-of-success upgrade on your own saves against emotion effects; nothing delivers it. Same situational shape as disillusionment.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against an emotion effect",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "irrepressible-halfling",
+   "verdict": "MISS",
+   "reason": "Duplicate printing of Irrepressible: a permanent degree-of-success upgrade on your own saves vs emotion effects, with the gutsy-halfling critical-failure clause. Nothing delivers it.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against an emotion effect",
+      "bonus": "a success is a critical success instead (and, with the gutsy halfling heritage, a critical failure is a failure instead)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "irrepressible-nephilim",
+   "verdict": "MISS",
+   "reason": "Permanent degree-of-success upgrade on your own saves against emotion effects; nothing delivers it.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against an emotion effect",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "iruxi-glide",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action glide (descend 5 ft, move 25 ft forward) — positional movement resolved at the table; it grants no fly Speed."
+  },
+  {
+   "id": "iruxi-spirit-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ghost touch only governs how your attacks interact with incorporeal TARGETS; nothing on your sheet changes."
+  },
+  {
+   "id": "iruxi-unarmed-cunning",
+   "verdict": "MISS",
+   "reason": "Grants weapon critical specialization with your claw and lizardfolk-feat unarmed attacks. critSpec/critSpecWeapons can only narrow by weapon group, trait, or base id — granted naturals get base 'natural:<n>' (derive.ts ~1671) and share the brawling group with gauntlets/fists/saps, so the only expressible narrowing would over-grant crit spec to other brawling weapons. No lane can name 'unarmed attacks granted by lizardfolk records'.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "its-alive",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Conditional temporary Hit Points for the CONSTRUCT COMPANION, and only when it takes electricity damage; companion-side and table-triggered, not a companion statistic."
+  },
+  {
+   "id": "ive-had-many-jobs",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Improves the Earn Income downtime activity (count as trained, DC –2 if expert) — downtime the app does not model."
+  },
+  {
+   "id": "ivy-district-influencer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces the DC of the Influence Rumor downtime activity in cities/Absalom — a downtime activity the app does not model."
+  },
+  {
+   "id": "ivy-playhouse-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action Strike that trades damage for making the TARGET clumsy; target-side, resolved at the table."
+  },
+  {
+   "id": "jealous-grip",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered reaction Strike that ignores the multiple attack penalty; resolved at the table, no permanent statistic change."
+  },
+  {
+   "id": "jotunborn-weapon-familiarity",
+   "verdict": "MISS",
+   "reason": "A standard ancestry weapon-familiarity grant that nothing delivers. Weapon ids enumerated from core.json (bola/greataxe/halberd/maul/war-flail are martial, longspear simple). Modelled with rank 'trained' exactly like vanara-/vishkanya-weapon-familiarity. The two uncommon jotunborn-trait advanced weapons (bladesweeper, maul-spade) are left out deliberately: mirroring them to martial can't be combined with the trained grant in one entry, and granting them flat trained would over-grant for a character untrained in martial weapons.",
+   "fix": {
+    "weaponFamiliarity": {
+     "weapons": [
+      "bola",
+      "greataxe",
+      "halberd",
+      "maul",
+      "longspear",
+      "war-flail"
+     ],
+     "rank": "trained"
+    }
+   }
+  },
+  {
+   "id": "jotuns-boost",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Throws a willing ALLY across the battlefield and lets that ally Strike; entirely ally-side and positional."
+  },
+  {
+   "id": "jotuns-grasp",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action Step-plus-Grapple activity; rolled at the table, no statistic changes."
+  },
+  {
+   "id": "journey-of-the-sky-chariot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An exemplar ikon: the immanence keeps you aloft at end of turn (it grants no fly Speed of its own) and the transcendence is a 1-action ability resolved at the table."
+  },
+  {
+   "id": "jousting-mount",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds the jousting trait to a two-handed weapon only WHILE riding your apocalypse mount; a mounted-combat weapon-trait change the app does not model."
+  },
+  {
+   "id": "juggernaut-charge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action Stride/Strike/Stride activity that drags the enemy along; positional, resolved at the table."
+  },
+  {
+   "id": "juggle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activity governing how many items you can juggle and which hands stay free; item/hand handling adjudicated at the table."
+  },
+  {
+   "id": "jumping-jenny-display",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Jumping Jenny fireworks display — a named action (present in the actions data as a descRef) resolved at the table."
+  },
+  {
+   "id": "jungle-runner",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignores forest/jungle difficult terrain and lets you Take Cover anywhere in that terrain — terrain handling the GM adjudicates; no statistic changes."
+  },
+  {
+   "id": "jungle-strider",
+   "verdict": "MISS",
+   "reason": "Beyond the GM-side terrain clause, it permanently improves the player's own Acrobatics: no off-guard while Balancing on plant material and a success becomes a critical success. That degree upgrade is delivered elsewhere as a situational note (brine-may does exactly this for Swim) and nothing delivers it here.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "acrobatics"
+       }
+      ],
+      "when": "to Balance on narrow surfaces or uneven ground made of plant material",
+      "bonus": "you aren't off-guard while doing so, and a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "junk-tinker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Crafting-economy rules (cheap shoddy level-0 items, discounts) adjudicated by the GM during downtime; no statistic changes."
+  },
+  {
+   "id": "just-the-facts",
+   "verdict": "MISS",
+   "reason": "Permanently improves the player's own Recall Knowledge checks by one degree of success (plus non-secret checks and spotting false information) — nothing delivers it, and the same degree-upgrade shape is already used for runic-skullcap's Recall Knowledge clause. Note the 'permanently quickened' clause still has no lane (no field applies a standing condition), so the fix covers the check improvements only.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "all"
+       }
+      ],
+      "when": "when you Recall Knowledge",
+      "bonus": "use the outcome one degree of success better; the check isn't secret, and you know which information is inaccurate"
+     }
+    ]
+   }
+  },
+  {
+   "id": "just-the-tool",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reshapes your mind weapon into a mundane tool and back; flavour/utility adjudicated at the table."
+  },
+  {
+   "id": "kaleidoscopic-entreaty",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape whose whole effect is a save-based dazzle/blind on creatures in the area; target-side."
+  },
+  {
+   "id": "keen-magical-detection",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A fortune reroll of initiative during the Detect Magic exploration activity; rolled at the table, and initiative isn't a statistic the sheet computes."
+  },
+  {
+   "id": "keep-pace",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction to Stride (or Climb/Fly/Swim) after fleeing prey; positional, resolved at the table."
+  },
+  {
+   "id": "kip-up",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free action to stand without triggering reactions; an action resolved at the table."
+  }
+ ]
+}

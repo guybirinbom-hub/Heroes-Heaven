@@ -1,0 +1,296 @@
+{
+  "rulings": [
+    {
+      "id": "insulated-poppet",
+      "upheld": true,
+      "why": "The weakness it cancels is really applied: tsukumogami-poppet carries an effectChoices 'poppet-material' whose metal/ceramic options grant weaknesses [{electricity|cold,5}]. Every IWR field is additive and no field subtracts, so needsEngineWork is correct.",
+      "correction": {}
+    },
+    {
+      "id": "intense-implement",
+      "upheld": true,
+      "why": "Verified in build.ts (~3061-3068): adept benefits are pushed only for imps.slice(0,2) and the comment says the third implement never gains adept. No field can push an implement benefit.",
+      "correction": {}
+    },
+    {
+      "id": "intercepting-hand",
+      "upheld": true,
+      "why": "The gap is real but grantedStrikes CREATES a second Fist row beside the nonlethal baseline instead of changing it — the same objection this judge raised against grantedStrikes for martial-artist-dedication. The lane that already exists is Feat.unarmedTraits (types.ts ~757, applied to FIST_PROFILE by applyUnarmedRiders in derive.ts ~1671/1765); FIST_PROFILE.name is 'Fist', so match:['fist'] hits it.",
+      "correction": { "fix": { "unarmedTraits": { "match": ["fist"], "add": ["disarm"] } } }
+    },
+    {
+      "id": "intimidating-glare",
+      "upheld": true,
+      "why": "Removes a -4 penalty on the player's own Demoralize and swaps auditory for visual; not in FEAT_SITUATIONAL, and the identical clause is already delivered for intimidating-prowess (situationalBonuses.ts:237).",
+      "correction": {}
+    },
+    {
+      "id": "into-the-storm",
+      "upheld": true,
+      "why": "The weather is GM-side but the -2 reduction lands on the player's own ranged attack rolls, which is exactly what the star registry displays; no entry exists for this id.",
+      "correction": {}
+    },
+    {
+      "id": "inured-to-alchemy",
+      "upheld": true,
+      "why": "A rider on the player's own successful Fortitude saves, the same shape as cantorian-reinforcement (situationalBonuses.ts:2776); the id is absent from the registry.",
+      "correction": {}
+    },
+    {
+      "id": "invoke-offense",
+      "upheld": true,
+      "why": "Confirmed: ModeDef (types.ts:1432-1495) carries resistances/weaknesses/immunities/senses/speeds but no strikes, StanceDef.strikes needs a core.stances record and 'enter-spirit-trance' is an action not a stance, and grantedStrikes is permanent. Nothing can express a duration-limited Strike.",
+      "correction": {}
+    },
+    {
+      "id": "iron-fists",
+      "upheld": true,
+      "why": "Gap real, fix wrong: grantedStrikes would add an 'Iron Fist' row beside the baseline Fist that still shows nonlethal. unarmedTraits can ADD shove but has no remove, and the nonlethal strip is hard-coded to fistDieUpgraded (derive.ts:1734-1737, powerful-fist / warrior-automaton / warrior-jotunborn only) — zombie-dedication prints the same 'your fist loses the nonlethal trait' and also carries nothing, confirming the lane is missing.",
+      "correction": { "fix": { "needsEngineWork": true } }
+    },
+    {
+      "id": "iron-lung",
+      "upheld": true,
+      "why": "A permanent degree-of-success upgrade on the player's own saves; not in FEAT_SITUATIONAL, and the same shape ships for cantorian-reinforcement and disillusionment.",
+      "correction": {}
+    },
+    {
+      "id": "irrepressible",
+      "upheld": true,
+      "why": "Degree upgrade on the character's own saves vs emotion effects; absent from FEAT_SITUATIONAL, and disillusionment (situationalBonuses.ts:2785) is the identical printed shape.",
+      "correction": {}
+    },
+    {
+      "id": "irrepressible-ganzi",
+      "upheld": true,
+      "why": "Same clause without the gutsy-halfling rider; the judge correctly omitted that rider, and the id carries nothing.",
+      "correction": {}
+    },
+    {
+      "id": "irrepressible-halfling",
+      "upheld": true,
+      "why": "A separate core.json record with the full text including the gutsy-halfling critical-failure clause; it carries no field and is not in the registry.",
+      "correction": {}
+    },
+    {
+      "id": "irrepressible-nephilim",
+      "upheld": true,
+      "why": "Same as irrepressible-ganzi — the printed text has no gutsy-halfling clause and the fix does not add one.",
+      "correction": {}
+    },
+    {
+      "id": "iruxi-unarmed-cunning",
+      "upheld": true,
+      "why": "Confirmed against weaponMatches (derive.ts:1265-1274): critSpecWeapons narrows only by group/traits/bases, granted naturals share group 'brawling' with fists/gauntlets/saps and carry no item base id, so any expressible narrowing would over-grant. needsEngineWork is the honest answer.",
+      "correction": {}
+    },
+    {
+      "id": "jotunborn-weapon-familiarity",
+      "upheld": true,
+      "why": "Gap real, values wrong: the text never says 'trained with' (unlike vanara/vishkanya, which do and therefore use rank:'trained') — it says treat martial ones as SIMPLE, which is mirrorCategory. rank:'trained' would freeze a character with expert-or-better simple proficiency at trained. Ids and categories verified in core.json: bola/greataxe/halberd/maul/war-flail are martial (longspear is already simple, so it is dropped as a no-op); the two jotunborn-trait weapons (bladesweeper, maul-spade) are advanced and cannot share one entry, so the advanced-to-martial half stays out rather than being over-granted.",
+      "correction": { "fix": { "weaponFamiliarity": { "weapons": ["bola", "greataxe", "halberd", "maul", "war-flail"], "mirrorCategory": "simple" } } }
+    },
+    {
+      "id": "jungle-strider",
+      "upheld": true,
+      "why": "The difficult-terrain half is GM-side and the fix correctly leaves it out; the off-guard removal plus degree upgrade on the player's own Acrobatics is real and matches brine-may (situationalBonuses.ts:2774).",
+      "correction": {}
+    },
+    {
+      "id": "just-the-facts",
+      "upheld": true,
+      "why": "A degree-of-success upgrade on the player's own Recall Knowledge checks, matching runic-skullcap (situationalBonuses.ts:2607); the judge explicitly excluded the unmodellable permanent-quickened clause rather than inventing a field for it.",
+      "correction": {}
+    },
+    {
+      "id": "knight-in-shining-armor",
+      "upheld": true,
+      "why": "'You gain expert proficiency in heavy armor' is unconditional; `armor` is a real FeatGrant field (featGrants.ts) and the id appears in neither FEAT_GRANTS, FEAT_SKILL_GRANTS nor FEAT_LANE_GRANTS.",
+      "correction": {}
+    },
+    {
+      "id": "knight-vigilant",
+      "upheld": true,
+      "why": "Verified: featGrantsAuto.ts:192 keys only 'knight-vigilant-dedication'. This is a separate selectable core.json record with the same expert-Religion clause and no grant; the lesser-cover clause is correctly left to the GM.",
+      "correction": {}
+    },
+    {
+      "id": "kobold-weapon-innovator",
+      "upheld": true,
+      "why": "Shape verified against kobold-weapon-familiarity, which already ships critSpecWeapons {traits:['kobold'],bases:['greatpick','light-pick','pick']}; weaponMatches ORs traits and bases, and crossbow/greatpick/light-pick/pick/spear all exist in core.json. This record carries no critSpec of its own, so nothing is overwritten.",
+      "correction": {}
+    },
+    {
+      "id": "land-legs",
+      "upheld": true,
+      "why": "Arithmetic checked: ancestries['awakened-animal'].speeds = {land:5}, and the swimming-animal 'aquatic' effectChoice grants only {swim:30}, so land stays 5. The feat's prerequisite forces the aquatic option, so +15 lands exactly on the printed 20 with no over-grant.",
+      "correction": {}
+    },
+    {
+      "id": "late-awakener",
+      "upheld": true,
+      "why": "Applying a second heritage's whole mechanical package and unlocking its feat prerequisites is expressible by no listed field and by none of the three registries.",
+      "correction": {}
+    },
+    {
+      "id": "leap-the-falls",
+      "upheld": true,
+      "why": "Gap real, fix over-grants: this is an IMMANENCE benefit, active only while your divine spark is in that ikon, and grantsFeats is unconditional and permanent. The house pattern for every other immanence benefit is a situational star naming the condition (gaze-sharp-as-steel, thousand-league-sandals, skybearers-belt, compliant-gold in situationalBonuses.ts), so the two granted feats are stated as a conditional note on the Athletics jump actions instead.",
+      "correction": {
+        "fix": {
+          "situational": [
+            {
+              "targets": [{ "kind": "skill", "detail": "athletics" }],
+              "when": "while your divine spark is in this imbued ikon (immanence active)",
+              "bonus": "you gain the Powerful Leap and Quick Jump skill feats even without their prerequisites: High Jump and Long Jump each take 1 action instead of 2, and your Long Jump distance increases by 5 feet"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "legendary-monster-hunter",
+      "upheld": true,
+      "why": "situationalBonuses.ts:501 still prints Monster Hunter's +1 and no entry exists for this id, so a 16th-level ranger reads the wrong number; the fix names the supersession in its `when` and correctly leaves monster-warden's existing entry alone.",
+      "correction": {}
+    },
+    {
+      "id": "legions-aim",
+      "upheld": true,
+      "why": "I recomputed the set from core.json (items with category 'martial' and group 'firearm' or 'bomb'): 258 items, of which the judge listed 254 and ZERO non-matching — no placeholder, no over-inclusion. mirrorCategory 'simple' is the correct reading of 'treating them as simple weapons for the purposes of proficiency'.",
+      "correction": {}
+    },
+    {
+      "id": "let-my-creature-live",
+      "upheld": true,
+      "why": "COMPANION_MODS.maturityFloor is a live lane (companions.ts:344-347) with no key for this id; 'advanced construct companion' is the mature rung here exactly as the shipped advanced-construct-companion / advanced-reanimated-companion entries read.",
+      "correction": {}
+    },
+    {
+      "id": "lich-dedication",
+      "upheld": true,
+      "why": "Verified in core.json: vampire-dedication and zombie-dedication both carry immunities ['death effects','disease','paralyzed','poison','sleep'] for the same 'basic undead benefits' clause; lich-dedication has no immunities field. The Soul Cage clause is narrative and is not written.",
+      "correction": {}
+    },
+    {
+      "id": "lightning-rings-intervention",
+      "upheld": true,
+      "why": "Gap real, lane wrong: COMPANION_MODS is only ever read by deriveAnimalCompanion (kinds 'animal', companions.ts:344/355/427/465) and the eidolon pass (companions.ts:784). deriveFamiliar never touches it, so a companionMod with kinds:['familiar'] would pass the applier's kind check and then sit dead. No legal field attaches a familiar ability, so what is missing is a feat-to-familiar-ability lane.",
+      "correction": { "fix": { "needsEngineWork": true } }
+    },
+    {
+      "id": "lightning-rings-overcharge",
+      "upheld": true,
+      "why": "Same as lightning-rings-intervention — deriveFamiliar reads only cfg.abilities and CompanionGrant.lockedAbilities, never COMPANION_MODS, so kinds:['familiar'] is an inert write.",
+      "correction": { "fix": { "needsEngineWork": true } }
+    },
+    {
+      "id": "living-rune",
+      "upheld": true,
+      "why": "A property-rune slot on the character's body (with its own pick) has no field and no registry; runes are only ever etched onto inventory items.",
+      "correction": {}
+    },
+    {
+      "id": "loyal-warhorse",
+      "upheld": true,
+      "why": "faithful-steed is a kind 'animal' companion grant and the maturityFloor lane exists; no COMPANION_MODS key for loyal-warhorse, so the steed stays young.",
+      "correction": {}
+    },
+    {
+      "id": "magical-crafting",
+      "upheld": false,
+      "why": "Overturned: this is Craft-downtime bookkeeping the app deliberately does not model, and the sibling record with the identical clause — alchemical-crafting, 'four common 1st-level alchemical formulas to your formula book' — was already ruled NEEDS_NOTHING in judge-0 for exactly this reason (no formula book exists; only free-text craftRequirements). The snare lane exists solely because prepared snares have a play consequence.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "magical-edification",
+      "upheld": true,
+      "why": "Shape checked against first-frost, which ships innateSpells with atWill:true; guidance, message and sigil all exist in core.spells (rank 0, occult on the list) and the record carries no innateSpells.",
+      "correction": {}
+    },
+    {
+      "id": "marine-combat-training",
+      "upheld": true,
+      "why": "harpoon and trident both exist in core.json as category 'martial', so mirrorCategory 'simple' matches the printed clause exactly; no FEAT_LANE_GRANTS key. The judge's stated reason for omitting the 5th-level crit spec is wrong (critSpecLevel does exist, cf. kobold-weapon-familiarity) but the omission is right anyway — the applier rejects a fix that mixes a proficiency grant with record fields.",
+      "correction": {}
+    },
+    {
+      "id": "martial-artist-dedication",
+      "upheld": true,
+      "why": "Confirmed at derive.ts:1734-1737 — the d4-to-d6 fist upgrade is a hard-coded three-way test. unarmedTraits.stepDie is not a safe substitute: the feat has NO prerequisites, so a monk with Powerful Fist could take it and step an already-d6 fist to d8.",
+      "correction": {}
+    },
+    {
+      "id": "master-cathartic-spellcasting",
+      "upheld": true,
+      "why": "Verified: cathartic-mage-dedication is absent from CASTER_ARCHETYPES and grants its cantrip via spellFilter grantAs 'innate', so the innate entry exists and build.ts:2980-2987 applies the best spellcastingGrant profile to it — the master proficiency really lands, and the judge honestly scoped the fix to the half that is expressible.",
+      "correction": {}
+    },
+    {
+      "id": "master-qi-spells",
+      "upheld": true,
+      "why": "SpellChoiceFilter really supports rank/traits/grantAs (types.ts:452-469), and the filter is exact: core.json holds precisely two rank-8 monk+focus spells, medusas-wrath and touch-of-death — the two the feat names. No focusPoolBonus is written, matching the printed text.",
+      "correction": {}
+    },
+    {
+      "id": "master-red-mantis-magic",
+      "upheld": true,
+      "why": "red-mantis-assassin-dedication is not in CASTER_ARCHETYPES; basic-red-mantis-magic grants two divine cantrips as innate, so the innate casting entry exists and a divine/cha/master spellcastingGrant raises its attack/DC as printed.",
+      "correction": {}
+    },
+    {
+      "id": "master-scroll-cache",
+      "upheld": true,
+      "why": "Nothing in src/rules mints a daily consumable; the sibling basic-/expert-scroll-cache were already ruled MISS with the same missing lane in judge-0 and judge-12, so the verdict is consistent and the lane really is absent.",
+      "correction": {}
+    },
+    {
+      "id": "master-snowcasting",
+      "upheld": true,
+      "why": "The gelid shard archetype is absent from CASTER_ARCHETYPES while first-frost ships spellcastingGrant {arcane,cha,trained} plus innateSpells, so an arcane/cha/master grant raises the same entry one tier as printed.",
+      "correction": {}
+    },
+    {
+      "id": "master-summoner",
+      "upheld": true,
+      "why": "spellSlotBonus only ADDS slots (perRank/byRank, build.ts ~2725) with no rank choice, no slot consumed and no restriction on what may be prepared; dailyChoices records a pick but cannot alter the slot table. A slot-conversion lane genuinely does not exist.",
+      "correction": {}
+    },
+    {
+      "id": "master-summoning-spellcasting",
+      "upheld": true,
+      "why": "Gap real, but no engine work is needed: grantsFeats is a legal field, build.ts:2316-2346 adds granted feats to the SAME `feats` list that activeCasterArchetype reads at build.ts:2790, and master-summoner-spellcasting (the id CASTER_ARCHETYPES derives for summoner-dedication) exists in core.json. Pointing the duplicate record at the canonical one delivers the full 7th/8th-rank ladder and the master proficiency with no over-grant.",
+      "correction": { "fix": { "grantsFeats": ["master-summoner-spellcasting"] } }
+    },
+    {
+      "id": "mature-animal-companion-druid",
+      "upheld": true,
+      "why": "The maturity dropdown defaults to 'young' (Builder.tsx:1015) and only COMPANION_MODS.maturityFloor raises it (companions.ts:344-347); no key exists for this id, consistent with the incredible-* batch already filed as MISS in judge-19.",
+      "correction": {}
+    },
+    {
+      "id": "mature-animal-companion-ranger",
+      "upheld": true,
+      "why": "Same lane, same absence — a separate core.json record with no COMPANION_MODS key.",
+      "correction": {}
+    },
+    {
+      "id": "mature-beastmaster-companion",
+      "upheld": true,
+      "why": "beastmaster-dedication grants a kind 'animal' companion and the maturityFloor lane applies; no key exists, and the note correctly flags that it covers all of the character's companions.",
+      "correction": {}
+    },
+    {
+      "id": "mature-dragon-companion",
+      "upheld": true,
+      "why": "drake-rider-dedication is registered in FEAT_COMPANION_GRANTS as kind 'animal' (and wing-rider already modifies it as such), so the maturityFloor lane is the right one and carries no key.",
+      "correction": {}
+    },
+    {
+      "id": "mature-megafauna-companion",
+      "upheld": true,
+      "why": "mammoth-lord-dedication grants a kind 'animal' companion and its sibling incredible-megafauna-companion is already filed in COMPANION_MODS one rung up, proving the ladder is the right lane and that the mature rung is missing.",
+      "correction": {}
+    }
+  ]
+}

@@ -33,14 +33,27 @@ const REGISTRY = p('src/rules/situationalBonuses.ts');
  */
 const stripGen = (text, tag) => {
   const at = text.indexOf(tag);
-  return at < 0 ? text : text.slice(0, text.lastIndexOf('\n\n', at)) + text.slice(text.indexOf('\n};', at));
+  if (at < 0) return text;
+  const start = text.lastIndexOf('\n', at - 1) + 1; // the start of the tag's own line
+  const end = text.indexOf('\n};', at);
+  if (end < 0) return text; // the table's close is missing — leave the file alone rather than cut blind
+  return text.slice(0, start) + text.slice(end + 1);
 };
+
+/**
+ * All string surgery below is index-based, so the file MUST be LF while we work on it. A CRLF file
+ * has no "\n\n" — the blank line is "\r\n\r\n" — and the previous strip's lastIndexOf returned -1,
+ * which `slice(0, -1)` turned into "everything but the last character" and duplicated 780 lines of
+ * the registry. Git restores the platform's endings on checkout, so this is not hypothetical.
+ */
+const lf = (text) => text.replace(/\r\n/g, '\n');
 const GEN_SIT = '  // ---- full feat audit (scripts/apply-feat-audit.mjs) — every never-examined feat';
 const GEN_MARK = '  // ---- full feat audit — action/condition marks ----';
 const GEN_LANE = '  // ---- full feat audit (scripts/apply-feat-audit.mjs) ----';
 const GEN_MODS = '  // ---- full feat audit — companion mods ----';
 const GEN_GRANTS = '  // ---- full feat audit — companion grants ----';
-let regSrc = stripGen(stripGen(readFileSync(REGISTRY, 'utf8'), GEN_SIT), GEN_MARK);
+const regBefore = stripGen(stripGen(lf(readFileSync(REGISTRY, 'utf8')), GEN_SIT), GEN_MARK);
+let regSrc = regBefore;
 
 const LEGAL_FIELDS = new Set([...typesSrc.matchAll(/^ {2}([a-zA-Z][\w]*)\??:/gm)].map((m) => m[1]));
 const SKILLS = new Set(typesSrc.match(/export const SKILLS = \[([\s\S]*?)\]/)[1].match(/'[a-z]+'/g).map((s) => s.slice(1, -1)));
@@ -120,8 +133,10 @@ for (const f of readdirSync(DIR).filter((n) => /^refute-c\d+-\d+\.json$/.test(n)
 /* ---- the three registries a correction can target, read from the source that ships ---- */
 const LANE_FILE = p('src/rules/featGrantsLane.ts');
 const COMP_FILE = p('src/rules/companionGrants.ts');
-let laneSrc = stripGen(readFileSync(LANE_FILE, 'utf8'), GEN_LANE);
-let compSrc = stripGen(stripGen(readFileSync(COMP_FILE, 'utf8'), GEN_MODS), GEN_GRANTS);
+const laneBefore = stripGen(lf(readFileSync(LANE_FILE, 'utf8')), GEN_LANE);
+const compBefore = stripGen(stripGen(lf(readFileSync(COMP_FILE, 'utf8')), GEN_MODS), GEN_GRANTS);
+let laneSrc = laneBefore;
+let compSrc = compBefore;
 const keysOf = (text, exportName) => {
   const open = text.indexOf(`export const ${exportName}`);
   const close = text.indexOf('\n};', open);
@@ -130,7 +145,7 @@ const keysOf = (text, exportName) => {
 const laneGrants = keysOf(laneSrc, 'FEAT_LANE_GRANTS');
 const compMods = keysOf(compSrc, 'COMPANION_MODS');
 const compGrants = keysOf(compSrc, 'FEAT_COMPANION_GRANTS');
-const featGrantSrc = readFileSync(p('src/rules/featGrants.ts'), 'utf8');
+const featGrantSrc = lf(readFileSync(p('src/rules/featGrants.ts'), 'utf8'));
 const FEATGRANT_FIELDS = new Set(
   [...featGrantSrc.slice(featGrantSrc.indexOf('export interface FeatGrant'), featGrantSrc.indexOf('\n}', featGrantSrc.indexOf('export interface FeatGrant')))
     .matchAll(/^ {2}([a-zA-Z][\w]*)\??:/gm)].map((m) => m[1]),
@@ -215,15 +230,17 @@ for (const rec of records) {
   }
 
   // ---- a toggleable effect -> a mode ----
+  // Deliberately does NOT `continue`: a fix may carry a mode AND record fields. Golden Body is a mode
+  // for its fast healing plus `unarmedTraits` for its deadly d12, and stopping at the mode dropped the
+  // second half in silence — the feat read as handled with half of it missing.
   if (fix.mode) {
     const m = fix.mode;
-    if (!m.id) { skipped.push(`${id}: mode with no id`); continue; }
-    if (core.modes?.[m.id] || newModes.has(m.id)) { skipped.push(`${id}: mode "${m.id}" already exists`); continue; }
-    const gate = (m.feats ?? []).filter((f) => !core.feats[f] && !core.classFeatures[f]);
-    if (gate.length) { skipped.push(`${id}: mode gate not found: ${gate.join(', ')}`); continue; }
-    if (!m.fromItemId && !(m.feats ?? []).length) { skipped.push(`${id}: mode with no gate — nothing would show it`); continue; }
-    newModes.set(m.id, { ...m, modifiers: m.modifiers ?? [] });
-    continue;
+    const gate = (m?.feats ?? []).filter((f) => !core.feats[f] && !core.classFeatures[f]);
+    if (!m.id) skipped.push(`${id}: mode with no id`);
+    else if (core.modes?.[m.id] || newModes.has(m.id)) skipped.push(`${id}: mode "${m.id}" already exists`);
+    else if (gate.length) skipped.push(`${id}: mode gate not found: ${gate.join(', ')}`);
+    else if (!m.fromItemId && !(m.feats ?? []).length) skipped.push(`${id}: mode with no gate — nothing would show it`);
+    else newModes.set(m.id, { ...m, modifiers: m.modifiers ?? [] });
   }
 
   // ---- registry lanes ----
@@ -324,7 +341,26 @@ if (newMarkers.size) {
   const close = regSrc.indexOf('\n};', open);
   regSrc = `${regSrc.slice(0, close)}\n\n${GEN_MARK}\n  // ${newMarkers.size} feats that change an ACTION or a CONDITION rather than a stat.\n${body}${regSrc.slice(close)}`;
 }
-writeFileSync(REGISTRY, regSrc);
+/**
+ * Refuse to write a file whose structure changed shape. A line-ending bug once made the strip cut
+ * `slice(0, -1)` and duplicated 780 lines of the registry — every export appeared three times and the
+ * only symptom was a parse error 300 lines away. Counting the exports catches that at the source.
+ */
+const guardShape = (path, before, after, exports) => {
+  for (const name of exports) {
+    const n = (s) => s.split(`export const ${name}`).length - 1;
+    if (n(after) !== n(before)) {
+      throw new Error(`${path}: "export const ${name}" appears ${n(after)}x after editing, ${n(before)}x before — refusing to write`);
+    }
+  }
+  const braces = (s) => (s.match(/^\};$/gm) ?? []).length;
+  if (braces(after) !== braces(before)) {
+    throw new Error(`${path}: top-level "};" count changed ${braces(before)} → ${braces(after)} — refusing to write`);
+  }
+  writeFileSync(path, after);
+};
+
+guardShape(REGISTRY, regBefore, regSrc, ['FEAT_SITUATIONAL', 'RECORD_MARKERS']);
 
 /** Append feat-keyed entries to a `Record<string, T>` export, replacing any previous generated block. */
 const appendTo = (text, exportName, entries, tag) => {
@@ -338,8 +374,8 @@ const appendTo = (text, exportName, entries, tag) => {
 laneSrc = appendTo(laneSrc, 'FEAT_LANE_GRANTS', newLaneGrants, GEN_LANE);
 compSrc = appendTo(compSrc, 'COMPANION_MODS', newCompMods, GEN_MODS);
 compSrc = appendTo(compSrc, 'FEAT_COMPANION_GRANTS', newCompGrants, GEN_GRANTS);
-writeFileSync(LANE_FILE, laneSrc);
-writeFileSync(COMP_FILE, compSrc);
+guardShape(LANE_FILE, laneBefore, laneSrc, ['FEAT_LANE_GRANTS']);
+guardShape(COMP_FILE, compBefore, compSrc, ['COMPANION_MODS', 'FEAT_COMPANION_GRANTS']);
 
 for (const w of fieldWrites) core.feats[w.id][w.field] = w.value;
 for (const [mid, m] of newModes) { core.modes = core.modes ?? {}; core.modes[mid] = m; }

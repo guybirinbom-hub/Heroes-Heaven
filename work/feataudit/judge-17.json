@@ -1,0 +1,391 @@
+{
+ "records": [
+  {
+   "id": "grippli-weapon-innovator",
+   "verdict": "MISS",
+   "reason": "Grants critical specialization with a named weapon list; the character carries no critSpec source, so the sheet's Strikes never show the crit-spec effect. Same shape as deadly-butterfly in effect-backfill.json (critSpec + critSpecWeapons.bases). Bases verified in core.json; the traits entry covers future grippli-trait weapons (none exist in core.json today).",
+   "fix": {
+    "critSpec": true,
+    "critSpecWeapons": {
+     "bases": ["blowgun", "hatchet", "scythe", "shortbow", "composite-shortbow"],
+     "traits": ["grippli"]
+    }
+   }
+  },
+  {
+   "id": "group-aid",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only lets you extend an Aid you already made to further ALLIES; it changes no statistic of yours."
+  },
+  {
+   "id": "grovel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action Feint variant (range and DC change) resolved at the table against a target's Will DC."
+  },
+  {
+   "id": "grow-tool",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Conjures a temporary level-0 mundane tool; no statistic on the sheet changes."
+  },
+  {
+   "id": "growth-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spellshape that enlarges the next spell's area; area size is not a value the sheet holds."
+  },
+  {
+   "id": "guarded-advance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants an action that bundles Raise a Shield and two Steps; resolved entirely at the table."
+  },
+  {
+   "id": "guarded-advance-guardian",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate printing of the same action bundle (Raise a Shield + Step twice); table-resolved, no stat."
+  },
+  {
+   "id": "guarded-advance-knight-vigilant",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants an action combining Step and Raise a Shield; table-resolved, no stat."
+  },
+  {
+   "id": "guarded-advance-knight-vigilante",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate printing of the Knight Vigilant action; table-resolved, no stat."
+  },
+  {
+   "id": "guarded-thoughts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Forces someone else's mind-reading effect to attempt a counteract check against DCs the sheet already shows (class DC / spell DC); the roll is on the GM's side."
+  },
+  {
+   "id": "guardian-ghosts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that moves incoming damage onto an adjacent undead companion; resolved at the table and the HP loss is the companion's."
+  },
+  {
+   "id": "guardian-lion-roar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action area attack: damage and off-guard land on targets, rolled against your class DC which the sheet already shows."
+  },
+  {
+   "id": "guardian-resiliency",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered: core.json feats.guardian-resiliency carries maxHpBonus {\"perArchetypeFeat\":3,\"archetype\":\"guardian\"}, resolved by featHpBonus in src/rules/derive.ts:352-357 (same lane as barbarian-resiliency/exemplar-resiliency)."
+  },
+  {
+   "id": "guardians-intercept",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Intercept Attack reaction, resolved at the table; its once-per-10-minutes frequency has no expressible limitedUses bucket (day|hour|minute|round|turn) and inventing one would misstate it."
+  },
+  {
+   "id": "guards-fury",
+   "verdict": "MISS",
+   "reason": "Two player-facing numbers are unmodelled: the -1 AC while raging (barbarian-dedication carries exactly this situational entry, this feat carries none) and Rage's extra damage rising from 2 to 4 next to your designated ally. NOTE for the applier: the Rage toggle itself is hard-gated in src/rules/classResources.ts (barbarian list, feat:'barbarian-dedication') and in rageStrikeRider() in src/rules/derive.ts:1195, so this feat also needs 'guards-fury' added to those two gates before a non-barbarian sees the toggle at all.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "ac" }],
+      "when": "while raging",
+      "bonus": "-1 (penalty)"
+     },
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "while raging and adjacent to your designated ally (melee & unarmed)",
+      "bonus": "+4 instead of Rage's +2"
+     }
+    ]
+   }
+  },
+  {
+   "id": "guerrilla-weaponry",
+   "verdict": "MISS",
+   "reason": "In your hands a blowgun's base damage becomes 1d4 and it gains deadly d4 — a change to a wielded weapon's own damage die and traits on your Strikes. strikeDamage only ADDS damage (StrikeDamageRider) and there is no per-character weapon-statistics override lane. (The Guerrilla Assault action half needs nothing.)",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "guided-hover",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that changes how your dragon MOUNT stays aloft; nothing on your own sheet."
+  },
+  {
+   "id": "guiding-finish",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike plus a Reposition of the target, including a failure rider; entirely target-side and table-resolved."
+  },
+  {
+   "id": "guiding-luck",
+   "verdict": "MISS",
+   "reason": "Halfling Luck carries limitedUses {\"max\":1,\"per\":\"day\"} in core.json; this feat raises it to twice per day (the second use has a different trigger). Without a usesUpgrade the player's Halfling Luck tracker still shows one use. Exact precedent: incredible-luck-halfling in effect-backfill.json uses usesUpgrade against the same feat.",
+   "fix": { "usesUpgrade": { "featId": "halfling-luck", "max": 2, "per": "day" } }
+  },
+  {
+   "id": "guiding-riposte",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a Reposition of the target after a Dueling Riposte hit; target-side and table-resolved."
+  },
+  {
+   "id": "gusting-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spellshape that lets you Fly 10 feet around a casting; movement resolved at the table, no Speed change."
+  },
+  {
+   "id": "hail-of-splinters",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An area-damage impulse: damage and save land on targets against the class DC the sheet already shows."
+  },
+  {
+   "id": "hair-trigger",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Swaps one Interact of your initial deed for a Strike and makes the target off-guard; table-resolved and target-side."
+  },
+  {
+   "id": "half-truths",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you roll Deception in place of Diplomacy for Request and vice versa for Lie; both modifiers are already on the sheet and the substitution happens when the check is made."
+  },
+  {
+   "id": "hallucinogenic-ink",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a frightened rider to the TARGET of your Spray Ink, saved against DCs the sheet already shows."
+  },
+  {
+   "id": "halo",
+   "verdict": "MISS",
+   "reason": "You permanently have a divine Light cantrip's effect, auto-heightened to half your level; nothing puts that spell on the sheet. Exact precedent for a constant \"sheds light\" grant: amulet-of-the-hellcat (innateSpells light/divine/atWill) and wildborn-adept (atWill + heightenHalfLevel) in effect-backfill.json. Spell id 'light' verified in core.json.",
+   "fix": {
+    "innateSpells": [
+     { "spellId": "light", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }
+    ]
+   }
+  },
+  {
+   "id": "halyard-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action swing-and-Strike; movement and the extra damage die are resolved at the table."
+  },
+  {
+   "id": "hammer-quake",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A three-action Strike plus mass Trip attempts against enemies; entirely target-side and table-resolved."
+  },
+  {
+   "id": "hand-of-the-lich",
+   "verdict": "MISS",
+   "reason": "Your fist becomes a 1d6 void, magical, non-nonlethal unarmed attack — a Strike line the sheet should show; nothing delivers it. grantedStrikes is the lane (precedent: bone-spikes, razorsharp-bite, tusks). Named \"Fist\" so it reads as the upgraded fist; it supersedes the base 1d4 fist rather than adding a limb. The crit rider (slowed 1 on a crit vs a living creature) is target-side and needs nothing.",
+   "fix": {
+    "grantedStrikes": [
+     {
+      "name": "Fist",
+      "die": "1d6",
+      "damageType": "void",
+      "traits": ["agile", "finesse", "magical", "unarmed"],
+      "group": "brawling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "hands-that-unweave-disaster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you SPEND a Mythic Point to roll Grab an Edge or Disable a Device at mythic proficiency; a per-check spend resolved when the check is made, not a standing proficiency."
+  },
+  {
+   "id": "haphazard-repair",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Compresses the Repair activity on your innovation; changes no statistic."
+  },
+  {
+   "id": "hardwood-armor",
+   "verdict": "MISS",
+   "reason": "A 10-minute impulse that replaces your armor's statistics (AC +3, Dex cap +2, check penalty -2, Speed penalty -5) and hands you a shield you can Shield Block with; nothing on the sheet reflects it. Modes are the established lane for kineticist impulses that change the sheet (see the cyclonic-ascent mode in core.json). modifiers stays empty deliberately: a flat +3 AC would STACK on the worn armor the impulse is supposed to suppress — an over-grant — so the mode carries the swap as a note the way the starlight-armor and armored-resistance modes do.",
+   "fix": {
+    "mode": {
+     "id": "hardwood-armor",
+     "name": "Hardwood Armor",
+     "feats": ["hardwood-armor"],
+     "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
+     "modifiers": [],
+     "note": "Medium wooden armor that uses your highest armor proficiency: AC Bonus +3, Dex Cap +2, Check Penalty -2, Speed Penalty -5 ft, Strength +2, Bulk 1, group wood. Your real armor's bonuses, runes and magical abilities are suppressed (runes that could apply are replicated onto the hardwood). You may also form a wooden shield in a free hand and Shield Block with it even without that feat, and that hand still counts as free for impulses; the shield decays if broken or if it leaves your grasp. At every 3rd level its Hardness +1, HP +4, BT +2. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
+    }
+   }
+  },
+  {
+   "id": "harming-hands",
+   "verdict": "MISS",
+   "reason": "Your Harm rolls d10s instead of d8s — a change to a SPELL's dice. No field expresses it and the one lane that shows changed dice inline, RECORD_MARKERS in src/rules/situationalBonuses.ts (e.g. magic-hands \"d10\" on treat-wounds), only attaches to core.json actions and conditions, not spells.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "harmonize",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes how compositions interact while running (a second composition may co-exist); no statistic and no new resource."
+  },
+  {
+   "id": "harrying-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike whose degrees of success impose Speed penalties on the TARGET."
+  },
+  {
+   "id": "haughty-obstinacy",
+   "verdict": "MISS",
+   "reason": "A success on a save against a mental effect that controls your actions becomes a critical success — a player-side save result nothing delivers. Degree-of-success upgrades are carried in the situational lane as a phrase bonus (precedent: hydra-mutagen's \"one degree of success better\" on a Will save, nocturnal-navigator). detail \"all\" because the text says \"a saving throw\", not specifically Will; the when clause is what limits it. The Coerce half is the other creature's check and needs nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "all" }],
+      "when": "vs a mental effect that directly controls your actions",
+      "bonus": "a success becomes a critical success"
+     }
+    ]
+   }
+  },
+  {
+   "id": "haunt-ingenuity",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Exploration-mode detection: the GM rolls the secret check, and the haunt-disabling proficiency exception applies to the GM's haunt requirement, not to any proficiency on the sheet."
+  },
+  {
+   "id": "head-of-the-night-parade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A three-action performance that casts a known spell three times and Sustains them together; resolved at the table with no new resource or slot."
+  },
+  {
+   "id": "head-stomp",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An unarmed Strike that inflicts stupefied and off-guard on a prone TARGET."
+  },
+  {
+   "id": "headless-haunt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Remove Head action; an action resolved at the table, with the rest being backstory."
+  },
+  {
+   "id": "heal-mount",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes how much Lay on Hands restores when cast on your MOUNT; the healing lands on the companion."
+  },
+  {
+   "id": "healing-bomb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you throw an Elixir of Life to heal a creature and those adjacent to it; the healing is on the targets and the throw is table-resolved."
+  },
+  {
+   "id": "healing-hands",
+   "verdict": "MISS",
+   "reason": "Your Heal rolls d10s instead of d8s — a change to a SPELL's dice. Same gap as harming-hands: no field expresses it, and RECORD_MARKERS (src/rules/situationalBonuses.ts) can only mark core.json actions and conditions. The feat exists in src/rules/seed.ts as a plain description and carries no mechanical field.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "healing-sanctuary",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Gives temporary Hit Points to ALLIES who start their turn in your aura; nothing on your sheet."
+  },
+  {
+   "id": "healing-transformation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spellshape that adds healing to the single creature your polymorph spell targets; resolved when the spell is cast."
+  },
+  {
+   "id": "heat-wave",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction granting concealment for a round; concealment is a table-side condition, and the once-per-10-minutes frequency has no expressible limitedUses bucket."
+  },
+  {
+   "id": "heatwave",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Legacy ifrit printing of the same reaction — concealment for a round, table-resolved, frequency not expressible."
+  },
+  {
+   "id": "heavens-thunder",
+   "verdict": "MISS",
+   "reason": "A one-action self-buff that adds electricity AND sonic damage to every unarmed attack and monk weapon you use until the end of your next turn — your own Strike damage, with nothing on the sheet showing it. Modes are the lane for toggled self-buffs. modifiers is empty because the added amount is \"equal to the number of damage dice\" of each weapon, which is per-Strike and not a static number; the mode carries it as a note (same treatment as the starlight-armor mode).",
+   "fix": {
+    "mode": {
+     "id": "heavens-thunder",
+     "name": "Heaven's Thunder",
+     "feats": ["heavens-thunder"],
+     "duration": "until the end of your next turn",
+     "modifiers": [],
+     "note": "Your unarmed attacks and any monk weapons you wield deal additional electricity damage and additional sonic damage, each equal to that attack's number of damage dice. Any creature that successfully Grapples you, or that you successfully Grapple, takes that damage immediately after the check (using your unarmed attack's damage dice). If you know the Ki Blast ki spell you may have it deal electricity or sonic instead of force while this is active."
+    }
+   }
+  },
+  {
+   "id": "hedge-maze",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Creates cover and difficult terrain on the battlefield (or a cabin in exploration); terrain is the GM's map, not a sheet value."
+  },
+  {
+   "id": "hefty-hauler",
+   "verdict": "MISS",
+   "reason": "\"Increase your maximum and encumbered Bulk limits by 2\" — both numbers are on the Inventory tab, and deriveBulk() in src/rules/derive.ts:1906 returns them hardcoded as encumberedAt: 5 + strMod / max: 10 + strMod with no feat hook. No field in the vocabulary touches Bulk limits; the feat is referenced elsewhere only as a grantable/pickable feat (featFeatGrants.ts, featPickGrants.ts).",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "heightened-instincts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Upgrades successes to critical successes on your COMPANIONS' saving throws — an ally's statistics; COMPANION_MODS carries senses/speeds/skills/IWR/strike riders, with no degree-of-success lane, so the only expressible fix would be a bare note."
+  },
+  {
+   "id": "hell-of-1-000-000-needles",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A large area impulse: damage, immobilized and hazardous terrain all land on targets, against the class DC the sheet already shows."
+  },
+  {
+   "id": "hellknight-errant",
+   "verdict": "MISS",
+   "reason": "Raises your mental resistance to 5 + your number of Hellknight archetype feats — a Defenses-card number. It cannot be written today: hellknight-dedication already stores resistances [{\"type\":\"mental\",\"value\":\"@actor.flags.system.hellknightArchetype.featCount + 1\"}], and the formula substituter in src/rules/derive.ts:604-627 supports only @actor.level, ability mods and Speeds, refusing any other @actor token — so the dedication's resistance is already dead and a copy with +5 would be too. A flat number would misstate it. Needs an archetype-feat-count token in the resistance formula evaluator. (The Warding Shift action half needs nothing.)",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "hellknight-mobility",
+   "verdict": "MISS",
+   "reason": "Heavy armor's Speed penalty drops by 10 instead of 5 when you meet the Strength requirement — a net +5 feet to every Speed. derive.ts:1826-1834 applies the standard 5-foot reduction with no feat hook, so the sheet shows the wrong Speed. Expressed as a conditional Speed entry (the dwarf/Unburdened Iron clause is a second entry).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "speed" }],
+      "when": "while wearing heavy armor whose Strength requirement you meet",
+      "bonus": "+5 feet (its Speed penalty drops by 10 instead of 5)"
+     },
+     {
+      "targets": [{ "kind": "speed" }],
+      "when": "if you're a dwarf with the Unburdened Iron feat",
+      "bonus": "+5 feet"
+     }
+    ]
+   }
+  },
+  {
+   "id": "hells-armaments",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "On your critical hit the TARGET saves against your class DC for a Speed penalty or slowed; entirely target-side, and the choice against crit specialization is made at the table."
+  },
+  {
+   "id": "herbal-forager",
+   "verdict": "MISS",
+   "reason": "Each day at daily preparations you get one temporary alchemical item with the healing trait, chosen from formulas you know — a real daily pick the builder never offers. effectChoices can't express it (it needs fixed options or a spellFilter; there is no item filter), and advancedAlchemy is the alchemist's Advanced Alchemy budget (src/rules/build.ts:2601-2614 → AlchemyPanel), which would hand a centaur any formula rather than one healing item. Needs a daily-prep temporary-item lane restricted by trait and count.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "heroic-weakness",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The damage type AND the qualifying circumstance are defined with the GM (\"spirit damage from a follower of a rival god\", \"fire in a certain region\"); a weaknesses entry would apply always and to a type nobody chose — an over-grant. The Makes Me Stronger reaction is table-resolved."
+  },
+  {
+   "id": "hex-focus",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered: effect-backfill.json carries {\"id\":\"hex-focus\",\"field\":\"refocusRestore\",\"value\":\"all\"}, consumed by src/rules/build.ts:2588-2592 and shown on the Refocus button in src/sheet/SpellsTab.tsx:992."
+  },
+  {
+   "id": "hey-over-here",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that improves an ALLY's saving throw result; nothing on your sheet."
+  },
+  {
+   "id": "hidden-hoard",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Creates an extradimensional storage space (a spacious-pouch-like container with no Bulk); it changes no statistic, and the player can already add a container to the inventory."
+  }
+ ]
+}

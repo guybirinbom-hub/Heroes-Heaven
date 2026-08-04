@@ -2758,8 +2758,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "verdant-staff-greater": [{ targets: [{ kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'lore:*' }], when: "to identify plants and fungi, while wielding the staff", bonus: "+2 circumstance" }],
   "whirling-throw": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on the Whirling Throw check, by the target's size relative to yours", bonus: "+2 circumstance one size smaller, +4 if smaller than that; -2 one size larger, -4 if larger than that" }],
 
+
+
   // ---- full feat audit (scripts/apply-feat-audit.mjs) — every never-examined feat — do not hand-edit below ----
-  // 27 feats. Selected by what the record HAS, not by whether its text matched a pattern.
+  // 61 feats. Selected by what the record HAS, not by whether its text matched a pattern.
   "abjure-the-false-kin": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a saving throw against a mental effect that doesn't deal damage", bonus: "a success becomes a critical success" }],
   "agent-of-all-holds": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'performance' }], when: "when you critically fail a Diplomacy, Intimidation, or Performance check", bonus: "critical failure becomes a failure (against a creature with the orc trait you may instead reroll as a fortune effect, still treating a critical failure as a failure)" }],
   "angel-of-vindication": [{ targets: [{ kind: 'strikeDamage' }], when: "backstabber weapon vs an off-guard undead (+4 if the weapon is a +3 weapon)", bonus: "+2 precision" }],
@@ -2787,6 +2789,40 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "eliminate-red-herrings": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge about one of your active investigations", bonus: "critical failure becomes a failure" }],
   "emerald-boughs-accustomation": [{ targets: [{ kind: 'skill', detail: 'society' }], when: "to Subsist", bonus: "critical failure becomes a failure; success becomes a critical success" }, { targets: [{ kind: 'skill', detail: 'society' }], when: "to Subsist, on a critical success", bonus: "you provide for one additional creature" }, { targets: [{ kind: 'skill', detail: 'society' }], when: "to Recall Knowledge about cultural practices", bonus: "critical failure becomes a failure" }],
   "empathy-incarnate": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression or Request", bonus: "+2 (the check's DC is reduced by 2)" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression or Request vs a lower-level creature", bonus: "any success becomes a critical success" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Gather Information", bonus: "you can't critically fail" }],
+  "envenomed-edge": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit that deals slashing or piercing damage", bonus: "+1d4 persistent poison" }],
+  "esteemed-visitor": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "in a settlement, to Gather Information or Make an Impression", bonus: "critical failure becomes failure" }],
+  "expert-backstabber": [{ targets: [{ kind: 'strikeDamage' }], when: "with a backstabber weapon vs an off-guard foe", bonus: "+2 precision (4 with a +3 weapon), replacing backstabber's usual 1/2" }],
+  "far-lobber": [{ targets: [{ kind: 'strikeAttack' }], when: "when you throw an alchemical bomb", bonus: "range increment 30 ft instead of 20 ft" }],
+  "far-shot": [{ targets: [{ kind: 'strikeAttack' }], when: "with any weapon that has a range increment", bonus: "range increments are doubled" }],
+  "far-throw": [{ targets: [{ kind: 'strikeAttack' }], when: "with a thrown weapon, per range increment past the first", bonus: "-1 instead of -2 range penalty" }],
+  "fatal-bullet": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit with a fatal firearm", bonus: "+1 extra fatal die (added after doubling)" }],
+  "fiendish-strikes": [{ targets: [{ kind: 'strikeDamage' }], when: "on all your weapon and unarmed Strikes", bonus: "they gain the unholy and magical traits" }],
+  "fire-lung": [{ targets: [{ kind: 'hp' }], when: "on the flat check to recover from persistent fire damage", bonus: "DC 10 instead of 15 (DC 5 with particularly effective assistance)" }, { targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by smoke", bonus: "you ignore the concealed condition (no flat check)" }],
+  "fire-savvy": [{ targets: [{ kind: 'hp' }], when: "on the flat check to remove persistent fire damage", bonus: "DC 10 instead of 15 (DC 5 with appropriate assistance)" }, { targets: [{ kind: 'save', detail: 'fortitude' }], when: "against suffocation or choking due to smoke or ash", bonus: "a success becomes a critical success" }],
+  "firesight": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by smoke and fire", bonus: "automatically succeed at the flat check" }],
+  "fluid-contortionist": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "on checks to Squeeze", bonus: "critical failure becomes failure and success becomes critical success" }],
+  "flying-blade": [{ targets: [{ kind: 'strikeDamage' }], when: "ranged Strike with a thrown agile or finesse weapon, in its first range increment", bonus: "your Precise Strike damage applies (and such a Strike can be used for Confident Finisher and other finishers)" }],
+  "ghostly-grasp": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease and poison", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against paralysis and sleep effects", bonus: "+1 circumstance" }],
+  "ghostly-grasp-ghost": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease and poison", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against paralysis and sleep effects", bonus: "+1 circumstance" }],
+  "grave-mummification": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease and poison", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against paralysis and sleep effects", bonus: "+1 circumstance" }],
+  "guards-fury": [{ targets: [{ kind: 'ac' }], when: "while raging", bonus: "-1 (penalty)" }, { targets: [{ kind: 'strikeDamage' }], when: "while raging and adjacent to your designated ally (melee & unarmed)", bonus: "+4 instead of Rage's +2" }],
+  "harming-hands": [{ targets: [{ kind: 'spellDamage' }], when: "when you cast Harm", bonus: "roll d10s instead of d8s" }],
+  "haughty-obstinacy": [{ targets: [{ kind: 'save', detail: 'all' }], when: "vs a mental effect that directly controls your actions", bonus: "a success becomes a critical success" }],
+  "healing-hands": [{ targets: [{ kind: 'spellDamage' }], when: "when you cast Heal", bonus: "roll d10s instead of d8s" }],
+  "hellknight-mobility": [{ targets: [{ kind: 'speed' }], when: "while wearing heavy armor whose Strength requirement you meet", bonus: "+5 feet (its Speed penalty drops by 10 instead of 5)" }, { targets: [{ kind: 'speed' }], when: "if you're a dwarf with the Unburdened Iron feat", bonus: "+5 feet" }],
+  "improvisational-defender": [{ targets: [{ kind: 'strikeAttack' }], when: "with an improvised or a shoddy weapon", bonus: "the -2 item penalty does not apply" }],
+  "intimidating-glare": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "when you Demoralize", bonus: "Demoralize is visual instead of auditory and ignores the not-sharing-a-language penalty" }],
+  "into-the-storm": [{ targets: [{ kind: 'strikeAttack' }], when: "ranged attacks hindered by wind or precipitation", bonus: "wind/precipitation circumstance penalty reduced by 2; you can still use weapons you're a master in at –4 (–2 if legendary) even when weather would prevent it" }],
+  "inured-to-alchemy": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "against an alchemical poison, drug, or addiction", bonus: "each success reduces the stage by 2 (1 if virulent); each critical success by 3 (2 if virulent)" }],
+  "iron-lung": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against an inhaled poison", bonus: "treat your result as one degree of success better" }],
+  "irrepressible": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against an emotion effect", bonus: "a success is a critical success instead (and, with the gutsy halfling heritage, a critical failure is a failure instead)" }],
+  "irrepressible-ganzi": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against an emotion effect", bonus: "a success is a critical success instead" }],
+  "irrepressible-halfling": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against an emotion effect", bonus: "a success is a critical success instead (and, with the gutsy halfling heritage, a critical failure is a failure instead)" }],
+  "irrepressible-nephilim": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against an emotion effect", bonus: "a success is a critical success instead" }],
+  "jungle-strider": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Balance on narrow surfaces or uneven ground made of plant material", bonus: "you aren't off-guard while doing so, and a success is a critical success instead" }],
+  "just-the-facts": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "when you Recall Knowledge", bonus: "use the outcome one degree of success better; the check isn't secret, and you know which information is inaccurate" }],
+  "leap-the-falls": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "while your divine spark is in this imbued ikon (immanence active)", bonus: "you gain the Powerful Leap and Quick Jump skill feats even without their prerequisites: High Jump and Long Jump each take 1 action instead of 2, and your Long Jump distance increases by 5 feet" }],
+  "legendary-monster-hunter": [{ targets: [{ kind: 'strikeAttack' }], when: "vs hunted prey you critically identified (replaces Monster Hunter's +1)", bonus: "+2 circumstance" }],
 };
 
 /** A StatRef, loosened so callers outside explain.ts can pass a plain object. */
@@ -2947,13 +2983,24 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   "vicious-vengeance": [{ on: 'action', id: 'destructive-vengeance', value: "+ its number of damage dice", note: "Vicious Vengeance: the ENEMY takes a circumstance bonus to the damage equal to the…" }],
   "wand": [{ on: 'action', id: 'fling-magic', value: "+your level status to damage", note: "Wand implement, Intensify Vulnerability: Fling Magic against the target of your Exploit…" }],
 
+
+
   // ---- full feat audit — action/condition marks ----
-  // 5 feats that change an ACTION or a CONDITION rather than a stat.
+  // 14 feats that change an ACTION or a CONDITION rather than a stat.
   'dancing-leaf': [{"on":"action","id":"leap","value":"+5 feet","note":"You jump 5 feet farther when you Leap."},{"on":"action","id":"high-jump","value":"+5 feet","note":"A successful High Jump carries you 5 feet farther."},{"on":"action","id":"long-jump","value":"+5 feet","note":"A successful Long Jump carries you 5 feet farther. When calculating falling damage, don't count any distance fallen while you are adjacent to a wall."}],
   'defy-death': [{"on":"condition","id":"dying","value":"DC 9 + dying (8 with Toughness)","note":"The DC of your recovery checks is 9 + your dying value, or 8 + your dying value if you have the Toughness general feat. Magic that returns you to life never leaves you debilitated for a week."}],
   'dwarven-doughtiness': [{"on":"condition","id":"frightened","value":"-2 per turn","note":"At the end of your turn, reduce your frightened condition by 2 instead of 1."}],
   'eagle-eyes': [{"on":"condition","id":"off-guard","note":"While you and your Sniping Duo partner can see or hear each other, neither of you is off-guard to hidden, undetected, or flanking creatures of your level or lower, or to their surprise attacks (they can still help allies flank)."}],
   'eclipsed-vitality': [{"on":"action","id":"hide","note":"You're always taking precautions to foil lifesense when you Hide, and you're concealed to any creature using only precise lifesense to observe you."},{"on":"action","id":"sneak","note":"You're always taking precautions to foil lifesense when you Sneak."},{"on":"action","id":"avoid-notice","note":"You're always taking precautions to foil lifesense when Avoiding Notice."}],
+  'eternal-boost': [{"on":"condition","id":"quickened","value":"always on","note":"Eternal Boost: you are permanently quickened; the extra action can only be used to cast Boost Eidolon or Reinforce Eidolon."}],
+  'eternal-composition': [{"on":"condition","id":"quickened","value":"always on","note":"Eternal Composition: you are permanently quickened; the extra action can only be used to cast a 1-action composition cantrip."}],
+  'evade-doom': [{"on":"condition","id":"doomed","note":"Evade Doom: when you would gain the doomed condition you can attempt a check; on a success you don't gain it."}],
+  'ever-dreaming': [{"on":"condition","id":"unconscious","note":"Ever Dreaming: asleep, you take no -4 to AC, Perception and Reflex and are not off-guard; you can act while slowed 2, though still blinded."}],
+  'experienced-professional': [{"on":"action","id":"earn-income","value":"crit fail -> fail","note":"When you use Lore to Earn Income a critical failure becomes a failure; if you're an expert in Lore, a failed check earns twice as much income (unless it was originally a critical failure)."}],
+  'fancy-moves': [{"on":"action","id":"demoralize","note":"You can roll Performance instead of Intimidation to Demoralize."}],
+  'fantastic-leaps': [{"on":"action","id":"leap","value":"+10 ft / +5 ft up","note":"Your maximum Leap distance is 10 feet farther horizontally and 5 feet higher vertically."}],
+  'feather-step': [{"on":"action","id":"step","note":"You can Step into difficult terrain."}],
+  'full-automation': [{"on":"condition","id":"quickened","value":"always on","note":"Full Automation: you're permanently quickened. Armor innovation - the extra action Strides, Steps, or uses a movement form your innovation provides; construct - Command your construct; weapon - Strike with your innovation."}],
 };
 
 /**

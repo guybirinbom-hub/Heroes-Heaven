@@ -2545,5 +2545,180 @@
       }
     ],
     "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
+  },
+  "feat-eternal-blessing": {
+    "id": "feat-eternal-blessing",
+    "name": "Eternal Blessing",
+    "feats": [
+      "eternal-blessing"
+    ],
+    "duration": "permanent — you may Dismiss it, and it returns automatically after 1 minute",
+    "modifiers": [
+      {
+        "target": "attack",
+        "type": "status",
+        "value": 1
+      }
+    ],
+    "note": "You are continuously surrounded by bless at a spell rank equal to half your level (rounded up), radius 15 feet (it cannot be increased): you and allies inside gain a +1 status bonus to attack rolls."
+  },
+  "exude-demonic-corruption": {
+    "id": "exude-demonic-corruption",
+    "name": "Demonic Corruption",
+    "feats": [
+      "exude-demonic-corruption"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "note": "Your melee Strikes deal an extra 1d6 poison damage, and each creature that hits you with a melee unarmed attack or otherwise touches you takes 1d6 poison damage. The poison damage is 2d6 at 14th level and 3d6 at 20th."
+  },
+  "eyes-that-see-eternity": {
+    "id": "eyes-that-see-eternity",
+    "name": "Eyes that See Eternity",
+    "feats": [
+      "eyes-that-see-eternity"
+    ],
+    "duration": "1 minute",
+    "senses": [
+      {
+        "name": "see-invisibility"
+      }
+    ],
+    "modifiers": [],
+    "note": "Costs 1 Mythic Point. You have the effects of Truesight (you see through illusions and magical darkness and can see invisible creatures) and roll all Perception checks with mythic proficiency."
+  },
+  "flamboyant-athlete": {
+    "id": "flamboyant-athlete",
+    "name": "Flamboyant Athlete (Panache)",
+    "feats": [
+      "flamboyant-athlete"
+    ],
+    "duration": "while you have panache",
+    "modifiers": [],
+    "speeds": {
+      "climb": "floor(@actor.speed.land/2)",
+      "swim": "floor(@actor.speed.land/2)"
+    },
+    "note": "While you have panache: climb and swim Speeds equal to half your land Speed; High Jump and Long Jump DCs decrease by 10 (doesn't combine with other DC reductions); a vertical Leap covers 5 feet and a horizontal Leap 15 feet (20 feet if your Speed is at least 30)."
+  },
+  "force-of-nature": {
+    "id": "force-of-nature",
+    "name": "Force of Nature (hybrid or animal shape)",
+    "feats": [
+      "force-of-nature"
+    ],
+    "duration": "while you are in your hybrid or animal shape",
+    "modifiers": [],
+    "note": "Fast healing 5. If you take damage from a silver weapon, the fast healing deactivates until the end of your next turn."
+  },
+  "ghost-wrangler": {
+    "id": "ghost-wrangler",
+    "name": "Ghost Wrangler",
+    "feats": [
+      "ghost-wrangler"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "note": "Your fists gain the effects of the ghost touch property rune, and you can make Strength-based skill checks against incorporeal creatures."
+  },
+  "giants-lunge": {
+    "id": "giants-lunge",
+    "name": "Giant's Lunge",
+    "feats": [
+      "giants-lunge"
+    ],
+    "duration": "until your rage ends",
+    "modifiers": [],
+    "note": "All your melee weapons and unarmed attacks have 10-foot reach. This doesn't increase the reach of an attack that already has the reach trait, but it does combine with size-based reach increases such as Giant's Stature."
+  },
+  "giants-stature": {
+    "id": "giants-stature",
+    "name": "Giant's Stature",
+    "feats": [
+      "giants-stature"
+    ],
+    "duration": "until you stop raging",
+    "modifiers": [],
+    "note": "You are Large: your reach increases by 5 feet and you are clumsy 1 until you stop raging. Your equipment grows with you. Requires that you were Medium or smaller."
+  },
+  "golden-body": {
+    "id": "golden-body",
+    "name": "Golden Body",
+    "feats": [
+      "golden-body"
+    ],
+    "duration": "always active",
+    "modifiers": [],
+    "note": "Fast healing 20: you regain 20 HP at the start of each of your turns as long as you have at least 1 HP. Track the healing yourself - the app has no fast-healing lane."
+  },
+  "grand-medics-mask": {
+    "id": "grand-medics-mask",
+    "name": "Grand Medic's Mask",
+    "feats": [
+      "grand-medics-mask"
+    ],
+    "duration": "always active",
+    "modifiers": [],
+    "note": "Fast healing 5. A lost limb or body part regrows within 1 day. Immediately after you Cast a non-cantrip Spell that targets only one creature, you can also give that creature temporary Hit Points equal to the spell's rank until the start of your next turn."
+  },
+  "grasping-reach": {
+    "id": "grasping-reach",
+    "name": "Extended Grasp",
+    "feats": [
+      "grasping-reach"
+    ],
+    "duration": "until you switch grips (Interact)",
+    "modifiers": [],
+    "note": "While held in your extended grasp, a two-handed melee weapon that lacks reach and deals at least 1d6 damage gains 10-foot reach, and its damage die is reduced by one step."
+  },
+  "greater-transformation": {
+    "id": "greater-transformation",
+    "name": "Oni Form (Greater)",
+    "feats": [
+      "greater-transformation"
+    ],
+    "duration": "10 minutes",
+    "modifiers": [],
+    "note": "Your Oni Form lasts 10 minutes with no need to Sustain it, and while in it your reach increases by 5 feet (on top of the form's usual Large size and clumsy 1)."
+  },
+  "hardwood-armor": {
+    "id": "hardwood-armor",
+    "name": "Hardwood Armor",
+    "feats": [
+      "hardwood-armor"
+    ],
+    "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
+    "modifiers": [],
+    "note": "Medium wooden armor that uses your highest armor proficiency: AC Bonus +3, Dex Cap +2, Check Penalty -2, Speed Penalty -5 ft, Strength +2, Bulk 1, group wood. Your real armor's bonuses, runes and magical abilities are suppressed (runes that could apply are replicated onto the hardwood). You may also form a wooden shield in a free hand and Shield Block with it even without that feat, and that hand still counts as free for impulses; the shield decays if broken or if it leaves your grasp. At every 3rd level its Hardness +1, HP +4, BT +2. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
+  },
+  "heavens-thunder": {
+    "id": "heavens-thunder",
+    "name": "Heaven's Thunder",
+    "feats": [
+      "heavens-thunder"
+    ],
+    "duration": "until the end of your next turn",
+    "modifiers": [],
+    "note": "Your unarmed attacks and any monk weapons you wield deal additional electricity damage and additional sonic damage, each equal to that attack's number of damage dice. Any creature that successfully Grapples you, or that you successfully Grapple, takes that damage immediately after the check (using your unarmed attack's damage dice). If you know the Ki Blast ki spell you may have it deal electricity or sonic instead of force while this is active."
+  },
+  "immortal-bear": {
+    "id": "immortal-bear",
+    "name": "Immortal Bear",
+    "feats": [
+      "immortal-bear"
+    ],
+    "duration": "while in Ursine Avenger Form",
+    "modifiers": [],
+    "note": "Fast healing 5 while you are in Ursine Avenger Form. Track the healing yourself - the app has no fast-healing lane."
+  },
+  "infused-with-belkzens-might": {
+    "id": "infused-with-belkzens-might",
+    "name": "Infused with Belkzen's Might",
+    "feats": [
+      "infused-with-belkzens-might"
+    ],
+    "duration": "until the end of your next turn",
+    "modifiers": [],
+    "note": "Infused with Belkzen's Might: expend one use of your storied skin's Living History. Your weapon and unarmed Strikes deal additional spirit damage equal to 1 plus half the number of Tattooed Historian feats you have (so 1 with one or two such feats, 2 with three or four, and so on)."
   }
 }

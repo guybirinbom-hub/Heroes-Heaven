@@ -51324,5 +51324,393 @@
     "value": {
       "levelMinus": 0
     }
+  },
+  {
+    "category": "feats",
+    "id": "beastkin-resilience",
+    "field": "removesWeaknesses",
+    "value": [
+      "silver"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "entitys-strike",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Entity's Limb",
+        "die": "d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "agile",
+          "finesse",
+          "magical",
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "expert-fireworks-crafter",
+    "field": "resourceMaxSet",
+    "value": {
+      "resourceId": "versatile-vials",
+      "values": [
+        5
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "false-priest-form",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "divine-lance",
+        "tradition": "primal",
+        "atWill": true
+      },
+      {
+        "spellId": "haunting-hymn",
+        "tradition": "primal",
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "fast-swimmer",
+    "field": "speeds",
+    "value": {
+      "swim": "min(@actor.speed.swim,5)+@actor.speed.swim"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "fey-cantrips",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "light",
+        "tradition": "primal",
+        "atWill": true
+      },
+      {
+        "spellId": "ghost-sound",
+        "tradition": "primal",
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "gnoll-weapon-practicality",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "gnoll-weapon-practicality",
+    "field": "critSpecWeapons",
+    "value": {
+      "bases": [
+        "flail",
+        "khopesh",
+        "mambele",
+        "spear",
+        "war-flail"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "grandmaster-qi-spells",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "grandmaster-qi-spell",
+        "prompt": "Grandmaster Qi Spells: choose a 9th-rank qi spell (such as Embrace Nothingness or Qi Form)",
+        "spellFilter": {
+          "traits": [
+            "monk"
+          ],
+          "rank": 9,
+          "grantAs": "focus"
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "grave-sight",
+    "field": "senses",
+    "value": [
+      {
+        "name": "deathsense",
+        "range": 60,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "grippli-weapon-innovator",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "grippli-weapon-innovator",
+    "field": "critSpecWeapons",
+    "value": {
+      "bases": [
+        "blowgun",
+        "hatchet",
+        "scythe",
+        "shortbow",
+        "composite-shortbow"
+      ],
+      "traits": [
+        "grippli"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "guiding-luck",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "halfling-luck",
+      "max": 2,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "halo",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "light",
+        "tradition": "divine",
+        "atWill": true,
+        "heightenHalfLevel": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "hand-of-the-lich",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Fist",
+        "die": "1d6",
+        "damageType": "void",
+        "traits": [
+          "agile",
+          "finesse",
+          "magical",
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "hefty-hauler",
+    "field": "bulkLimitBonus",
+    "value": 2
+  },
+  {
+    "category": "feats",
+    "id": "hobgoblin-weapon-discipline",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "hobgoblin-weapon-discipline",
+    "field": "critSpecWeapons",
+    "value": {
+      "groups": [
+        "polearm",
+        "spear",
+        "sword"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "house-of-imaginary-walls",
+    "field": "focusSpells",
+    "value": [
+      "house-of-imaginary-walls"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "implausible-purchase",
+    "field": "limitedUses",
+    "value": {
+      "max": 5,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "implausible-purchase-rogue",
+    "field": "limitedUses",
+    "value": {
+      "max": 5,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "intercepting-hand",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "fist"
+      ],
+      "add": [
+        "disarm"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "kobold-weapon-innovator",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "kobold-weapon-innovator",
+    "field": "critSpecWeapons",
+    "value": {
+      "traits": [
+        "kobold"
+      ],
+      "bases": [
+        "crossbow",
+        "greatpick",
+        "light-pick",
+        "pick",
+        "spear"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "land-legs",
+    "field": "landSpeedBonus",
+    "value": 15
+  },
+  {
+    "category": "feats",
+    "id": "lich-dedication",
+    "field": "immunities",
+    "value": [
+      "death effects",
+      "disease",
+      "paralyzed",
+      "poison",
+      "sleep"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "magical-edification",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "guidance",
+        "tradition": "occult",
+        "atWill": true
+      },
+      {
+        "spellId": "message",
+        "tradition": "occult",
+        "atWill": true
+      },
+      {
+        "spellId": "sigil",
+        "tradition": "occult",
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "master-cathartic-spellcasting",
+    "field": "spellcastingGrant",
+    "value": {
+      "tradition": "occult",
+      "keyAbility": "cha",
+      "proficiency": "master"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "master-qi-spells",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "qi-spell",
+        "prompt": "Choose an 8th-rank qi spell (Medusa's Wrath, Touch of Death, or another you have access to)",
+        "spellFilter": {
+          "rank": 8,
+          "traits": [
+            "monk",
+            "focus"
+          ],
+          "grantAs": "focus"
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "master-red-mantis-magic",
+    "field": "spellcastingGrant",
+    "value": {
+      "tradition": "divine",
+      "keyAbility": "cha",
+      "proficiency": "master"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "master-snowcasting",
+    "field": "spellcastingGrant",
+    "value": {
+      "tradition": "arcane",
+      "keyAbility": "cha",
+      "proficiency": "master"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "master-summoning-spellcasting",
+    "field": "grantsFeats",
+    "value": [
+      "master-summoner-spellcasting"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "golden-body",
+    "field": "unarmedTraits",
+    "value": {
+      "add": [
+        "deadly-d12"
+      ]
+    }
   }
 ]

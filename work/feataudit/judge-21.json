@@ -1,0 +1,624 @@
+{
+ "records": [
+  {
+   "id": "kneecap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action Strike whose only effect is a Speed penalty on the TARGET; nothing on the player sheet changes."
+  },
+  {
+   "id": "kneel-for-no-god",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Upgrades a critical failure to a failure on one reaction-triggered save vs divine spells - a degree-of-success conversion resolved at the table, not a sheet value."
+  },
+  {
+   "id": "knight-in-shining-armor",
+   "verdict": "MISS",
+   "reason": "\"You gain expert proficiency in heavy armor.\" No featGrantsLane/featGrantsAuto entry exists for knight-in-shining-armor, so heavy-armor proficiency never rises.",
+   "fix": {
+    "armor": {
+     "heavy": "expert"
+    }
+   }
+  },
+  {
+   "id": "knight-vigilant",
+   "verdict": "MISS",
+   "reason": "\"You gain expert proficiency in Religion.\" featGrantsAuto covers the sibling record knight-vigilant-dedication, but this knight-vigilant record (the legacy-era archetype entry, also selectable) carries no grant. The lesser-cover-becomes-standard-cover clause is GM-adjudicated and needs nothing.",
+   "fix": {
+    "skills": {
+     "religion": "expert"
+    }
+   }
+  },
+  {
+   "id": "knights-retaliation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that lets you attempt Disarm/Shove/Trip - an action resolved at the table; no player statistic changes."
+  },
+  {
+   "id": "knock-sense",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike against a confused ALLY; the only mechanical effect (auto-success on the ally's flat check) lands on the ally."
+  },
+  {
+   "id": "knockback",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action Shove-like push against a foe; the effect is entirely on the target."
+  },
+  {
+   "id": "knockback-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An action combining an unarmed Strike with an Athletics Shove; MAP handling and the Shove resolve at the table, no sheet value changes."
+  },
+  {
+   "id": "know-it-all",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extra information/context on Recall Knowledge - purely GM-adjudicated narrative output, no roll modifier."
+  },
+  {
+   "id": "know-it-all-eldritch-researcher",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as Know-It-All: additional GM-provided information on a successful Recall Knowledge; no mechanical value."
+  },
+  {
+   "id": "know-your-own",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Critical failure becomes failure on Recall Knowledge about elves - a degree-of-success conversion on a GM-run knowledge check, not a sheet field."
+  },
+  {
+   "id": "knowledge-is-power-wizard",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Imposes a -1 circumstance penalty on the TARGET creature; the player gains no statistic."
+  },
+  {
+   "id": "knowledge-of-shapes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces Reach/Widen Spell to a free action - action economy resolved at the table; no listed field expresses an action-cost override and no number changes."
+  },
+  {
+   "id": "kobold-breath",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a 2-action breath activity whose damage, area, and save all resolve against targets at the table; the 1d4-round recharge is not expressible as limitedUses and nothing on the player sheet changes."
+  },
+  {
+   "id": "kobold-momentum",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Recharges Kobold Breath on a critical hit and rerolls 1s on its damage dice - in-play resolution of another activity, no sheet statistic."
+  },
+  {
+   "id": "kobold-weapon-innovator",
+   "verdict": "MISS",
+   "reason": "\"Whenever you critically hit with a crossbow, greatpick, light pick, pick, spear, or kobold weapon, you apply the weapon's critical specialization effect.\" The feat carries no critSpec field; kobold-weapon-familiarity covers only the three picks plus kobold-trait weapons, leaving crossbow and spear unserved.",
+   "fix": {
+    "critSpec": true,
+    "critSpecWeapons": {
+     "traits": [
+      "kobold"
+     ],
+     "bases": [
+      "crossbow",
+      "greatpick",
+      "light-pick",
+      "pick",
+      "spear"
+     ]
+    }
+   }
+  },
+  {
+   "id": "koi-secrets",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you converse with and use Diplomacy on fish and shifts koi attitude - pure roleplay/GM adjudication."
+  },
+  {
+   "id": "land-legs",
+   "verdict": "MISS",
+   "reason": "\"You gain a land Speed of 20.\" The awakened-animal ancestry base land Speed in core.json is 5 and the aquatic swimming-animal option grants only a swim Speed, so the sheet still reads 5. +15 lands exactly on the printed 20, and the feat requires the aquatic swimming animal heritage so the base is always 5. Breathing air for 10 minutes has no field and needs none.",
+   "fix": {
+    "landSpeedBonus": 15
+   }
+  },
+  {
+   "id": "landscape-form",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An alternate Change Shape form (a building or terrain feature) with no statistics - entirely GM/table adjudication."
+  },
+  {
+   "id": "larcenous-hand",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Modifies how you may cast Telekinetic Hand (range/duration/target) and gates it behind a Thievery Steal check; no player statistic changes."
+  },
+  {
+   "id": "larcenous-tail",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you Steal with your tail and nudges observers' Perception DCs at GM discretion - table adjudication only."
+  },
+  {
+   "id": "larger-than-life-guardian",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Treats you as one size larger for maneuver rules (Disarm/Grapple/Reposition/Shove/Trip, Swallow Whole) while in heavy armor - a size-category rules interaction with no numeric modifier and no size field."
+  },
+  {
+   "id": "lasting-armament",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extends the duration of Sanctify Armament to 1 hour - a duration change on another ability, no sheet value."
+  },
+  {
+   "id": "lasting-doubt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lengthens conditions (enfeebled/stupefied) imposed on the FOE by Glimpse of Redemption."
+  },
+  {
+   "id": "lasting-protection",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extends the effect Commitment to Protection places on an ALLY; nothing on the player sheet."
+  },
+  {
+   "id": "lastwall-warden",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Broadens the Shield Block reaction trigger to cover an adjacent ally; a reaction resolved at the table, no statistic changes."
+  },
+  {
+   "id": "late-awakener",
+   "verdict": "MISS",
+   "reason": "\"You gain all the mechanical benefits of the awakened animal heritage you selected at 1st level\" - a real grant (that heritage's speeds, unarmed attack, senses, plus qualifying for heritage-gated feats) for a character who took a versatile heritage. No listed field can apply a second heritage's mechanics or unlock its feat prerequisites.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "lead-climber",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you salvage an ALLY's critical failure to Climb during Follow the Expert - an exploration activity affecting allies."
+  },
+  {
+   "id": "leap-and-fire",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a ranged Strike to the Hit the Dirt! reaction - an action resolved at the table."
+  },
+  {
+   "id": "leap-the-falls",
+   "verdict": "MISS",
+   "reason": "\"You gain the Powerful Leap and Quick Jump skill feats\" - two real core.json feats (powerful-leap, quick-jump) the sheet never adds. The grant is gated on this body ikon being imbued; the app tracks no ikon-imbuement state, so it applies whenever the feat is taken.",
+   "fix": {
+    "grantsFeats": [
+     "powerful-leap",
+     "quick-jump"
+    ]
+   }
+  },
+  {
+   "id": "leaping-hedgehog-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action Leap/Tumble Through/Strike sequence; prone and the mythic-proficiency Strike resolve at the table against a target."
+  },
+  {
+   "id": "leave-an-opening",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Triggers a Reactive Strike from an ALLY; nothing on the player sheet."
+  },
+  {
+   "id": "legacy-of-monarchs",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure narrative succession/retraining rule that applies after the character dies; no statistic."
+  },
+  {
+   "id": "legend-of-combat",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spends a Mythic Point for an extra reaction each turn plus a temporary reaction for 1 minute - action economy no listed field expresses, tracked at the table."
+  },
+  {
+   "id": "legendary-codebreaker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Speeds up and upgrades Decipher Writing, a downtime/exploration activity the app does not model."
+  },
+  {
+   "id": "legendary-laugh",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extends Demoralize range and deals damage to the TARGET on a success; no player statistic."
+  },
+  {
+   "id": "legendary-linguist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you improvise a pidgin with any speaking creature - narrative communication, and it grants no actual language."
+  },
+  {
+   "id": "legendary-monster-hunter",
+   "verdict": "MISS",
+   "reason": "\"Your bonus from Monster Hunter increases from +1 to +2.\" situationalBonuses.ts still lists only monster-hunter's +1, so a legendary ranger sees the wrong number. Monster Warden's half is deliberately left alone (not a prerequisite, and its existing entry already reads +2).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "vs hunted prey you critically identified (replaces Monster Hunter's +1)",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "legendary-negotiation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 3-action social activity (Make an Impression + Request); its -5 penalty and DC are applied by the GM at the table."
+  },
+  {
+   "id": "legendary-performer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fame, NPC attitude, and higher-level Earn Income audiences - reputation and downtime the app does not model."
+  },
+  {
+   "id": "legendary-professional",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "As Legendary Performer but for Lore: fame and Earn Income downtime, not modelled."
+  },
+  {
+   "id": "legendary-rider",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants quickened while mounted, usable only to Command an Animal - conditional action economy with no listed field and no sheet number."
+  },
+  {
+   "id": "legendary-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Waives the range-increment penalty against hunted prey; the sheet does not compute per-increment range penalties, so there is nothing to change."
+  },
+  {
+   "id": "legendary-sneak",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you Hide/Sneak without cover and adds Avoiding Notice to other exploration tactics - table and exploration rules, no statistic."
+  },
+  {
+   "id": "legendary-summoner",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets Master Summoner's sacrificed slots cast 10th-rank summoning spells while explicitly NOT counting as 10th-rank slots, so a spellSlotBonus would be an over-grant."
+  },
+  {
+   "id": "legendary-survivalist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Survive without food/water and ignore environmental cold/heat damage - an exploration/environment rule; a cold or fire immunity entry would be a massive over-grant."
+  },
+  {
+   "id": "legendary-thief",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Widens what you may attempt to Steal over a minute of careful work - GM-adjudicated skill use."
+  },
+  {
+   "id": "legions-aim",
+   "verdict": "MISS",
+   "reason": "\"You have familiarity with martial firearms and alchemical bombs, treating them as simple weapons for the purposes of proficiency\" - a real proficiency mirror with no lane entry. Ids enumerated from core.json: every martial firearm-group weapon plus every martial alchemical bomb. The second-range-increment clause and the uncommon-access clause need nothing.",
+   "fix": {
+    "weaponFamiliarity": {
+     "weapons": [
+      "acid-flask-greater",
+      "acid-flask-lesser",
+      "acid-flask-major",
+      "acid-flask-moderate",
+      "alchemists-fire-greater",
+      "alchemists-fire-lesser",
+      "alchemists-fire-major",
+      "alchemists-fire-moderate",
+      "alicorn-trigger",
+      "arboreals-revenge",
+      "arquebus",
+      "atrophy-bomb-greater",
+      "atrophy-bomb-lesser",
+      "atrophy-bomb-major",
+      "atrophy-bomb-moderate",
+      "axe-musket",
+      "axe-musket-ranged",
+      "big-boom-gun",
+      "bioluminescence-bomb",
+      "black-king",
+      "black-powder-knuckle-dusters",
+      "black-powder-knuckle-dusters-ranged",
+      "blade-of-fallen-stars",
+      "blasting-stone-greater",
+      "blasting-stone-lesser",
+      "blasting-stone-major",
+      "blasting-stone-moderate",
+      "blight-bomb-greater",
+      "blight-bomb-lesser",
+      "blight-bomb-major",
+      "blight-bomb-moderate",
+      "blightburn-bomb",
+      "blightburn-bomb-greater",
+      "blood-bomb-greater",
+      "blood-bomb-lesser",
+      "blood-bomb-major",
+      "blood-bomb-moderate",
+      "blunderbuss",
+      "boastful-hunter",
+      "bottled-lightning-greater",
+      "bottled-lightning-lesser",
+      "bottled-lightning-major",
+      "bottled-lightning-moderate",
+      "bottled-sunlight-greater",
+      "bottled-sunlight-lesser",
+      "bottled-sunlight-major",
+      "bottled-sunlight-moderate",
+      "boulder-seed",
+      "boulder-seed-greater",
+      "breath-blaster",
+      "breath-blaster-greater",
+      "breath-blaster-major",
+      "cane-pistol",
+      "cane-pistol-ranged",
+      "clan-pistol",
+      "coldstar-pistols",
+      "crystal-shards-greater",
+      "crystal-shards-major",
+      "crystal-shards-moderate",
+      "dagger-pistol",
+      "dagger-pistol-ranged",
+      "dawnsilver-tree",
+      "defoliation-bomb-greater",
+      "defoliation-bomb-lesser",
+      "defoliation-bomb-major",
+      "defoliation-bomb-moderate",
+      "double-barreled-musket",
+      "double-barreled-pistol",
+      "dragon-mouth-pistol",
+      "drake-rifle-acid",
+      "drake-rifle-cold",
+      "drake-rifle-electricity",
+      "drake-rifle-fire",
+      "drake-rifle-poison",
+      "dread-ampoule-greater",
+      "dread-ampoule-lesser",
+      "dread-ampoule-major",
+      "dread-ampoule-moderate",
+      "dueling-pistol",
+      "durian-bomb-greater",
+      "durian-bomb-lesser",
+      "durian-bomb-major",
+      "durian-bomb-moderate",
+      "dwarven-daisy-lesser",
+      "dwarven-daisy-moderate",
+      "frost-vial-greater",
+      "frost-vial-lesser",
+      "frost-vial-major",
+      "frost-vial-moderate",
+      "fulmination-fang",
+      "ghost-charge-greater",
+      "ghost-charge-lesser",
+      "ghost-charge-major",
+      "ghost-charge-moderate",
+      "glue-bomb-greater",
+      "glue-bomb-lesser",
+      "glue-bomb-major",
+      "glue-bomb-moderate",
+      "gnome-amalgam-musket",
+      "gnome-amalgam-musket-ranged",
+      "goo-grenade-greater",
+      "goo-grenade-lesser",
+      "goo-grenade-major",
+      "goo-grenade-moderate",
+      "gun-sword",
+      "gun-sword-ranged",
+      "hammer-gun",
+      "hammer-gun-ranged",
+      "harmona-gun",
+      "hex-blaster",
+      "howler-pistol",
+      "immolation-clan-pistol",
+      "inflammation-flask-greater",
+      "inflammation-flask-lesser",
+      "inflammation-flask-major",
+      "inflammation-flask-moderate",
+      "iris-of-the-sky",
+      "jax",
+      "jezail",
+      "junk-bomb-greater",
+      "junk-bomb-lesser",
+      "junk-bomb-major",
+      "junk-bomb-moderate",
+      "leydroth-spellbreaker",
+      "liars-gun",
+      "lodestone-bomb",
+      "lodestone-bomb-greater",
+      "mace-multipistol",
+      "mace-multipistol-ranged",
+      "mindlance",
+      "mud-bomb-greater",
+      "mud-bomb-lesser",
+      "mud-bomb-major",
+      "mud-bomb-moderate",
+      "nail-bomb-greater",
+      "nail-bomb-lesser",
+      "nail-bomb-major",
+      "nail-bomb-moderate",
+      "necrotic-bomb-greater",
+      "necrotic-bomb-lesser",
+      "necrotic-bomb-major",
+      "necrotic-bomb-moderate",
+      "nightmares-lament",
+      "obsidian-edge",
+      "obsidian-edge-greater",
+      "obsidian-edge-major",
+      "obsidian-edge-true",
+      "pact-bound-pistol",
+      "pepperbox",
+      "pernicious-spore-bomb-greater",
+      "pernicious-spore-bomb-lesser",
+      "pernicious-spore-bomb-major",
+      "pernicious-spore-bomb-moderate",
+      "peshpine-grenade-greater",
+      "peshpine-grenade-lesser",
+      "peshpine-grenade-major",
+      "peshpine-grenade-moderate",
+      "petrification-cannon",
+      "piercing-wind",
+      "piercing-wind-ranged",
+      "pressure-bomb-greater",
+      "pressure-bomb-lesser",
+      "pressure-bomb-major",
+      "pressure-bomb-moderate",
+      "rapier-pistol",
+      "rapier-pistol-ranged",
+      "reapers-grasp",
+      "redeemers-pistol",
+      "redpitch-bomb-greater",
+      "redpitch-bomb-lesser",
+      "redpitch-bomb-major",
+      "redpitch-bomb-moderate",
+      "scarlet-queen",
+      "screech-shooter",
+      "screech-shooter-greater",
+      "screech-shooter-major",
+      "shatterstone",
+      "shatterstone-greater",
+      "shobhad-longrifle",
+      "silver-orb-greater",
+      "silver-orb-lesser",
+      "silver-orb-powder",
+      "silverscrap-bomb-greater",
+      "silverscrap-bomb-lesser",
+      "silverscrap-bomb-moderate",
+      "silversoul-bomb",
+      "silversoul-bomb-greater",
+      "silversoul-bomb-major",
+      "skunk-bomb-greater",
+      "skunk-bomb-lesser",
+      "skunk-bomb-major",
+      "skunk-bomb-moderate",
+      "slide-pistol",
+      "spark-dancer",
+      "spellsap-grenade",
+      "spellsap-grenade-greater",
+      "spider-gun",
+      "spider-gun-greater",
+      "spider-gun-major",
+      "spider-satchel-greater",
+      "spider-satchel-lesser",
+      "spider-satchel-major",
+      "spider-satchel-moderate",
+      "spike-launcher",
+      "spoon-gun",
+      "star-grenade-greater",
+      "star-grenade-lesser",
+      "star-grenade-major",
+      "star-grenade-moderate",
+      "steelscour-greater",
+      "steelscour-lesser",
+      "steelscour-major",
+      "steelscour-moderate",
+      "sticky-algae-bomb-greater",
+      "sticky-algae-bomb-lesser",
+      "sticky-algae-bomb-major",
+      "sticky-algae-bomb-moderate",
+      "sulfur-bomb-greater",
+      "sulfur-bomb-lesser",
+      "sulfur-bomb-major",
+      "sulfur-bomb-moderate",
+      "sunken-pistol",
+      "tallow-bomb-greater",
+      "tallow-bomb-lesser",
+      "tallow-bomb-major",
+      "tallow-bomb-moderate",
+      "tenderizer-grenade-greater",
+      "tenderizer-grenade-lesser",
+      "tenderizer-grenade-major",
+      "tenderizer-grenade-moderate",
+      "tentacle-cannon",
+      "tentacle-cannon-greater",
+      "tentacle-cannon-major",
+      "three-peaked-tree",
+      "three-peaked-tree-ranged",
+      "thundercrasher",
+      "tigers-claw",
+      "triggerbrand",
+      "triggerbrand-ranged",
+      "trueshape-bomb",
+      "trueshape-bomb-greater",
+      "twigjack-sack-greater",
+      "twigjack-sack-lesser",
+      "twigjack-sack-major",
+      "twigjack-sack-moderate",
+      "versatile-vial",
+      "vexing-vapor-greater",
+      "vexing-vapor-lesser",
+      "vexing-vapor-major",
+      "vexing-vapor-moderate",
+      "water-bomb-greater",
+      "water-bomb-lesser",
+      "water-bomb-major",
+      "water-bomb-moderate"
+     ],
+     "mirrorCategory": "simple"
+    }
+   }
+  },
+  {
+   "id": "lengthy-diversion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Keeps you hidden after a critical Create a Diversion for a GM-determined duration - table adjudication."
+  },
+  {
+   "id": "leshy-glide",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A controlled descent (5 ft down, up to 25 ft forward) - not a fly Speed, and no listed field expresses gliding."
+  },
+  {
+   "id": "lesson-of-bonded-eyes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Shares observation of hidden creatures between you and your STUDENT (an ally); no statistic on either sheet."
+  },
+  {
+   "id": "lesson-of-mutual-gambits",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Makes the Feinted creature off-guard to your STUDENT's next attack - an ally benefit."
+  },
+  {
+   "id": "lesson-of-sympathetic-vulnerability",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Swaps your damage type for one turn to exploit a foe's weakness - a triggered, turn-long damage-type substitution resolved at the table."
+  },
+  {
+   "id": "lesson-of-the-circling-gale",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "You Step and your student Steps as a reaction - an action, and the second half belongs to the ally."
+  },
+  {
+   "id": "lesson-of-the-hurricanes-might",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds free-action Strikes to Lesson of the Circling Gale for you and your student - action economy resolved at the table."
+  },
+  {
+   "id": "lesson-of-the-splintered-aegis",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants your STUDENT a fortune reroll on their next attack; nothing on your sheet."
+  },
+  {
+   "id": "lesson-of-unified-elusion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A fortune effect sharing the better Reflex die between you and your student when both are targeted - a reroll, not a modifier."
+  },
+  {
+   "id": "let-my-creature-live",
+   "verdict": "MISS",
+   "reason": "\"Your construct companion becomes an advanced construct companion\" - the maturity upgrade never reaches the companion. Mirrors the existing advanced-construct-companion COMPANION_MODS entry (advanced construct = the mature rung).",
+   "fix": {
+    "companionMod": {
+     "kinds": [
+      "animal"
+     ],
+     "maturityFloor": "mature",
+     "note": "Let my Creature Live!: your construct companion is at least an advanced construct companion (the mature rung here). During an encounter, even without the Command a Minion action, it can still use 1 action on your turn to Stride or Strike."
+    }
+   }
+  },
+  {
+   "id": "lethal-edge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Applies a condition (no reactions, or enfeebled 1) to the TARGET of your spectral dagger Strike."
+  },
+  {
+   "id": "lethal-finisher",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A finisher Strike that trades precise strike damage for save-based precision damage on the target - resolved at the table."
+  }
+ ]
+}

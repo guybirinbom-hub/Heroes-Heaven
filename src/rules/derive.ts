@@ -914,6 +914,13 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     for (const s of list) if ((s.value ?? 0) < best) s.applied = false;
   }
 
+  // "You no longer gain silver weakness from Werecreature Dedication." Applied LAST, after every
+  // source has contributed, because the point of the feat is to undo one an earlier choice imposed.
+  // Every other field adds; nothing could take one away, so the drawback stayed on the sheet.
+  for (const fc of c.feats ?? []) {
+    for (const t of db.feats[fc.featId]?.removesWeaknesses ?? []) weak.delete(t);
+  }
+
   const sortByType = (a: { type: string }, b: { type: string }) => a.type.localeCompare(b.type);
   return {
     senses: [...senses.values()],

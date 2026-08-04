@@ -93,10 +93,13 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   'undead-master-dedication': { kind: 'animal', label: 'Undead Master Dedication', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'witch-dedication': { kind: 'familiar', label: 'Witch Dedication', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
 
+
+
   // ---- full feat audit — companion grants ----
-  // 2 entries. The judge said "no lane exists"; the adversary found the lane.
+  // 3 entries. The judge said "no lane exists"; the adversary found the lane.
   'adaptive-mask-familiar': {"kind":"familiar","label":"Adaptive Mask Familiar","abilityBudget":4,"supersedes":["mask-familiar"],"note":"Your mask familiar adapts quickly to material form: select four master and familiar abilities each day instead of two."},
   'additional-follower': {"kind":"follower","label":"Additional Follower","note":"Another novice follower with the minion trait joins you. Repeatable up to four followers in total — add the further ones by hand in the Companions tab."},
+  'incredible-familiar-familiar-master': {"kind":"familiar","label":"Incredible Familiar","abilityBudget":6,"supersedes":["familiar-master-dedication"],"note":"Grants a familiar you configure here. Choose 6 familiar or master abilities each day."},
 };
 
 /** The companion grants active on a character, given its taken feat ids. Deduped via `supersedes`
@@ -187,12 +190,32 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'vibration-sense': {"kinds":["eidolon"],"senses":["tremorsense (imprecise 30 ft)"],"note":"Vibration Sense: tremorsense as an imprecise sense, range 30 feet. An aquatic eidolon gains wavesense (imprecise 30 ft) instead; an amphibious eidolon gains both."},
   'wing-rider': {"kinds":["animal"],"speeds":{"fly":25},"note":"Wing Rider: your dragon companion has a fly Speed of 25 feet at all times."},
 
+
+
   // ---- full feat audit — companion mods ----
-  // 6 entries. The judge said "no lane exists"; the adversary found the lane.
+  // 24 entries. The judge said "no lane exists"; the adversary found the lane.
   'a-miracle-of-science': {"kinds":["animal"],"maturityFloor":"specialized","note":"A Miracle of Science!: your construct companion is at least a paragon (specialized) construct companion."},
   'advanced-construct-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Advanced Construct Companion: your construct companion is at least an advanced construct companion (the mature rung here). During an encounter, even without Command a Construct, it can still use 1 action on your turn to Stride or Strike."},
   'battle-hardened-companion': {"kinds":["animal"],"maturityFloor":"nimble","note":"Battle-Hardened Companion: the companion you gained with Commander's Companion is at least a nimble or savage animal companion — pick savage in Edit if you want that side. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike, and then gains a reaction for your tactics (that is all the actions it gets that round)."},
   'battle-tested-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Battle-Tested Companion: the companion you gained with Commander's Companion is at least a mature animal companion. While your banner is affixed to it, the banner's aura is 10 feet greater than normal."},
   'behold-a-pale-horse': {"kinds":["animal"],"maturityFloor":"specialized","note":"Behold, A Pale Horse: your apocalypse mount is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time (three maximum)."},
   'behold-my-creation': {"kinds":["animal"],"maturityFloor":"nimble","note":"Behold My Creation!: your construct companion is at least an incredible construct companion — the nimble/savage rung here; pick savage in Edit if that fits your build better."},
+  'gigantic-megafauna-companion': {"kinds":["animal"],"note":"Gigantic Megafauna Companion: your megafauna companion's size increases to Huge. Nothing else about its statistics changes — adjust its space, reach, and Bulk limit by hand."},
+  'hulking-size': {"kinds":["eidolon"],"note":"Hulking Size: your eidolon is Large instead of its previous size and its reach increases to 10 feet. No other statistics change."},
+  'imposing-destrier': {"kinds":["animal"],"maturityFloor":"nimble","note":"Imposing Destrier: the mount you gained with Faithful Steed is at least a nimble or savage animal companion — pick savage in Edit if you want that side. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike (that is all the actions it gets that round)."},
+  'impressive-mount': {"kinds":["animal"],"maturityFloor":"mature","note":"Impressive Mount: the mount you gained through Cavalier Dedication is at least a mature animal companion. During an encounter, even without Command an Animal, it can use 1 action on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed) — that is all the actions it gets that round."},
+  'incredible-beastmaster-companion': {"kinds":["animal"],"maturityFloor":"nimble","note":"Incredible Beastmaster Companion: each of your mature Beastmaster companions is at least a nimble or savage animal companion (your choice per companion) — pick savage in Edit for any companion you want on that side. Any companion that becomes mature later also gains this."},
+  'incredible-companion-druid': {"kinds":["animal"],"maturityFloor":"nimble","note":"Incredible Companion: your animal companion is at least a nimble or savage companion (your choice) — pick savage in Edit if you want that side."},
+  'incredible-companion-ranger': {"kinds":["animal"],"maturityFloor":"nimble","note":"Incredible Companion: your animal companion is at least a nimble or savage companion (your choice) — pick savage in Edit if you want that side."},
+  'incredible-construct-companion': {"kinds":["animal"],"maturityFloor":"nimble","note":"Incredible Construct Companion: your construct companion is at least an incredible construct companion — the nimble/savage rung here; pick savage in Edit if that fits your build better."},
+  'incredible-dragon-companion': {"kinds":["animal"],"maturityFloor":"nimble","note":"Incredible Dragon Companion: your dragon companion is at least a nimble or savage animal companion (your choice) — pick savage in Edit if you want that side."},
+  'incredible-mount': {"kinds":["animal"],"maturityFloor":"nimble","note":"Incredible Mount: the mount you gained from Cavalier Dedication is at least a nimble or savage animal companion (your choice) — pick savage in Edit if you want that side."},
+  'incredible-reanimated-companion': {"kinds":["animal"],"maturityFloor":"nimble","note":"Incredible Reanimated Companion: your reanimated construct companion is at least an incredible construct companion — the nimble/savage rung here; pick savage in Edit if that fits your build better."},
+  'let-my-creature-live': {"kinds":["animal"],"maturityFloor":"mature","note":"Let my Creature Live!: your construct companion is at least an advanced construct companion (the mature rung here). During an encounter, even without the Command a Minion action, it can still use 1 action on your turn to Stride or Strike."},
+  'loyal-warhorse': {"kinds":["animal"],"maturityFloor":"mature","note":"Loyal Warhorse: the mount you gained with Faithful Steed is at least a mature animal companion. It never attacks you, even if magically compelled."},
+  'mature-animal-companion-druid': {"kinds":["animal"],"maturityFloor":"mature","note":"Mature Animal Companion: your companion is at least a mature animal companion. During an encounter, even if you don't Command an Animal, it can still use 1 action on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed) — if it does, that's all it gets that round."},
+  'mature-animal-companion-ranger': {"kinds":["animal"],"maturityFloor":"mature","note":"Mature Animal Companion: your companion is at least a mature animal companion. During an encounter, even if you don't Command an Animal, it can still use 1 action on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed) — if it does, that's all it gets that round."},
+  'mature-beastmaster-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Mature Beastmaster Companion: ALL of your animal companions are at least mature animal companions. During an encounter, even without Command an Animal, a companion can use 1 action on your turn to Strike or Stride (or Burrow, Climb, Fly, or Swim if it has that Speed) — that is all the actions it gets that round."},
+  'mature-dragon-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Mature Dragon Companion: your drake is at least a mature animal companion. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike — that is all the actions it gets that round."},
+  'mature-megafauna-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Mature Megafauna Companion: your megafauna companion is at least a mature animal companion. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike."},
 };

@@ -19,15 +19,79 @@
   "arcane-safeguards: The feat grants only the Resist Magic REACTION; its +1 applies to one triggering effect when the reaction is spent — a table-resolved reaction, as judge-1 itself ruled for apparition-cloud.",
   "armor-in-earth: A 1-action kineticist impulse with a Dismiss clause — an activated effect resolved in play, not a standing sheet value.",
   "armored-resistance: mode \"armored-resistance\" already exists",
+  "armored-resistance: a MISS whose fix says nothing",
   "ash-piercing-gaze: already has senses — not overwriting",
   "divine-breadth: already has spellSlotBonus — not overwriting",
   "echolocation: mode \"echolocation\" already exists",
+  "echolocation: a MISS whose fix says nothing",
   "enduring-quickness: Per-turn action economy, which the app does not model — the same judge ruled divine-reflexes (an extra reaction each turn) NEEDS_NOTHING for exactly this reason, and quickened already exists as a play-state toggle the player can simply leave on.",
+  "enforced-order: already has strikeDamage — not overwriting",
+  "entitys-strike: already has grantedStrikes — not overwriting",
+  "eternal-blessing: mode \"feat-eternal-blessing\" already exists",
+  "eternal-blessing: a MISS whose fix says nothing",
+  "expert-fireworks-crafter: already has resourceMaxSet — not overwriting",
+  "exude-demonic-corruption: mode \"exude-demonic-corruption\" already exists",
+  "exude-demonic-corruption: a MISS whose fix says nothing",
+  "eyes-that-see-eternity: mode \"eyes-that-see-eternity\" already exists",
+  "eyes-that-see-eternity: a MISS whose fix says nothing",
+  "false-priest-form: already has innateSpells — not overwriting",
+  "fast-swimmer: already has speeds — not overwriting",
+  "fey-cantrips: already has innateSpells — not overwriting",
+  "flamboyant-athlete: mode \"flamboyant-athlete\" already exists",
+  "flamboyant-athlete: a MISS whose fix says nothing",
+  "force-of-nature: mode \"force-of-nature\" already exists",
+  "force-of-nature: a MISS whose fix says nothing",
+  "ghost-wrangler: mode \"ghost-wrangler\" already exists",
+  "ghost-wrangler: a MISS whose fix says nothing",
+  "giants-lunge: mode \"giants-lunge\" already exists",
+  "giants-lunge: a MISS whose fix says nothing",
+  "giants-stature: mode \"giants-stature\" already exists",
+  "giants-stature: a MISS whose fix says nothing",
+  "gnoll-weapon-practicality: already has critSpec — not overwriting",
+  "golden-body: mode \"golden-body\" already exists",
+  "grand-medics-mask: mode \"grand-medics-mask\" already exists",
+  "grand-medics-mask: a MISS whose fix says nothing",
+  "grandmaster-qi-spells: already has effectChoices — not overwriting",
+  "grasping-reach: mode \"grasping-reach\" already exists",
+  "grasping-reach: a MISS whose fix says nothing",
+  "grave-sight: already has senses — not overwriting",
+  "greater-transformation: mode \"greater-transformation\" already exists",
+  "greater-transformation: a MISS whose fix says nothing",
+  "grippli-weapon-innovator: already has critSpec — not overwriting",
+  "guiding-luck: already has usesUpgrade — not overwriting",
+  "halo: already has innateSpells — not overwriting",
+  "hand-of-the-lich: already has grantedStrikes — not overwriting",
+  "hardwood-armor: mode \"hardwood-armor\" already exists",
+  "hardwood-armor: a MISS whose fix says nothing",
+  "heavens-thunder: mode \"heavens-thunder\" already exists",
+  "heavens-thunder: a MISS whose fix says nothing",
+  "hefty-hauler: already has bulkLimitBonus — not overwriting",
+  "hobgoblin-weapon-discipline: already has critSpec — not overwriting",
+  "house-of-imaginary-walls: already has focusSpells — not overwriting",
+  "immortal-bear: mode \"immortal-bear\" already exists",
+  "immortal-bear: a MISS whose fix says nothing",
+  "implausible-purchase: already has limitedUses — not overwriting",
+  "implausible-purchase-rogue: already has limitedUses — not overwriting",
+  "infused-with-belkzens-might: mode \"infused-with-belkzens-might\" already exists",
+  "infused-with-belkzens-might: a MISS whose fix says nothing",
   "athletes-ally: actionCost is 1 action with a 'wielding your warshard weapon' requirement and a Mythic Point cost — an activity resolved at the table, not a standing check change.",
   "attuned-electroreceptors: already has senses — not overwriting",
   "avenger-of-wrath: already has grantsFeats — not overwriting",
   "axe-climber: mode \"axe-climber\" already exists",
+  "axe-climber: a MISS whose fix says nothing",
   "battle-scars: mode \"battle-scars\" already exists",
+  "battle-scars: a MISS whose fix says nothing",
+  "intercepting-hand: already has unarmedTraits — not overwriting",
+  "kobold-weapon-innovator: already has critSpec — not overwriting",
+  "land-legs: already has landSpeedBonus — not overwriting",
+  "lich-dedication: already has immunities — not overwriting",
+  "magical-crafting: Overturned: this is Craft-downtime bookkeeping the app deliberately does not model, and the sibling record with the identical clause — alchemical-crafting, 'four common 1st-level alchemical formulas to your formula book' — was already ruled NEEDS_NOTHING in judge-0 for exactly this reason (no formula book exists; only free-text craftRequirements). The snare lane exists solely because prepared snares have a play consequence.",
+  "magical-edification: already has innateSpells — not overwriting",
+  "master-cathartic-spellcasting: already has spellcastingGrant — not overwriting",
+  "master-qi-spells: already has effectChoices — not overwriting",
+  "master-red-mantis-magic: already has spellcastingGrant — not overwriting",
+  "master-snowcasting: already has spellcastingGrant — not overwriting",
+  "master-summoning-spellcasting: already has grantsFeats — not overwriting",
   "bond-companion: The designated companion is ANOTHER player character and Fortify Focus spends your action to refill THEIR Focus Point - nothing on your own sheet changes.",
   "bonded-focus: False premise: refocusRestore ('all') is a real Feat field (types.ts:733, applied build.ts:2588, rendered SpellsTab ~992) and core.json already carries refocusRestore:\"all\" on this record.",
   "brain-drain: already has limitedUses — not overwriting",
@@ -37,6 +101,7 @@
   "cackle: already has focusSpells — not overwriting",
   "calm-and-centered: The app never decrements frightened/stupefied itself - condition values are typed in by the player and restConditions only steps Doomed/Drained - so there is no computed value this changes.",
   "canopy-predator: mode \"canopy-predator\" already exists",
+  "canopy-predator: a MISS whose fix says nothing",
   "celestial-strikes: Adding the holy and magical traits changes no number on the player's sheet - both matter only when resolving against a creature's weaknesses/resistances, on the GM's side of the screen.",
   "ceremony-of-fortification: A one-Strike, one-round resistance triggered by spending another action - transient and table-resolved, exactly what this judge ruled NEEDS_NOTHING for body-barrier.",
   "ceremony-of-growth: already has sizeOverride — not overwriting",
@@ -50,12 +115,18 @@
   "crunch: already has grantedStrikes — not overwriting",
   "crystal-keeper-dedication: already has resistances — not overwriting",
   "cyclonic-ascent: mode \"cyclonic-ascent\" already exists",
+  "cyclonic-ascent: a MISS whose fix says nothing",
   "deadeye: mode \"deadeye\" already exists",
+  "deadeye: a MISS whose fix says nothing",
   "deadly-butterfly: already has critSpec — not overwriting",
   "defiant-banner: mode \"defiant-banner\" already exists",
+  "defiant-banner: a MISS whose fix says nothing",
   "deitys-protection: mode \"deitys-protection\" already exists",
+  "deitys-protection: a MISS whose fix says nothing",
   "dire-form: mode \"dire-form\" already exists",
-  "dire-growth: mode \"dire-growth\" already exists"
+  "dire-form: a MISS whose fix says nothing",
+  "dire-growth: mode \"dire-growth\" already exists",
+  "dire-growth: a MISS whose fix says nothing"
  ],
  "engineWork": [
   {
@@ -174,6 +245,166 @@
    "reason": "Constant enlarge is a real permanent package (Large size, +5 feet reach, +2 status to melee damage, clumsy 1 until the Enhancement removes it) and none of it reaches the sheet — the id appears only as a label in the automaton core-feat option list. The feat fields sizeOverride/reach in build.ts would carry the size and reach half, but the melee-damage bonus and the clumsy have no lane."
   },
   {
+   "id": "enticing-dwelling",
+   "name": "Enticing Dwelling",
+   "reason": "Doubles the spirit wisps your spirit dwelling gains each day (1 -> 2). Wisps are a per-day counter other exorcist feats spend; nothing in the app tracks them. The right home is a feat-gated counter in CLASS_RESOURCES (src/rules/classResources.ts, the `feat:` form used for Rage/Panache), which no audit field can write."
+  },
+  {
+   "id": "exemplar-expertise",
+   "name": "Exemplar Expertise",
+   "reason": "Raises your exemplar class DC proficiency to expert. Feat-granted class DCs exist only as `classDcGrant` (a flat TRAINED secondary DC in build.ts ~2677) and no lane raises that rank — the same gap already recorded for alchemical-power."
+  },
+  {
+   "id": "exorcist-dedication",
+   "name": "Exorcist Dedication",
+   "reason": "The dedication creates a spirit dwelling that gains a spirit wisp every day (and can be re-primed with a 10-minute ritual); wisps are the currency every other exorcist feat spends. Nothing tracks them. A feat-gated counter in CLASS_RESOURCES (src/rules/classResources.ts) is the right home and no audit field can write it."
+  },
+  {
+   "id": "expert-cathartic-spellcasting",
+   "name": "Expert Cathartic Spellcasting",
+   "reason": "The expert tier of the Cathartic Mage's spontaneous casting (ranks 4-6 slots). cathartic-mage-dedication is NOT in CASTER_ARCHETYPES (src/rules/casterArchetypes.ts), so neither the basic nor the expert feat grants a slot — the whole archetype's casting is inert. Registering the dedication is engine work no audit field can express."
+  },
+  {
+   "id": "expert-kinetic-control",
+   "name": "Expert Kinetic Control",
+   "reason": "Expert in kineticist class DC and impulse attack rolls for the archetype. Feat-granted class DCs are flat TRAINED entries (classDcGrant, build.ts ~2677) with no rank ladder, and impulse attack rolls have no feat-driven track at all — the same lane gap recorded for alchemical-power."
+  },
+  {
+   "id": "expert-red-mantis-magic",
+   "name": "Expert Red Mantis Magic",
+   "reason": "The expert tier of Red Mantis divine casting (ranks 4-6 slots). red-mantis-assassin-dedication is absent from CASTER_ARCHETYPES, and the archetype's feat ids ('basic/expert-red-mantis-magic') do not even match mk()'s basic-/expert-<slug>-spellcasting pattern, so the tier can never be detected. Engine/registry work."
+  },
+  {
+   "id": "expert-scroll-cache",
+   "name": "Expert Scroll Cache",
+   "reason": "Adds a daily temporary scroll of a 3rd-rank spell (4th at 14th, 5th at 16th) that the player PICKS. Nothing offers the pick — basic-scroll-cache was already judged the same way (judge-2) and the scroll cache is unmodelled end to end; effectChoices' spellFilter grants innate casts, not level-scaling temporary scroll items."
+  },
+  {
+   "id": "expert-snowcasting",
+   "name": "Expert Snowcasting",
+   "reason": "The expert tier of the Gelid Shard archetype's spellcasting (the basic tier is the 'snowcaster' feat). No gelid-shard dedication is registered in CASTER_ARCHETYPES and the feat ids do not follow mk()'s basic-/expert-<slug>-spellcasting pattern, so no archetype slots are ever unlocked. Engine/registry work."
+  },
+  {
+   "id": "explosive-savant",
+   "name": "Explosive Savant",
+   "reason": "Two-tier group re-categorisation of proficiency (bombs and martial firearms count as SIMPLE, advanced firearms count as MARTIAL). FEAT_LANE_GRANTS.weaponFamiliarity takes an explicit weapon-id list plus ONE mirrorCategory, and core.json holds 172 bomb ids and 119 firearm ids across both tiers — one entry cannot carry two tiers, and neither can it express 'every weapon in this group'. Needs a group/trait-scoped familiarity rule (e.g. weaponFamiliarity accepting {groups:['bomb','firearm'], category:'martial'} with a per-tier mirrorCategory)."
+  },
+  {
+   "id": "extend-elixir",
+   "name": "Extend Elixir",
+   "reason": "Doubles the duration of every infused elixir with a duration of 1 minute or longer that you drink. Item-driven consumable modes carry a fixed printed `duration` string (core.modes item-* entries) and nothing scales it per-character, so the alchemist's doubled durations never reach the sheet. Needs a duration multiplier on item modes gated on this feat (and the Quick Alchemy 10-minute cap)."
+  },
+  {
+   "id": "extradimensional-stash",
+   "name": "Extradimensional Stash",
+   "reason": "Grants an inherent 5-Bulk extradimensional space that functions as a bag of holding with no Bulk of its own — real carrying capacity the app models for items (itemType 'container' with ignoredBulk, Character.inventory containerInstanceId) but that no feat can confer: there is no grantsItems/container lane anywhere in src/rules. Needs a feat→inventory-container grant."
+  },
+  {
+   "id": "fast-recovery",
+   "name": "Fast Recovery",
+   "reason": "Doubles the Hit Points you regain from resting, and reduces drained by 2 per night instead of 1. rest() in src/rules/play.ts computes `recovered = level * conMod` with no per-feat multiplier, and nothing steps drained down at all, so the app's Rest button gives this character the wrong number. Needs a rest-recovery modifier lane (the disease/poison stage reductions are a GM-run affliction track and can stay prose)."
+  },
+  {
+   "id": "fearsome-fangs",
+   "name": "Fearsome Fangs",
+   "reason": "Upgrades the Ursine Avenger Form strikes (jaws 1d8→1d12, claws 1d6→1d8). The form is modelled as stances['ursine-avenger-form'] with fixed strike dice; StanceDef has senseIfFeat for feat-gated SENSES but no equivalent feat-gated strike-die upgrade, and a feat-side grantedStrikes would create duplicate attacks rather than replace the form's. Needs a strikeIfFeat/die-upgrade gate on StanceDef."
+  },
+  {
+   "id": "ferrousoul",
+   "name": "Ferrousoul",
+   "reason": "The base Fist upgrade (die d6, loses nonlethal, gains modular B/P/S) is hardcoded in derive.ts as `fistDieUpgraded` = powerful-fist / warrior-automaton / warrior-jotunborn only; no data field upgrades the built-in Fist profile, and grantedStrikes would add a SECOND fist row instead of replacing it (an over-grant)."
+  },
+  {
+   "id": "fey-caller",
+   "name": "Fey Caller",
+   "reason": "Adds Illusory Disguise, Illusory Object and Illusory Scene to the druid's spell list as primal spells — a real expansion of what the player may prepare, but the spell picker offers only the tradition list and no field adds specific spells to it."
+  },
+  {
+   "id": "flexible-spellcaster-dedication",
+   "name": "Flexible Spellcaster Dedication",
+   "reason": "The record's text grants an extra cantrip per day (four instead of three, five instead of four at 4th level) and nothing delivers it: cantripsKnown() is a hardcoded per-class number and spellSlotBonus explicitly skips rank 0 (build.ts `r > 0`)."
+  },
+  {
+   "id": "forgotten-presence",
+   "name": "Forgotten Presence",
+   "reason": "The Recall Knowledge penalty falls on other creatures, but \"Add Rewrite Memory to your spell list as a primal spell\" is a real player-facing grant: without it the primal-filtered spell picker will never offer Rewrite Memory. No field adds a single spell to a character's spell list/tradition (innateSpells would wrongly give it as a free innate casting), and the two other feats with the same wording (tupilaq-carver, dragon-arcana) carry no field either."
+  },
+  {
+   "id": "frozen-breadth",
+   "name": "Frozen Breadth",
+   "reason": "Really grants the player extra repertoire spells and extra spell slots. spellSlotBonus supports {perRank, exceptHighest, entryId} (occult-breadth uses exactly that shape for the bard archetype), but the gelid shard archetype has no spellcasting entry with slots to attach to — first-frost supplies only spellcastingGrant + at-will innateSpells, and snowcaster/expert-snowcasting/master-snowcasting carry no fields at all. Writing spellSlotBonus with no entryId would over-grant slots to the character's main caster. Needs the gelid-shard slot/repertoire entry first, plus a repertoire-size increase (no field exists for spells known)."
+  },
+  {
+   "id": "ghost-path-epiphany",
+   "name": "Ghost-path Epiphany",
+   "reason": "Grants the unholy sanctification trait and knowledge of two rituals (Call Spirit, Commune). No field grants a FIXED sanctification (only `choice` flags where the player picks holy/unholy) and nothing grants known rituals — innateSpells would wrongly make them per-day innate casts. The secondary-caster substitution is table-resolved."
+  },
+  {
+   "id": "gifted-power",
+   "name": "Gifted Power",
+   "reason": "A real extra spell slot at your HIGHEST rank, usable only for mystery-granted spells. spellSlotBonus can only say perRank (every rank — a huge over-grant) or byRank with a fixed rank number, and the highest rank moves with level; there is no 'highest rank only' form and no way to restrict the slot's contents."
+  },
+  {
+   "id": "gnome-polyglot",
+   "name": "Gnome Polyglot",
+   "reason": "Learn three new languages. The sheet tracks languages (character.languages, its own rail card) but NO feat field grants them — the only addedLanguages field is on the per-character override record, not on feats, and even core Multilingual is unmodelled. The lane itself is missing."
+  },
+  {
+   "id": "grand-scroll-esoterica",
+   "name": "Grand Scroll Esoterica",
+   "reason": "Adds a daily temporary scroll with a 6th-rank spell (7th at 20th level) — a real per-day resource whose spell the player PICKS. Neither Scroll Esoterica nor Elaborate Scroll Esoterica carries any field, and there is no lane for daily temporary items: effectChoices+spellFilter only grants innate or focus spells, which would be an over-grant (unlimited-target casting rather than a one-use scroll)."
+  },
+  {
+   "id": "greater-armament",
+   "name": "Greater Armament",
+   "reason": "Adds eight property runes (Brilliant, Corrosive, Flaming, Frost, Holy, Shock, Thundering, Unholy) to the daily rune pick that Harbinger's Armament already implements as a `choice` with flag harbingerRune and five options. The player's daily menu stays at five. No field lets one feat EXPAND another record's choice options; adding a second choice here would grant a second rune, an over-grant."
+  },
+  {
+   "id": "guerrilla-weaponry",
+   "name": "Guerrilla Weaponry",
+   "reason": "In your hands a blowgun's base damage becomes 1d4 and it gains deadly d4 — a change to a wielded weapon's own damage die and traits on your Strikes. strikeDamage only ADDS damage (StrikeDamageRider) and there is no per-character weapon-statistics override lane. (The Guerrilla Assault action half needs nothing.)"
+  },
+  {
+   "id": "hellknight-errant",
+   "name": "Hellknight-Errant",
+   "reason": "Raises your mental resistance to 5 + your number of Hellknight archetype feats — a Defenses-card number. It cannot be written today: hellknight-dedication already stores resistances [{\"type\":\"mental\",\"value\":\"@actor.flags.system.hellknightArchetype.featCount + 1\"}], and the formula substituter in src/rules/derive.ts:604-627 supports only @actor.level, ability mods and Speeds, refusing any other @actor token — so the dedication's resistance is already dead and a copy with +5 would be too. A flat number would misstate it. Needs an archetype-feat-count token in the resistance formula evaluator. (The Warding Shift action half needs nothing.)"
+  },
+  {
+   "id": "herbal-forager",
+   "name": "Herbal Forager",
+   "reason": "Each day at daily preparations you get one temporary alchemical item with the healing trait, chosen from formulas you know — a real daily pick the builder never offers. effectChoices can't express it (it needs fixed options or a spellFilter; there is no item filter), and advancedAlchemy is the alchemist's Advanced Alchemy budget (src/rules/build.ts:2601-2614 → AlchemyPanel), which would hand a centaur any formula rather than one healing item. Needs a daily-prep temporary-item lane restricted by trait and count."
+  },
+  {
+   "id": "hilt-hammer",
+   "name": "Hilt Hammer",
+   "reason": "Every melee weapon you wield gains the versatile B trait (a real change to your Strikes' damage options), and no field can add a trait to wielded weapons — the strikes engine reads traits off the item record only."
+  },
+  {
+   "id": "hurl-at-the-horizon",
+   "name": "Hurl at the Horizon",
+   "reason": "The imbued ikon's immanence gives your weapon the thrown 15 ft trait (or +10 ft thrown range) — a real change to that weapon's Strikes. No field adds a trait to a weapon, and ikon imbue/immanence state is unmodelled (only mated-birds-in-paired-flight has any ikon field)."
+  },
+  {
+   "id": "implement-initiate",
+   "name": "Implement Initiate",
+   "reason": "'You gain your implement's initiate benefit.' Thaumaturge Dedication already records the pick (choice flag dedicationImplement), and the benefits exist as classFeatures `initiate-benefit-<implement>`, but build.ts only pushes them inside `if (ownsClass('thaumaturge'))` (build.ts ~3043), so an archetype character gets nothing. No data field points a feat at a classFeature."
+  },
+  {
+   "id": "improved-elemental-blast",
+   "name": "Improved Elemental Blast",
+   "reason": "'The damage of your elemental blast increases by one die' (repeatable; maxTakable 3). deriveBlastStrikes (derive.ts ~1495) computes dice purely from character level — `1 + [5,9,13,17]` — so an archetype kineticist's blast ignores this feat entirely; no field expresses a damage-die count."
+  },
+  {
+   "id": "incredible-investiture",
+   "name": "Incredible Investiture",
+   "reason": "The invested-item cap is hard-coded at 10 in src/sheet/InventoryTab.tsx (INVESTED_LIMIT, enforced on the Invest button, on drag-to-invest and in the x/10 badge), so a character with this feat literally cannot invest their 11th and 12th item. No legal field raises the cap."
+  },
+  {
+   "id": "instinct-ability",
+   "name": "Instinct Ability",
+   "reason": "Gives an archetype barbarian the instinct ability of the instinct chosen at Barbarian Dedication (Draconic Rage's damage, Animal Instinct's unarmed Strike, Giant Instinct's larger weapon, and so on). Barbarian Dedication records the pick in the `barbarianInstinct` choice flag, but nothing in src/ ever reads it — rageStrikeRider in src/rules/derive.ts only honours subclassId for a real barbarian and hands an archetype a flat 2 damage — so the feat delivers nothing and no legal field can express instinct abilities."
+  },
+  {
    "id": "aura-enhancement",
    "name": "Aura Enhancement",
    "reason": "Adds two named spells (Benediction, Malediction) to the pool you can prepare in your divine font slots. No allowed field adds specific spells to a prepared pool, and the Battle Harbinger font is not built at all — battle-harbinger-dedication is absent from CASTER_ARCHETYPES and its registry entries only grant Toughness plus a skill."
@@ -202,6 +433,66 @@
    "id": "basic-scroll-cache",
    "name": "Basic Scroll Cache",
    "reason": "A daily-preparations PICK (one common 1st-rank spell, plus a 2nd-rank one at 8th level) that becomes a temporary scroll; nothing offers it. effectChoices' spellFilter can only grant a spell as innate or focus, which would misrepresent it — a scroll is read at the scroll's own rank/DC and works for non-casters — so this needs a temporary-consumable daily-choice lane."
+  },
+  {
+   "id": "insulated-poppet",
+   "name": "Insulated Poppet",
+   "reason": "The feat REMOVES the electricity/cold weakness the tsukumogami-poppet heritage grants through its poppet-material effectChoice. Every IWR field is additive (weaknesses only add entries); there is no lane for a feat that cancels a weakness granted by a heritage, so the sheet keeps showing weakness 5."
+  },
+  {
+   "id": "intense-implement",
+   "name": "Intense Implement",
+   "reason": "Grants the ADEPT benefit of the thaumaturge's THIRD implement. build.ts's implement pipeline (~3040-3061) only ever assigns adept to the first two implements ('never the third implement'), and no feat field can push an implement benefit, so the third implement's adept benefit never appears."
+  },
+  {
+   "id": "invoke-offense",
+   "name": "Invoke Offense",
+   "reason": "Grants a real unarmed attack (1d8 spirit, brawling, agile/finesse/magical, gaining striking-rune dice at 5/12/20) but ONLY for the duration of Enter Spirit Trance. grantedStrikes is permanent (build.ts collectGrantedNaturals) and ModeDef carries no grantedStrikes field, so there is no way to express a Strike that exists only while a mode/trance is on without over-granting it permanently."
+  },
+  {
+   "id": "iron-fists",
+   "name": "Iron Fists",
+   "reason": "Your fist unarmed attacks permanently lose nonlethal and gain shove; the derived baseline Fist still shows nonlethal and no shove. Same modelling petrified-skin already uses (a granted brawling natural attack with the printed traits)."
+  },
+  {
+   "id": "iruxi-unarmed-cunning",
+   "name": "Iruxi Unarmed Cunning",
+   "reason": "Grants weapon critical specialization with your claw and lizardfolk-feat unarmed attacks. critSpec/critSpecWeapons can only narrow by weapon group, trait, or base id — granted naturals get base 'natural:<n>' (derive.ts ~1671) and share the brawling group with gauntlets/fists/saps, so the only expressible narrowing would over-grant crit spec to other brawling weapons. No lane can name 'unarmed attacks granted by lizardfolk records'."
+  },
+  {
+   "id": "late-awakener",
+   "name": "Late Awakener",
+   "reason": "\"You gain all the mechanical benefits of the awakened animal heritage you selected at 1st level\" - a real grant (that heritage's speeds, unarmed attack, senses, plus qualifying for heritage-gated feats) for a character who took a versatile heritage. No listed field can apply a second heritage's mechanics or unlock its feat prerequisites."
+  },
+  {
+   "id": "lightning-rings-intervention",
+   "name": "Lightning Rings' Intervention",
+   "reason": "'Your familiar gains the Lightning Needles ability' is a concrete grant to your familiar — the ability record lightning-needles exists in core.json's familiarAbilities, but no registry entry attaches it, so the familiar block never shows it."
+  },
+  {
+   "id": "lightning-rings-overcharge",
+   "name": "Lightning Rings' Overcharge",
+   "reason": "'Your familiar gains the Lightning Armillary ability' — the lightning-armillary familiar ability exists in core.json but nothing attaches it to the familiar."
+  },
+  {
+   "id": "living-rune",
+   "name": "Living Rune",
+   "reason": "The feat gives the PLAYER a real, permanent rune slot on their own body that holds one armor property rune and applies its effects to them; the app only etches property runes onto armor items in inventory, so there is no lane for a body-worn property rune slot (and no way to pick which rune goes in it)."
+  },
+  {
+   "id": "martial-artist-dedication",
+   "name": "Martial Artist Dedication",
+   "reason": "'The damage die for your fist unarmed attacks becomes 1d6 instead of 1d4' is a real Strike change and nothing delivers it. The lane is a HARD-CODED list: derive.ts ~1692 `fistDieUpgraded = ownedFeatureIds(...).has('powerful-fist') || heritage warrior-automaton/warrior-jotunborn`. Martial Artist must be added there — but unlike Powerful Fist it does NOT drop the nonlethal trait (it only removes the -2 lethal-attack penalty), so the existing branch can't be reused verbatim. grantedStrikes is wrong here: it would add a SECOND 'Fist' row beside the d4 baseline rather than upgrading it."
+  },
+  {
+   "id": "master-scroll-cache",
+   "name": "Master Scroll Cache",
+   "reason": "'Add a single scroll with a 6th-rank spell (7th at 20th level)' to your daily scrolls is a real free consumable the player picks each day, and no lane exists: nothing in src/rules references scroll caches, and Basic/Expert Scroll Cache are equally inert. What is missing is a daily-preparations GRANTED-CONSUMABLE lane (a scroll of a chosen spell at a fixed rank, refreshed daily) — dailyChoices.ts only records a pick, it cannot mint an item."
+  },
+  {
+   "id": "master-summoner",
+   "name": "Master Summoner",
+   "reason": "'During daily preparations, designate one spell slot to become TWO summoning slots of the same rank' is a real net gain of a spell slot, chosen daily and restricted to summoning/incarnate spells. No lane: spellSlotBonus can only ADD slots (perRank/byRank) with no rank choice, no slot consumed, and no restriction on what can be prepared in them; dailyChoices.ts records a morning pick but cannot alter the slot table. Needs a restricted-slot / slot-conversion lane."
   },
   {
    "id": "beast-of-burden",

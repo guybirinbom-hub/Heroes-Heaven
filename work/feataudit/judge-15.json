@@ -1,0 +1,325 @@
+{
+ "records": [
+  {
+   "id": "flying-kick",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Two-action attack activity (jump, then a Strike) resolved entirely at the table; no persistent sheet change."
+  },
+  {
+   "id": "flying-tackle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Movement-plus-Trip activity; the degree-of-success upgrade is resolved at the table against a target."
+  },
+  {
+   "id": "focus-ally",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction that lets an adjacent ALLY reroll a save; changes only the ally's roll."
+  },
+  {
+   "id": "focused-cat-nap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you Refocus during the Cat Nap rest activity; rest/exploration timing the app does not model, and the focus points recovered are unchanged."
+  },
+  {
+   "id": "focused-fascination",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adjusts the degree of success another activity (Fascinating Performance) needs against a target; resolved at the table."
+  },
+  {
+   "id": "focused-fire",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "One-action Launch activity with an extra damage die on that roll; resolved at the table."
+  },
+  {
+   "id": "focused-juggler",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Free action that extends Juggling and raises the number of items juggled; a table-tracked activity, not a sheet statistic."
+  },
+  {
+   "id": "fog-cloak",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a conditional hidden state while concealed by mist or fog; visibility states are adjudicated at the table."
+  },
+  {
+   "id": "foil-senses",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Declares that Avoid Notice/Hide/Sneak always count as taking precautions against special senses; no roll or statistic changes."
+  },
+  {
+   "id": "folk-dowsing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The GM rolls secret Survival checks while you Search with a dowsing rod; entirely GM-adjudicated exploration."
+  },
+  {
+   "id": "folklorist-dedication",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants only the Spin Tale action, performed at the table; no proficiency, statistic, or choice is conferred."
+  },
+  {
+   "id": "follow-the-threads-of-fate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An ikon whose only benefit is the Unravel the Future transcendence activity (a fortune reroll used at the table)."
+  },
+  {
+   "id": "follow-up-assault",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "One-action Strike with backswing/forceful added to that single Strike; resolved at the table."
+  },
+  {
+   "id": "follow-up-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "One-action extra unarmed Strike after a miss, at the same MAP; resolved at the table."
+  },
+  {
+   "id": "following-smite",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Forces a save and applies damage, prone, and clumsy to the TARGET."
+  },
+  {
+   "id": "font-of-knowledge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extra information on successful Recall Knowledge checks, explicitly at the GM's discretion."
+  },
+  {
+   "id": "fools-fleeting-plan",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Actions gained from being quickened do not trigger reactions; a table-side reaction-trigger rule."
+  },
+  {
+   "id": "for-the-fallen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "One-action Step-then-Strike activity; resolved at the table."
+  },
+  {
+   "id": "force-of-nature",
+   "verdict": "MISS",
+   "reason": "Grants fast healing 5 whenever you are in hybrid or animal shape — a real, standing self-benefit that nothing delivers. No fast-healing field exists, but the werecreature shape-gated pattern is already a mode (dire-form, dire-growth), so it belongs there with the fast healing and the silver-weapon suppression in the note.",
+   "fix": {
+    "mode": {
+     "id": "force-of-nature",
+     "name": "Force of Nature (hybrid or animal shape)",
+     "feats": [
+      "force-of-nature"
+     ],
+     "duration": "while you are in your hybrid or animal shape",
+     "modifiers": [],
+     "note": "Fast healing 5. If you take damage from a silver weapon, the fast healing deactivates until the end of your next turn."
+    }
+   }
+  },
+  {
+   "id": "forceful-push",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rewrites the effect of a spell you cast against a single target; the push lands on the target's side."
+  },
+  {
+   "id": "forceful-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ranged Strike activity whose extra effects (push, off-guard) apply to the target."
+  },
+  {
+   "id": "forensic-countermeasures",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-minute downtime tampering activity opposed by other creatures' checks; no sheet statistic."
+  },
+  {
+   "id": "foresee-danger",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction that redirects one incoming attack roll to your Perception DC; a per-roll table resolution, not a standing statistic."
+  },
+  {
+   "id": "forest-passage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignores difficult terrain caused by plants and fungi; terrain and movement cost are tracked at the table, not on the sheet."
+  },
+  {
+   "id": "forest-stealth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "One-action Take Cover then Hide activity; resolved at the table."
+  },
+  {
+   "id": "forgotten-presence",
+   "verdict": "MISS",
+   "reason": "The Recall Knowledge penalty falls on other creatures, but \"Add Rewrite Memory to your spell list as a primal spell\" is a real player-facing grant: without it the primal-filtered spell picker will never offer Rewrite Memory. No field adds a single spell to a character's spell list/tradition (innateSpells would wrongly give it as a free innate casting), and the two other feats with the same wording (tupilaq-carver, dragon-arcana) carry no field either.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "form-control",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spellshape action that changes the rank and duration of the untamed form you cast next; resolved when the spell is cast at the table."
+  },
+  {
+   "id": "form-lock",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Athletics counteract attempt against a polymorph effect on a creature you have grabbed; entirely target-side."
+  },
+  {
+   "id": "form-retention",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Alters how a battle-form polymorph spell is prepared and how long it lasts; a preparation/duration ruling handled at the table."
+  },
+  {
+   "id": "formidable-breath",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Upgrades the area and damage dice of the Breath of the Dragon action. That feat carries no mechanical field in core.json (it is a plain 2-action record), so the area and dice are read off the text and rolled at the table; there is nothing on the sheet to be wrong."
+  },
+  {
+   "id": "fortified-mind",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Offers a check to avoid gaining fascinated or stupefied when it would be applied; a per-instance roll at the table (the printed DC is even missing from the record)."
+  },
+  {
+   "id": "fortuitous-shift",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lowers the flat-check DC of the Unexpected Shift reaction and drops its dazzled rider; both are resolved when that reaction is used at the table."
+  },
+  {
+   "id": "fortunate-blow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a reroll to the next creature OTHER THAN YOU that attacks the target; changes only an ally's roll."
+  },
+  {
+   "id": "fortunate-relief",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A fortune reroll on a counteract check made when you cast a healing spell; a per-roll table resolution, not a statistic."
+  },
+  {
+   "id": "four-winds",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Impulse that moves up to four willing creatures; changes only the targets' positions."
+  },
+  {
+   "id": "fracture-time-flow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Riders on a critical hit force the TARGET to save and become slowed or stunned."
+  },
+  {
+   "id": "fracture-timeflow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same effect as the archetype twin: a critical hit forces the TARGET to save and become slowed or stunned."
+  },
+  {
+   "id": "friendly-fling",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Throws a willing ally to another square; affects only the ally's position, damage, and reaction."
+  },
+  {
+   "id": "friendly-nudge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Shove an ally with an Athletics check; the outcome lands on the ally."
+  },
+  {
+   "id": "friendly-toss",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Throws an ally across the battlefield; affects only the ally's position and reaction."
+  },
+  {
+   "id": "frighten-undead",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Substitutes Religion for Intimidation when you Demoralize an undead and drops two traits from that action; a per-use action choice resolved at the table, not a bonus."
+  },
+  {
+   "id": "frightening-appearance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a Demoralize attempt against each nearby opponent when you make a Startling Appearance; entirely target-side."
+  },
+  {
+   "id": "frightful-condemnation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Applies frightened 1 or 2 to the condemned foe; target-side condition."
+  },
+  {
+   "id": "frog-geyser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Line effect forcing Fortitude saves; push and prone land on the targets."
+  },
+  {
+   "id": "frozen-breadth",
+   "verdict": "MISS",
+   "reason": "Really grants the player extra repertoire spells and extra spell slots. spellSlotBonus supports {perRank, exceptHighest, entryId} (occult-breadth uses exactly that shape for the bard archetype), but the gelid shard archetype has no spellcasting entry with slots to attach to — first-frost supplies only spellcastingGrant + at-will innateSpells, and snowcaster/expert-snowcasting/master-snowcasting carry no fields at all. Writing spellSlotBonus with no entryId would over-grant slots to the character's main caster. Needs the gelid-shard slot/repertoire entry first, plus a repertoire-size increase (no field exists for spells known).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "full-automation",
+   "verdict": "MISS",
+   "reason": "Level-20 capstone that makes you permanently quickened — a standing extra action every turn, restricted by innovation type. No field or registry grants a persistent condition, and a mode would misrepresent a permanent, non-toggled benefit.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "furious-focus",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes how one Vicious Swing counts toward the multiple attack penalty; MAP is tracked at the table, not on the sheet."
+  },
+  {
+   "id": "furious-grab",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Applies the grabbed condition to the foe you just hit; entirely target-side."
+  },
+  {
+   "id": "furious-sprint",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Multi-Stride movement activity resolved at the table; no Speed value changes."
+  },
+  {
+   "id": "furious-vengeance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction granting one melee Strike; resolved at the table."
+  },
+  {
+   "id": "fused-polearm",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A daily-preparation item fusion: the fused weapon uses the higher fundamental runes of the two items, which the player represents directly by editing the item's runes in inventory."
+  },
+  {
+   "id": "gallop-across-shadow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets your MOUNT treat darkness as solid ground; it changes only the companion's movement options and is GM-adjudicated (no speed value, sense, or IWR is granted)."
+  },
+  {
+   "id": "gang-up",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relaxes the flanking positioning requirement; flanking is determined by table positioning, not by any sheet statistic."
+  },
+  {
+   "id": "gear-gnash",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Makes your snares harder for other creatures to Disable and damages them on a failure; entirely on the other creature's side."
+  },
+  {
+   "id": "generals-gambit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Three-action Stride plus Create a Diversion activity; the alternate skill and the fascinated rider are resolved at the table against an enemy."
+  },
+  {
+   "id": "gentle-death-and-rebirth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-year narrative resurrection after you die; no living-character statistic changes."
+  },
+  {
+   "id": "get-behind-me",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds forced movement of a willing ally to the Intercept Attack reaction; changes only the ally's position."
+  },
+  {
+   "id": "get-used-to-disappointment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Free action to Demoralize an opponent, with temporary immunity tracked at the table; target-side."
+  },
+  {
+   "id": "ghost-eater-dedication",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Makes your Strikes magical and ghost touch against incorporeal creatures; this only changes how your damage interacts with a target's resistances, which the app resolves on the target's side, not on your sheet."
+  },
+  {
+   "id": "ghost-hunter",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the Ghost Eater benefit: magical/ghost touch Strikes against incorporeal creatures, which only affects how the target's resistances apply."
+  }
+ ]
+}

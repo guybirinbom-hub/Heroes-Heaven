@@ -1,0 +1,425 @@
+{
+ "rulings": [
+  {
+   "id": "ghost-path-epiphany",
+   "upheld": true,
+   "why": "Verified: rituals reach the sheet only through Overrides -> Add spell (SpellsTab.tsx:604) and no feat field grants a known ritual; sanctification exists only as an effectChoices options pick (qi-zhong), which is illegal with one fixed value. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "ghost-wrangler",
+   "upheld": true,
+   "why": "Upheld: a timed self-state on YOUR fists is what the mode lane carries; 104 of the 146 records in toggle-modes.json are note-only, so the shape is precedented.",
+   "correction": {}
+  },
+  {
+   "id": "ghostly-grasp",
+   "upheld": true,
+   "why": "Upheld and VERIFIED against the source: the AoN mirror (rules-1695, Book of the Dead p.44) gives Advanced Undead Benefits as darkvision, poison resistance half level, +2 vs disease/poison and +1 vs paralysis/sleep - the judge quoted it exactly, and core.json ships the rules record as a bare stub with no text.",
+   "correction": {}
+  },
+  {
+   "id": "ghostly-grasp-ghost",
+   "upheld": true,
+   "why": "Same verified Advanced Undead Benefits grant as ghostly-grasp; both ids exist as separate takeable records in core.feats, so both need the fields.",
+   "correction": {}
+  },
+  {
+   "id": "giants-lunge",
+   "upheld": true,
+   "why": "Upheld: the reach field exists (jotuns-heart, bound-in-ice) but is UNCONDITIONAL, so using it would give 10-ft reach outside rage - the judge correctly refused the over-grant and used the mode lane.",
+   "correction": {}
+  },
+  {
+   "id": "giants-stature",
+   "upheld": true,
+   "why": "Upheld: sizeOverride and reach both exist but are unconditional; the grant lasts only while raging, so the mode lane is the only non-over-granting expression.",
+   "correction": {}
+  },
+  {
+   "id": "gifted-power",
+   "upheld": true,
+   "why": "Upheld: I read SpellSlotBonus (types.ts:376-393) - perRank, exceptHighest, byRank, entryId. There is no highest-rank-only form and no content restriction, so any field write would over-grant.",
+   "correction": {}
+  },
+  {
+   "id": "gigantic-megafauna-companion",
+   "upheld": true,
+   "why": "Upheld: CompanionMod (companionGrants.ts:118-147) has no size field; stealthy-companion is the shipped note-only precedent.",
+   "correction": {}
+  },
+  {
+   "id": "gnoll-weapon-practicality",
+   "upheld": true,
+   "why": "Upheld: critSpecWeapons.bases is a declared key (types.ts:320, weaponMatches derive.ts:1243) and I confirmed all five ids in core.items - flail, khopesh, mambele, spear, war-flail. The text names no open-ended sixth clause, so the fix is exact.",
+   "correction": {}
+  },
+  {
+   "id": "gnome-polyglot",
+   "upheld": true,
+   "why": "Upheld, reason corrected: grantsLanguages DOES exist for feats (build.ts:3220) - what is missing is a CHOICE lane. settlement-scholastics carries choice.from.type language and is flagged inert ('a feat-granted language is not added to your Languages yet'), so the wiring genuinely is absent. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "golden-body",
+   "upheld": true,
+   "why": "Upheld but the fix was incomplete: unarmedTraits (types.ts:785, applyUnarmedRiders derive.ts:1692) carries 'your unarmed Strikes gain the deadly d12 trait' - deadly-strikes already ships {add:[deadly-d10]}. Only fast healing has no lane, so that half stays a mode note (gathering-moss precedent).",
+   "correction": {
+    "fix": {
+     "unarmedTraits": {
+      "add": [
+       "deadly-d12"
+      ]
+     },
+     "mode": {
+      "id": "golden-body",
+      "name": "Golden Body",
+      "feats": [
+       "golden-body"
+      ],
+      "duration": "always active",
+      "modifiers": [],
+      "note": "Fast healing 20: you regain 20 HP at the start of each of your turns as long as you have at least 1 HP. Track the healing yourself - the app has no fast-healing lane."
+     }
+    }
+   }
+  },
+  {
+   "id": "grand-medics-mask",
+   "upheld": true,
+   "why": "Upheld: fast healing has no field anywhere, and the shipped gathering-moss mode carries fast healing as a note with the words 'the app has no fast-healing lane'. The temp-HP rider is ally-side and was correctly left in the note only.",
+   "correction": {}
+  },
+  {
+   "id": "grand-scroll-esoterica",
+   "upheld": true,
+   "why": "Upheld: heldSpells (the only stored-spell field) is item-only and rank-keyed, and effectChoices+spellFilter grants innate or focus casting - either would turn a one-use scroll into repeatable casting. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "grandmaster-qi-spells",
+   "upheld": true,
+   "why": "Upheld: advanced-qi-spells ships the identical shape in core.json - effectChoices with spellFilter {traits:[monk], rank, grantAs:focus}. Only the rank differs.",
+   "correction": {}
+  },
+  {
+   "id": "grasping-reach",
+   "upheld": true,
+   "why": "Upheld: the grip is switched with an Interact action, so it is toggleable by definition; the unconditional reach field would grant 10-ft reach with every weapon at all times.",
+   "correction": {}
+  },
+  {
+   "id": "grave-mummification",
+   "upheld": true,
+   "why": "Upheld: same Advanced Undead Benefits, verified word for word against the AoN mirror. The judge correctly omitted the bound-terrain resistance rather than faking it as a damage type.",
+   "correction": {}
+  },
+  {
+   "id": "grave-sight",
+   "upheld": true,
+   "why": "Upheld, fix corrected: the text senses UNDEAD only, and lifesense senses living creatures too - an over-grant. deathsense is already shipped in this exact shape by pact-of-the-death-hunter, and senses accepts free-form names with range/acuity.",
+   "correction": {
+    "fix": {
+     "senses": [
+      {
+       "name": "deathsense",
+       "range": 60,
+       "acuity": "imprecise"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "greater-armament",
+   "upheld": true,
+   "why": "Upheld: dailyChoicesFor keys each daily choice by dailyChoiceKey(rec.id, def.flag) (dailyChoices.ts:73), so a second record carrying the harbingerRune flag produces a SECOND prompt and a second rune. No field can widen another record's option list.",
+   "correction": {}
+  },
+  {
+   "id": "greater-transformation",
+   "upheld": true,
+   "why": "Upheld: oni-form ships in stances.json as a note-only form record with no reach and no duration field, and the unconditional reach field would apply outside the form.",
+   "correction": {}
+  },
+  {
+   "id": "grippli-weapon-innovator",
+   "upheld": true,
+   "why": "Upheld: all five bases verified in core.items (blowgun, hatchet, scythe, shortbow, composite-shortbow). traits:[grippli] matches nothing today, which weaponMatches simply skips - harmless, not an over-grant.",
+   "correction": {}
+  },
+  {
+   "id": "guards-fury",
+   "upheld": true,
+   "why": "Upheld: barbarian-dedication carries the identical entry at situationalBonuses.ts:115 with the same '-1 (penalty)' string, and this feat requires that you CANNOT already Rage, so there is no double-count.",
+   "correction": {}
+  },
+  {
+   "id": "guerrilla-weaponry",
+   "upheld": true,
+   "why": "Upheld: strikeDamage only ADDS damage terms and unarmedTraits is unarmed-only - nothing rewrites a wielded weapon's base damage die or adds deadly to it.",
+   "correction": {}
+  },
+  {
+   "id": "guiding-luck",
+   "upheld": true,
+   "why": "Upheld: halfling-luck carries limitedUses {max:1,per:day} in core.json, and forever-among-humanity ships the same day-form usesUpgrade {max:3,per:day}.",
+   "correction": {}
+  },
+  {
+   "id": "halo",
+   "upheld": true,
+   "why": "Upheld: wildborn-adept ships the identical shape - innateSpells with atWill:true and heightenHalfLevel:true - and spell id light exists in core.spells.",
+   "correction": {}
+  },
+  {
+   "id": "hand-of-the-lich",
+   "upheld": true,
+   "why": "Upheld: phantom-shroud ships the same shape verbatim ({name, die, damageType:void, traits:[agile,finesse,magical,unarmed], group:brawling}) and grantedStrikes accepts both '1d6' and 'd6'. The crit rider was correctly left target-side.",
+   "correction": {}
+  },
+  {
+   "id": "hardwood-armor",
+   "upheld": true,
+   "why": "Upheld: modifiers is deliberately empty - a flat +3 AC would stack on the armor the impulse suppresses. No mode for this feat exists in toggle-modes.json.",
+   "correction": {}
+  },
+  {
+   "id": "harming-hands",
+   "upheld": true,
+   "why": "Upheld, fix corrected: needsEngineWork is wrong. The situational lane takes a spellDamage target (burn-it, dangerous-sorcery, sorcerous-potency) and explicitly supports non-numeric phrase bonuses - situationalBonuses.ts:3049 names 'roll d10s instead of d8s' as its own example of a bonus that never pools.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "spellDamage"
+        }
+       ],
+       "when": "when you cast Harm",
+       "bonus": "roll d10s instead of d8s"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "haughty-obstinacy",
+   "upheld": true,
+   "why": "Upheld: hydra-mutagen and nocturnal-navigator both carry degree-of-success upgrades as phrase bonuses in the situational lane. The Coerce half was correctly left on the other creature's side.",
+   "correction": {}
+  },
+  {
+   "id": "healing-hands",
+   "upheld": true,
+   "why": "Upheld, fix corrected: same as harming-hands - spellDamage covers restored Hit Points too (sorcerous-potency's when clause says 'deals damage or restores Hit Points'), and phrase bonuses are supported.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "spellDamage"
+        }
+       ],
+       "when": "when you cast Heal",
+       "bonus": "roll d10s instead of d8s"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "heavens-thunder",
+   "upheld": true,
+   "why": "Upheld: a one-action self-buff with a stated duration is the mode lane, and the added amount scales per-Strike so it correctly stays a note rather than a static modifier.",
+   "correction": {}
+  },
+  {
+   "id": "hefty-hauler",
+   "upheld": true,
+   "why": "Upheld, fix corrected: the judge said no field touches Bulk limits - bulkLimitBonus EXISTS (types.ts:771) and deriveBulk reads it at derive.ts:1976, with beast-of-burden already shipping bulkLimitBonus:4 for the identical wording. This feat says 2.",
+   "correction": {
+    "fix": {
+     "bulkLimitBonus": 2
+    }
+   }
+  },
+  {
+   "id": "hellknight-errant",
+   "upheld": true,
+   "why": "Upheld: substituteTokens (derive.ts:605-618) supports only @actor.level, ability mods and Speeds, and resolveFormula returns 0 for any surviving @ token - so the archetype-feat-count formula genuinely cannot be written, and a flat number would misstate it.",
+   "correction": {}
+  },
+  {
+   "id": "hellknight-mobility",
+   "upheld": true,
+   "why": "Upheld: derive.ts:1900 hardcodes 'penalty - 5' when the Strength requirement is met, with no feat hook, so the sheet shows the wrong Speed. The situational lane is the only non-over-granting expression.",
+   "correction": {}
+  },
+  {
+   "id": "herbal-forager",
+   "upheld": true,
+   "why": "Upheld: advancedAlchemy is an {items, addInt, atLevel} budget feeding the alchemist AlchemyPanel and would offer any formula; effectChoices needs options or a spellFilter and there is no item filter. No daily temporary-item lane exists.",
+   "correction": {}
+  },
+  {
+   "id": "hilt-hammer",
+   "upheld": true,
+   "why": "Upheld: unarmedTraits is the only trait-adding lane and it is explicitly unarmed-only ('Traits this feat adds to unarmed Strikes', types.ts:781). Nothing adds a trait to a wielded weapon.",
+   "correction": {}
+  },
+  {
+   "id": "hobgoblin-weapon-discipline",
+   "upheld": true,
+   "why": "Upheld: critSpecWeapons.groups is a declared key (types.ts:320) read by weaponMatches, and polearm, spear and sword are all real CRIT_SPEC groups.",
+   "correction": {}
+  },
+  {
+   "id": "house-of-imaginary-walls",
+   "upheld": true,
+   "why": "Upheld: the spell exists in core.spells at rank 0 with the composition trait, and dirge-of-doom, allegro, triple-time and loremasters-etude all carry focusSpells:[<own id>] in core.json. This one carries nothing.",
+   "correction": {}
+  },
+  {
+   "id": "hulking-size",
+   "upheld": true,
+   "why": "Upheld: CompanionMod has no size or reach field, and note-only eidolon entries already ship (airborne-form, vibration-sense). featPickGrants.ts only OFFERS this feat, it does not implement it.",
+   "correction": {}
+  },
+  {
+   "id": "hurl-at-the-horizon",
+   "upheld": true,
+   "why": "Upheld: no field adds a trait to a wielded weapon and no ikon imbue/immanence state is modelled.",
+   "correction": {}
+  },
+  {
+   "id": "immortal-bear",
+   "upheld": true,
+   "why": "Upheld, fix corrected: needsEngineWork is wrong - the mode lane already carries fast healing as a note. gathering-moss ships exactly this case (fast healing triggered by entering a stance) with modifiers:[] and the note 'Track the healing yourself - the app has no fast-healing lane'.",
+   "correction": {
+    "fix": {
+     "mode": {
+      "id": "immortal-bear",
+      "name": "Immortal Bear",
+      "feats": [
+       "immortal-bear"
+      ],
+      "duration": "while in Ursine Avenger Form",
+      "modifiers": [],
+      "note": "Fast healing 5 while you are in Ursine Avenger Form. Track the healing yourself - the app has no fast-healing lane."
+     }
+    }
+   }
+  },
+  {
+   "id": "implausible-purchase",
+   "upheld": true,
+   "why": "Upheld: prescient-planner carries no limitedUses in core.json, so the five-per-day allowance this feat adds has no tracker. limitedUses on the feat itself is right - a usesUpgrade would invent a per-day pool on a feat that has none.",
+   "correction": {}
+  },
+  {
+   "id": "implausible-purchase-rogue",
+   "upheld": true,
+   "why": "Upheld: same bounded five-per-day resource, same reasoning as the investigator record.",
+   "correction": {}
+  },
+  {
+   "id": "implement-initiate",
+   "upheld": true,
+   "why": "Upheld: the initiate benefits exist as classFeatures but build.ts only pushes them inside ownsClass('thaumaturge'), and no data field points a feat at a classFeature.",
+   "correction": {}
+  },
+  {
+   "id": "imposing-destrier",
+   "upheld": true,
+   "why": "Upheld: maturityFloor is a real CompanionMod key and battle-hardened-companion already ships the identical nimble entry. MATURITY_RANK (companions.ts:336) puts nimble and savage on the same rung, so the floor can never downgrade a savage pick.",
+   "correction": {}
+  },
+  {
+   "id": "impressive-mount",
+   "upheld": true,
+   "why": "Upheld: mature is the printed rung and advanced-construct-companion already ships maturityFloor:mature for the same wording.",
+   "correction": {}
+  },
+  {
+   "id": "improved-elemental-blast",
+   "upheld": true,
+   "why": "Upheld: deriveBlastStrikes computes blast dice from character level alone and no field expresses a damage-die count.",
+   "correction": {}
+  },
+  {
+   "id": "improvisational-defender",
+   "upheld": true,
+   "why": "Upheld: resurgent-maelstrom ships the same target and almost the same bonus string ('the -2 item penalty does not apply') at situationalBonuses.ts:2687.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-beastmaster-companion",
+   "upheld": true,
+   "why": "Upheld: the maturity ladder is the engine's model for this wording and kinds:[animal] covers every companion the beastmaster holds, matching 'each of them'.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-companion-druid",
+   "upheld": true,
+   "why": "Upheld: nimble is the correct floor and it only ever raises (companions.ts:346). The Companions tab does let the player set maturity by hand, but the shipped registry now carries six equivalent upgrade feats, so leaving this one out would be the inconsistency.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-companion-ranger",
+   "upheld": true,
+   "why": "Upheld: identical wording and identical reasoning to the druid record.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-construct-companion",
+   "upheld": true,
+   "why": "Upheld: behold-my-creation already ships maturityFloor:nimble for the exact phrase 'becomes an incredible construct companion', one rung above advanced-construct-companion's mature.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-dragon-companion",
+   "upheld": true,
+   "why": "Upheld: the text says nimble or savage outright, so nimble is the printed floor.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-familiar-familiar-master",
+   "upheld": true,
+   "why": "Upheld: enhanced-psychopomp-familiar and adaptive-mask-familiar both ship the abilityBudget + supersedes pattern in FEAT_COMPANION_GRANTS, and featGrantedCompanions dedupes via supersedes so only one familiar card shows.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-investiture",
+   "upheld": true,
+   "why": "Upheld: INVESTED_LIMIT is a bare const 10 in InventoryTab.tsx:119, enforced on the Invest button and the x/10 badge. featFeatGrants.ts only GRANTS this feat, it does not implement it.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-mount",
+   "upheld": true,
+   "why": "Upheld: same maturity ladder, nimble floor precedented by battle-hardened-companion.",
+   "correction": {}
+  },
+  {
+   "id": "incredible-reanimated-companion",
+   "upheld": true,
+   "why": "Upheld: advanced-reanimated-companion already ships maturityFloor:mature one rung below, so nimble here is consistent.",
+   "correction": {}
+  },
+  {
+   "id": "infused-with-belkzens-might",
+   "upheld": true,
+   "why": "Upheld: a spend-a-use self-buff with a stated duration is the mode lane; the amount scales with your Tattooed Historian feat count, so a static modifier would be wrong and the note is correct.",
+   "correction": {}
+  },
+  {
+   "id": "instinct-ability",
+   "upheld": true,
+   "why": "Upheld: barbarian-dedication stores the barbarianInstinct choice flag but rageStrikeRider honours subclassId only, so an archetype barbarian gets a flat 2 damage and no instinct ability. No field expresses instinct abilities.",
+   "correction": {}
+  }
+ ]
+}

@@ -1,0 +1,372 @@
+{
+ "records": [
+  {
+   "id": "expert-sorcerer-spellcasting",
+   "verdict": "ALREADY_OK",
+   "reason": "CASTER_ARCHETYPES in src/rules/casterArchetypes.ts builds expertId as `expert-<slug>-spellcasting`, so taking this feat raises the sorcerer-archetype slot progression and spell proficiency to expert."
+  },
+  {
+   "id": "expert-spellcasting",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record ('you gain the archetype benefits') that names no archetype; the real per-archetype Expert <X> Spellcasting feats are the ones the caster-archetype registry reads."
+  },
+  {
+   "id": "expert-summoner-spellcasting",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by CASTER_ARCHETYPES ('summoner-dedication' → expertId 'expert-summoner-spellcasting') in src/rules/casterArchetypes.ts."
+  },
+  {
+   "id": "expert-witch-spellcasting",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by CASTER_ARCHETYPES ('witch-dedication' → expertId 'expert-witch-spellcasting') in src/rules/casterArchetypes.ts."
+  },
+  {
+   "id": "expert-wizard-spellcasting",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by CASTER_ARCHETYPES ('wizard-dedication' → expertId 'expert-wizard-spellcasting') in src/rules/casterArchetypes.ts."
+  },
+  {
+   "id": "exploit-blunder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction whose whole effect is 'you Step' — an action resolved at the table; no statistic changes."
+  },
+  {
+   "id": "explosion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Explode action, which is used and resolved at the table; it changes no statistic on the sheet."
+  },
+  {
+   "id": "explosion-of-power",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A blood magic effect that deals damage to other creatures near you (basic Reflex against your spell) — it changes only targets' statistics."
+  },
+  {
+   "id": "explosive-arrival",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spellshape free action that deals damage to creatures around your summoned creature; nothing on the caster's sheet changes."
+  },
+  {
+   "id": "explosive-leap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A granted 1-action jump activity resolved at the table (movement and landing adjudicated by the GM); no statistic changes."
+  },
+  {
+   "id": "explosive-maneuver",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A granted action that repeats a Grapple/Shove/Trip at the prior MAP; resolved at the table and it grants no bonus to model."
+  },
+  {
+   "id": "explosive-metamorphosis",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spellshape action that adds a damaging burst affecting other creatures; only targets' statistics are touched."
+  },
+  {
+   "id": "explosive-savant",
+   "verdict": "MISS",
+   "reason": "Two-tier group re-categorisation of proficiency (bombs and martial firearms count as SIMPLE, advanced firearms count as MARTIAL). FEAT_LANE_GRANTS.weaponFamiliarity takes an explicit weapon-id list plus ONE mirrorCategory, and core.json holds 172 bomb ids and 119 firearm ids across both tiers — one entry cannot carry two tiers, and neither can it express 'every weapon in this group'. Needs a group/trait-scoped familiarity rule (e.g. weaponFamiliarity accepting {groups:['bomb','firearm'], category:'martial'} with a per-tier mirrorCategory).",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "express-driver",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An exploration/downtime travel-speed activity ('no effect on your vehicle's movement in encounters') that the app does not model."
+  },
+  {
+   "id": "express-rider",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Exploration-mode overland travel Speed for a mount and allies; explicitly no effect in encounters, and the app does not model daily travel speed."
+  },
+  {
+   "id": "extend-elixir",
+   "verdict": "MISS",
+   "reason": "Doubles the duration of every infused elixir with a duration of 1 minute or longer that you drink. Item-driven consumable modes carry a fixed printed `duration` string (core.modes item-* entries) and nothing scales it per-character, so the alchemist's doubled durations never reach the sheet. Needs a duration multiplier on item modes gated on this feat (and the Quick Alchemy 10-minute cap).",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "extend-surge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mythic action that widens the radius of an aura affecting other creatures; the radius is an at-table measurement, not a statistic on your sheet."
+  },
+  {
+   "id": "extended-kinesis",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds GM-adjudicated utility options (Proliferate/Regulate/Sculpt) to the Base Kinesis impulse — environment manipulation resolved at the table, no statistic changes."
+  },
+  {
+   "id": "extinguish-light",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An action that targets an external light source and makes a counteract check; nothing on the actor's sheet changes."
+  },
+  {
+   "id": "extradimensional-stash",
+   "verdict": "MISS",
+   "reason": "Grants an inherent 5-Bulk extradimensional space that functions as a bag of holding with no Bulk of its own — real carrying capacity the app models for items (itemType 'container' with ignoredBulk, Character.inventory containerInstanceId) but that no feat can confer: there is no grantsItems/container lane anywhere in src/rules. Needs a feat→inventory-container grant.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "extraplanar-cloud",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a 1-action option to another feat's activity (Extraplanar Haze) that concealed creatures inside and outside an area — an at-table area effect touching everyone, not a sheet statistic."
+  },
+  {
+   "id": "exude-demonic-corruption",
+   "verdict": "MISS",
+   "reason": "A 1-action self-buff lasting until the start of your next turn: your melee Strikes deal +1d6 poison and anyone who touches or hits you with a melee unarmed attack takes 1d6 poison (2d6 at 14th, 3d6 at 20th). Nothing toggles it. ModeModifier.value is numeric so the dice riders live in the mode's note, but the toggle itself is what the player needs.",
+   "fix": {
+    "mode": {
+     "id": "exude-demonic-corruption",
+     "name": "Demonic Corruption",
+     "feats": ["exude-demonic-corruption"],
+     "duration": "until the start of your next turn",
+     "modifiers": [],
+     "note": "Your melee Strikes deal an extra 1d6 poison damage, and each creature that hits you with a melee unarmed attack or otherwise touches you takes 1d6 poison damage. The poison damage is 2d6 at 14th level and 3d6 at 20th."
+    }
+   }
+  },
+  {
+   "id": "exult-in-violence",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An action that drops a pillar of light on a randomly chosen other enemy; only a target's statistics change."
+  },
+  {
+   "id": "eye-for-weakness",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extra information the GM supplies on a successful Recall Knowledge, plus off-guard applied to the TARGET on a critical success — neither is the player's own statistic."
+  },
+  {
+   "id": "eyes-that-see-eternity",
+   "verdict": "MISS",
+   "reason": "Spending a Mythic Point gives you the effects of Truesight for 1 minute (plus mythic-proficiency Perception). Nothing grants the sense or gives the player a toggle; the mode lane exists for exactly this kind of timed sense grant (ModeDef.senses feeds deriveSenses). 'truesight' is not on the sense enum, so see-invisibility is the accurate non-over-granting subset and the rest goes in the note.",
+   "fix": {
+    "mode": {
+     "id": "eyes-that-see-eternity",
+     "name": "Eyes that See Eternity",
+     "feats": ["eyes-that-see-eternity"],
+     "duration": "1 minute",
+     "senses": [{ "name": "see-invisibility" }],
+     "modifiers": [],
+     "note": "Costs 1 Mythic Point. You have the effects of Truesight (you see through illusions and magical darkness and can see invisible creatures) and roll all Perception checks with mythic proficiency."
+    }
+   }
+  },
+  {
+   "id": "fading",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction resolved at the table: the attacker rolls, the Strike may miss, and your Crimson Shroud ends. No statistic to model."
+  },
+  {
+   "id": "faith-in-the-fallen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Narrative/downtime: you become a spirit dwelling that collects spirit wisps during daily preparations and gain the Spirit Sanctification action — a GM-tracked resource and a table-resolved action."
+  },
+  {
+   "id": "faithful-stride",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Command an Animal action that moves your MOUNT; it changes the companion's movement at the table, not any statistic."
+  },
+  {
+   "id": "falcon-swoop",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A flourish action (Fly twice with a Strike in the middle); off-guard applies to the target. Resolved at the table."
+  },
+  {
+   "id": "false-faith",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure flavour/permission: it only changes WHICH deity's religious symbol works as your divine focus after an hour of prayer; no statistic changes."
+  },
+  {
+   "id": "false-priest-form",
+   "verdict": "MISS",
+   "reason": "While in false priest form you can cast Divine Lance and Haunting Hymn as primal innate cantrips — two real at-will innate spells that nothing grants. Change Shape is an at-will tanuki action and the corpus already applies form-gated benefits unconditionally (fiendish-form carries senses:[darkvision] the same way), so the innateSpells grant is the matching delivery; the Deception-for-Religion-Recall-Knowledge half is GM-adjudicated.",
+   "fix": {
+    "innateSpells": [
+     { "spellId": "divine-lance", "tradition": "primal", "atWill": true },
+     { "spellId": "haunting-hymn", "tradition": "primal", "atWill": true }
+    ]
+   }
+  },
+  {
+   "id": "fame-and-fortune",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Kingmaker kingdom feat: it grants a bonus Resource Die on the kingdom sheet during a Kingdom turn — a subsystem the character sheet does not model."
+  },
+  {
+   "id": "familiar-conduit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spellshape action that moves a spell's origin point to your familiar; positioning resolved at the table, no statistic changes."
+  },
+  {
+   "id": "familiar-mascot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It only lets a chosen ALLY benefit from a familiar master ability; it changes an ally's statistics, not yours."
+  },
+  {
+   "id": "familiar-ritualist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets your familiar act as a secondary caster in a ritual — ritual casting is a downtime, GM-run procedure the app does not model."
+  },
+  {
+   "id": "familiars-language",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Communication with one animal family (Speak with Animals limited to your familiar's kin) plus permission to use Diplomacy on them — GM-adjudicated roleplay, and it explicitly makes them no friendlier."
+  },
+  {
+   "id": "fancy-moves",
+   "verdict": "MISS",
+   "reason": "You can use Performance to Demoralize — a substitution of the skill modifier you roll, which changes the number the player uses. SKILL_ACTIONS in src/rules/skillActions.ts is a static per-skill list with no feat-driven alternate-skill lane, so the RECORD_MARKERS surface on the Demoralize action is where it is deliverable (precedent: 'quick-unlock', 'eclipsed-vitality').",
+   "fix": {
+    "situational": [
+     { "on": "action", "id": "demoralize", "note": "You can roll Performance instead of Intimidation to Demoralize." }
+    ]
+   }
+  },
+  {
+   "id": "fanes-escape",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action activity (Interact, then Sneak with improvised cover) resolved at the table; no statistic changes."
+  },
+  {
+   "id": "fantastic-leap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A granted 2-action jump-and-Strike activity resolved at the table; it adds no bonus and changes no statistic."
+  },
+  {
+   "id": "fantastic-leaps",
+   "verdict": "MISS",
+   "reason": "A permanent numeric change to the Leap action (+10 feet horizontal, +5 feet vertical maximum distance) that nothing records. RECORD_MARKERS on the Leap action is the lane the corpus already uses for exactly this — 'dancing-leaf' and 'black-powder-boost' both mark leap distance there.",
+   "fix": {
+    "situational": [
+     { "on": "action", "id": "leap", "value": "+10 ft / +5 ft up", "note": "Your maximum Leap distance is 10 feet farther horizontally and 5 feet higher vertically." }
+    ]
+   }
+  },
+  {
+   "id": "far-lobber",
+   "verdict": "MISS",
+   "reason": "Alchemical bombs you throw get a 30-foot range increment instead of 20 — a real change to the player's own ranged attacks that nothing records. The situational registry already carries range-increment entries of this shape ('crossbow-crack-shot': bonus '+10 ft range increment').",
+   "fix": {
+    "situational": [
+     { "targets": [{ "kind": "strikeAttack" }], "when": "when you throw an alchemical bomb", "bonus": "range increment 30 ft instead of 20 ft" }
+    ]
+   }
+  },
+  {
+   "id": "far-shot",
+   "verdict": "MISS",
+   "reason": "Doubles the range increments of all your weapons — the player's own attack statistic, unrecorded anywhere. Same lane and phrasing as the existing range-increment entries in FEAT_SITUATIONAL ('crossbow-crack-shot', 'shootists-edge').",
+   "fix": {
+    "situational": [
+     { "targets": [{ "kind": "strikeAttack" }], "when": "with any weapon that has a range increment", "bonus": "range increments are doubled" }
+    ]
+   }
+  },
+  {
+   "id": "far-throw",
+   "verdict": "MISS",
+   "reason": "Halves the range penalty on your thrown-weapon Strikes (−1 per additional range increment instead of −2) — a change to the player's own attack roll that nothing records; FEAT_SITUATIONAL already holds range-penalty entries of this shape ('distant-archer').",
+   "fix": {
+    "situational": [
+     { "targets": [{ "kind": "strikeAttack" }], "when": "with a thrown weapon, per range increment past the first", "bonus": "-1 instead of -2 range penalty" }
+    ]
+   }
+  },
+  {
+   "id": "fast-channel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It only changes the action cost at which you choose a Harm/Heal variant; both variants are already printed on the spell and the choice is made at the table — no statistic on the sheet differs."
+  },
+  {
+   "id": "fast-recovery",
+   "verdict": "MISS",
+   "reason": "Doubles the Hit Points you regain from resting, and reduces drained by 2 per night instead of 1. rest() in src/rules/play.ts computes `recovered = level * conMod` with no per-feat multiplier, and nothing steps drained down at all, so the app's Rest button gives this character the wrong number. Needs a rest-recovery modifier lane (the disease/poison stage reductions are a GM-run affliction track and can stay prose).",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "fast-swimmer",
+   "verdict": "MISS",
+   "reason": "Your swim Speed increases by 5 feet and nothing delivers it. The speeds lane takes a formula string relative to your own Speeds, and 'timewracked-dedication' already uses the min() idiom so the +5 lands only on a swim Speed you already have (the feat's own prerequisite) rather than granting one to a character with none.",
+   "fix": { "speeds": { "swim": "min(@actor.speed.swim,5)+@actor.speed.swim" } }
+  },
+  {
+   "id": "fatal-bullet",
+   "verdict": "MISS",
+   "reason": "On a critical hit with a fatal firearm you add one more die of the fatal size after doubling — extra damage on the player's own Strike that nothing records. FEAT_SITUATIONAL already carries per-die damage riders of this shape ('crossbow-crack-shot': '+1 precision damage per weapon damage die').",
+   "fix": {
+    "situational": [
+     { "targets": [{ "kind": "strikeDamage" }], "when": "on a critical hit with a fatal firearm", "bonus": "+1 extra fatal die (added after doubling)" }
+    ]
+   }
+  },
+  {
+   "id": "faultless-defense",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction: resistance applied to one triggering damage roll plus a Strike back — resolved at the table, not a standing resistance on the sheet."
+  },
+  {
+   "id": "faultspawn",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The whole feat grants the Find Fault reaction, which is used and resolved at the table; no statistic changes."
+  },
+  {
+   "id": "fautless-defense",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A misspelled duplicate import of Faultless Defense; like the original it is a reaction resolved at the table (one-off resistance to the triggering damage plus a Strike)."
+  },
+  {
+   "id": "favorable-winds",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action buff to one ranged Strike: it removes wind circumstance penalties (a GM-set environmental penalty the app does not model) and lengthens a short range increment for that single Strike — resolved at the table."
+  },
+  {
+   "id": "fear-no-law-fear-no-one",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The Strike is normal; the only extra effect reduces your ALLIES' frightened value, which is not your sheet."
+  },
+  {
+   "id": "fearsome-fangs",
+   "verdict": "MISS",
+   "reason": "Upgrades the Ursine Avenger Form strikes (jaws 1d8→1d12, claws 1d6→1d8). The form is modelled as stances['ursine-avenger-form'] with fixed strike dice; StanceDef has senseIfFeat for feat-gated SENSES but no equivalent feat-gated strike-die upgrade, and a feat-side grantedStrikes would create duplicate attacks rather than replace the form's. Needs a strikeIfFeat/die-upgrade gate on StanceDef.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "feast",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action activity against an adjacent restrained/unconscious/dead creature; the temporary Hit Points are entered on the HP control when it happens, and the save-or-deteriorate branch is table resolution."
+  },
+  {
+   "id": "feast-planner",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a RITUAL (Fortifying Brew) and permission to fill both caster roles yourself — ritual casting is downtime, GM-run, and the app tracks no ritual repertoire."
+  },
+  {
+   "id": "feather-step",
+   "verdict": "MISS",
+   "reason": "Permanently changes the Step action for this character — you can Step into difficult terrain — and nothing records it. RECORD_MARKERS on the Step action is the lane the corpus uses for rule changes to a basic action ('quick-unlock' on Pick a Lock, 'eclipsed-vitality' on Hide/Sneak).",
+   "fix": {
+    "situational": [
+     { "on": "action", "id": "step", "note": "You can Step into difficult terrain." }
+    ]
+   }
+  },
+  {
+   "id": "feathered-flechettes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An action that deals area damage to other creatures (scaled by your striking rune); only targets' statistics change."
+  },
+  {
+   "id": "feed-the-void",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An action that pulls and damages other creatures in a cone; the temporary Hit Points from the awakening are entered on the HP control at the table when it happens."
+  },
+  {
+   "id": "feet-that-stride-the-sky",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An optional Mythic Point spend made at the moment of a High/Long Jump check (mythic proficiency, Long Jump DCs); it is a per-check table decision, not a standing statistic."
+  },
+  {
+   "id": "felicitous-riposte",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A fortune effect on one reaction (roll the Opportune Riposte attack twice, take the better) — resolved when the reaction is rolled at the table."
+  }
+ ]
+}

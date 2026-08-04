@@ -1,0 +1,326 @@
+{
+  "rulings": [
+    {
+      "id": "enticing-dwelling",
+      "upheld": true,
+      "why": "Doubles a per-day spirit-wisp count; CLASS_RESOURCES is source-side (the `feat:` gate form) and no record field writes a resource, so the engine-work flag is honest.",
+      "correction": {}
+    },
+    {
+      "id": "entitys-strike",
+      "upheld": true,
+      "why": "\"You gain an unarmed attack... 1d6, brawling group, agile, finesse, magical\" - an unconditional Strike the record does not carry; grantedStrikes matches the shape used by tusks/fang-sharpener.",
+      "correction": {}
+    },
+    {
+      "id": "envenomed-edge",
+      "upheld": true,
+      "why": "\"you deal an additional 1d4 persistent poison damage\" on YOUR critical Strike - the player's own damage, conditional, absent from FEAT_SITUATIONAL.",
+      "correction": {}
+    },
+    {
+      "id": "esteemed-visitor",
+      "upheld": true,
+      "why": "A degree-of-success upgrade on the player's own Diplomacy check; detail 'diplomacy' is a real skill id and the entry is not in FEAT_SITUATIONAL.",
+      "correction": {}
+    },
+    {
+      "id": "eternal-blessing",
+      "upheld": true,
+      "why": "core.spells.bless reads \"You and your allies gain a +1 status bonus to attack rolls\" - the caster is included, so the mode's attack/status/+1 modifier is not an ally-only effect. No bless mode exists in core.modes.",
+      "correction": {}
+    },
+    {
+      "id": "eternal-boost",
+      "upheld": true,
+      "why": "Permanently quickened is a standing condition on the player; RECORD_MARKERS ('quickened' is in core.conditions) is the shipped lane for condition rewrites (the-survivor/dying, face-your-fears/frightened) and carries no entry for this feat.",
+      "correction": {}
+    },
+    {
+      "id": "eternal-composition",
+      "upheld": true,
+      "why": "Same as eternal-boost: a permanent condition on the player, deliverable through the existing RECORD_MARKERS condition surface, currently unmarked.",
+      "correction": {}
+    },
+    {
+      "id": "evade-doom",
+      "upheld": true,
+      "why": "A permanent change to how doomed lands on the player, not a GM call about a target; the condition marker lane exists and is empty for this id.",
+      "correction": {}
+    },
+    {
+      "id": "ever-dreaming",
+      "upheld": true,
+      "why": "Removes the -4 to AC/Perception/Reflex and the off-guard state while you sleep - the player's own numbers under a condition; RECORD_MARKERS on 'unconscious' is the shipped surface (uncanny-dodge marks off-guard the same way).",
+      "correction": {}
+    },
+    {
+      "id": "exemplar-expertise",
+      "upheld": true,
+      "why": "Verified: FeatGrant (src/rules/featGrants.ts) has armor/weapon/save/perception/skills/weaponFamiliarity but NO classDc track, and the record field classDcGrant is a flat {classId} trained grant with no rank ladder. The lane really is missing.",
+      "correction": {}
+    },
+    {
+      "id": "exorcist-dedication",
+      "upheld": true,
+      "why": "The wisp pool is the currency the whole archetype spends and nothing tracks it; CLASS_RESOURCES is not writable from a record field.",
+      "correction": {}
+    },
+    {
+      "id": "experienced-professional",
+      "upheld": true,
+      "why": "The degree-of-success change is real and player-side, but the judge's fix cannot land: targetMatches() requires an exact skill id or 'all', so detail 'lore:*' matches no Lore row and would star nothing. Earn Income IS in core.actions, so the marker lane delivers it.",
+      "correction": {
+        "fix": {
+          "situational": [
+            {
+              "on": "action",
+              "id": "earn-income",
+              "value": "crit fail -> fail",
+              "note": "When you use Lore to Earn Income a critical failure becomes a failure; if you're an expert in Lore, a failed check earns twice as much income (unless it was originally a critical failure)."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "expert-backstabber",
+      "upheld": true,
+      "why": "Doubles the backstabber precision damage on the player's own Strike - conditional damage, no registry entry.",
+      "correction": {}
+    },
+    {
+      "id": "expert-cathartic-spellcasting",
+      "upheld": true,
+      "why": "Confirmed: CASTER_ARCHETYPES has no cathartic-mage-dedication key, so neither tier ever unlocks a slot. No fix field routes to that registry.",
+      "correction": {}
+    },
+    {
+      "id": "expert-fireworks-crafter",
+      "upheld": true,
+      "why": "resourceMaxSet is real, not invented: types.ts:747 declares it, build.ts:2633 reads it, and additional-servings already carries {resourceId:'versatile-vials',values:[5,6,7]}. The single value [5] matches the printed \"increases to 5\".",
+      "correction": {}
+    },
+    {
+      "id": "expert-kinetic-control",
+      "upheld": true,
+      "why": "Same verified gap as exemplar-expertise - FeatGrant has no classDc rank track, and impulse attack rolls have no feat-driven lane at all.",
+      "correction": {}
+    },
+    {
+      "id": "expert-red-mantis-magic",
+      "upheld": true,
+      "why": "Confirmed absent from CASTER_ARCHETYPES and the id does not match the basic-/expert-<slug>-spellcasting detection pattern, so the tier is unreachable.",
+      "correction": {}
+    },
+    {
+      "id": "expert-scroll-cache",
+      "upheld": true,
+      "why": "A daily temporary scroll the player PICKS, at a rank that scales with level; effectChoices/spellFilter grants innate casts, not level-scaling temporary items, so nothing legal expresses it.",
+      "correction": {}
+    },
+    {
+      "id": "expert-snowcasting",
+      "upheld": true,
+      "why": "Confirmed: no gelid-shard entry in CASTER_ARCHETYPES, so the archetype's expert tier unlocks nothing.",
+      "correction": {}
+    },
+    {
+      "id": "explosive-savant",
+      "upheld": true,
+      "why": "This IS the weaponFamiliarity lane, but the lane cannot carry it: a FEAT_LANE_GRANTS entry is keyed by feat id and holds ONE mirrorCategory, while the feat mirrors two tiers (bombs + martial firearms -> simple, advanced firearms -> martial). Writing either half alone would silently close the feat with the other half missing, so the engine-work flag stands rather than a partial entry.",
+      "correction": {}
+    },
+    {
+      "id": "extend-elixir",
+      "upheld": true,
+      "why": "Doubles the duration of elixirs the PLAYER drinks; item consumable modes carry a fixed printed duration string and nothing scales it per character.",
+      "correction": {}
+    },
+    {
+      "id": "extradimensional-stash",
+      "upheld": true,
+      "why": "Verified: no grantsItems/container field exists anywhere in src/rules, yet Bulk and container capacity are computed by the app, so this is a real unreachable grant.",
+      "correction": {}
+    },
+    {
+      "id": "exude-demonic-corruption",
+      "upheld": true,
+      "why": "A self-buff on the player's own Strikes and on anyone touching them; a mode with a note is the shipped pattern for effects modifiers cannot express numerically (the ModeDef comment cites Triple Time shipping as modifiers:[] + note). Mode id is free in core.modes.",
+      "correction": {}
+    },
+    {
+      "id": "eyes-that-see-eternity",
+      "upheld": true,
+      "why": "ModeDef.senses is real and feeds deriveSenses; see-invisibility is a strict SUBSET of Truesight, so the grant is under- not over-scoped, and the rest is in the note.",
+      "correction": {}
+    },
+    {
+      "id": "false-priest-form",
+      "upheld": true,
+      "why": "Two real innate cantrips with verified spell ids (divine-lance, haunting-hymn both in core.spells); atWill is a real key on InnateSpellGrant (shadow-pact, wildborn-adept carry it). The form gate is applied unconditionally exactly as fiendish-form's senses:[{darkvision}] is.",
+      "correction": {}
+    },
+    {
+      "id": "fancy-moves",
+      "upheld": true,
+      "why": "Substituting Performance for Intimidation changes which modifier the player rolls; SKILL_ACTIONS has no alternate-skill lane, and 'demoralize' is in core.actions so the marker lands.",
+      "correction": {}
+    },
+    {
+      "id": "fantastic-leaps",
+      "upheld": true,
+      "why": "Leap distance is a number the player uses; dancing-leaf and black-powder-boost already mark 'leap' in RECORD_MARKERS and this id carries nothing.",
+      "correction": {}
+    },
+    {
+      "id": "far-lobber",
+      "upheld": true,
+      "why": "A range increment on the player's own thrown bombs; crossbow-crack-shot already carries a '+10 ft range increment' star of exactly this shape.",
+      "correction": {}
+    },
+    {
+      "id": "far-shot",
+      "upheld": true,
+      "why": "Doubling the player's own range increments; same lane as shootists-edge/distant-archer, no entry present.",
+      "correction": {}
+    },
+    {
+      "id": "far-throw",
+      "upheld": true,
+      "why": "Halves the player's own range penalty - verified absent from FEAT_SITUATIONAL; distant-archer is the precedent.",
+      "correction": {}
+    },
+    {
+      "id": "fast-recovery",
+      "upheld": true,
+      "why": "Verified in src/rules/play.ts: rest() computes `level * conMod` with no feat hook, so the doubled HP never lands. (The judge's aside that nothing steps drained down is slightly wrong - restConditions steps it by 1 - but the feat's by-2 still has no lane.)",
+      "correction": {}
+    },
+    {
+      "id": "fast-swimmer",
+      "upheld": true,
+      "why": "The formula idiom is not invented: timewracked-dedication ships \"min(@actor.speed.swim,5)+@actor.speed.swim\" verbatim, and SpeedGrants is an object map. It adds 5 only to an existing swim Speed, matching the feat's own prerequisite.",
+      "correction": {}
+    },
+    {
+      "id": "fatal-bullet",
+      "upheld": true,
+      "why": "An extra fatal die on the player's own critical hit; no registry entry exists for the id.",
+      "correction": {}
+    },
+    {
+      "id": "fearsome-fangs",
+      "upheld": true,
+      "why": "Verified: core.modes['ursine-avenger-form'] holds fixed strikes (jaws d8, claws d6) and StanceDef offers senseIfFeat but no feat-gated strike upgrade; a feat-side grantedStrikes would add duplicate rows.",
+      "correction": {}
+    },
+    {
+      "id": "feather-step",
+      "upheld": true,
+      "why": "Stepping into difficult terrain is a rule change to a basic action the player takes; 'step' is in core.actions and the marker lane is the shipped surface for this.",
+      "correction": {}
+    },
+    {
+      "id": "ferrousoul",
+      "upheld": true,
+      "why": "Verified at derive.ts:1733 - fistDieUpgraded is a hardcoded OR of powerful-fist / warrior-automaton / warrior-jotunborn, and FIST_PROFILE is not data-driven, so no field can raise the Fist die or drop nonlethal.",
+      "correction": {}
+    },
+    {
+      "id": "fey-caller",
+      "upheld": true,
+      "why": "Verified: nothing in types.ts adds named spells to a caster's selectable list (no spellList/addsSpells field), and innateSpells would wrongly make them at-will.",
+      "correction": {}
+    },
+    {
+      "id": "fey-cantrips",
+      "upheld": true,
+      "why": "\"You gain Light and Ghost Sound as primal innate cantrips\" is unconditional; both ids exist in core.spells and the heritage-gated extras are correctly excluded.",
+      "correction": {}
+    },
+    {
+      "id": "fiendish-strikes",
+      "upheld": true,
+      "why": "Traits on the player's own Strikes have no field (no strikeTraits anywhere in types.ts); compliant-gold carries a trait rider as a star in the same registry.",
+      "correction": {}
+    },
+    {
+      "id": "fire-lung",
+      "upheld": true,
+      "why": "Both halves are checks the PLAYER rolls; cindersoul ships the identical 'hp' + persistent-flat-check entry and superior-sight the identical concealment entry. Neither id is in the registry.",
+      "correction": {}
+    },
+    {
+      "id": "fire-savvy",
+      "upheld": true,
+      "why": "Player-side flat check plus a success-to-critical-success upgrade on the player's own Fortitude save; no entry exists.",
+      "correction": {}
+    },
+    {
+      "id": "firesight",
+      "upheld": true,
+      "why": "Auto-success on the player's own flat check to target a concealed creature; superior-sight is the verbatim precedent.",
+      "correction": {}
+    },
+    {
+      "id": "flamboyant-athlete",
+      "upheld": true,
+      "why": "ModeDef.speeds is real and feeds deriveSpeeds, floor()/@actor.speed.land formulas are already used (uncanny-suction), and the panache gate matches the printed condition.",
+      "correction": {}
+    },
+    {
+      "id": "flexible-spellcaster-dedication",
+      "upheld": true,
+      "why": "Verified: build.ts skips rank 0 in both spellSlotBonus branches (`r > 0`) and cantripsKnown() is a hardcoded per-class number, so the extra cantrip has no lane.",
+      "correction": {}
+    },
+    {
+      "id": "fluid-contortionist",
+      "upheld": true,
+      "why": "A two-step degree-of-success change on the player's own Acrobatics check; amorphous-aspect already stars Squeeze in the same registry.",
+      "correction": {}
+    },
+    {
+      "id": "flying-blade",
+      "upheld": true,
+      "why": "Extends the player's own Precise Strike damage to thrown Strikes; finishing-precision is the same-shaped neighbouring entry and this id has none.",
+      "correction": {}
+    },
+    {
+      "id": "force-of-nature",
+      "upheld": true,
+      "why": "Shape-gated fast healing on the player with a silver-weapon suppression - a mode is the shipped pattern for shape-gated werecreature benefits, and no fast-healing field exists.",
+      "correction": {}
+    },
+    {
+      "id": "forgotten-presence",
+      "upheld": true,
+      "why": "The Recall Knowledge penalty is correctly left on the other creature's side; the spell-list addition is real and, as with fey-caller, no field widens a caster's selectable list.",
+      "correction": {}
+    },
+    {
+      "id": "frozen-breadth",
+      "upheld": true,
+      "why": "Verified: gelid shard has no CASTER_ARCHETYPES entry and therefore no spellcasting entry with slots, so an entryId-less spellSlotBonus would over-grant slots to the character's main caster. Plus there is no repertoire-size field at all.",
+      "correction": {}
+    },
+    {
+      "id": "full-automation",
+      "upheld": true,
+      "why": "Permanently quickened is real and player-side, but it is NOT a missing lane: RECORD_MARKERS already marks conditions ('quickened' is in core.conditions, rendered by VitalsRail with a star), which is exactly how eternal-boost and eternal-composition are being delivered in this same batch.",
+      "correction": {
+        "fix": {
+          "situational": [
+            {
+              "on": "condition",
+              "id": "quickened",
+              "value": "always on",
+              "note": "Full Automation: you're permanently quickened. Armor innovation - the extra action Strides, Steps, or uses a movement form your innovation provides; construct - Command your construct; weapon - Strike with your innovation."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
