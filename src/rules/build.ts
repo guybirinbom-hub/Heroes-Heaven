@@ -2614,6 +2614,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (max > 0) advancedAlchemy = { max, source };
   }
 
+  // "Increase your limit on invested items from 10 to 12" (Incredible Investiture). The inventory
+  // capped investment at a bare const, so the feat raised nothing.
+  const investedBonus = feats.reduce((n, fc) => n + (content.feats[fc.featId]?.investedLimitBonus ?? 0), 0);
+
   // "Add Illusory Disguise, Illusory Object, and Illusory Scene to your spell list." The picker
   // filtered strictly on the entry's tradition, so these feats offered nothing new to learn. They
   // widen the POOL only — the player still has to spend a repertoire slot or prepare the spell.
@@ -3217,6 +3221,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(resourceFloors ? { resourceFloors } : {}),
     ...(dyingThreshold ? { dyingThreshold } : {}),
     ...(spellListAdditions ? { spellListAdditions } : {}),
+    ...(investedBonus ? { investedLimit: 10 + investedBonus } : {}),
     conditions: [],
     classResources: initialClassResources(
       build.classId,

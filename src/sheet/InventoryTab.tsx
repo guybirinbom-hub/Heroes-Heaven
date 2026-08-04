@@ -115,7 +115,8 @@ function isConsumable(item: Item): boolean {
   return item.itemType === 'consumable' || (item.traits ?? []).includes('consumable');
 }
 
-/** PF2e caps a character at 10 invested magic items. */
+/** PF2e caps a character at 10 invested magic items — Incredible Investiture raises it to 12. Read
+ *  `character.investedLimit` wherever a character is in hand; this is only the RAW default. */
 const INVESTED_LIMIT = 10;
 
 function ItemCard({
@@ -126,6 +127,7 @@ function ItemCard({
   onOpen,
   onPlay,
   investedCount = 0,
+  investedLimit = INVESTED_LIMIT,
   rationsDayTracking = false,
   isMobile = false,
   onDragStartItem,
@@ -153,6 +155,8 @@ function ItemCard({
   onOpen: () => void;
   onPlay?: PlayUpdater;
   investedCount?: number;
+  /** The character's invested-item cap (10, or 12 with Incredible Investiture). */
+  investedLimit?: number;
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
   rationsDayTracking?: boolean;
   /** Phone layout: disable the desktop HTML5 drag (cards aren't draggable on touch). */
@@ -296,10 +300,10 @@ function ItemCard({
             {investable && (
               <button
                 className={'inv-act' + (inv.invested ? ' on' : '')}
-                disabled={!inv.invested && investedCount >= INVESTED_LIMIT}
+                disabled={!inv.invested && investedCount >= investedLimit}
                 title={
-                  !inv.invested && investedCount >= INVESTED_LIMIT
-                    ? `You can invest at most ${INVESTED_LIMIT} items`
+                  !inv.invested && investedCount >= investedLimit
+                    ? `You can invest at most ${investedLimit} items`
                     : undefined
                 }
                 onClick={(e) => { stop(e); onPlay((p) => toggleItemFlag(p, inv.instanceId, 'invested')); }}
@@ -611,6 +615,7 @@ export function InventoryTab({
   // Only items that are actually investable (carry the `invested` trait) count toward the
   // 10-item cap — not anything that happens to have a stale invested flag.
   const investedCount = character.inventory.filter((inv) => inv.invested && resolve(inv)?.traits?.includes('invested')).length;
+  const investedLimit = character.investedLimit ?? INVESTED_LIMIT;
   // When the character holds more than one instance of the same item, number them (" 1", " 2", …)
   // in inventory order so otherwise-identical copies (e.g. two Longswords, one refined) are
   // distinguishable. Computed across the whole inventory; recomputes (renumbers) when one is removed.
@@ -668,7 +673,7 @@ export function InventoryTab({
       // Dragging onto Equipped invests anything that isn't armor/weapon/shield — enforce the same
       // 10-item invested cap the Invest button does, so drag-and-drop can't slip past it.
       const wouldInvest = !['armor', 'weapon', 'shield'].includes(draggedItem.itemType);
-      if (wouldInvest && !draggedInv?.invested && investedCount >= INVESTED_LIMIT) return false;
+      if (wouldInvest && !draggedInv?.invested && investedCount >= investedLimit) return false;
       return true;
     }
     if (dest === 'carried') return true;
@@ -690,8 +695,8 @@ export function InventoryTab({
       else if (item.itemType === 'weapon' || item.itemType === 'shield')
         patch = { equipped: true, worn: false, invested: false, containerInstanceId: undefined };
       else {
-        // Investing is capped at 10 (the Invest condition limit) — match the Invest button's guard.
-        if (!inv.invested && investedCount >= INVESTED_LIMIT) return;
+        // Investing is capped (the Invest condition limit) — match the Invest button's guard.
+        if (!inv.invested && investedCount >= investedLimit) return;
         patch = { invested: true, worn: false, equipped: false, containerInstanceId: undefined };
       }
     } else if (dest === 'carried') {
@@ -1041,6 +1046,7 @@ export function InventoryTab({
                   onOpen={() => open(inv)}
                   onPlay={onPlay}
                   investedCount={investedCount}
+                  investedLimit={investedLimit}
                   rationsDayTracking={rationsDayTracking}
                   isMobile={isMobile}
                   onDragStartItem={startDrag}
@@ -1130,10 +1136,10 @@ export function InventoryTab({
           );
         })()}
         {investedCount > 0 && (
-          <span className={'bulk-badge' + (investedCount > INVESTED_LIMIT ? ' over' : '')} title="Invested magic items (max 10)">
+          <span className={'bulk-badge' + (investedCount > investedLimit ? ' over' : '')} title={`Invested magic items (max ${investedLimit})`}>
             <i className="ti ti-sparkles" aria-hidden="true" /> Invested{' '}
             <strong>
-              {investedCount} / {INVESTED_LIMIT}
+              {investedCount} / {investedLimit}
             </strong>
           </span>
         )}

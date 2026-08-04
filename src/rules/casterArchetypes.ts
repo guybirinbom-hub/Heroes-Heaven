@@ -19,9 +19,15 @@ export interface CasterArchetype {
   keyAbility: AbilityId;
   /** Cantrips the dedication grants. */
   cantrips: number;
-  basicId: string;
-  expertId: string;
-  masterId: string;
+  /** The Basic/Expert/Master Spellcasting feat ids that unlock slot ranks.
+   *
+   *  OPTIONAL because two archetypes get their slots elsewhere — Magaambyan Attendant grants a single
+   *  innate cantrip (`innateCantrip`) and Halcyon Speaker uses `customUnlocks` — and mk() had been
+   *  minting them ids like `basic-halcyon-speaker-spellcasting` for feats that do not exist. Harmless
+   *  today because both paths return before reading them, and a trap for whoever touches this next. */
+  basicId?: string;
+  expertId?: string;
+  masterId?: string;
   /** True when the tradition is set by a sub-choice (sorcerer bloodline, witch patron). */
   choiceTradition?: boolean;
   /** Constrains the tradition choice to these options (beast-gunner = arcane/primal). */
@@ -64,6 +70,11 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   // a cantrips-only pool — the archetype's power is the rage synergy (see BLOODRAGER_NOTE) + Harvest Blood.
   'bloodrager-dedication': {
     ...mk('arcane', 'cha', 2, 'bloodrager', true),
+    // The comment above says it: no Basic/Expert/Master Bloodrager feats ship. mk() minted ids for
+    // them anyway, so clear them rather than keep three names that resolve to nothing.
+    basicId: undefined,
+    expertId: undefined,
+    masterId: undefined,
     traditionOptions: ['arcane', 'divine'],
     repertoire: true,
     cantripsOnly: true,
@@ -84,6 +95,11 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   // No spell slots — the slot progression comes from the follow-on Halcyon Speaker archetype.
   'magaambyan-attendant-dedication': {
     ...mk('arcane', 'int', 1, 'magaambyan-attendant', true),
+    // No Basic/Expert/Master feats exist for this archetype — mk() had minted ids for three feats
+    // that do not ship. Cleared so nothing reads a name that resolves to nothing.
+    basicId: undefined,
+    expertId: undefined,
+    masterId: undefined,
     traditionOptions: ['arcane', 'primal'],
     keyByTradition: true,
     innateCantrip: true,
@@ -93,6 +109,11 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   // 4-5 (→ expert), Sage (18) adds 6-7 (→ master). Tradition (arcane/primal) sets the key + label.
   'halcyon-speaker-dedication': {
     ...mk('arcane', 'int', 2, 'halcyon-speaker', true),
+    // Slots come from customUnlocks below, not from Basic/Expert/Master feats — those do not exist
+    // for this archetype, and mk()'s derived ids pointed at nothing.
+    basicId: undefined,
+    expertId: undefined,
+    masterId: undefined,
     traditionOptions: ['arcane', 'primal'],
     keyByTradition: true,
     repertoire: true,
@@ -107,6 +128,46 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
     ],
     profExpertFeat: 'halcyon-spellcasting-adept',
     profMasterFeat: 'halcyon-spellcasting-sage',
+  },
+  // ---- Found by the full feat audit: three caster archetypes missing from this table entirely, so
+  // their Basic/Expert/Master feats granted no slots at all and "You gain the benefits" pointed at
+  // nothing. None of the three fits mk() — each names its progression feats something other than
+  // "basic-<slug>-spellcasting", which is presumably how they were missed.
+  //
+  // "You learn to cast spontaneous spells and gain a spell repertoire with one cantrip of your choice,
+  // from a spell list of your choice… Your key spellcasting ability for these spells is Charisma."
+  'cathartic-mage-dedication': {
+    tradition: 'occult',
+    keyAbility: 'cha',
+    cantrips: 1,
+    basicId: 'basic-cathartic-spellcasting',
+    expertId: 'expert-cathartic-spellcasting',
+    masterId: 'master-cathartic-spellcasting',
+    choiceTradition: true, // "a spell list of your choice" — genuinely any of the four
+    repertoire: true,
+  },
+  // "You can prepare two common cantrips each day from the divine spell list… Your key spellcasting
+  // attribute for the Red Mantis archetype spells is Charisma, and they are divine." Prepared, and
+  // the key attribute is printed on Basic Red Mantis Magic rather than on the dedication.
+  'red-mantis-assassin-dedication': {
+    tradition: 'divine',
+    keyAbility: 'cha',
+    cantrips: 2,
+    basicId: 'basic-red-mantis-magic',
+    expertId: 'expert-red-mantis-magic',
+    masterId: 'master-red-mantis-magic',
+  },
+  // Gelid Shard ships no feat carrying the dedication trait — First Frost is the level-2 entry point:
+  // "You learn to cast arcane spontaneous spells, and you gain a spell repertoire with the Frostbite
+  // and Frost's Touch cantrips… Your key spellcasting attribute is Charisma."
+  'first-frost': {
+    tradition: 'arcane',
+    keyAbility: 'cha',
+    cantrips: 2,
+    basicId: 'snowcaster',
+    expertId: 'expert-snowcasting',
+    masterId: 'master-snowcasting',
+    repertoire: true,
   },
 };
 
@@ -166,7 +227,11 @@ export function activeCasterArchetype(takenFeatIds: string[], _content?: Content
     return {
       dedicationId,
       config,
-      tier: { basic: taken.has(config.basicId), expert: taken.has(config.expertId), master: taken.has(config.masterId) },
+      tier: {
+        basic: !!config.basicId && taken.has(config.basicId),
+        expert: !!config.expertId && taken.has(config.expertId),
+        master: !!config.masterId && taken.has(config.masterId),
+      },
       taken,
     };
   }

@@ -795,6 +795,9 @@ export interface Feat extends ContentBase, DefenseGrants {
    * omitted, the spells join every entry's pool.
    */
   spellListAdditions?: { spells: string[]; entryId?: string };
+  /** "Increase your limit on invested items from 10 to 12" (Incredible Investiture). The inventory
+   *  capped investment at a bare const 10, so the feat could not raise anything. */
+  investedLimitBonus?: number;
   /**
    * Weakness types this feat REMOVES ("you no longer gain silver weakness from Werecreature
    * Dedication"). Every other field adds; there was no way to take one away, so a feat whose whole
@@ -2272,6 +2275,8 @@ export interface Character {
   /** Spell ids a feat added to the pool the prepare/repertoire picker offers, beyond what the entry's
    *  tradition contains. Keyed by spellcasting entry id; `'*'` applies to every entry. */
   spellListAdditions?: Record<string, string[]>;
+  /** How many magic items this character may invest — 10 by RAW, 12 with Incredible Investiture. */
+  investedLimit?: number;
   /** Answers to daily-preparation choices, keyed `${recordId}:${flag}`; overlaid from play-state. */
   dailyChoices?: Record<string, string>;
   /** Uses spent against each feat's `limitedUses`, by feat id; overlaid from play-state. */

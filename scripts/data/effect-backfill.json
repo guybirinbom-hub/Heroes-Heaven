@@ -52320,5 +52320,11 @@
         "illusory-scene"
       ]
     }
+  },
+  {
+    "category": "feats",
+    "id": "incredible-investiture",
+    "field": "investedLimitBonus",
+    "value": 2
   }
 ]
