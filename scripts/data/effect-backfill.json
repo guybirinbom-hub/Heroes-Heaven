@@ -52326,5 +52326,22 @@
     "id": "incredible-investiture",
     "field": "investedLimitBonus",
     "value": 2
+  },
+  {
+    "category": "feats",
+    "id": "fast-recovery",
+    "field": "restRecovery",
+    "value": {
+      "hpMultiplier": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "bolstered-recovery",
+    "field": "restRecovery",
+    "value": {
+      "hpMultiplier": 2,
+      "conditionSteps": 2
+    }
   }
 ]

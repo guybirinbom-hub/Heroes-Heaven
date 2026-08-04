@@ -2614,6 +2614,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (max > 0) advancedAlchemy = { max, source };
   }
 
+  // "You regain twice as many Hit Points from resting" (Fast Recovery), and Bolstered Recovery
+  // doubles the condition steps as well. rest() used a bare `level × Con mod` and stepped
+  // Doomed/Drained by exactly 1, so neither feat changed anything about a night's sleep.
+  let restRecovery: Character['restRecovery'];
+  {
+    let hp = 1;
+    let steps = 1;
+    for (const fc of feats) {
+      const r = content.feats[fc.featId]?.restRecovery;
+      if (!r) continue;
+      hp = Math.max(hp, r.hpMultiplier ?? 1); // the best offer wins; two such feats do not multiply
+      steps = Math.max(steps, r.conditionSteps ?? 1);
+    }
+    if (hp > 1 || steps > 1) restRecovery = { hpMultiplier: hp, conditionSteps: steps };
+  }
+
   // "Increase your limit on invested items from 10 to 12" (Incredible Investiture). The inventory
   // capped investment at a bare const, so the feat raised nothing.
   const investedBonus = feats.reduce((n, fc) => n + (content.feats[fc.featId]?.investedLimitBonus ?? 0), 0);
@@ -3222,6 +3238,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(dyingThreshold ? { dyingThreshold } : {}),
     ...(spellListAdditions ? { spellListAdditions } : {}),
     ...(investedBonus ? { investedLimit: 10 + investedBonus } : {}),
+    ...(restRecovery ? { restRecovery } : {}),
     conditions: [],
     classResources: initialClassResources(
       build.classId,

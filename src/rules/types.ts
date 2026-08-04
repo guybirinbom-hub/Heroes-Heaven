@@ -799,6 +799,13 @@ export interface Feat extends ContentBase, DefenseGrants {
    *  capped investment at a bare const 10, so the feat could not raise anything. */
   investedLimitBonus?: number;
   /**
+   * "You regain twice as many Hit Points from resting" (Fast Recovery); Bolstered Recovery doubles
+   * the condition steps too. rest() computed `level × Con mod` and stepped Doomed/Drained by exactly
+   * 1, both unconditionally, so neither feat changed a thing about a night's sleep.
+   * The best offer across everything owned wins — these are not additive.
+   */
+  restRecovery?: { hpMultiplier?: number; conditionSteps?: number };
+  /**
    * Weakness types this feat REMOVES ("you no longer gain silver weakness from Werecreature
    * Dedication"). Every other field adds; there was no way to take one away, so a feat whose whole
    * point is undoing an earlier drawback left the drawback on the sheet.
@@ -2277,6 +2284,9 @@ export interface Character {
   spellListAdditions?: Record<string, string[]>;
   /** How many magic items this character may invest — 10 by RAW, 12 with Incredible Investiture. */
   investedLimit?: number;
+  /** What a full night's rest gives back: the HP multiplier on `level × Con mod` and how far a
+   *  night steps Doomed/Drained down. Both 1 by RAW; Fast and Bolstered Recovery raise them. */
+  restRecovery?: { hpMultiplier: number; conditionSteps: number };
   /** Answers to daily-preparation choices, keyed `${recordId}:${flag}`; overlaid from play-state. */
   dailyChoices?: Record<string, string>;
   /** Uses spent against each feat's `limitedUses`, by feat id; overlaid from play-state. */

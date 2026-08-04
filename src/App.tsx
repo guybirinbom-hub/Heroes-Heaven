@@ -774,6 +774,8 @@ export default function App() {
               initialResources: active.character.classResources,
               // Lets rest tell an ITEM mode (clears overnight) from one the player toggled themselves.
               modeDefs: content?.modes,
+              // Fast Recovery / Bolstered Recovery — without this a night's sleep ignores them.
+              restRecovery: active.character.restRecovery,
             }),
           )
         }

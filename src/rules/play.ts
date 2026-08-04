@@ -1096,12 +1096,14 @@ export function playForRebuild(play: PlayState): PlayState {
  *  Wounded picked up from dropping to 0 HP would linger forever, since a night's HP recovery often
  *  won't reach full). Doomed and Drained step down by 1 (removed at 0). Other conditions persist
  *  (their durations aren't tracked, so the player clears those manually). */
-function restConditions(list: ActiveCondition[]): ActiveCondition[] {
+function restConditions(list: ActiveCondition[], steps = 1): ActiveCondition[] {
   const out: ActiveCondition[] = [];
   for (const c of list) {
     if (c.id === 'fatigued' || c.id === 'wounded' || c.id === 'dying') continue;
     if (c.id === 'doomed' || c.id === 'drained') {
-      const v = (c.value ?? 1) - 1;
+      // `steps` is 1 by RAW; Bolstered Recovery doubles "the amount by which condition values are
+      // reduced from a full night's rest", which was hardcoded here.
+      const v = (c.value ?? 1) - Math.max(1, steps);
       if (v > 0) out.push({ ...c, value: v });
       continue;
     }
@@ -1119,9 +1121,18 @@ function restConditions(list: ActiveCondition[]): ActiveCondition[] {
  */
 export function rest(
   play: PlayState,
-  opts: { level: number; conMod: number; initialResources?: Record<string, number>; modeDefs?: Record<string, ModeDef> },
+  opts: {
+    level: number;
+    conMod: number;
+    initialResources?: Record<string, number>;
+    modeDefs?: Record<string, ModeDef>;
+    /** Character.restRecovery — Fast Recovery doubles the HP, Bolstered Recovery the condition steps
+     *  as well. Both were hardcoded to 1 here, so neither feat changed a night's sleep. */
+    restRecovery?: { hpMultiplier: number; conditionSteps: number };
+  },
 ): PlayState {
-  const recovered = Math.max(0, opts.level) * Math.max(1, opts.conMod);
+  const hpMult = Math.max(1, opts.restRecovery?.hpMultiplier ?? 1);
+  const recovered = Math.max(0, opts.level) * Math.max(1, opts.conMod) * hpMult;
   const damage = Math.max(0, play.damage - recovered);
   const companionConditions = play.companionConditions
     ? Object.fromEntries(Object.entries(play.companionConditions).map(([k, v]) => [k, restConditions(v)]))
@@ -1168,7 +1179,7 @@ export function rest(
     // Per-day feat uses refill with everything else. dailyChoices deliberately does NOT reset here —
     // it is the answer you keep, which is what the "reuse my last pick" setting relies on.
     featUses: {},
-    conditions: restConditions(play.conditions ?? []),
+    conditions: restConditions(play.conditions ?? [], opts.restRecovery?.conditionSteps),
     companionConditions,
     companionHp,
     resources: opts.initialResources ?? play.resources,
