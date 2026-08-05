@@ -786,7 +786,12 @@ export function MainTab({
               </div>
             )}
 
-            {character.classId === 'alchemist' && <AlchemyPanel character={character} content={content} onPlay={onPlay} />}
+            {/* Gated on the BUDGET, not on being an alchemist by class. buildCharacter already sets
+                `advancedAlchemy` for an Alchemist Dedication and for a Dual Class second class, so
+                gating on `classId === 'alchemist'` hid the panel from exactly the characters who had
+                to go looking for it — they were entitled to daily infused items and could neither
+                see nor prepare them. */}
+            {character.advancedAlchemy && <AlchemyPanel character={character} content={content} onPlay={onPlay} />}
 
             {subEff === 'strikes' ? (
               <div className="strikes">

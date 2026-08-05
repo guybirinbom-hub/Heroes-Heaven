@@ -3506,8 +3506,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (adept7) pushBenefit('adept', adept7, 7);
     const adept11 = firstTwo.find((x) => x !== adept7);
     if (adept11) pushBenefit('adept', adept11, 11);
-    // Paragon: one that already has adept — never the third implement, which never gains adept.
-    const adeptSet = [adept7, adept11].filter(Boolean) as string[];
+    // Intense Implement is the ONE thing that changes the line below: "You have an exceptional link
+    // to your third implement. You gain the adept benefit for your third implement." Without it the
+    // third implement never gains adept, which is why the feat delivered nothing.
+    const third = imps[2];
+    if (third && takenFeats.has('intense-implement')) pushBenefit('adept', third, content.feats['intense-implement']?.level ?? 9);
+    // Paragon: one that already has adept — never the third implement UNLESS Intense Implement gave
+    // it one, which is exactly what that feat is for.
+    const adeptSet = [adept7, adept11, ...(third && takenFeats.has('intense-implement') ? [third] : [])].filter(Boolean) as string[];
     const paragon = adeptSet.includes(build.implementParagon ?? '') ? build.implementParagon! : adeptSet[0];
     if (paragon) pushBenefit('paragon', paragon, 17);
   }

@@ -65312,5 +65312,29 @@
     "value": [
       "divine-defense"
     ]
+  },
+  {
+    "category": "feats",
+    "id": "alchemist-dedication",
+    "field": "advancedAlchemy",
+    "value": {
+      "items": 4
+    }
+  },
+  {
+    "category": "feats",
+    "id": "herbalist-dedication",
+    "field": "advancedAlchemy",
+    "value": {
+      "items": 4
+    }
+  },
+  {
+    "category": "feats",
+    "id": "poisoner-dedication",
+    "field": "advancedAlchemy",
+    "value": {
+      "items": 4
+    }
   }
 ]
