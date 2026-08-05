@@ -9,6 +9,8 @@ import {
   unansweredDailyChoices,
   dailyChoiceLabel,
 } from '../rules/dailyChoices';
+import { dailyItemSlots, dailyItemOptions } from '../rules/dailyItems';
+import { PopupSelect } from '../builder/shared';
 import { roll as rollDice, rollCheck, type RollResult, type DicePreset } from '../rules/dice';
 import { PinContext, type PinDescApi } from './PinContext';
 import { StatDetailModal } from './StatDetailModal';
@@ -220,6 +222,10 @@ export function CharacterSheet({
   // Pending edits inside the open modal, so cancelling discards them.
   const [dailyDraft, setDailyDraft] = useState<Record<string, string>>({});
   const dailyAnswer = (key: string) => dailyDraft[key] ?? storedDaily?.[key] ?? '';
+  // Temporary items made at daily preparations (scroll caches, Scroll Adept, Herbal Forager).
+  const dailyItems = useMemo(() => dailyItemSlots(character, content), [character, content]);
+  const [dailyItemDraft, setDailyItemDraft] = useState<Record<string, string>>({});
+  const dailyItemAnswer = (key: string) => dailyItemDraft[key] ?? character.dailyItems?.[key] ?? '';
   const [customizeOpen, setCustomizeOpen] = useState(false);
   useBackHandler(customizeOpen, () => setCustomizeOpen(false));
   const [portraitOpen, setPortraitOpen] = useState(false);
@@ -765,6 +771,41 @@ export function CharacterSheet({
                 </div>
               )}
 
+              {/* TEMPORARY ITEMS made during daily preparations — the scroll caches, Scroll Adept,
+                  Herbal Forager. Seven records of this shape delivered nothing, because the only
+                  field for it (advancedAlchemy) was alchemist-only and hardcoded to alchemical
+                  items. Kept beside the daily choices, because that is when they are made. */}
+              {dailyItems.length > 0 && (
+                <div className="daily-choices">
+                  <p className="confirm-note">Temporary items you make today:</p>
+                  {dailyItems.map((slot) => {
+                    const opts = dailyItemOptions(slot, character, content);
+                    return (
+                      <div className="daily-choice" key={slot.key}>
+                        <div className="daily-choice-q">
+                          {slot.label} <span className="sb-trait">{slot.sourceName}</span>
+                        </div>
+                        {opts.length === 0 ? (
+                          <p className="confirm-note">
+                            Nothing you can choose yet
+                            {slot.fromSpellbook ? ' — no spell of that rank in your spellbook' : ''}.
+                          </p>
+                        ) : (
+                          <PopupSelect
+                            title={slot.label}
+                            placeholder="Choose…"
+                            value={dailyItemAnswer(slot.key)}
+                            onChange={(v) => setDailyItemDraft((d) => ({ ...d, [slot.key]: v }))}
+                            options={opts.map((o) => ({ value: o.id, label: o.name, description: o.note }))}
+                          />
+                        )}
+                        {slot.note && <p className="confirm-note">{slot.note}</p>}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
               {/* With "reuse" on and everything already answered, say what is being kept — a silent
                   re-application the player can't see is indistinguishable from a bug. */}
               {reuseDaily && needsAsking.length === 0 && dailyChoices.length > 0 && (
@@ -789,11 +830,16 @@ export function CharacterSheet({
                     : undefined
                 }
                 onClick={() => {
-                  if (onPlay && Object.keys(dailyDraft).length) {
-                    onPlay((p) => ({ ...p, dailyChoices: { ...(p.dailyChoices ?? {}), ...dailyDraft } }));
+                  if (onPlay && (Object.keys(dailyDraft).length || Object.keys(dailyItemDraft).length)) {
+                    onPlay((p) => ({
+                      ...p,
+                      dailyChoices: { ...(p.dailyChoices ?? {}), ...dailyDraft },
+                      dailyItems: { ...(p.dailyItems ?? {}), ...dailyItemDraft },
+                    }));
                   }
                   onRest();
                   setDailyDraft({});
+                  setDailyItemDraft({});
                   setRestOpen(false);
                 }}
               >

@@ -1058,6 +1058,40 @@ export interface Feat extends ContentBase, DefenseGrants {
    */
   advancedAlchemy?: { items: number; addInt?: boolean; atLevel?: { level: number; items: number } };
   /**
+   * "Each day during your daily preparations, you can create a single temporary scroll containing a
+   * 1st-rank spell."
+   *
+   * `advancedAlchemy` above is the proof this shape works and the proof it was built too narrowly:
+   * it is alchemist-only, feat-keyed, and hardcoded to alchemical items, so seven records that hand
+   * the player a DIFFERENT temporary item every morning had nowhere to live. Each entry is one slot
+   * the player fills at rest; the answer is play state, re-picked daily, and clears at the next rest.
+   */
+  dailyTemporaryItems?: {
+    /** Stable key, so two sources cannot collide in play state. */
+    id: string;
+    label: string;
+    /** How many slots. `countByLevel` takes the highest entry whose level is reached. */
+    count?: number;
+    countByLevel?: { level: number; count: number }[];
+    /** Scroll Adept scales on the spell DC's rank rather than on level. */
+    countByProficiency?: { key: ProficiencyKey | 'spell-dc'; ranks: Partial<Record<ProficiencyRank, number>> };
+    /** WHICH item may be chosen — the piece that did not exist. */
+    filter: {
+      /** A temporary SCROLL/WAND of a spell: what rank, rising with level. */
+      spellRank?: number;
+      spellRankByLevel?: { level: number; rank: number }[];
+      /** Restrict the spell pool to the character's own spellbook (Scroll Adept). */
+      fromSpellbook?: boolean;
+      /** An ITEM instead of a scroll: required traits and an item-level ceiling. */
+      traits?: string[];
+      maxLevel?: number | string;
+      /** Restrict to formulas the character knows (Herbal Forager). */
+      fromKnownFormulas?: boolean;
+      /** A printed restriction the app cannot enforce, shown with the picker. */
+      note?: string;
+    };
+  }[];
+  /**
    * "Your number of versatile vials per day increases to 5 … a second time to increase it to 6 …
    * a third time to 7." A repeatable feat that SETS a class resource's daily maximum, so `values` is
    * indexed by how many times the character has taken it. It raises a floor rather than replacing the
@@ -2677,6 +2711,9 @@ export interface Character {
   restRecovery?: { hpMultiplier: number; conditionSteps: number };
   /** Answers to daily-preparation choices, keyed `${recordId}:${flag}`; overlaid from play-state. */
   dailyChoices?: Record<string, string>;
+  /** The temporary item each daily-preparations slot holds today (a scroll's spell id, or an item
+   *  id), keyed by slot. See `dailyTemporaryItems`. */
+  dailyItems?: Record<string, string>;
   /** Uses spent against each feat's `limitedUses`, by feat id; overlaid from play-state. */
   featUses?: Record<string, number>;
 

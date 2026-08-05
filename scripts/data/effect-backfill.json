@@ -64621,5 +64621,134 @@
         "text": "Your eidolon's unusual connection with you allows you both to rejuvenate when defeated. The first time each day your turn begins while you're dying, you instantly regain a number of Hit Points equal to three times your level and wake up. (Increase your wounded condition as normal.) You can immediately Manifest your Eidolon as a free action. You can then take your turn as normal."
       }
     ]
+  },
+  {
+    "category": "feats",
+    "id": "basic-scroll-cache",
+    "field": "dailyTemporaryItems",
+    "value": [
+      {
+        "id": "basic",
+        "label": "Temporary scroll (1st rank)",
+        "count": 1,
+        "filter": {
+          "spellRank": 1,
+          "note": "The spell must be a common spell, one you have access to, or one you can cast. The scroll becomes non-magical at your next daily preparations."
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "expert-scroll-cache",
+    "field": "dailyTemporaryItems",
+    "value": [
+      {
+        "id": "expert",
+        "label": "Temporary scroll",
+        "count": 1,
+        "filter": {
+          "spellRankByLevel": [
+            {
+              "level": 1,
+              "rank": 3
+            },
+            {
+              "level": 14,
+              "rank": 4
+            },
+            {
+              "level": 16,
+              "rank": 5
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "master-scroll-cache",
+    "field": "dailyTemporaryItems",
+    "value": [
+      {
+        "id": "master",
+        "label": "Temporary scroll",
+        "count": 1,
+        "filter": {
+          "spellRankByLevel": [
+            {
+              "level": 1,
+              "rank": 6
+            },
+            {
+              "level": 20,
+              "rank": 7
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "grand-scroll-esoterica",
+    "field": "dailyTemporaryItems",
+    "value": [
+      {
+        "id": "grand",
+        "label": "Temporary scroll",
+        "count": 1,
+        "filter": {
+          "spellRankByLevel": [
+            {
+              "level": 1,
+              "rank": 6
+            },
+            {
+              "level": 20,
+              "rank": 7
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "scroll-adept",
+    "field": "dailyTemporaryItems",
+    "value": [
+      {
+        "id": "adept",
+        "label": "Temporary scroll from your spellbook",
+        "count": 2,
+        "filter": {
+          "fromSpellbook": true,
+          "spellRank": 1,
+          "note": "Each scroll must be of a DIFFERENT spell rank, and both ranks must be at least 2 lower than your highest-rank spell."
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "herbal-forager",
+    "field": "dailyTemporaryItems",
+    "value": [
+      {
+        "id": "forage",
+        "label": "Temporary herbal item",
+        "count": 1,
+        "filter": {
+          "traits": [
+            "alchemical",
+            "healing"
+          ],
+          "fromKnownFormulas": true,
+          "note": "It must be an item whose formula you know. If not consumed by your next daily preparations, it is rendered inert."
+        }
+      }
+    ]
   }
 ]

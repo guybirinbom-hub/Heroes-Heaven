@@ -73,6 +73,13 @@ export interface PlayState {
    */
   dailyChoices?: Record<string, string>;
   /**
+   * The temporary item each `dailyTemporaryItems` slot holds today (a scroll's spell id, or an item
+   * id), keyed by slot. Like `dailyChoices` these persist across a rest so the player can keep
+   * yesterday's picks — the items themselves are temporary, but the ANSWER is the thing worth
+   * keeping, and re-picking three scrolls every morning would be worse than confirming them.
+   */
+  dailyItems?: Record<string, string>;
+  /**
    * Uses SPENT against a feat's `limitedUses`, keyed by feat id. Feats with "once per day" had no
    * tracking at all — only items did — so the player had to remember them. Reset by rest() alongside
    * focus points and spell slots; sub-daily periods (round/turn/minute/hour) reset there too, since
@@ -297,6 +304,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     classResources: play.resources ?? ch.classResources ?? {},
     alchemyPrep: play.alchemyPrep ?? ch.alchemyPrep,
     dailyChoices: play.dailyChoices ?? ch.dailyChoices,
+    dailyItems: play.dailyItems ?? ch.dailyItems,
     featUses: play.featUses ?? ch.featUses,
     notes: play.notes ?? ch.notes,
     companionConditions: play.companionConditions ?? ch.companionConditions ?? {},
