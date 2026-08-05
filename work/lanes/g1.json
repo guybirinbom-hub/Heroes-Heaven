@@ -1,0 +1,455 @@
+[
+ {
+  "id": "spirit-instinct",
+  "collection": "classFeatures",
+  "name": "Spirit Instinct",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "whyFlagged": "Spirit Rage's damage IS delivered (RAGE_DAMAGE in derive.ts: 'spirit-instinct' tiers [3,7,13], type 'spirit'), but Raging Resistance at 9th — resistance to void damage and to damage dealt by undead creatures' attacks and abilities while raging — reaches nothing; no instinct carries a whileActive res",
+  "text": "Whether you are emotionally sensitive to the spirits around you; worship ancestors or apparitions; or are haunted by the specter of an ancestor, relative, friend, or foe, your rage takes the form of a spiritual possession. Instinct Ability—Spirit Rage When you rage, you can increase the additional damage from Rage from 2 to 3 and change its damage type to spirit, instead of the damage type for your weapon or unarmed attack (choose each time you Rage). If you choose to deal spirit damage, your weapon or unarmed attack gains the effects of the Ghost Touch property rune, which makes it more effective against incorporeal creatures, and your Rage action gains the divine and spirit traits. Specialization Ability (7th) When using spirit rage, increase the damage from Rage from 3 to 7. If you have greater weapon specialization, instead increase the damage when using spirit rage to 13. Raging Res"
+ },
+ {
+  "id": "tangle-line",
+  "collection": "classFeatures",
+  "name": "Tangle Line",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "An inventor weapon modification whose whole content is 'your innovation gains the parry, ranged trip and tethered traits' — real traits on the weapon the character actually wields, delivered nowhere.",
+  "text": "Thrown Only --- Your weapon has an extensible line that you can use to knock your enemies over, recall the weapon to your hand and even parry attacks. Your innovation gains the parry, ranged trip and tethered traits."
+ },
+ {
+  "id": "thaumaturgic-mastery",
+  "collection": "classFeatures",
+  "name": "Thaumaturgic Mastery",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "whyFlagged": "The class DC master rank IS delivered (advancement.ts, thaumaturge level 17, source 'thaumaturgic-mastery'), but the additional skill increase restricted to Arcana/Nature/Occultism/Religion is never offered.",
+  "text": "You've become a master in paranormal phenomena, and your esoterica grow in power. Your proficiency rank for your thaumaturge class DC increases to master. You also gain an additional skill increase, which you can apply only to Arcana, Nature, Occultism, or Religion."
+ },
+ {
+  "id": "warfare-expertise",
+  "collection": "classFeatures",
+  "name": "Warfare Expertise",
+  "level": 3,
+  "traits": [
+   "commander"
+  ],
+  "whyFlagged": "Auto-granted at Commander 3: expert proficiency in Warfare Lore, plus using Warfare Lore for initiative. There is no lane that raises a Lore skill's rank — AdvancementTrack (types.ts:77) has no skill/lore track, and the only record-level lore fields (trainedLore, loreChoices) grant trained only, so ",
+  "text": "Your knowledge of war and strategy grows and guides your decisions in battle. You gain expert proficiency in Warfare Lore. You can use Warfare Lore to Recall Knowledge about most creatures regardless of type, but typically only to determine whether they can be reasoned with, their most notable offensive abilities, and whether one of their saving throws is particularly weak. In addition, as long as you are observing at least one opponent when initiative is rolled, you can use Warfare Lore for your initiative roll."
+ },
+ {
+  "id": "wildsong",
+  "collection": "classFeatures",
+  "name": "Wildsong",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "whyFlagged": "Auto-granted at Druid 1: every druid knows the Wildsong in addition to their ancestry languages, and nothing adds it — classes.druid has no language grant, so the sheet's language list is short by one. `wildsong` is a real core.languages id.",
+  "text": "You know the Wildsong, a secret language known only within druid orders, in addition to any languages you know through your ancestry. The Wildsong is a melodic and tonal language sounding more like animal calls than a spoken tongue, and its alphabet involves fractals and spirals, like the arrangement of a seashell's chambers, a snowflake's crystals, or a fern's fronds. Teaching the Wildsong to non-druids is anathema."
+ },
+ {
+  "id": "additional-ikon",
+  "collection": "feats",
+  "name": "Additional Ikon",
+  "level": 8,
+  "traits": [
+   "exemplar"
+  ],
+  "whyFlagged": "Grants a fourth ikon of any type — an extra exemplar ikon selection the builder should offer; effectChoices has no ikon filter and the ikon list is too large to enumerate as options.",
+  "text": "Your story has grown rich enough that three ikons can't contain its full complexity. You gain a fourth ikon, which can be of any type."
+ },
+ {
+  "id": "advanced-order-training",
+  "collection": "feats",
+  "name": "Advanced Order Training",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Grants the greater order benefit of whichever Hellknight order you belong to — a concrete benefit conditional on an earlier choice; nothing grants it and no legal field expresses a choice-dependent grant of another record.",
+  "text": "You gain the greater order benefit for the Hellknight order to which you belong."
+ },
+ {
+  "id": "ancestral-mind",
+  "collection": "feats",
+  "name": "Ancestral Mind",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "whyFlagged": "Ancestry/heritage innate spells become occult and use the psychic spellcasting attribute for spell attack and spell DC. build.ts computes the innate entry's profile from the granting source (Charisma by default) and there is no field that retunes an existing innate entry's tradition/key attribute — ",
+  "text": "By unraveling memories and connections passed down from your progenitors and buried within your unconscious mind, you learn to convert your inherent magic into psychic power. You can cast any innate spells you know from an ancestry feat or heritage using your psychic spellcasting and thoughtforms. When you do so, the spell's tradition becomes occult, if it wasn't already, and you can use your psychic spellcasting attribute modifier instead of Charisma to determine your spell attack modifier and spell DC."
+ },
+ {
+  "id": "armor-specialist",
+  "collection": "feats",
+  "name": "Armor Specialist",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Grants the armor specialization effects for every armor you are proficient with — real defensive benefits (e.g. plate's physical resistance, chain's crit-to-hit conversion) that depend on the worn armor's group. Nothing in src models armor specialization at all (no match for 'armor specialization' a",
+  "text": "You have trained hard to optimize your armor's unique protective qualities to maximize the materials used in its creation. You gain the armor specialization effects for all armors you are proficient with."
+ },
+ {
+  "id": "aura-enhancement",
+  "collection": "feats",
+  "name": "Aura Enhancement",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Adds two named spells (Benediction, Malediction) to the pool you can prepare in your divine font slots. No allowed field adds specific spells to a prepared pool, and the Battle Harbinger font is not built at all — battle-harbinger-dedication is absent from CASTER_ARCHETYPES and its registry entries ",
+  "text": "You've enhanced your training with your battle magic, allowing you access to a more potent divine font. Add Benediction and Malediction to the spells you can prepare with your additional slots from your divine font. These spells are also battle auras."
+ },
+ {
+  "id": "awakened-yaoguai-heritage",
+  "collection": "feats",
+  "name": "Awakened Yaoguai Heritage",
+  "level": 5,
+  "traits": [
+   "yaoguai"
+  ],
+  "whyFlagged": "It grants a versatile-heritage character the full mechanical benefits of a yaoguai heritage (and unlocks heritage-gated feats). No allowed field grants a heritage's benefits and there is no second-heritage lane.",
+  "text": "You've delved into the power of your legacy. You gain all the mechanical benefits of the yaoguai heritage you selected at first level, allowing you to take feats and gain any benefits that require a specific yaoguai heritage."
+ },
+ {
+  "id": "axe-thrower",
+  "collection": "feats",
+  "name": "Axe Thrower",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Two real grants, neither expressible: every one-handed axe you wield GAINS the thrown trait (10 feet) and already-thrown axes get +10 feet of range — there is no weapon-trait or range-increment lane — and the critical specialization applies only to THROWN axe attacks, which critSpec/critSpecWeapons ",
+  "text": "You have mastered the weight and balance of a variety of axes and can lob them with ease. Any one-handed axe weapon you wield has the thrown trait with a range of 10 feet. For axes that already have the thrown trait, the range increases by 10 feet. When you critically succeed at an attack roll with a thrown axe weapon, you apply the axe's critical specialization effect."
+ },
+ {
+  "id": "basic-modification",
+  "collection": "feats",
+  "name": "Basic Modification",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "It is a PICK (a basic innovation modification) the builder never offers: inventorModificationOptions / INVENTOR_TIER_LEVEL and build.inventorModifications are gated on the inventor CLASS and an innovation subclass, so an Inventor-archetype character gets no choice. effectChoices can't express it — t",
+  "text": "You've learned to modify your innovation in order to enhance its capabilities beyond what an ordinary piece of equipment can accomplish. You gain a basic modification of your choice for your innovation. Your innovation must meet any requirements for the modification you choose, as normal."
+ },
+ {
+  "id": "basic-scroll-cache",
+  "collection": "feats",
+  "name": "Basic Scroll Cache",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "A daily-preparations PICK (one common 1st-rank spell, plus a 2nd-rank one at 8th level) that becomes a temporary scroll; nothing offers it. effectChoices' spellFilter can only grant a spell as innate or focus, which would misrepresent it — a scroll is read at the scroll's own rank/DC and works for n",
+  "text": "You have a vast and overflowing collection of scroll scraps, riddled with errors and misspellings and leaking energy like a sieve. With enough care, you can coax these scroll scraps into functioning—briefly. Each day during your daily preparations, you can create a single temporary scroll containing a 1st-rank spell. The spell must be a common spell, a spell to which you have access, or a spell you are able to cast, and you must be trained in the skill corresponding to at least one of the spell's traditions. You can use Learn a Spell to add spells to those you can use with this feat, even if you aren't a spellcaster. This scroll is an unstable, temporary item and loses its magic the next time you make your daily preparations if you haven't already used it. This temporary scroll can't be used to Learn the Spell. At 8th level, add a second temporary scroll containing a 2nd-rank spell."
+ },
+ {
+  "id": "bestial-brutality",
+  "collection": "feats",
+  "name": "Bestial Brutality",
+  "level": 5,
+  "traits": [
+   "nephilim"
+  ],
+  "whyFlagged": "The Bestial Manifestation unarmed attack gains the deadly d6 trait (the app does compute deadly crit riders on strikes) and gets brawling critical specialization, but only for that one attack. There is no lane to add a trait to an already-granted strike, and critSpec + critSpecWeapons {groups:['braw",
+  "text": "Your animalistic unarmed attack grows more dangerous. The unarmed attack you chose for Bestial Manifestation gains the deadly d6 trait. Whenever you score a critical hit with this unarmed attack, you get the brawling critical specialization effect."
+ },
+ {
+  "id": "billowing-wings",
+  "collection": "feats",
+  "name": "Billowing Wings",
+  "level": 12,
+  "traits": [
+   "air",
+   "archetype"
+  ],
+  "whyFlagged": "Grants your winged animal companions a gust ranged unarmed attack (1d4 bludgeoning, 30 ft, air and propulsive). Companion strikes are rendered on the sheet (companions.ts formats them), but COMPANION_MODS has no attack-grant field — only strikeRider, senses, speeds, and note — so the companion attac",
+  "text": "You've trained your winged companions to gather air in their wings, whipping up a concentrated gust of wind at opponents, potentially staggering them. Your companions with wings gain a gust ranged unarmed attack, which deals 1d4 bludgeoning damage with a range of 30 feet and has the air and propulsive traits. On a critical hit, the target is pushed back 5 feet. This is forced movement."
+ },
+ {
+  "id": "blessed-blood-sorcerer",
+  "collection": "feats",
+  "name": "Blessed Blood (Sorcerer)",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "whyFlagged": "'Add up to three of your deity's spells to your spell list' is a build-time player pick that nothing offers. effectChoices/spellFilter cannot model it, because that would put the spells in the repertoire for free while the feat only makes them selectable with normal repertoire slots — the spell-LIST",
+  "text": "Your deity's blessings manifest in your blood-borne power. Add up to three of your deity's spells (spells your deity grants to clerics) to your spell list. They are not automatically added to your repertoire, but you can select them just as you would spells normally on the divine spell list."
+ },
+ {
+  "id": "cantrip-casting",
+  "collection": "feats",
+  "name": "Cantrip Casting",
+  "level": 2,
+  "traits": [
+   "pervasive-magic"
+  ],
+  "whyFlagged": "Grants two additional cantrips from the matching tradition — a real spellcasting resource the player should be able to PICK. spellSlotBonus cannot deliver it: build.ts filters slot grants to ranks > 0, so rank-0 (cantrip) counts are unreachable, and no other field expresses a cantrip-count increase.",
+  "text": "You increase your ability to cast simple spells. You gain two additional cantrips from the tradition matching your trait."
+ },
+ {
+  "id": "cantrip-expansion",
+  "collection": "feats",
+  "name": "Cantrip Expansion",
+  "level": 2,
+  "traits": [
+   "bard",
+   "cleric",
+   "magus",
+   "oracle",
+   "psychic",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "whyFlagged": "Two extra cantrips prepared per day (prepared casters) or two extra cantrips added to the repertoire (spontaneous) — a picked spellcasting resource. Same missing lane as Cantrip Casting: spellSlotBonus explicitly skips rank 0, so nothing can grant cantrip capacity.",
+  "text": "Bard, Oracle, Sorcerer Study broadens your range of simple spells. Cleric You study a wider range of simple spells. Magus, Wizard Dedicated study allows you to prepare a wider range of simple spells for every situation. Psychic You expand what your mind can accomplish. Witch Your patron recognizes your need for flexibility and versatility, and grants you the power to prepare a wider range of simple spells. --- Prepared You can prepare two additional cantrips each day. Spontaneous Add two additional cantrips from your spell list to your repertoire."
+ },
+ {
+  "id": "cutting-heaven-crushing-earth",
+  "collection": "feats",
+  "name": "Cutting Heaven, Crushing Earth",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "While you wear invested handwraps of mighty blows, their runes also apply to one wielded weapon usable with Overwhelming Combination - a real change to that weapon's attack bonus, striking dice and property runes on the Strikes page. derive.ts:1005 (bestHandwrapsRunes) applies handwraps runes to una",
+  "text": "Your skill in combining fist and blade has grown into a seamless art where each attack makes an opponent more vulnerable to the next. As long as you have invested and are wearing a set of handwraps of mighty blows, you also apply their runes to a single weapon you're wielding that can be used with your Overwhelming Combination ability. You gain the following benefits. - When you successfully Strike an opponent with this weapon, it's off-guard to the next Strike you make against it with a fist unarmed attack before the end of your next turn. - When you successfully Strike an opponent with your fist unarmed attack, it's off-guard to the next Strike you make against it with a one-handed, agile, or finesse melee weapon before the end of your next turn."
+ },
+ {
+  "id": "deadly-aspect",
+  "collection": "feats",
+  "name": "Deadly Aspect",
+  "level": 5,
+  "traits": [
+   "dragonblood"
+  ],
+  "whyFlagged": "The unarmed attack granted by Draconic Aspect permanently gains the deadly d8 trait, which changes the crit damage line the Strikes page prints (derive.ts:1421 reads deadly-dN off the strike's traits). No legal field injects a trait onto an already-granted strike.",
+  "text": "You have honed the unarmed attack your draconic heritage has granted you to a lethal degree. The unarmed attack you gained from Draconic Aspect gains the deadly d8 trait."
+ },
+ {
+  "id": "embodiment-of-the-balance",
+  "collection": "feats",
+  "name": "Embodiment Of The Balance",
+  "level": 2,
+  "traits": [
+   "animist"
+  ],
+  "whyFlagged": "Adds Heal and Harm to the apparition spell repertoire — real, permanent spell access the player never receives; build.ts assembles that repertoire solely from the attuned apparition options' `grantedSpells`, and no listed field lets a FEAT add spells to a repertoire.",
+  "text": "Your place in the balance between the forces of life and entropy expands the spells you can pull from the spirit realms. You add Heal and Harm to your apparition spell repertoire, allowing you to cast them with your apparition spellcasting."
+ },
+ {
+  "id": "enlarged-chassis",
+  "collection": "feats",
+  "name": "Enlarged Chassis",
+  "level": 13,
+  "traits": [
+   "automaton"
+  ],
+  "whyFlagged": "Constant enlarge is a real permanent package (Large size, +5 feet reach, +2 status to melee damage, clumsy 1 until the Enhancement removes it) and none of it reaches the sheet — the id appears only as a label in the automaton core-feat option list. The feat fields sizeOverride/reach in build.ts woul",
+  "text": "You've empowered your core to support a larger body, granting you size and additional reach. You gain the effects of enlarge constantly. Enhancement Your core's empowerment has stabilized, allowing for greater support. You are no longer clumsy due to the effects of enlarge."
+ },
+ {
+  "id": "enticing-dwelling",
+  "collection": "feats",
+  "name": "Enticing Dwelling",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Doubles the spirit wisps your spirit dwelling gains each day (1 -> 2). Wisps are a per-day counter other exorcist feats spend; nothing in the app tracks them. The right home is a feat-gated counter in CLASS_RESOURCES (src/rules/classResources.ts, the `feat:` form used for Rage/Panache), which no aud",
+  "text": "Your spirit dwelling is particularly inviting to spirit wisps. During your daily preparations, and whenever you spend 10 minutes to find more wisps, you entice two wisps into your spirit dwelling instead of one."
+ },
+ {
+  "id": "exorcist-dedication",
+  "collection": "feats",
+  "name": "Exorcist Dedication",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "whyFlagged": "The dedication creates a spirit dwelling that gains a spirit wisp every day (and can be re-primed with a 10-minute ritual); wisps are the currency every other exorcist feat spends. Nothing tracks them. A feat-gated counter in CLASS_RESOURCES (src/rules/classResources.ts) is the right home and no aud",
+  "text": "You've learned to attract, quell, and purify spirits, housing them in a special receptacle called a *spirit dwelling* until they're ready to move on. Through the power of prayers or ritual incantations, one mundane object in your possession becomes a *spirit dwelling*. Your *spirit dwelling* functions as a lure for lost spirits weakened by their time on the Material Plane. Each day during your daily preparations, your *spirit dwelling* attracts a spirit wisp who comes to dwell inside. If your *spirit dwelling* contains no wisps, you can spend 10 minutes in a minor ritual to cast your *spirit dwelling* around an area and attract another wisp. You can also capture stronger spirit remnants from vanquished undead spirits. As long as your *spirit dwelling* contains any spirits, it glows faintly, casting dim light in a 10-foot radius. As an exorcist, you do more than just collect spirits: you "
+ },
+ {
+  "id": "expert-cathartic-spellcasting",
+  "collection": "feats",
+  "name": "Expert Cathartic Spellcasting",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "The expert tier of the Cathartic Mage's spontaneous casting (ranks 4-6 slots). cathartic-mage-dedication is NOT in CASTER_ARCHETYPES (src/rules/casterArchetypes.ts), so neither the basic nor the expert feat grants a slot — the whole archetype's casting is inert. Registering the dedication is engine ",
+  "text": "You gain the benefits."
+ },
+ {
+  "id": "expert-red-mantis-magic",
+  "collection": "feats",
+  "name": "Expert Red Mantis Magic",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "The expert tier of Red Mantis divine casting (ranks 4-6 slots). red-mantis-assassin-dedication is absent from CASTER_ARCHETYPES, and the archetype's feat ids ('basic/expert-red-mantis-magic') do not even match mk()'s basic-/expert-<slug>-spellcasting pattern, so the tier can never be detected. Engin",
+  "text": "You gain the expert spellcasting benefits."
+ },
+ {
+  "id": "expert-scroll-cache",
+  "collection": "feats",
+  "name": "Expert Scroll Cache",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Adds a daily temporary scroll of a 3rd-rank spell (4th at 14th, 5th at 16th) that the player PICKS. Nothing offers the pick — basic-scroll-cache was already judged the same way (judge-2) and the scroll cache is unmodelled end to end; effectChoices' spellFilter grants innate casts, not level-scaling ",
+  "text": "Your scroll collection has vastly grown, both in size and potency. In addition to your daily scrolls from Basic Scroll Cache, add a scroll with a 3rd-rank spell. At 14th level, add a scroll with a 4th-rank spell. At 16th level, add a scroll with a 5th-rank spell."
+ },
+ {
+  "id": "expert-snowcasting",
+  "collection": "feats",
+  "name": "Expert Snowcasting",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "The expert tier of the Gelid Shard archetype's spellcasting (the basic tier is the 'snowcaster' feat). No gelid-shard dedication is registered in CASTER_ARCHETYPES and the feat ids do not follow mk()'s basic-/expert-<slug>-spellcasting pattern, so no archetype slots are ever unlocked. Engine/registr",
+  "text": "You draw ever more magical cold into your being, learning how to manipulate it to your whims. You gain the benefits."
+ },
+ {
+  "id": "explosive-savant",
+  "collection": "feats",
+  "name": "Explosive Savant",
+  "level": 1,
+  "traits": [
+   "dwarf"
+  ],
+  "whyFlagged": "Two-tier group re-categorisation of proficiency (bombs and martial firearms count as SIMPLE, advanced firearms count as MARTIAL). FEAT_LANE_GRANTS.weaponFamiliarity takes an explicit weapon-id list plus ONE mirrorCategory, and core.json holds 172 bomb ids and 119 firearm ids across both tiers — one ",
+  "text": "Access You are from Dongun Hold or Alkenstar. --- You've spent a lifetime wielding guns and explosive ordinance. You have familiarity with bombs and firearms; for the purposes of proficiency you treat bombs and martial firearms as simple weapons, and advanced firearms as martial weapons."
+ },
+ {
+  "id": "extend-elixir",
+  "collection": "feats",
+  "name": "Extend Elixir",
+  "level": 12,
+  "traits": [
+   "alchemist"
+  ],
+  "whyFlagged": "Doubles the duration of every infused elixir with a duration of 1 minute or longer that you drink. Item-driven consumable modes carry a fixed printed `duration` string (core.modes item-* entries) and nothing scales it per-character, so the alchemist's doubled durations never reach the sheet. Needs a",
+  "text": "Integrating your own personal energy into the elixirs you create causes them to affect you for longer. When you consume one of your alchemical items that has the elixir and infused traits and a duration of 1 minute or longer, that elixir's duration is doubled. If you created the item with Quick Alchemy, this can't cause it to exceed the 10-minute duration limit."
+ },
+ {
+  "id": "extradimensional-stash",
+  "collection": "feats",
+  "name": "Extradimensional Stash",
+  "level": 20,
+  "traits": [
+   "extradimensional",
+   "rogue"
+  ],
+  "whyFlagged": "Grants an inherent 5-Bulk extradimensional space that functions as a bag of holding with no Bulk of its own — real carrying capacity the app models for items (itemType 'container' with ignoredBulk, Character.inventory containerInstanceId) but that no feat can confer: there is no grantsItems/containe",
+  "text": "When you perform sleight of hand, you fold space so that objects really do disappear. You create a small extradimensional space somewhere within in your clothing that can hold up to 5 Bulk worth of objects. The space functions as a bag of holding, but can hold only up to 5 Bulk, has no Bulk of its own, and can be Interacted with using only one hand. In addition, when you Palm an Object, you can place it directly into this extradimensional space as long as the space has sufficient free space to hold the object. Extradimensional Stash"
+ },
+ {
+  "id": "fearsome-fangs",
+  "collection": "feats",
+  "name": "Fearsome Fangs",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Upgrades the Ursine Avenger Form strikes (jaws 1d8→1d12, claws 1d6→1d8). The form is modelled as stances['ursine-avenger-form'] with fixed strike dice; StanceDef has senseIfFeat for feat-gated SENSES but no equivalent feat-gated strike-die upgrade, and a feat-side grantedStrikes would create duplica",
+  "text": "Your claws and jaws are brutally powerful and efficient, even by ursine standards. The base damage of your jaws unarmed attack from Ursine Avenger Form increases to 1d12. The base damage of your claws unarmed attack from Ursine Avenger Form increases to 1d8."
+ },
+ {
+  "id": "ferrousoul",
+  "collection": "feats",
+  "name": "Ferrousoul",
+  "level": 1,
+  "traits": [
+   "lineage",
+   "talos"
+  ],
+  "whyFlagged": "The base Fist upgrade (die d6, loses nonlethal, gains modular B/P/S) is hardcoded in derive.ts as `fistDieUpgraded` = powerful-fist / warrior-automaton / warrior-jotunborn only; no data field upgrades the built-in Fist profile, and grantedStrikes would add a SECOND fist row instead of replacing it (",
+  "text": "Whether in their pure elemental forms or as part of an alloy such as steel, the elemental metal in your soul resonates strongly with iron, bronze, and other sturdy, practical metals suitable for weaponry. Your fist attacks gain the modular B, P, or S trait and lose the nonlethal trait. Your fist's damage die increases to 1d6."
+ },
+ {
+  "id": "flexible-spellcaster-dedication",
+  "collection": "feats",
+  "name": "Flexible Spellcaster Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "class",
+   "dedication"
+  ],
+  "whyFlagged": "The record's text grants an extra cantrip per day (four instead of three, five instead of four at 4th level) and nothing delivers it: cantripsKnown() is a hardcoded per-class number and spellSlotBonus explicitly skips rank 0 (build.ts `r > 0`).",
+  "text": "You now have four cantrips per day instead of three. At 4th level, you have five cantrips per day instead of four."
+ },
+ {
+  "id": "forgotten-presence",
+  "collection": "feats",
+  "name": "Forgotten Presence",
+  "level": 8,
+  "traits": [
+   "druid"
+  ],
+  "whyFlagged": "The Recall Knowledge penalty falls on other creatures, but \"Add Rewrite Memory to your spell list as a primal spell\" is a real player-facing grant: without it the primal-filtered spell picker will never offer Rewrite Memory. No field adds a single spell to a character's spell list/tradition (innateS",
+  "text": "The world conspires to keep you forgotten and unnoticed—memories cloud, ink stains out your name in ledgers, and portraits of you crack and warp over your face. Characters attempting to Recall Knowledge about you take a –2 circumstance penalty. Add Rewrite Memory to your spell list as a primal spell."
+ },
+ {
+  "id": "frozen-breadth",
+  "collection": "feats",
+  "name": "Frozen Breadth",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Really grants the player extra repertoire spells and extra spell slots. spellSlotBonus supports {perRank, exceptHighest, entryId} (occult-breadth uses exactly that shape for the bard archetype), but the gelid shard archetype has no spellcasting entry with slots to attach to — first-frost supplies on",
+  "text": "Your attunement to arcane cold enhances the depths of your growing power. Increase the number of spells in your repertoire and number of spell slots you gain from *gelid shard* archetype feats by 1 for each spell rank other than your two highest *gelid shard* spell slots."
+ },
+ {
+  "id": "ghost-path-epiphany",
+  "collection": "feats",
+  "name": "Ghost-path Epiphany",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Grants the unholy sanctification trait and knowledge of two rituals (Call Spirit, Commune). No field grants a FIXED sanctification (only `choice` flags where the player picks holy/unholy) and nothing grants known rituals — innateSpells would wrongly make them per-day innate casts. The secondary-cast",
+  "text": "Deviating from the orthodox path, you tread an inauspicious descent littered with flowers of death; this heretical choice will, in time, earn you the enmity and fear of more traditional cultivators. You become sanctified with the unholy trait. You also learn the Call Spirit and Commune rituals, which can be used to contact only undead or entities from the Void or the Netherworld. When you cast a ritual, you can reduce the number of secondary casters by 1 as you direct decaying fragments of your own soul, felled by your proximity to death, to assist with the ritual. When you do, you must fulfill any requirements for the secondary caster, and you attempt the secondary check normally performed by that secondary caster. You can't replace a secondary caster who's the target of the spell (as in the atone ritual)."
+ },
+ {
+  "id": "gifted-power",
+  "collection": "feats",
+  "name": "Gifted Power",
+  "level": 6,
+  "traits": [
+   "oracle"
+  ],
+  "whyFlagged": "A real extra spell slot at your HIGHEST rank, usable only for mystery-granted spells. spellSlotBonus can only say perRank (every rank — a huge over-grant) or byRank with a fixed rank number, and the highest rank moves with level; there is no 'highest rank only' form and no way to restrict the slot's",
+  "text": "Your mystery grants you additional magic. You have an extra spell slot of your highest rank, which you can use only to cast one of your mystery's granted spells, heightened to this rank. --- Special If you have the divine access class feature or Mysterious Repertoire feat, you can cast spells that you learned from those abilities using the additional spell slot from Gifted Power."
+ },
+ {
+  "id": "gnome-polyglot",
+  "collection": "feats",
+  "name": "Gnome Polyglot",
+  "level": 1,
+  "traits": [
+   "gnome"
+  ],
+  "whyFlagged": "Learn three new languages. The sheet tracks languages (character.languages, its own rail card) but NO feat field grants them — the only addedLanguages field is on the per-character override record, not on feats, and even core Multilingual is unmodelled. The lane itself is missing.",
+  "text": "Your extensive travels, curiosity, and love of learning help you to learn languages quickly. You learn three new languages, chosen from common languages and uncommon languages you have access to. These languages take the same form (signed or spoken) as your other languages. When you select the feat, you learn three new languages instead of two."
+ }
+]

@@ -1191,10 +1191,15 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
   // inventor-modification case above, which is why that comment reads the way it does.
   if (c.mythicCalling && db.classFeatures[c.mythicCalling]) out.add(c.mythicCalling);
   for (const id of choiceOwnedFeatureIds(c.feats ?? [], db)) out.add(id);
-  // Class features the chosen SUBCLASS brings with it — an oracle mystery hands over its oracular
-  // curse. A curse is in no class's feature list and is not a subclass option itself, so all 11 were
-  // reachable by nothing at all.
   for (const [klass, subId] of [[cls, c.subclassId], [c.classId2 ? db.classes[c.classId2] : undefined, c.subclassId2]] as const) {
+    // The CHOSEN SUBCLASS ITSELF. 159 of the 160 subclass options are also classFeatures records —
+    // Giant Instinct, Cloistered Cleric, Bones mystery — and this set never held them, so a star, a
+    // marker, a resistance or a whileActive authored on the subclass you picked reached nothing. The
+    // `<featureId>-<subclassId>` rule above catches VARIANTS of a class feature, not the option.
+    if (subId && db.classFeatures[subId]) out.add(subId);
+    // Class features the subclass brings WITH it — an oracle mystery hands over its oracular curse.
+    // A curse is in no class's feature list and is not a subclass option either, so all 11 were
+    // reachable by nothing at all.
     const opt = klass?.subclass?.options.find((o) => o.id === subId);
     for (const id of opt?.featureIds ?? []) if (db.classFeatures[id]) out.add(id);
   }

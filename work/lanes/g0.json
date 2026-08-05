@@ -1,0 +1,447 @@
+[
+ {
+  "id": "advanced-deed",
+  "collection": "classFeatures",
+  "name": "Advanced Deed",
+  "level": 9,
+  "traits": [
+   "gunslinger"
+  ],
+  "whyFlagged": "Auto-granted at gunslinger 9 and completely inert: the way's advanced deed is never handed over. The way subclass options carry only grants.skills, and the deed records (finish-the-job, vital-shot, spinning-crush, ...) live in classFeatures, which grantsFeats cannot reach (it resolves against the fe",
+  "text": "You've learned a powerful new technique of your chosen way. You gain the advanced deed ability of the way you chose at 1st level."
+ },
+ {
+  "id": "blessed-shield",
+  "collection": "classFeatures",
+  "name": "Blessed Shield",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "whyFlagged": "A champion's shield should carry the reinforcing rune for their level (minor at 1st up to supreme at 19th), or +1 Hardness if it already has it. The app computes shield Hardness/HP/BT from an ETCHED reinforcing rune only (derive.ts reads held.inv.runes.reinforcing), and no field lets a class feature",
+  "text": "In your hands, a shield gains the minor Reinforcing rune. As you go up in level, the shield gains the reinforcing rune of your level (lesser at 7th level, moderate at 10th level, greater at 13th level, major at 16th level, and supreme at 19th level). If your shield already has the appropriate reinforcing rune for your level, or if it's a Sturdy Shield of the same level as the appropriate reinforcing rune, the shield's Hardness instead increases by 1."
+ },
+ {
+  "id": "custodian-of-groves-and-gardens",
+  "collection": "classFeatures",
+  "name": "Custodian of Groves and Gardens",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "whyFlagged": "Spells and the vessel focus spell ARE delivered (classes.animist.extraChoices.apparition option carries grantedSpells + focusSpells garden-of-healing), but the Apparition Skills are not: apparition-attunement's text grants Lore skills while attuned, so Farming Lore and Herbalism Lore should be train",
+  "text": "Custodians of groves and gardens frequent tended greenery and farmlands cared for by loving stewards, and other places of reflection and restoration where green things grow. Some of these apparitions linger in the mortal realms not because they have lost their way, but because they believe they have already found Elysium. Others are the cultivated spiritual essence of the location itself. Custodians of groves and gardens are peaceful, quiet, and averse to conflict. --- Apparition Skills Farming Lore, Herbalism Lore Apparition Spells - Cantrip Tangle Vine - 1st Protector Tree - 2nd Gentle Breeze - 3rd Safe Passage - 4th Peaceful Bubble - 5th Truespeech - 6th Field of Life - 7th Lifewood Cage - 8th Moment of Renewal - 9th Nature's Enmity Vessel Spell Garden of Healing Avatar *Peaceful Reaches* Speed 60 feet, ignore difficult terrain and greater difficult terrain Melee ⟨1⟩ garden's cradle ("
+ },
+ {
+  "id": "deific-weapon",
+  "collection": "classFeatures",
+  "name": "Deific Weapon",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "whyFlagged": "Steps the damage die of the deity's favored weapon up one size when it is a simple weapon or a d4 unarmed attack, grants access if uncommon, and treats an advanced favored weapon as martial. derive.ts implements exactly this die step, but only for the FEAT Deadly Simplicity (hasDeadlySimplicity chec",
+  "text": "You zealously bear your deity's favored weapon. If it's an unarmed attack with a d4 damage die or a simple weapon, increase the damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). If the weapon is uncommon, you gain access to it, and if it's an advanced weapon, you treat it as a martial weapon for the purposes of proficiency"
+ },
+ {
+  "id": "deity-cleric",
+  "collection": "classFeatures",
+  "name": "Deity (Cleric)",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "whyFlagged": "The favored-weapon training IS delivered (build.ts writes proficiencies.weaponOverrides from deity.favoredWeapons, doctrine-scaled) and sanctification comes through the deity's own effectChoices, but the deity's granted SKILL is not: deities carry a 'skill' field (e.g. sarenrae.skill = medicine) and",
+  "text": "As a cleric, you are a mortal servitor of a deity you revere above all others. Your deity grants you the trained proficiency rank in one skill and with the deity's favored weapon. If the favored weapon is uncommon, you also get access to that weapon. Your deity also adds spells to your spell list. You can prepare these just like you can any spell on the divine spell list once you can prepare spells of their rank as a cleric. Any of these spells that aren't normally on the divine list are still divine spells if you prepare them this way. ## Sanctification Depending on your deity, their sanctification can make you holy or unholy. This gives you the holy or unholy trait, which commits you to one side of a struggle over the souls of the planes and may be referenced in other abilities. If you \"can be\" holy or unholy according to your deity, you make that choice, and if you \"must be\" holy or u"
+ },
+ {
+  "id": "eidolon-symbiosis",
+  "collection": "classFeatures",
+  "name": "Eidolon Symbiosis",
+  "level": 7,
+  "traits": [
+   "summoner"
+  ],
+  "whyFlagged": "Auto-granted at summoner 7 and completely invisible: the eidolon gains a new ability determined by its type, and nothing models eidolon-type abilities (companions.ts derives only ability mods, unarmed Strikes, senses and defences). No legal field can grant a type-keyed companion ability.",
+  "text": "Your connection with your eidolon strengthens, granting your eidolon access to a new ability depending on its type, as described in Eidolon Abilities in each eidolon's entry."
+ },
+ {
+  "id": "eidolon-transcendence",
+  "collection": "classFeatures",
+  "name": "Eidolon Transcendence",
+  "level": 17,
+  "traits": [
+   "summoner"
+  ],
+  "whyFlagged": "Auto-granted at summoner 17: a second type-keyed eidolon ability plus +2 to one of the eidolon's ability scores. Neither is delivered — eidolon ability scores are free-entry (ec.abilities) with nothing prompting or applying the +2, and type abilities are not modelled at all.",
+  "text": "Your connection with your eidolon approaches its peak, granting your eidolon access to a powerful new ability depending on its type, as described in Eidolon Abilities in each eidolon's entry. This ability also increases one of the eidolon's ability scores by 2."
+ },
+ {
+  "id": "enhanced-resistance",
+  "collection": "classFeatures",
+  "name": "Enhanced Resistance",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "Upgrades the resistance an initial armor modification grants from half level to full level (e.g. phlogistonic-regulator carries resistances cold/fire max(1,floor(@actor.level/2)) in effect-backfill.json). No field can rewrite another feature's resistance formula, and which modification it applies to",
+  "text": "You've improved upon your initial modification's ability to resist damage. The resistance from your initial armor modification adds your full level, instead of half your level (for instance, phlogistonic regulator's resistance would increase to your level). If you have more than one initial modification that gives resistance, choose which one this applies to."
+ },
+ {
+  "id": "expert-tactician",
+  "collection": "classFeatures",
+  "name": "Expert Tactician",
+  "level": 7,
+  "traits": [
+   "commander"
+  ],
+  "whyFlagged": "Class DC→expert is in CLASS_ADVANCEMENT.commander (level 7) and the +2 folio tactics in commanderFolioMax(), but 'the total number of tactics you can have prepared increases to four' never arrives: preparedMax is a flat 3 + preparedTacticsBonus summed over FEATS only (build.ts:3126-3127), so a level",
+  "text": "Your time spent leading and training others on battlefield tactics has improved your combat acumen. Your proficiency rank for your commander class DC increases to expert, and you add two new tactics to your folio; these can be any mobility or offensive tactics you don't already know, or you can choose from expert tactics you have access to. The total number of tactics you can have prepared increases to four. In addition, your proficiency rank in Warfare Lore increases to master."
+ },
+ {
+  "id": "giant-instinct",
+  "collection": "classFeatures",
+  "name": "Giant Instinct",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "whyFlagged": "The instinct's rage damage IS delivered (derive.ts RAGE_DAMAGE['giant-instinct'] tiers 6/10/18 with the larger-weapon note), but Raging Resistance (9th) is not — nothing grants resistance 3 + Con to bludgeoning and a chosen energy type while raging, and the sibling dragon-instinct record openly admi",
+  "text": "Your rage gives you the raw power and size of a giant. This doesn't necessarily mean you revere giants—you might scoff at them or even aspire to slay them! You could instead seem like a giant to other people due to your exceptional strength or larger-than-life emotions and ego. Instinct Ability—Titan Mauler You can use a weapon built for a Large creature if you are Small or Medium (both normally and when raging). If you're not Small or Medium, you can use a weapon built for a creature one size larger than you. You start with one such weapon, which you receive for free. It must be a common melee or ranged weapon, it must have a Price of 9 gp or less (not including the Price adjustment for being a larger weapon), and it must be common or you must otherwise have access to it. It is your personal weapon and has no value if sold unless you later add runes to it, and it has the normal Bulk for"
+ },
+ {
+  "id": "hampering-spikes",
+  "collection": "classFeatures",
+  "name": "Hampering Spikes",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "Adds hampering, trip and versatile P to the inventor's innovation weapon. weaponTraits is a FEAT-only field (derive.ts weaponRiderTraits reads db.feats only) and is not on the ClassFeature type, and nothing marks WHICH inventory weapon is the innovation — writing an unfiltered rider would over-grant",
+  "text": "You've added long, snagging spikes to your weapon, which you can use to impede your foes' movement. Your innovation gains the hampering, trip, and versatile P traits."
+ },
+ {
+  "id": "handlers-calling",
+  "collection": "classFeatures",
+  "name": "Handler's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "whyFlagged": "Command an Animal is Nature. The regain clause also covers Make an Impression on a wild animal (Diplomacy), so Diplomacy appears on the regain entry only — the spend clause is Command an Animal alone and must not be widened.",
+  "text": "You have an instinctive urge to care for wild creatures. When you attempt a check to Command an Animal, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Make an Impression on a wild animal or Command an Animal who isn't your pet or companion, you regain a Mythic Point. --- Edicts care for dangerous animals or beasts in need, respect the habitats of wild creatures Anathema initiate combat against an animal or beast encountered in its natural environment, kill an animal or beast when sparing it is a viable option"
+ },
+ {
+  "id": "heavy-construction",
+  "collection": "classFeatures",
+  "name": "Heavy Construction",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "Rewrites the innovation armour to a printed heavy-armour stat block (AC +5, Dex cap +1, check –2, Speed –10/0, Str +3, Bulk 3, bulwark + entrench) and sets innovation-armour proficiency equal to medium. There is no innovation ARMOUR item to restat — build.inventorArmorStats only picks power-suit/sub",
+  "text": "Power Suit only --- You've expanded your innovation into a heavy bulwark, and your groundbreaking design ensures you don't take any of the drawbacks for such heavy defenses. Your innovation becomes heavy armor, and your proficiency in your innovation armor (but no other heavy armor) advances to be equal to your proficiency in medium armor. If your Strength modifier is at least +3, you remove the Speed penalty entirely instead of reducing it to –5 feet. The armor's adjusted statistics are: *AC Bonus* +5; *Dex Cap* +1; *Check Penalty* –2; *Speed Penalty* –10 feet; *Strength* +3; *Bulk* 3; *Group* composite; *Armor Traits* bulwark, entrench melee and ranged."
+ },
+ {
+  "id": "hefty-composition",
+  "collection": "classFeatures",
+  "name": "Hefty Composition",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "Adds shove, razing and versatile B to the innovation weapon. Same gap as the other weapon-innovation modifications: weaponTraits is feat-only and no inventory item is designated as the innovation.",
+  "text": "Blunt surfaces and sturdy construction make your weapon hefty and mace-like. Your innovation gains the shove, razing, and versatile B traits."
+ },
+ {
+  "id": "humble-strikes",
+  "collection": "classFeatures",
+  "name": "Humble Strikes",
+  "level": 1,
+  "traits": [
+   "exemplar"
+  ],
+  "whyFlagged": "Auto-granted at exemplar 1 and completely invisible: every simple weapon the character wields should show one damage die size larger. unarmedTraits.stepDie is unarmed-only, weaponTraits has no stepDie, and neither field exists on ClassFeature. Needs a wielded-weapon die-step lane filtered to simple ",
+  "text": "Even the most unassuming weapons can accomplish great deeds. When you are wielding a simple weapon, increase the damage die size of that weapon by one step."
+ },
+ {
+  "id": "hunters-calling",
+  "collection": "classFeatures",
+  "name": "Hunter's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "whyFlagged": "Seek is a Perception check and Track is Survival — both rolled by the player, both unmodelled. Perception needs the perception kind, not a skill target.",
+  "text": "You're the hunter, and somewhere, a legendary predator awaits as your ultimate challenge. When you attempt a check to Seek or Track, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Seek or Track a hostile or unfriendly creature, you regain a Mythic Point. --- Edicts be first in a group to scout an unknown and potentially dangerous area, seek out creatures that are causing imbalances in the natural world and correct the imbalance Anathema leave an animal or beast you've wounded free to cause future harm, refuse a request to hunt a dangerous animal or beast"
+ },
+ {
+  "id": "inconspicuous-appearance",
+  "collection": "classFeatures",
+  "name": "Inconspicuous Appearance",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "Adds backstabber and versatile P (plus concealable when light Bulk) to the innovation weapon. Same innovation-item gap: weaponTraits is feat-only and no inventory item is the innovation.",
+  "text": "Melee Only --- Your innovation is built for easy concealment and surprise attacks. It gains the backstabber and versatile P traits. If the weapon has light Bulk, it also gains the concealable trait."
+ },
+ {
+  "id": "initiate-benefit-weapon",
+  "collection": "classFeatures",
+  "name": "Initiate Benefit (Weapon)",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "whyFlagged": "The reaction half is fine, but from 5th level this grants weapon critical specialization with the weapon implement and no Strike ever shows it. critSpec must be paired with critSpecWeapons and there is no way to say 'the weapon you designated as your implement' — an unfiltered critSpec would over-gr",
+  "text": "Your weapon trembles slightly in your hand, seeking out your foe's weakness to it and interrupting their actions. You gain the Implement's Interruption reaction. At 5th level, when you gain thaumaturgic weapon expertise, your instinctive knowledge of your weapon implement also grants you the weapon's critical specialization effect."
+ },
+ {
+  "id": "integrated-gauntlet",
+  "collection": "classFeatures",
+  "name": "Integrated Gauntlet",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "Adds the free-hand trait to the innovation weapon (excluding two-hand/fatal aim). Same innovation-item gap: weaponTraits is feat-only and no inventory item is designated as the innovation.",
+  "text": "Combining your weapon with a gauntlet, you make it so you can quickly switch between attacking with your weapon and tinkering using your hands. Your innovation gains the free-hand trait. This cannot be used with weapons that have the two-hand or fatal aim traits."
+ },
+ {
+  "id": "inventor-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Inventor Weapon Expertise",
+  "level": 5,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "The expert simple/martial/unarmed half is delivered by CLASS_ADVANCEMENT.inventor level 5, but 'if you have a Weapon Innovation you gain the critical specialization effect with your innovation' is delivered nowhere (the record carries no critSpec, and neither does weapon-innovation). critSpec cannot",
+  "text": "You develop tricks for using your weapons more effectively. Your proficiency ranks for simple and martial weapons and unarmed attacks increase to expert. If you have a Weapon Innovation, you gain access to the critical specialization effect with your innovation."
+ },
+ {
+  "id": "legendary-tactician",
+  "collection": "classFeatures",
+  "name": "Legendary Tactician",
+  "level": 19,
+  "traits": [
+   "commander"
+  ],
+  "whyFlagged": "Two of three halves land — CLASS_ADVANCEMENT.commander level 19 gives classDc legendary, and commanderFolioMax(level) adds +2 folio slots at 19 while commanderMaxTier unlocks legendary tactics. But 'the total number of tactics you can have prepared increases to six' never happens: build.ts hardcodes",
+  "text": "You are an unrivaled legend in your use of battlefield tactics. Your proficiency rank for your commander class DC increases to legendary, and you add two new tactics to your folio; these can be any mobility or offensive tactics you don't already have in your folio, or you can choose from expert tactics, master tactics, or legendary tactics you have access to. The total number of tactics you can have prepared increases to six."
+ },
+ {
+  "id": "ligneous-instinct",
+  "collection": "classFeatures",
+  "name": "Ligneous Instinct",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "whyFlagged": "Wooden Rage's damage IS delivered (RAGE_DAMAGE in derive.ts has 'ligneous-instinct': tiers [6,10,18]), but three printed pieces reach nothing and no legal field can express them: the −10-foot Speed while using wooden rage (speedPenalty is unconditional, and whileActive carries no speeds penalty), Ra",
+  "text": "Your rage is powered by the steady growth of the natural world, from the blossoming of flowers to the cultivation of vegetables and the towering, imposing might of the grandest trees. You might be descended from powerful druids or dryads, been exposed to powerful primal magic, or been transformed by the resurgence of the Plane of Wood. As you unleash your rage, your flesh becomes covered in woody growths, which spread like bark across your body. ## Anathema Despoiling nature and killing plants unnecessarily is anathema to your instinct. Defending yourself against plant creatures or hazards is not. ## Wooden Rage (Instinct Ability) While raging, you can increase the additional damage from Rage from 2 to 6. If you do this, reduce your Speed by 10 feet, as the bark plates covering your body are a hinderance to mobility. This speed reduction can't be overcome by any means, though it can be o"
+ },
+ {
+  "id": "lust",
+  "collection": "classFeatures",
+  "name": "Lust",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "whyFlagged": "A wizard curriculum (Runelord sin) that exists ONLY as this classFeature — there is no matching wizard subclass option in core.json, so neither the initial school spell Heart's Hook nor the sin spell list reaches the character. Anathema is roleplay.",
+  "text": "The Heart's Hook drowns rationality in desires, twisting its targets' thoughts until they gladly serve the runelord's wishes. Anathema Use your magic to meddle with physical forms or invoke the void. Sin Spells - cantrips: Daze, Message - 1st: Charm, Command - 2nd: Charitable Urge, Stupefy - 3rd: Dream Message, Enthrall - 4th: Confusion, Suggestion - 5th: Mind Probe, Subconscious Suggestion - 6th: Dominate, Never Mind - 7th: Love's Sacrifice, Warp Mind - 8th: Uncontrollable Dance - 9th: Telepathic Demand Initial School Spell Heart's Hook"
+ },
+ {
+  "id": "master-overdrive",
+  "collection": "classFeatures",
+  "name": "Master Overdrive",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "Neither half arrives. \"You become a master in Crafting\": skill RANK raises have no record field (trainedSkill only grants trained) — the siblings live in featGrantsAuto.ts as 'expert-overdrive' {crafting: expert} and 'legendary-overdrive' {crafting: legendary}, but there is no 'master-overdrive' ent",
+  "text": "Your mastery of invention and crafting enhances your Overdrive even further. You become a master in Crafting, and on a successful Overdrive, you increase the additional damage by a total of 2, replacing the increase from expert overdrive."
+ },
+ {
+  "id": "master-tactician",
+  "collection": "classFeatures",
+  "name": "Master Tactician",
+  "level": 15,
+  "traits": [
+   "commander"
+  ],
+  "whyFlagged": "Class DC to master IS delivered (advancement.ts commander level 15, source 'master-tactician') and folio size comes from commanderFolioMax(level), but the prepared-tactics increase never happens — build.ts computes preparedMax = 3 + preparedTacticsBonus summed over content.feats only, so this featur",
+  "text": "You are among the greatest tacticians to have ever led forces on the field of battle. Your proficiency rank for commander class DC increases to master, and you add two new tactics to your folio; these can be any mobility or offensive tactics you don't already have in your folio, or you can choose from expert tactics or master tactics you have access to. The total number of tactics you can have prepared increases to five. In addition, you gain legendary proficiency in Warfare Lore."
+ },
+ {
+  "id": "masterful-hunter-precision",
+  "collection": "classFeatures",
+  "name": "Masterful Hunter (Precision)",
+  "level": 17,
+  "traits": [
+   "ranger"
+  ],
+  "whyFlagged": "Extra precision damage on the SECOND (and, at 19th, third) hit against your hunted prey in a round. strikeDamage is unconditional per Strike and situational carries no per-round hit counter, so there is no lane for \"the Nth time in a round you hit\" — the base Precision edge is equally unmodelled.",
+  "text": "Your weapon mastery allows you to hit your prey's vital areas multiple times. The second time in a round you hit your hunted prey, you also deal 1d8 precision damage. At 19th level, your second hit in a round against your hunted prey deals 2d8 precision damage, and your third hit in a round against your hunted prey deals 1d8 precision damage."
+ },
+ {
+  "id": "medium-armor-expertise-inventor",
+  "collection": "classFeatures",
+  "name": "Medium Armor Expertise (Inventor)",
+  "level": 11,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "The proficiency half is ALREADY delivered (advancement.ts inventor level 11 lists unarmored/light/medium expert with source 'medium-armor-expertise-inventor'), but the second sentence — access to the critical specialization effect with a medium or heavy armor innovation — has no lane: critSpec is we",
+  "text": "You've learned to defend yourself better against attacks. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to expert. If you have a medium or heavy armor innovation, you gain access to the critical specialization effect with your armor innovation."
+ },
+ {
+  "id": "modular-head",
+  "collection": "classFeatures",
+  "name": "Modular Head",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "The innovation gains the modular trait (B/P/S) plus an on-demand nonlethal toggle, and the Strike never sees it. weaponTraits is the right family but its match filter only accepts melee/groups/anyTrait/items — there is no way to say \"your weapon innovation\", which is a player-chosen weapon resolved ",
+  "text": "You've constructed a multi-purpose, adjustable striking surface for your weapon, or you've made special ammunition you can swiftly alter. Your innovation gains the modular trait for bludgeoning, piercing, and slashing. When you Interact to use the modular trait, you can also choose to give the weapon the nonlethal trait if it doesn't currently have it, or to remove that trait if it's currently nonlethal."
+ },
+ {
+  "id": "pride",
+  "collection": "classFeatures",
+  "name": "Pride",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "whyFlagged": "A wizard sin/school record: the initial school spell (Crescent Scepter) is a focus spell that is never granted, and the sin spell list is never added to what you can prepare. All ids verified in core.json; the 2nd-rank entry has a second spell missing from the source text, so only the printed ones a",
+  "text": "The Crescent Scepter is endlessly convinced of its own superiority and the ascendance of its users. If someone's eyes show something else, clearly their eyes are mistaken. Anathema Use your magic to change or create physical things rather than their appearances. Sin Spells - cantrips: Bullhorn, Figment - 1st: Dizzying Colors, Illusory Disguise - 2nd: Illusory Creature, - 3rd: Blindness, Levitate - 4th: Mirage, Vision of Death - 5th: Cloak of Colors - 6th: Phantasmal Calamity - 7th: Mask of Terror, Project Image - 8th: Confusing Colors - 9th: Overwhelming Presence Initial School Spell Crescent Scepter"
+ },
+ {
+  "id": "raging-resistance",
+  "collection": "classFeatures",
+  "name": "Raging Resistance",
+  "level": 9,
+  "traits": [
+   "barbarian"
+  ],
+  "whyFlagged": "Resistance 3 + Con modifier to instinct-typed damage while raging reaches nothing: no classFeature carries whileActive, and none of the ten *-instinct features (animal-instinct, dragon-instinct, …) carries a resistance either. The lane exists — whileActive [{state:\"rage\",resistances:[…]}] with a \"3+",
+  "text": "Repeated exposure and toughened skin allow you to fend off harm. While raging, you gain resistance equal to 3 + your Constitution modifier to damage types based on your instinct. See specific instincts for more information."
+ },
+ {
+  "id": "razor-prongs",
+  "collection": "classFeatures",
+  "name": "Razor Prongs",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "A selectable weapon-innovation modification (build.ts inventorModificationOptions offers it) whose whole content is \"your innovation gains the tearing, trip, and versatile S traits\" — and nothing adds them. weaponTraits cannot express it: derive.ts reads weaponTraits only from db.feats, and the inno",
+  "text": "You can knock down and slash your foes with sharp, curved blades. Your innovation gains the tearing, trip, and versatile S traits."
+ },
+ {
+  "id": "reveler-in-lost-glee",
+  "collection": "classFeatures",
+  "name": "Reveler in Lost Glee",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "whyFlagged": "The apparition spells and the Trickster's Mirrors vessel spell ARE delivered (classes.animist.extraChoices[\"apparition\"] option carries grantedSpells + focusSpells), but the Apparition Skills — trained in Circus Lore and Fortune-Telling Lore while attuned, which the animist class text confirms you \"",
+  "text": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics. --- Apparition Skills Circus Lore, Fortune-Telling Lore Apparition Spells - Cantrip - 1st Dizzying Colors - 2nd Laughing Fit - 3rd Hypnotize - 4th Confusion - 5th Illusory Scene - 6th Vibrant Pattern - 7th Warp Mind - 8th Quandary - 9th Wails of the Damned Vessel Spell Trickster's Mirrors Avatar *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain Melee ⟨1⟩ ringmaster's whip (reach 15 feet, trip), Damage 6d10+6 Ranged ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), Damage 6d6+6"
+ },
+ {
+  "id": "rope-shot",
+  "collection": "classFeatures",
+  "name": "Rope Shot",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "A selectable ranged weapon-innovation modification whose content is \"your weapon innovation gains the climbing and ranged trip traits, and tethered if thrown\" — nothing adds them. Same blocker as razor-prongs: derive.ts reads weaponTraits only from db.feats, and the innovation is never bound to an i",
+  "text": "Ranged Only --- Your weapon can shoot projectiles that split into simple ropes or nets around your foes' legs to trip your targets, and you can climb using the grappling hooks built into the weapon. Your weapon innovation gains the climbing and ranged trip traits, as well as the tethered trait if it is thrown."
+ },
+ {
+  "id": "rune-capacity",
+  "collection": "classFeatures",
+  "name": "Rune Capacity",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "whyFlagged": "A selectable innovation modification granting one property rune slot beyond the item's normal limit (max four with +3 potency). No field expresses a rune-capacity change — there is no lane for the etching/rune-slot cap at all, and the innovation is not linked to an inventory item.",
+  "text": "Whether you've done some dabbling in orichalcum alloys or found another engineering solution, you've built your innovation in such a way that it can hold an additional property rune. Your innovation can have one more property rune than a normal item of its kind (to a maximum of four property runes with a +3 *potency* armor)."
+ },
+ {
+  "id": "runelords-calling",
+  "collection": "classFeatures",
+  "name": "Runelord's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "whyFlagged": "Identify Magic, Learn a Spell and casting a ritual are all player checks; the skill varies by tradition and by ritual, so the spend entry targets 'all' with the actions named. The regain clause names the four magic skills explicitly, so it is narrowed to those. Unmodelled.",
+  "text": "Even before Karzoug rose, you felt something tugging to you from beyond. Strange memories, sudden insights, vivid dreams, or wild hunches that lead to discoveries or unexpected successes have been the norm for you. Once knowledge of the legacies of Thassilon began to spread anew into the modern world after Karzoug rose from slumber, you've increasingly come to realize these visions and inspirations come to you from the past—maybe even one of your past lives—and that something from the time before Earthfall in ancient Thassilon is linked to your soul. When you attempt a check to Identify Magic, Learn a Spell, or cast a ritual, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed at an Arcana, Nature, Occultism, or Religion check to Identify Magic, you regain a Mythic Point. --- Edicts seek out rare magic spells and it"
+ },
+ {
+  "id": "sagas-calling",
+  "collection": "classFeatures",
+  "name": "Saga's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "whyFlagged": "A Performance check or Gather Information (Diplomacy), at mythic proficiency for a Mythic Point. Unmodelled. The regain clause is Gather Information only, so it is narrowed to Diplomacy.",
+  "text": "The Saga Lands do not come by that appellation lightly, for the storied legacies of this region predate Earthfall and have roots in worlds far beyond Golarion. Whether you were born in these lands or drawn there, those storied legacies have resonated with you on a supernatural level. It seems like each time you learn of some new legend or tale of this land passed down through the generations, there's something in it that directly applies to your life. You've taken to relying upon these legends—be they ancient or modern—as guideposts for your own life's course, knowing full well that they're calling to you and that you're destined to be the focus of one yourself. When you attempt a Performance check or a check to gather-information, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed at a check to Gather Information,"
+ },
+ {
+  "id": "sages-calling",
+  "collection": "classFeatures",
+  "name": "Sage's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "whyFlagged": "Recall Knowledge with any skill, at mythic proficiency for a Mythic Point. Unmodelled. Unrestricted by skill, so 'all' is exact rather than a fallback.",
+  "text": "You're already an archive of knowledge, but you're driven to learn more with an unquenchable passion that might never be sated. When you attempt to Recall Knowledge, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a Recall Knowledge check against an enemy creature, you regain a Mythic Point. --- Edicts preserve your knowledge for future generations, seek out lost knowledge in dangerous or forgotten places Anathema destroy books or other repositories of knowledge, lie to hide knowledge from the world"
+ },
+ {
+  "id": "skin-hard-as-horn",
+  "collection": "classFeatures",
+  "name": "Skin Hard as Horn",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "whyFlagged": "The immanence grants resistance equal to half your level to a damage type you attune during daily preparations (not against critical hits). The player never picks the type and never gets the resistance.",
+  "text": "Usage imbued in the skin --- Tempered in your spirit, your very skin is as a suit of armor, though a single location on your body remains unprotected, a curse and a challenge within your legend. During your daily preparations, you can strike your skin lightly with an object that deals bludgeoning, slashing or piecing damage to habituate your skin against this type of injury, attuning the ikon to that damage type. Immanence When your skin houses your divine spark, you gain resistance to the attuned damage type equal to half your level. This resistance doesn't apply against critical hits, which successfully find your unprotected spot. Transcendence—Crash Against Me ⟨1⟩ (transcendence)"
+ },
+ {
+  "id": "speaker-in-sibilance",
+  "collection": "classFeatures",
+  "name": "Speaker in Sibilance",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "whyFlagged": "Spells and vessel spell ARE delivered by the animist apparition option (grantedSpells + focusSpells:['crown-of-prophets']); its Apparition Skills — Fortune-Telling Lore and Mountain Lore while attuned — are delivered nowhere (no lore grant exists on any apparition option in core.json).",
+  "text": "Whether witnessed in hissing serpents or the whisper of pungent fumes wafting up from a forlorn cave, a speaker in sibilance offers forbidden knowledge and revels in the anguish of an unprepared mind. These apparitions often take medusa-like forms, each serpent providing different (and often contradictory) advice. --- Apparition Skill Fortune-Telling Lore, Mountain Lore Apparition Spells - Cantrip Puff of Poison - 1st Ill Omen - 2nd Stupefy - 3rd - 4th Snake Fangs - 5th Slither - 6th Petrify - 7th Mask of Terror - 8th Unrelenting Observation - 9th Unfathomable Song Vessel Spell Crown of Prophets Avatar *Medusa of Merciless Mysteries* Speed 60 feet, climb 60 feet Melee ⟨1⟩ biting hair (poison, reach 15 feet), Damage 6d6+6 piercing plus 2d6 persistent poison Ranged ⟨1⟩ jarring prophecy (mental, range 120 feet, versatile sonic), Damage 6d6+3 mental"
+ },
+ {
+  "id": "spell-blending",
+  "collection": "classFeatures",
+  "name": "Spell Blending",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "whyFlagged": "A wizard thesis that restructures the spell slot table at daily preparations — trade two slots of one rank for a bonus slot up to 2 ranks higher, or a slot for two extra cantrips. The player's slot line never changes.",
+  "text": "You theorize that spell slots are a shorthand for an underlying energy that powers all spellcasting, and you've found a way to tinker with the hierarchy of spell slots, combining them to fuel more powerful spells. During your daily preparations, you can trade two spell slots of the same spell rank for a bonus spell slot of up to 2 spell ranks higher than the traded spell slots. You can exchange as many spell slots as you have available. Bonus spell slots must be of a spell rank you can normally cast, and each bonus spell slot must be of a different spell rank. You can also trade any spell slot for two additional cantrips, though you can't trade more than one spell slot at a time for additional cantrips in this way."
+ }
+]

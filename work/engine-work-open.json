@@ -1,0 +1,1002 @@
+[
+ {
+  "id": "additional-ikon",
+  "name": "Additional Ikon",
+  "reason": "Grants a fourth ikon of any type — an extra exemplar ikon selection the builder should offer; effectChoices has no ikon filter and the ikon list is too large to enumerate as options.",
+  "src": "feats"
+ },
+ {
+  "id": "advanced-order-training",
+  "name": "Advanced Order Training",
+  "reason": "Grants the greater order benefit of whichever Hellknight order you belong to — a concrete benefit conditional on an earlier choice; nothing grants it and no legal field expresses a choice-dependent grant of another record.",
+  "src": "feats"
+ },
+ {
+  "id": "ancestral-mind",
+  "name": "Ancestral Mind",
+  "reason": "Ancestry/heritage innate spells become occult and use the psychic spellcasting attribute for spell attack and spell DC. build.ts computes the innate entry's profile from the granting source (Charisma by default) and there is no field that retunes an existing innate entry's tradition/key attribute — an innate-entry retune lane is missing.",
+  "src": "feats"
+ },
+ {
+  "id": "armor-specialist",
+  "name": "Armor Specialist",
+  "reason": "Grants the armor specialization effects for every armor you are proficient with — real defensive benefits (e.g. plate's physical resistance, chain's crit-to-hit conversion) that depend on the worn armor's group. Nothing in src models armor specialization at all (no match for 'armor specialization' anywhere in src), and no legal field expresses an armor-group-conditional defence.",
+  "src": "feats"
+ },
+ {
+  "id": "embodiment-of-the-balance",
+  "name": "Embodiment Of The Balance",
+  "reason": "Adds Heal and Harm to the apparition spell repertoire — real, permanent spell access the player never receives; build.ts assembles that repertoire solely from the attuned apparition options' `grantedSpells`, and no listed field lets a FEAT add spells to a repertoire.",
+  "src": "feats"
+ },
+ {
+  "id": "enlarged-chassis",
+  "name": "Enlarged Chassis",
+  "reason": "Constant enlarge is a real permanent package (Large size, +5 feet reach, +2 status to melee damage, clumsy 1 until the Enhancement removes it) and none of it reaches the sheet — the id appears only as a label in the automaton core-feat option list. The feat fields sizeOverride/reach in build.ts would carry the size and reach half, but the melee-damage bonus and the clumsy have no lane.",
+  "src": "feats"
+ },
+ {
+  "id": "enticing-dwelling",
+  "name": "Enticing Dwelling",
+  "reason": "Doubles the spirit wisps your spirit dwelling gains each day (1 -> 2). Wisps are a per-day counter other exorcist feats spend; nothing in the app tracks them. The right home is a feat-gated counter in CLASS_RESOURCES (src/rules/classResources.ts, the `feat:` form used for Rage/Panache), which no audit field can write.",
+  "src": "feats"
+ },
+ {
+  "id": "exorcist-dedication",
+  "name": "Exorcist Dedication",
+  "reason": "The dedication creates a spirit dwelling that gains a spirit wisp every day (and can be re-primed with a 10-minute ritual); wisps are the currency every other exorcist feat spends. Nothing tracks them. A feat-gated counter in CLASS_RESOURCES (src/rules/classResources.ts) is the right home and no audit field can write it.",
+  "src": "feats"
+ },
+ {
+  "id": "expert-cathartic-spellcasting",
+  "name": "Expert Cathartic Spellcasting",
+  "reason": "The expert tier of the Cathartic Mage's spontaneous casting (ranks 4-6 slots). cathartic-mage-dedication is NOT in CASTER_ARCHETYPES (src/rules/casterArchetypes.ts), so neither the basic nor the expert feat grants a slot — the whole archetype's casting is inert. Registering the dedication is engine work no audit field can express.",
+  "src": "feats"
+ },
+ {
+  "id": "expert-red-mantis-magic",
+  "name": "Expert Red Mantis Magic",
+  "reason": "The expert tier of Red Mantis divine casting (ranks 4-6 slots). red-mantis-assassin-dedication is absent from CASTER_ARCHETYPES, and the archetype's feat ids ('basic/expert-red-mantis-magic') do not even match mk()'s basic-/expert-<slug>-spellcasting pattern, so the tier can never be detected. Engine/registry work.",
+  "src": "feats"
+ },
+ {
+  "id": "expert-scroll-cache",
+  "name": "Expert Scroll Cache",
+  "reason": "Adds a daily temporary scroll of a 3rd-rank spell (4th at 14th, 5th at 16th) that the player PICKS. Nothing offers the pick — basic-scroll-cache was already judged the same way (judge-2) and the scroll cache is unmodelled end to end; effectChoices' spellFilter grants innate casts, not level-scaling temporary scroll items.",
+  "src": "feats"
+ },
+ {
+  "id": "expert-snowcasting",
+  "name": "Expert Snowcasting",
+  "reason": "The expert tier of the Gelid Shard archetype's spellcasting (the basic tier is the 'snowcaster' feat). No gelid-shard dedication is registered in CASTER_ARCHETYPES and the feat ids do not follow mk()'s basic-/expert-<slug>-spellcasting pattern, so no archetype slots are ever unlocked. Engine/registry work.",
+  "src": "feats"
+ },
+ {
+  "id": "explosive-savant",
+  "name": "Explosive Savant",
+  "reason": "Two-tier group re-categorisation of proficiency (bombs and martial firearms count as SIMPLE, advanced firearms count as MARTIAL). FEAT_LANE_GRANTS.weaponFamiliarity takes an explicit weapon-id list plus ONE mirrorCategory, and core.json holds 172 bomb ids and 119 firearm ids across both tiers — one entry cannot carry two tiers, and neither can it express 'every weapon in this group'. Needs a group/trait-scoped familiarity rule (e.g. weaponFamiliarity accepting {groups:['bomb','firearm'], category:'martial'} with a per-tier mirrorCategory).",
+  "src": "feats"
+ },
+ {
+  "id": "extend-elixir",
+  "name": "Extend Elixir",
+  "reason": "Doubles the duration of every infused elixir with a duration of 1 minute or longer that you drink. Item-driven consumable modes carry a fixed printed `duration` string (core.modes item-* entries) and nothing scales it per-character, so the alchemist's doubled durations never reach the sheet. Needs a duration multiplier on item modes gated on this feat (and the Quick Alchemy 10-minute cap).",
+  "src": "feats"
+ },
+ {
+  "id": "extradimensional-stash",
+  "name": "Extradimensional Stash",
+  "reason": "Grants an inherent 5-Bulk extradimensional space that functions as a bag of holding with no Bulk of its own — real carrying capacity the app models for items (itemType 'container' with ignoredBulk, Character.inventory containerInstanceId) but that no feat can confer: there is no grantsItems/container lane anywhere in src/rules. Needs a feat→inventory-container grant.",
+  "src": "feats"
+ },
+ {
+  "id": "fearsome-fangs",
+  "name": "Fearsome Fangs",
+  "reason": "Upgrades the Ursine Avenger Form strikes (jaws 1d8→1d12, claws 1d6→1d8). The form is modelled as stances['ursine-avenger-form'] with fixed strike dice; StanceDef has senseIfFeat for feat-gated SENSES but no equivalent feat-gated strike-die upgrade, and a feat-side grantedStrikes would create duplicate attacks rather than replace the form's. Needs a strikeIfFeat/die-upgrade gate on StanceDef.",
+  "src": "feats"
+ },
+ {
+  "id": "ferrousoul",
+  "name": "Ferrousoul",
+  "reason": "The base Fist upgrade (die d6, loses nonlethal, gains modular B/P/S) is hardcoded in derive.ts as `fistDieUpgraded` = powerful-fist / warrior-automaton / warrior-jotunborn only; no data field upgrades the built-in Fist profile, and grantedStrikes would add a SECOND fist row instead of replacing it (an over-grant).",
+  "src": "feats"
+ },
+ {
+  "id": "flexible-spellcaster-dedication",
+  "name": "Flexible Spellcaster Dedication",
+  "reason": "The record's text grants an extra cantrip per day (four instead of three, five instead of four at 4th level) and nothing delivers it: cantripsKnown() is a hardcoded per-class number and spellSlotBonus explicitly skips rank 0 (build.ts `r > 0`).",
+  "src": "feats"
+ },
+ {
+  "id": "forgotten-presence",
+  "name": "Forgotten Presence",
+  "reason": "The Recall Knowledge penalty falls on other creatures, but \"Add Rewrite Memory to your spell list as a primal spell\" is a real player-facing grant: without it the primal-filtered spell picker will never offer Rewrite Memory. No field adds a single spell to a character's spell list/tradition (innateSpells would wrongly give it as a free innate casting), and the two other feats with the same wording (tupilaq-carver, dragon-arcana) carry no field either.",
+  "src": "feats"
+ },
+ {
+  "id": "frozen-breadth",
+  "name": "Frozen Breadth",
+  "reason": "Really grants the player extra repertoire spells and extra spell slots. spellSlotBonus supports {perRank, exceptHighest, entryId} (occult-breadth uses exactly that shape for the bard archetype), but the gelid shard archetype has no spellcasting entry with slots to attach to — first-frost supplies only spellcastingGrant + at-will innateSpells, and snowcaster/expert-snowcasting/master-snowcasting carry no fields at all. Writing spellSlotBonus with no entryId would over-grant slots to the character's main caster. Needs the gelid-shard slot/repertoire entry first, plus a repertoire-size increase (no field exists for spells known).",
+  "src": "feats"
+ },
+ {
+  "id": "ghost-path-epiphany",
+  "name": "Ghost-path Epiphany",
+  "reason": "Grants the unholy sanctification trait and knowledge of two rituals (Call Spirit, Commune). No field grants a FIXED sanctification (only `choice` flags where the player picks holy/unholy) and nothing grants known rituals — innateSpells would wrongly make them per-day innate casts. The secondary-caster substitution is table-resolved.",
+  "src": "feats"
+ },
+ {
+  "id": "gifted-power",
+  "name": "Gifted Power",
+  "reason": "A real extra spell slot at your HIGHEST rank, usable only for mystery-granted spells. spellSlotBonus can only say perRank (every rank — a huge over-grant) or byRank with a fixed rank number, and the highest rank moves with level; there is no 'highest rank only' form and no way to restrict the slot's contents.",
+  "src": "feats"
+ },
+ {
+  "id": "gnome-polyglot",
+  "name": "Gnome Polyglot",
+  "reason": "Learn three new languages. The sheet tracks languages (character.languages, its own rail card) but NO feat field grants them — the only addedLanguages field is on the per-character override record, not on feats, and even core Multilingual is unmodelled. The lane itself is missing.",
+  "src": "feats"
+ },
+ {
+  "id": "grand-scroll-esoterica",
+  "name": "Grand Scroll Esoterica",
+  "reason": "Adds a daily temporary scroll with a 6th-rank spell (7th at 20th level) — a real per-day resource whose spell the player PICKS. Neither Scroll Esoterica nor Elaborate Scroll Esoterica carries any field, and there is no lane for daily temporary items: effectChoices+spellFilter only grants innate or focus spells, which would be an over-grant (unlimited-target casting rather than a one-use scroll).",
+  "src": "feats"
+ },
+ {
+  "id": "greater-armament",
+  "name": "Greater Armament",
+  "reason": "Adds eight property runes (Brilliant, Corrosive, Flaming, Frost, Holy, Shock, Thundering, Unholy) to the daily rune pick that Harbinger's Armament already implements as a `choice` with flag harbingerRune and five options. The player's daily menu stays at five. No field lets one feat EXPAND another record's choice options; adding a second choice here would grant a second rune, an over-grant.",
+  "src": "feats"
+ },
+ {
+  "id": "guerrilla-weaponry",
+  "name": "Guerrilla Weaponry",
+  "reason": "In your hands a blowgun's base damage becomes 1d4 and it gains deadly d4 — a change to a wielded weapon's own damage die and traits on your Strikes. strikeDamage only ADDS damage (StrikeDamageRider) and there is no per-character weapon-statistics override lane. (The Guerrilla Assault action half needs nothing.)",
+  "src": "feats"
+ },
+ {
+  "id": "hellknight-errant",
+  "name": "Hellknight-Errant",
+  "reason": "Raises your mental resistance to 5 + your number of Hellknight archetype feats — a Defenses-card number. It cannot be written today: hellknight-dedication already stores resistances [{\"type\":\"mental\",\"value\":\"@actor.flags.system.hellknightArchetype.featCount + 1\"}], and the formula substituter in src/rules/derive.ts:604-627 supports only @actor.level, ability mods and Speeds, refusing any other @actor token — so the dedication's resistance is already dead and a copy with +5 would be too. A flat number would misstate it. Needs an archetype-feat-count token in the resistance formula evaluator. (The Warding Shift action half needs nothing.)",
+  "src": "feats"
+ },
+ {
+  "id": "herbal-forager",
+  "name": "Herbal Forager",
+  "reason": "Each day at daily preparations you get one temporary alchemical item with the healing trait, chosen from formulas you know — a real daily pick the builder never offers. effectChoices can't express it (it needs fixed options or a spellFilter; there is no item filter), and advancedAlchemy is the alchemist's Advanced Alchemy budget (src/rules/build.ts:2601-2614 → AlchemyPanel), which would hand a centaur any formula rather than one healing item. Needs a daily-prep temporary-item lane restricted by trait and count.",
+  "src": "feats"
+ },
+ {
+  "id": "hurl-at-the-horizon",
+  "name": "Hurl at the Horizon",
+  "reason": "The imbued ikon's immanence gives your weapon the thrown 15 ft trait (or +10 ft thrown range) — a real change to that weapon's Strikes. No field adds a trait to a weapon, and ikon imbue/immanence state is unmodelled (only mated-birds-in-paired-flight has any ikon field).",
+  "src": "feats"
+ },
+ {
+  "id": "implement-initiate",
+  "name": "Implement Initiate",
+  "reason": "'You gain your implement's initiate benefit.' Thaumaturge Dedication already records the pick (choice flag dedicationImplement), and the benefits exist as classFeatures `initiate-benefit-<implement>`, but build.ts only pushes them inside `if (ownsClass('thaumaturge'))` (build.ts ~3043), so an archetype character gets nothing. No data field points a feat at a classFeature.",
+  "src": "feats"
+ },
+ {
+  "id": "instinct-ability",
+  "name": "Instinct Ability",
+  "reason": "Gives an archetype barbarian the instinct ability of the instinct chosen at Barbarian Dedication (Draconic Rage's damage, Animal Instinct's unarmed Strike, Giant Instinct's larger weapon, and so on). Barbarian Dedication records the pick in the `barbarianInstinct` choice flag, but nothing in src/ ever reads it — rageStrikeRider in src/rules/derive.ts only honours subclassId for a real barbarian and hands an archetype a flat 2 damage — so the feat delivers nothing and no legal field can express instinct abilities.",
+  "src": "feats"
+ },
+ {
+  "id": "aura-enhancement",
+  "name": "Aura Enhancement",
+  "reason": "Adds two named spells (Benediction, Malediction) to the pool you can prepare in your divine font slots. No allowed field adds specific spells to a prepared pool, and the Battle Harbinger font is not built at all — battle-harbinger-dedication is absent from CASTER_ARCHETYPES and its registry entries only grant Toughness plus a skill.",
+  "src": "feats"
+ },
+ {
+  "id": "awakened-yaoguai-heritage",
+  "name": "Awakened Yaoguai Heritage",
+  "reason": "It grants a versatile-heritage character the full mechanical benefits of a yaoguai heritage (and unlocks heritage-gated feats). No allowed field grants a heritage's benefits and there is no second-heritage lane.",
+  "src": "feats"
+ },
+ {
+  "id": "axe-thrower",
+  "name": "Axe Thrower",
+  "reason": "Two real grants, neither expressible: every one-handed axe you wield GAINS the thrown trait (10 feet) and already-thrown axes get +10 feet of range — there is no weapon-trait or range-increment lane — and the critical specialization applies only to THROWN axe attacks, which critSpec/critSpecWeapons would over-grant to melee axe crits.",
+  "src": "feats"
+ },
+ {
+  "id": "basic-modification",
+  "name": "Basic Modification",
+  "reason": "It is a PICK (a basic innovation modification) the builder never offers: inventorModificationOptions / INVENTOR_TIER_LEVEL and build.inventorModifications are gated on the inventor CLASS and an innovation subclass, so an Inventor-archetype character gets no choice. effectChoices can't express it — the legal options are classFeatures filtered by innovation type and the armor sub-gate, not a fixed list.",
+  "src": "feats"
+ },
+ {
+  "id": "basic-scroll-cache",
+  "name": "Basic Scroll Cache",
+  "reason": "A daily-preparations PICK (one common 1st-rank spell, plus a 2nd-rank one at 8th level) that becomes a temporary scroll; nothing offers it. effectChoices' spellFilter can only grant a spell as innate or focus, which would misrepresent it — a scroll is read at the scroll's own rank/DC and works for non-casters — so this needs a temporary-consumable daily-choice lane.",
+  "src": "feats"
+ },
+ {
+  "id": "insulated-poppet",
+  "name": "Insulated Poppet",
+  "reason": "The feat REMOVES the electricity/cold weakness the tsukumogami-poppet heritage grants through its poppet-material effectChoice. Every IWR field is additive (weaknesses only add entries); there is no lane for a feat that cancels a weakness granted by a heritage, so the sheet keeps showing weakness 5.",
+  "src": "feats"
+ },
+ {
+  "id": "intense-implement",
+  "name": "Intense Implement",
+  "reason": "Grants the ADEPT benefit of the thaumaturge's THIRD implement. build.ts's implement pipeline (~3040-3061) only ever assigns adept to the first two implements ('never the third implement'), and no feat field can push an implement benefit, so the third implement's adept benefit never appears.",
+  "src": "feats"
+ },
+ {
+  "id": "invoke-offense",
+  "name": "Invoke Offense",
+  "reason": "Grants a real unarmed attack (1d8 spirit, brawling, agile/finesse/magical, gaining striking-rune dice at 5/12/20) but ONLY for the duration of Enter Spirit Trance. grantedStrikes is permanent (build.ts collectGrantedNaturals) and ModeDef carries no grantedStrikes field, so there is no way to express a Strike that exists only while a mode/trance is on without over-granting it permanently.",
+  "src": "feats"
+ },
+ {
+  "id": "iron-fists",
+  "name": "Iron Fists",
+  "reason": "Your fist unarmed attacks permanently lose nonlethal and gain shove; the derived baseline Fist still shows nonlethal and no shove. Same modelling petrified-skin already uses (a granted brawling natural attack with the printed traits).",
+  "src": "feats"
+ },
+ {
+  "id": "iruxi-unarmed-cunning",
+  "name": "Iruxi Unarmed Cunning",
+  "reason": "Grants weapon critical specialization with your claw and lizardfolk-feat unarmed attacks. critSpec/critSpecWeapons can only narrow by weapon group, trait, or base id — granted naturals get base 'natural:<n>' (derive.ts ~1671) and share the brawling group with gauntlets/fists/saps, so the only expressible narrowing would over-grant crit spec to other brawling weapons. No lane can name 'unarmed attacks granted by lizardfolk records'.",
+  "src": "feats"
+ },
+ {
+  "id": "late-awakener",
+  "name": "Late Awakener",
+  "reason": "\"You gain all the mechanical benefits of the awakened animal heritage you selected at 1st level\" - a real grant (that heritage's speeds, unarmed attack, senses, plus qualifying for heritage-gated feats) for a character who took a versatile heritage. No listed field can apply a second heritage's mechanics or unlock its feat prerequisites.",
+  "src": "feats"
+ },
+ {
+  "id": "lightning-rings-intervention",
+  "name": "Lightning Rings' Intervention",
+  "reason": "'Your familiar gains the Lightning Needles ability' is a concrete grant to your familiar — the ability record lightning-needles exists in core.json's familiarAbilities, but no registry entry attaches it, so the familiar block never shows it.",
+  "src": "feats"
+ },
+ {
+  "id": "lightning-rings-overcharge",
+  "name": "Lightning Rings' Overcharge",
+  "reason": "'Your familiar gains the Lightning Armillary ability' — the lightning-armillary familiar ability exists in core.json but nothing attaches it to the familiar.",
+  "src": "feats"
+ },
+ {
+  "id": "living-rune",
+  "name": "Living Rune",
+  "reason": "The feat gives the PLAYER a real, permanent rune slot on their own body that holds one armor property rune and applies its effects to them; the app only etches property runes onto armor items in inventory, so there is no lane for a body-worn property rune slot (and no way to pick which rune goes in it).",
+  "src": "feats"
+ },
+ {
+  "id": "martial-artist-dedication",
+  "name": "Martial Artist Dedication",
+  "reason": "'The damage die for your fist unarmed attacks becomes 1d6 instead of 1d4' is a real Strike change and nothing delivers it. The lane is a HARD-CODED list: derive.ts ~1692 `fistDieUpgraded = ownedFeatureIds(...).has('powerful-fist') || heritage warrior-automaton/warrior-jotunborn`. Martial Artist must be added there — but unlike Powerful Fist it does NOT drop the nonlethal trait (it only removes the -2 lethal-attack penalty), so the existing branch can't be reused verbatim. grantedStrikes is wrong here: it would add a SECOND 'Fist' row beside the d4 baseline rather than upgrading it.",
+  "src": "feats"
+ },
+ {
+  "id": "master-scroll-cache",
+  "name": "Master Scroll Cache",
+  "reason": "'Add a single scroll with a 6th-rank spell (7th at 20th level)' to your daily scrolls is a real free consumable the player picks each day, and no lane exists: nothing in src/rules references scroll caches, and Basic/Expert Scroll Cache are equally inert. What is missing is a daily-preparations GRANTED-CONSUMABLE lane (a scroll of a chosen spell at a fixed rank, refreshed daily) — dailyChoices.ts only records a pick, it cannot mint an item.",
+  "src": "feats"
+ },
+ {
+  "id": "master-summoner",
+  "name": "Master Summoner",
+  "reason": "'During daily preparations, designate one spell slot to become TWO summoning slots of the same rank' is a real net gain of a spell slot, chosen daily and restricted to summoning/incarnate spells. No lane: spellSlotBonus can only ADD slots (perRank/byRank) with no rank choice, no slot consumed, and no restriction on what can be prepared in them; dailyChoices.ts records a morning pick but cannot alter the slot table. Needs a restricted-slot / slot-conversion lane.",
+  "src": "feats"
+ },
+ {
+  "id": "miraculous-flight",
+  "name": "Miraculous Flight",
+  "reason": "Your signature vehicle gains a fly Speed. Vehicles are a real CompanionKind in this app and COMPANION_MODS already carries speeds:{fly:'land'} grants, so this is the companion-mod registry lane, not engine work.",
+  "src": "feats"
+ },
+ {
+  "id": "modular-dynamo",
+  "name": "Modular Dynamo",
+  "reason": "Your dynamo unarmed attack gains the modular trait plus a chosen alternate configuration with its own damage die, damage type and traits (power driver, percussive striker, rotating sickle, entangling barbs, extendable baton), repeatable. unarmedTraits can only add traits to an existing strike, and grantedStrikes can't be presented as switchable configurations of one attack (the base sterling-dynamo-dedication strikes are even named 'Label'). No lane expresses a switchable strike configuration.",
+  "src": "feats"
+ },
+ {
+  "id": "monstrous-inclinations",
+  "name": "Monstrous Inclinations",
+  "reason": "Adds Monstrosity Form to your apparition spell repertoire — a genuinely new castable spell. grantedSpells (the repertoire-grant field) exists only on subclass options in types.ts, never on feats, and spellFilter can only grant a pick as innate or focus. No feat-level repertoire-grant lane exists.",
+  "src": "feats"
+ },
+ {
+  "id": "mysterious-repertoire",
+  "name": "Mysterious Repertoire",
+  "reason": "You may hold one spell from another tradition in your divine repertoire (swappable, cast as divine). The repertoire picker is restricted to the divine list, and no lane lets a feat widen it: grantedSpells exists only on subclass options in types.ts, and SpellChoiceFilter.grantAs allows only 'innate' or 'focus', which would grant a use-limited spell rather than a repertoire slot.",
+  "src": "feats"
+ },
+ {
+  "id": "pack-rat",
+  "name": "Pack Rat",
+  "reason": "The app models container capacity (derive.ts computes each container's load vs item.capacity.bulk and blocks over-capacity drops), so a +50% capacity on mundane containers and vehicles is a real sheet effect. No listed field or registry expresses a container-capacity multiplier — bulkLimitBonus is the character's own Bulk limit, which this feat explicitly does not change.",
+  "src": "feats"
+ },
+ {
+  "id": "pact-of-the-rune-dragon",
+  "name": "Pact of the Rune Dragon",
+  "reason": "You immediately learn 10 languages of your choice — a real, player-picked sheet element. No feat in core.json carries any language field and there is no language lane on feats (OpenChoiceFrom's 'language' type is not reachable from a feat record), so nothing can deliver it.",
+  "src": "feats"
+ },
+ {
+  "id": "perfect-mutagen",
+  "name": "Perfect Mutagen",
+  "reason": "Mutagens are real consumable MODES whose drawbacks are negative modifiers on the sheet (e.g. item-bendy-arm-mutagen-lesser's -1 Athletics). This feat removes those drawbacks for mutagens you crafted, and no field or registry can suppress part of a mode.",
+  "src": "feats"
+ },
+ {
+  "id": "plentiful-snares",
+  "name": "Plentiful Snares",
+  "reason": "Doubles the free daily prepared snares from Snarecrafter Dedication. That count IS modelled - snareAllowance() in src/rules/snareFormulas.ts returns prepared 4/6/8 by Crafting rank - but it takes only the Crafting rank, so nothing doubles it and the feat is inert. No record field expresses 'double a computed snare allowance'.",
+  "src": "feats"
+ },
+ {
+  "id": "quick-alchemy",
+  "name": "Quick Alchemy",
+  "reason": "The archetype grants the Quick Alchemy action, which the app DOES model — but AlchemyPanel is gated on classId==='alchemist' and the versatile-vials resource only exists in CLASS_RESOURCES['alchemist'], so an archetype taker gets nothing. Needs a lane to unlock the alchemy panel/vial resource from a feat.",
+  "src": "feats"
+ },
+ {
+  "id": "radiant-armament",
+  "name": "Radiant Armament",
+  "reason": "Adds Astral and Brilliant (plus Holy or Unholy by sanctification) to the list you pick from for Blessed Armament. Blessed Armament IS modelled (classFeature blessed-armament, choice flag blessedRune with a fixed 5-option array), but no field lets a feat ADD options to another record's choice.options, so the two-to-four extra runes are unreachable.",
+  "src": "feats"
+ },
+ {
+  "id": "raging-thrower",
+  "name": "Raging Thrower",
+  "reason": "Rage's bonus damage must apply to THROWN weapon Strikes. derive.ts rageStrikeRider explicitly returns null for ranged Strikes (`if (opts.ranged) return null; // Rage never applies to ranged Strikes`), so a raging barbarian with this feat sees no bonus on thrown Strikes. The value is instinct- and level-scaled, so no flat field can express it — the rider needs a thrown-weapon exception gated on this feat.",
+  "src": "feats"
+ },
+ {
+  "id": "razmiran-priest-dedication",
+  "name": "Razmiran Priest Dedication",
+  "reason": "Two real player-side grants nothing delivers: (a) you gain a Razmiri Mask item (the item exists in core.json — src/data/index.ts keeps 'razmiri-mask' — but no field lets a feat put an item in inventory), and (b) taking Cleric Dedication through this archetype re-traditions all its spells to occult with Charisma as key attribute. spellcastingGrant only creates a NEW entry; it cannot rewrite the tradition/key ability of the cleric archetype's grant, and the mask's DC = higher of class DC or spell DC has no lane either.",
+  "src": "feats"
+ },
+ {
+  "id": "read-the-land",
+  "name": "Read the Land",
+  "reason": "'You learn the Commune ritual if you didn't know it already' — a real grant of a known ritual (commune exists in core.json spells with ritual:true), plus a reduced casting time. There is no known-rituals lane at all: src/rules/build.ts line 2998 explicitly filters ritual spells OUT of addedSpells, and innateSpells/focusSpells are the wrong shape for a ritual.",
+  "src": "feats"
+ },
+ {
+  "id": "bestial-brutality",
+  "name": "Bestial Brutality",
+  "reason": "The Bestial Manifestation unarmed attack gains the deadly d6 trait (the app does compute deadly crit riders on strikes) and gets brawling critical specialization, but only for that one attack. There is no lane to add a trait to an already-granted strike, and critSpec + critSpecWeapons {groups:['brawling']} would hand brawling crit spec to every brawling attack the character has — an over-grant.",
+  "src": "feats"
+ },
+ {
+  "id": "billowing-wings",
+  "name": "Billowing Wings",
+  "reason": "Grants your winged animal companions a gust ranged unarmed attack (1d4 bludgeoning, 30 ft, air and propulsive). Companion strikes are rendered on the sheet (companions.ts formats them), but COMPANION_MODS has no attack-grant field — only strikeRider, senses, speeds, and note — so the companion attack lane is missing.",
+  "src": "feats"
+ },
+ {
+  "id": "blessed-blood-sorcerer",
+  "name": "Blessed Blood (Sorcerer)",
+  "reason": "'Add up to three of your deity's spells to your spell list' is a build-time player pick that nothing offers. effectChoices/spellFilter cannot model it, because that would put the spells in the repertoire for free while the feat only makes them selectable with normal repertoire slots — the spell-LIST expansion lane does not exist.",
+  "src": "feats"
+ },
+ {
+  "id": "restorative-channel",
+  "name": "Restorative Channel",
+  "reason": "It widens what your divine-font slots may hold: a font Heal can be spent to cast Cleanse Affliction, Clear Mind, Sound Body, or Sure Footing at the sacrificed spell's rank. build.ts models the font with a fixed `allowed` list (used for Battle Creed) that no record field can extend, so the player cannot record or cast these from the sheet.",
+  "src": "feats"
+ },
+ {
+  "id": "rod-of-rule",
+  "name": "Rod of Rule",
+  "reason": "Grants the critical specialization effects of the character's arcane bonded weapon (the second half, the -2 penalty to saves, is target-side). critSpec must be paired with critSpecWeapons, but the bonded weapon is chosen during play and cannot be enumerated in the record, so no existing field can express \"crit spec with whatever weapon is your arcane bond\".",
+  "src": "feats"
+ },
+ {
+  "id": "sanguimancer-dedication",
+  "name": "Sanguimancer Dedication",
+  "reason": "Grants a real player resource - sanguimancy Hit Points (temp HP equal to your level after an 8-hour rest, cap 2x level, spendable to power other feats). No field expresses a named, level-scaling, daily-refreshed temp-HP pool; limitedUses tracks fixed per-day uses only.",
+  "src": "feats"
+ },
+ {
+  "id": "scroll-adept",
+  "name": "Scroll Adept",
+  "reason": "Grants 2 (3 at master, 4 at legendary spell DC) player-chosen temporary scrolls from your spellbook at every daily preparation - exactly the 'let them pick what the rules give them' case. There is a daily-item lane for alchemy (advancedAlchemy) but none for temporary scrolls, and no field can express a per-day count of player-chosen scrolls with rank limits.",
+  "src": "feats"
+ },
+ {
+  "id": "second-ikon",
+  "name": "Second Ikon",
+  "reason": "Grants an additional ikon - a pick the player must make. Ikons are an extra-choice group defined per class (ChoiceGroup.pickByLevel in src/rules/types.ts); no feat-level field increases an extra-choice pick count, and effectChoices cannot enumerate 'any ikon' (there is no featFilter).",
+  "src": "feats"
+ },
+ {
+  "id": "shadow-spells",
+  "name": "Shadow Spells",
+  "reason": "Adds seven named spells (Shadow Blast, Shadow Siphon, Umbral Journey, Replicate, Shadow Army, Shadow Projectile, Shadow Raid) to the character's own spell list so they can be learned/prepared off-tradition. Spell pickers filter strictly by tradition and there is no spell-list-addition lane (no field, no registry) to widen that list.",
+  "src": "feats"
+ },
+ {
+  "id": "share-eidolon-magic",
+  "name": "Share Eidolon Magic",
+  "reason": "Lets the summoner cast the eidolon's innate spells from Magical Understudy/Adept/Master (shared daily uses). No eidolon innate-spellcasting lane exists — Magical Understudy carries no field either — so there is nothing to project onto the summoner's spell list, and innateSpells cannot express it without over-granting spells the character's actual evolution feats may not include.",
+  "src": "feats"
+ },
+ {
+  "id": "shield-warfare",
+  "name": "Shield Warfare",
+  "reason": "Increases the weapon damage die of any shield bash, shield boss, or shield spikes you wield by one step — a real, permanent damage change. Shields are modelled only as AC/Hardness/HP (deriveShield); no shield attack exists in the strikes lane and unarmedTraits.stepDie only reaches unarmed Strikes, so no field can step a shield attack's die.",
+  "src": "feats"
+ },
+ {
+  "id": "signature-spell-expansion",
+  "name": "Signature Spell Expansion",
+  "reason": "Grants two additional signature spells of base rank 3rd or lower — a genuine player PICK. The builder stores signatures as Record<rank, spellId> (BuildState.signatures, src/rules/build.ts ~222 and Builder.tsx ~661), one per rank, so a sorcerer cannot designate a second signature at any rank ≤3 and this feat does nothing. No existing field can express extra signature slots.",
+  "src": "feats"
+ },
+ {
+  "id": "signature-spell-expansion-psychic",
+  "name": "Signature Spell Expansion (Psychic)",
+  "reason": "Same as the sorcerer version: two additional signature spells of rank 3rd or lower. BuildState.signatures is one spell per rank, so the psychic gets nothing. No existing field expresses extra signature slots.",
+  "src": "feats"
+ },
+ {
+  "id": "spell-combination",
+  "name": "Spell Combination",
+  "reason": "The 20th-level wizard capstone converts one prepared slot of every rank except 1st and 2nd into a combination slot that holds TWO spells at once. That is a real change to spell preparation the player cannot record: spellSlotBonus adds slots rather than re-typing them, and no field marks a slot as a combination slot or lets two spells be prepared in one.",
+  "src": "feats"
+ },
+ {
+  "id": "splinter-faith",
+  "name": "Splinter Faith",
+  "reason": "You choose four domains that REPLACE your deity's domain list, and the app's domain picker (choice kind 'domains' in Builder.tsx) enumerates strictly content.deities[deityId].domains, so Domain Initiate and friends still offer only the printed list. No field can override a deity's domain set.",
+  "src": "feats"
+ },
+ {
+  "id": "strong-arm",
+  "name": "Strong Arm",
+  "reason": "It permanently increases the range increment of every thrown weapon you Strike with — a number the strike card shows — and there is no field or registry that modifies weapon range.",
+  "src": "feats"
+ },
+ {
+  "id": "student-of-water",
+  "name": "Student of Water",
+  "reason": "It hands you Underwater Marauder and Water Sprint, but only once you meet each one’s prerequisite (trained / master in Athletics). grantsFeats applies unconditionally, so writing it would give a 2nd-level monk the 7th-level Water Sprint — a prerequisite-gated feat grant has no lane.",
+  "src": "feats"
+ },
+ {
+  "id": "tactical-expansion",
+  "name": "Tactical Expansion",
+  "reason": "Repeatable: \"Add two additional tactics you qualify for to your folio.\" Tactics are real records (core.json `tactic` / actions with the tactic trait) and the folio is built by commanderFolioMax() in src/rules/build.ts, a fixed formula no record can influence. A folio-size grant field (repeatable, +2 each time) does not exist.",
+  "src": "feats"
+ },
+ {
+  "id": "talismanic-sage",
+  "name": "Talismanic Sage",
+  "reason": "Lets one specially treated item hold two active talismans at once. The app enforces the opposite: attachKind()/the host rule in src/rules/attachments.ts allows a host at most one talisman, so this feat is actively contradicted by the engine and no field relaxes the cap for a nominated item.",
+  "src": "feats"
+ },
+ {
+  "id": "tempest-clouds-speed",
+  "name": "Tempest Cloud's Speed",
+  "reason": "The feat permanently gives your familiar the Path of the Tempest familiar ability (an activation that grants YOU a +10-foot status bonus to Speed, reaction-free Striding and a Long Jump without a Stride). The record carries nothing and the familiar's ability roster never shows it; the COMPANION_MODS registry is the existing lane for feats that modify an existing companion.",
+  "src": "feats"
+ },
+ {
+  "id": "terrifying-mien",
+  "name": "Terrifying Mien",
+  "reason": "Grants the PLAYER a standing resistance to bludgeoning, piercing and slashing from Strikes made by frightened creatures, equal to four times that attacker's frightened value. Nothing delivers it: the resistances field is unconditional and its value can only reference the actor, so there is no way to key a resistance to the ATTACKER's condition value (and a flat resistance here would be a large over-grant).",
+  "src": "feats"
+ },
+ {
+  "id": "ubiquitous-snares",
+  "name": "Ubiquitous Snares",
+  "reason": "Doubles the free daily prepared snares from Snare Specialist (4/6/8 by Crafting rank becomes 8/12/16). The app already computes that allowance in src/rules/snareFormulas.ts snareAllowance(), but the number is hardcoded off Crafting rank with no record field able to modify it.",
+  "src": "feats"
+ },
+ {
+  "id": "ultimate-polymath",
+  "name": "Ultimate Polymath",
+  "reason": "Makes EVERY spell in the bard's repertoire a signature spell, which drives the app's 'cast at' heightening picker. The engine only produces all-repertoire signatures from the summoner class feature check ('unlimited-signature-spells', src/rules/build.ts:1766-1771); there is no record field a feat can set, and no entry exists for this feat.",
+  "src": "feats"
+ },
+ {
+  "id": "unburdened-iron",
+  "name": "Unburdened Iron",
+  "reason": "'Ignore the reduction to your Speed from any armor you wear' plus a 5-foot reduction to one other Speed penalty. The app really does subtract the worn armor's Speed penalty from every Speed (src/rules/derive.ts:1926) and applies encumbered as -10, with no check for this feat and no record field that waives a penalty (speedPenalty only ADDS one; landSpeedBonus would over-grant when unarmored).",
+  "src": "feats"
+ },
+ {
+  "id": "venomous-weapons",
+  "name": "Venomous Weapons",
+  "reason": "Wielded blowguns and slings gain the venomous trait — a permanent change to the player's weapons that nothing delivers. There is no lane to add a trait to a MANUFACTURED weapon (unarmedTraits is unarmed-only, and core.json's 'venomous' trait record is a bare stub with no description), so the strike line and the item's trait list never show it.",
+  "src": "feats"
+ },
+ {
+  "id": "versatile-blasts",
+  "name": "Versatile Blasts",
+  "reason": "Adds selectable damage types to your Elemental Blasts (air/fire cold, earth/wood poison, metal electricity, water acid). deriveBlastStrikes (src/rules/derive.ts ~1537) hardcodes one damage type per element from ELEMENT_BLAST with no alternative, and no record field can add blast damage types, so the sheet can never show the type the player chose.",
+  "src": "feats"
+ },
+ {
+  "id": "versatile-font",
+  "name": "Versatile Font",
+  "reason": "Lets you prepare either Harm or Heal in every divine-font slot. build.ts pins the font entry to a single type ({type: build.divineFont}) and SpellsTab renders that one spell for each pip, so half the feat's slots are shown as the wrong spell. The battle-font 'allowed' list is the existing mechanism, but nothing keys it to this feat — no record field can express it.",
+  "src": "feats"
+ },
+ {
+  "id": "walk-the-wilds",
+  "name": "Walk the Wilds",
+  "reason": "Adds Animal Form to the animist apparition spell repertoire, which the app does build (build.ts animist-apparition-casting) — but no field can add a spell to a repertoire.",
+  "src": "feats"
+ },
+ {
+  "id": "winged-warrior-dedication",
+  "name": "Winged Warrior Dedication",
+  "reason": "Permanently increases any fly Speed granted by ancestry feats/permanent wings by 5 feet, which is a persistent sheet speed. No lane exists: 'speeds' only sets an absolute value and landSpeedBonus covers land Speed only, so there is no way to add +5 to an existing fly Speed. (The Leap +10 feet half correctly needs nothing, matching Powerful Leap/Winglets which carry no field.)",
+  "src": "feats"
+ },
+ {
+  "id": "cantrip-casting",
+  "name": "Cantrip Casting",
+  "reason": "Grants two additional cantrips from the matching tradition — a real spellcasting resource the player should be able to PICK. spellSlotBonus cannot deliver it: build.ts filters slot grants to ranks > 0, so rank-0 (cantrip) counts are unreachable, and no other field expresses a cantrip-count increase.",
+  "src": "feats"
+ },
+ {
+  "id": "cantrip-expansion",
+  "name": "Cantrip Expansion",
+  "reason": "Two extra cantrips prepared per day (prepared casters) or two extra cantrips added to the repertoire (spontaneous) — a picked spellcasting resource. Same missing lane as Cantrip Casting: spellSlotBonus explicitly skips rank 0, so nothing can grant cantrip capacity.",
+  "src": "feats"
+ },
+ {
+  "id": "cutting-heaven-crushing-earth",
+  "name": "Cutting Heaven, Crushing Earth",
+  "reason": "While you wear invested handwraps of mighty blows, their runes also apply to one wielded weapon usable with Overwhelming Combination - a real change to that weapon's attack bonus, striking dice and property runes on the Strikes page. derive.ts:1005 (bestHandwrapsRunes) applies handwraps runes to unarmed Strikes only, and no legal field redirects them to a carried weapon. The two off-guard clauses are target-side and correctly ignored.",
+  "src": "feats"
+ },
+ {
+  "id": "deadly-aspect",
+  "name": "Deadly Aspect",
+  "reason": "The unarmed attack granted by Draconic Aspect permanently gains the deadly d8 trait, which changes the crit damage line the Strikes page prints (derive.ts:1421 reads deadly-dN off the strike's traits). No legal field injects a trait onto an already-granted strike.",
+  "src": "feats"
+ },
+ {
+  "id": "adamantine-echo",
+  "name": "Adamantine Echo",
+  "reason": "The text says it 'functions as a +1 armor potency rune', but its core.runes entry is {slot:'armor', kind:'property'} — property runes carry no value, so the wearer never gets the +1 item bonus to AC that a potency rune gives. The registry already supports the right shape (armor-potency-1 is kind 'potency', value 1). Note the item form carries no passiveEffects either, but as an etched rune the registry entry is the lane that actually fires.",
+  "src": "items"
+ },
+ {
+  "id": "assisting",
+  "name": "Assisting",
+  "reason": "The armour rune states flat Bulk limits of 6 + Str (encumbered) and 11 + Str (maximum), i.e. +1 to both thresholds, and deriveBulk computes encumberedAt = 5 + strMod and max = 10 + strMod with a limitBonus that is summed from FEATS only (Feat.bulkLimitBonus, derive.ts ~line 2036). core.runes.assisting carries id/name/slot/kind/level/price and nothing else, so the printed numbers never reach the Bulk readout. Fix uses the existing bulkLimitBonus field; deriveBulk must also read it from etched armour runes.",
+  "src": "items"
+ },
+ {
+  "id": "astral",
+  "name": "Astral",
+  "reason": "'Strikes with it deal an extra 1d6 spirit damage' is per-Strike damage for the OWNER, and core.runes.astral carries no damage block — the only rune payload lane there is `damage` (flaming/frost/corrosive/shock/thundering all have it, verified in core.json). AoN text confirms the die and type. The ghost touch and possession clauses are target-side.",
+  "src": "items"
+ },
+ {
+  "id": "astral-greater",
+  "name": "Astral (Greater)",
+  "reason": "Same extra 1d6 spirit damage per Strike (the greater version only raises the save DC and ignores spirit resistance); core.runes.astral-greater has no damage block, so the rider is missing exactly as on the base rune.",
+  "src": "items"
+ },
+ {
+  "id": "giant-killing",
+  "name": "Giant-Killing",
+  "reason": "Registered in core.runes as a weapon property rune, but the +1d6 vs giants is nowhere — the rune registry only carries unconditional damage (corrosive et al.), so a giant-killing weapon shows no trace of its extra damage. The crit enfeeblement is target-side.",
+  "src": "items"
+ },
+ {
+  "id": "giant-killing-greater",
+  "name": "Giant-Killing (Greater)",
+  "reason": "Same as the lesser rune at 2d6: the conditional extra damage the owner deals is not carried anywhere. Ignoring mental resistance and the crit save are target-side.",
+  "src": "items"
+ },
+ {
+  "id": "gills",
+  "name": "Gills",
+  "reason": "An invested graft whose entire content is a permanent character capability — you can breathe underwater. The record carries nothing, and no item field can express it: passiveEffects covers senses/speeds/resistances/immunities but not breathing, and unlike every other water item this one grants no swim Speed to stand in for it.",
+  "src": "items"
+ },
+ {
+  "id": "greater-chainbreaker",
+  "name": "Greater Chainbreaker",
+  "reason": "The text says \"Base Weapon Pick\" and \"this +2 striking pick\", but the record is itemType 'equipment' with no category, group or damage — buying it gives you a piece of gear you cannot Strike with at all. The Hardness-ignoring clause and the ally's Escape reaction are correctly table-side.",
+  "src": "items"
+ },
+ {
+  "id": "greater-dragons-tongue",
+  "name": "Greater Dragon's Tongue",
+  "reason": "\"Base Weapon Longspear\" and \"+2 greater striking longspear\", yet the record is itemType 'equipment' with no weapon statistics — it cannot be wielded or Struck with. (The breath activation is target-side and correctly needs nothing.)",
+  "src": "items"
+ },
+ {
+  "id": "greater-energized-shield",
+  "name": "Greater Energized Shield",
+  "reason": "The text gives explicit shield statistics — \"minor reinforcing steel shield (Hardness 8, HP 64, BT 32)\" — but the record is itemType 'equipment' with no acBonus, hardness, hp or brokenThreshold, so it can never be Raised or Shield Blocked. The energized blast itself is target-side.",
+  "src": "items"
+ },
+ {
+  "id": "greater-mitigation-mail",
+  "name": "Greater Mitigation Mail",
+  "reason": "\"Base Armor Chain Mail\" and \"+2 resilient chain mail\", but the record is itemType 'equipment' with no acBonus, dexCap, checkPenalty, speedPenalty or strength — worn, it gives the character no AC at all. The once-per-day Salve heal is a momentary activation and correctly needs nothing.",
+  "src": "items"
+ },
+ {
+  "id": "greater-reactive-mail",
+  "name": "Greater Reactive Mail",
+  "reason": "\"Base Armor Chain Mail\" and \"+1 resilient chain mail\", yet the record is itemType 'equipment' with no armor statistics — wearing it grants no AC. The Quick Spike reaction is target-side.",
+  "src": "items"
+ },
+ {
+  "id": "impactful",
+  "name": "Impactful",
+  "reason": "Property rune present in core.runes but with NO `damage` field, so the promised additional 1d6 force damage on a successful Strike never reaches the strike breakdown (derive.ts:1486/1694 read db.runes[p]?.damage — flaming ships this shape, impactful does not). The crit push-5-feet rider is target-side and is deliberately not modelled. FIX TARGET: core.runes['impactful'].damage.",
+  "src": "items"
+ },
+ {
+  "id": "impactful-greater",
+  "name": "Impactful (Greater)",
+  "reason": "Same defect as impactful: the rune exists in core.runes with no `damage` field, so its additional 1d6 force damage on a successful Strike is never added. The greater version differs from the base only in the crit push distance (10 feet instead of 5), which is target-side, so the damage rider is identical. FIX TARGET: core.runes['impactful-greater'].damage.",
+  "src": "items"
+ },
+ {
+  "id": "linguistic-nexus",
+  "name": "Linguistic Nexus",
+  "reason": "\"You learn an additional language of your choice for every 2 levels of the relic (minimum 1)\" is an owner-facing pick that nothing delivers — the record has no grantsLanguages and no chooser, so the extra language never reaches the character sheet. Fix offers the pick (minimum one language; the engine cannot scale it by relic level, so it grants the printed floor rather than over-granting).",
+  "src": "items"
+ },
+ {
+  "id": "blazons-of-shared-power",
+  "name": "Blazons of Shared Power",
+  "reason": "The secondary weapon gains the primary weapon's fundamental runes while both are wielded. The engine HAS this lane (inv.copyRunesFrom + effectiveWeaponRunes in derive.ts) but it is gated behind DOUBLING_RINGS, a hardcoded set of two ids, so the blazons deliver nothing.",
+  "src": "items"
+ },
+ {
+  "id": "blazons-of-shared-power-greater",
+  "name": "Blazons of Shared Power (Greater)",
+  "reason": "As the base blazons, plus property runes are copied too (and the secondary's own runes are suppressed entirely). Nothing reads it — the rune-copy path only fires for doubling-rings/doubling-rings-greater.",
+  "src": "items"
+ },
+ {
+  "id": "bomb-launcher",
+  "name": "Bomb Launcher",
+  "reason": "\"Bombs fired with a bomb launcher have a range increment of 60 feet\" — that overrides the range increment shown on every bomb Strike the owner makes, and no field on an item can reach another item's range.",
+  "src": "items"
+ },
+ {
+  "id": "branch-attendants-mask",
+  "name": "Branch Attendant's Mask",
+  "reason": "\"While you wear the mask... add the associated cantrip to your prepared cantrips\", chosen by Magaambya branch. The player is never asked which branch and gains no cantrip; the record has no effectChoices.",
+  "src": "items"
+ },
+ {
+  "id": "advanced-deed",
+  "coll": "classFeatures",
+  "name": "Advanced Deed",
+  "reason": "Auto-granted at gunslinger 9 and completely inert: the way's advanced deed is never handed over. The way subclass options carry only grants.skills, and the deed records (finish-the-job, vital-shot, spinning-crush, ...) live in classFeatures, which grantsFeats cannot reach (it resolves against the feats collection).",
+  "src": "features"
+ },
+ {
+  "id": "blessed-shield",
+  "coll": "classFeatures",
+  "name": "Blessed Shield",
+  "reason": "A champion's shield should carry the reinforcing rune for their level (minor at 1st up to supreme at 19th), or +1 Hardness if it already has it. The app computes shield Hardness/HP/BT from an ETCHED reinforcing rune only (derive.ts reads held.inv.runes.reinforcing), and no field lets a class feature grant a level-scaling rune or a flat Hardness bump to the wielded shield.",
+  "src": "features"
+ },
+ {
+  "id": "custodian-of-groves-and-gardens",
+  "coll": "classFeatures",
+  "name": "Custodian of Groves and Gardens",
+  "reason": "Spells and the vessel focus spell ARE delivered (classes.animist.extraChoices.apparition option carries grantedSpells + focusSpells garden-of-healing), but the Apparition Skills are not: apparition-attunement's text grants Lore skills while attuned, so Farming Lore and Herbalism Lore should be trained. trainedLore is single-valued and there is no multi-lore grant lane on a class-choice option.",
+  "src": "features"
+ },
+ {
+  "id": "deific-weapon",
+  "coll": "classFeatures",
+  "name": "Deific Weapon",
+  "reason": "Steps the damage die of the deity's favored weapon up one size when it is a simple weapon or a d4 unarmed attack, grants access if uncommon, and treats an advanced favored weapon as martial. derive.ts implements exactly this die step, but only for the FEAT Deadly Simplicity (hasDeadlySimplicity checks c.feats for 'deadly-simplicity'); a champion holds Deific Weapon as a class feature, so none of the three benefits apply. No record field can express a deity-dependent die step or a proficiency-category downgrade.",
+  "src": "features"
+ },
+ {
+  "id": "deity-cleric",
+  "coll": "classFeatures",
+  "name": "Deity (Cleric)",
+  "reason": "The favored-weapon training IS delivered (build.ts writes proficiencies.weaponOverrides from deity.favoredWeapons, doctrine-scaled) and sanctification comes through the deity's own effectChoices, but the deity's granted SKILL is not: deities carry a 'skill' field (e.g. sarenrae.skill = medicine) and the only reader in src is derive.ts:270, for the Sanguine Pendant item bonus. Nothing trains it. The value is deity-dependent, so trainedSkill on this record cannot express it.",
+  "src": "features"
+ },
+ {
+  "id": "eidolon-symbiosis",
+  "coll": "classFeatures",
+  "name": "Eidolon Symbiosis",
+  "reason": "Auto-granted at summoner 7 and completely invisible: the eidolon gains a new ability determined by its type, and nothing models eidolon-type abilities (companions.ts derives only ability mods, unarmed Strikes, senses and defences). No legal field can grant a type-keyed companion ability.",
+  "src": "features"
+ },
+ {
+  "id": "eidolon-transcendence",
+  "coll": "classFeatures",
+  "name": "Eidolon Transcendence",
+  "reason": "Auto-granted at summoner 17: a second type-keyed eidolon ability plus +2 to one of the eidolon's ability scores. Neither is delivered — eidolon ability scores are free-entry (ec.abilities) with nothing prompting or applying the +2, and type abilities are not modelled at all.",
+  "src": "features"
+ },
+ {
+  "id": "enhanced-resistance",
+  "coll": "classFeatures",
+  "name": "Enhanced Resistance",
+  "reason": "Upgrades the resistance an initial armor modification grants from half level to full level (e.g. phlogistonic-regulator carries resistances cold/fire max(1,floor(@actor.level/2)) in effect-backfill.json). No field can rewrite another feature's resistance formula, and which modification it applies to is a player choice among the ones they own.",
+  "src": "features"
+ },
+ {
+  "id": "expert-tactician",
+  "coll": "classFeatures",
+  "name": "Expert Tactician",
+  "reason": "Class DC→expert is in CLASS_ADVANCEMENT.commander (level 7) and the +2 folio tactics in commanderFolioMax(), but 'the total number of tactics you can have prepared increases to four' never arrives: preparedMax is a flat 3 + preparedTacticsBonus summed over FEATS only (build.ts:3126-3127), so a level-7 commander still prepares 3. (Warfare Lore → master is a skill rank with no lane at all — a separate gap.)",
+  "src": "features"
+ },
+ {
+  "id": "giant-instinct",
+  "coll": "classFeatures",
+  "name": "Giant Instinct",
+  "reason": "The instinct's rage damage IS delivered (derive.ts RAGE_DAMAGE['giant-instinct'] tiers 6/10/18 with the larger-weapon note), but Raging Resistance (9th) is not — nothing grants resistance 3 + Con to bludgeoning and a chosen energy type while raging, and the sibling dragon-instinct record openly admits it ('Raging Resistance (9th) isn't applied'). The bludgeoning half fits the whileActive 'rage' lane; the cold/electricity/fire PICK does not, because EffectGrant (types.ts) has no whileActive member, so an effectChoices option could only grant the energy resistance unconditionally, which would over-grant it outside rage.",
+  "src": "features"
+ },
+ {
+  "id": "hampering-spikes",
+  "coll": "classFeatures",
+  "name": "Hampering Spikes",
+  "reason": "Adds hampering, trip and versatile P to the inventor's innovation weapon. weaponTraits is a FEAT-only field (derive.ts weaponRiderTraits reads db.feats only) and is not on the ClassFeature type, and nothing marks WHICH inventory weapon is the innovation — writing an unfiltered rider would over-grant to every wielded weapon. Needs an innovation-item designation + a classFeature weaponTraits lane.",
+  "src": "features"
+ },
+ {
+  "id": "handlers-calling",
+  "coll": "classFeatures",
+  "name": "Handler's Calling",
+  "reason": "Command an Animal is Nature. The regain clause also covers Make an Impression on a wild animal (Diplomacy), so Diplomacy appears on the regain entry only — the spend clause is Command an Animal alone and must not be widened.",
+  "src": "features"
+ },
+ {
+  "id": "heavy-construction",
+  "coll": "classFeatures",
+  "name": "Heavy Construction",
+  "reason": "Rewrites the innovation armour to a printed heavy-armour stat block (AC +5, Dex cap +1, check –2, Speed –10/0, Str +3, Bulk 3, bulwark + entrench) and sets innovation-armour proficiency equal to medium. There is no innovation ARMOUR item to restat — build.inventorArmorStats only picks power-suit/subterfuge-suit — and no per-item armour proficiency lane.",
+  "src": "features"
+ },
+ {
+  "id": "hefty-composition",
+  "coll": "classFeatures",
+  "name": "Hefty Composition",
+  "reason": "Adds shove, razing and versatile B to the innovation weapon. Same gap as the other weapon-innovation modifications: weaponTraits is feat-only and no inventory item is designated as the innovation.",
+  "src": "features"
+ },
+ {
+  "id": "horn-of-plenty",
+  "coll": "classFeatures",
+  "name": "Horn of Plenty",
+  "reason": "An ikon that hands the player 1 (2 at 8th, 3 at 16th) temporary elixirs/potions of their level or lower, each individually chosen, refreshed at daily preparations. That is a real pick and real inventory; there is no daily temporary-consumable lane (advancedAlchemy is alchemist-only and feat-keyed).",
+  "src": "features"
+ },
+ {
+  "id": "humble-strikes",
+  "coll": "classFeatures",
+  "name": "Humble Strikes",
+  "reason": "Auto-granted at exemplar 1 and completely invisible: every simple weapon the character wields should show one damage die size larger. unarmedTraits.stepDie is unarmed-only, weaponTraits has no stepDie, and neither field exists on ClassFeature. Needs a wielded-weapon die-step lane filtered to simple weapons.",
+  "src": "features"
+ },
+ {
+  "id": "hunters-calling",
+  "coll": "classFeatures",
+  "name": "Hunter's Calling",
+  "reason": "Seek is a Perception check and Track is Survival — both rolled by the player, both unmodelled. Perception needs the perception kind, not a skill target.",
+  "src": "features"
+ },
+ {
+  "id": "inconspicuous-appearance",
+  "coll": "classFeatures",
+  "name": "Inconspicuous Appearance",
+  "reason": "Adds backstabber and versatile P (plus concealable when light Bulk) to the innovation weapon. Same innovation-item gap: weaponTraits is feat-only and no inventory item is the innovation.",
+  "src": "features"
+ },
+ {
+  "id": "initiate-benefit-weapon",
+  "coll": "classFeatures",
+  "name": "Initiate Benefit (Weapon)",
+  "reason": "The reaction half is fine, but from 5th level this grants weapon critical specialization with the weapon implement and no Strike ever shows it. critSpec must be paired with critSpecWeapons and there is no way to say 'the weapon you designated as your implement' — an unfiltered critSpec would over-grant to every weapon.",
+  "src": "features"
+ },
+ {
+  "id": "integrated-gauntlet",
+  "coll": "classFeatures",
+  "name": "Integrated Gauntlet",
+  "reason": "Adds the free-hand trait to the innovation weapon (excluding two-hand/fatal aim). Same innovation-item gap: weaponTraits is feat-only and no inventory item is designated as the innovation.",
+  "src": "features"
+ },
+ {
+  "id": "inventor-weapon-expertise",
+  "coll": "classFeatures",
+  "name": "Inventor Weapon Expertise",
+  "reason": "The expert simple/martial/unarmed half is delivered by CLASS_ADVANCEMENT.inventor level 5, but 'if you have a Weapon Innovation you gain the critical specialization effect with your innovation' is delivered nowhere (the record carries no critSpec, and neither does weapon-innovation). critSpec cannot be restricted to the innovation because no inventory item is marked as it, and an unfiltered grant would over-grant to every weapon.",
+  "src": "features"
+ },
+ {
+  "id": "legendary-tactician",
+  "coll": "classFeatures",
+  "name": "Legendary Tactician",
+  "reason": "Two of three halves land — CLASS_ADVANCEMENT.commander level 19 gives classDc legendary, and commanderFolioMax(level) adds +2 folio slots at 19 while commanderMaxTier unlocks legendary tactics. But 'the total number of tactics you can have prepared increases to six' never happens: build.ts hardcodes preparedMax: 3 + preparedBonus, and preparedTacticsBonus is a FEAT-only field read from content.feats.",
+  "src": "features"
+ },
+ {
+  "id": "ligneous-instinct",
+  "coll": "classFeatures",
+  "name": "Ligneous Instinct",
+  "reason": "Wooden Rage's damage IS delivered (RAGE_DAMAGE in derive.ts has 'ligneous-instinct': tiers [6,10,18]), but three printed pieces reach nothing and no legal field can express them: the −10-foot Speed while using wooden rage (speedPenalty is unconditional, and whileActive carries no speeds penalty), Raging Resistance's piercing/slashing resistance 3 + Con (whileActive rage resistances exist but have no minLevel, so attaching them would over-grant from level 1 instead of 9), and the fire weakness (whileActive has no weaknesses field).",
+  "src": "features"
+ },
+ {
+  "id": "lust",
+  "coll": "classFeatures",
+  "name": "Lust",
+  "reason": "A wizard curriculum (Runelord sin) that exists ONLY as this classFeature — there is no matching wizard subclass option in core.json, so neither the initial school spell Heart's Hook nor the sin spell list reaches the character. Anathema is roleplay.",
+  "src": "features"
+ },
+ {
+  "id": "master-overdrive",
+  "coll": "classFeatures",
+  "name": "Master Overdrive",
+  "reason": "Neither half arrives. \"You become a master in Crafting\": skill RANK raises have no record field (trainedSkill only grants trained) — the siblings live in featGrantsAuto.ts as 'expert-overdrive' {crafting: expert} and 'legendary-overdrive' {crafting: legendary}, but there is no 'master-overdrive' entry, and FEAT_GRANTS is applied only to taken FEATS (build.ts ~2384), never to class features. The +2 Overdrive damage also lands nowhere: the predefined 'cat-overdrive' mode ships modifiers: [] with a note only.",
+  "src": "features"
+ },
+ {
+  "id": "master-tactician",
+  "coll": "classFeatures",
+  "name": "Master Tactician",
+  "reason": "Class DC to master IS delivered (advancement.ts commander level 15, source 'master-tactician') and folio size comes from commanderFolioMax(level), but the prepared-tactics increase never happens — build.ts computes preparedMax = 3 + preparedTacticsBonus summed over content.feats only, so this feature (and Expert Tactician's raise to four) contribute nothing. The \"legendary proficiency in Warfare Lore\" raise also has no lane: no record field expresses a skill rank above trained, and the FEAT_GRANTS skills table is keyed to taken feats.",
+  "src": "features"
+ },
+ {
+  "id": "masterful-hunter-precision",
+  "coll": "classFeatures",
+  "name": "Masterful Hunter (Precision)",
+  "reason": "Extra precision damage on the SECOND (and, at 19th, third) hit against your hunted prey in a round. strikeDamage is unconditional per Strike and situational carries no per-round hit counter, so there is no lane for \"the Nth time in a round you hit\" — the base Precision edge is equally unmodelled.",
+  "src": "features"
+ },
+ {
+  "id": "medium-armor-expertise-inventor",
+  "coll": "classFeatures",
+  "name": "Medium Armor Expertise (Inventor)",
+  "reason": "The proficiency half is ALREADY delivered (advancement.ts inventor level 11 lists unarmored/light/medium expert with source 'medium-armor-expertise-inventor'), but the second sentence — access to the critical specialization effect with a medium or heavy armor innovation — has no lane: critSpec is weapons-only (it is valid only alongside critSpecWeapons), and nothing expresses armour-group specialization effects.",
+  "src": "features"
+ },
+ {
+  "id": "modular-head",
+  "coll": "classFeatures",
+  "name": "Modular Head",
+  "reason": "The innovation gains the modular trait (B/P/S) plus an on-demand nonlethal toggle, and the Strike never sees it. weaponTraits is the right family but its match filter only accepts melee/groups/anyTrait/items — there is no way to say \"your weapon innovation\", which is a player-chosen weapon resolved by inventorModificationOptions. The modification PICK is offered; its effect is not.",
+  "src": "features"
+ },
+ {
+  "id": "pride",
+  "coll": "classFeatures",
+  "name": "Pride",
+  "reason": "A wizard sin/school record: the initial school spell (Crescent Scepter) is a focus spell that is never granted, and the sin spell list is never added to what you can prepare. All ids verified in core.json; the 2nd-rank entry has a second spell missing from the source text, so only the printed ones are listed. Anathema is roleplay.",
+  "src": "features"
+ },
+ {
+  "id": "raging-resistance",
+  "coll": "classFeatures",
+  "name": "Raging Resistance",
+  "reason": "Resistance 3 + Con modifier to instinct-typed damage while raging reaches nothing: no classFeature carries whileActive, and none of the ten *-instinct features (animal-instinct, dragon-instinct, …) carries a resistance either. The lane exists — whileActive [{state:\"rage\",resistances:[…]}] with a \"3+@actor.con.mod\" formula (derive.ts substitutes @actor.<abil>.mod) — but it must be written on each INSTINCT feature, because this record cannot name the damage types; raging-resistance itself has nothing to carry.",
+  "src": "features"
+ },
+ {
+  "id": "razor-prongs",
+  "coll": "classFeatures",
+  "name": "Razor Prongs",
+  "reason": "A selectable weapon-innovation modification (build.ts inventorModificationOptions offers it) whose whole content is \"your innovation gains the tearing, trip, and versatile S traits\" — and nothing adds them. weaponTraits cannot express it: derive.ts reads weaponTraits only from db.feats, and the innovation is never bound to an inventory item (InventorBuild.modifications is resolved \"for display\" only). Needs an innovation→item link plus weaponTraits on class features.",
+  "src": "features"
+ },
+ {
+  "id": "reveler-in-lost-glee",
+  "coll": "classFeatures",
+  "name": "Reveler in Lost Glee",
+  "reason": "The apparition spells and the Trickster's Mirrors vessel spell ARE delivered (classes.animist.extraChoices[\"apparition\"] option carries grantedSpells + focusSpells), but the Apparition Skills — trained in Circus Lore and Fortune-Telling Lore while attuned, which the animist class text confirms you \"forget\" when the apparition is dispersed — reach nothing. No lane fits: trainedLore/trainedSkill exist only on Background, and the option-level `grants.skills` (used by witch patrons and exemplar epithets) is typed to SkillId, so it cannot carry two Lore subjects. Fix belongs on classes.animist.extraChoices apparition option once grants.skills accepts \"lore:<Name>\".",
+  "src": "features"
+ },
+ {
+  "id": "rope-shot",
+  "coll": "classFeatures",
+  "name": "Rope Shot",
+  "reason": "A selectable ranged weapon-innovation modification whose content is \"your weapon innovation gains the climbing and ranged trip traits, and tethered if thrown\" — nothing adds them. Same blocker as razor-prongs: derive.ts reads weaponTraits only from db.feats, and the innovation is never bound to an inventory weapon, so no legal field can target it.",
+  "src": "features"
+ },
+ {
+  "id": "rune-capacity",
+  "coll": "classFeatures",
+  "name": "Rune Capacity",
+  "reason": "A selectable innovation modification granting one property rune slot beyond the item's normal limit (max four with +3 potency). No field expresses a rune-capacity change — there is no lane for the etching/rune-slot cap at all, and the innovation is not linked to an inventory item.",
+  "src": "features"
+ },
+ {
+  "id": "runelords-calling",
+  "coll": "classFeatures",
+  "name": "Runelord's Calling",
+  "reason": "Identify Magic, Learn a Spell and casting a ritual are all player checks; the skill varies by tradition and by ritual, so the spend entry targets 'all' with the actions named. The regain clause names the four magic skills explicitly, so it is narrowed to those. Unmodelled.",
+  "src": "features"
+ },
+ {
+  "id": "sagas-calling",
+  "coll": "classFeatures",
+  "name": "Saga's Calling",
+  "reason": "A Performance check or Gather Information (Diplomacy), at mythic proficiency for a Mythic Point. Unmodelled. The regain clause is Gather Information only, so it is narrowed to Diplomacy.",
+  "src": "features"
+ },
+ {
+  "id": "sages-calling",
+  "coll": "classFeatures",
+  "name": "Sage's Calling",
+  "reason": "Recall Knowledge with any skill, at mythic proficiency for a Mythic Point. Unmodelled. Unrestricted by skill, so 'all' is exact rather than a fallback.",
+  "src": "features"
+ },
+ {
+  "id": "skin-hard-as-horn",
+  "coll": "classFeatures",
+  "name": "Skin Hard as Horn",
+  "reason": "The immanence grants resistance equal to half your level to a damage type you attune during daily preparations (not against critical hits). The player never picks the type and never gets the resistance.",
+  "src": "features"
+ },
+ {
+  "id": "speaker-in-sibilance",
+  "coll": "classFeatures",
+  "name": "Speaker in Sibilance",
+  "reason": "Spells and vessel spell ARE delivered by the animist apparition option (grantedSpells + focusSpells:['crown-of-prophets']); its Apparition Skills — Fortune-Telling Lore and Mountain Lore while attuned — are delivered nowhere (no lore grant exists on any apparition option in core.json).",
+  "src": "features"
+ },
+ {
+  "id": "spell-blending",
+  "coll": "classFeatures",
+  "name": "Spell Blending",
+  "reason": "A wizard thesis that restructures the spell slot table at daily preparations — trade two slots of one rank for a bonus slot up to 2 ranks higher, or a slot for two extra cantrips. The player's slot line never changes.",
+  "src": "features"
+ },
+ {
+  "id": "spirit-instinct",
+  "coll": "classFeatures",
+  "name": "Spirit Instinct",
+  "reason": "Spirit Rage's damage IS delivered (RAGE_DAMAGE in derive.ts: 'spirit-instinct' tiers [3,7,13], type 'spirit'), but Raging Resistance at 9th — resistance to void damage and to damage dealt by undead creatures' attacks and abilities while raging — reaches nothing; no instinct carries a whileActive resistance anywhere in core.json.",
+  "src": "features"
+ },
+ {
+  "id": "tangle-line",
+  "coll": "classFeatures",
+  "name": "Tangle Line",
+  "reason": "An inventor weapon modification whose whole content is 'your innovation gains the parry, ranged trip and tethered traits' — real traits on the weapon the character actually wields, delivered nowhere.",
+  "src": "features"
+ },
+ {
+  "id": "thaumaturgic-mastery",
+  "coll": "classFeatures",
+  "name": "Thaumaturgic Mastery",
+  "reason": "The class DC master rank IS delivered (advancement.ts, thaumaturge level 17, source 'thaumaturgic-mastery'), but the additional skill increase restricted to Arcana/Nature/Occultism/Religion is never offered.",
+  "src": "features"
+ },
+ {
+  "id": "warfare-expertise",
+  "coll": "classFeatures",
+  "name": "Warfare Expertise",
+  "reason": "Auto-granted at Commander 3: expert proficiency in Warfare Lore, plus using Warfare Lore for initiative. There is no lane that raises a Lore skill's rank — AdvancementTrack (types.ts:77) has no skill/lore track, and the only record-level lore fields (trainedLore, loreChoices) grant trained only, so the expert bump cannot be expressed.",
+  "src": "features"
+ },
+ {
+  "id": "wildsong",
+  "coll": "classFeatures",
+  "name": "Wildsong",
+  "reason": "Auto-granted at Druid 1: every druid knows the Wildsong in addition to their ancestry languages, and nothing adds it — classes.druid has no language grant, so the sheet's language list is short by one. `wildsong` is a real core.languages id.",
+  "src": "features"
+ }
+]

@@ -1,0 +1,449 @@
+[
+ {
+  "id": "shield-warfare",
+  "collection": "feats",
+  "name": "Shield Warfare",
+  "level": 1,
+  "traits": [
+   "guardian"
+  ],
+  "whyFlagged": "Increases the weapon damage die of any shield bash, shield boss, or shield spikes you wield by one step — a real, permanent damage change. Shields are modelled only as AC/Hardness/HP (deriveShield); no shield attack exists in the strikes lane and unarmedTraits.stepDie only reaches unarmed Strikes, s",
+  "text": "You know how to use shields offensively far better than most. Increase the weapon damage die of any shield bash, shield boss, or shield spikes you wield by one step."
+ },
+ {
+  "id": "signature-spell-expansion",
+  "collection": "feats",
+  "name": "Signature Spell Expansion",
+  "level": 10,
+  "traits": [
+   "sorcerer"
+  ],
+  "whyFlagged": "Grants two additional signature spells of base rank 3rd or lower — a genuine player PICK. The builder stores signatures as Record<rank, spellId> (BuildState.signatures, src/rules/build.ts ~222 and Builder.tsx ~661), one per rank, so a sorcerer cannot designate a second signature at any rank ≤3 and t",
+  "text": "Your innate connection to magic lets you cast more spells with greater freedom. You gain two additional signature spells, each of which must have a base rank of 3rd or lower."
+ },
+ {
+  "id": "signature-spell-expansion-psychic",
+  "collection": "feats",
+  "name": "Signature Spell Expansion (Psychic)",
+  "level": 10,
+  "traits": [
+   "psychic"
+  ],
+  "whyFlagged": "Same as the sorcerer version: two additional signature spells of rank 3rd or lower. BuildState.signatures is one spell per rank, so the psychic gets nothing. No existing field expresses extra signature slots.",
+  "text": "Your direct mental grasp of your power lets you cast more spells with greater freedom. You gain two additional signature spells, each of which must have a minimum rank of 3rd or lower."
+ },
+ {
+  "id": "spell-combination",
+  "collection": "feats",
+  "name": "Spell Combination",
+  "level": 20,
+  "traits": [
+   "wizard"
+  ],
+  "whyFlagged": "The 20th-level wizard capstone converts one prepared slot of every rank except 1st and 2nd into a combination slot that holds TWO spells at once. That is a real change to spell preparation the player cannot record: spellSlotBonus adds slots rather than re-typing them, and no field marks a slot as a ",
+  "text": "You can merge spells, producing multiple effects with a single casting. One slot of each rank of spell you can cast, except 2nd rank and 1st rank, becomes a spell combination slot (this doesn't apply to cantrips). When you prepare your spells, you can fill a combination slot with a combination of two spells. Each spell in the combination must be 2 or more spell ranks below the slot's rank, and both must target only one creature or object or have the option to target only one creature or object. Each spell in the combination must also have the same means of determining whether it has an effect—both spells must require a ranged spell attack, require the same type of saving throw, or automatically affect the target. When you cast a combined spell, it affects only one target, even if the component spells normally affect more than one. If any spell in the combination has further restrictions "
+ },
+ {
+  "id": "splinter-faith",
+  "collection": "feats",
+  "name": "Splinter Faith",
+  "level": 1,
+  "traits": [
+   "champion",
+   "cleric"
+  ],
+  "whyFlagged": "You choose four domains that REPLACE your deity's domain list, and the app's domain picker (choice kind 'domains' in Builder.tsx) enumerates strictly content.deities[deityId].domains, so Domain Initiate and friends still offer only the printed list. No field can override a deity's domain set.",
+  "text": "Your faith in your deity is represented in an extremely unusual way that some might call heretical. When you select this feat, you should detail the fundamental tenets of your splinter faith, though it shouldn't affect the deity's edicts or anathema. Choose four domains. These domains must be chosen from among your deity's domains, your deity's alternate domains, and up to one domain that isn't on either list and isn't anathematic to your deity. Any domain spell you cast from a domain that isn't on either of your deity's lists is always heightened to 1 rank lower than usual for a focus spell. For the purpose of abilities that depend on your deity's domains, the four domains you chose are your deity's domains, and any of your deity's domains you didn't choose are now among your deity's alternate domains. --- Special Unless you take this feat at 1st level, changing the way you relate to yo"
+ },
+ {
+  "id": "strong-arm",
+  "collection": "feats",
+  "name": "Strong Arm",
+  "level": 2,
+  "traits": [
+   "rogue"
+  ],
+  "whyFlagged": "It permanently increases the range increment of every thrown weapon you Strike with — a number the strike card shows — and there is no field or registry that modifies weapon range.",
+  "text": "When you Strike with a thrown weapon, the weapon's range increment increases by 10 feet."
+ },
+ {
+  "id": "student-of-water",
+  "collection": "feats",
+  "name": "Student of Water",
+  "level": 2,
+  "traits": [
+   "monk",
+   "water"
+  ],
+  "whyFlagged": "It hands you Underwater Marauder and Water Sprint, but only once you meet each one’s prerequisite (trained / master in Athletics). grantsFeats applies unconditionally, so writing it would give a 2nd-level monk the 7th-level Water Sprint — a prerequisite-gated feat grant has no lane.",
+  "text": "Following your studies of water, your qi stirs the water of the natural world. If you're underwater, you have cover against creatures outside of the water. As soon as you meet the prerequisites for Underwater Marauder and Water Sprint, you gain those feats."
+ },
+ {
+  "id": "tactical-expansion",
+  "collection": "feats",
+  "name": "Tactical Expansion",
+  "level": 2,
+  "traits": [
+   "commander"
+  ],
+  "whyFlagged": "Repeatable: \"Add two additional tactics you qualify for to your folio.\" Tactics are real records (core.json `tactic` / actions with the tactic trait) and the folio is built by commanderFolioMax() in src/rules/build.ts, a fixed formula no record can influence. A folio-size grant field (repeatable, +2",
+  "text": "Your folio is filled with tactics and techniques you've devised based on study and experience. Add two additional tactics you qualify for to your folio. --- Special You can take this feat multiple times, adding two new tactics to your folio each time."
+ },
+ {
+  "id": "talismanic-sage",
+  "collection": "feats",
+  "name": "Talismanic Sage",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Lets one specially treated item hold two active talismans at once. The app enforces the opposite: attachKind()/the host rule in src/rules/attachments.ts allows a host at most one talisman, so this feat is actively contradicted by the engine and no field relaxes the cap for a nominated item.",
+  "text": "Normally, affixing more than one talisman to an item causes the talismans to be suppressed, but when you Affix a Talisman, you can specially treat one item you're working on, allowing it to have two active talismans at once. This special treatment ends if you use Affix a Talisman to treat a new item for this ability."
+ },
+ {
+  "id": "tempest-clouds-speed",
+  "collection": "feats",
+  "name": "Tempest Cloud's Speed",
+  "level": 6,
+  "traits": [
+   "air",
+   "archetype",
+   "magical"
+  ],
+  "whyFlagged": "The feat permanently gives your familiar the Path of the Tempest familiar ability (an activation that grants YOU a +10-foot status bonus to Speed, reaction-free Striding and a Long Jump without a Stride). The record carries nothing and the familiar's ability roster never shows it; the COMPANION_MODS",
+  "text": "Requirements You aren't encumbered. --- You and your familiar coordinate to channel elemental air. Your familiar gains the Path of the Tempest ability."
+ },
+ {
+  "id": "terrifying-mien",
+  "collection": "feats",
+  "name": "Terrifying Mien",
+  "level": 16,
+  "traits": [
+   "mythic"
+  ],
+  "whyFlagged": "Grants the PLAYER a standing resistance to bludgeoning, piercing and slashing from Strikes made by frightened creatures, equal to four times that attacker's frightened value. Nothing delivers it: the resistances field is unconditional and its value can only reference the actor, so there is no way to",
+  "text": "Whether they have heard of your legend or seen your prowess on the field of battle, those already quaking in their boots grow weak when forced to stand against you. You gain resistance against bludgeoning, piercing, and slashing damage against Strikes made by creatures with the frightened condition. This resistance is equal to four times the value of that creature's frightened condition. When this resistance applies to at least one of a creature's Strikes during their turn, that creature doesn't reduce the value of their frightened condition at the end of their turn."
+ },
+ {
+  "id": "ubiquitous-snares",
+  "collection": "feats",
+  "name": "Ubiquitous Snares",
+  "level": 16,
+  "traits": [
+   "ranger"
+  ],
+  "whyFlagged": "Doubles the free daily prepared snares from Snare Specialist (4/6/8 by Crafting rank becomes 8/12/16). The app already computes that allowance in src/rules/snareFormulas.ts snareAllowance(), but the number is hardcoded off Crafting rank with no record field able to modify it.",
+  "text": "You can prepare a seemingly impossible number of snares in advance, and you're ready to spring them on unsuspecting foes. Double the number of prepared snares from Snare Specialist."
+ },
+ {
+  "id": "ultimate-polymath",
+  "collection": "feats",
+  "name": "Ultimate Polymath",
+  "level": 20,
+  "traits": [
+   "bard"
+  ],
+  "whyFlagged": "Makes EVERY spell in the bard's repertoire a signature spell, which drives the app's 'cast at' heightening picker. The engine only produces all-repertoire signatures from the summoner class feature check ('unlimited-signature-spells', src/rules/build.ts:1766-1771); there is no record field a feat ca",
+  "text": "You can flexibly cast all of your spells, granting a dizzying array of possible options. All of the spells in your repertoire are signature spells for you."
+ },
+ {
+  "id": "unburdened-iron",
+  "collection": "feats",
+  "name": "Unburdened Iron",
+  "level": 1,
+  "traits": [
+   "dwarf"
+  ],
+  "whyFlagged": "'Ignore the reduction to your Speed from any armor you wear' plus a 5-foot reduction to one other Speed penalty. The app really does subtract the worn armor's Speed penalty from every Speed (src/rules/derive.ts:1926) and applies encumbered as -10, with no check for this feat and no record field that",
+  "text": "You've learned techniques first devised by your ancestors during their ancient wars, allowing you to comfortably wear massive suits of armor. Ignore the reduction to your Speed from any armor you wear. In addition, any time you're taking a penalty to your Speed for some other reason (such as from the encumbered condition or from a spell), deduct 5 feet from the penalty. For example, the encumbered condition normally gives a –10-foot penalty to Speed, but this feat would reduce it to a –5-foot penalty. If your Speed is taking multiple penalties, pick only one penalty to reduce."
+ },
+ {
+  "id": "venomous-weapons",
+  "collection": "feats",
+  "name": "Venomous Weapons",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Wielded blowguns and slings gain the venomous trait — a permanent change to the player's weapons that nothing delivers. There is no lane to add a trait to a MANUFACTURED weapon (unarmedTraits is unarmed-only, and core.json's 'venomous' trait record is a bare stub with no description), so the strike ",
+  "text": "Your skill with poisons is such that your preferred weapons also contain trace amounts of it, even when you don't actively apply a dose. Blowguns and slings you are wielding have the venomous trait."
+ },
+ {
+  "id": "versatile-blasts",
+  "collection": "feats",
+  "name": "Versatile Blasts",
+  "level": 1,
+  "traits": [
+   "kineticist"
+  ],
+  "whyFlagged": "Adds selectable damage types to your Elemental Blasts (air/fire cold, earth/wood poison, metal electricity, water acid). deriveBlastStrikes (src/rules/derive.ts ~1537) hardcodes one damage type per element from ELEMENT_BLAST with no alternative, and no record field can add blast damage types, so the",
+  "text": "Accessing a wider realm of elemental manifestations, you can make blasts with rare forms of your elements. Add the following damage types to those you can choose for Elemental Blasts of that element: - air cold - earth poison - fire cold - metal electricity - water acid - wood poison"
+ },
+ {
+  "id": "versatile-font",
+  "collection": "feats",
+  "name": "Versatile Font",
+  "level": 2,
+  "traits": [
+   "cleric"
+  ],
+  "whyFlagged": "Lets you prepare either Harm or Heal in every divine-font slot. build.ts pins the font entry to a single type ({type: build.divineFont}) and SpellsTab renders that one spell for each pip, so half the feat's slots are shown as the wrong spell. The battle-font 'allowed' list is the existing mechanism,",
+  "text": "As you explore your deity's aspects, you move beyond restrictions on healing or harming. You can prepare either Harm or Heal in the spell slots gained from the harmful font or healing font."
+ },
+ {
+  "id": "walk-the-wilds",
+  "collection": "feats",
+  "name": "Walk the Wilds",
+  "level": 4,
+  "traits": [
+   "animist"
+  ],
+  "whyFlagged": "Adds Animal Form to the animist apparition spell repertoire, which the app does build (build.ts animist-apparition-casting) — but no field can add a spell to a repertoire.",
+  "text": "You know the ways of birds and beasts and have gained the right to wear their forms. You add Animal Form to your apparition spell repertoire, allowing you to cast it with your apparition spellcasting. --- Special If you cast the Darkened Forest Form focus spell to turn into a form granted by *animal form*, you can Sustain it up to 5 minutes instead of its normal duration."
+ },
+ {
+  "id": "winged-warrior-dedication",
+  "collection": "feats",
+  "name": "Winged Warrior Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "whyFlagged": "Permanently increases any fly Speed granted by ancestry feats/permanent wings by 5 feet, which is a persistent sheet speed. No lane exists: 'speeds' only sets an absolute value and landSpeedBonus covers land Speed only, so there is no way to add +5 to an existing fly Speed. (The Leap +10 feet half c",
+  "text": "Through rigorous training, you have strengthened your wings, granting you enough thrust to gain additional altitude. When you make a horizontal Leap, increase the distance by 10 feet up to a maximum of your Speed. Any fly Speed granted by ancestry feats and other permanent wings increases by 5 feet."
+ },
+ {
+  "id": "adamantine-echo",
+  "collection": "items",
+  "name": "Adamantine Echo",
+  "level": 5,
+  "traits": [
+   "earth",
+   "invested",
+   "magical",
+   "relic"
+  ],
+  "whyFlagged": "The text says it 'functions as a +1 armor potency rune', but its core.runes entry is {slot:'armor', kind:'property'} — property runes carry no value, so the wearer never gets the +1 item bonus to AC that a potency rune gives. The registry already supports the right shape (armor-potency-1 is kind 'po",
+  "text": "Made from glossy, nearly black adamantine, this large fragment of a plate armor vambrace provides little protection on its own. However, when incorporated into an intact suit of armor, it functions as a +1 armor potency rune."
+ },
+ {
+  "id": "assisting",
+  "collection": "items",
+  "name": "Assisting",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "whyFlagged": "The armour rune states flat Bulk limits of 6 + Str (encumbered) and 11 + Str (maximum), i.e. +1 to both thresholds, and deriveBulk computes encumberedAt = 5 + strMod and max = 10 + strMod with a limitBonus that is summed from FEATS only (Feat.bulkLimitBonus, derive.ts ~line 2036). core.runes.assisti",
+  "text": "Your armor provides support for your joints or advanced prostheses for missing limbs, holding your body in place and easing physical symptoms. This replicates the benefits of any number of splints, supports, and prostheses. When you invest the armor, you determine how many such supports you want, and where on your body they assist you. In addition, the extra support and structure provided by the armor allows you to transport more than you would otherwise normally be able to. You can carry Bulk equal to 6 + your Strength modifier before becoming encumbered, and you can hold and carry a total Bulk of up to 11 + your Strength modifier."
+ },
+ {
+  "id": "astral",
+  "collection": "items",
+  "name": "Astral",
+  "level": 8,
+  "traits": [
+   "magical",
+   "spirit"
+  ],
+  "whyFlagged": "'Strikes with it deal an extra 1d6 spirit damage' is per-Strike damage for the OWNER, and core.runes.astral carries no damage block — the only rune payload lane there is `damage` (flaming/frost/corrosive/shock/thundering all have it, verified in core.json). AoN text confirms the die and type. The gh",
+  "text": "*Astral* weapons command powerful spiritual energy from the Astral Plane. This rune has the same effects as a *Ghost Touch* rune, plus Strikes with it deal an extra 1d6 spirit damage. If used to attack a creature that's possessing another creature, this weapon deals no damage to the possessed creature. On a critical hit against a creature possessing another creature, the possessing creature must succeed at a save or be expelled and unable to possess a creature for 1d4 rounds."
+ },
+ {
+  "id": "astral-greater",
+  "collection": "items",
+  "name": "Astral (Greater)",
+  "level": 15,
+  "traits": [
+   "magical",
+   "spirit"
+  ],
+  "whyFlagged": "Same extra 1d6 spirit damage per Strike (the greater version only raises the save DC and ignores spirit resistance); core.runes.astral-greater has no damage block, so the rider is missing exactly as on the base rune.",
+  "text": "*Astral* weapons command powerful spiritual energy from the Astral Plane. This rune has the same effects as a *Ghost Touch* rune, plus Strikes with it deal an extra 1d6 spirit damage. If used to attack a creature that's possessing another creature, this weapon deals no damage to the possessed creature. On a critical hit against a creature possessing another creature, the possessing creature must succeed at a save or be expelled and unable to possess a creature for 1d4 rounds. Spirit damage dealt by this weapon ignores the target's spirit resistance."
+ },
+ {
+  "id": "blazons-of-shared-power",
+  "collection": "items",
+  "name": "Blazons of Shared Power",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "whyFlagged": "The secondary weapon gains the primary weapon's fundamental runes while both are wielded. The engine HAS this lane (inv.copyRunesFrom + effectiveWeaponRunes in derive.ts) but it is gated behind DOUBLING_RINGS, a hardcoded set of two ids, so the blazons deliver nothing.",
+  "text": "These brass emblems come in a variety of designs, usually customized to the purchaser to reflect the heraldry of a family or guild. *Blazons of shared power* come in sets of three. When you invest the blazons, you wear one of the three on your chest, and you attach the others to a pair of one-handed weapons, choosing one as the primary weapon and one as the secondary weapon. These weapons can be either melee weapons or ranged weapons. As long as you're wielding both the primary weapon and the secondary weapon, the secondary weapon gains the benefit of the fundamental runes on the primary weapon. A weapon can only have a single blazon of shared power attached to it at a time."
+ },
+ {
+  "id": "blazons-of-shared-power-greater",
+  "collection": "items",
+  "name": "Blazons of Shared Power (Greater)",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "whyFlagged": "As the base blazons, plus property runes are copied too (and the secondary's own runes are suppressed entirely). Nothing reads it — the rune-copy path only fires for doubling-rings/doubling-rings-greater.",
+  "text": "These brass emblems come in a variety of designs, usually customized to the purchaser to reflect the heraldry of a family or guild. *Blazons of shared power* come in sets of three. When you invest the blazons, you wear one of the three on your chest, and you attach the others to a pair of one-handed weapons, choosing one as the primary weapon and one as the secondary weapon. These weapons can be either melee weapons or ranged weapons. As long as you're wielding both the primary weapon and the secondary weapon, the secondary weapon gains the benefit of the fundamental runes on the primary weapon. A weapon can only have a single blazon of shared power attached to it at a time. A set of *greater blazons of shared power* also replicates property runes from the primary weapon, so long as the secondary weapon meets all the prerequisites for a given rune and isn't a specific weapon. The seconda"
+ },
+ {
+  "id": "bomb-launcher",
+  "collection": "items",
+  "name": "Bomb Launcher",
+  "level": 1,
+  "traits": [],
+  "whyFlagged": "\"Bombs fired with a bomb launcher have a range increment of 60 feet\" — that overrides the range increment shown on every bomb Strike the owner makes, and no field on an item can reach another item's range.",
+  "text": "This long, hollow tube is held in two hands and braced over the shoulder. Inside, it contains a small metal basket sized to hold alchemical bombs. A chute in the top delivers an alchemical bomb into the internal basket, while a lever on the underside pulls the basket back and locks it in place. Loading an alchemical bomb into a bomb launcher requires a single Interact action. With a pull of a trigger, the basket speeds forward, allowing you to Strike with the loaded alchemical bomb over long distances. Bombs fired with a bomb launcher have a range increment of 60 feet."
+ },
+ {
+  "id": "branch-attendants-mask",
+  "collection": "items",
+  "name": "Branch Attendant's Mask",
+  "level": 2,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "whyFlagged": "\"While you wear the mask... add the associated cantrip to your prepared cantrips\", chosen by Magaambya branch. The player is never asked which branch and gains no cantrip; the record has no effectChoices.",
+  "text": "Although not all attendants' masks are enchanted, many apply a first enchantment to celebrate their acceptance into a branch of the academy. While you wear the mask or have it as your bonded item, add the associated cantrip to your prepared cantrips. This has no effect if you do not prepare cantrips from the arcane or primal lists. - Cascade Bearers Read Aura - Emerald Boughs Root Reading - Rain-Scribes Deep Breath - Tempest-Sun Mages Electric Arc - Uzunjati"
+ },
+ {
+  "id": "giant-killing",
+  "collection": "items",
+  "name": "Giant-Killing",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "whyFlagged": "Registered in core.runes as a weapon property rune, but the +1d6 vs giants is nowhere — the rune registry only carries unconditional damage (corrosive et al.), so a giant-killing weapon shows no trace of its extra damage. The crit enfeeblement is target-side.",
+  "text": "This weapon features stylized etchings of giants. A giant-killing weapon deals an additional 1d6 damage on a successful Strike against a giant. On a critical hit, the giant is also Enfeebled 1 until the end of your next turn."
+ },
+ {
+  "id": "giant-killing-greater",
+  "collection": "items",
+  "name": "Giant-Killing (Greater)",
+  "level": 15,
+  "traits": [
+   "magical"
+  ],
+  "whyFlagged": "Same as the lesser rune at 2d6: the conditional extra damage the owner deals is not carried anywhere. Ignoring mental resistance and the crit save are target-side.",
+  "text": "This weapon features stylized etchings of giants. A giant-killing weapon deals an additional 2d6 damage on a successful Strike against a giant. Mental damage dealt by this weapon ignores the target's mental resistance. On a critical hit, instead of being Enfeebled 1, the giant must attempt a save with the following effects. --- Critical Success The giant is enfeebled 1 until the end of your next turn. Success The giant is Enfeebled 2 until the end of your next turn and takes 1d10 damage. Failure The giant is enfeebled 2 for the next minute and takes 2d10 damage. Critical Failure The giant is Enfeebled 4 for the next minute and takes 4d10 damage."
+ },
+ {
+  "id": "gills",
+  "collection": "items",
+  "name": "Gills",
+  "level": 8,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "whyFlagged": "An invested graft whose entire content is a permanent character capability — you can breathe underwater. The record carries nothing, and no item field can express it: passiveEffects covers senses/speeds/resistances/immunities but not breathing, and unlike every other water item this one grants no sw",
+  "text": "Delicate folds in the skin just behind your ears ripple as water flows over them. You can breathe underwater."
+ },
+ {
+  "id": "greater-chainbreaker",
+  "collection": "items",
+  "name": "Greater Chainbreaker",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "whyFlagged": "The text says \"Base Weapon Pick\" and \"this +2 striking pick\", but the record is itemType 'equipment' with no category, group or damage — buying it gives you a piece of gear you cannot Strike with at all. The Hardness-ignoring clause and the ally's Escape reaction are correctly table-side.",
+  "text": "Chainbreaker Source Battlecry! pg. 126 Usage held in 1 hand Bulk 1 Base Weapon Pick The head of this +1 striking pick is adorned with a detailed etching of an eagle with outstretched wings. When you use it to Strike an unattended object whose intended purpose is to restrain or confine, such as a pair of manacles or the bars of a prison cell, you ignore the first 5 points of the object’s Hardness. Activate—Liberating Strike ; Frequency once per day; Effect You Strike a creature with the chainbreaker. If you hit and deal damage, one grabbed or restrained ally within 60 feet of the target can use a reaction to attempt to Escape. Chainbreaker Source Battlecry! pg. 126 Price 150 gp Greater Chainbreaker Source Battlecry! pg. 126 Price 1,750 gp This +2 striking pick ignores 10 points of Hardness when Striking restraints."
+ },
+ {
+  "id": "greater-dragons-tongue",
+  "collection": "items",
+  "name": "Greater Dragon's Tongue",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "whyFlagged": "\"Base Weapon Longspear\" and \"+2 greater striking longspear\", yet the record is itemType 'equipment' with no weapon statistics — it cannot be wielded or Struck with. (The breath activation is target-side and correctly needs nothing.)",
+  "text": "Dragon's Tongue Source Draconic Codex pg. 222 PFS Note The damage type(s) for this item must be chosen at purchase or when crafted. Usage held in 2 hands Bulk 2 Base Weapon Longspear This +2 striking longspear was crafted by a renowned monster hunter, who designed the prototype from the bones and scales of a diabolic dragon. The drathyrican folds of a young dragon, the organ that generates their magical breath, are crucial to the operation of the spear. The mechanics of the weapon are largely based on an injection spear: when the safety is disengaged and a secondary lever is squeezed, it produces a magical effect like a dragon’s breath from the hollow tip of the spear. Activate—Breath of the Spear (concentrate, manipulate) Effect The dragon’s tongue releases a burst of energy that manifests as a 30-foot cone dealing 6d6 damage with a DC 28 basic Reflex save. You can’t use this activation"
+ },
+ {
+  "id": "greater-energized-shield",
+  "collection": "items",
+  "name": "Greater Energized Shield",
+  "level": 15,
+  "traits": [
+   "magical"
+  ],
+  "whyFlagged": "The text gives explicit shield statistics — \"minor reinforcing steel shield (Hardness 8, HP 64, BT 32)\" — but the record is itemType 'equipment' with no acBonus, hardness, hp or brokenThreshold, so it can never be Raised or Shield Blocked. The energized blast itself is target-side.",
+  "text": "Energized Shield Source Battlecry! pg. 124 Usage held in 1 hand Bulk 1 Base Shield Steel Shield This minor reinforcing steel shield (Hardness 8, HP 64, BT 32) is lined with pale silver that glows when struck. Whenever you use the Shield Block reaction, this shield becomes energized for 1 round. Activate—Energized Blast (force, manipulate) Frequency once per 10 minutes; Requirements The shield is energized; Effect You direct the stored energy into a short blast, targeting a creature within 15 feet. The target takes 2d10 force damage (DC 23 basic Reflex save). Lesser Energized Shield Source Battlecry! pg. 124 Price 350 gp Moderate Energized Shield Source Battlecry! pg. 124 Price 1,300 gp The damage increases to 3d10 and the DC increases to 28. Greater Energized Shield Source Battlecry! pg. 124 Price 6,000 gp The damage increases to 4d10 and the DC increases to 34. Major Energized Shield So"
+ },
+ {
+  "id": "greater-mitigation-mail",
+  "collection": "items",
+  "name": "Greater Mitigation Mail",
+  "level": 13,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "whyFlagged": "\"Base Armor Chain Mail\" and \"+2 resilient chain mail\", but the record is itemType 'equipment' with no acBonus, dexCap, checkPenalty, speedPenalty or strength — worn, it gives the character no AC at all. The once-per-day Salve heal is a momentary activation and correctly needs nothing.",
+  "text": "Mitigation Mail Source Battlecry! pg. 122 Usage worn armor Bulk 2 Base Armor Chain Mail This +1 resilient chain mail helps bind up your wounds when you’re injured in battle, enabling you to continue fighting. Activate—Salve (concentrate, healing, manipulate, vitality) Frequency once per day; Effect You restore 5d10+10 Hit points. Mitigation Mail Source Battlecry! pg. 122 Price 700 gp Greater Mitigation Mail Source Battlecry! pg. 122 Price 3,000 gp The armor is +2 resilient chain mail, and the healing is increased to 8d10+15 Hit Points. Major Mitigation Mail Source Battlecry! pg. 122 Price 14,000 gp The armor is +2 greater resilient chain mail, and the healing is increased to 11d10+20 Hit Points."
+ },
+ {
+  "id": "greater-reactive-mail",
+  "collection": "items",
+  "name": "Greater Reactive Mail",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "whyFlagged": "\"Base Armor Chain Mail\" and \"+1 resilient chain mail\", yet the record is itemType 'equipment' with no armor statistics — wearing it grants no AC. The Quick Spike reaction is target-side.",
+  "text": "Reactive Mail Source Battlecry! pg. 122 Usage worn armor Bulk 2 Base Armor Chain Mail Often heavily battle scared from use, this chain mail is commonly issued to frontline soldiers who are tasked with battling through enemies to reach high-value targets across the battlefield. Activate—Quick Spike (manipulate, metal) Frequency once per hour; Trigger A creature within 15 feet uses a manipulate action; Effect An iron spike launches from your armor at the target, dealing 2d8 piercing damage to the target (DC 20 basic Reflex save). If the target critically fails, the triggering action is disrupted. Reactive Mail Source Battlecry! pg. 122 Price 160 gp Greater Reactive Mail Source Battlecry! pg. 122 Price 1,400 gp The armor is +1 resilient chain mail. The damage increases to 5d8 and the DC increases to 28. Major Reactive Mail Source Battlecry! pg. 122 Price 14,000 gp The armor is +2 greater re"
+ },
+ {
+  "id": "horn-of-plenty",
+  "collection": "items",
+  "name": "Horn of Plenty",
+  "level": 0,
+  "traits": [
+   "divine",
+   "extradimensional"
+  ],
+  "whyFlagged": "An ikon that hands the player 1 (2 at 8th, 3 at 16th) temporary elixirs/potions of their level or lower, each individually chosen, refreshed at daily preparations. That is a real pick and real inventory; there is no daily temporary-consumable lane (advancedAlchemy is alchemist-only and feat-keyed).",
+  "text": ""
+ },
+ {
+  "id": "impactful",
+  "collection": "items",
+  "name": "Impactful",
+  "level": 10,
+  "traits": [
+   "force",
+   "magical"
+  ],
+  "whyFlagged": "Property rune present in core.runes but with NO `damage` field, so the promised additional 1d6 force damage on a successful Strike never reaches the strike breakdown (derive.ts:1486/1694 read db.runes[p]?.damage — flaming ships this shape, impactful does not). The crit push-5-feet rider is target-si",
+  "text": "This rune thrums with pure magical energy. Weapons with the rune deal an additional 1d6 force damage on a successful Strike. On a critical hit, you can choose to force the target to succeed at a save or be pushed 5 feet away from you."
+ },
+ {
+  "id": "impactful-greater",
+  "collection": "items",
+  "name": "Impactful (Greater)",
+  "level": 17,
+  "traits": [
+   "force",
+   "magical"
+  ],
+  "whyFlagged": "Same defect as impactful: the rune exists in core.runes with no `damage` field, so its additional 1d6 force damage on a successful Strike is never added. The greater version differs from the base only in the crit push distance (10 feet instead of 5), which is target-side, so the damage rider is iden",
+  "text": "This rune thrums with pure magical energy. Weapons with the rune deal an additional 1d6 force damage on a successful Strike. On a critical hit, you can choose to force the target to succeed at a save or be pushed 10 feet away from you."
+ },
+ {
+  "id": "linguistic-nexus",
+  "collection": "items",
+  "name": "Linguistic Nexus",
+  "level": 0,
+  "traits": [
+   "mental"
+  ],
+  "whyFlagged": "\"You learn an additional language of your choice for every 2 levels of the relic (minimum 1)\" is an owner-facing pick that nothing delivers — the record has no grantsLanguages and no chooser, so the extra language never reaches the character sheet. Fix offers the pick (minimum one language; the engi",
+  "text": "Linguistic Nexus Source GM Core pg. 316 Aspect Mind Your relic grants you a powerful neural plasticity, and as a result, you can learn languages more easily. You learn an additional language of your choice for every 2 levels of the relic (minimum 1). You can retrain one of the languages from the relic with only a single week of downtime."
+ }
+]

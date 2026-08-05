@@ -1,0 +1,455 @@
+[
+ {
+  "id": "grand-scroll-esoterica",
+  "collection": "feats",
+  "name": "Grand Scroll Esoterica",
+  "level": 18,
+  "traits": [
+   "thaumaturge"
+  ],
+  "whyFlagged": "Adds a daily temporary scroll with a 6th-rank spell (7th at 20th level) — a real per-day resource whose spell the player PICKS. Neither Scroll Esoterica nor Elaborate Scroll Esoterica carries any field, and there is no lane for daily temporary items: effectChoices+spellFilter only grants innate or f",
+  "text": "You've completed the third and final step in your assimilation of scroll esoterica, granting you daily scrolls of incredible power. In addition to your daily scrolls from Scroll Esoterica and Elaborate Scroll Esoterica, add a single scroll with a 6th-rank spell. At 20th level, add a scroll with a 7th-rank spell."
+ },
+ {
+  "id": "greater-armament",
+  "collection": "feats",
+  "name": "Greater Armament",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Adds eight property runes (Brilliant, Corrosive, Flaming, Frost, Holy, Shock, Thundering, Unholy) to the daily rune pick that Harbinger's Armament already implements as a `choice` with flag harbingerRune and five options. The player's daily menu stays at five. No field lets one feat EXPAND another r",
+  "text": "Your weapons have greater power available to them. Add Brilliant, Corrosive, Flaming, Frost, Holy, Shock, Thundering, and Unholy to the list of property runes you can add to your weapon during your daily preparations."
+ },
+ {
+  "id": "guerrilla-weaponry",
+  "collection": "feats",
+  "name": "Guerrilla Weaponry",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "In your hands a blowgun's base damage becomes 1d4 and it gains deadly d4 — a change to a wielded weapon's own damage die and traits on your Strikes. strikeDamage only ADDS damage (StrikeDamageRider) and there is no per-character weapon-statistics override lane. (The Guerrilla Assault action half nee",
+  "text": "You are especially skilled in transforming simple weapons that can be easily assembled from readily available materials into deadly weapons. In your hands, a blowgun's base damage increases from 1 to a 1d4 damage die, and it gains the deadly d4 trait. In addition, you gain the Guerrilla Assault action."
+ },
+ {
+  "id": "hellknight-errant",
+  "collection": "feats",
+  "name": "Hellknight-Errant",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Raises your mental resistance to 5 + your number of Hellknight archetype feats — a Defenses-card number. It cannot be written today: hellknight-dedication already stores resistances [{\"type\":\"mental\",\"value\":\"@actor.flags.system.hellknightArchetype.featCount + 1\"}], and the formula substituter in sr",
+  "text": "Either through unfortunate circumstances or your own choice, you remain a Hellknight armiger instead of entering the true ranks of your order, though you still believe in the tenets of law and order. You likely take on an adventuring life with a group of like-minded individuals who aren't Hellknights. The resistance to mental damage you gained from the Hellknight Dedication feat increases to 5 + your number of archetype class feats from the Hellknight archetype. You also gain the Warding Shift action, which allows you to keep your allies from harm. --- Special You can't take both this feat and Hellknight Preferment or Hellknight Signifer Preferment."
+ },
+ {
+  "id": "herbal-forager",
+  "collection": "feats",
+  "name": "Herbal Forager",
+  "level": 9,
+  "traits": [
+   "centaur"
+  ],
+  "whyFlagged": "Each day at daily preparations you get one temporary alchemical item with the healing trait, chosen from formulas you know — a real daily pick the builder never offers. effectChoices can't express it (it needs fixed options or a spellFilter; there is no item filter), and advancedAlchemy is the alche",
+  "text": "Your skill with herbs has improved. Each day as part of your daily preparations, you can harvest ingredients from your surroundings to craft one temporary alchemical item you know the formula for. This alchemical item must have the healing trait. If not consumed by your next daily preparations, the item is rendered inert."
+ },
+ {
+  "id": "hurl-at-the-horizon",
+  "collection": "feats",
+  "name": "Hurl at the Horizon",
+  "level": 2,
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "whyFlagged": "The imbued ikon's immanence gives your weapon the thrown 15 ft trait (or +10 ft thrown range) — a real change to that weapon's Strikes. No field adds a trait to a weapon, and ikon imbue/immanence state is unmodelled (only mated-birds-in-paired-flight has any ikon field).",
+  "text": "Usage imbued into a thrown or melee weapon ikon --- Your weapon flies from your hand as if propelled under its own power. The imbued ikon gains the following ability. Immanence Your weapon gains the thrown 15 feet trait, or increases its thrown distance by 10 feet if it already has the thrown trait."
+ },
+ {
+  "id": "implement-initiate",
+  "collection": "feats",
+  "name": "Implement Initiate",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "'You gain your implement's initiate benefit.' Thaumaturge Dedication already records the pick (choice flag dedicationImplement), and the benefits exist as classFeatures `initiate-benefit-<implement>`, but build.ts only pushes them inside `if (ownsClass('thaumaturge'))` (build.ts ~3043), so an archet",
+  "text": "Mastery of an implement is the sign of a studied thaumaturge. You gain your implement's initiate benefit. If the benefit affects the target of Exploit Vulnerability, for you it affects the target of Glimpse Vulnerability instead."
+ },
+ {
+  "id": "instinct-ability",
+  "collection": "feats",
+  "name": "Instinct Ability",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Gives an archetype barbarian the instinct ability of the instinct chosen at Barbarian Dedication (Draconic Rage's damage, Animal Instinct's unarmed Strike, Giant Instinct's larger weapon, and so on). Barbarian Dedication records the pick in the `barbarianInstinct` choice flag, but nothing in src/ ev",
+  "text": "You gain the instinct ability for the instinct you chose for Barbarian Dedication."
+ },
+ {
+  "id": "insulated-poppet",
+  "collection": "feats",
+  "name": "Insulated Poppet",
+  "level": 5,
+  "traits": [
+   "poppet"
+  ],
+  "whyFlagged": "The feat REMOVES the electricity/cold weakness the tsukumogami-poppet heritage grants through its poppet-material effectChoice. Every IWR field is additive (weaknesses only add entries); there is no lane for a feat that cancels a weakness granted by a heritage, so the sheet keeps showing weakness 5.",
+  "text": "You've used insulating wraps or special glazes to reduce your weakness to current and temperature. You no longer have the weakness to either electricity or cold caused by your tsukumogami heritage."
+ },
+ {
+  "id": "intense-implement",
+  "collection": "feats",
+  "name": "Intense Implement",
+  "level": 18,
+  "traits": [
+   "thaumaturge"
+  ],
+  "whyFlagged": "Grants the ADEPT benefit of the thaumaturge's THIRD implement. build.ts's implement pipeline (~3040-3061) only ever assigns adept to the first two implements ('never the third implement'), and no feat field can push an implement benefit, so the third implement's adept benefit never appears.",
+  "text": "You have an exceptional link to your third implement. You gain the adept benefit for your third implement."
+ },
+ {
+  "id": "invoke-offense",
+  "collection": "feats",
+  "name": "Invoke Offense",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "morph",
+   "spirit"
+  ],
+  "whyFlagged": "Grants a real unarmed attack (1d8 spirit, brawling, agile/finesse/magical, gaining striking-rune dice at 5/12/20) but ONLY for the duration of Enter Spirit Trance. grantedStrikes is permanent (build.ts collectGrantedNaturals) and ModeDef carries no grantedStrikes field, so there is no way to express",
+  "text": "Requirements You're under the effects of Enter Spirit Trance. --- You manifest a physical attack of the spirits all around you, such as the claw of an animal spirit or the whipping vine of a nature spirit. You gain an unarmed attack that deals 1d8 spirit damage for the duration of your spirit trance. This unarmed attack is in the brawling weapon group and has the agile, finesse, and magical traits. At 5th level, this unarmed attack gains the benefits of a striking rune. At 12th level, this unarmed attack gains the benefits of a greater striking rune. At 20th level, this unarmed attack gains the benefits of a major striking rune."
+ },
+ {
+  "id": "iron-fists",
+  "collection": "feats",
+  "name": "Iron Fists",
+  "level": 1,
+  "traits": [
+   "orc"
+  ],
+  "whyFlagged": "Your fist unarmed attacks permanently lose nonlethal and gain shove; the derived baseline Fist still shows nonlethal and no shove. Same modelling petrified-skin already uses (a granted brawling natural attack with the printed traits).",
+  "text": "Your fists have been forged by battle, your naturally tough skin and dense bone further hardened by conflict. Your fist unarmed attacks no longer have the nonlethal trait and gain the shove weapon trait."
+ },
+ {
+  "id": "iruxi-unarmed-cunning",
+  "collection": "feats",
+  "name": "Iruxi Unarmed Cunning",
+  "level": 5,
+  "traits": [
+   "lizardfolk"
+  ],
+  "whyFlagged": "Grants weapon critical specialization with your claw and lizardfolk-feat unarmed attacks. critSpec/critSpecWeapons can only narrow by weapon group, trait, or base id — granted naturals get base 'natural:<n>' (derive.ts ~1671) and share the brawling group with gauntlets/fists/saps, so the only expres",
+  "text": "Iruxi Unarmed Cunning Source Character Guide pg. 59 You make the most of your iruxi unarmed attacks. Whenever you score a critical hit with a claw or an unarmed attack you gained from a lizardfolk ancestry feat, you apply the unarmed attack’s critical specialization effect."
+ },
+ {
+  "id": "late-awakener",
+  "collection": "feats",
+  "name": "Late Awakener",
+  "level": 5,
+  "traits": [
+   "awakened-animal"
+  ],
+  "whyFlagged": "\"You gain all the mechanical benefits of the awakened animal heritage you selected at 1st level\" - a real grant (that heritage's speeds, unarmed attack, senses, plus qualifying for heritage-gated feats) for a character who took a versatile heritage. No listed field can apply a second heritage's mech",
+  "text": "Whether due to a more gradual process or your animal and sapient sides being especially in conflict, your awakening was a little slower than most, but your eyes are now fully open and your abilities have returned. You gain all the mechanical benefits of the awakened animal heritage you selected at 1st level, allowing you to take feats and gain any benefits that require a specific awakened animal heritage."
+ },
+ {
+  "id": "lightning-rings-intervention",
+  "collection": "feats",
+  "name": "Lightning Rings' Intervention",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "electricity",
+   "manipulate"
+  ],
+  "whyFlagged": "'Your familiar gains the Lightning Needles ability' is a concrete grant to your familiar — the ability record lightning-needles exists in core.json's familiarAbilities, but no registry entry attaches it, so the familiar block never shows it.",
+  "text": "Your familiar learns to empower spells with an electrical discharge. Your familiar gains the Lightning Needles ability."
+ },
+ {
+  "id": "lightning-rings-overcharge",
+  "collection": "feats",
+  "name": "Lightning Rings' Overcharge",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "electricity",
+   "magical"
+  ],
+  "whyFlagged": "'Your familiar gains the Lightning Armillary ability' — the lightning-armillary familiar ability exists in core.json but nothing attaches it to the familiar.",
+  "text": "Your familiar can adopt an electrical form to empower weapon strikes. Your familiar gains the Lightning Armillary ability."
+ },
+ {
+  "id": "living-rune",
+  "collection": "feats",
+  "name": "Living Rune",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "The feat gives the PLAYER a real, permanent rune slot on their own body that holds one armor property rune and applies its effects to them; the app only etches property runes onto armor items in inventory, so there is no lane for a body-worn property rune slot (and no way to pick which rune goes in ",
+  "text": "You've bridged a connection between the runes on your body and the magic of runestones, allowing you to place an armor rune on your living flesh. Your body can hold a single property rune; you can't etch a property rune on your body if it has requirements on the type or category of armor or if the property would affect the armor instead of its wearer. If you wear armor, you gain the property rune's effects in addition to any effects of that armor."
+ },
+ {
+  "id": "martial-artist-dedication",
+  "collection": "feats",
+  "name": "Martial Artist Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "whyFlagged": "'The damage die for your fist unarmed attacks becomes 1d6 instead of 1d4' is a real Strike change and nothing delivers it. The lane is a HARD-CODED list: derive.ts ~1692 `fistDieUpgraded = ownedFeatureIds(...).has('powerful-fist') || heritage warrior-automaton/warrior-jotunborn`. Martial Artist must",
+  "text": "You have trained to use your fists as deadly weapons and can deliver devastatingly powerful blows with them. The damage die for your fist unarmed attacks becomes 1d6 instead of 1d4. You don't take the –2 circumstance penalty for making a lethal attack with your nonlethal unarmed attacks."
+ },
+ {
+  "id": "master-scroll-cache",
+  "collection": "feats",
+  "name": "Master Scroll Cache",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "'Add a single scroll with a 6th-rank spell (7th at 20th level)' to your daily scrolls is a real free consumable the player picks each day, and no lane exists: nothing in src/rules references scroll caches, and Basic/Expert Scroll Cache are equally inert. What is missing is a daily-preparations GRANT",
+  "text": "Your scroll collection is incredible, brimming with eldritch power, and you can prepare far more of them than an ordinary scroll trickster. In addition to your daily scrolls from the Basic and Expert Scroll Caches, add a single scroll with a 6th-rank spell. At 20th level, add a scroll with a 7th-rank spell."
+ },
+ {
+  "id": "master-summoner",
+  "collection": "feats",
+  "name": "Master Summoner",
+  "level": 6,
+  "traits": [
+   "summoner"
+  ],
+  "whyFlagged": "'During daily preparations, designate one spell slot to become TWO summoning slots of the same rank' is a real net gain of a spell slot, chosen daily and restricted to summoning/incarnate spells. No lane: spellSlotBonus can only ADD slots (perRank/byRank) with no rank choice, no slot consumed, and n",
+  "text": "During daily preparations, you can designate one of your spell slots to become two summoning slots of the same spell rank, from which you can cast only summoning or incarnate spells."
+ },
+ {
+  "id": "miraculous-flight",
+  "collection": "feats",
+  "name": "Miraculous Flight",
+  "level": 18,
+  "traits": [
+   "archetype",
+   "magical"
+  ],
+  "whyFlagged": "Your signature vehicle gains a fly Speed. Vehicles are a real CompanionKind in this app and COMPANION_MODS already carries speeds:{fly:'land'} grants, so this is the companion-mod registry lane, not engine work.",
+  "text": "With superior engineering and magical application, you have freed your signature vehicle from the bonds of gravity, allowing it to soar through the sky like a dragon. The vehicle gains magical propulsion and a fly Speed equal to its fastest current Speed. If your signature vehicle already had a fly Speed, reduce the distance the vehicle needs to make a 90-degree turn to half the usual length (typically half the length of the vehicle)."
+ },
+ {
+  "id": "modular-dynamo",
+  "collection": "feats",
+  "name": "Modular Dynamo",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Your dynamo unarmed attack gains the modular trait plus a chosen alternate configuration with its own damage die, damage type and traits (power driver, percussive striker, rotating sickle, entangling barbs, extendable baton), repeatable. unarmedTraits can only add traits to an existing strike, and g",
+  "text": "Your dynamo has modular configurations, allowing you to swap between various different possibilities with ease in order to adapt to various situations in combat. Your dynamo attack gains the modular trait, as well as one of the following configurations of your choice: power driver (1d6 bludgeoning damage; shove), percussive striker (1d4 bludgeoning damage; agile, finesse), rotating sickle (1d6 slashing damage; trip), or entangling barbs (1d6 piercing damage; grapple). If you have a manually controlled dynamo, these damage dice increase by 1 size, as usual, and you can also choose the extendable baton (1d4 bludgeoning damage; finesse, reach), which has the damage increase already factored in. When you use an Interact action to switch configurations using the modular trait, you switch between the initial configuration of dynamo you chose with the Sterling Dynamo Dedication and the new conf"
+ },
+ {
+  "id": "monstrous-inclinations",
+  "collection": "feats",
+  "name": "Monstrous Inclinations",
+  "level": 16,
+  "traits": [
+   "animist",
+   "apparition",
+   "wandering"
+  ],
+  "whyFlagged": "Adds Monstrosity Form to your apparition spell repertoire — a genuinely new castable spell. grantedSpells (the repertoire-grant field) exists only on subclass options in types.ts, never on feats, and spellFilter can only grant a pick as innate or focus. No feat-level repertoire-grant lane exists.",
+  "text": "Requirements Your attuned apparition grants Forest Lore or Ocean Lore as one of its apparition skills. --- Your apparitions share with you the monstrous nature of those creatures who dwell in deep seas or ancient woods. You add Monstrosity Form to your apparition spell repertoire, allowing you to cast it with your apparition spellcasting. --- Special If you are attuned to a stalker in darkened boughs, add the phoenix form from *monstrosity form* to your available Darkened Forest Form options when you cast the spell heightened to 8th rank. If you are attuned to a lurker in devouring dark, add the cave worm and sea serpent forms to your Devouring Dark Form options as a polymorph effect when you cast the spell heightened to 8th rank."
+ },
+ {
+  "id": "mysterious-repertoire",
+  "collection": "feats",
+  "name": "Mysterious Repertoire",
+  "level": 14,
+  "traits": [
+   "oracle"
+  ],
+  "whyFlagged": "You may hold one spell from another tradition in your divine repertoire (swappable, cast as divine). The repertoire picker is restricted to the divine list, and no lane lets a feat widen it: grantedSpells exists only on subclass options in types.ts, and SpellChoiceFilter.grantAs allows only 'innate'",
+  "text": "Your mystery holds unknowable depths of magic not always associated with the divine. You can have one spell in your spell repertoire not on the divine spell list, in addition to spells you've added to your spell list from abilities like divine access. You cast that spell as a divine spell. You can swap which spell you add and from which tradition as you could any other oracle spell, but you can't use this feat to have more than one spell from another tradition in your spell repertoire at the same time"
+ },
+ {
+  "id": "pack-rat",
+  "collection": "feats",
+  "name": "Pack Rat",
+  "level": 1,
+  "traits": [
+   "ratfolk"
+  ],
+  "whyFlagged": "The app models container capacity (derive.ts computes each container's load vs item.capacity.bulk and blocks over-capacity drops), so a +50% capacity on mundane containers and vehicles is a real sheet effect. No listed field or registry expresses a container-capacity multiplier — bulkLimitBonus is t",
+  "text": "You've learned how to cram vast quantities into small spaces. You can fit an additional 50% of the listed Bulk capacity into mundane storage containers or vehicles. For example, you can fit 6 Bulk in a backpack, or 12 Bulk in a chest. This doesn't alter the items' Bulk, nor does it change how much you can store in a magical or extradimensional storage space, such as a *spacious pouch*."
+ },
+ {
+  "id": "pact-of-the-rune-dragon",
+  "collection": "feats",
+  "name": "Pact of the Rune Dragon",
+  "level": 16,
+  "traits": [
+   "arcane",
+   "archetype"
+  ],
+  "whyFlagged": "You immediately learn 10 languages of your choice — a real, player-picked sheet element. No feat in core.json carries any language field and there is no language lane on feats (OpenChoiceFrom's 'language' type is not reachable from a feat record), so nothing can deliver it.",
+  "text": "While the students of Cobyslarni are taught to make pacts with many kinds of dragons, a pact with a rune dragon is somewhat more frequent due to their interest in the accomplishments of various academies. You immediately learn 10 languages chosen from common languages, uncommon languages, and any others the dragon has access to. Additionally, you can Identify Magic at a range of 30 feet as a single action ability with the concentrate trait. In exchange, the rune dragon requires you to research a topic and send a detailed report each year. Year to year, the dragon may change the interest of your research as they see fit. If you fail to send an appropriately detailed report, you lose this ability unless you spend one week serving the dragon."
+ },
+ {
+  "id": "perfect-mutagen",
+  "collection": "feats",
+  "name": "Perfect Mutagen",
+  "level": 20,
+  "traits": [
+   "alchemist"
+  ],
+  "whyFlagged": "Mutagens are real consumable MODES whose drawbacks are negative modifiers on the sheet (e.g. item-bendy-arm-mutagen-lesser's -1 Athletics). This feat removes those drawbacks for mutagens you crafted, and no field or registry can suppress part of a mode.",
+  "text": "You have enhanced the formulas for your mutagens, aligning them perfectly to your physiology. When under the effect of a mutagen you crafted, you do not suffer its drawback."
+ },
+ {
+  "id": "plentiful-snares",
+  "collection": "feats",
+  "name": "Plentiful Snares",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Doubles the free daily prepared snares from Snarecrafter Dedication. That count IS modelled - snareAllowance() in src/rules/snareFormulas.ts returns prepared 4/6/8 by Crafting rank - but it takes only the Crafting rank, so nothing doubles it and the feat is inert. No record field expresses 'double a",
+  "text": "You can prepare incredible numbers of snares each day out of simple ingredients. Double the number of prepared snares granted by Snarecrafter Dedication."
+ },
+ {
+  "id": "quick-alchemy",
+  "collection": "feats",
+  "name": "Quick Alchemy",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "The archetype grants the Quick Alchemy action, which the app DOES model — but AlchemyPanel is gated on classId==='alchemist' and the versatile-vials resource only exists in CLASS_RESOURCES['alchemist'], so an archetype taker gets nothing. Needs a lane to unlock the alchemy panel/vial resource from a",
+  "text": "Quick Alchemy Source Core Rulebook pg. 220 Archetype Alchemist Prerequisites Alchemist Dedication You gain the Quick Alchemy action."
+ },
+ {
+  "id": "radiant-armament",
+  "collection": "feats",
+  "name": "Radiant Armament",
+  "level": 10,
+  "traits": [
+   "champion"
+  ],
+  "whyFlagged": "Adds Astral and Brilliant (plus Holy or Unholy by sanctification) to the list you pick from for Blessed Armament. Blessed Armament IS modelled (classFeature blessed-armament, choice flag blessedRune with a fixed 5-option array), but no field lets a feat ADD options to another record's choice.options",
+  "text": "Your blessed armament radiates power, further enhancing your chosen weapon. When you choose the weapon for your blessed armament during your daily preparations, add the Astral and Brilliant property runes to the list of effects you can choose from. If you're holy, also add the Holy rune, and if you're unholy, also add the Unholy rune. In addition, you can change the rune you've selected for the day to a different rune from your list as a 10-minute activity that has the concentrate, divine, and exploration traits. Changing the rune doesn't restore abilities that can be used only a limited number of times, such as Holy Healing for the *holy* rune"
+ },
+ {
+  "id": "raging-thrower",
+  "collection": "feats",
+  "name": "Raging Thrower",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "whyFlagged": "Rage's bonus damage must apply to THROWN weapon Strikes. derive.ts rageStrikeRider explicitly returns null for ranged Strikes (`if (opts.ranged) return null; // Rage never applies to ranged Strikes`), so a raging barbarian with this feat sees no bonus on thrown Strikes. The value is instinct- and le",
+  "text": "Thrown weapons become especially deadly in your fury. You apply the additional damage from Rage to your thrown weapon attacks. If you have the Brutal Critical feat or the Devastator class feature, apply their benefits to thrown weapon attacks."
+ },
+ {
+  "id": "razmiran-priest-dedication",
+  "collection": "feats",
+  "name": "Razmiran Priest Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "whyFlagged": "Two real player-side grants nothing delivers: (a) you gain a Razmiri Mask item (the item exists in core.json — src/data/index.ts keeps 'razmiri-mask' — but no field lets a feat put an item in inventory), and (b) taking Cleric Dedication through this archetype re-traditions all its spells to occult w",
+  "text": "You have earned entry to the priesthood of Razmir, either at the Exalted Lodge or another temple where Razmir's holy masks are forged. You gain a Razmiri Mask and can Craft a replacement in 4 hours if yours is ever damaged or lost. There is no value in selling your *Razmiri mask*, and only you gain its benefits. The abilities of your *Razmiri mask* use the higher of your class DC or spell DC. You can take the Cleric Dedication feat without needing to meet its prerequisites and before you take two other feats from the Razmiran priest archetype, but you must choose Razmir as your deity. All spells granted by the cleric archetype when gained in this way are occult spells instead of divine spells, and cleric feats that normally have the divine trait instead have the occult trait. Your key spellcasting attribute for these spells is Charisma, rather than Wisdom."
+ },
+ {
+  "id": "read-the-land",
+  "collection": "feats",
+  "name": "Read the Land",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "'You learn the Commune ritual if you didn't know it already' — a real grant of a known ritual (commune exists in core.json spells with ritual:true), plus a reduced casting time. There is no known-rituals lane at all: src/rules/build.ts line 2998 explicitly filters ritual spells OUT of addedSpells, a",
+  "text": "You've learned how to commune with the land to learn information. You learn the Commune ritual if you didn't know it already. You can perform this ritual with a casting time of 1 hour instead of 1 day and without a secondary caster."
+ },
+ {
+  "id": "restorative-channel",
+  "collection": "feats",
+  "name": "Restorative Channel",
+  "level": 8,
+  "traits": [
+   "cleric"
+  ],
+  "whyFlagged": "It widens what your divine-font slots may hold: a font Heal can be spent to cast Cleanse Affliction, Clear Mind, Sound Body, or Sure Footing at the sacrificed spell's rank. build.ts models the font with a fixed `allowed` list (used for Battle Creed) that no record field can extend, so the player can",
+  "text": "You can remove conditions with divine grace. You can sacrifice one Heal spell you've prepared in your extra slots from your healing font to cast one of the following spells instead: Cleanse Affliction, Clear Mind, Sound Body, or Sure Footing. The spell is heightened to the same rank as the spell you sacrificed."
+ },
+ {
+  "id": "rod-of-rule",
+  "collection": "feats",
+  "name": "Rod of Rule",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Grants the critical specialization effects of the character's arcane bonded weapon (the second half, the -2 penalty to saves, is target-side). critSpec must be paired with critSpecWeapons, but the bonded weapon is chosen during play and cannot be enumerated in the record, so no existing field can ex",
+  "text": "Your personal rune is connected more closely to your arcane bond. You gain the critical specialization effects of your arcane bonded weapon. In addition, whenever you critically hit a creature with your arcane bonded weapon, they begin to feel the pull of your sin, imposing a –2 circumstance penalty to saves against any of your curriculum or sin spells until the end of your next turn."
+ },
+ {
+  "id": "sanguimancer-dedication",
+  "collection": "feats",
+  "name": "Sanguimancer Dedication",
+  "level": 2,
+  "traits": [
+   "dedication"
+  ],
+  "whyFlagged": "Grants a real player resource - sanguimancy Hit Points (temp HP equal to your level after an 8-hour rest, cap 2x level, spendable to power other feats). No field expresses a named, level-scaling, daily-refreshed temp-HP pool; limitedUses tracks fixed per-day uses only.",
+  "text": "The life essence in your blood recovers naturally over time. You gain a special type of temporary Hit Points called sanguimancy Hit Points that follow the normal rules for temporary Hit Points with two exceptions: you can spend them to power some sanguimancy feats, and you can never have a greater number of sanguimancy Hit Points than double your level. After a full 8-hour rest, you gain sanguimancy HP equal to your level that last for 8 hours. If someone successfully restores HP to you with Treat Wounds, you also gain 1 sanguimancy HP for every 10 Hit Points recovered (minimum 1 sanguimancy HP). --- Special Sanguimancer actions have the trait matching your spellcasting tradition; if you don't have one, choose divine or occult when you select the Sanguimancer Dedication."
+ },
+ {
+  "id": "scroll-adept",
+  "collection": "feats",
+  "name": "Scroll Adept",
+  "level": 10,
+  "traits": [
+   "wizard"
+  ],
+  "whyFlagged": "Grants 2 (3 at master, 4 at legendary spell DC) player-chosen temporary scrolls from your spellbook at every daily preparation - exactly the 'let them pick what the rules give them' case. There is a daily-item lane for alchemy (advancedAlchemy) but none for temporary scrolls, and no field can expres",
+  "text": "During your daily preparations, you can create two temporary scrolls containing arcane spells from your spellbook. Each scroll must be of a different spell rank, and both spell ranks must be 2 or more ranks lower than your highest-rank spell. Any scrolls you create this way become non-magical the next time you make your daily preparations. A temporary scroll has no value if sold. As normal for a scroll, these are consumable items of light Bulk, and someone holding the item in one hand can Cast the Spell from it if it's on their spell list, using their spell attack modifier and spell DC. If you have master proficiency in spell DC, you can create three temporary scrolls during your daily preparations, and if you have legendary proficiency, you can create four temporary scrolls."
+ },
+ {
+  "id": "second-ikon",
+  "collection": "feats",
+  "name": "Second Ikon",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Grants an additional ikon - a pick the player must make. Ikons are an extra-choice group defined per class (ChoiceGroup.pickByLevel in src/rules/types.ts); no feat-level field increases an extra-choice pick count, and effectChoices cannot enumerate 'any ikon' (there is no featFilter).",
+  "text": "You gain an additional ikon. When you Spark Transcendence, your spark moves automatically from the ikon you just used to the other ikon."
+ },
+ {
+  "id": "shadow-spells",
+  "collection": "feats",
+  "name": "Shadow Spells",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "whyFlagged": "Adds seven named spells (Shadow Blast, Shadow Siphon, Umbral Journey, Replicate, Shadow Army, Shadow Projectile, Shadow Raid) to the character's own spell list so they can be learned/prepared off-tradition. Spell pickers filter strictly by tradition and there is no spell-list-addition lane (no field",
+  "text": "Hidden darkness whispers to you, teaching you secrets of shadow beyond other spellcasters of your tradition. Add Shadow Blast, Shadow Siphon, and Umbral Journey, Replicate, Shadow Army, Shadow Projectile, and Shadow Raid to your spell list. You can thus potentially learn these spells even if they aren't normally on your tradition's spell list."
+ },
+ {
+  "id": "share-eidolon-magic",
+  "collection": "feats",
+  "name": "Share Eidolon Magic",
+  "level": 14,
+  "traits": [
+   "summoner"
+  ],
+  "whyFlagged": "Lets the summoner cast the eidolon's innate spells from Magical Understudy/Adept/Master (shared daily uses). No eidolon innate-spellcasting lane exists — Magical Understudy carries no field either — so there is nothing to project onto the summoner's spell list, and innateSpells cannot express it wit",
+  "text": "Your eidolon shares innate spells with you. You can cast the innate spells your eidolon gained from Magical Understudy, Magical Adept, and Magical Master. You and your eidolon share the same daily uses of these innate spells."
+ }
+]

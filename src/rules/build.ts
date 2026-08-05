@@ -997,6 +997,9 @@ function collectGrantedNaturals(
   level: number,
   seen: Set<string> = new Set(),
   investedItemIds: string[] = [],
+  /** The chosen subclass. Appended rather than placed beside classId so the positional callers below
+   *  keep working; a subclass that grants a Strike (Unfurling Brocade) granted none without it. */
+  subclassId?: string | null,
 ): NaturalAttack[] {
   const out: NaturalAttack[] = [];
   const push = (gs: GrantedStrike[] | undefined, pick?: string) => {
@@ -1020,6 +1023,9 @@ function collectGrantedNaturals(
   if (ancestryId) push(content.ancestries[ancestryId]?.grantedStrikes);
   const cls = classId ? content.classes[classId] : undefined;
   for (const cf of cls?.features ?? []) if (cf.level <= level) push(content.classFeatures[cf.featureId]?.grantedStrikes);
+  // The chosen SUBCLASS's own record. `cls.features` lists the class's features, never the option the
+  // player picked, so a subclass that grants a Strike (Unfurling Brocade) granted none.
+  if (subclassId) push(content.classFeatures[subclassId]?.grantedStrikes);
   // Invested items that grant a Strike (Phantom Shroud → ghostly touch).
   for (const itemId of investedItemIds) push(content.items[itemId]?.grantedStrikes);
   return out;
@@ -2830,6 +2836,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     level,
     new Set((build.naturalAttacks ?? []).map((n) => n.name.toLowerCase())),
     build.inventory.filter((inv) => inv.invested).map((inv) => inv.itemId),
+    build.subclassId,
   );
   const naturalAttacks = [...(build.naturalAttacks ?? []), ...grantedNaturals];
 
@@ -3436,7 +3443,11 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     // Keep only user/WG-imported attacks in the build — feat/feature-granted ones are re-derived on
     // every build, so subtract them here to stay idempotent (no double-count on round-trip).
     const grantedNames = new Set(
-      collectGrantedNaturals(content, c.feats ?? [], c.heritageId, c.ancestryId, c.classId, c.level).map((g) => g.name.toLowerCase()),
+      // Must subtract exactly what the build ADDS, subclass included, or a subclass-granted Strike
+      // round-trips into a manually-added one and then appears twice.
+      collectGrantedNaturals(content, c.feats ?? [], c.heritageId, c.ancestryId, c.classId, c.level, new Set(), [], c.subclassId).map((g) =>
+        g.name.toLowerCase(),
+      ),
     );
     const kept = c.naturalAttacks.filter((na) => !grantedNames.has(na.name.toLowerCase())).map((na) => ({ ...na }));
     if (kept.length) b.naturalAttacks = kept;
