@@ -65416,5 +65416,72 @@
       "bonus": 1,
       "max": 4
     }
+  },
+  {
+    "category": "classFeatures",
+    "id": "armor-expertise",
+    "field": "armorSpec",
+    "value": {
+      "categories": [
+        "medium",
+        "heavy"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "armor-specialist",
+    "field": "armorSpec",
+    "value": {
+      "anyProficient": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "unshaken-in-iron",
+    "field": "armorSpec",
+    "value": {
+      "categories": [
+        "light"
+      ],
+      "ifTrained": [
+        "medium",
+        "heavy"
+      ],
+      "bonusWhileStance": {
+        "stanceId": "tenacious-stance",
+        "source": "armorCheckPenalty"
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "hellknight-preferment",
+    "field": "armorSpec",
+    "value": {
+      "items": [
+        "hellknight-breastplate",
+        "hellknight-half-plate",
+        "hellknight-plate"
+      ],
+      "bonus": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "highhelm-stronghold-plate",
+    "field": "armorSpecExtraTypes",
+    "value": [
+      "piercing"
+    ]
+  },
+  {
+    "category": "items",
+    "id": "reinforced-surcoat",
+    "field": "armorSpecBonus",
+    "value": {
+      "group": "chain",
+      "value": 2
+    }
   }
 ]

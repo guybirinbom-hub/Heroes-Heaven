@@ -44,6 +44,7 @@ import type {
 import { PROFICIENCY_RANKS } from './types';
 import { conditionPenalty, conditionTypedMods, drainedHpLoss } from './conditions';
 import { DOMAIN_SPELLS } from './domains';
+import { armorSpecEffect, armorSpecValue } from './armorSpec';
 import { modeNumberBonus, modeTypedMods, poolTypedMods, type TypedMod } from './modes';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
 import {
@@ -1332,6 +1333,37 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     for (const sense of grants.senses) addSense({ name: sense });
   }
 
+  // ARMOR SPECIALIZATION (Player Core pg. 272). Computed here as a plain number rather than through a
+  // record formula: the value is `base + the WORN ARMOR's potency rune`, which FormulaScope cannot
+  // reach — and an unknown @token resolves to 0 silently, so a data formula would have looked correct
+  // and granted nothing. Placed with the other computed resistances so it competes under the
+  // no-stacking rule and shows up in the breakdown like every other source.
+  {
+    const worn = findWornArmor(c, db);
+    const access = armorSpecAccess(c, db);
+    if (worn && (access.categories.has(worn.armor.category) || access.items.has(worn.inv.itemId))) {
+      const eff = armorSpecEffect(worn.armor.group);
+      // ABP replaces the potency rune's numeric value, exactly as deriveAc does.
+      const potency = abpOn(c) ? abpDefense(c.level) : ((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0);
+      // A worn item can raise the value for its group (Reinforced Surcoat: chain +2).
+      let itemBonus = 0;
+      for (const inv of c.inventory) {
+        if (!(inv.worn || inv.invested || inv.equipped)) continue;
+        const b = db.items[inv.itemId]?.armorSpecBonus;
+        if (b && (!b.group || b.group === worn.armor.group)) itemBonus += b.value;
+      }
+      const value = armorSpecValue(worn.armor.group, worn.armor.category, potency) + access.bonus + itemBonus;
+      // 'reactive' (wood) damages the ATTACKER — it is not a defence, so it grants no resistance.
+      if (value > 0 && eff && eff.kind !== 'reactive' && eff.type) {
+        // Highhelm Stronghold Plate: "your resistance applies to both slashing and piercing damage".
+        for (const type of [eff.type, ...(worn.armor.armorSpecExtraTypes ?? [])]) {
+          res.set(type, Math.max(res.get(type) ?? 0, value));
+          note(`resistance:${type}`, `${worn.armor.name} (armor specialization)`, value, eff.note);
+        }
+      }
+    }
+  }
+
   const heritage = c.heritageId ? db.heritages[c.heritageId] : undefined;
   // Nephilim-type heritages grant low-light vision, UPGRADED to darkvision if the ancestry already gives
   // low-light (or darkvision). The plain low-light Sense is imported normally; add darkvision when it upgrades.
@@ -1892,6 +1924,43 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
     for (const cf of Object.values(db.classFeatures)) if (cf.critSpec && cf.id.endsWith(suffix)) add(cf, cf.level);
   }
   return out.filter((s) => s.level <= c.level);
+}
+
+/** Which armors the character has the armor specialization effect for, and any increase to its value.
+ *  The twin of `critSpecSources` — see armorSpec.ts for the effects themselves. */
+export interface ArmorSpecAccess {
+  categories: Set<ArmorCategory>;
+  items: Set<string>;
+  bonus: number;
+  /** What granted it, for the breakdown. */
+  from: string[];
+}
+
+export function armorSpecAccess(c: Character, db: ContentDatabase): ArmorSpecAccess {
+  const out: ArmorSpecAccess = { categories: new Set(), items: new Set(), bonus: 0, from: [] };
+  const trained = (cat: ArmorCategory) => (c.proficiencies.defenses[cat] ?? 'untrained') !== 'untrained';
+  const add = (name: string, g: DefenseGrants | undefined) => {
+    const a = g?.armorSpec;
+    if (!a) return;
+    out.from.push(name);
+    for (const cat of a.categories ?? []) out.categories.add(cat);
+    for (const cat of a.ifTrained ?? []) if (trained(cat)) out.categories.add(cat);
+    // "for all armors you are proficient with" — unarmored is a defense track too, but no group
+    // defines a value for it, so including it changes nothing and excluding it would be a guess.
+    if (a.anyProficient) {
+      for (const cat of ['light', 'medium', 'heavy', 'unarmored'] as ArmorCategory[]) if (trained(cat)) out.categories.add(cat);
+    }
+    for (const id of a.items ?? []) out.items.add(id);
+    if (a.bonus) out.bonus += a.bonus;
+    // "While in Tenacious Stance, increase the value of your armor specialization effects by an amount
+    // equal to the value of your armor check penalty."
+    if (a.bonusWhileStance?.stanceId && c.activeStance === a.bonusWhileStance.stanceId) {
+      out.bonus += Math.abs(deriveArmorCheckPenalty(c, db).value);
+    }
+  };
+  for (const id of ownedFeatureIds(c, db)) add(db.classFeatures[id]?.name ?? id, db.classFeatures[id]);
+  for (const f of c.feats) add(db.feats[f.featId]?.name ?? f.featId, db.feats[f.featId]);
+  return out;
 }
 
 function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons'], c?: Character): boolean {

@@ -578,6 +578,28 @@ export interface DefenseGrants {
   /** True when this feature/feat grants weapon critical specialization (a CriticalSpecialization
    *  rule element). Drives whether Strikes show their critical-specialization effect. */
   critSpec?: boolean;
+  /**
+   * "You gain the armor specialization effects of medium and heavy armor" (Armor Expertise), "for all
+   * armors you are proficient with" (Armor Specialist).
+   *
+   * The twin of `critSpec`/`critSpecWeapons`: this says only WHICH armors the record unlocks it for.
+   * The VALUE lives in src/rules/armorSpec.ts keyed by armor group, because it scales with the
+   * ARMOR's potency rune, which no data formula can reach.
+   */
+  armorSpec?: {
+    /** Categories unlocked unconditionally (Armor Expertise: medium + heavy). */
+    categories?: ArmorCategory[];
+    /** Categories unlocked only if the wearer is at least trained in them (Unshaken in Iron). */
+    ifTrained?: ArmorCategory[];
+    /** "all armors you are proficient with" — every category the wearer is not untrained in. */
+    anyProficient?: boolean;
+    /** Specific armor ITEM ids — Hellknight Preferment names three armors, not a category. */
+    items?: string[];
+    /** "your resistance from that armor specialization is 1 higher than normal". */
+    bonus?: number;
+    /** "While in Tenacious Stance, increase the value by your armor check penalty." */
+    bonusWhileStance?: { stanceId: string; source: 'armorCheckPenalty' };
+  };
   /** The level the crit-spec effect activates, when gated by `self:level >= N` (e.g. ancestry
    *  weapon-familiarity feats grant it at 5, even though the feat is taken at 1). */
   critSpecLevel?: number;
@@ -1617,6 +1639,14 @@ interface ItemBase extends ContentBase {
    */
   passiveEffects?: ItemPassiveEffects;
   /**
+   * A worn item that RAISES a group's armor specialization value — Reinforced Surcoat, "you instead
+   * increase the physical resistance from the chain armor specialization by 2".
+   *
+   * On ItemBase rather than ArmorItem because the surcoat is `equipment`, not armor: it is worn OVER
+   * the armor whose specialization it improves. `group` scopes it to the printed group.
+   */
+  armorSpecBonus?: { group?: string; value: number };
+  /**
    * CONDITIONAL effects: a `*` on each stat named, with the trigger and the bonus spelled out when
    * the player opens that stat. Nothing here changes a number — the whole point is the effects that
    * only apply sometimes, which no computed total can honestly include.
@@ -1677,6 +1707,9 @@ export interface ArmorItem extends ItemBase {
   speedPenalty?: number;
   /** Strength score that removes the check penalty. */
   strength?: number;
+  /** "If you have armor specialization with heavy armor, your resistance applies to both slashing and
+   *  piercing damage" (Highhelm Stronghold Plate) — extra IWR types the specialization also covers. */
+  armorSpecExtraTypes?: string[];
 }
 
 export interface ShieldItem extends ItemBase {

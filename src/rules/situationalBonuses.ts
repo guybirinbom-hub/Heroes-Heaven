@@ -2879,7 +2879,9 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "aerodynamic-construction": [{ targets: [{ kind: 'strikeAttack' }], when: "with your melee weapon innovation", bonus: "it gains the sweep trait and the versatile S trait" }],
   "agile-mind": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on any Will save", bonus: "a success is a critical success instead" }],
   "anvils-hardness": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "on any Fortitude save", bonus: "a success is a critical success instead" }],
-  "armor-expertise": [{ targets: [{ kind: 'ac' }], when: "while wearing medium or heavy armour", bonus: "you gain that armour group's armor specialization effect" }],
+  // The resistance itself is now a real number in Defenses, so this keeps only what the engine cannot
+  // express: chain's floor, and wood damaging the attacker rather than resisting anything.
+  "armor-expertise": [{ targets: [{ kind: 'ac' }], when: "while wearing chain or wood armour", bonus: "chain can't reduce a critical hit below its pre-doubling damage; wood damages the attacker instead" }],
   "artisans-calling": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "to Craft or Repair an object, vehicle, or structure, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'crafting' }], when: "first critical success each day on a check to Repair an object", bonus: "regain 1 Mythic Point" }],
   // The five mythic callings the shipped set was missing, in the same spend/regain shape as the nine
   // above. Each clause is quoted from that calling's own text: the SPEND and the REGAIN often cover
