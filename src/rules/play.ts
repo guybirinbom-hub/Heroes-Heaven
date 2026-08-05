@@ -12,7 +12,7 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
 import { deriveMaxHp, deriveBulk } from './derive';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
@@ -822,6 +822,28 @@ export function toggleItemMode(play: PlayState, instanceId: string, modeDefs?: R
   if (!inv) return play;
   const mode = Object.values(modeDefs ?? {}).find((m) => m.fromItemId === inv.itemId);
   return mode ? toggleMode(play, mode.id, modeDefs) : play;
+}
+
+/**
+ * Mark (or unmark) an item as the character's innovation, weapon implement, bonded item, ikon or
+ * rune source. EXCLUSIVE: a designation moves rather than duplicating, because a character has one
+ * innovation, and two items both claiming it would apply the same modifications twice.
+ */
+export function setItemDesignation(play: PlayState, instanceId: string, kind: ItemDesignation, on: boolean): PlayState {
+  return {
+    ...play,
+    inventory: (play.inventory ?? []).map((i) => {
+      const has = (i.designations ?? []).includes(kind);
+      if (i.instanceId === instanceId) {
+        const next = on ? [...new Set([...(i.designations ?? []), kind])] : (i.designations ?? []).filter((d) => d !== kind);
+        return next.length ? { ...i, designations: next } : (({ designations: _drop, ...rest }) => rest)(i);
+      }
+      if (!on || !has) return i;
+      // Another item held it — take it away, so the designation names exactly one thing.
+      const next = (i.designations ?? []).filter((d) => d !== kind);
+      return next.length ? { ...i, designations: next } : (({ designations: _drop, ...rest }) => rest)(i);
+    }),
+  };
 }
 
 /** Toggle a per-item carry flag (worn / equipped / invested). */

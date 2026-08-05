@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { ContentDatabase, InventoryItem, Item } from '../rules/types';
-import { removeInventoryItem, setItemCounter, setItemQuantity, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
+import type { ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
+import { removeInventoryItem, setItemCounter, setItemDesignation, setItemQuantity, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
 import { containerOptionsFor } from '../rules/derive';
 import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
@@ -147,6 +147,7 @@ export function ItemDetail({
   rationsDayTracking = false,
   charLevel = 1,
   activeModes = [],
+  designationKinds = [],
   onEdit,
 }: {
   inv: InventoryItem;
@@ -162,6 +163,9 @@ export function ItemDetail({
   charLevel?: number;
   /** The modes currently switched on — so a non-consumable's Activate button knows its own state. */
   activeModes?: readonly { id: string }[];
+  /** Designations this character's class can use ('innovation' for an inventor, …). The caller knows
+   *  the class; this component renders only what it is given. Empty = no designation control. */
+  designationKinds?: readonly { kind: ItemDesignation; label: string }[];
   /** Opens the item editor for this item + instance (runes/attachments live there). */
   onEdit?: (item: Item, inv: InventoryItem) => void;
 }) {
@@ -392,6 +396,29 @@ export function ItemDetail({
                   {itemModeOn ? `Stop ${itemMode.name}` : itemMode.name}
                 </button>
                 {itemMode.duration && <span className="sd-uses-hint">{itemMode.duration}</span>}
+              </span>
+            </div>
+          )}
+          {/* Which class thing this item IS. Nothing linked a class choice to an inventory item, so
+              every "your innovation gains…" modification pointed at an object the app could not name.
+              Exclusive: marking one moves the designation off whatever held it before. */}
+          {onPlay && designationKinds.length > 0 && (
+            <div className="sd-uses">
+              <span className="sd-uses-title">This is my</span>
+              <span className="sd-uses-row">
+                {designationKinds.map(({ kind, label }) => {
+                  const on = (inv.designations ?? []).includes(kind);
+                  return (
+                    <button
+                      key={kind}
+                      className={'sd-use-btn' + (on ? ' on' : '')}
+                      title={on ? `Stop treating this as your ${label.toLowerCase()}` : `Treat this item as your ${label.toLowerCase()}`}
+                      onClick={() => onPlay((p) => setItemDesignation(p, id, kind, !on), `desig:${id}:${kind}`)}
+                    >
+                      <i className={'ti ' + (on ? 'ti-check' : 'ti-plus')} aria-hidden="true" /> {label}
+                    </button>
+                  );
+                })}
               </span>
             </div>
           )}

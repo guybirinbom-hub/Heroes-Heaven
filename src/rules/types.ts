@@ -310,6 +310,12 @@ export interface WeaponRider {
     excludeTraits?: string[];
     /** Only the character's deity's favored weapon (Deific Weapon). */
     deityFavored?: true;
+    /**
+     * Only the item the player DESIGNATED as this — "your innovation gains the tearing trait".
+     * Matches nothing when nothing is designated, deliberately: a "first weapon" fallback would hand
+     * a greatsword's modifications to a dagger. See InventoryItem.designations.
+     */
+    designated?: ItemDesignation;
   };
   add?: string[];
   /** Traits to remove. Names a trait the weapon never had? Then nothing happens, silently. */
@@ -402,7 +408,16 @@ export interface DefenseGrants {
    *  weapon-familiarity feats grant it at 5, even though the feat is taken at 1). */
   critSpecLevel?: number;
   /** Weapon restriction on the crit-spec grant — only matching weapons show the effect. */
-  critSpecWeapons?: { groups?: string[]; traits?: string[]; bases?: string[]; melee?: boolean };
+  critSpecWeapons?: {
+    groups?: string[];
+    traits?: string[];
+    bases?: string[];
+    melee?: boolean;
+    /** Only the DESIGNATED item — "your innovation gains critical specialization". Without this the
+     *  grant is unnarrowed, and weaponMatches returns true for an unnarrowed entry, so it would light
+     *  up crit spec on every Strike the character makes. See InventoryItem.designations. */
+    designated?: ItemDesignation;
+  };
   /** Melee unarmed Strikes this feat/feature grants (from Foundry `Strike` rule elements). */
   grantedStrikes?: GrantedStrike[];
   /** "You gain X — or Y instead if you already have X" sense grants (Superior Sight, Ember's Eyes,
@@ -596,6 +611,13 @@ export interface ItemPassiveEffects {
   loreBonus?: number;
   /** Languages the item lets you speak/read while invested (Stole of Civility → Azlanti). */
   grantsLanguages?: string[];
+  /**
+   * While invested, this item copies one wielded weapon's runes onto another — the Doubling Rings
+   * and the Blazons of Shared Power. `'fundamental'` copies potency and striking; `'all'` copies the
+   * property runes too and lifts the same-weapon-group restriction, which is what the greater
+   * versions print. Replaces a hardcoded two-id set, so a new such item needs no code.
+   */
+  copiesRunes?: 'fundamental' | 'all';
 }
 
 export interface Ancestry extends ContentBase {
@@ -1982,6 +2004,13 @@ export interface GrantedStrike {
 }
 
 /** One stack of an item in the character's inventory. */
+/**
+ * The role an inventory item plays for its owner's class. One mechanism, several users: the
+ * inventor's innovation, the thaumaturge's weapon implement, the wizard's bonded item, an exemplar's
+ * ikon, and a weapon acting as a rune source for another.
+ */
+export type ItemDesignation = 'innovation' | 'weapon-implement' | 'bonded' | 'ikon' | 'rune-source';
+
 export interface InventoryItem {
   /** Unique per inventory entry (distinct from the item definition id). */
   instanceId: string;
@@ -2000,6 +2029,19 @@ export interface InventoryItem {
   /** Doubling Rings: the instanceId of ANOTHER wielded weapon whose runes are duplicated onto THIS
    *  weapon while the rings are invested and both are wielded. Set on the lesser-ring (target) weapon. */
   copyRunesFrom?: string;
+  /**
+   * What this item IS to the character's class, beyond being an item.
+   *
+   * The app never linked a class choice to an inventory item: an inventor's build recorded an
+   * innovation TYPE and three modification ids but no item, and the thaumaturge's weapon implement
+   * and the wizard's bonded weapon were not recorded anywhere at all. That single absence is why 19
+   * inventor modifications, both crit-spec clauses, the armour restat and the rune cap were inert —
+   * every one says "your innovation…" and nothing knew which object that meant.
+   *
+   * A rider filtering on a designation applies to NOTHING when none is set. There is deliberately no
+   * "first weapon" fallback: guessing would hand a greatsword's modifications to a dagger.
+   */
+  designations?: ItemDesignation[];
   /**
    * Battleforger (ruling O): an hour's work grants this weapon or armour the effects of a +1 potency
    * rune UNTIL YOUR NEXT DAILY PREPARATIONS — a real number (+1 attack, or +1 AC), not a note.

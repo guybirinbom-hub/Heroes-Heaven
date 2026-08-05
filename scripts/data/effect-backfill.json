@@ -58677,5 +58677,193 @@
         }
       }
     ]
+  },
+  {
+    "category": "items",
+    "id": "doubling-rings",
+    "field": "passiveEffects",
+    "value": {
+      "copiesRunes": "fundamental"
+    }
+  },
+  {
+    "category": "items",
+    "id": "doubling-rings-greater",
+    "field": "passiveEffects",
+    "value": {
+      "copiesRunes": "all"
+    }
+  },
+  {
+    "category": "items",
+    "id": "blazons-of-shared-power",
+    "field": "passiveEffects",
+    "value": {
+      "copiesRunes": "fundamental"
+    }
+  },
+  {
+    "category": "items",
+    "id": "blazons-of-shared-power-greater",
+    "field": "passiveEffects",
+    "value": {
+      "copiesRunes": "all"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "inventor-weapon-expertise",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "classFeatures",
+    "id": "inventor-weapon-expertise",
+    "field": "critSpecWeapons",
+    "value": {
+      "designated": "innovation"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "initiate-benefit-weapon",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "classFeatures",
+    "id": "initiate-benefit-weapon",
+    "field": "critSpecWeapons",
+    "value": {
+      "designated": "weapon-implement"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "initiate-benefit-weapon",
+    "field": "critSpecLevel",
+    "value": 5
+  },
+  {
+    "category": "feats",
+    "id": "rod-of-rule",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "rod-of-rule",
+    "field": "critSpecWeapons",
+    "value": {
+      "designated": "bonded"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "razor-prongs",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "designated": "innovation"
+      },
+      "add": [
+        "tearing",
+        "trip",
+        "versatile-s"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "hampering-spikes",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "designated": "innovation"
+      },
+      "add": [
+        "hampering",
+        "trip",
+        "versatile-p"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "hefty-composition",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "designated": "innovation"
+      },
+      "add": [
+        "shove",
+        "razing",
+        "versatile-b"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "integrated-gauntlet",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "designated": "innovation",
+        "excludeTraits": [
+          "two-hand",
+          "fatal-aim"
+        ]
+      },
+      "add": [
+        "free-hand"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "inconspicuous-appearance",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "designated": "innovation",
+        "melee": true
+      },
+      "add": [
+        "backstabber",
+        "versatile-p"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "tangle-line",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "designated": "innovation",
+        "anyTrait": [
+          "thrown"
+        ]
+      },
+      "add": [
+        "parry",
+        "ranged-trip",
+        "tethered"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "modular-head",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "designated": "innovation"
+      },
+      "add": [
+        "modular-b-p-or-s"
+      ]
+    }
   }
 ]

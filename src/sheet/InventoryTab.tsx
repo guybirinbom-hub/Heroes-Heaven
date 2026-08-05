@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
-import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, SiegeWeaponStat, VehicleStat } from '../rules/types';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable, isHandwraps } from '../rules/derive';
 import { isAttachable, planAttach } from '../rules/attachments';
@@ -616,6 +616,23 @@ export function InventoryTab({
   // 10-item cap — not anything that happens to have a stale invested flag.
   const investedCount = character.inventory.filter((inv) => inv.invested && resolve(inv)?.traits?.includes('invested')).length;
   const investedLimit = character.investedLimit ?? INVESTED_LIMIT;
+  /**
+   * Which "this item IS my …" marks this character can use. Offered only where the class actually has
+   * the concept, so an ordinary fighter is not asked which of their swords is an innovation.
+   *
+   * `rune-source` is offered to everyone: Cutting Heaven, Crushing Earth makes invested handwraps
+   * feed one wielded weapon, and nothing about that is class-specific.
+   */
+  const designationKinds = useMemo(() => {
+    const owned = new Set([character.classId, character.classId2].filter(Boolean) as string[]);
+    const out: { kind: ItemDesignation; label: string }[] = [];
+    if (owned.has('inventor')) out.push({ kind: 'innovation', label: 'Innovation' });
+    if (owned.has('thaumaturge')) out.push({ kind: 'weapon-implement', label: 'Weapon implement' });
+    if (owned.has('wizard')) out.push({ kind: 'bonded', label: 'Bonded item' });
+    if (owned.has('exemplar')) out.push({ kind: 'ikon', label: 'Ikon' });
+    out.push({ kind: 'rune-source', label: 'Rune source' });
+    return out;
+  }, [character.classId, character.classId2]);
   // When the character holds more than one instance of the same item, number them (" 1", " 2", …)
   // in inventory order so otherwise-identical copies (e.g. two Longswords, one refined) are
   // distinguishable. Computed across the whole inventory; recomputes (renumbers) when one is removed.
@@ -1251,6 +1268,7 @@ export function InventoryTab({
           rationsDayTracking={rationsDayTracking}
           charLevel={character.level}
           activeModes={character.activeModes}
+          designationKinds={designationKinds}
           onEdit={onCreateItem ? (it, iv) => setEditTarget({ item: it, inv: iv }) : undefined}
         />
       )}

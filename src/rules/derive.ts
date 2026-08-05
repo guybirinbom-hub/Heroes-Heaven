@@ -1022,6 +1022,9 @@ function deityFavorsUnarmed(c: Character, db: ContentDatabase): boolean {
 export interface Strike {
   instanceId: string;
   name: string;
+  /** THIS attack has its group's critical specialization on its own, from an `unarmedTraits.critSpec`
+   *  rider — critSpecWeapons filters by group, trait or base weapon, never by one attack. */
+  critSpec?: boolean;
   /** Attack bonus across the three multiple-attack-penalty tiers. */
   attack: number[];
   damage: string;
@@ -1091,18 +1094,24 @@ export function bestHandwrapsRunes(c: Character, db: ContentDatabase): WeaponRun
   )[0];
 }
 
-const DOUBLING_RINGS = new Set(['doubling-rings', 'doubling-rings-greater']);
-
-/** The invested Doubling Rings a character is wearing, if any (greater removes the same-group rule). */
-function investedDoublingRings(c: Character, db: ContentDatabase): { greater: boolean } | undefined {
-  const worn = c.inventory.find((inv) => inv.invested && DOUBLING_RINGS.has(db.items[inv.itemId]?.id ?? ''));
-  return worn ? { greater: db.items[worn.itemId]?.id === 'doubling-rings-greater' } : undefined;
+/**
+ * The invested rune-copying item a character is wearing, if any.
+ *
+ * Was a hardcoded two-id Set. `copiesRunes` on the item's own passive effects replaces it, so the
+ * Blazons of Shared Power — which do exactly the same thing — work without editing this file:
+ * 'fundamental' copies potency and striking only, 'all' copies the property runes too and lifts the
+ * same-weapon-group restriction, which is what the greater versions print.
+ */
+function investedRuneCopier(c: Character, db: ContentDatabase): { greater: boolean } | undefined {
+  const worn = c.inventory.find((inv) => inv.invested && db.items[inv.itemId]?.passiveEffects?.copiesRunes);
+  if (!worn) return undefined;
+  return { greater: db.items[worn.itemId]?.passiveEffects?.copiesRunes === 'all' };
 }
 
 /** Whether a character can use the Doubling Rings rune-copy right now: rings invested AND at least two
  *  weapons wielded (so there's a source and a target hand). Drives the inventory picker's visibility. */
 export function doublingRingsAvailable(c: Character, db: ContentDatabase): boolean {
-  if (!investedDoublingRings(c, db)) return false;
+  if (!investedRuneCopier(c, db)) return false;
   const wielded = c.inventory.filter((inv) => inv.equipped && db.items[inv.itemId]?.itemType === 'weapon' && !isHandwraps(db.items[inv.itemId]));
   return wielded.length >= 2;
 }
@@ -1113,7 +1122,7 @@ export function doublingRingsAvailable(c: Character, db: ContentDatabase): boole
 export function effectiveWeaponRunes(c: Character, db: ContentDatabase, inv: InventoryItem): WeaponRunes | undefined {
   const own = inv.runes as WeaponRunes | undefined;
   if (!inv.copyRunesFrom) return own;
-  const rings = investedDoublingRings(c, db);
+  const rings = investedRuneCopier(c, db);
   if (!rings) return own;
   const source = c.inventory.find((x) => x.instanceId === inv.copyRunesFrom);
   const srcItem = source && db.items[source.itemId];
@@ -1388,9 +1397,16 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
   return out.filter((s) => s.level <= c.level);
 }
 
-function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons']): boolean {
+function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons'], c?: Character): boolean {
   if (!w) return true;
   if (w.melee && strike.ranged) return false;
+  // "Your innovation gains critical specialization." Narrows to the ONE designated item, and matches
+  // nothing when nothing is designated — an unnarrowed entry returns true below, which would light up
+  // crit spec on every Strike the character makes.
+  if (w.designated) {
+    const inv = c?.inventory?.find((i) => i.instanceId === strike.instanceId);
+    return (inv?.designations ?? []).includes(w.designated);
+  }
   const narrowed = !!(w.groups?.length || w.traits?.length || w.bases?.length);
   if (!narrowed) return true;
   if (strike.group && w.groups?.includes(strike.group)) return true;
@@ -1401,8 +1417,11 @@ function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons']): bo
 
 /** Whether a Strike should show its critical-specialization effect: the character has a source
  *  (at their level) that grants crit-spec for this weapon's group / traits / base. */
-export function strikeShowsCritSpec(strike: Strike, sources: CritSpecSource[]): boolean {
-  return sources.some((s) => weaponMatches(strike, s.weapons));
+export function strikeShowsCritSpec(strike: Strike, sources: CritSpecSource[], c?: Character): boolean {
+  // A per-strike `unarmedTraits.critSpec` rider grants it to that one attack with no other source —
+  // critSpecWeapons filters by group, trait or base weapon, never by one particular attack.
+  if (strike.critSpec) return true;
+  return sources.some((s) => weaponMatches(strike, s.weapons, c));
 }
 
 /** Weapon Specialization bonus damage at a given attack proficiency rank: +2/+3/+4 at
@@ -1498,7 +1517,7 @@ const stepsOf = (v: boolean | number | undefined) => (v === true ? 1 : typeof v 
  * wields. Die steps deliberately DO NOT COMPOUND — the best single step wins, or a champion with two
  * such feats turns a d6 into a d10.
  */
-function applyWeaponRiders(c: Character, db: ContentDatabase, w: WeaponItem): WeaponItem {
+function applyWeaponRiders(c: Character, db: ContentDatabase, w: WeaponItem, inv?: InventoryItem): WeaponItem {
   const sources: (DefenseGrants | undefined)[] = [
     ...(c.feats ?? []).map((fc) => db.feats[fc.featId]),
     ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
@@ -1527,6 +1546,9 @@ function applyWeaponRiders(c: Character, db: ContentDatabase, w: WeaponItem): We
       // must match the whole family or every thrown-weapon clause silently matches nothing at all.
       if (m.anyTrait?.length && !m.anyTrait.some((t) => hasTraitFamily(traits, t))) continue;
       if (m.deityFavored && !deityWeapons.has(w.id)) continue;
+      // "Your innovation gains the tearing trait." Matches nothing when nothing is designated — a
+      // "first weapon" fallback would hand a greatsword's modifications to a dagger.
+      if (m.designated && !(inv?.designations ?? []).includes(m.designated)) continue;
 
       if (r.add?.length) {
         // "…that doesn't have the deadly trait": skip a weapon already carrying the family, or the
@@ -1558,7 +1580,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   if (!item || item.itemType !== 'weapon') return null;
   // A feat or class feature may change what you wield — traits, damage die, range increment.
   // Everything below reads those off `w`, so apply the riders here, once.
-  const w = applyWeaponRiders(c, db, item);
+  const w = applyWeaponRiders(c, db, item, inv);
   // Material/precious-metal placeholder "weapons" (cold iron, adamantine ingots, silver, …) carry no
   // damage object; guard so a stray equip can't crash the entire Strikes computation + Main tab.
   if (!w.damage) return null;
@@ -1893,6 +1915,8 @@ function deriveUnarmedStrike(
     attack,
     damage: damage + conditionalRiderText(conditionalDamage),
     traits: p.traits,
+    // Carried through from the profile: a rider may give THIS one attack its crit specialization.
+    ...(p.critSpec ? { critSpec: true } : {}),
     ranged: isRanged,
     range: p.range,
     group: p.group,
