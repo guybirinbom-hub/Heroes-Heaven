@@ -20,7 +20,7 @@ export function DefensesPills({ character, content }: { character: Character; co
   const def = deriveDefenses(character, content);
   const [brk, setBrk] = useState<StatBreakdown | null>(null);
 
-  const has = def.resistances.length > 0 || def.weaknesses.length > 0 || def.immunities.length > 0 || def.negativeHealing;
+  const has = def.resistances.length > 0 || def.weaknesses.length > 0 || def.immunities.length > 0 || def.negativeHealing || def.breathesWater;
   if (!has) return null;
 
   const label = (t: string) => {
@@ -83,6 +83,16 @@ export function DefensesPills({ character, content }: { character: Character; co
           <span className="idl">Void healing</span>
           <div className="idpills">
             <span className="lang-pill">healed by void, harmed by vitality</span>
+          </div>
+        </div>
+      )}
+      {/* A permanent capability with no number: it belongs beside the other always-on defences, not
+          in the sense list where it would render as a bogus sense pill. */}
+      {def.breathesWater && (
+        <div className="id-row">
+          <span className="idl">Breathing</span>
+          <div className="idpills">
+            <span className="lang-pill">can breathe underwater</span>
           </div>
         </div>
       )}

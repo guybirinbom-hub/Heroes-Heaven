@@ -893,6 +893,8 @@ export interface CharacterDefenses {
   immunities: string[];
   /** Void (negative) healing — healed by void energy, harmed by vitality (dhampir & co.). */
   negativeHealing?: boolean;
+  /** "You can breathe underwater" — from a graft, a heritage, a feat or an invested item. */
+  breathesWater?: boolean;
   /** Where each entry came from, keyed `"resistance:fire"` / `"weakness:cold"` / `"immunity:disease"`.
    *  Additive: absent means "not computed", never "no sources". */
   sources?: Record<string, DefenseSource[]>;
@@ -1223,6 +1225,14 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       !!heritage?.negativeHealing ||
       c.feats.some((f) => db.feats[f.featId]?.negativeHealing) ||
       c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.negativeHealing),
+    // "You can breathe underwater." A permanent capability with no number attached, so it fitted no
+    // existing field — not a sense, not a speed, not a resistance — and every record saying it did
+    // nothing at all. Aggregated exactly like negativeHealing beside it, invested-only rule included.
+    breathesWater:
+      heritageRecords(c, db).some((h) => h.breathesWater) ||
+      c.feats.some((f) => db.feats[f.featId]?.breathesWater) ||
+      [...ownedFeatureIds(c, db)].some((id) => db.classFeatures[id]?.breathesWater) ||
+      c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.breathesWater),
   };
 }
 

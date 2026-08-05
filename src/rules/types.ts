@@ -564,6 +564,9 @@ export interface DefenseGrants {
   /** Grants void ("negative") healing — harmed by vitality, healed by void (dhampir-style). Surfaced on
    *  the Defenses card. Some ITEMS grant it too (Emerald Fulcrum Lens) — see ItemBase. */
   negativeHealing?: boolean;
+  /** "You can breathe underwater." A permanent capability with no number — it is not a sense, not
+   *  a speed, and not a resistance, so it had no home and the records saying it did nothing. */
+  breathesWater?: boolean;
   /** True when this feature/feat grants weapon critical specialization (a CriticalSpecialization
    *  rule element). Drives whether Strikes show their critical-specialization effect. */
   critSpec?: boolean;
@@ -890,6 +893,9 @@ export interface Heritage extends ContentBase, DefenseGrants {
   darkvisionIfAncestryLowLight?: boolean;
   /** Dhampir & co.: void (negative) healing — healed by void energy, harmed by vitality. */
   negativeHealing?: boolean;
+  /** "You can breathe underwater." A permanent capability with no number — it is not a sense, not
+   *  a speed, and not a resistance, so it had no home and the records saying it did nothing. */
+  breathesWater?: boolean;
   /** A resistance whose damage type the player chooses at level 1, valued at half the character's level
    *  (Deep Fetchling: cold/void; Elementheart Kobold: an element's damage type). The choice is stored in
    *  BuildState.heritageResistanceChoice. */
@@ -1537,6 +1543,9 @@ interface ItemBase extends ContentBase {
   /** An invested item that grants void ("negative") healing (Emerald Fulcrum Lens). Surfaced on the
    *  Defenses card while invested. */
   negativeHealing?: boolean;
+  /** "You can breathe underwater." A permanent capability with no number — it is not a sense, not
+   *  a speed, and not a resistance, so it had no home and the records saying it did nothing. */
+  breathesWater?: boolean;
   /** Feats an invested item grants as bonus feats (The Survivor → Diehard). */
   grantsFeats?: string[];
   /** An item bonus to the character's DYNAMIC skills — resolved from their sorcerer bloodline (Sanguine

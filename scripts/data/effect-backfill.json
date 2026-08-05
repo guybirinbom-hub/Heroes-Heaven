@@ -65336,5 +65336,41 @@
     "value": {
       "items": 4
     }
+  },
+  {
+    "category": "items",
+    "id": "reef-heart",
+    "field": "breathesWater",
+    "value": true
+  },
+  {
+    "category": "items",
+    "id": "reef-heart-greater",
+    "field": "breathesWater",
+    "value": true
+  },
+  {
+    "category": "items",
+    "id": "gills",
+    "field": "breathesWater",
+    "value": true
+  },
+  {
+    "category": "heritages",
+    "id": "seaweed-leshy",
+    "field": "breathesWater",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "enlarged-chassis",
+    "field": "sizeOverride",
+    "value": "large"
+  },
+  {
+    "category": "feats",
+    "id": "enlarged-chassis",
+    "field": "reach",
+    "value": 10
   }
 ]
