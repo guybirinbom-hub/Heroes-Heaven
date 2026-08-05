@@ -39,6 +39,7 @@ import type {
 } from './types';
 import { PROFICIENCY_RANKS } from './types';
 import { conditionPenalty, conditionTypedMods, drainedHpLoss } from './conditions';
+import { DOMAIN_SPELLS } from './domains';
 import { modeNumberBonus, modeTypedMods, poolTypedMods, type TypedMod } from './modes';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
 import {
@@ -523,6 +524,69 @@ export function ownedDailyChoiceRecords(
     if (inv.equipped || inv.worn || inv.invested) push(inv.itemId, db.items as never);
   }
   return out;
+}
+
+/**
+ * The domains a `kind: 'domains'` choice may offer.
+ *
+ * The pool was hardcoded to the deity's own list at four separate call sites, so a record drawing
+ * from a WIDER pool — Splinter Faith's "your deity's domains, your deity's alternate domains, and up
+ * to one domain that isn't on either list" — could not be expressed and the feat offered the same
+ * four domains as everything else. One helper now, so the four sites cannot drift.
+ */
+export function domainPoolFor(
+  deityId: string | null | undefined,
+  db: ContentDatabase,
+  pool: FeatChoiceDef['domainPool'] = 'deity',
+): string[] {
+  const deity = deityId ? db.deities[deityId] : undefined;
+  if (pool === 'all') return Object.keys(DOMAIN_SPELLS).sort();
+  const own = deity?.domains ?? [];
+  if (pool !== 'deity+alternate') return own;
+  return [...new Set([...own, ...(deity?.alternateDomains ?? [])])];
+}
+
+/** 'holy', 'unholy', or null. Recorded as the deity's `sanctification` effect choice. */
+export function sanctificationOf(c: Character): 'holy' | 'unholy' | null {
+  const label = (c.effectPicks ?? []).find((p) => p.choiceId === 'sanctification')?.label?.toLowerCase();
+  return label === 'holy' || label === 'unholy' ? label : null;
+}
+
+/**
+ * A choice's options PLUS anything another record the character owns adds to them.
+ *
+ * "Add the astral and brilliant property runes to the list of effects you can choose from." Nothing
+ * let one record reach into another's `choice.options`, so a feat whose entire content was widening a
+ * menu could be taken and the menu stayed the same size — the player read the new runes in the feat's
+ * text and could not pick one.
+ *
+ * Deduped by value, so taking two widening feats that overlap does not list a rune twice.
+ */
+export function effectiveChoiceOptions(
+  recordId: string,
+  def: FeatChoiceDef,
+  c: Character,
+  db: ContentDatabase,
+): NonNullable<FeatChoiceDef['options']> {
+  const base = def.options ?? [];
+  const sources: DefenseGrants[] = [];
+  for (const f of c.feats ?? []) if (db.feats[f.featId]) sources.push(db.feats[f.featId]);
+  for (const fid of ownedFeatureIds(c, db)) if (db.classFeatures[fid]) sources.push(db.classFeatures[fid]);
+  if (c.heritageId && db.heritages[c.heritageId]) sources.push(db.heritages[c.heritageId]);
+
+  const extra: NonNullable<FeatChoiceDef['options']> = [];
+  const sanct = sanctificationOf(c);
+  for (const src of sources) {
+    for (const a of src.choiceOptionAdditions ?? []) {
+      if (a.target !== recordId) continue;
+      if (a.flag && a.flag !== def.flag) continue;
+      extra.push(...(a.add ?? []));
+      for (const s of a.addIfSanctified ?? []) if (s.sanctification === sanct) extra.push({ value: s.value, label: s.label });
+    }
+  }
+  if (!extra.length) return base;
+  const seen = new Set(base.map((o) => o.value));
+  return [...base, ...extra.filter((o) => !seen.has(o.value) && seen.add(o.value))];
 }
 
 /**
@@ -1828,19 +1892,38 @@ function conditionalRiderText(riders: { text: string; note: string }[]): string 
 }
 
 /** Per-element Elemental Blast profile (die + damage types + range), from the kineticist gate data. */
-const ELEMENT_BLAST: Record<string, { die: string; type: string; range: number }> = {
-  air: { die: 'd6', type: 'electricity', range: 60 },
-  earth: { die: 'd8', type: 'bludgeoning', range: 30 },
-  fire: { die: 'd6', type: 'fire', range: 60 },
-  metal: { die: 'd8', type: 'piercing', range: 30 },
-  water: { die: 'd8', type: 'bludgeoning', range: 30 },
-  wood: { die: 'd8', type: 'bludgeoning', range: 30 },
+/**
+ * Elemental Blast, per element.
+ *
+ * `types` is the list Elemental Blast prints — "choose one of your kinetic elements AND A DAMAGE TYPE
+ * LISTED FOR THAT ELEMENT". Only the first of each was modelled, so half the printed choice was
+ * missing: an earth kineticist could not throw a piercing blast, and Versatile Blasts (whose entire
+ * content is adding to these lists) had nothing to add to.
+ */
+export const ELEMENT_BLAST: Record<string, { die: string; types: string[]; range: number }> = {
+  air: { die: 'd6', types: ['electricity', 'slashing'], range: 60 },
+  earth: { die: 'd8', types: ['bludgeoning', 'piercing'], range: 30 },
+  fire: { die: 'd6', types: ['fire'], range: 60 },
+  metal: { die: 'd8', types: ['piercing', 'slashing'], range: 30 },
+  water: { die: 'd8', types: ['bludgeoning', 'cold'], range: 30 },
+  wood: { die: 'd8', types: ['bludgeoning', 'vitality'], range: 30 },
 };
+
+/** The damage types this character may choose for a blast of `element`, including what their records
+ *  add to the printed list. Deduped, printed order first. */
+export function blastTypesFor(c: Character, db: ContentDatabase, element: string): string[] {
+  const base = ELEMENT_BLAST[element]?.types ?? [];
+  const extra: string[] = [];
+  for (const f of c.feats ?? []) for (const t of db.feats[f.featId]?.blastTypeAdditions?.[element] ?? []) extra.push(t);
+  for (const fid of ownedFeatureIds(c, db)) for (const t of db.classFeatures[fid]?.blastTypeAdditions?.[element] ?? []) extra.push(t);
+  return [...new Set([...base, ...extra])];
+}
 
 /** A kineticist's Elemental Blast as a rollable strike per attuned element. Attack uses Con + the class
  *  proficiency (class DC track); damage scales +1 die at L5/9/13/17. Shown as a ranged strike with a
  *  note that melee adds Str and a 2-action blast adds Con to damage. */
-export function deriveBlastStrikes(c: Character, _db: ContentDatabase): Strike[] {
+export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] {
+  const _db = db;
   const elements = c.kineticist?.elements ?? [];
   if (!elements.length) return [];
   const conMod = abilityMod(c.abilities.con);
@@ -1867,11 +1950,20 @@ export function deriveBlastStrikes(c: Character, _db: ContentDatabase): Strike[]
     .filter((el) => ELEMENT_BLAST[el])
     .map((el) => {
       const b = ELEMENT_BLAST[el];
+      // The player's chosen damage type for this element, defaulting to the first the element prints.
+      // Elemental Blast says "choose … a damage type listed for that element", so a fixed type would
+      // be showing one branch of a choice the rules give every kineticist every time they blast.
+      const types = blastTypesFor(c, db, el);
+      const picked = c.kineticist?.blastTypes?.[el];
+      const type = picked && types.includes(picked) ? picked : types[0];
+      const alt = types.filter((t) => t !== type);
       return {
         instanceId: `blast:${el}`,
         name: `Elemental Blast (${el.charAt(0).toUpperCase() + el.slice(1)})`,
         attack,
-        damage: `${dice}${b.die}${flat ? formatMod(flat) : ''} ${DAMAGE_ABBR[b.type] ?? b.type} (2 actions; +Str instead in melee)`,
+        damage:
+          `${dice}${b.die}${flat ? formatMod(flat) : ''} ${DAMAGE_ABBR[type] ?? type}` +
+          ` (2 actions; +Str instead in melee${alt.length ? `; or ${alt.map((t) => DAMAGE_ABBR[t] ?? t).join('/')}` : ''})`,
         traits: ['attack', 'impulse', 'kineticist', el],
         ranged: true,
         range: b.range,

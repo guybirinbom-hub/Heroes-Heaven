@@ -418,6 +418,27 @@ export interface DefenseGrants {
   /** "When you select the Multilingual feat, you learn three new languages instead of two" — this
    *  record changes ANOTHER record's choice count, once per time that other record was taken. */
   languageChoicesBonus?: { featId: string; extra: number }[];
+  /**
+   * "Add the astral and brilliant property runes to the list of effects you can choose from."
+   *
+   * A record whose entire content is widening a menu another record owns. Nothing let one record
+   * reach into another's `choice.options`, so these feats were taken and the menu stayed the same
+   * size — the player could see the new runes named in the feat's text and could not pick one.
+   */
+  /** Damage types this record adds to an Elemental Blast's printed list, per element — "add the
+   *  following damage types to those you can choose for Elemental Blasts of that element" (Versatile
+   *  Blasts). The printed lists were not modelled as lists, so there was nothing to add to. */
+  blastTypeAdditions?: Record<string, string[]>;
+  choiceOptionAdditions?: {
+    /** The record id whose choice is widened. */
+    target: string;
+    /** Which choice, when the target record has more than one. */
+    flag?: string;
+    add?: { value: string; label: string; description?: string }[];
+    /** Options added only to a character of that sanctification — Radiant Armament adds the holy
+     *  rune if you are holy and the unholy rune if you are unholy, never both. */
+    addIfSanctified?: { sanctification: 'holy' | 'unholy'; value: string; label: string }[];
+  }[];
   /** Feats this heritage/feat grants outright (Cataphract Fleshwarp → Armor Proficiency,
    *  Battle-Trained Human → Diehard). Added as bonus feats with their own effects. */
   grantsFeats?: string[];
@@ -875,6 +896,11 @@ export interface FeatChoiceDef {
   kind: 'domains' | 'array' | 'skills' | 'text' | 'open';
   /** For 'open': what the player is choosing from. */
   from?: OpenChoiceFrom;
+  /** For 'domains': which domains are offered. Default 'deity' (the deity's own list). Splinter
+   *  Faith draws from "your deity's domains, your deity's alternate domains, and up to one domain
+   *  that isn't on either list" — the last clause is the player's to honour and is stated in `note`,
+   *  because nothing in the data marks a domain anathematic to a deity. */
+  domainPool?: 'deity' | 'deity+alternate' | 'all';
   /**
    * `grant` is what the answer DOES. Without it a daily choice was recorded and nothing more: 67
    * records collected an answer at rest and the sheet never changed, so "habituate your skin against
@@ -1484,6 +1510,10 @@ export interface Deity extends ContentBase {
   favoredWeapons?: string[];
   /** The skill the deity grants training in. */
   skill?: string;
+  /** Domains the deity offers BESIDES its primary ones. The importer kept only the primary list, so
+   *  "chosen from among your deity's domains, your deity's alternate domains…" (Splinter Faith) could
+   *  not be offered — 401 deities have alternates and none of them shipped. */
+  alternateDomains?: string[];
 }
 
 export interface Language {
@@ -2573,7 +2603,9 @@ export interface Character {
   /** Inventor innovation + chosen modifications (resolved for display). */
   inventor?: InventorBuild;
   /** Kineticist resolved elements (bare ids: air/earth/fire/metal/water/wood) — drives the Elemental Blast strike. */
-  kineticist?: { elements: string[] };
+  /** `blastTypes` is the damage type chosen per element for Elemental Blast ("choose one of your
+   *  kinetic elements and a damage type listed for that element"). Absent ⇒ the element's first. */
+  kineticist?: { elements: string[]; blastTypes?: Record<string, string> };
 
   // --- gear ---
   inventory: InventoryItem[];

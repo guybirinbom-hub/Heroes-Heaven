@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { content } from './_content';
 import { choiceKeys, choiceOptionsFor } from '../src/rules/build';
 import { openChoiceOptions } from '../src/rules/openChoice';
+import { domainPoolFor } from '../src/rules/derive';
 import type { FeatChoiceDef } from '../src/rules/types';
 
 const c = content();
@@ -57,6 +58,17 @@ describe('multi-pick choices', () => {
       // generic item source, and "a talisman whose formula you know" is not expressible as a filter,
       // so free text is the honest shape rather than a missing list.
       if (def.kind === 'text') continue;
+      // A 'domains' choice has no static list either — it resolves from the character's DEITY, so
+      // the check that matters is that no deity leaves it unsatisfiable. Splinter Faith asks for
+      // four, and the thinnest deity pool in the data is exactly four.
+      if (def.kind === 'domains') {
+        const thin = Object.keys(c.deities)
+          .map((did) => [did, domainPoolFor(did, c, def.domainPool).length] as const)
+          .filter(([, n]) => n > 0 && n < picks)
+          .map(([did, n]) => `${did}:${n}`);
+        expect(thin, `${id} needs ${picks} domains`).toEqual([]);
+        continue;
+      }
       // An 'open' choice has no static list — its options resolve from `from` at render time, so
       // reading def.options would wrongly count zero.
       const opts = def.kind === 'open' ? openChoiceOptions(def.from, c).length : def.options?.length ?? 0;

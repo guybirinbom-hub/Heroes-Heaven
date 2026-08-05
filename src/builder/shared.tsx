@@ -50,7 +50,9 @@ import {
   deriveSave,
   deriveSkill,
   deriveSpeeds,
+  blastTypesFor,
   deriveSpellcasting,
+  domainPoolFor,
   formatMod,
 } from '../rules/derive';
 import { explainStat, statHasSituational, type StatRef } from '../rules/explain';
@@ -325,7 +327,12 @@ export function useBuilderActions(
         for (const [slotKey, val] of Object.entries(featChoices)) {
           const featId = b.featPicks[slotKey];
           const def = featId ? content.feats[featId]?.choice : undefined;
-          if (def?.kind === 'domains' && !domains.includes(val)) featChoices[slotKey] = domains[0] ?? val;
+          // A domain choice may draw from a WIDER pool than the deity's own list (Splinter Faith
+          // adds the alternate domains), so validate against the pool that choice actually offers.
+          if (def?.kind === 'domains') {
+            const pool = def.domainPool && def.domainPool !== 'deity' ? domainPoolFor(id || null, content, def.domainPool) : domains;
+            if (!pool.includes(val)) featChoices[slotKey] = pool[0] ?? val;
+          }
         }
         return { ...b, deityId: id || null, divineFont: font, featChoices };
       });
@@ -392,7 +399,7 @@ export function useBuilderActions(
           // Default the embedded choice so the feat is usable immediately.
           const def = content.feats[featId]?.choice;
           if (def?.kind === 'domains') {
-            const dom = (b.deityId ? content.deities[b.deityId]?.domains : undefined)?.[0];
+            const dom = domainPoolFor(b.deityId, content, def.domainPool)[0];
             if (dom) featChoices[slotKey] = dom;
           } else if (def?.kind === 'array' && def.options?.[0]) {
             featChoices[slotKey] = def.options[0].value;
@@ -2890,6 +2897,31 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 );
               })}
             </>
+          );
+        })()}
+      {/* Elemental Blast: "choose one of your kinetic elements AND A DAMAGE TYPE LISTED FOR THAT
+          ELEMENT". Only the first printed type was ever used, so half of a choice the rules give on
+          every blast was invisible — and Versatile Blasts, whose whole content is adding to those
+          lists, had nothing to add to. One row per element the character actually has. */}
+      {ownsClass('kineticist') &&
+        (() => {
+          const c = buildCharacter(build, content);
+          const rows = (c.kineticist?.elements ?? [])
+            .map((el) => ({ el, types: blastTypesFor(c, content, el) }))
+            .filter((r) => r.types.length > 1);
+          if (!rows.length) return null;
+          return (
+            <SubCard icon="ti-bolt" label="Elemental Blast damage type">
+              {rows.map(({ el, types }) => (
+                <PopupSelect
+                  key={el}
+                  title={`${cap(el)} blast`}
+                  value={build.blastTypes?.[el] ?? types[0]}
+                  onChange={(v) => actions.patch({ blastTypes: { ...(build.blastTypes ?? {}), [el]: v } })}
+                  options={types.map((t) => ({ value: t, label: `${cap(el)} — ${cap(t)}` }))}
+                />
+              ))}
+            </SubCard>
           );
         })()}
       {ownsClass('kineticist') &&

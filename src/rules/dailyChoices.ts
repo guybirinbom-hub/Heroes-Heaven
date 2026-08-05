@@ -11,7 +11,7 @@
  * new feat is a data edit, not a code edit.
  */
 import type { Character, ContentDatabase } from './types';
-import { dailyChoiceKey, ownedDailyChoiceRecords as ownedRecords } from './derive';
+import { dailyChoiceKey, effectiveChoiceOptions, ownedDailyChoiceRecords as ownedRecords } from './derive';
 import { openChoiceOptions } from './openChoice';
 
 export { dailyChoiceKey } from './derive';
@@ -42,7 +42,9 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
     if (def.kind !== 'array' && def.kind !== 'text' && def.kind !== 'open') continue;
     const options =
       def.kind === 'array'
-        ? (def.options ?? [])
+        ? // Plus whatever another owned record adds to this menu — Radiant Armament's astral and
+          // brilliant runes belong on the blessed armament's list, not on a list of their own.
+          effectiveChoiceOptions(rec.id, def, c, db)
         : def.kind === 'open'
           ? openChoiceOptions(def.from, db, { character: c }).map((o) => ({ value: o.id, label: o.name, description: o.description }))
           : [];

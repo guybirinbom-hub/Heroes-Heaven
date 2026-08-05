@@ -60794,5 +60794,3063 @@
         }
       ]
     }
+  },
+  {
+    "category": "feats",
+    "id": "radiant-armament",
+    "field": "choiceOptionAdditions",
+    "value": [
+      {
+        "target": "blessed-armament",
+        "flag": "blessedRune",
+        "add": [
+          {
+            "value": "astral",
+            "label": "Astral"
+          },
+          {
+            "value": "brilliant",
+            "label": "Brilliant"
+          }
+        ],
+        "addIfSanctified": [
+          {
+            "sanctification": "holy",
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "sanctification": "unholy",
+            "value": "unholy",
+            "label": "Unholy"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "greater-armament",
+    "field": "choiceOptionAdditions",
+    "value": [
+      {
+        "target": "harbingers-armament",
+        "flag": "harbingerRune",
+        "add": [
+          {
+            "value": "brilliant",
+            "label": "Brilliant"
+          },
+          {
+            "value": "corrosive",
+            "label": "Corrosive"
+          },
+          {
+            "value": "flaming",
+            "label": "Flaming"
+          },
+          {
+            "value": "frost",
+            "label": "Frost"
+          },
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "shock",
+            "label": "Shock"
+          },
+          {
+            "value": "thundering",
+            "label": "Thundering"
+          },
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-godclaw",
+    "field": "alternateDomains",
+    "value": [
+      "duty"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "wards-of-the-pharaoh",
+    "field": "alternateDomains",
+    "value": [
+      "glyph",
+      "healing"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "pillars-of-knowledge",
+    "field": "alternateDomains",
+    "value": [
+      "glyph",
+      "perfection",
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-path-of-the-heavens",
+    "field": "alternateDomains",
+    "value": [
+      "void"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "demon-bringers",
+    "field": "alternateDomains",
+    "value": [
+      "cities",
+      "duty"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-freeing-flame",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "destruction",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sky-keepers",
+    "field": "alternateDomains",
+    "value": [
+      "freedom",
+      "lightning"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "touch-of-the-sun",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "vigil",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sorrows-sword",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "fire"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-deliberate-journey",
+    "field": "alternateDomains",
+    "value": [
+      "secrecy",
+      "wealth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-enlightened-scholars-path",
+    "field": "alternateDomains",
+    "value": [
+      "glyph",
+      "passion"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hearth-and-harvest",
+    "field": "alternateDomains",
+    "value": [
+      "earth",
+      "healing"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-laborers-bastion",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "indulgence"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-offering-plate",
+    "field": "alternateDomains",
+    "value": [
+      "cities",
+      "family"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "urban-prosperity",
+    "field": "alternateDomains",
+    "value": [
+      "healing",
+      "wealth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-divine-dare",
+    "field": "alternateDomains",
+    "value": [
+      "fate",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-last-breath",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "destruction",
+      "duty"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-perplexing-jest",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "creation",
+      "destruction"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-resplendent-court",
+    "field": "alternateDomains",
+    "value": [
+      "passion",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "abadar",
+    "field": "alternateDomains",
+    "value": [
+      "creation",
+      "duty",
+      "metal",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "asmodeus",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "glyph",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "desna",
+    "field": "alternateDomains",
+    "value": [
+      "star",
+      "void"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "erastil",
+    "field": "alternateDomains",
+    "value": [
+      "duty"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "gozreh",
+    "field": "alternateDomains",
+    "value": [
+      "cold",
+      "lightning"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "iomedae",
+    "field": "alternateDomains",
+    "value": [
+      "duty"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "irori",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "introspection",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lamashtu",
+    "field": "alternateDomains",
+    "value": [
+      "abomination",
+      "change"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nethys",
+    "field": "alternateDomains",
+    "value": [
+      "disorientation",
+      "glyph"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "pharasma",
+    "field": "alternateDomains",
+    "value": [
+      "soul",
+      "time",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "rovagug",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness",
+      "swarm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sarenrae",
+    "field": "alternateDomains",
+    "value": [
+      "repose"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shelyn",
+    "field": "alternateDomains",
+    "value": [
+      "repose"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "torag",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "metal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "urgathoa",
+    "field": "alternateDomains",
+    "value": [
+      "decay",
+      "plague",
+      "swarm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zon-kuthon",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "green-faith",
+    "field": "alternateDomains",
+    "value": [
+      "cold",
+      "decay",
+      "lightning",
+      "moon",
+      "sun"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "baekho",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "might"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "phi-deva",
+    "field": "alternateDomains",
+    "value": [
+      "freedom",
+      "nature"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "srikalis-sritaming-and-sribaril",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "freedom",
+      "pain"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-lady-of-the-north-star",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "star"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "daikitsu",
+    "field": "alternateDomains",
+    "value": [
+      "earth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "fumeiyoshi",
+    "field": "alternateDomains",
+    "value": [
+      "indulgence"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hei-feng",
+    "field": "alternateDomains",
+    "value": [
+      "destruction",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "jin-li",
+    "field": "alternateDomains",
+    "value": [
+      "luck",
+      "water"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kofusachi",
+    "field": "alternateDomains",
+    "value": [
+      "fate"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lady-jingxi",
+    "field": "alternateDomains",
+    "value": [
+      "moon",
+      "nature",
+      "sun"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lady-nanbyo",
+    "field": "alternateDomains",
+    "value": [
+      "dust",
+      "earth",
+      "lightning",
+      "sorrow"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lao-shu-po",
+    "field": "alternateDomains",
+    "value": [
+      "secrecy",
+      "wealth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nalinivati",
+    "field": "alternateDomains",
+    "value": [
+      "family",
+      "glyph"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "qi-zhong",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "earth",
+      "fire",
+      "nature",
+      "water"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shizuru",
+    "field": "alternateDomains",
+    "value": [
+      "sorrow"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sun-wukong",
+    "field": "alternateDomains",
+    "value": [
+      "freedom",
+      "magic",
+      "protection",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tsukiyo",
+    "field": "alternateDomains",
+    "value": [
+      "change"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yaezhing",
+    "field": "alternateDomains",
+    "value": [
+      "darkness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "treerazer",
+    "field": "alternateDomains",
+    "value": [
+      "decay"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "achaekek",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "fate"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "arazni",
+    "field": "alternateDomains",
+    "value": [
+      "sorrow"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ah-pook",
+    "field": "alternateDomains",
+    "value": [
+      "pain",
+      "secrecy",
+      "sorrow",
+      "trickery"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aleth",
+    "field": "alternateDomains",
+    "value": [
+      "dreams",
+      "repose"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "alseta",
+    "field": "alternateDomains",
+    "value": [
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "apsu",
+    "field": "alternateDomains",
+    "value": [
+      "freedom",
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "atrogine",
+    "field": "alternateDomains",
+    "value": [
+      "nature"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "besmara",
+    "field": "alternateDomains",
+    "value": [
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "brigh",
+    "field": "alternateDomains",
+    "value": [
+      "earth",
+      "fire"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "camazotz",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "moon"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "casandalee",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "lightning"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chaldira",
+    "field": "alternateDomains",
+    "value": [
+      "freedom"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dajermube",
+    "field": "alternateDomains",
+    "value": [
+      "cities",
+      "introspection",
+      "star",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-devourer",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "freedom"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "embaral",
+    "field": "alternateDomains",
+    "value": [
+      "freedom",
+      "repose"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "emmeton-galardaria",
+    "field": "alternateDomains",
+    "value": [
+      "travel",
+      "wealth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "genzaeri",
+    "field": "alternateDomains",
+    "value": [
+      "might"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ghlaunder",
+    "field": "alternateDomains",
+    "value": [
+      "dust",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "grandmother-spider",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "darkness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "groetus",
+    "field": "alternateDomains",
+    "value": [
+      "decay"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "gruhastha",
+    "field": "alternateDomains",
+    "value": [
+      "nature",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hanspur",
+    "field": "alternateDomains",
+    "value": [
+      "freedom"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "izuyaku",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "family"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kaldemash",
+    "field": "alternateDomains",
+    "value": [
+      "healing",
+      "protection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kazutal",
+    "field": "alternateDomains",
+    "value": [
+      "cities"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kurgess",
+    "field": "alternateDomains",
+    "value": [
+      "introspection",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "milani",
+    "field": "alternateDomains",
+    "value": [
+      "healing",
+      "protection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nin",
+    "field": "alternateDomains",
+    "value": [
+      "darkness",
+      "tyranny"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nivi-rhombodazzle",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "earth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nocticula",
+    "field": "alternateDomains",
+    "value": [
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "obari",
+    "field": "alternateDomains",
+    "value": [
+      "travel",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sivanah",
+    "field": "alternateDomains",
+    "value": [
+      "glyph"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vudravati",
+    "field": "alternateDomains",
+    "value": [
+      "healing",
+      "nature"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zjar-tovan",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "creation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zyphus",
+    "field": "alternateDomains",
+    "value": [
+      "creation",
+      "pain"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "esoteric-order-of-the-palatine-eye",
+    "field": "alternateDomains",
+    "value": [
+      "glyph",
+      "truth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-spirit-wall",
+    "field": "alternateDomains",
+    "value": [
+      "metal",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "immaculate-growth",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "earth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "blooms-of-the-spreading-weald",
+    "field": "alternateDomains",
+    "value": [
+      "creation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "breath-of-the-endless-sky",
+    "field": "alternateDomains",
+    "value": [
+      "cold",
+      "lightning"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "faith-in-the-fallen",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "pain"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "good-neighbors",
+    "field": "alternateDomains",
+    "value": [
+      "cities"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "light-of-the-everlasting-flame",
+    "field": "alternateDomains",
+    "value": [
+      "passion"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-pandemonia",
+    "field": "alternateDomains",
+    "value": [
+      "dreams",
+      "nightmares"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-readied-strike",
+    "field": "alternateDomains",
+    "value": [
+      "protection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shadow-cabinet",
+    "field": "alternateDomains",
+    "value": [
+      "disorientation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shapes-of-the-fading-luster",
+    "field": "alternateDomains",
+    "value": [
+      "cities",
+      "lightning"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "treasures-of-the-eternal-delve",
+    "field": "alternateDomains",
+    "value": [
+      "protection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "waves-of-the-boundless-sea",
+    "field": "alternateDomains",
+    "value": [
+      "cold"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "children-of-the-night",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "nightmares"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cosmic-caravan",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness",
+      "star"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "fortunes-fate",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "disorientation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "guardians-of-the-sacred-self",
+    "field": "alternateDomains",
+    "value": [
+      "freedom",
+      "truth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "radiant-prism",
+    "field": "alternateDomains",
+    "value": [
+      "family",
+      "healing",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sovyrian-conclave",
+    "field": "alternateDomains",
+    "value": [
+      "passion",
+      "wood"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "stones-blood",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "glyph"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "talons-of-the-godclaw",
+    "field": "alternateDomains",
+    "value": [
+      "tyranny",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "weight-of-the-world",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "cold"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "wheels-of-innovation",
+    "field": "alternateDomains",
+    "value": [
+      "metal",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "rivethun",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "soul",
+      "water"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "baalzebul",
+    "field": "alternateDomains",
+    "value": [
+      "secrecy",
+      "swarm",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "barbatos",
+    "field": "alternateDomains",
+    "value": [
+      "confidence"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "belial",
+    "field": "alternateDomains",
+    "value": [
+      "might"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dispater",
+    "field": "alternateDomains",
+    "value": [
+      "perfection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "geryon",
+    "field": "alternateDomains",
+    "value": [
+      "knowledge",
+      "secrecy"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mammon",
+    "field": "alternateDomains",
+    "value": [
+      "earth",
+      "metal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mephistopheles",
+    "field": "alternateDomains",
+    "value": [
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "moloch",
+    "field": "alternateDomains",
+    "value": [
+      "metal",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "acavna",
+    "field": "alternateDomains",
+    "value": [
+      "knowledge",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aesocar",
+    "field": "alternateDomains",
+    "value": [
+      "knowledge"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "amaznen",
+    "field": "alternateDomains",
+    "value": [
+      "glyph",
+      "metal",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "elion",
+    "field": "alternateDomains",
+    "value": [
+      "creation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "jaidi",
+    "field": "alternateDomains",
+    "value": [
+      "earth",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "myr",
+    "field": "alternateDomains",
+    "value": [
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "onos",
+    "field": "alternateDomains",
+    "value": [
+      "metal",
+      "travel",
+      "wood"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "scal",
+    "field": "alternateDomains",
+    "value": [
+      "repose",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sicva",
+    "field": "alternateDomains",
+    "value": [
+      "decay"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ulon",
+    "field": "alternateDomains",
+    "value": [
+      "ambition"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cihua-coatl",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "repose",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "pahti-coatl",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "duty",
+      "knowledge"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tolte-coatl",
+    "field": "alternateDomains",
+    "value": [
+      "introspection",
+      "secrecy",
+      "star"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "anogetz",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "swarm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cixyron",
+    "field": "alternateDomains",
+    "value": [
+      "destruction",
+      "fire"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "corosbel",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness",
+      "tyranny"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "laivatiniel",
+    "field": "alternateDomains",
+    "value": [
+      "protection",
+      "sorrow"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "pavnuri",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness",
+      "trickery"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tresmalvos",
+    "field": "alternateDomains",
+    "value": [
+      "plague",
+      "swarm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vorasha",
+    "field": "alternateDomains",
+    "value": [
+      "naga",
+      "pain"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "xsistaid",
+    "field": "alternateDomains",
+    "value": [
+      "death",
+      "swarm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zelishkar",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "star"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "abraxas",
+    "field": "alternateDomains",
+    "value": [
+      "glyph"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "areshkagal",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "glyph"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "baphomet",
+    "field": "alternateDomains",
+    "value": [
+      "disorientation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cyth-vsug",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dagon",
+    "field": "alternateDomains",
+    "value": [
+      "abomination"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "haagenti",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "creation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "jezelda",
+    "field": "alternateDomains",
+    "value": [
+      "nature"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shivaska",
+    "field": "alternateDomains",
+    "value": [
+      "metal",
+      "sorrow"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sithhud",
+    "field": "alternateDomains",
+    "value": [
+      "toil",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vulot",
+    "field": "alternateDomains",
+    "value": [
+      "nightmares",
+      "nothingness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "xoveron",
+    "field": "alternateDomains",
+    "value": [
+      "decay",
+      "might"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yhidothrus",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness",
+      "undeath"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zura",
+    "field": "alternateDomains",
+    "value": [
+      "decay",
+      "swarm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "angradd",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "knowledge"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "bolka",
+    "field": "alternateDomains",
+    "value": [
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dranngvit",
+    "field": "alternateDomains",
+    "value": [
+      "fate",
+      "truth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "droskar",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "fire",
+      "metal",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "folgrit",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "sorrow"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kols",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "glyph",
+      "secrecy"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "magrim",
+    "field": "alternateDomains",
+    "value": [
+      "creation",
+      "metal",
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "trudd",
+    "field": "alternateDomains",
+    "value": [
+      "earth",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "count-ranalc",
+    "field": "alternateDomains",
+    "value": [
+      "secrecy"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "imbrex",
+    "field": "alternateDomains",
+    "value": [
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-lost-prince",
+    "field": "alternateDomains",
+    "value": [
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "magdh",
+    "field": "alternateDomains",
+    "value": [
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ng",
+    "field": "alternateDomains",
+    "value": [
+      "nature"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "findeladlara",
+    "field": "alternateDomains",
+    "value": [
+      "protection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ketephys",
+    "field": "alternateDomains",
+    "value": [
+      "family",
+      "freedom"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "arshea",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "family",
+      "protection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ashava",
+    "field": "alternateDomains",
+    "value": [
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "bharnarol",
+    "field": "alternateDomains",
+    "value": [
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dalenydra",
+    "field": "alternateDomains",
+    "value": [
+      "family",
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "eritrice",
+    "field": "alternateDomains",
+    "value": [
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "falayna",
+    "field": "alternateDomains",
+    "value": [
+      "family",
+      "perfection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kelinahat",
+    "field": "alternateDomains",
+    "value": [
+      "truth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "korada",
+    "field": "alternateDomains",
+    "value": [
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lalaci",
+    "field": "alternateDomains",
+    "value": [
+      "darkness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lorris",
+    "field": "alternateDomains",
+    "value": [
+      "toil",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "olheon",
+    "field": "alternateDomains",
+    "value": [
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ragathiel",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "confidence",
+      "might"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "reymenda",
+    "field": "alternateDomains",
+    "value": [
+      "introspection",
+      "might",
+      "protection",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "soralyon",
+    "field": "alternateDomains",
+    "value": [
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "uskyeria",
+    "field": "alternateDomains",
+    "value": [
+      "protection",
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "valani",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zohls",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "fandarra",
+    "field": "alternateDomains",
+    "value": [
+      "earth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "minderhal",
+    "field": "alternateDomains",
+    "value": [
+      "tyranny"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yrmidar",
+    "field": "alternateDomains",
+    "value": [
+      "change"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hadregash",
+    "field": "alternateDomains",
+    "value": [
+      "destruction"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "teki-stronggut",
+    "field": "alternateDomains",
+    "value": [
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "alazhra",
+    "field": "alternateDomains",
+    "value": [
+      "disorientation",
+      "nothingness",
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "anubis",
+    "field": "alternateDomains",
+    "value": [
+      "healing"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aroden",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "toil",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "grundinnar",
+    "field": "alternateDomains",
+    "value": [
+      "repose"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mestama",
+    "field": "alternateDomains",
+    "value": [
+      "passion",
+      "secrecy"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ra",
+    "field": "alternateDomains",
+    "value": [
+      "creation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "smiad",
+    "field": "alternateDomains",
+    "value": [
+      "destruction"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sturovenen",
+    "field": "alternateDomains",
+    "value": [
+      "dragon",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "furcas",
+    "field": "alternateDomains",
+    "value": [
+      "might"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "haborym",
+    "field": "alternateDomains",
+    "value": [
+      "might",
+      "toil",
+      "tyranny",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "malthus",
+    "field": "alternateDomains",
+    "value": [
+      "dust",
+      "knowledge",
+      "tyranny"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nergal",
+    "field": "alternateDomains",
+    "value": [
+      "indulgence",
+      "swarm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "titivilus",
+    "field": "alternateDomains",
+    "value": [
+      "trickery",
+      "truth",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vapula",
+    "field": "alternateDomains",
+    "value": [
+      "duty"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "atropos",
+    "field": "alternateDomains",
+    "value": [
+      "darkness",
+      "family",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ceyannan",
+    "field": "alternateDomains",
+    "value": [
+      "protection",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dammar",
+    "field": "alternateDomains",
+    "value": [
+      "protection",
+      "swarm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ilsurrish",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "disorientation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "inna",
+    "field": "alternateDomains",
+    "value": [
+      "creation",
+      "fire",
+      "nothingness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mother-vulture",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mrtyu",
+    "field": "alternateDomains",
+    "value": [
+      "creation",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-pale-horse",
+    "field": "alternateDomains",
+    "value": [
+      "travel",
+      "water"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "phlegyas",
+    "field": "alternateDomains",
+    "value": [
+      "family",
+      "fate"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "saloc",
+    "field": "alternateDomains",
+    "value": [
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ssilameshnik",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "telastmar",
+    "field": "alternateDomains",
+    "value": [
+      "moon",
+      "travel",
+      "water"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "teshallas",
+    "field": "alternateDomains",
+    "value": [
+      "dragon",
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vale",
+    "field": "alternateDomains",
+    "value": [
+      "truth",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vavaalrav",
+    "field": "alternateDomains",
+    "value": [
+      "earth",
+      "family"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vonymos",
+    "field": "alternateDomains",
+    "value": [
+      "nature",
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ydajisk",
+    "field": "alternateDomains",
+    "value": [
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "grask-uldeth",
+    "field": "alternateDomains",
+    "value": [
+      "tyranny",
+      "wealth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mahja-firehair",
+    "field": "alternateDomains",
+    "value": [
+      "sun"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nulgreth",
+    "field": "alternateDomains",
+    "value": [
+      "destruction"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "uirch",
+    "field": "alternateDomains",
+    "value": [
+      "family",
+      "sun",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ahriman",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "azathoth",
+    "field": "alternateDomains",
+    "value": [
+      "disorientation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cthulhu",
+    "field": "alternateDomains",
+    "value": [
+      "water"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mhar",
+    "field": "alternateDomains",
+    "value": [
+      "dust"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nyarlathotep-the-faceless-sphinx",
+    "field": "alternateDomains",
+    "value": [
+      "dreams",
+      "wealth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nyarlathotep-the-veiled-voice",
+    "field": "alternateDomains",
+    "value": [
+      "destruction",
+      "glyph"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "orgesh",
+    "field": "alternateDomains",
+    "value": [
+      "metal",
+      "undeath"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "rhan-tegoth",
+    "field": "alternateDomains",
+    "value": [
+      "star"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "xhamen-dor",
+    "field": "alternateDomains",
+    "value": [
+      "disorientation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yig",
+    "field": "alternateDomains",
+    "value": [
+      "dragon"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yog-sothoth",
+    "field": "alternateDomains",
+    "value": [
+      "fate"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aonaurious",
+    "field": "alternateDomains",
+    "value": [
+      "fate",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chavazvug",
+    "field": "alternateDomains",
+    "value": [
+      "abomination",
+      "death"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "isph-aun-vuln",
+    "field": "alternateDomains",
+    "value": [
+      "secrecy",
+      "tyranny"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nyuo-ogh",
+    "field": "alternateDomains",
+    "value": [
+      "disorientation",
+      "nightmares"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "oaur-ooung",
+    "field": "alternateDomains",
+    "value": [
+      "indulgence",
+      "nature"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "thuskchoon",
+    "field": "alternateDomains",
+    "value": [
+      "dust",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yamasoth",
+    "field": "alternateDomains",
+    "value": [
+      "cities",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ardad-lili",
+    "field": "alternateDomains",
+    "value": [
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "doloras",
+    "field": "alternateDomains",
+    "value": [
+      "nothingness"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "eiseth",
+    "field": "alternateDomains",
+    "value": [
+      "fire"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mahathallah",
+    "field": "alternateDomains",
+    "value": [
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ananshea",
+    "field": "alternateDomains",
+    "value": [
+      "destruction",
+      "nature"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chamiaholom",
+    "field": "alternateDomains",
+    "value": [
+      "decay",
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "charg",
+    "field": "alternateDomains",
+    "value": [
+      "decay",
+      "nightmares"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dachzerul",
+    "field": "alternateDomains",
+    "value": [
+      "death",
+      "disorientation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hataam",
+    "field": "alternateDomains",
+    "value": [
+      "cold",
+      "dust"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "iggeret",
+    "field": "alternateDomains",
+    "value": [
+      "death",
+      "family"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nameless",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ozranvial",
+    "field": "alternateDomains",
+    "value": [
+      "nightmares",
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shawnari",
+    "field": "alternateDomains",
+    "value": [
+      "introspection",
+      "secrecy"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "velgaas",
+    "field": "alternateDomains",
+    "value": [
+      "magic",
+      "naga"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vermilion-mother",
+    "field": "alternateDomains",
+    "value": [
+      "earth",
+      "passion"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "xiquiripat",
+    "field": "alternateDomains",
+    "value": [
+      "toil",
+      "tyranny"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zipacna",
+    "field": "alternateDomains",
+    "value": [
+      "decay",
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "alglenweis",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kagia",
+    "field": "alternateDomains",
+    "value": [
+      "earth",
+      "might"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ristrentho",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "cold"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "stag-mother-of-the-forest-of-stones",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "protection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "arundhat",
+    "field": "alternateDomains",
+    "value": [
+      "passion"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chamidu",
+    "field": "alternateDomains",
+    "value": [
+      "freedom"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "diomazul",
+    "field": "alternateDomains",
+    "value": [
+      "might"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lahkgya",
+    "field": "alternateDomains",
+    "value": [
+      "wealth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "likha",
+    "field": "alternateDomains",
+    "value": [
+      "repose",
+      "truth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ragdya",
+    "field": "alternateDomains",
+    "value": [
+      "family"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ravithra",
+    "field": "alternateDomains",
+    "value": [
+      "ambition",
+      "soul"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "suyuddha",
+    "field": "alternateDomains",
+    "value": [
+      "swarm",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vineshvakhi",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "knowledge",
+      "secrecy"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aakriti",
+    "field": "alternateDomains",
+    "value": [
+      "freedom",
+      "knowledge"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "etaris",
+    "field": "alternateDomains",
+    "value": [
+      "abomination",
+      "sorrow"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yelayne",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "travel"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "bes",
+    "field": "alternateDomains",
+    "value": [
+      "healing"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hathor",
+    "field": "alternateDomains",
+    "value": [
+      "creation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "khepri",
+    "field": "alternateDomains",
+    "value": [
+      "trickery"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "neith",
+    "field": "alternateDomains",
+    "value": [
+      "death",
+      "protection",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nephthys",
+    "field": "alternateDomains",
+    "value": [
+      "dust",
+      "duty"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ptah",
+    "field": "alternateDomains",
+    "value": [
+      "knowledge"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "set",
+    "field": "alternateDomains",
+    "value": [
+      "destruction"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "angazhan",
+    "field": "alternateDomains",
+    "value": [
+      "indulgence",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "arqueros",
+    "field": "alternateDomains",
+    "value": [
+      "family"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "halcamora",
+    "field": "alternateDomains",
+    "value": [
+      "disorientation"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "jaidz",
+    "field": "alternateDomains",
+    "value": [
+      "introspection",
+      "truth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "marishi",
+    "field": "alternateDomains",
+    "value": [
+      "indulgence",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shei",
+    "field": "alternateDomains",
+    "value": [
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tanagaar",
+    "field": "alternateDomains",
+    "value": [
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "thisamet",
+    "field": "alternateDomains",
+    "value": [
+      "family",
+      "fire"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cormigus",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "secrecy"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "imot",
+    "field": "alternateDomains",
+    "value": [
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "narakaas",
+    "field": "alternateDomains",
+    "value": [
+      "introspection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "adanye",
+    "field": "alternateDomains",
+    "value": [
+      "confidence",
+      "fire"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chohar",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "toil",
+      "vigil",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kalekot",
+    "field": "alternateDomains",
+    "value": [
+      "darkness",
+      "dragon"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lubaiko",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "destruction"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "luhar",
+    "field": "alternateDomains",
+    "value": [
+      "fate",
+      "soul",
+      "star",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mazludeh",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "nature"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tlehar",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "creation",
+      "vigil",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "uvuko",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "cold"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "walkena",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "fire"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ayrzul",
+    "field": "alternateDomains",
+    "value": [
+      "cities",
+      "dust",
+      "metal",
+      "undeath"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ferrumnestra",
+    "field": "alternateDomains",
+    "value": [
+      "sorrow",
+      "vigil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kelizandri",
+    "field": "alternateDomains",
+    "value": [
+      "dragon",
+      "tyranny",
+      "zeal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "laudinmio",
+    "field": "alternateDomains",
+    "value": [
+      "wealth"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lysianassa",
+    "field": "alternateDomains",
+    "value": [
+      "dreams",
+      "protection",
+      "time"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sairazul",
+    "field": "alternateDomains",
+    "value": [
+      "creation",
+      "protection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shumunue",
+    "field": "alternateDomains",
+    "value": [
+      "perfection",
+      "repose"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "verilorn",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "perfection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-tides-of-chaos",
+    "field": "alternateDomains",
+    "value": [
+      "decay",
+      "nightmares"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "anras",
+    "field": "alternateDomains",
+    "value": [
+      "lightning"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "deshto",
+    "field": "alternateDomains",
+    "value": [
+      "toil"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "oathos",
+    "field": "alternateDomains",
+    "value": [
+      "duty",
+      "repose"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "umarik",
+    "field": "alternateDomains",
+    "value": [
+      "cold",
+      "lightning"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "gaasham",
+    "field": "alternateDomains",
+    "value": [
+      "change",
+      "perfection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "garhaazh",
+    "field": "alternateDomains",
+    "value": [
+      "indulgence",
+      "nature",
+      "passion"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "otilaz",
+    "field": "alternateDomains",
+    "value": [
+      "abomination",
+      "dragon",
+      "sorrow"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sarshallatu",
+    "field": "alternateDomains",
+    "value": [
+      "knowledge",
+      "magic",
+      "sorrow",
+      "star"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "turvu",
+    "field": "alternateDomains",
+    "value": [
+      "dragon",
+      "perfection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yluma",
+    "field": "alternateDomains",
+    "value": [
+      "knowledge",
+      "perfection"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-anointing-of-kings",
+    "field": "alternateDomains",
+    "value": [
+      "dragon",
+      "tyranny"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "essence-dancers",
+    "field": "alternateDomains",
+    "value": [
+      "nature",
+      "secrecy"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "abrogail",
+    "field": "alternateDomains",
+    "value": [
+      "knowledge",
+      "magic",
+      "tyranny"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "surveyors-of-the-deep",
+    "field": "alternateDomains",
+    "value": [
+      "air",
+      "water"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "splinter-faith",
+    "field": "choice",
+    "value": {
+      "flag": "splinterDomains",
+      "prompt": "Splinter faith domains",
+      "kind": "domains",
+      "domainPool": "deity+alternate",
+      "picks": 4,
+      "distinct": true,
+      "note": "You may also take up to ONE domain from outside both lists, so long as it is not anathematic to your deity — pick it here only if your GM agrees. A domain spell from a domain on neither list is always heightened to 1 rank lower than usual."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "versatile-blasts",
+    "field": "blastTypeAdditions",
+    "value": {
+      "air": [
+        "cold"
+      ],
+      "earth": [
+        "poison"
+      ],
+      "fire": [
+        "cold"
+      ],
+      "metal": [
+        "electricity"
+      ],
+      "water": [
+        "acid"
+      ],
+      "wood": [
+        "poison"
+      ]
+    }
   }
 ]

@@ -145,6 +145,10 @@ export interface BuildState {
   gateForks?: Record<string, string>;
   /** Kineticist Expand the Portal picks: Gate's Threshold level (string) → bonus impulse feat id. */
   gateExpands?: Record<string, string>;
+  /** Elemental Blast damage type per element ("choose … a damage type listed for that element").
+   *  Only the first of each element's printed types was ever shown, so half of a choice the rules
+   *  offer on every blast was missing. Absent ⇒ that element's first printed type. */
+  blastTypes?: Record<string, string>;
   /** Chosen key attribute (for classes that offer a choice). */
   keyAbility: AbilityId | null;
   /** Selections for the ancestry's non-fixed boosts (choice/free), in order. */
@@ -3385,7 +3389,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Kineticist: resolve the effective elements (gate picks + Fork the Path) for the Elemental Blast strike.
   const kineticist =
     ownsClass('kineticist')
-      ? { elements: kineticistElements(build, level).map((id) => id.replace(/-gate$/, '')) }
+      ? {
+          elements: kineticistElements(build, level).map((id) => id.replace(/-gate$/, '')),
+          // "Choose one of your kinetic elements AND A DAMAGE TYPE LISTED FOR THAT ELEMENT" — the
+          // player's answer per element. Absent entries fall back to the element's first printed type.
+          ...(build.blastTypes && Object.keys(build.blastTypes).length ? { blastTypes: build.blastTypes } : {}),
+        }
       : undefined;
 
   // Override: features force-granted via Overrides — materialized for the Feats & Features list (any
