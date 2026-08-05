@@ -1461,6 +1461,23 @@ export interface Spell extends ContentBase {
   heightening?: SpellHeightening;
   /** Primary base damage/heal dice formula (for upcast scaling display). */
   baseDamage?: string;
+  /**
+   * Whether `baseDamage` HURTS or HEALS. 449 spells carry it, 31 of them `healing`.
+   *
+   * ⚠ DELIBERATELY UNREAD — a parked landmine, not an oversight. Nothing today applies a NUMERIC
+   * bonus to spell damage: `spellDamage` is a situational target only, so it renders prose the
+   * player reads and applies themselves, and prose cannot be wrong about healing.
+   *
+   * THE MOMENT a numeric spell-damage bonus exists, this field is what stops "+2 to your spell
+   * damage" adding +2 to a heal. Read it there.
+   *
+   * It is NOT a blanket "skip healing" rule — check each record's own words. Sorcerous Potency reads
+   * "a spell … that deals damage OR RESTORES HIT POINTS" and is meant to cover both; Dangerous
+   * Sorcery reads "that deals damage" and is not.
+   *
+   * `test/parked-fields.test.ts` fails the build the moment this gains a reader, and tells whoever
+   * added it to come read this comment.
+   */
   damageKind?: 'damage' | 'healing';
   /** Structured base area (companion to the prose `area` string), in feet. */
   baseArea?: { value: number; kind: string };

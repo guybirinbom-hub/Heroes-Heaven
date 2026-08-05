@@ -42,6 +42,13 @@ export interface SituationalTarget {
    * For `ability`: an ability key (e.g. `str`) or `all`.
    * Ignored for `spellDamage` — the damage your spells deal has no sub-stat.
    * Ignored for the rest.
+   *
+   * ⚠ `spellDamage` is PROSE ONLY, on purpose. Every entry renders a "when" the player reads and
+   * applies themselves, so it cannot be wrong about which spells it covers. If this ever becomes a
+   * NUMBER, read `Spell.damageKind` first: 31 spells heal, and "+2 to your spell damage" must not
+   * add +2 to a heal. Per record though — Sorcerous Potency says "deals damage OR RESTORES HIT
+   * POINTS" and means both; Dangerous Sorcery says "deals damage" and does not.
+   * See the comment on `Spell.damageKind` and `test/parked-fields.test.ts`.
    */
   detail?: string;
   /**
