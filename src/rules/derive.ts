@@ -26,6 +26,7 @@ import type {
   FeatChoiceDef,
   SenseEntry,
   StanceStrike,
+  SubclassOption,
   ProficiencyKey,
   ProficiencyRank,
   SaveId,
@@ -492,6 +493,20 @@ export function activeStateGrants(c: Character, db: ContentDatabase): NonNullabl
   // or fire" is part of Raging Resistance, not a standing benefit.
   scan(c.chosenEffects);
   return out;
+}
+
+/**
+ * The class features a chosen subclass hands over, filtered to the ones this level has reached.
+ *
+ * A bare id means "from the level the subclass is taken" — an oracle's curse arrives with the
+ * mystery. A `{ id, level }` is gated, which the gunslinger's ways need: each hands over three deeds
+ * at 1st, 9th and 15th, and without the gate a 1st-level gunslinger would own their Greater Deed.
+ */
+export function subclassFeatureIds(
+  ids: SubclassOption['featureIds'],
+  level: number,
+): string[] {
+  return (ids ?? []).filter((e) => typeof e === 'string' || level >= e.level).map((e) => (typeof e === 'string' ? e : e.id));
 }
 
 /** `${recordId}:${flag}` — the one place this key is spelled, so callers can't drift. */
@@ -1334,7 +1349,7 @@ export function classFeatureIdsOwned(
     }
     if (db.classFeatures[opts.subclassId]) out.add(opts.subclassId);
     const opt = cls.subclass?.options.find((o) => o.id === opts.subclassId);
-    for (const id of opt?.featureIds ?? []) if (db.classFeatures[id]) out.add(id);
+    for (const id of subclassFeatureIds(opt?.featureIds, opts.level)) if (db.classFeatures[id]) out.add(id);
   }
   for (const cc of opts.classChoices ?? []) {
     if (cc.id && cc.level <= opts.level && db.classFeatures[cc.id]) out.add(cc.id);
@@ -1394,7 +1409,7 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
     // A curse is in no class's feature list and is not a subclass option either, so all 11 were
     // reachable by nothing at all.
     const opt = klass?.subclass?.options.find((o) => o.id === subId);
-    for (const id of opt?.featureIds ?? []) if (db.classFeatures[id]) out.add(id);
+    for (const id of subclassFeatureIds(opt?.featureIds, c.level)) if (db.classFeatures[id]) out.add(id);
   }
   return out;
 }

@@ -1159,8 +1159,12 @@ export interface SubclassOption {
    * Those curse records were reachable by nothing: they are not in `Class.features`, not subclass
    * options themselves, and ownedFeatureIds had no route to them, so every field and star on all 11
    * rendered for nobody.
+   *
+   * A bare string means "from the level the subclass is taken". A `{ id, level }` gates it, which is
+   * what the gunslinger's ways need: each way hands over three deeds at 1st, 9th and 15th, and with
+   * only the bare form a 1st-level gunslinger would own their 15th-level Greater Deed.
    */
-  featureIds?: string[];
+  featureIds?: (string | { id: string; level: number })[];
   /** Focus spell ids this option grants (druid order spell, wizard school spell, witch hex). */
   focusSpells?: string[];
   /** Feat-gated advanced focus spell (Advanced Bloodline / Advanced Revelation grants this). */

@@ -412,6 +412,14 @@ let backfillCount = 0;
 if (existsSync('scripts/data/effect-backfill.json')) {
   const unresolved = [];
   for (const fix of JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8'))) {
+    // `create` adds a whole record rather than patching a field. Needed where a record is filed in
+    // the wrong collection upstream: Way of the Spellshot's three deeds ship only as actions, so
+    // after a regeneration the way's deed links would point at nothing. Never overwrites.
+    if (fix.create) {
+      db[fix.category] ??= {};
+      if (!db[fix.category][fix.id]) { db[fix.category][fix.id] = fix.value; backfillCount++; }
+      continue;
+    }
     const entry = db[fix.category]?.[fix.id];
     if (!entry || !fix.field) continue;
     const target = fix.path?.length ? backfillTarget(entry, fix.path) : entry;

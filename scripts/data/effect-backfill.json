@@ -63852,5 +63852,223 @@
         "poison"
       ]
     }
+  },
+  {
+    "category": "classes",
+    "id": "gunslinger",
+    "path": [
+      "subclass",
+      "options",
+      "id=way-of-the-drifter"
+    ],
+    "field": "featureIds",
+    "value": [
+      {
+        "id": "into-the-fray",
+        "level": 1
+      },
+      {
+        "id": "finish-the-job",
+        "level": 9
+      },
+      {
+        "id": "drifters-wake",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "gunslinger",
+    "path": [
+      "subclass",
+      "options",
+      "id=way-of-the-pistolero"
+    ],
+    "field": "featureIds",
+    "value": [
+      {
+        "id": "ten-paces",
+        "level": 1
+      },
+      {
+        "id": "pistoleros-retort",
+        "level": 9
+      },
+      {
+        "id": "grim-swagger",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "gunslinger",
+    "path": [
+      "subclass",
+      "options",
+      "id=way-of-the-sniper"
+    ],
+    "field": "featureIds",
+    "value": [
+      {
+        "id": "one-shot-one-kill",
+        "level": 1
+      },
+      {
+        "id": "vital-shot",
+        "level": 9
+      },
+      {
+        "id": "ghost-shot",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "gunslinger",
+    "path": [
+      "subclass",
+      "options",
+      "id=way-of-the-spellshot"
+    ],
+    "field": "featureIds",
+    "value": [
+      {
+        "id": "energy-shot",
+        "level": 1
+      },
+      {
+        "id": "recall-ammunition",
+        "level": 9
+      },
+      {
+        "id": "dispelling-bullet",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "gunslinger",
+    "path": [
+      "subclass",
+      "options",
+      "id=way-of-the-triggerbrand"
+    ],
+    "field": "featureIds",
+    "value": [
+      {
+        "id": "spring-the-trap",
+        "level": 1
+      },
+      {
+        "id": "wind-them-up",
+        "level": 9
+      },
+      {
+        "id": "break-them-down",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "gunslinger",
+    "path": [
+      "subclass",
+      "options",
+      "id=way-of-the-vanguard"
+    ],
+    "field": "featureIds",
+    "value": [
+      {
+        "id": "living-fortification",
+        "level": 1
+      },
+      {
+        "id": "spinning-crush",
+        "level": 9
+      },
+      {
+        "id": "siegebreaker",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "energy-shot",
+    "create": true,
+    "value": {
+      "id": "energy-shot",
+      "name": "Energy Shot",
+      "traits": [
+        "magical",
+        "spellshot"
+      ],
+      "rarity": "common",
+      "description": "**Trigger** You roll initiative.\n\n---\n\nYou unleash a small surge of magical energy into your weapon, shrouding the bullet with potential energy and granting it the ability to deal energy damage to your foes to exploit their weaknesses. You can Interact to draw a ranged weapon. On your first three Strikes of this encounter with a firearm or crossbow, you deal an additional 1 acid, cold, fire or electricity damage per weapon damage die. You choose which damage type to deal as part of making each Strike.",
+      "actionCost": {
+        "type": "free"
+      },
+      "source": {
+        "book": "Pathfinder Guns & Gears",
+        "license": "ORC"
+      },
+      "edition": "remaster",
+      "level": 1
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "recall-ammunition",
+    "create": true,
+    "value": {
+      "id": "recall-ammunition",
+      "name": "Recall Ammunition",
+      "traits": [
+        "magical",
+        "spellshot",
+        "teleportation"
+      ],
+      "rarity": "common",
+      "description": "**Trigger** You miss with a firearm or crossbow Strike.\n\n---\n\nYou create a bond to your ammunition, calling your missed shot back. The ammunition you just fired is reloaded back into your weapon. If the ammunition was a piece of magical or alchemical ammunition that normally requires one or more actions to activate, you must re-activate it before firing again.",
+      "actionCost": {
+        "type": "reaction"
+      },
+      "source": {
+        "book": "Pathfinder Guns & Gears",
+        "license": "ORC"
+      },
+      "edition": "remaster",
+      "level": 9
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "dispelling-bullet",
+    "create": true,
+    "value": {
+      "id": "dispelling-bullet",
+      "name": "Dispelling Bullet",
+      "traits": [
+        "magical",
+        "spellshot"
+      ],
+      "rarity": "common",
+      "description": "You imprint a bullet with a field of disruptive energy built upon your magical signature, disrupting the magic of whatever it hits. Make a firearm or crossbow Strike against a foe you can see. If you hit, you attempt to counteract a spell effect active on the target (your choice, or the highest-level effect if you don't choose). Your counteract rank is equal to half your level (rounded up), and your counteract check modifier is equal to your class DC – 10.",
+      "actionCost": {
+        "type": "actions",
+        "value": 2
+      },
+      "source": {
+        "book": "Pathfinder Guns & Gears",
+        "license": "ORC"
+      },
+      "edition": "remaster",
+      "level": 15
+    }
   }
 ]

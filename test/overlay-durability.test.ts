@@ -4,7 +4,7 @@ import { content } from './_content';
 import { backgroundGrantedFeats } from '../src/rules/build';
 
 const c = content();
-type Patch = { category: string; id: string; field: string; value: unknown; path?: string[] };
+type Patch = { category: string; id: string; field?: string; value: unknown; path?: string[]; create?: boolean };
 const overlay = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as Patch[];
 
 /**
@@ -56,8 +56,11 @@ describe('mechanical data survives a re-import', () => {
     const db = c as unknown as Record<string, Record<string, Record<string, unknown>>>;
     const drift = overlay
       .filter((p) => {
+        // A `create` entry carries a whole record rather than one field; it matches when the record
+        // ships at all. (It never overwrites, so a differing shipped record is upstream's, not drift.)
+        if (p.create) return !db[p.category]?.[p.id];
         const target = p.path?.length ? resolvePath(db[p.category][p.id], p.path) : db[p.category][p.id];
-        if (!target) return true; // an unresolved path is drift of the worst kind: it patches nothing
+        if (!target || !p.field) return true; // an unresolved path is drift of the worst kind: it patches nothing
         const live = target[p.field];
         // The overlay applier can only ASSIGN, so "remove this field" has to be written as null.
         // null and absent are equivalent to every reader (`rec.speeds?.land`, `...(rec.speeds ?? {})`),
