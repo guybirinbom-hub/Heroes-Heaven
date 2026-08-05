@@ -33,6 +33,7 @@ import {
   skillIncreaseCap,
 } from '../rules/build';
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
+import { classFeatureIdsOwned } from '../rules/derive';
 import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes';
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
@@ -239,7 +240,15 @@ export function Builder({
     : archCaster
       ? archetypeSlots(build.level, archCaster)
       : {};
-  const cantripCap = casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0;
+  // Cantrip Expansion and its kin raise this. Without the same bonus here the extra cantrips exist on
+  // the sheet and the builder gives the player no slot in which to choose them.
+  const cantripBonus = [
+    ...Object.values(build.featPicks ?? {}).filter(Boolean).map((id) => content.feats[id as string]),
+    ...[...classFeatureIdsOwned({ classId: build.classId, subclassId: build.subclassId, level: build.level }, content)].map(
+      (id) => content.classFeatures[id],
+    ),
+  ].reduce((n, r) => n + (r?.spellSlotBonus?.cantrips ?? 0), 0);
+  const cantripCap = (casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0) + cantripBonus;
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
   const featPrereqChar = useMemo(() => buildCharacter(build, ovContent), [build, ovContent]);

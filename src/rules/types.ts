@@ -493,6 +493,22 @@ export interface SpellSlotBonus {
   byRank?: Record<string, number>;
   /** Restrict to a specific entry id (defaults to the character's main slot caster). */
   entryId?: string;
+  /**
+   * Extra CANTRIPS known. The slot applier filters `r > 0`, so `byRank['0']` was silently dropped and
+   * nothing else could reach the cantrip cap — Cantrip Expansion, one of the most-taken feats in the
+   * game, did nothing whatsoever.
+   */
+  cantrips?: number;
+  /**
+   * Slots at the character's CURRENT highest castable rank (Gifted Power: "an extra spell slot of
+   * your highest rank"). The rank moves with level, so `byRank` cannot say it and `perRank` would
+   * hand out one at every rank instead of one at the top.
+   */
+  highestOnly?: boolean;
+  /** A printed limit on what the slot may hold ("only to cast spells from your mystery"). DISPLAY
+   *  ONLY: the engine does not police what goes into a slot, and pretending otherwise would be worse
+   *  than showing the sentence. */
+  restriction?: string;
 }
 
 /** A concrete effect an EffectChoice option confers when picked. A subset of the effect lanes the

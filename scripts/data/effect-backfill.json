@@ -58941,5 +58941,31 @@
         "shadow-projectile"
       ]
     }
+  },
+  {
+    "category": "feats",
+    "id": "cantrip-expansion",
+    "field": "spellSlotBonus",
+    "value": {
+      "cantrips": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "cantrip-casting",
+    "field": "spellSlotBonus",
+    "value": {
+      "cantrips": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "gifted-power",
+    "field": "spellSlotBonus",
+    "value": {
+      "highestOnly": true,
+      "perRank": 1,
+      "restriction": "Only to cast one of your mystery’s granted spells, heightened to this rank."
+    }
   }
 ]

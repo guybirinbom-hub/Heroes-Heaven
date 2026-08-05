@@ -1391,6 +1391,25 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const keyAbility = choiceKeyAbility ?? build.keyAbility ?? cls?.keyAbility[0] ?? null;
   const level = build.level;
 
+  /**
+   * Extra CANTRIPS known, needed HERE because the cantrip cap is applied while the spellcasting
+   * entries are assembled — well before the spell-slot bonuses are collected, and before the resolved
+   * `feats` array exists. So it reads the picks and the owned class features directly.
+   *
+   * The slot applier filters `r > 0`, so a `byRank['0']` was silently dropped and nothing could reach
+   * this cap: Cantrip Expansion, one of the most-taken feats in the game, did nothing at all.
+   */
+  const cantripBonus = (() => {
+    const sources = [
+      ...Object.values(build.featPicks ?? {}).filter(Boolean).map((id) => content.feats[id as string]),
+      ...[...classFeatureIdsOwned({ classId: build.classId, subclassId: build.subclassId, level }, content)]
+        .map((id) => content.classFeatures[id]),
+    ];
+    let n = 0;
+    for (const src of sources) n += src?.spellSlotBonus?.cantrips ?? 0;
+    return n;
+  })();
+
   const skills = {} as Record<ProficiencyKey, ProficiencyRank>;
   for (const sk of SKILLS) skills[sk] = 'untrained';
   // Trainings granted by other sources first; they "lock" a skill and don't
@@ -1757,7 +1776,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       proficiency: 'trained',
       // Dedup so a subclass-granted cantrip (psychic conscious mind) doesn't duplicate a
       // player-picked one.
-      cantrips: [...new Set([...build.cantrips.slice(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0)), ...(grantedByRank[0] ?? [])])],
+      cantrips: [...new Set([...build.cantrips.slice(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonus), ...(grantedByRank[0] ?? [])])],
     };
     if (sp.repertoire) {
       // Spontaneous: a repertoire of known spells per rank + a slot pool.
@@ -1919,7 +1938,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       tradition: tradition2,
       keyAbility: sp2.keyAbility,
       proficiency: 'trained',
-      cantrips: [...new Set([...cantrips2.slice(0, cantripsKnown(cls2.id))])],
+      cantrips: [...new Set([...cantrips2.slice(0, cantripsKnown(cls2.id) + cantripBonus)])],
     };
     const hasSchool2 = cls2.id === 'wizard'; // wizard curriculum: +1 prepared slot per castable rank
     if (sp2.repertoire) {
@@ -2869,6 +2888,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
     const perRank = bonus.perRank ?? 1;
     const ranks = Object.keys(entry.slots ?? entry.prepared ?? {}).map(Number).filter((r) => r > 0).sort((a, b) => a - b);
+    // "An extra spell slot of your highest rank." The rank moves with level, so byRank cannot say it
+    // and perRank would grant one at EVERY rank instead of one at the top.
+    if (bonus.highestOnly) {
+      const top = ranks[ranks.length - 1];
+      if (top != null) add(top, perRank);
+      continue;
+    }
     const eligible = bonus.exceptHighest ? ranks.slice(0, Math.max(0, ranks.length - bonus.exceptHighest)) : ranks;
     for (const r of eligible) add(r, perRank);
   }
