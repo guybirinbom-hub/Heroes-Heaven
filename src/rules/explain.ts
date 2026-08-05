@@ -49,6 +49,7 @@ import {
   skillSubstitutions,
 } from './derive';
 import { mpArmorRefine } from './monsterParts';
+import { traitLabel } from './glossary';
 import {
   featSituationalFor,
   hasFeatSituational,
@@ -201,6 +202,15 @@ function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
     // Without this, a rune's conditional bonuses vanished at exactly the moment the rune started
     // working — listed while it sat unused in your pack, silent once it was on the weapon.
     for (const rune of inv.runes?.property ?? []) ids.push(rune);
+    // ARMOR AND SHIELD TRAITS, under a `trait:` prefix so they can never collide with a record id.
+    // Every armor trait in the game was inert — 35 items carry `bulwark` and nothing read it. The
+    // worn armor is read THROUGH its riders, so a Heavy Construction innovation's added bulwark
+    // counts as well as a printed one.
+    const item = db?.items[inv.itemId];
+    if (item?.itemType === 'armor' || item?.itemType === 'shield') {
+      const traits = item.itemType === 'armor' && db ? applyArmorRiders(c, db, inv, item).armor.traits : item.traits;
+      for (const t of traits ?? []) ids.push(`trait:${t}`);
+    }
   }
   // Ruling G: a completed relic set's entry REPLACES the piece's, so the player reads one line rather
   // than two that look like they add up. Dropped only when the character has both.
@@ -337,13 +347,17 @@ function sourceCollectionOf(db: ContentDatabase, id: string): SituationalLine['s
  *  come from, so an item's bonus reads with the item's name. */
 function featSituationalLines(c: Character, db: ContentDatabase, ref: StatRef): SituationalLine[] {
   const nameOf = (id: string) =>
-    db.feats[id]?.name ??
-    db.items[id]?.name ??
-    db.heritages[id]?.name ??
-    db.backgrounds[id]?.name ??
-    db.ancestries[id]?.name ??
-    db.classFeatures[id]?.name ??
-    id;
+    // An armour/shield TRAIT is not a record, so it needs its own label — otherwise the popup reads
+    // "+3 instead of your Dexterity modifier from trait:bulwark".
+    id.startsWith('trait:')
+      ? traitLabel(id.slice('trait:'.length))
+      : db.feats[id]?.name ??
+        db.items[id]?.name ??
+        db.heritages[id]?.name ??
+        db.backgrounds[id]?.name ??
+        db.ancestries[id]?.name ??
+        db.classFeatures[id]?.name ??
+        id;
   return featSituationalFor(characterSituationalIds(c, db), ref, authoredSituational(c, db)).map((s) => ({
     source: nameOf(s.id),
     when: s.when,
@@ -518,7 +532,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         parts.push({ label, note: 'item bonus', value: skillItem });
       }
       if (ability === 'str' || ability === 'dex') {
-        const acp = deriveArmorCheckPenalty(c, db);
+        const acp = deriveArmorCheckPenalty(c, db, ref.skill);
         if (acp.value) parts.push({ label: 'Armor check penalty', note: acp.source ?? undefined, value: acp.value });
       }
       const cond = conditionPart(c, ability, 'skill');

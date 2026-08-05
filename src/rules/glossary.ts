@@ -137,6 +137,32 @@ const TRAIT_GLOSSARY: Record<string, string> = {
   divine: 'Divine: the magical tradition channeled from deities and the Outer Planes.',
   occult: 'Occult: the magical tradition drawn from the mysteries of mind and spirit.',
   primal: 'Primal: the magical tradition drawn from nature and the wilds.',
+  // Armor and shield traits. Not one of these had an entry, so every armour trait chip in the game
+  // fell through to the generic "…interacts with anything that has this trait" non-description —
+  // including the 35 items carrying Bulwark, whose whole content is a rule the player must apply.
+  bulwark:
+    'Bulwark: on Reflex saves to avoid a damaging effect, such as a fireball, you add a +3 modifier INSTEAD of your Dexterity modifier. Above a +3 Dexterity modifier that is a net penalty.',
+  flexible: "Flexible: you don't apply this armor's check penalty to Acrobatics or Athletics checks.",
+  noisy: "Noisy: this armor's check penalty applies to Stealth checks even if you meet its required Strength modifier.",
+  comfort: 'Comfort: the armor is comfortable enough that you can rest normally while wearing it.',
+  hindering:
+    'Hindering: you take a -5 penalty to all your Speeds (minimum 5 feet), on top of the armor’s own Speed penalty — and it applies even if something lets you reduce or ignore that penalty.',
+  ponderous:
+    "Ponderous: you take a -1 penalty to initiative. If you don't meet the armor's required Strength modifier, the penalty becomes the armor's check penalty when that is worse.",
+  laminar:
+    'Laminar: while this armor is broken its status penalty to AC is -1 for medium or -2 for heavy, and none at all for light, rather than the usual broken penalty.',
+  'entrench-melee':
+    'Entrench (melee): if you are trained in this armor, you can spend a single action to gain a +1 circumstance bonus to AC against melee attacks until the start of your next turn.',
+  'entrench-ranged':
+    'Entrench (ranged): if you are trained in this armor, you can spend a single action to gain a +1 circumstance bonus to AC against ranged attacks until the start of your next turn.',
+  aquadynamic: "Aquadynamic: designed for underwater use — you don't take this armor's check penalty on Athletics checks to Swim.",
+  adjusted: 'Adjusted: the equipment comes with a permanent adjustment described in its entry, built in rather than added afterwards.',
+  barding: 'Barding: armor made for an animal. All animals are trained in barding, and it uses the animal’s statistics rather than yours.',
+  'deflecting-bludgeoning': "Deflecting (bludgeoning): increase this shield's Hardness against bludgeoning damage by 2.",
+  'deflecting-slashing': "Deflecting (slashing): increase this shield's Hardness against slashing damage by 2.",
+  'deflecting-physical-ranged': "Deflecting (physical ranged): increase this shield's Hardness against physical ranged attacks by 2.",
+  foldaway: 'Foldaway: the shield collapses onto a gauntlet, leaving that hand free until you spend an action to deploy it.',
+  harnessed: 'Harnessed: a brace designed to hold a lance or other jousting weapon while you are mounted.',
 };
 
 /** Languages of Golarion (Remaster naming). The import carries no language descriptions, so

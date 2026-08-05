@@ -408,9 +408,11 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
       ...conditionTypedMods(c.conditions, ability, 'skill'),
       ...modeTypedMods(c.activeModes, { kind: 'skill', detail: key }),
     ]);
-  // The worn armor's check penalty hits Strength- and Dexterity-based skills.
+  // The worn armor's check penalty hits Strength- and Dexterity-based skills — but which skills
+  // exactly is a per-skill question once armor traits are read: `flexible` exempts Acrobatics and
+  // Athletics, `noisy` forces it onto Stealth even when the Strength requirement is met.
   if (db && (ability === 'str' || ability === 'dex')) {
-    modifier += deriveArmorCheckPenalty(c, db).value;
+    modifier += deriveArmorCheckPenalty(c, db, key).value;
   }
   const own: StatLine = { rank, modifier };
   // "You can use your proficiency rank in Crafting for anything that requires a proficiency rank in
@@ -548,11 +550,19 @@ export interface ArmorCheckPenalty {
 
 /** The armor check penalty currently in effect: the worn armor's check penalty
  *  unless the wearer meets its Strength threshold (then 0). */
-export function deriveArmorCheckPenalty(c: Character, db: ContentDatabase): ArmorCheckPenalty {
+export function deriveArmorCheckPenalty(c: Character, db: ContentDatabase, skill?: ProficiencyKey): ArmorCheckPenalty {
   const worn = findWornArmor(c, db);
-  if (!worn || !worn.armor.checkPenalty || meetsArmorStrength(c, worn.armor)) {
+  if (!worn || !worn.armor.checkPenalty) return { value: 0, source: null };
+  const traits = worn.armor.traits ?? [];
+  // FLEXIBLE: "You don't apply its check penalty to Acrobatics or Athletics checks." Unconditional —
+  // it does not care whether you meet the armor's Strength requirement.
+  if (traits.includes('flexible') && (skill === 'acrobatics' || skill === 'athletics')) {
     return { value: 0, source: null };
   }
+  // NOISY: "The armor's check penalty applies to Stealth checks even if you have the required
+  // Strength modifier." The one case where meeting Strength does NOT clear the penalty.
+  const noisyStealth = traits.includes('noisy') && skill === 'stealth';
+  if (!noisyStealth && meetsArmorStrength(c, worn.armor)) return { value: 0, source: null };
   return { value: -Math.abs(worn.armor.checkPenalty), source: worn.armor.name };
 }
 
@@ -2819,6 +2829,19 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   if (total > 0) {
     for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
       if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - total);
+    }
+  }
+  // HINDERING armor: "You take a -5 penalty to all your Speeds (to a minimum of a 5-foot Speed).
+  // This is separate from and in addition to the armor's Speed penalty, and affects you even if your
+  // Strength or an ability lets you reduce or ignore the armor's Speed penalty."
+  //
+  // Which is why it is applied HERE and not folded into `armorPenalty`: it must survive both the
+  // Strength reduction above and Unburdened Iron's `ignoreArmor`, and its floor is 5 feet, not 0.
+  if ((worn?.armor.traits ?? []).includes('hindering')) {
+    for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
+      const v = speeds[k];
+      // A Speed already at or below the 5-foot floor is left alone — the floor is a floor, not a set.
+      if (v != null && v > 5) speeds[k] = Math.max(5, v - 5);
     }
   }
   return speeds;

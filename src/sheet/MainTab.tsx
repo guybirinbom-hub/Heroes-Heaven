@@ -160,7 +160,13 @@ export function MainTab({
   const skillKeys: ProficiencyKey[] = [...SKILLS, ...loreKeys];
   // These derivations are unchanged by the sheet's transient header state (XP draft, etc.); memoize
   // on [character, content] so a keystroke in the header doesn't re-run the whole strike/crit pipeline.
-  const acp = useMemo(() => deriveArmorCheckPenalty(character, content), [character, content]);
+  // PER SKILL, not one value for all of them: `flexible` armour exempts Acrobatics and Athletics
+  // while `noisy` armour keeps the penalty on Stealth even once you meet its Strength requirement.
+  // A single shared value made this badge disagree with the number deriveSkill had already produced.
+  const acpFor = useMemo(
+    () => (key: ProficiencyKey) => deriveArmorCheckPenalty(character, content, key),
+    [character, content],
+  );
   const strikes = useMemo(() => deriveStrikes(character, content), [character, content]);
   // Crit-spec sources the character has (class features, feats, subclass/doctrine), each with the
   // level it activates + any weapon restriction. A Strike shows its crit-spec effect only when a
@@ -615,6 +621,7 @@ export function MainTab({
         <div className="skills">
           {skillKeys.map((key) => {
             const d = deriveSkill(character, key, content);
+            const acp = acpFor(key);
             const penalized = acp.value < 0 && skillTakesArmorPenalty(key);
             // "You can use your proficiency rank in Crafting for anything that requires a proficiency
             // rank in Medicine." When that stand-in beats the skill's own number it IS the number the

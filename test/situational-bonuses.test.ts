@@ -11,8 +11,23 @@ describe('feat situational bonuses', () => {
     // list of four ids in one key. The obvious dead-id scan uses /[a-z0-9-]+/, which does not flag
     // those — it skips them, so they shipped silently and the scan reported zero problems. Assert the
     // SHAPE of the key, not just that it resolves.
-    const bad = Object.keys(FEAT_SITUATIONAL).filter((k) => !/^[a-z0-9-]+$/.test(k));
+    // `trait:<name>` is the one legal prefix — armour/shield traits are not records, so they cannot be
+    // keyed by a record id, and the namespace stops them ever colliding with one.
+    const bad = Object.keys(FEAT_SITUATIONAL).filter((k) => !/^(trait:)?[a-z0-9-]+$/.test(k));
     expect(bad, `malformed registry keys: ${bad.join(' | ')}`).toHaveLength(0);
+  });
+
+  it('every trait-keyed entry names a trait that actually ships on an item', () => {
+    // The same protection the dead-id scan gives record keys. A typo'd trait would be silently inert,
+    // which is precisely the failure this lane exists to fix.
+    const shipped = new Set<string>();
+    for (const i of Object.values(c.items)) {
+      if (i.itemType === 'armor' || i.itemType === 'shield') for (const t of i.traits ?? []) shipped.add(t);
+    }
+    const traitKeys = Object.keys(FEAT_SITUATIONAL).filter((k) => k.startsWith('trait:'));
+    expect(traitKeys.length).toBeGreaterThan(0);
+    const dead = traitKeys.filter((k) => !shipped.has(k.slice('trait:'.length)));
+    expect(dead, `trait entries matching no shipped armour/shield trait: ${dead.join(', ')}`).toHaveLength(0);
   });
 
   it('the registry is populated and well-formed', () => {
@@ -30,7 +45,8 @@ describe('feat situational bonuses', () => {
       c.feats, c.items, c.heritages, c.backgrounds, c.classFeatures, c.ancestries,
       c.animalCompanions, c.companionSpecializations,
     ];
-    const dead = ids.filter((id) => !cols.some((col) => col && col[id]));
+    // `trait:` keys are checked by their own test above — they name an armour trait, not a record.
+    const dead = ids.filter((id) => !id.startsWith('trait:') && !cols.some((col) => col && col[id]));
     expect(dead, `registry ids matching no record: ${dead.slice(0, 8).join(', ')}`).toHaveLength(0);
     for (const id of ids) {
       for (const b of FEAT_SITUATIONAL[id]) {

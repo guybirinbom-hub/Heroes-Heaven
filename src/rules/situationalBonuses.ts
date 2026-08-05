@@ -2988,6 +2988,42 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "wardens-endurance": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "on any Fortitude save", bonus: "a success is a critical success instead" }],
   "wild-willpower": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on any Will save", bonus: "a success is a critical success instead" }],
   "will-of-the-pupil": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on any Will save", bonus: "a success is a critical success instead" }],
+
+  /* ---- ARMOR AND SHIELD TRAITS ------------------------------------------------------------------
+   * Keyed `trait:<name>`, namespaced so a trait can never collide with a record id, and fed in by
+   * `characterSituationalIds` from the WORN armor/shield. Every armor trait in the game was inert:
+   * 35 items carry bulwark and nothing read it.
+   *
+   * Only the traits the engine CANNOT compute live here. flexible, noisy and hindering are real
+   * numbers in derive.ts and deliberately have no entry — a note beside a number that already moved
+   * would be telling the player something twice.
+   */
+
+  // "On Reflex saves to avoid a damaging effect, such as a fireball, you add a +3 modifier instead of
+  // your Dexterity modifier." A REPLACEMENT, so for a high-Dex character it is a PENALTY. It cannot
+  // be a computed number: the app never knows whether the incoming effect is a damaging one.
+  "trait:bulwark": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on Reflex saves against a damaging effect", bonus: "+3 instead of your Dexterity modifier" }],
+  // "you take a -1 penalty to initiative checks. If you don't meet the armor's required Strength
+  // modifier, this penalty increases to be equal to the armor's check penalty if it's worse."
+  // Initiative has no stat of its own here — it is rolled with Perception — so it lives on Perception.
+  "trait:ponderous": [{ targets: [{ kind: 'perception' }], when: "on initiative", bonus: "-1, or the armour's check penalty if that is worse" }],
+  // "The status penalty to AC if this armor is broken is -1 for broken medium armor, -2 for broken
+  // heavy armor, or no penalty for broken light armor." Worn armor has no broken state in the app.
+  "trait:laminar": [{ targets: [{ kind: 'ac' }], when: "while this armour is broken", bonus: "-1 medium, -2 heavy, none for light, instead of the usual penalty" }],
+  // "you can spend a single action to gain a +1 circumstance bonus to AC against a certain type of
+  // attack until the start of your next turn." An ACTION, not a passive — see the Entrench mode.
+  "trait:entrench-melee": [{ targets: [{ kind: 'ac' }], when: "after spending an action to Entrench, until your next turn", bonus: "+1 circumstance vs melee attacks" }],
+  "trait:entrench-ranged": [{ targets: [{ kind: 'ac' }], when: "after spending an action to Entrench, until your next turn", bonus: "+1 circumstance vs ranged attacks" }],
+  // Shield: "Increase the shield's Hardness against the listed type of attack by 2." Shield Hardness
+  // is a single number here, with no per-damage-type track.
+  "trait:deflecting-bludgeoning": [{ targets: [{ kind: 'ac' }], when: "when you Shield Block bludgeoning damage", bonus: "+2 Hardness" }],
+  "trait:deflecting-slashing": [{ targets: [{ kind: 'ac' }], when: "when you Shield Block slashing damage", bonus: "+2 Hardness" }],
+  "trait:deflecting-physical-ranged": [{ targets: [{ kind: 'ac' }], when: "when you Shield Block a physical ranged attack", bonus: "+2 Hardness" }],
+  // "This armor is designed for use underwater… you don't take its check penalty on Athletics checks
+  // to Swim." Environment-gated, so it stays a note rather than joining the flexible/noisy lane.
+  "trait:aquadynamic": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on Athletics checks to Swim", bonus: "no armour check penalty" }],
+  // "Raising a Shield with the hefty trait is a two-action activity instead of a single action."
+  "trait:hefty-2": [{ targets: [{ kind: 'ac' }], when: "when Raising this shield", bonus: "two actions instead of one, unless you meet its Strength requirement" }],
 };
 
 /** A StatRef, loosened so callers outside explain.ts can pass a plain object. */
