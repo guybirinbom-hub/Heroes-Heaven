@@ -53,6 +53,7 @@ import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod, choiceOwnedFeatureIds, classFeatureIdsOwned, profBonus } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
+import { applyCounterMods } from './counterMods';
 import { FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
 import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED } from './featFeatGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from './featPickGrants';
@@ -3228,7 +3229,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   if (ownsClass('commander')) {
     const maxTier = commanderMaxTier(level);
     const maxRank = TACTIC_TIER_RANK[maxTier];
-    const folioMax = commanderFolioMax(level);
+    // Tactical Expansion adds two and is repeatable; the formula alone could not be influenced.
+    const folioMax = applyCounterMods('commander-folio', commanderFolioMax(level), feats.map((f) => f.featId));
     const folio = (build.commanderTactics ?? [])
       .filter((id) => {
         const a = content.actions[id];

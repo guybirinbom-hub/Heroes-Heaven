@@ -58967,5 +58967,22 @@
       "perRank": 1,
       "restriction": "Only to cast one of your mystery’s granted spells, heightened to this rank."
     }
+  },
+  {
+    "category": "feats",
+    "id": "instinct-ability",
+    "field": "derivedGrant",
+    "value": {
+      "fromFeat": "barbarian-dedication"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "implement-initiate",
+    "field": "derivedGrant",
+    "value": {
+      "fromFeat": "thaumaturge-dedication",
+      "prefix": "initiate-benefit-"
+    }
   }
 ]

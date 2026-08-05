@@ -1282,6 +1282,18 @@ export function choiceOwnedFeatureIds(
     const id = db.classFeatures[fc.choice.value] ? fc.choice.value : fc.choice.value.replace(/^aon-/, '');
     if (db.classFeatures[id]) out.push(id);
   }
+  // "You gain the instinct ability for the instinct you chose for Barbarian Dedication." The record
+  // NAMING the benefit and the record HOLDING the choice are different records, and nothing connected
+  // them — so a family of archetype feats withheld the benefit of a pick already in the build.
+  const answerOf = (featId: string) => feats.find((f) => f.featId === featId)?.choice?.value;
+  for (const fc of feats) {
+    const d = db.feats[fc.featId]?.derivedGrant;
+    if (!d) continue;
+    const answer = answerOf(d.fromFeat);
+    if (!answer) continue; // the dedication is not taken, or its choice is unanswered — grant nothing
+    const id = `${d.prefix ?? ''}${answer.replace(/^aon-/, '')}${d.suffix ?? ''}`;
+    if (db.classFeatures[id]) out.push(id);
+  }
   return out;
 }
 

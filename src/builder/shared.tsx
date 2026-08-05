@@ -40,6 +40,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
 import { activeCasterArchetype } from '../rules/casterArchetypes';
 import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY } from '../rules/snareFormulas';
+import { snareAllowanceFor } from '../rules/counterMods';
 import {
   abilityMod,
   deriveAc,
@@ -1816,7 +1817,8 @@ export function SnareFormulasCard({ build, actions, content, character }: Editor
   // Rangers "use Survival instead of Crafting for all functions of feats from this archetype" — so their
   // formula book scales off whichever of the two is higher.
   const drivingRank = isRanger ? higher(craftingRank, survivalRank) : craftingRank;
-  const { known, prepared } = snareAllowance(drivingRank);
+  // Plentiful Snares doubles what you can prepare; the formula alone could not be influenced.
+  const { known, prepared } = snareAllowanceFor(drivingRank, character.feats.map((f) => f.featId), snareAllowance);
   const chosen = build.extraChoices?.[SNARE_FORMULA_KEY] ?? [];
   const setAt = (idx: number, id: string) => {
     const next = [...chosen];

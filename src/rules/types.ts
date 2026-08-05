@@ -334,6 +334,24 @@ export interface WeaponRider {
 }
 
 export interface DefenseGrants {
+  /**
+   * "You gain the instinct ability for the instinct you chose for Barbarian Dedication." The answer
+   * was recorded when the DEDICATION was taken; this record just needs to dereference it.
+   *
+   * A whole family of archetype feats reads this way — the implement's initiate benefit, the
+   * Hellknight order's greater benefit — and each was inert, because the record naming the benefit
+   * and the record holding the choice are different records and nothing connected them.
+   *
+   * Resolving it OWNS the resulting class feature, so its defences, effect choices and situational
+   * stars all apply with no further plumbing.
+   */
+  derivedGrant?: {
+    /** The feat whose embedded choice holds the answer. */
+    fromFeat: string;
+    /** How the answer becomes a record id: `initiate-benefit-` + `chalice`. */
+    prefix?: string;
+    suffix?: string;
+  };
   /** Spells this record gives ACCESS to — see SpellAccessGrant. An array because one record can widen
    *  the list AND grant into a repertoire, and those are different promises. */
   spellListAdditions?: SpellAccessGrant | SpellAccessGrant[];
