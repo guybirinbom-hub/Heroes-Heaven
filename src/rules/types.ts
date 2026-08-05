@@ -873,6 +873,19 @@ export interface Background extends ContentBase {
   /** A "choose one of N" this record asks at build time; resolved by buildCharacter and rendered
    *  by the shared EffectChoicesPicker. */
   effectChoices?: EffectChoice[];
+  /**
+   * The background's own embedded sub-choice — "an Ancestry Lore of your choice", "Guild Lore or
+   * Heraldry Lore", "a skill of your choice".
+   *
+   * 71 backgrounds carry one and the field was not declared here at all, so nothing rendered it and
+   * nothing read it: every one of those backgrounds asked a question no player was shown. Stored
+   * under `featChoices['background:<id>']`, the same convention as a class feature's `feature:<id>`.
+   */
+  choice?: FeatChoiceDef;
+  /** An authored note about something in this record the app cannot model. Collected for feats,
+   *  heritages, class features and items but not backgrounds, so the one background carrying one
+   *  warned nobody. */
+  dataWarning?: string;
   abilityBoosts: AbilityBoost[];
   /** Innate spells the background grants outright — Blessed gives Guidance, Astrological Augur gives
    *  Augury. buildCharacter reads these alongside the heritage's; before that they were inert. */
@@ -2596,7 +2609,10 @@ export interface Character {
    * situational bonuses reach the sheet. It is optional only for characters saved before it existed;
    * those still round-trip through the by-name reverse map in `buildFromCharacter`.
    */
-  classChoices?: { group: string; name: string; description: string; level: number; id?: string }[];
+  /** `descRefs` carries the row's cross-reference links. They were dropped when these rows were
+   *  built, so every link inside a bloodline / mystery / implement / apparition description rendered
+   *  as plain text — 1,199 of them across the choice options. */
+  classChoices?: { group: string; name: string; description: string; level: number; id?: string; descRefs?: DescRef[] }[];
   /** Chosen key attribute (matters for classes that offer a choice, e.g. Str/Dex). */
   keyAbility: AbilityId | null;
   /** Optional variant rules this character opted into. */

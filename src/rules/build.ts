@@ -333,6 +333,35 @@ export function emptyCustomBackground(): CustomBackground {
  *  build's custom ("deep") background — so every consumer treats them identically. */
 /** The feat ids a background grants, normalised. `grantedFeatId` is usually a single string, but Eagle
  *  Hunter and Returned each grant a PAIR of feats and a bare string read dropped the second one. */
+/** The storage key for a background's own sub-choice — the sibling of `feature:<id>`. */
+export const backgroundChoiceKey = (backgroundId: string) => `background:${backgroundId}`;
+
+/** The player's answer to a background's sub-choice, defaulting to the first option so an unanswered
+ *  build is still legal — the same default every other choice in the builder takes. */
+export function backgroundChoiceValue(build: BuildState, bg: Background | undefined): string | undefined {
+  if (!bg?.choice) return undefined;
+  const stored = build.featChoices?.[backgroundChoiceKey(bg.id)];
+  return stored || bg.choice.options?.[0]?.value;
+}
+
+/**
+ * What a background's sub-choice ANSWER does, decided by what it is rather than by a table of the
+ * 40-odd `flag` names in the data — a table would be right today and wrong the moment one is added.
+ *
+ * 'other' is a real answer, not a failure: a terrain, a constellation, a deviant classification have
+ * no sheet number, and recording the pick is the whole of what the record asks for.
+ */
+export function backgroundChoiceKind(def: FeatChoiceDef, content: ContentDatabase): 'skill' | 'lore' | 'feat' | 'other' {
+  if (def.kind === 'skills') return 'skill';
+  const opts = def.options ?? [];
+  if (!opts.length) return 'other';
+  const loreish = /lore/i.test(def.prompt ?? '') || /lore/i.test(def.flag ?? '') || opts.every((o) => /lore/i.test(o.label ?? ''));
+  if (loreish) return 'lore';
+  if (opts.every((o) => (SKILLS as readonly string[]).includes(o.value))) return 'skill';
+  if (opts.every((o) => content.feats[o.value])) return 'feat';
+  return 'other';
+}
+
 export function backgroundGrantedFeats(bg: Background | undefined, skillChoice?: SkillId | null): string[] {
   // A background whose feat depends on the skill you chose ("If you selected Performance… if you
   // chose Society…") replaces the flat grant entirely — otherwise a Society pick would still hand
@@ -1522,6 +1551,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const bgTrainedSkill = backgroundTrainedSkill(build, background);
   if (bgTrainedSkill) (skills[bgTrainedSkill] = 'trained'), locked.add(bgTrainedSkill);
   if (background?.trainedLore) skills[`lore:${background.trainedLore}`] = 'trained';
+  // The BACKGROUND's own embedded sub-choice ("an Ancestry Lore of your choice", "Guild Lore or
+  // Heraldry Lore", "a skill of your choice"). 71 backgrounds carry one, the field was not even
+  // declared, and nothing rendered or read it — so every one asked a question nobody was shown.
+  // What the answer DOES is decided by what it IS, not by a per-flag lookup table: a skill trains
+  // that skill, a Lore trains that Lore, a feat is granted below, anything else is recorded and
+  // displayed. Nothing is invented for the 17 whose answer has no sheet number (a terrain, a
+  // constellation, a deviant classification) — being asked and having the answer kept IS the fix.
+  if (background?.choice) {
+    const picked = backgroundChoiceValue(build, background);
+    if (picked) {
+      const kind = backgroundChoiceKind(background.choice, content);
+      if (kind === 'lore') (skills[loreKey(picked)] = 'trained'), locked.add(loreKey(picked));
+      else if (kind === 'skill' && (SKILLS as readonly string[]).includes(picked)) {
+        (skills[picked as SkillId] = 'trained'), locked.add(picked as SkillId);
+      }
+    }
+  }
   // "Legal Lore OR Underworld Lore": two NAMED subjects, so the answer is one of them rather than
   // free text. Unpicked defaults to the first, as every other unanswered choice in the builder does.
   const loreOptions = background?.trainedLoreOptions ?? [];
@@ -2330,8 +2376,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // taken once, so dedup by id (the granted feat wins over a duplicate pick).
   const feats: FeatChoice[] = [];
   const takenFeats = new Set<string>();
+  // A background whose own sub-choice IS the feat ("Multilingual or Assurance") — four of them.
+  // Read through the same classifier the skill/Lore branch uses, so one place decides what a
+  // background's answer means.
+  const bgChoiceFeat = (() => {
+    if (!background?.choice || backgroundChoiceKind(background.choice, content) !== 'feat') return undefined;
+    const v = backgroundChoiceValue(build, background);
+    return v && content.feats[v] ? v : undefined;
+  })();
   // Eagle Hunter and Returned each grant TWO feats; iterating is what stopped the second being lost.
-  for (const bgFeatId of backgroundGrantedFeats(background, build.backgroundSkillChoice)) {
+  for (const bgFeatId of [...backgroundGrantedFeats(background, build.backgroundSkillChoice), ...(bgChoiceFeat ? [bgChoiceFeat] : [])]) {
+    if (takenFeats.has(bgFeatId)) continue;
     // The granted feat's OWN sub-choice travels with it. Without this the feat arrived and its subject
     // did not: Abadar's Avenger grants "Assurance with Religion", and the sheet could only render a
     // bare "Assurance" because nothing carried the skill. Read from grantedFeatChoices — the slot the
@@ -3021,6 +3076,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (cf?.spellcastingGrant) spellcastingGrants.push(cf.spellcastingGrant);
     if (cf?.spellSlotBonus) spellSlotBonuses.push(cf.spellSlotBonus);
   }
+  // A HERITAGE can grant a casting profile too (Spellhorn Kobold: trained arcane, Charisma). Only
+  // feats and class features were scanned, so the one heritage carrying it granted nothing.
+  for (const hid of [build.heritageId, secondHeritageId]) {
+    const h = hid ? content.heritages[hid] : undefined;
+    if (h?.spellcastingGrant) spellcastingGrants.push(h.spellcastingGrant);
+    if (h?.spellSlotBonus) spellSlotBonuses.push(h.spellSlotBonus);
+  }
   // Invested items can grant extra slots too (Endless Grimoire, Sin Reservoir).
   for (const inv of build.inventory) {
     if (!inv.invested) continue;
@@ -3069,6 +3131,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   if (build.heritageId && content.heritages[build.heritageId]?.dataWarning) effectWarnings.push({ source: content.heritages[build.heritageId].name, message: content.heritages[build.heritageId].dataWarning! });
   for (const fid of ownedFeatureIds) if (content.classFeatures[fid]?.dataWarning) effectWarnings.push({ source: content.classFeatures[fid].name, message: content.classFeatures[fid].dataWarning! });
   for (const inv of build.inventory) if (content.items[inv.itemId]?.dataWarning) effectWarnings.push({ source: content.items[inv.itemId].name, message: content.items[inv.itemId].dataWarning! });
+  // The BACKGROUND and the SECOND heritage were the two gaps in this collector — an authored warning
+  // that never reaches the player is the same as no warning at all.
+  if (background?.dataWarning) effectWarnings.push({ source: background.name, message: background.dataWarning });
+  if (secondHeritageId && content.heritages[secondHeritageId]?.dataWarning) {
+    effectWarnings.push({ source: content.heritages[secondHeritageId].name, message: content.heritages[secondHeritageId].dataWarning! });
+  }
   // Items: the picked option's `passive` (item bonuses) is applied while the item is worn.
   for (const inv of build.inventory) {
     resolvePick(inv.itemId, content.items[inv.itemId]?.effectChoices, (g) => {
@@ -3369,12 +3437,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
 
   // Resolve the subclass + extra-choice picks (bloodline, ikons, apparitions, …) for
   // display on the sheet, so the choices are visible character abilities.
-  const classChoices: { group: string; name: string; description: string; level: number; id?: string }[] = [];
+  // Typed off Character so the row shape cannot drift from what the sheet renders — a local literal
+  // is what silently dropped `descRefs` and left 1,199 cross-reference links dead.
+  const classChoices: NonNullable<Character['classChoices']> = [];
   if (cls?.subclass && subOption)
-    classChoices.push({ group: cls.subclass.name, name: subOption.name, description: subOption.description, level: 1, id: subOption.id });
+    classChoices.push({ group: cls.subclass.name, name: subOption.name, description: subOption.description, level: 1, id: subOption.id, descRefs: subOption.descRefs });
   // Dual Class: also record the second class's subclass.
   if (cls2?.subclass && subOption2)
-    classChoices.push({ group: cls2.subclass.name, name: subOption2.name, description: subOption2.description, level: 1, id: subOption2.id });
+    classChoices.push({ group: cls2.subclass.name, name: subOption2.name, description: subOption2.description, level: 1, id: subOption2.id, descRefs: subOption2.descRefs });
   // Extra-choice picks from BOTH classes (element/apparition/subconscious-mind/bloodline/…). The id
   // rides along so the sheet can treat a pick as an OWNED class feature rather than a display row —
   // that is what makes a thaumaturge's chosen implement or an exemplar's ikon actually do something.
@@ -3386,7 +3456,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // The level of the SLOT, not of the group: a thaumaturge's second implement arrives at 5 and
         // the third at 15, so stamping every pick with the group's entry level would make them all
         // count as owned from level 1.
-        if (o) classChoices.push({ group: g.name, name: o.name, description: o.description, level: extraPickLevel(g, i), id: o.id });
+        if (o) classChoices.push({ group: g.name, name: o.name, description: o.description, level: extraPickLevel(g, i), id: o.id, descRefs: o.descRefs });
       }
     }
   }
@@ -3401,7 +3471,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const pushBenefit = (tier: 'initiate' | 'adept' | 'paragon', imp: string, level: number) => {
       const rec = content.classFeatures[`${tier}-benefit-${imp}`];
       if (rec && !classChoices.some((x) => x.id === rec.id)) {
-        classChoices.push({ group: 'Implement benefit', name: rec.name, description: rec.description, level, id: rec.id });
+        classChoices.push({ group: 'Implement benefit', name: rec.name, description: rec.description, level, id: rec.id, descRefs: rec.descRefs });
       }
     };
     if (impGroup) for (let i = 0; i < imps.length; i++) pushBenefit('initiate', imps[i], extraPickLevel(impGroup, i));

@@ -44637,14 +44637,6 @@
   },
   {
     "category": "feats",
-    "id": "open-mind",
-    "field": "passiveEffects",
-    "value": {
-      "loreBonus": 1
-    }
-  },
-  {
-    "category": "feats",
     "id": "endless-memories",
     "field": "choice",
     "value": {
@@ -64862,5 +64854,11 @@
         "level": 1
       }
     ]
+  },
+  {
+    "category": "feats",
+    "id": "open-mind",
+    "field": "passiveEffects",
+    "value": null
   }
 ]

@@ -151,6 +151,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       traits: [],
       groupLabel: c.group,
       description: c.description,
+      // Without these every cross-reference inside a bloodline / mystery / implement / apparition
+      // description rendered as plain text — 1,199 dead links across the choice options.
+      descRefs: c.descRefs,
       isFeature: true,
       bucket: 'Class',
     });

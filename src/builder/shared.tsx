@@ -32,6 +32,11 @@ import {
   resolveBackground,
   subclassKeyAbility,
   backgroundGrantedFeats,
+  backgroundChoiceKey,
+  backgroundChoiceKind,
+  backgroundChoiceValue,
+  featChoicePrompt,
+  trainedSkillOptions,
   chosenFromBooks,
   removeChosenIds,
 } from '../rules/build';
@@ -2614,6 +2619,33 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             value={build.backgroundLore ?? ''}
             onChange={(e) => actions.patch({ backgroundLore: e.target.value })}
           />
+        </SubCard>
+      )}
+      {/* The background's OWN embedded sub-choice — "an Ancestry Lore of your choice", "Guild Lore
+          or Heraldry Lore", "a skill of your choice". 71 backgrounds carry one and `choice` was not
+          declared on the Background type at all, so every one of them asked a question no player was
+          ever shown. What the answer does is decided by backgroundChoiceKind, in the rules layer. */}
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && background.choice && (
+        <SubCard icon="ti-adjustments" label={featChoicePrompt(background.choice.prompt, background.choice.flag)}>
+          <PopupSelect
+            title={featChoicePrompt(background.choice.prompt, background.choice.flag)}
+            placeholder="Choose…"
+            value={backgroundChoiceValue(build, background) ?? ''}
+            onChange={(v) =>
+              actions.patch({ featChoices: { ...build.featChoices, [backgroundChoiceKey(background.id)]: v } })
+            }
+            options={
+              background.choice.kind === 'skills'
+                ? trainedSkillOptions(buildCharacter(build, content), background.choice.minRank ?? 'trained')
+                : (background.choice.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description }))
+            }
+          />
+          {/* An answer with no sheet number (a terrain, a constellation, a deviant classification)
+              is RECORDED rather than silently dropped — being asked is the whole of what the record
+              wants. Say so, so the player is not left wondering what it changed. */}
+          {backgroundChoiceKind(background.choice, content) === 'other' && (
+            <p className="confirm-note">Recorded on your sheet; this choice has no number of its own.</p>
+          )}
         </SubCard>
       )}
       {showCustomBg && build.backgroundId === CUSTOM_BACKGROUND_ID && (

@@ -1237,6 +1237,36 @@ export function Builder({
                               const def = content.classFeatures[build.subclassId!]?.choice;
                               return def && !def.daily ? renderChoice(def, `feature:${build.subclassId}`) : null;
                             })()}
+                          {/* …and its effectChoices, for the same reason. build.ts resolves these
+                              (resolvePick over grantOptions) and the picker was mounted only for
+                              features in `cls.features`, so the mastermind's, the runelord's and the
+                              palatine detective's picks were resolved from an answer nobody gave. */}
+                          {cls?.subclass && subAnchorId && build.subclassId && (
+                            <EffectChoicesPicker
+                              recordId={build.subclassId}
+                              choices={content.classFeatures[build.subclassId]?.effectChoices}
+                              build={build}
+                              actions={actions}
+                              content={content}
+                            />
+                          )}
+                          {/* Extra-choice picks (kineticist gates, thaumaturge implements, animist
+                              apparitions…) carry them too — the four elemental gates ask which
+                              damage type, and nothing asked. */}
+                          {subAnchorId &&
+                            Object.values(build.extraChoices ?? {})
+                              .flat()
+                              .filter((oid) => content.classFeatures[oid]?.effectChoices?.length)
+                              .map((oid) => (
+                                <EffectChoicesPicker
+                                  key={`ec-${oid}`}
+                                  recordId={oid}
+                                  choices={content.classFeatures[oid]!.effectChoices}
+                                  build={build}
+                                  actions={actions}
+                                  content={content}
+                                />
+                              ))}
                           {/* School of Unified Magical Theory (Player Core): grants a BONUS 1st-level
                               wizard class feat (an extra class-feat slot) — pick it here. */}
                           {isUmtSchool && subAnchorId && lvl === 1 && (
