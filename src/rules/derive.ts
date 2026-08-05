@@ -848,7 +848,12 @@ export function deriveShield(c: Character, db: ContentDatabase): ShieldInfo | nu
   // A reinforcing rune (or a Monster-Parts refined shield, Table 4C) raises the shield's
   // Hardness/HP/Broken Threshold. A refined shield ignores runes and uses its refinement stats instead.
   const rein = mpActive(c, held.inv) ? undefined : (held.inv.runes as ArmorRunes | undefined)?.reinforcing;
-  const r = rein ? REINFORCING[rein] : undefined;
+  // A record can supply the tier from the CHARACTER instead of an etched rune — Blessed Shield: "In
+  // your hands, a shield gains the minor Reinforcing rune… the reinforcing rune of your level." The
+  // tier could only ever come from `inv.runes`, so the champion's shield gained nothing. Folded into
+  // the same max() below, so an actually-etched better rune still wins.
+  const byLevel = mpActive(c, held.inv) ? undefined : levelReinforcingTier(c, db);
+  const r = REINFORCING[Math.max(rein ?? 0, byLevel ?? 0)];
   const ref = mpActive(c, held.inv) ? mpShieldRefine(held.inv.monsterPart, c.level) : null;
   // Guard every shield stat against a data-incomplete item (missing hardness/hp/BT/acBonus) so the
   // shield block — and the AC breakdown that reads it — can never compute NaN.
@@ -857,6 +862,20 @@ export function deriveShield(c: Character, db: ContentDatabase): ShieldInfo | nu
   const brokenThreshold = Math.max(s.brokenThreshold ?? 0, r?.bt ?? 0, ref?.bt ?? 0);
   const current = Math.max(0, hp - Math.max(0, c.shieldDamage ?? 0));
   return { name: s.name, ac: s.acBonus ?? 0, hardness, hp, brokenThreshold, current, broken: current <= brokenThreshold };
+}
+
+/**
+ * The reinforcing tier a RECORD gives the character's held shield, from their level.
+ *
+ * "the reinforcing rune of your level (lesser at 7th, moderate at 10th, greater at 13th, major at
+ * 16th, and supreme at 19th)" — the printed table, and the same one for any record that says this.
+ */
+function levelReinforcingTier(c: Character, db: ContentDatabase): number | undefined {
+  const grants =
+    (c.feats ?? []).some((f) => db.feats[f.featId]?.shieldReinforcingByLevel) ||
+    [...ownedFeatureIds(c, db)].some((id) => db.classFeatures[id]?.shieldReinforcingByLevel);
+  if (!grants) return undefined;
+  return c.level >= 19 ? 6 : c.level >= 16 ? 5 : c.level >= 13 ? 4 : c.level >= 10 ? 3 : c.level >= 7 ? 2 : 1;
 }
 
 /** Reinforcing-rune tiers → the shield Hardness/HP/Broken-Threshold maximum each sets. */

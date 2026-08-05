@@ -65372,5 +65372,11 @@
     "id": "enlarged-chassis",
     "field": "reach",
     "value": 10
+  },
+  {
+    "category": "classFeatures",
+    "id": "blessed-shield",
+    "field": "shieldReinforcingByLevel",
+    "value": true
   }
 ]

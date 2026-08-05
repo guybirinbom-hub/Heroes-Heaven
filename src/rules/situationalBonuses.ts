@@ -1003,6 +1003,13 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "bitter-taste-of-betrayal": [{ targets: [{ kind: 'ac' }], when: "against attacks from creatures you consider an ally or that are undetected by you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'fortitude' }], when: "against effects from creatures you consider an ally or that are undetected by you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "against effects from creatures you consider an ally or that are undetected by you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'will' }], when: "against effects from creatures you consider an ally or that are undetected by you…", bonus: "+2 circumstance" }],
   "think-twice": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack, when a frightened creature attacks you (reaction; once per creature per day)", bonus: "+4 circumstance" }],
   "aquatic-pirouette": [{ targets: [{ kind: 'ac' }], when: "while underwater, against the triggering ranged attack from an attacker you can see (reaction)", bonus: "+2 circumstance" }],
+  // "If you're underwater, you have cover against creatures outside of the water." Cover is +2
+  // circumstance to AC.
+  // The feat's SECOND clause is deliberately NOT modelled: it grants Underwater Marauder and Water
+  // Sprint "as soon as you meet the prerequisites for" each, and Water Sprint is a 7th-level feat
+  // needing master Athletics — a plain grant would hand a 2nd-level monk a feat they cannot legally
+  // have. The player takes them when they qualify; over-granting is worse than the gap.
+  "student-of-water": [{ targets: [{ kind: 'ac' }], when: "while underwater, against creatures outside the water (cover)", bonus: "+2 circumstance" }],
   "pass-vengeful-judgment": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "for 1 month after you spend a Mythic Point on Pass Vengeful Judgment…", bonus: "+2 status" }],
   "trailblazing-stride": [{ targets: [{ kind: 'speed' }], when: "for the rest of your turn, after you succeed at a Recall Knowledge check about an animal…", bonus: "+10-foot circumstance" }],
   "emboldened-with-glorious-purpose": [{ targets: [{ kind: 'save', detail: 'will' }], when: "after you Consult the Spirits, until your next daily preparations", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'will' }], when: "after you Consult the Spirits, until your next daily preparations, against emotion and fear effects", bonus: "+2 status" }],

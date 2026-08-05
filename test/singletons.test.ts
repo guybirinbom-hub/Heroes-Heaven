@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
-import { deriveDefenses } from '../src/rules/derive';
+import { deriveDefenses, deriveShield } from '../src/rules/derive';
 
 /**
  * Singletons — records whose entire content is one thing the app could not say.
@@ -68,5 +68,40 @@ describe('Enlarged Chassis', () => {
     expect(db.feats['enlarged-chassis'].description).toMatch(/no longer clumsy/i);
     const c = auto({ featPicks: { '13:ancestry': 'enlarged-chassis' } });
     expect(c.conditions.some((x) => x.id === 'clumsy')).toBe(false);
+  });
+});
+
+describe('Blessed Shield', () => {
+  const shieldId = Object.entries(db.items).find(([, i]) => i.itemType === 'shield')![0];
+  const champ = (level: number, blessed: boolean) => {
+    const c = build('champion', level, {
+      deityId: 'iomedae',
+      ...(blessed ? { extraChoices: { blessing: ['blessed-shield'] } } : {}),
+    });
+    return { ...c, inventory: [{ instanceId: 's', itemId: shieldId, quantity: 1, worn: true, equipped: true }] } as typeof c;
+  };
+
+  it('the record says the rune tracks your level', () => {
+    expect(db.classFeatures['blessed-shield'].shieldReinforcingByLevel).toBe(true);
+    expect(db.classFeatures['blessed-shield'].description).toMatch(/reinforcing rune of your level/i);
+  });
+
+  it('a plain shield is unchanged', () => {
+    const s = deriveShield(champ(13, false), db)!;
+    expect(s.hardness).toBe(db.items[shieldId].hardness ?? 0);
+  });
+
+  it('a blessed one follows the printed table', () => {
+    // minor@1, lesser@7, moderate@10, greater@13, major@16, supreme@19.
+    expect(deriveShield(champ(3, true), db)!.hardness).toBe(8);
+    expect(deriveShield(champ(7, true), db)!.hardness).toBe(10);
+    expect(deriveShield(champ(13, true), db)!.hardness).toBe(15);
+    expect(deriveShield(champ(19, true), db)!.hardness).toBe(20);
+  });
+
+  it('an etched rune that is BETTER still wins — the record sets a floor', () => {
+    const c = champ(3, true);
+    c.inventory[0].runes = { reinforcing: 6 } as never;
+    expect(deriveShield(c, db)!.hardness).toBe(20);
   });
 });

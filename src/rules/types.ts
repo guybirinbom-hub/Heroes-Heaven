@@ -567,6 +567,14 @@ export interface DefenseGrants {
   /** "You can breathe underwater." A permanent capability with no number — it is not a sense, not
    *  a speed, and not a resistance, so it had no home and the records saying it did nothing. */
   breathesWater?: boolean;
+  /**
+   * "In your hands, a shield gains the minor Reinforcing rune… the reinforcing rune of your level."
+   *
+   * The shield block already takes the best of the shield's own Hardness/HP/BT and its etched rune's,
+   * so this only has to supply a TIER — but nothing could derive one from the CHARACTER rather than
+   * from an etched rune, so Blessed Shield gave a champion's shield nothing at all.
+   */
+  shieldReinforcingByLevel?: boolean;
   /** True when this feature/feat grants weapon critical specialization (a CriticalSpecialization
    *  rule element). Drives whether Strikes show their critical-specialization effect. */
   critSpec?: boolean;
