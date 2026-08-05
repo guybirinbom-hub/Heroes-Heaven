@@ -432,7 +432,22 @@ export interface DefenseGrants {
   classDcGrant?: { classId: string };
   /** Effects that apply ONLY while a signature resource STATE is active (Raging Resistance: resistance
    *  while raging; Raging Athlete: climb/swim while raging). Gated on the character's live toggle. */
-  whileActive?: { state: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche'; resistances?: IwrEntry[]; senses?: SenseEntry[]; immunities?: string[]; speeds?: SpeedGrants }[];
+  whileActive?: {
+    state: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche';
+    resistances?: IwrEntry[];
+    /** Ligneous Instinct's bark-like flesh: the same clause that resists piercing and slashing also
+     *  grants weakness to fire. A benefit block that could only ever help would have dropped it. */
+    weaknesses?: IwrEntry[];
+    senses?: SenseEntry[];
+    immunities?: string[];
+    speeds?: SpeedGrants;
+    /** Wooden Rage's −10 ft, which applies only while the state is on. */
+    speedPenalty?: number;
+    /** The character level this clause starts at. Raging Resistance is a 9th-level class feature
+     *  whose damage types are printed on an INSTINCT chosen at 1st — so without a gate the instinct
+     *  would hand a 1st-level barbarian a 9th-level defence. */
+    minLevel?: number;
+  }[];
   /** This feat/heritage raises the character to at least this SIZE (Jotun's Heart → Large). */
   sizeOverride?: Size;
   /** Natural reach in feet this feat/heritage grants (Jotun's Heart: 10). Highest wins. */
@@ -574,6 +589,11 @@ export interface EffectGrant {
   focusPoolBonus?: number;
   /** Item-only: worn/invested item bonuses of the chosen kind. */
   passive?: ItemPassiveEffects;
+  /** The chosen benefit applies ONLY while a state is on. Giant Instinct's Raging Resistance covers
+   *  "bludgeoning and your choice of cold, electricity, or fire" — resolved picks otherwise land in
+   *  `chosenEffects`, which deriveDefenses applies unconditionally, so the pick would have granted a
+   *  permanent resistance to a barbarian who was not raging and had not yet reached 9th level. */
+  whileActive?: DefenseGrants['whileActive'];
 }
 
 /** A "choose one of N" the player resolves in the builder. Either an explicit `options` list, or a
@@ -855,7 +875,13 @@ export interface FeatChoiceDef {
   kind: 'domains' | 'array' | 'skills' | 'text' | 'open';
   /** For 'open': what the player is choosing from. */
   from?: OpenChoiceFrom;
-  options?: { value: string; label: string; description?: string }[];
+  /**
+   * `grant` is what the answer DOES. Without it a daily choice was recorded and nothing more: 67
+   * records collected an answer at rest and the sheet never changed, so "habituate your skin against
+   * this type of injury" read as a note rather than a resistance. Build-time picks have carried a
+   * grant since the start (EffectChoice.options); this is the same shape for the nightly ones.
+   */
+  options?: { value: string; label: string; description?: string; grant?: EffectGrant }[];
   /**
    * Why this pick is RECORDED but grants nothing mechanical. Shown to the player next to the choice.
    * Two shapes, both agreed with the owner rather than guessed:
@@ -1734,6 +1760,11 @@ export interface ModeDef {
   /** Speeds granted while the mode is on — "a fly Speed of 40 feet for 1 minute". Consumed by
    *  deriveSpeeds alongside the heritage/feat/item grant sources. */
   speeds?: SpeedGrants;
+  /** Unarmed Strikes the mode grants for as long as it is on — Invoke Offense's 1d8 spirit brawling
+   *  attack, which lasts "for the duration of your spirit trance". A stance could already do this;
+   *  a mode could not, so a toggle whose whole content was "you gain an attack" had nowhere to put
+   *  it. Applied exactly where the active stance's strikes are, so they scale identically. */
+  grantedStrikes?: StanceStrike[];
   /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
    *  universal (every character on this device). Catalog/predefined modes never set this. */
   charId?: string;
@@ -1766,6 +1797,10 @@ export interface StanceStrike {
   damageType: string;
   group?: string;
   traits: string[];
+  /** A granted attack that gains striking runes by LEVEL rather than from handwraps — "at 5th level
+   *  this unarmed attack gains the benefits of a striking rune, at 12th greater, at 20th major".
+   *  Highest qualifying entry wins, and it is a FLOOR: real handwraps still beat it if better. */
+  strikingByLevel?: { level: number; extraDice: number }[];
 }
 /** The mechanical effects of a stance (extracted from its rules text; keyed by feat/action slug in
  *  ContentDatabase.stances). Only one stance is active at a time (Character.activeStance). */

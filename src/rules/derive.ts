@@ -22,7 +22,10 @@ import type {
   DieSize,
   Item,
   WeaponItem,
+  EffectGrant,
+  FeatChoiceDef,
   SenseEntry,
+  StanceStrike,
   ProficiencyKey,
   ProficiencyRank,
   SaveId,
@@ -477,11 +480,71 @@ export function activeStateGrants(c: Character, db: ContentDatabase): NonNullabl
   const out: NonNullable<DefenseGrants['whileActive']> = [];
   const on = (state: string) => (c.classResources?.[state] ?? 0) > 0;
   const scan = (g: DefenseGrants | undefined) => {
-    for (const wa of g?.whileActive ?? []) if (on(wa.state)) out.push(wa);
+    // minLevel: an instinct is chosen at 1st but prints the damage types for Raging Resistance, a
+    // 9th-level feature. Without the gate a 1st-level barbarian would rage with a 9th-level defence.
+    for (const wa of g?.whileActive ?? []) if (on(wa.state) && c.level >= (wa.minLevel ?? 0)) out.push(wa);
   };
   for (const f of c.feats) scan(db.feats[f.featId]);
   if (c.heritageId) scan(db.heritages[c.heritageId]);
   for (const fid of ownedFeatureIds(c, db)) scan(db.classFeatures[fid]);
+  // A resolved PICK may itself be state-gated — Giant Instinct's "your choice of cold, electricity,
+  // or fire" is part of Raging Resistance, not a standing benefit.
+  scan(c.chosenEffects);
+  return out;
+}
+
+/** `${recordId}:${flag}` — the one place this key is spelled, so callers can't drift. */
+export const dailyChoiceKey = (recordId: string, flag: string) => `${recordId}:${flag}`;
+
+/**
+ * Records that can carry a DAILY-PREPARATIONS choice, in the order the Rest sheet lists them.
+ *
+ * Lives here, not in dailyChoices.ts, because deriveDefenses needs the same walk to turn this
+ * morning's answers into grants and derive.ts must not import back out — it is imported by nearly
+ * everything, and a cycle through it has already produced phantom ReferenceErrors under HMR.
+ */
+export function ownedDailyChoiceRecords(
+  c: Character,
+  db: ContentDatabase,
+): { id: string; name: string; choice?: FeatChoiceDef }[] {
+  const out: { id: string; name: string; choice?: FeatChoiceDef }[] = [];
+  const push = (id: string | null | undefined, bucket: Record<string, { name: string; choice?: FeatChoiceDef }> | undefined) => {
+    if (!id || !bucket) return;
+    const r = bucket[id];
+    if (r) out.push({ id, name: r.name, choice: r.choice });
+  };
+  for (const f of c.feats ?? []) push(f.featId, db.feats as never);
+  for (const id of ownedFeatureIds(c, db)) push(id, db.classFeatures as never);
+  push(c.heritageId, db.heritages as never);
+  push(c.ancestryId, db.ancestries as never);
+  push(c.backgroundId, db.backgrounds as never);
+  // Items only count while actually in use — a wand in your backpack prepares nothing.
+  for (const inv of c.inventory ?? []) {
+    if (inv.equipped || inv.worn || inv.invested) push(inv.itemId, db.items as never);
+  }
+  return out;
+}
+
+/**
+ * What THIS MORNING's answers grant.
+ *
+ * Until now a daily choice was recorded and nothing more: the Rest sheet collected the answer and no
+ * sheet number moved, so "habituate your skin against this type of injury" was a note. An answer
+ * grants only while it is the stored one, so tomorrow's pick replaces today's rather than stacking.
+ *
+ * Reads the choice DEFINITIONS rather than the raw store, so an answer left behind by a record the
+ * character no longer owns grants nothing.
+ */
+export function dailyChoiceGrants(c: Character, db: ContentDatabase): EffectGrant[] {
+  const stored = c.dailyChoices;
+  if (!stored) return [];
+  const out: EffectGrant[] = [];
+  for (const rec of ownedDailyChoiceRecords(c, db)) {
+    const def = rec.choice;
+    if (!def?.daily) continue;
+    const grant = (def.options ?? []).find((o) => o.value === stored[dailyChoiceKey(rec.id, def.flag)])?.grant;
+    if (grant) out.push(grant);
+  }
   return out;
 }
 
@@ -811,7 +874,14 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   // "While raging / while you have panache …" conditional grants (Raging Resistance), gated on the
   // character's live resource toggle. Owned feats/features contribute only while the state is on.
   for (const wa of activeStateGrants(c, db)) {
-    push((wa as { name?: string }).name ?? 'Active state', { resistances: wa.resistances, senses: wa.senses, immunities: wa.immunities }, 'only while that state is active');
+    // `weaknesses` too: Ligneous Instinct's bark-like flesh resists piercing and slashing AND takes
+    // fire weakness from the same clause. Dropping the cost would have made the instinct strictly
+    // better than the text.
+    push(
+      (wa as { name?: string }).name ?? 'Active state',
+      { resistances: wa.resistances, weaknesses: wa.weaknesses, senses: wa.senses, immunities: wa.immunities },
+      'only while that state is active',
+    );
   }
   // Senses a rider feat grants only in this form (Senses of the Bear → Ursine Avenger Form).
   const rider = activeStance?.senseIfFeat;
@@ -834,6 +904,12 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   }
   // Resolved "choose one of N" effects (dragon-tattoo resistance type, energy-heart element).
   if (c.chosenEffects) push('Your chosen effect', c.chosenEffects);
+  // THIS MORNING's answers. Separate from chosenEffects because they are re-made nightly, and marked
+  // as such in the breakdown so a player can tell which resistance they picked today from the ones
+  // they picked at character creation.
+  for (const g of dailyChoiceGrants(c, db)) {
+    push('Daily preparations', { resistances: g.resistances, weaknesses: g.weaknesses, immunities: g.immunities, senses: g.senses }, 'chosen this morning');
+  }
 
   const senses = new Map<string, SenseEntry>();
   const rank = (a?: string) => ACUITY_ORDER[a ?? 'precise'] ?? 3;
@@ -1827,6 +1903,9 @@ interface UnarmedProfile {
   critSpec?: boolean;
   /** Range increment (ft) for a RANGED natural/unarmed attack (Spined Azarketi spine); undefined = melee. */
   range?: number;
+  /** Extra damage dice this attack has from its own level scaling rather than from handwraps — a
+   *  FLOOR, so better handwraps still win. */
+  strikingFloor?: number;
 }
 
 const FIST_PROFILE: UnarmedProfile = {
@@ -1891,6 +1970,9 @@ function deriveUnarmedStrike(
   const strikingExtra = Math.max(
     abpOn(c) ? abpStrikingDice(c.level) : hwRunes?.striking ? STRIKING_DICE[hwRunes.striking] : 0,
     mpRef?.extraDice ?? 0,
+    // A granted attack that scales on its own ("at 5th level it gains the benefits of a striking
+    // rune"). A floor, not an override: a character with better handwraps keeps them.
+    p.strikingFloor ?? 0,
   );
   const dice = 1 + strikingExtra;
   // Property runes on the handwraps apply to unarmed attacks (no weapon-type restriction exists in
@@ -2042,17 +2124,28 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
   const dsFist = hasDeadlySimplicity(c) && deityFavorsUnarmed(c, db);
   // The active stance's granted unarmed attack(s) (Tiger claw, Falling Stone, …) — buffed by handwraps
   // like any unarmed Strike. Listed first so the in-stance attack is prominent.
-  const stanceStrikes = (activeStanceDef(c, db)?.strikes ?? []).map((s, i) =>
+  // An ACTIVE MODE may grant one too (Invoke Offense's spirit attack, which lasts as long as the
+  // trance). Same treatment as a stance's: a granted attack should not scale differently because the
+  // toggle that granted it is called something else.
+  const granted: { s: StanceStrike; key: string }[] = [
+    ...(activeStanceDef(c, db)?.strikes ?? []).map((s, i) => ({ s, key: `stance:${i}` })),
+    ...(c.activeModes ?? []).flatMap((m) => (m.grantedStrikes ?? []).map((s, i) => ({ s, key: `mode:${m.id}:${i}` }))),
+  ];
+  const stanceStrikes = granted.map(({ s, key }) =>
     deriveUnarmedStrike(
       c,
       db,
       applyUnarmedRiders(c, db, {
-        instanceId: `stance:${i}`,
+        instanceId: key,
         name: s.name,
         die: s.die,
         damageType: s.damageType,
         traits: s.traits?.length ? [...new Set([...s.traits, 'unarmed'])] : ['unarmed'],
         group: s.group ?? 'brawling',
+        strikingFloor: Math.max(
+          0,
+          ...(s.strikingByLevel ?? []).filter((t) => c.level >= t.level).map((t) => t.extraDice),
+        ),
       }),
       hwRunes,
       false,
@@ -2084,6 +2177,9 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   if (c.chosenEffects?.speeds) grantSources.push({ speeds: c.chosenEffects.speeds });
   // "While raging you gain a climb/swim Speed…" (Raging Athlete) — active only while the state is on.
   for (const wa of activeStateGrants(c, db)) if (wa.speeds) grantSources.push({ speeds: wa.speeds });
+  // A state that COSTS Speed (Wooden Rage: −10 ft while raging), alongside the ones that grant it.
+  let statePenalty = 0;
+  for (const wa of activeStateGrants(c, db)) statePenalty += wa.speedPenalty ?? 0;
   // Flat additive land-Speed from feats/class features/heritage (Hyper Boosters: +10 ft). After the base.
   let featLandBonus = 0;
   for (const f of c.feats) featLandBonus += db.feats[f.featId]?.landSpeedBonus ?? 0;
@@ -2204,6 +2300,7 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   const others = [
     passiveSpeedPenalty, // a worn item's flat penalty (Monster Suit −10 ft)
     activeStanceDef(c, db)?.speedPenalty ?? 0, // Mountain Stance −5 ft
+    statePenalty, // Wooden Rage −10 ft while raging
     c.conditions.some((x) => x.id === 'encumbered') ? 10 : 0,
   ].filter((n) => n > 0);
   const reduceBy = Math.max(0, ...adjusts.map((a) => a.reduceOtherPenalty ?? 0));

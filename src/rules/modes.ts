@@ -198,6 +198,35 @@ const RAW_MODES: ModeDef[] = [
 
   // ---- Archetype trances/forms (gated to the dedication that grants them) ----
   { id: 'cat-spirit-trance', name: 'Spirit Trance', category: 'Archetype', feats: ['rivethun-invoker-dedication'], modifiers: [], note: 'Rivethun Invoker (Divine Mysteries): enter a trance to commune with spirits.' },
+  // Its own toggle rather than a clause of Spirit Trance: the trance is only the REQUIREMENT, the
+  // attack comes from a separate feat, and a Rivethun invoker who never took Invoke Offense must not
+  // gain a Strike for entering a trance.
+  {
+    id: 'cat-invoke-offense',
+    name: 'Invoke Offense',
+    category: 'Archetype',
+    feats: ['invoke-offense'],
+    modifiers: [],
+    duration: 'for the duration of your spirit trance',
+    note: 'A manifested spirit attack. Requires that you are under the effects of Enter Spirit Trance.',
+    grantedStrikes: [
+      {
+        name: 'Spirit attack',
+        dice: 1,
+        die: 'd8',
+        damageType: 'spirit',
+        group: 'brawling',
+        traits: ['agile', 'finesse', 'magical'],
+        // "At 5th level, this unarmed attack gains the benefits of a striking rune. At 12th level, a
+        // greater striking rune. At 20th level, a major striking rune."
+        strikingByLevel: [
+          { level: 5, extraDice: 1 },
+          { level: 12, extraDice: 2 },
+          { level: 20, extraDice: 3 },
+        ],
+      },
+    ],
+  },
   { id: 'cat-sentinel-form', name: 'Sentinel Form', category: 'Archetype', feats: ['starlit-sentinel-dedication'], modifiers: [], note: 'Starlit Sentinel (Tian Xia): assume your sentinel form.' },
   { id: 'cat-daydream-trance', name: 'Daydream Trance', category: 'Archetype', feats: ['sleepwalker-dedication'], modifiers: [], note: 'Sleepwalker (Dark Archive): enter a daydream trance.' },
 ];

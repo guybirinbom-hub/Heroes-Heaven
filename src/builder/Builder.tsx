@@ -1224,6 +1224,19 @@ export function Builder({
                               const opt = cls.subclass!.options.find((o) => o.id === build.subclassId);
                               return opt ? <ChoiceDetails name={opt.name} flavor={opt.description} descRefs={opt.descRefs} /> : null;
                             })()}
+                          {/* The CHOSEN subclass can ask a follow-up of its own — the barbarian's
+                              Dragon Instinct asks which dragon, Giant Instinct which energy. Those
+                              records ship as a classFeature under the same slug and their choice
+                              rendered nowhere, so the answer Raging Resistance depends on could not
+                              be given at all. Stored under the same `feature:<id>` key as any other
+                              class-feature choice. */}
+                          {cls?.subclass &&
+                            subAnchorId &&
+                            build.subclassId &&
+                            (() => {
+                              const def = content.classFeatures[build.subclassId!]?.choice;
+                              return def && !def.daily ? renderChoice(def, `feature:${build.subclassId}`) : null;
+                            })()}
                           {/* School of Unified Magical Theory (Player Core): grants a BONUS 1st-level
                               wizard class feat (an extra class-feat slot) — pick it here. */}
                           {isUmtSchool && subAnchorId && lvl === 1 && (

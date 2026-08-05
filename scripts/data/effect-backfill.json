@@ -39513,219 +39513,6 @@
   },
   {
     "category": "classFeatures",
-    "id": "dragon-instinct",
-    "field": "choice",
-    "value": {
-      "flag": "instinctDragon",
-      "prompt": "Dragon type",
-      "kind": "array",
-      "note": "Draconic Rage's extra damage is applied but shown as generic 'energy' rather than your dragon's breath type, and Raging Resistance (9th) isn't applied.",
-      "options": [
-        {
-          "value": "adamantine",
-          "label": "Adamantine — Primal, bludgeoning"
-        },
-        {
-          "value": "barrage",
-          "label": "Barrage — Arcane, force"
-        },
-        {
-          "value": "bog",
-          "label": "Bog — Primal, acid"
-        },
-        {
-          "value": "brine",
-          "label": "Brine — Primal, bludgeoning"
-        },
-        {
-          "value": "cinder",
-          "label": "Cinder — Primal, fire"
-        },
-        {
-          "value": "cloud",
-          "label": "Cloud — Primal, electricity"
-        },
-        {
-          "value": "conspirator",
-          "label": "Conspirator — Occult, poison"
-        },
-        {
-          "value": "coral",
-          "label": "Coral — Primal, bludgeoning"
-        },
-        {
-          "value": "crystal",
-          "label": "Crystal — Primal, piercing"
-        },
-        {
-          "value": "delight",
-          "label": "Delight — Divine, spirit"
-        },
-        {
-          "value": "despair",
-          "label": "Despair — Occult, sonic"
-        },
-        {
-          "value": "diabolic",
-          "label": "Diabolic — Divine, fire"
-        },
-        {
-          "value": "empyreal",
-          "label": "Empyreal — Divine, spirit"
-        },
-        {
-          "value": "executor",
-          "label": "Executor — Divine, sonic"
-        },
-        {
-          "value": "forest",
-          "label": "Forest — Primal, piercing"
-        },
-        {
-          "value": "fortune",
-          "label": "Fortune — Arcane, force"
-        },
-        {
-          "value": "horned",
-          "label": "Horned — Primal, poison"
-        },
-        {
-          "value": "magma",
-          "label": "Magma — Primal, fire"
-        },
-        {
-          "value": "mirage",
-          "label": "Mirage — Arcane, mental"
-        },
-        {
-          "value": "mocking",
-          "label": "Mocking — Occult, bludgeoning"
-        },
-        {
-          "value": "oath",
-          "label": "Oath — Divine, spirit"
-        },
-        {
-          "value": "omen",
-          "label": "Omen — Occult, mental"
-        },
-        {
-          "value": "phase",
-          "label": "Phase — Arcane, force"
-        },
-        {
-          "value": "requiem",
-          "label": "Requiem — Divine, spirit"
-        },
-        {
-          "value": "resurrection",
-          "label": "Resurrection — Divine, void"
-        },
-        {
-          "value": "rime",
-          "label": "Rime — Primal, cold"
-        },
-        {
-          "value": "rune",
-          "label": "Rune — Arcane, fire"
-        },
-        {
-          "value": "sage",
-          "label": "Sage — Occult, mental"
-        },
-        {
-          "value": "sea",
-          "label": "Sea — Primal, bludgeoning"
-        },
-        {
-          "value": "sky",
-          "label": "Sky — Divine, electricity"
-        },
-        {
-          "value": "sovereign",
-          "label": "Sovereign — Occult, mental"
-        },
-        {
-          "value": "stormcrown",
-          "label": "Stormcrown — Primal, electricity"
-        },
-        {
-          "value": "time",
-          "label": "Time — Arcane, force"
-        },
-        {
-          "value": "umbral",
-          "label": "Umbral — Occult, void"
-        },
-        {
-          "value": "underworld",
-          "label": "Underworld — Arcane, fire"
-        },
-        {
-          "value": "vizier",
-          "label": "Vizier — Occult, fire"
-        },
-        {
-          "value": "vorpal",
-          "label": "Vorpal — Arcane, void"
-        },
-        {
-          "value": "wailing",
-          "label": "Wailing — Arcane, sonic"
-        },
-        {
-          "value": "whisper",
-          "label": "Whisper — Occult, mental"
-        },
-        {
-          "value": "wish",
-          "label": "Wish — Arcane, mental"
-        },
-        {
-          "value": "black",
-          "label": "Black — Arcane, line of acid"
-        },
-        {
-          "value": "blue",
-          "label": "Blue — Arcane, line of electricity"
-        },
-        {
-          "value": "green",
-          "label": "Green — Arcane, cone of poison"
-        },
-        {
-          "value": "red",
-          "label": "Red — Arcane, cone of fire"
-        },
-        {
-          "value": "white",
-          "label": "White — Arcane, cone of cold"
-        },
-        {
-          "value": "brass",
-          "label": "Brass — Arcane, line of fire"
-        },
-        {
-          "value": "bronze",
-          "label": "Bronze — Arcane, line of electricity"
-        },
-        {
-          "value": "copper",
-          "label": "Copper — Arcane, line of acid"
-        },
-        {
-          "value": "gold",
-          "label": "Gold — Arcane, cone of fire"
-        },
-        {
-          "value": "silver",
-          "label": "Silver — Arcane, cone of cold"
-        }
-      ]
-    }
-  },
-  {
-    "category": "classFeatures",
     "id": "eldritch-trickster",
     "field": "choice",
     "value": {
@@ -59270,5 +59057,1742 @@
     "id": "pact-of-the-rune-dragon",
     "field": "languageChoices",
     "value": 10
+  },
+  {
+    "category": "classFeatures",
+    "id": "animal-instinct",
+    "field": "whileActive",
+    "value": [
+      {
+        "state": "rage",
+        "minLevel": 9,
+        "resistances": [
+          {
+            "type": "piercing",
+            "value": "3+@actor.con.mod"
+          },
+          {
+            "type": "slashing",
+            "value": "3+@actor.con.mod"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "fury-instinct",
+    "field": "whileActive",
+    "value": [
+      {
+        "state": "rage",
+        "minLevel": 9,
+        "resistances": [
+          {
+            "type": "physical",
+            "value": "3+@actor.con.mod",
+            "note": "weapon damage only — not unarmed attacks or other sources"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "ligneous-instinct",
+    "field": "whileActive",
+    "value": [
+      {
+        "state": "rage",
+        "minLevel": 9,
+        "resistances": [
+          {
+            "type": "piercing",
+            "value": "3+@actor.con.mod"
+          },
+          {
+            "type": "slashing",
+            "value": "3+@actor.con.mod"
+          }
+        ],
+        "weaknesses": [
+          {
+            "type": "fire",
+            "value": "3+@actor.con.mod"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "spirit-instinct",
+    "field": "whileActive",
+    "value": [
+      {
+        "state": "rage",
+        "minLevel": 9,
+        "resistances": [
+          {
+            "type": "void",
+            "value": "3+@actor.con.mod"
+          },
+          {
+            "type": "all damage from undead",
+            "value": "3+@actor.con.mod",
+            "note": "attacks and abilities of undead creatures, regardless of damage type"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "decay-instinct",
+    "field": "whileActive",
+    "value": [
+      {
+        "state": "rage",
+        "minLevel": 9,
+        "resistances": [
+          {
+            "type": "poison",
+            "value": "3+@actor.con.mod"
+          },
+          {
+            "type": "all damage from fungus creatures",
+            "value": "3+@actor.con.mod",
+            "note": "attacks and abilities of creatures with the fungus trait, regardless of damage type"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "giant-instinct",
+    "field": "choice",
+    "value": {
+      "flag": "ragingResistanceEnergy",
+      "prompt": "Raging Resistance energy type",
+      "kind": "array",
+      "options": [
+        {
+          "value": "cold",
+          "label": "Cold",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "bludgeoning",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "cold",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "electricity",
+          "label": "Electricity",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "bludgeoning",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "electricity",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "fire",
+          "label": "Fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "bludgeoning",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "superstition-instinct",
+    "field": "choice",
+    "value": {
+      "flag": "ragingResistanceTraditions",
+      "prompt": "Raging Resistance traditions",
+      "kind": "array",
+      "options": [
+        {
+          "value": "arcane-occult",
+          "label": "Arcane and occult",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "arcane spells",
+                    "value": "3+@actor.con.mod",
+                    "note": "all damage from arcane spells"
+                  },
+                  {
+                    "type": "occult spells",
+                    "value": "3+@actor.con.mod",
+                    "note": "all damage from occult spells"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "arcane-primal",
+          "label": "Arcane and primal",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "arcane spells",
+                    "value": "3+@actor.con.mod",
+                    "note": "all damage from arcane spells"
+                  },
+                  {
+                    "type": "primal spells",
+                    "value": "3+@actor.con.mod",
+                    "note": "all damage from primal spells"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "divine-occult",
+          "label": "Divine and occult",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "divine spells",
+                    "value": "3+@actor.con.mod",
+                    "note": "all damage from divine spells"
+                  },
+                  {
+                    "type": "occult spells",
+                    "value": "3+@actor.con.mod",
+                    "note": "all damage from occult spells"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "divine-primal",
+          "label": "Divine and primal",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "divine spells",
+                    "value": "3+@actor.con.mod",
+                    "note": "all damage from divine spells"
+                  },
+                  {
+                    "type": "primal spells",
+                    "value": "3+@actor.con.mod",
+                    "note": "all damage from primal spells"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "dragon-instinct",
+    "field": "choice",
+    "value": {
+      "flag": "instinctDragon",
+      "prompt": "Dragon type",
+      "kind": "array",
+      "note": "Draconic Rage's extra damage is applied but shown as generic 'energy' rather than your dragon's breath type.",
+      "options": [
+        {
+          "value": "adamantine",
+          "label": "Adamantine — Primal, bludgeoning",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "bludgeoning",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "barrage",
+          "label": "Barrage — Arcane, force",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "force",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "bog",
+          "label": "Bog — Primal, acid",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "acid",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "brine",
+          "label": "Brine — Primal, bludgeoning",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "bludgeoning",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "cinder",
+          "label": "Cinder — Primal, fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "cloud",
+          "label": "Cloud — Primal, electricity",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "electricity",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "conspirator",
+          "label": "Conspirator — Occult, poison",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "poison",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "coral",
+          "label": "Coral — Primal, bludgeoning",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "bludgeoning",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "crystal",
+          "label": "Crystal — Primal, piercing",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "delight",
+          "label": "Delight — Divine, spirit",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "spirit",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "despair",
+          "label": "Despair — Occult, sonic",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "sonic",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "diabolic",
+          "label": "Diabolic — Divine, fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "empyreal",
+          "label": "Empyreal — Divine, spirit",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "spirit",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "executor",
+          "label": "Executor — Divine, sonic",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "sonic",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "forest",
+          "label": "Forest — Primal, piercing",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "fortune",
+          "label": "Fortune — Arcane, force",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "force",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "horned",
+          "label": "Horned — Primal, poison",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "poison",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "magma",
+          "label": "Magma — Primal, fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "mirage",
+          "label": "Mirage — Arcane, mental",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "mental",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "mocking",
+          "label": "Mocking — Occult, bludgeoning",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "bludgeoning",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "oath",
+          "label": "Oath — Divine, spirit",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "spirit",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "omen",
+          "label": "Omen — Occult, mental",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "mental",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "phase",
+          "label": "Phase — Arcane, force",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "force",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "requiem",
+          "label": "Requiem — Divine, spirit",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "spirit",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "resurrection",
+          "label": "Resurrection — Divine, void",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "void",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "rime",
+          "label": "Rime — Primal, cold",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "cold",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "rune",
+          "label": "Rune — Arcane, fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "sage",
+          "label": "Sage — Occult, mental",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "mental",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "sea",
+          "label": "Sea — Primal, bludgeoning",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "bludgeoning",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "sky",
+          "label": "Sky — Divine, electricity",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "electricity",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "sovereign",
+          "label": "Sovereign — Occult, mental",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "mental",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "stormcrown",
+          "label": "Stormcrown — Primal, electricity",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "electricity",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "time",
+          "label": "Time — Arcane, force",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "force",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "umbral",
+          "label": "Umbral — Occult, void",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "void",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "underworld",
+          "label": "Underworld — Arcane, fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "vizier",
+          "label": "Vizier — Occult, fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "vorpal",
+          "label": "Vorpal — Arcane, void",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "void",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "wailing",
+          "label": "Wailing — Arcane, sonic",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "sonic",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "whisper",
+          "label": "Whisper — Occult, mental",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "mental",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "wish",
+          "label": "Wish — Arcane, mental",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "mental",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "black",
+          "label": "Black — Arcane, line of acid",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "acid",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "blue",
+          "label": "Blue — Arcane, line of electricity",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "electricity",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "green",
+          "label": "Green — Arcane, cone of poison",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "poison",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "red",
+          "label": "Red — Arcane, cone of fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "white",
+          "label": "White — Arcane, cone of cold",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "cold",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "brass",
+          "label": "Brass — Arcane, line of fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "bronze",
+          "label": "Bronze — Arcane, line of electricity",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "electricity",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "copper",
+          "label": "Copper — Arcane, line of acid",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "acid",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "gold",
+          "label": "Gold — Arcane, cone of fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "fire",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "silver",
+          "label": "Silver — Arcane, cone of cold",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "piercing",
+                    "value": "3+@actor.con.mod"
+                  },
+                  {
+                    "type": "cold",
+                    "value": "3+@actor.con.mod"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "elemental-instinct",
+    "field": "choice",
+    "value": {
+      "flag": "instinctElement",
+      "prompt": "Element (and damage type)",
+      "kind": "array",
+      "options": [
+        {
+          "value": "air-electricity",
+          "label": "Air — electricity",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "air damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the air trait"
+                  },
+                  {
+                    "type": "damage from air creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "air-slashing",
+          "label": "Air — slashing",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "air damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the air trait"
+                  },
+                  {
+                    "type": "damage from air creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "earth-bludgeoning",
+          "label": "Earth — bludgeoning",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "earth damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the earth trait"
+                  },
+                  {
+                    "type": "damage from earth creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "earth-piercing",
+          "label": "Earth — piercing",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "earth damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the earth trait"
+                  },
+                  {
+                    "type": "damage from earth creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "fire-fire",
+          "label": "Fire — fire",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "fire damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the fire trait"
+                  },
+                  {
+                    "type": "damage from fire creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "metal-piercing",
+          "label": "Metal — piercing",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "metal damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the metal trait"
+                  },
+                  {
+                    "type": "damage from metal creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "metal-slashing",
+          "label": "Metal — slashing",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "metal damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the metal trait"
+                  },
+                  {
+                    "type": "damage from metal creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "water-bludgeoning",
+          "label": "Water — bludgeoning",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "water damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the water trait"
+                  },
+                  {
+                    "type": "damage from water creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "water-cold",
+          "label": "Water — cold",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "water damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the water trait"
+                  },
+                  {
+                    "type": "damage from water creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "wood-bludgeoning",
+          "label": "Wood — bludgeoning",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "wood damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the wood trait"
+                  },
+                  {
+                    "type": "damage from wood creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "value": "wood-piercing",
+          "label": "Wood — piercing",
+          "grant": {
+            "whileActive": [
+              {
+                "state": "rage",
+                "minLevel": 9,
+                "resistances": [
+                  {
+                    "type": "wood damage",
+                    "value": "3+@actor.con.mod",
+                    "note": "attacks, spells and abilities with the wood trait"
+                  },
+                  {
+                    "type": "damage from wood creatures",
+                    "value": "3+@actor.con.mod",
+                    "note": "elemental creatures of your element, regardless of damage type"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "skin-hard-as-horn",
+    "field": "choice",
+    "value": {
+      "flag": "attunedDamageType",
+      "prompt": "Damage type your skin is habituated against",
+      "kind": "array",
+      "daily": true,
+      "options": [
+        {
+          "value": "bludgeoning",
+          "label": "Bludgeoning",
+          "grant": {
+            "resistances": [
+              {
+                "type": "bludgeoning",
+                "value": "floor(@actor.level/2)",
+                "note": "only while your divine spark is in this ikon (immanence), and never against critical hits"
+              }
+            ]
+          }
+        },
+        {
+          "value": "piercing",
+          "label": "Piercing",
+          "grant": {
+            "resistances": [
+              {
+                "type": "piercing",
+                "value": "floor(@actor.level/2)",
+                "note": "only while your divine spark is in this ikon (immanence), and never against critical hits"
+              }
+            ]
+          }
+        },
+        {
+          "value": "slashing",
+          "label": "Slashing",
+          "grant": {
+            "resistances": [
+              {
+                "type": "slashing",
+                "value": "floor(@actor.level/2)",
+                "note": "only while your divine spark is in this ikon (immanence), and never against critical hits"
+              }
+            ]
+          }
+        }
+      ]
+    }
   }
 ]

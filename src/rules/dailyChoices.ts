@@ -10,9 +10,11 @@
  * A record opts in with `choice.daily = true`; everything here is driven by that flag, so wiring a
  * new feat is a data edit, not a code edit.
  */
-import type { Character, ContentDatabase, FeatChoiceDef } from './types';
-import { ownedFeatureIds } from './derive';
+import type { Character, ContentDatabase } from './types';
+import { dailyChoiceKey, ownedDailyChoiceRecords as ownedRecords } from './derive';
 import { openChoiceOptions } from './openChoice';
+
+export { dailyChoiceKey } from './derive';
 
 export interface DailyChoice {
   /** Storage key in PlayState.dailyChoices — `${recordId}:${flag}`. */
@@ -27,28 +29,7 @@ export interface DailyChoice {
   options: { value: string; label: string; description?: string }[];
 }
 
-/** `${recordId}:${flag}` — the one place this key is spelled, so callers can't drift. */
-export const dailyChoiceKey = (recordId: string, flag: string) => `${recordId}:${flag}`;
 
-/** Records that can carry a daily choice, in the order the Rest sheet should list them. */
-function ownedRecords(c: Character, db: ContentDatabase): { id: string; name: string; choice?: FeatChoiceDef }[] {
-  const out: { id: string; name: string; choice?: FeatChoiceDef }[] = [];
-  const push = (id: string | null | undefined, bucket: Record<string, { name: string; choice?: FeatChoiceDef }> | undefined) => {
-    if (!id || !bucket) return;
-    const r = bucket[id];
-    if (r) out.push({ id, name: r.name, choice: r.choice });
-  };
-  for (const f of c.feats ?? []) push(f.featId, db.feats as never);
-  for (const id of ownedFeatureIds(c, db)) push(id, db.classFeatures as never);
-  push(c.heritageId, db.heritages as never);
-  push(c.ancestryId, db.ancestries as never);
-  push(c.backgroundId, db.backgrounds as never);
-  // Items only count while actually in use — a wand in your backpack prepares nothing.
-  for (const inv of c.inventory ?? []) {
-    if (inv.equipped || inv.worn || inv.invested) push(inv.itemId, db.items as never);
-  }
-  return out;
-}
 
 /** Every daily-preparation choice this character has to make, deduped by key. */
 export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[] {
@@ -81,6 +62,16 @@ export function unansweredDailyChoices(choices: DailyChoice[], stored: Record<st
   return choices.filter((ch) => !stored?.[ch.key]);
 }
 
+/**
+ * What this morning's answers actually GRANT.
+ *
+ * Until now a daily choice was recorded and nothing more — the Rest sheet collected the answer and no
+ * sheet number moved, so "habituate your skin against this type of injury" was a note. An answer
+ * grants only while it is the stored one, so tomorrow's pick replaces today's rather than stacking.
+ *
+ * Reads the CHOICE DEFINITIONS rather than the raw store, so an answer left behind by a record the
+ * character no longer owns grants nothing.
+ */
 /** Human-readable label for a stored answer ("Severe heat"), or null when unset/stale. */
 export function dailyChoiceLabel(choice: DailyChoice, stored: Record<string, string> | undefined): string | null {
   const value = stored?.[choice.key];

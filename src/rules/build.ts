@@ -2668,6 +2668,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (g.weaknesses) (into.weaknesses ??= []).push(...g.weaknesses);
     if (g.immunities) (into.immunities ??= []).push(...g.immunities);
     if (g.speeds) into.speeds = { ...into.speeds, ...g.speeds };
+    // A pick whose benefit is STATE-GATED ("bludgeoning and your choice of cold, electricity, or
+    // fire" — but only while raging, and only from 9th). Everything else here lands unconditionally,
+    // so without this branch the pick would grant a permanent resistance to a barbarian standing still.
+    if (g.whileActive?.length) (into.whileActive ??= []).push(...g.whileActive);
   };
   const resolvePick = (recordId: string, choices: EffectChoice[] | undefined, sink: (g: EffectGrant, srcName: string) => void, srcName: string) => {
     for (const ch of choices ?? []) {
@@ -2746,6 +2750,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const o of grantOptions) {
     if (ownedFeatureIds.has(o.id)) continue; // already resolved above
     resolvePick(o.id, content.classFeatures[o.id]?.effectChoices, applyAlwaysOn, content.classFeatures[o.id]?.name ?? o.name ?? o.id);
+  }
+  // A class feature's PLAIN `choice` (stored under `feature:<id>`) may now carry a grant too. Those
+  // pickers already rendered and their answers already round-tripped — the barbarian's instinct even
+  // shipped a choice literally flagged `ragingResistanceTraditions` — but no reader ever looked at
+  // the answer, so every one of them was a question with no consequence.
+  // A chosen SUBCLASS counts too — the barbarian's instinct ships as a classFeature under the same
+  // slug and is where all nine Raging Resistance clauses live.
+  for (const fid of new Set([...ownedFeatureIds, ...grantOptions.map((o) => o.id)])) {
+    const def = content.classFeatures[fid]?.choice;
+    if (!def || def.daily) continue; // a daily answer is play state, resolved by dailyChoiceGrants
+    const g = (def.options ?? []).find((o) => o.value === build.featChoices?.[`feature:${fid}`])?.grant;
+    if (g) applyAlwaysOn(g, content.classFeatures[fid]?.name ?? fid);
   }
   // "Whenever you Refocus, you recover 3 Focus Points / completely refill your focus pool."
   // The Refocus control restored exactly 1 point with nothing able to say otherwise, so this whole
