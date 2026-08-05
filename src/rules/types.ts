@@ -246,7 +246,92 @@ export interface IwrEntry {
 
 /** Innate defenses (senses + IWR) a content item grants. Mixed into Heritage,
  *  Feat, and ClassFeature; parsed from Foundry rule elements at import. */
+/**
+ * A change to an unarmed Strike the character ALREADY has — "your unarmed attacks gain the reach
+ * trait", "the base damage of your claws increases to 1d8".
+ *
+ * Distinct from `grantedStrikes`, which CREATES an attack. A record may carry SEVERAL riders, because
+ * one printed effect often hits two attacks differently: Fearsome Fangs steps jaws twice and claws
+ * once, and a single rider cannot say that.
+ */
+export interface UnarmedRider {
+  /** Strike names this applies to, matched case-insensitively as a substring ("beak", "hair").
+   *  Omitted means every unarmed Strike, which is what most of these feats say. */
+  match?: string[];
+  /**
+   * Match the strike a specific RECORD granted, rather than one whose NAME happens to match.
+   * "Claw" is Draconic Aspect's attack and also a nephilim's Bestial Manifestation, so a name match
+   * hands Deadly Aspect's deadly d8 to the wrong character. Fails CLOSED: an id that resolves to
+   * nothing matches nothing.
+   */
+  fromRecord?: string;
+  /** Traits to add. A `deadly-dN` / `versatile-*` replaces a weaker one of the same family rather
+   *  than sitting beside it, which is how the printed "or increase it to" clauses read. */
+  add?: string[];
+  /** Traits to REMOVE — "your fist attacks lose the nonlethal trait". Every field before this one
+   *  could only add, so a feat whose whole content is losing a drawback did nothing. */
+  remove?: string[];
+  /** Step the damage die up. `true` is one step; a number is that many (Fearsome Fangs steps d8→d12). */
+  stepDie?: boolean | number;
+  /** The absolute die, which is how most of these are printed ("increases to 1d12"). Wins over
+   *  stepDie when both are present, since it states a result rather than a change. */
+  setDie?: string;
+  /** Step the die only on Strikes that ALREADY had one of `add` — Diamond Fists gives forceful +
+   *  deadly d10 and steps the die instead for attacks that had them. */
+  stepDieIfHad?: boolean;
+  /** THIS strike gets its weapon group's critical specialization, with no other source needed.
+   *  critSpecWeapons filters by group, trait or base weapon — never by one particular attack. */
+  critSpec?: boolean;
+}
+
+/**
+ * A change to a WIELDED weapon that matches a filter — "melee weapons you wield gain versatile B".
+ *
+ * Every field on `match` must hold; `anyTrait` is the one OR ("agile OR finesse"). An unfiltered
+ * rider applies to EVERY weapon the character wields, which is the loudest over-grant in the engine:
+ * Humble Strikes without `categories: ['simple']` is a silent damage buff on the whole pack.
+ */
+export interface WeaponRider {
+  match?: {
+    /** true = melee only, false = ranged only, omitted = either. */
+    melee?: boolean;
+    /** Weapon groups it applies to ('axe', 'sword'). */
+    groups?: string[];
+    /** Applies when the weapon carries ANY of these (Deadly Grace: agile or finesse). */
+    anyTrait?: string[];
+    /** Specific core.json weapon ids. */
+    items?: string[];
+    /** Weapon categories — "simple weapons you wield" (Humble Strikes). */
+    categories?: WeaponCategory[];
+    /** Hands required — "any ONE-HANDED axe weapon you wield". A weapon whose `hands` is '1+' counts
+     *  as one-handed, since that is how it is wielded when the rider's clause applies. */
+    hands?: 1 | 2;
+    /** Excluded traits — Integrated Gauntlet does not apply to two-hand or fatal-aim weapons. */
+    excludeTraits?: string[];
+    /** Only the character's deity's favored weapon (Deific Weapon). */
+    deityFavored?: true;
+  };
+  add?: string[];
+  /** Traits to remove. Names a trait the weapon never had? Then nothing happens, silently. */
+  remove?: string[];
+  /** Add only to weapons that do NOT already carry a trait of that family — Deadly Grace reads
+   *  "an agile or finesse melee weapon that DOESN'T have the deadly trait". Without this it would
+   *  quietly downgrade a deadly d10 weapon to d8. */
+  onlyIfMissing?: boolean;
+  /** Step the damage die up. `true` is one step; a number is that many. Steps DO NOT COMPOUND across
+   *  riders — the best single step wins, or a champion with two of these turns a d6 into a d10. */
+  stepDie?: boolean | number;
+  /** The absolute die ("its damage die becomes d8"). Wins over stepDie. */
+  setDie?: string;
+  /** Set or extend the range increment in feet. There is no other range lane. */
+  range?: { set?: number; add?: number };
+}
+
 export interface DefenseGrants {
+  /** Changes to unarmed Strikes the character already has. See UnarmedRider. */
+  unarmedTraits?: UnarmedRider | UnarmedRider[];
+  /** Changes to WIELDED weapons matching a filter. See WeaponRider. */
+  weaponTraits?: WeaponRider | WeaponRider[];
   /**
    * A lower multiple attack penalty. The strike line computes MAP as 5 (4 with agile) with no way to
    * change it, so Agile Grace ("–3 and –6 rather than –4 and –8") and the ranger's Flurry moved
@@ -835,23 +920,6 @@ export interface Feat extends ContentBase, DefenseGrants {
    *
    * Every field on `match` must hold; `anyTrait` is the one OR ("agile OR finesse").
    */
-  weaponTraits?: {
-    match?: {
-      /** true = melee only, false = ranged only, omitted = either. */
-      melee?: boolean;
-      /** Weapon groups it applies to ('axe', 'sword'). */
-      groups?: string[];
-      /** Applies when the weapon carries ANY of these (Deadly Grace: agile or finesse). */
-      anyTrait?: string[];
-      /** Specific core.json weapon ids. */
-      items?: string[];
-    };
-    add?: string[];
-    /** Add only to weapons that do NOT already carry a trait of that family — Deadly Grace reads
-     *  "an agile or finesse melee weapon that DOESN'T have the deadly trait". Without this it would
-     *  quietly downgrade a deadly d10 weapon to d8. */
-    onlyIfMissing?: boolean;
-  };
   /**
    * Weakness types this feat REMOVES ("you no longer gain silver weakness from Werecreature
    * Dedication"). Every other field adds; there was no way to take one away, so a feat whose whole
@@ -868,19 +936,6 @@ export interface Feat extends ContentBase, DefenseGrants {
    * Distinct from `grantedStrikes`, which CREATES an attack. There was no way to say "change the one
    * you already have", so a whole family of capstone feats printed a trait nobody received.
    */
-  unarmedTraits?: {
-    /** Strike names this applies to, matched case-insensitively as a substring ("beak", "hair").
-     *  Omitted means every unarmed Strike, which is what most of these feats say. */
-    match?: string[];
-    /** Traits to add. A `deadly-dN` / `versatile-*` replaces a weaker one of the same family rather
-     *  than sitting beside it, which is how the printed "or increase it to" clauses read. */
-    add?: string[];
-    /** Step the damage die up one size, unconditionally (Demon's Hair). */
-    stepDie?: boolean;
-    /** Step the damage die up one size only on Strikes that ALREADY had one of `add` — Diamond
-     *  Fists gives forceful + deadly d10 and steps the die instead for attacks that had them. */
-    stepDieIfHad?: boolean;
-  };
   /** Innate spells this feat grants (cast at a fixed tradition; cantrips at-will, else 1/day). */
   innateSpells?: InnateSpellGrant[];
   /** Max-HP modifier (Toughness/Mountain's Stoutness = perLevel 1; Thick Hide Mask = flat 20;

@@ -19,6 +19,7 @@ import type {
   DefenseGrants,
   AbilityScores,
   InventoryItem,
+  DieSize,
   Item,
   WeaponItem,
   SenseEntry,
@@ -1460,33 +1461,104 @@ export function strikeDamageRiders(
  * d8" (Deadly Grace). The wielded sibling of applyUnarmedRiders; weapon traits came straight off the
  * item record, so none of these feats could touch them.
  */
-function weaponRiderTraits(c: Character, db: ContentDatabase, w: WeaponItem): string[] {
-  let traits = w.traits;
-  for (const fc of c.feats ?? []) {
-    const r = db.feats[fc.featId]?.weaponTraits;
-    if (!r?.add?.length) continue;
-    const m = r.match ?? {};
-    const isMelee = !w.range;
-    if (m.melee !== undefined && m.melee !== isMelee) continue;
-    if (m.groups?.length && !m.groups.includes(w.group ?? '')) continue;
-    if (m.items?.length && !m.items.includes(w.id)) continue;
-    if (m.anyTrait?.length && !m.anyTrait.some((t) => traits.includes(t))) continue;
-    // "…that doesn't have the deadly trait": skip a weapon that already carries the family, or the
-    // rider would replace a deadly d10 with a d8.
-    const add = r.onlyIfMissing
-      ? r.add.filter((t) => !traits.some((existing) => traitFamily(existing) === traitFamily(t)))
-      : r.add;
-    if (add.length) traits = [...new Set([...traits, ...add])];
+/** A record may carry one rider or several; one printed effect often hits two attacks differently. */
+const asRiders = <T,>(v: T | T[] | undefined): T[] => (v == null ? [] : Array.isArray(v) ? v : [v]);
+
+/** Does this trait list carry `name`, or any member of its family? `thrown` matches `thrown-20`. */
+const hasTraitFamily = (traits: readonly string[], name: string) =>
+  traits.some((t) => t === name || t.startsWith(`${name}-`));
+
+/** Merge `add` into `traits`, letting a bigger deadly/versatile/fatal REPLACE a smaller one. */
+function mergeTraits(traits: readonly string[], add: readonly string[]): string[] {
+  const families = new Set(add.map(traitFamily));
+  const kept = traits.filter((t) => !families.has(traitFamily(t)));
+  const rivals = traits.filter((t) => families.has(traitFamily(t)));
+  const dieRank = (s: string) => DIE_LADDER.indexOf((s.split('-')[1] ?? '') as (typeof DIE_LADDER)[number]);
+  const out = [...kept];
+  for (const t of add) {
+    // Never DOWNGRADE: a deadly d12 already present beats an incoming d10.
+    const rival = rivals.find((x) => traitFamily(x) === traitFamily(t));
+    out.push(rival && dieRank(rival) > dieRank(t) ? rival : t);
   }
-  return traits;
+  return [...new Set(out)];
+}
+
+/** Apply `n` die steps, `n` being a count or a plain true for one. */
+const stepsOf = (v: boolean | number | undefined) => (v === true ? 1 : typeof v === 'number' ? v : 0);
+
+/**
+ * Changes a feat or class feature makes to a WIELDED weapon — traits, the damage die, the range
+ * increment. "Melee weapons you wield gain versatile B" (Hilt Hammer), "simple weapons you wield
+ * have their damage die increased" (Humble Strikes).
+ *
+ * Returns a MODIFIED weapon rather than only its traits, because several of these change the die or
+ * the range and everything downstream reads those off the item.
+ *
+ * Over-granting is the whole danger here: an unfiltered rider applies to EVERY weapon the character
+ * wields. Die steps deliberately DO NOT COMPOUND — the best single step wins, or a champion with two
+ * such feats turns a d6 into a d10.
+ */
+function applyWeaponRiders(c: Character, db: ContentDatabase, w: WeaponItem): WeaponItem {
+  const sources: (DefenseGrants | undefined)[] = [
+    ...(c.feats ?? []).map((fc) => db.feats[fc.featId]),
+    ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
+  ];
+  const deityWeapons = deitySimpleFavoredWeaponIds(c, db);
+
+  let traits = w.traits;
+  let die: DieSize | undefined = w.damage?.die;
+  let range = w.range;
+  let bestStep = 0; // steps never compound; the largest single one wins
+  let setDie: string | undefined;
+
+  for (const src of sources) {
+    for (const r of asRiders(src?.weaponTraits)) {
+      const m = r.match ?? {};
+      const isMelee = !w.range;
+      if (m.melee !== undefined && m.melee !== isMelee) continue;
+      if (m.groups?.length && !m.groups.includes(w.group ?? '')) continue;
+      if (m.items?.length && !m.items.includes(w.id)) continue;
+      if (m.categories?.length && !m.categories.includes(w.category)) continue;
+      // '1+' counts as one-handed: that is how it is wielded when such a clause applies.
+      if (m.hands != null && !String(w.hands ?? '').startsWith(String(m.hands))) continue;
+      // Family-aware for the same reason as anyTrait: excluding "thrown" must exclude `thrown-20`.
+      if (m.excludeTraits?.length && m.excludeTraits.some((t) => hasTraitFamily(traits, t))) continue;
+      // Family-aware: a weapon carries `thrown-20`, not a bare `thrown`, so a filter naming "thrown"
+      // must match the whole family or every thrown-weapon clause silently matches nothing at all.
+      if (m.anyTrait?.length && !m.anyTrait.some((t) => hasTraitFamily(traits, t))) continue;
+      if (m.deityFavored && !deityWeapons.has(w.id)) continue;
+
+      if (r.add?.length) {
+        // "…that doesn't have the deadly trait": skip a weapon already carrying the family, or the
+        // rider would replace a deadly d10 with a d8.
+        const add = r.onlyIfMissing
+          ? r.add.filter((t) => !traits.some((existing) => traitFamily(existing) === traitFamily(t)))
+          : r.add;
+        if (add.length) traits = mergeTraits(traits, add);
+      }
+      if (r.remove?.length) traits = traits.filter((t) => !r.remove!.includes(t));
+      if (r.setDie) setDie = r.setDie;
+      bestStep = Math.max(bestStep, stepsOf(r.stepDie));
+      if (r.range?.set != null) range = r.range.set;
+      if (r.range?.add != null) range = (range ?? 0) + r.range.add;
+    }
+  }
+
+  // An absolute die states a result, so it wins over a step. Both are validated against the ladder,
+  // so a typo in the data cannot put a nonsense die on a Strike.
+  if (setDie && DIE_LADDER.includes(setDie as DieSize)) die = setDie as DieSize;
+  else for (let i = 0; i < bestStep; i++) die = stepDie(die ?? '') as DieSize;
+
+  if (traits === w.traits && die === w.damage?.die && range === w.range) return w;
+  return { ...w, traits, range, ...(w.damage && die ? { damage: { ...w.damage, die } } : {}) };
 }
 
 export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryItem): Strike | null {
   const item = db.items[inv.itemId];
   if (!item || item.itemType !== 'weapon') return null;
-  // A feat may add traits to what you wield; everything below reads `w.traits`, so widen it here.
-  const riderTraits = weaponRiderTraits(c, db, item);
-  const w = riderTraits === item.traits ? item : { ...item, traits: riderTraits };
+  // A feat or class feature may change what you wield — traits, damage die, range increment.
+  // Everything below reads those off `w`, so apply the riders here, once.
+  const w = applyWeaponRiders(c, db, item);
   // Material/precious-metal placeholder "weapons" (cold iron, adamantine ingots, silver, …) carry no
   // damage object; guard so a stray equip can't crash the entire Strikes computation + Main tab.
   if (!w.damage) return null;
@@ -1714,6 +1786,11 @@ interface UnarmedProfile {
   damageType: string;
   traits: string[];
   group: string;
+  /** The record that GRANTED this strike, so a rider can name it rather than guess from the name —
+   *  "Claw" belongs to Draconic Aspect and to a nephilim's Bestial Manifestation alike. */
+  source?: string;
+  /** This one attack has its group's critical specialization, from an `unarmedTraits.critSpec` rider. */
+  critSpec?: boolean;
   /** Range increment (ft) for a RANGED natural/unarmed attack (Spined Azarketi spine); undefined = melee. */
   range?: number;
 }
@@ -1846,33 +1923,46 @@ const traitFamily = (t: string) => (/^(deadly|fatal|versatile)-/.test(t) ? t.spl
  */
 function applyUnarmedRiders(c: Character, db: ContentDatabase, p: UnarmedProfile): UnarmedProfile {
   let out = p;
-  for (const fc of c.feats) {
-    const r = db.feats[fc.featId]?.unarmedTraits;
-    if (!r) continue;
-    // A rider may name which attack it changes ("your beak", "your hair"); most name none = all.
-    if (r.match?.length && !r.match.some((m) => out.name.toLowerCase().includes(m.toLowerCase()))) continue;
+  // Class features carry these too, now that both riders live on DefenseGrants — the monk's Powerful
+  // Fist is a class feature, and so is every subclass that reshapes an attack.
+  const sources: (DefenseGrants | undefined)[] = [
+    ...(c.feats ?? []).map((fc) => db.feats[fc.featId]),
+    ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
+  ];
+  let bestStep = 0;
+  let setDie: string | undefined;
+  let gainsCritSpec = false;
 
-    const add = r.add ?? [];
-    // "any that already had one or both of these" — tested BEFORE the new traits are merged in.
-    const had = add.some((t) => out.traits.some((existing) => traitFamily(existing) === traitFamily(t)));
+  for (const src of sources) {
+    for (const r of asRiders(src?.unarmedTraits)) {
+      // A rider may name which attack it changes ("your beak", "your hair"); most name none = all.
+      if (r.match?.length && !r.match.some((m) => out.name.toLowerCase().includes(m.toLowerCase()))) continue;
+      // Or name the RECORD that granted the strike. "Claw" is Draconic Aspect's attack and also a
+      // nephilim's Bestial Manifestation, so a name match hands the wrong character a deadly d8.
+      // Fails closed: a strike with no recorded source matches no `fromRecord` rider.
+      if (r.fromRecord && out.source !== r.fromRecord) continue;
 
-    if (add.length) {
-      // A new deadly-d10 REPLACES a deadly-d6 rather than joining it — the printed clause always
-      // reads "or increase it to", never "and also". Same for versatile and fatal.
-      const families = new Set(add.map(traitFamily));
-      const kept = out.traits.filter((t) => !families.has(traitFamily(t)));
-      const rivals = out.traits.filter((t) => families.has(traitFamily(t)));
-      const dieRank = (s: string) => DIE_LADDER.indexOf((s.split('-')[1] ?? '') as (typeof DIE_LADDER)[number]);
-      const merged = [...kept];
-      for (const t of add) {
-        // Never DOWNGRADE: a deadly d12 already present beats an incoming d10.
-        const rival = rivals.find((x) => traitFamily(x) === traitFamily(t));
-        merged.push(rival && dieRank(rival) > dieRank(t) ? rival : t);
-      }
-      out = { ...out, traits: [...new Set(merged)] };
+      const add = r.add ?? [];
+      // "any that already had one or both of these" — tested BEFORE the new traits are merged in.
+      const had = add.some((t) => out.traits.some((existing) => traitFamily(existing) === traitFamily(t)));
+      if (add.length) out = { ...out, traits: mergeTraits(out.traits, add) };
+      // "Your fist attacks lose the nonlethal trait" — every field before this could only add.
+      if (r.remove?.length) out = { ...out, traits: out.traits.filter((t) => !r.remove!.includes(t)) };
+
+      if (r.setDie) setDie = r.setDie;
+      bestStep = Math.max(bestStep, stepsOf(r.stepDie) || (r.stepDieIfHad && had ? 1 : 0));
+      if (r.critSpec) gainsCritSpec = true;
     }
-    if (r.stepDie || (r.stepDieIfHad && had)) out = { ...out, die: stepDie(out.die) };
   }
+
+  // An absolute die states a result, so it wins; steps never compound across riders.
+  if (setDie) out = { ...out, die: setDie };
+  else if (bestStep) {
+    let die = out.die;
+    for (let i = 0; i < bestStep; i++) die = stepDie(die);
+    out = { ...out, die };
+  }
+  if (gainsCritSpec) out = { ...out, critSpec: true };
   return out;
 }
 

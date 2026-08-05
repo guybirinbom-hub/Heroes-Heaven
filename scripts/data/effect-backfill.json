@@ -58495,5 +58495,187 @@
     "id": "greater-energized-shield",
     "field": "brokenThreshold",
     "value": 32
+  },
+  {
+    "category": "feats",
+    "id": "iron-fists",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "fist"
+      ],
+      "remove": [
+        "nonlethal"
+      ],
+      "add": [
+        "shove"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "ferrousoul",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "fist"
+      ],
+      "add": [
+        "modular-b-p-or-s"
+      ],
+      "remove": [
+        "nonlethal"
+      ],
+      "setDie": "d6"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "martial-artist-dedication",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "fist"
+      ],
+      "setDie": "d6"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "fearsome-fangs",
+    "field": "unarmedTraits",
+    "value": [
+      {
+        "match": [
+          "jaws"
+        ],
+        "setDie": "d12"
+      },
+      {
+        "match": [
+          "claw"
+        ],
+        "setDie": "d8"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "iruxi-unarmed-cunning",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "claw"
+      ],
+      "critSpec": true
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "humble-strikes",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "categories": [
+          "simple"
+        ]
+      },
+      "stepDie": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "shield-warfare",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "groups": [
+          "shield"
+        ]
+      },
+      "stepDie": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "venomous-weapons",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "items": [
+          "blowgun",
+          "sling"
+        ]
+      },
+      "add": [
+        "venomous"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "guerrilla-weaponry",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "items": [
+          "blowgun"
+        ]
+      },
+      "setDie": "d4",
+      "add": [
+        "deadly-d4"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "strong-arm",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "anyTrait": [
+          "thrown"
+        ]
+      },
+      "range": {
+        "add": 10
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "axe-thrower",
+    "field": "weaponTraits",
+    "value": [
+      {
+        "match": {
+          "groups": [
+            "axe"
+          ],
+          "hands": 1,
+          "excludeTraits": [
+            "thrown"
+          ]
+        },
+        "add": [
+          "thrown-10"
+        ]
+      },
+      {
+        "match": {
+          "groups": [
+            "axe"
+          ],
+          "hands": 1,
+          "anyTrait": [
+            "thrown"
+          ]
+        },
+        "range": {
+          "add": 10
+        }
+      }
+    ]
   }
 ]
