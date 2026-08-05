@@ -442,6 +442,15 @@ export interface DefenseGrants {
      *  applies only to elixirs YOU created, and Quick Alchemy still caps at 10 minutes). */
     note?: string;
   }[];
+  /**
+   * "You gain all the mechanical benefits of the <X> heritage you selected at 1st level."
+   *
+   * Both feats that say this require a VERSATILE heritage, which is what the character's single
+   * `heritageId` records — so the 1st-level ancestry heritage was never stored anywhere and there
+   * was nothing to dereference. The feat's own `choice` (kind 'open', from a `heritage` pool) records
+   * which one; this flag says to apply it.
+   */
+  secondHeritage?: boolean;
   /** Damage types this record adds to an Elemental Blast's printed list, per element — "add the
    *  following damage types to those you can choose for Elemental Blasts of that element" (Versatile
    *  Blasts). The printed lists were not modelled as lists, so there was nothing to add to. */
@@ -662,7 +671,7 @@ export interface OpenChoiceFrom {
    * spell YOU KNOW of 5th rank or lower", Fuse Stance "two stances you already know". Offering the
    * whole of content for those would let the player choose something they don't have.
    */
-  type: 'spell' | 'feat' | 'weapon' | 'language' | 'own-spell' | 'own-feat' | 'own-item' | 'own-companion';
+  type: 'spell' | 'feat' | 'weapon' | 'language' | 'heritage' | 'own-spell' | 'own-feat' | 'own-item' | 'own-companion';
   /** spell: allowed traditions / rank window / required traits / cantrip filter. */
   traditions?: Tradition[];
   rank?: number;
@@ -686,6 +695,10 @@ export interface OpenChoiceFrom {
   itemType?: string;
   /** own-item: only items the character has INVESTED (a worn magic item that is actually active). */
   investedOnly?: boolean;
+  /** heritage: restrict to one ancestry's heritages ("the awakened animal heritage you selected at
+   *  1st level"). Versatile heritages are excluded — the feat asks which ANCESTRY heritage you had,
+   *  and a versatile one is what you took INSTEAD of it. */
+  ancestry?: string;
 }
 
 export interface SpellChoiceFilter {
@@ -2493,6 +2506,9 @@ export interface Character {
   // --- build references (content ids) ---
   ancestryId: string | null;
   heritageId: string | null;
+  /** A SECOND heritage whose mechanical benefits also apply (Late Awakener, Awakened Yaoguai
+   *  Heritage). Resolved from the granting feat's own pick; absent for every other character. */
+  secondHeritageId?: string;
   /** Chosen damage type for a choice-resistance heritage (Deep Fetchling / Elementheart Kobold). */
   heritageResistanceChoice?: string | null;
   backgroundId: string | null;

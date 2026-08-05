@@ -64120,5 +64120,45 @@
         "note": "Perfect Mutagen: the drawback is suppressed. It applies only to a mutagen YOU crafted."
       }
     ]
+  },
+  {
+    "category": "feats",
+    "id": "late-awakener",
+    "field": "choice",
+    "value": {
+      "flag": "firstHeritage",
+      "prompt": "The awakened animal heritage you selected at 1st level",
+      "kind": "open",
+      "from": {
+        "type": "heritage",
+        "ancestry": "awakened-animal"
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "late-awakener",
+    "field": "secondHeritage",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "awakened-yaoguai-heritage",
+    "field": "choice",
+    "value": {
+      "flag": "firstHeritage",
+      "prompt": "The yaoguai heritage you selected at 1st level",
+      "kind": "open",
+      "from": {
+        "type": "heritage",
+        "ancestry": "yaoguai"
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "awakened-yaoguai-heritage",
+    "field": "secondHeritage",
+    "value": true
   }
 ]

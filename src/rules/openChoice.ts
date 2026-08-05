@@ -95,6 +95,16 @@ export function openChoiceOptions(
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((l) => ({ id: l.id, name: l.name, note: l.rarity !== 'common' ? l.rarity : undefined }));
 
+    // "The awakened animal heritage you selected at 1st level." A character who took a VERSATILE
+    // heritage has that recorded as their one `heritageId`, so the ancestry heritage they would
+    // otherwise have had was never stored anywhere. This is the picker that records it. Versatile
+    // heritages are excluded: one is what you took INSTEAD of the heritage being asked about.
+    case 'heritage':
+      return Object.values(content.heritages ?? {})
+        .filter((h) => (!from.ancestry || h.ancestryId === from.ancestry) && !h.versatile)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((h) => ({ id: h.id, name: h.name, description: h.description }));
+
     // ---- BUILD-RESOLVED sources: the pool is what this character has -------------------------
     // Without a character these return [] rather than falling back to all of content, because
     // offering every spell for "one spell YOU KNOW" would let the player pick one they don't have.

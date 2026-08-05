@@ -24,6 +24,7 @@ import type {
   WeaponItem,
   EffectGrant,
   FeatChoiceDef,
+  Heritage,
   RuneDef,
   SenseEntry,
   StanceStrike,
@@ -488,7 +489,7 @@ export function activeStateGrants(c: Character, db: ContentDatabase): NonNullabl
     for (const wa of g?.whileActive ?? []) if (on(wa.state) && c.level >= (wa.minLevel ?? 0)) out.push(wa);
   };
   for (const f of c.feats) scan(db.feats[f.featId]);
-  if (c.heritageId) scan(db.heritages[c.heritageId]);
+  for (const h of heritageRecords(c, db)) scan(h);
   for (const fid of ownedFeatureIds(c, db)) scan(db.classFeatures[fid]);
   // A resolved PICK may itself be state-gated — Giant Instinct's "your choice of cold, electricity,
   // or fire" is part of Raging Resistance, not a standing benefit.
@@ -563,6 +564,27 @@ export function domainPoolFor(
 }
 
 /**
+ * The heritage records whose benefits this character has.
+ *
+ * Normally one. Late Awakener and Awakened Yaoguai Heritage each say "you gain all the mechanical
+ * benefits of the <X> heritage you selected at 1st level" — and both require a VERSATILE heritage,
+ * which is what the single `heritageId` records, so the 1st-level ancestry heritage was never stored
+ * and there was nothing to dereference. Every reader goes through here so a second one cannot be
+ * honoured in some places and forgotten in others.
+ */
+export function heritageRecords(c: Character, db: ContentDatabase): Heritage[] {
+  return [c.heritageId, c.secondHeritageId]
+    .filter((id): id is string => !!id)
+    .map((id) => db.heritages[id])
+    .filter((h): h is Heritage => !!h);
+}
+
+/** Does the character have this heritage — either the one they picked, or a granted second? */
+export function hasHeritage(c: Character, id: string | undefined): boolean {
+  return !!id && (c.heritageId === id || c.secondHeritageId === id);
+}
+
+/**
  * The rune definitions of the property runes etched on one item.
  *
  * `RuneDef.damage` was the only payload a rune could carry, and it is weapon-side — so an ARMOUR
@@ -600,7 +622,7 @@ export function effectiveChoiceOptions(
   const sources: DefenseGrants[] = [];
   for (const f of c.feats ?? []) if (db.feats[f.featId]) sources.push(db.feats[f.featId]);
   for (const fid of ownedFeatureIds(c, db)) if (db.classFeatures[fid]) sources.push(db.classFeatures[fid]);
-  if (c.heritageId && db.heritages[c.heritageId]) sources.push(db.heritages[c.heritageId]);
+  sources.push(...heritageRecords(c, db));
 
   const extra: NonNullable<FeatChoiceDef['options']> = [];
   const sanct = sanctificationOf(c);
@@ -917,7 +939,7 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   const push = (from: string, g: DefenseGrants | undefined, cond?: string) => {
     if (g) sources.push({ ...g, __from: from, __cond: cond });
   };
-  if (c.heritageId && db.heritages[c.heritageId]) push(db.heritages[c.heritageId].name ?? 'Heritage', db.heritages[c.heritageId]);
+  for (const h of heritageRecords(c, db)) push(h.name ?? 'Heritage', h);
   // The ANCESTRY's own IWR. This source was missing entirely — the ancestry was read for `vision` and
   // nothing else — so the poppet's Flammable ("weakness to fire equal to one-third your level") had
   // nowhere to live, and Sealed Poppet had nothing to remove.
@@ -2244,7 +2266,7 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
   // The Fist's damage die increases to 1d6 (and it loses the nonlethal trait) from Powerful Fist (level-1
   // monk class feature) OR the Warrior Automaton / Warrior Jotunborn heritages, which grant the same upgrade.
   const fistDieUpgraded =
-    ownedFeatureIds(c, db).has('powerful-fist') || c.heritageId === 'warrior-automaton' || c.heritageId === 'warrior-jotunborn';
+    ownedFeatureIds(c, db).has('powerful-fist') || hasHeritage(c, 'warrior-automaton') || hasHeritage(c, 'warrior-jotunborn');
   const fistProfile: UnarmedProfile = fistDieUpgraded
     ? { ...FIST_PROFILE, die: 'd6', traits: FIST_PROFILE.traits.filter((t) => t !== 'nonlethal') }
     : FIST_PROFILE;
@@ -2298,7 +2320,7 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   // Non-land speeds granted (unconditionally) by the heritage, selected feats, or a worn/invested
   // item's passive effects (the generic magic-item lane).
   const grantSources: DefenseGrants[] = [];
-  if (c.heritageId && db.heritages[c.heritageId]) grantSources.push(db.heritages[c.heritageId]);
+  grantSources.push(...heritageRecords(c, db));
   for (const f of c.feats) {
     const feat = db.feats[f.featId];
     if (feat) grantSources.push(feat);
@@ -2313,7 +2335,7 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   let featLandBonus = 0;
   for (const f of c.feats) featLandBonus += db.feats[f.featId]?.landSpeedBonus ?? 0;
   for (const fid of ownedFeatureIds(c, db)) featLandBonus += db.classFeatures[fid]?.landSpeedBonus ?? 0;
-  if (c.heritageId) featLandBonus += db.heritages[c.heritageId]?.landSpeedBonus ?? 0;
+  for (const h of heritageRecords(c, db)) featLandBonus += h.landSpeedBonus ?? 0;
   let passiveSpeedPenalty = 0;
   let passiveLandBonus = 0;
   for (const inv of c.inventory) {
@@ -2332,7 +2354,7 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   let landFloor = 0;
   for (const f of c.feats) landFloor = Math.max(landFloor, db.feats[f.featId]?.landSpeedMin ?? 0);
   for (const fid of ownedFeatureIds(c, db)) landFloor = Math.max(landFloor, db.classFeatures[fid]?.landSpeedMin ?? 0);
-  if (c.heritageId) landFloor = Math.max(landFloor, db.heritages[c.heritageId]?.landSpeedMin ?? 0);
+  for (const h of heritageRecords(c, db)) landFloor = Math.max(landFloor, h.landSpeedMin ?? 0);
   if (landFloor) speeds.land = Math.max(speeds.land ?? 0, landFloor);
   if (passiveLandBonus || featLandBonus) speeds.land = (speeds.land ?? 0) + passiveLandBonus + featLandBonus;
   // A proficiency-gated speed (Quick Climb/Swim: climb/swim = land Speed only if legendary Athletics).
@@ -2343,7 +2365,7 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       // Skill-proficiency gate (Quick Climb/Swim) — pass if no skill named.
       const skillOk = !g.skill || !g.rank || PROFICIENCY_RANKS.indexOf(c.proficiencies.skills[g.skill] ?? 'untrained') >= PROFICIENCY_RANKS.indexOf(g.rank);
       // Heritage gate (Swift Swimmer's wetlander lizardfolk) — pass if no heritage named.
-      const heritageOk = !g.heritage || c.heritageId === g.heritage;
+      const heritageOk = !g.heritage || hasHeritage(c, g.heritage);
       if (skillOk && heritageOk) gatedSpeeds.push(g.speeds);
     }
   }

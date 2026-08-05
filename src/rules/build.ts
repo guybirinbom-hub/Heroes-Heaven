@@ -1534,8 +1534,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const subj = build.backgroundLore.trim().toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     if (subj) skills[`lore:${subj}` as ProficiencyKey] = 'trained';
   }
+  // "You gain all the mechanical benefits of the <X> heritage you selected at 1st level." Both feats
+  // that say this require a VERSATILE heritage — which is what the character's single `heritageId`
+  // records — so the 1st-level ancestry heritage was never stored anywhere and there was nothing to
+  // dereference. The feat's own pick supplies it; with no answer, nothing is granted.
+  let secondHeritageId: string | undefined;
+  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+    if (!content.feats[featId]?.secondHeritage) continue;
+    const picked = build.featChoices?.[slotKey];
+    if (picked && content.heritages[picked] && picked !== build.heritageId) secondHeritageId = picked;
+  }
+
   // A "choose N Lores" heritage (Half Moon Sarangay: 2; Born of Item: 1) — each typed subject is trained.
-  const heritageLoreN = build.heritageId ? content.heritages[build.heritageId]?.loreChoices ?? 0 : 0;
+  const heritageLoreN = [build.heritageId, secondHeritageId].reduce(
+    (n, id) => n + (id ? content.heritages[id]?.loreChoices ?? 0 : 0),
+    0,
+  );
   if (heritageLoreN > 0) {
     for (const raw of (build.heritageLore ?? []).slice(0, heritageLoreN)) {
       const subj = raw?.trim().toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -2743,7 +2757,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   };
   for (const fc of feats) resolvePick(fc.featId, content.feats[fc.featId]?.effectChoices, applyAlwaysOn, content.feats[fc.featId]?.name ?? fc.featId);
-  if (build.heritageId) resolvePick(build.heritageId, content.heritages[build.heritageId]?.effectChoices, applyAlwaysOn, content.heritages[build.heritageId]?.name ?? build.heritageId);
+  // Both heritages: four of the nine a second-heritage feat can hand over carry their whole
+  // mechanical content in `effectChoices`, so resolving only the first would grant nothing.
+  for (const hid of [build.heritageId, secondHeritageId]) {
+    if (hid) resolvePick(hid, content.heritages[hid]?.effectChoices, applyAlwaysOn, content.heritages[hid]?.name ?? hid);
+  }
   // The DEITY and the BACKGROUND can carry a pick too (Lurlup's optional Unholy sanctification;
   // Magical Experiment). Neither was resolved, so both were questions with no answer and no effect.
   if (build.deityId) resolvePick(build.deityId, content.deities[build.deityId]?.effectChoices, applyAlwaysOn, content.deities[build.deityId]?.name ?? build.deityId);
@@ -3447,6 +3465,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     xp: 0,
     ancestryId: build.ancestryId,
     heritageId: build.heritageId,
+    ...(secondHeritageId ? { secondHeritageId } : {}),
     heritageResistanceChoice: build.heritageResistanceChoice ?? null,
     backgroundId: build.backgroundId,
     classId: build.classId,
@@ -3507,7 +3526,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // Languages granted outright by feats/heritage (fixed grants) and invested items (Stole of
       // Civility). These are on top of the Int/ancestry slot budget, like the override-added ones.
       const featLangs = feats.flatMap((fc) => content.feats[fc.featId]?.grantsLanguages ?? []);
-      const heritageLangs = build.heritageId ? content.heritages[build.heritageId]?.grantsLanguages ?? [] : [];
+      const heritageLangs = [build.heritageId, secondHeritageId].flatMap((id) =>
+        id ? content.heritages[id]?.grantsLanguages ?? [] : [],
+      );
       const itemLangs = (build.inventory ?? [])
         .filter((inv) => inv.invested)
         .flatMap((inv) => content.items[inv.itemId]?.passiveEffects?.grantsLanguages ?? []);
