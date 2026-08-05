@@ -14,6 +14,7 @@
  */
 import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
 import { deriveMaxHp, deriveBulk } from './derive';
+import { adjustModes } from './modes';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
 import { coinsToCp, cpToCoins } from './wealth';
@@ -303,7 +304,14 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     companions: play.companions ?? ch.companions,
     details: play.details ? { ...ch.details, ...play.details } : ch.details,
     appearance: play.appearance ? { ...ch.appearance, ...play.appearance } : ch.appearance,
-    activeModes: (play.activeModes ?? []).map((id) => content.modes[id]).filter(Boolean),
+    // A feat can CHANGE a mode before anything reads it (Extend Elixir doubles the duration, Perfect
+    // Mutagen drops the drawback). Applied here, where a mode id becomes the live object, so every
+    // reader downstream sees the adjusted version instead of each one having to remember to adjust.
+    activeModes: adjustModes(
+      (play.activeModes ?? []).map((id) => content.modes[id]).filter(Boolean),
+      ch.feats ?? [],
+      content,
+    ),
     activeStance: play.activeStance && content.stances?.[play.activeStance] ? play.activeStance : undefined,
     companionModes: Object.fromEntries(
       Object.entries(play.companionModes ?? {}).map(([cid, ids]) => [cid, ids.map((id) => content.modes[id]).filter(Boolean)]),

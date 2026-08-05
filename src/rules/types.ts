@@ -425,6 +425,23 @@ export interface DefenseGrants {
    * reach into another's `choice.options`, so these feats were taken and the menu stayed the same
    * size — the player could see the new runes named in the feat's text and could not pick one.
    */
+  /**
+   * A record that changes an ITEM MODE rather than the character — an elixir's duration, or whether
+   * a mutagen's drawback applies. Mutagens and elixirs ship as item-driven modes whose `duration` is
+   * a printed string (the app has no clock) and whose drawback is a genuine negative modifier;
+   * nothing could touch either, so both of these feats were inert.
+   */
+  modeAdjust?: {
+    /** Which modes. All present conditions must hold. */
+    match: { traits?: string[]; ids?: string[]; minDurationMinutes?: number };
+    /** "that elixir's duration is doubled" — applied to the printed string. */
+    doubleDuration?: boolean;
+    /** "you do not suffer its drawback" — every negative modifier on the mode stops applying. */
+    suppressNegativeModifiers?: boolean;
+    /** Shown alongside the adjusted mode, for a restriction the app cannot check (Extend Elixir
+     *  applies only to elixirs YOU created, and Quick Alchemy still caps at 10 minutes). */
+    note?: string;
+  }[];
   /** Damage types this record adds to an Elemental Blast's printed list, per element — "add the
    *  following damage types to those you can choose for Elemental Blasts of that element" (Versatile
    *  Blasts). The printed lists were not modelled as lists, so there was nothing to add to. */
@@ -697,6 +714,9 @@ export interface ItemPassiveEffects {
   saves?: number;
   ac?: number;
   attack?: number;
+  /** Raises BOTH Bulk thresholds — the Assisting armour rune sets them to 6 + Str and 11 + Str,
+   *  which is the ordinary 5 + Str / 10 + Str plus one. */
+  bulkLimitBonus?: number;
   senses?: SenseEntry[];
   /** Feet, or a formula relative to the character ("floor(@actor.speed.land/2)"). */
   speeds?: SpeedGrants;
@@ -1977,6 +1997,19 @@ export interface RuneDef {
   price?: Price;
   /** Property runes that add Strike damage (e.g. Flaming → 1d6 fire). */
   damage?: { dice: number; die: DieSize; type: DamageType; critPersistent?: { dice: number; die: DieSize } };
+  /**
+   * A PROPERTY rune that "functions as" a fundamental one — Adamantine Echo works as a +1 armor
+   * potency rune. It cannot simply BE `kind: 'potency'`: that would make it occupy the potency slot
+   * instead of a property slot, which is the whole point of the relic.
+   */
+  actsAs?: { kind: 'potency' | 'striking' | 'resilient' | 'reinforcing'; value: number };
+  /**
+   * Everything else an armour property rune does. `damage` was the ONLY payload a rune could carry
+   * and it is weapon-side, so an armour property rune could never do anything mechanical at all —
+   * both of the ones that ship were bare registrations. Reuses the ITEM shape rather than inventing a
+   * rune-specific one, so a rune reaches every reader an invested item already reaches.
+   */
+  passiveEffects?: ItemPassiveEffects;
 }
 
 /* =========================================================================

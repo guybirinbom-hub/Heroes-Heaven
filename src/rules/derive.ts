@@ -24,6 +24,7 @@ import type {
   WeaponItem,
   EffectGrant,
   FeatChoiceDef,
+  RuneDef,
   SenseEntry,
   StanceStrike,
   SubclassOption,
@@ -561,6 +562,18 @@ export function domainPoolFor(
   return [...new Set([...own, ...(deity?.alternateDomains ?? [])])];
 }
 
+/**
+ * The rune definitions of the property runes etched on one item.
+ *
+ * `RuneDef.damage` was the only payload a rune could carry, and it is weapon-side — so an ARMOUR
+ * property rune could never do anything mechanical, and both of the ones that ship were bare
+ * registrations. This is the one place that resolves them, so every reader sees the same list.
+ */
+export function propertyRuneDefs(inv: InventoryItem | undefined, db: ContentDatabase): RuneDef[] {
+  const ids = (inv?.runes as ArmorRunes | WeaponRunes | undefined)?.property ?? [];
+  return ids.map((id) => db.runes?.[id]).filter((r): r is RuneDef => !!r);
+}
+
 /** 'holy', 'unholy', or null. Recorded as the deity's `sanctification` effect choice. */
 export function sanctificationOf(c: Character): 'holy' | 'unholy' | null {
   const label = (c.effectPicks ?? []).find((p) => p.choiceId === 'sanctification')?.label?.toLowerCase();
@@ -669,7 +682,16 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
     // rather than adding — which is also exactly the feat's own "no effect if it already had a
     // potency rune".
     const bfAc = worn.inv.battleforged ? 1 : 0;
-    acItem = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc, bfAc);
+    // A PROPERTY rune that "functions as a +1 armor potency rune" (Adamantine Echo). It occupies a
+    // property slot, not the potency slot — so it cannot be recorded as a potency rune — but it must
+    // deliver the same item bonus, and like every other source here it takes the highest.
+    const actsAsPotency = Math.max(
+      0,
+      ...propertyRuneDefs(worn.inv, db)
+        .filter((r) => r.actsAs?.kind === 'potency')
+        .map((r) => r.actsAs!.value),
+    );
+    acItem = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc, bfAc, actsAsPotency);
   }
   // A passive AC item (Bracers of Armor), Monster Parts, and ABP defense potency are all ITEM bonuses to
   // AC — they don't stack with each other or the armor potency rune, so take the highest.
@@ -2482,6 +2504,16 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
     if (f?.bulkLimitBonus) limitBonus += f.bulkLimitBonus;
     if (f?.armorBulkReduction) armorCuts.push(f.armorBulkReduction);
   }
+  // An armour PROPERTY RUNE can raise the thresholds too — Assisting sets them to 6 + Str and
+  // 11 + Str. Only while the armour is actually worn and invested, since the rune's own text keys
+  // off investing it. Highest wins rather than summing: two of the same rune is still one set of
+  // supports, and these are the same untyped thresholds a single item bonus would move.
+  let runeBonus = 0;
+  for (const inv of c.inventory ?? []) {
+    if (!inv.worn || !inv.invested) continue;
+    for (const r of propertyRuneDefs(inv, db)) runeBonus = Math.max(runeBonus, r.passiveEffects?.bulkLimitBonus ?? 0);
+  }
+  limitBonus += runeBonus;
   /** How much Bulk this feat set forgives on a given worn item — armour only, and never below 0. */
   const armorRelief = (inv: InventoryItem): number => {
     if (!armorCuts.length || !inv.worn) return 0;

@@ -4,7 +4,7 @@
  * into the targeted stat's number with PF2e stacking; a CONDITIONAL one doesn't change the
  * number — it underlines the stat and is shown (with its "applies when") in the breakdown.
  */
-import type { ModeDef, ModeModifier, ModeTargetKind } from './types';
+import type { ContentDatabase, DefenseGrants, Item, ModeDef, ModeModifier, ModeTargetKind } from './types';
 
 /** A stat being computed, matched against a modifier's target. */
 export interface ModeTarget {
@@ -308,4 +308,72 @@ export function modeRelevant(
   if (mode.feats) gates.push(!!featIds && mode.feats.some((f) => featIds.has(f)));
   if (gates.length === 0) return true; // ungated ⇒ general
   return gates.some(Boolean); // matches any gate
+}
+
+/* -------------------------------------------------------------------------------------------------
+ * Records that change an item MODE rather than the character.
+ *
+ * Mutagens and elixirs ship as item-driven modes: `duration` is a PRINTED string (the app has no
+ * clock, so the player reads it and switches the mode off) and a mutagen's drawback is a genuine
+ * negative modifier. Neither could be touched by anything, so Extend Elixir ("that elixir's duration
+ * is doubled") and Perfect Mutagen ("you do not suffer its drawback") did nothing at all.
+ * ---------------------------------------------------------------------------------------------- */
+
+/** Minutes in a printed duration string, or 0 when it names no time ("until your next daily preparations"). */
+export function durationMinutes(printed: string | undefined): number {
+  const m = /(\d+)\s*(minute|hour|day)/i.exec(printed ?? '');
+  if (!m) return 0;
+  const n = Number(m[1]);
+  return m[2].toLowerCase() === 'hour' ? n * 60 : m[2].toLowerCase() === 'day' ? n * 1440 : n;
+}
+
+/** Double every number in a printed duration, keeping its units and wording. */
+function doublePrinted(printed: string): string {
+  return printed.replace(/(\d+)/g, (d) => String(Number(d) * 2));
+}
+
+/** Does `adj.match` describe this mode? All present conditions must hold. */
+function adjustMatches(
+  mode: ModeDef,
+  item: Item | undefined,
+  match: NonNullable<DefenseGrants['modeAdjust']>[number]['match'],
+): boolean {
+  if (match.ids?.length && !match.ids.includes(mode.id)) return false;
+  // Traits live on the ITEM the mode came from — a mode is a toggle, not a game object with traits.
+  if (match.traits?.length) {
+    const traits = new Set(item?.traits ?? []);
+    if (!match.traits.every((t) => traits.has(t))) return false;
+  }
+  if (match.minDurationMinutes && durationMinutes(mode.duration) < match.minDurationMinutes) return false;
+  return true;
+}
+
+/**
+ * Apply every `modeAdjust` the character's feats carry to the modes they have switched on.
+ *
+ * Returns new objects — the catalog and the content database are shared, and mutating a ModeDef here
+ * would leak one character's feats into every other character's copy of the same elixir.
+ */
+export function adjustModes(
+  modes: readonly ModeDef[],
+  feats: readonly { featId: string }[],
+  content: ContentDatabase,
+): ModeDef[] {
+  const adjusts = feats.flatMap((f) => content.feats[f.featId]?.modeAdjust ?? []);
+  if (!adjusts.length) return [...modes];
+  return modes.map((mode) => {
+    const item = mode.fromItemId ? content.items[mode.fromItemId] : undefined;
+    const hits = adjusts.filter((a) => adjustMatches(mode, item, a.match));
+    if (!hits.length) return mode;
+    let out = mode;
+    // Doubling is applied ONCE however many records ask for it: two feats that each say "doubled"
+    // do not quadruple a duration.
+    if (hits.some((a) => a.doubleDuration) && out.duration) out = { ...out, duration: doublePrinted(out.duration) };
+    if (hits.some((a) => a.suppressNegativeModifiers)) {
+      out = { ...out, modifiers: out.modifiers.filter((m) => m.value >= 0) };
+    }
+    const notes = hits.map((a) => a.note).filter(Boolean);
+    if (notes.length) out = { ...out, note: [out.note, ...notes].filter(Boolean).join(' ') };
+    return out;
+  });
 }

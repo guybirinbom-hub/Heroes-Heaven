@@ -64070,5 +64070,55 @@
       "edition": "remaster",
       "level": 15
     }
+  },
+  {
+    "category": "runes",
+    "id": "adamantine-echo",
+    "field": "actsAs",
+    "value": {
+      "kind": "potency",
+      "value": 1
+    }
+  },
+  {
+    "category": "runes",
+    "id": "assisting",
+    "field": "passiveEffects",
+    "value": {
+      "bulkLimitBonus": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "extend-elixir",
+    "field": "modeAdjust",
+    "value": [
+      {
+        "match": {
+          "traits": [
+            "elixir"
+          ],
+          "minDurationMinutes": 1
+        },
+        "doubleDuration": true,
+        "note": "Extend Elixir doubled this duration. It applies only to an INFUSED elixir you created yourself, and an elixir made with Quick Alchemy still cannot exceed 10 minutes."
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "perfect-mutagen",
+    "field": "modeAdjust",
+    "value": [
+      {
+        "match": {
+          "traits": [
+            "mutagen"
+          ]
+        },
+        "suppressNegativeModifiers": true,
+        "note": "Perfect Mutagen: the drawback is suppressed. It applies only to a mutagen YOU crafted."
+      }
+    ]
   }
 ]
