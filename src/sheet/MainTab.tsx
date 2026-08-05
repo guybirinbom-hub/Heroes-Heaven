@@ -6,6 +6,7 @@ import {
   abilityMod,
   deriveArmorCheckPenalty,
   deriveSkill,
+  ownedFeatureIds,
   deriveStrikes,
   formatMod,
   critSpecSources,
@@ -192,9 +193,18 @@ export function MainTab({
   // and must NOT be listed as activities.
   const isActionCost = (c?: ActionCost) =>
     !!c && (c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable');
-  const featActions: Act[] = character.feats
-    .map((f) => content.feats[f.featId])
+  // A CLASS FEATURE can be an action too — Flurry of Blows, Channel Smite, an oracle's curse, a
+  // gunslinger's deed. This list was built from `character.feats` alone, so every one of those was
+  // owned, correct, described on the Feats tab, and absent from the encounter action list where a
+  // player looks for something to DO on their turn.
+  const actionRecords = [
+    ...character.feats.map((f) => content.feats[f.featId]),
+    ...[...ownedFeatureIds(character, content)].map((id) => content.classFeatures[id]),
+  ];
+  const seenActionNames = new Set<string>();
+  const featActions: Act[] = actionRecords
     .filter((f) => !!f && isActionCost(f.actionCost) && !activityNames.has(f.name))
+    .filter((f) => !seenActionNames.has(f!.name) && seenActionNames.add(f!.name))
     .map((f) => ({ name: f!.name, cost: f!.actionCost as ActionCost, desc: f!.description, descRefs: f!.descRefs, traits: f!.traits }));
   // Commander folio tactics are Action items the character knows — listed in their own section.
   const tacticActions: (Act & { id: string })[] = (character.commanderTactics?.folio ?? [])

@@ -42,6 +42,19 @@ function featBucket(category: string): string {
  */
 export function featEntries(character: Character, content: ContentDatabase): FeatEntry[] {
   const entries: FeatEntry[] = [];
+  /** A record's display name from ANY collection a granter can live in. Falling back to the id shows
+   *  a raw slug, which is what "Granted by cloistered-cleric" was. */
+  const recordName = (id: string) =>
+    content.feats[id]?.name ??
+    content.classFeatures[id]?.name ??
+    content.heritages[id]?.name ??
+    content.items[id]?.name ??
+    content.backgrounds[id]?.name ??
+    // A subclass / extra-choice option is not in classFeatures under every id, so search the class defs.
+    Object.values(content.classes)
+      .flatMap((cl) => [...(cl.subclass?.options ?? []), ...(cl.extraChoices ?? []).flatMap((g) => g.options ?? [])])
+      .find((o) => o.id === id)?.name ??
+    id;
   // "Choose one of N" picks, so a row can say WHICH option this character took (and why it matters).
   const picksOf = (recordId: string) => (character.effectPicks ?? []).filter((p) => p.recordId === recordId);
   const pickSuffix = (recordId: string) => {
@@ -65,7 +78,10 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       description: withPicks(fc.featId, feat.description),
       descRefs: feat.descRefs,
       isFeature: false,
-      grantedBy: fc.grantedBy ? content.feats[fc.grantedBy]?.name ?? fc.grantedBy : undefined,
+      // build.ts sets `grantedBy` from heritages, class features, invested items and subclass /
+      // extra-choice options as well as feats — so resolving the name through `content.feats` alone
+      // showed a raw slug ("cloistered-cleric") for every granter that is not a feat.
+      grantedBy: fc.grantedBy ? recordName(fc.grantedBy) : undefined,
       bucket: feat.traits.includes('archetype') ? 'Archetype' : featBucket(feat.category),
       rarity: feat.rarity,
       prerequisites: feat.prerequisites,
