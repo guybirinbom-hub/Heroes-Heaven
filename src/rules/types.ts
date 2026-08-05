@@ -1221,6 +1221,15 @@ export interface SubclassOption {
    * only the bare form a 1st-level gunslinger would own their 15th-level Greater Deed.
    */
   featureIds?: (string | { id: string; level: number })[];
+  /**
+   * The eidolon type's own abilities, one per tier.
+   *
+   * Every one of the 13 eidolon types already printed the answer in its own description — "Eidolon
+   * Abilities *Initial* breath weapon; *Symbiosis* draconic frenzy; *Transcendence* wyrm's breath",
+   * followed by the full text of each — and nothing structured it, so the eidolon's block listed
+   * none of them and Eidolon Symbiosis (7th) and Eidolon Transcendence (17th) arrived empty.
+   */
+  eidolonAbilities?: { tier: 'initial' | 'symbiosis' | 'transcendence'; level: number; name: string; text: string }[];
   /** Focus spell ids this option grants (druid order spell, wizard school spell, witch hex). */
   focusSpells?: string[];
   /** Feat-gated advanced focus spell (Advanced Bloodline / Advanced Revelation grants this). */

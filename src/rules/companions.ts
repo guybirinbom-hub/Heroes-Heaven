@@ -661,6 +661,11 @@ export interface EidolonBlock extends Defenses {
   iwr?: string[];
   /** Evolution reminders shown under the block. */
   evoNotes?: string[];
+  /** The eidolon TYPE's own abilities, filtered to the tiers the summoner's level has reached.
+   *  Every type printed these in its description and nothing structured them, so Eidolon Symbiosis
+   *  (7th) and Eidolon Transcendence (17th) — whose whole content is "you gain your type's ability" —
+   *  arrived empty. */
+  typeAbilities?: { tier: string; level: number; name: string; text: string }[];
 }
 
 /** The eidolon's primary unarmed attack is chosen from these stat blocks (Secrets of Magic). The
@@ -847,5 +852,12 @@ export function deriveEidolon(
     ...(extraSpeeds.length ? { extraSpeeds } : {}),
     ...(evoIwr.length ? { iwr: evoIwr } : {}),
     ...(evoNotes.length ? { evoNotes } : {}),
+    // Only the tiers the summoner has reached. Eidolon Symbiosis is a 7th-level class feature and
+    // Transcendence a 17th — listing all three from 1st would show a 1st-level summoner two
+    // abilities their eidolon does not have.
+    ...(() => {
+      const owned = (opt?.eidolonAbilities ?? []).filter((a) => character.level >= a.level);
+      return owned.length ? { typeAbilities: owned } : {};
+    })(),
   };
 }

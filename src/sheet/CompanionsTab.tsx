@@ -800,6 +800,20 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
         {b.extraSpeeds?.length ? `, ${b.extraSpeeds.join(', ')}` : ''}
       </div>
       {b.evoNotes?.length ? <div className="sb-line sb-muted">{b.evoNotes.join(' ')}</div> : null}
+      {/* The eidolon TYPE's own abilities. Every type printed these in its description and nothing
+          structured them, so the block listed none — and Eidolon Symbiosis (7th) and Eidolon
+          Transcendence (17th), whose whole content is "you gain your type's ability", arrived
+          empty. Only the tiers this summoner has reached are listed. */}
+      {b.typeAbilities?.length ? (
+        <>
+          <div className="sb-div" />
+          {b.typeAbilities.map((a) => (
+            <div className="sb-line" key={a.tier}>
+              <b>{a.name}</b> <span className="sb-trait">{a.tier}</span> {a.text}
+            </div>
+          ))}
+        </>
+      ) : null}
       {b.description && (
         <>
           <div className="sb-div" />

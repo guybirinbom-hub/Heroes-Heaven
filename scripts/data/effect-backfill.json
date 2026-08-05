@@ -64231,5 +64231,395 @@
         "itemId": "extradimensional-stash-space"
       }
     ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=angel-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Hallowed Strikes",
+        "text": "Your eidolon's attacks are hallowed by the celestial realms. Your eidolon's unarmed Strikes gain the holy trait and deal 1 extra spirit damage to unholy creatures and creatures with weakness to holy. Additionally, your eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance penalty."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Traveler's Aura",
+        "text": "Your eidolon emanates a powerful aura—resembling that of an astral deva—that protects creatures as they travel. The aura has the abjuration, aura, and divine traits. Your eidolon and its allies within a 20-foot emanation are protected from severe heat and cold, and your eidolon is never flat-footed to creatures inside the aura that are of a lower level than the eidolon. When you gain the transcendence class feature, this evolves to the full benefits of an astral deva; your eidolon and allies in the aura are protected from environmental damage from any plane, including severe and extreme heat and cold as well as more unusual dangers."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Angelic Mercy",
+        "text": "Your eidolon's angelic power allows them to assuage a variety of ailments, just like most other powerful angels. Your eidolon can cast _remove curse_, _remove disease_, _remove fear_, and _remove paralysis_ once per day each as 9th-level divine innate spells."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=anger-phantom-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Furious Strike",
+        "text": "Your eidolon can infuse an attack with unmitigated rage. It gains the Furious Strike activity."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Seething Frenzy",
+        "text": "Your eidolon can stoke itself into a frenzy. It gains the Seething Frenzy action."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Anger Aura",
+        "text": "Your eidolon exudes wrath in an aura around it, rousing the ire of nearby creatures and causing their defenses to crack as they seethe with rage. Your eidolon gains a 20-foot anger aura, which has the aura, emotion, enchantment, mental, and occult traits. The resistances of any creature in the aura, including you, your allies, your enemies, and your eidolon, are reduced by an amount equal to 3 + your eidolon's Constitution modifier. Your eidolon can hold in its rage by spending a single action, which has the concentrate trait. This reduces the aura's effect to affect only your eidolon. It can take this action again to reinstate the full effect of its aura. Creatures in a barbarian Rage, Seething Frenzy, or similar ability that allows them to channel their anger aren't affected by the anger aura."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=beast-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Beast's Charge",
+        "text": "Your eidolon can make a ferocious charge or pounce on foes, allowing it to quickly engage. It gains the Beast's Charge activity."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Primal Roar",
+        "text": "Your eidolon can bellow a terrifying roar, screech, croak, or other overpowering sound to frighten foes. It gains the Primal Roar activity."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Whirlwind Maul",
+        "text": "Your eidolon thrashes violently, damaging many foes in its reach. It gains the Whirlwind Maul activity."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=construct-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Construct Heart",
+        "text": "Your construct eidolon has a link directly to your life force, which renders it a living creature and therefore susceptible to many ailments that bother only the living, though it does possess some resistances to these effects. It doesn't have a construct's normal immunities, but does gain a +2 circumstance bonus to saving throws against death effects, disease, necromancy, and poison effects, as well as effects causing the fatigued or sickened conditions. Additionally, its astral essence bleeds off slowly, and it only needs to succeed at a DC 10 flat check to remove persistent bleed damage (or DC 5 after receiving particularly effective aid)."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Reconfigured Evolution",
+        "text": "Your construct eidolon is particularly easy to reconfigure, gaining an additional evolution that suits both of your whims. Choose one additional evolution feat of 6th level or lower. Your eidolon gains that feat. You can Retrain this feat for any other evolution feat of 6th level or lower with only a single day of downtime if you succeed at a Crafting check, with a standard DC of your eidolon's level. If you fail, you can try again on a later day. Many summoners choose Eidolon's Wrath for this ability."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Ultimate Reconfiguration",
+        "text": "Your construct eidolon becomes even more customizable. Choose an evolution feat of 16th level or lower. Your eidolon gains that feat. You can spend downtime to adjust it using Crafting, just like the feat from reconfigured evolution. Many summoners select Ever-Vigilant Senses for this ability."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=demon-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Demonic Strikes",
+        "text": "Your eidolon's attacks are corrupted by the Abyss and imbued with pure evil and shifting chaos. Your eidolon's unarmed Strikes gain the unholy trait and deal 1 extra spirit damage to holy creatures and creatures with weakness to unholy. Additionally, choose one of your eidolon's unarmed attacks that deals physical damage; it gains your choice of versatile B, versatile P, or versatile S."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Visions of Sin",
+        "text": "Your demon is born of sin and can project the sin it is formed from into the minds of others. It gains the Visions of Sin activity."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Blasphemous Decree",
+        "text": "Your demon utters indescribable words writhing with its associated sin. It can cast an evil _divine decree_ once per day as a 9th-level spell. You are unaffected by this decree, even if you aren't evil. At 19th level, this becomes a 10th-level _divine decree_ instead."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=devotion-phantom-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Dutiful Retaliation",
+        "text": "Your eidolon deeply respects your assistance, and it extends its loyalty to you, attacking those who dare harm you. It gains the Dutiful Retaliation reaction."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Steadfast Devotion",
+        "text": "Your eidolon's dedication makes it extremely challenging for your foes to bend its mind. Your eidolon gains a +2 circumstance bonus to saving throws against mental effects, and if they roll a success against such an effect, they get a critical success instead. If you have the shared resolve class feature and your eidolon rolls a critical failure against a mental effect, they get a failure instead."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Devotion Aura",
+        "text": "After fighting at your side for so long, your eidolon has become as devoted to protecting you and your allies as it is to its original cause. It gains a 20-foot devotion aura, which has the abjuration, aura, and occult traits. Whenever one of your eidolon's allies within the aura takes damage, you can reduce the damage by your eidolon's Constitution modifier. You lose a number of Hit Points equal to half the amount by which the eidolon reduced the damage, rounded down. If the damage was lower than the Constitution modifier, base the damage you take on the actual amount of damage prevented."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=dragon-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Breath Weapon",
+        "text": "Your eidolon has a powerful breath weapon, which they are able to use regularly to wreak havoc upon your foes. They gain the Breath Weapon activity. Choose a damage type from among acid, cold, electricity, fire, negative, piercing, or poison, and choose whether the area is a 60-foot line or a 30-foot cone. Unless you chose piercing damage, both Breath Weapon and your eidolon gain the trait matching the damage type."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Draconic Frenzy",
+        "text": "Your eidolon can make a furious assault, potentially recovering the use of their Breath Weapon. They gain the Draconic Frenzy activity."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Wyrm's Breath",
+        "text": "Your eidolon can draw upon the power of wyrms to enhance the eidolon's Breath Weapon. Your eidolon gains the Wyrm's Breath free action."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=elemental-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Elemental Core",
+        "text": "Your elemental eidolon is an amalgam of elemental matter and mortal life force, which helps protect them from certain effects that are more harmful to mortals than elementals. They gain a +2 circumstance bonus to saving throws against poison and sleep effects, as well as effects causing the paralyzed condition. Additionally, their elemental essence bleeds less easily than flesh, so the DC of any flat check they make to remove persistent bleed damage is 10 (or 5 after receiving particularly effective aid). Choose for your eidolon to be an air, earth, fire, metal, wood, or water elemental. Your eidolon and all their unarmed attacks gain the trait of the chosen element, and the eidolon gains additional effects based on your choice. **Air**: Your eidolon is formed from elemental air and is light as a breeze. Your eidolon can Leap, High Jump, and Long Jump twice as far, and doesn't take falling damage. **Earth**: Your eidolon is formed from elemental earth, and is incredibly hard to move by force. Your eidolon gains a +2 circumstance bonus to their Fortitude or Reflex DCs against attempts to Shove or Trip them. This bonus also applies to saving throws against spells or effects that attempt to knock them prone. In addition, if any effect would force them to move 10 feet or more, they're moved only half the distance. **Fire**: Your eidolon is formed from elemental fire and burns with embers of flame. Your eidolon gains resistance equal to half your level (minimum 1) to fire and an equal amount of weakness to cold and water. Their unarmed attacks deal 1 additional fire damage. **Metal**: Your eidolon is formed from elemental metal and can adapt their metallic form to battle. One of your eidolon's starting melee unarmed attacks gains the versatile bludgeoning, piercing, or slashing trait, as your eidolon learns how to shift the metal into various weaponlike forms. **Water**: Your eidolon is formed from elemental water and swims with ease. Your eidolon gains the amphibious trait, allowing them to breathe in water and air and to avoid the normal –2 penalty for making bludgeoning and slashing unarmed Strikes underwater. Your eidolon's land Speed is reduced to 15 feet, and they gain a swim Speed of 25 feet. You can take the Amphibious Form feat to increase their land Speed back up to 25 feet, as described in the feat. **Wood**: Your eidolon is formed from elemental wood, and its living wooden form twists and regrows as you focus your elemental energies. You can choose to have your eidolon gain the plant trait. Whenever you Refocus, your eidolon regains a number of Hit Points equal to double your level."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Elemental Burst",
+        "text": "Your eidolon can form projectile attacks from their own body. Your eidolon gains the Elemental Burst activity."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Elemental Maelstrom",
+        "text": "Your eidolon can form a swirling vortex of elemental matter and move across the battlefield, damaging everything in their path. Your eidolon gains the Elemental Maelstrom activity."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=fey-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Fey Gift Spells",
+        "text": "Your eidolon expands your primal magic with enchantment and illusion magic, allowing both of you to wield the power of fey charm and glamour. When you add spells to your repertoire, you can choose from the primal list as well as spells that have the illusion or mental traits that appear on the arcane spell list. As usual for when you add spells of a different tradition to your spell list, you're still a primal spellcaster, so all of your spells are primal spells. Your eidolon gains the Magical Understudy summoner feat, despite not meeting the prerequisite level, and it can choose fey gift cantrips in addition to primal cantrips. As usual for a feat you are granted by name, you can't retrain Magical Understudy into another feat."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Fey Mischief",
+        "text": "Your eidolon's fey magic becomes more powerful and mischievous. Your eidolon gains the Magical Adept feat, despite not meeting the prerequisite level, and can choose from fey gift spells in addition to primal spells."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Fey Chicanery",
+        "text": "Ever full of tricks, your fey eidolon twists magical protections into your shared life force, granting it a contingency in its back pocket for desperate situations. During your daily preparations, your eidolon can cast a _contingency_ spell. The 4th-level spell it chooses must come from the primal or fey gift list, and must either be common or be another spell you have access to."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=plant-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Tendril Strike",
+        "text": "Your eidolon can stretch out vines and roots, attacking foes outside its reach. It gains the Tendril Strike action."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Growing Vines",
+        "text": "Your eidolon's vines and branches lengthen even more. All your eidolon's melee unarmed attacks gain the reach trait."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Field of Roots",
+        "text": "Your eidolon learns how to send its roots underground to hinder foes. It gains the Field of Roots activity."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=psychopomp-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Spirit Touch",
+        "text": "Your eidolon's attacks possess a psychopomp's ability to harm the living and the dead. Your eidolon's unarmed Strikes affect incorporeal creatures as though etched with a _ghost touch_ property rune and deal an extra 1 negative damage to living creatures and an extra 1 positive damage to undead."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Hidden Watcher",
+        "text": "Your eidolon can render both of you unseen. Once per hour, it can cast _invisibility_ targeting you, them, or both of you at once. If the spell targeted both of you, the spell ends for both of you if either of you uses a hostile action."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Spirit Taker",
+        "text": "Your eidolon is particularly capable when it comes to handling bodiless spirits and putting undead to their final rest. Your eidolon can see incorporeal creatures inside of solid objects and can attack them with Strikes without penalty; an incorporeal creature in a solid object that takes damage from your eidolon's Strike is expelled from the object to the nearest available space, moving closer to your eidolon if possible. Additionally, your eidolon can target or affect a creature projecting its consciousness (such as via _project image_) or possessing another creature, even if its body is elsewhere, though your eidolon must know about the possession or projection and choose to do so. Finally, the spirit of an undead destroyed by your eidolon's Strikes is sent directly to the Boneyard for judgment; an undead with an ability to avoid such a fate automatically, such as a ghost's rejuvenation, can attempt a counteract check against your spell DC to return via that ability as normal. In that case, it uses its Will save modifier as its counteract modifier."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=swarm-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Swarm Form",
+        "text": "Your eidolon is an intelligent swarm composed of hundreds of Tiny creatures, and it’s immune to the grabbed, prone, and restrained conditions. It can fit through tight spaces as though it were a Tiny creature. It has weakness to area damage equal to its level. Your eidolon has two forms: condensed and dispersed. When you Manifest Eidolon, it manifests condensed. It can switch between these two forms as a single action that has the concentrate trait. **Condensed Form:** When condensed, your eidolon draws all its component bodies into a single, condensed mound that functions as a Medium creature. It has a reach of 5 feet, can make Strikes, and can’t occupy the same space as other creatures. While condensed, it can use the Haunting Visage action. **Dispersed Form:** When dispersed, your eidolon scatters its component bodies across a wider area, increasing its size by one category (to Large for most swarm eidolons). It has a reach of 0 feet, can’t make Strikes, and can occupy the same space as other creatures. While dispersed, it can use the Swarming Assault activity."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Sudden Shift",
+        "text": "Once per round, your eidolon can switch forms between condensed and dispersed as a free action, rather than a single action. In addition, your eidolon gains the Redistribute reaction."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Sickening Swarm",
+        "text": "Your eidolon is particularly good at distracting and hindering its foes while dispersed. While dispersed, spaces your eidolon occupies are difficult terrain for other creatures. In addition, your eidolon gains the Sickening Assault action."
+      }
+    ]
+  },
+  {
+    "category": "classes",
+    "id": "summoner",
+    "path": [
+      "subclass",
+      "options",
+      "id=undead-eidolon"
+    ],
+    "field": "eidolonAbilities",
+    "value": [
+      {
+        "tier": "initial",
+        "level": 1,
+        "name": "Negative Essence",
+        "text": "Your undead eidolon has a link directly to your life force, which grants it a twilight state between living and undead. This renders it a living creature and therefore susceptible to many ailments that bother only the living, though it does possess some resistances to these effects. The eidolon has negative healing, meaning it heals from negative energy effects that heal undead and is damaged by positive energy effects that damage undead. It doesn't have an undead's normal immunities, but it does gain a +2 circumstance bonus to saving throws against death effects, disease, and poison effects, and non-damaging effects that target only undead. Additionally, its necrotic essence stanches its wounds easily. The flat check to remove persistent bleed damage from the eidolon is DC 10 (or DC 5 after receiving particularly effective aid)."
+      },
+      {
+        "tier": "symbiosis",
+        "level": 7,
+        "name": "Drain Life",
+        "text": "Your eidolon's link with you sustains it, but it still craves the life essence of the living, whether through blood or pure essence. It gains the Drain Life activity."
+      },
+      {
+        "tier": "transcendence",
+        "level": 17,
+        "name": "Rejuvenation",
+        "text": "Your eidolon's unusual connection with you allows you both to rejuvenate when defeated. The first time each day your turn begins while you're dying, you instantly regain a number of Hit Points equal to three times your level and wake up. (Increase your wounded condition as normal.) You can immediately Manifest your Eidolon as a free action. You can then take your turn as normal."
+      }
+    ]
   }
 ]
