@@ -748,7 +748,7 @@ export function InventoryTab({
     if (!srcInv || !srcItem) return null;
     if (!isAttachable(srcItem) && !content.runes[srcItem.id]) return null;
     if (mpActive(character, hostInv)) return null; // Monster-Parts items ignore runes entirely
-    return planAttach(srcItem, srcInv, hostItem, hostInv, character.inventory, content);
+    return planAttach(srcItem, srcInv, hostItem, hostInv, character.inventory, content, character);
   };
   const endDrag = () => {
     dragIdRef.current = null;
@@ -909,7 +909,7 @@ export function InventoryTab({
       endDrag();
       return;
     }
-    const plan = planAttach(attDef, attInv, hostDef, hostInv, character.inventory, content);
+    const plan = planAttach(attDef, attInv, hostDef, hostInv, character.inventory, content, character);
     if (!plan.ok) {
       setAttachMsg(plan.reason);
       endDrag();
@@ -1036,7 +1036,7 @@ export function InventoryTab({
               // target — dropping a rune on it would consume the rune for zero effect (the editor already
               // hides its rune section for the same reason).
               const attachHost = !!onPlay && draggingAttachable && isHostType && inv.instanceId !== dragId && !mpActive(character, inv);
-              const plan = attachHost && draggedItem && draggedInv ? planAttach(draggedItem, draggedInv, item, inv, character.inventory, content) : null;
+              const plan = attachHost && draggedItem && draggedInv ? planAttach(draggedItem, draggedInv, item, inv, character.inventory, content, character) : null;
               // Doubling Rings: a wielded weapon can borrow another wielded weapon's runes. Only offered
               // while the rings are invested and there's a second weapon to copy from.
               const runeCopy =

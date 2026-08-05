@@ -3,7 +3,8 @@
  * Foundry has no structured "affix target", so we read the item's `usage` string + traits
  * (talismans by consumableType, spellhearts by trait). A host is identified by its itemType.
  */
-import type { ArmorRunes, ContentDatabase, InventoryItem, Item, RuneDef, WeaponRunes } from './types';
+import type { ArmorRunes, Character, ContentDatabase, InventoryItem, Item, RuneDef, WeaponRunes } from './types';
+import { propertyRuneCapacity } from './derive';
 
 export type HostType = 'weapon' | 'armor' | 'shield';
 
@@ -70,7 +71,9 @@ export type AttachPlan =
   | { ok: true; action: 'etch'; verb: 'Etch'; prep: 'onto'; runes: HostRunes; consume: boolean };
 
 /** Plan affixing/etching the dragged item onto the host. `content` resolves rune defs + affixed
- *  siblings; `inventory` is the full list (to count one-per-kind attachments). */
+ *  siblings; `inventory` is the full list (to count one-per-kind attachments). `character` is only
+ *  needed for per-character rune capacity (the inventor's Rune Capacity); without it the host falls
+ *  back to the standard cap, which is right for everyone who does not have that modification. */
 export function planAttach(
   attachment: Item,
   attachmentInv: InventoryItem,
@@ -78,10 +81,13 @@ export function planAttach(
   hostInv: InventoryItem,
   inventory: InventoryItem[],
   content: ContentDatabase,
+  character?: Character,
 ): AttachPlan {
   if (attachmentInv.instanceId === hostInv.instanceId) return { ok: false, reason: 'An item can’t be attached to itself.' };
   const rune = content.runes[attachment.id];
-  if (rune) return planRune(rune, attachment, host, hostInv);
+  // A capacity FUNCTION, not a number: etching a potency rune changes the potency, and the slot
+  // count that matters there is the one the item is about to have.
+  if (rune) return planRune(rune, attachment, host, hostInv, (potency) => propertyRuneCapacity(character, hostInv, content, potency));
   if (isAttachable(attachment)) return planAffix(attachment, attachmentInv, host, hostInv, inventory, content);
   return { ok: false, reason: `${attachment.name} isn’t a rune or an attachment — there’s nothing to affix onto another item.` };
 }
@@ -90,7 +96,13 @@ function isHost(host: Item): host is Extract<Item, { itemType: HostType }> {
   return host.itemType === 'weapon' || host.itemType === 'armor' || host.itemType === 'shield';
 }
 
-function planRune(rune: RuneDef, attachment: Item, host: Item, hostInv: InventoryItem): AttachPlan {
+function planRune(
+  rune: RuneDef,
+  attachment: Item,
+  host: Item,
+  hostInv: InventoryItem,
+  capacityFor: (potency: number) => number,
+): AttachPlan {
   if (!isHost(host)) return { ok: false, reason: `Runes can only be etched onto a weapon, armor, or shield — not ${host.name}.` };
   if (rune.slot !== host.itemType) return { ok: false, reason: `${attachment.name} is ${aOrAn(rune.slot)} rune — it can’t be etched onto ${host.name}.` };
   const runes: HostRunes = { ...((hostInv.runes ?? {}) as HostRunes) };
@@ -99,7 +111,9 @@ function planRune(rune: RuneDef, attachment: Item, host: Item, hostInv: Inventor
   if (rune.kind === 'potency') {
     if (runes.potency === v) return { ok: false, reason: `${host.name} already has a +${v} potency rune.` };
     runes.potency = Math.min(v, 4) as HostRunes['potency'];
-    runes.property = (runes.property ?? []).slice(0, Math.min(runes.potency ?? 0, 3));
+    // Lowering potency trims the property runes that no longer fit — sized against the NEW potency,
+    // and against this host's own capacity, so an inventor's innovation keeps its fourth rune.
+    runes.property = (runes.property ?? []).slice(0, capacityFor(runes.potency ?? 0));
     return etch(runes);
   }
   if (rune.kind === 'striking') {
@@ -119,8 +133,9 @@ function planRune(rune: RuneDef, attachment: Item, host: Item, hostInv: Inventor
     runes.reinforcing = Math.min(v, 6) as ArmorRunes['reinforcing'];
     return etch(runes);
   }
-  // property rune — needs a free slot (slots = the potency value, capped at 3) and no duplicate.
-  const free = Math.min(runes.potency ?? 0, 3);
+  // property rune — needs a free slot (normally the potency value, capped at 3; an inventor's
+  // innovation holds one more) and no duplicate.
+  const free = capacityFor(runes.potency ?? 0);
   const used = (runes.property ?? []).length;
   if (free === 0) return { ok: false, reason: `${host.name} needs a potency rune first — property-rune slots come from the potency rune.` };
   if ((runes.property ?? []).includes(rune.id)) return { ok: false, reason: `${host.name} already has the ${attachment.name} rune etched.` };

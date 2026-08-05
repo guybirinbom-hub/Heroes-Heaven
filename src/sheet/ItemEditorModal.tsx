@@ -2,6 +2,7 @@ import { type ReactNode, useId, useMemo, useState } from 'react';
 import { partyHasFeat } from '../data/partyCapabilities';
 import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import { canAttachTo } from '../rules/attachments';
+import { propertyRuneCapacity } from '../rules/derive';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
 import type { DescNode } from './descref';
@@ -919,7 +920,7 @@ export function ItemEditorModal({
                       {/* A Monster-Parts item ignores runes/attachments (either/or) — hide the rune editor. */}
                       {!mpActiveHere && (
                         <>
-                          <RuneEditor inv={inv} item={item} content={content} onPlay={onPlay} />
+                          <RuneEditor inv={inv} item={item} content={content} character={character} onPlay={onPlay} />
                           <BattleforgerRow inv={inv} item={item} character={character} onPlay={onPlay} />
                           <AttachmentsSection host={inv} hostItem={item} inventory={inventory} content={content} onPlay={onPlay} />
                           <span className="ie-hint">Runes and attachments apply to this specific item right away.</span>
@@ -1218,11 +1219,13 @@ function RuneEditor({
   inv,
   item,
   content,
+  character,
   onPlay,
 }: {
   inv: InventoryItem;
   item: Item;
   content: ContentDatabase;
+  character?: Character;
   onPlay: PlayUpdater;
 }) {
   const [pickingSlot, setPickingSlot] = useState<number | null>(null);
@@ -1268,7 +1271,9 @@ function RuneEditor({
 
   const slot = item.itemType; // 'weapon' | 'armor'
   const potency = runes.potency ?? 0;
-  const propSlots = Math.min(potency, 3);
+  // Shared with the drag-to-etch path so the editor and the drop target never disagree about how
+  // many slots an item has — an inventor's innovation holds one more than anything else.
+  const propSlots = propertyRuneCapacity(character, inv, content, potency);
   const setProperty = (i: number, id: string) => {
     const property = [...(runes.property ?? [])];
     if (id) property[i] = id;
@@ -1335,7 +1340,7 @@ function RuneEditor({
             value={potency}
             onChange={(e) => {
               const v = Number(e.target.value);
-              apply({ ...runes, potency: v as 0 | 1 | 2 | 3, property: (runes.property ?? []).slice(0, Math.min(v, 3)) });
+              apply({ ...runes, potency: v as 0 | 1 | 2 | 3, property: (runes.property ?? []).slice(0, propertyRuneCapacity(character, inv, content, v)) });
             }}
           >
             <option value={0}>None</option>

@@ -65378,5 +65378,40 @@
     "id": "blessed-shield",
     "field": "shieldReinforcingByLevel",
     "value": true
+  },
+  {
+    "category": "classFeatures",
+    "id": "enhanced-resistance",
+    "field": "resistanceLevelUpgrade",
+    "value": "inventor-initial"
+  },
+  {
+    "category": "classFeatures",
+    "id": "heavy-construction",
+    "field": "armorRestat",
+    "value": {
+      "designated": "innovation",
+      "set": {
+        "category": "heavy",
+        "speedPenalty": -10,
+        "bulk": 3
+      },
+      "addTraits": [
+        "bulwark",
+        "entrench"
+      ],
+      "proficiencyAs": "medium",
+      "removeSpeedPenaltyAtStr": 3
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "rune-capacity",
+    "field": "propertyRuneBonus",
+    "value": {
+      "designated": "innovation",
+      "bonus": 1,
+      "max": 4
+    }
   }
 ]

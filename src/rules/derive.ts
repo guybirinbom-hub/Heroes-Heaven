@@ -15,6 +15,7 @@ import type {
   ArmorItem,
   ArmorRunes,
   Character,
+  ClassFeature,
   ContentDatabase,
   DefenseGrants,
   AbilityScores,
@@ -1036,6 +1037,87 @@ export function resolveIwrValue(value: number | string, level: number): number {
   return resolveFormula(value, { level });
 }
 
+/** The HALF-LEVEL sub-expression every scaling resistance formula is written with. Enhanced
+ *  Resistance replaces exactly this, so `3+floor(@actor.level/2)` keeps its flat +3 and
+ *  `max(1,floor(@actor.level/2))` keeps its floor of 1. */
+const HALF_LEVEL = /floor\(\s*@actor\.level\s*\/\s*2\s*\)/g;
+
+/** The initial armor modification whose resistance counts the FULL level, or undefined.
+ *
+ *  Gated on an ARMOR innovation because the feat says "your initial armor modification" — a weapon
+ *  innovation has no such modification to improve. The record is found through ownedFeatureIds
+ *  rather than `modifications.breakthrough` so any future path that grants it still counts. */
+function fullLevelResistanceTarget(c: Character, db: ContentDatabase, owned: Iterable<string>): string | undefined {
+  if (c.inventor?.innovationType !== 'armor') return undefined;
+  let upgrades = false;
+  for (const id of owned) {
+    if (db.classFeatures[id]?.resistanceLevelUpgrade === 'inventor-initial') {
+      upgrades = true;
+      break;
+    }
+  }
+  if (!upgrades) return undefined;
+
+  const mods = c.inventor.modifications ?? {};
+  // An "initial modification" is one of INITIAL TIER — INVENTOR_TIER_LEVEL.initial, i.e. level 1 —
+  // not merely the one sitting in the initial slot.
+  const qualifies = (id: string | undefined) => {
+    const rec = id ? db.classFeatures[id] : undefined;
+    return !!rec && rec.level === 1 && !!rec.resistances?.length;
+  };
+  if (qualifies(mods.initial)) return mods.initial;
+  // "If you have more than one initial modification that gives resistance, choose which one this
+  // applies to." inventorModificationOptions admits a level-1 modification into the breakthrough and
+  // revolutionary slots (it filters `level <= tierLevel`), so an inventor really can hold several.
+  // With no picker for that choice, the later slots are a deterministic fallback — which only ever
+  // decides anything when the initial slot itself grants no resistance.
+  for (const id of [mods.breakthrough, mods.revolutionary]) if (qualifies(id)) return id;
+  return undefined;
+}
+
+/** Rewrite a record's half-level resistances to count the full level, keeping everything else
+ *  (including the record's own name, so the breakdown still reads "Phlogistonic Regulator"). */
+function withFullLevelResistance(rec: ClassFeature): ClassFeature {
+  if (!rec.resistances?.length) return rec;
+  return {
+    ...rec,
+    // .replace() only — never .test(), which is stateful on a /g regex and would alternate.
+    // A formula without the half-level term is simply returned unchanged.
+    resistances: rec.resistances.map((r) =>
+      typeof r.value === 'string' ? { ...r, value: r.value.replace(HALF_LEVEL, '@actor.level') } : r,
+    ),
+  };
+}
+
+/**
+ * How many property runes an item can hold.
+ *
+ * Normally the potency value, capped at 3. The inventor's Rune Capacity raises it by one — for the
+ * DESIGNATED innovation only, which is the whole difficulty: the cap lives in a shared clamp, and
+ * raising that clamp would hand a fourth slot to every weapon in the game.
+ *
+ * A property rune still requires a potency rune, so the bonus never conjures the first slot; that
+ * base requirement is what the "needs a potency rune first" message already enforces.
+ */
+export function propertyRuneCapacity(
+  c: Character | undefined,
+  hostInv: InventoryItem | undefined,
+  db: ContentDatabase,
+  /** Potency to size against — pass the NEW value when planning a potency change, whose capacity is
+   *  not the one the item has now. Defaults to the host's current potency rune. */
+  potency: number = ((hostInv?.runes ?? {}) as WeaponRunes & ArmorRunes).potency ?? 0,
+): number {
+  if (potency <= 0) return 0;
+  let cap = Math.min(potency, 3);
+  if (!c) return cap;
+  const designations = hostInv?.designations ?? [];
+  for (const id of ownedFeatureIds(c, db)) {
+    const b = db.classFeatures[id]?.propertyRuneBonus;
+    if (b && designations.includes(b.designated)) cap = Math.min(cap + b.bonus, b.max);
+  }
+  return cap;
+}
+
 /** Aggregate the character's innate senses + IWR from ancestry vision, heritage,
  *  selected feats, and auto-granted class features (by level). Resistances/weaknesses
  *  of the same type don't stack — the highest value wins. Conditional (predicated) and
@@ -1072,10 +1154,16 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     // generic `field-discovery`. Suppression is keyed by the generic id, so a suppressed feature
     // takes its variant with it.
     const sub = c.subclassId ? `-${c.subclassId}` : null;
-    for (const id of ownedFeatureIds(c, db)) {
+    const owned = ownedFeatureIds(c, db);
+    // Enhanced Resistance improves the INITIAL modification's formula, so the upgrade is applied to
+    // that record as it is pushed — keeping its own name in the breakdown, where the player expects
+    // to read "Phlogistonic Regulator", not "Enhanced Resistance".
+    const fullLevelRes = fullLevelResistanceTarget(c, db, owned);
+    for (const id of owned) {
       const base = sub && id.endsWith(sub) ? id.slice(0, -sub.length) : id;
       if (suppressed.has(id) || suppressed.has(base)) continue;
-      if (db.classFeatures[id]) push(db.classFeatures[id].name ?? id, db.classFeatures[id]);
+      const rec = db.classFeatures[id];
+      if (rec) push(rec.name ?? id, id === fullLevelRes ? withFullLevelResistance(rec) : rec);
     }
   }
   for (const af of c.classArchetype?.addedFeatures ?? []) {

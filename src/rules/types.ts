@@ -1239,6 +1239,36 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
   focusPoolBonus?: number;
   /** Foundry classification tags (e.g. `armor-innovation-modification`) used to filter selectable options. */
   otherTags?: string[];
+  /**
+   * Enhanced Resistance: "The resistance from your initial armor modification adds your full level,
+   * instead of half your level."
+   *
+   * All four initial armor modifications that grant resistance store it as a FORMULA
+   * (`max(1,floor(@actor.level/2))`, `3+floor(@actor.level/2)`), so the upgrade rewrites the
+   * half-level sub-expression rather than setting a number — that way a modification's flat bonus
+   * survives. `'inventor-initial'` targets whichever initial modification the character chose.
+   */
+  resistanceLevelUpgrade?: 'inventor-initial';
+  /**
+   * Heavy Construction: "Your innovation becomes heavy armor, and your proficiency in your innovation
+   * armor (but no other heavy armor) advances to be equal to your proficiency in medium armor."
+   *
+   * `proficiencyAs` is the load-bearing half: an inventor is never trained in heavy armor, so flipping
+   * `category` alone would send the AC lookup to an untrained column and collapse AC.
+   */
+  armorRestat?: {
+    /** Only restat the item carrying this designation (the innovation, not other armor). */
+    designated: ItemDesignation;
+    set?: { category?: ArmorCategory; speedPenalty?: number; bulk?: number };
+    addTraits?: string[];
+    /** Read proficiency from THIS armor category instead of the restatted one. */
+    proficiencyAs?: ArmorCategory;
+    /** At or above this Strength modifier the armor's Speed penalty is removed outright. */
+    removeSpeedPenaltyAtStr?: number;
+  };
+  /** Rune Capacity: "Your innovation can have one more property rune than a normal item of its kind."
+   *  Applies to the designated item only — a blanket +1 would give every weapon a fourth slot. */
+  propertyRuneBonus?: { designated: ItemDesignation; bonus: number; max: number };
   /** Focus spells the feature grants on reaching its level — Hero's Defiance is a 19th-level champion
    *  feature whose entire content is "you gain the Hero's Defiance devotion spell". buildCharacter
    *  reads these; before it did, the feature did nothing even at 20th level. */
