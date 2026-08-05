@@ -1,0 +1,13 @@
+[
+ {
+  "id": "iron-wine",
+  "name": "Iron Wine",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Iron Wine",
+  "effects": "For 10 minutes your unarmed Strikes deal an additional 1d4 fire damage. A separate toggle for a second cup in one day: you gain weakness 5 to fire until your next daily preparations.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ }
+]

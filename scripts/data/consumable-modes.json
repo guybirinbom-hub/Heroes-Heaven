@@ -4314,5 +4314,39 @@
     "appliesWhen": "against emotion effects"
    }
   ]
+ },
+ {
+  "id": "item-iron-wine",
+  "name": "Iron Wine",
+  "fromItemId": "iron-wine",
+  "duration": "10 minutes",
+  "modifiers": [],
+  "strikeDamage": [
+   {
+    "type": "fire",
+    "appliesTo": "unarmed",
+    "dice": {
+     "n": 1,
+     "die": "d4"
+    },
+    "note": "Iron wine"
+   }
+  ],
+  "note": "Your sweat ignites with the slightest friction."
+ },
+ {
+  "id": "item-iron-wine-second-cup",
+  "name": "Iron Wine (second cup)",
+  "fromItemId": "iron-wine",
+  "duration": "until your next daily preparations",
+  "survivesRest": true,
+  "modifiers": [],
+  "weaknesses": [
+   {
+    "type": "fire",
+    "value": 5
+   }
+  ],
+  "note": "A second cup in one day: the fire that helps you also burns you."
  }
 ]

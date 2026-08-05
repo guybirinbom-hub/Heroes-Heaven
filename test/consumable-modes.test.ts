@@ -31,7 +31,10 @@ describe('consumable modes: the data', () => {
     // +19 from the full item audit (2026-08-04): items that had never been examined at all, whose
     // text pairs an activation with a stated span — the same shape as every entry above, found by
     // selecting on what the record HAS rather than on whether its wording matched a pattern.
-    expect(itemModes().length).toBe(329);
+    // +2 for iron wine, the last item in the batch-2 deferred-toggle pile: one mode for the cup
+    // (+1d4 fire on unarmed attacks for 10 minutes) and a SEPARATE one for a second cup in a day,
+    // which is a fire weakness lasting past the night — hence its own `survivesRest` entry.
+    expect(itemModes().length).toBe(331);
   });
 
   it('every item mode points at an item that actually exists', () => {

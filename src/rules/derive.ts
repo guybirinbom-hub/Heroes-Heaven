@@ -2027,6 +2027,10 @@ export function strikeDamageRiders(
     const it = db.items[inv.itemId];
     if (inv.invested && it?.strikeDamage && it.itemType !== 'weapon') sources.push(it);
   }
+  // ACTIVE MODES — a drink, a potion, a switched-on ability. A temporary rider has to reach the same
+  // place a permanent one does, or a 10-minute "+1d4 fire to your unarmed attacks" has nowhere to go
+  // but a note: `grantedStrikes` grants a NEW attack, which is not what those effects say.
+  for (const m of c.activeModes ?? []) if (m.strikeDamage) sources.push(m);
   // The specific weapon's own intrinsic riders (Hyldarf's Fang +2d6) — only this Strike.
   if (extra.length) sources.push({ strikeDamage: extra });
   const flatByType = new Map<string, number>();

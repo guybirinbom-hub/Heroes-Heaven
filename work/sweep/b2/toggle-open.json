@@ -1,0 +1,35 @@
+[
+ {
+  "id": "curse-of-engulfing-flames",
+  "name": "Curse of Engulfing Flames",
+  "collection": "classFeatures",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Curse of Engulfing Flames (cursebound)",
+  "effects": "While active: you take persistent fire damage equal to your cursebound value, and any fire immunity or fire resistance you have is suppressed (treated as none). Ends while Refocusing to assuage the curse or while unconscious.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "inexorable-iron",
+  "name": "Inexorable Iron",
+  "collection": "classFeatures",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Inexorable Iron",
+  "effects": "While in Arcane Cascade stance wielding a melee weapon in two hands: gain temporary Hit Points equal to half your level (minimum 1) on entering the stance and at the start of each of your turns.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "stone-brawler-dedication",
+  "name": "Stone Brawler Dedication",
+  "collection": "feats",
+  "lane": "toggle",
+  "registry": "stances",
+  "toggleName": "Stonestrike Stance",
+  "effects": "While in the stance you can make stonestrike attacks: 1d8 bludgeoning, brawling group, traits forceful, magical, unarmed. Requires that you are standing on the ground. (Text verified against core.actions['stonestrike-stance'].)",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ }
+]

@@ -3229,5 +3229,48 @@
       "fly": "max(@actor.speed.land,20)"
     },
     "note": "Transcendence: for 1 minute you gain a fly Speed equal to your Speed or 20 feet, whichever is greater."
+  },
+  "stonestrike-stance": {
+    "id": "stonestrike-stance",
+    "name": "Stonestrike Stance",
+    "feats": [
+      "stone-brawler-dedication"
+    ],
+    "exclusiveGroup": "stance",
+    "modifiers": [],
+    "grantedStrikes": [
+      {
+        "name": "Stonestrike",
+        "dice": 1,
+        "die": "d8",
+        "damageType": "bludgeoning",
+        "group": "brawling",
+        "traits": [
+          "forceful",
+          "magical",
+          "unarmed"
+        ]
+      }
+    ],
+    "note": "Requires standing on the ground."
+  },
+  "inexorable-iron": {
+    "id": "inexorable-iron",
+    "name": "Inexorable Iron",
+    "feats": [
+      "inexorable-iron"
+    ],
+    "duration": "while in Arcane Cascade",
+    "modifiers": [],
+    "note": "Wielding a melee weapon in two hands: temporary HP equal to half your level (minimum 1) on entering Arcane Cascade and at the start of each of your turns in it."
+  },
+  "curse-of-engulfing-flames": {
+    "id": "curse-of-engulfing-flames",
+    "name": "Engulfing Flames (cursebound)",
+    "feats": [
+      "curse-of-engulfing-flames"
+    ],
+    "modifiers": [],
+    "note": "While cursebound: persistent fire damage equal to your cursebound value, and your fire immunity and resistance are suppressed."
   }
 }

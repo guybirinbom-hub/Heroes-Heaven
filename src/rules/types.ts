@@ -2051,6 +2051,15 @@ export interface ModeDef {
    *  a mode could not, so a toggle whose whole content was "you gain an attack" had nowhere to put
    *  it. Applied exactly where the active stance's strikes are, so they scale identically. */
   grantedStrikes?: StanceStrike[];
+  /**
+   * Extra damage the mode adds to Strikes while it is on — iron wine's "+1d4 fire to your unarmed
+   * attacks for 10 minutes".
+   *
+   * `grantedStrikes` was not enough: that GRANTS a new attack, whereas this RIDES on the attacks you
+   * already have. The rider shape is the one feats, class features and invested items already use,
+   * so a temporary source and a permanent one produce the same line in the strike breakdown.
+   */
+  strikeDamage?: StrikeDamageRider[];
   /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
    *  universal (every character on this device). Catalog/predefined modes never set this. */
   charId?: string;
