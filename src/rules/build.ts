@@ -925,9 +925,13 @@ export function bonusLanguageSlots(build: BuildState, content: ContentDatabase):
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
   const intMod = abilityMod(computeAbilities(build, content).int);
   const base = Math.max(0, intMod) + (ancestry?.languages.additional ?? 0);
-  const featIds = Object.values(build.featPicks ?? {}).filter(Boolean) as string[];
-  // The builder card has no built Character, and a rank-gated extra needs one — so build only when a
-  // selected record actually asks about a rank. Nothing in the common case does.
+  // EVERY feat the character has, not only the slot-picked ones. Multilingual reached by a
+  // background, a heritage, a pick-a-feat grant or an override produced no language slots at all,
+  // because only `featPicks` was read — the same "only slot picks are scanned" gap that hid the
+  // granted-feat sub-choices.
+  // NOT deduped: Multilingual is repeatable and taking it twice grants twice as many languages, so
+  // this has to stay the multiset the built feat list already is.
+  const featIds = buildCharacter(build, content).feats.map((f) => f.featId);
   const needsRanks = featIds.some((id) => content.feats[id]?.languageChoicesAtRank?.length);
   const skills = needsRanks ? buildCharacter(build, content).proficiencies.skills : {};
   return (
