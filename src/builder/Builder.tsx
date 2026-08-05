@@ -1250,6 +1250,28 @@ export function Builder({
                               content={content}
                             />
                           )}
+                          {/* EVERY granted feat's own sub-choice, wherever the grant came from.
+                              build.ts grants feats from six lanes (a feat's pick, a heritage, a
+                              subclass/extra-choice option, a class feature, an item, a background)
+                              and every one reads `grantedFeatChoices` — but the picker was mounted
+                              from only two of them, so the rest resolved an answer nobody could give.
+                              Driven off the BUILT character rather than per-lane, so a seventh lane
+                              cannot silently miss it. Rendered at level 0 so it has one home. */}
+                          {subAnchorId &&
+                            (() => {
+                              // The two lanes that already mount their own picker under the granting
+                              // row: a slot-picked feat's grants, and the background's. Everything
+                              // else — heritage, subclass/extra-choice option, class feature, item,
+                              // and any transitive grant — had none.
+                              const slotPicked = new Set(Object.values(build.featPicks).filter(Boolean));
+                              const handled = new Set<string>([
+                                ...[...slotPicked].flatMap((id) => FEAT_FEAT_GRANTS[id as string] ?? []),
+                                ...backgroundGrantedFeats(bg, build.backgroundSkillChoice),
+                              ]);
+                              return [...new Set(featPrereqChar.feats.filter((f) => f.grantedBy).map((f) => f.featId))]
+                                .filter((gid) => !handled.has(gid) && content.feats[gid]?.choice)
+                                .map((gid) => grantedChoicePicker(gid));
+                            })()}
                           {/* Extra-choice picks (kineticist gates, thaumaturge implements, animist
                               apparitions…) carry them too — the four elemental gates ask which
                               damage type, and nothing asked. */}

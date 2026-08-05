@@ -92,20 +92,27 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
     for (const f of [...cls.features, ...archAdded]) {
       if (f.level > character.level) continue; // only features actually gained yet
       if (suppressed.has(f.featureId)) continue; // removed by the chosen subclass
-      const feature = content.classFeatures[f.featureId];
+      // Prefer the SUBCLASS's own variant of a shared feature. The class lists the generic prose
+      // record (`field-discovery`, `first-doctrine`) and the variant carries the real text — so a
+      // toxicologist's Field Discovery row read "You learn a discovery list…" instead of naming the
+      // discovery, for all 12 cleric doctrines, 12 alchemist field discoveries and 3 ranger rows.
+      // `ownedFeatureIds` already owns the variant; this is only which one the player is shown.
+      const variantId = subId && content.classFeatures[`${f.featureId}-${subId}`] ? `${f.featureId}-${subId}` : f.featureId;
+      const feature = content.classFeatures[variantId];
       if (!feature) continue;
       entries.push({
         key: `feature:${clsId}:${f.featureId}`,
         // Carried so a class feature printing "Frequency once per day" can draw use pips like a feat.
         // 21 class features have `limitedUses` and drew nothing, because the pip lookup only ever
         // consulted content.feats and a feature row had no id to look up with.
-        featureId: f.featureId,
-        name: feature.name + pickSuffix(f.featureId),
+        // The VARIANT's id, so use pips and effect picks read the record actually being shown.
+        featureId: variantId,
+        name: feature.name + pickSuffix(variantId),
         level: f.level,
         traits: feature.traits,
         actionCost: feature.actionCost,
         // Strip class-specific addenda for OTHER classes (shared features like Reflex Expertise).
-        description: withPicks(f.featureId, classFeatureDescription(feature.description, clsId, content)),
+        description: withPicks(variantId, classFeatureDescription(feature.description, clsId, content)),
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',

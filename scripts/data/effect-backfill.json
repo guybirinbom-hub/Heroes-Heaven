@@ -64860,5 +64860,13 @@
     "id": "open-mind",
     "field": "passiveEffects",
     "value": null
+  },
+  {
+    "category": "classFeatures",
+    "id": "tensile-absorption",
+    "field": "otherTags",
+    "value": [
+      "armor-innovation-modification"
+    ]
   }
 ]

@@ -1880,6 +1880,27 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const f of build.overrides?.addedFeats ?? []) if ((f.level ?? 1) <= level) pushFocusBonus(f.featId);
   for (const id of Object.values(build.pickFeatChoices ?? {})) pushFocusBonus(id);
   for (const id of Object.values(build.dedicationSkillFeats ?? {})) pushFocusBonus(id);
+  // Feats granted by a HERITAGE, a CLASS FEATURE or a chosen SUBCLASS / extra-choice option. These
+  // three lanes push the feat with `choice: grantedChoiceById[gid]` — but nothing ever resolved the
+  // answer for them, because only the six sources above fed this list. A cloistered cleric is
+  // granted Domain Initiate by their doctrine, and their domain pick was read by nothing: no choice
+  // on the feat, and no focus spell in the pool.
+  for (const hid of [build.heritageId, secondHeritageId]) {
+    for (const id of (hid ? content.heritages[hid]?.grantsFeats : undefined) ?? []) pushFocusBonus(id);
+  }
+  for (const cid of [build.classId, build.classId2]) {
+    if (!cid) continue;
+    const sub = cid === build.classId ? build.subclassId : build.subclassId2;
+    for (const fid of classFeatureIdsOwned({ classId: cid, subclassId: sub, level }, content)) {
+      for (const id of content.classFeatures[fid]?.grantsFeats ?? []) pushFocusBonus(id);
+    }
+    const opt = content.classes[cid]?.subclass?.options.find((o) => o.id === sub);
+    for (const id of opt?.grantedFeats ?? []) pushFocusBonus(id);
+  }
+  for (const [gid, picks] of Object.entries(build.extraChoices ?? {})) {
+    void gid;
+    for (const oid of picks) for (const id of content.classFeatures[oid]?.grantsFeats ?? []) pushFocusBonus(id);
+  }
   {
     const queue = [...focusSeen];
     let guard = 0;
