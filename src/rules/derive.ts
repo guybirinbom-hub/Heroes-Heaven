@@ -753,6 +753,16 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     if (g) sources.push({ ...g, __from: from, __cond: cond });
   };
   if (c.heritageId && db.heritages[c.heritageId]) push(db.heritages[c.heritageId].name ?? 'Heritage', db.heritages[c.heritageId]);
+  // The ANCESTRY's own IWR. This source was missing entirely — the ancestry was read for `vision` and
+  // nothing else — so the poppet's Flammable ("weakness to fire equal to one-third your level") had
+  // nowhere to live, and Sealed Poppet had nothing to remove.
+  //
+  // Only the IWR fields: an ancestry also carries `senses` and `speeds`, which deriveSpeeds and the
+  // vision path already consume, and pushing the whole record would count those twice.
+  if (c.ancestryId && db.ancestries[c.ancestryId]) {
+    const a = db.ancestries[c.ancestryId];
+    push(a.name ?? 'Ancestry', { resistances: a.resistances, weaknesses: a.weaknesses, immunities: a.immunities });
+  }
   for (const f of c.feats) {
     const feat = db.feats[f.featId];
     if (feat) push(feat.name ?? f.featId, feat);

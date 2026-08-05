@@ -517,6 +517,12 @@ export interface Ancestry extends ContentBase {
   hp: number;
   size: Size;
   speeds: Speeds;
+  /** IWR the ancestry itself carries — the poppet's Flammable is "weakness to fire equal to one-third
+   *  your level". Read by deriveDefenses; `senses` and `speeds` above are consumed elsewhere, so only
+   *  these three come through that path. */
+  resistances?: IwrEntry[];
+  weaknesses?: IwrEntry[];
+  immunities?: string[];
   abilityBoosts: AbilityBoost[];
   abilityFlaws: AbilityId[];
   vision: Vision;

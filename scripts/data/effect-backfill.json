@@ -58275,5 +58275,225 @@
     "value": [
       "censure-falsehoods"
     ]
+  },
+  {
+    "category": "ancestries",
+    "id": "poppet",
+    "field": "weaknesses",
+    "value": [
+      {
+        "type": "fire",
+        "value": "max(1,floor(@actor.level/3))"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "insulated-poppet",
+    "field": "removesWeaknesses",
+    "value": [
+      "electricity",
+      "cold"
+    ]
+  },
+  {
+    "category": "items",
+    "id": "greater-chainbreaker",
+    "field": "itemType",
+    "value": "weapon"
+  },
+  {
+    "category": "items",
+    "id": "greater-chainbreaker",
+    "field": "category",
+    "value": "martial"
+  },
+  {
+    "category": "items",
+    "id": "greater-chainbreaker",
+    "field": "group",
+    "value": "pick"
+  },
+  {
+    "category": "items",
+    "id": "greater-chainbreaker",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-chainbreaker",
+    "field": "hands",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "greater-dragons-tongue",
+    "field": "itemType",
+    "value": "weapon"
+  },
+  {
+    "category": "items",
+    "id": "greater-dragons-tongue",
+    "field": "category",
+    "value": "simple"
+  },
+  {
+    "category": "items",
+    "id": "greater-dragons-tongue",
+    "field": "group",
+    "value": "spear"
+  },
+  {
+    "category": "items",
+    "id": "greater-dragons-tongue",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d8",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-dragons-tongue",
+    "field": "hands",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "greater-mitigation-mail",
+    "field": "itemType",
+    "value": "armor"
+  },
+  {
+    "category": "items",
+    "id": "greater-mitigation-mail",
+    "field": "category",
+    "value": "medium"
+  },
+  {
+    "category": "items",
+    "id": "greater-mitigation-mail",
+    "field": "group",
+    "value": "chain"
+  },
+  {
+    "category": "items",
+    "id": "greater-mitigation-mail",
+    "field": "acBonus",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "greater-mitigation-mail",
+    "field": "dexCap",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "greater-mitigation-mail",
+    "field": "checkPenalty",
+    "value": -2
+  },
+  {
+    "category": "items",
+    "id": "greater-mitigation-mail",
+    "field": "speedPenalty",
+    "value": -5
+  },
+  {
+    "category": "items",
+    "id": "greater-mitigation-mail",
+    "field": "strength",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "greater-reactive-mail",
+    "field": "itemType",
+    "value": "armor"
+  },
+  {
+    "category": "items",
+    "id": "greater-reactive-mail",
+    "field": "category",
+    "value": "medium"
+  },
+  {
+    "category": "items",
+    "id": "greater-reactive-mail",
+    "field": "group",
+    "value": "chain"
+  },
+  {
+    "category": "items",
+    "id": "greater-reactive-mail",
+    "field": "acBonus",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "greater-reactive-mail",
+    "field": "dexCap",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "greater-reactive-mail",
+    "field": "checkPenalty",
+    "value": -2
+  },
+  {
+    "category": "items",
+    "id": "greater-reactive-mail",
+    "field": "speedPenalty",
+    "value": -5
+  },
+  {
+    "category": "items",
+    "id": "greater-reactive-mail",
+    "field": "strength",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "greater-energized-shield",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "greater-energized-shield",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "greater-energized-shield",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "greater-energized-shield",
+    "field": "hardness",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "greater-energized-shield",
+    "field": "hp",
+    "value": 64
+  },
+  {
+    "category": "items",
+    "id": "greater-energized-shield",
+    "field": "brokenThreshold",
+    "value": 32
   }
 ]
