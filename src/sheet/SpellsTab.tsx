@@ -2,10 +2,9 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { cleanRun } from './RichText';
 import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
-import { deriveSpellcasting, deriveClassDc, formatMod } from '../rules/derive';
+import { deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
 import {
   poolKey,
-  preparedKey,
   removeInventoryItem,
   resetPreparedEntry,
   resetRepertoire,
@@ -13,11 +12,21 @@ import {
   setItemCounter,
   setItemQuantity,
   setPreparedSpell,
+  setTradedCantrip,
   setRepertoireRank,
   setSignatureSpells,
   setSlotsUsed,
   toggleExpended,
   toggleInnateCast,
+  addSpellTrade,
+  removeSpellTrade,
+  spellTradeError,
+  entryTrades,
+  untradedIndices,
+  slotKeyOf,
+  tradeCost,
+  CANTRIP_TRADE,
+  CANTRIPS_PER_TRADE,
   type PlayUpdater,
 } from '../rules/play';
 import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem } from '../rules/itemUses';
@@ -224,7 +233,7 @@ function ManageSpellsModal({
 }) {
   useEscapeClose(onClose);
   const spontaneous = !!entry.repertoire;
-  const [picking, setPicking] = useState<{ rank: number; slot: number | null } | null>(null);
+  const [picking, setPicking] = useState<{ rank: number; slot: number | null; cantripTrade?: boolean } | null>(null);
   const ranks = Object.keys((spontaneous ? entry.repertoire : entry.prepared) ?? {})
     .map(Number)
     .sort((a, b) => a - b);
@@ -295,7 +304,8 @@ function ManageSpellsModal({
             onPlay((p) => setRepertoireRank(p, entry.id, picking.rank, [...cur, spellId]));
         }
       } else {
-        onPlay((p) => setPreparedSpell(p, entry.id, picking.rank, picking.slot!, spellId));
+        if (picking.cantripTrade) onPlay((p) => setTradedCantrip(p, entry.id, picking.slot!, spellId));
+        else onPlay((p) => setPreparedSpell(p, entry.id, picking.rank, picking.slot!, spellId, entry.prepared?.[picking.rank]?.[picking.slot!]));
       }
     }
     setPicking(null);
@@ -438,13 +448,24 @@ function ManageSpellsModal({
                   <div className="ms-rank-hdr">{ord(rank)} rank</div>
                   {(entry.prepared?.[rank] ?? []).map((slot, i) => {
                     const sp = slot.spellId ? content.spells[slot.spellId] : null;
+                    // A slot traded away is not preparable — it is shown so the trade is visible, not
+                    // so it can be filled.
+                    if (slot.traded)
+                      return (
+                        <div key={i} className="ms-slot empty" aria-disabled="true">
+                          <span className="ms-slot-name">Traded away (spell blending)</span>
+                        </div>
+                      );
                     return (
                       <button
                         key={i}
                         className={'ms-slot' + (slot.spellId ? '' : ' empty')}
                         onClick={() => setPicking({ rank, slot: i })}
                       >
-                        <span className="ms-slot-name">{sp?.name ?? (slot.spellId || 'Empty slot')}</span>
+                        <span className="ms-slot-name">
+                          {sp?.name ?? (slot.spellId || 'Empty slot')}
+                          {slot.bonusFrom != null && <em className="ms-slot-tag"> · bonus from {ord(slot.bonusFrom)}</em>}
+                        </span>
                         <i className="ti ti-pencil" aria-hidden="true" />
                       </button>
                     );
@@ -452,11 +473,122 @@ function ManageSpellsModal({
                 </div>
               ),
             )}
+            {!!entry.tradedCantrips?.length && (
+              <div className="ms-rank">
+                <div className="ms-rank-hdr">Traded cantrips</div>
+                {entry.tradedCantrips.map((id, i) => {
+                  const sp = id ? content.spells[id] : null;
+                  return (
+                    <button key={i} className={'ms-slot' + (id ? '' : ' empty')} onClick={() => setPicking({ rank: 0, slot: i, cantripTrade: true })}>
+                      <span className="ms-slot-name">{sp?.name ?? 'Empty cantrip'}</span>
+                      <i className="ti ti-pencil" aria-hidden="true" />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
             <button className="ms-reset" onClick={reset}>
               <i className="ti ti-rotate" aria-hidden="true" /> Reset to default {spontaneous ? 'repertoire' : 'preparation'}
             </button>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Spell Blending — the wizard thesis's daily slot trade.
+ *
+ * "During your daily preparations, you can trade two spell slots of the same spell rank for a bonus
+ * spell slot of up to 2 spell ranks higher… Bonus spell slots must be of a spell rank you can normally
+ * cast, and each bonus spell slot must be of a different spell rank. You can also trade any spell slot
+ * for two additional cantrips, though you can't trade more than one spell slot at a time for
+ * additional cantrips in this way."
+ *
+ * Every one of those limits is enforced by `spellTradeError`, whose sentence becomes the disabled
+ * reason here — a silently ignored click would read as a broken button.
+ */
+function SpellBlendingModal({
+  entry,
+  onPlay,
+  onClose,
+}: {
+  entry: SpellcastingEntry;
+  onPlay: PlayUpdater;
+  onClose: () => void;
+}) {
+  const ranks = Object.keys(entry.prepared ?? {})
+    .map(Number)
+    .filter((r) => r > 0)
+    .sort((a, b) => a - b);
+  const trades = entryTrades(entry);
+
+  const targets = (from: number) => [from + 1, from + 2, CANTRIP_TRADE];
+  const label = (to: number) => (to === CANTRIP_TRADE ? `${CANTRIPS_PER_TRADE} cantrips` : `${ord(to)} slot`);
+
+  return (
+    <div className="picker-overlay" onClick={onClose}>
+      <div className="picker manage-spells" onClick={(e) => e.stopPropagation()}>
+        <div className="picker-head">
+          <span>Spell Blending — trade slots</span>
+          <button className="picker-close" style={{ marginLeft: 'auto' }} onClick={onClose} aria-label="Close">
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="ms-body">
+          <div className="ms-hint">
+            Trade two slots of the same rank for one bonus slot up to two ranks higher, or one slot for{' '}
+            {CANTRIPS_PER_TRADE} extra cantrips. Part of your daily preparations.
+          </div>
+
+          {trades.length > 0 && (
+            <div className="ms-rank">
+              <div className="ms-rank-hdr">Traded today</div>
+              {trades.map((t, i) => (
+                <div key={i} className="ms-slot">
+                  <span className="ms-slot-name">
+                    {t.to === CANTRIP_TRADE
+                      ? `1 slot → ${CANTRIPS_PER_TRADE} cantrips`
+                      : `2 × ${ord(t.from)} → one ${ord(t.to)} slot`}
+                  </span>
+                  <button className="ms-btn" onClick={() => onPlay((p) => removeSpellTrade(p, entry.id, t.to))}>
+                    <i className="ti ti-rotate" aria-hidden="true" /> Undo
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {ranks.map((from) => {
+            const free = untradedIndices(entry, from).length;
+            return (
+              <div key={from} className="ms-rank">
+                <div className="ms-rank-hdr">
+                  {ord(from)} rank <span className="spell-rankhdr-right">{free} untraded</span>
+                </div>
+                {targets(from).map((to) => {
+                  const err = spellTradeError(entry, from, to);
+                  return (
+                    <button
+                      key={to}
+                      className={'ms-slot' + (err ? ' empty' : '')}
+                      disabled={!!err}
+                      title={err ?? undefined}
+                      onClick={() => onPlay((p) => addSpellTrade(p, entry, from, to))}
+                    >
+                      <span className="ms-slot-name">
+                        {tradeCost(to)} × {ord(from)} → {label(to)}
+                        {err && <em className="ms-slot-tag"> · {err}</em>}
+                      </span>
+                      {!err && <i className="ti ti-arrow-right" aria-hidden="true" />}
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
@@ -586,6 +718,7 @@ export function SpellsTab({
   // Mobile: which spell section tab is active (cantrips / a rank / focus / items / …); '' = first.
   const [spellTab, setSpellTab] = useState<string>('');
   const [manageId, setManageId] = useState<string | null>(null);
+  const [blendId, setBlendId] = useState<string | null>(null);
   // An item-spell source opened from its Spells-page header → the item's full detail popup.
   const [itemView, setItemView] = useState<string | null>(null);
   // Collapsible spellcasting sections (in-component, like the Actions sub-tab).
@@ -605,6 +738,9 @@ export function SpellsTab({
   );
   const mains = character.spellcasting.filter((e) => e.type === 'prepared' || e.type === 'spontaneous');
   const manageEntry = manageId ? mains.find((m) => m.id === manageId) : null;
+  const blendEntry = blendId ? mains.find((m) => m.id === blendId) : null;
+  // The wizard's arcane thesis. It arrives as a classChoices row, which ownedFeatureIds folds in.
+  const hasSpellBlending = useMemo(() => ownedFeatureIds(character, content).has('spell-blending'), [character, content]);
   const focusEntries = character.spellcasting.filter((e) => e.type === 'focus');
   const focus = focusEntries[0]; // first entry — for existence checks + maxCastRank; rendering uses focusEntries
   const itemEntries = character.spellcasting.filter((e) => e.type === 'items' || e.type === 'innate');
@@ -687,7 +823,11 @@ export function SpellsTab({
     // pool's highest slot rank. For a full caster the two coincide, but a spellcasting-archetype / multiclass
     // caster's slot ranks lag their level, so their cantrips must still heighten to ceil(level/2).
     const maxRank = Math.min(10, Math.ceil(character.level / 2));
-    if (main.cantrips.length) {
+    // Cantrips bought with Spell Blending sit beside the known ones, labelled, so a player can see
+    // what today's trade actually bought them. An unfilled opening still shows, or the trade would
+    // look like it did nothing.
+    const tradedCantrips = main.tradedCantrips ?? [];
+    if (main.cantrips.length || tradedCantrips.length) {
       const cards = main.cantrips
         .map((id, i) => {
           const sp = content.spells[id];
@@ -695,6 +835,15 @@ export function SpellsTab({
             <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta="at will" marks={marksFor(id)} onClick={() => setDetail(sp)} />
           ) : null;
         })
+        .concat(
+          tradedCantrips.map((id, i) => {
+            const sp = id ? content.spells[id] : null;
+            if (!sp) return filtering ? null : <SpellCard key={'tc' + i} name="Empty cantrip" meta="traded" empty />;
+            return visible(sp) ? (
+              <SpellCard key={'tc' + i} name={sp.name} cost={sp.cast} meta="traded · at will" marks={marksFor(sp.id)} onClick={() => setDetail(sp)} />
+            ) : null;
+          }),
+        )
         .filter(Boolean);
       if (cards.length) {
         ranks.push({
@@ -718,11 +867,20 @@ export function SpellsTab({
   if (main.type === 'prepared' && main.prepared) {
     for (const rank of Object.keys(main.prepared).map(Number).sort((a, b) => a - b)) {
       const slots = main.prepared[rank];
-      const used = slots.filter((s) => s.expended).length;
+      // A slot traded away by Spell Blending is not a slot you have today, so it counts for nothing
+      // here. `slots.length` is the ARRAY size — using it would over-count every traded rank.
+      const live = slots.filter((s) => !s.traded);
+      const used = live.filter((s) => s.expended).length;
       const cards = slots
         .map((slot, i) => {
+          if (slot.traded)
+            return filtering ? null : (
+              <SpellCard key={i} name="Traded away" meta="spell blending" pip="empty" empty />
+            );
           if (!slot.spellId)
-            return filtering ? null : <SpellCard key={i} name="Empty slot" meta={'rank ' + rank} pip="empty" empty />;
+            return filtering ? null : (
+              <SpellCard key={i} name="Empty slot" meta={slot.bonusFrom != null ? `bonus · from ${ord(slot.bonusFrom)}` : 'rank ' + rank} pip="empty" empty />
+            );
           const sp = content.spells[slot.spellId];
           if (!visible(sp)) return null;
           return (
@@ -731,9 +889,11 @@ export function SpellsTab({
               name={sp?.name ?? slot.spellId}
               marks={marksFor(slot.spellId)}
               cost={sp?.cast}
-              meta={'rank ' + rank}
+              meta={slot.bonusFrom != null ? `bonus · from ${ord(slot.bonusFrom)}` : 'rank ' + rank}
               pip={slot.expended ? 'filled' : 'empty'}
-              onPip={onPlay ? () => onPlay((p) => toggleExpended(p, preparedKey(main.id, rank, i))) : undefined}
+              // A bonus slot carries its own key, derived from the rank it was traded FROM, so undoing
+              // a different trade can't renumber it and move this spell.
+              onPip={onPlay ? () => onPlay((p) => toggleExpended(p, slotKeyOf(main.id, rank, i, slot))) : undefined}
               onClick={sp ? () => setDetail(sp) : undefined}
             />
           );
@@ -743,13 +903,13 @@ export function SpellsTab({
       ranks.push({
         key: 'r' + rank,
         label: ord(rank),
-        badge: `${slots.length - used}/${slots.length}`,
+        badge: `${live.length - used}/${live.length}`,
         node: (
           <div key={'r' + rank}>
             <div className="spell-rankhdr">
               {ord(rank)} rank
               <span className="spell-rankhdr-right">
-                {used} / {slots.length} slot{slots.length === 1 ? '' : 's'} used
+                {used} / {live.length} slot{live.length === 1 ? '' : 's'} used
               </span>
             </div>
             <div className="spell-grid">{cards}</div>
@@ -1275,6 +1435,13 @@ export function SpellsTab({
                       <i className="ti ti-pencil-plus" aria-hidden="true" /> {main.type === 'spontaneous' ? 'Repertoire' : 'Prepare'}
                     </button>
                   )}
+                  {/* Gated on the spellbook as well as the thesis: a dual-class wizard/cleric has a
+                      second prepared entry that Spell Blending does not touch. */}
+                  {onPlay && hasSpellBlending && main.type === 'prepared' && !!main.spellbook && (
+                    <button className="ms-btn" onClick={() => setBlendId(main.id)} title="Spell Blending — trade slots">
+                      <i className="ti ti-arrows-exchange" aria-hidden="true" /> Trade slots
+                    </button>
+                  )}
                 </div>
                 <div className="sc-detail">
                   <div className="sc-sub">
@@ -1427,6 +1594,9 @@ export function SpellsTab({
           onPlay={onPlay}
           onClose={() => setManageId(null)}
         />
+      )}
+      {blendEntry && onPlay && (
+        <SpellBlendingModal entry={blendEntry} onPlay={onPlay} onClose={() => setBlendId(null)} />
       )}
     </div>
   );

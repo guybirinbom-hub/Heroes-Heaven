@@ -12,7 +12,7 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot, SpellcastingEntry } from './types';
 import { deriveMaxHp, deriveBulk } from './derive';
 import { adjustModes } from './modes';
 import { monsterPartApex } from './monsterParts';
@@ -114,6 +114,23 @@ export interface PlayState {
   signatureSpells?: Record<string, string[]>;
   /** Commander tactics prepared today (subset of the folio, up to preparedMax); reset on rest. */
   preparedTactics?: string[];
+  /**
+   * Spell Blending trades made during this morning's preparation, per spellcasting entry.
+   *
+   * A ledger of references, not a rewritten slot table: slot counts stay build-derived, and a trade
+   * only names which indices it consumed. That is what keeps `preparedSpells`/`expendedSlots` — both
+   * keyed by slot INDEX — pointing at the same slots they always did.
+   */
+  spellTrades?: Record<string, SpellTrade[]>;
+}
+
+/** One Spell Blending trade: `indices` slots of rank `from` spent for a bonus slot of rank `to`
+ *  (or, when `to` is CANTRIP_TRADE, for two additional cantrips). */
+export interface SpellTrade {
+  from: number;
+  to: number;
+  /** The exact source slots consumed — stored so the marking is stable across renders. */
+  indices: number[];
 }
 
 /** A toggleable per-item carry state. */
@@ -237,15 +254,50 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     let out = e;
     if (e.prepared) {
       const prepared: Record<number, PreparedSlot[]> = {};
+      // Spell Blending. Stale trades are dropped rather than applied: investing a Ring of Wizardry or
+      // levelling up changes the slot arrays in PLAY, without ever passing through playForRebuild, so
+      // a recorded index can outlive the slot it named.
+      const trades = (play.spellTrades?.[e.id] ?? []).filter(
+        (t) => e.prepared?.[t.from] && t.indices.every((i) => i < (e.prepared?.[t.from]?.length ?? 0)) && (t.to === CANTRIP_TRADE || !!e.prepared?.[t.to]),
+      );
+      const tradedAt = new Map<number, Set<number>>();
+      for (const t of trades) {
+        const set = tradedAt.get(t.from) ?? new Set<number>();
+        for (const i of t.indices) set.add(i);
+        tradedAt.set(t.from, set);
+      }
       for (const [rankStr, slots] of Object.entries(e.prepared)) {
         const rank = Number(rankStr);
+        const spent = tradedAt.get(rank);
         prepared[rank] = slots.map((s, i) => {
           const key = preparedKey(e.id, rank, i);
           const override = play.preparedSpells?.[key];
+          // A traded slot is not a slot you have today: it renders greyed and casts nothing.
+          if (spent?.has(i)) return { ...s, spellId: null, expended: false, traded: true };
           return { ...s, spellId: override !== undefined ? override : s.spellId, expended: !!expended[key] };
         });
       }
+      // Bonus slots are APPENDED, so no existing index moves. Their key comes from the source rank,
+      // not their position, so removing another trade cannot renumber them.
+      for (const t of trades) {
+        if (t.to === CANTRIP_TRADE || !prepared[t.to]) continue;
+        const key = bonusSlotKey(e.id, t.to, t.from);
+        prepared[t.to] = [
+          ...prepared[t.to],
+          { spellId: play.preparedSpells?.[key] ?? null, expended: !!expended[key], bonusFrom: t.from },
+        ];
+      }
       out = { ...out, prepared };
+      // "trade any spell slot for two additional cantrips" — openings on the OVERLAY only, never on
+      // the stored character, so the builder's known-cantrip cap survives a round-trip untouched.
+      // Keyed at rank 0, which prepared slots never use, so the keys cannot collide with a real slot.
+      const extra = trades.filter((t) => t.to === CANTRIP_TRADE).length * CANTRIPS_PER_TRADE;
+      if (extra) {
+        out = {
+          ...out,
+          tradedCantrips: Array.from({ length: extra }, (_, i) => play.preparedSpells?.[cantripTradeKey(e.id, i)] ?? null),
+        };
+      }
     }
     if (e.slots) {
       const slots: Record<number, { max: number; used: number }> = {};
@@ -447,8 +499,11 @@ export function setPreparedSpell(
   rank: number,
   slotIndex: number,
   spellId: string | null,
+  /** The slot itself, when it may be a Spell Blending bonus slot — those are keyed by the rank they
+   *  were traded from rather than by position, so their spell survives undoing another trade. */
+  slot?: PreparedSlot,
 ): PlayState {
-  const key = preparedKey(entryId, rank, slotIndex);
+  const key = slotKeyOf(entryId, rank, slotIndex, slot);
   const preparedSpells = { ...(play.preparedSpells ?? {}), [key]: spellId };
   const expendedSlots = { ...play.expendedSlots };
   delete expendedSlots[key];
@@ -462,7 +517,155 @@ export function resetPreparedEntry(play: PlayState, entryId: string): PlayState 
   const expendedSlots = { ...play.expendedSlots };
   for (const k of Object.keys(preparedSpells)) if (k.startsWith(prefix)) delete preparedSpells[k];
   for (const k of Object.keys(expendedSlots)) if (k.startsWith(prefix)) delete expendedSlots[k];
-  return { ...play, preparedSpells, expendedSlots };
+  // Trades are part of this morning's preparation too. Leaving them would restore the default spells
+  // into slots the wizard traded away, and leave the bonus slots sitting there empty.
+  const spellTrades = { ...(play.spellTrades ?? {}) };
+  delete spellTrades[entryId];
+  return { ...play, preparedSpells, expendedSlots, spellTrades };
+}
+
+/* =========================================================================
+ * SPELL BLENDING (wizard arcane thesis)
+ *
+ * "During your daily preparations, you can trade two spell slots of the same spell rank for a bonus
+ * spell slot of up to 2 spell ranks higher than the traded spell slots. You can exchange as many
+ * spell slots as you have available. Bonus spell slots must be of a spell rank you can normally cast,
+ * and each bonus spell slot must be of a different spell rank. You can also trade any spell slot for
+ * two additional cantrips, though you can't trade more than one spell slot at a time for additional
+ * cantrips in this way."
+ *
+ * The ledger lives in PlayState because trading is a daily-preparation act, like every sibling
+ * (preparedSpells, dailyChoices, preparedTactics). Slot COUNTS stay build-derived; a trade only
+ * references (rank, index) into them.
+ * ========================================================================= */
+
+/** The cantrip trade is recorded with `to: 0` — there is no rank-0 slot, so it cannot collide. */
+export const CANTRIP_TRADE = 0;
+/** "you can also trade ANY spell slot for two additional cantrips" — one slot in, two cantrips out. */
+export const CANTRIPS_PER_TRADE = 2;
+
+/** Key for a bonus slot. Derived from the SOURCE rank, never from its position in the array, so
+ *  removing a different trade cannot renumber it and move its prepared spell. Unique because the
+ *  rules allow at most one bonus slot per rank. */
+export const bonusSlotKey = (entryId: string, rank: number, from: number) => `${entryId}:${rank}:b${from}`;
+
+/** Key for a traded-cantrip opening. Rank 0 has no prepared slots, so this can never collide. */
+export const cantripTradeKey = (entryId: string, index: number) => `${entryId}:0:c${index}`;
+
+/** The key for one slot of a rendered prepared entry — a bonus slot carries its own. */
+export const slotKeyOf = (entryId: string, rank: number, index: number, slot?: PreparedSlot): string =>
+  slot?.bonusFrom != null ? bonusSlotKey(entryId, rank, slot.bonusFrom) : preparedKey(entryId, rank, index);
+
+export const tradesFor = (play: PlayState, entryId: string): SpellTrade[] => play.spellTrades?.[entryId] ?? [];
+
+/** How many slots a trade consumes: two for a bonus slot, one for the cantrip trade. */
+export const tradeCost = (to: number) => (to === CANTRIP_TRADE ? 1 : 2);
+
+/**
+ * The trades currently in force, read back off the OVERLAID entry.
+ *
+ * The sheet is handed the already-overlaid character and never sees PlayState — and the overlay
+ * carries everything needed: a bonus slot records the rank it came from, and the cantrip openings are
+ * a list. Reading it back means the modal and the slot grid cannot disagree about what was traded.
+ */
+export function entryTrades(entry: SpellcastingEntry): { from: number; to: number }[] {
+  const out: { from: number; to: number }[] = [];
+  for (const [rankStr, slots] of Object.entries(entry.prepared ?? {})) {
+    for (const s of slots) if (s.bonusFrom != null) out.push({ from: s.bonusFrom, to: Number(rankStr) });
+  }
+  // The cantrip trade leaves no bonus slot behind — only its openings.
+  for (let i = 0; i < Math.floor((entry.tradedCantrips?.length ?? 0) / CANTRIPS_PER_TRADE); i++) {
+    out.push({ from: -1, to: CANTRIP_TRADE });
+  }
+  return out;
+}
+
+/** Indices of `rank`'s real slots that no trade has consumed (bonus slots are never tradeable). */
+export function untradedIndices(entry: SpellcastingEntry, rank: number): number[] {
+  return (entry.prepared?.[rank] ?? [])
+    .map((s, i) => ({ s, i }))
+    .filter(({ s }) => !s.traded && s.bonusFrom == null)
+    .map(({ i }) => i);
+}
+
+/**
+ * Why this trade is illegal, or null when it is allowed.
+ *
+ * Returned as a sentence so the modal can show it as the disabled reason — `addSpellTrade` refusing
+ * silently would look like a frozen button.
+ */
+export function spellTradeError(entry: SpellcastingEntry, from: number, to: number): string | null {
+  const prepared = entry.prepared;
+  if (!prepared) return 'This caster has no prepared slots.';
+  const existing = entryTrades(entry);
+  if (!prepared[from]?.length) return `You have no rank-${from} slots.`;
+
+  const cost = tradeCost(to);
+  const free = untradedIndices(entry, from).length;
+  if (free < cost) return `That needs ${cost} untraded rank-${from} slot${cost === 1 ? '' : 's'} — you have ${free}.`;
+
+  if (to === CANTRIP_TRADE) {
+    // "you can't trade more than one spell slot at a time for additional cantrips in this way"
+    if (existing.some((t) => t.to === CANTRIP_TRADE)) return 'You can only trade one slot for cantrips.';
+    return null;
+  }
+  if (to <= from) return 'A bonus slot must be of a higher rank than the slots you trade.';
+  if (to > from + 2) return 'A bonus slot can be at most 2 ranks higher than the slots you trade.';
+  // "Bonus spell slots must be of a spell rank you can normally cast" — read from the entry's own
+  // slot table rather than a hand-written maximum, so the app agrees with itself by construction.
+  if (!prepared[to]) return `You can't cast rank-${to} spells yet.`;
+  // "each bonus spell slot must be of a different spell rank"
+  if (existing.some((t) => t.to === to)) return `You already have a bonus rank-${to} slot.`;
+  return null;
+}
+
+/** Trade two slots of `from` for a bonus slot of `to` (or one slot for two cantrips when `to` is 0).
+ *  `entry` is the OVERLAID entry the sheet is showing, so its traded marks are already in place. */
+export function addSpellTrade(play: PlayState, entry: SpellcastingEntry, from: number, to: number): PlayState {
+  if (spellTradeError(entry, from, to)) return play;
+  // Consume from the END, so the slots a player is most likely to have prepared keep their indices.
+  const free = untradedIndices(entry, from);
+  const indices = free.slice(-tradeCost(to)).sort((a, b) => a - b);
+
+  // A traded slot keeps its index, so anything saved against it would still render — a spell in a
+  // slot the wizard no longer has, or a spent pip on a slot that is gone.
+  const preparedSpells = { ...(play.preparedSpells ?? {}) };
+  const expendedSlots = { ...play.expendedSlots };
+  for (const i of indices) {
+    const k = preparedKey(entry.id, from, i);
+    delete preparedSpells[k];
+    delete expendedSlots[k];
+  }
+  const spellTrades = { ...(play.spellTrades ?? {}) };
+  spellTrades[entry.id] = [...tradesFor(play, entry.id), { from, to, indices }];
+  return { ...play, preparedSpells, expendedSlots, spellTrades };
+}
+
+/** Undo the trade that produced the bonus slot of rank `to` (or the cantrip trade, when 0). */
+export function removeSpellTrade(play: PlayState, entryId: string, to: number): PlayState {
+  const kept = tradesFor(play, entryId).filter((t) => t.to !== to);
+  const spellTrades = { ...(play.spellTrades ?? {}) };
+  if (kept.length) spellTrades[entryId] = kept;
+  else delete spellTrades[entryId];
+  // The bonus slot is going away; anything prepared into it goes with it.
+  const preparedSpells = { ...(play.preparedSpells ?? {}) };
+  const expendedSlots = { ...play.expendedSlots };
+  for (const t of tradesFor(play, entryId)) {
+    if (t.to !== to) continue;
+    const k = bonusSlotKey(entryId, t.to, t.from);
+    delete preparedSpells[k];
+    delete expendedSlots[k];
+  }
+  return { ...play, preparedSpells, expendedSlots, spellTrades };
+}
+
+/** Extra cantrips the trade grants today (2 per traded slot, and at most one such trade). */
+export const tradedCantripCount = (play: PlayState, entryId: string): number =>
+  tradesFor(play, entryId).filter((t) => t.to === CANTRIP_TRADE).length * CANTRIPS_PER_TRADE;
+
+/** Fill (or clear) one of the cantrip openings bought with the cantrip trade. */
+export function setTradedCantrip(play: PlayState, entryId: string, index: number, spellId: string | null): PlayState {
+  return { ...play, preparedSpells: { ...(play.preparedSpells ?? {}), [cantripTradeKey(entryId, index)]: spellId } };
 }
 
 /** Set a spontaneous caster's known spells for one rank, in play. */

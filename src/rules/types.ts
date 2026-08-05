@@ -2501,6 +2501,17 @@ export interface PreparedSlot {
   /** Spell prepared into this slot, or null if empty. */
   spellId: string | null;
   expended: boolean;
+  /**
+   * Spell Blending: this slot was TRADED away this morning and is not a slot you have today.
+   *
+   * It is marked rather than removed on purpose. Prepared slots are addressed by ARRAY INDEX
+   * (`preparedKey(entryId, rank, index)`) and PlayState keys its prepared spells and expended flags
+   * that way, so shrinking a rank's array would silently re-point every saved key after it.
+   */
+  traded?: boolean;
+  /** Spell Blending: a bonus slot gained by trading two slots of THIS rank. Its key is derived from
+   *  the source rank rather than its position, so removing another trade cannot renumber it. */
+  bonusFrom?: number;
 }
 
 /** A spellcasting source on the character (a class's casting, an innate set, ...). */
@@ -2513,6 +2524,14 @@ export interface SpellcastingEntry {
   proficiency: ProficiencyRank;
   /** Always-available cantrips (spell ids, rank 0). */
   cantrips: string[];
+  /**
+   * Spell Blending: additional cantrip openings bought by trading a spell slot, `null` until filled.
+   *
+   * Kept apart from `cantrips` and written by the play overlay ONLY. Merging them into `cantrips`
+   * would push the list past the known-cantrip cap the builder enforces, and a build round-trip would
+   * bake today's temporary picks into the character permanently.
+   */
+  tradedCantrips?: (string | null)[];
   /** Prepared casters: slots per rank. */
   prepared?: Record<number, PreparedSlot[]>;
   /** Spontaneous casters: known spell ids per rank. */
