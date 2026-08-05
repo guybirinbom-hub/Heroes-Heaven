@@ -389,9 +389,35 @@ export interface DefenseGrants {
    *  Swim — legendary Athletics) OR a specific heritage (Swift Swimmer's wetlander lizardfolk → swim 25).
    *  All present conditions must hold. */
   speedsIf?: { skill?: ProficiencyKey; rank?: ProficiencyRank; heritage?: string; speeds: SpeedGrants }[];
-  /** Languages this feat/heritage grants outright (Multilingual picks are separate; this is fixed
-   *  grants like a half-elf lineage's or a regional feat's specific language). */
+  /** Arithmetic ON a Speed the character ALREADY has, which `speeds` cannot express: every non-land
+   *  grant resolves as max(existing, granted), so a `speeds: { fly: 5 }` meaning "+5 feet to your fly
+   *  Speed" (Winged Warrior Dedication) would be swallowed whole. Also the two penalty clauses. */
+  speedAdjust?: {
+    /** Which Speed(s). 'non-land' is every movement type except land. */
+    key: 'land' | 'fly' | 'swim' | 'climb' | 'burrow' | 'all' | 'non-land';
+    /** Feet added AFTER the grants resolve, and ONLY to a Speed that is already greater than 0 —
+     *  "any fly Speed granted by … increases by 5 feet" gives a wingless character nothing. */
+    add?: number;
+    /** Unburdened Iron's first clause: the worn armour's Speed reduction does not apply. */
+    ignoreArmorPenalty?: boolean;
+    /** Unburdened Iron's second clause: deduct this many feet from ONE other Speed penalty
+     *  ("If your Speed is taking multiple penalties, pick only one penalty to reduce"). */
+    reduceOtherPenalty?: number;
+  };
+  /** Languages this feat/heritage grants outright (a half-elf lineage's or a regional feat's specific
+   *  language) — the record names WHICH languages. */
   grantsLanguages?: string[];
+  /** Languages the record lets the PLAYER choose ("You learn three new languages of your choice").
+   *  Nothing expressed a language choice before, so Multilingual — the most-taken language feat in
+   *  the game — did nothing at all. A formula string may reference `@item.level`. */
+  languageChoices?: number | string;
+  /** Extra choices this record grants once a skill reaches a rank. Multilingual's "an additional
+   *  language if you are or become a master in Society, and again if you are or become legendary"
+   *  is two of these, so the count RISES with the character rather than being fixed at selection. */
+  languageChoicesAtRank?: { skill: ProficiencyKey; rank: ProficiencyRank; extra: number }[];
+  /** "When you select the Multilingual feat, you learn three new languages instead of two" — this
+   *  record changes ANOTHER record's choice count, once per time that other record was taken. */
+  languageChoicesBonus?: { featId: string; extra: number }[];
   /** Feats this heritage/feat grants outright (Cataphract Fleshwarp → Armor Proficiency,
    *  Battle-Trained Human → Diehard). Added as bonus feats with their own effects. */
   grantsFeats?: string[];
@@ -1100,6 +1126,9 @@ export interface SubclassOption {
     skills?: SkillId[];
     weapons?: WeaponCategory[];
     armor?: ArmorCategory[];
+    /** Lore SUBJECTS the option trains ('farming', 'herbalism'). An animist apparition grants two
+     *  named Lores, and `skills` — a SkillId list — cannot express a Lore at all. Kept `lore:<subject>`. */
+    lores?: string[];
   };
   /** A restricted skill choice the subclass grants (gunslinger Pistolero way, investigator Empiricism). */
   skillChoice?: SkillId[];

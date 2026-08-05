@@ -2137,11 +2137,18 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       else speeds[key] = Math.max(speeds[key] ?? 0, v);
     }
   }
-  if (passiveSpeedPenalty > 0) {
-    for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
-      if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - passiveSpeedPenalty);
-    }
+  // Every record that does ARITHMETIC on a Speed rather than granting one. Collected before the
+  // penalties are applied because one of them cancels a penalty and another reduces it, and both
+  // need to be known while the penalties are still separable.
+  const adjusts: NonNullable<DefenseGrants['speedAdjust']>[] = [];
+  for (const src of grantSources) if (src.speedAdjust) adjusts.push(src.speedAdjust);
+  for (const fid of ownedFeatureIds(c, db)) {
+    const a = db.classFeatures[fid]?.speedAdjust;
+    if (a) adjusts.push(a);
   }
+  const ADJUST_KEYS: (keyof Speeds)[] = ['land', 'fly', 'swim', 'climb', 'burrow'];
+  const adjustTargets = (key: NonNullable<DefenseGrants['speedAdjust']>['key']) =>
+    key === 'all' ? ADJUST_KEYS : key === 'non-land' ? ADJUST_KEYS.filter((k) => k !== 'land') : [key as keyof Speeds];
 
   // The active stance / FORM may grant speeds (an ursine form's climb, a form's "fly = your land Speed").
   // Applied AFTER the base grants so a "@actor.speed.land" formula sees the finished land Speed.
@@ -2172,28 +2179,43 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
     }
   }
 
+  // "+5 feet to any fly Speed you already have" — applied after every grant (base, stance, mode) and
+  // before the penalties. A Speed of 0 or absent stays absent, which is exactly why this could not be
+  // a `speeds` grant: those resolve as max(existing, granted) and would have swallowed the 5.
+  for (const a of adjusts) {
+    if (!a.add) continue;
+    for (const k of adjustTargets(a.key)) {
+      if ((speeds[k] ?? 0) > 0) speeds[k] = (speeds[k] as number) + a.add;
+    }
+  }
+
+  // ---- penalties. Every one of these hits EVERY movement type, not just land.
+  const ignoreArmor = adjusts.some((a) => a.ignoreArmorPenalty);
   const worn = findWornArmor(c, db);
-  if (worn && worn.armor.speedPenalty) {
-    // Full penalty if you don't meet the armor's Strength threshold; meeting it
-    // reduces the penalty by 5 feet (to a minimum of 0). The penalty applies to EVERY movement type
-    // (land, fly, swim, climb, burrow), not just land speed.
-    let penalty = Math.abs(worn.armor.speedPenalty);
-    if (meetsArmorStrength(c, worn.armor)) penalty = Math.max(0, penalty - 5);
-    for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
-      if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - penalty);
-    }
+  // Full penalty if you don't meet the armor's Strength threshold; meeting it reduces the penalty by
+  // 5 feet (to a minimum of 0).
+  let armorPenalty = worn?.armor.speedPenalty ? Math.abs(worn.armor.speedPenalty) : 0;
+  if (armorPenalty && meetsArmorStrength(c, worn!.armor)) armorPenalty = Math.max(0, armorPenalty - 5);
+  if (ignoreArmor) armorPenalty = 0; // Unburdened Iron: "Ignore the reduction to your Speed from any armor you wear."
+
+  // The penalties that are NOT from armour, kept apart because the second Unburdened Iron clause
+  // reduces exactly one of them: "If your Speed is taking multiple penalties, pick only one penalty
+  // to reduce." Reducing the LARGEST is the reading that always delivers the full deduction.
+  const others = [
+    passiveSpeedPenalty, // a worn item's flat penalty (Monster Suit −10 ft)
+    activeStanceDef(c, db)?.speedPenalty ?? 0, // Mountain Stance −5 ft
+    c.conditions.some((x) => x.id === 'encumbered') ? 10 : 0,
+  ].filter((n) => n > 0);
+  const reduceBy = Math.max(0, ...adjusts.map((a) => a.reduceOtherPenalty ?? 0));
+  if (reduceBy && others.length) {
+    const biggest = others.indexOf(Math.max(...others));
+    others[biggest] = Math.max(0, others[biggest] - reduceBy);
   }
-  // An active stance may reduce Speed (e.g. Mountain Stance −5 ft to all Speeds).
-  const stanceSpeedPenalty = activeStanceDef(c, db)?.speedPenalty ?? 0;
-  if (stanceSpeedPenalty > 0) {
+
+  const total = armorPenalty + others.reduce((n, p) => n + p, 0);
+  if (total > 0) {
     for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
-      if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - stanceSpeedPenalty);
-    }
-  }
-  // Encumbered reduces every Speed by 10 ft.
-  if (c.conditions.some((x) => x.id === 'encumbered')) {
-    for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
-      if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - 10);
+      if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - total);
     }
   }
   return speeds;

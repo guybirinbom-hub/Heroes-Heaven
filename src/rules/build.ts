@@ -51,7 +51,7 @@ import type {
 import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod, choiceOwnedFeatureIds, classFeatureIdsOwned, profBonus } from './derive';
+import { abilityMod, choiceOwnedFeatureIds, classFeatureIdsOwned, profBonus, resolveFormula } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { applyCounterMods } from './counterMods';
 import { FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
@@ -692,6 +692,22 @@ function maxRank(a: ProficiencyRank, b: ProficiencyRank): ProficiencyRank {
   return PROFICIENCY_RANKS.indexOf(b) > PROFICIENCY_RANKS.indexOf(a) ? b : a;
 }
 
+/**
+ * A free-text Lore subject → the proficiency key that stores it.
+ *
+ * The same subject reaches us typed by a player ("Warfare Lore"), printed on a background, and
+ * listed on an apparition — so all three have to normalize identically or a character ends up
+ * trained in two Lores that are the same Lore.
+ */
+function loreKey(subject: string): ProficiencyKey {
+  const s = subject
+    .toLowerCase()
+    .replace(/\s*lore$/, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return `lore:${s}` as ProficiencyKey;
+}
+
 /** Whichever rank is lower — used for CEILINGS (a class archetype that removes training). */
 function minRank(a: ProficiencyRank, b: ProficiencyRank): ProficiencyRank {
   return PROFICIENCY_RANKS.indexOf(b) < PROFICIENCY_RANKS.indexOf(a) ? b : a;
@@ -821,11 +837,77 @@ function slug(s: string): string {
 }
 
 /** Build a complete, renderable Character from the current choices. */
-/** How many bonus languages the character may choose: max(0, Int mod) + ancestry's extra. */
+/**
+ * Language choices the character's RECORDS grant, on top of Int and ancestry.
+ *
+ * Nothing expressed a language choice before this, so "you learn three new languages of your choice"
+ * had no home and Multilingual — the most-taken language feat in the game — did nothing.
+ *
+ * A feat taken twice grants its languages twice (Multilingual is explicitly repeatable), which is why
+ * this counts feat INSTANCES rather than distinct ids. `skills` is what makes "an additional language
+ * if you are or become a master in Society" rise with the character instead of freezing at selection.
+ */
+export function recordLanguageSlots(
+  content: ContentDatabase,
+  featIds: readonly string[],
+  heritageId: string | null | undefined,
+  investedItemIds: readonly string[],
+  skills: Partial<Record<ProficiencyKey, ProficiencyRank>>,
+  level: number,
+): number {
+  const sources: { id: string; g: DefenseGrants }[] = [];
+  for (const id of featIds) {
+    const f = content.feats[id];
+    if (f) sources.push({ id, g: f });
+  }
+  if (heritageId && content.heritages[heritageId]) sources.push({ id: heritageId, g: content.heritages[heritageId] });
+  for (const id of investedItemIds) {
+    const pe = content.items[id]?.passiveEffects;
+    if (pe) sources.push({ id, g: pe });
+  }
+
+  let n = 0;
+  for (const { id, g } of sources) {
+    let own =
+      typeof g.languageChoices === 'string'
+        ? resolveFormula(g.languageChoices, { level })
+        : (g.languageChoices ?? 0);
+    if (!own && !g.languageChoicesAtRank?.length) continue;
+    for (const r of g.languageChoicesAtRank ?? []) {
+      const have = skills[r.skill] ?? 'untrained';
+      if (PROFICIENCY_RANKS.indexOf(have) >= PROFICIENCY_RANKS.indexOf(r.rank)) own += r.extra;
+    }
+    // "When you select the Multilingual feat, you learn three new languages instead of two" — another
+    // record raising THIS one's count, once per time this one was taken.
+    for (const { g: other } of sources) {
+      for (const b of other.languageChoicesBonus ?? []) if (b.featId === id) own += b.extra;
+    }
+    n += own;
+  }
+  return n;
+}
+
+/** How many bonus languages the character may choose: max(0, Int mod) + ancestry's extra + records'. */
 export function bonusLanguageSlots(build: BuildState, content: ContentDatabase): number {
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
   const intMod = abilityMod(computeAbilities(build, content).int);
-  return Math.max(0, intMod) + (ancestry?.languages.additional ?? 0);
+  const base = Math.max(0, intMod) + (ancestry?.languages.additional ?? 0);
+  const featIds = Object.values(build.featPicks ?? {}).filter(Boolean) as string[];
+  // The builder card has no built Character, and a rank-gated extra needs one — so build only when a
+  // selected record actually asks about a rank. Nothing in the common case does.
+  const needsRanks = featIds.some((id) => content.feats[id]?.languageChoicesAtRank?.length);
+  const skills = needsRanks ? buildCharacter(build, content).proficiencies.skills : {};
+  return (
+    base +
+    recordLanguageSlots(
+      content,
+      featIds,
+      build.heritageId,
+      (build.inventory ?? []).filter((inv) => inv.invested).map((inv) => inv.itemId),
+      skills,
+      build.level,
+    )
+  );
 }
 
 /** Does this class make the character choose a deity? The class carries a deity feature whose id is
@@ -1464,6 +1546,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Subclass-/choice-granted skills (druid order, rogue racket, witch patron, eidolon) — also free.
   for (const o of grantOptions) {
     for (const sk of o.grants?.skills ?? []) (skills[sk] = 'trained'), locked.add(sk);
+    // Named Lores (animist apparitions grant two apiece). A Lore is not a SkillId, so these could
+    // not ride in `grants.skills` and every apparition's "Apparition Skills" Lore line was inert.
+    for (const subj of o.grants?.lores ?? []) {
+      const key = loreKey(subj);
+      (skills[key] = maxRank(skills[key] ?? 'untrained', 'trained')), locked.add(key);
+    }
     // A restricted skill choice (Pistolero way, Empiricism methodology): train the picked skill,
     // defaulting to the first allowed option so the build is always legal.
     if (o.skillChoice?.length) {
@@ -1475,6 +1563,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   }
   // Sorcerer Draconic: the chosen dragon trains a second bloodline skill (Arcana/Religion/Occultism/Nature).
   if (dragon?.skill) (skills[dragon.skill] = 'trained'), locked.add(dragon.skill);
+  // "Your deity grants you the trained proficiency rank in one skill and with the deity's favored
+  // weapon." Only the CLERIC's Deity feature says that — the champion's Deity and Cause does not —
+  // so this stays scoped to the cleric even though several classes pick a deity. The weapon half was
+  // already granted below; `Deity.skill` was read only by Helm of Zeal and never trained anything.
+  const clericDeitySkill =
+    build.classId === 'cleric' || build.classId2 === 'cleric'
+      ? (build.deityId ? content.deities[build.deityId]?.skill : undefined)
+      : undefined;
+  if (clericDeitySkill && (SKILLS as readonly string[]).includes(clericDeitySkill)) {
+    const k = clericDeitySkill as SkillId;
+    (skills[k] = maxRank(skills[k] ?? 'untrained', 'trained')), locked.add(k);
+  }
   // Clamp the class's free skill picks to the legal count (base + level-1 Int),
   // skipping any that duplicate a granted training, so the built character is
   // always legal even if state was reached via a since-lowered Int.
@@ -2526,7 +2626,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (let idx = 0; idx < (g.loreChoices ?? 0); idx++) {
       const subject = build.featLoreChoices?.[`${fc.featId}:${idx}`]?.trim();
       if (!subject) continue;
-      const key = `lore:${subject.toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}` as ProficiencyKey;
+      const key = loreKey(subject);
       proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', 'trained');
     }
   }
@@ -3371,7 +3471,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ),
     languages: (() => {
       const granted = ancestry?.languages.granted ?? [];
-      const slots = Math.max(0, abilityMod(abilities.int)) + (ancestry?.languages.additional ?? 0);
+      const invested = (build.inventory ?? []).filter((inv) => inv.invested).map((inv) => inv.itemId);
+      const slots =
+        Math.max(0, abilityMod(abilities.int)) +
+        (ancestry?.languages.additional ?? 0) +
+        // "You learn three new languages of your choice" — a record widening the pick budget. The
+        // picks themselves live in the same list the Int slots use, so the existing picker serves both.
+        recordLanguageSlots(content, feats.map((fc) => fc.featId), build.heritageId, invested, proficiencies.skills, level);
       const bonus = build.languages.filter((l) => !granted.includes(l)).slice(0, slots);
       // Languages granted outright by feats/heritage (fixed grants) and invested items (Stole of
       // Civility). These are on top of the Int/ancestry slot budget, like the override-added ones.
@@ -3974,13 +4080,24 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     }
     if (background?.trainedLore) granted.add(`lore:${background.trainedLore}`);
     for (const o of grantOptions) for (const sk of o.grants?.skills ?? []) granted.add(sk);
+    for (const o of grantOptions) for (const subj of o.grants?.lores ?? []) granted.add(loreKey(subj));
+    if (c.classId === 'cleric' || c.classId2 === 'cleric') {
+      const ds = c.details.deityId ? content.deities[c.details.deityId]?.skill : undefined;
+      if (ds) granted.add(ds as ProficiencyKey);
+    }
 
     let extras = trained.filter((sk) => !granted.has(sk));
-    if (c.heritageId === 'skilled-human' && extras.length) {
-      const expertExtra = extras.find((sk) => c.proficiencies.skills[sk] === 'expert');
-      const hSkill = (expertExtra ?? extras[0]) as SkillId;
-      b.heritageSkill = hSkill;
-      extras = extras.filter((sk) => sk !== hSkill);
+    if (c.heritageId === 'skilled-human') {
+      // Skilled Heritage raises its skill to expert at 5th. The skill it names may equally be one
+      // the character was GRANTED — a Sarenrae cleric is trained in Medicine by their deity and can
+      // still spend the heritage on it — so look for the expert among the granted skills too, or the
+      // round-trip moves the heritage onto an unrelated skill and makes THAT one expert.
+      const expertAt = (sk: ProficiencyKey) => c.proficiencies.skills[sk] === 'expert';
+      const hSkill = (extras.find(expertAt) ?? [...granted].find(expertAt) ?? extras[0]) as SkillId | undefined;
+      if (hSkill) {
+        b.heritageSkill = hSkill;
+        extras = extras.filter((sk) => sk !== hSkill);
+      }
     }
     b.classSkills = extras;
 

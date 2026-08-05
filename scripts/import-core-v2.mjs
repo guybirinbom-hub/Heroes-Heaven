@@ -390,13 +390,37 @@ if (existsSync('scripts/data/subclass-features.json')) {
 // per-id field patches (senses/speeds/innateSpells/focusSpells/passiveEffects/…) extracted from each
 // record's rules text and validated by scripts/audit/apply-patches.ts. Applied LAST so every backfilled
 // effect survives regeneration regardless of what the facet transcription produced.
+//
+// A fix may also carry `path`: the steps from the record down to a NESTED object, so one option
+// inside a choice group can be patched without restating the whole group. Array steps address by id
+// (`id=apparition`), never by index — regeneration reorders options freely and an index would
+// silently land on a different apparition. A path that does not resolve is REPORTED, not skipped
+// quietly: a typo there produces a record that looks backfilled and isn't.
+function backfillTarget(root, path) {
+  let node = root;
+  for (const step of path) {
+    if (node == null) return null;
+    if (Array.isArray(node)) {
+      const [k, v] = String(step).split('=');
+      node = k === 'id' ? node.find((x) => x?.id === v) : null;
+    } else node = node[step];
+  }
+  return node && typeof node === 'object' ? node : null;
+}
+
 let backfillCount = 0;
 if (existsSync('scripts/data/effect-backfill.json')) {
+  const unresolved = [];
   for (const fix of JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8'))) {
     const entry = db[fix.category]?.[fix.id];
-    if (entry && fix.field) { entry[fix.field] = fix.value; backfillCount++; }
+    if (!entry || !fix.field) continue;
+    const target = fix.path?.length ? backfillTarget(entry, fix.path) : entry;
+    if (!target) { unresolved.push(`${fix.category}/${fix.id}/${fix.path.join('/')}`); continue; }
+    target[fix.field] = fix.value;
+    backfillCount++;
   }
   console.log(`[import-v2] applied ${backfillCount} audit effect backfills`);
+  if (unresolved.length) console.warn(`[import-v2] !! ${unresolved.length} backfill paths did not resolve:\n  ` + unresolved.join('\n  '));
 }
 
 // ------------------------------------------------------------------ per-bucket ast (lazy-loaded, Step 1)

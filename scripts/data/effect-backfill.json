@@ -58984,5 +58984,291 @@
       "fromFeat": "thaumaturge-dedication",
       "prefix": "initiate-benefit-"
     }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=crafter-in-the-vault"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "architecture",
+        "engineering"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=custodian-of-groves-and-gardens"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "farming",
+        "herbalism"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=echo-of-lost-moments"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "fortune-telling",
+        "genealogy"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=impostor-in-hidden-places"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "fortune-telling",
+        "underworld"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=lurker-in-devouring-dark"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "ocean",
+        "sailing"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=monarch-of-the-fey-courts"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "art",
+        "fey"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=reveler-in-lost-glee"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "circus",
+        "fortune-telling"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=shepherd-of-errant-winds"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "sailing",
+        "scouting"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=speaker-in-sibilance"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "fortune-telling",
+        "mountain"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=stalker-in-darkened-boughs"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "forest",
+        "hunting"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=steward-of-stone-and-fire"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "mountain",
+        "volcano"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=vanguard-of-roaring-waters"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "mountain",
+        "river"
+      ]
+    }
+  },
+  {
+    "category": "classes",
+    "id": "animist",
+    "path": [
+      "extraChoices",
+      "id=apparition",
+      "options",
+      "id=witness-to-ancient-battles"
+    ],
+    "field": "grants",
+    "value": {
+      "lores": [
+        "battlegrounds",
+        "heraldry"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "winged-warrior-dedication",
+    "field": "speedAdjust",
+    "value": {
+      "key": "fly",
+      "add": 5
+    }
+  },
+  {
+    "category": "feats",
+    "id": "unburdened-iron",
+    "field": "speedAdjust",
+    "value": {
+      "key": "all",
+      "ignoreArmorPenalty": true,
+      "reduceOtherPenalty": 5
+    }
+  },
+  {
+    "category": "feats",
+    "id": "multilingual",
+    "field": "languageChoices",
+    "value": 2
+  },
+  {
+    "category": "feats",
+    "id": "multilingual",
+    "field": "languageChoicesAtRank",
+    "value": [
+      {
+        "skill": "society",
+        "rank": "master",
+        "extra": 1
+      },
+      {
+        "skill": "society",
+        "rank": "legendary",
+        "extra": 1
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "gnome-polyglot",
+    "field": "languageChoices",
+    "value": 3
+  },
+  {
+    "category": "feats",
+    "id": "gnome-polyglot",
+    "field": "languageChoicesBonus",
+    "value": [
+      {
+        "featId": "multilingual",
+        "extra": 1
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "pact-of-the-rune-dragon",
+    "field": "languageChoices",
+    "value": 10
   }
 ]

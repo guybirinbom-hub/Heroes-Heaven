@@ -4,8 +4,27 @@ import { content } from './_content';
 import { backgroundGrantedFeats } from '../src/rules/build';
 
 const c = content();
-type Patch = { category: string; id: string; field: string; value: unknown };
+type Patch = { category: string; id: string; field: string; value: unknown; path?: string[] };
 const overlay = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as Patch[];
+
+/**
+ * A patch may address a NESTED object, so one option inside a choice group can be patched without
+ * restating the whole group. Array steps address by id (`id=apparition`), never by index — a
+ * regeneration reorders options freely and an index would land on a different record. This walk
+ * mirrors the one `scripts/import-core-v2.mjs` performs; if they diverge the overlay stops
+ * describing what ships.
+ */
+function resolvePath(root: unknown, path: readonly string[]): Record<string, unknown> | null {
+  let node: unknown = root;
+  for (const step of path) {
+    if (node == null) return null;
+    if (Array.isArray(node)) {
+      const [k, v] = String(step).split('=');
+      node = k === 'id' ? node.find((x) => (x as { id?: string })?.id === v) : null;
+    } else node = (node as Record<string, unknown>)[step];
+  }
+  return node && typeof node === 'object' ? (node as Record<string, unknown>) : null;
+}
 
 /**
  * THE OVERLAY IS THE ONLY THING THAT SURVIVES A REGENERATION.
@@ -37,15 +56,27 @@ describe('mechanical data survives a re-import', () => {
     const db = c as unknown as Record<string, Record<string, Record<string, unknown>>>;
     const drift = overlay
       .filter((p) => {
-        const live = db[p.category][p.id][p.field];
+        const target = p.path?.length ? resolvePath(db[p.category][p.id], p.path) : db[p.category][p.id];
+        if (!target) return true; // an unresolved path is drift of the worst kind: it patches nothing
+        const live = target[p.field];
         // The overlay applier can only ASSIGN, so "remove this field" has to be written as null.
         // null and absent are equivalent to every reader (`rec.speeds?.land`, `...(rec.speeds ?? {})`),
         // so treat them as agreeing rather than forcing a literal null into core.json.
         if (p.value === null && live === undefined) return false;
         return JSON.stringify(live) !== JSON.stringify(p.value);
       })
-      .map((p) => `${p.category}/${p.id}.${p.field}`);
+      .map((p) => `${p.category}/${p.id}${p.path?.length ? '/' + p.path.join('/') : ''}.${p.field}`);
     expect(drift, 'overlay entries that no longer match core.json').toEqual([]);
+  });
+
+  it('every nested patch resolves to a real object', () => {
+    // A `path` typo produces a record that LOOKS backfilled and isn't — the exact failure mode this
+    // whole file exists to catch, one level deeper.
+    const db = c as unknown as Record<string, Record<string, unknown>>;
+    const dead = overlay
+      .filter((p) => p.path?.length && !resolvePath(db[p.category]?.[p.id], p.path))
+      .map((p) => `${p.category}/${p.id}/${p.path!.join('/')}`);
+    expect(dead).toEqual([]);
   });
 
   it("the champion's blessing group is in the overlay, not only in core.json", () => {
