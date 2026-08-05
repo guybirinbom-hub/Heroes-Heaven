@@ -35,6 +35,7 @@ import {
   backgroundChoiceKey,
   backgroundChoiceKind,
   backgroundChoiceValue,
+  secondHeritageIdOf,
   featChoicePrompt,
   trainedSkillOptions,
   chosenFromBooks,
@@ -2505,23 +2506,34 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             </SubCard>
           );
         })()}
-      {/* Heritage "choose one of N" effects (a chosen energy/sense/skill). */}
-      {heritage &&
-        build.heritageId &&
-        (heritage.effectChoices ?? []).map((ch) => {
-          const ecKey = `${build.heritageId}:${ch.id}`;
-          return (
-            <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
-              <PopupSelect
-                title={ch.prompt}
-                placeholder={`${ch.prompt}…`}
-                value={build.effectChoices?.[ecKey] ?? ''}
-                onChange={(v) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } })}
-                options={(ch.options ?? []).map((o) => ({ value: o.value, label: o.label }))}
-              />
-            </SubCard>
-          );
-        })}
+      {/* Heritage "choose one of N" effects (a chosen energy/sense/skill/cantrip).
+          This used its own inline copy of the picker, written before EffectChoicesPicker existed and
+          never updated: it mapped `ch.options` only, so the two heritages whose choice is an OPEN
+          spell pick (Wellspring Gnome, Budding Speaker Centaur — "choose one cantrip from that
+          tradition's spell list") rendered an EMPTY, unanswerable dropdown. The shared component
+          resolves `spellFilter` into a searchable list, which is the whole reason it exists. */}
+      {heritage && build.heritageId && (
+        <EffectChoicesPicker
+          recordId={build.heritageId}
+          choices={heritage.effectChoices}
+          build={build}
+          actions={actions}
+          content={content}
+        />
+      )}
+      {/* The SECOND heritage's, for the same reason — buildCharacter resolves both. */}
+      {(() => {
+        const second = secondHeritageIdOf(build, content);
+        return second && content.heritages[second]?.effectChoices?.length ? (
+          <EffectChoicesPicker
+            recordId={second}
+            choices={content.heritages[second].effectChoices}
+            build={build}
+            actions={actions}
+            content={content}
+          />
+        ) : null;
+      })()}
       <SetupCard icon="ti-briefcase" label="Background">
         <SearchSelect
           bare
@@ -2647,6 +2659,18 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             <p className="confirm-note">Recorded on your sheet; this choice has no number of its own.</p>
           )}
         </SubCard>
+      )}
+      {/* The background's `effectChoices`. types.ts documented these as "rendered by the shared
+          EffectChoicesPicker" and no such call existed, so Magical Experiment's sense and Local
+          Savior's innate cantrip were resolved by buildCharacter from an answer nobody could give. */}
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && background.effectChoices?.length && (
+        <EffectChoicesPicker
+          recordId={background.id}
+          choices={background.effectChoices}
+          build={build}
+          actions={actions}
+          content={content}
+        />
       )}
       {showCustomBg && build.backgroundId === CUSTOM_BACKGROUND_ID && (
         <CustomBackgroundForm build={build} actions={actions} content={content} />

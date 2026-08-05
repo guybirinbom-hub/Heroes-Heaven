@@ -333,6 +333,21 @@ export function emptyCustomBackground(): CustomBackground {
  *  build's custom ("deep") background — so every consumer treats them identically. */
 /** The feat ids a background grants, normalised. `grantedFeatId` is usually a single string, but Eagle
  *  Hunter and Returned each grant a PAIR of feats and a bare string read dropped the second one. */
+/**
+ * The SECOND heritage a character has been granted, if any.
+ *
+ * buildCharacter works this out inline; the builder needs the same answer to render that heritage's
+ * own choice surfaces, and duplicating the rule is how the two drift.
+ */
+export function secondHeritageIdOf(build: BuildState, content: ContentDatabase): string | undefined {
+  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+    if (!content.feats[featId]?.secondHeritage) continue;
+    const picked = build.featChoices?.[slotKey];
+    if (picked && content.heritages[picked] && picked !== build.heritageId) return picked;
+  }
+  return undefined;
+}
+
 /** The storage key for a background's own sub-choice — the sibling of `feature:<id>`. */
 export const backgroundChoiceKey = (backgroundId: string) => `background:${backgroundId}`;
 
@@ -1588,12 +1603,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // that say this require a VERSATILE heritage — which is what the character's single `heritageId`
   // records — so the 1st-level ancestry heritage was never stored anywhere and there was nothing to
   // dereference. The feat's own pick supplies it; with no answer, nothing is granted.
-  let secondHeritageId: string | undefined;
-  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
-    if (!content.feats[featId]?.secondHeritage) continue;
-    const picked = build.featChoices?.[slotKey];
-    if (picked && content.heritages[picked] && picked !== build.heritageId) secondHeritageId = picked;
-  }
+  // Through the shared helper, so the builder's pickers and the build agree on which heritage it is.
+  const secondHeritageId = secondHeritageIdOf(build, content);
 
   // A "choose N Lores" heritage (Half Moon Sarangay: 2; Born of Item: 1) — each typed subject is trained.
   const heritageLoreN = [build.heritageId, secondHeritageId].reduce(

@@ -216,8 +216,12 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       rarity: g.rarity,
     });
   }
-  const heritage = character.heritageId ? content.heritages[character.heritageId] : undefined;
-  if (heritage) {
+  // BOTH heritages. Late Awakener and Awakened Yaoguai Heritage give a character the mechanical
+  // benefits of a second one, and those benefits already apply (derive.ts heritageRecords reads it) —
+  // but only `heritageId` was ever listed, so the heritage doing half the work appeared nowhere.
+  for (const hid of [character.heritageId, character.secondHeritageId]) {
+    const heritage = hid ? content.heritages[hid] : undefined;
+    if (!heritage) continue;
     entries.push({
       key: `heritage:${heritage.id}`,
       name: heritage.name,
@@ -227,6 +231,10 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       descRefs: heritage.descRefs,
       isFeature: true,
       bucket: 'Ancestry & heritage',
+      // Which of the two this is, so a player seeing two heritage rows knows why.
+      ...(hid === character.secondHeritageId && hid !== character.heritageId
+        ? { groupLabel: 'Second heritage' }
+        : {}),
       rarity: heritage.rarity,
     });
   }
