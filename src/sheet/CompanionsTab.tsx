@@ -734,13 +734,19 @@ function FamiliarBlockView({ b, cond, hp }: { b: FamiliarBlock; cond?: ReactNode
         </>
       )}
       <div className="sb-div" />
-      <div className="sb-line sb-muted">Chosen familiar abilities ({b.abilities.length})</div>
+      <div className="sb-line sb-muted">
+        Familiar abilities ({b.abilities.filter((a) => !a.fromFeat).length} chosen
+        {b.abilities.some((a) => a.fromFeat) ? `, ${b.abilities.filter((a) => a.fromFeat).length} from feats` : ''})
+      </div>
       {b.abilities.length === 0 ? (
         <div className="sb-line sb-muted">None chosen yet — add some in Edit, including this familiar's required abilities.</div>
       ) : (
         b.abilities.map((a) => (
           <div className="sb-line" key={a.id}>
-            <b>{a.name}</b> {a.kind === 'master' && <span className="sb-trait sb-trait-accent">master</span>} {a.description}
+            <b>{a.name}</b> {a.kind === 'master' && <span className="sb-trait sb-trait-accent">master</span>}{' '}
+            {/* Granted by one of your feats, so it cost no ability slot — the player needs to be able
+                to tell those from the ones they spent a slot on. */}
+            {a.fromFeat && <span className="sb-trait">from a feat</span>} {a.description}
           </div>
         ))
       )}

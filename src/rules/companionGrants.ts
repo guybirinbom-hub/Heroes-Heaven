@@ -150,6 +150,22 @@ export interface CompanionMod {
   /** Skills the mod trains on the companion (Chorus Companion → Performance; Fell Rider → Intimidation).
    *  Raises the companion's rank in that skill to at least the given rank. */
   skillGrants?: { skill: SkillId; rank: ProficiencyRank }[];
+  /**
+   * An unarmed Strike the OWNER's feat gives the companion — Billowing Wings' gust, a ranged
+   * bludgeoning attack a winged companion does not otherwise have. Companion strikes were built from
+   * the companion TYPE and from wielded gear only, so nothing could add one from a feat and a record
+   * whose whole content was "your companions gain this attack" listed nothing.
+   *
+   * `dice`/`die` are the printed values and do NOT scale with maturity: the feat prints 1d4, not the
+   * companion's usual maturity die.
+   */
+  grantedStrikes?: { name: string; dice: number; die: string; damageType: string; range?: number; traits: string[]; note?: string }[];
+  /**
+   * Familiar ability ids the owner's feat grants. The ability RECORDS already ship and the roster
+   * already renders them; nothing attached one, so "your familiar gains the Lightning Needles
+   * ability" left the familiar's block unchanged.
+   */
+  familiarAbilities?: string[];
   note?: string;
 }
 
@@ -193,6 +209,24 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'specialized-spirit-companion': {"kinds":["animal"],"strikeRider":"ghost touch","note":"Spirit-blessed: Strikes gain ghost touch."},
   'vibration-sense': {"kinds":["eidolon"],"senses":["tremorsense (imprecise 30 ft)"],"note":"Vibration Sense: tremorsense as an imprecise sense, range 30 feet. An aquatic eidolon gains wavesense (imprecise 30 ft) instead; an amphibious eidolon gains both."},
   'wing-rider': {"kinds":["animal"],"speeds":{"fly":25},"note":"Wing Rider: your dragon companion has a fly Speed of 25 feet at all times."},
+
+  // ---- grants that had no field until now --------------------------------------------------
+  // "Your companions with wings gain a gust ranged unarmed attack, which deals 1d4 bludgeoning
+  //  damage with a range of 30 feet and has the air and propulsive traits. On a critical hit, the
+  //  target is pushed back 5 feet."
+  // WINGED companions only, which the app cannot check — a companion type carries no 'winged' flag —
+  // so the note says whose attack it is rather than the block quietly claiming every companion has it.
+  'billowing-wings': {
+    kinds: ['animal'],
+    grantedStrikes: [
+      { name: 'Gust', dice: 1, die: 'd4', damageType: 'bludgeoning', range: 30, traits: ['air', 'propulsive', 'range-increment-30', 'unarmed'] },
+    ],
+    note: 'Billowing Wings: a companion WITH WINGS gains the Gust ranged unarmed attack (1d4 bludgeoning, 30 feet, air and propulsive). On a critical hit the target is pushed back 5 feet — forced movement. Remove it by hand if this companion has no wings.',
+  },
+  // "Your familiar gains the <X> ability." The ability records already ship; nothing attached one.
+  'lightning-rings-intervention': { kinds: ['familiar'], familiarAbilities: ['lightning-needles'] },
+  'lightning-rings-overcharge': { kinds: ['familiar'], familiarAbilities: ['lightning-armillary'] },
+  'tempest-clouds-speed': { kinds: ['familiar'], familiarAbilities: ['path-of-the-tempest'] },
 
 
 

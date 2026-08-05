@@ -416,7 +416,21 @@ export function deriveAnimalCompanion(
     }),
   );
   const wielded = gear.strikes.map((w) => buildAttack(w.name, w.dice, w.die.replace(/^d/, ''), w.damageType, w.traits, 0));
-  const attacks = [...natural, ...wielded];
+  // Strikes an OWNER's feat grants (Billowing Wings' gust). The printed dice stand — the feat says
+  // 1d4, not "the companion's maturity die" — so no maturity flat damage rides on them either, and a
+  // ranged one adds no Strength to damage.
+  const granted = ownerFeatIds
+    ? Object.entries(COMPANION_MODS)
+        .filter(([slug, mod]) => ownerFeatIds.has(slug) && mod.kinds.includes('animal'))
+        .flatMap(([, mod]) => mod.grantedStrikes ?? [])
+        .map((s) =>
+          buildAttack(s.name, s.dice, s.die.replace(/^d/, ''), s.damageType, s.traits, 0, {
+            plus: s.note,
+            noStrengthDamage: s.range != null,
+          }),
+        )
+    : [];
+  const attacks = [...natural, ...wielded, ...granted];
 
   const sig = new Set(type.skills);
   const specSkill = new Map((spec?.skills ?? []).map((s) => [s.skill, s.rank] as const));
@@ -541,7 +555,9 @@ export interface FamiliarBlock extends Defenses {
   speed: number;
   /** Extra movement types granted by abilities (Flier → "fly 25 feet", etc.). */
   extraSpeeds: string[];
-  abilities: { id: string; name: string; description: string; kind: string }[];
+  /** `fromFeat` names the owner's feat that granted the ability — those are on TOP of the familiar's
+   *  ability budget, so a player must be able to tell them from the ones they spent a slot on. */
+  abilities: { id: string; name: string; description: string; kind: string; fromFeat?: string }[];
   /** When this familiar is a specific familiar (Pipefox, Imp, …). */
   specific?: {
     name: string;
@@ -563,12 +579,27 @@ export function deriveFamiliar(
   conditions: ActiveCondition[] = [],
   modes: ModeDef[] = [],
 ): FamiliarBlock {
-  const abilities = (cfg.abilities ?? [])
-    .map((id) => content.familiarAbilities[id])
-    .filter((a): a is FamiliarAbility => !!a)
-    .map((a) => ({ id: a.id, name: a.name, description: a.description, kind: a.kind }));
+  // Abilities an OWNER's feat grants ("Your familiar gains the Lightning Needles ability"). The
+  // ability records already shipped and the roster already rendered them; nothing attached one, so
+  // those feats left the familiar's block exactly as it was. They do NOT cost an ability slot.
+  const ownerFeats = new Set((character.feats ?? []).map((f) => f.featId));
+  const grantedAbilityIds = new Map<string, string>();
+  for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
+    if (!ownerFeats.has(slug) || !mod.kinds.includes('familiar')) continue;
+    for (const id of mod.familiarAbilities ?? []) if (!grantedAbilityIds.has(id)) grantedAbilityIds.set(id, slug);
+  }
+  const chosen = new Set(cfg.abilities ?? []);
+  const abilities = [
+    ...(cfg.abilities ?? []).map((id) => ({ id, from: undefined as string | undefined })),
+    ...[...grantedAbilityIds].filter(([id]) => !chosen.has(id)).map(([id, from]) => ({ id, from })),
+  ]
+    .map(({ id, from }) => ({ a: content.familiarAbilities[id], from }))
+    .filter((x): x is { a: FamiliarAbility; from: string | undefined } => !!x.a)
+    .map(({ a, from }) => ({ id: a.id, name: a.name, description: a.description, kind: a.kind, ...(from ? { fromFeat: from } : {}) }));
   const sf = specificFamiliar(content, cfg.specificFamiliarId);
-  const has = (id: string) => (cfg.abilities ?? []).includes(id);
+  // Granted abilities count as HAD: a feat that grants Tough must raise HP, and one that grants
+  // Flier must add the fly Speed, exactly as a chosen one does.
+  const has = (id: string) => chosen.has(id) || grantedAbilityIds.has(id);
   // The 'Tough' familiar ability raises max HP by 2 per level (base 5/level → 7/level). A specific
   // familiar that requires Tough (e.g. Spellslime) gets it even though its required abilities aren't
   // stored in cfg.abilities.
