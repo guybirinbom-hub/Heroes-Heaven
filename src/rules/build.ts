@@ -51,7 +51,7 @@ import type {
 import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod, profBonus } from './derive';
+import { abilityMod, choiceOwnedFeatureIds, profBonus } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
 import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED } from './featFeatGrants';
@@ -1644,6 +1644,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         (v) => (def?.options?.find((o) => o.value === v)?.label ?? featChoiceLabel(v)),
       );
       featChoiceById[slotKey] = labels.length > 1 ? { value: values.join(','), label: labels.join(', ') } : resolved;
+    }
+    // A choice that hands over a CLASS FEATURE carrying focus spells — the witch's 19 lessons, each
+    // of which grants a hex. Focus spells from a class feature are otherwise gathered from
+    // klass.features alone, and a lesson is in no class's feature list, so the lesson was picked,
+    // shown in the builder, and its hex never reached the focus pool.
+    if (content.feats[featId]?.choice?.ownsFeature) {
+      for (const id of choiceOwnedFeatureIds([{ featId, choice: { value: values[0] } }], content)) {
+        for (const sid of content.classFeatures[id]?.focusSpells ?? []) {
+          if (!content.spells[sid] || featFocusSpells.includes(sid)) continue;
+          featFocusSpells.push(sid);
+          focusSource[sid] ??= content.classFeatures[id]?.name ?? id;
+        }
+      }
     }
   }
   // BONUS/GRANTED feats contribute focus too — background/heritage/UMT feats, override-added feats,

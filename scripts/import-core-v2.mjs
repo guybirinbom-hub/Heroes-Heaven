@@ -362,6 +362,30 @@ if (existsSync('scripts/data/fixes.json')) {
   }
 }
 
+// Class features a SUBCLASS hands over (scripts/data/subclass-features.json): an oracle mystery brings
+// its oracular curse. A curse is in no class's `features` list and is not a subclass option itself, so
+// without this ownedFeatureIds has no route to it and everything on the record renders for nobody.
+// Patches an EXISTING option, which class-extras.json cannot do — that one only appends new ones.
+if (existsSync('scripts/data/subclass-features.json')) {
+  const spec = JSON.parse(readFileSync('scripts/data/subclass-features.json', 'utf8'));
+  let attached = 0;
+  for (const [classId, byOption] of Object.entries(spec)) {
+    if (classId.startsWith('_')) continue; // `_why` / `_source` prose
+    const opts = db.classes[classId]?.subclass?.options;
+    if (!opts) { console.warn(`[import-v2] subclass-features: no class "${classId}" with subclasses — skipped`); continue; }
+    for (const [optionId, featureIds] of Object.entries(byOption)) {
+      const opt = opts.find((o) => o.id === optionId);
+      if (!opt) { console.warn(`[import-v2] subclass-features: ${classId} has no option "${optionId}" — skipped`); continue; }
+      for (const missing of featureIds.filter((id) => !db.classFeatures[id])) {
+        console.warn(`[import-v2] subclass-features: ${classId}/${optionId} names "${missing}", which is not a class feature — skipped`);
+      }
+      const live = featureIds.filter((id) => db.classFeatures[id]);
+      if (live.length) { opt.featureIds = [...new Set([...(opt.featureIds ?? []), ...live])]; attached += live.length; }
+    }
+  }
+  console.log(`[import-v2] attached ${attached} subclass-granted class feature(s)`);
+}
+
 // Mechanical-effect backfill from the full player-effect audit (scripts/data/effect-backfill.json):
 // per-id field patches (senses/speeds/innateSpells/focusSpells/passiveEffects/…) extracted from each
 // record's rules text and validated by scripts/audit/apply-patches.ts. Applied LAST so every backfilled

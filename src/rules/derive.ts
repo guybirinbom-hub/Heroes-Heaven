@@ -1190,6 +1190,40 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
   // situational bonuses and any marker keyed on it all rendered for nobody. Same shape as the
   // inventor-modification case above, which is why that comment reads the way it does.
   if (c.mythicCalling && db.classFeatures[c.mythicCalling]) out.add(c.mythicCalling);
+  for (const id of choiceOwnedFeatureIds(c.feats ?? [], db)) out.add(id);
+  // Class features the chosen SUBCLASS brings with it — an oracle mystery hands over its oracular
+  // curse. A curse is in no class's feature list and is not a subclass option itself, so all 11 were
+  // reachable by nothing at all.
+  for (const [klass, subId] of [[cls, c.subclassId], [c.classId2 ? db.classes[c.classId2] : undefined, c.subclassId2]] as const) {
+    const opt = klass?.subclass?.options.find((o) => o.id === subId);
+    for (const id of opt?.featureIds ?? []) if (db.classFeatures[id]) out.add(id);
+  }
+  return out;
+}
+
+/**
+ * Class features a feat's CHOICE puts in the character's hands — Basic/Greater/Major Lesson pick a
+ * `lesson-of-*` record that carries the hex, while the feat itself carries nothing.
+ *
+ * Exported because buildCharacter needs the same answer before a Character exists: focus spells from
+ * a class feature are gathered from `klass.features` alone, and a lesson is in no class's feature
+ * list, so owning it would not have been enough on its own.
+ *
+ * Gated on the choice's own `ownsFeature` flag rather than on the value merely resolving, because 33
+ * feats offer a value that happens to be a classFeature id — Dragon Disciple Dedication offers
+ * "time", which is also the oracle's Time mystery.
+ */
+export function choiceOwnedFeatureIds(
+  feats: readonly { featId: string; choice?: { value: string } }[],
+  db: ContentDatabase,
+): string[] {
+  const out: string[] = [];
+  for (const fc of feats) {
+    if (!fc.choice?.value || !db.feats[fc.featId]?.choice?.ownsFeature) continue;
+    // The value may carry the importer's `aon-` prefix while the record does not.
+    const id = db.classFeatures[fc.choice.value] ? fc.choice.value : fc.choice.value.replace(/^aon-/, '');
+    if (db.classFeatures[id]) out.push(id);
+  }
   return out;
 }
 

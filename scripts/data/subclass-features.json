@@ -1,0 +1,17 @@
+{
+  "_why": "Class-feature records a SUBCLASS hands over, which are in no class's `features` list and are not subclass options themselves — so ownedFeatureIds had no route to them and every field and star on them rendered for nobody. Merged onto the subclass option by scripts/import-core-v2.mjs.",
+  "_source": "Each oracle mystery's own AoN entry names its curse under a `right=\"Oracular Curse\"` heading. Extracted from the local mirror at C:/wonderers guide/aon-2e-archive/data/by-category/mystery/. NOT inferred from the ids: the curse text is actively misleading — Curse of Inevitable Rot says \"time\" and belongs to BLIGHT. Where AoN lists both a legacy and a remaster curse for a mystery, the remaster one is used, matching what this app ships: Battle takes Curse of the Mortal Warrior (not the Hero's Burden) and Tempest takes Curse of Inclement Headwinds (not the Perpetual Storm).",
+  "oracle": {
+    "ancestors": ["curse-of-ancestral-meddling"],
+    "ashes": ["curse-of-creeping-ashes"],
+    "battle": ["curse-of-the-mortal-warrior"],
+    "blight": ["curse-of-inevitable-rot"],
+    "bones": ["curse-of-the-living-death"],
+    "cosmos": ["curse-of-the-skys-call"],
+    "flames": ["curse-of-engulfing-flames"],
+    "life": ["curse-of-outpouring-life"],
+    "lore": ["curse-of-torrential-knowledge"],
+    "tempest": ["curse-of-inclement-headwinds"],
+    "time": ["curse-of-turbulent-moments"]
+  }
+}

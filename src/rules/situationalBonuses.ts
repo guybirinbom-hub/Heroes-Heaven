@@ -3219,6 +3219,21 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'wildwood-halfling': [{"on":"action","id":"stride","note":"You ignore any difficult terrain caused by plants and fungi, such as bushes, vines, and undergrowth."}],
   'woodland-elf': [{"on":"action","id":"climb","note":"Climbing trees, vines, and other foliage you move at half Speed on a success and full Speed on a critical success (full Speed on a success with Quick Climb). Doesn't apply if you have a climb Speed."},{"on":"action","id":"take-cover","note":"You can always Take Cover while within forest terrain, even with no obstacle beside you."}],
   'woodstalker-lizardfolk': [{"on":"action","id":"take-cover","note":"You can always Take Cover while in forest or jungle terrain, even if you are not next to an obstacle."}],
+
+  // ---- oracle curses: what each one does while you are cursebound ----
+  // Transcribed from each record's own text. Reachable only because the chosen mystery now hands
+  // its curse over (SubclassOption.featureIds); before that these records had no route to a sheet.
+  'curse-of-ancestral-meddling': [{ on: 'condition', id: 'cursebound', value: "clumsy = cursebound", note: "Your ancestors vie for control: you are clumsy with a value equal to your cursebound value." }],
+  'curse-of-creeping-ashes': [{ on: 'condition', id: 'cursebound', value: "fire weakness", note: "Cursebound 1: weakness 2 to fire. 2: −2 circumstance to your ranged attack rolls. 3: your fire weakness becomes 5 + your level. 4: you are consumed and die." }],
+  'curse-of-engulfing-flames': [{ on: 'condition', id: 'cursebound', value: "persistent fire = cursebound", note: "You catch fire, taking persistent fire damage equal to your cursebound value, and any immunity or resistance you have to fire is suppressed." }],
+  'curse-of-inclement-headwinds': [{ on: 'condition', id: 'cursebound', value: "electricity weakness", note: "Cursebound 1: electricity weakness 2, and metal-seeking electricity treats you as wearing metal (your immunity or resistance is suppressed). 2: −2 circumstance to your ranged attack rolls. 3: the weakness becomes 5 + your level." }],
+  'curse-of-inevitable-rot': [{ on: 'condition', id: 'cursebound', value: "acid + poison weakness", note: "Cursebound 1: weakness 2 to acid and poison. 2: −1 status to saves against diseases and poisons. 3: the weakness becomes twice your level." }],
+  'curse-of-outpouring-life': [{ on: 'condition', id: 'cursebound', value: "healing reduced", note: "Magical healing you receive takes a status penalty equal to your level (minimum 1) times your cursebound value to the Hit Points restored." }],
+  'curse-of-the-living-death': [{ on: 'condition', id: 'cursebound', value: "vitality + void weakness", note: "Cursebound 1: weakness 2 to vitality and void. 2: −1 status to Fortitude saves. 3: the weakness becomes 5 + your level." }],
+  'curse-of-the-mortal-warrior': [{ on: 'condition', id: 'cursebound', value: "weakness to spells", note: "Cursebound 1: spells wound you more easily. 2: −1 status to saves against spells. 3: your weakness to spells equals your level." }],
+  'curse-of-the-skys-call': [{ on: 'condition', id: 'cursebound', value: "enfeebled = cursebound", note: "You are enfeebled with a value equal to your cursebound value, and take that as a status penalty to saves and DCs against all forms of forced movement." }],
+  'curse-of-torrential-knowledge': [{ on: 'condition', id: 'cursebound', value: "−cursebound to Perception + Will", note: "Status penalty to Perception checks and Will saves equal to your cursebound value. At cursebound 4 you also cannot speak, use linguistic effects, or otherwise communicate with allies." }],
+  'curse-of-turbulent-moments': [{ on: 'condition', id: 'cursebound', value: "−cursebound vs reactions", note: "Status penalty equal to your cursebound value to AC against attacks from reactions or free actions, and to saves against effects that would make you fatigued or slowed." }],
 };
 
 /**

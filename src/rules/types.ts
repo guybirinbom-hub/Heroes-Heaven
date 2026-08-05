@@ -650,6 +650,19 @@ export type FeatCategory =
 export interface FeatChoiceDef {
   flag: string;
   prompt: string;
+  /**
+   * The chosen VALUE names a class feature the character then owns — Basic/Greater/Major Lesson pick
+   * a `lesson-of-*` record whose hex and grants live on that record, not on the feat.
+   *
+   * OPT-IN on purpose. Matching any choice value that happens to resolve would be wrong 33 times over:
+   * Dragon Disciple Dedication offers "time", which is also the oracle's Time mystery, and Martial
+   * Exercise offers "shield", which is a weapon group. An accidental match would hand a dragon
+   * disciple an oracle subclass.
+   *
+   * The value may carry the importer's `aon-` prefix (`aon-lesson-of-calamity`) while the record does
+   * not; ownedFeatureIds strips it.
+   */
+  ownsFeature?: boolean;
   /** How the options are produced:
    *  - 'array'   — fixed options carried on the record.
    *  - 'domains' — resolved from the chosen deity at build time.
@@ -942,6 +955,15 @@ export interface SubclassOption {
   /** The option makes the key attribute a CHOICE among these (rogue racket = the racket's attribute
    *  or Dex). First entry is the default when the player hasn't picked. */
   keyAbilityOptions?: AbilityId[];
+  /**
+   * Class-feature records this subclass hands over, beyond the class's own feature list — an oracle
+   * MYSTERY brings its oracular curse (Ancestors → Curse of Ancestral Meddling).
+   *
+   * Those curse records were reachable by nothing: they are not in `Class.features`, not subclass
+   * options themselves, and ownedFeatureIds had no route to them, so every field and star on all 11
+   * rendered for nobody.
+   */
+  featureIds?: string[];
   /** Focus spell ids this option grants (druid order spell, wizard school spell, witch hex). */
   focusSpells?: string[];
   /** Feat-gated advanced focus spell (Advanced Bloodline / Advanced Revelation grants this). */
