@@ -36,6 +36,7 @@ import {
   backgroundChoiceKind,
   backgroundChoiceValue,
   secondHeritageIdOf,
+  toggleSignature,
   featChoicePrompt,
   trainedSkillOptions,
   chosenFromBooks,
@@ -471,10 +472,10 @@ export function useBuilderActions(
     },
     toggleSignature(rank, id) {
       setBuild((b) => {
-        const signatures = { ...b.signatures };
-        if (signatures[rank] === id) delete signatures[rank];
-        else signatures[rank] = id;
-        return { ...b, signatures };
+        // Through the shared toggle: a rank can hold SEVERAL signatures now (Signature Spell
+        // Expansion grants two more, Ultimate Polymath makes the whole repertoire signature), and
+        // the old assignment silently replaced whatever was there.
+        return { ...b, signatures: toggleSignature(b.signatures, rank, id) };
       });
     },
     // ── Dual Class second-caster spell writers (cantrips2/spells2/signatures2) ──
@@ -505,10 +506,7 @@ export function useBuilderActions(
     },
     toggleSignature2(rank, id) {
       setBuild((b) => {
-        const signatures2 = { ...(b.signatures2 ?? {}) };
-        if (signatures2[rank] === id) delete signatures2[rank];
-        else signatures2[rank] = id;
-        return { ...b, signatures2 };
+        return { ...b, signatures2: toggleSignature(b.signatures2, rank, id) };
       });
     },
     addItem(itemId) {

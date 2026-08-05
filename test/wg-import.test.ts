@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
 import { exportWg, importCharacter } from '../src/data/transfer';
-import { CUSTOM_BACKGROUND_ID } from '../src/rules/build';
+import { CUSTOM_BACKGROUND_ID, signaturesAt } from '../src/rules/build';
 import { initialPlay } from '../src/rules/play';
 
 /**
@@ -163,7 +163,9 @@ describe('Wanderer’s Guide import — subclass, focus/innate spells, extraChoi
     obj.content.spells.normal = [{ id: 55, name: 'Soothe', rank: 1 }];
     const { saved } = importCharacter(JSON.stringify(obj), db);
     const soothe = Object.values(db.spells).find((s) => s.name === 'Soothe')!.id;
-    expect(saved.build!.signatures[1]).toBe(soothe);
+    // Through the helper: a rank holds an ARRAY now, because the rules allow several signature
+    // spells at one rank and the import previously kept only the first.
+    expect(signaturesAt(saved.build!.signatures, 1)).toEqual([soothe]);
     // focus_point_current: 0 → the focus pool starts spent.
     expect((saved.character as any).focus?.current).toBe(0);
   });

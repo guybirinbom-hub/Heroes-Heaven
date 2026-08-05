@@ -857,9 +857,22 @@ export function deriveShield(c: Character, db: ContentDatabase): ShieldInfo | nu
   const ref = mpActive(c, held.inv) ? mpShieldRefine(held.inv.monsterPart, c.level) : null;
   // Guard every shield stat against a data-incomplete item (missing hardness/hp/BT/acBonus) so the
   // shield block — and the AC breakdown that reads it — can never compute NaN.
-  const hardness = Math.max(s.hardness ?? 0, r?.hardness ?? 0, ref?.hardness ?? 0);
+  let hardness = Math.max(s.hardness ?? 0, r?.hardness ?? 0, ref?.hardness ?? 0);
   const hp = Math.max(s.hp ?? 0, r?.hp ?? 0, ref?.hp ?? 0);
   const brokenThreshold = Math.max(s.brokenThreshold ?? 0, r?.bt ?? 0, ref?.bt ?? 0);
+  // "If your shield already has the appropriate reinforcing rune for your level, or if it's a Sturdy
+  // Shield of the same level, the shield's Hardness INSTEAD increases by 1." Exclusive with the tier
+  // above: the +1 applies only when the shield already meets every number that tier would have set,
+  // so a blessing can never both raise the floor and add the bonus.
+  const lvlTier = byLevel ? REINFORCING[byLevel] : undefined;
+  if (
+    lvlTier &&
+    (s.hardness ?? 0) >= lvlTier.hardness &&
+    (s.hp ?? 0) >= lvlTier.hp &&
+    (s.brokenThreshold ?? 0) >= lvlTier.bt
+  ) {
+    hardness += 1;
+  }
   const current = Math.max(0, hp - Math.max(0, c.shieldDamage ?? 0));
   return { name: s.name, ac: s.acBonus ?? 0, hardness, hp, brokenThreshold, current, broken: current <= brokenThreshold };
 }

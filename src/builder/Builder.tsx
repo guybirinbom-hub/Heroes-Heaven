@@ -34,6 +34,7 @@ import {
 } from '../rules/build';
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
 import { classFeatureIdsOwned, domainPoolFor } from '../rules/derive';
+import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes';
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
@@ -667,7 +668,7 @@ export function Builder({
                       {sigAvailable && (
                         <button
                           type="button"
-                          className={'spr-chip-sig' + (build.signatures[rank] === id ? ' on' : '')}
+                          className={'spr-chip-sig' + (signaturesAt(build.signatures, rank).includes(id) ? ' on' : '')}
                           aria-label={`Signature ${content.spells[id]?.name ?? id}`}
                           title="Signature spell (cast at any rank)"
                           onClick={() => actions.toggleSignature(rank, id)}
@@ -746,7 +747,7 @@ export function Builder({
                     {sigAvailable2 && (
                       <button
                         type="button"
-                        className={'spr-chip-sig' + (build.signatures2?.[rank] === id ? ' on' : '')}
+                        className={'spr-chip-sig' + (signaturesAt(build.signatures2, rank).includes(id) ? ' on' : '')}
                         aria-label={`Signature ${content.spells[id]?.name ?? id}`}
                         title="Signature spell (cast at any rank)"
                         onClick={() => actions.toggleSignature2(rank, id)}

@@ -224,14 +224,24 @@ export interface BuildState {
   cantrips: string[];
   /** Chosen spells per rank (1-10): repertoire for spontaneous, prepared list for prepared. */
   spells: Record<number, string[]>;
-  /** Spontaneous signature spell per rank (rank -> repertoire spell id) — one per rank. */
-  signatures: Record<number, string>;
+  /**
+   * Spontaneous signature spells, rank -> spell ids.
+   *
+   * A bare string is the LEGACY shape (one per rank) and is still accepted on read, because saved
+   * characters are never normalized on load — changing the type outright compiles clean and silently
+   * corrupts them. Read through `signaturesAt()`, never directly.
+   *
+   * More than one per rank is reachable: Signature Spell Expansion grants "two additional signature
+   * spells", Reanimator Dedication one "in addition to your usual", and Ultimate Polymath makes the
+   * whole repertoire signature. With one slot per rank, every one of those was capped at one.
+   */
+  signatures: Record<number, string | string[]>;
   /** Dual Class: the SECOND caster class's own spell surface — cantrips, spells-per-rank
    *  (repertoire for spontaneous / prepared list for prepared), and signatures. Without these,
    *  the second class's caster entry would be rebuilt empty on every builder edit. */
   cantrips2?: string[];
   spells2?: Record<number, string[]>;
-  signatures2?: Record<number, string>;
+  signatures2?: Record<number, string | string[]>;
   /** Chosen tradition for a choice-tradition caster archetype (sorcerer/witch/eldritch-archer/beast-gunner). */
   archetypeTradition?: Tradition | null;
   /** Chosen key attribute for a choice-key caster archetype (psychic dedication = Int or Cha). */
@@ -829,6 +839,33 @@ export function featChoiceLabel(raw: string): string {
  * Lores are included — the rules let you choose one — and are keyed `lore:<subject>`, so the subject
  * becomes the label. Sorted by rank (best first) then name, so the likely pick is at the top.
  */
+/**
+ * The signature spells at one rank, whichever shape they are stored in.
+ *
+ * A saved character may hold the LEGACY bare string (one per rank). `build` is never normalized on
+ * load, so widening the type without this would compile clean and silently drop those picks. Every
+ * reader goes through here; every writer stores an array.
+ */
+export function signaturesAt(store: Record<number, string | string[]> | undefined, rank: number): string[] {
+  const v = store?.[rank];
+  return v == null ? [] : Array.isArray(v) ? v : [v];
+}
+
+/** Toggle one spell's signature status at a rank, returning the new store. */
+export function toggleSignature(
+  store: Record<number, string | string[]> | undefined,
+  rank: number,
+  spellId: string,
+): Record<number, string | string[]> {
+  const next = { ...(store ?? {}) };
+  const after = signaturesAt(next, rank).includes(spellId)
+    ? signaturesAt(next, rank).filter((x) => x !== spellId)
+    : [...signaturesAt(next, rank), spellId];
+  if (after.length) next[rank] = after;
+  else delete next[rank];
+  return next;
+}
+
 export function trainedSkillOptions(
   character: { proficiencies: { skills: Record<string, ProficiencyRank> } },
   minRank: ProficiencyRank = 'trained',
@@ -1226,7 +1263,7 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   }
   for (const v of build.cantrips) add(v);
   for (const arr of Object.values(build.spells)) for (const v of arr) add(v);
-  for (const v of Object.values(build.signatures)) add(v);
+  for (const r of Object.keys(build.signatures)) for (const v of signaturesAt(build.signatures, Number(r))) add(v);
   if (build.archetypeSpells) {
     for (const v of build.archetypeSpells.cantrips) add(v);
     for (const arr of Object.values(build.archetypeSpells.spells)) for (const v of arr) add(v);
@@ -1296,6 +1333,17 @@ export function removeChosenIds(build: BuildState, ids: ReadonlySet<string>): Bu
     r ? Object.fromEntries(Object.entries(r).filter(([, v]) => !gone(v))) : r;
   const filterArrRec = (r: Record<string, string[]> | undefined) =>
     r ? Object.fromEntries(Object.entries(r).map(([k, a]) => [k, a.filter((v) => !gone(v))])) : r;
+  /** Signatures filter PER ID, not per rank — a rank can hold several now, and dropping the whole
+   *  rank because one of them referenced removed content would silently delete the rest. Accepts
+   *  either stored shape. */
+  const filterSignatures = (r: Record<number, string | string[]>) => {
+    const out: Record<number, string | string[]> = {};
+    for (const k of Object.keys(r)) {
+      const kept = signaturesAt(r, Number(k)).filter((v) => !gone(v));
+      if (kept.length) out[Number(k)] = kept;
+    }
+    return out;
+  };
 
   const next: BuildState = {
     ...build,
@@ -1316,7 +1364,9 @@ export function removeChosenIds(build: BuildState, ids: ReadonlySet<string>): Bu
     featPicks: filterRec(build.featPicks) ?? build.featPicks,
     featChoices: filterRec(build.featChoices) ?? build.featChoices,
     dedicationSkillFeats: filterRec(build.dedicationSkillFeats),
-    signatures: filterRec(build.signatures) ?? build.signatures,
+    // Filtered per-rank: a rank may now hold several ids, and dropping the whole rank because one
+    // of them referenced removed content would silently delete the others.
+    signatures: filterSignatures(build.signatures),
     gateForks: filterRec(build.gateForks),
     gateExpands: filterRec(build.gateExpands),
     extraChoices: filterArrRec(build.extraChoices) ?? build.extraChoices,
@@ -2011,9 +2061,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // (e.g. bard at level 3); each must be a spell actually in the repertoire.
       const sigAvailable = (cls.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= level);
       if (sigAvailable) {
-        const sig = Object.entries(build.signatures)
-          .filter(([rankStr, id]) => entry.repertoire?.[Number(rankStr)]?.includes(id))
-          .map(([, id]) => id);
+        const sig = Object.keys(build.signatures)
+          .flatMap((rankStr) => signaturesAt(build.signatures, Number(rankStr))
+            .filter((id) => entry.repertoire?.[Number(rankStr)]?.includes(id)));
         if (sig.length) entry.signature = sig;
       }
       // Summoner's Unlimited Signature Spells (level 3): every spell in the repertoire is a signature
@@ -2167,9 +2217,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // Signature spells (spontaneous, once granted) — each must be in the repertoire.
       const sig2Available = (cls2.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= level);
       if (sig2Available) {
-        const sig2 = Object.entries(build.signatures2 ?? {})
-          .filter(([rankStr, id]) => entry2.repertoire?.[Number(rankStr)]?.includes(id))
-          .map(([, id]) => id);
+        const sig2 = Object.keys(build.signatures2 ?? {})
+          .flatMap((rankStr) => signaturesAt(build.signatures2, Number(rankStr))
+            .filter((id) => entry2.repertoire?.[Number(rankStr)]?.includes(id)));
         if (sig2.length) entry2.signature = sig2;
       }
     } else if (cls2.id === 'wizard') {
@@ -4388,9 +4438,12 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       b.cantrips = classEntry.cantrips.filter((s) => !grantedSpellSet.has(s));
       if (classEntry.type === 'spontaneous' && classEntry.repertoire) {
         for (const [rank, ids] of Object.entries(classEntry.repertoire)) b.spells[Number(rank)] = ids.filter((s) => !grantedSpellSet.has(s));
+        // ACCUMULATE. Assigning would keep only the last of a rank's signatures, which is exactly
+        // the round-trip loss the array shape exists to stop — and TypeScript cannot catch it,
+        // because a bare string is still assignable to `string | string[]`.
         for (const sigId of classEntry.signature ?? []) {
           const r = content.spells[sigId]?.rank;
-          if (r != null) b.signatures[r] = sigId;
+          if (r != null) b.signatures[r] = [...signaturesAt(b.signatures, r), sigId];
         }
       } else if (classEntry.spellbook) {
         for (const [rank, ids] of Object.entries(classEntry.spellbook)) b.spells[Number(rank)] = [...ids];
@@ -4411,10 +4464,10 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       const spells2: Record<number, string[]> = {};
       if (classEntry2.type === 'spontaneous' && classEntry2.repertoire) {
         for (const [rank, ids] of Object.entries(classEntry2.repertoire)) spells2[Number(rank)] = [...ids];
-        const signatures2: Record<number, string> = {};
+        const signatures2: Record<number, string | string[]> = {};
         for (const sigId of classEntry2.signature ?? []) {
           const r = content.spells[sigId]?.rank;
-          if (r != null) signatures2[r] = sigId;
+          if (r != null) signatures2[r] = [...signaturesAt(signatures2, r), sigId];
         }
         if (Object.keys(signatures2).length) b.signatures2 = signatures2;
       } else if (classEntry2.spellbook) {

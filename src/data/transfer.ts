@@ -44,7 +44,7 @@ import type {
 } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
-import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
+import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, signaturesAt, type BuildState } from '../rules/build';
 import { maxTakes } from '../rules/featGrants';
 import { CORE_BOOKS, sourceCatalog } from '../rules/sources';
 import { applyPlayState } from '../rules/play';
@@ -980,18 +980,25 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   const idNames = wgSpellIdNames(snap);
   {
     const list: any[] = Array.isArray(c.spells?.list) ? c.spells.list : [];
-    const signatures: Record<number, string> = {};
+    // ACCUMULATE per rank. `if (!signatures[rank])` kept the FIRST and dropped the rest, so an
+    // imported character with two signatures at one rank silently lost one — and Wanderer's Guide
+    // exports them all, because the rules allow them all.
+    const signatures: Record<number, string | string[]> = {};
+    let count = 0;
     for (const row of list) {
       if (!row?.signature) continue;
       const nm = idNames.get(Number(row.spell_id));
       const id = nm ? spellsIdx.get(norm(nm)) : undefined;
       if (!id) continue;
       const rank = Number(row.rank) || content.spells[id]?.rank || 1;
-      if (!signatures[rank]) signatures[rank] = id;
+      const cur = signaturesAt(signatures, rank);
+      if (cur.includes(id)) continue;
+      signatures[rank] = [...cur, id];
+      count++;
     }
-    if (Object.keys(signatures).length) {
+    if (count) {
       build.signatures = { ...build.signatures, ...signatures };
-      resolved.push(`${Object.keys(signatures).length} signature spell${Object.keys(signatures).length === 1 ? '' : 's'} marked.`);
+      resolved.push(`${count} signature spell${count === 1 ? '' : 's'} marked.`);
     }
   }
 
