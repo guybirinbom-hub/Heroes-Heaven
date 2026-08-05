@@ -334,6 +334,9 @@ export interface WeaponRider {
 }
 
 export interface DefenseGrants {
+  /** Spells this record gives ACCESS to — see SpellAccessGrant. An array because one record can widen
+   *  the list AND grant into a repertoire, and those are different promises. */
+  spellListAdditions?: SpellAccessGrant | SpellAccessGrant[];
   /** Changes to unarmed Strikes the character already has. See UnarmedRider. */
   unarmedTraits?: UnarmedRider | UnarmedRider[];
   /** Changes to WIELDED weapons matching a filter. See WeaponRider. */
@@ -924,7 +927,6 @@ export interface Feat extends ContentBase, DefenseGrants {
    * `entryId` narrows it to one spellcasting entry (Aura Enhancement adds to the divine font only);
    * omitted, the spells join every entry's pool.
    */
-  spellListAdditions?: { spells: string[]; entryId?: string };
   /** "Increase your limit on invested items from 10 to 12" (Incredible Investiture). The inventory
    *  capped investment at a bare const 10, so the feat could not raise anything. */
   investedLimitBonus?: number;
@@ -2010,6 +2012,23 @@ export interface GrantedStrike {
  * ikon, and a weapon acting as a rune source for another.
  */
 export type ItemDesignation = 'innovation' | 'weapon-implement' | 'bonded' | 'ikon' | 'rune-source';
+
+/**
+ * Spells a record gives the character ACCESS to, and in what sense.
+ *
+ * "Access" is three different promises in the printed text and they are not interchangeable:
+ *   'list'       widens the prepare/repertoire picker. You may now LEARN these — Dragon Arcana's
+ *                "you must still learn them or add them to your repertoire as normal". The default.
+ *   'repertoire' you actually KNOW them, free of the known-spells cap — "add Heal and Harm to your
+ *                apparition's repertoire".
+ *   'font'       they become legal choices for your divine font, which is a separate pool from both.
+ */
+export interface SpellAccessGrant {
+  spells?: string[];
+  /** Narrow to one spellcasting entry (a font addition belongs to the font's own entry). */
+  entryId?: string;
+  as?: 'list' | 'repertoire' | 'font';
+}
 
 export interface InventoryItem {
   /** Unique per inventory entry (distinct from the item definition id). */

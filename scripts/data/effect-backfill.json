@@ -58865,5 +58865,81 @@
         "modular-b-p-or-s"
       ]
     }
+  },
+  {
+    "category": "feats",
+    "id": "versatile-font",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "heal",
+        "harm"
+      ],
+      "as": "font"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "aura-enhancement",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "benediction",
+        "malediction"
+      ],
+      "as": "font"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "restorative-channel",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "cleanse-affliction",
+        "clear-mind",
+        "sound-body",
+        "sure-footing"
+      ],
+      "as": "font"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "embodiment-of-the-balance",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "heal",
+        "harm"
+      ],
+      "as": "repertoire"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "walk-the-wilds",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "animal-form"
+      ],
+      "as": "repertoire"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "shadow-spells",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "shadow-blast",
+        "shadow-siphon",
+        "umbral-journey",
+        "replicate",
+        "shadow-army",
+        "shadow-projectile"
+      ]
+    }
   }
 ]

@@ -2685,15 +2685,54 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // "Add Illusory Disguise, Illusory Object, and Illusory Scene to your spell list." The picker
   // filtered strictly on the entry's tradition, so these feats offered nothing new to learn. They
   // widen the POOL only — the player still has to spend a repertoire slot or prepare the spell.
+  //
+  // Three different promises, kept apart: 'list' widens the picker (you may LEARN it), 'repertoire'
+  // means you already know it, 'font' makes it a legal divine-font choice. Class features carry these
+  // too now, which is why the sins and the witch lessons could not be expressed before.
   let spellListAdditions: Record<string, string[]> | undefined;
-  for (const fc of feats) {
-    const add = content.feats[fc.featId]?.spellListAdditions;
-    if (!add?.spells?.length) continue;
-    const key = add.entryId ?? '*';
-    const known = add.spells.filter((s) => content.spells[s]); // never offer an id the picker cannot open
-    if (!known.length) continue;
-    spellListAdditions = spellListAdditions ?? {};
-    spellListAdditions[key] = [...new Set([...(spellListAdditions[key] ?? []), ...known])];
+  const grantedRepertoireAdds: { entryId?: string; spells: string[] }[] = [];
+  const fontAdds: { entryId?: string; spells: string[] }[] = [];
+  {
+    const sources: (DefenseGrants | undefined)[] = [
+      ...feats.map((fc) => content.feats[fc.featId]),
+      ...[...classFeatureIdsOwned(
+        { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+        content,
+      )].map((id) => content.classFeatures[id]),
+    ];
+    for (const src of sources) {
+      const list = src?.spellListAdditions;
+      for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
+        // Never offer an id the picker cannot open.
+        const known = (add.spells ?? []).filter((s) => content.spells[s]);
+        if (!known.length) continue;
+        if (add.as === 'repertoire') grantedRepertoireAdds.push({ entryId: add.entryId, spells: known });
+        else if (add.as === 'font') fontAdds.push({ entryId: add.entryId, spells: known });
+        else {
+          const key = add.entryId ?? '*';
+          spellListAdditions = spellListAdditions ?? {};
+          spellListAdditions[key] = [...new Set([...(spellListAdditions[key] ?? []), ...known])];
+        }
+      }
+    }
+  }
+
+  // Applied as a final pass: the spellcasting entries are assembled well above this point, and a
+  // record granting into a repertoire or a font has to wait until there is an entry to grant into.
+  for (const { entryId, spells } of grantedRepertoireAdds) {
+    const entry = entryId ? spellcasting.find((e) => e.id === entryId) : spellcasting.find((e) => e.type === 'focus') ?? spellcasting[0];
+    if (!entry) continue;
+    for (const sid of spells) {
+      const rank = content.spells[sid]?.rank ?? 1;
+      const at = ((entry.grantedRepertoire ??= {})[rank] ??= []);
+      if (!at.includes(sid)) at.push(sid);
+    }
+  }
+  for (const { entryId, spells } of fontAdds) {
+    // A font addition belongs to the entry that HAS a font; naming one is only needed when two do.
+    const entry = entryId ? spellcasting.find((e) => e.id === entryId) : spellcasting.find((e) => e.font);
+    if (!entry?.font) continue;
+    entry.font.allowed = [...new Set([...(entry.font.allowed ?? []), ...spells])];
   }
 
   // Diehard: "you die from the dying condition at dying 5, rather than dying 4". dyingDeathThreshold
