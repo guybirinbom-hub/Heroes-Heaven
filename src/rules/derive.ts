@@ -1149,6 +1149,39 @@ export function weaponSpecialization(c: Character, db: ContentDatabase): { spec:
 /** The class-feature ids the character owns at their current level (auto-granted class features only —
  *  not feats or subclass options). Lets strike math key off level-1 features like Powerful Fist,
  *  Sneak Attack, or Hunt Prey by exact id. */
+/**
+ * The class features a character holds by virtue of their CLASS — auto-granted ones at or below their
+ * level, the `<featureId>-<subclassId>` variants of those, the subclass option itself, and whatever
+ * the subclass hands over.
+ *
+ * Exists as its own function because buildCharacter needs the same answer before a Character exists,
+ * and because the two were already out of step: the registries in featGrantsAuto.ts and
+ * featFeatGrants.ts are iterated over taken FEATS only, so 32 entries authored against class-feature
+ * ids — `expert-overdrive` and `legendary-overdrive` among them — had never once fired.
+ */
+export function classFeatureIdsOwned(
+  opts: { classId?: string | null; subclassId?: string | null; level: number; classChoices?: readonly { id?: string; level: number }[] },
+  db: ContentDatabase,
+): Set<string> {
+  const cls = opts.classId ? db.classes[opts.classId] : undefined;
+  const out = new Set<string>();
+  if (cls) for (const f of cls.features) if (f.level <= opts.level) out.add(f.featureId);
+  if (cls && opts.subclassId) {
+    for (const f of cls.features) {
+      if (f.level > opts.level) continue;
+      const variant = `${f.featureId}-${opts.subclassId}`;
+      if (db.classFeatures[variant]) out.add(variant);
+    }
+    if (db.classFeatures[opts.subclassId]) out.add(opts.subclassId);
+    const opt = cls.subclass?.options.find((o) => o.id === opts.subclassId);
+    for (const id of opt?.featureIds ?? []) if (db.classFeatures[id]) out.add(id);
+  }
+  for (const cc of opts.classChoices ?? []) {
+    if (cc.id && cc.level <= opts.level && db.classFeatures[cc.id]) out.add(cc.id);
+  }
+  return out;
+}
+
 export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> {
   const cls = c.classId ? db.classes[c.classId] : undefined;
   const out = new Set<string>();

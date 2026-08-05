@@ -1,0 +1,54 @@
+SCOPE AND METHOD
+
+159 records. 21 lanes cover 146 of them; 11 records are singletons that no lane reaches; 2 are wholly impossible. Ten more records appear in BOTH a lane and the singleton or impossible bucket, because one printed half is buildable and the other is not — those are marked PARTIAL rather than silently rounded up.
+
+Two of the four cluster proposals arrived truncated, so lanes for those quarters (g2 and g3 — 79 records) were rebuilt from the records themselves in work/lanes/all159.json rather than taken on trust. Every structural claim below was checked against the source before a lane was kept.
+
+WHAT I DROPPED, AND WHY
+
+Several clusters proposed lanes for things the engine already has. All were verified and demoted to DATA, which is why lane 1 exists and ranks first:
+  - shadow-spells / forgotten-presence were flagged "there is no spell-list-addition lane". There is: spellListAdditions (types.ts:814), read at build.ts:2659-2667, consumed by SpellsTab.tsx:246-247. What is actually missing is only the array/feature/repertoire widening, which is lane 5.
+  - insulated-poppet was flagged "every IWR field is additive". removesWeaknesses (types.ts:854) is read at derive.ts:928 and insulated-poppet is a FEAT, so the field reaches it today. Pure data.
+  - astral / impactful and their greater versions were flagged as needing a rune-payload lane. RuneDef.damage exists (types.ts:1762) and flaming ships it; core.json simply omits the key on these four. Pure data.
+  - The five mythic callings were flagged "unmodelled". Nine *-calling rows already ship in FEAT_SITUATIONAL (situationalBonuses.ts:2861-2952) in exactly the drafted shape, and derive.ts:1192 already puts c.mythicCalling into ownedFeatureIds. A registry fill, costed as data.
+  - miraculous-flight's own cluster said it was a registry fill, and it is: COMPANION_MODS already carries speeds:{fly:'land'}.
+  - blazons-of-shared-power was flagged as needing a rune-copy lane. copyRunesFrom exists (types.ts:1941) with a full applier at derive.ts:1104 and a manual picker in InventoryTab.tsx:1028. Only the AUTOMATIC trigger is hardcoded, as DOUBLING_RINGS at derive.ts:1083 — a two-id Set. Folded into lane 4.
+  - masterful-hunter-precision's whyFlagged says "the base Precision edge is equally unmodelled". It is modelled: derive.ts:1266-1272 emits the 1d8/2d8/3d8 annotation gated on the precision subclass and the Hunt Prey toggle. Only the Nth-hit extension is missing, and only as text.
+
+THE SINGLE BIGGEST STRUCTURAL FINDING
+
+The engine has a systematic hole that no cluster stated as one thing: a dozen appliers read a field off a FEAT and nothing ever looks the same field up on an owned CLASS FEATURE. Verified sites — derive.ts:310 untrainedProficiency, :928 removesWeaknesses, :1227 choice.ownsFeature, :1423 weaponTraits, :1807 unarmedTraits, :2086 bulkLimitBonus; build.ts:2289/2403/2705/3699/3761 FEAT_GRANTS, :2661 spellListAdditions, :3272 the languages IIFE.
+
+The proof it is a hole and not a design decision: featGrantsAuto.ts:132 ships 'expert-overdrive': { skills: { crafting: 'expert' } } and :197 ships 'legendary-overdrive': { skills: { crafting: 'legendary' } }. Both keys are classFeature ids. Every FEAT_GRANTS lookup passes a featId. Neither has ever fired. Someone already authored the data for a lane the engine cannot read. Lane 2 resurrects it, and lanes 3, 4 and 5 cannot land at all until it does — the inventor's 19 innovation modifications, the seven runelord sins and the wizard curriculum lists are ALL classFeatures.
+
+THE SECOND STRUCTURAL FINDING
+
+The app never links a class choice to an inventory item. InventorBuild (types.ts:916) stores an innovation TYPE and three modification ids and no item; the thaumaturge's weapon implement and the wizard's bonded weapon are not recorded anywhere at all. That single absence kills 19 inventor modifications, both crit-spec clauses, the armour restat, the rune cap and Rod of Rule. It is lane 4, and it is why lane 3's inventor half cannot ship alone.
+
+THIRD: ownsClass() IS A WALL
+
+Verified gates in build.ts at :1362, :2022, :2261, :2623, :3110, :3134, :3154, :3175. An archetype taker gets none of the class machinery even when the archetype ALREADY RECORDED THE PICK — thaumaturge-dedication stores dedicationImplement, barbarian-dedication stores barbarianInstinct, order-training stores the order. Meanwhile ClassResource.feat (classResources.ts:29-31) exists for exactly this purpose and already ships for Rage, Panache and Ranger. Lane 7 finishes a job the codebase started.
+
+RANKING RULE APPLIED
+
+Rank = (records covered) x (confidence it reaches the sheet), cheapest first among equals. That puts lane 1 (16 records, zero engine change, every field already read) first and lane 2 (6 direct records but a hard prerequisite for ~40 more, one afternoon of plumbing) second, ahead of lane 3, which covers the most records (29) but is the largest single piece of work and half-blocked on lane 4.
+
+THIN LANES, DECLARED
+
+Lanes 15, 16, 20 and 21 cover two records each, and lane 18 covers one. They are kept because in each case the missing CONCEPT — additive speed arithmetic, an armour rune with any payload, adjusting a mode you already have, a second heritage, a level-gated subclass grant — has no expression at all and the alternative is a hardcoded special case. Lane 18 is one record here and eighteen in the family (6 gunslinger ways x initial/advanced/greater), and the widened field is what every future subclass-grants-a-later-feature case needs. If a batch-count floor is imposed, these five are the ones that fall.
+
+LANES WITH A SMALL SLICE HERE AND A LARGE FAMILY BEHIND THEM
+
+Lane 12 is 4 records here, 13 apparitions and ~485 deities in the family. Lane 3's inventor half is 7 here and 19 in the family. Lane 9's daily-choice half is 1 here (skin-hard-as-horn) and ~10 in the family, with the siblings named: pelt-of-the-beast already carries a daily choice and grants nothing, and planar-resilience, environmental-adaptability, demon-hunter, the-queen-mother, viridian-crown and endless-memories all record an answer today and apply nothing. Sixty-seven records in total carry a FeatChoiceDef.daily whose answer the Rest sheet collects and discards, because a FeatChoiceDef option is {value,label,description} and carries no grant.
+
+THE HONEST CEILINGS
+
+"Attempt the check at mythic proficiency" renders as a PHRASE, not a number, in all fourteen calling entries — PROFICIENCY_RANKS stops at legendary. Making it compute is a rules-content decision about the proficiency ladder that would retroactively give a number to ~20 shipped entries; it is not a gap and is deliberately not in this plan.
+
+Every "first time each day you critically succeed" clause is a reminder. The app never sees a roll.
+
+Lane 3 is where over-granting is most dangerous: an unfiltered weaponTraits rider applies to every weapon the character wields, and an unfiltered critSpec grant lights up every Strike (derive.ts:1347 weaponMatches returns true for an unnarrowed entry). In both cases the FILTER and the DATA must ship in the same change, never separately.
+
+BUILD ORDER, NOT JUST RANK
+
+Lane 2 is a hard dependency of lanes 3, 4 and 5. Lane 4 is a hard dependency of the inventor half of lane 3 and of the two heavy-construction / rune-capacity singletons. Lane 1 depends on nothing and blocks nothing, so it can be done in parallel by whoever is touching data rather than code. Lane 16's actsAs arithmetic and the blessed-shield singleton share a max-not-sum helper and should be written once.

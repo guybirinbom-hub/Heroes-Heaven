@@ -51,7 +51,7 @@ import type {
 import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod, choiceOwnedFeatureIds, profBonus } from './derive';
+import { abilityMod, choiceOwnedFeatureIds, classFeatureIdsOwned, profBonus } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
 import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED } from './featFeatGrants';
@@ -2367,14 +2367,28 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   }
   // granted feat too.
   {
-    const queue = feats.map((f) => f.featId);
+    // Seeded with owned CLASS FEATURES as well as feats: 19 entries in featFeatGrants.ts are keyed to
+    // class-feature ids (Alchemical Sciences Methodology, Aloof Firmament, Battledancer) and this
+    // queue only ever held feats, so none of them had fired. The grant still has to name a real feat.
+    const queue = [
+      ...feats.map((f) => f.featId),
+      ...classFeatureIdsOwned(
+        { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+        content,
+      ),
+    ];
     let guard = 0;
     while (queue.length && guard++ < 500) {
       const srcId = queue.shift() as string;
       for (const gid of FEAT_FEAT_GRANTS[srcId] ?? []) {
         if (takenFeats.has(gid) || !content.feats[gid]) continue;
         takenFeats.add(gid);
-        const srcLevel = feats.find((f) => f.featId === srcId)?.level ?? 1;
+        // A class-feature source has no entry in `feats`; fall back to the level the class grants it,
+        // so a feature gained at 9th does not list its granted feat as though it arrived at 1st.
+        const srcLevel =
+          feats.find((f) => f.featId === srcId)?.level ??
+          (content.classes[build.classId ?? '']?.features ?? []).find((f) => f.featureId === srcId)?.level ??
+          1;
         feats.push({ featId: gid, level: srcLevel, category: content.feats[gid].category as FeatCategory, grantedBy: srcId, choice: grantedChoiceById[gid] });
         queue.push(gid);
       }
@@ -2399,7 +2413,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Redundant-grant fallbacks ("already trained → a skill of your choice") triggered here are surfaced
   // on Character.skillFallbacks so the builder can offer the replacement picker.
   const skillFallbacks: { featId: string; skill: ProficiencyKey }[] = [];
-  for (const fc of feats) {
+  // CLASS FEATURES are grant sources too. This table is iterated over taken feats, and 13 entries in
+  // featGrantsAuto.ts were authored against class-feature ids — `expert-overdrive` and
+  // `legendary-overdrive` among them — so they had never once fired. A class feature has no embedded
+  // sub-choice, hence the bare `{ featId }`.
+  const grantSourcesForProficiency = [
+    ...feats,
+    // `grantOptions` is every chosen option — subclass plus the extra-choice picks (thaumaturge
+    // implements, exemplar ikons, kineticist elements) — and each option id is also a classFeature.
+    ...[...classFeatureIdsOwned(
+      { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+      content,
+    )]
+      .filter((id) => FEAT_GRANTS[id])
+      .map((id) => ({ featId: id, choice: undefined })),
+  ];
+  for (const fc of grantSourcesForProficiency) {
     const g = FEAT_GRANTS[fc.featId];
     if (!g) continue;
     // Some grants don't start when the feat is taken — Martial Experience only trains you in every
