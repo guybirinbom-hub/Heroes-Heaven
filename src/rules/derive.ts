@@ -478,11 +478,54 @@ export function deriveMaxHp(c: Character, db: ContentDatabase): number {
   return Math.max(0, base + perLevel * c.level + featHpBonus(c, db) - drainedHpLoss(c));
 }
 
-/** The worn armor item and its inventory entry, if any. */
-function findWornArmor(c: Character, db: ContentDatabase): { inv: InventoryItem; armor: ArmorItem } | null {
+export interface WornArmor {
+  inv: InventoryItem;
+  armor: ArmorItem;
+  /**
+   * The category the PROFICIENCY lookup must use, which is not always the armor's own.
+   *
+   * Heavy Construction turns the innovation into heavy armor while its proficiency "advances to be
+   * equal to your proficiency in medium armor" — and an inventor is never trained in heavy armor at
+   * any level, with untrained being a flat +0. Reading `defenses.heavy` would cost a 10th-level
+   * inventor 12 AC.
+   */
+  profCategory: ArmorCategory;
+}
+
+/**
+ * Restat a worn armor when an owned record modifies the DESIGNATED innovation.
+ *
+ * Gated twice on purpose: the item must carry the designation AND be one the record names. The
+ * designation alone is player-set, so without the id check a player could mark full plate as their
+ * innovation and collect the medium-armor track for it.
+ */
+export function applyArmorRiders(c: Character, db: ContentDatabase, inv: InventoryItem, armor: ArmorItem): WornArmor {
+  // Zero cost for everyone who designated nothing — which is everyone but an inventor.
+  if (!inv.designations?.length) return { inv, armor, profCategory: armor.category };
+  let out = armor;
+  let profCategory = armor.category;
+  for (const id of ownedFeatureIds(c, db)) {
+    const r = db.classFeatures[id]?.armorRestat;
+    if (!r || !inv.designations.includes(r.designated)) continue;
+    if (r.items && !r.items.includes(armor.id)) continue;
+    out = { ...out, ...(r.set ?? {}) };
+    if (r.addTraits?.length) out = { ...out, traits: [...new Set([...(out.traits ?? []), ...r.addTraits])] };
+    if (r.proficiencyAs) profCategory = r.proficiencyAs;
+    // "If your Strength modifier is at least +3, you remove the Speed penalty entirely instead of
+    // reducing it to -5 feet." Zeroing it here lets the ordinary threshold rule below run unchanged:
+    // max(0, 0 - 5) is still 0. Below the threshold the full restatted penalty stands.
+    if (r.removeSpeedPenaltyAtStr != null && abilityMod(c.abilities.str) >= r.removeSpeedPenaltyAtStr) {
+      out = { ...out, speedPenalty: 0 };
+    }
+  }
+  return { inv, armor: out, profCategory };
+}
+
+/** The worn armor item and its inventory entry, if any — restatted by any owned rider. */
+function findWornArmor(c: Character, db: ContentDatabase): WornArmor | null {
   for (const inv of c.inventory) {
     const item = db.items[inv.itemId];
-    if (inv.worn && item?.itemType === 'armor') return { inv, armor: item };
+    if (inv.worn && item?.itemType === 'armor') return applyArmorRiders(c, db, inv, item);
   }
   return null;
 }
@@ -768,7 +811,8 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   let acItem = 0; // item-type bonus (potency rune / Monster-Parts refine) — item bonuses don't stack
 
   if (worn) {
-    category = worn.armor.category;
+    // profCategory, not armor.category — Heavy Construction reads the medium track for a heavy suit.
+    category = worn.profCategory;
     dexCap = worn.armor.dexCap ?? null;
     // ABP defense potency replaces the armor potency rune's numeric bonus. A Monster-Parts refined
     // armor (Table 4B) supplies an AC item bonus in place of the potency rune (which it ignores).
@@ -2738,7 +2782,10 @@ function makeEffBulk(c: Character, db: ContentDatabase) {
   const effBulk = (inv: InventoryItem, seen: Set<string>): number => {
     const item = db.items[inv.itemId];
     if (!item) return 0;
-    const own = item.bulk * inv.quantity;
+    // Heavy Construction restats the innovation's Bulk (2 -> 3). Read the ridden item so the
+    // encumbrance total agrees with the armour the rest of the sheet is showing.
+    const eff = item.itemType === 'armor' && inv.designations?.length ? applyArmorRiders(c, db, inv, item).armor : item;
+    const own = eff.bulk * inv.quantity;
     if (item.itemType !== 'container' || seen.has(inv.instanceId)) return own;
     seen.add(inv.instanceId);
     const contents = (childrenOf[inv.instanceId] ?? []).reduce((s, k) => s + effBulk(k, seen), 0);

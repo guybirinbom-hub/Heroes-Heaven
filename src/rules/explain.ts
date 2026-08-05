@@ -22,6 +22,7 @@ import { modeModifiersFor, hasConditionalMode, activeModesTouch, type ModeTarget
 import { abpOn, abpSave, abpPerception, abpDefense, abpSkillBonus } from './abp';
 import type { CharacterDefenses } from './derive';
 import {
+  applyArmorRiders,
   RANK_VALUE,
   abilityMod,
   activeStanceDef,
@@ -629,8 +630,14 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const dex = abilityMod(c.abilities.dex);
       const dexContribution = ac.dexCap != null ? Math.min(dex, ac.dexCap) : dex;
       const worn = c.inventory.map((i) => ({ i, it: db.items[i.itemId] })).find((x) => x.i.worn && x.it?.itemType === 'armor');
-      const armor = worn && worn.it?.itemType === 'armor' ? worn.it : null;
+      // Restatted the same way deriveAc sees it, or the breakdown contradicts the number it explains.
+      // Heavy Construction makes the innovation heavy while its proficiency still reads the MEDIUM
+      // track, so `category` (what the armor IS) and `profCategory` (where the rank comes from) differ
+      // — and the timeline has to follow the rank, or it shows a track the class never advances.
+      const ridden = worn && worn.it?.itemType === 'armor' ? applyArmorRiders(c, db, worn.i, worn.it) : null;
+      const armor = ridden?.armor ?? null;
       const category = armor?.category ?? 'unarmored';
+      const profCategory = ridden?.profCategory ?? 'unarmored';
       const cls = c.classId ? db.classes[c.classId] : undefined;
       const stance = activeStanceDef(c, db);
       // The Dex cap can come from worn armor OR the active stance (e.g. Mountain Stance +0). Attribute it
@@ -678,7 +685,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         totalText: String(ac.value),
         rank: ac.rank,
         parts,
-        timeline: profTimeline(c, db, category, cls?.defenses[category] ?? 'trained', `in ${category === 'unarmored' ? 'unarmored defense' : `${category} armor`}`),
+        timeline: profTimeline(c, db, profCategory, cls?.defenses[profCategory] ?? 'trained', `in ${profCategory === 'unarmored' ? 'unarmored defense' : `${profCategory} armor`}`),
         description: DESC.ac,
         situational,
       };

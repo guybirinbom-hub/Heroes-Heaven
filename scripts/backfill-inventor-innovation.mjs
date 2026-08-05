@@ -103,8 +103,16 @@ const add = (id, field, value) => {
   const addTraits = ['bulwark', 'entrench'].filter((tr) => new RegExp(`\\b${tr}`, 'i').test(block));
   if (addTraits.length !== 2) fail(`expected bulwark + entrench in the armor traits, found ${addTraits.join(', ') || 'none'}`);
 
+  // "Power Suit only" — taken from the record's own tag, not typed in. Without this the restat would
+  // fire on ANY armor a player designated as their innovation, and `proficiencyAs` would hand full
+  // plate the medium-armor track.
+  const suitTag = (rec.otherTags ?? []).find((t) => t.endsWith('-suit-modification'));
+  const only = suitTag.replace(/-modification$/, '');
+  if (!core.items[only]) fail(`the record is tagged ${suitTag} but items/${only} does not ship`);
+
   add('heavy-construction', 'armorRestat', {
     designated: 'innovation',
+    items: [only],
     set: { category: 'heavy', speedPenalty, bulk },
     addTraits,
     // THE LOAD-BEARING HALF. An inventor is never trained in heavy armor; without this the AC lookup

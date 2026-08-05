@@ -48,7 +48,7 @@ import type {
   WeaponRunes,
   PinnedDesc,
 } from './types';
-import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
+import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod, choiceOwnedFeatureIds, classFeatureIdsOwned, profBonus, resolveFormula } from './derive';
@@ -271,6 +271,14 @@ export interface BuildState {
     charges?: { current: number; max: number };
     /** Generic scroll/wand: the spell the player chose to store (see ItemBase.spellSlot). */
     heldSpell?: string;
+    /**
+     * Innovation / weapon implement / bonded item / ikon / rune source.
+     *
+     * This survived only in PlayState, which restores it by instanceId — and instanceIds are the
+     * inventory INDEX (`inv-${i}`), so removing an earlier item slid the mark onto whatever took its
+     * place. Carrying it on the build keeps it attached to the item the player marked.
+     */
+    designations?: ItemDesignation[];
   }[];
   /** Ancestry/feat natural unarmed attacks (Iruxi Fangs, claws, …) shown as extra Strikes. */
   naturalAttacks?: NaturalAttack[];
@@ -3792,6 +3800,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         ...(it.runes ? { runes: it.runes } : {}),
         ...(it.charges ? { charges: it.charges } : {}),
         ...(it.heldSpell ? { heldSpell: it.heldSpell } : {}),
+        ...(it.designations?.length ? { designations: it.designations } : {}),
       })),
       // Items a record HANDS you ("You gain a Razmiri mask"). Nothing put an item in the inventory,
       // so a feat whose benefit IS an item delivered nothing. Skipped when the player already
@@ -3952,6 +3961,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     ...(it.runes ? { runes: it.runes } : {}),
     ...(it.charges ? { charges: it.charges } : {}),
     ...(it.heldSpell ? { heldSpell: it.heldSpell } : {}),
+    ...(it.designations?.length ? { designations: it.designations } : {}),
   }));
   // Native/lossless path: the character carries its own skillIncreases — trust them verbatim so a
   // native round-trip stays exact. When they're absent or under-count the final ranks (imported /

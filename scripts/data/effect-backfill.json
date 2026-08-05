@@ -65391,6 +65391,9 @@
     "field": "armorRestat",
     "value": {
       "designated": "innovation",
+      "items": [
+        "power-suit"
+      ],
       "set": {
         "category": "heavy",
         "speedPenalty": -10,

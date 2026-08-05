@@ -1259,6 +1259,12 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
   armorRestat?: {
     /** Only restat the item carrying this designation (the innovation, not other armor). */
     designated: ItemDesignation;
+    /**
+     * …and only these item ids. The designation alone is not enough: nothing stops a player marking
+     * their full plate as the innovation, and `proficiencyAs` would then hand a heavy suit the medium
+     * track. Heavy Construction is printed "Power Suit only" and carries the matching tag.
+     */
+    items?: string[];
     set?: { category?: ArmorCategory; speedPenalty?: number; bulk?: number };
     addTraits?: string[];
     /** Read proficiency from THIS armor category instead of the restatted one. */
