@@ -1,0 +1,436 @@
+[
+ {
+  "id": "fascinating",
+  "coll": "items",
+  "name": "Fascinating",
+  "level": 0,
+  "bucket": "NONE"
+ },
+ {
+  "id": "aon-seer-s-array",
+  "coll": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "bucket": "NONE"
+ },
+ {
+  "id": "aetheric-irritant",
+  "coll": "items",
+  "name": "Aetheric Irritant",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "inflammation-flask-lesser",
+  "coll": "items",
+  "name": "Inflammation Flask (Lesser)",
+  "level": 2,
+  "bucket": "NONE"
+ },
+ {
+  "id": "clay-sphere",
+  "coll": "items",
+  "name": "Clay Sphere",
+  "level": 3,
+  "bucket": "NONE"
+ },
+ {
+  "id": "thorn-triad",
+  "coll": "items",
+  "name": "Thorn Triad",
+  "level": 4,
+  "bucket": "NONE"
+ },
+ {
+  "id": "stone-body-mutagen-lesser",
+  "coll": "items",
+  "name": "Stone Body Mutagen (Lesser)",
+  "level": 5,
+  "bucket": "NONE"
+ },
+ {
+  "id": "vaccine-moderate",
+  "coll": "items",
+  "name": "Vaccine (Moderate)",
+  "level": 6,
+  "bucket": "NONE"
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-rank",
+  "coll": "items",
+  "name": "Wand of Noisome Acid (2nd-Rank)",
+  "level": 6,
+  "bucket": "NONE"
+ },
+ {
+  "id": "moderate-maelstromic-destabilizer",
+  "coll": "items",
+  "name": "Moderate Maelstromic Destabilizer",
+  "level": 7,
+  "bucket": "NONE"
+ },
+ {
+  "id": "thorn-triad-greater",
+  "coll": "items",
+  "name": "Thorn Triad (Greater)",
+  "level": 8,
+  "bucket": "NONE"
+ },
+ {
+  "id": "chromatic-jellyfish-oil",
+  "coll": "items",
+  "name": "Chromatic Jellyfish Oil",
+  "level": 9,
+  "bucket": "NONE"
+ },
+ {
+  "id": "sun-slayer",
+  "coll": "items",
+  "name": "Sun Slayer",
+  "level": 10,
+  "bucket": "NONE"
+ },
+ {
+  "id": "mask-of-the-mantis-greater",
+  "coll": "items",
+  "name": "Mask of the Mantis (Greater)",
+  "level": 11,
+  "bucket": "NONE"
+ },
+ {
+  "id": "arboreal-staff",
+  "coll": "items",
+  "name": "Arboreal Staff",
+  "level": 12,
+  "bucket": "NONE"
+ },
+ {
+  "id": "stormshard-greater",
+  "coll": "items",
+  "name": "Stormshard (Greater)",
+  "level": 12,
+  "bucket": "NONE"
+ },
+ {
+  "id": "staff-of-the-unblinking-eye-major",
+  "coll": "items",
+  "name": "Staff of the Unblinking Eye (Major)",
+  "level": 14,
+  "bucket": "NONE"
+ },
+ {
+  "id": "dragonhide-buckler-high-grade",
+  "coll": "items",
+  "name": "Dragonhide Buckler (High-Grade)",
+  "level": 16,
+  "bucket": "NONE"
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-rank-spell",
+  "coll": "items",
+  "name": "Wand of Noisome Acid (8th-Rank Spell)",
+  "level": 18,
+  "bucket": "NONE"
+ },
+ {
+  "id": "breastplate-of-the-mountain",
+  "coll": "items",
+  "name": "Breastplate of the Mountain",
+  "level": 20,
+  "bucket": "NONE"
+ },
+ {
+  "id": "pierce-the-veil",
+  "coll": "items",
+  "name": "Pierce the Veil",
+  "level": 0,
+  "bucket": "NH"
+ },
+ {
+  "id": "rime-crystal",
+  "coll": "items",
+  "name": "Rime Crystal",
+  "level": 3,
+  "bucket": "PE"
+ },
+ {
+  "id": "resonating-fork-greater",
+  "coll": "items",
+  "name": "Resonating Fork (Greater)",
+  "level": 7,
+  "bucket": "PE"
+ },
+ {
+  "id": "greater-foxglove-token",
+  "coll": "items",
+  "name": "Greater Foxglove Token",
+  "level": 8,
+  "bucket": "PE"
+ },
+ {
+  "id": "broadleaf-shield-greater",
+  "coll": "items",
+  "name": "Broadleaf Shield (Greater)",
+  "level": 9,
+  "bucket": "EC"
+ },
+ {
+  "id": "heartmoss-major",
+  "coll": "items",
+  "name": "Heartmoss (Major)",
+  "level": 12,
+  "bucket": "PE"
+ },
+ {
+  "id": "elven-verve",
+  "coll": "feats",
+  "name": "Elven Verve",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "acupuncturist",
+  "coll": "feats",
+  "name": "Acupuncturist",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "godless-healing",
+  "coll": "feats",
+  "name": "Godless Healing",
+  "level": 2,
+  "bucket": "NONE"
+ },
+ {
+  "id": "commitment-to-equality",
+  "coll": "feats",
+  "name": "Commitment to Equality",
+  "level": 4,
+  "bucket": "NONE"
+ },
+ {
+  "id": "reincarnated-ridiculer",
+  "coll": "feats",
+  "name": "Reincarnated Ridiculer",
+  "level": 5,
+  "bucket": "NONE"
+ },
+ {
+  "id": "fearful-symmetry",
+  "coll": "feats",
+  "name": "Fearful Symmetry",
+  "level": 6,
+  "bucket": "NONE"
+ },
+ {
+  "id": "aon-oppurtune-trickster",
+  "coll": "feats",
+  "name": "Oppurtune Trickster",
+  "level": 6,
+  "bucket": "NONE"
+ },
+ {
+  "id": "mutable-familiar",
+  "coll": "feats",
+  "name": "Mutable Familiar",
+  "level": 8,
+  "bucket": "NONE"
+ },
+ {
+  "id": "siren-song",
+  "coll": "feats",
+  "name": "Siren Song",
+  "level": 9,
+  "bucket": "NONE"
+ },
+ {
+  "id": "battlefront-sabotage",
+  "coll": "feats",
+  "name": "Battlefront Sabotage",
+  "level": 10,
+  "bucket": "NONE"
+ },
+ {
+  "id": "surgical-shock",
+  "coll": "feats",
+  "name": "Surgical Shock",
+  "level": 12,
+  "bucket": "NONE"
+ },
+ {
+  "id": "fear-of-god",
+  "coll": "feats",
+  "name": "Fear of God",
+  "level": 14,
+  "bucket": "NONE"
+ },
+ {
+  "id": "confusing-commands",
+  "coll": "feats",
+  "name": "Confusing Commands",
+  "level": 16,
+  "bucket": "NONE"
+ },
+ {
+  "id": "marked-for-rebuke",
+  "coll": "feats",
+  "name": "Marked For Rebuke",
+  "level": 18,
+  "bucket": "NONE"
+ },
+ {
+  "id": "animal-senses",
+  "coll": "feats",
+  "name": "Animal Senses",
+  "level": 1,
+  "bucket": "EC+CH"
+ },
+ {
+  "id": "winter-sleet",
+  "coll": "feats",
+  "name": "Winter Sleet",
+  "level": 4,
+  "bucket": "STANCE"
+ },
+ {
+  "id": "kinetic-dampening",
+  "coll": "feats",
+  "name": "Kinetic Dampening",
+  "level": 6,
+  "bucket": "MODE"
+ },
+ {
+  "id": "stunt-performer-stance",
+  "coll": "feats",
+  "name": "Stunt Performer Stance",
+  "level": 10,
+  "bucket": "STANCE"
+ },
+ {
+  "id": "form-a-flock",
+  "coll": "feats",
+  "name": "Form a Flock",
+  "level": 13,
+  "bucket": "MODE"
+ },
+ {
+  "id": "auspicious-mount",
+  "coll": "feats",
+  "name": "Auspicious Mount",
+  "level": 16,
+  "bucket": "CH"
+ },
+ {
+  "id": "spellstrike",
+  "coll": "classFeatures",
+  "name": "Spellstrike",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "curse-of-inclement-headwinds",
+  "coll": "classFeatures",
+  "name": "Curse of Inclement Headwinds",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "fey-eidolon",
+  "coll": "classFeatures",
+  "name": "Fey Eidolon",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "swarm-eidolon",
+  "coll": "classFeatures",
+  "name": "Swarm Eidolon",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "wilding-steward",
+  "coll": "classFeatures",
+  "name": "Wilding Steward",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "skirt-the-underworld",
+  "coll": "classFeatures",
+  "name": "Skirt the Underworld",
+  "level": 1,
+  "bucket": "NONE"
+ },
+ {
+  "id": "gate-junction",
+  "coll": "classFeatures",
+  "name": "Gate Junction",
+  "level": 5,
+  "bucket": "NONE"
+ },
+ {
+  "id": "construct-eidolon",
+  "coll": "classFeatures",
+  "name": "Construct Eidolon",
+  "level": 1,
+  "bucket": "CH"
+ },
+ {
+  "id": "elemental-eidolon",
+  "coll": "classFeatures",
+  "name": "Elemental Eidolon",
+  "level": 1,
+  "bucket": "CH"
+ },
+ {
+  "id": "break-the-suns-legs",
+  "coll": "classFeatures",
+  "name": "Break the Sun's Legs",
+  "level": 1,
+  "bucket": "MODE"
+ },
+ {
+  "id": "rite-of-light",
+  "coll": "heritages",
+  "name": "Rite of Light",
+  "level": null,
+  "bucket": "NONE"
+ },
+ {
+  "id": "enchanting-lily",
+  "coll": "heritages",
+  "name": "Enchanting Lily",
+  "level": null,
+  "bucket": "EC"
+ },
+ {
+  "id": "magical-experiment",
+  "coll": "backgrounds",
+  "name": "Magical Experiment",
+  "level": null,
+  "bucket": "EC"
+ },
+ {
+  "id": "shade",
+  "coll": "companionSpecializations",
+  "name": "Shade",
+  "level": null,
+  "bucket": "NONE"
+ },
+ {
+  "id": "nivi-rhombodazzle",
+  "coll": "deities",
+  "name": "Nivi Rhombodazzle",
+  "level": null,
+  "bucket": "NONE"
+ },
+ {
+  "id": "the-pale-horse",
+  "coll": "deities",
+  "name": "The Pale Horse",
+  "level": null,
+  "bucket": "NONE"
+ }
+]

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Character, ContentDatabase } from '../rules/types';
 import { classFeatureDescription } from '../rules/featureText';
+import { subclassFeatureIds } from '../rules/derive';
 import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, type FeatEntry } from './FeatDetail';
 import { toPlainText } from './RichText';
@@ -32,15 +33,14 @@ function featBucket(category: string): string {
   }
 }
 
-export function FeatsTab({ character, content, onPlay }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater }) {
-  // Which type sections to show. EMPTY = "All" (everything); otherwise only the picked types.
-  const [picked, setPicked] = useState<Set<string>>(new Set());
-  const [query, setQuery] = useState('');
-  const [detail, setDetail] = useState<FeatEntry | null>(null);
-
-  // Rebuilding this list is independent of the local query/filter state — memoize on
-  // [character, content] so typing in the search box doesn't re-derive every feat/feature row.
-  const entries = useMemo<FeatEntry[]>(() => {
+/**
+ * Everything the character owns, as rows.
+ *
+ * Exported and pure so the DISPLAY half of "every record is displayed and affects the sheet" can be
+ * TESTED. It was previously inline in the component, which is precisely why 29 owned-and-correct
+ * class features could be listed nowhere without a single test noticing.
+ */
+export function featEntries(character: Character, content: ContentDatabase): FeatEntry[] {
   const entries: FeatEntry[] = [];
   // "Choose one of N" picks, so a row can say WHICH option this character took (and why it matters).
   const picksOf = (recordId: string) => (character.effectPicks ?? []).filter((p) => p.recordId === recordId);
@@ -78,10 +78,18 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
   for (const [clsId, subId] of classPairs) {
     const cls = content.classes[clsId];
     if (!cls) continue;
-    // A subclass can remove class features (cleric Battle Creed drops Resolute Faith + Miraculous Spell).
+    // A subclass can remove class features (cleric Battle Creed drops Resolute Faith + Miraculous
+    // Spell) — and so can a CLASS ARCHETYPE. Only the subclass half was honoured here, so a class
+    // archetype's replaced features stayed listed as owned while a "Replaced: …" note below claimed
+    // otherwise, and the features it substitutes IN were listed nowhere at all.
     const subOpt = cls.subclass?.options.find((o) => o.id === subId);
-    const suppressed = new Set(subOpt?.suppressedFeatures ?? []);
-    for (const f of cls.features) {
+    // A class archetype restructures ONE class; under Dual Class this loop runs twice, so both its
+    // halves are scoped to the class it targets or the substituted features appear under both.
+    const arch = character.classArchetype;
+    const archHere = arch && (arch.classId ?? clsId) === clsId ? arch : undefined;
+    const suppressed = new Set([...(subOpt?.suppressedFeatures ?? []), ...(archHere?.suppressedFeatures ?? [])]);
+    const archAdded = (archHere?.addedFeatures ?? []).filter((a) => a.level <= character.level);
+    for (const f of [...cls.features, ...archAdded]) {
       if (f.level > character.level) continue; // only features actually gained yet
       if (suppressed.has(f.featureId)) continue; // removed by the chosen subclass
       const feature = content.classFeatures[f.featureId];
@@ -101,6 +109,34 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',
+        rarity: feature.rarity,
+      });
+    }
+    // Class features the SUBCLASS hands over, which appear in no class feature list — an oracle
+    // mystery brings its curse, a gunslinger way its three deeds. `ownedFeatureIds` reaches these so
+    // their mechanics fire; this loop is the only thing that puts them in front of the player.
+    // Without it 29 records were owned, correct, and listed nowhere.
+    for (const fid of subclassFeatureIds(subOpt?.featureIds, character.level)) {
+      if (suppressed.has(fid)) continue;
+      const feature = content.classFeatures[fid];
+      if (!feature || entries.some((e) => e.featureId === fid)) continue;
+      entries.push({
+        key: `feature:${clsId}:${fid}`,
+        featureId: fid,
+        name: feature.name + pickSuffix(fid),
+        // The level the SUBCLASS hands it over at, not the record's own printed level — a gunslinger
+        // way's greater deed is a 15th-level feature sitting on a 1st-level record.
+        level: (subOpt?.featureIds ?? []).reduce<number>(
+          (lv, e) => (typeof e !== 'string' && e.id === fid ? e.level : lv),
+          feature.level ?? 1,
+        ),
+        traits: feature.traits,
+        actionCost: feature.actionCost,
+        description: withPicks(fid, classFeatureDescription(feature.description, clsId, content)),
+        descRefs: feature.descRefs,
+        isFeature: true,
+        bucket: 'Class',
+        groupLabel: subOpt?.name,
         rarity: feature.rarity,
       });
     }
@@ -169,7 +205,17 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
     });
   }
   return entries;
-  }, [character, content]);
+}
+
+export function FeatsTab({ character, content, onPlay }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater }) {
+  // Which type sections to show. EMPTY = "All" (everything); otherwise only the picked types.
+  const [picked, setPicked] = useState<Set<string>>(new Set());
+  const [query, setQuery] = useState('');
+  const [detail, setDetail] = useState<FeatEntry | null>(null);
+
+  // Rebuilding this list is independent of the local query/filter state — memoize on
+  // [character, content] so typing in the search box doesn't re-derive every feat/feature row.
+  const entries = useMemo<FeatEntry[]>(() => featEntries(character, content), [character, content]);
 
   const q = query.trim().toLowerCase();
   // EMPTY picked = show every type; otherwise only the picked ones.

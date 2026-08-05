@@ -1173,6 +1173,10 @@ export interface Feat extends ContentBase, DefenseGrants {
 export interface ClassFeature extends ContentBase, DefenseGrants {
   level: number;
   actionCost?: ActionCost;
+  /** A Focus Point the FEATURE grants without a spell (Clarity of Focus, the psychic's 5th-level
+   *  feature). The importer has been writing this; only `Feat.focusPoolBonus` was ever read, so it
+   *  was undeclared, unread, and every psychic from 5th on was one Focus Point short. */
+  focusPoolBonus?: number;
   /** Foundry classification tags (e.g. `armor-innovation-modification`) used to filter selectable options. */
   otherTags?: string[];
   /** Focus spells the feature grants on reaching its level — Hero's Defiance is a 19th-level champion
@@ -2655,6 +2659,9 @@ export interface Character {
   /** Class-feature ids a CLASS ARCHETYPE removed, plus the features it substituted and a note per
    *  archetype. derive and the builder both honor these so the class reads as the archetype rebuilt it. */
   classArchetype?: {
+    /** The class it restructures. Needed by any per-class list: under Dual Class the feature loop
+     *  runs twice, and without this the archetype's substituted features are listed under BOTH. */
+    classId?: string;
     suppressedFeatures: string[];
     addedFeatures: { level: number; featureId: string }[];
     notes: string[];

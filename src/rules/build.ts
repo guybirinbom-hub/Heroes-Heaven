@@ -1714,11 +1714,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Advanced/Greater Bloodline (sorcerer) and Advanced/Greater Revelation (oracle) grant a focus spell
   // that depends on the chosen subclass, so the feat itself can't name it — resolved from the picked
   // bloodline/mystery. The pool point is counted via the spell (avoids double count).
+  // The WIZARD's Advanced School Spell was missing here, so all 13 schools carried an
+  // `advancedFocusSpell` the feat could not reach: the pool point arrived and the spell did not.
   const ADV_SPELL: Record<string, string | undefined> = {
     'advanced-bloodline': subOption?.advancedFocusSpell,
     'greater-bloodline': subOption?.greaterFocusSpell,
     'advanced-revelation': subOption?.advancedFocusSpell,
     'greater-revelation': subOption?.greaterFocusSpell,
+    'advanced-school-spell': subOption?.advancedFocusSpell,
+    'greater-school-spell': subOption?.greaterFocusSpell,
   };
   /** One feat's focus contribution. The domain sub-choice (Domain Initiate) grants that domain's spell,
    *  AND the feat's own fixed focusSpells / focusPoolBonus still apply — a feat with BOTH a sub-choice
@@ -1801,6 +1805,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           focusSource[sid] ??= content.classFeatures[id]?.name ?? id;
         }
       }
+    }
+  }
+  // A CLASS FEATURE can grant a pool point too. Only `feat.focusPoolBonus` was ever read, so
+  // Clarity of Focus — the psychic's 5th-level feature, and the field's only carrier — did nothing:
+  // every psychic from 5th on was one Focus Point short of what the rules give them.
+  for (const cid of [build.classId, build.classId2]) {
+    if (!cid) continue;
+    const sub = cid === build.classId ? build.subclassId : build.subclassId2;
+    for (const fid of classFeatureIdsOwned({ classId: cid, subclassId: sub, level }, content)) {
+      featPoolBonus += content.classFeatures[fid]?.focusPoolBonus ?? 0;
     }
   }
   // BONUS/GRANTED feats contribute focus too — background/heritage/UMT feats, override-added feats,
@@ -2243,9 +2257,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // conscious mind's grantedSpells), NOT focus spells — so the block above never fires for a
   // psychic. But the psychic DOES have a Focus Pool (RAW: "You start with a focus pool of 2
   // Focus Points"), spent to power amps and refilled by Refocus. Seed it independently so the
-  // sheet shows Focus Points + Refocus. No psychic class feat increases the pool beyond 2.
-  if (!focus && (ownsClass('psychic'))) {
-    focus = { current: 2, max: 2 };
+  // sheet shows Focus Points + Refocus.
+  //
+  // It is NOT a flat 2: Clarity of Focus, the psychic's 5th-level class FEATURE, reads "Increase
+  // the number of Focus Points in your focus pool by 1." Only `feat.focusPoolBonus` was ever read,
+  // and this seed was hardcoded with a comment asserting nothing raised it — so every psychic from
+  // 5th level on was a Focus Point short. `featPoolBonus` now also collects class features.
+  if (!focus && ownsClass('psychic')) {
+    // "As normal, this ability can't increase the size of your focus pool above 3 points."
+    const max = Math.min(3, 2 + featPoolBonus);
+    focus = { current: max, max };
   }
 
   // Class proficiency advancement: raise tracks to expert/master/legendary at the
@@ -2718,6 +2739,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const archSuppressed = new Set<string>();
   const archAddedFeatures: { level: number; featureId: string }[] = [];
   const archNotes: string[] = [];
+  /** Which class the archetype restructures — a per-class list needs it, or Dual Class shows the
+   *  substituted features under both classes. */
+  let archClassId: string | undefined;
   const archCaps: { armor?: ClassArchetype['armorCap']; weapon?: ClassArchetype['weaponCap'] }[] = [];
   // An archetype may be carried by the dedication FEAT or by a chosen subclass/extra-choice option
   // (the wizard's Runelord school is both the school and the archetype), so scan both.
@@ -2733,6 +2757,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const { name, ca } of archCarriers) {
     // Only applies to a character OF that class (either class when dual-classed).
     if (ca.classId !== build.classId && ca.classId !== build.classId2) continue;
+    archClassId = ca.classId;
     for (const id of ca.suppressFeatures ?? []) archSuppressed.add(id);
     for (const af of ca.addFeatures ?? []) if (af.level <= level && content.classFeatures[af.featureId]) archAddedFeatures.push(af);
     for (const [c, r] of Object.entries(ca.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], r);
@@ -3568,7 +3593,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     skillIncreases,
     ...(skillFallbacks.length ? { skillFallbacks } : {}),
     ...(archSuppressed.size || archAddedFeatures.length || archNotes.length
-      ? { classArchetype: { suppressedFeatures: [...archSuppressed], addedFeatures: archAddedFeatures, notes: archNotes } }
+      ? { classArchetype: { ...(archClassId ? { classId: archClassId } : {}), suppressedFeatures: [...archSuppressed], addedFeatures: archAddedFeatures, notes: archNotes } }
       : {}),
     ...(Object.keys(chosenEffects).length ? { chosenEffects } : {}),
     ...(Object.keys(resolvedItemPassives).length ? { resolvedItemPassives } : {}),

@@ -53,7 +53,16 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     // A general feat slot may take any qualifying SKILL feat (skill feats are a subset of general
     // feats). The reverse is not true — a skill slot takes only skill feats.
     if (f.category !== p.category && !(p.category === 'general' && f.category === 'skill')) return false;
-    if (p.category === 'ancestry' && build.ancestryId && !f.traits.includes(build.ancestryId)) return false;
+    // An ancestry slot takes your ancestry's feats — AND, if you took a VERSATILE heritage, that
+    // heritage's own feats. A versatile heritage (nephilim, dragonblood, dhampir, …) has
+    // `ancestryId: null` and its feats carry the HERITAGE's trait, not an ancestry's. Gating on
+    // ancestryId alone made several hundred perfectly-modelled feats unreachable by anyone: this
+    // file did not contain the word "heritage" at all.
+    if (p.category === 'ancestry' && build.ancestryId) {
+      const her = build.heritageId ? content.heritages[build.heritageId] : undefined;
+      const ok = f.traits.includes(build.ancestryId) || (her?.versatile && f.traits.includes(her.id));
+      if (!ok) return false;
+    }
     // Class slots take your class's feats OR any archetype feat (multiclass/archetypes). Dual Class
     // also accepts the second class's feats.
     if (

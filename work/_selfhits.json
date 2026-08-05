@@ -1,0 +1,1262 @@
+[
+ {
+  "id": "eye-of-the-arclords",
+  "coll": "feats",
+  "level": 2,
+  "name": "Eye of the Arclords",
+  "frag": "ns without needing to cast the spell; - you gain darkvision; - you gain a +2 status bonus to Perception checks to Seek undetected and hidden creatures and to your Perception DC against Hide "
+ },
+ {
+  "id": "attunement-to-stone",
+  "coll": "feats",
+  "level": 10,
+  "name": "Attunement to Stone",
+  "frag": ". When in contact with a stone surface, you gain tremorsense (imprecise) 5 feet along that surface, and you can activate your *ka stone* to cast One with Stone."
+ },
+ {
+  "id": "endure-deaths-touch",
+  "coll": "feats",
+  "level": 10,
+  "name": "Endure Death's Touch",
+  "frag": "gh your armor and then harmlessly away. You gain resistance 5 to physical damage and resistance 10 to void damage against the triggering attack. You gain a +2 circumstance bonus on any savin"
+ },
+ {
+  "id": "mimic-protections",
+  "coll": "feats",
+  "level": 20,
+  "name": "Mimic Protections",
+  "frag": "use Hunt Prey on a foe within 100 feet, you gain resistance 10 to all damage types that target has resistance or immunity to for as long as the foe remains within 100 feet."
+ },
+ {
+  "id": "elemental-bulwark",
+  "coll": "feats",
+  "level": 5,
+  "name": "Elemental Bulwark",
+  "frag": "our suli heritage to resist the effect. You gain resistance 5 against the triggering damage."
+ },
+ {
+  "id": "soulforger-dedication",
+  "coll": "feats",
+  "level": 2,
+  "name": "Soulforger Dedication",
+  "frag": "of the selected type. *Corruption Flaw* You gain weakness 1 to all damage. **Planar Pain** (evocation) Weapon only. When you manifest the essence form, choose one damage type: acid, cold, el"
+ },
+ {
+  "id": "defensive-armaments",
+  "coll": "feats",
+  "level": 2,
+  "name": "Defensive Armaments",
+  "frag": "to +2. While parrying with your weapon, you are immune to splash damage."
+ },
+ {
+  "id": "pyrophilic-recovery",
+  "coll": "feats",
+  "level": 1,
+  "name": "Pyrophilic Recovery",
+  "frag": ", if an effect deals 15 fire Damage and you have fire resistance 5, you would take 10 fire Damage and Pyrophilic Recovery could recover at most 5 Hit Points, regardless of any other effects "
+ },
+ {
+  "id": "consolidated-overlay-panopticon",
+  "coll": "feats",
+  "level": 4,
+  "name": "Consolidated Overlay Panopticon",
+  "frag": "e prosthetic eyes; for the next minute, you gain darkvision and low-light vision, and you gain a +1 status bonus to visual Perception checks. Even when the prosthetic eyes aren't supercharge"
+ },
+ {
+  "id": "senses-of-the-bear",
+  "coll": "feats",
+  "level": 4,
+  "name": "Senses of the Bear",
+  "frag": "While in ursine form, you gain low-light vision and scent (imprecise) 30 feet. If you already had low-light vision, you instead gain darkvision."
+ },
+ {
+  "id": "helts-spelldance",
+  "coll": "feats",
+  "level": 8,
+  "name": "Helt's Spelldance",
+  "frag": "erformance. All creatures that observed you become temporarily immune to your Helt's Spelldance for 10 minutes."
+ },
+ {
+  "id": "inexorable",
+  "coll": "feats",
+  "level": 6,
+  "name": "Inexorable",
+  "frag": "ore the condition. When using Worm Form you are immune to penalties to your Speed and the immobilized condition, you gain a +2 circumstance bonus to your Fortitude or Reflex DC against attem"
+ },
+ {
+  "id": "all-in-my-head",
+  "coll": "feats",
+  "level": 18,
+  "name": "All in my Head",
+  "frag": "l trait. You can't use this reaction if you are immune to mental effects or mental damage."
+ },
+ {
+  "id": "elemental-shape",
+  "coll": "feats",
+  "level": 10,
+  "name": "Elemental Shape",
+  "frag": "nto another shape using *untamed form*, you gain resistance 5 to fire."
+ },
+ {
+  "id": "plant-shape",
+  "coll": "feats",
+  "level": 10,
+  "name": "Plant Shape",
+  "frag": " into another shape using untamed form, you gain resistance 5 to poison."
+ },
+ {
+  "id": "dragon-shape",
+  "coll": "feats",
+  "level": 12,
+  "name": "Dragon Shape",
+  "frag": "into another form using *untamed form*, you gain resistance 5 to your choice of bludgeoning or poison."
+ },
+ {
+  "id": "feeding-frenzy",
+  "coll": "feats",
+  "level": 6,
+  "name": "Feeding Frenzy",
+  "frag": "e target until the end of your turn. If you have scent as a special sense, it's a precise sense with double its normal range when locating creatures taking persistent bleed damage."
+ },
+ {
+  "id": "nocturnal-senses",
+  "coll": "feats",
+  "level": 6,
+  "name": "Nocturnal Senses",
+  "frag": " even greater clarity. While raging, if you have low-light vision you gain darkvision, and if you have scent the range of your imprecise scent increases to 60 feet."
+ },
+ {
+  "id": "robust-health",
+  "coll": "feats",
+  "level": 3,
+  "name": "Robust Health",
+  "frag": " or an ally use Battle Medicine on you, you become temporarily immune to that Battle Medicine for only 1 hour, instead of 1 day."
+ },
+ {
+  "id": "fiend-eternal",
+  "coll": "feats",
+  "level": 20,
+  "name": "Fiend Eternal",
+  "frag": "apotheosis and become a true archfiend. You gain the fiend and unholy traits and are immune to your realm's damage type. You don't age. Your planned realm becomes a complete reality, forming"
+ },
+ {
+  "id": "you-cant-kill-an-idea",
+  "coll": "feats",
+  "level": 20,
+  "name": "You Can't Kill an Idea",
+  "frag": "orm, you are invisible and incorporeal. You have only 1 Hit Point and can't gain more, but you are immune to all damage; if your dying or doomed condition would increase to a high enough val"
+ },
+ {
+  "id": "fight-through-oblivion",
+  "coll": "feats",
+  "level": 20,
+  "name": "Fight Through Oblivion",
+  "frag": "ion. Until the start of your next turn, you become immune to all damage, but you also can't regain Hit Points in any way except the following. If you Strike and damage a foe on this turn, yo"
+ },
+ {
+  "id": "vengful-remnant",
+  "coll": "feats",
+  "level": 14,
+  "name": "Vengful Remnant",
+  "frag": "ade. Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay "
+ },
+ {
+  "id": "field-propagandist-dedication",
+  "coll": "feats",
+  "level": 2,
+  "name": "Field Propagandist Dedication",
+  "frag": " Propaganda exploration activity. While you are not immune to propaganda, you are resistant to it. You gain a +2 circumstance bonus to your Perception DC against attempts made by others to L"
+ },
+ {
+  "id": "borrowed-ability",
+  "coll": "feats",
+  "level": 2,
+  "name": "Borrowed Ability",
+  "frag": "et does. When you use Borrowed Ability, you gain any special senses—such as darkvision, scent, or tremorsense—that the target possesses. If the target does not have a sense that you normally"
+ },
+ {
+  "id": "stargazers-eyes",
+  "coll": "feats",
+  "level": 4,
+  "name": "Stargazer's Eyes",
+  "frag": "'t have low-light vision or darkvision, you gain low-light vision, or if you already have low-light vision, you gain darkvision. **Special** You can take this feat a second time, upgrading y"
+ },
+ {
+  "id": "craft-runewell",
+  "coll": "feats",
+  "level": 20,
+  "name": "Craft Runewell",
+  "frag": "m these sins. As long as it does so and you are on the same plane as the anima focus, you do not age and are immune to effects that rob you of your mental abilities (such as the never mind s"
+ },
+ {
+  "id": "live-off-borrowed-time",
+  "coll": "feats",
+  "level": 14,
+  "name": "Live Off Borrowed Time",
+  "frag": " it this turn. At the end of your turn, you become Slowed 1 and are immune to the quickened condition until the end of your next turn."
+ },
+ {
+  "id": "godless-healing",
+  "coll": "feats",
+  "level": 2,
+  "name": "Godless Healing",
+  "frag": " or an ally use Battle Medicine on you, you become temporarily immune to that Battle Medicine for only 1 hour, instead of 1 day."
+ },
+ {
+  "id": "aon-vengful-remnant",
+  "coll": "feats",
+  "level": 14,
+  "name": "Vengful Remnant",
+  "frag": "ade. Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay "
+ },
+ {
+  "id": "revolutionary-innovation",
+  "coll": "classFeatures",
+  "level": 15,
+  "name": "Revolutionary Innovation",
+  "frag": "l hits with a flat check. Additionally, you gain resistance 2 + half your level against precision damage. - **Physical Protections:** Your armor has so many adjustments and precautions that "
+ },
+ {
+  "id": "curse-of-creeping-ashes",
+  "coll": "classFeatures",
+  "level": 1,
+  "name": "Curse of Creeping Ashes",
+  "frag": " falls from your body. **Cursebound 1** You gain weakness 2 to fire damage. Any immunity or resistance you have to fire is suppressed. **Cursebound 2** Swirling ash imposes a -2 circumstance"
+ },
+ {
+  "id": "curse-of-inclement-headwinds",
+  "coll": "classFeatures",
+  "level": 1,
+  "name": "Curse of Inclement Headwinds",
+  "frag": "rsebound 1** Lightning is drawn to you. You gain electricity weakness 2 and electricity spells or effects that have additional effects for a creature wearing or holding metal treat you as th"
+ },
+ {
+  "id": "curse-of-inevitable-rot",
+  "coll": "classFeatures",
+  "level": 1,
+  "name": "Curse of Inevitable Rot",
+  "frag": "inegar in your goblet. **Cursebound 1** You gain weakness 2 to acid and poison damage. **Cursebound 2** You take a –1 status penalty to saving throws against diseases and poisons. In additio"
+ },
+ {
+  "id": "curse-of-the-living-death",
+  "coll": "classFeatures",
+  "level": 1,
+  "name": "Curse of the Living Death",
+  "frag": " or deathly cold skin. **Cursebound 1** You gain weakness 2 to vitality and void damage. You can be targeted by and are hurt by both vitality and void damage even if one or the other normall"
+ },
+ {
+  "id": "curse-of-the-mortal-warrior",
+  "coll": "classFeatures",
+  "level": 1,
+  "name": "Curse of the Mortal Warrior",
+  "frag": "pells have an easier time wounding you. You gain weakness 2 to any damage dealt by a spell. Any immunity or resistance you have to spells is suppressed. This applies only to spells, not othe"
+ },
+ {
+  "id": "gate-junction",
+  "coll": "classFeatures",
+  "level": 5,
+  "name": "Gate Junction",
+  "frag": "ny of the listed traits. At 17th level, you gain immunity to effects with any of the listed traits. This doesn't make you immune to creatures with such a trait. You can voluntarily forgo thi"
+ },
+ {
+  "id": "hands-of-the-wildling",
+  "coll": "classFeatures",
+  "level": 1,
+  "name": "Hands of the Wildling",
+  "frag": "it splash damage per weapon damage die. You are immune to this splash damage. **Transcendence—**Feral Swing ⟨2⟩ (spirit, transcendence)"
+ },
+ {
+  "id": "coral-aspect",
+  "coll": "items",
+  "level": 4,
+  "name": "Coral Aspect",
+  "frag": " +2 circumstance bonus to their AC, and you gain resistance 5 to any damage caused by a creature sharing the same space as you."
+ },
+ {
+  "id": "energy-mutagen",
+  "coll": "items",
+  "level": 1,
+  "name": "Energy Mutagen",
+  "frag": "ge of the attuned energy type. Drawback You gain weakness 5 to the other three energy types. Energy Mutagen (Lesser) Source Treasure Vault (Remastered) pg. 60, The Fall of Plaguestone pg. 56"
+ },
+ {
+  "id": "stone-body-mutagen",
+  "coll": "items",
+  "level": 5,
+  "name": "Stone Body Mutagen",
+  "frag": "f Plaguestone pg. 56 Price 22 gp Bulk L You gain resistance 5 to physical damage (except bludgeoning) and the duration is 10 minutes. Stone Body Mutagen (Moderate) Source Treasure Vault (Rem"
+ },
+ {
+  "id": "dragons-eye-charm",
+  "coll": "items",
+  "level": 7,
+  "name": "Dragon's Eye Charm",
+  "frag": "faintly glowing layer of golden energy. You gain fire resistance 5 for 10 minutes. --- **Activate** ⟨1⟩ Interact **Frequency** once per day --- **Effect** You can speak and understand Dracon"
+ },
+ {
+  "id": "ambrosia-of-undying-hope",
+  "coll": "items",
+  "level": 19,
+  "name": "Ambrosia of Undying Hope",
+  "frag": " Points, the elixir's benefits end, and you become temporarily immune to the ambrosia of undying hope for 24 hours. The ambrosia can't protect you from death effects or disintegration, but i"
+ },
+ {
+  "id": "olfactory-obfuscator",
+  "coll": "items",
+  "level": 3,
+  "name": "Olfactory Obfuscator",
+  "frag": "hat sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only s"
+ },
+ {
+  "id": "olfactory-obfuscator-greater",
+  "coll": "items",
+  "level": 10,
+  "name": "Olfactory Obfuscator (Greater)",
+  "frag": "hat sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only s"
+ },
+ {
+  "id": "victory-plate",
+  "coll": "items",
+  "level": 9,
+  "name": "Victory Plate",
+  "frag": "shes from the tabard, and for 1 minute, you gain resistance 5 to a damage type based on the creature's trait (you gain resistance to only one type, even if the creature has more than one tra"
+ },
+ {
+  "id": "psychopomp-mask",
+  "coll": "items",
+  "level": 1,
+  "name": "Psychopomp Mask",
+  "frag": "hopomps won't be so easily fooled again-you are temporarily immune to the effects of any psychopomp mask for 1 year."
+ },
+ {
+  "id": "rune-of-sin",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin",
+  "frag": "a Spell of the school matching the sin, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against spells of the matching school"
+ },
+ {
+  "id": "warding-tattoo",
+  "coll": "items",
+  "level": 5,
+  "name": "Warding Tattoo",
+  "frag": "nt turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage."
+ },
+ {
+  "id": "warding-tattoo-trail",
+  "coll": "items",
+  "level": 6,
+  "name": "Warding Tattoo (Trail)",
+  "frag": "lpool in the high seas of the Shackles. You gain resistance 2 to damage from hazardous terrain and environmental hazards at all times. --- **Activate** ⟨5⟩ envision **Frequency** once per da"
+ },
+ {
+  "id": "warding-tattoo-wave",
+  "coll": "items",
+  "level": 6,
+  "name": "Warding Tattoo (Wave)",
+  "frag": "nt turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage. The tattoo casts Air Bubble."
+ },
+ {
+  "id": "warding-tattoo-fiend",
+  "coll": "items",
+  "level": 7,
+  "name": "Warding Tattoo (Fiend)",
+  "frag": "lpool in the high seas of the Shackles. You gain resistance 2 to spells cast by fiends and magical attacks by fiends. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An "
+ },
+ {
+  "id": "trinity-geode",
+  "coll": "items",
+  "level": 3,
+  "name": "Trinity Geode",
+  "frag": " earth spell by Activating the *geode*, you gain resistance 1 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell. - **We"
+ },
+ {
+  "id": "trinity-geode-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Trinity Geode (Greater)",
+  "frag": " earth spell by Activating the *geode*, you gain resistance 3 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell. - **We"
+ },
+ {
+  "id": "trinity-geode-major",
+  "coll": "items",
+  "level": 12,
+  "name": "Trinity Geode (Major)",
+  "frag": " earth spell by Activating the *geode*, you gain resistance 5 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell. - **We"
+ },
+ {
+  "id": "vapor-sphere",
+  "coll": "items",
+  "level": 14,
+  "name": "Vapor Sphere",
+  "frag": "inst the trap's reaction or the attack, you gain resistance 25 to physical damage and are immune to precision damage. This effect also prevents the reaction or attack from physically moving "
+ },
+ {
+  "id": "arboreals-revenge",
+  "coll": "items",
+  "level": 6,
+  "name": "Arboreal's Revenge",
+  "frag": "similar effect, like many cursed items. You gain weakness 5 to fire and the flat check for you to recover from persistent fire damage increases from 15 to 17, or from 10 to 12 if you receive"
+ },
+ {
+  "id": "pact-bound-pistol",
+  "coll": "items",
+  "level": 10,
+  "name": "Pact-Bound Pistol",
+  "frag": "tract is fully scribed upon your flesh. You become immune to fire damage and the *pact-bound pistol* becomes a +2 striking greater fearsome dueling pistol. Your soul belongs to Mephistophele"
+ },
+ {
+  "id": "darkvision-scope",
+  "coll": "items",
+  "level": 5,
+  "name": "Darkvision Scope",
+  "frag": "Night** ⟨1⟩ (manipulate) --- **Effect** You gain darkvision until the beginning of your next turn, as long as you continue to look through the scope."
+ },
+ {
+  "id": "darkvision-scope-greater",
+  "coll": "items",
+  "level": 15,
+  "name": "Darkvision Scope (Greater)",
+  "frag": "Night** ⟨1⟩ (manipulate) --- **Effect** You gain greater darkvision until the beginning of your next turn, as long as you continue to look through the scope."
+ },
+ {
+  "id": "dragonfly-potion",
+  "coll": "items",
+  "level": 12,
+  "name": "Dragonfly Potion",
+  "frag": "equal to your land Speed. Additionally, you gain low-light vision and a +2 item bonus to visual Perception checks, and you can't be flanked except by creatures higher level than you are (tho"
+ },
+ {
+  "id": "fire-and-iceberg",
+  "coll": "items",
+  "level": 7,
+  "name": "Fire and Iceberg",
+  "frag": "comparison. When you consume the salad, you gain resistance 5 to fire and cold for 1 minute."
+ },
+ {
+  "id": "swarmsuit",
+  "coll": "items",
+  "level": 1,
+  "name": "Swarmsuit",
+  "frag": "ide brim to keep you safe from insects. You gain resistance 3 to physical damage from swarms. Explorer's clothing altered in this way has a Dexterity cap of +2, check penalty of -1, and Spee"
+ },
+ {
+  "id": "fanged-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Fanged (Greater)",
+  "frag": " of your own volition). In animal form, you gain low-light vision and a +5-foot item bonus to your Speed."
+ },
+ {
+  "id": "fanged-major",
+  "coll": "items",
+  "level": 15,
+  "name": "Fanged (Major)",
+  "frag": " of your own volition). In animal form, you gain low-light vision, imprecise scent to a range of 30 feet, and a +10-foot item bonus to your Speed."
+ },
+ {
+  "id": "moon-radish-soup",
+  "coll": "items",
+  "level": 2,
+  "name": "Moon Radish Soup",
+  "frag": "r eating a serving of moon radish soup, you gain temporary immunity to its effects for 24 hours."
+ },
+ {
+  "id": "energy-adaptive",
+  "coll": "items",
+  "level": 13,
+  "name": "Energy Adaptive",
+  "frag": "ctricity, or fire damage --- **Effect** You gain resistance 5 to the triggering damage type. This doesn't apply to the triggering damage. This resistance lasts until you Activate this rune a"
+ },
+ {
+  "id": "ouroboros-buckles",
+  "coll": "items",
+  "level": 19,
+  "name": "Ouroboros Buckles",
+  "frag": "le form. When you're a swarm of snakes, you gain low-light vision, imprecise scent (30 feet), a Speed of 20 feet, a climb Speed of 20 feet, and a swim Speed of 20 feet. You have an AC of 16 "
+ },
+ {
+  "id": "arbor-wine",
+  "coll": "items",
+  "level": 9,
+  "name": "Arbor Wine",
+  "frag": "e after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet."
+ },
+ {
+  "id": "arbor-wine-aged",
+  "coll": "items",
+  "level": 12,
+  "name": "Arbor Wine (Aged)",
+  "frag": "e after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet. Arbor Wine Source Treasure Vault (Remastered) pg. 47 Price 130 gp Bulk L Arbor Wine (Aged) Source Treasure"
+ },
+ {
+  "id": "cinnamon-seers",
+  "coll": "items",
+  "level": 4,
+  "name": "Cinnamon Seers",
+  "frag": "y on guesswork. The seer becomes inert. You become temporarily immune to cinnamon seers until the next time you make your daily preparations."
+ },
+ {
+  "id": "fury-cocktail",
+  "coll": "items",
+  "level": 4,
+  "name": "Fury Cocktail",
+  "frag": "tronger, with more ginger and more rum. You gain resistance 1 to physical damage. The resistance increases to 2 for a moderate fury cocktail or 5 for a greater fury cocktail. Mournful A few "
+ },
+ {
+  "id": "fury-cocktail-lesser",
+  "coll": "items",
+  "level": 4,
+  "name": "Fury Cocktail (Lesser)",
+  "frag": "tronger, with more ginger and more rum. You gain resistance 1 to physical damage. - **Mournful** A few flower petals add a powerful aroma to the drink. You gain resistance 1 to void damage, "
+ },
+ {
+  "id": "fury-cocktail-moderate",
+  "coll": "items",
+  "level": 12,
+  "name": "Fury Cocktail (Moderate)",
+  "frag": "tronger, with more ginger and more rum. You gain resistance 2 to physical damage. - **Mournful** A few flower petals add a powerful aroma to the drink. You gain resistance 5 to void damage, "
+ },
+ {
+  "id": "fury-cocktail-greater",
+  "coll": "items",
+  "level": 18,
+  "name": "Fury Cocktail (Greater)",
+  "frag": "tronger, with more ginger and more rum. You gain resistance 5 to physical damage. - **Mournful** A few flower petals add a powerful aroma to the drink. You gain resistance 10 to void damage,"
+ },
+ {
+  "id": "galvanic-chew",
+  "coll": "items",
+  "level": 8,
+  "name": "Galvanic Chew",
+  "frag": "ctricity as you chew. For up to 1 hour, you have resistance 5 to electricity. --- **Secondary Effect** ⟨5⟩ (electricity) **Trigger** You're hit by a melee attack or touched by a creature **E"
+ },
+ {
+  "id": "journeybread",
+  "coll": "items",
+  "level": 1,
+  "name": "Journeybread",
+  "frag": "you subsist on nothing else for a week, you become temporarily immune to journeybread until you eat real food and drink water normally for 24 hours."
+ },
+ {
+  "id": "journeybread-power",
+  "coll": "items",
+  "level": 4,
+  "name": "Journeybread (Power)",
+  "frag": "you subsist on nothing else for a week, you become temporarily immune to journeybread until you eat real food and drink water normally for 24 hours. In addition to the benefits of journeybre"
+ },
+ {
+  "id": "scholars-drop",
+  "coll": "items",
+  "level": 6,
+  "name": "Scholar's Drop",
+  "frag": "his effect three times in a single day, you become temporarily immune to scholar's drops entirely until you get a full night's rest."
+ },
+ {
+  "id": "witchs-finger",
+  "coll": "items",
+  "level": 3,
+  "name": "Witch's Finger",
+  "frag": "a bite makes you feel warm. For 1 hour, you have cold resistance 3, and for 8 hours, the treat negates the damage you would take from severe environmental cold and reduces the damage you tak"
+ },
+ {
+  "id": "chromatic-jellyfish-oil-lesser",
+  "coll": "items",
+  "level": 9,
+  "name": "Chromatic Jellyfish Oil (Lesser)",
+  "frag": "fter consuming chromatic jellyfish oil, you gain resistance 5 to precision damage and extra damage from critical hits. While the effect lasts, you ignore difficult terrain caused by moving t"
+ },
+ {
+  "id": "contagion-metabolizer",
+  "coll": "items",
+  "level": 5,
+  "name": "Contagion Metabolizer",
+  "frag": "r you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute you"
+ },
+ {
+  "id": "contagion-metabolizer-lesser",
+  "coll": "items",
+  "level": 5,
+  "name": "Contagion Metabolizer (Lesser)",
+  "frag": "r you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute you"
+ },
+ {
+  "id": "contagion-metabolizer-moderate",
+  "coll": "items",
+  "level": 11,
+  "name": "Contagion Metabolizer (Moderate)",
+  "frag": "r you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute you"
+ },
+ {
+  "id": "contagion-metabolizer-greater",
+  "coll": "items",
+  "level": 19,
+  "name": "Contagion Metabolizer (Greater)",
+  "frag": "r you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute you"
+ },
+ {
+  "id": "energy-mutagen-lesser",
+  "coll": "items",
+  "level": 1,
+  "name": "Energy Mutagen (Lesser)",
+  "frag": "nergy in controlled bursts. **Benefit** You gain resistance 5 to the attuned energy type. Whenever you score a hit with a melee weapon, add 1 damage of the attuned energy type. **Drawback** "
+ },
+ {
+  "id": "energy-mutagen-moderate",
+  "coll": "items",
+  "level": 3,
+  "name": "Energy Mutagen (Moderate)",
+  "frag": "nergy in controlled bursts. **Benefit** You gain resistance 10 to the attuned energy type. Whenever you score a hit with a melee weapon, add 1d4 damage of the attuned energy type. **Drawback"
+ },
+ {
+  "id": "energy-mutagen-greater",
+  "coll": "items",
+  "level": 11,
+  "name": "Energy Mutagen (Greater)",
+  "frag": "nergy in controlled bursts. **Benefit** You gain resistance 15 to the attuned energy type. Whenever you score a hit with a melee weapon, add 1d6 damage of the attuned energy type. In additio"
+ },
+ {
+  "id": "energy-mutagen-major",
+  "coll": "items",
+  "level": 17,
+  "name": "Energy Mutagen (Major)",
+  "frag": "nergy in controlled bursts. **Benefit** You gain resistance 20 to the attuned energy type. Whenever you score a hit with a melee weapon, add 2d6 damage of the attuned energy type. In additio"
+ },
+ {
+  "id": "stone-body-mutagen-lesser",
+  "coll": "items",
+  "level": 5,
+  "name": "Stone Body Mutagen (Lesser)",
+  "frag": "making it as hard as stone. **Benefit** You gain resistance 5 to physical damage (except bludgeoning). **Drawback** Your speeds are reduced by 10 feet (minimum 5 feet) and you take a -2 pena"
+ },
+ {
+  "id": "stone-body-mutagen-moderate",
+  "coll": "items",
+  "level": 12,
+  "name": "Stone Body Mutagen (Moderate)",
+  "frag": "making it as hard as stone. **Benefit** You gain resistance 5 to physical damage (except bludgeoning). **Drawback** Your speeds are reduced by 10 feet (minimum 5 feet) and you take a -2 pena"
+ },
+ {
+  "id": "nevercold",
+  "coll": "items",
+  "level": 10,
+  "name": "Nevercold",
+  "frag": "eases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours. The catalyst affects 4th-rank *fire shield*."
+ },
+ {
+  "id": "nevercold-compressed",
+  "coll": "items",
+  "level": 14,
+  "name": "Nevercold (Compressed)",
+  "frag": "eases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours. The catalyst affects 6th-rank or lower *fire shield*, and the i"
+ },
+ {
+  "id": "nevercold-refined",
+  "coll": "items",
+  "level": 18,
+  "name": "Nevercold (Refined)",
+  "frag": "eases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours. The catalyst affects 8th-rank or lower *fire shield*, and the i"
+ },
+ {
+  "id": "cloning-potion",
+  "coll": "items",
+  "level": 18,
+  "name": "Cloning Potion",
+  "frag": "es, your clone melts into silvery dust. You become temporarily immune to cloning potion for 1d4 days."
+ },
+ {
+  "id": "starsong-nectar",
+  "coll": "items",
+  "level": 20,
+  "name": "Starsong Nectar",
+  "frag": "being hidden from or undetected by you. You are temporarily immune to this potion for 24 hours once its effects end. While the potion lasts, though, if you take a moment to imagine the futur"
+ },
+ {
+  "id": "breastplate-of-the-mountain",
+  "coll": "items",
+  "level": 20,
+  "name": "Breastplate of the Mountain",
+  "frag": "r day --- **Effect** With a single tap, you gain immunity to poison for 1 minute. --- **Activate** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You fail or critically fail a Fort"
+ },
+ {
+  "id": "mantle-of-amazing-health",
+  "coll": "items",
+  "level": 19,
+  "name": "Mantle of Amazing Health",
+  "frag": "e stage of the affliction. Furthermore, you gain immunity to that poison or disease for 24 hours."
+ },
+ {
+  "id": "olfactory-stimulators-bloodhound",
+  "coll": "items",
+  "level": 5,
+  "name": "Olfactory Stimulators (Bloodhound)",
+  "frag": "h as they gather even more information. You gain imprecise scent with a range of 30 feet for 1 minute."
+ },
+ {
+  "id": "ghostcallers-planchette",
+  "coll": "items",
+  "level": 12,
+  "name": "Ghostcaller's Planchette",
+  "frag": "t a spell by activating the planchette, you gain resistance 5 to all physical damage (except Ghost Touch) until the start of your next turn. Attacks by incorporeal creatures (such as a ghost"
+ },
+ {
+  "id": "saurian-spike-major",
+  "coll": "items",
+  "level": 15,
+  "name": "Saurian Spike (Major)",
+  "frag": "ctivating this item is +24. - **Armor** You gain precise scent with a range of 60 feet. - **Weapon** (auditory, emotion, fear, visual) When you cast a polymorph spell by activating the spike"
+ },
+ {
+  "id": "wyrm-spindle",
+  "coll": "items",
+  "level": 12,
+  "name": "Wyrm Spindle",
+  "frag": "antrip spell by activating the spindle, you gain resistance 5 to fire, force, mental, and spirit for 1 minute. - **Weapon** After you cast a non-cantrip spell by activating the spindle, you "
+ },
+ {
+  "id": "caydens-tankard",
+  "coll": "items",
+  "level": 25,
+  "name": "Cayden's Tankard",
+  "frag": ". Imbued with Cayden Cailean's courage, you are immune to fear effects. Any liquid poured into the tankard transforms into a strong, alcoholic ambrosia that remains contained safely within u"
+ },
+ {
+  "id": "elder-seed",
+  "coll": "items",
+  "level": 11,
+  "name": "Elder Seed",
+  "frag": "iercing damage equal to your level, and you have tremorsense out to a range of 30 feet. Also, you can cast Enlarge, Speak with Animals, Speak with Plants, and Web each once per day as primal"
+ },
+ {
+  "id": "heartblood-ring",
+  "coll": "items",
+  "level": 15,
+  "name": "Heartblood Ring",
+  "frag": " step better. --- **Stage 2 (1 Month)** You gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. Reduce your current and maximum Hit Points by 2 × you"
+ },
+ {
+  "id": "phoenix-cinder",
+  "coll": "items",
+  "level": 16,
+  "name": "Phoenix Cinder",
+  "frag": " For 3 days after taking in the cinder, you are immune to fire. While in this stage or higher, you have fast healing equal to half your level, as well as resistance to fire damage equal to h"
+ },
+ {
+  "id": "stone-of-encouragement",
+  "coll": "items",
+  "level": 2,
+  "name": "Stone of Encouragement",
+  "frag": "kill check you attempt within 1 minute. You become temporarily immune to the effects of all *stones of encouragement*, even ones other than the one you activated, for 1 day. You can still he"
+ },
+ {
+  "id": "stone-of-encouragement-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Stone of Encouragement (Greater)",
+  "frag": "kill check you attempt within 1 minute. You become temporarily immune to the effects of all *stones of encouragement*, even ones other than the one you activated, for 1 day. You can still he"
+ },
+ {
+  "id": "the-fiend",
+  "coll": "items",
+  "level": 20,
+  "name": "The Fiend",
+  "frag": "ave DC is your class DC or spell DC (). You are immune to the effects of your own phantasmal calamity."
+ },
+ {
+  "id": "the-desert",
+  "coll": "items",
+  "level": 20,
+  "name": "The Desert",
+  "frag": "s. As long as *The Desert* is invested, you are immune to the effects of temperatures ranging from extreme cold to extreme heat, and can hold your breath and go without food and water for tw"
+ },
+ {
+  "id": "frost-breath",
+  "coll": "items",
+  "level": 7,
+  "name": "Frost Breath",
+  "frag": "the world. After inhaling frost breath, you gain resistance 5 to cold. You can exhale the frost breath as a single action to release a spray of frigid air in a . Each creature in the area ta"
+ },
+ {
+  "id": "nimbus-breath",
+  "coll": "items",
+  "level": 8,
+  "name": "Nimbus Breath",
+  "frag": ". After you inhale the *nimbus breath*, you gain resistance 5 to electricity and are affected by Fly as long as you hold your breath. You can exhale the breath as a single action to create a"
+ },
+ {
+  "id": "storm-breath",
+  "coll": "items",
+  "level": 9,
+  "name": "Storm Breath",
+  "frag": "tiverse. After inhaling *storm breath*, you gain resistance 5 to both electricity and sonic. You can exhale the *storm breath* as a bolt of lightning, dealing damage to all creatures in a , "
+ },
+ {
+  "id": "sairazul-blue",
+  "coll": "items",
+  "level": 10,
+  "name": "Sairazul Blue",
+  "frag": "hours, your skin becomes navy blue, and you gain resistance 5 to poison damage and void damage. If you drop to 0 Hit Points due to poison or void damage, the *Sairazul blue* within your body"
+ },
+ {
+  "id": "ferrofluid-urchin",
+  "coll": "items",
+  "level": 7,
+  "name": "Ferrofluid Urchin",
+  "frag": "ce Rage of Elements pg. 146 Price 55 gp You gain resistance 3. Ferrofluid Urchin (Moderate) Source Rage of Elements pg. 146 Price 225 gp You gain resistance 6. Ferrofluid Urchin (Greater) So"
+ },
+ {
+  "id": "ferrofluid-urchin-lesser",
+  "coll": "items",
+  "level": 7,
+  "name": "Ferrofluid Urchin (Lesser)",
+  "frag": " reshapes to deflect the incoming harm. You gain resistance 3 to the triggering damage."
+ },
+ {
+  "id": "ferrofluid-urchin-moderate",
+  "coll": "items",
+  "level": 11,
+  "name": "Ferrofluid Urchin (Moderate)",
+  "frag": " reshapes to deflect the incoming harm. You gain resistance 6 to the triggering damage."
+ },
+ {
+  "id": "spiny-lodestone",
+  "coll": "items",
+  "level": 4,
+  "name": "Spiny Lodestone",
+  "frag": "+8, and the spell DC is 18. - **Armor** You gain a +1 item bonus to Athletics checks and resistance 2 to nonlethal damage. - **Weapon** After you cast a spell by Activating the *spiny lodest"
+ },
+ {
+  "id": "spiny-lodestone-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Spiny Lodestone (Greater)",
+  "frag": "14, and the spell DC is 24. - **Armor** You gain a +1 item bonus to Athletics checks and resistance 5 to nonlethal damage. - **Weapon** After you cast a spell by Activating the *spiny lodest"
+ },
+ {
+  "id": "thorn-triad",
+  "coll": "items",
+  "level": 4,
+  "name": "Thorn Triad",
+  "frag": " a plant spell by activating the triad, you gain resistance 2 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-ca"
+ },
+ {
+  "id": "thorn-triad-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Thorn Triad (Greater)",
+  "frag": " a plant spell by activating the triad, you gain resistance 4 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-ca"
+ },
+ {
+  "id": "thorn-triad-major",
+  "coll": "items",
+  "level": 12,
+  "name": "Thorn Triad (Major)",
+  "frag": " a plant spell by activating the triad, you gain resistance 6 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-ca"
+ },
+ {
+  "id": "janns-prism",
+  "coll": "items",
+  "level": 9,
+  "name": "Jann's Prism",
+  "frag": "with two colors chosen by the jann, and you gain resistance 5 to two damage types based on the colors chosen: **red** fire, **orange** acid, **yellow** electricity, **green** poison, **blue*"
+ },
+ {
+  "id": "sparkwarden",
+  "coll": "items",
+  "level": 5,
+  "name": "Sparkwarden",
+  "frag": "nt turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage."
+ },
+ {
+  "id": "sky-hammer",
+  "coll": "items",
+  "level": 20,
+  "name": "Sky Hammer",
+  "frag": "n the *sky hammer*. The spell DC is 45. You are immune to the *fireball's* effect, though your allies are not. --- **Craft Requirements** Supply a casting of *fireball* (6th rank), and the i"
+ },
+ {
+  "id": "darkvision-elixir",
+  "coll": "items",
+  "level": 2,
+  "name": "Darkvision Elixir",
+  "frag": "your sight becomes sharper in darkness. You gain darkvision for the listed duration. Darkvision Elixir (Lesser) Source Player Core 2 pg. 287, GM Core pg. 246, Core Rulebook pg. 547 Price 6 g"
+ },
+ {
+  "id": "potion-of-resistance",
+  "coll": "items",
+  "level": 6,
+  "name": "Potion of Resistance",
+  "frag": " 260, Core Rulebook pg. 563 Price 45 gp You gain resistance 5 to the appropriate energy type Potion of Resistance (Moderate) Source GM Core pg. 260, Core Rulebook pg. 563 Price 180 gp You ga"
+ },
+ {
+  "id": "time-shield-potion",
+  "coll": "items",
+  "level": 13,
+  "name": "Time Shield Potion",
+  "frag": "4 rounds. You can't act or be targeted, you become immune to all effects, and you vanish from your space; as far as the universe is concerned, you simply don't exist as long as the potion la"
+ },
+ {
+  "id": "truth-potion",
+  "coll": "items",
+  "level": 6,
+  "name": "Truth Potion",
+  "frag": " must answer the question truthfully if you are able to do so; if you succeed, you are temporarily immune to further attempts to ask the same question within the potion's duration."
+ },
+ {
+  "id": "aeon-stone",
+  "coll": "items",
+  "level": 1,
+  "name": "Aeon Stone",
+  "frag": "en you are subject to lingering wounds. You gain resistance 3 to persistent damage. At the end of any turn where the persistent damage can't overcome this resistance, end that condition. The"
+ },
+ {
+  "id": "channel-protection-amulet",
+  "coll": "items",
+  "level": 3,
+  "name": "Channel Protection Amulet",
+  "frag": " silken cord. When wearing this amulet, you gain resistance 5 against damage from Harm spells if you're living, or against Heal spells if you're undead."
+ },
+ {
+  "id": "obsidian-goggles",
+  "coll": "items",
+  "level": 5,
+  "name": "Obsidian Goggles",
+  "frag": " day **Effect** Adjusting your goggles, you gain darkvision for 1 hour."
+ },
+ {
+  "id": "arctic-worm-chitin-shield",
+  "coll": "items",
+  "level": 12,
+  "name": "Arctic Worm Chitin Shield",
+  "frag": " Until the beginning of your next turn, you gain resistance 5 to cold and any creature that ends its turn adjacent to you takes 3d6 damage ( save). --- **Craft Requirements** The initial raw"
+ },
+ {
+  "id": "fulmination-fang",
+  "coll": "items",
+  "level": 4,
+  "name": "Fulmination Fang",
+  "frag": " You take electricity damage **Effect** You gain resistance 5 to the triggering damage, and the *fulmination fang* crackles with the absorbed energy. You can Interact to change between the g"
+ },
+ {
+  "id": "ommatophoric-mutagen",
+  "coll": "items",
+  "level": 7,
+  "name": "Ommatophoric Mutagen",
+  "frag": " to harmful visual effects. **Benefit** You gain all-around vision, a +2 item bonus to visual Perception checks, and low-light vision if you don't already have it. These effects last for 1 m"
+ },
+ {
+  "id": "pallesthetic-mutagen",
+  "coll": "items",
+  "level": 9,
+  "name": "Pallesthetic Mutagen",
+  "frag": "come useless. **Benefit** For 1 minute, you gain precise echolocation out to 40 feet, imprecise tremorsense out to 60 feet, and a +2 item bonus to Perception checks using either of these sen"
+ },
+ {
+  "id": "darkvision-elixir-lesser",
+  "coll": "items",
+  "level": 2,
+  "name": "Darkvision Elixir (Lesser)",
+  "frag": "your sight becomes sharper in darkness. You gain darkvision for 10 minutes."
+ },
+ {
+  "id": "darkvision-elixir-moderate",
+  "coll": "items",
+  "level": 4,
+  "name": "Darkvision Elixir (Moderate)",
+  "frag": "your sight becomes sharper in darkness. You gain darkvision for 1 hour."
+ },
+ {
+  "id": "darkvision-elixir-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Darkvision Elixir (Greater)",
+  "frag": "your sight becomes sharper in darkness. You gain darkvision for 24 hours."
+ },
+ {
+  "id": "rainbow-vinegar",
+  "coll": "items",
+  "level": 4,
+  "name": "Rainbow Vinegar",
+  "frag": "deal an additional 1d4 acid damage, and you have resistance 10 to electricity. Vampires find this vinegar particularly harmful and take an additional 2d4 acid damage instead. Taking more tha"
+ },
+ {
+  "id": "rainbow-vinegar-greater",
+  "coll": "items",
+  "level": 12,
+  "name": "Rainbow Vinegar (Greater)",
+  "frag": "deal an additional 1d8 acid damage, and you have resistance 15 to electricity. Vampires find this vinegar particularly harmful and take an additional 2d8 acid damage instead. Taking more tha"
+ },
+ {
+  "id": "temperbrand",
+  "coll": "items",
+  "level": 20,
+  "name": "Temperbrand",
+  "frag": "cally fail this save are knocked prone. You are immune to the effects of Molten Smash, but your allies are not."
+ },
+ {
+  "id": "spiced-demonade",
+  "coll": "items",
+  "level": 2,
+  "name": "Spiced Demonade",
+  "frag": "when the spiced demonade wears off, and you become temporarily immune to spiced demonade for 24 hours."
+ },
+ {
+  "id": "perfections-first-step",
+  "coll": "items",
+  "level": 5,
+  "name": "Perfection's First Step",
+  "frag": "king Wave Advance with a save DC of 19. You are then temporarily immune to benefiting from further copies of *perfection's first step* until your next daily preparations."
+ },
+ {
+  "id": "three-pillared-yang-na",
+  "coll": "items",
+  "level": 4,
+  "name": "Three-Pillared Yang Na",
+  "frag": "* You take spirit damage --- **Effect** You gain resistance 3 against that spirit damage."
+ },
+ {
+  "id": "angelic-opera-cloak",
+  "coll": "items",
+  "level": 19,
+  "name": "Angelic Opera Cloak",
+  "frag": " feet for 10 minutes. During this time, you gain immunity to paralysis effects and ignore effects that would give you a circumstance penalty to speed."
+ },
+ {
+  "id": "aurochs-jerky",
+  "coll": "items",
+  "level": 9,
+  "name": "Aurochs Jerky",
+  "frag": "ition for 10 minutes. During this time, you are not immune to fatigue and can become fatigued by subsequent effects, but you gain a +2 item bonus to saving throws against effects that would "
+ },
+ {
+  "id": "purple-pepper-powder",
+  "coll": "items",
+  "level": 8,
+  "name": "Purple Pepper Powder",
+  "frag": "lavored with this purple pepper powder, you gain resistance 10 to fire and resistance 5 to poison for 1 hour."
+ },
+ {
+  "id": "pharasmin-visor",
+  "coll": "items",
+  "level": 13,
+  "name": "Pharasmin Visor",
+  "frag": "so that only the left visor is lowered. You gain darkvision until you adjust the visors again or until the item is no longer invested by you, whichever comes first. --- **Activate—Reveal the"
+ },
+ {
+  "id": "clay-sphere",
+  "coll": "items",
+  "level": 3,
+  "name": "Clay Sphere",
+  "frag": " is +7 and the spell DC 17. - **Armor** You gain resistance 2 to precision damage and a +1 item bonus to saving throws against effects with the morph or polymorph traits. - **Weapon** After "
+ },
+ {
+  "id": "sun-slayer",
+  "coll": "items",
+  "level": 10,
+  "name": "Sun Slayer",
+  "frag": "ed against solar energy and heat. While you have this shield raised, you gain fire resistance 5. **Activate—Sunset** ⟨1⟩ (darkness, manipulate) **Frequency** once per day **Requirements** Yo"
+ },
+ {
+  "id": "gas-mask-of-clean-air",
+  "coll": "items",
+  "level": 4,
+  "name": "Gas Mask of Clean Air",
+  "frag": " into your nose and mouth. For 1 round, you are immune to inhaled poisons, inhaled diseases, and olfactory effects. If you have ongoing effects due to such an effect from before activating t"
+ },
+ {
+  "id": "warming-parka",
+  "coll": "items",
+  "level": 3,
+  "name": "Warming Parka",
+  "frag": " much as possible. For the next minute, you gain resistance 3 to cold damage, but also take a –2 item penalty to Perception checks. You can Dismiss this effect."
+ },
+ {
+  "id": "pyrefeather-cloak",
+  "coll": "items",
+  "level": 3,
+  "name": "Pyrefeather Cloak",
+  "frag": "e feathers to reduce the incoming heat. You gain fire resistance 5 and a +1 circumstance bonus to saving throws against the triggering effect until the beginning of your next turn. If you ar"
+ },
+ {
+  "id": "thousand-year-dragonroot",
+  "coll": "items",
+  "level": 10,
+  "name": "Thousand-Year Dragonroot",
+  "frag": "ght, providing illumination as a torch. You gain a fly Speed of 40 feet and fire resistance 5 for 1 minute."
+ },
+ {
+  "id": "devilwing-badge",
+  "coll": "items",
+  "level": 4,
+  "name": "Devilwing Badge",
+  "frag": "+8, and the spell DC is 18. - **Armor** You gain resistance 2 to fire and unholy. - **Weapon** After you cast a spell by Activating the *devilwing badge*, your Strikes with the weapon deal a"
+ },
+ {
+  "id": "devilwing-badge-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Devilwing Badge (Greater)",
+  "frag": "14, and the spell DC is 24. - **Armor** You gain resistance 5 to fire and unholy. - **Weapon** After you cast a spell by Activating the *devilwing badge*, your Strikes with the weapon deal a"
+ },
+ {
+  "id": "pallid-crystal",
+  "coll": "items",
+  "level": 7,
+  "name": "Pallid Crystal",
+  "frag": "'re healed by healing vitality effects, you gain void resistance 5, but if you're healed by void effects, you instead gain vitality resistance 5."
+ },
+ {
+  "id": "grim-specter",
+  "coll": "items",
+  "level": 0,
+  "name": "Grim Specter",
+  "frag": "e incorporeal, having no physical body. You are immune to effects that require a physical body, including precision damage as well as exposure to most diseases and poisons. You also have res"
+ },
+ {
+  "id": "living-statue",
+  "coll": "items",
+  "level": 0,
+  "name": "Living Statue",
+  "frag": "ody reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine). This increases to 8 in caves or subterranean environments."
+ },
+ {
+  "id": "agathion-raiment",
+  "coll": "items",
+  "level": 0,
+  "name": "Agathion Raiment",
+  "frag": "call. Five Items: In your form of fury, you have darkvision and gain 20 additional temporary Hit Points, but you have weakness 5 to unholy. You don't need to change your size to gain the ben"
+ },
+ {
+  "id": "aged-arbor-wine",
+  "coll": "items",
+  "level": 12,
+  "name": "Aged Arbor Wine",
+  "frag": "e after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet. Arbor wine that has been aged for several years—or artificially aged with alchemy—develops both a greater "
+ },
+ {
+  "id": "bloodhound-olfactory-stimulators",
+  "coll": "items",
+  "level": 5,
+  "name": "Bloodhound Olfactory Stimulators",
+  "frag": "h as they gather even more information. You gain imprecise scent with a range of 30 feet for 1 minute."
+ },
+ {
+  "id": "clay-sphere-greater",
+  "coll": "items",
+  "level": 6,
+  "name": "Clay Sphere (Greater)",
+  "frag": "is +10 and the spell DC 20. - **Armor** You gain resistance 5 to precision damage and a +2 item bonus to saving throws against effects with the morph or polymorph traits. - **Weapon** After "
+ },
+ {
+  "id": "olfactory-obfuscator-lesser",
+  "coll": "items",
+  "level": 3,
+  "name": "Olfactory Obfuscator (Lesser)",
+  "frag": "hat sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only s"
+ },
+ {
+  "id": "pickled-demon-tongue-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Pickled Demon Tongue (Greater)",
+  "frag": "14, and the spell DC is 24. - **Armor** You gain resistance 5 to acid and attacks by demons. - **Weapon** After you cast an acid spell by Activating the *pickled demon tongue*, your Strikes "
+ },
+ {
+  "id": "polished-demon-horn-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Polished Demon Horn (Greater)",
+  "frag": "Activating this item is 24. - **Armor** You gain resistance 5 to unholy. - **Weapon** After you cast an enchantment spell by Activating the *horn*, your Strikes with the weapon deal an addit"
+ },
+ {
+  "id": "rainbow-vinegar-moderate",
+  "coll": "items",
+  "level": 4,
+  "name": "Rainbow Vinegar (Moderate)",
+  "frag": "deal an additional 1d4 acid damage, and you have resistance 10 to electricity. Vampires find this vinegar particularly harmful and take an additional 2d4 acid damage instead. Taking more tha"
+ },
+ {
+  "id": "rune-of-sin-envy",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Envy)",
+  "frag": "gic. When you Cast an abjuration Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against abjuration spells."
+ },
+ {
+  "id": "rune-of-sin-gluttony",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Gluttony)",
+  "frag": "agic. When you Cast a necromancy Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against necromancy spells."
+ },
+ {
+  "id": "rune-of-sin-greed",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Greed)",
+  "frag": "c. When you Cast a transmutation Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against transmutation spells."
+ },
+ {
+  "id": "rune-of-sin-lust",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Lust)",
+  "frag": "ic. When you Cast an enchantment Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against enchantment spells."
+ },
+ {
+  "id": "rune-of-sin-pride",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Pride)",
+  "frag": "magic. When you Cast an illusion Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against illusion spells."
+ },
+ {
+  "id": "rune-of-sin-sloth",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Sloth)",
+  "frag": "gic. When you Cast a conjuration Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against conjuration spells."
+ },
+ {
+  "id": "rune-of-sin-wrath",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Wrath)",
+  "frag": "agic. When you Cast an evocation Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against evocation spells."
+ },
+ {
+  "id": "stalk-goggles-major",
+  "coll": "items",
+  "level": 8,
+  "name": "Stalk Goggles (Major)",
+  "frag": "an watch for enemies in all directions. You gain all-around vision, low-light vision, and a +2 item bonus to Perception checks involving sight for 1 minute; during this time, you can't be fl"
+ },
+ {
+  "id": "wyrm-claw",
+  "coll": "items",
+  "level": 12,
+  "name": "Wyrm Claw",
+  "frag": "on spell by activating the *wyrm claw*, you gain resistance 5 to acid, cold, electricity, and fire for the next minute. - **Weapon** After you cast a conjuration spell by activating the claw"
+ },
+ {
+  "id": "aon-grim-specter",
+  "coll": "items",
+  "level": 0,
+  "name": "Grim Specter",
+  "frag": "e incorporeal, having no physical body. You are immune to effects that require a physical body, including precision damage as well as exposure to most diseases and poisons. You also have res"
+ },
+ {
+  "id": "aon-living-statue",
+  "coll": "items",
+  "level": 0,
+  "name": "Living Statue",
+  "frag": "ody reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine). This increases to 8 in caves or subterranean environments."
+ },
+ {
+  "id": "aon-agathion-raiment",
+  "coll": "items",
+  "level": 0,
+  "name": "Agathion Raiment",
+  "frag": "all. Five Items : In your form of fury, you have darkvision and gain 20 additional temporary Hit Points, but you have weakness 5 to unholy. You don't need to change your size to gain the ben"
+ }
+]

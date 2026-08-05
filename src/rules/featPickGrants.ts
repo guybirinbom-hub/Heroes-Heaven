@@ -18,8 +18,10 @@ export interface FeatPickSpec {
   prompt: string;
   /** Restrict to this feat category (general also accepts skill feats). */
   category?: FeatCategory;
-  /** Highest feat level offered; 'self' = the character's level. */
-  maxLevel: number | 'self';
+  /** Highest feat level offered; 'self' = the character's level; 'half' = half it, rounded down —
+   *  the Advanced <archetype> feats read "your <class> level is equal to half your character level",
+   *  and a feat's own level is a prerequisite, so that clause IS the cap. */
+  maxLevel: number | 'self' | 'half';
   /** Feat must have ALL of these traits. */
   traits?: string[];
   /** Feat must have the character's own class / ancestry trait. */
@@ -96,6 +98,38 @@ export const FEAT_PICK_GRANTS: Record<string, FeatPickSpec> = {
   'basic-trickery': { prompt: "Choose a class feat", category: 'class', maxLevel: 2, traits: ['rogue'] },
   'basic-wilding': { prompt: "Choose a class feat", category: 'class', maxLevel: 2, traits: ['druid'] },
   'basic-witchcraft': { prompt: "Choose a class feat", category: 'class', maxLevel: 2, traits: ['witch'] },
+
+  // ---- Advanced <archetype>: the sibling of every basic-* row above -------------------------
+  // "You gain one <class> feat. For the purpose of meeting its prerequisites, your <class> level is
+  // equal to half your character level. Special: You can select this feat more than once."
+  // All 25 basic-* rows were registered and NONE of the 25 advanced-* ones were, so the second half
+  // of every multiclass archetype asked no question and granted no feat. Each row below is the
+  // basic row with the level cap changed; the class trait is verified to match the sibling.
+  'advanced-arcana': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['wizard'] },
+  'advanced-blood-potency': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['sorcerer'] },
+  'advanced-breakthrough': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['inventor'] },
+  'advanced-concoction': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['alchemist'] },
+  'advanced-deduction': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['investigator'] },
+  'advanced-defender': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['guardian'] },
+  'advanced-devotion': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['champion'] },
+  'advanced-dogma': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['cleric'] },
+  'advanced-field-training': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['commander'] },
+  'advanced-flair': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['swashbuckler'] },
+  'advanced-fury': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['barbarian'] },
+  'advanced-glory': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['exemplar'] },
+  'advanced-hunters-trick': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['ranger'] },
+  'advanced-kata': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['monk'] },
+  'advanced-maneuver': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['fighter'] },
+  'advanced-martial-magic': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['magus'] },
+  'advanced-muses-whispers': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['bard'] },
+  'advanced-mysteries': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['oracle'] },
+  'advanced-shooting': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['gunslinger'] },
+  'advanced-synergy': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['summoner'], excludeTraits: ['tandem'] },
+  'advanced-thaumaturgy': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['thaumaturge'] },
+  'advanced-thoughtform': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['psychic'] },
+  'advanced-trickery': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['rogue'] },
+  'advanced-wilding': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['druid'] },
+  'advanced-witchcraft': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['witch'] },
   'elemental-existence': { prompt: "Choose a feat", category: 'ancestry', maxLevel: 1, traits: ['oread'] },
   'general-training': { prompt: "Choose a general feat", category: 'general', maxLevel: 1 },
   'multifarious-muse': { prompt: "Choose a class feat", category: 'class', maxLevel: 1, traits: ['bard'] },
@@ -119,7 +153,8 @@ export function pickableFeats(spec: FeatPickSpec, build: BuildState, content: Co
       .filter((f): f is Feat => !!f)
       .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
   }
-  const maxL = spec.maxLevel === 'self' ? build.level : spec.maxLevel;
+  const maxL =
+    spec.maxLevel === 'self' ? build.level : spec.maxLevel === 'half' ? Math.floor(build.level / 2) : spec.maxLevel;
   const clsTrait = build.classId;
   const ancTrait = build.ancestryId;
   return Object.values(content.feats)

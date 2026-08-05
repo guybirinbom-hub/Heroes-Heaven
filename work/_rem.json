@@ -1,0 +1,740 @@
+[
+ {
+  "id": "eye-of-the-arclords",
+  "coll": "feats",
+  "level": 2,
+  "name": "Eye of the Arclords"
+ },
+ {
+  "id": "attunement-to-stone",
+  "coll": "feats",
+  "level": 10,
+  "name": "Attunement to Stone"
+ },
+ {
+  "id": "endure-deaths-touch",
+  "coll": "feats",
+  "level": 10,
+  "name": "Endure Death's Touch"
+ },
+ {
+  "id": "mimic-protections",
+  "coll": "feats",
+  "level": 20,
+  "name": "Mimic Protections"
+ },
+ {
+  "id": "elemental-bulwark",
+  "coll": "feats",
+  "level": 5,
+  "name": "Elemental Bulwark"
+ },
+ {
+  "id": "soulforger-dedication",
+  "coll": "feats",
+  "level": 2,
+  "name": "Soulforger Dedication"
+ },
+ {
+  "id": "defensive-armaments",
+  "coll": "feats",
+  "level": 2,
+  "name": "Defensive Armaments"
+ },
+ {
+  "id": "pyrophilic-recovery",
+  "coll": "feats",
+  "level": 1,
+  "name": "Pyrophilic Recovery"
+ },
+ {
+  "id": "consolidated-overlay-panopticon",
+  "coll": "feats",
+  "level": 4,
+  "name": "Consolidated Overlay Panopticon"
+ },
+ {
+  "id": "helts-spelldance",
+  "coll": "feats",
+  "level": 8,
+  "name": "Helt's Spelldance"
+ },
+ {
+  "id": "inexorable",
+  "coll": "feats",
+  "level": 6,
+  "name": "Inexorable"
+ },
+ {
+  "id": "all-in-my-head",
+  "coll": "feats",
+  "level": 18,
+  "name": "All in my Head"
+ },
+ {
+  "id": "elemental-shape",
+  "coll": "feats",
+  "level": 10,
+  "name": "Elemental Shape"
+ },
+ {
+  "id": "plant-shape",
+  "coll": "feats",
+  "level": 10,
+  "name": "Plant Shape"
+ },
+ {
+  "id": "dragon-shape",
+  "coll": "feats",
+  "level": 12,
+  "name": "Dragon Shape"
+ },
+ {
+  "id": "feeding-frenzy",
+  "coll": "feats",
+  "level": 6,
+  "name": "Feeding Frenzy"
+ },
+ {
+  "id": "nocturnal-senses",
+  "coll": "feats",
+  "level": 6,
+  "name": "Nocturnal Senses"
+ },
+ {
+  "id": "robust-health",
+  "coll": "feats",
+  "level": 3,
+  "name": "Robust Health"
+ },
+ {
+  "id": "fiend-eternal",
+  "coll": "feats",
+  "level": 20,
+  "name": "Fiend Eternal"
+ },
+ {
+  "id": "you-cant-kill-an-idea",
+  "coll": "feats",
+  "level": 20,
+  "name": "You Can't Kill an Idea"
+ },
+ {
+  "id": "fight-through-oblivion",
+  "coll": "feats",
+  "level": 20,
+  "name": "Fight Through Oblivion"
+ },
+ {
+  "id": "vengful-remnant",
+  "coll": "feats",
+  "level": 14,
+  "name": "Vengful Remnant"
+ },
+ {
+  "id": "field-propagandist-dedication",
+  "coll": "feats",
+  "level": 2,
+  "name": "Field Propagandist Dedication"
+ },
+ {
+  "id": "borrowed-ability",
+  "coll": "feats",
+  "level": 2,
+  "name": "Borrowed Ability"
+ },
+ {
+  "id": "stargazers-eyes",
+  "coll": "feats",
+  "level": 4,
+  "name": "Stargazer's Eyes"
+ },
+ {
+  "id": "craft-runewell",
+  "coll": "feats",
+  "level": 20,
+  "name": "Craft Runewell"
+ },
+ {
+  "id": "live-off-borrowed-time",
+  "coll": "feats",
+  "level": 14,
+  "name": "Live Off Borrowed Time"
+ },
+ {
+  "id": "godless-healing",
+  "coll": "feats",
+  "level": 2,
+  "name": "Godless Healing"
+ },
+ {
+  "id": "aon-vengful-remnant",
+  "coll": "feats",
+  "level": 14,
+  "name": "Vengful Remnant"
+ },
+ {
+  "id": "revolutionary-innovation",
+  "coll": "classFeatures",
+  "level": 15,
+  "name": "Revolutionary Innovation"
+ },
+ {
+  "id": "gate-junction",
+  "coll": "classFeatures",
+  "level": 5,
+  "name": "Gate Junction"
+ },
+ {
+  "id": "hands-of-the-wildling",
+  "coll": "classFeatures",
+  "level": 1,
+  "name": "Hands of the Wildling"
+ },
+ {
+  "id": "coral-aspect",
+  "coll": "items",
+  "level": 4,
+  "name": "Coral Aspect"
+ },
+ {
+  "id": "energy-mutagen",
+  "coll": "items",
+  "level": 1,
+  "name": "Energy Mutagen"
+ },
+ {
+  "id": "stone-body-mutagen",
+  "coll": "items",
+  "level": 5,
+  "name": "Stone Body Mutagen"
+ },
+ {
+  "id": "ambrosia-of-undying-hope",
+  "coll": "items",
+  "level": 19,
+  "name": "Ambrosia of Undying Hope"
+ },
+ {
+  "id": "olfactory-obfuscator",
+  "coll": "items",
+  "level": 3,
+  "name": "Olfactory Obfuscator"
+ },
+ {
+  "id": "psychopomp-mask",
+  "coll": "items",
+  "level": 1,
+  "name": "Psychopomp Mask"
+ },
+ {
+  "id": "rune-of-sin",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin"
+ },
+ {
+  "id": "warding-tattoo",
+  "coll": "items",
+  "level": 5,
+  "name": "Warding Tattoo"
+ },
+ {
+  "id": "warding-tattoo-trail",
+  "coll": "items",
+  "level": 6,
+  "name": "Warding Tattoo (Trail)"
+ },
+ {
+  "id": "warding-tattoo-wave",
+  "coll": "items",
+  "level": 6,
+  "name": "Warding Tattoo (Wave)"
+ },
+ {
+  "id": "warding-tattoo-fiend",
+  "coll": "items",
+  "level": 7,
+  "name": "Warding Tattoo (Fiend)"
+ },
+ {
+  "id": "trinity-geode",
+  "coll": "items",
+  "level": 3,
+  "name": "Trinity Geode"
+ },
+ {
+  "id": "trinity-geode-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Trinity Geode (Greater)"
+ },
+ {
+  "id": "trinity-geode-major",
+  "coll": "items",
+  "level": 12,
+  "name": "Trinity Geode (Major)"
+ },
+ {
+  "id": "vapor-sphere",
+  "coll": "items",
+  "level": 14,
+  "name": "Vapor Sphere"
+ },
+ {
+  "id": "arboreals-revenge",
+  "coll": "items",
+  "level": 6,
+  "name": "Arboreal's Revenge"
+ },
+ {
+  "id": "pact-bound-pistol",
+  "coll": "items",
+  "level": 10,
+  "name": "Pact-Bound Pistol"
+ },
+ {
+  "id": "darkvision-scope",
+  "coll": "items",
+  "level": 5,
+  "name": "Darkvision Scope"
+ },
+ {
+  "id": "darkvision-scope-greater",
+  "coll": "items",
+  "level": 15,
+  "name": "Darkvision Scope (Greater)"
+ },
+ {
+  "id": "fanged-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Fanged (Greater)"
+ },
+ {
+  "id": "fanged-major",
+  "coll": "items",
+  "level": 15,
+  "name": "Fanged (Major)"
+ },
+ {
+  "id": "moon-radish-soup",
+  "coll": "items",
+  "level": 2,
+  "name": "Moon Radish Soup"
+ },
+ {
+  "id": "ouroboros-buckles",
+  "coll": "items",
+  "level": 19,
+  "name": "Ouroboros Buckles"
+ },
+ {
+  "id": "arbor-wine-aged",
+  "coll": "items",
+  "level": 12,
+  "name": "Arbor Wine (Aged)"
+ },
+ {
+  "id": "fury-cocktail",
+  "coll": "items",
+  "level": 4,
+  "name": "Fury Cocktail"
+ },
+ {
+  "id": "fury-cocktail-lesser",
+  "coll": "items",
+  "level": 4,
+  "name": "Fury Cocktail (Lesser)"
+ },
+ {
+  "id": "fury-cocktail-moderate",
+  "coll": "items",
+  "level": 12,
+  "name": "Fury Cocktail (Moderate)"
+ },
+ {
+  "id": "fury-cocktail-greater",
+  "coll": "items",
+  "level": 18,
+  "name": "Fury Cocktail (Greater)"
+ },
+ {
+  "id": "journeybread",
+  "coll": "items",
+  "level": 1,
+  "name": "Journeybread"
+ },
+ {
+  "id": "contagion-metabolizer",
+  "coll": "items",
+  "level": 5,
+  "name": "Contagion Metabolizer"
+ },
+ {
+  "id": "contagion-metabolizer-lesser",
+  "coll": "items",
+  "level": 5,
+  "name": "Contagion Metabolizer (Lesser)"
+ },
+ {
+  "id": "contagion-metabolizer-moderate",
+  "coll": "items",
+  "level": 11,
+  "name": "Contagion Metabolizer (Moderate)"
+ },
+ {
+  "id": "contagion-metabolizer-greater",
+  "coll": "items",
+  "level": 19,
+  "name": "Contagion Metabolizer (Greater)"
+ },
+ {
+  "id": "nevercold",
+  "coll": "items",
+  "level": 10,
+  "name": "Nevercold"
+ },
+ {
+  "id": "nevercold-compressed",
+  "coll": "items",
+  "level": 14,
+  "name": "Nevercold (Compressed)"
+ },
+ {
+  "id": "nevercold-refined",
+  "coll": "items",
+  "level": 18,
+  "name": "Nevercold (Refined)"
+ },
+ {
+  "id": "cloning-potion",
+  "coll": "items",
+  "level": 18,
+  "name": "Cloning Potion"
+ },
+ {
+  "id": "breastplate-of-the-mountain",
+  "coll": "items",
+  "level": 20,
+  "name": "Breastplate of the Mountain"
+ },
+ {
+  "id": "mantle-of-amazing-health",
+  "coll": "items",
+  "level": 19,
+  "name": "Mantle of Amazing Health"
+ },
+ {
+  "id": "olfactory-stimulators-bloodhound",
+  "coll": "items",
+  "level": 5,
+  "name": "Olfactory Stimulators (Bloodhound)"
+ },
+ {
+  "id": "caydens-tankard",
+  "coll": "items",
+  "level": 25,
+  "name": "Cayden's Tankard"
+ },
+ {
+  "id": "stone-of-encouragement",
+  "coll": "items",
+  "level": 2,
+  "name": "Stone of Encouragement"
+ },
+ {
+  "id": "stone-of-encouragement-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Stone of Encouragement (Greater)"
+ },
+ {
+  "id": "the-fiend",
+  "coll": "items",
+  "level": 20,
+  "name": "The Fiend"
+ },
+ {
+  "id": "the-desert",
+  "coll": "items",
+  "level": 20,
+  "name": "The Desert"
+ },
+ {
+  "id": "nimbus-breath",
+  "coll": "items",
+  "level": 8,
+  "name": "Nimbus Breath"
+ },
+ {
+  "id": "sairazul-blue",
+  "coll": "items",
+  "level": 10,
+  "name": "Sairazul Blue"
+ },
+ {
+  "id": "ferrofluid-urchin",
+  "coll": "items",
+  "level": 7,
+  "name": "Ferrofluid Urchin"
+ },
+ {
+  "id": "ferrofluid-urchin-lesser",
+  "coll": "items",
+  "level": 7,
+  "name": "Ferrofluid Urchin (Lesser)"
+ },
+ {
+  "id": "ferrofluid-urchin-moderate",
+  "coll": "items",
+  "level": 11,
+  "name": "Ferrofluid Urchin (Moderate)"
+ },
+ {
+  "id": "janns-prism",
+  "coll": "items",
+  "level": 9,
+  "name": "Jann's Prism"
+ },
+ {
+  "id": "sparkwarden",
+  "coll": "items",
+  "level": 5,
+  "name": "Sparkwarden"
+ },
+ {
+  "id": "sky-hammer",
+  "coll": "items",
+  "level": 20,
+  "name": "Sky Hammer"
+ },
+ {
+  "id": "darkvision-elixir",
+  "coll": "items",
+  "level": 2,
+  "name": "Darkvision Elixir"
+ },
+ {
+  "id": "potion-of-resistance",
+  "coll": "items",
+  "level": 6,
+  "name": "Potion of Resistance"
+ },
+ {
+  "id": "time-shield-potion",
+  "coll": "items",
+  "level": 13,
+  "name": "Time Shield Potion"
+ },
+ {
+  "id": "truth-potion",
+  "coll": "items",
+  "level": 6,
+  "name": "Truth Potion"
+ },
+ {
+  "id": "aeon-stone",
+  "coll": "items",
+  "level": 1,
+  "name": "Aeon Stone"
+ },
+ {
+  "id": "channel-protection-amulet",
+  "coll": "items",
+  "level": 3,
+  "name": "Channel Protection Amulet"
+ },
+ {
+  "id": "obsidian-goggles",
+  "coll": "items",
+  "level": 5,
+  "name": "Obsidian Goggles"
+ },
+ {
+  "id": "fulmination-fang",
+  "coll": "items",
+  "level": 4,
+  "name": "Fulmination Fang"
+ },
+ {
+  "id": "rainbow-vinegar",
+  "coll": "items",
+  "level": 4,
+  "name": "Rainbow Vinegar"
+ },
+ {
+  "id": "rainbow-vinegar-greater",
+  "coll": "items",
+  "level": 12,
+  "name": "Rainbow Vinegar (Greater)"
+ },
+ {
+  "id": "temperbrand",
+  "coll": "items",
+  "level": 20,
+  "name": "Temperbrand"
+ },
+ {
+  "id": "spiced-demonade",
+  "coll": "items",
+  "level": 2,
+  "name": "Spiced Demonade"
+ },
+ {
+  "id": "perfections-first-step",
+  "coll": "items",
+  "level": 5,
+  "name": "Perfection's First Step"
+ },
+ {
+  "id": "three-pillared-yang-na",
+  "coll": "items",
+  "level": 4,
+  "name": "Three-Pillared Yang Na"
+ },
+ {
+  "id": "angelic-opera-cloak",
+  "coll": "items",
+  "level": 19,
+  "name": "Angelic Opera Cloak"
+ },
+ {
+  "id": "purple-pepper-powder",
+  "coll": "items",
+  "level": 8,
+  "name": "Purple Pepper Powder"
+ },
+ {
+  "id": "pharasmin-visor",
+  "coll": "items",
+  "level": 13,
+  "name": "Pharasmin Visor"
+ },
+ {
+  "id": "clay-sphere",
+  "coll": "items",
+  "level": 3,
+  "name": "Clay Sphere"
+ },
+ {
+  "id": "gas-mask-of-clean-air",
+  "coll": "items",
+  "level": 4,
+  "name": "Gas Mask of Clean Air"
+ },
+ {
+  "id": "pyrefeather-cloak",
+  "coll": "items",
+  "level": 3,
+  "name": "Pyrefeather Cloak"
+ },
+ {
+  "id": "pallid-crystal",
+  "coll": "items",
+  "level": 7,
+  "name": "Pallid Crystal"
+ },
+ {
+  "id": "agathion-raiment",
+  "coll": "items",
+  "level": 0,
+  "name": "Agathion Raiment"
+ },
+ {
+  "id": "clay-sphere-greater",
+  "coll": "items",
+  "level": 6,
+  "name": "Clay Sphere (Greater)"
+ },
+ {
+  "id": "pickled-demon-tongue-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Pickled Demon Tongue (Greater)"
+ },
+ {
+  "id": "polished-demon-horn-greater",
+  "coll": "items",
+  "level": 8,
+  "name": "Polished Demon Horn (Greater)"
+ },
+ {
+  "id": "rainbow-vinegar-moderate",
+  "coll": "items",
+  "level": 4,
+  "name": "Rainbow Vinegar (Moderate)"
+ },
+ {
+  "id": "rune-of-sin-envy",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Envy)"
+ },
+ {
+  "id": "rune-of-sin-gluttony",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Gluttony)"
+ },
+ {
+  "id": "rune-of-sin-greed",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Greed)"
+ },
+ {
+  "id": "rune-of-sin-lust",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Lust)"
+ },
+ {
+  "id": "rune-of-sin-pride",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Pride)"
+ },
+ {
+  "id": "rune-of-sin-sloth",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Sloth)"
+ },
+ {
+  "id": "rune-of-sin-wrath",
+  "coll": "items",
+  "level": 12,
+  "name": "Rune of Sin (Wrath)"
+ },
+ {
+  "id": "stalk-goggles-major",
+  "coll": "items",
+  "level": 8,
+  "name": "Stalk Goggles (Major)"
+ },
+ {
+  "id": "wyrm-claw",
+  "coll": "items",
+  "level": 12,
+  "name": "Wyrm Claw"
+ },
+ {
+  "id": "aon-grim-specter",
+  "coll": "items",
+  "level": 0,
+  "name": "Grim Specter"
+ },
+ {
+  "id": "aon-living-statue",
+  "coll": "items",
+  "level": 0,
+  "name": "Living Statue"
+ },
+ {
+  "id": "aon-agathion-raiment",
+  "coll": "items",
+  "level": 0,
+  "name": "Agathion Raiment"
+ }
+]

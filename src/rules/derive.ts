@@ -1384,7 +1384,18 @@ export function classFeatureIdsOwned(
 ): Set<string> {
   const cls = opts.classId ? db.classes[opts.classId] : undefined;
   const out = new Set<string>();
-  if (cls) for (const f of cls.features) if (f.level <= opts.level) out.add(f.featureId);
+  if (cls) {
+    for (const f of cls.features) {
+      if (f.level > opts.level) continue;
+      out.add(f.featureId);
+      // A CLASS-suffixed variant of a shared feature — the swashbuckler's own Weapon Expertise
+      // (which carries critSpec), each spontaneous caster's own Spell Repertoire. Only the
+      // SUBCLASS suffix was tried, and a swashbuckler's subclass is a style, so six records
+      // existed, carried mechanics, and were reachable by nothing.
+      const byClass = `${f.featureId}-${cls.id}`;
+      if (db.classFeatures[byClass]) out.add(byClass);
+    }
+  }
   if (cls && opts.subclassId) {
     for (const f of cls.features) {
       if (f.level > opts.level) continue;
@@ -1404,7 +1415,17 @@ export function classFeatureIdsOwned(
 export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> {
   const cls = c.classId ? db.classes[c.classId] : undefined;
   const out = new Set<string>();
-  if (cls) for (const f of cls.features) if (f.level <= c.level) out.add(f.featureId);
+  if (cls) {
+    for (const f of cls.features) {
+      if (f.level > c.level) continue;
+      out.add(f.featureId);
+      // A CLASS-suffixed variant, the sibling of the subclass rule below: the swashbuckler's own
+      // Weapon Expertise carries critSpec, each spontaneous caster has its own Spell Repertoire.
+      // A swashbuckler's subclass is a style, so the subclass suffix never reached these.
+      const byClass = `${f.featureId}-${cls.id}`;
+      if (db.classFeatures[byClass]) out.add(byClass);
+    }
+  }
   // Subclass VARIANTS of a listed feature are stored as `<featureId>-<subclassId>` and are not in
   // cls.features — the class lists the generic prose record (`field-discovery`), and the variant
   // (`field-discovery-toxicologist`) carries the actual mechanics. `critSpecSources` already reached
