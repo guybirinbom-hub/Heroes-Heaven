@@ -443,6 +443,29 @@ export interface DefenseGrants {
     note?: string;
   }[];
   /**
+   * RETUNE an existing spellcasting entry rather than granting a new one.
+   *
+   * An entry's tradition and key attribute come from the source that granted it, and nothing could
+   * change them afterwards — so Ancestral Mind ("the spell's tradition becomes occult … and you can
+   * use your psychic spellcasting attribute modifier instead of Charisma") and the Razmiran priest's
+   * occult cleric spells both left the entry exactly as it was.
+   */
+  entryRetune?: {
+    /** Which entry: an exact id, or 'innate' for the innate-spell entry. */
+    scope: 'innate' | string;
+    tradition?: Tradition;
+    keyAbility?: AbilityId;
+    /** Take the key attribute from the entry belonging to this class ("your PSYCHIC spellcasting
+     *  attribute modifier"), rather than naming one — a psychic's is not fixed. */
+    keyAbilityFromClass?: string;
+  }[];
+  /**
+   * Items a record hands the character ("You gain a Razmiri mask"). Nothing put an item in the
+   * inventory, so a feat whose benefit IS an item delivered nothing and the player had to know to
+   * add it themselves.
+   */
+  grantsItems?: { itemId: string; quantity?: number; invested?: boolean }[];
+  /**
    * "You gain all the mechanical benefits of the <X> heritage you selected at 1st level."
    *
    * Both feats that say this require a VERSATILE heritage, which is what the character's single
@@ -2214,6 +2237,9 @@ export interface InventoryItem {
   /** Reference into ContentDatabase.items (or a homebrew item id). */
   itemId: string;
   quantity: number;
+  /** The record that HANDED the character this item ("You gain a Razmiri mask") — displayed, and the
+   *  reason it cost no gold. Absent for anything the player bought or added themselves. */
+  grantedBy?: string;
   worn?: boolean;
   /** Held/wielded. */
   equipped?: boolean;

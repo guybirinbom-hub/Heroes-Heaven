@@ -3312,6 +3312,36 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   }
 
+  // Items a record HANDS the character. Collected here so the inventory emission below stays a
+  // single expression; the record that gave it is kept so the sheet can say where it came from.
+  const grantedItems: { itemId: string; quantity?: number; invested?: boolean; source: string }[] = [];
+  for (const fc of feats) {
+    for (const g of content.feats[fc.featId]?.grantsItems ?? []) {
+      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
+      grantedItems.push({ ...g, source: content.feats[fc.featId].name });
+    }
+  }
+
+  // RETUNE an entry that already exists. Its tradition and key attribute come from whatever granted
+  // it, and nothing could change them afterwards — so Ancestral Mind ("the spell's tradition becomes
+  // occult … and you can use your psychic spellcasting attribute modifier instead of Charisma") left
+  // the innate entry exactly as it was. Applied last, over the finished list.
+  for (const fc of feats) {
+    for (const rt of content.feats[fc.featId]?.entryRetune ?? []) {
+      const target = spellcasting.find((e) => (rt.scope === 'innate' ? e.type === 'innate' : e.id === rt.scope));
+      if (!target) continue;
+      if (rt.tradition) target.tradition = rt.tradition;
+      if (rt.keyAbility) target.keyAbility = rt.keyAbility;
+      // "your PSYCHIC spellcasting attribute" — a psychic's is not fixed, so it is read off that
+      // class's own entry rather than named. No such entry ⇒ nothing changes.
+      if (rt.keyAbilityFromClass) {
+        // Class entries are keyed `<classId>-casting`.
+        const src = spellcasting.find((e) => e.id === `${rt.keyAbilityFromClass}-casting`);
+        if (src) target.keyAbility = src.keyAbility;
+      }
+    }
+  }
+
   // Resolve the subclass + extra-choice picks (bloodline, ikons, apparitions, …) for
   // display on the sheet, so the choices are visible character abilities.
   const classChoices: { group: string; name: string; description: string; level: number; id?: string }[] = [];
@@ -3563,18 +3593,35 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(inventor ? { inventor } : {}),
     ...(kineticist?.elements.length ? { kineticist } : {}),
     // Deterministic instanceIds (index-based) so buildCharacter stays pure across renders.
-    inventory: build.inventory.map((it, i) => ({
-      instanceId: `inv-${i}`,
-      itemId: it.itemId,
-      quantity: Math.max(1, it.quantity),
-      worn: it.worn,
-      equipped: it.equipped,
-      ...(it.invested !== undefined ? { invested: it.invested } : {}),
-      ...(it.containerInstanceId !== undefined ? { containerInstanceId: it.containerInstanceId } : {}),
-      ...(it.runes ? { runes: it.runes } : {}),
-      ...(it.charges ? { charges: it.charges } : {}),
-      ...(it.heldSpell ? { heldSpell: it.heldSpell } : {}),
-    })),
+    inventory: [
+      ...build.inventory.map((it, i) => ({
+        instanceId: `inv-${i}`,
+        itemId: it.itemId,
+        quantity: Math.max(1, it.quantity),
+        worn: it.worn,
+        equipped: it.equipped,
+        ...(it.invested !== undefined ? { invested: it.invested } : {}),
+        ...(it.containerInstanceId !== undefined ? { containerInstanceId: it.containerInstanceId } : {}),
+        ...(it.runes ? { runes: it.runes } : {}),
+        ...(it.charges ? { charges: it.charges } : {}),
+        ...(it.heldSpell ? { heldSpell: it.heldSpell } : {}),
+      })),
+      // Items a record HANDS you ("You gain a Razmiri mask"). Nothing put an item in the inventory,
+      // so a feat whose benefit IS an item delivered nothing. Skipped when the player already
+      // carries one — a granted item must not duplicate a bought one — and it costs no gold, since
+      // the wealth line below is computed from `build.inventory` alone.
+      ...grantedItems
+        .filter((g) => !build.inventory.some((it) => it.itemId === g.itemId))
+        .map((g, i) => ({
+          instanceId: `granted-${i}`,
+          itemId: g.itemId,
+          quantity: Math.max(1, g.quantity ?? 1),
+          worn: false,
+          equipped: false,
+          ...(g.invested !== undefined ? { invested: g.invested } : {}),
+          grantedBy: g.source,
+        })),
+    ],
     currency: cpToCoins(
       startingWealthGp(level) * 100 -
         build.inventory.reduce((cp, it) => cp + coinsToCp(content.items[it.itemId]?.price) * Math.max(1, it.quantity), 0),

@@ -64160,5 +64160,76 @@
     "id": "awakened-yaoguai-heritage",
     "field": "secondHeritage",
     "value": true
+  },
+  {
+    "category": "feats",
+    "id": "ancestral-mind",
+    "field": "entryRetune",
+    "value": [
+      {
+        "scope": "innate",
+        "tradition": "occult",
+        "keyAbilityFromClass": "psychic"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "razmiran-priest-dedication",
+    "field": "grantsItems",
+    "value": [
+      {
+        "itemId": "razmiri-mask"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "razmiran-priest-dedication",
+    "field": "entryRetune",
+    "value": [
+      {
+        "scope": "cleric-dedication-casting",
+        "tradition": "occult",
+        "keyAbility": "cha"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "extradimensional-stash-space",
+    "create": true,
+    "value": {
+      "id": "extradimensional-stash-space",
+      "name": "Extradimensional Stash",
+      "level": 20,
+      "bulk": 0,
+      "traits": [
+        "extradimensional",
+        "magical"
+      ],
+      "rarity": "common",
+      "itemType": "container",
+      "capacity": {
+        "bulk": 5
+      },
+      "ignoredBulk": 5,
+      "price": {},
+      "description": "A small extradimensional space within your clothing, from the Extradimensional Stash feat. It holds up to 5 Bulk, has no Bulk of its own, and can be Interacted with using only one hand. When you Palm an Object you can place it directly inside, so long as there is room.",
+      "source": {
+        "book": "Pathfinder #168: King of the Mountain",
+        "license": "OGL"
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "extradimensional-stash",
+    "field": "grantsItems",
+    "value": [
+      {
+        "itemId": "extradimensional-stash-space"
+      }
+    ]
   }
 ]
