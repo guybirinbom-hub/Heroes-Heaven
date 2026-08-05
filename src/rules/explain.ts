@@ -45,6 +45,7 @@ import {
   dynamicItemSkillBonus,
   mpActive,
   shieldSwappedModes,
+  skillSubstitutions,
 } from './derive';
 import { mpArmorRefine } from './monsterParts';
 import {
@@ -221,6 +222,21 @@ function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituation
     const authored = db.items[inv.itemId]?.situational;
     if (!authored?.length) continue;
     (out ??= {})[inv.itemId] = authored;
+  }
+  // A CONDITIONAL skill substitution ("use Nature instead of Medicine to Treat Wounds") is exactly a
+  // situational note: it does NOT move the skill's number — Natural Medicine's own text says it
+  // "doesn't replace Medicine for uses of the skill other than Treat Wounds or for feat
+  // prerequisites" — but the player must be told it exists and which record allows it. Only the
+  // conditional ones come through here; an unconditional substitution moves the number (deriveSkill).
+  for (const s of skillSubstitutions(c, db)) {
+    if (!s.when) continue;
+    // Keyed by the RECORD's id, because the situational map is only ever consulted for the ids the
+    // character actually has — an entry filed under a synthetic key is never looked at.
+    ((out ??= {})[s.sourceId] ??= []).push({
+      targets: [{ kind: 'skill', detail: s.forSkill }],
+      when: `${s.when} — roll ${s.use} instead`,
+      bonus: `use ${s.use} (${s.source})`,
+    });
   }
   return out;
 }

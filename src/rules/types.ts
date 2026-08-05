@@ -404,6 +404,28 @@ export interface DefenseGrants {
      *  ("If your Speed is taking multiple penalties, pick only one penalty to reduce"). */
     reduceOtherPenalty?: number;
   };
+  /**
+   * "You can use your proficiency rank in Crafting for anything that requires a proficiency rank in
+   * Medicine" (Chirurgeon), "use Nature instead of Medicine to Treat Wounds" (Natural Medicine).
+   *
+   * A substitution is not a bonus — it swaps WHICH skill you roll — so it could not be expressed as
+   * one, and 35 records carrying one did nothing. Chirurgeon's own record shipped a `dataWarning`
+   * saying so.
+   */
+  skillSubstitutions?: {
+    /** The skill you may roll instead. */
+    use: SkillId;
+    /** The skill it stands in for. */
+    forSkill: SkillId;
+    /**
+     * WHEN it applies, in the record's own words ("to Treat Wounds", "to Gather Information").
+     * ABSENT means unconditional — only Chirurgeon's "anything that requires a proficiency rank in
+     * Medicine" reads that way. A conditional one must NOT silently replace the skill's number,
+     * because Natural Medicine explicitly "doesn't replace Medicine for uses of the skill other than
+     * Treat Wounds or for feat prerequisites".
+     */
+    when?: string;
+  }[];
   /** Languages this feat/heritage grants outright (a half-elf lineage's or a regional feat's specific
    *  language) — the record names WHICH languages. */
   grantsLanguages?: string[];
@@ -491,6 +513,15 @@ export interface DefenseGrants {
   /** Feats this heritage/feat grants outright (Cataphract Fleshwarp → Armor Proficiency,
    *  Battle-Trained Human → Diehard). Added as bonus feats with their own effects. */
   grantsFeats?: string[];
+  /**
+   * "You gain the Sneak Attack class feature." A record that hands over a CLASS FEATURE rather than a
+   * feat — the archetype route into another class's signature ability.
+   *
+   * `grantsFeats` could not express it (the target is not a feat) and nothing else wrote into
+   * `ownedFeatureIds`, so 14 records said this and delivered none of it: an Investigator Dedication
+   * granted no On the Case, and Sneak Attacker granted no sneak attack dice.
+   */
+  grantsClassFeatures?: string[];
   /** Number of free-text Lore skills a HERITAGE grants the player to choose (Half Moon Sarangay: 2;
    *  Born of Item: 1). Typed subjects live in BuildState.heritageLore and become trained Lores. */
   loreChoices?: number;
@@ -753,6 +784,8 @@ export interface ItemPassiveEffects {
   /** Raises BOTH Bulk thresholds — the Assisting armour rune sets them to 6 + Str and 11 + Str,
    *  which is the ordinary 5 + Str / 10 + Str plus one. */
   bulkLimitBonus?: number;
+  /** "You can use Nature instead of Occultism…" from a worn/invested item (Tales in Timber). */
+  skillSubstitutions?: DefenseGrants['skillSubstitutions'];
   senses?: SenseEntry[];
   /** Feet, or a formula relative to the character ("floor(@actor.speed.land/2)"). */
   speeds?: SpeedGrants;

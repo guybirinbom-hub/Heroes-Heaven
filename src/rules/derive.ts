@@ -147,6 +147,9 @@ function betterRank(a: ProficiencyRank, b?: ProficiencyRank): ProficiencyRank {
 export interface StatLine {
   rank: ProficiencyRank;
   modifier: number;
+  /** Set when this number is not the skill's own — an unconditional substitution beat it. Carries
+   *  the skill actually rolled and the record that allows it, so the sheet can say both. */
+  substitutedFrom?: { skill: SkillId; source: string };
 }
 
 export function abilityModifiers(c: Character): Record<AbilityId, number> {
@@ -323,7 +326,69 @@ export function untrainedSkillBonus(c: Character, db?: ContentDatabase): number 
   return best;
 }
 
-export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatabase): StatLine {
+/** One resolved skill substitution, with the record it came from so the sheet can name it. */
+export interface ResolvedSkillSub {
+  use: SkillId;
+  forSkill: SkillId;
+  /** Absent = unconditional. */
+  when?: string;
+  /** Display name of the feat / feature / heritage / item that grants it. */
+  source: string;
+  /** Its RECORD id. The situational map is keyed by the ids a character actually has, so an entry
+   *  filed under anything else is never looked at. */
+  sourceId: string;
+}
+
+/**
+ * Every "you can use X instead of Y" the character has.
+ *
+ * A substitution swaps WHICH skill you roll, so it is not a bonus and could not be written as one —
+ * 35 records carrying one did nothing at all, and Chirurgeon's record shipped a `dataWarning` saying
+ * so. An ITEM only counts while it is actually worn, held or invested.
+ */
+export function skillSubstitutions(c: Character, db: ContentDatabase | undefined): ResolvedSkillSub[] {
+  if (!db) return [];
+  const out: ResolvedSkillSub[] = [];
+  const take = (subs: DefenseGrants['skillSubstitutions'], sourceId: string, source: string) => {
+    for (const s of subs ?? []) out.push({ ...s, sourceId, source });
+  };
+  for (const f of c.feats ?? []) take(db.feats[f.featId]?.skillSubstitutions, f.featId, db.feats[f.featId]?.name ?? f.featId);
+  for (const fid of ownedFeatureIds(c, db)) take(db.classFeatures[fid]?.skillSubstitutions, fid, db.classFeatures[fid]?.name ?? fid);
+  for (const h of heritageRecords(c, db)) take(h.skillSubstitutions, h.id, h.name);
+  for (const inv of c.inventory ?? []) {
+    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    const item = db.items[inv.itemId];
+    take(item?.passiveEffects?.skillSubstitutions, inv.itemId, item?.name ?? inv.itemId);
+  }
+  return out;
+}
+
+/**
+ * The best UNCONDITIONAL stand-in for a skill, when it beats the skill's own number.
+ *
+ * Only an unconditional substitution may move the number a player reads off the sheet. Natural
+ * Medicine's is conditional and its own text says it "doesn't replace Medicine for uses of the skill
+ * other than Treat Wounds or for feat prerequisites" — showing its number on Medicine would be a lie.
+ * Those are surfaced beside the skill instead, with their condition.
+ */
+export function skillSubstituteFor(
+  c: Character,
+  key: ProficiencyKey,
+  db: ContentDatabase | undefined,
+  own: StatLine,
+): (ResolvedSkillSub & { modifier: number; rank: ProficiencyRank }) | undefined {
+  let best: (ResolvedSkillSub & { modifier: number; rank: ProficiencyRank }) | undefined;
+  for (const s of skillSubstitutions(c, db)) {
+    if (s.when || s.forSkill !== key) continue;
+    const alt = deriveSkill(c, s.use, db, true);
+    if (alt.modifier <= own.modifier) continue;
+    if (!best || alt.modifier > best.modifier) best = { ...s, modifier: alt.modifier, rank: alt.rank };
+  }
+  return best;
+}
+
+/** `noSubstitute` stops the substitution lookup recursing when it derives the stand-in skill. */
+export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatabase, noSubstitute = false): StatLine {
   const rank = c.proficiencies.skills[key] ?? 'untrained';
   const ability = skillAbility(key);
   // Item bonus: the best of an ABP skill item, a Monster-Parts refined skill item, a passive skill item
@@ -345,7 +410,16 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
   if (db && (ability === 'str' || ability === 'dex')) {
     modifier += deriveArmorCheckPenalty(c, db).value;
   }
-  return { rank, modifier };
+  const own: StatLine = { rank, modifier };
+  // "You can use your proficiency rank in Crafting for anything that requires a proficiency rank in
+  // Medicine." An UNCONDITIONAL stand-in that is better than the skill's own number IS the number
+  // the player rolls, so it is what the sheet shows — carrying `substitutedFrom` so the row and its
+  // breakdown can say which skill it is and which record allows it.
+  if (!noSubstitute) {
+    const sub = skillSubstituteFor(c, key, db, own);
+    if (sub) return { rank: sub.rank, modifier: sub.modifier, substitutedFrom: { skill: sub.use, source: sub.source } };
+  }
+  return own;
 }
 
 export function deriveClassDc(c: Character): StatLine & { dc: number } {
@@ -1456,6 +1530,23 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
   // surfaced it.
   for (const id of Object.values(c.inventor?.modifications ?? {})) {
     if (typeof id === 'string' && db.classFeatures[id]) out.add(id);
+  }
+  // "You gain the Sneak Attack class feature." A record handing over a CLASS FEATURE rather than a
+  // feat — the archetype route into another class's signature ability. `grantsFeats` could not say it
+  // (the target is not a feat) and nothing else wrote in here, so 14 records said this and delivered
+  // none of it. Resolved LAST, over everything owned so far, so a granted feature can itself grant
+  // one; the seen-set stops a cycle.
+  for (let pass = 0; pass < 4; pass++) {
+    const before = out.size;
+    const sources: (DefenseGrants | undefined)[] = [
+      ...(c.feats ?? []).map((f) => db.feats[f.featId]),
+      ...[...out].map((id) => db.classFeatures[id]),
+      ...heritageRecords(c, db),
+    ];
+    for (const src of sources) {
+      for (const id of src?.grantsClassFeatures ?? []) if (db.classFeatures[id]) out.add(id);
+    }
+    if (out.size === before) break;
   }
   // The chosen MYTHIC CALLING is a classFeatures record, but build.ts only pushes it to
   // `grantedFeatures`, which is a display list nothing derives from. So the calling was picked, shown

@@ -2155,6 +2155,20 @@ body {
   line-height: 1.4;
   cursor: help;
 }
+/* "via Crafting" — this skill's number is a stand-in from another skill (Chirurgeon). Muted rather
+   than alarming: it is a benefit, unlike the armour-check badge above, which is a penalty. */
+.skill-sub {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--app-muted);
+  background: color-mix(in srgb, var(--app-muted) 14%, transparent);
+  border-radius: 4px;
+  padding: 0 3px;
+  margin-left: 4px;
+  line-height: 1.4;
+  cursor: help;
+  white-space: nowrap;
+}
 .tile.has-note {
   cursor: help;
 }

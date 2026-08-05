@@ -64868,5 +64868,449 @@
     "value": [
       "armor-innovation-modification"
     ]
+  },
+  {
+    "category": "feats",
+    "id": "wilderness-spotter",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "survival",
+        "forSkill": "thievery",
+        "when": "to Disable the Device"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "reverse-engineer",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "crafting",
+        "forSkill": "thievery",
+        "when": "to disable-device skill=crafting or pick-a-lock skill=crafting"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "that-was-a-close-one-huh",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "deception",
+        "forSkill": "intimidation",
+        "when": "to attempt the check to Demoralize"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "social-camouflage",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "deception",
+        "forSkill": "diplomacy",
+        "when": "to Gather Information while in that settlement"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "mockingbirds-disarm",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "acrobatics",
+        "forSkill": "athletics",
+        "when": "for this check"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "versatile-performance",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "performance",
+        "forSkill": "diplomacy",
+        "when": "to make-an-impression and instead of Intimidation to demoralize"
+      },
+      {
+        "use": "performance",
+        "forSkill": "deception",
+        "when": "to impersonate"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "sly-disarm",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "thievery",
+        "forSkill": "athletics",
+        "when": "when you attempt a Disarm"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "natural-medicine",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "nature",
+        "forSkill": "medicine",
+        "when": "to Treat Wounds, including higher Nature proficiency letting you attempt more difficult chec"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "schooled-in-secrets",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "occultism",
+        "forSkill": "diplomacy",
+        "when": "to Gather Information about such groups and in place of Deception to Impersonate a member of"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "streetwise",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "society",
+        "forSkill": "diplomacy",
+        "when": "to Gather Information"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "zoophonic-communication",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "performance",
+        "forSkill": "nature",
+        "when": "to Command an Animal"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "tumbling-opportunist",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "acrobatics",
+        "forSkill": "athletics",
+        "when": "for this check"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "herbalist-dedication",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "nature",
+        "forSkill": "crafting",
+        "when": "to Craft alchemical consumables with the healing trait"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "expert-disassembly",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "crafting",
+        "forSkill": "thievery",
+        "when": "to Disable a Device or Pick a Lock"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "snarecrafter-dedication",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "survival",
+        "forSkill": "crafting",
+        "when": "for all prerequisites and functions of feats from this archetype"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "concealing-legerdemain",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "thievery",
+        "forSkill": "stealth",
+        "when": "for your checks and for the DC of an active searcher's Perception check"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "deceptive-worship",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "occultism",
+        "forSkill": "deception",
+        "when": "to Impersonate a typical worshipper of another faith or to Lie specifically to claim you are"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "eye-for-numbers",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "society",
+        "forSkill": "deception",
+        "when": "for the check"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "seven-changes-performance",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "performance",
+        "forSkill": "deception",
+        "when": "for the purposes of Impersonating someone"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "the-immortal-attains-the-summit",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "occultism",
+        "forSkill": "nature",
+        "when": "for these rituals"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "rise-my-creature",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "medicine",
+        "forSkill": "crafting",
+        "when": "to Repair your construct or rebuild it if it's been destroyed"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "verduran-shadow-dedication",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "survival",
+        "forSkill": "stealth",
+        "when": "when you Avoid Notice, Hide, Sneak, or would use Stealth to roll initiative"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "prophet-of-kalistrade-dedication",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "society",
+        "forSkill": "diplomacy",
+        "when": "to Make an Impression on merchants and traders"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "twilight-speaker-dedication",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "society",
+        "forSkill": "diplomacy",
+        "when": "when you attempt to Make an Impression on a non-elven intelligent humanoid creature"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "in-plain-sight",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "deception",
+        "forSkill": "stealth",
+        "when": "when using the Avoid Notice exploration activity in an area where someone with your role would"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "decisive-swimmer",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "athletics",
+        "forSkill": "diplomacy",
+        "when": "to Request"
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "chirurgeon",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "crafting",
+        "forSkill": "medicine"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "self-emptying-pocket",
+    "field": "skillSubstitutions",
+    "value": [
+      {
+        "use": "performance",
+        "forSkill": "diplomacy",
+        "when": "to Gather Information"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "shadow-sneak-attack",
+    "field": "grantsClassFeatures",
+    "value": [
+      "sneak-attack"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "butterflys-sting",
+    "field": "grantsClassFeatures",
+    "value": [
+      "sneak-attack"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "sneak-attacker",
+    "field": "grantsClassFeatures",
+    "value": [
+      "sneak-attack"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "uncanny-dodge",
+    "field": "grantsClassFeatures",
+    "value": [
+      "deny-advantage"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "investigator-dedication",
+    "field": "grantsClassFeatures",
+    "value": [
+      "on-the-case"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "finishing-precision",
+    "field": "grantsClassFeatures",
+    "value": [
+      "precise-strike"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "arcana-of-iron",
+    "field": "grantsClassFeatures",
+    "value": [
+      "weapon-expertise"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "spellshield",
+    "field": "grantsClassFeatures",
+    "value": [
+      "arcane-bond"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "tactics",
+    "field": "grantsClassFeatures",
+    "value": [
+      "expert-tactician"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "battle-creed",
+    "field": "grantsClassFeatures",
+    "value": [
+      "divine-defense"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "first-doctrine-warpriest",
+    "field": "grantsClassFeatures",
+    "value": [
+      "divine-defense"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "initial-creed",
+    "field": "grantsClassFeatures",
+    "value": [
+      "divine-defense"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "warpriest",
+    "field": "grantsClassFeatures",
+    "value": [
+      "divine-defense"
+    ]
   }
 ]

@@ -606,7 +606,16 @@ export function MainTab({
           {skillKeys.map((key) => {
             const d = deriveSkill(character, key, content);
             const penalized = acp.value < 0 && skillTakesArmorPenalty(key);
-            const note = penalized ? `${formatMod(acp.value)} armor check penalty (${acp.source})` : '';
+            // "You can use your proficiency rank in Crafting for anything that requires a proficiency
+            // rank in Medicine." When that stand-in beats the skill's own number it IS the number the
+            // player rolls, so the row shows it — and says which skill and which record, because a
+            // Medicine +8 on a character untrained in Medicine is otherwise inexplicable.
+            const subNote = d.substitutedFrom
+              ? `Uses ${skillLabel(d.substitutedFrom.skill)} instead — from ${d.substitutedFrom.source}`
+              : '';
+            const note = [penalized ? `${formatMod(acp.value)} armor check penalty (${acp.source})` : '', subNote]
+              .filter(Boolean)
+              .join(' · ');
             return (
               <div
                 className={'skill' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'skill', skill: key }, content)}
@@ -618,6 +627,11 @@ export function MainTab({
                 <span className="skill-name">
                   {skillLabel(key)}
                   {statHasSituational(character, { kind: 'skill', skill: key }, content) && <SituationalStar />}
+                  {d.substitutedFrom && (
+                    <span className="skill-sub" title={subNote}>
+                      via {skillLabel(d.substitutedFrom.skill)}
+                    </span>
+                  )}
                 </span>
                 {penalized && (
                   <span className="acp-badge" title={note}>
