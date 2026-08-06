@@ -1,4 +1,5 @@
 import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
+import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
 import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
@@ -1192,6 +1193,7 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
   if (!dualClass && !abp && !mythic) return null;
   const cls2 = build.classId2 ? content.classes[build.classId2] : undefined;
   const calling = build.mythicCalling ? content.classFeatures[build.mythicCalling] : undefined;
+  const destiny = build.mythicDestiny ? destinyDedications(content).find((f) => f.archetype === build.mythicDestiny) : undefined;
   return (
     <>
       {dualClass && (
@@ -1242,13 +1244,35 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
           />
           {calling?.description && <ChoiceDetails name={calling.name} flavor={calling.description} descRefs={calling.descRefs} />}
           <p className="setup-hint">
-            You gain a mythic feat slot at every even level (2–20), fillable with mythic feats; at level 12 you take a
-            mythic <strong>destiny</strong>. A pool of mythic points powers rerolls (Recall the Teachings) and mythic
-            abilities.
+            You gain a mythic feat slot at every even level (2&ndash;20). At 12th level that slot must buy a mythic{' '}
+            <strong>destiny</strong>, and you can only ever have one. Mythic points power rerolls (Rewrite Fate) and
+            mythic abilities; you start each session with 3.
           </p>
           <button type="button" className="mp-rules-link setup-rules-link" onClick={() => setMythicRulesOpen(true)}>
             <i className="ti ti-book-2" aria-hidden="true" /> Read the Mythic rules
           </button>
+        </SetupCard>
+      )}
+      {mythic && build.level >= DESTINY_LEVEL && (
+        <SetupCard icon="ti-star" label="Mythic Destiny">
+          <PopupSelect
+            title="Mythic Destiny"
+            value={build.mythicDestiny ?? ''}
+            onChange={(v) => actions.patch({ mythicDestiny: v || null })}
+            clearLabel="Clear"
+            options={destinyDedications(content).map((f) => ({
+              value: f.archetype as string,
+              label: f.name.replace(/ Dedication$/i, ''),
+              description: f.description,
+              descRefs: f.descRefs,
+            }))}
+          />
+          {destiny && <ChoiceDetails name={destiny.name.replace(/ Dedication$/i, '')} flavor={destiny.description} descRefs={destiny.descRefs} />}
+          <p className="setup-hint">
+            Chosen once, at 12th level, and you can only ever have one. Your 12th-level mythic slot offers destiny
+            dedications and nothing else; every mythic slot after it offers general mythic feats plus the feats of{' '}
+            <em>this</em> destiny.
+          </p>
         </SetupCard>
       )}
       {mythicRulesOpen && <MythicRules content={content} onClose={() => setMythicRulesOpen(false)} />}

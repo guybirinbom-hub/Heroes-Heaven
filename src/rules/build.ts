@@ -100,6 +100,10 @@ export interface BuildState {
   hideLegacy?: boolean;
   /** The chosen Mythic Calling (a [calling]-trait classFeature id), when Mythic is enabled. */
   mythicCalling?: string | null;
+  /** The chosen mythic DESTINY, as an archetype slug. An explicit pick rather than an inference from
+   *  whichever dedication is in the feat list, because the 12th-level slot must offer ONLY destinies
+   *  and every slot above it must exclude the other destinies' feats. */
+  mythicDestiny?: string | null;
   /** Dual Class variant: the second class + its subclass. */
   classId2?: string | null;
   subclassId2?: string | null;
@@ -3943,6 +3947,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.kingmakerEnabled ? { kingmakerEnabled: true } : {}),
     ...(build.hideLegacy ? { hideLegacy: true } : {}),
     ...(build.mythicEnabled && build.mythicCalling ? { mythicCalling: build.mythicCalling } : {}),
+    ...(build.mythicEnabled && build.mythicDestiny ? { mythicDestiny: build.mythicDestiny } : {}),
+    ...(build.mythicEnabled && build.mythicDestiny ? { mythicDestiny: build.mythicDestiny } : {}),
     ...(grantedFeatures.length ? { grantedFeatures } : {}),
     ...(naturalAttacks.length ? { naturalAttacks } : {}),
     ...(build.variantRules?.dualClass && build.classId2 ? { classId2: build.classId2, subclassId2: build.subclassId2 ?? null } : {}),
@@ -4179,6 +4185,8 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   if (c.campaignIds?.length) b.campaignIds = [...c.campaignIds];
   if (c.mythicEnabled) b.mythicEnabled = true;
   if (c.mythicCalling) b.mythicCalling = c.mythicCalling;
+  if (c.mythicDestiny) b.mythicDestiny = c.mythicDestiny;
+  if (c.mythicDestiny) b.mythicDestiny = c.mythicDestiny;
   if (c.kingmakerEnabled) b.kingmakerEnabled = true;
   if (c.naturalAttacks?.length) {
     // Keep only user/WG-imported attacks in the build — feat/feature-granted ones are re-derived on

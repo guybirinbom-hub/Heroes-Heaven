@@ -1519,7 +1519,14 @@ export function rest(
     damage,
     tempHp: 0,
     focusUsed: 0,
-    // Mythic points are a daily resource (unlike session-based hero points) — refill on rest.
+    // Mythic points are a SESSION resource, not a daily one — the comment here used to say the
+    // opposite. "Mythic Points last for only a single session… Each mythic character starts the
+    // session with 3" (War of Immortals p.76), and the printed ways to regain them are slaying a
+    // mythic foe, completing a mythic deed and following your Calling's edicts — never resting.
+    //
+    // Refilled here anyway, because Rest is the only session boundary this app has and a player who
+    // rests has almost certainly ended a session. The pips stay clickable for the mid-session
+    // regains, and the rail states the real rule so the app is not teaching a wrong one.
     mythicPoints: MAX_MYTHIC_POINTS,
     expendedSlots: {},
     slotsUsed: {},

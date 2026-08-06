@@ -2984,6 +2984,8 @@ export interface Character {
   hideLegacy?: boolean;
   /** The chosen Mythic Calling (a [calling]-trait classFeature id). */
   mythicCalling?: string | null;
+  /** The chosen mythic destiny, as an archetype slug (War of Immortals: one destiny, taken at 12). */
+  mythicDestiny?: string | null;
   /** Dual Class: the second class id + its subclass (variant rule). */
   classId2?: string | null;
   subclassId2?: string | null;

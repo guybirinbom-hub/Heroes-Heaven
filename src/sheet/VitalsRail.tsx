@@ -896,15 +896,20 @@ export function VitalsRail({
         </div>
       </section>
   ) : null;
-  // Mythic (War of Immortals): the mythic-points pool (spend 1 to reroll a d20 — Recall the Teachings)
+  // Mythic (War of Immortals): the mythic-points pool (spend 1 to reroll a check or save — Rewrite Fate)
   // plus at-a-glance chips for the chosen Calling and Destiny (the L12 dedication the character took),
   // and a shortcut into the in-app Mythic rules reference. Only shown for mythic characters.
   const mythicCalling =
     character.mythicEnabled && character.mythicCalling ? content.classFeatures[character.mythicCalling] : undefined;
+  // The destiny is an explicit choice (build.mythicDestiny). Characters built before that existed
+  // fall back to the old inference — whichever destiny dedication is in their feat list — so an
+  // existing sheet keeps showing its destiny without being re-edited.
   const mythicDestiny = character.mythicEnabled
     ? (() => {
+        const groups = mythicDestinies(content);
+        if (character.mythicDestiny) return groups.find((g) => g.slug === character.mythicDestiny);
         const taken = new Set(character.feats.map((f) => f.featId));
-        return mythicDestinies(content).find((g) => g.dedication && taken.has(g.dedication.id));
+        return groups.find((g) => g.dedication && taken.has(g.dedication.id));
       })()
     : undefined;
   cards.mythic = character.mythicEnabled ? (
@@ -959,7 +964,11 @@ export function VitalsRail({
             <i className="ti ti-book-2" aria-hidden="true" /> Rules
           </button>
         </div>
-        <p className="mythic-note">Spend 1 point to reroll a d20 (Recall the Teachings). Refills at daily preparations.</p>
+        <p className="mythic-note">
+          Spend 1 point to reroll a failed skill check or save at mythic proficiency (Rewrite Fate). Mythic points last
+          one session: you start each with 3. Regain 2 for slaying a mythic foe, 3 for a mythic deed, 1 for following
+          your Calling&rsquo;s edicts.
+        </p>
       </section>
   ) : null;
   cards.conditions = (

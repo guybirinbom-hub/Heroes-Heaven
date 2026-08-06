@@ -12,6 +12,7 @@
 import type { BuildState } from './build';
 import { backgroundGrantedFeats, kineticistElements, resolveBackground } from './build';
 import { maxTakes } from './featGrants';
+import { mythicSlotAllows } from './mythic';
 import type { ContentDatabase, Feat, FeatCategory } from './types';
 
 export interface FeatSlotRef {
@@ -48,8 +49,16 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     // Free Archetype slot: any archetype feat (these are stored as class-category feats carrying the
     // 'archetype' trait, so match on the trait rather than the category).
     if (p.category === 'archetype') return f.traits.includes('archetype');
-    // Mythic slot: any mythic-trait feat (callings + mythic destiny feats) at or below this level.
-    if (p.category === 'mythic') return f.traits.includes('mythic');
+    /*
+     * Mythic slot. NOT simply "any mythic-trait feat", which broke the printed rule three ways:
+     *   - the 12th-level slot MUST buy a destiny dedication ("they must use their extra feat to take
+     *     the 12th-level destiny feat for a mythic destiny"), and offered every mythic feat instead;
+     *   - a slot above 12 offered feats belonging to destinies the character does not have, so one
+     *     could accumulate a second — "Characters can have only one mythic destiny";
+     *   - Mortal Herald, which its own rules page names as a destiny, ships with no `mythic` trait,
+     *     so the 14th destiny was unreachable from the one slot the rules say must buy it.
+     */
+    if (p.category === 'mythic') return mythicSlotAllows(f, p.level, build.mythicDestiny, content);
     /*
      * Fighter Combat Flexibility (L9) / Improved Flexibility (L15) / Ultimate Flexibility (L20).
      *
