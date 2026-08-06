@@ -522,6 +522,18 @@ export interface DefenseGrants {
    * granted no On the Case, and Sneak Attacker granted no sneak attack dice.
    */
   grantsClassFeatures?: string[];
+  /**
+   * A record that grants Sneak Attack with its OWN, NON-SCALING damage.
+   *
+   * Three feats hand over the class feature and then immediately cap it — "You don't increase the
+   * number of dice as you gain levels", "1d6 regardless of your level", "1d4, increasing to 1d6 at
+   * 6th level". Reading only `grantsClassFeatures` gives them the ROGUE's progression, so a
+   * 17th-level fighter with Butterfly's Sting rolled 4d6 for a feat that never leaves 1d6.
+   *
+   * Sneak attack from multiple sources is not cumulative, so the BEST applies rather than the sum —
+   * a real rogue's scaling always wins over one of these.
+   */
+  precisionDice?: { dice: number; die: string; upgradeAt?: { level: number; die: string } };
   /** Number of free-text Lore skills a HERITAGE grants the player to choose (Half Moon Sarangay: 2;
    *  Born of Item: 1). Typed subjects live in BuildState.heritageLore and become trained Lores. */
   loreChoices?: number;
@@ -913,6 +925,18 @@ export interface Heritage extends ContentBase, DefenseGrants {
   /** The owning ancestry, or null for a versatile heritage (any ancestry). */
   ancestryId: string | null;
   versatile: boolean;
+  /**
+   * Extra traits an ANCESTRY FEAT SLOT will accept because of this heritage — "you can select elf,
+   * half-elf, and human feats whenever you gain an ancestry feat".
+   *
+   * The slot filter already takes your own ancestry's feats and, for a versatile heritage, the
+   * heritage's own; a heritage that opens a THIRD ancestry's list had nowhere to say so.
+   *
+   * Only traits that actually ship on feats belong here. `half-elf`, `half-orc` and `geniekin` are
+   * each carried by ZERO feats in this data — writing them would widen the pool by nothing while
+   * recording the gap as closed.
+   */
+  extraAncestryFeatTraits?: string[];
   /** Grants a level-1 general feat of the player's choice (Versatile Human). The pick lives in
    *  BuildState.heritageFeatId. */
   grantsGeneralFeat?: boolean;

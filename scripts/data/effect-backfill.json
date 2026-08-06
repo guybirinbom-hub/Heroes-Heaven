@@ -65495,5 +65495,52 @@
     "id": "verduran-city-folk",
     "field": "grantedFeatId",
     "value": "streetwise"
+  },
+  {
+    "category": "feats",
+    "id": "butterflys-sting",
+    "field": "precisionDice",
+    "value": {
+      "dice": 1,
+      "die": "d6"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "shadow-sneak-attack",
+    "field": "precisionDice",
+    "value": {
+      "dice": 1,
+      "die": "d6"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "sneak-attacker",
+    "field": "precisionDice",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "upgradeAt": {
+        "level": 6,
+        "die": "d6"
+      }
+    }
+  },
+  {
+    "category": "heritages",
+    "id": "aon-half-elf",
+    "field": "extraAncestryFeatTraits",
+    "value": [
+      "human"
+    ]
+  },
+  {
+    "category": "heritages",
+    "id": "aon-half-orc",
+    "field": "extraAncestryFeatTraits",
+    "value": [
+      "human"
+    ]
   }
 ]

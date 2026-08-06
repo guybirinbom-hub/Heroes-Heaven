@@ -1851,8 +1851,34 @@ function strikePrecisionRiders(
         ((strike.category === 'martial' || strike.category === 'advanced') && faces <= 6));
     const qualifies = strike.ranged ? !thrown || agileOrFinesse : agileOrFinesse || !!strike.unarmed || ruffian;
     if (qualifies) {
-      const dice = 1 + [5, 11, 17].filter((l) => c.level >= l).length;
-      out.push({ text: `${dice}d6 precision`, note: 'sneak attack when target is off-guard' });
+      // WHERE the feature came from decides the damage. A class that grants Sneak Attack natively
+      // scales it 1d6 → 4d6; the three FEATS that hand it over each cap their own dice ("You don't
+      // increase the number of dice as you gain levels"), and reading only the grant gave a
+      // 17th-level fighter with Butterfly's Sting the rogue's 4d6.
+      const nativeCls = c.classId ? db.classes[c.classId] : undefined;
+      const nativeCls2 = c.classId2 ? db.classes[c.classId2] : undefined;
+      const native = [nativeCls, nativeCls2].some((k) =>
+        (k?.features ?? []).some((f) => f.featureId === 'sneak-attack' && f.level <= c.level),
+      );
+      let dice = 0;
+      let die = 'd6';
+      if (native) {
+        dice = 1 + [5, 11, 17].filter((l) => c.level >= l).length;
+      } else {
+        // Not cumulative across sources — the best one applies, never the sum.
+        for (const f of c.feats) {
+          const p = db.feats[f.featId]?.precisionDice;
+          if (!p) continue;
+          const d = p.upgradeAt && c.level >= p.upgradeAt.level ? p.upgradeAt.die : p.die;
+          if (p.dice > dice || (p.dice === dice && Number(d.slice(1)) > Number(die.slice(1)))) {
+            dice = p.dice;
+            die = d;
+          }
+        }
+        // A grant with no stated dice falls back to the base 1d6 rather than vanishing.
+        if (!dice) dice = 1;
+      }
+      out.push({ text: `${dice}${die} precision`, note: 'sneak attack when target is off-guard' });
     }
   }
   // Ranger Precision hunter's edge applies to ANY Strike vs your hunted prey (no weapon restriction),

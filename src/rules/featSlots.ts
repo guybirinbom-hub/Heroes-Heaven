@@ -60,7 +60,12 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     // file did not contain the word "heritage" at all.
     if (p.category === 'ancestry' && build.ancestryId) {
       const her = build.heritageId ? content.heritages[build.heritageId] : undefined;
-      const ok = f.traits.includes(build.ancestryId) || (her?.versatile && f.traits.includes(her.id));
+      const ok =
+        f.traits.includes(build.ancestryId) ||
+        (her?.versatile && f.traits.includes(her.id)) ||
+        // …and a heritage that opens ANOTHER ancestry's list: "you can select elf, half-elf, and
+        // human feats whenever you gain an ancestry feat" (half-elf, half-orc).
+        (her?.extraAncestryFeatTraits ?? []).some((t) => f.traits.includes(t));
       if (!ok) return false;
     }
     // Class slots take your class's feats OR any archetype feat (multiclass/archetypes). Dual Class
