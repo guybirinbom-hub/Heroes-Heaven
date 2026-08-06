@@ -34,7 +34,9 @@ describe('consumable modes: the data', () => {
     // +2 for iron wine, the last item in the batch-2 deferred-toggle pile: one mode for the cup
     // (+1d4 fire on unarmed attacks for 10 minutes) and a SEPARATE one for a second cup in a day,
     // which is a fire weakness lasting past the night — hence its own `survivesRest` entry.
-    expect(itemModes().length).toBe(331);
+    // +1 for the Candle of Invocation, whose two restricted spell slots are a mode rather than the
+    // item's own spellSlotBonus: that field only fires for INVESTED items, and a candle is lit.
+    expect(itemModes().length).toBe(332);
   });
 
   it('every item mode points at an item that actually exists', () => {

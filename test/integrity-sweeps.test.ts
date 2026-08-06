@@ -135,6 +135,25 @@ describe('a data field nothing reads', () => {
   });
 });
 
+describe('content that a data regen would silently delete', () => {
+  it('every mode in core.json exists in a source file', () => {
+    // `npm run data` carries hand-authored buckets from the FROZEN Foundry backup, which has no modes
+    // at all. Anything living only in core.json is deleted by the next regen and nothing says so: all
+    // 428 modes vanished exactly that way, and fourteen of them had no source file to come back from.
+    const core = JSON.parse(readFileSync('public/core.json', 'utf8')) as { modes?: Record<string, unknown> };
+    const consumable = JSON.parse(readFileSync('scripts/data/consumable-modes.json', 'utf8')) as { id: string }[];
+    const toggle = JSON.parse(readFileSync('scripts/data/toggle-modes.json', 'utf8')) as Record<string, unknown>;
+    const sourced = new Set([...consumable.map((m) => m.id), ...Object.keys(toggle)]);
+    expect(Object.keys(core.modes ?? {}).filter((id) => !sourced.has(id))).toEqual([]);
+  });
+
+  it('…and the shipped bucket is not empty', () => {
+    // The failure mode above is silent, so assert the floor too: a regen that wipes the bucket leaves
+    // every toggle, consumable and IWR-granting mode gone with no other symptom.
+    expect(Object.keys(db.modes ?? {}).length).toBeGreaterThan(400);
+  });
+});
+
 describe('the character still builds', () => {
   it('every class builds at level 20 without throwing', () => {
     for (const clsId of Object.keys(db.classes)) {

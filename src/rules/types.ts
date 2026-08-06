@@ -742,6 +742,69 @@ export interface SpellSlotBonus {
    *  ONLY: the engine does not police what goes into a slot, and pretending otherwise would be worse
    *  than showing the sentence. */
   restriction?: string;
+  /**
+   * Slots that are genuinely RESTRICTED — held apart from the caster's own, with their own picker.
+   *
+   * `restriction` above is a sentence printed on ordinary slots; this is the real thing, for the
+   * handful of records whose extra slots are useless outside a named set. Writing those as ordinary
+   * slots over-grants badly: Conscious Spell Specialization shipped as four plain slots plus a
+   * warning, which handed a 14th-level psychic four unrestricted casts a day it does not have.
+   */
+  restricted?: RestrictedSlotGrant;
+}
+
+/** The data-side description of a restricted extra-slot grant. Resolved into
+ *  `SpellcastingEntry.restrictedSlots` — one object per actual slot — at build time. */
+export interface RestrictedSlotGrant {
+  /** Short name for the group header ("Creed slots"). */
+  label: string;
+  /** The printed sentence, shown on each slot. */
+  note?: string;
+  /** Slots at fixed ranks. */
+  byRank?: Record<string, number>;
+  /** Ranks that ADD later — Conscious Spell Specialization's "at 18th level, you also gain an
+   *  additional 5th-rank spell slot, with the same restrictions". */
+  byRankAt?: { level: number; byRank: Record<string, number> }[];
+  /**
+   * …whereas these ranks MOVE with level rather than accumulating. Creed Magic's two slots are 2nd
+   * rank, then 3rd at 10th and 4th at 14th — it never has six. The highest entry reached wins
+   * outright, while its `addSpells` accumulate: the slot count stays at two but the allowed list
+   * grows. Kept apart from `byRankAt` because getting the two confused is exactly how a record ends
+   * up granting three times the slots it prints.
+   */
+  ladder?: { level: number; byRank: Record<string, number>; addSpells?: string[] }[];
+  /** N slots at HALF the caster's highest rank, rounded down — a Candle of Invocation ("4th-rank
+   *  slots if the caster can cast 8th-rank spells"). Relative to the caster, so byRank can't say it. */
+  halfHighest?: number;
+  /** N slots whose rank the player chooses at daily preparations, from every rank up to
+   *  `belowHighest` below their highest — Sin Reservoir's "one slot of any level up to two below". */
+  rankChoice?: { count: number; belowHighest: number };
+  /** Only these spells may fill the slots. */
+  spells?: string[];
+  /** …or resolve the allowed set from the character: `subclass-granted` is whatever the subclass put
+   *  in `grantedRepertoire` (a psychic's conscious mind). Omit both when the restriction is prose the
+   *  engine cannot check — a wizard's curriculum lives only in its school's description text, and
+   *  that text is one of the ~829 AoN records with unsubstituted templates and dropped spell names. */
+  from?: 'subclass-granted';
+}
+
+/** One restricted slot on a built character. */
+export interface RestrictedSlot {
+  /** Stable play-state key. Derived from the grant's position, never from the slot's position in a
+   *  filtered list, so adding a second group cannot re-point the first one's saved picks. */
+  id: string;
+  label: string;
+  note?: string;
+  rank: number;
+  /** Ranks the player may move this slot to at daily preparations (Sin Reservoir). */
+  rankOptions?: number[];
+  /** Only these spells may fill it. Absent = the restriction is prose only. */
+  allowed?: string[];
+  spellId: string | null;
+  expended: boolean;
+  /** The entry casts spontaneously, so nothing is prepared here — the slot is one extra cast drawn
+   *  from `allowed` (or from the repertoire when the restriction is prose). */
+  spontaneous?: boolean;
 }
 
 /** A concrete effect an EffectChoice option confers when picked. A subset of the effect lanes the
@@ -2112,6 +2175,16 @@ export interface ModeDef {
    * so a temporary source and a permanent one produce the same line in the strike breakdown.
    */
   strikeDamage?: StrikeDamageRider[];
+  /**
+   * Restricted spell slots the mode grants while it is on — a lit Candle of Invocation's "two
+   * additional spell slots, each at half the highest spell slot you possess".
+   *
+   * A mode rather than the item's own `spellSlotBonus`, because that field only fires for INVESTED
+   * items and a candle is a consumable you light. Only the `restricted` half is honoured here:
+   * plain extra slots would have to renumber the prepared arrays that play state is keyed against,
+   * and no record needs that.
+   */
+  spellSlotBonus?: SpellSlotBonus;
   /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
    *  universal (every character on this device). Catalog/predefined modes never set this. */
   charId?: string;
@@ -2613,6 +2686,10 @@ export interface SpellcastingEntry {
   grantedRepertoire?: Record<number, string[]>;
   /** Slot pool per rank (used by spontaneous; prepared derives from `prepared`). */
   slots?: Record<number, { max: number; used: number }>;
+  /** Extra slots that may hold only certain spells. Deliberately NOT folded into `prepared`/`slots`:
+   *  the restriction is per-slot, so merging would let it leak onto ordinary slots, and the
+   *  spontaneous pool has no per-slot identity to hang it on at all. */
+  restrictedSlots?: RestrictedSlot[];
   /** Innate entries: spell ids already cast today (1/day each), overlaid from PlayState.innateUsed. */
   innateUsed?: string[];
   /** Innate entries: per-spell daily-uses override — 0 = at-will (a leveled at-will grant), N = N/day.

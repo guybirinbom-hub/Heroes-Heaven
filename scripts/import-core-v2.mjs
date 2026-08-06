@@ -17,6 +17,7 @@
 import { readFileSync, writeFileSync, readdirSync, copyFileSync, existsSync, mkdirSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
+import { applyBackfill } from './lib/apply-backfill.mjs';
 
 const DATA = 'C:/trying ai 2/hh-data-export/without-images/data';
 const OUT = 'public/core.json';
@@ -329,6 +330,22 @@ for (const bucket of AON_BUCKETS) {
 for (const bucket of CARRY_WHOLESALE) {
   if (cur[bucket]) { db[bucket] = cur[bucket]; stats[bucket] = { total: Object.keys(cur[bucket]).length, carried: true }; }
 }
+// MODES had the problem stances already solved, and worse: CARRY_WHOLESALE copies from REF, which is
+// the FROZEN Foundry backup, and that predates the modes work entirely — so every regen silently
+// emptied the bucket of all 428 item and toggle modes, and they were only ever coming back because
+// somebody re-ran an apply script afterwards. The two source files are authoritative and ship in
+// DIFFERENT shapes: consumable-modes.json is an ARRAY, toggle-modes.json an id-keyed OBJECT.
+{
+  const merged = {};
+  if (existsSync('scripts/data/consumable-modes.json'))
+    for (const m of JSON.parse(readFileSync('scripts/data/consumable-modes.json', 'utf8'))) merged[m.id] = m;
+  if (existsSync('scripts/data/toggle-modes.json'))
+    for (const [id, m] of Object.entries(JSON.parse(readFileSync('scripts/data/toggle-modes.json', 'utf8')))) merged[id] = { ...m, id };
+  if (Object.keys(merged).length) {
+    db.modes = { ...(db.modes ?? {}), ...merged };
+    stats.modes = { total: Object.keys(db.modes).length, carried: true };
+  }
+}
 // scripts/data/stances.json is the authoritative hand-authored stance/form table — merge it over the
 // carried bucket so new stances/forms (Ursine Avenger Form, …) land without hand-editing core.json.
 if (existsSync('scripts/data/stances.json')) {
@@ -396,39 +413,12 @@ if (existsSync('scripts/data/subclass-features.json')) {
 // (`id=apparition`), never by index — regeneration reorders options freely and an index would
 // silently land on a different apparition. A path that does not resolve is REPORTED, not skipped
 // quietly: a typo there produces a record that looks backfilled and isn't.
-function backfillTarget(root, path) {
-  let node = root;
-  for (const step of path) {
-    if (node == null) return null;
-    if (Array.isArray(node)) {
-      const [k, v] = String(step).split('=');
-      node = k === 'id' ? node.find((x) => x?.id === v) : null;
-    } else node = node[step];
-  }
-  return node && typeof node === 'object' ? node : null;
-}
-
 let backfillCount = 0;
-if (existsSync('scripts/data/effect-backfill.json')) {
-  const unresolved = [];
-  for (const fix of JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8'))) {
-    // `create` adds a whole record rather than patching a field. Needed where a record is filed in
-    // the wrong collection upstream: Way of the Spellshot's three deeds ship only as actions, so
-    // after a regeneration the way's deed links would point at nothing. Never overwrites.
-    if (fix.create) {
-      db[fix.category] ??= {};
-      if (!db[fix.category][fix.id]) { db[fix.category][fix.id] = fix.value; backfillCount++; }
-      continue;
-    }
-    const entry = db[fix.category]?.[fix.id];
-    if (!entry || !fix.field) continue;
-    const target = fix.path?.length ? backfillTarget(entry, fix.path) : entry;
-    if (!target) { unresolved.push(`${fix.category}/${fix.id}/${fix.path.join('/')}`); continue; }
-    target[fix.field] = fix.value;
-    backfillCount++;
-  }
+{
+  const { applied, unresolved } = applyBackfill(db);
+  backfillCount = applied;
   console.log(`[import-v2] applied ${backfillCount} audit effect backfills`);
-  if (unresolved.length) console.warn(`[import-v2] !! ${unresolved.length} backfill paths did not resolve:\n  ` + unresolved.join('\n  '));
+  if (unresolved.length) console.warn(`[import-v2] !! ${unresolved.length} backfill paths did not resolve:\n  ` + unresolved.join("\n  "));
 }
 
 // ------------------------------------------------------------------ per-bucket ast (lazy-loaded, Step 1)

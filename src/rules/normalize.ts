@@ -183,5 +183,6 @@ export function normalizePlay(input: unknown): PlayState {
     ...(p.preparedSpells !== undefined ? { preparedSpells: obj(p.preparedSpells, {}) } : {}),
     ...(p.repertoireSpells !== undefined ? { repertoireSpells: obj(p.repertoireSpells, {}) } : {}),
     ...(p.signatureSpells !== undefined ? { signatureSpells: obj(p.signatureSpells, {}) } : {}),
+    ...(p.restrictedSlotRanks !== undefined ? { restrictedSlotRanks: obj(p.restrictedSlotRanks, {}) } : {}),
   };
 }

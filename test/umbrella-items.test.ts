@@ -15,7 +15,9 @@ describe('umbrella detection', () => {
     // It rose from 439 when ruling B stripped the leaked flat bonus off `maestros-instrument` and
     // `camouflaging-chromatophores` — both are summary rows, and the bonus was the only thing that
     // had been sparing them. The two rulings agreeing on those records is the point, not a surprise.
-    expect(umbrellas().size).toBe(437);
+    // Back to 439 with `peachwood` and `peachwood-weapon`, two family summaries a fresher AoN export
+    // brought in — new content, not a change in what detection catches.
+    expect(umbrellas().size).toBe(439);
   });
 
   it('hides the summaries the owner named', () => {

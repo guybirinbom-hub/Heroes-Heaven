@@ -77,22 +77,22 @@ describe('spell-list widening', () => {
 });
 
 describe('extra spell slots', () => {
-  it('Conscious Spell Specialization adds ranks 1-4 at its own level', () => {
+  // Conscious Spell Specialization used to be asserted HERE as an ordinary slot grant, which is what
+  // it shipped as: four plain slots plus a warning that the app does not police the restriction. That
+  // over-grants, and "you can use these spell slots to cast only a spell granted by your conscious
+  // mind" is the whole feat. It is now a RESTRICTED grant, exercised in test/restricted-slots.test.ts.
+  // What still belongs here is the other half of the claim: it must not touch the ordinary pool.
+  it('Conscious Spell Specialization leaves the psychic’s own slots alone', () => {
     const base = mainSlots(build('psychic', 14));
     const withIt = mainSlots(build('psychic', 14, { featPicks: { '14:class': 'conscious-spell-specialization' } } as Partial<BuildState>));
-    for (const r of ['1', '2', '3', '4']) expect(withIt[r], `rank ${r}`).toBe(base[r] + 1);
-    for (const r of ['5', '6', '7']) expect(withIt[r], `rank ${r} must be untouched`).toBe(base[r]);
+    for (const r of ['1', '2', '3', '4', '5', '6', '7']) expect(withIt[r], `rank ${r} must be untouched`).toBe(base[r]);
   });
 
-  it('…and the 5th-rank slot ONLY from 18th level, as its text says', () => {
+  it('…and its restricted grant still carries the 18th-level step its text names', () => {
     const f = db.feats['conscious-spell-specialization'];
     expect(f.description).toMatch(/At 18th level/i);
-    expect(f.spellSlotBonus?.byRankAt).toEqual([{ level: 18, byRank: { 5: 1 } }]);
-    const at14 = mainSlots(build('psychic', 14, { featPicks: { '14:class': 'conscious-spell-specialization' } } as Partial<BuildState>));
-    const at18 = mainSlots(build('psychic', 18, { featPicks: { '14:class': 'conscious-spell-specialization' } } as Partial<BuildState>));
-    const base18 = mainSlots(build('psychic', 18));
-    expect(at14['5'], 'not before 18').toBe(mainSlots(build('psychic', 14))['5']);
-    expect(at18['5'], 'and one more at 18').toBe(base18['5'] + 1);
+    expect(f.spellSlotBonus?.restricted?.byRankAt).toEqual([{ level: 18, byRank: { 5: 1 } }]);
+    expect(f.spellSlotBonus?.restricted?.from).toBe('subclass-granted');
   });
 
   it('the restriction it cannot enforce is TOLD to the player, not faked', () => {

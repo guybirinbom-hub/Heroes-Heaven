@@ -38,6 +38,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
+import { applyBackfill } from './lib/apply-backfill.mjs';
 
 /** The PRISTINE AoN mirror (one JSON file per record). Facets + markdown come from here. */
 const SRC = process.env.AON_MIRROR || 'C:/wonderers guide/aon-2e-archive/data/by-category';
@@ -780,6 +781,17 @@ if (stats._ast) {
   for (const [b, s] of Object.entries(stats._ast)) console.log(`  ${pad(b, 16)} +${s.added} (total ${s.total})`);
 }
 if (notes.length) console.log(`\nnotes:\n  ${notes.join('\n  ')}`);
+
+// The records this script CREATES do not exist when import-core-v2 applies effect-backfill.json, so
+// their hand-authored patches are skipped there — and then overwritten here by a fresh parse. Four
+// were silently inert for exactly that reason (cecaelia-merfolk's climb Speed and land-Speed floor,
+// camouflage-tripkee's terrain choice, the Surveyors' alternate domains). Re-applying is safe: every
+// row is an absolute assignment, so applying it twice is applying it once.
+{
+  const { applied, unresolved } = applyBackfill(core);
+  console.log(`\nre-applied ${applied} effect backfills over the gap-imported records`);
+  if (unresolved.length) console.warn(`!! ${unresolved.length} backfill paths did not resolve:\n  ` + unresolved.join('\n  '));
+}
 
 if (DRY) {
   console.log('\n--dry-run: core.json NOT written');

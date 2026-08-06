@@ -15,151 +15,54 @@
       }
     ]
   },
-  "item-aged-arbor-wine": {
-    "id": "item-aged-arbor-wine",
-    "name": "Arbor Wine",
-    "fromItemId": "aged-arbor-wine",
-    "duration": "1 minute",
-    "note": "You have tremorsense at a range of 30 feet. Aged wine also makes vegetation around you writhe into difficult terrain until the start of your next turn — that is battlefield-side, not on your sheet.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "tremorsense",
-        "range": 30,
-        "acuity": "imprecise"
-      }
-    ]
-  },
-  "item-arbor-wine": {
-    "id": "item-arbor-wine",
-    "name": "Arbor Wine",
-    "fromItemId": "arbor-wine",
-    "duration": "1 minute",
-    "note": "For 1 minute after drinking a glass, you have tremorsense at a range of 30 feet.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "tremorsense",
-        "range": 30,
-        "acuity": "imprecise"
-      }
-    ]
-  },
-  "item-arctic-worm-chitin-shield": {
-    "id": "item-arctic-worm-chitin-shield",
-    "name": "Misty Chill",
-    "fromItemId": "arctic-worm-chitin-shield",
-    "duration": "until the beginning of your next turn",
-    "note": "Misty Chill: you Raise the Shield and gain resistance 5 to cold. Any creature that ends its turn adjacent to you takes 3d6 cold damage (basic save) — that damage lands on their sheet, not yours.",
+  "armored-resistance": {
+    "id": "armored-resistance",
+    "name": "Armored Resistance",
+    "feats": [
+      "armored-resistance"
+    ],
+    "duration": "while you Intercept an Attack in medium or heavy armor",
     "modifiers": [],
     "resistances": [
       {
-        "type": "cold",
-        "value": 5
+        "type": "physical",
+        "value": "floor(@actor.level/2)"
       }
-    ]
+    ],
+    "note": "Armored Resistance: this resistance applies ONLY to the damage you take in your ally's place with Intercept Attack, and only while you wear medium or heavy armor. Switch it on when you Intercept."
   },
-  "item-blood-booster-lesser": {
-    "id": "item-blood-booster-lesser",
-    "name": "Blood Booster",
-    "fromItemId": "blood-booster-lesser",
-    "duration": "10 minutes",
-    "note": "Resistance 5 to persistent bleed and persistent poison damage. You also lower the DC of any flat check to end persistent bleed or persistent poison damage as if you had received particularly appropriate aid (DC 10).",
+  "axe-climber": {
+    "id": "axe-climber",
+    "name": "Axe Climbing",
+    "feats": [
+      "axe-climber"
+    ],
+    "duration": "while climbing wood with an axe in each hand (or ice with two light picks)",
+    "modifiers": [],
+    "speeds": {
+      "climb": "floor(@actor.speed.land/2)"
+    },
+    "note": "Climbing a wooden surface with a Hatchet or Battle Axe in each hand (or ice with a Light Pick in each hand) gives you a climb Speed equal to half your Speed. You still need both legs free and can't use either axe in combat while climbing."
+  },
+  "battle-scars": {
+    "id": "battle-scars",
+    "name": "Battle Scars (vs. devils)",
+    "feats": [
+      "battle-scars"
+    ],
+    "duration": "while taking bludgeoning or slashing damage from devils or Chelaxian-allied creatures",
     "modifiers": [],
     "resistances": [
       {
-        "type": "persistent bleed",
-        "value": 5
+        "type": "bludgeoning",
+        "value": "floor(@actor.level/2)"
       },
       {
-        "type": "persistent poison",
-        "value": 5
-      }
-    ]
-  },
-  "item-bloodhound-mask-lesser": {
-    "id": "item-bloodhound-mask-lesser",
-    "name": "Bloodhound Mask",
-    "fromItemId": "bloodhound-mask-lesser",
-    "duration": "10 minutes",
-    "note": "Imprecise scent with a 15-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "item",
-        "target": "skill",
-        "detail": "survival",
-        "appliesWhen": "to Track a creature by its scent"
+        "type": "slashing",
+        "value": "floor(@actor.level/2)"
       }
     ],
-    "senses": [
-      {
-        "name": "scent",
-        "range": 15,
-        "acuity": "imprecise"
-      }
-    ]
-  },
-  "item-bloodhound-mask-moderate": {
-    "id": "item-bloodhound-mask-moderate",
-    "name": "Bloodhound Mask",
-    "fromItemId": "bloodhound-mask-moderate",
-    "duration": "1 hour",
-    "note": "Imprecise scent with a 30-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
-    "modifiers": [
-      {
-        "value": 2,
-        "type": "item",
-        "target": "skill",
-        "detail": "survival",
-        "appliesWhen": "to Track a creature by its scent"
-      }
-    ],
-    "senses": [
-      {
-        "name": "scent",
-        "range": 30,
-        "acuity": "imprecise"
-      }
-    ]
-  },
-  "item-bloodhound-mask-greater": {
-    "id": "item-bloodhound-mask-greater",
-    "name": "Bloodhound Mask",
-    "fromItemId": "bloodhound-mask-greater",
-    "duration": "8 hours",
-    "note": "Imprecise scent with a 60-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
-    "modifiers": [
-      {
-        "value": 3,
-        "type": "item",
-        "target": "skill",
-        "detail": "survival",
-        "appliesWhen": "to Track a creature by its scent"
-      }
-    ],
-    "senses": [
-      {
-        "name": "scent",
-        "range": 60,
-        "acuity": "imprecise"
-      }
-    ]
-  },
-  "item-bloodhound-olfactory-stimulators": {
-    "id": "item-bloodhound-olfactory-stimulators",
-    "name": "Olfactory Stimulators",
-    "fromItemId": "bloodhound-olfactory-stimulators",
-    "duration": "1 minute",
-    "note": "Activate (once per day): your stimulators twitch and gather more information, giving you imprecise scent with a range of 30 feet.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "scent",
-        "range": 30,
-        "acuity": "imprecise"
-      }
-    ]
+    "note": "Resistance to bludgeoning and slashing damage equal to half your level, but ONLY from devils and creatures allied with the Chelaxian government (the GM determines which creatures qualify). Leave the mode off against anything else."
   },
   "break-the-suns-legs": {
     "id": "break-the-suns-legs",
@@ -176,71 +79,53 @@
       }
     ]
   },
-  "item-chromatic-jellyfish-oil-lesser": {
-    "id": "item-chromatic-jellyfish-oil-lesser",
-    "name": "Jellyfish Oil",
-    "fromItemId": "chromatic-jellyfish-oil-lesser",
-    "duration": "10 minutes",
-    "note": "Resistance 5 to precision damage and to the extra damage from critical hits. You also ignore difficult terrain from tight spaces that don't force you to Squeeze, move 5 feet per round when you succeed at Squeeze (10 feet on a critical success), and can Crawl at half your Speed.",
+  "canopy-predator": {
+    "id": "canopy-predator",
+    "name": "Canopy Predator",
+    "feats": [
+      "canopy-predator"
+    ],
+    "duration": "while moving through trees, vines, and other foliage",
+    "modifiers": [],
+    "speeds": {
+      "climb": 15
+    },
+    "note": "A success on an Athletics check to Climb a tree or an Acrobatics check to Balance on a branch is a critical success instead, and you aren't off-guard while Climbing or Balancing on a tree."
+  },
+  "cat-inner-fire-stoked-flame": {
+    "id": "cat-inner-fire-stoked-flame",
+    "name": "Inner Fire (Stoked Flame Stance)",
+    "category": "Monk",
+    "feats": [
+      "inner-fire-monk",
+      "inner-fire-som"
+    ],
     "modifiers": [],
     "resistances": [
       {
-        "type": "precision",
-        "value": 5
+        "type": "cold",
+        "value": "floor(@actor.level/2)"
       },
       {
-        "type": "critical-hits",
-        "value": 5
+        "type": "fire",
+        "value": "floor(@actor.level/2)"
       }
-    ]
+    ],
+    "note": "While in Stoked Flame Stance: cold and fire resistance equal to half your level. Any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1), no more than once per turn."
   },
-  "item-clockwork-goggles": {
-    "id": "item-clockwork-goggles",
-    "name": "Clockwork Goggles",
-    "fromItemId": "clockwork-goggles",
-    "duration": "10 minutes",
-    "note": "The lenses cycle rapidly, granting you low-light vision.",
+  "cat-rope-runner": {
+    "id": "cat-rope-runner",
+    "name": "On Ropes (Rope Runner)",
+    "category": "Archetype",
+    "feats": [
+      "rope-runner"
+    ],
     "modifiers": [],
-    "senses": [
-      {
-        "name": "low-light-vision"
-      }
-    ]
-  },
-  "item-clockwork-goggles-greater": {
-    "id": "item-clockwork-goggles-greater",
-    "name": "Clockwork Goggles",
-    "fromItemId": "clockwork-goggles-greater",
-    "duration": "10 minutes",
-    "note": "The lenses cycle rapidly, granting you low-light vision and darkvision.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "low-light-vision"
-      },
-      {
-        "name": "darkvision"
-      }
-    ]
-  },
-  "item-clockwork-goggles-major": {
-    "id": "item-clockwork-goggles-major",
-    "name": "Clockwork Goggles",
-    "fromItemId": "clockwork-goggles-major",
-    "duration": "10 minutes",
-    "note": "Low-light vision, darkvision, and the effects of See the Unseen — invisible creatures are concealed to you rather than undetected.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "low-light-vision"
-      },
-      {
-        "name": "darkvision"
-      },
-      {
-        "name": "see-invisibility"
-      }
-    ]
+    "speeds": {
+      "climb": 15
+    },
+    "duration": "while climbing or balancing on a rope or similar object",
+    "note": "Rope Runner: a climb Speed of 15 feet, but only when climbing ropes and similar objects. You aren't off-guard while Climbing or Balancing on a rope or similar object, and a success on an Athletics check to Climb or an Acrobatics check to Balance is a critical success instead."
   },
   "close-formation": {
     "id": "close-formation",
@@ -347,6 +232,15 @@
         "value": "5+@actor.level"
       }
     ]
+  },
+  "curse-of-engulfing-flames": {
+    "id": "curse-of-engulfing-flames",
+    "name": "Engulfing Flames (cursebound)",
+    "feats": [
+      "curse-of-engulfing-flames"
+    ],
+    "modifiers": [],
+    "note": "While cursebound: persistent fire damage equal to your cursebound value, and your fire immunity and resistance are suppressed."
   },
   "curse-of-inclement-headwinds-1": {
     "id": "curse-of-inclement-headwinds-1",
@@ -736,6 +630,891 @@
       }
     ]
   },
+  "cyclonic-ascent": {
+    "id": "cyclonic-ascent",
+    "name": "Cyclonic Ascent",
+    "feats": [
+      "cyclonic-ascent"
+    ],
+    "duration": "10 minutes",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(30,@actor.speed.land)"
+    },
+    "note": "Fly Speed equal to your land Speed or 30 feet, whichever is greater, for 10 minutes. You can move upward without treating it as difficult terrain, and you can stay aloft at the end of your turn if you used an air impulse that turn. At 14th level you can also give up to five other creatures a fly Speed - that is ally-side, not on your sheet."
+  },
+  "deadeye": {
+    "id": "deadeye",
+    "name": "Deadeye",
+    "feats": [
+      "deadeye"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "see-invisibility"
+      }
+    ],
+    "note": "Until the start of your next turn you see invisible creatures and objects as silhouettes, making them merely concealed from you rather than undetected."
+  },
+  "defiant-banner": {
+    "id": "defiant-banner",
+    "name": "Defiant Banner",
+    "feats": [
+      "defiant-banner"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "bludgeoning",
+        "value": "@actor.abilities.int.mod"
+      },
+      {
+        "type": "piercing",
+        "value": "@actor.abilities.int.mod"
+      },
+      {
+        "type": "slashing",
+        "value": "@actor.abilities.int.mod"
+      }
+    ],
+    "note": "Resistance to bludgeoning, piercing and slashing equal to your Intelligence modifier until the start of your next turn. Allies inside your banner's aura gain the same resistance - that belongs on their sheets, not yours."
+  },
+  "deitys-protection": {
+    "id": "deitys-protection",
+    "name": "Deity's Protection",
+    "feats": [
+      "deitys-protection"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all",
+        "value": "floor((@actor.level+1)/2)"
+      }
+    ],
+    "note": "Turn this on after you cast a domain spell. The resistance equals the rank of the domain spell you cast; domain focus spells are automatically heightened to half your level rounded up."
+  },
+  "dire-form": {
+    "id": "dire-form",
+    "name": "Dire Form (hybrid shape)",
+    "feats": [
+      "dire-form"
+    ],
+    "duration": "while you are in your hybrid shape",
+    "modifiers": [
+      {
+        "target": "damage",
+        "type": "status",
+        "value": 2,
+        "appliesWhen": "melee damage rolls"
+      }
+    ],
+    "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
+  },
+  "dire-growth": {
+    "id": "dire-growth",
+    "name": "Dire Growth (animal shape)",
+    "feats": [
+      "dire-growth"
+    ],
+    "duration": "while you remain in your animal shape",
+    "modifiers": [
+      {
+        "target": "damage",
+        "type": "status",
+        "value": 2,
+        "appliesWhen": "melee damage rolls"
+      }
+    ],
+    "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
+  },
+  "dissolutions-sight": {
+    "id": "dissolutions-sight",
+    "name": "Dissolution's Sight",
+    "feats": [
+      "dissolutions-sight"
+    ],
+    "duration": "1 minute",
+    "note": "Once per hour. Accepting your inner darkness means no outer darkness can obscure your sight.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "greater-darkvision"
+      }
+    ]
+  },
+  "echoes-in-stone": {
+    "id": "echoes-in-stone",
+    "name": "Echoes in Stone",
+    "feats": [
+      "echoes-in-stone"
+    ],
+    "duration": "Until the start of your next turn",
+    "note": "Requires that you are standing on a stone or earthen surface.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 20,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "echolocation": {
+    "id": "echolocation",
+    "name": "Echolocation",
+    "feats": [
+      "echolocation"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "echolocation",
+        "range": 40,
+        "acuity": "precise"
+      }
+    ],
+    "note": "Switch this on after you Seek: until the start of your next turn you can use hearing as a precise sense with a range of 40 feet. You can also use this sense while you Search."
+  },
+  "electric-counter": {
+    "id": "electric-counter",
+    "name": "Electric Counter",
+    "feats": [
+      "electric-counter"
+    ],
+    "duration": "until the start of your next turn",
+    "note": "Reaction while in Wild Winds Stance when you would take damage; the resistance also applies to the triggering damage if it was electricity. If the trigger was a melee attack, the attacker takes 3d6 damage.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "electricity",
+        "value": "@actor.level"
+      }
+    ]
+  },
+  "energetic-meltdown": {
+    "id": "energetic-meltdown",
+    "name": "Moderate Backlash",
+    "feats": [
+      "energetic-meltdown"
+    ],
+    "duration": "Until your next daily preparations",
+    "survivesRest": true,
+    "note": "Moderate Backlash from Energetic Meltdown. You also lose immunity to that energy type, if you had it, until your next daily preparations. (Mild Backlash is only damage equal to your level; Severe Backlash is a burst dealing 1d6 per level, which you take in full without a save.)",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "your backlash's energy type",
+        "value": "floor(@actor.level/3)"
+      }
+    ]
+  },
+  "extract-vow-of-nonviolence": {
+    "id": "extract-vow-of-nonviolence",
+    "name": "Vow of Nonviolence",
+    "feats": [
+      "extract-vow-of-nonviolence"
+    ],
+    "duration": "10 minutes",
+    "note": "On a critical success the weapon swears not to hurt you; on a plain success the remaining duration also drops by 1 minute each time that weapon hits you. The resistance covers only damage dealt by that one weapon.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "damage from the weapon that swore the vow",
+        "value": "floor(@actor.level/2)"
+      }
+    ]
+  },
+  "exude-demonic-corruption": {
+    "id": "exude-demonic-corruption",
+    "name": "Demonic Corruption",
+    "feats": [
+      "exude-demonic-corruption"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "note": "Your melee Strikes deal an extra 1d6 poison damage, and each creature that hits you with a melee unarmed attack or otherwise touches you takes 1d6 poison damage. The poison damage is 2d6 at 14th level and 3d6 at 20th."
+  },
+  "eyes-that-see-eternity": {
+    "id": "eyes-that-see-eternity",
+    "name": "Eyes that See Eternity",
+    "feats": [
+      "eyes-that-see-eternity"
+    ],
+    "duration": "1 minute",
+    "senses": [
+      {
+        "name": "see-invisibility"
+      }
+    ],
+    "modifiers": [],
+    "note": "Costs 1 Mythic Point. You have the effects of Truesight (you see through illusions and magical darkness and can see invisible creatures) and roll all Perception checks with mythic proficiency."
+  },
+  "feat-aegis-for-the-innocent": {
+    "name": "Aegis for the Innocent",
+    "feats": [
+      "aegis-for-the-innocent"
+    ],
+    "category": "Ally effects",
+    "predefined": true,
+    "duration": "1 minute",
+    "note": "An ally inside your nimbus is barriered: they have +1 status AC and enemies in/entering it must save vs your class or spell DC. While it runs, your nimbus area is halved. Your own AC is unchanged.",
+    "modifiers": []
+  },
+  "feat-eternal-blessing": {
+    "id": "feat-eternal-blessing",
+    "name": "Eternal Blessing",
+    "feats": [
+      "eternal-blessing"
+    ],
+    "duration": "permanent — you may Dismiss it, and it returns automatically after 1 minute",
+    "modifiers": [
+      {
+        "target": "attack",
+        "type": "status",
+        "value": 1
+      }
+    ],
+    "note": "You are continuously surrounded by bless at a spell rank equal to half your level (rounded up), radius 15 feet (it cannot be increased): you and allies inside gain a +1 status bonus to attack rolls."
+  },
+  "feat-tweak-appearances": {
+    "name": "Tweak Appearances",
+    "feats": [
+      "tweak-appearances"
+    ],
+    "category": "Ally effects",
+    "predefined": true,
+    "duration": "until used on the target again, the situation they were prepared for ends, or they next change their outfit",
+    "note": "The target you tweaked has +1 item (up to +3 at master/legendary Crafting) to Diplomacy and Performance with the chosen audience. Your own checks are unchanged.",
+    "modifiers": []
+  },
+  "feral-senses": {
+    "id": "feral-senses",
+    "name": "Feral Senses",
+    "feats": [
+      "feral-senses"
+    ],
+    "duration": "while in your hybrid or animal shape",
+    "note": "Werecreature archetype: these senses last only while the hybrid or animal shape is up.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "low-light-vision"
+      },
+      {
+        "name": "scent",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "field-vial-mutagenist": {
+    "id": "field-vial-mutagenist",
+    "name": "Field Vial (Mutagenist)",
+    "feats": [
+      "advanced-vials-mutagenist"
+    ],
+    "duration": "the field vial's duration",
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Advanced Vials (Mutagenist): while a field vial you drank is in effect you have resistance to physical damage equal to half your level.",
+    "modifiers": []
+  },
+  "flamboyant-athlete": {
+    "id": "flamboyant-athlete",
+    "name": "Flamboyant Athlete (Panache)",
+    "feats": [
+      "flamboyant-athlete"
+    ],
+    "duration": "while you have panache",
+    "modifiers": [],
+    "speeds": {
+      "climb": "floor(@actor.speed.land/2)",
+      "swim": "floor(@actor.speed.land/2)"
+    },
+    "note": "While you have panache: climb and swim Speeds equal to half your land Speed; High Jump and Long Jump DCs decrease by 10 (doesn't combine with other DC reductions); a vertical Leap covers 5 feet and a horizontal Leap 15 feet (20 feet if your Speed is at least 30)."
+  },
+  "force-of-nature": {
+    "id": "force-of-nature",
+    "name": "Force of Nature (hybrid or animal shape)",
+    "feats": [
+      "force-of-nature"
+    ],
+    "duration": "while you are in your hybrid or animal shape",
+    "modifiers": [],
+    "note": "Fast healing 5. If you take damage from a silver weapon, the fast healing deactivates until the end of your next turn."
+  },
+  "form-a-flock": {
+    "id": "form-a-flock",
+    "name": "Form a Flock",
+    "feats": [
+      "form-a-flock"
+    ],
+    "duration": "up to 1 minute",
+    "note": "The flock also grants 25 temporary Hit Points and ends when they are gone, the minute elapses, or you Dismiss it. Enemies in the flock aura are dazzled, and you can take the Acrid Barrage action while it lasts.",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "area damage",
+        "value": 5
+      },
+      {
+        "type": "splash damage",
+        "value": 5
+      }
+    ]
+  },
+  "fresh-produce": {
+    "id": "fresh-produce",
+    "name": "Fresh Produce",
+    "feats": [
+      "fresh-produce"
+    ],
+    "duration": "10 minutes",
+    "note": "Only if you eat the produce yourself; you also feel full and can't eat another piece while it lasts. Resistance is 2 at 1st level and increases by 2 for every 2 levels.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "void",
+        "value": "2*floor((@actor.level+1)/2)"
+      }
+    ]
+  },
+  "gathering-moss": {
+    "id": "gathering-moss",
+    "name": "Gathering Moss",
+    "feats": [
+      "gathering-moss"
+    ],
+    "duration": "1 minute or until Tenacious Stance ends",
+    "note": "Fast healing equal to your level (triggered when you enter Tenacious Stance). Track the healing yourself — the app has no fast-healing lane.",
+    "modifiers": []
+  },
+  "geomancer-dedication": {
+    "id": "geomancer-dedication",
+    "name": "Underground Attunement",
+    "feats": [
+      "geomancer-dedication"
+    ],
+    "duration": "1 round",
+    "note": "Terrain attunement after expending a slot on an earth spell underground. The other self-affecting attunements aren't tracked here: Aquatic grants a swim Speed, Sky lets you Fly 10 feet, Mountain gives resistance to physical damage (except adamantine) equal to the spell's rank, and Plains gives temporary Hit Points equal to the spell's rank. Arctic, Desert, Forest and Swamp affect enemies only.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "darkvision"
+      },
+      {
+        "name": "tremorsense",
+        "range": 15,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "ghost-wrangler": {
+    "id": "ghost-wrangler",
+    "name": "Ghost Wrangler",
+    "feats": [
+      "ghost-wrangler"
+    ],
+    "duration": "until the start of your next turn",
+    "modifiers": [],
+    "note": "Your fists gain the effects of the ghost touch property rune, and you can make Strength-based skill checks against incorporeal creatures."
+  },
+  "giants-lunge": {
+    "id": "giants-lunge",
+    "name": "Giant's Lunge",
+    "feats": [
+      "giants-lunge"
+    ],
+    "duration": "until your rage ends",
+    "modifiers": [],
+    "note": "All your melee weapons and unarmed attacks have 10-foot reach. This doesn't increase the reach of an attack that already has the reach trait, but it does combine with size-based reach increases such as Giant's Stature."
+  },
+  "giants-stature": {
+    "id": "giants-stature",
+    "name": "Giant's Stature",
+    "feats": [
+      "giants-stature"
+    ],
+    "duration": "until you stop raging",
+    "modifiers": [],
+    "note": "You are Large: your reach increases by 5 feet and you are clumsy 1 until you stop raging. Your equipment grows with you. Requires that you were Medium or smaller."
+  },
+  "golden-body": {
+    "id": "golden-body",
+    "name": "Golden Body",
+    "feats": [
+      "golden-body"
+    ],
+    "duration": "always active",
+    "modifiers": [],
+    "note": "Fast healing 20: you regain 20 HP at the start of each of your turns as long as you have at least 1 HP. Track the healing yourself - the app has no fast-healing lane."
+  },
+  "grand-medics-mask": {
+    "id": "grand-medics-mask",
+    "name": "Grand Medic's Mask",
+    "feats": [
+      "grand-medics-mask"
+    ],
+    "duration": "always active",
+    "modifiers": [],
+    "note": "Fast healing 5. A lost limb or body part regrows within 1 day. Immediately after you Cast a non-cantrip Spell that targets only one creature, you can also give that creature temporary Hit Points equal to the spell's rank until the start of your next turn."
+  },
+  "grasping-reach": {
+    "id": "grasping-reach",
+    "name": "Extended Grasp",
+    "feats": [
+      "grasping-reach"
+    ],
+    "duration": "until you switch grips (Interact)",
+    "modifiers": [],
+    "note": "While held in your extended grasp, a two-handed melee weapon that lacks reach and deals at least 1d6 damage gains 10-foot reach, and its damage die is reduced by one step."
+  },
+  "greater-transformation": {
+    "id": "greater-transformation",
+    "name": "Oni Form (Greater)",
+    "feats": [
+      "greater-transformation"
+    ],
+    "duration": "10 minutes",
+    "modifiers": [],
+    "note": "Your Oni Form lasts 10 minutes with no need to Sustain it, and while in it your reach increases by 5 feet (on top of the form's usual Large size and clumsy 1)."
+  },
+  "guardians-armor": {
+    "id": "guardians-armor",
+    "name": "Guardian's Armor",
+    "feats": [
+      "guardians-armor"
+    ],
+    "duration": "while wearing medium or heavy armor",
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "1+floor(@actor.level/2)"
+      }
+    ],
+    "note": "While wearing medium or heavy armor you have resistance to physical damage equal to 1 + half your level. You can also rest normally in medium and heavy armor.",
+    "modifiers": []
+  },
+  "harden-flesh": {
+    "id": "harden-flesh",
+    "name": "Harden Flesh",
+    "feats": [
+      "harden-flesh"
+    ],
+    "duration": "until the beginning of your next turn",
+    "note": "Requires standing on earthen or stone ground. Resistance 3, increasing by 1 at 12th level and every 4 levels after, to a maximum of 6 at 20th.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical (except adamantine)",
+        "value": "min(6,3+floor((@actor.level-8)/4))"
+      }
+    ]
+  },
+  "hardwood-armor": {
+    "id": "hardwood-armor",
+    "name": "Hardwood Armor",
+    "feats": [
+      "hardwood-armor"
+    ],
+    "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
+    "modifiers": [],
+    "note": "Medium wooden armor that uses your highest armor proficiency: AC Bonus +3, Dex Cap +2, Check Penalty -2, Speed Penalty -5 ft, Strength +2, Bulk 1, group wood. Your real armor's bonuses, runes and magical abilities are suppressed (runes that could apply are replicated onto the hardwood). You may also form a wooden shield in a free hand and Shield Block with it even without that feat, and that hand still counts as free for impulses; the shield decays if broken or if it leaves your grasp. At every 3rd level its Hardness +1, HP +4, BT +2. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
+  },
+  "heavens-thunder": {
+    "id": "heavens-thunder",
+    "name": "Heaven's Thunder",
+    "feats": [
+      "heavens-thunder"
+    ],
+    "duration": "until the end of your next turn",
+    "modifiers": [],
+    "note": "Your unarmed attacks and any monk weapons you wield deal additional electricity damage and additional sonic damage, each equal to that attack's number of damage dice. Any creature that successfully Grapples you, or that you successfully Grapple, takes that damage immediately after the check (using your unarmed attack's damage dice). If you know the Ki Blast ki spell you may have it deal electricity or sonic instead of force while this is active."
+  },
+  "immortal-bear": {
+    "id": "immortal-bear",
+    "name": "Immortal Bear",
+    "feats": [
+      "immortal-bear"
+    ],
+    "duration": "while in Ursine Avenger Form",
+    "modifiers": [],
+    "note": "Fast healing 5 while you are in Ursine Avenger Form. Track the healing yourself - the app has no fast-healing lane."
+  },
+  "immortal-techniques": {
+    "id": "immortal-techniques",
+    "name": "Immortal Techniques",
+    "feats": [
+      "immortal-techniques"
+    ],
+    "duration": "until the start of your next turn",
+    "note": "The first time each round you use an action with both the monk and stance traits, you gain 20 temporary Hit Points. Enter them in the temporary HP box yourself.",
+    "modifiers": []
+  },
+  "inexorable-iron": {
+    "id": "inexorable-iron",
+    "name": "Inexorable Iron",
+    "feats": [
+      "inexorable-iron"
+    ],
+    "duration": "while in Arcane Cascade",
+    "modifiers": [],
+    "note": "Wielding a melee weapon in two hands: temporary HP equal to half your level (minimum 1) on entering Arcane Cascade and at the start of each of your turns in it."
+  },
+  "infused-with-belkzens-might": {
+    "id": "infused-with-belkzens-might",
+    "name": "Infused with Belkzen's Might",
+    "feats": [
+      "infused-with-belkzens-might"
+    ],
+    "duration": "until the end of your next turn",
+    "modifiers": [],
+    "note": "Infused with Belkzen's Might: expend one use of your storied skin's Living History. Your weapon and unarmed Strikes deal additional spirit damage equal to 1 plus half the number of Tattooed Historian feats you have (so 1 with one or two such feats, 2 with three or four, and so on)."
+  },
+  "item-abysium-chunk": {
+    "id": "item-abysium-chunk",
+    "name": "Carrying Abysium (Sickened 1)",
+    "fromItemId": "abysium-chunk",
+    "survivesRest": true,
+    "modifiers": [
+      {
+        "value": -1,
+        "type": "status",
+        "target": "all-checks"
+      }
+    ],
+    "note": "A creature carrying this standard-grade, light-Bulk abysium chunk is sickened 1 (a poison effect). Switch off when the chunk is not carried. The chunk also sheds dim light in a 10-foot radius.",
+    "duration": "While you carry it"
+  },
+  "item-abysium-ingot": {
+    "id": "item-abysium-ingot",
+    "name": "Carrying Abysium (Sickened 2)",
+    "fromItemId": "abysium-ingot",
+    "survivesRest": true,
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "status",
+        "target": "all-checks"
+      }
+    ],
+    "note": "A creature carrying this standard-grade, 1-Bulk abysium ingot is sickened 2 (a poison effect). Switch off when the ingot is not carried. It also sheds dim light in a 10-foot radius.",
+    "duration": "While you carry it"
+  },
+  "item-aged-arbor-wine": {
+    "id": "item-aged-arbor-wine",
+    "name": "Arbor Wine",
+    "fromItemId": "aged-arbor-wine",
+    "duration": "1 minute",
+    "note": "You have tremorsense at a range of 30 feet. Aged wine also makes vegetation around you writhe into difficult terrain until the start of your next turn — that is battlefield-side, not on your sheet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-arbor-wine": {
+    "id": "item-arbor-wine",
+    "name": "Arbor Wine",
+    "fromItemId": "arbor-wine",
+    "duration": "1 minute",
+    "note": "For 1 minute after drinking a glass, you have tremorsense at a range of 30 feet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-arctic-worm-chitin-shield": {
+    "id": "item-arctic-worm-chitin-shield",
+    "name": "Misty Chill",
+    "fromItemId": "arctic-worm-chitin-shield",
+    "duration": "until the beginning of your next turn",
+    "note": "Misty Chill: you Raise the Shield and gain resistance 5 to cold. Any creature that ends its turn adjacent to you takes 3d6 cold damage (basic save) — that damage lands on their sheet, not yours.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 5
+      }
+    ]
+  },
+  "item-azatas-grace": {
+    "id": "item-azatas-grace",
+    "name": "Azata's Grace",
+    "fromItemId": "azatas-grace",
+    "duration": "until Dismissed",
+    "survivesRest": true,
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "lawful",
+        "value": 10
+      }
+    ],
+    "note": "+50 maximum and current Hit Points while active. You also gain the effects of the righteous call gift without expending that gift's daily use. Dismissing it casts scintillating pattern (your allies are unaffected)."
+  },
+  "item-bioluminescent-stripes": {
+    "id": "item-bioluminescent-stripes",
+    "name": "Glowing Stripes",
+    "fromItemId": "bioluminescent-stripes",
+    "duration": "until you Dismiss the glow",
+    "note": "You shed bright light in a 20-foot radius and dim light for the next 20 feet, and you can't be undetected. Dismiss as a free action.",
+    "modifiers": [
+      {
+        "value": -4,
+        "type": "item",
+        "target": "skill",
+        "detail": "stealth",
+        "appliesWhen": "on Stealth checks to Hide and Sneak"
+      }
+    ]
+  },
+  "item-blessed-tattoo": {
+    "id": "item-blessed-tattoo",
+    "name": "Blessed Tattoo",
+    "fromItemId": "blessed-tattoo",
+    "duration": "1 minute",
+    "note": "Once per day; grants the effect of Protection (+1 status bonus to AC and saving throws). Can be activated as a reaction instead of a 2-action activity when a demon attacks you or you attempt a save against a demon's ability.",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "ac"
+      },
+      {
+        "value": 1,
+        "type": "status",
+        "target": "save"
+      }
+    ]
+  },
+  "item-blood-booster-lesser": {
+    "id": "item-blood-booster-lesser",
+    "name": "Blood Booster",
+    "fromItemId": "blood-booster-lesser",
+    "duration": "10 minutes",
+    "note": "Resistance 5 to persistent bleed and persistent poison damage. You also lower the DC of any flat check to end persistent bleed or persistent poison damage as if you had received particularly appropriate aid (DC 10).",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "persistent bleed",
+        "value": 5
+      },
+      {
+        "type": "persistent poison",
+        "value": 5
+      }
+    ]
+  },
+  "item-bloodhound-mask-greater": {
+    "id": "item-bloodhound-mask-greater",
+    "name": "Bloodhound Mask",
+    "fromItemId": "bloodhound-mask-greater",
+    "duration": "8 hours",
+    "note": "Imprecise scent with a 60-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+    "modifiers": [
+      {
+        "value": 3,
+        "type": "item",
+        "target": "skill",
+        "detail": "survival",
+        "appliesWhen": "to Track a creature by its scent"
+      }
+    ],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 60,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-bloodhound-mask-lesser": {
+    "id": "item-bloodhound-mask-lesser",
+    "name": "Bloodhound Mask",
+    "fromItemId": "bloodhound-mask-lesser",
+    "duration": "10 minutes",
+    "note": "Imprecise scent with a 15-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "item",
+        "target": "skill",
+        "detail": "survival",
+        "appliesWhen": "to Track a creature by its scent"
+      }
+    ],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 15,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-bloodhound-mask-moderate": {
+    "id": "item-bloodhound-mask-moderate",
+    "name": "Bloodhound Mask",
+    "fromItemId": "bloodhound-mask-moderate",
+    "duration": "1 hour",
+    "note": "Imprecise scent with a 30-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "item",
+        "target": "skill",
+        "detail": "survival",
+        "appliesWhen": "to Track a creature by its scent"
+      }
+    ],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-bloodhound-olfactory-stimulators": {
+    "id": "item-bloodhound-olfactory-stimulators",
+    "name": "Olfactory Stimulators",
+    "fromItemId": "bloodhound-olfactory-stimulators",
+    "duration": "1 minute",
+    "note": "Activate (once per day): your stimulators twitch and gather more information, giving you imprecise scent with a range of 30 feet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-chromatic-jellyfish-oil-lesser": {
+    "id": "item-chromatic-jellyfish-oil-lesser",
+    "name": "Jellyfish Oil",
+    "fromItemId": "chromatic-jellyfish-oil-lesser",
+    "duration": "10 minutes",
+    "note": "Resistance 5 to precision damage and to the extra damage from critical hits. You also ignore difficult terrain from tight spaces that don't force you to Squeeze, move 5 feet per round when you succeed at Squeeze (10 feet on a critical success), and can Crawl at half your Speed.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "precision",
+        "value": 5
+      },
+      {
+        "type": "critical-hits",
+        "value": 5
+      }
+    ]
+  },
+  "item-cloak-of-waves-clouds": {
+    "id": "item-cloak-of-waves-clouds",
+    "name": "Cut Air and Sea",
+    "fromItemId": "cloak-of-waves-clouds",
+    "duration": "until you next Activate the cloak",
+    "survivesRest": true,
+    "modifiers": [],
+    "speeds": {
+      "fly": 40
+    },
+    "note": "Feathers form: fly Speed 40 feet. Activating for the scale form instead gives a swim Speed of 60 feet and the ability to breathe underwater - leave this mode off and use the swim form at the table."
+  },
+  "item-clockwork-goggles": {
+    "id": "item-clockwork-goggles",
+    "name": "Clockwork Goggles",
+    "fromItemId": "clockwork-goggles",
+    "duration": "10 minutes",
+    "note": "The lenses cycle rapidly, granting you low-light vision.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "low-light-vision"
+      }
+    ]
+  },
+  "item-clockwork-goggles-greater": {
+    "id": "item-clockwork-goggles-greater",
+    "name": "Clockwork Goggles",
+    "fromItemId": "clockwork-goggles-greater",
+    "duration": "10 minutes",
+    "note": "The lenses cycle rapidly, granting you low-light vision and darkvision.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "low-light-vision"
+      },
+      {
+        "name": "darkvision"
+      }
+    ]
+  },
+  "item-clockwork-goggles-major": {
+    "id": "item-clockwork-goggles-major",
+    "name": "Clockwork Goggles",
+    "fromItemId": "clockwork-goggles-major",
+    "duration": "10 minutes",
+    "note": "Low-light vision, darkvision, and the effects of See the Unseen — invisible creatures are concealed to you rather than undetected.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "low-light-vision"
+      },
+      {
+        "name": "darkvision"
+      },
+      {
+        "name": "see-invisibility"
+      }
+    ]
+  },
+  "item-cursed-dreamstone": {
+    "id": "item-cursed-dreamstone",
+    "name": "Cursed Dreamstone",
+    "fromItemId": "cursed-dreamstone",
+    "duration": "as long as you possess the stone",
+    "survivesRest": true,
+    "note": "Switch this on only if you failed the save against the curse. You are also fatigued whenever you wake from sleep, natural or magical, and you gain no bonus from the dreamstone. On a critical failure you additionally get one degree worse on every saving throw against sleep effects.",
+    "modifiers": [
+      {
+        "target": "save",
+        "type": "item",
+        "value": -2,
+        "appliesWhen": "against sleep effects"
+      }
+    ]
+  },
+  "item-darkvision-elixir-greater": {
+    "id": "item-darkvision-elixir-greater",
+    "name": "Darkvision",
+    "fromItemId": "darkvision-elixir-greater",
+    "duration": "24 hours",
+    "survivesRest": true,
+    "note": "Your sight becomes sharper in darkness. Lasts a full day, so a night's rest doesn't end it.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "darkvision"
+      }
+    ]
+  },
   "item-darkvision-elixir-lesser": {
     "id": "item-darkvision-elixir-lesser",
     "name": "Darkvision",
@@ -755,20 +1534,6 @@
     "fromItemId": "darkvision-elixir-moderate",
     "duration": "1 hour",
     "note": "Your sight becomes sharper in darkness.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "darkvision"
-      }
-    ]
-  },
-  "item-darkvision-elixir-greater": {
-    "id": "item-darkvision-elixir-greater",
-    "name": "Darkvision",
-    "fromItemId": "darkvision-elixir-greater",
-    "duration": "24 hours",
-    "survivesRest": true,
-    "note": "Your sight becomes sharper in darkness. Lasts a full day, so a night's rest doesn't end it.",
     "modifiers": [],
     "senses": [
       {
@@ -828,21 +1593,6 @@
       }
     ]
   },
-  "dissolutions-sight": {
-    "id": "dissolutions-sight",
-    "name": "Dissolution's Sight",
-    "feats": [
-      "dissolutions-sight"
-    ],
-    "duration": "1 minute",
-    "note": "Once per hour. Accepting your inner darkness means no outer darkness can obscure your sight.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "greater-darkvision"
-      }
-    ]
-  },
   "item-draft-of-stellar-radiance": {
     "id": "item-draft-of-stellar-radiance",
     "name": "Stellar Radiance",
@@ -872,23 +1622,6 @@
       }
     ]
   },
-  "echoes-in-stone": {
-    "id": "echoes-in-stone",
-    "name": "Echoes in Stone",
-    "feats": [
-      "echoes-in-stone"
-    ],
-    "duration": "Until the start of your next turn",
-    "note": "Requires that you are standing on a stone or earthen surface.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "tremorsense",
-        "range": 20,
-        "acuity": "imprecise"
-      }
-    ]
-  },
   "item-elder-seed": {
     "id": "item-elder-seed",
     "name": "Elder Seed (Stage 1)",
@@ -914,22 +1647,155 @@
       }
     ]
   },
-  "energetic-meltdown": {
-    "id": "energetic-meltdown",
-    "name": "Moderate Backlash",
-    "feats": [
-      "energetic-meltdown"
-    ],
-    "duration": "Until your next daily preparations",
-    "survivesRest": true,
-    "note": "Moderate Backlash from Energetic Meltdown. You also lose immunity to that energy type, if you had it, until your next daily preparations. (Mild Backlash is only damage equal to your level; Severe Backlash is a burst dealing 1d6 per level, which you take in full without a save.)",
-    "modifiers": [],
-    "weaknesses": [
+  "item-emotion-surge-anger": {
+    "id": "item-emotion-surge-anger",
+    "name": "Emotion Surge (Anger)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
       {
-        "type": "your backlash's energy type",
-        "value": "floor(@actor.level/3)"
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "athletics"
       }
-    ]
+    ],
+    "note": "A surge from your relic grants +1 status to Athletics checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-awe": {
+    "id": "item-emotion-surge-awe",
+    "name": "Emotion Surge (Awe)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "performance"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Performance checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-dedication": {
+    "id": "item-emotion-surge-dedication",
+    "name": "Emotion Surge (Dedication)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "all-checks",
+        "appliesWhen": "to Recall Knowledge"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to checks to Recall Knowledge for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-fear": {
+    "id": "item-emotion-surge-fear",
+    "name": "Emotion Surge (Fear)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "stealth"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Stealth checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-hatred": {
+    "id": "item-emotion-surge-hatred",
+    "name": "Emotion Surge (Hatred)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "intimidation"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Intimidation checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-joy": {
+    "id": "item-emotion-surge-joy",
+    "name": "Emotion Surge (Joy)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "diplomacy"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Diplomacy checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-love": {
+    "id": "item-emotion-surge-love",
+    "name": "Emotion Surge (Love)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "medicine"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Medicine checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-misery": {
+    "id": "item-emotion-surge-misery",
+    "name": "Emotion Surge (Misery)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "survival"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Survival checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-pride": {
+    "id": "item-emotion-surge-pride",
+    "name": "Emotion Surge (Pride)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "society"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Society checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-remorse": {
+    "id": "item-emotion-surge-remorse",
+    "name": "Emotion Surge (Remorse)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "deception"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Deception checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
   },
   "item-energy-adaptive": {
     "id": "item-energy-adaptive",
@@ -946,45 +1812,13 @@
       }
     ]
   },
-  "item-energy-mutagen-lesser": {
-    "id": "item-energy-mutagen-lesser",
-    "name": "Energy Mutagen",
-    "fromItemId": "energy-mutagen-lesser",
-    "duration": "1 minute",
-    "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1 damage of the attuned type.",
+  "item-energy-breath-potion-greater": {
+    "id": "item-energy-breath-potion-greater",
+    "name": "Energy Breath (Greater)",
+    "fromItemId": "energy-breath-potion-greater",
+    "duration": "1 hour",
     "modifiers": [],
-    "resistances": [
-      {
-        "type": "the mutagen's attuned energy type",
-        "value": 5
-      }
-    ],
-    "weaknesses": [
-      {
-        "type": "each of the other three energy types",
-        "value": 5
-      }
-    ]
-  },
-  "item-energy-mutagen-moderate": {
-    "id": "item-energy-mutagen-moderate",
-    "name": "Energy Mutagen",
-    "fromItemId": "energy-mutagen-moderate",
-    "duration": "10 minutes",
-    "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1d4 damage of the attuned type.",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "the mutagen's attuned energy type",
-        "value": 10
-      }
-    ],
-    "weaknesses": [
-      {
-        "type": "each of the other three energy types",
-        "value": 5
-      }
-    ]
+    "note": "You have the Energy Breath action for 1 hour: 10d6 damage of the potion's energy type, basic save DC 37. Area/save by type — acid or electricity 30-foot line (Reflex), cold or fire 15-foot cone (Reflex), sonic 15-foot cone (Fortitude). After using it you can't do so again for 1d4 rounds."
   },
   "item-energy-mutagen-greater": {
     "id": "item-energy-mutagen-greater",
@@ -997,6 +1831,26 @@
       {
         "type": "the mutagen's attuned energy type",
         "value": 15
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "each of the other three energy types",
+        "value": 5
+      }
+    ]
+  },
+  "item-energy-mutagen-lesser": {
+    "id": "item-energy-mutagen-lesser",
+    "name": "Energy Mutagen",
+    "fromItemId": "energy-mutagen-lesser",
+    "duration": "1 minute",
+    "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1 damage of the attuned type.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "the mutagen's attuned energy type",
+        "value": 5
       }
     ],
     "weaknesses": [
@@ -1026,39 +1880,23 @@
       }
     ]
   },
-  "extract-vow-of-nonviolence": {
-    "id": "extract-vow-of-nonviolence",
-    "name": "Vow of Nonviolence",
-    "feats": [
-      "extract-vow-of-nonviolence"
-    ],
+  "item-energy-mutagen-moderate": {
+    "id": "item-energy-mutagen-moderate",
+    "name": "Energy Mutagen",
+    "fromItemId": "energy-mutagen-moderate",
     "duration": "10 minutes",
-    "note": "On a critical success the weapon swears not to hurt you; on a plain success the remaining duration also drops by 1 minute each time that weapon hits you. The resistance covers only damage dealt by that one weapon.",
+    "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1d4 damage of the attuned type.",
     "modifiers": [],
     "resistances": [
       {
-        "type": "damage from the weapon that swore the vow",
-        "value": "floor(@actor.level/2)"
+        "type": "the mutagen's attuned energy type",
+        "value": 10
       }
-    ]
-  },
-  "feral-senses": {
-    "id": "feral-senses",
-    "name": "Feral Senses",
-    "feats": [
-      "feral-senses"
     ],
-    "duration": "while in your hybrid or animal shape",
-    "note": "Werecreature archetype: these senses last only while the hybrid or animal shape is up.",
-    "modifiers": [],
-    "senses": [
+    "weaknesses": [
       {
-        "name": "low-light-vision"
-      },
-      {
-        "name": "scent",
-        "range": 30,
-        "acuity": "imprecise"
+        "type": "each of the other three energy types",
+        "value": 5
       }
     ]
   },
@@ -1079,6 +1917,17 @@
         "value": 5
       }
     ]
+  },
+  "item-flying-broomstick": {
+    "id": "item-flying-broomstick",
+    "name": "Riding the Flying Broomstick",
+    "fromItemId": "flying-broomstick",
+    "duration": "while riding the broom",
+    "modifiers": [],
+    "speeds": {
+      "fly": 20
+    },
+    "note": "Guiding the broom with one hand gives a fly Speed of 20 feet; it can carry one passenger besides you. Activate—Lift Off (2 actions, concentrate, manipulate) toward a named destination on the same plane raises the fly Speed to 40 feet for up to 4 hours (about 16 miles) or until you Dismiss it — raise the speed to 40 by hand while that runs. Laden with more than 20 Bulk the broom takes a -10-foot penalty; above 30 Bulk it crashes. After the activation ends the broom can't be activated again for 1 hour."
   },
   "item-force-shield": {
     "id": "item-force-shield",
@@ -1105,42 +1954,6 @@
       {
         "type": "fire",
         "value": 5
-      }
-    ]
-  },
-  "form-a-flock": {
-    "id": "form-a-flock",
-    "name": "Form a Flock",
-    "feats": [
-      "form-a-flock"
-    ],
-    "duration": "up to 1 minute",
-    "note": "The flock also grants 25 temporary Hit Points and ends when they are gone, the minute elapses, or you Dismiss it. Enemies in the flock aura are dazzled, and you can take the Acrid Barrage action while it lasts.",
-    "modifiers": [],
-    "weaknesses": [
-      {
-        "type": "area damage",
-        "value": 5
-      },
-      {
-        "type": "splash damage",
-        "value": 5
-      }
-    ]
-  },
-  "fresh-produce": {
-    "id": "fresh-produce",
-    "name": "Fresh Produce",
-    "feats": [
-      "fresh-produce"
-    ],
-    "duration": "10 minutes",
-    "note": "Only if you eat the produce yourself; you also feel full and can't eat another piece while it lasts. Resistance is 2 at 1st level and increases by 2 for every 2 levels.",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "void",
-        "value": "2*floor((@actor.level+1)/2)"
       }
     ]
   },
@@ -1172,26 +1985,6 @@
       }
     ]
   },
-  "geomancer-dedication": {
-    "id": "geomancer-dedication",
-    "name": "Underground Attunement",
-    "feats": [
-      "geomancer-dedication"
-    ],
-    "duration": "1 round",
-    "note": "Terrain attunement after expending a slot on an earth spell underground. The other self-affecting attunements aren't tracked here: Aquatic grants a swim Speed, Sky lets you Fly 10 feet, Mountain gives resistance to physical damage (except adamantine) equal to the spell's rank, and Plains gives temporary Hit Points equal to the spell's rank. Arctic, Desert, Forest and Swamp affect enemies only.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "darkvision"
-      },
-      {
-        "name": "tremorsense",
-        "range": 15,
-        "acuity": "imprecise"
-      }
-    ]
-  },
   "item-ghostcallers-planchette": {
     "id": "item-ghostcallers-planchette",
     "name": "Planchette (Armor)",
@@ -1206,6 +1999,31 @@
       }
     ]
   },
+  "item-giant-catch-pole": {
+    "id": "item-giant-catch-pole",
+    "name": "Wielding the Giant Catch Pole",
+    "fromItemId": "giant-catch-pole",
+    "duration": "while wielding the giant catch pole",
+    "modifiers": [],
+    "note": "You are Clumsy 1 while wielding it (apply as a condition). The rope loop lets you Grapple without having a free hand, and the giant version can Grapple creatures up to your normal size limit rather than only Medium or smaller."
+  },
+  "item-golden-wings": {
+    "id": "item-golden-wings",
+    "name": "Assisted Flight",
+    "fromItemId": "golden-wings",
+    "duration": "10 minutes",
+    "survivesRest": false,
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "item",
+        "target": "skill",
+        "detail": "stealth",
+        "appliesWhen": "to Hide and Sneak"
+      }
+    ],
+    "note": "Assisted Flight: you can Leap 20 feet and must land on solid ground. You shed bright light in a 20-foot radius and dim light 20 feet beyond, and take a -2 item penalty to Stealth to Hide and Sneak."
+  },
   "item-goz-mask-major": {
     "id": "item-goz-mask-major",
     "name": "Goz Mask",
@@ -1218,6 +2036,23 @@
         "name": "darkvision"
       }
     ]
+  },
+  "item-greater-golden-wings": {
+    "id": "item-greater-golden-wings",
+    "name": "Assisted Flight",
+    "fromItemId": "greater-golden-wings",
+    "duration": "10 minutes",
+    "survivesRest": false,
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "item",
+        "target": "skill",
+        "detail": "stealth",
+        "appliesWhen": "to Hide and Sneak"
+      }
+    ],
+    "note": "Assisted Flight: you can Leap 20 feet and must land on solid ground, and can spend an action to glide 5 feet down and 20 feet forward. You shed bright light in a 20-foot radius and dim light 20 feet beyond, and take a -2 item penalty to Stealth to Hide and Sneak."
   },
   "item-grim-specter": {
     "id": "item-grim-specter",
@@ -1254,22 +2089,6 @@
       }
     ]
   },
-  "harden-flesh": {
-    "id": "harden-flesh",
-    "name": "Harden Flesh",
-    "feats": [
-      "harden-flesh"
-    ],
-    "duration": "until the beginning of your next turn",
-    "note": "Requires standing on earthen or stone ground. Resistance 3, increasing by 1 at 12th level and every 4 levels after, to a maximum of 6 at 20th.",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "physical (except adamantine)",
-        "value": "min(6,3+floor((@actor.level-8)/4))"
-      }
-    ]
-  },
   "item-horned-lion-amulet": {
     "id": "item-horned-lion-amulet",
     "name": "Horned Lion",
@@ -1284,19 +2103,61 @@
       }
     ]
   },
-  "kinetic-dampening": {
-    "id": "kinetic-dampening",
-    "name": "Kinetic Dampening",
-    "feats": [
-      "kinetic-dampening"
-    ],
-    "duration": "until the beginning of your next turn",
-    "note": "Resistance 5 to physical damage, increasing by 5 at 10th level and every 4 levels after. With the second Awakening you also gain the same resistance to your choice of fire, electricity or sonic — add that one by hand, since the app can't record the choice. The first Awakening's ally emanation isn't modelled.",
-    "modifiers": [],
-    "resistances": [
+  "item-incandescent-sight": {
+    "id": "item-incandescent-sight",
+    "name": "Incandescent Sight",
+    "fromItemId": "incandescent-sight",
+    "duration": "1 minute",
+    "senses": [
       {
-        "type": "physical",
-        "value": "max(5,5+5*floor((@actor.level-6)/4))"
+        "name": "heatsight",
+        "range": 30,
+        "acuity": "precise"
+      }
+    ],
+    "note": "Detects temperature gradients out to 30 feet, so you can spot living creatures and warm objects in the dark. Warm objects block it even when transparent (e.g. hot water).",
+    "modifiers": []
+  },
+  "item-instinct-crown": {
+    "id": "item-instinct-crown",
+    "name": "Instinct Crown Boon",
+    "fromItemId": "instinct-crown",
+    "duration": "until the end of your rage",
+    "survivesRest": false,
+    "modifiers": [],
+    "note": "Once per day while raging, if the crown's instinct matches yours: Animal - Stride, +10 temporary HP, +3 damage and deadly d8 on your animal unarmed attacks. Dragon - adjacent attackers take 2d6 of your breath's damage type. Fury - quickened (Stride or Strike only). Giant - become Large, +5 ft reach, +2 damage with the larger weapon, your Strides leave difficult terrain. Spirit - raging resistance applies to all physical and poison damage, halved against magical attacks. Superstition - roll twice and take the higher on saves against magic, and raging resistance applies to all traditions. The separate once-per-day initiative activation adds 10 more temporary HP to Quick-Tempered's Rage."
+  },
+  "item-leopards-armor": {
+    "id": "item-leopards-armor",
+    "name": "Leopard's Ferocity",
+    "fromItemId": "leopards-armor",
+    "duration": "1 hour",
+    "note": "Once per day; Activate the armor again to revert it to its original form.",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "item",
+        "target": "skill",
+        "detail": "stealth"
+      },
+      {
+        "value": 2,
+        "type": "item",
+        "target": "skill",
+        "detail": "intimidation",
+        "appliesWhen": "on Intimidation checks to Demoralize"
+      },
+      {
+        "value": -2,
+        "type": "untyped",
+        "target": "skill",
+        "detail": "diplomacy"
+      },
+      {
+        "value": -2,
+        "type": "untyped",
+        "target": "skill",
+        "detail": "society"
       }
     ]
   },
@@ -1328,6 +2189,20 @@
       }
     ]
   },
+  "item-maelstromic-destabilizer-major": {
+    "id": "item-maelstromic-destabilizer-major",
+    "name": "Destabilizer (Major)",
+    "fromItemId": "maelstromic-destabilizer-major",
+    "duration": "1 minute",
+    "note": "The creature holding the gadget gains resistance 10 to spirit damage. The weakness 10 to spirit damage the destabilizer inflicts on creatures in its emanation is target-facing and isn't applied to your sheet.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "spirit",
+        "value": 10
+      }
+    ]
+  },
   "item-maelstromic-destabilizer-moderate": {
     "id": "item-maelstromic-destabilizer-moderate",
     "name": "Destabilizer (Moderate)",
@@ -1342,19 +2217,41 @@
       }
     ]
   },
-  "item-maelstromic-destabilizer-major": {
-    "id": "item-maelstromic-destabilizer-major",
-    "name": "Destabilizer (Major)",
-    "fromItemId": "maelstromic-destabilizer-major",
-    "duration": "1 minute",
-    "note": "The creature holding the gadget gains resistance 10 to spirit damage. The weakness 10 to spirit damage the destabilizer inflicts on creatures in its emanation is target-facing and isn't applied to your sheet.",
-    "modifiers": [],
-    "resistances": [
+  "item-major-golden-wings": {
+    "id": "item-major-golden-wings",
+    "name": "Golden Wings (Assisted Flight)",
+    "fromItemId": "major-golden-wings",
+    "duration": "10 minutes",
+    "speeds": {
+      "fly": 20
+    },
+    "modifiers": [
       {
-        "type": "spirit",
-        "value": 10
+        "target": "skill",
+        "detail": "stealth",
+        "type": "item",
+        "value": -2,
+        "appliesWhen": "to Hide or Sneak"
       }
-    ]
+    ],
+    "note": "Once per day. You can also Leap 20 feet and must land on solid ground. While active you shed bright light in a 20-foot radius and dim light for the next 20 feet."
+  },
+  "item-pyrefeather-token": {
+    "id": "item-pyrefeather-token",
+    "name": "Pyrefeather Token",
+    "fromItemId": "pyrefeather-token",
+    "duration": "1 minute",
+    "note": "5 temporary Hit Points — enter them in the temporary HP box yourself. Activating also reduces the triggering recovery check's DC by 1; you can Activate it while unconscious.",
+    "modifiers": []
+  },
+  "item-rime-jar": {
+    "id": "item-rime-jar",
+    "name": "Siphon Chill",
+    "fromItemId": "rime-jar",
+    "duration": "8 hours",
+    "survivesRest": false,
+    "note": "For 8 hours you treat extreme cold as severe cold. The activation also removes the fatigued condition if it was caused by exposure to environmental cold.",
+    "modifiers": []
   },
   "item-saurian-spike-major": {
     "id": "item-saurian-spike-major",
@@ -1371,65 +2268,140 @@
     ],
     "duration": "while affixed to armor"
   },
-  "scouring-spark": {
-    "id": "scouring-spark",
-    "name": "Scouring Spark",
-    "feats": [
-      "scouring-spark"
-    ],
-    "duration": "while Channeling your Divine Spark",
-    "note": "You are immune to confused and frightened. Your unarmed attacks deal 1d6 additional fire damage and your fire spells deal one extra die of fire damage (doubled against aberrations, fiends and undead) — those damage riders aren't applied to your Strikes yet. The 3d6 to creatures that touch or hit you is target-facing.",
-    "modifiers": [],
-    "immunities": [
-      "confused",
-      "frightened"
-    ]
-  },
-  "shadow-master": {
-    "id": "shadow-master",
-    "name": "Shadow Master",
-    "feats": [
-      "shadow-master"
-    ],
-    "note": "Only while you are in an area of dim light or darkness. In dim light or darkness you may also roll Reflex saves twice and take the higher result (fortune).",
+  "item-siccatite-buckler-high-grade-cold": {
+    "id": "item-siccatite-buckler-high-grade-cold",
+    "name": "Cold Siccatite Buckler",
+    "fromItemId": "siccatite-buckler-high-grade",
+    "duration": "while the shield is Raised",
     "modifiers": [],
     "resistances": [
       {
-        "type": "all except force and damage from Ghost Touch Strikes",
+        "type": "fire",
+        "value": 10
+      }
+    ],
+    "note": "While Raised, a cold siccatite buckler grants resistance 10 to fire — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-buckler-high-grade-hot": {
+    "id": "item-siccatite-buckler-high-grade-hot",
+    "name": "Hot Siccatite Buckler",
+    "fromItemId": "siccatite-buckler-high-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 10
+      }
+    ],
+    "note": "While Raised, a hot siccatite buckler grants resistance 10 to cold — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-buckler-standard-grade-cold": {
+    "id": "item-siccatite-buckler-standard-grade-cold",
+    "name": "Cold Siccatite Buckler",
+    "fromItemId": "siccatite-buckler-standard-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
         "value": 5
       }
-    ]
-  },
-  "shadow-sight": {
-    "id": "shadow-sight",
-    "name": "Shadow Sight",
-    "feats": [
-      "shadow-sight"
     ],
-    "duration": "1 minute",
-    "note": "Once per hour, a single action: you gain greater darkvision for 1 minute.",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "greater-darkvision"
-      }
-    ]
+    "note": "While Raised, a cold siccatite buckler grants resistance 5 to fire — the opposing energy type. Switch on the one matching your shield."
   },
-  "spell-survivor": {
-    "id": "spell-survivor",
-    "name": "Spell Survivor",
-    "feats": [
-      "spell-survivor"
-    ],
-    "duration": "until the end of that caster's next turn",
-    "note": "Triggered by critically succeeding at a save against a spell using Orc Superstition or Pervasive Superstition. Resistance 1 to all damage dealt by that caster, increasing by 1 at 9th level and every 4 levels thereafter.",
+  "item-siccatite-buckler-standard-grade-hot": {
+    "id": "item-siccatite-buckler-standard-grade-hot",
+    "name": "Hot Siccatite Buckler",
+    "fromItemId": "siccatite-buckler-standard-grade",
+    "duration": "while the shield is Raised",
     "modifiers": [],
     "resistances": [
       {
-        "type": "damage from that caster",
-        "value": "max(1,1+floor((@actor.level-5)/4))"
+        "type": "cold",
+        "value": 5
       }
-    ]
+    ],
+    "note": "While Raised, a hot siccatite buckler grants resistance 5 to cold — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-shield-high-grade-cold": {
+    "id": "item-siccatite-shield-high-grade-cold",
+    "name": "Cold Siccatite Shield",
+    "fromItemId": "siccatite-shield-high-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 10
+      }
+    ],
+    "note": "While Raised, a cold siccatite shield grants resistance 10 to fire — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-shield-high-grade-hot": {
+    "id": "item-siccatite-shield-high-grade-hot",
+    "name": "Hot Siccatite Shield",
+    "fromItemId": "siccatite-shield-high-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 10
+      }
+    ],
+    "note": "While Raised, a hot siccatite shield grants resistance 10 to cold — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-shield-standard-grade-cold": {
+    "id": "item-siccatite-shield-standard-grade-cold",
+    "name": "Cold Siccatite Shield",
+    "fromItemId": "siccatite-shield-standard-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ],
+    "note": "While Raised, a cold siccatite shield grants resistance 5 to fire — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-shield-standard-grade-hot": {
+    "id": "item-siccatite-shield-standard-grade-hot",
+    "name": "Hot Siccatite Shield",
+    "fromItemId": "siccatite-shield-standard-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 5
+      }
+    ],
+    "note": "While Raised, a hot siccatite shield grants resistance 5 to cold — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-skyrider-sword-greater": {
+    "id": "item-skyrider-sword-greater",
+    "name": "Ride the Skyrider Sword",
+    "fromItemId": "skyrider-sword-greater",
+    "duration": "until you Dismiss it or stop holding the sword in at least one hand",
+    "survivesRest": false,
+    "modifiers": [],
+    "speeds": {
+      "fly": "min(25,@actor.speed.land)"
+    },
+    "note": "Fly Speed of 25 feet or your land Speed, whichever is slower. While riding the sword you can't Strike with it except via its 2-action Fly-and-Strike activation."
+  },
+  "item-soaring-wings-major": {
+    "id": "item-soaring-wings-major",
+    "name": "Soaring Wings",
+    "fromItemId": "soaring-wings-major",
+    "duration": "10 minutes",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(20,@actor.speed.land)"
+    },
+    "note": "Fly Speed equal to your land Speed or 20 feet, whichever is greater."
   },
   "item-spiny-lodestone": {
     "id": "item-spiny-lodestone",
@@ -1487,29 +2459,25 @@
       }
     ]
   },
-  "starlight-armor": {
-    "id": "starlight-armor",
-    "name": "Starlight Armor",
-    "feats": [
-      "starlight-armor"
-    ],
-    "duration": "1 minute",
-    "note": "Once per day. Resistance 7 to piercing, bludgeoning and slashing, increasing to 10 at 17th level. The armor also sheds bright light for 20 feet; the dazzling save adjacent attackers must attempt is target-facing. Paizo printed no duration — 1 minute is the value the linked effect uses.",
+  "item-stalwarts-ring": {
+    "id": "item-stalwarts-ring",
+    "name": "Stalwart's Ring",
+    "fromItemId": "stalwarts-ring",
+    "duration": "until your next daily preparations",
+    "survivesRest": false,
     "modifiers": [],
-    "resistances": [
-      {
-        "type": "piercing",
-        "value": "max(7,10*floor(@actor.level/17))"
-      },
-      {
-        "type": "bludgeoning",
-        "value": "max(7,10*floor(@actor.level/17))"
-      },
-      {
-        "type": "slashing",
-        "value": "max(7,10*floor(@actor.level/17))"
-      }
-    ]
+    "note": "5 temporary Hit Points, gained by meditating on the ring during daily preparations. They last until your next daily preparations and only while you keep wearing the ring."
+  },
+  "item-steamflight-pack": {
+    "id": "item-steamflight-pack",
+    "name": "Steamflight Pack",
+    "fromItemId": "steamflight-pack",
+    "duration": "20 minutes",
+    "modifiers": [],
+    "speeds": {
+      "fly": 20
+    },
+    "note": "Fly Speed 20 feet while the pack is running. It carries enough water for 20 minutes of operation and refills in 5 minutes; the on/off switch is a 2-action activation."
   },
   "item-stone-body-mutagen-lesser": {
     "id": "item-stone-body-mutagen-lesser",
@@ -1700,6 +2668,23 @@
       }
     ]
   },
+  "item-thousand-year-dragonroot": {
+    "id": "item-thousand-year-dragonroot",
+    "name": "Dragonroot Flight",
+    "fromItemId": "thousand-year-dragonroot",
+    "duration": "1 minute",
+    "modifiers": [],
+    "speeds": {
+      "fly": 40
+    },
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ],
+    "note": "Fly Speed 40 feet and fire resistance 5 for 1 minute."
+  },
   "item-tremorsensors": {
     "id": "item-tremorsensors",
     "name": "Tremorsensors",
@@ -1715,25 +2700,24 @@
       }
     ]
   },
-  "vengeful-remnant": {
-    "id": "vengeful-remnant",
-    "name": "Vengeful Remnant",
-    "feats": [
-      "vengeful-remnant"
-    ],
-    "duration": "Until the start of your next turn",
-    "note": "Once per day. Resistance 10 to all damage except force, ghost touch, spirit and vitality — doubled to 20 when the damage source is non-magical (the second entry; only one applies to a given source). If you slay a significant foe not immune to spirit damage with your Spectral Dagger while this is up, it lasts until the end of your next turn instead.",
-    "modifiers": [],
-    "resistances": [
+  "item-true-golden-wings": {
+    "id": "item-true-golden-wings",
+    "name": "Assisted Flight",
+    "fromItemId": "true-golden-wings",
+    "duration": "10 minutes",
+    "modifiers": [
       {
-        "type": "all damage except force, ghost touch, spirit, and vitality",
-        "value": 10
-      },
-      {
-        "type": "non-magical damage (except force, ghost touch, spirit, and vitality)",
-        "value": 20
+        "target": "skill",
+        "detail": "stealth",
+        "type": "item",
+        "value": -2,
+        "appliesWhen": "to Hide or Sneak"
       }
-    ]
+    ],
+    "speeds": {
+      "fly": "max(25,@actor.speed.land)"
+    },
+    "note": "Once per day. For 10 minutes you can Leap 20 feet and gain a fly Speed equal to your Speed or 25 feet, whichever is greater. You emit bright light in a 20-foot radius (dim light 20 feet beyond), which is why Stealth suffers."
   },
   "item-victory-plate": {
     "id": "item-victory-plate",
@@ -1783,6 +2767,29 @@
       }
     ]
   },
+  "item-winged": {
+    "id": "item-winged",
+    "name": "Take to the Skies",
+    "fromItemId": "winged",
+    "duration": "1 minute",
+    "modifiers": [],
+    "speeds": {
+      "fly": "min(25,@actor.speed.land)"
+    },
+    "note": "Fly Speed of 25 feet or your land Speed, whichever is slower. Once per hour."
+  },
+  "item-winged-greater": {
+    "id": "item-winged-greater",
+    "name": "Take to the Skies",
+    "fromItemId": "winged-greater",
+    "duration": "until you Dismiss it",
+    "survivesRest": true,
+    "modifiers": [],
+    "speeds": {
+      "fly": "min(25,@actor.speed.land)"
+    },
+    "note": "Greater winged rune: a fly Speed of 25 feet or your land Speed, whichever is slower. Once activated the wings stay tangible indefinitely; you can Dismiss it and reactivate without waiting an hour."
+  },
   "item-witchs-finger": {
     "id": "item-witchs-finger",
     "name": "Witch's Finger",
@@ -1823,6 +2830,17 @@
       }
     ]
   },
+  "item-wyrms-flight": {
+    "id": "item-wyrms-flight",
+    "name": "Wyrm's Flight",
+    "fromItemId": "wyrms-flight",
+    "duration": "1 minute",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(20,@actor.speed.land)"
+    },
+    "note": "Fly Speed equal to your Speed or 20 feet, whichever is greater. Once per day."
+  },
   "item-zetogeki-hide-armor": {
     "id": "item-zetogeki-hide-armor",
     "name": "Shift Scales",
@@ -1845,211 +2863,21 @@
       }
     ]
   },
-  "item-bioluminescent-stripes": {
-    "id": "item-bioluminescent-stripes",
-    "name": "Glowing Stripes",
-    "fromItemId": "bioluminescent-stripes",
-    "duration": "until you Dismiss the glow",
-    "note": "You shed bright light in a 20-foot radius and dim light for the next 20 feet, and you can't be undetected. Dismiss as a free action.",
-    "modifiers": [
-      {
-        "value": -4,
-        "type": "item",
-        "target": "skill",
-        "detail": "stealth",
-        "appliesWhen": "on Stealth checks to Hide and Sneak"
-      }
-    ]
-  },
-  "item-blessed-tattoo": {
-    "id": "item-blessed-tattoo",
-    "name": "Blessed Tattoo",
-    "fromItemId": "blessed-tattoo",
-    "duration": "1 minute",
-    "note": "Once per day; grants the effect of Protection (+1 status bonus to AC and saving throws). Can be activated as a reaction instead of a 2-action activity when a demon attacks you or you attempt a save against a demon's ability.",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "ac"
-      },
-      {
-        "value": 1,
-        "type": "status",
-        "target": "save"
-      }
-    ]
-  },
-  "electric-counter": {
-    "id": "electric-counter",
-    "name": "Electric Counter",
+  "kinetic-dampening": {
+    "id": "kinetic-dampening",
+    "name": "Kinetic Dampening",
     "feats": [
-      "electric-counter"
+      "kinetic-dampening"
     ],
-    "duration": "until the start of your next turn",
-    "note": "Reaction while in Wild Winds Stance when you would take damage; the resistance also applies to the triggering damage if it was electricity. If the trigger was a melee attack, the attacker takes 3d6 damage.",
+    "duration": "until the beginning of your next turn",
+    "note": "Resistance 5 to physical damage, increasing by 5 at 10th level and every 4 levels after. With the second Awakening you also gain the same resistance to your choice of fire, electricity or sonic — add that one by hand, since the app can't record the choice. The first Awakening's ally emanation isn't modelled.",
     "modifiers": [],
     "resistances": [
       {
-        "type": "electricity",
-        "value": "@actor.level"
+        "type": "physical",
+        "value": "max(5,5+5*floor((@actor.level-6)/4))"
       }
     ]
-  },
-  "gathering-moss": {
-    "id": "gathering-moss",
-    "name": "Gathering Moss",
-    "feats": [
-      "gathering-moss"
-    ],
-    "duration": "1 minute or until Tenacious Stance ends",
-    "note": "Fast healing equal to your level (triggered when you enter Tenacious Stance). Track the healing yourself — the app has no fast-healing lane.",
-    "modifiers": []
-  },
-  "immortal-techniques": {
-    "id": "immortal-techniques",
-    "name": "Immortal Techniques",
-    "feats": [
-      "immortal-techniques"
-    ],
-    "duration": "until the start of your next turn",
-    "note": "The first time each round you use an action with both the monk and stance traits, you gain 20 temporary Hit Points. Enter them in the temporary HP box yourself.",
-    "modifiers": []
-  },
-  "item-leopards-armor": {
-    "id": "item-leopards-armor",
-    "name": "Leopard's Ferocity",
-    "fromItemId": "leopards-armor",
-    "duration": "1 hour",
-    "note": "Once per day; Activate the armor again to revert it to its original form.",
-    "modifiers": [
-      {
-        "value": 2,
-        "type": "item",
-        "target": "skill",
-        "detail": "stealth"
-      },
-      {
-        "value": 2,
-        "type": "item",
-        "target": "skill",
-        "detail": "intimidation",
-        "appliesWhen": "on Intimidation checks to Demoralize"
-      },
-      {
-        "value": -2,
-        "type": "untyped",
-        "target": "skill",
-        "detail": "diplomacy"
-      },
-      {
-        "value": -2,
-        "type": "untyped",
-        "target": "skill",
-        "detail": "society"
-      }
-    ]
-  },
-  "item-pyrefeather-token": {
-    "id": "item-pyrefeather-token",
-    "name": "Pyrefeather Token",
-    "fromItemId": "pyrefeather-token",
-    "duration": "1 minute",
-    "note": "5 temporary Hit Points — enter them in the temporary HP box yourself. Activating also reduces the triggering recovery check's DC by 1; you can Activate it while unconscious.",
-    "modifiers": []
-  },
-  "renewing-cycle": {
-    "id": "renewing-cycle",
-    "name": "Renewing Cycle",
-    "feats": [
-      "renewing-cycle"
-    ],
-    "duration": "until the start of your next turn",
-    "note": "The first time each round you Cycle Elemental Stance you gain temporary Hit Points equal to half your level — enter them yourself. You can't gain them again from the same elemental stance until you've entered every other elemental stance you know, or 10 minutes pass.",
-    "modifiers": []
-  },
-  "stone-body": {
-    "id": "stone-body",
-    "name": "Stone Body",
-    "feats": [
-      "stone-body"
-    ],
-    "duration": "until the end of your next turn",
-    "note": "Requires Tenacious Stance. Ends immediately if you are critically hit.",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "all",
-        "value": 10
-      }
-    ]
-  },
-  "raging-stories": {
-    "id": "raging-stories",
-    "name": "Raging Stories",
-    "feats": [
-      "raging-stories"
-    ],
-    "duration": "for the duration of Offer a Story",
-    "note": "Taken in place of Offer a Story's normal benefits: you wrap yourself in spectral flame and the action gains the fire trait. The extra damage is fire and applies only to melee Strikes.",
-    "modifiers": [
-      {
-        "value": 2,
-        "type": "untyped",
-        "target": "damage",
-        "appliesWhen": "on melee Strikes, as fire damage (4 if you're a master in Religion, 6 if legendary)"
-      }
-    ]
-  },
-  "item-thousand-year-dragonroot": {
-    "id": "item-thousand-year-dragonroot",
-    "name": "Dragonroot Flight",
-    "fromItemId": "thousand-year-dragonroot",
-    "duration": "1 minute",
-    "modifiers": [],
-    "speeds": {
-      "fly": 40
-    },
-    "resistances": [
-      {
-        "type": "fire",
-        "value": 5
-      }
-    ],
-    "note": "Fly Speed 40 feet and fire resistance 5 for 1 minute."
-  },
-  "item-soaring-wings-major": {
-    "id": "item-soaring-wings-major",
-    "name": "Soaring Wings",
-    "fromItemId": "soaring-wings-major",
-    "duration": "10 minutes",
-    "modifiers": [],
-    "speeds": {
-      "fly": "max(20,@actor.speed.land)"
-    },
-    "note": "Fly Speed equal to your land Speed or 20 feet, whichever is greater."
-  },
-  "item-winged": {
-    "id": "item-winged",
-    "name": "Take to the Skies",
-    "fromItemId": "winged",
-    "duration": "1 minute",
-    "modifiers": [],
-    "speeds": {
-      "fly": "min(25,@actor.speed.land)"
-    },
-    "note": "Fly Speed of 25 feet or your land Speed, whichever is slower. Once per hour."
-  },
-  "item-wyrms-flight": {
-    "id": "item-wyrms-flight",
-    "name": "Wyrm's Flight",
-    "fromItemId": "wyrms-flight",
-    "duration": "1 minute",
-    "modifiers": [],
-    "speeds": {
-      "fly": "max(20,@actor.speed.land)"
-    },
-    "note": "Fly Speed equal to your Speed or 20 feet, whichever is greater. Once per day."
   },
   "klingegeist": {
     "id": "klingegeist",
@@ -2064,663 +2892,6 @@
     },
     "note": "Fly Speed 30 feet while possessing the blade. You can take only Strike and Fly actions, and they do not trigger reactions."
   },
-  "item-siccatite-buckler-standard-grade-hot": {
-    "id": "item-siccatite-buckler-standard-grade-hot",
-    "name": "Hot Siccatite Buckler",
-    "fromItemId": "siccatite-buckler-standard-grade",
-    "duration": "while the shield is Raised",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "cold",
-        "value": 5
-      }
-    ],
-    "note": "While Raised, a hot siccatite buckler grants resistance 5 to cold — the opposing energy type. Switch on the one matching your shield."
-  },
-  "item-siccatite-buckler-standard-grade-cold": {
-    "id": "item-siccatite-buckler-standard-grade-cold",
-    "name": "Cold Siccatite Buckler",
-    "fromItemId": "siccatite-buckler-standard-grade",
-    "duration": "while the shield is Raised",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "fire",
-        "value": 5
-      }
-    ],
-    "note": "While Raised, a cold siccatite buckler grants resistance 5 to fire — the opposing energy type. Switch on the one matching your shield."
-  },
-  "item-siccatite-shield-standard-grade-hot": {
-    "id": "item-siccatite-shield-standard-grade-hot",
-    "name": "Hot Siccatite Shield",
-    "fromItemId": "siccatite-shield-standard-grade",
-    "duration": "while the shield is Raised",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "cold",
-        "value": 5
-      }
-    ],
-    "note": "While Raised, a hot siccatite shield grants resistance 5 to cold — the opposing energy type. Switch on the one matching your shield."
-  },
-  "item-siccatite-shield-standard-grade-cold": {
-    "id": "item-siccatite-shield-standard-grade-cold",
-    "name": "Cold Siccatite Shield",
-    "fromItemId": "siccatite-shield-standard-grade",
-    "duration": "while the shield is Raised",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "fire",
-        "value": 5
-      }
-    ],
-    "note": "While Raised, a cold siccatite shield grants resistance 5 to fire — the opposing energy type. Switch on the one matching your shield."
-  },
-  "item-siccatite-buckler-high-grade-hot": {
-    "id": "item-siccatite-buckler-high-grade-hot",
-    "name": "Hot Siccatite Buckler",
-    "fromItemId": "siccatite-buckler-high-grade",
-    "duration": "while the shield is Raised",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "cold",
-        "value": 10
-      }
-    ],
-    "note": "While Raised, a hot siccatite buckler grants resistance 10 to cold — the opposing energy type. Switch on the one matching your shield."
-  },
-  "item-siccatite-buckler-high-grade-cold": {
-    "id": "item-siccatite-buckler-high-grade-cold",
-    "name": "Cold Siccatite Buckler",
-    "fromItemId": "siccatite-buckler-high-grade",
-    "duration": "while the shield is Raised",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "fire",
-        "value": 10
-      }
-    ],
-    "note": "While Raised, a cold siccatite buckler grants resistance 10 to fire — the opposing energy type. Switch on the one matching your shield."
-  },
-  "item-siccatite-shield-high-grade-hot": {
-    "id": "item-siccatite-shield-high-grade-hot",
-    "name": "Hot Siccatite Shield",
-    "fromItemId": "siccatite-shield-high-grade",
-    "duration": "while the shield is Raised",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "cold",
-        "value": 10
-      }
-    ],
-    "note": "While Raised, a hot siccatite shield grants resistance 10 to cold — the opposing energy type. Switch on the one matching your shield."
-  },
-  "item-siccatite-shield-high-grade-cold": {
-    "id": "item-siccatite-shield-high-grade-cold",
-    "name": "Cold Siccatite Shield",
-    "fromItemId": "siccatite-shield-high-grade",
-    "duration": "while the shield is Raised",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "fire",
-        "value": 10
-      }
-    ],
-    "note": "While Raised, a cold siccatite shield grants resistance 10 to fire — the opposing energy type. Switch on the one matching your shield."
-  },
-  "cat-inner-fire-stoked-flame": {
-    "id": "cat-inner-fire-stoked-flame",
-    "name": "Inner Fire (Stoked Flame Stance)",
-    "category": "Monk",
-    "feats": [
-      "inner-fire-monk",
-      "inner-fire-som"
-    ],
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "cold",
-        "value": "floor(@actor.level/2)"
-      },
-      {
-        "type": "fire",
-        "value": "floor(@actor.level/2)"
-      }
-    ],
-    "note": "While in Stoked Flame Stance: cold and fire resistance equal to half your level. Any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1), no more than once per turn."
-  },
-  "segmented-frame-collapsed": {
-    "id": "segmented-frame-collapsed",
-    "name": "Innovation collapsed",
-    "category": "Inventor",
-    "feats": [
-      "segmented-frame"
-    ],
-    "duration": "while collapsed to light Bulk",
-    "modifiers": [
-      {
-        "value": 2,
-        "type": "circumstance",
-        "target": "skill",
-        "detail": "stealth"
-      }
-    ],
-    "note": "Segmented Frame: collapsed to light Bulk your innovation has the concealable trait — +2 circumstance to Stealth checks and to DCs to hide or conceal the weapon. Interact to collapse or restore it."
-  },
-  "item-emotion-surge-anger": {
-    "id": "item-emotion-surge-anger",
-    "name": "Emotion Surge (Anger)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "athletics"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Athletics checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-awe": {
-    "id": "item-emotion-surge-awe",
-    "name": "Emotion Surge (Awe)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "performance"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Performance checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-dedication": {
-    "id": "item-emotion-surge-dedication",
-    "name": "Emotion Surge (Dedication)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "all-checks",
-        "appliesWhen": "to Recall Knowledge"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to checks to Recall Knowledge for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-fear": {
-    "id": "item-emotion-surge-fear",
-    "name": "Emotion Surge (Fear)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "stealth"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Stealth checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-hatred": {
-    "id": "item-emotion-surge-hatred",
-    "name": "Emotion Surge (Hatred)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "intimidation"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Intimidation checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-joy": {
-    "id": "item-emotion-surge-joy",
-    "name": "Emotion Surge (Joy)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "diplomacy"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Diplomacy checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-love": {
-    "id": "item-emotion-surge-love",
-    "name": "Emotion Surge (Love)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "medicine"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Medicine checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-misery": {
-    "id": "item-emotion-surge-misery",
-    "name": "Emotion Surge (Misery)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "survival"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Survival checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-pride": {
-    "id": "item-emotion-surge-pride",
-    "name": "Emotion Surge (Pride)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "society"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Society checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "item-emotion-surge-remorse": {
-    "id": "item-emotion-surge-remorse",
-    "name": "Emotion Surge (Remorse)",
-    "fromItemId": "aon-emotion-surge",
-    "duration": "1 minute",
-    "modifiers": [
-      {
-        "value": 1,
-        "type": "status",
-        "target": "skill",
-        "detail": "deception"
-      }
-    ],
-    "note": "A surge from your relic grants +1 status to Deception checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
-  },
-  "armored-resistance": {
-    "id": "armored-resistance",
-    "name": "Armored Resistance",
-    "feats": [
-      "armored-resistance"
-    ],
-    "duration": "while you Intercept an Attack in medium or heavy armor",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "physical",
-        "value": "floor(@actor.level/2)"
-      }
-    ],
-    "note": "Armored Resistance: this resistance applies ONLY to the damage you take in your ally's place with Intercept Attack, and only while you wear medium or heavy armor. Switch it on when you Intercept."
-  },
-  "echolocation": {
-    "id": "echolocation",
-    "name": "Echolocation",
-    "feats": [
-      "echolocation"
-    ],
-    "duration": "until the start of your next turn",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "echolocation",
-        "range": 40,
-        "acuity": "precise"
-      }
-    ],
-    "note": "Switch this on after you Seek: until the start of your next turn you can use hearing as a precise sense with a range of 40 feet. You can also use this sense while you Search."
-  },
-  "axe-climber": {
-    "id": "axe-climber",
-    "name": "Axe Climbing",
-    "feats": [
-      "axe-climber"
-    ],
-    "duration": "while climbing wood with an axe in each hand (or ice with two light picks)",
-    "modifiers": [],
-    "speeds": {
-      "climb": "floor(@actor.speed.land/2)"
-    },
-    "note": "Climbing a wooden surface with a Hatchet or Battle Axe in each hand (or ice with a Light Pick in each hand) gives you a climb Speed equal to half your Speed. You still need both legs free and can't use either axe in combat while climbing."
-  },
-  "battle-scars": {
-    "id": "battle-scars",
-    "name": "Battle Scars (vs. devils)",
-    "feats": [
-      "battle-scars"
-    ],
-    "duration": "while taking bludgeoning or slashing damage from devils or Chelaxian-allied creatures",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "bludgeoning",
-        "value": "floor(@actor.level/2)"
-      },
-      {
-        "type": "slashing",
-        "value": "floor(@actor.level/2)"
-      }
-    ],
-    "note": "Resistance to bludgeoning and slashing damage equal to half your level, but ONLY from devils and creatures allied with the Chelaxian government (the GM determines which creatures qualify). Leave the mode off against anything else."
-  },
-  "canopy-predator": {
-    "id": "canopy-predator",
-    "name": "Canopy Predator",
-    "feats": [
-      "canopy-predator"
-    ],
-    "duration": "while moving through trees, vines, and other foliage",
-    "modifiers": [],
-    "speeds": {
-      "climb": 15
-    },
-    "note": "A success on an Athletics check to Climb a tree or an Acrobatics check to Balance on a branch is a critical success instead, and you aren't off-guard while Climbing or Balancing on a tree."
-  },
-  "cyclonic-ascent": {
-    "id": "cyclonic-ascent",
-    "name": "Cyclonic Ascent",
-    "feats": [
-      "cyclonic-ascent"
-    ],
-    "duration": "10 minutes",
-    "modifiers": [],
-    "speeds": {
-      "fly": "max(30,@actor.speed.land)"
-    },
-    "note": "Fly Speed equal to your land Speed or 30 feet, whichever is greater, for 10 minutes. You can move upward without treating it as difficult terrain, and you can stay aloft at the end of your turn if you used an air impulse that turn. At 14th level you can also give up to five other creatures a fly Speed - that is ally-side, not on your sheet."
-  },
-  "deadeye": {
-    "id": "deadeye",
-    "name": "Deadeye",
-    "feats": [
-      "deadeye"
-    ],
-    "duration": "until the start of your next turn",
-    "modifiers": [],
-    "senses": [
-      {
-        "name": "see-invisibility"
-      }
-    ],
-    "note": "Until the start of your next turn you see invisible creatures and objects as silhouettes, making them merely concealed from you rather than undetected."
-  },
-  "defiant-banner": {
-    "id": "defiant-banner",
-    "name": "Defiant Banner",
-    "feats": [
-      "defiant-banner"
-    ],
-    "duration": "until the start of your next turn",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "bludgeoning",
-        "value": "@actor.abilities.int.mod"
-      },
-      {
-        "type": "piercing",
-        "value": "@actor.abilities.int.mod"
-      },
-      {
-        "type": "slashing",
-        "value": "@actor.abilities.int.mod"
-      }
-    ],
-    "note": "Resistance to bludgeoning, piercing and slashing equal to your Intelligence modifier until the start of your next turn. Allies inside your banner's aura gain the same resistance - that belongs on their sheets, not yours."
-  },
-  "deitys-protection": {
-    "id": "deitys-protection",
-    "name": "Deity's Protection",
-    "feats": [
-      "deitys-protection"
-    ],
-    "duration": "until the start of your next turn",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "all",
-        "value": "floor((@actor.level+1)/2)"
-      }
-    ],
-    "note": "Turn this on after you cast a domain spell. The resistance equals the rank of the domain spell you cast; domain focus spells are automatically heightened to half your level rounded up."
-  },
-  "dire-form": {
-    "id": "dire-form",
-    "name": "Dire Form (hybrid shape)",
-    "feats": [
-      "dire-form"
-    ],
-    "duration": "while you are in your hybrid shape",
-    "modifiers": [
-      {
-        "target": "damage",
-        "type": "status",
-        "value": 2,
-        "appliesWhen": "melee damage rolls"
-      }
-    ],
-    "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
-  },
-  "dire-growth": {
-    "id": "dire-growth",
-    "name": "Dire Growth (animal shape)",
-    "feats": [
-      "dire-growth"
-    ],
-    "duration": "while you remain in your animal shape",
-    "modifiers": [
-      {
-        "target": "damage",
-        "type": "status",
-        "value": 2,
-        "appliesWhen": "melee damage rolls"
-      }
-    ],
-    "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
-  },
-  "feat-eternal-blessing": {
-    "id": "feat-eternal-blessing",
-    "name": "Eternal Blessing",
-    "feats": [
-      "eternal-blessing"
-    ],
-    "duration": "permanent — you may Dismiss it, and it returns automatically after 1 minute",
-    "modifiers": [
-      {
-        "target": "attack",
-        "type": "status",
-        "value": 1
-      }
-    ],
-    "note": "You are continuously surrounded by bless at a spell rank equal to half your level (rounded up), radius 15 feet (it cannot be increased): you and allies inside gain a +1 status bonus to attack rolls."
-  },
-  "exude-demonic-corruption": {
-    "id": "exude-demonic-corruption",
-    "name": "Demonic Corruption",
-    "feats": [
-      "exude-demonic-corruption"
-    ],
-    "duration": "until the start of your next turn",
-    "modifiers": [],
-    "note": "Your melee Strikes deal an extra 1d6 poison damage, and each creature that hits you with a melee unarmed attack or otherwise touches you takes 1d6 poison damage. The poison damage is 2d6 at 14th level and 3d6 at 20th."
-  },
-  "eyes-that-see-eternity": {
-    "id": "eyes-that-see-eternity",
-    "name": "Eyes that See Eternity",
-    "feats": [
-      "eyes-that-see-eternity"
-    ],
-    "duration": "1 minute",
-    "senses": [
-      {
-        "name": "see-invisibility"
-      }
-    ],
-    "modifiers": [],
-    "note": "Costs 1 Mythic Point. You have the effects of Truesight (you see through illusions and magical darkness and can see invisible creatures) and roll all Perception checks with mythic proficiency."
-  },
-  "flamboyant-athlete": {
-    "id": "flamboyant-athlete",
-    "name": "Flamboyant Athlete (Panache)",
-    "feats": [
-      "flamboyant-athlete"
-    ],
-    "duration": "while you have panache",
-    "modifiers": [],
-    "speeds": {
-      "climb": "floor(@actor.speed.land/2)",
-      "swim": "floor(@actor.speed.land/2)"
-    },
-    "note": "While you have panache: climb and swim Speeds equal to half your land Speed; High Jump and Long Jump DCs decrease by 10 (doesn't combine with other DC reductions); a vertical Leap covers 5 feet and a horizontal Leap 15 feet (20 feet if your Speed is at least 30)."
-  },
-  "force-of-nature": {
-    "id": "force-of-nature",
-    "name": "Force of Nature (hybrid or animal shape)",
-    "feats": [
-      "force-of-nature"
-    ],
-    "duration": "while you are in your hybrid or animal shape",
-    "modifiers": [],
-    "note": "Fast healing 5. If you take damage from a silver weapon, the fast healing deactivates until the end of your next turn."
-  },
-  "ghost-wrangler": {
-    "id": "ghost-wrangler",
-    "name": "Ghost Wrangler",
-    "feats": [
-      "ghost-wrangler"
-    ],
-    "duration": "until the start of your next turn",
-    "modifiers": [],
-    "note": "Your fists gain the effects of the ghost touch property rune, and you can make Strength-based skill checks against incorporeal creatures."
-  },
-  "giants-lunge": {
-    "id": "giants-lunge",
-    "name": "Giant's Lunge",
-    "feats": [
-      "giants-lunge"
-    ],
-    "duration": "until your rage ends",
-    "modifiers": [],
-    "note": "All your melee weapons and unarmed attacks have 10-foot reach. This doesn't increase the reach of an attack that already has the reach trait, but it does combine with size-based reach increases such as Giant's Stature."
-  },
-  "giants-stature": {
-    "id": "giants-stature",
-    "name": "Giant's Stature",
-    "feats": [
-      "giants-stature"
-    ],
-    "duration": "until you stop raging",
-    "modifiers": [],
-    "note": "You are Large: your reach increases by 5 feet and you are clumsy 1 until you stop raging. Your equipment grows with you. Requires that you were Medium or smaller."
-  },
-  "golden-body": {
-    "id": "golden-body",
-    "name": "Golden Body",
-    "feats": [
-      "golden-body"
-    ],
-    "duration": "always active",
-    "modifiers": [],
-    "note": "Fast healing 20: you regain 20 HP at the start of each of your turns as long as you have at least 1 HP. Track the healing yourself - the app has no fast-healing lane."
-  },
-  "grand-medics-mask": {
-    "id": "grand-medics-mask",
-    "name": "Grand Medic's Mask",
-    "feats": [
-      "grand-medics-mask"
-    ],
-    "duration": "always active",
-    "modifiers": [],
-    "note": "Fast healing 5. A lost limb or body part regrows within 1 day. Immediately after you Cast a non-cantrip Spell that targets only one creature, you can also give that creature temporary Hit Points equal to the spell's rank until the start of your next turn."
-  },
-  "grasping-reach": {
-    "id": "grasping-reach",
-    "name": "Extended Grasp",
-    "feats": [
-      "grasping-reach"
-    ],
-    "duration": "until you switch grips (Interact)",
-    "modifiers": [],
-    "note": "While held in your extended grasp, a two-handed melee weapon that lacks reach and deals at least 1d6 damage gains 10-foot reach, and its damage die is reduced by one step."
-  },
-  "greater-transformation": {
-    "id": "greater-transformation",
-    "name": "Oni Form (Greater)",
-    "feats": [
-      "greater-transformation"
-    ],
-    "duration": "10 minutes",
-    "modifiers": [],
-    "note": "Your Oni Form lasts 10 minutes with no need to Sustain it, and while in it your reach increases by 5 feet (on top of the form's usual Large size and clumsy 1)."
-  },
-  "hardwood-armor": {
-    "id": "hardwood-armor",
-    "name": "Hardwood Armor",
-    "feats": [
-      "hardwood-armor"
-    ],
-    "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
-    "modifiers": [],
-    "note": "Medium wooden armor that uses your highest armor proficiency: AC Bonus +3, Dex Cap +2, Check Penalty -2, Speed Penalty -5 ft, Strength +2, Bulk 1, group wood. Your real armor's bonuses, runes and magical abilities are suppressed (runes that could apply are replicated onto the hardwood). You may also form a wooden shield in a free hand and Shield Block with it even without that feat, and that hand still counts as free for impulses; the shield decays if broken or if it leaves your grasp. At every 3rd level its Hardness +1, HP +4, BT +2. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
-  },
-  "heavens-thunder": {
-    "id": "heavens-thunder",
-    "name": "Heaven's Thunder",
-    "feats": [
-      "heavens-thunder"
-    ],
-    "duration": "until the end of your next turn",
-    "modifiers": [],
-    "note": "Your unarmed attacks and any monk weapons you wield deal additional electricity damage and additional sonic damage, each equal to that attack's number of damage dice. Any creature that successfully Grapples you, or that you successfully Grapple, takes that damage immediately after the check (using your unarmed attack's damage dice). If you know the Ki Blast ki spell you may have it deal electricity or sonic instead of force while this is active."
-  },
-  "immortal-bear": {
-    "id": "immortal-bear",
-    "name": "Immortal Bear",
-    "feats": [
-      "immortal-bear"
-    ],
-    "duration": "while in Ursine Avenger Form",
-    "modifiers": [],
-    "note": "Fast healing 5 while you are in Ursine Avenger Form. Track the healing yourself - the app has no fast-healing lane."
-  },
-  "infused-with-belkzens-might": {
-    "id": "infused-with-belkzens-might",
-    "name": "Infused with Belkzen's Might",
-    "feats": [
-      "infused-with-belkzens-might"
-    ],
-    "duration": "until the end of your next turn",
-    "modifiers": [],
-    "note": "Infused with Belkzen's Might: expend one use of your storied skin's Living History. Your weapon and unarmed Strikes deal additional spirit damage equal to 1 plus half the number of Tattooed Historian feats you have (so 1 with one or two such feats, 2 with three or four, and so on)."
-  },
   "metal-carapace": {
     "id": "metal-carapace",
     "name": "Metal Carapace",
@@ -2730,437 +2901,6 @@
     "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
     "modifiers": [],
     "note": "Medium metal armor that uses your highest armor proficiency: AC Bonus +3, Dex Cap +2, Check Penalty -2, Speed Penalty -5 ft, Strength +2, Bulk 2, group plate, armor trait noisy. Your real armor's bonuses, runes and magical abilities are suppressed (any that could apply are replicated onto the carapace). You may also form a rusty steel shield in a free hand and Shield Block with it even without that feat, and that hand still counts as free for impulses; the shield crumbles to rust if broken or if it leaves your grasp. At every 3rd level the shield's Hardness +1, HP +4, BT +2. If you take damage from a critical hit the metal shatters and the impulse ends. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
-  },
-  "pain-is-temporary": {
-    "id": "pain-is-temporary",
-    "name": "Pain is Temporary",
-    "feats": [
-      "pain-is-temporary"
-    ],
-    "duration": "until the end of your next turn",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "all",
-        "value": 10
-      }
-    ],
-    "note": "Two actions, once per 10 minutes: you gain resistance 10 to all damage until the end of your next turn."
-  },
-  "cat-rope-runner": {
-    "id": "cat-rope-runner",
-    "name": "On Ropes (Rope Runner)",
-    "category": "Archetype",
-    "feats": [
-      "rope-runner"
-    ],
-    "modifiers": [],
-    "speeds": {
-      "climb": 15
-    },
-    "duration": "while climbing or balancing on a rope or similar object",
-    "note": "Rope Runner: a climb Speed of 15 feet, but only when climbing ropes and similar objects. You aren't off-guard while Climbing or Balancing on a rope or similar object, and a success on an Athletics check to Climb or an Acrobatics check to Balance is a critical success instead."
-  },
-  "scarred-hide": {
-    "id": "scarred-hide",
-    "name": "Scarred Hide (hybrid or animal shape)",
-    "feats": [
-      "scarred-hide"
-    ],
-    "duration": "while in your hybrid or animal shape",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "slashing (except silver)",
-        "value": "floor(@actor.level/2)"
-      }
-    ],
-    "note": "Werecreature: while in your hybrid or animal shape you have resistance to non-silver slashing damage equal to half your level."
-  },
-  "sentinels-orbit": {
-    "id": "sentinels-orbit",
-    "name": "Sentinel's Orbit (sentinel form)",
-    "feats": [
-      "sentinels-orbit"
-    ],
-    "duration": "while in your sentinel form",
-    "modifiers": [],
-    "speeds": {
-      "fly": "max(20,@actor.speed.land)"
-    },
-    "note": "Starlit Sentinel: while in your sentinel form you have a fly Speed equal to your land Speed, or 20 feet if that is higher."
-  },
-  "shore-gift": {
-    "id": "shore-gift",
-    "name": "Shore Gift",
-    "feats": [
-      "shore-gift"
-    ],
-    "duration": "indefinite (use the action again to revert)",
-    "modifiers": [],
-    "speeds": {
-      "land": "max(0,25-@actor.speed.land)"
-    },
-    "note": "You walk on two legs: your land Speed becomes 25 feet. You lose the swim Speed from your merfolk ancestry (swim Speeds from other sources remain). Using the Shore Gift also counts as creating a disguise for Impersonate and automatically defeats Perception DCs to notice it."
-  },
-  "stalwart-chant": {
-    "id": "stalwart-chant",
-    "name": "Stalwart Chant",
-    "feats": [
-      "stalwart-chant"
-    ],
-    "duration": "against the effect of the mental save you failed",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "mental",
-        "value": "floor(@actor.level/2)"
-      }
-    ],
-    "note": "Stalwart Chant: you can use Stalwart Song against any mental effect. If you fail that save, you gain resistance to mental damage equal to half your level against the resulting effect. Turn this on for that effect only."
-  },
-  "strand-strider-spider-shape": {
-    "id": "strand-strider-spider-shape",
-    "name": "Spider Shape (Strand Strider)",
-    "feats": [
-      "strand-strider"
-    ],
-    "duration": "while in your spider shape",
-    "modifiers": [],
-    "speeds": {
-      "climb": 25
-    },
-    "note": "Strand Strider: while in your spider shape you have a climb Speed of 25 feet."
-  },
-  "the-tyrant-falls": {
-    "id": "the-tyrant-falls",
-    "name": "The Tyrant Falls!",
-    "feats": [
-      "the-tyrant-falls"
-    ],
-    "duration": "1 minute (Dismissable)",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "all-damage",
-        "value": "floor(@actor.level/2)"
-      }
-    ],
-    "note": "The Tyrant Falls!: at the start of each of your turns you become drained 1 or increase your drained value by 1, and you can't reduce or remove drained while this is active — but drained doesn't penalize your Fortitude save while it lasts. You can cast Invoke the Crimson Oath at will without spending Focus Points (with an increased area). Any melee weapon you wield gains the reach trait (or +5 feet of reach if it already had reach) and its Strikes deal an extra 2d6 vitality or void damage, whichever is more effective against the target."
-  },
-  "unyielding-force": {
-    "id": "unyielding-force",
-    "name": "Unyielding Force (medium/heavy armor)",
-    "feats": [
-      "unyielding-force"
-    ],
-    "duration": "while wearing medium or heavy armor",
-    "modifiers": [],
-    "resistances": [
-      {
-        "type": "physical",
-        "value": "6+floor(@actor.level/2)"
-      }
-    ],
-    "note": "Unyielding Force: while you wear medium or heavy armor, your guardian's armor resistance to physical damage is 6 + half your level."
-  },
-  "warped-by-rage": {
-    "id": "warped-by-rage",
-    "name": "Warped by Rage (Immanence)",
-    "feats": [
-      "warped-by-rage"
-    ],
-    "duration": "while this ikon is immanent",
-    "modifiers": [
-      {
-        "value": 4,
-        "type": "status",
-        "target": "damage",
-        "appliesWhen": "melee Strike damage while enlarged by the ikon's immanence"
-      }
-    ],
-    "note": "Immanence: you're affected by a 4th-rank Enlarge — you become Huge, your reach increases by 10 feet, you gain a +4 status bonus to melee damage and are clumsy 1. You can forgo this effect when your body ikon becomes empowered."
-  },
-  "item-abysium-chunk": {
-    "id": "item-abysium-chunk",
-    "name": "Carrying Abysium (Sickened 1)",
-    "fromItemId": "abysium-chunk",
-    "survivesRest": true,
-    "modifiers": [
-      {
-        "value": -1,
-        "type": "status",
-        "target": "all-checks"
-      }
-    ],
-    "note": "A creature carrying this standard-grade, light-Bulk abysium chunk is sickened 1 (a poison effect). Switch off when the chunk is not carried. The chunk also sheds dim light in a 10-foot radius.",
-    "duration": "While you carry it"
-  },
-  "item-abysium-ingot": {
-    "id": "item-abysium-ingot",
-    "name": "Carrying Abysium (Sickened 2)",
-    "fromItemId": "abysium-ingot",
-    "survivesRest": true,
-    "modifiers": [
-      {
-        "value": -2,
-        "type": "status",
-        "target": "all-checks"
-      }
-    ],
-    "note": "A creature carrying this standard-grade, 1-Bulk abysium ingot is sickened 2 (a poison effect). Switch off when the ingot is not carried. It also sheds dim light in a 10-foot radius.",
-    "duration": "While you carry it"
-  },
-  "item-golden-wings": {
-    "id": "item-golden-wings",
-    "name": "Assisted Flight",
-    "fromItemId": "golden-wings",
-    "duration": "10 minutes",
-    "survivesRest": false,
-    "modifiers": [
-      {
-        "value": -2,
-        "type": "item",
-        "target": "skill",
-        "detail": "stealth",
-        "appliesWhen": "to Hide and Sneak"
-      }
-    ],
-    "note": "Assisted Flight: you can Leap 20 feet and must land on solid ground. You shed bright light in a 20-foot radius and dim light 20 feet beyond, and take a -2 item penalty to Stealth to Hide and Sneak."
-  },
-  "item-greater-golden-wings": {
-    "id": "item-greater-golden-wings",
-    "name": "Assisted Flight",
-    "fromItemId": "greater-golden-wings",
-    "duration": "10 minutes",
-    "survivesRest": false,
-    "modifiers": [
-      {
-        "value": -2,
-        "type": "item",
-        "target": "skill",
-        "detail": "stealth",
-        "appliesWhen": "to Hide and Sneak"
-      }
-    ],
-    "note": "Assisted Flight: you can Leap 20 feet and must land on solid ground, and can spend an action to glide 5 feet down and 20 feet forward. You shed bright light in a 20-foot radius and dim light 20 feet beyond, and take a -2 item penalty to Stealth to Hide and Sneak."
-  },
-  "item-incandescent-sight": {
-    "id": "item-incandescent-sight",
-    "name": "Incandescent Sight",
-    "fromItemId": "incandescent-sight",
-    "duration": "1 minute",
-    "senses": [
-      {
-        "name": "heatsight",
-        "range": 30,
-        "acuity": "precise"
-      }
-    ],
-    "note": "Detects temperature gradients out to 30 feet, so you can spot living creatures and warm objects in the dark. Warm objects block it even when transparent (e.g. hot water).",
-    "modifiers": []
-  },
-  "item-instinct-crown": {
-    "id": "item-instinct-crown",
-    "name": "Instinct Crown Boon",
-    "fromItemId": "instinct-crown",
-    "duration": "until the end of your rage",
-    "survivesRest": false,
-    "modifiers": [],
-    "note": "Once per day while raging, if the crown's instinct matches yours: Animal - Stride, +10 temporary HP, +3 damage and deadly d8 on your animal unarmed attacks. Dragon - adjacent attackers take 2d6 of your breath's damage type. Fury - quickened (Stride or Strike only). Giant - become Large, +5 ft reach, +2 damage with the larger weapon, your Strides leave difficult terrain. Spirit - raging resistance applies to all physical and poison damage, halved against magical attacks. Superstition - roll twice and take the higher on saves against magic, and raging resistance applies to all traditions. The separate once-per-day initiative activation adds 10 more temporary HP to Quick-Tempered's Rage."
-  },
-  "item-major-golden-wings": {
-    "id": "item-major-golden-wings",
-    "name": "Golden Wings (Assisted Flight)",
-    "fromItemId": "major-golden-wings",
-    "duration": "10 minutes",
-    "speeds": {
-      "fly": 20
-    },
-    "modifiers": [
-      {
-        "target": "skill",
-        "detail": "stealth",
-        "type": "item",
-        "value": -2,
-        "appliesWhen": "to Hide or Sneak"
-      }
-    ],
-    "note": "Once per day. You can also Leap 20 feet and must land on solid ground. While active you shed bright light in a 20-foot radius and dim light for the next 20 feet."
-  },
-  "item-rime-jar": {
-    "id": "item-rime-jar",
-    "name": "Siphon Chill",
-    "fromItemId": "rime-jar",
-    "duration": "8 hours",
-    "survivesRest": false,
-    "note": "For 8 hours you treat extreme cold as severe cold. The activation also removes the fatigued condition if it was caused by exposure to environmental cold.",
-    "modifiers": []
-  },
-  "item-azatas-grace": {
-    "id": "item-azatas-grace",
-    "name": "Azata's Grace",
-    "fromItemId": "azatas-grace",
-    "duration": "until Dismissed",
-    "survivesRest": true,
-    "modifiers": [],
-    "weaknesses": [
-      {
-        "type": "lawful",
-        "value": 10
-      }
-    ],
-    "note": "+50 maximum and current Hit Points while active. You also gain the effects of the righteous call gift without expending that gift's daily use. Dismissing it casts scintillating pattern (your allies are unaffected)."
-  },
-  "item-skyrider-sword-greater": {
-    "id": "item-skyrider-sword-greater",
-    "name": "Ride the Skyrider Sword",
-    "fromItemId": "skyrider-sword-greater",
-    "duration": "until you Dismiss it or stop holding the sword in at least one hand",
-    "survivesRest": false,
-    "modifiers": [],
-    "speeds": {
-      "fly": "min(25,@actor.speed.land)"
-    },
-    "note": "Fly Speed of 25 feet or your land Speed, whichever is slower. While riding the sword you can't Strike with it except via its 2-action Fly-and-Strike activation."
-  },
-  "item-stalwarts-ring": {
-    "id": "item-stalwarts-ring",
-    "name": "Stalwart's Ring",
-    "fromItemId": "stalwarts-ring",
-    "duration": "until your next daily preparations",
-    "survivesRest": false,
-    "modifiers": [],
-    "note": "5 temporary Hit Points, gained by meditating on the ring during daily preparations. They last until your next daily preparations and only while you keep wearing the ring."
-  },
-  "item-steamflight-pack": {
-    "id": "item-steamflight-pack",
-    "name": "Steamflight Pack",
-    "fromItemId": "steamflight-pack",
-    "duration": "20 minutes",
-    "modifiers": [],
-    "speeds": {
-      "fly": 20
-    },
-    "note": "Fly Speed 20 feet while the pack is running. It carries enough water for 20 minutes of operation and refills in 5 minutes; the on/off switch is a 2-action activation."
-  },
-  "item-true-golden-wings": {
-    "id": "item-true-golden-wings",
-    "name": "Assisted Flight",
-    "fromItemId": "true-golden-wings",
-    "duration": "10 minutes",
-    "modifiers": [
-      {
-        "target": "skill",
-        "detail": "stealth",
-        "type": "item",
-        "value": -2,
-        "appliesWhen": "to Hide or Sneak"
-      }
-    ],
-    "speeds": {
-      "fly": "max(25,@actor.speed.land)"
-    },
-    "note": "Once per day. For 10 minutes you can Leap 20 feet and gain a fly Speed equal to your Speed or 25 feet, whichever is greater. You emit bright light in a 20-foot radius (dim light 20 feet beyond), which is why Stealth suffers."
-  },
-  "item-winged-greater": {
-    "id": "item-winged-greater",
-    "name": "Take to the Skies",
-    "fromItemId": "winged-greater",
-    "duration": "until you Dismiss it",
-    "survivesRest": true,
-    "modifiers": [],
-    "speeds": {
-      "fly": "min(25,@actor.speed.land)"
-    },
-    "note": "Greater winged rune: a fly Speed of 25 feet or your land Speed, whichever is slower. Once activated the wings stay tangible indefinitely; you can Dismiss it and reactivate without waiting an hour."
-  },
-  "item-cloak-of-waves-clouds": {
-    "id": "item-cloak-of-waves-clouds",
-    "name": "Cut Air and Sea",
-    "fromItemId": "cloak-of-waves-clouds",
-    "duration": "until you next Activate the cloak",
-    "survivesRest": true,
-    "modifiers": [],
-    "speeds": {
-      "fly": 40
-    },
-    "note": "Feathers form: fly Speed 40 feet. Activating for the scale form instead gives a swim Speed of 60 feet and the ability to breathe underwater - leave this mode off and use the swim form at the table."
-  },
-  "item-cursed-dreamstone": {
-    "id": "item-cursed-dreamstone",
-    "name": "Cursed Dreamstone",
-    "fromItemId": "cursed-dreamstone",
-    "duration": "as long as you possess the stone",
-    "survivesRest": true,
-    "note": "Switch this on only if you failed the save against the curse. You are also fatigued whenever you wake from sleep, natural or magical, and you gain no bonus from the dreamstone. On a critical failure you additionally get one degree worse on every saving throw against sleep effects.",
-    "modifiers": [
-      {
-        "target": "save",
-        "type": "item",
-        "value": -2,
-        "appliesWhen": "against sleep effects"
-      }
-    ]
-  },
-  "item-energy-breath-potion-greater": {
-    "id": "item-energy-breath-potion-greater",
-    "name": "Energy Breath (Greater)",
-    "fromItemId": "energy-breath-potion-greater",
-    "duration": "1 hour",
-    "modifiers": [],
-    "note": "You have the Energy Breath action for 1 hour: 10d6 damage of the potion's energy type, basic save DC 37. Area/save by type — acid or electricity 30-foot line (Reflex), cold or fire 15-foot cone (Reflex), sonic 15-foot cone (Fortitude). After using it you can't do so again for 1d4 rounds."
-  },
-  "item-flying-broomstick": {
-    "id": "item-flying-broomstick",
-    "name": "Riding the Flying Broomstick",
-    "fromItemId": "flying-broomstick",
-    "duration": "while riding the broom",
-    "modifiers": [],
-    "speeds": {
-      "fly": 20
-    },
-    "note": "Guiding the broom with one hand gives a fly Speed of 20 feet; it can carry one passenger besides you. Activate—Lift Off (2 actions, concentrate, manipulate) toward a named destination on the same plane raises the fly Speed to 40 feet for up to 4 hours (about 16 miles) or until you Dismiss it — raise the speed to 40 by hand while that runs. Laden with more than 20 Bulk the broom takes a -10-foot penalty; above 30 Bulk it crashes. After the activation ends the broom can't be activated again for 1 hour."
-  },
-  "item-giant-catch-pole": {
-    "id": "item-giant-catch-pole",
-    "name": "Wielding the Giant Catch Pole",
-    "fromItemId": "giant-catch-pole",
-    "duration": "while wielding the giant catch pole",
-    "modifiers": [],
-    "note": "You are Clumsy 1 while wielding it (apply as a condition). The rope loop lets you Grapple without having a free hand, and the giant version can Grapple creatures up to your normal size limit rather than only Medium or smaller."
-  },
-  "field-vial-mutagenist": {
-    "id": "field-vial-mutagenist",
-    "name": "Field Vial (Mutagenist)",
-    "feats": [
-      "advanced-vials-mutagenist"
-    ],
-    "duration": "the field vial's duration",
-    "resistances": [
-      {
-        "type": "physical",
-        "value": "floor(@actor.level/2)"
-      }
-    ],
-    "note": "Advanced Vials (Mutagenist): while a field vial you drank is in effect you have resistance to physical damage equal to half your level.",
-    "modifiers": []
-  },
-  "guardians-armor": {
-    "id": "guardians-armor",
-    "name": "Guardian's Armor",
-    "feats": [
-      "guardians-armor"
-    ],
-    "duration": "while wearing medium or heavy armor",
-    "resistances": [
-      {
-        "type": "physical",
-        "value": "1+floor(@actor.level/2)"
-      }
-    ],
-    "note": "While wearing medium or heavy armor you have resistance to physical damage equal to 1 + half your level. You can also rest normally in medium and heavy armor.",
-    "modifiers": []
   },
   "mode-mountaineering-training": {
     "id": "mode-mountaineering-training",
@@ -3199,22 +2939,21 @@
     ],
     "note": "Advanced Vials (11th): drinking a field vial also gives you resistance to physical damage equal to half your level for the same duration. The vial also suppresses one mutagen drawback for 1 minute."
   },
-  "tactic-naval-training": {
-    "id": "tactic-naval-training",
-    "name": "Naval Training",
-    "category": "Commander",
-    "classes": [
-      "commander"
-    ],
+  "pain-is-temporary": {
+    "id": "pain-is-temporary",
+    "name": "Pain is Temporary",
     "feats": [
-      "naval-training"
+      "pain-is-temporary"
     ],
     "duration": "until the end of your next turn",
     "modifiers": [],
-    "speeds": {
-      "swim": 20
-    },
-    "note": "Naval Training tactic: you and each signalled squadmate gain a swim Speed of 20 feet until the end of your next turn. While this tactic is prepared you can also use Warfare Lore in place of Athletics to Swim."
+    "resistances": [
+      {
+        "type": "all",
+        "value": 10
+      }
+    ],
+    "note": "Two actions, once per 10 minutes: you gain resistance 10 to all damage until the end of your next turn."
   },
   "race-the-skies": {
     "id": "race-the-skies",
@@ -3229,6 +2968,209 @@
       "fly": "max(@actor.speed.land,20)"
     },
     "note": "Transcendence: for 1 minute you gain a fly Speed equal to your Speed or 20 feet, whichever is greater."
+  },
+  "raging-stories": {
+    "id": "raging-stories",
+    "name": "Raging Stories",
+    "feats": [
+      "raging-stories"
+    ],
+    "duration": "for the duration of Offer a Story",
+    "note": "Taken in place of Offer a Story's normal benefits: you wrap yourself in spectral flame and the action gains the fire trait. The extra damage is fire and applies only to melee Strikes.",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "untyped",
+        "target": "damage",
+        "appliesWhen": "on melee Strikes, as fire damage (4 if you're a master in Religion, 6 if legendary)"
+      }
+    ]
+  },
+  "renewing-cycle": {
+    "id": "renewing-cycle",
+    "name": "Renewing Cycle",
+    "feats": [
+      "renewing-cycle"
+    ],
+    "duration": "until the start of your next turn",
+    "note": "The first time each round you Cycle Elemental Stance you gain temporary Hit Points equal to half your level — enter them yourself. You can't gain them again from the same elemental stance until you've entered every other elemental stance you know, or 10 minutes pass.",
+    "modifiers": []
+  },
+  "scarred-hide": {
+    "id": "scarred-hide",
+    "name": "Scarred Hide (hybrid or animal shape)",
+    "feats": [
+      "scarred-hide"
+    ],
+    "duration": "while in your hybrid or animal shape",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "slashing (except silver)",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Werecreature: while in your hybrid or animal shape you have resistance to non-silver slashing damage equal to half your level."
+  },
+  "scouring-spark": {
+    "id": "scouring-spark",
+    "name": "Scouring Spark",
+    "feats": [
+      "scouring-spark"
+    ],
+    "duration": "while Channeling your Divine Spark",
+    "note": "You are immune to confused and frightened. Your unarmed attacks deal 1d6 additional fire damage and your fire spells deal one extra die of fire damage (doubled against aberrations, fiends and undead) — those damage riders aren't applied to your Strikes yet. The 3d6 to creatures that touch or hit you is target-facing.",
+    "modifiers": [],
+    "immunities": [
+      "confused",
+      "frightened"
+    ]
+  },
+  "segmented-frame-collapsed": {
+    "id": "segmented-frame-collapsed",
+    "name": "Innovation collapsed",
+    "category": "Inventor",
+    "feats": [
+      "segmented-frame"
+    ],
+    "duration": "while collapsed to light Bulk",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "circumstance",
+        "target": "skill",
+        "detail": "stealth"
+      }
+    ],
+    "note": "Segmented Frame: collapsed to light Bulk your innovation has the concealable trait — +2 circumstance to Stealth checks and to DCs to hide or conceal the weapon. Interact to collapse or restore it."
+  },
+  "sentinels-orbit": {
+    "id": "sentinels-orbit",
+    "name": "Sentinel's Orbit (sentinel form)",
+    "feats": [
+      "sentinels-orbit"
+    ],
+    "duration": "while in your sentinel form",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(20,@actor.speed.land)"
+    },
+    "note": "Starlit Sentinel: while in your sentinel form you have a fly Speed equal to your land Speed, or 20 feet if that is higher."
+  },
+  "shadow-master": {
+    "id": "shadow-master",
+    "name": "Shadow Master",
+    "feats": [
+      "shadow-master"
+    ],
+    "note": "Only while you are in an area of dim light or darkness. In dim light or darkness you may also roll Reflex saves twice and take the higher result (fortune).",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all except force and damage from Ghost Touch Strikes",
+        "value": 5
+      }
+    ]
+  },
+  "shadow-sight": {
+    "id": "shadow-sight",
+    "name": "Shadow Sight",
+    "feats": [
+      "shadow-sight"
+    ],
+    "duration": "1 minute",
+    "note": "Once per hour, a single action: you gain greater darkvision for 1 minute.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "greater-darkvision"
+      }
+    ]
+  },
+  "shore-gift": {
+    "id": "shore-gift",
+    "name": "Shore Gift",
+    "feats": [
+      "shore-gift"
+    ],
+    "duration": "indefinite (use the action again to revert)",
+    "modifiers": [],
+    "speeds": {
+      "land": "max(0,25-@actor.speed.land)"
+    },
+    "note": "You walk on two legs: your land Speed becomes 25 feet. You lose the swim Speed from your merfolk ancestry (swim Speeds from other sources remain). Using the Shore Gift also counts as creating a disguise for Impersonate and automatically defeats Perception DCs to notice it."
+  },
+  "spell-survivor": {
+    "id": "spell-survivor",
+    "name": "Spell Survivor",
+    "feats": [
+      "spell-survivor"
+    ],
+    "duration": "until the end of that caster's next turn",
+    "note": "Triggered by critically succeeding at a save against a spell using Orc Superstition or Pervasive Superstition. Resistance 1 to all damage dealt by that caster, increasing by 1 at 9th level and every 4 levels thereafter.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "damage from that caster",
+        "value": "max(1,1+floor((@actor.level-5)/4))"
+      }
+    ]
+  },
+  "stalwart-chant": {
+    "id": "stalwart-chant",
+    "name": "Stalwart Chant",
+    "feats": [
+      "stalwart-chant"
+    ],
+    "duration": "against the effect of the mental save you failed",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "mental",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Stalwart Chant: you can use Stalwart Song against any mental effect. If you fail that save, you gain resistance to mental damage equal to half your level against the resulting effect. Turn this on for that effect only."
+  },
+  "starlight-armor": {
+    "id": "starlight-armor",
+    "name": "Starlight Armor",
+    "feats": [
+      "starlight-armor"
+    ],
+    "duration": "1 minute",
+    "note": "Once per day. Resistance 7 to piercing, bludgeoning and slashing, increasing to 10 at 17th level. The armor also sheds bright light for 20 feet; the dazzling save adjacent attackers must attempt is target-facing. Paizo printed no duration — 1 minute is the value the linked effect uses.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "piercing",
+        "value": "max(7,10*floor(@actor.level/17))"
+      },
+      {
+        "type": "bludgeoning",
+        "value": "max(7,10*floor(@actor.level/17))"
+      },
+      {
+        "type": "slashing",
+        "value": "max(7,10*floor(@actor.level/17))"
+      }
+    ]
+  },
+  "stone-body": {
+    "id": "stone-body",
+    "name": "Stone Body",
+    "feats": [
+      "stone-body"
+    ],
+    "duration": "until the end of your next turn",
+    "note": "Requires Tenacious Stance. Ends immediately if you are critically hit.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all",
+        "value": 10
+      }
+    ]
   },
   "stonestrike-stance": {
     "id": "stonestrike-stance",
@@ -3254,23 +3196,103 @@
     ],
     "note": "Requires standing on the ground."
   },
-  "inexorable-iron": {
-    "id": "inexorable-iron",
-    "name": "Inexorable Iron",
+  "strand-strider-spider-shape": {
+    "id": "strand-strider-spider-shape",
+    "name": "Spider Shape (Strand Strider)",
     "feats": [
-      "inexorable-iron"
+      "strand-strider"
     ],
-    "duration": "while in Arcane Cascade",
+    "duration": "while in your spider shape",
     "modifiers": [],
-    "note": "Wielding a melee weapon in two hands: temporary HP equal to half your level (minimum 1) on entering Arcane Cascade and at the start of each of your turns in it."
+    "speeds": {
+      "climb": 25
+    },
+    "note": "Strand Strider: while in your spider shape you have a climb Speed of 25 feet."
   },
-  "curse-of-engulfing-flames": {
-    "id": "curse-of-engulfing-flames",
-    "name": "Engulfing Flames (cursebound)",
-    "feats": [
-      "curse-of-engulfing-flames"
+  "tactic-naval-training": {
+    "id": "tactic-naval-training",
+    "name": "Naval Training",
+    "category": "Commander",
+    "classes": [
+      "commander"
     ],
+    "feats": [
+      "naval-training"
+    ],
+    "duration": "until the end of your next turn",
     "modifiers": [],
-    "note": "While cursebound: persistent fire damage equal to your cursebound value, and your fire immunity and resistance are suppressed."
+    "speeds": {
+      "swim": 20
+    },
+    "note": "Naval Training tactic: you and each signalled squadmate gain a swim Speed of 20 feet until the end of your next turn. While this tactic is prepared you can also use Warfare Lore in place of Athletics to Swim."
+  },
+  "the-tyrant-falls": {
+    "id": "the-tyrant-falls",
+    "name": "The Tyrant Falls!",
+    "feats": [
+      "the-tyrant-falls"
+    ],
+    "duration": "1 minute (Dismissable)",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all-damage",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "The Tyrant Falls!: at the start of each of your turns you become drained 1 or increase your drained value by 1, and you can't reduce or remove drained while this is active — but drained doesn't penalize your Fortitude save while it lasts. You can cast Invoke the Crimson Oath at will without spending Focus Points (with an increased area). Any melee weapon you wield gains the reach trait (or +5 feet of reach if it already had reach) and its Strikes deal an extra 2d6 vitality or void damage, whichever is more effective against the target."
+  },
+  "unyielding-force": {
+    "id": "unyielding-force",
+    "name": "Unyielding Force (medium/heavy armor)",
+    "feats": [
+      "unyielding-force"
+    ],
+    "duration": "while wearing medium or heavy armor",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "6+floor(@actor.level/2)"
+      }
+    ],
+    "note": "Unyielding Force: while you wear medium or heavy armor, your guardian's armor resistance to physical damage is 6 + half your level."
+  },
+  "vengeful-remnant": {
+    "id": "vengeful-remnant",
+    "name": "Vengeful Remnant",
+    "feats": [
+      "vengeful-remnant"
+    ],
+    "duration": "Until the start of your next turn",
+    "note": "Once per day. Resistance 10 to all damage except force, ghost touch, spirit and vitality — doubled to 20 when the damage source is non-magical (the second entry; only one applies to a given source). If you slay a significant foe not immune to spirit damage with your Spectral Dagger while this is up, it lasts until the end of your next turn instead.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all damage except force, ghost touch, spirit, and vitality",
+        "value": 10
+      },
+      {
+        "type": "non-magical damage (except force, ghost touch, spirit, and vitality)",
+        "value": 20
+      }
+    ]
+  },
+  "warped-by-rage": {
+    "id": "warped-by-rage",
+    "name": "Warped by Rage (Immanence)",
+    "feats": [
+      "warped-by-rage"
+    ],
+    "duration": "while this ikon is immanent",
+    "modifiers": [
+      {
+        "value": 4,
+        "type": "status",
+        "target": "damage",
+        "appliesWhen": "melee Strike damage while enlarged by the ikon's immanence"
+      }
+    ],
+    "note": "Immanence: you're affected by a 4th-rank Enlarge — you become Huge, your reach increases by 10 feet, you gain a +4 status bonus to melee damage and are clumsy 1. You can forgo this effect when your body ikon becomes empowered."
   }
 }

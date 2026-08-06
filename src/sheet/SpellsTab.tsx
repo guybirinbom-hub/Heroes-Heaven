@@ -12,6 +12,8 @@ import {
   setItemCounter,
   setItemQuantity,
   setPreparedSpell,
+  setRestrictedSpell,
+  setRestrictedRank,
   setTradedCantrip,
   setRepertoireRank,
   setSignatureSpells,
@@ -215,6 +217,19 @@ function SpellDetail({ spell, maxRank, signature, onClose }: { spell: Spell; max
   );
 }
 
+/** Group in ENCOUNTER order — insertion order of the first member — so two restricted groups always
+ *  render in the order the records granted them, not alphabetically. */
+function groupBy<T>(items: T[], key: (t: T) => string): [string, T[]][] {
+  const out = new Map<string, T[]>();
+  for (const it of items) {
+    const k = key(it);
+    const cur = out.get(k);
+    if (cur) cur.push(it);
+    else out.set(k, [it]);
+  }
+  return [...out];
+}
+
 /** In-play spell management. PREPARED casters: change what's prepared in each slot
  *  (from the wizard's spellbook or the whole tradition list). SPONTANEOUS casters:
  *  add/remove repertoire spells per rank and set a signature spell (one per rank). */
@@ -233,7 +248,7 @@ function ManageSpellsModal({
 }) {
   useEscapeClose(onClose);
   const spontaneous = !!entry.repertoire;
-  const [picking, setPicking] = useState<{ rank: number; slot: number | null; cantripTrade?: boolean } | null>(null);
+  const [picking, setPicking] = useState<{ rank: number; slot: number | null; cantripTrade?: boolean; restricted?: string } | null>(null);
   const ranks = Object.keys((spontaneous ? entry.repertoire : entry.prepared) ?? {})
     .map(Number)
     .sort((a, b) => a - b);
@@ -271,7 +286,17 @@ function ManageSpellsModal({
   }, [content, entry.tradition, entry.id, character.hideLegacy, character.spellListAdditions]);
 
   // Spells you may add (spontaneous) / prepare (prepared) at a rank — rank ≤ the slot's rank.
-  const optionsFor = (rank: number): Spell[] => {
+  const optionsFor = (rank: number, restrictedId?: string): Spell[] => {
+    // A restricted slot offers ONLY its allowed list — that is the entire point of the lane. When the
+    // restriction is prose the engine can't check (a wizard's curriculum), `allowed` is absent and the
+    // slot falls through to the normal options with the sentence shown beside it.
+    const rs = restrictedId ? entry.restrictedSlots?.find((s) => s.id === restrictedId) : undefined;
+    if (rs?.allowed?.length) {
+      return rs.allowed
+        .map((id) => content.spells[id])
+        .filter((s): s is Spell => !!s && s.rank <= rank)
+        .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
+    }
     if (spontaneous) {
       const known = new Set(entry.repertoire?.[rank] ?? []);
       const pool = rank === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[rank] ?? [];
@@ -292,7 +317,9 @@ function ManageSpellsModal({
 
   const pick = (spellId: string | null) => {
     if (picking) {
-      if (spontaneous) {
+      if (picking.restricted) {
+        onPlay((p) => setRestrictedSpell(p, picking.restricted!, spellId));
+      } else if (spontaneous) {
         if (spellId) {
           const cur = entry.repertoire?.[picking.rank] ?? [];
           // The cap counts only player-CHOSEN spells — granted (bloodline/mystery/conscious-mind) spells
@@ -342,13 +369,13 @@ function ManageSpellsModal({
         {picking ? (
           <FilterableSelect
             key={'pick-' + picking.rank}
-            title={`${spontaneous ? 'Add' : 'Prepare'} a ${ord(picking.rank)}-rank spell`}
-            items={optionsFor(picking.rank)}
+            title={`${spontaneous && !picking.restricted ? 'Add' : 'Prepare'} a ${ord(picking.rank)}-rank spell`}
+            items={optionsFor(picking.rank, picking.restricted)}
             spec={SPELL_SPEC_BUILDER}
             rowKey={(s) => s.id}
             onClose={() => setPicking(null)}
             headerExtra={
-              !spontaneous ? (
+              !spontaneous || picking.restricted ? (
                 <button className="fsel-arch" onClick={() => pick(null)}>
                   Leave slot empty
                 </button>
@@ -366,7 +393,7 @@ function ManageSpellsModal({
                   name={s.name}
                   meta={<div className="picker-traits">{s.rank === 0 ? 'Cantrip' : `${ord(s.rank)} rank`}</div>}
                   onOpenDesc={node ? () => openDesc(node) : undefined}
-                  selectLabel={spontaneous ? 'Add' : 'Prepare'}
+                  selectLabel={spontaneous && !picking.restricted ? 'Add' : 'Prepare'}
                   onSelect={() => pick(s.id)}
                 />
               );
@@ -473,6 +500,52 @@ function ManageSpellsModal({
                 </div>
               ),
             )}
+            {/* Restricted slots — their own group, because they are not slots of the ranks above:
+                what may go in them is narrower, and Sin Reservoir's rank moves at each preparation. */}
+            {groupBy(entry.restrictedSlots ?? [], (s) => s.label).map(([label, group]) => (
+              <div key={'rs-' + label} className="ms-rank">
+                <div className="ms-rank-hdr">{label}</div>
+                {group[0].note && <div className="ms-cap-note">{group[0].note}</div>}
+                {group.map((slot) => {
+                  const sp = slot.spellId ? content.spells[slot.spellId] : null;
+                  // A spontaneous caster prepares nothing — its restricted slot is one extra CAST, so
+                  // there is nothing here to pick and the sheet shows it as a pip.
+                  if (slot.spontaneous)
+                    return (
+                      <div key={slot.id} className="ms-slot empty" aria-disabled="true">
+                        <span className="ms-slot-name">
+                          {ord(slot.rank)} rank — one extra cast<em className="ms-slot-tag"> · spend it on the sheet</em>
+                        </span>
+                      </div>
+                    );
+                  return (
+                    <div key={slot.id} style={{ display: 'flex', gap: 6, alignItems: 'stretch' }}>
+                      <button className={'ms-slot' + (slot.spellId ? '' : ' empty')} style={{ flex: 1 }} onClick={() => setPicking({ rank: slot.rank, slot: null, restricted: slot.id })}>
+                        <span className="ms-slot-name">
+                          {sp?.name ?? (slot.spellId || 'Empty slot')}
+                          <em className="ms-slot-tag"> · {ord(slot.rank)} rank</em>
+                        </span>
+                        <i className="ti ti-pencil" aria-hidden="true" />
+                      </button>
+                      {!!slot.rankOptions?.length && (
+                        <select
+                          className="ms-rank-select"
+                          aria-label="Slot rank"
+                          value={slot.rank}
+                          onChange={(ev) => onPlay((p) => setRestrictedRank(p, slot.id, Number(ev.target.value)))}
+                        >
+                          {slot.rankOptions.map((r) => (
+                            <option key={r} value={r}>
+                              {ord(r)}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
             {!!entry.tradedCantrips?.length && (
               <div className="ms-rank">
                 <div className="ms-rank-hdr">Traded cantrips</div>
@@ -1037,6 +1110,53 @@ export function SpellsTab({
           ))}
         </div>
       </div>
+      ),
+    });
+  }
+
+  // Restricted slots — one section per group, kept out of the rank sections above because what they
+  // may hold is narrower than their rank and, for Sin Reservoir, the rank itself moves each morning.
+  for (const [label, group] of groupBy(main.restrictedSlots ?? [], (s) => s.label)) {
+    const cards = group
+      .map((slot) => {
+        const sp = slot.spellId ? content.spells[slot.spellId] : null;
+        const allowedNames = (slot.allowed ?? []).map((id) => content.spells[id]?.name ?? id);
+        if (sp && !visible(sp)) return null;
+        // Nothing is prepared into a spontaneous caster's restricted slot — it is one extra cast, so
+        // the card names what it may be spent on rather than a spell.
+        if (!sp && filtering) return null;
+        return (
+          <SpellCard
+            key={slot.id}
+            name={sp?.name ?? (slot.spontaneous ? allowedNames.slice(0, 3).join(' / ') || 'Extra cast' : 'Empty slot')}
+            marks={sp ? marksFor(slot.spellId!) : undefined}
+            cost={sp?.cast}
+            meta={`${ord(slot.rank)} rank · ${label.toLowerCase()}`}
+            pip={slot.expended ? 'filled' : 'empty'}
+            onPip={onPlay ? () => onPlay((p) => toggleExpended(p, slot.id)) : undefined}
+            onClick={sp ? () => setDetail(sp) : undefined}
+            empty={!sp && !slot.spontaneous}
+          />
+        );
+      })
+      .filter(Boolean);
+    if (!cards.length) continue;
+    const used = group.filter((s) => s.expended).length;
+    ranks.push({
+      key: 'rs-' + label,
+      label,
+      badge: `${group.length - used}/${group.length}`,
+      node: (
+        <div key={'rs-' + label}>
+          <div className="spell-rankhdr">
+            {label}
+            <span className="spell-rankhdr-right">
+              {used} / {group.length} used
+            </span>
+          </div>
+          {group[0].note && <div className="spell-rank-note">{group[0].note}</div>}
+          <div className="spell-grid">{cards}</div>
+        </div>
       ),
     });
   }

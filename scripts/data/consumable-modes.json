@@ -696,6 +696,30 @@
   ]
  },
  {
+  "id": "item-candle-of-inflamed-passions",
+  "name": "Candle of Inflamed Passions (lit)",
+  "fromItemId": "candle-of-inflamed-passions",
+  "duration": "10 minutes",
+  "note": "The lit candle affects everything within 10 feet of it — allies, enemies, and you if you stay close — with a -1 status penalty to saves against emotion effects. Nothing is applied to your sheet.",
+  "modifiers": []
+ },
+ {
+  "id": "item-candle-of-invocation",
+  "name": "Candle of Invocation",
+  "fromItemId": "candle-of-invocation",
+  "duration": "until your next daily preparations",
+  "survivesRest": true,
+  "note": "You must cast divine spells, worship the deity emblazoned on the candle, and have performed your daily preparations within 10 feet of it while lit. No one benefits from more than one candle in a day.",
+  "modifiers": [],
+  "spellSlotBonus": {
+   "restricted": {
+    "label": "Candle of Invocation",
+    "note": "Two extra slots at half your highest rank, lost at your next daily preparations.",
+    "halfHighest": 2
+   }
+  }
+ },
+ {
   "id": "item-caydens-brew",
   "name": "Cayden's Brew",
   "fromItemId": "caydens-brew",
@@ -1116,6 +1140,14 @@
   ]
  },
  {
+  "id": "item-deadweight-snare",
+  "name": "Deadweight Snare (triggered)",
+  "fromItemId": "deadweight-snare",
+  "duration": "1 round on a success; 1 minute, or until the creature Escapes (DC 18), on a failure",
+  "note": "The creature that set off your snare has a status penalty to its attack rolls until it Escapes. None of your own numbers change.",
+  "modifiers": []
+ },
+ {
   "id": "item-delve-scale",
   "name": "Delve Scale",
   "fromItemId": "delve-scale",
@@ -1130,6 +1162,14 @@
     "appliesWhen": "on Athletics checks to High Jump or Long Jump"
    }
   ]
+ },
+ {
+  "id": "item-demortification-oil",
+  "name": "Demortification Oil Applied",
+  "fromItemId": "demortification-oil",
+  "duration": "1 hour",
+  "note": "The non-incorporeal undead you oiled has a +1 item bonus to AC for 1 hour. Your own AC does not change.",
+  "modifiers": []
  },
  {
   "id": "item-diplomats-charcuterie",
@@ -2103,6 +2143,33 @@
   ]
  },
  {
+  "id": "item-heartening-missive-bull",
+  "name": "Missive Sent (Bull)",
+  "fromItemId": "heartening-missive-bull",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "The addressed recipient has a +1 item bonus to Fortitude saves for 24 hours. Your own Fortitude is unchanged.",
+  "modifiers": []
+ },
+ {
+  "id": "item-heartening-missive-rabbit",
+  "name": "Missive Sent (Rabbit)",
+  "fromItemId": "heartening-missive-rabbit",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "The addressed recipient has a +1 item bonus to Reflex saves for 24 hours. Your own Reflex is unchanged.",
+  "modifiers": []
+ },
+ {
+  "id": "item-heartening-missive-turtle",
+  "name": "Missive Sent (Turtle)",
+  "fromItemId": "heartening-missive-turtle",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "The addressed recipient has a +1 item bonus to Will saves for 24 hours. Your own Will is unchanged.",
+  "modifiers": []
+ },
+ {
   "id": "item-hydra-mutagen",
   "name": "Hydra Mutagen",
   "fromItemId": "hydra-mutagen",
@@ -2273,6 +2340,40 @@
     "appliesWhen": "against fear effects"
    }
   ]
+ },
+ {
+  "id": "item-iron-wine",
+  "name": "Iron Wine",
+  "fromItemId": "iron-wine",
+  "duration": "10 minutes",
+  "modifiers": [],
+  "strikeDamage": [
+   {
+    "type": "fire",
+    "appliesTo": "unarmed",
+    "dice": {
+     "n": 1,
+     "die": "d4"
+    },
+    "note": "Iron wine"
+   }
+  ],
+  "note": "Your sweat ignites with the slightest friction."
+ },
+ {
+  "id": "item-iron-wine-second-cup",
+  "name": "Iron Wine (second cup)",
+  "fromItemId": "iron-wine",
+  "duration": "until your next daily preparations",
+  "survivesRest": true,
+  "modifiers": [],
+  "weaknesses": [
+   {
+    "type": "fire",
+    "value": 5
+   }
+  ],
+  "note": "A second cup in one day: the fire that helps you also burns you."
  },
  {
   "id": "item-journeybread-power",
@@ -2697,6 +2798,14 @@
   ]
  },
  {
+  "id": "item-necrobinding-serum",
+  "name": "Necrobinding Serum",
+  "fromItemId": "necrobinding-serum",
+  "duration": "10 minutes (8 hours if the undead is mindless); on a critical failure 1 hour (24 hours if mindless)",
+  "note": "The undead you struck is friendly (or helpful) toward you and can't use hostile actions against you. The effect sits on that creature — none of your own numbers change.",
+  "modifiers": []
+ },
+ {
   "id": "item-oily-button",
   "name": "Oily Button",
   "fromItemId": "oily-button",
@@ -2827,6 +2936,14 @@
     "appliesWhen": "using the granted echolocation or tremorsense"
    }
   ]
+ },
+ {
+  "id": "item-paradigm-cube",
+  "name": "Paradigm Cube (active color)",
+  "fromItemId": "paradigm-cube",
+  "duration": "1 minute",
+  "note": "One color is active; allies in the area get that color's +2 item bonus. None of it applies to you.",
+  "modifiers": []
  },
  {
   "id": "item-peace-in-dreams-tea",
@@ -3008,6 +3125,30 @@
     "appliesWhen": "against void effects"
    }
   ]
+ },
+ {
+  "id": "item-psyche-salts-greater",
+  "name": "Psyche Salts, Greater (administered)",
+  "fromItemId": "psyche-salts-greater",
+  "duration": "10 minutes",
+  "note": "The adjacent creature you dosed has 8th-rank Clear Mind and a +3 item bonus to saves against mental effects for 10 minutes. None of your saves move.",
+  "modifiers": []
+ },
+ {
+  "id": "item-psyche-salts-lesser",
+  "name": "Psyche Salts, Lesser (administered)",
+  "fromItemId": "psyche-salts-lesser",
+  "duration": "10 minutes",
+  "note": "The adjacent creature you dosed has 2nd-rank Clear Mind and a +1 item bonus to saves against mental effects for 10 minutes. None of your saves move.",
+  "modifiers": []
+ },
+ {
+  "id": "item-psyche-salts-moderate",
+  "name": "Psyche Salts, Moderate (administered)",
+  "fromItemId": "psyche-salts-moderate",
+  "duration": "10 minutes",
+  "note": "The adjacent creature you dosed has 4th-rank Clear Mind and a +2 item bonus to saves against mental effects for 10 minutes. None of your saves move.",
+  "modifiers": []
  },
  {
   "id": "item-rovagugs-mud",
@@ -3787,6 +3928,14 @@
   ]
  },
  {
+  "id": "item-strand-of-the-seven-births",
+  "name": "Hero-God's Whisper",
+  "fromItemId": "strand-of-the-seven-births",
+  "duration": "1 hour",
+  "note": "The charm's image sheds bright light in a 20-foot radius: allies inside get +2 status to saves vs auditory effects, and enemies entering must save or be fascinated. Your own saves are unchanged.",
+  "modifiers": []
+ },
+ {
   "id": "item-sun-orchid-poultice",
   "name": "Sun Orchid Vigor",
   "fromItemId": "sun-orchid-poultice",
@@ -4314,39 +4463,5 @@
     "appliesWhen": "against emotion effects"
    }
   ]
- },
- {
-  "id": "item-iron-wine",
-  "name": "Iron Wine",
-  "fromItemId": "iron-wine",
-  "duration": "10 minutes",
-  "modifiers": [],
-  "strikeDamage": [
-   {
-    "type": "fire",
-    "appliesTo": "unarmed",
-    "dice": {
-     "n": 1,
-     "die": "d4"
-    },
-    "note": "Iron wine"
-   }
-  ],
-  "note": "Your sweat ignites with the slightest friction."
- },
- {
-  "id": "item-iron-wine-second-cup",
-  "name": "Iron Wine (second cup)",
-  "fromItemId": "iron-wine",
-  "duration": "until your next daily preparations",
-  "survivesRest": true,
-  "modifiers": [],
-  "weaknesses": [
-   {
-    "type": "fire",
-    "value": 5
-   }
-  ],
-  "note": "A second cup in one day: the fire that helps you also burns you."
  }
 ]

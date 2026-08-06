@@ -12,7 +12,8 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot, SpellcastingEntry } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
+import { resolveRestrictedSlots } from './restrictedSlots';
 import { deriveMaxHp, deriveBulk } from './derive';
 import { adjustModes } from './modes';
 import { monsterPartApex } from './monsterParts';
@@ -122,6 +123,9 @@ export interface PlayState {
    * keyed by slot INDEX — pointing at the same slots they always did.
    */
   spellTrades?: Record<string, SpellTrade[]>;
+  /** Restricted slots whose rank the player chooses at daily preparations (Sin Reservoir), keyed by
+   *  the slot's own id. What is prepared INTO them rides in `preparedSpells` under the same id. */
+  restrictedSlotRanks?: Record<string, number>;
 }
 
 /** One Spell Blending trade: `indices` slots of rank `from` spent for a bonus slot of rank `to`
@@ -250,8 +254,12 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   // Max HP must reflect the overlaid conditions (Drained lowers it), so the
   // damage clamp below uses the same max the sheet will display.
   const max = deriveMaxHp({ ...ch, conditions }, content);
+  // A mode grant with no `entryId` lands on the character's own slot caster, the same default the
+  // build-time applier uses.
+  const mainCasterId = (ch.spellcasting ?? []).find((e) => e.type === 'spontaneous' || e.type === 'prepared')?.id;
   const spellcasting = (ch.spellcasting ?? []).map((e) => {
     let out = e;
+    const isMainCaster = e.id === mainCasterId;
     if (e.prepared) {
       const prepared: Record<number, PreparedSlot[]> = {};
       // Spell Blending. Stale trades are dropped rather than applied: investing a Ring of Wizardry or
@@ -323,6 +331,34 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
       out = {
         ...out,
         font: { ...e.font, expended: Array.from({ length: e.font.slots }, (_, i) => !!expended[`${e.id}:font:${i}`]) },
+      };
+    }
+    // A lit Candle of Invocation grants its two slots through a MODE, because the item's own
+    // spellSlotBonus only fires for invested items and a candle is a consumable you light. Resolved
+    // here rather than at build time for the same reason: the toggle is play state.
+    const modeSlots: RestrictedSlot[] = [];
+    for (const [i, mid] of (play.activeModes ?? []).entries()) {
+      const g = content.modes[mid]?.spellSlotBonus;
+      if (!g?.restricted) continue;
+      const target = g.entryId ?? (isMainCaster ? e.id : null);
+      if (target !== e.id) continue;
+      modeSlots.push(...resolveRestrictedSlots(g.restricted, e, ch.level, `m${i}`));
+    }
+    const baseRestricted = [...(e.restrictedSlots ?? []), ...modeSlots];
+    if (baseRestricted.length) {
+      out = {
+        ...out,
+        restrictedSlots: baseRestricted.map((s) => {
+          // The chosen rank is stored under the slot's OWN id, so re-picking one slot's rank cannot
+          // disturb another's — the same reasoning as the bonus slots keyed off their source rank.
+          const picked = play.restrictedSlotRanks?.[s.id];
+          const moved = picked != null && picked !== s.rank && (s.rankOptions ?? []).includes(picked);
+          const rank = moved ? picked : s.rank;
+          // Moving the slot empties it: what was prepared there was chosen for the old rank and may
+          // be a spell the slot can no longer hold.
+          const spellId = moved ? null : play.preparedSpells?.[s.id] ?? s.spellId;
+          return { ...s, rank, spellId, expended: !!expended[s.id] };
+        }),
       };
     }
     if (e.type === 'innate') {
@@ -493,6 +529,24 @@ export function toggleInnateCast(play: PlayState, entryId: string, spellId: stri
 
 /** Prepare (or clear) the spell in a single prepared slot, in play. `null` empties the
  *  slot; the slot's expended flag is reset, since it's freshly prepared. */
+/** Prepare a spell into a restricted slot (Creed Magic, Sin Reservoir, a Candle of Invocation).
+ *  These are keyed by the slot's own stable id rather than by rank+index, because the rank can move. */
+export function setRestrictedSpell(play: PlayState, slotId: string, spellId: string | null): PlayState {
+  const preparedSpells = { ...(play.preparedSpells ?? {}), [slotId]: spellId };
+  const expendedSlots = { ...play.expendedSlots };
+  delete expendedSlots[slotId];
+  return { ...play, preparedSpells, expendedSlots };
+}
+
+/** Move a restricted slot to a different rank at daily preparations. Empties it — see the overlay. */
+export function setRestrictedRank(play: PlayState, slotId: string, rank: number): PlayState {
+  const preparedSpells = { ...(play.preparedSpells ?? {}) };
+  delete preparedSpells[slotId];
+  const expendedSlots = { ...play.expendedSlots };
+  delete expendedSlots[slotId];
+  return { ...play, restrictedSlotRanks: { ...(play.restrictedSlotRanks ?? {}), [slotId]: rank }, preparedSpells, expendedSlots };
+}
+
 export function setPreparedSpell(
   play: PlayState,
   entryId: string,

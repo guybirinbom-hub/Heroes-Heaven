@@ -62,6 +62,7 @@ import { grantForSpellPick } from './spellChoice';
 import { DOMAIN_SPELLS } from './domains';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeProficiency, archetypeSlots } from './casterArchetypes';
+import { resolveRestrictedSlots } from './restrictedSlots';
 import { coinsToCp, cpToCoins, startingWealthGp } from './wealth';
 import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells } from './spellcasting';
 
@@ -3254,11 +3255,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   spellcastingGrants.sort((a, b) => PROFICIENCY_RANKS.indexOf(b.proficiency) - PROFICIENCY_RANKS.indexOf(a.proficiency));
   // Extra spell slots ("+1 slot of each rank except your highest"). Applied to the already-built slot
   // caster: a spontaneous entry gains slot capacity, a prepared one gains empty prepared slots.
+  let restrictedGroup = 0;
   for (const bonus of spellSlotBonuses) {
     const entry = bonus.entryId
       ? spellcasting.find((e) => e.id === bonus.entryId)
       : spellcasting.find((e) => e.type === 'spontaneous' || e.type === 'prepared');
     if (!entry) continue;
+    // RESTRICTED slots live in their own list, never in `prepared`/`slots` — see RestrictedSlotGrant.
+    if (bonus.restricted) {
+      (entry.restrictedSlots ??= []).push(...resolveRestrictedSlots(bonus.restricted, entry, level, String(restrictedGroup++)));
+      continue;
+    }
     const add = (r: number, n: number) => {
       if (entry.slots?.[r]) entry.slots[r].max += n;
       // …and, when the record says so, CREATE the rank. The psychic's and animist's slot tables stop
