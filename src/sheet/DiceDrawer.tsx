@@ -2,8 +2,12 @@ import { useState } from 'react';
 import type { DieSides, DicePreset, RollResult } from '../rules/dice';
 import { useEscapeClose } from './useEscapeClose';
 import { confirmDialog } from './confirm';
+import { DiceTray, DICE_THEMES, DEFAULT_THEME, type DiceTheme } from './DiceTray';
 
 const DICE: DieSides[] = [4, 6, 8, 10, 12, 20, 100];
+
+/** The chosen dice theme is a device preference, like the roll history itself. */
+const THEME_KEY = 'wanderers-codex:dice-theme:v1';
 
 /** The dice roller drawer: a manual roller on top, saved presets, then the roll history. */
 export function DiceDrawer({
@@ -28,6 +32,25 @@ export function DiceDrawer({
   const [sides, setSides] = useState<DieSides>(20);
   const [modifier, setModifier] = useState(0);
   const [label, setLabel] = useState('');
+  // The tray shows the MOST RECENT roll, whichever button produced it — the manual roller, a preset,
+  // or a click-to-roll on a stat elsewhere on the sheet, since they all land in `rolls`.
+  const latest = rolls[0] ?? null;
+  const [theme, setTheme] = useState<DiceTheme>(() => {
+    try {
+      const id = localStorage.getItem(THEME_KEY);
+      return DICE_THEMES.find((t) => t.id === id) ?? DEFAULT_THEME;
+    } catch {
+      return DEFAULT_THEME;
+    }
+  });
+  const pickTheme = (t: DiceTheme) => {
+    setTheme(t);
+    try {
+      localStorage.setItem(THEME_KEY, t.id);
+    } catch {
+      /* a device that refuses storage still gets the theme for this session */
+    }
+  };
 
   function rollNow() {
     onRoll(label.trim() || `${count}d${sides}`, count, sides, modifier);
@@ -91,6 +114,21 @@ export function DiceDrawer({
           </div>
         </div>
 
+        <DiceTray result={latest} theme={theme} />
+        <div className="dice-themes" role="group" aria-label="Dice theme">
+          {DICE_THEMES.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              className={'dice-theme-swatch' + (t.id === theme.id ? ' on' : '')}
+              title={t.name}
+              aria-label={t.name}
+              aria-pressed={t.id === theme.id}
+              style={{ background: `linear-gradient(135deg, ${t.lit}, ${t.dim})`, borderColor: t.edge }}
+              onClick={() => pickTheme(t)}
+            />
+          ))}
+        </div>
         <div className="dice-hist-head">
           <span>Presets</span>
           <button
