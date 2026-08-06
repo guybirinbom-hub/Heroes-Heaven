@@ -166,10 +166,27 @@ export interface CompanionMod {
    * ability" left the familiar's block unchanged.
    */
   familiarAbilities?: string[];
+  /**
+   * ADVANCED MANEUVERS an owner feat gives an animal companion, on top of the one its type already
+   * knows. `AnimalCompanionType.maneuver` is a single string owned by the TYPE, so a feat reading
+   * "it gains the Primal Howl advanced maneuver, in addition to any it already knows" had nowhere
+   * to put it.
+   */
+  maneuvers?: string[];
   note?: string;
 }
 
 export const COMPANION_MODS: Record<string, CompanionMod> = {
+  // "It gains the Primal Howl advanced maneuver, in addition to any advanced maneuvers it already
+  // knows." The maneuver text is transcribed from the AoN mirror, because the copy shipped in
+  // core.json is TRUNCATED by a failed template substitution: "All creatures in a take damage for
+  // every 2 levels your companion has, with a save against your spell DC".
+  'primal-howl': {
+    kinds: ['animal'],
+    maneuvers: [
+      'Primal Howl (primal, sonic): Frequency once per hour. Your animal companion screeches and howls, empowered with natural magic. All creatures in a 30-foot cone take 1d6 sonic damage for every 2 levels your companion has, with a basic Fortitude save against your spell DC. Creatures that fail become frightened 1, and creatures that critically fail become frightened 2.',
+    ],
+  },
   // Coverage sweep, registry lane. "gains one specialization of your choice. Increase its
   // proficiency rank in Performance to legendary instead of one of the specialization's skill increases."
   'specialized-companion': { kinds: ['animal'], maturityFloor: 'specialized', skillGrants: [{ skill: 'performance', rank: 'legendary' }], note: "Specialized Companion: your Animal Trainer companion becomes specialized and its Performance rank rises to legendary in place of one of the specialization's skill increases." },

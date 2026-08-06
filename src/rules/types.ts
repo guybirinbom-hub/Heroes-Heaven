@@ -563,6 +563,15 @@ export interface DefenseGrants {
   }[];
   /** This feat/heritage raises the character to at least this SIZE (Jotun's Heart → Large). */
   sizeOverride?: Size;
+  /**
+   * This heritage/feat SETS the size outright, in either direction — "Instead of Large, your size is
+   * Medium" (Plane-Hopper jotunborn).
+   *
+   * `sizeOverride` is strictly largest-wins, so nothing could make a character SMALLER than their
+   * ancestry: a plane-hopper jotunborn stayed Large, which is the one thing their heritage says they
+   * are not.
+   */
+  sizeSet?: Size;
   /** Natural reach in feet this feat/heritage grants (Jotun's Heart: 10). Highest wins. */
   reach?: number;
   /** A flat additive bonus to LAND Speed (Hyper Boosters: +10, Fleet: +5). `speeds.land` is additive
@@ -696,6 +705,14 @@ export interface SpellSlotBonus {
    * When present, this wins: `perRank` is ignored.
    */
   byRank?: Record<string, number>;
+  /**
+   * Ranks that arrive LATER than the feat itself — "You gain an additional spell slot of 1st, 2nd,
+   * 3rd, and 4th ranks. … At 18th level, you also gain a 5th-rank slot."
+   *
+   * `byRank` has no level gate, so a 14th-level feat could either grant its 18th-level slot four
+   * levels early or drop it. Each entry applies only once the character reaches its `level`.
+   */
+  byRankAt?: { level: number; byRank: Record<string, number> }[];
   /**
    * `byRank` may CREATE a rank the caster's table never gives it.
    *

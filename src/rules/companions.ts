@@ -228,6 +228,8 @@ export interface AnimalCompanionBlock {
   modNotes?: string[];
   support: string;
   maneuver: string;
+  /** Advanced maneuvers granted by an OWNER FEAT, beside the type's own. */
+  extraManeuvers?: string[];
   /** The type's "Special" line (mount, extra poison damage, an added creature trait, …). */
   special?: string;
   /** Carried Bulk vs. capacity (only over-capacity is a problem). */
@@ -474,6 +476,8 @@ export function deriveAnimalCompanion(
   const senses = [...type.senses];
   const iwr: string[] = [];
   const modNotes: string[] = [];
+  // Advanced maneuvers an OWNER FEAT grants, beside the one the companion type already knows.
+  const extraManeuvers: string[] = [];
   let hpBonus = 0;
   if (ownerFeatIds) {
     for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
@@ -491,6 +495,7 @@ export function deriveAnimalCompanion(
       }
       iwr.push(...(mod.iwr ?? []));
       if (mod.strikeRider) for (const a of attacks) if (!a.traits.includes(mod.strikeRider)) a.traits.push(mod.strikeRider);
+      for (const m of mod.maneuvers ?? []) if (!extraManeuvers.includes(m)) extraManeuvers.push(m);
       if (mod.note) modNotes.push(mod.note);
     }
   }
@@ -518,6 +523,7 @@ export function deriveAnimalCompanion(
     skills,
     support: type.support,
     maneuver: type.maneuver,
+    ...(extraManeuvers.length ? { extraManeuvers } : {}),
     ...(type.special ? { special: type.special } : {}),
     bulk,
     gearNote: gear.notes.join('; ') || undefined,

@@ -50,6 +50,22 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     if (p.category === 'archetype') return f.traits.includes('archetype');
     // Mythic slot: any mythic-trait feat (callings + mythic destiny feats) at or below this level.
     if (p.category === 'mythic') return f.traits.includes('mythic');
+    /*
+     * Fighter Combat Flexibility (L9) / Improved Flexibility (L15) / Ultimate Flexibility (L20).
+     *
+     * These SHORT-CIRCUIT the category test, exactly as archetype and mythic slots do, because "you
+     * gain a fighter feat" means a fighter feat — which ships as category 'class'. Matching category
+     * against 'bonus' offered NOTHING: the 14 records that happen to carry category 'bonus' are not
+     * fighter feats, and the 70 fighter feats of 8th level or lower are all category 'class'. Both
+     * flexibility slots were unfillable.
+     *
+     * The cap is the slot's level minus one (≤8 at 9, ≤14 at 15) except at 20, where Ultimate
+     * Flexibility prints "up to 18th level" rather than 19.
+     */
+    if (p.category === 'bonus') {
+      if (!f.traits.includes('fighter')) return false;
+      return f.level <= (p.level === 20 ? 18 : p.level - 1);
+    }
     // A general feat slot may take any qualifying SKILL feat (skill feats are a subset of general
     // feats). The reverse is not true — a skill slot takes only skill feats.
     if (f.category !== p.category && !(p.category === 'general' && f.category === 'skill')) return false;
@@ -88,9 +104,6 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
       const featElements = f.traits.filter((t) => KINETIC_ELEMENTS.includes(t));
       if (elements.length && featElements.length && !featElements.some((t) => elements.includes(t))) return false;
     }
-    // Fighter Combat/Improved Flexibility bonus slots take a fighter feat of level ≤8 (L9 slot) / ≤14 (L15).
-    if (p.category === 'bonus' && build.classId === 'fighter' && (!f.traits.includes('fighter') || f.level > p.level - 1))
-      return false;
     return true;
   });
 }

@@ -661,7 +661,7 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
         <i className="ti ti-weight" aria-hidden="true" /> Bulk {b.bulk.carried} / {b.bulk.max}
         {over && ' — over capacity'}
       </div>
-      {(b.support || b.maneuver) && <div className="sb-div" />}
+      {(b.support || b.maneuver || b.extraManeuvers?.length) && <div className="sb-div" />}
       {b.support && (
         <div className="sb-line">
           <b>Support</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {b.support}
@@ -672,6 +672,13 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
           <b>Advanced maneuver</b> {maneuverNode(b.maneuver)}
         </div>
       )}
+      {/* Maneuvers an OWNER FEAT granted, "in addition to any advanced maneuvers it already knows" —
+          rendered through the same helper so a granted one reads exactly like the type's own. */}
+      {(b.extraManeuvers ?? []).map((m, i) => (
+        <div className="sb-line" key={'em' + i}>
+          <b>Advanced maneuver</b> {maneuverNode(m)}
+        </div>
+      ))}
       {b.special && (
         <div className="sb-line">
           <b>Special</b> {b.special}

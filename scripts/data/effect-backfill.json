@@ -65584,5 +65584,455 @@
       "perRank": 1,
       "entryId": "bloodrager-dedication-casting"
     }
+  },
+  {
+    "category": "feats",
+    "id": "advanced-domain",
+    "field": "choice",
+    "value": null
+  },
+  {
+    "category": "feats",
+    "id": "future-spell-learning",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "behold-the-weave",
+        "cast-into-time",
+        "haste",
+        "loose-times-arrow",
+        "quicken-time",
+        "slow",
+        "stagnate-time"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "sacred-spells",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "void-warp",
+        "death-ward",
+        "vitality-lash",
+        "infuse-vitality",
+        "holy-cascade",
+        "magic-stone",
+        "sunburst"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "sacred-spells",
+    "field": "choice",
+    "value": {
+      "flag": "sacredSpellsBenefit",
+      "prompt": "Benefit",
+      "kind": "array",
+      "options": [
+        {
+          "value": "prepared-swap",
+          "label": "Prepared caster — spend 10 minutes (or while Refocusing) to swap a prepared spell for a same-rank sacred spell"
+        },
+        {
+          "value": "spontaneous-signature",
+          "label": "Spontaneous caster with signature spells — add two sacred spells to your repertoire as extra signature spells"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "domain-fluency",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "domain-fluency",
+        "prompt": "Choose a domain of your mystery — you gain its ADVANCED domain spell",
+        "options": [
+          {
+            "value": "air",
+            "label": "Air — Disperse into Air",
+            "grant": {
+              "focusSpells": [
+                "disperse-into-air"
+              ]
+            }
+          },
+          {
+            "value": "ambition",
+            "label": "Ambition — Competitive Edge",
+            "grant": {
+              "focusSpells": [
+                "competitive-edge"
+              ]
+            }
+          },
+          {
+            "value": "cities",
+            "label": "Cities — Pulse of Civilization",
+            "grant": {
+              "focusSpells": [
+                "pulse-of-civilization"
+              ]
+            }
+          },
+          {
+            "value": "confidence",
+            "label": "Confidence — Delusional Pride",
+            "grant": {
+              "focusSpells": [
+                "delusional-pride"
+              ]
+            }
+          },
+          {
+            "value": "creation",
+            "label": "Creation — Artistic Flourish",
+            "grant": {
+              "focusSpells": [
+                "artistic-flourish"
+              ]
+            }
+          },
+          {
+            "value": "darkness",
+            "label": "Darkness — Darkened Eyes",
+            "grant": {
+              "focusSpells": [
+                "darkened-eyes"
+              ]
+            }
+          },
+          {
+            "value": "death",
+            "label": "Death — Eradicate Undeath",
+            "grant": {
+              "focusSpells": [
+                "eradicate-undeath"
+              ]
+            }
+          },
+          {
+            "value": "destruction",
+            "label": "Destruction — Destructive Aura",
+            "grant": {
+              "focusSpells": [
+                "destructive-aura"
+              ]
+            }
+          },
+          {
+            "value": "dreams",
+            "label": "Dreams — Dreamer's Call",
+            "grant": {
+              "focusSpells": [
+                "dreamers-call"
+              ]
+            }
+          },
+          {
+            "value": "earth",
+            "label": "Earth — Localized Quake",
+            "grant": {
+              "focusSpells": [
+                "localized-quake"
+              ]
+            }
+          },
+          {
+            "value": "family",
+            "label": "Family — Unity",
+            "grant": {
+              "focusSpells": [
+                "unity"
+              ]
+            }
+          },
+          {
+            "value": "fate",
+            "label": "Fate — Tempt Fate",
+            "grant": {
+              "focusSpells": [
+                "tempt-fate"
+              ]
+            }
+          },
+          {
+            "value": "fire",
+            "label": "Fire — Flame Barrier",
+            "grant": {
+              "focusSpells": [
+                "flame-barrier"
+              ]
+            }
+          },
+          {
+            "value": "freedom",
+            "label": "Freedom — Word of Freedom",
+            "grant": {
+              "focusSpells": [
+                "word-of-freedom"
+              ]
+            }
+          },
+          {
+            "value": "healing",
+            "label": "Healing — Rebuke Death",
+            "grant": {
+              "focusSpells": [
+                "rebuke-death"
+              ]
+            }
+          },
+          {
+            "value": "indulgence",
+            "label": "Indulgence — Take its Course",
+            "grant": {
+              "focusSpells": [
+                "take-its-course"
+              ]
+            }
+          },
+          {
+            "value": "knowledge",
+            "label": "Knowledge — Know the Enemy",
+            "grant": {
+              "focusSpells": [
+                "know-the-enemy"
+              ]
+            }
+          },
+          {
+            "value": "luck",
+            "label": "Luck — Lucky Break",
+            "grant": {
+              "focusSpells": [
+                "lucky-break"
+              ]
+            }
+          },
+          {
+            "value": "magic",
+            "label": "Magic — Mystic Beacon",
+            "grant": {
+              "focusSpells": [
+                "mystic-beacon"
+              ]
+            }
+          },
+          {
+            "value": "might",
+            "label": "Might — Enduring Might",
+            "grant": {
+              "focusSpells": [
+                "enduring-might"
+              ]
+            }
+          },
+          {
+            "value": "moon",
+            "label": "Moon — Touch of the Moon",
+            "grant": {
+              "focusSpells": [
+                "touch-of-the-moon"
+              ]
+            }
+          },
+          {
+            "value": "nature",
+            "label": "Nature — Nature's Bounty",
+            "grant": {
+              "focusSpells": [
+                "natures-bounty"
+              ]
+            }
+          },
+          {
+            "value": "nightmares",
+            "label": "Nightmares — Shared Nightmare",
+            "grant": {
+              "focusSpells": [
+                "shared-nightmare"
+              ]
+            }
+          },
+          {
+            "value": "pain",
+            "label": "Pain — Retributive Pain",
+            "grant": {
+              "focusSpells": [
+                "retributive-pain"
+              ]
+            }
+          },
+          {
+            "value": "passion",
+            "label": "Passion — Captivating Adoration",
+            "grant": {
+              "focusSpells": [
+                "captivating-adoration"
+              ]
+            }
+          },
+          {
+            "value": "protection",
+            "label": "Protection — Protector's Sphere",
+            "grant": {
+              "focusSpells": [
+                "protectors-sphere"
+              ]
+            }
+          },
+          {
+            "value": "secrecy",
+            "label": "Secrecy — Safeguard Secret",
+            "grant": {
+              "focusSpells": [
+                "safeguard-secret"
+              ]
+            }
+          },
+          {
+            "value": "travel",
+            "label": "Travel — Traveler's Transit",
+            "grant": {
+              "focusSpells": [
+                "travelers-transit"
+              ]
+            }
+          },
+          {
+            "value": "trickery",
+            "label": "Trickery — Trickster's Twin",
+            "grant": {
+              "focusSpells": [
+                "tricksters-twin"
+              ]
+            }
+          },
+          {
+            "value": "truth",
+            "label": "Truth — Glimpse the Truth",
+            "grant": {
+              "focusSpells": [
+                "glimpse-the-truth"
+              ]
+            }
+          },
+          {
+            "value": "tyranny",
+            "label": "Tyranny — Commanding Lash",
+            "grant": {
+              "focusSpells": [
+                "commanding-lash"
+              ]
+            }
+          },
+          {
+            "value": "undeath",
+            "label": "Undeath — Malignant Sustenance",
+            "grant": {
+              "focusSpells": [
+                "malignant-sustenance"
+              ]
+            }
+          },
+          {
+            "value": "water",
+            "label": "Water — Downpour",
+            "grant": {
+              "focusSpells": [
+                "downpour"
+              ]
+            }
+          },
+          {
+            "value": "wealth",
+            "label": "Wealth — Precious Metals",
+            "grant": {
+              "focusSpells": [
+                "precious-metals"
+              ]
+            }
+          },
+          {
+            "value": "zeal",
+            "label": "Zeal — Zeal for Battle",
+            "grant": {
+              "focusSpells": [
+                "zeal-for-battle"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "domain-fluency",
+    "field": "choice",
+    "value": null
+  },
+  {
+    "category": "feats",
+    "id": "captivating-intensity",
+    "field": "spellSlotBonus",
+    "value": {
+      "perRank": 1,
+      "exceptHighest": 2,
+      "entryId": "captivator-dedication-casting"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "conscious-spell-specialization",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1
+      },
+      "byRankAt": [
+        {
+          "level": 18,
+          "byRank": {
+            "5": 1
+          }
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "conscious-spell-specialization",
+    "field": "dataWarning",
+    "value": "These extra slots may only cast spells granted by your conscious mind — the app does not restrict them."
+  },
+  {
+    "category": "feats",
+    "id": "draconic-paragon",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "jaw",
+        "claw",
+        "tail"
+      ],
+      "add": [
+        "deadly-d6"
+      ]
+    }
+  },
+  {
+    "category": "heritages",
+    "id": "plane-hopper-jotunborn",
+    "field": "sizeSet",
+    "value": "medium"
   }
 ]

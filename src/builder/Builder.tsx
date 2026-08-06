@@ -778,7 +778,7 @@ export function Builder({
   const subclassAnchorId = (lvl: number): string | null => {
     const cls = build.classId ? content.classes[build.classId] : undefined;
     if (!cls?.subclass) return null;
-    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled);
+    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
     const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
     const sn = norm(cls.subclass.name);
     const exact = g.features.find((f) => norm(f.name) === sn);
@@ -793,7 +793,7 @@ export function Builder({
   // How many required choices at this level are still unfilled (feat slots, subclass,
   // skill increase, attribute boosts). 0 = the level is fully set.
   const pendingCount = (lvl: number) => {
-    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled);
+    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
     let n = g.featSlots.filter((c, i) => !build.featPicks[slotKey(lvl, c, i)]).length;
     if (g.skillIncrease && !build.skillIncreases[lvl]) n++;
     if (g.attributeBoosts && new Set((build.attributeBoosts[lvl] ?? []).filter(Boolean)).size < attributeBoostCount(build.variantRules)) n++;
@@ -1065,7 +1065,7 @@ export function Builder({
               if (baseSkills == null) return null; // unreachable (sel is a valid level here) — narrows the memo
               const future = lvl > build.level;
               const pending = pendingCount(lvl);
-              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled);
+              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
               const bg = resolveBackground(build, content);
               const bgFeatAtThisLevel = lvl === 1 && bg?.grantedFeatId;
               const anyContent =

@@ -3277,10 +3277,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // SPECIFIC ranks ("two 4th-rank and one 3rd-rank") win over the per-rank spread. Without this
     // branch the four Rings of Wizardry — which all carry byRank — fell through to `perRank ?? 1`
     // with no exceptHighest, granting a slot at EVERY rank instead of the printed handful.
-    if (bonus.byRank) {
-      for (const [rank, n] of Object.entries(bonus.byRank)) {
+    if (bonus.byRank || bonus.byRankAt) {
+      for (const [rank, n] of Object.entries(bonus.byRank ?? {})) {
         const r = Number(rank);
         if (Number.isFinite(r) && r > 0 && n > 0) add(r, n);
+      }
+      // Ranks that arrive later than the feat ("At 18th level, you also gain a 5th-rank slot").
+      for (const step of bonus.byRankAt ?? []) {
+        if (level < step.level) continue;
+        for (const [rank, n] of Object.entries(step.byRank)) {
+          const r = Number(rank);
+          if (Number.isFinite(r) && r > 0 && n > 0) add(r, n);
+        }
       }
       continue;
     }
@@ -3419,6 +3427,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * and was already applied.
        */
       const archEntry = spellcasting.find((e) => e.id === baseEntry.id);
+      // Repertoire and font grants have the SAME problem, for the same reason: their "final pass"
+      // runs ~300 lines above this, so anything naming an archetype entry found nothing and was
+      // dropped in silence.
+      if (archEntry) {
+        for (const { entryId, spells } of grantedRepertoireAdds) {
+          if (entryId !== baseEntry.id) continue;
+          for (const sid of spells) {
+            const rank = content.spells[sid]?.rank ?? 1;
+            const at = ((archEntry.grantedRepertoire ??= {})[rank] ??= []);
+            if (!at.includes(sid)) at.push(sid);
+          }
+        }
+        for (const { entryId, spells } of fontAdds) {
+          if (entryId !== baseEntry.id || !archEntry.font) continue;
+          archEntry.font.allowed = [...new Set([...(archEntry.font.allowed ?? []), ...spells])];
+        }
+      }
       if (archEntry) {
         for (const bonus of spellSlotBonuses) {
           if (bonus.entryId !== baseEntry.id) continue;
@@ -3883,13 +3908,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const ancSize = (ancestry?.size as (typeof SIZE_ORDER)[number]) ?? 'medium';
       let size = ancSize;
       let reach = 5;
-      const consider = (g: { sizeOverride?: (typeof SIZE_ORDER)[number]; reach?: number } | undefined) => {
-        if (g?.sizeOverride && SIZE_ORDER.indexOf(g.sizeOverride) > SIZE_ORDER.indexOf(size)) size = g.sizeOverride;
+      const consider = (
+        g: { sizeOverride?: (typeof SIZE_ORDER)[number]; sizeSet?: (typeof SIZE_ORDER)[number]; reach?: number } | undefined,
+      ) => {
+        // `sizeSet` is absolute and may LOWER — "Instead of Large, your size is Medium". Nothing else
+        // could shrink a character, because sizeOverride is strictly largest-wins.
+        if (g?.sizeSet) size = g.sizeSet;
+        else if (g?.sizeOverride && SIZE_ORDER.indexOf(g.sizeOverride) > SIZE_ORDER.indexOf(size)) size = g.sizeOverride;
         if (g?.reach && g.reach > reach) reach = g.reach;
       };
       for (const fc of feats) consider(content.feats[fc.featId]);
       if (build.heritageId) consider(content.heritages[build.heritageId]);
-      return { ...(size !== 'medium' ? { size } : {}), ...(reach !== 5 ? { reach } : {}) };
+      if (secondHeritageId) consider(content.heritages[secondHeritageId]);
+      // Emit when the size differs from the ANCESTRY's as well as when it is not medium: a jotunborn
+      // lowered to Medium must record it, or the sheet falls back to the ancestry's Large.
+      return { ...(size !== 'medium' || size !== ancSize ? { size } : {}), ...(reach !== 5 ? { reach } : {}) };
     })(),
     ...(commanderTactics ? { commanderTactics } : {}),
     ...(inventor ? { inventor } : {}),
@@ -4401,7 +4434,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   const realSlots: RealSlot[] = [];
   if (c.classId) {
     for (let lvl = 1; lvl <= c.level; lvl++) {
-      const cats = levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2, c.mythicEnabled).featSlots;
+      const cats = levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2, c.mythicEnabled, c.feats.map((f) => f.featId)).featSlots;
       cats.forEach((category, idx) => realSlots.push({ level: lvl, idx, category }));
     }
   }
@@ -4666,6 +4699,9 @@ export function levelGrants(
   classId2?: string | null,
   subclassId2?: string | null,
   mythicEnabled?: boolean,
+  /** The feats the character has TAKEN — only needed for grants a feat itself unlocks
+   *  (Ultimate Flexibility adds a third combat-flexibility slot). */
+  takenFeatIds?: Iterable<string>,
 ): LevelGrants {
   const cls = classId ? content.classes[classId] : undefined;
   // Dual Class: the second class contributes its own features and class feats at every level.
@@ -4695,6 +4731,10 @@ export function levelGrants(
     // Fighter Combat Flexibility (L9) + Improved Flexibility (L15): each grants a bonus daily fighter
     // feat (≤8 at L9, ≤14 at L15). Modeled as an additive 'bonus' slot (the app has no daily-prep step).
     if ((cls.id === 'fighter' || cls2?.id === 'fighter') && (level === 9 || level === 15)) featSlots.push('bonus');
+    // Ultimate Flexibility (L20) makes it THREE feats, the third "up to 18th level" — a slot the
+    // level table cannot know about, because it is unlocked by a feat rather than by the class.
+    if ((cls.id === 'fighter' || cls2?.id === 'fighter') && level === 20 && takenFeatIds && [...takenFeatIds].includes('ultimate-flexibility'))
+      featSlots.push('bonus');
     // Free Archetype: a bonus archetype-only class feat at every even level (2–20).
     if (variant?.freeArchetype && level >= 2 && level % 2 === 0) featSlots.push('archetype');
     // Mythic (War of Immortals): a mythic-feat slot at every even level (2–20), fillable only with
