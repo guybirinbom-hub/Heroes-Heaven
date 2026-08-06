@@ -101,12 +101,14 @@ describe('extra spell slots', () => {
     expect((db.feats['conscious-spell-specialization'].spellSlotBonus as Record<string, unknown>).restriction).toBeUndefined();
   });
 
-  it('Captivating Intensity is pinned to the captivator archetype entry', () => {
-    expect(db.feats['captivating-intensity'].spellSlotBonus).toEqual({
-      perRank: 1,
-      exceptHighest: 2,
-      entryId: 'captivator-dedication-casting',
-    });
+  it('Captivating Intensity is NOT a slot grant — it is innate USES', () => {
+    // "You can cast each occult INNATE SPELL granted by captivator archetype feats one additional
+    // time per day." A spellSlotBonus here would invent slots the archetype never had: the captivator
+    // grants innate spells at fixed levels, not a slot ladder.
+    expect(db.feats['captivating-intensity'].description).toMatch(/innate spell/i);
+    expect(db.feats['captivating-intensity'].spellSlotBonus).toBeUndefined();
+    // No lane amends the daily uses of an ALREADY-granted innate spell, so the player is told.
+    expect(db.feats['captivating-intensity'].dataWarning).toMatch(/innate/i);
   });
 });
 

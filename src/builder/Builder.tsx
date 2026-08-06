@@ -432,9 +432,34 @@ export function Builder({
     return { cantrips, upTo };
   }, [content]);
   const NO_SPELLS: Sp[] = useMemo(() => [], []);
+  /**
+   * Spells a feat ADDS to your list ("Add Behold the Weave, Cast into Time, Haste … to your spell
+   * list"). The sheet's Manage-Spells picker already reads `character.spellListAdditions`; this one
+   * filtered on tradition alone, so a caster building a repertoire here could never pick the spells
+   * their own feat had just granted them.
+   */
+  const listAdditions = useMemo(() => {
+    const out = new Set<string>();
+    for (const featId of Object.values(build.featPicks ?? {})) {
+      const list = featId ? content.feats[featId]?.spellListAdditions : undefined;
+      for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
+        // Only the plain list-widening lane belongs in this picker — 'repertoire' and 'font' grants
+        // are applied by buildCharacter and are not the player's to choose here.
+        if (add.as && add.as !== 'list') continue;
+        for (const s of add.spells ?? []) if (content.spells[s]) out.add(s);
+      }
+    }
+    return out;
+  }, [build.featPicks, content]);
   const eligibleSpells = (rank: number) => {
     if (!tradition) return NO_SPELLS;
-    return rank === 0 ? spellIndex.cantrips[tradition] ?? NO_SPELLS : spellIndex.upTo[tradition]?.[rank] ?? NO_SPELLS;
+    const base = rank === 0 ? spellIndex.cantrips[tradition] ?? NO_SPELLS : spellIndex.upTo[tradition]?.[rank] ?? NO_SPELLS;
+    if (!listAdditions.size) return base;
+    const have = new Set(base.map((s) => s.id));
+    const extra = [...listAdditions]
+      .map((id) => content.spells[id])
+      .filter((s): s is Sp => !!s && !have.has(s.id) && (rank === 0 ? s.rank === 0 : s.rank > 0 && s.rank <= rank));
+    return extra.length ? [...base, ...extra].sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name)) : base;
   };
   // ── Dual Class: the SECOND caster's spell surface (writes cantrips2/spells2/signatures2). Only when
   //    the dual-class variant is on AND the second class is itself a slot caster. These mirror the

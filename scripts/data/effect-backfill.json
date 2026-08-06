@@ -65592,6 +65592,12 @@
     "value": null
   },
   {
+    "category": "heritages",
+    "id": "plane-hopper-jotunborn",
+    "field": "sizeSet",
+    "value": "medium"
+  },
+  {
     "category": "feats",
     "id": "future-spell-learning",
     "field": "spellListAdditions",
@@ -65980,12 +65986,8 @@
   {
     "category": "feats",
     "id": "captivating-intensity",
-    "field": "spellSlotBonus",
-    "value": {
-      "perRank": 1,
-      "exceptHighest": 2,
-      "entryId": "captivator-dedication-casting"
-    }
+    "field": "dataWarning",
+    "value": "Grants one extra daily casting of each captivator innate spell (except your two highest ranks) — the app does not yet track per-spell innate uses granted this way."
   },
   {
     "category": "feats",
@@ -66028,11 +66030,5 @@
         "deadly-d6"
       ]
     }
-  },
-  {
-    "category": "heritages",
-    "id": "plane-hopper-jotunborn",
-    "field": "sizeSet",
-    "value": "medium"
   }
 ]

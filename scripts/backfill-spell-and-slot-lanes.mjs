@@ -98,13 +98,19 @@ listAdd(
   put('feats', 'domain-fluency', 'choice', null, [/advanced domain spell/i]);
 }
 
-/* ---- 5. Captivating Intensity ---------------------------------------------------------------- */
+/* ---- 5. Captivating Intensity — NOT a slot grant ---------------------------------------------
+ * It reads "You can cast each occult INNATE SPELL granted by captivator archetype feats one
+ * additional time per day". A spellSlotBonus here would invent a slot ladder the captivator does not
+ * have: its Basic/Expert/Master feats grant innate spells at fixed levels (4th at 10, 5th at 12,
+ * 6th at 14 …), not slots. Nothing amends the daily uses of an already-granted innate spell, so the
+ * player is told rather than given a wrong number.
+ */
 put(
   'feats',
   'captivating-intensity',
-  'spellSlotBonus',
-  { perRank: 1, exceptHighest: 2, entryId: 'captivator-dedication-casting' },
-  [/captivator/i],
+  'dataWarning',
+  'Grants one extra daily casting of each captivator innate spell (except your two highest ranks) — the app does not yet track per-spell innate uses granted this way.',
+  [/innate spell/i],
 );
 
 /* ---- 6. Conscious Spell Specialization ------------------------------------------------------- */
