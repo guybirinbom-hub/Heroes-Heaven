@@ -39,6 +39,8 @@ export function grantForSpellPick(
   if (!content.spells[spellId]) return null;
   if (!spellsMatching(filter, content).some((s) => s.id === spellId)) return null;
   if (filter.grantAs === 'focus') return { focusSpells: [spellId] };
+  // 'staff': the pick is LOADED INTO a staff the record hands you, not cast from nothing.
+  if (filter.grantAs === 'staff') return { staffSpells: [spellId] };
   return { innateSpells: [{ spellId, ...(filter.innate ?? {}) }] };
 }
 

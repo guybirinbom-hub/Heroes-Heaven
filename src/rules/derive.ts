@@ -391,7 +391,10 @@ export function skillSubstituteFor(
 
 /** `noSubstitute` stops the substitution lookup recursing when it derives the stand-in skill. */
 export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatabase, noSubstitute = false): StatLine {
-  const rank = c.proficiencies.skills[key] ?? 'untrained';
+  // A rank granted by THIS MORNING's answer (Haunting Memories' borrowed skill). Build-time skill
+  // grants are already folded into `proficiencies`; a daily one is play state resolved after the
+  // build, so it has to be maxed in here or the answer moves nothing on the sheet.
+  const rank = dailySkillRank(c, db, key) ?? c.proficiencies.skills[key] ?? 'untrained';
   const ability = skillAbility(key);
   // Item bonus: the best of an ABP skill item, a Monster-Parts refined skill item, a passive skill item
   // (Cloak of Social Graces), and a dynamic bloodline/deity skill item (Sanguine Pendant). Don't stack.
@@ -778,6 +781,33 @@ export function effectiveChoiceOptions(
  * Reads the choice DEFINITIONS rather than the raw store, so an answer left behind by a record the
  * character no longer owns grants nothing.
  */
+const RANK_ORDER = ['untrained', 'trained', 'expert', 'master', 'legendary'] as const;
+
+/** Whether a character meets an option's skill-rank gate. No gate ⇒ always offered. */
+export function qualifiesForOption(
+  c: Character,
+  gate: { skill: ProficiencyKey; min?: ProficiencyRank; max?: ProficiencyRank } | undefined,
+): boolean {
+  if (!gate) return true;
+  const at = RANK_ORDER.indexOf((c.proficiencies.skills[gate.skill] ?? 'untrained') as (typeof RANK_ORDER)[number]);
+  if (gate.min && at < RANK_ORDER.indexOf(gate.min)) return false;
+  if (gate.max && at > RANK_ORDER.indexOf(gate.max)) return false;
+  return true;
+}
+
+/** The best rank this morning's answers give a skill, or undefined when they give none. Never lowers:
+ *  a granted rank only counts when it beats what the character already has. */
+export function dailySkillRank(c: Character, db: ContentDatabase | undefined, key: ProficiencyKey): ProficiencyRank | undefined {
+  if (!db || !c.dailyChoices) return undefined;
+  const own = c.proficiencies.skills[key] ?? 'untrained';
+  let best: ProficiencyRank | undefined;
+  for (const g of dailyChoiceGrants(c, db)) {
+    const r = g.skills?.[key];
+    if (r && RANK_ORDER.indexOf(r) > RANK_ORDER.indexOf(best ?? own)) best = r;
+  }
+  return best;
+}
+
 export function dailyChoiceGrants(c: Character, db: ContentDatabase): EffectGrant[] {
   const stored = c.dailyChoices;
   if (!stored) return [];
@@ -785,8 +815,20 @@ export function dailyChoiceGrants(c: Character, db: ContentDatabase): EffectGran
   for (const rec of ownedDailyChoiceRecords(c, db)) {
     const def = rec.choice;
     if (!def?.daily) continue;
-    const grant = (def.options ?? []).find((o) => o.value === stored[dailyChoiceKey(rec.id, def.flag)])?.grant;
-    if (grant) out.push(grant);
+    const answer = stored[dailyChoiceKey(rec.id, def.flag)];
+    // An OPEN spell pick made this morning becomes a real casting. Loaner Spell borrows a spell from
+    // an ally and can cast it once that day; without this the answer was recorded and nothing else,
+    // because only fixed `options` carried grants.
+    if (def.kind === 'open' && def.from?.type === 'spell' && def.from.grantInnate && answer && db.spells[answer]) {
+      const g = def.from.grantInnate;
+      out.push({ innateSpells: [{ spellId: answer, usesPerDay: g.usesPerDay ?? 1 }] });
+      continue;
+    }
+    const opt = (def.options ?? []).find((o) => o.value === answer);
+    // An answer whose gate no longer holds grants nothing. A Haunting Memories pick made while a skill
+    // was untrained has to stop applying once training arrives from somewhere else, or this morning's
+    // answer outlives the condition it was chosen under.
+    if (opt?.grant && qualifiesForOption(c, opt.requiresSkillRank)) out.push(opt.grant);
   }
   return out;
 }

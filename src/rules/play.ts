@@ -14,7 +14,7 @@
  */
 import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
 import { resolveRestrictedSlots } from './restrictedSlots';
-import { deriveMaxHp, deriveBulk } from './derive';
+import { deriveMaxHp, deriveBulk, dailyChoiceGrants } from './derive';
 import { adjustModes } from './modes';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
@@ -367,6 +367,43 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     }
     return out;
   });
+  // Spells BORROWED this morning (Loaner Spell). They cannot come from the build — the answer is
+  // re-made nightly — so they are appended to the innate entry here, or given one of their own when
+  // the character has no innate spells at all.
+  {
+    const borrowed: { spellId: string; uses: number }[] = [];
+    for (const g of dailyChoiceGrants({ ...ch, dailyChoices: play.dailyChoices }, content))
+      for (const s of g.innateSpells ?? []) if (content.spells[s.spellId]) borrowed.push({ spellId: s.spellId, uses: s.usesPerDay ?? 1 });
+    if (borrowed.length) {
+      const i = spellcasting.findIndex((e) => e.id === 'innate-casting');
+      const base: SpellcastingEntry =
+        i >= 0
+          ? spellcasting[i]
+          : {
+              id: 'innate-casting',
+              name: 'Innate spells',
+              type: 'innate',
+              tradition: spellcasting[0]?.tradition ?? 'arcane',
+              keyAbility: spellcasting[0]?.keyAbility ?? 'cha',
+              proficiency: spellcasting[0]?.proficiency ?? 'trained',
+              cantrips: [],
+              repertoire: {},
+            };
+      const repertoire: Record<number, string[]> = { ...(base.repertoire ?? {}) };
+      const innateUses = { ...(base.innateUses ?? {}) };
+      const spellSources = { ...(base.spellSources ?? {}) };
+      for (const b of borrowed) {
+        const rank = content.spells[b.spellId].rank ?? 0;
+        if (rank <= 0) continue;
+        if (!(repertoire[rank] ??= []).includes(b.spellId)) repertoire[rank].push(b.spellId);
+        if (b.uses !== 1) innateUses[b.spellId] = b.uses;
+        spellSources[b.spellId] = 'Borrowed today';
+      }
+      const merged = { ...base, repertoire, ...(Object.keys(innateUses).length ? { innateUses } : {}), spellSources };
+      if (i >= 0) spellcasting[i] = merged;
+      else spellcasting.push(merged);
+    }
+  }
   const focus = ch.focus ? { ...ch.focus, current: clamp(ch.focus.max - focusUsed, 0, ch.focus.max) } : ch.focus;
   return {
     ...ch,

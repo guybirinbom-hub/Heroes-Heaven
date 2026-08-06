@@ -826,6 +826,10 @@ export interface EffectGrant {
   focusPoolBonus?: number;
   /** Item-only: worn/invested item bonuses of the chosen kind. */
   passive?: ItemPassiveEffects;
+  /** Spells the pick loads into a staff this record GRANTS — a Staff Nexus makeshift staff holds
+   *  a cantrip and a 1st-rank spell from the wizard's own spellbook, so they belong to that instance
+   *  and not to the shared item record. */
+  staffSpells?: string[];
   /** Extra damage the chosen option adds to Strikes. Potent Nectar's two branches are nothing
    *  BUT this, and an EffectGrant could carry defences, senses and spells but no damage. */
   strikeDamage?: StrikeDamageRider[];
@@ -878,6 +882,12 @@ export interface OpenChoiceFrom {
   anyTraits?: string[];
   /** feat: restrict to a category and a level ceiling ("any 1st-level dwarf ancestry feat"). */
   featCategory?: FeatCategory;
+  /**
+   * spell + `daily`: what the morning's pick GRANTS. Loaner Spell borrows one spell of up to 3rd
+   * rank from an ally and can cast it once that day, so the answer has to become a real casting
+   * rather than a recorded note — an open daily choice otherwise granted nothing at all.
+   */
+  grantInnate?: { usesPerDay?: number; note?: string };
   /** feat: level ceiling. weapon: item-level ceiling ("choose a level 0 weapon"). */
   maxLevel?: number;
   /** weapon: required rarity ("an uncommon simple or martial weapon"). */
@@ -906,7 +916,7 @@ export interface SpellChoiceFilter {
   /** Only cantrips / only non-cantrips. */
   cantripsOnly?: boolean;
   /** How the picked spell is granted. 'innate' uses the innate lane; 'focus' adds a focus spell. */
-  grantAs: 'innate' | 'focus';
+  grantAs: 'innate' | 'focus' | 'staff';
   /** For 'innate': the cadence/heightening applied to the chosen spell. */
   innate?: Omit<InnateSpellGrant, 'spellId'>;
   /** Level at which this pick unlocks (a scaling feat offers more picks as you level). */
@@ -1163,7 +1173,20 @@ export interface FeatChoiceDef {
    * this type of injury" read as a note rather than a resistance. Build-time picks have carried a
    * grant since the start (EffectChoice.options); this is the same shape for the nightly ones.
    */
-  options?: { value: string; label: string; description?: string; grant?: EffectGrant }[];
+  /**
+   * `requiresSkillRank` hides an option the character does not qualify for. Haunting Memories offers
+   * two branches — "expert in one skill in which you are UNTRAINED" or "master in one skill in which
+   * you are TRAINED OR BETTER" — so the same skill appears under one branch or the other depending on
+   * where the character actually stands, and offering both would let a player raise an untrained skill
+   * straight to master.
+   */
+  options?: {
+    value: string;
+    label: string;
+    description?: string;
+    grant?: EffectGrant;
+    requiresSkillRank?: { skill: ProficiencyKey; min?: ProficiencyRank; max?: ProficiencyRank };
+  }[];
   /**
    * Why this pick is RECORDED but grants nothing mechanical. Shown to the player next to the choice.
    * Two shapes, both agreed with the owner rather than guessed:
@@ -2656,6 +2679,10 @@ export interface InventoryItem {
   /** Monster Parts (variant rule): when present, this item is refined/imbued with monster parts and
    *  ignores its runes/precious material. Absent = a normal runed item. */
   monsterPart?: ItemMonsterPart;
+  /** Spells THIS instance holds, overriding the item record. A Staff Nexus makeshift staff holds
+   *  a cantrip and a 1st-rank spell chosen from the wizard's own spellbook, so they belong to the
+   *  instance rather than to the shared item. */
+  heldSpellsOverride?: Record<number, string[]>;
 }
 
 export type SpellcastingType = 'prepared' | 'spontaneous' | 'focus' | 'innate' | 'ritual' | 'items';

@@ -272,6 +272,9 @@ export interface BuildState {
     charges?: { current: number; max: number };
     /** Generic scroll/wand: the spell the player chose to store (see ItemBase.spellSlot). */
     heldSpell?: string;
+    /** Spells THIS instance holds, overriding the item record — a Staff Nexus makeshift staff
+     *  carries a cantrip and a 1st-rank spell chosen from the wizard's own spellbook. */
+    heldSpellsOverride?: Record<number, string[]>;
     /**
      * Innovation / weapon implement / bonded item / ikon / rune source.
      *
@@ -2898,6 +2901,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const resolvedItemPassives: Record<string, ItemPassiveEffects> = {};
   const effectWarnings: { source: string; message: string }[] = [];
   const effectPicks: NonNullable<Character['effectPicks']> = [];
+  /** Spells the player loaded into a staff a record hands them (Staff Nexus). Applied to the granted
+   *  instance below rather than to the shared item, which every wizard would otherwise share. */
+  const grantedStaffSpells: string[] = [];
+  /** Those spells keyed by rank, or undefined. Used by BOTH the inventory entry and the item-spell
+   *  entry, so the two cannot disagree about what the staff holds. */
+  const staffSpellsFor = (itemId: string): Record<number, string[]> | undefined => {
+    if (!content.items[itemId]?.traits?.includes('staff')) return undefined;
+    const held: Record<number, string[]> = {};
+    for (const sid of grantedStaffSpells) (held[content.spells[sid]?.rank ?? 0] ??= []).push(sid);
+    return Object.keys(held).length ? held : undefined;
+  };
   const mergeEffect = (into: DefenseGrants, g: EffectGrant) => {
     if (g.senses) (into.senses ??= []).push(...g.senses);
     if (g.resistances) (into.resistances ??= []).push(...g.resistances);
@@ -2909,6 +2923,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // so without this branch the pick would grant a permanent resistance to a barbarian standing still.
     if (g.whileActive?.length) (into.whileActive ??= []).push(...g.whileActive);
     if (g.strikeDamage?.length) (into.strikeDamage ??= []).push(...g.strikeDamage);
+    if (g.staffSpells?.length) grantedStaffSpells.push(...g.staffSpells);
   };
   const resolvePick = (recordId: string, choices: EffectChoice[] | undefined, sink: (g: EffectGrant, srcName: string) => void, srcName: string) => {
     for (const ch of choices ?? []) {
@@ -3527,18 +3542,53 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   }
 
+  // Items a record HANDS you. Collected HERE, above the magic-item spell block, because a granted
+  // staff has to reach the Spells page like a bought one — that block reads build.inventory, which a
+  // granted item is never in.
+  const grantedItems: { itemId: string; quantity?: number; invested?: boolean; source: string }[] = [];
+  for (const fc of feats) {
+    for (const g of content.feats[fc.featId]?.grantsItems ?? []) {
+      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
+      grantedItems.push({ ...g, source: content.feats[fc.featId].name });
+    }
+  }
+  // …and off CLASS FEATURES. Only feats were scanned, so a thesis whose benefit IS an item (Staff
+  // Nexus's makeshift staff) handed over nothing. `grantOptions` as well as `ownedFeatureIds`,
+  // because a chosen subclass/extra-choice option is NOT in cls.features — the same trap that made
+  // Unfurling Brocade grant no Strike.
+  for (const fid of [...ownedFeatureIds, ...grantOptions.map((o) => o.id)]) {
+    for (const g of content.classFeatures[fid]?.grantsItems ?? []) {
+      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
+      grantedItems.push({ ...g, source: content.classFeatures[fid].name });
+    }
+  }
   // Magic-item spell sources: each carried staff / wand exposes its held spells as a read-only
   // 'items' spellcasting entry (cast using the wielder's spell DC; charges tracked on the item).
   {
     const caster = spellcasting.find((e) => e.type === 'prepared' || e.type === 'spontaneous');
-    build.inventory.forEach((it, i) => {
+    // Bought items PLUS the ones a record handed over, which are not in build.inventory — a Staff
+    // Nexus makeshift staff has to cast the two spells its owner loaded into it exactly like a
+    // bought staff would.
+    const grantedInv = grantedItems
+      .filter((g) => !build.inventory.some((it) => it.itemId === g.itemId))
+      .map((g, n) => ({
+        instanceId: `granted-${n}`,
+        itemId: g.itemId,
+        quantity: Math.max(1, g.quantity ?? 1),
+        heldSpellsOverride: staffSpellsFor(g.itemId),
+        heldSpell: undefined as string | undefined,
+      }));
+    [...build.inventory, ...grantedInv].forEach((it, i) => {
       const item = content.items[it.itemId];
+      const instanceId = (it as { instanceId?: string }).instanceId ?? `inv-${i}`;
       if (!item) return;
       // A generic scroll/wand (item.spellSlot) holds the spell the player chose for this instance.
       const held =
-        item.spellSlot && it.heldSpell && content.spells[it.heldSpell]
-          ? { [item.spellSlot.rank]: [it.heldSpell] }
-          : item.heldSpells;
+        it.heldSpellsOverride && Object.keys(it.heldSpellsOverride).length
+          ? it.heldSpellsOverride
+          : item.spellSlot && it.heldSpell && content.spells[it.heldSpell]
+            ? { [item.spellSlot.rank]: [it.heldSpell] }
+            : item.heldSpells;
       if (!held || !Object.keys(held).length) return;
       const tradCount: Record<string, number> = {};
       for (const ids of Object.values(held))
@@ -3547,8 +3597,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const repertoire: Record<number, string[]> = {};
       for (const [rankStr, ids] of Object.entries(held)) if (Number(rankStr) > 0) repertoire[Number(rankStr)] = ids;
       spellcasting.push({
-        // `inv-${i}` matches the instanceId assigned to character.inventory[i] further below.
-        id: `item:inv-${i}`,
+        // `inv-${i}` matches the instanceId assigned to character.inventory[i] further below — but a
+        // GRANTED item carries its own `granted-N` id, so its entry has to use that or the Spells page
+        // and the Inventory point at different instances and the charges never sync.
+        id: `item:${instanceId}`,
         name: item.name,
         type: 'items',
         tradition,
@@ -3556,7 +3608,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         proficiency: caster?.proficiency ?? 'trained',
         cantrips: held[0] ?? [],
         repertoire,
-        itemInstanceId: `inv-${i}`,
+        itemInstanceId: instanceId,
       });
     });
 
@@ -3694,14 +3746,6 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
 
   // Items a record HANDS the character. Collected here so the inventory emission below stays a
   // single expression; the record that gave it is kept so the sheet can say where it came from.
-  const grantedItems: { itemId: string; quantity?: number; invested?: boolean; source: string }[] = [];
-  for (const fc of feats) {
-    for (const g of content.feats[fc.featId]?.grantsItems ?? []) {
-      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
-      grantedItems.push({ ...g, source: content.feats[fc.featId].name });
-    }
-  }
-
   // RETUNE an entry that already exists. Its tradition and key attribute come from whatever granted
   // it, and nothing could change them afterwards — so Ancestral Mind ("the spell's tradition becomes
   // occult … and you can use your psychic spellcasting attribute modifier instead of Charisma") left
@@ -4017,6 +4061,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           equipped: false,
           ...(g.invested !== undefined ? { invested: g.invested } : {}),
           grantedBy: g.source,
+          // The spells the player chose for THIS staff, keyed by the spell's own rank.
+          ...(() => {
+            const held = staffSpellsFor(g.itemId);
+            return held ? { heldSpellsOverride: held } : {};
+          })(),
         })),
     ],
     currency: cpToCoins(

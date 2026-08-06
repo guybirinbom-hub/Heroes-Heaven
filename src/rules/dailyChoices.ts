@@ -11,10 +11,10 @@
  * new feat is a data edit, not a code edit.
  */
 import type { Character, ContentDatabase } from './types';
-import { dailyChoiceKey, effectiveChoiceOptions, ownedDailyChoiceRecords as ownedRecords } from './derive';
+import { dailyChoiceKey, effectiveChoiceOptions, ownedDailyChoiceRecords as ownedRecords, qualifiesForOption } from './derive';
 import { openChoiceOptions } from './openChoice';
 
-export { dailyChoiceKey } from './derive';
+export { dailyChoiceKey, qualifiesForOption } from './derive';
 
 export interface DailyChoice {
   /** Storage key in PlayState.dailyChoices — `${recordId}:${flag}`. */
@@ -44,7 +44,11 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
       def.kind === 'array'
         ? // Plus whatever another owned record adds to this menu — Radiant Armament's astral and
           // brilliant runes belong on the blessed armament's list, not on a list of their own.
-          effectiveChoiceOptions(rec.id, def, c, db)
+          //
+          // …then narrowed to what the character actually qualifies for. Haunting Memories offers a
+          // given skill under exactly ONE of its two branches depending on where that skill stands,
+          // so an untrained skill cannot be taken straight to master.
+          effectiveChoiceOptions(rec.id, def, c, db).filter((o) => qualifiesForOption(c, o.requiresSkillRank))
         : def.kind === 'open'
           ? openChoiceOptions(def.from, db, { character: c }).map((o) => ({ value: o.id, label: o.name, description: o.description }))
           : [];

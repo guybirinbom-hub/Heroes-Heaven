@@ -89491,5 +89491,567 @@
     "id": "magical-understudy",
     "field": "eidolonCantrips",
     "value": 2
+  },
+  {
+    "category": "feats",
+    "id": "haunting-memories",
+    "field": "choice",
+    "value": {
+      "flag": "hauntingMemory",
+      "prompt": "Haunting Memories — this morning’s borrowed skill",
+      "kind": "array",
+      "daily": true,
+      "options": [
+        {
+          "value": "expert-acrobatics",
+          "label": "Acrobatics → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "acrobatics",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "acrobatics": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-arcana",
+          "label": "Arcana → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "arcana",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "arcana": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-athletics",
+          "label": "Athletics → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "athletics",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "athletics": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-crafting",
+          "label": "Crafting → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "crafting",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "crafting": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-deception",
+          "label": "Deception → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "deception",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "deception": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-diplomacy",
+          "label": "Diplomacy → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "diplomacy",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "diplomacy": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-intimidation",
+          "label": "Intimidation → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "intimidation",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "intimidation": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-medicine",
+          "label": "Medicine → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "medicine",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "medicine": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-nature",
+          "label": "Nature → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "nature",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "nature": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-occultism",
+          "label": "Occultism → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "occultism",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "occultism": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-performance",
+          "label": "Performance → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "performance",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "performance": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-religion",
+          "label": "Religion → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "religion",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "religion": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-society",
+          "label": "Society → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "society",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "society": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-stealth",
+          "label": "Stealth → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "stealth",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "stealth": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-survival",
+          "label": "Survival → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "survival",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "survival": "expert"
+            }
+          }
+        },
+        {
+          "value": "expert-thievery",
+          "label": "Thievery → expert",
+          "description": "Untrained in it today.",
+          "requiresSkillRank": {
+            "skill": "thievery",
+            "max": "untrained"
+          },
+          "grant": {
+            "skills": {
+              "thievery": "expert"
+            }
+          }
+        },
+        {
+          "value": "master-acrobatics",
+          "label": "Acrobatics → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "acrobatics",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "acrobatics": "master"
+            }
+          }
+        },
+        {
+          "value": "master-arcana",
+          "label": "Arcana → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "arcana",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "arcana": "master"
+            }
+          }
+        },
+        {
+          "value": "master-athletics",
+          "label": "Athletics → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "athletics",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "athletics": "master"
+            }
+          }
+        },
+        {
+          "value": "master-crafting",
+          "label": "Crafting → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "crafting",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "crafting": "master"
+            }
+          }
+        },
+        {
+          "value": "master-deception",
+          "label": "Deception → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "deception",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "deception": "master"
+            }
+          }
+        },
+        {
+          "value": "master-diplomacy",
+          "label": "Diplomacy → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "diplomacy",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "diplomacy": "master"
+            }
+          }
+        },
+        {
+          "value": "master-intimidation",
+          "label": "Intimidation → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "intimidation",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "intimidation": "master"
+            }
+          }
+        },
+        {
+          "value": "master-medicine",
+          "label": "Medicine → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "medicine",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "medicine": "master"
+            }
+          }
+        },
+        {
+          "value": "master-nature",
+          "label": "Nature → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "nature",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "nature": "master"
+            }
+          }
+        },
+        {
+          "value": "master-occultism",
+          "label": "Occultism → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "occultism",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "occultism": "master"
+            }
+          }
+        },
+        {
+          "value": "master-performance",
+          "label": "Performance → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "performance",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "performance": "master"
+            }
+          }
+        },
+        {
+          "value": "master-religion",
+          "label": "Religion → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "religion",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "religion": "master"
+            }
+          }
+        },
+        {
+          "value": "master-society",
+          "label": "Society → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "society",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "society": "master"
+            }
+          }
+        },
+        {
+          "value": "master-stealth",
+          "label": "Stealth → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "stealth",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "stealth": "master"
+            }
+          }
+        },
+        {
+          "value": "master-survival",
+          "label": "Survival → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "survival",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "survival": "master"
+            }
+          }
+        },
+        {
+          "value": "master-thievery",
+          "label": "Thievery → master",
+          "description": "Trained or better in it today.",
+          "requiresSkillRank": {
+            "skill": "thievery",
+            "min": "trained"
+          },
+          "grant": {
+            "skills": {
+              "thievery": "master"
+            }
+          }
+        }
+      ],
+      "note": "You also gain one skill feat with a minimum requirement of your new rank in the chosen skill, until your next daily preparations. Take it as a temporary feat — for its level prerequisite only, count your level as half your level."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "loaner-spell",
+    "field": "choice",
+    "value": {
+      "flag": "loanerSpell",
+      "prompt": "Loaner Spell — the spell an ally prepared for you today",
+      "kind": "open",
+      "daily": true,
+      "from": {
+        "type": "spell",
+        "maxRank": 3,
+        "cantripsOnly": false,
+        "grantInnate": {
+          "usesPerDay": 1
+        }
+      },
+      "note": "Your ally must be a prepared caster able to prepare and cast it, the spell must have a Targets entry or an area, and they lose a slot of that rank. Cast it using your CLASS DC for saves, and your class DC minus 10 as the spell attack modifier."
+    }
+  },
+  {
+    "category": "items",
+    "id": "makeshift-staff",
+    "create": true,
+    "value": {
+      "id": "makeshift-staff",
+      "name": "Makeshift Staff",
+      "level": 1,
+      "itemType": "weapon",
+      "category": "simple",
+      "group": "club",
+      "damage": {
+        "dice": 1,
+        "die": "d4",
+        "type": "bludgeoning"
+      },
+      "traits": [
+        "magical",
+        "staff",
+        "two-hand-d8"
+      ],
+      "rarity": "common",
+      "bulk": 1,
+      "hands": 1,
+      "price": "0 gp",
+      "description": "The makeshift staff you built during your first days of study (Staff Nexus). It holds one cantrip and one 1st-rank spell from your spellbook. During your daily preparations you can expend a prepared spell to give it charges equal to that spell’s rank — two spells from 8th level, three from 16th. Casting its 1st-rank spell costs 1 charge; the cantrip costs none. Charges dissipate after 24 hours. If it is destroyed you can build another in an hour, with no charges.",
+      "counters": [
+        {
+          "id": "pool",
+          "label": "Charges",
+          "max": "level",
+          "resetsOnRest": true,
+          "startsFull": false
+        }
+      ],
+      "source": {
+        "book": "Pathfinder Player Core",
+        "license": "ORC"
+      }
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "staff-nexus",
+    "field": "grantsItems",
+    "value": [
+      {
+        "itemId": "makeshift-staff"
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "staff-nexus",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "staff-cantrip",
+        "prompt": "Makeshift staff — the cantrip it holds",
+        "spellFilter": {
+          "cantripsOnly": true,
+          "traditions": [
+            "arcane"
+          ],
+          "grantAs": "staff"
+        }
+      },
+      {
+        "id": "staff-spell",
+        "prompt": "Makeshift staff — the 1st-rank spell it holds",
+        "spellFilter": {
+          "rank": 1,
+          "traditions": [
+            "arcane"
+          ],
+          "grantAs": "staff"
+        }
+      }
+    ]
   }
 ]
