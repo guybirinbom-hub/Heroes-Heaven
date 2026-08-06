@@ -1423,6 +1423,14 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
    * `proficiencyAs` is the load-bearing half: an inventor is never trained in heavy armor, so flipping
    * `category` alone would send the AC lookup to an untrained column and collapse AC.
    */
+  /**
+   * A wizard arcane school's CURRICULUM, by rank — the spells its extra prepared slot may hold.
+   *
+   * Parsed from the school's AST tree rather than its description text: the printed block drops 21 of
+   * its 211 spell names (an AoN export defect), while the tree carries a resolved `spells:<id>` for
+   * every one. School of Unified Magical Theory correctly has none — it prints "No Curriculum".
+   */
+  curriculum?: Record<string, string[]>;
   armorRestat?: {
     /** Only restat the item carrying this designation (the innovation, not other armor). */
     designated: ItemDesignation;
@@ -2450,7 +2458,22 @@ export interface RuneDef {
   level: number;
   price?: Price;
   /** Property runes that add Strike damage (e.g. Flaming → 1d6 fire). */
-  damage?: { dice: number; die: DieSize; type: DamageType; critPersistent?: { dice: number; die: DieSize } };
+  damage?: {
+    dice: number;
+    die: DieSize;
+    type: DamageType;
+    /** Extra damage only on a critical hit, as persistent damage (flaming's 1d10 persistent fire). */
+    critPersistent?: { dice: number; die: DieSize };
+    /** The dice are PERSISTENT damage on every hit, not on a crit — wounding's "when you hit a
+     *  creature with a wounding weapon, you deal an extra 1d6 persistent bleed damage". */
+    persistent?: boolean;
+    /**
+     * "…or an extra 2d4 against an unholy target." A larger die pool that replaces the base one
+     * against a particular kind of creature. The app cannot know what is being hit, so this is shown
+     * beside the base rather than folded into it — the player applies it.
+     */
+    vs?: { trait: string; dice: number; die: DieSize };
+  };
   /**
    * A PROPERTY rune that "functions as" a fundamental one — Adamantine Echo works as a +1 armor
    * potency rune. It cannot simply BE `kind: 'potency'`: that would make it occupy the potency slot

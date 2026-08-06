@@ -2104,12 +2104,29 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         ((cls.features ?? []).some((f) => f.featureId === 'arcane-school' || f.featureId === 'arcane-thesis') || !!subOption);
       entry.spellbook = {};
       entry.prepared = {};
+      // The curriculum slot is RESTRICTED, not an extra ordinary slot. "You can prepare one spell from
+      // your school's curriculum" — filling it from the whole spellbook, which is what a plain +1 did,
+      // hands a wizard a free general slot at every rank. The list is the school's own, cumulative to
+      // the slot's rank because a slot may hold any spell of its rank or lower.
+      const curriculum = subOption?.id ? content.classFeatures[subOption.id]?.curriculum : undefined;
       for (const [rankStr, count] of Object.entries(slotCounts)) {
         const rank = Number(rankStr);
         const learned = build.spells[rank] ?? [];
         entry.spellbook[rank] = [...learned];
-        const total = count + (hasSchool ? 1 : 0); // +1 curriculum slot per castable rank (wizard only)
-        entry.prepared[rank] = Array.from({ length: total }, (_, i) => ({ spellId: learned[i] ?? null, expended: false }));
+        entry.prepared[rank] = Array.from({ length: count }, (_, i) => ({ spellId: learned[i] ?? null, expended: false }));
+        if (hasSchool && rank > 0) {
+          const allowed: string[] = [];
+          for (let r = 1; r <= rank; r++) for (const id of curriculum?.[String(r)] ?? []) if (content.spells[id]) allowed.push(id);
+          (entry.restrictedSlots ??= []).push({
+            id: `${entry.id}:curriculum:${rank}`,
+            label: 'Curriculum',
+            note: 'Your arcane school grants one extra prepared slot of each rank, for a spell from its curriculum.',
+            rank,
+            ...(allowed.length ? { allowed } : {}),
+            spellId: null,
+            expended: false,
+          });
+        }
       }
     } else {
       // Cleric/druid: prepare from the whole tradition list each day.

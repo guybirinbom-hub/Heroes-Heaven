@@ -179,10 +179,18 @@ describe('feature-gap fixes (granted spells/feats, deity, champion devotion)', (
     // Cleric (also a full caster, no curriculum slot) is the baseline.
     const clr = build('cleric', 5, { subclassId: 'cloistered-cleric', keyAbility: 'wis' });
     const cPrep = clr.spellcasting.find((e) => e.type === 'prepared');
+    // The extra slot is now a RESTRICTED one (it may hold only a curriculum spell), so the ordinary
+    // counts MATCH the cleric and the difference shows up as one Curriculum slot per rank.
     for (const rank of Object.keys(cPrep?.prepared ?? {})) {
       const r = Number(rank);
-      expect((wPrep?.prepared?.[r]?.length ?? 0), `rank ${r}`).toBe((cPrep?.prepared?.[r]?.length ?? 0) + 1);
+      expect(wPrep?.prepared?.[r]?.length ?? 0, `rank ${r}`).toBe(cPrep?.prepared?.[r]?.length ?? 0);
     }
+    const curriculum = (wPrep?.restrictedSlots ?? []).filter((s) => s.label === 'Curriculum');
+    expect(curriculum.map((s) => s.rank)).toEqual(
+      Object.keys(cPrep?.prepared ?? {})
+        .map(Number)
+        .filter((r) => r > 0),
+    );
   });
 
   it('Eldritch Archer / Beast Gunner / Psychic dedications grant an archetype spell pool (tradition + key)', () => {

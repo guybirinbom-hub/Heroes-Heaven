@@ -90189,5 +90189,598 @@
     "id": "sanctified-relic",
     "field": "note",
     "value": "At your daily preparations, touch one worn magical item without the apex trait: it gains apex until your next preparations and raises one of your divine attributes (chosen then) by 1, or to +4, whichever is higher — and grants its wearer your chosen sanctification. You cannot wear it yourself; your hierophant can, so the bonus lands on their sheet rather than yours. Spend 1 Mythic Point as you create it to raise BOTH divine attributes, an explicit exception to the one-apex-item limit."
+  },
+  {
+    "category": "runes",
+    "id": "wounding",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "bleed",
+      "persistent": true
+    }
+  },
+  {
+    "category": "runes",
+    "id": "holy",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "spirit",
+      "vs": {
+        "trait": "unholy",
+        "dice": 2,
+        "die": "d4"
+      }
+    }
+  },
+  {
+    "category": "runes",
+    "id": "unholy",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "spirit",
+      "vs": {
+        "trait": "holy",
+        "dice": 2,
+        "die": "d4"
+      }
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "red-mantis-magic-school",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "figment",
+        "gouging-claw"
+      ],
+      "1": [
+        "fleet-step",
+        "illusory-disguise",
+        "sure-strike"
+      ],
+      "2": [
+        "invisibility",
+        "mist"
+      ],
+      "3": [
+        "clairaudience",
+        "paralyze"
+      ],
+      "4": [
+        "clairvoyance",
+        "translocate"
+      ],
+      "5": [
+        "hallucination",
+        "illusory-scene"
+      ],
+      "6": [
+        "mislead",
+        "phantasmal-calamity"
+      ],
+      "7": [
+        "duplicate-foe",
+        "project-image"
+      ],
+      "8": [
+        "disappearance",
+        "unrelenting-observation"
+      ],
+      "9": [
+        "phantasmagoria"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-ars-grammatica",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "message",
+        "sigil"
+      ],
+      "1": [
+        "command",
+        "disguise-magic",
+        "runic-body",
+        "runic-weapon"
+      ],
+      "2": [
+        "dispel-magic",
+        "translate"
+      ],
+      "3": [
+        "enthrall",
+        "veil-of-privacy"
+      ],
+      "4": [
+        "dispelling-globe",
+        "suggestion"
+      ],
+      "5": [
+        "sending",
+        "truespeech"
+      ],
+      "6": [
+        "repulsion",
+        "spellwrack"
+      ],
+      "7": [
+        "contingency",
+        "planar-seal"
+      ],
+      "8": [
+        "quandary",
+        "unrelenting-observation"
+      ],
+      "9": [
+        "detonate-magic"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-battle-magic",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "shield",
+        "telekinetic-projectile"
+      ],
+      "1": [
+        "breathe-fire",
+        "force-barrage",
+        "mystic-armor"
+      ],
+      "2": [
+        "mist",
+        "resist-energy"
+      ],
+      "3": [
+        "earthbind",
+        "fireball"
+      ],
+      "4": [
+        "wall-of-fire",
+        "weapon-storm"
+      ],
+      "5": [
+        "howling-blizzard",
+        "impaling-spike"
+      ],
+      "6": [
+        "chain-lightning",
+        "disintegrate"
+      ],
+      "7": [
+        "energy-aegis",
+        "true-target"
+      ],
+      "8": [
+        "arctic-rift",
+        "desiccate"
+      ],
+      "9": [
+        "falling-stars"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-civic-wizardry",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "prestidigitation",
+        "read-aura"
+      ],
+      "1": [
+        "hydraulic-push",
+        "pummeling-rubble",
+        "summon-construct"
+      ],
+      "2": [
+        "revealing-light",
+        "water-walk"
+      ],
+      "3": [
+        "cozy-cabin",
+        "safe-passage"
+      ],
+      "4": [
+        "creation",
+        "unfettered-movement"
+      ],
+      "5": [
+        "control-water",
+        "wall-of-stone"
+      ],
+      "6": [
+        "disintegrate",
+        "wall-of-force"
+      ],
+      "7": [
+        "planar-palace",
+        "retrocognition"
+      ],
+      "8": [
+        "earthquake",
+        "pinpoint"
+      ],
+      "9": [
+        "foresight"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-gates",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "message",
+        "telekinetic-hand"
+      ],
+      "1": [
+        "fleet-step",
+        "lock",
+        "thoughtful-gift"
+      ],
+      "2": [
+        "knock",
+        "warping-pull"
+      ],
+      "3": [
+        "echo-jump",
+        "trade-items"
+      ],
+      "4": [
+        "flicker",
+        "translocate"
+      ],
+      "5": [
+        "kings-castle",
+        "magic-passage"
+      ],
+      "6": [
+        "collective-transposition",
+        "teleport"
+      ],
+      "7": [
+        "interplanar-teleport",
+        "planar-seal"
+      ],
+      "8": [
+        "quandary",
+        "sudden-transposition"
+      ],
+      "9": [
+        "forest-of-gates"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-kalistrade",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "prestidigitation",
+        "read-aura"
+      ],
+      "1": [
+        "alarm",
+        "charm",
+        "item-facade"
+      ],
+      "2": [
+        "ghostly-carrier",
+        "invisibility"
+      ],
+      "3": [
+        "clairaudience",
+        "veil-of-privacy"
+      ],
+      "4": [
+        "outcasts-curse",
+        "suggestion"
+      ],
+      "5": [
+        "imaginary-lockbox",
+        "subconscious-suggestion"
+      ],
+      "6": [
+        "repulsion",
+        "scrying"
+      ],
+      "7": [
+        "project-image",
+        "retrocognition"
+      ],
+      "8": [
+        "disappearance",
+        "hidden-mind"
+      ],
+      "9": [
+        "resplendent-mansion"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-magical-technologies",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "needle-darts",
+        "shield"
+      ],
+      "1": [
+        "mending",
+        "runic-weapon",
+        "summon-construct"
+      ],
+      "2": [
+        "animated-assault",
+        "dismantle"
+      ],
+      "3": [
+        "shrink-item",
+        "wooden-double"
+      ],
+      "4": [
+        "creation",
+        "weapon-storm"
+      ],
+      "5": [
+        "impaling-spike",
+        "wall-of-stone"
+      ],
+      "6": [
+        "field-of-razors",
+        "petrify"
+      ],
+      "7": [
+        "beheading-buzz-saw",
+        "lifewood-cage"
+      ],
+      "8": [
+        "ferrous-form",
+        "quandary"
+      ],
+      "9": [
+        "resplendent-mansion"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-mentalism",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "daze",
+        "figment"
+      ],
+      "1": [
+        "dizzying-colors",
+        "sleep",
+        "sure-strike"
+      ],
+      "2": [
+        "illusory-creature",
+        "stupefy"
+      ],
+      "3": [
+        "dream-message",
+        "mind-reading"
+      ],
+      "4": [
+        "nightmare",
+        "vision-of-death"
+      ],
+      "5": [
+        "hallucination",
+        "illusory-scene"
+      ],
+      "6": [
+        "never-mind",
+        "phantasmal-calamity"
+      ],
+      "7": [
+        "project-image",
+        "warp-mind"
+      ],
+      "8": [
+        "disappearance",
+        "uncontrollable-dance"
+      ],
+      "9": [
+        "phantasmagoria"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-protean-form",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "gouging-claw",
+        "tangle-vine"
+      ],
+      "1": [
+        "jump",
+        "pest-form",
+        "spider-sting"
+      ],
+      "2": [
+        "enlarge",
+        "humanoid-form"
+      ],
+      "3": [
+        "feet-to-fins",
+        "vampiric-feast"
+      ],
+      "4": [
+        "mountain-resilience",
+        "vapor-form"
+      ],
+      "5": [
+        "elemental-form",
+        "toxic-cloud"
+      ],
+      "6": [
+        "cursed-metamorphosis",
+        "petrify"
+      ],
+      "7": [
+        "duplicate-foe",
+        "fiery-body"
+      ],
+      "8": [
+        "desiccate",
+        "monstrosity-form"
+      ],
+      "9": [
+        "metamorphosis"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-rooted-wisdom",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "detect-magic"
+      ],
+      "1": [
+        "alarm"
+      ],
+      "2": [
+        "dispel-magic"
+      ],
+      "3": [
+        "safe-passage"
+      ],
+      "4": [
+        "mountain-resilience"
+      ],
+      "5": [
+        "control-water"
+      ],
+      "6": [
+        "truesight"
+      ],
+      "7": [
+        "energy-aegis"
+      ],
+      "8": [
+        "quandary"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-the-boundary",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "telekinetic-hand",
+        "void-warp"
+      ],
+      "1": [
+        "grim-tendrils",
+        "phantasmal-minion",
+        "summon-undead"
+      ],
+      "2": [
+        "darkness",
+        "see-the-unseen"
+      ],
+      "3": [
+        "bind-undead",
+        "ghostly-weapon"
+      ],
+      "4": [
+        "flicker",
+        "translocate"
+      ],
+      "5": [
+        "banishment",
+        "invoke-spirits"
+      ],
+      "6": [
+        "teleport",
+        "vampiric-exsanguination"
+      ],
+      "7": [
+        "eclipse-burst",
+        "interplanar-teleport"
+      ],
+      "8": [
+        "quandary",
+        "unrelenting-observation"
+      ],
+      "9": [
+        "massacre"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-the-reclamation",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "telekinetic-hand",
+        "telekinetic-projectile"
+      ],
+      "1": [
+        "fleet-step",
+        "gust-of-wind",
+        "mending"
+      ],
+      "2": [
+        "knock",
+        "mental-map"
+      ],
+      "3": [
+        "locate",
+        "overwhelming-memory"
+      ],
+      "4": [
+        "bridge-of-vines",
+        "shape-stone"
+      ],
+      "5": [
+        "mind-probe",
+        "scouting-eye"
+      ],
+      "6": [
+        "truesight",
+        "wall-of-force"
+      ],
+      "7": [
+        "restore-ground",
+        "retrocognition"
+      ],
+      "8": [
+        "pinpoint",
+        "unrelenting-observation"
+      ],
+      "9": [
+        "metamorphosis"
+      ]
+    }
   }
 ]

@@ -2429,7 +2429,14 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const runeDamage = (runes?.property ?? [])
     .map((p) => db.runes[p]?.damage)
     .filter((d): d is NonNullable<typeof d> => !!d);
-  const runeDmg = runeDamage.map((d) => `${d.dice}${d.die} ${DAMAGE_ABBR[d.type] ?? d.type}`);
+  const runeDmg = runeDamage.map((d) => {
+    const type = DAMAGE_ABBR[d.type] ?? d.type;
+    // Wounding deals its 1d6 as PERSISTENT bleed on every hit, so saying "1d6 bleed" would read as
+    // ordinary damage; the "or 2d4 against an unholy target" clause is shown rather than folded in,
+    // because nothing here knows what is being hit.
+    const base = `${d.dice}${d.die} ${d.persistent ? 'persistent ' : ''}${type}`;
+    return d.vs ? `${base} (${d.vs.dice}${d.vs.die} vs ${d.vs.trait})` : base;
+  });
   const critPersistent = runeDamage
     .filter((d) => d.critPersistent)
     .map((d) => `${d.critPersistent!.dice}${d.critPersistent!.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
@@ -2675,7 +2682,14 @@ function deriveUnarmedStrike(
   const runeDamage = (hwRunes?.property ?? [])
     .map((pp) => db.runes[pp]?.damage)
     .filter((d): d is NonNullable<typeof d> => !!d);
-  const runeDmg = runeDamage.map((d) => `${d.dice}${d.die} ${DAMAGE_ABBR[d.type] ?? d.type}`);
+  const runeDmg = runeDamage.map((d) => {
+    const type = DAMAGE_ABBR[d.type] ?? d.type;
+    // Wounding deals its 1d6 as PERSISTENT bleed on every hit, so saying "1d6 bleed" would read as
+    // ordinary damage; the "or 2d4 against an unholy target" clause is shown rather than folded in,
+    // because nothing here knows what is being hit.
+    const base = `${d.dice}${d.die} ${d.persistent ? 'persistent ' : ''}${type}`;
+    return d.vs ? `${base} (${d.vs.dice}${d.vs.die} vs ${d.vs.trait})` : base;
+  });
   // Monster-Parts imbued damage on the handwraps folds into unarmed damage as per-hit "plus" terms.
   const mpDmg = mpHandwraps ? mpImbuedDamageTerms(mpHandwraps, p.damageType, c.level).map((t) => formatMpDamageTerm(t)) : [];
   const critPersistent = runeDamage

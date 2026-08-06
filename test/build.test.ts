@@ -170,9 +170,16 @@ describe('caster-math accuracy (audit Section 3A)', () => {
     expect(counts(w)).toEqual({ 1: 3, 2: 3, 3: 2 });
   });
 
-  it('wizard arcane school grants a +1 curriculum slot per castable rank', () => {
-    const s = prepared(build('wizard', 5, { subclassId: 'school-of-battle-magic', keyAbility: 'int' }));
-    expect(counts(s)).toEqual({ 1: 4, 2: 4, 3: 3 });
+  it('wizard arcane school grants a curriculum slot per castable rank, held apart from the ordinary ones', () => {
+    // The extra slot used to be an ordinary prepared slot, which let it be filled from the whole
+    // spellbook — a free general slot at every rank. It is now a RESTRICTED slot carrying the
+    // school's own curriculum, so the ordinary counts match a base full caster.
+    const wiz = build('wizard', 5, { subclassId: 'school-of-battle-magic', keyAbility: 'int' });
+    expect(counts(prepared(wiz))).toEqual({ 1: 3, 2: 3, 3: 2 });
+    const curriculum = (wiz.spellcasting.find((e) => e.type === 'prepared')?.restrictedSlots ?? []).filter((s) => s.label === 'Curriculum');
+    expect(curriculum.map((s) => s.rank)).toEqual([1, 2, 3]);
+    // …and each one offers the curriculum rather than everything.
+    for (const s of curriculum) expect(s.allowed?.length, `rank ${s.rank}`).toBeGreaterThan(0);
   });
 
   it('UMT has no curriculum: no extra slot and no 6th cantrip', () => {

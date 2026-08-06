@@ -11,8 +11,11 @@ import type { Character } from '../src/rules/types';
  * Specialization gives a psychic.
  */
 const db = content();
-const rs = (ch: Character, entryId?: string) =>
-  (ch.spellcasting.find((e) => (entryId ? e.id === entryId : !!e.restrictedSlots?.length))?.restrictedSlots ?? []);
+const rs = (ch: Character, entryId?: string, label?: string) => {
+  const all = ch.spellcasting.find((e) => (entryId ? e.id === entryId : !!e.restrictedSlots?.length))?.restrictedSlots ?? [];
+  // A wizard now also carries a Curriculum slot at every rank, so a test about ONE group must say which.
+  return label ? all.filter((s) => s.label === label) : all;
+};
 
 describe('Conscious Spell Specialization — psychic, conscious-mind only', () => {
   const at = (level: number) =>
@@ -81,12 +84,12 @@ describe('Sin Reservoir — one slot whose rank the player chooses', () => {
 
   it('is one slot, offering every rank up to two below the highest', () => {
     const ch = at(8); // a wizard casts 4th rank at 8 → 1st and 2nd are offered
-    const slots = rs(ch, 'wizard-casting');
+    const slots = rs(ch, 'wizard-casting', 'Sin Reservoir');
     expect(slots).toHaveLength(1);
     expect(slots[0].rankOptions).toEqual([1, 2]);
     expect(slots[0].rank).toBe(2); // defaults to the highest it may reach
     // At 20 a wizard casts 10th rank, so everything up to 8th is on offer.
-    const top = rs(at(20), 'wizard-casting')[0];
+    const top = rs(at(20), 'wizard-casting', 'Sin Reservoir')[0];
     expect(top.rankOptions?.[top.rankOptions.length - 1]).toBe(top.rank);
     expect(top.rank).toBeGreaterThanOrEqual(8);
   });
@@ -94,7 +97,7 @@ describe('Sin Reservoir — one slot whose rank the player chooses', () => {
   it('carries the curriculum restriction as prose — the app cannot resolve a wizard curriculum', () => {
     // The school's spell list lives only in its description text, so pretending to filter would be
     // worse than showing the sentence.
-    const slot = rs(at(8), 'wizard-casting')[0];
+    const slot = rs(at(8), 'wizard-casting', 'Sin Reservoir')[0];
     expect(slot.allowed).toBeUndefined();
     expect(slot.note).toMatch(/curriculum/i);
   });
@@ -133,20 +136,20 @@ describe('using a restricted slot in play', () => {
 
   it('moving a Sin Reservoir slot to another rank empties it', () => {
     const wiz = build('wizard', 8, { featPicks: { '8:class:0': 'sin-reservoir' }, subclassId: firstSubclass('wizard') });
-    const id = rs(wiz, 'wizard-casting')[0].id;
+    const id = rs(wiz, 'wizard-casting', 'Sin Reservoir')[0].id;
     let p = setRestrictedSpell(emptyPlay(), id, 'fly');
-    expect(rs(applyPlayState(wiz, p, db), 'wizard-casting')[0].spellId).toBe('fly');
+    expect(rs(applyPlayState(wiz, p, db), 'wizard-casting', 'Sin Reservoir')[0].spellId).toBe('fly');
     // A 2nd-rank spell chosen for a 2nd-rank slot cannot follow it down to 1st.
     p = setRestrictedRank(p, id, 1);
-    const moved = rs(applyPlayState(wiz, p, db), 'wizard-casting')[0];
+    const moved = rs(applyPlayState(wiz, p, db), 'wizard-casting', 'Sin Reservoir')[0];
     expect(moved.rank).toBe(1);
     expect(moved.spellId).toBe(null);
   });
 
   it('a rank outside the offered options is ignored', () => {
     const wiz = build('wizard', 8, { featPicks: { '8:class:0': 'sin-reservoir' }, subclassId: firstSubclass('wizard') });
-    const id = rs(wiz, 'wizard-casting')[0].id;
+    const id = rs(wiz, 'wizard-casting', 'Sin Reservoir')[0].id;
     const p = setRestrictedRank(emptyPlay(), id, 9);
-    expect(rs(applyPlayState(wiz, p, db), 'wizard-casting')[0].rank).toBe(2);
+    expect(rs(applyPlayState(wiz, p, db), 'wizard-casting', 'Sin Reservoir')[0].rank).toBe(2);
   });
 });
