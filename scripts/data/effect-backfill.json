@@ -90023,5 +90023,106 @@
         }
       }
     ]
+  },
+  {
+    "category": "items",
+    "id": "armored-skirt",
+    "field": "armorAdjust",
+    "value": {
+      "modes": [
+        {
+          "label": "with a breastplate, chain shirt, chain mail or scale mail",
+          "items": [
+            "breastplate",
+            "chain-shirt",
+            "chain-mail",
+            "scale-mail"
+          ],
+          "acBonus": 1,
+          "checkPenalty": -1,
+          "dexCap": -1,
+          "strength": 1,
+          "addTraits": [
+            "noisy"
+          ],
+          "categoryStep": 1
+        },
+        {
+          "label": "replacing portions of half plate or full plate",
+          "items": [
+            "half-plate",
+            "full-plate"
+          ],
+          "acBonus": -1,
+          "checkPenalty": 1,
+          "dexCap": 1,
+          "strength": -1,
+          "addTraits": [
+            "noisy"
+          ]
+        }
+      ],
+      "exclusive": true
+    }
+  },
+  {
+    "category": "items",
+    "id": "plated-duster",
+    "field": "armorAdjust",
+    "value": {
+      "modes": [
+        {
+          "label": "with light cloth, leather or chain armour",
+          "hostCategories": [
+            "light"
+          ],
+          "hostGroups": [
+            "cloth",
+            "leather",
+            "chain"
+          ],
+          "acBonus": 1,
+          "checkPenalty": -1,
+          "dexCap": -1,
+          "strength": 1,
+          "addTraits": [
+            "noisy"
+          ],
+          "setGroup": "composite",
+          "categoryStep": 1
+        }
+      ],
+      "exclusive": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "gird-champion",
+    "field": "choice",
+    "value": {
+      "flag": "godlingWeapon",
+      "prompt": "Your favored weapon",
+      "kind": "open",
+      "from": {
+        "type": "weapon"
+      },
+      "note": "Chosen when you gain the feat. You and your hierophant treat it as a simple weapon for proficiency; the extra 1d6 can match a damage type from one of your domain spells instead of spirit."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "gird-champion",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "spirit",
+        "dice": {
+          "n": 1,
+          "die": "d6"
+        },
+        "fromChoiceFlag": "godlingWeapon",
+        "note": "Gird Champion"
+      }
+    ]
   }
 ]

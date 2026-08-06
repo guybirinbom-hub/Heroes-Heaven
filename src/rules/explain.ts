@@ -22,7 +22,7 @@ import { modeModifiersFor, hasConditionalMode, activeModesTouch, type ModeTarget
 import { abpOn, abpSave, abpPerception, abpDefense, abpSkillBonus } from './abp';
 import type { CharacterDefenses } from './derive';
 import {
-  applyArmorRiders,
+  wornArmorOf,
   RANK_VALUE,
   abilityMod,
   activeStanceDef,
@@ -208,7 +208,9 @@ function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
     // counts as well as a printed one.
     const item = db?.items[inv.itemId];
     if (item?.itemType === 'armor' || item?.itemType === 'shield') {
-      const traits = item.itemType === 'armor' && db ? applyArmorRiders(c, db, inv, item).armor.traits : item.traits;
+      // Read through BOTH rider lanes: an Armored Skirt adds `noisy`, which is a real trait with real
+      // consequences, and reading only the class-feature riders would drop it.
+      const traits = item.itemType === 'armor' && db ? (wornArmorOf(c, db)?.armor.traits ?? item.traits) : item.traits;
       for (const t of traits ?? []) ids.push(`trait:${t}`);
     }
   }
@@ -648,7 +650,9 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       // Heavy Construction makes the innovation heavy while its proficiency still reads the MEDIUM
       // track, so `category` (what the armor IS) and `profCategory` (where the rank comes from) differ
       // — and the timeline has to follow the rank, or it shows a track the class never advances.
-      const ridden = worn && worn.it?.itemType === 'armor' ? applyArmorRiders(c, db, worn.i, worn.it) : null;
+      // wornArmorOf, not applyArmorRiders: an Armored Skirt or Plated Duster restates the suit too,
+      // and reading only the class-feature riders here would explain a number deriveAc never produced.
+      const ridden = wornArmorOf(c, db);
       const armor = ridden?.armor ?? null;
       const category = armor?.category ?? 'unarmored';
       const profCategory = ridden?.profCategory ?? 'unarmored';
@@ -675,7 +679,8 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         // The armor's own AC is untyped and always applies; only its potency half competes for the slot.
         const potency = acItem === armorItem ? armorItem : 0;
         const note = potency ? (refAc === potency ? `+${armor.acBonus} armor + ${potency} refined` : `+${armor.acBonus} armor + ${potency} potency`) : 'armor item bonus';
-        parts.push({ label: armor.name, note, value: armor.acBonus + potency });
+        const adj = ridden?.adjustedBy?.[0];
+        parts.push({ label: armor.name, note: adj ? `${note} · restated by ${adj.name}` : note, value: armor.acBonus + potency });
       }
       if (acItem && acItem !== armorItem) {
         parts.push(

@@ -12,6 +12,8 @@ import type {
   AbilityId,
   ArmorCategory,
   ItemPassiveEffects,
+  ArmorAdjust,
+  ArmorAdjustMode,
   ArmorItem,
   ArmorRunes,
   Character,
@@ -496,6 +498,71 @@ export interface WornArmor {
    * inventor 12 AC.
    */
   profCategory: ArmorCategory;
+  /** Items worn WITH the armour that restated it (Armored Skirt, Plated Duster) — surfaced so the AC
+   *  breakdown can name them and the sheet can warn when one has pushed the wearer into a category
+   *  they are untrained in. */
+  adjustedBy?: { itemId: string; name: string; label: string }[];
+}
+
+const CATEGORY_ORDER: ArmorCategory[] = ['unarmored', 'light', 'medium', 'heavy'];
+
+/** Step an armour category up or down, clamped — "one step heavier (from light to medium, or medium
+ *  to heavy)". Never steps into 'unarmored', which is a kind of armour rather than a lighter one. */
+function stepCategory(c: ArmorCategory, by: number): ArmorCategory {
+  const i = CATEGORY_ORDER.indexOf(c);
+  if (i < 1) return c;
+  return CATEGORY_ORDER[Math.min(CATEGORY_ORDER.length - 1, Math.max(1, i + by))];
+}
+
+/** The mode of an ArmorAdjust that applies to this host, or undefined when none does. */
+function armorAdjustMode(adjust: ArmorAdjust, host: ArmorItem): ArmorAdjustMode | undefined {
+  return adjust.modes.find((m) => {
+    if (m.items?.length) return m.items.includes(host.id);
+    if (m.hostCategories?.length && !m.hostCategories.includes(host.category)) return false;
+    if (m.hostGroups?.length && !m.hostGroups.includes(host.group ?? '')) return false;
+    return !!(m.hostCategories?.length || m.hostGroups?.length);
+  });
+}
+
+/**
+ * Apply every worn item that restates the armour (Armored Skirt, Plated Duster).
+ *
+ * The mode is chosen by the HOST, never by the player: each item prints which armours each of its
+ * modes covers, and an armour matching none gets nothing. That is why this needs no picker and no
+ * attachment — wearing both items is the whole interaction, exactly as the rules describe it.
+ */
+function applyArmorAdjusts(c: Character, db: ContentDatabase, worn: WornArmor): WornArmor {
+  let out = worn.armor;
+  let profCategory = worn.profCategory;
+  const adjustedBy: { itemId: string; name: string; label: string }[] = [];
+  for (const inv of c.inventory) {
+    if (!inv.worn) continue;
+    const item = db.items[inv.itemId];
+    const adjust = item?.armorAdjust;
+    if (!adjust) continue;
+    // "You can't use a plated duster alongside an armored skirt or any other item that adjusts an
+    // armor's statistics." One adjusting item per suit; the first worn wins.
+    if (adjustedBy.length) continue;
+    const mode = armorAdjustMode(adjust, out);
+    if (!mode) continue;
+    if (mode.acBonus) out = { ...out, acBonus: out.acBonus + mode.acBonus };
+    // An absent Dex cap is UNLIMITED, and an item that "reduces the Dex cap by 1" cannot cap an
+    // uncapped suit — leave it alone rather than inventing a number.
+    if (mode.dexCap != null && out.dexCap != null) out = { ...out, dexCap: Math.max(0, out.dexCap + mode.dexCap) };
+    if (mode.checkPenalty) out = { ...out, checkPenalty: Math.min(0, (out.checkPenalty ?? 0) + mode.checkPenalty) };
+    if (mode.strength != null && out.strength != null) out = { ...out, strength: out.strength + mode.strength };
+    if (mode.setGroup) out = { ...out, group: mode.setGroup };
+    if (mode.addTraits?.length) out = { ...out, traits: [...new Set([...(out.traits ?? []), ...mode.addTraits])] };
+    if (mode.categoryStep) {
+      const stepped = stepCategory(out.category, mode.categoryStep);
+      out = { ...out, category: stepped };
+      // "you use the proficiency bonus appropriate to this adjusted armor type" — the proficiency
+      // moves WITH the category, which is what can cost an untrained wearer their entire AC bonus.
+      profCategory = stepped;
+    }
+    adjustedBy.push({ itemId: item.id, name: item.name, label: mode.label });
+  }
+  return adjustedBy.length ? { ...worn, armor: out, profCategory, adjustedBy } : worn;
 }
 
 /**
@@ -531,9 +598,16 @@ export function applyArmorRiders(c: Character, db: ContentDatabase, inv: Invento
 function findWornArmor(c: Character, db: ContentDatabase): WornArmor | null {
   for (const inv of c.inventory) {
     const item = db.items[inv.itemId];
-    if (inv.worn && item?.itemType === 'armor') return applyArmorRiders(c, db, inv, item);
+    // Class-feature riders first (an inventor's designated innovation), then the worn items that
+    // restate the suit itself. Order matters: a skirt steps the category the rider may have set.
+    if (inv.worn && item?.itemType === 'armor') return applyArmorAdjusts(c, db, applyArmorRiders(c, db, inv, item));
   }
   return null;
+}
+
+/** The worn armour with everything applied — exported so the sheet can name what adjusted it. */
+export function wornArmorOf(c: Character, db: ContentDatabase): WornArmor | null {
+  return findWornArmor(c, db);
 }
 
 /** PF2e (remaster) stores an armor's Strength entry as a *modifier* (e.g. full plate
@@ -1995,6 +2069,25 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
   const cls = c.classId ? db.classes[c.classId] : undefined;
   if (cls) for (const cf of cls.features) add(db.classFeatures[cf.featureId], cf.level);
   for (const f of c.feats) add(db.feats[f.featId], f.level ?? 1);
+  // A base of the form "{actor|flags.system.<flag>}" is an UNSUBSTITUTED Foundry template that ships
+  // in the source data — Gird Champion's favored weapon is stored exactly that way, so its crit
+  // specialization could never match any weapon. The placeholder names the choice flag, so the
+  // player's own answer is what belongs there.
+  for (const src of out) {
+    const bases = src.weapons?.bases;
+    if (!bases?.some((b) => b.startsWith('{actor|flags.'))) continue;
+    src.weapons = {
+      ...src.weapons,
+      bases: bases.flatMap((b) => {
+        // Braces, the pipe and the dots ALL need escaping: unescaped, the pipe reads as an
+        // alternation that matches "^{actor" with no capture group, so every lookup silently missed.
+        const m = /^\{actor\|flags\.[^.]+\.([^}]+)\}$/.exec(b);
+        if (!m) return [b];
+        const answer = c.feats.find((f) => db.feats[f.featId]?.choice?.flag === m[1])?.choice?.value;
+        return answer ? [answer] : [];
+      }),
+    };
+  }
   if (c.subclassId) {
     add(db.classFeatures[c.subclassId], db.classFeatures[c.subclassId]?.level ?? 1);
     // Doctrines and other subclass-suffixed features aren't listed in cls.features.
@@ -2083,7 +2176,7 @@ export function weaponSpecDamage(rank: ProficiencyRank, ws: { spec: boolean; gre
 export function strikeDamageRiders(
   c: Character,
   db: ContentDatabase,
-  ctx: { rank: ProficiencyRank; ranged: boolean; unarmed: boolean; name?: string },
+  ctx: { rank: ProficiencyRank; ranged: boolean; unarmed: boolean; name?: string; baseId?: string },
   extra: StrikeDamageRider[] = [],
 ): string[] {
   const RANK_I = ['untrained', 'trained', 'expert', 'master', 'legendary'];
@@ -2114,6 +2207,11 @@ export function strikeDamageRiders(
       // A rider naming ONE Strike rides only on that Strike. Potent Nectar adds its acid to the
       // nectar attack, not to every unarmed attack its owner happens to have.
       if (r.strikeName && r.strikeName.toLowerCase() !== (ctx.name ?? '').toLowerCase()) continue;
+      // …and a rider aimed at "your favored weapon", whose identity is the player's own answer.
+      if (r.fromChoiceFlag) {
+        const answer = c.feats.find((f) => db.feats[f.featId]?.choice?.flag === r.fromChoiceFlag)?.choice?.value;
+        if (!answer || answer !== ctx.baseId) continue;
+      }
       let flat = r.flat ?? 0;
       if (r.byStrikeProficiency) {
         // Keyed to the strike's proficiency — only expert+ qualifies; take the value at that rank.
@@ -2340,7 +2438,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const mpDmg = mpMode ? mpImbuedDamageTerms(inv.monsterPart, w.damage.type, c.level).map((t) => formatMpDamageTerm(t)) : [];
   // Feat/feature/item strike-damage riders (Spirit Striking; Crimson Fulcrum Lens; Hyldarf's Fang +2d6
   // intrinsic to this weapon).
-  const riderDmg = strikeDamageRiders(c, db, { rank, ranged, unarmed: false, name: w.name }, w.strikeDamage);
+  const riderDmg = strikeDamageRiders(c, db, { rank, ranged, unarmed: false, name: w.name, baseId: w.id }, w.strikeDamage);
   const extraDmg = [...runeDmg, ...mpDmg, ...riderDmg];
   // Deadly dN adds bonus weapon dice on a crit (1 die; 2 with greater striking, 3 with major); Fatal dN
   // upgrades the crit dice to dN and adds one; Two-Hand dN uses a larger die when wielded two-handed.

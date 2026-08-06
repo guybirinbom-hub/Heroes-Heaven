@@ -3346,6 +3346,51 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // The BACKGROUND and the SECOND heritage were the two gaps in this collector — an authored warning
   // that never reaches the player is the same as no warning at all.
   if (background?.dataWarning) effectWarnings.push({ source: background.name, message: background.dataWarning });
+  // An Armored Skirt or Plated Duster makes its host ONE STEP HEAVIER, and you read the proficiency
+  // of the heavier type. For anyone untrained there that is a large, silent AC LOSS — untrained armour
+  // is a flat +0 here — which is the one case in the app where buying a 2 gp item makes you worse.
+  // Said out loud rather than left for the player to notice.
+  for (const inv of build.inventory) {
+    if (!inv.worn) continue;
+    const adj = content.items[inv.itemId]?.armorAdjust;
+    if (!adj) continue;
+    const host = build.inventory.find((x) => x.worn && content.items[x.itemId]?.itemType === 'armor');
+    const hostItem = host ? content.items[host.itemId] : undefined;
+    if (!hostItem || hostItem.itemType !== 'armor') continue;
+    const mode = adj.modes.find((m) =>
+      m.items?.length
+        ? m.items.includes(hostItem.id)
+        : (!m.hostCategories?.length || m.hostCategories.includes(hostItem.category)) &&
+          (!m.hostGroups?.length || m.hostGroups.includes(hostItem.group ?? '')) &&
+          !!(m.hostCategories?.length || m.hostGroups?.length),
+    );
+    if (!mode?.categoryStep) continue;
+    const order: ArmorCategory[] = ['unarmored', 'light', 'medium', 'heavy'];
+    const i = order.indexOf(hostItem.category);
+    const stepped = order[Math.min(order.length - 1, Math.max(1, i + mode.categoryStep))];
+    // Warn only on a real LOSS: trained (or better) in what you are wearing, untrained in what the
+    // item turns it into. A wizard untrained in light armour already gets nothing from proficiency, so
+    // the step costs them nothing and a warning would be noise — they simply gain the +1.
+    //
+    // The gap is computed with profBonus rather than by hand: untrained armour is a flat +0 here, so
+    // the drop is the whole trained bonus (level + 2) and not a step of 2, and quoting a wrong number
+    // in a warning would be worse than quoting none.
+    const RANKS: ProficiencyRank[] = ['untrained', 'trained', 'expert', 'master', 'legendary'];
+    const had = proficiencies.defenses[hostItem.category] ?? 'untrained';
+    const now = proficiencies.defenses[stepped] ?? 'untrained';
+    if (RANKS.indexOf(now) < RANKS.indexOf(had)) {
+      const pwlOn = !!build.variantRules?.proficiencyWithoutLevel;
+      const net = profBonus(had, level, pwlOn) - profBonus(now, level, pwlOn) - (mode.acBonus ?? 0);
+      effectWarnings.push({
+        source: content.items[inv.itemId].name,
+        message:
+          `makes your ${hostItem.name} ${stepped} armor, and you read the ${stepped} proficiency for AC. ` +
+          `You are ${now} in ${stepped} but ${had} in ${hostItem.category}, so wearing both costs you ${net} AC ` +
+          `overall — far more than the +${mode.acBonus ?? 0} it grants. Take one off unless you meant this.`,
+      });
+    }
+    break; // one adjusting item per suit, matching the printed exclusivity
+  }
   if (secondHeritageId && content.heritages[secondHeritageId]?.dataWarning) {
     effectWarnings.push({ source: content.heritages[secondHeritageId].name, message: content.heritages[secondHeritageId].dataWarning! });
   }

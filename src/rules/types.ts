@@ -1705,6 +1705,13 @@ export interface Spell extends ContentBase {
 interface ItemBase extends ContentBase {
   level: number;
   /**
+   * An item worn WITH armour that restates it. Exactly two items in the game do this: an Armored
+   * Skirt and a Plated Duster, both of which make their host one step heavier and change which
+   * proficiency you read. Distinct from `armorRestat`, which lives on a CLASS FEATURE and restates a
+   * designated innovation — this one belongs to the item you bought.
+   */
+  armorAdjust?: ArmorAdjust;
+  /**
    * CURSED ITEMS ONLY: the id of the ordinary item this one imitates — Gaffe Glasses imitate Glasses
    * of Sociability. When a GM plants the item hidden, the player sees THIS record instead: its name,
    * its description and its bonuses, exactly as the item deceives them in the fiction. Only cursed
@@ -1840,6 +1847,54 @@ export interface WeaponItem extends ItemBase {
   /** Range increment in feet (ranged/thrown). */
   range?: number;
   reload?: number;
+}
+
+/** An item that restates the armour it is worn with (Armored Skirt, Plated Duster). */
+export interface ArmorAdjust {
+  /**
+   * One entry per printed mode. The FIRST whose host test matches wins, and a host matching none gets
+   * nothing at all — "An armored skirt grants no benefit when worn by itself or with armors other
+   * than those listed here." The mode is therefore never a player choice: the armour picks it.
+   */
+  modes: ArmorAdjustMode[];
+  /**
+   * "You can't use a plated duster alongside an armored skirt or any other item that adjusts an
+   * armor's statistics." With two adjusting items worn, only the first applies.
+   */
+  exclusive?: boolean;
+}
+
+/** One printed mode of an ArmorAdjust. Every numeric field is a DELTA on the host's own value. */
+export interface ArmorAdjustMode {
+  /** Shown in the AC breakdown — "with a breastplate, chain shirt, chain mail or scale mail". */
+  label: string;
+  /** Host armour ids this mode covers. */
+  items?: string[];
+  /** …or any host of these categories AND (if given) these groups — the duster covers "light armor
+   *  from the cloth, leather, or chain groups", which is 30-odd items and cannot be listed by id. */
+  hostCategories?: ArmorCategory[];
+  hostGroups?: string[];
+  acBonus?: number;
+  dexCap?: number;
+  /** Added to the host's check penalty, which is stored NON-POSITIVE: -1 worsens it, +1 lessens it. */
+  checkPenalty?: number;
+  /**
+   * Delta to the host's Strength entry — in the app's unit, which is a MODIFIER.
+   *
+   * Both items are pre-Remaster and print "increases the Strength SCORE required … by 2". The
+   * Remaster restated armour Strength as a modifier (full plate is +4, i.e. Str 18), so two points of
+   * score is ONE point here. Writing 2 would double the requirement.
+   */
+  strength?: number;
+  addTraits?: string[];
+  /** The duster "changes the armor's group to composite", which also moves its armour specialization. */
+  setGroup?: string;
+  /**
+   * "This also makes the armor one step heavier (from light to medium, or medium to heavy), and you
+   * use the proficiency bonus appropriate to this adjusted armor type." Moves BOTH the category and
+   * the proficiency the AC reads — which is what can cost an untrained wearer their whole bonus.
+   */
+  categoryStep?: number;
 }
 
 export interface ArmorItem extends ItemBase {
@@ -2533,6 +2588,10 @@ export interface StrikeDamageRider {
    *  attack Caustic Nectar grants, not on every unarmed Strike the character has. `appliesTo` is a
    *  category and cannot say that. */
   strikeName?: string;
+  /** Restrict to the weapon the PLAYER chose, named by the flag of the choice that asked. Gird
+   *  Champion's "+1d6 spirit damage with Strikes made with your favored weapon" cannot be a fixed
+   *  list — the favored weapon is whatever they picked. */
+  fromChoiceFlag?: string;
   /** The dice are PERSISTENT damage ("1d4 persistent acid"). Not multiplied on a critical hit, which
    *  is how every record printing this phrases it. */
   persistent?: boolean;
