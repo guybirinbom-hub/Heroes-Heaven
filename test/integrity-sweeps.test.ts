@@ -159,6 +159,45 @@ describe('a cantrip grant that quietly grants slots', () => {
   });
 });
 
+describe('a field that only LOOKS read', () => {
+  it('every backfilled field is read in a file that knows its collection', () => {
+    /*
+     * The dead-field sweep further down matches a field NAME anywhere in src, which lets a field pass
+     * by matching a DIFFERENT type's use of the same word. `note` did exactly that: it is a real field
+     * on SpellcastingEntry and ModeDef, so authoring `note` on FEATS satisfied that sweep while
+     * nothing rendered a feat's note — four records shipped with prose no one would ever see.
+     *
+     * The stricter question is per-pair: for each (collection, field) actually written, is that field
+     * read in a file that also mentions the collection? Same-file is only a PROXY for same-subject —
+     * a big file touching several collections can still satisfy it — so this narrows the gap rather
+     * than closing it. The real guard against an inert field is a test that asserts the behaviour,
+     * which is why every lane added here ships with one.
+     */
+    const files: { path: string; code: string }[] = [];
+    const walk = (d: string) => {
+      for (const f of readdirSync(d, { withFileTypes: true })) {
+        const p = path.join(d, f.name);
+        if (f.isDirectory()) walk(p);
+        else if (/\.(ts|tsx)$/.test(f.name))
+          files.push({ path: p, code: readFileSync(p, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '') });
+      }
+    };
+    walk('src');
+
+    const bf = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as { category?: string; field?: string }[];
+    const pairs = [...new Set(bf.filter((e) => e.category && e.field).map((e) => `${e.category}|${e.field}`))];
+    const dead: string[] = [];
+    for (const pair of pairs) {
+      const [collection, field] = pair.split('|');
+      const esc = field.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const reads = new RegExp(`\\.\\s*${esc}\\b|\\b${esc}\\s*[,}:?)\\]]|['"\`]${esc}['"\`]`);
+      const hit = files.some((f) => reads.test(f.code) && f.code.includes(collection));
+      if (!hit) dead.push(`${collection}.${field}`);
+    }
+    expect(dead).toEqual([]);
+  });
+});
+
 describe('a warning that outlived the thing it warns about', () => {
   it('no record warns about a mechanic it now carries', () => {
     // `dataWarning` renders as a "Missing data — N effects reference content not in the current data"

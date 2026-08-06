@@ -90782,5 +90782,72 @@
         "metamorphosis"
       ]
     }
+  },
+  {
+    "category": "feats",
+    "id": "monstrous-inclinations",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "monstrosity-form"
+      ],
+      "as": "repertoire",
+      "entryId": "animist-apparition-casting"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "deadly-aspect",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "claw",
+        "jaws",
+        "tail"
+      ],
+      "add": [
+        "deadly-d8"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "exorcist-dedication",
+    "field": "dataWarning",
+    "value": "Spirit wisps are not tracked. One arrives at each daily preparation; if your dwelling is empty you can spend 10 minutes to attract another, and remnants captured from vanquished incorporeal undead join it. Each purification spends one. Count them by hand."
+  },
+  {
+    "category": "feats",
+    "id": "enticing-dwelling",
+    "field": "dataWarning",
+    "value": "Not tracked: you entice TWO wisps into your spirit dwelling instead of one, both at daily preparations and whenever you spend 10 minutes to find more."
+  },
+  {
+    "category": "feats",
+    "id": "miraculous-flight",
+    "field": "dataWarning",
+    "value": "Not tracked: the flight is a once-per-day miracle with a duration you time at the table."
+  },
+  {
+    "category": "feats",
+    "id": "terrifying-mien",
+    "field": "dataWarning",
+    "value": "Not tracked: the aura affects creatures that end their turn near you, which depends on where they are — apply it at the table."
+  },
+  {
+    "category": "feats",
+    "id": "forgotten-presence",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "rewrite-memory"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "forgotten-presence",
+    "field": "note",
+    "value": "Characters attempting to Recall Knowledge about you take a −2 circumstance penalty — that penalty is on their check, not yours."
   }
 ]

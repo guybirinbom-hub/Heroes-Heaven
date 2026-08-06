@@ -223,6 +223,16 @@ interface ContentBase {
   /** Cross-references found in `description` (from Foundry @UUID links), for in-text linking. */
   descRefs?: DescRef[];
   source?: SourceInfo;
+  /**
+   * "This record works; here is the part you apply yourself."
+   *
+   * Rendered under the record's description on the Feats tab. Deliberately distinct from
+   * `dataWarning`, which says something is BROKEN and shows in the red "Missing data" panel — a note
+   * is for a clause the rules leave to the table (which ally wears your relic) or one the app tracks
+   * only in part. It was authored on several records before anything rendered it, which is why it is
+   * declared here rather than left as an untyped extra that typing could never catch.
+   */
+  note?: string;
   /** App-level link to the user Homebrew source that authored this entry (groups it in the Homebrew
    *  manager). Absent on imported/seed content. Ignored by the rules engine. */
   homebrewSourceId?: string;

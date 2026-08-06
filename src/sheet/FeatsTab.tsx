@@ -63,7 +63,18 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
   };
   const withPicks = (recordId: string, description: string) => {
     const notes = picksOf(recordId).filter((p) => p.note);
-    return notes.length ? `${description}<p><strong>Your choice:</strong> ${notes.map((p) => `${p.label} — ${p.note}`).join('; ')}</p>` : description;
+    let out = notes.length ? `${description}<p><strong>Your choice:</strong> ${notes.map((p) => `${p.label} — ${p.note}`).join('; ')}</p>` : description;
+    /*
+     * The record's OWN note — "this feat works; here is the part you apply yourself".
+     *
+     * Rendered nowhere until now, so every `note` authored on a feat was inert: the one Captivating
+     * Intensity clause that is not tracked, where a Sanctified Relic's bonus actually lands, Caustic
+     * Nectar's critical-hit rider. Distinct from `dataWarning`, which says something is BROKEN and
+     * shows in the red "Missing data" panel.
+     */
+    const own = (content.feats[recordId] ?? content.classFeatures[recordId])?.note;
+    if (own) out += `<p><strong>Note:</strong> ${own}</p>`;
+    return out;
   };
   for (const fc of character.feats) {
     const feat = content.feats[fc.featId];
