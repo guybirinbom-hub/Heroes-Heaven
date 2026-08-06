@@ -115,6 +115,21 @@ export interface FeatGrant {
    */
   weaponFamiliarity?: {
     weapons: string[];
+    /**
+     * …or the weapon the player CHOSE, named by the `choice.flag` that recorded it.
+     *
+     * Unconventional Weaponry picks a weapon; Unconventional Expertise then advances "the weapon you
+     * chose for Unconventional Weaponry" — a different feat entirely. `weapons` is a static list, so
+     * neither could name it, and the base feat shipped marked "Recorded only". Resolved against the
+     * built feats, so the answer travels between the two.
+     */
+    weaponFromChoiceFlag?: string;
+    /**
+     * "for the purpose of proficiency, you treat it as a simple weapon" — and for the advanced-weapon
+     * branch, "as a martial weapon". One category DOWN, floored at simple, decided by the chosen
+     * weapon's own category rather than written out per feat.
+     */
+    treatAsLowerCategory?: boolean;
     rank?: ProficiencyRank;
     mirrorBestCategory?: boolean;
     /**
@@ -230,6 +245,23 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
   // "You gain proficiency with all advanced <X> as if they were martial <X>." The feat audit flagged
   // all four; every weapon list below is enumerated from core.json (category 'advanced' + the stated
   // group or trait) rather than from the feat's prose, because the prose names no weapons at all.
+  /*
+   * Unconventional Weaponry: "Choose an uncommon simple or martial weapon… for the purpose of
+   * proficiency, you treat it as a simple weapon. If you are trained in all martial weapons, you can
+   * instead choose an uncommon advanced weapon… you treat it as a martial weapon."
+   *
+   * The weapon is the player's, recorded under the `unconventionalWeapon` choice flag, so no static
+   * `weapons` list can name it — which is why the feat shipped marked "Recorded only".
+   */
+  'unconventional-weaponry': {
+    weaponFamiliarity: { weapons: [], weaponFromChoiceFlag: 'unconventionalWeapon', treatAsLowerCategory: true },
+  },
+  // "Whenever you gain a class feature that grants you expert or greater proficiency in certain
+  // weapons, you also gain that proficiency in the weapon you chose for Unconventional Weaponry."
+  // The SAME chosen weapon, now tracking the best category rank instead of the lowered one.
+  'unconventional-expertise': {
+    weaponFamiliarity: { weapons: [], weaponFromChoiceFlag: 'unconventionalWeapon', mirrorBestCategory: true },
+  },
   'advanced-bow-training': { weaponFamiliarity: { weapons: ['daikyu', 'hongali-hornbow', 'phalanx-piercer'], mirrorCategory: 'martial' } },
   'advanced-monastic-weaponry': { weaponFamiliarity: { weapons: ['butterfly-sword', 'feng-huo-lun', 'heavenly-rolling-flames', 'hook-sword'], mirrorCategory: 'martial' } },
   'advanced-firearm-familiarity': {

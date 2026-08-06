@@ -37995,7 +37995,7 @@
         "type": "weapon",
         "rarity": "uncommon"
       },
-      "inert": "Recorded only: access and the treat-as-simple (or treat-as-martial) proficiency are not applied to your sheet.",
+      "inert": "Recorded only: access to the uncommon weapon is not enforced. Its proficiency IS applied.",
       "note": "Must be an UNCOMMON simple or martial weapon with an ancestry trait (dwarf, goblin, orc…) or one common in another culture — the picker can't filter by rarity, level or category, so it lists every weapon. If you're trained in all martial weapons you may instead pick such an uncommon ADVANCED weapon, which you then treat as martial."
     }
   },

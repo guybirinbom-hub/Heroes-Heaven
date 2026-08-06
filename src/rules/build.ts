@@ -3155,11 +3155,31 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const chosen = fc.choice?.value ? g?.choiceGrants?.[fc.choice.value]?.weaponFamiliarity : undefined;
       for (const wf of [g?.weaponFamiliarity, chosen]) {
         if (!wf) continue;
+        // The weapon may be one the player CHOSE on this feat or on another one (Unconventional
+        // Weaponry records it; Unconventional Expertise advances "the weapon you chose" for it).
+        let weapons = wf.weapons;
+        let lowered: WeaponCategory | undefined;
+        if (wf.weaponFromChoiceFlag) {
+          const picked = feats
+            .map((f) => (content.feats[f.featId]?.choice?.flag === wf.weaponFromChoiceFlag ? f.choice?.value : undefined))
+            .find(Boolean);
+          const item = picked ? content.items[picked] : undefined;
+          if (!item || item.itemType !== 'weapon') continue; // nothing chosen yet — grant nothing
+          weapons = [picked!];
+          // "you treat it as a simple weapon" / advanced → "as a martial weapon": one category down.
+          if (wf.treatAsLowerCategory) lowered = item.category === 'advanced' ? 'martial' : 'simple';
+        }
         // mirrorCategory is the precise form ("as if they were MARTIAL weapons"); mirrorBestCategory
         // is the ancestry-Expertise form ("whenever a class feature grants you expert or greater…").
-        const rank = wf.mirrorCategory ? proficiencies.attacks[wf.mirrorCategory] : wf.mirrorBestCategory ? bestCategory : wf.rank;
+        const rank = lowered
+          ? proficiencies.attacks[lowered]
+          : wf.mirrorCategory
+            ? proficiencies.attacks[wf.mirrorCategory]
+            : wf.mirrorBestCategory
+              ? bestCategory
+              : wf.rank;
         if (!rank || rank === 'untrained') continue;
-        for (const w of wf.weapons) {
+        for (const w of weapons) {
           if (!content.items[w]) continue;
           wo[w] = maxRank(wo[w] ?? 'untrained', rank);
           touched = true;
