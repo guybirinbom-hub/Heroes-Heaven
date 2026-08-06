@@ -95,6 +95,10 @@ export function CharacterSheet({
   onRest,
   onOpenRoster,
   onEdit,
+  undo,
+  redo,
+  canUndo,
+  canRedo,
   onCreateItem,
   onSaveMode,
   onDeleteMode,
@@ -125,6 +129,12 @@ export function CharacterSheet({
   onRest?: () => void;
   onOpenRoster?: () => void;
   onEdit?: () => void;
+  /** Roster undo/redo, surfaced as header buttons. Absent ⇒ the buttons are not rendered (the sheet
+   *  is also used read-only, e.g. a teammate's sheet in a campaign, where undoing makes no sense). */
+  undo?: () => void;
+  redo?: () => void;
+  canUndo?: boolean;
+  canRedo?: boolean;
   /** Navigate to the full-screen Homebrew page. */
   onOpenHomebrew?: () => void;
   /** Navigate to the Campaigns page. Provided ONLY when signed in — absent hides the menu item. */
@@ -585,6 +595,18 @@ export function CharacterSheet({
           // mobile) chrome bar. Mobile: the chrome bar is hidden, so the hamburger is rendered here and
           // Customize is moved INTO it (still per-character); Edit stays a quick-access icon.
           <>
+            {/* Undo/redo were keyboard-only (Ctrl+Z / Ctrl+Shift+Z) — invisible on a tablet and
+                undiscoverable everywhere else. The tracker has had these buttons all along. */}
+            {undo && (
+              <button className="icon-btn" title="Undo (Ctrl+Z)" aria-label="Undo" disabled={!canUndo} onClick={() => canUndo && undo()}>
+                <i className="ti ti-arrow-back-up" aria-hidden="true" />
+              </button>
+            )}
+            {redo && (
+              <button className="icon-btn" title="Redo (Ctrl+Shift+Z)" aria-label="Redo" disabled={!canRedo} onClick={() => canRedo && redo()}>
+                <i className="ti ti-arrow-forward-up" aria-hidden="true" />
+              </button>
+            )}
             {onEdit && (
               <button className="icon-btn" title="Edit character" aria-label="Edit character" onClick={onEdit}>
                 <i className="ti ti-edit" aria-hidden="true" />

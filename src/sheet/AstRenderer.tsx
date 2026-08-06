@@ -10,6 +10,7 @@
  */
 import { Fragment, type ReactNode } from 'react';
 import type { AstNode } from './astStore';
+import { useContent } from './ContentContext';
 import './ast.css';
 
 /* ---------- text hygiene: strip AoN template artifacts + markdown backslash-escapes ---------- */
@@ -65,7 +66,14 @@ function sortTraits(ts: string[]): string[] {
   });
 }
 
-interface Ctx { selfRef?: string; onOpenRef: (bucket: string, slug: string) => void; }
+interface Ctx {
+  selfRef?: string;
+  onOpenRef: (bucket: string, slug: string) => void;
+  /** Does this "bucket:slug" actually ship? A link whose target is absent rendered as a clickable
+   *  anchor whose click did nothing — 3,692 of them, led by classFeatures:anathema (617 times) and
+   *  actions:command (601). Absent ⇒ assume everything resolves, which is the old behaviour. */
+  hasRef?: (bucket: string, slug: string) => boolean;
+}
 
 /** The engine/importer slug for a name — must match import-core-v2's slug() so a trait chip's label
  *  resolves to its shipped `trait` record (e.g. "Dwarf" → trait:dwarf). */
@@ -93,6 +101,10 @@ function Inline({ node, ctx, k }: { node: AstNode; ctx: Ctx; k: number }): React
       if (node.ref && node.ref === ctx.selfRef) return <Fragment key={k}>{label}</Fragment>; // self-suppress
       if (node.ref) {
         const [bucket, slug] = node.ref.split(':');
+        // A target that does not ship falls through to the dead style below, which is what ref:null
+        // already does. Looking clickable and doing nothing is worse than looking inert.
+        if (ctx.hasRef && !ctx.hasRef(bucket, slug))
+          return <span key={k} className={'ast-lk-dead' + (node.auto ? ' auto' : '')}>{label}</span>;
         return (
           <a key={k} className={'ast-lk' + (node.auto ? ' auto' : '')} role="button" tabIndex={0}
              onClick={(e) => { e.preventDefault(); ctx.onOpenRef(bucket, slug); }}
@@ -171,11 +183,19 @@ function TableEl({ node, ctx }: { node: AstNode; ctx: Ctx }): ReactNode {
             <tr key={i}>
               {(tr.c || [])
                 .filter((c) => c.t === 'td' || c.t === 'th')
-                .map((cell, j) =>
-                  cell.t === 'th'
-                    ? <th key={j}><Kids node={cell} ctx={ctx} /></th>
-                    : <td key={j}><Kids node={cell} ctx={ctx} /></td>,
-                )}
+                .map((cell, j) => {
+                  // The ast carries colspan/rowspan (288 and 62 cells, mostly the class advancement
+                  // tables) and this dropped them, so every merged row rendered a cell short and the
+                  // columns after it slid left.
+                  const span = (v: unknown) => {
+                    const n = Number(v);
+                    return Number.isFinite(n) && n > 1 ? n : undefined;
+                  };
+                  const attrs = { colSpan: span(cell.colspan), rowSpan: span(cell.rowspan) };
+                  return cell.t === 'th'
+                    ? <th key={j} {...attrs}><Kids node={cell} ctx={ctx} /></th>
+                    : <td key={j} {...attrs}><Kids node={cell} ctx={ctx} /></td>;
+                })}
             </tr>
           ))}
         </tbody>
@@ -346,7 +366,12 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
   /** controls (Back / pin / close) rendered at the right of the header, when the popup owns the chrome */
   headerControls?: ReactNode;
 }): ReactNode {
-  const ctx: Ctx = { selfRef, onOpenRef };
+  // A link's target must actually ship, or it renders inert rather than as a button that does nothing.
+  const content = useContent();
+  const hasRef = content
+    ? (bucket: string, slug: string) => !!(content as unknown as Record<string, Record<string, unknown> | undefined>)[bucket]?.[slug]
+    : undefined;
+  const ctx: Ctx = { selfRef, onOpenRef, hasRef };
   const top = node.c || [];
   if (bodyOnly) return <div className="ast-body ast-embed"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} /></div>;
   const title = top.find((n) => n.t === 'title' && Number(n.level || 1) <= 1) || top.find((n) => n.t === 'title');

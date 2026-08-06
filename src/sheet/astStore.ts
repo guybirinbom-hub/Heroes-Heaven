@@ -21,6 +21,9 @@ export interface AstNode {
   level?: number;
   /** right-aligned header badge, e.g. "Spell 3" */
   right?: string;
+  /** merged table cells — 288 colspan and 62 rowspan ship, mostly in the class advancement tables */
+  colspan?: string | number;
+  rowspan?: string | number;
   /** trait chip label / url */
   label?: string;
   url?: string;

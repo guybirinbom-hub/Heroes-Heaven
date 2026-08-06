@@ -100,12 +100,18 @@ function SpellDetail({ spell, maxRank, signature, onClose }: { spell: Spell; max
   const { base, heightening } = splitHeightening(spell.description || '');
   const baseRank = spell.rank;
   const isCantrip = baseRank === 0;
+  // "Focus spells are automatically heightened to half your level rounded up" — the same treatment
+  // cantrips get, and 480 spells carry the trait.
+  const isFocus = (spell.traits ?? []).includes('focus');
   const top = Math.min(10, Math.max(baseRank, maxRank ?? baseRank));
   // Only spontaneous SIGNATURE spells can be freely re-ranked, so they're the only ones with a "cast
   // at" picker. Cantrips auto-heighten to your max (viewed there, no picker); everything else is viewed
   // at its set rank (highlighted, no picker).
   const showPicker = !!signature && top > baseRank;
-  const autoRank = isCantrip ? top : baseRank;
+  // Focus spells heighten automatically to your maximum, exactly as cantrips do — "focus spells are
+  // automatically heightened to half your level rounded up". Only cantrips were covered, so a focus
+  // spell's detail view showed its 1st-rank damage forever.
+  const autoRank = isCantrip || isFocus ? top : baseRank;
   const [castRank, setCastRank] = useState<number>(showPicker ? baseRank : autoRank);
   const r = showPicker ? castRank : autoRank;
   // Upcast scaling at the viewed rank — inline damage in the prose, area on the stat.

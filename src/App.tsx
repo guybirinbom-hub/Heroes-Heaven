@@ -64,7 +64,7 @@ export default function App() {
   const bypassLogin = devBypass || localSkip;
   // Roster lives in an undo/redo timeline: every character-data change (all sheet mutations funnel
   // through setRoster) becomes an undoable step, driving Ctrl+Z / Ctrl+Shift+Z below.
-  const { state: roster, set: setRoster, undo, redo } = useUndoableState<SavedChar[]>(initialRoster);
+  const { state: roster, set: setRoster, undo, redo, canUndo, canRedo } = useUndoableState<SavedChar[]>(initialRoster);
   const [activeId, setActiveId] = useState<string>(() => {
     // Reopen the last-active character if it still exists, else the first (or '' on an empty roster).
     const r = initialRoster();
@@ -750,6 +750,10 @@ export default function App() {
       <CharacterSheet
         // This else is reached only when pickScreen returned 'sheet', which requires content AND a
         // character — so `character` is non-null here; TS just can't infer it through `which`.
+        undo={undo}
+        redo={redo}
+        canUndo={canUndo}
+        canRedo={canRedo}
         character={character!}
         content={sheetContent ?? readyContent}
         build={active.build}
