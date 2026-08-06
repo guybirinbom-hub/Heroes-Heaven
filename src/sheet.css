@@ -8973,6 +8973,17 @@ button.strike-name:hover {
   gap: 8px;
   flex: 1;
 }
+/* Magical Understudy's two cantrip pickers — the eidolon's own innate spells. */
+.eid-cantrips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+.eid-cantrips > .osel {
+  flex: 1 1 160px;
+  min-width: 0;
+}
 .eid-abil {
   display: flex;
   flex-direction: column;

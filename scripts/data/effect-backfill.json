@@ -89413,5 +89413,83 @@
       "entryId": "magaambyan-attendant-dedication-casting",
       "cantrips": 1
     }
+  },
+  {
+    "category": "feats",
+    "id": "caustic-nectar",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Nectar",
+        "die": "d4",
+        "damageType": "acid",
+        "group": "",
+        "traits": [
+          "unarmed"
+        ],
+        "range": 20
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "caustic-nectar",
+    "field": "note",
+    "value": "On a critical hit with your nectar the target is also sickened 1. Your nectar adds no critical specialization effect, and you are immune to your own."
+  },
+  {
+    "category": "feats",
+    "id": "potent-nectar",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "potent-nectar",
+        "prompt": "Potent Nectar — permanent, and cannot be changed later",
+        "options": [
+          {
+            "value": "sticky",
+            "label": "Sticky — 1d4 persistent acid",
+            "grant": {
+              "strikeDamage": [
+                {
+                  "type": "acid",
+                  "strikeName": "Nectar",
+                  "dice": {
+                    "n": 1,
+                    "die": "d4"
+                  },
+                  "persistent": true,
+                  "note": "Potent Nectar"
+                }
+              ]
+            }
+          },
+          {
+            "value": "splash",
+            "label": "High velocity — 1d4 acid splash",
+            "grant": {
+              "strikeDamage": [
+                {
+                  "type": "acid",
+                  "strikeName": "Nectar",
+                  "dice": {
+                    "n": 1,
+                    "die": "d4"
+                  },
+                  "splash": true,
+                  "note": "Potent Nectar"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "magical-understudy",
+    "field": "eidolonCantrips",
+    "value": 2
   }
 ]

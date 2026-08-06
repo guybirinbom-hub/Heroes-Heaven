@@ -2041,7 +2041,7 @@ export function weaponSpecDamage(rank: ProficiencyRank, ws: { spec: boolean; gre
 export function strikeDamageRiders(
   c: Character,
   db: ContentDatabase,
-  ctx: { rank: ProficiencyRank; ranged: boolean; unarmed: boolean },
+  ctx: { rank: ProficiencyRank; ranged: boolean; unarmed: boolean; name?: string },
   extra: StrikeDamageRider[] = [],
 ): string[] {
   const RANK_I = ['untrained', 'trained', 'expert', 'master', 'legendary'];
@@ -2057,6 +2057,8 @@ export function strikeDamageRiders(
   // place a permanent one does, or a 10-minute "+1d4 fire to your unarmed attacks" has nowhere to go
   // but a note: `grantedStrikes` grants a NEW attack, which is not what those effects say.
   for (const m of c.activeModes ?? []) if (m.strikeDamage) sources.push(m);
+  // A resolved effect PICK — Potent Nectar's permanent one-of-two choice lands here.
+  if (c.chosenEffects?.strikeDamage) sources.push({ strikeDamage: c.chosenEffects.strikeDamage });
   // The specific weapon's own intrinsic riders (Hyldarf's Fang +2d6) — only this Strike.
   if (extra.length) sources.push({ strikeDamage: extra });
   const flatByType = new Map<string, number>();
@@ -2067,6 +2069,9 @@ export function strikeDamageRiders(
       if (scope === 'unarmed' && !ctx.unarmed) continue;
       if (scope === 'melee' && ctx.ranged) continue;
       if (scope === 'ranged' && !ctx.ranged) continue;
+      // A rider naming ONE Strike rides only on that Strike. Potent Nectar adds its acid to the
+      // nectar attack, not to every unarmed attack its owner happens to have.
+      if (r.strikeName && r.strikeName.toLowerCase() !== (ctx.name ?? '').toLowerCase()) continue;
       let flat = r.flat ?? 0;
       if (r.byStrikeProficiency) {
         // Keyed to the strike's proficiency — only expert+ qualifies; take the value at that rank.
@@ -2074,7 +2079,11 @@ export function strikeDamageRiders(
         flat = Math.max(flat, RANK_I.indexOf(ctx.rank) >= 2 ? r.byStrikeProficiency[key] ?? 0 : 0);
       }
       if (flat > 0) flatByType.set(r.type, Math.max(flatByType.get(r.type) ?? 0, flat));
-      if (r.dice) diceTerms.push(`${r.dice.n}${r.dice.die} ${DAMAGE_ABBR[r.type] ?? r.type}`);
+      if (r.dice) {
+        const kind = r.persistent ? 'persistent ' : '';
+        const tail = r.splash ? ' splash' : '';
+        diceTerms.push(`${r.dice.n}${r.dice.die} ${kind}${DAMAGE_ABBR[r.type] ?? r.type}${tail}`);
+      }
     }
   }
   return [...[...flatByType].map(([type, n]) => `${n} ${DAMAGE_ABBR[type] ?? type}`), ...diceTerms];
@@ -2289,7 +2298,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const mpDmg = mpMode ? mpImbuedDamageTerms(inv.monsterPart, w.damage.type, c.level).map((t) => formatMpDamageTerm(t)) : [];
   // Feat/feature/item strike-damage riders (Spirit Striking; Crimson Fulcrum Lens; Hyldarf's Fang +2d6
   // intrinsic to this weapon).
-  const riderDmg = strikeDamageRiders(c, db, { rank, ranged, unarmed: false }, w.strikeDamage);
+  const riderDmg = strikeDamageRiders(c, db, { rank, ranged, unarmed: false, name: w.name }, w.strikeDamage);
   const extraDmg = [...runeDmg, ...mpDmg, ...riderDmg];
   // Deadly dN adds bonus weapon dice on a crit (1 die; 2 with greater striking, 3 with major); Fatal dN
   // upgrades the crit dice to dN and adds one; Two-Hand dN uses a larger die when wielded two-handed.
@@ -2539,7 +2548,7 @@ function deriveUnarmedStrike(
   const nCritRiders = [...(nDeadly ? [`${Math.max(1, strikingExtra)}${nDeadly}`] : []), ...critPersistent];
   // Feat/feature strike-damage riders apply to unarmed Strikes too (Spirit Striking, an armor
   // innovation's Offensive Boost). `p.name === 'Fist'` and stance strikes are all unarmed here.
-  const riderDmg = strikeDamageRiders(c, db, { rank, ranged: isRanged, unarmed: true });
+  const riderDmg = strikeDamageRiders(c, db, { rank, ranged: isRanged, unarmed: true, name: p.name });
   const extraDmg = [...runeDmg, ...mpDmg, ...riderDmg];
   const damage =
     `${dice}${die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[p.damageType] ?? p.damageType}` +

@@ -2908,6 +2908,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // fire" — but only while raging, and only from 9th). Everything else here lands unconditionally,
     // so without this branch the pick would grant a permanent resistance to a barbarian standing still.
     if (g.whileActive?.length) (into.whileActive ??= []).push(...g.whileActive);
+    if (g.strikeDamage?.length) (into.strikeDamage ??= []).push(...g.strikeDamage);
   };
   const resolvePick = (recordId: string, choices: EffectChoice[] | undefined, sink: (g: EffectGrant, srcName: string) => void, srcName: string) => {
     for (const ch of choices ?? []) {

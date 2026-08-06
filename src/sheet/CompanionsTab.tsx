@@ -9,6 +9,7 @@ import {
   MATURITIES,
   COMPANION_FORMULA,
   EIDOLON_PRIMARY_OPTIONS,
+  eidolonCantripSlots,
   type AnimalCompanionBlock,
   type EidolonBlock,
   type FamiliarBlock,
@@ -811,6 +812,11 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
           structured them, so the block listed none — and Eidolon Symbiosis (7th) and Eidolon
           Transcendence (17th), whose whole content is "you gain your type's ability", arrived
           empty. Only the tiers this summoner has reached are listed. */}
+      {b.cantrips?.length ? (
+        <div className="sb-line">
+          <b>Innate cantrips</b> {b.cantrips.join(", ")} <span className="sb-muted">(your spell attack and DC)</span>
+        </div>
+      ) : null}
       {b.typeAbilities?.length ? (
         <>
           <div className="sb-div" />
@@ -1069,10 +1075,23 @@ const isSpecialized = (m?: string) => !!m && m.startsWith('specialized');
 /** An eidolon's unarmed attack damage type is its form's physical type (GM may allow others). */
 const EID_DMG_TYPES: DamageType[] = ['bludgeoning', 'piercing', 'slashing'];
 
-function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { cfg: CompanionConfig; content: ContentDatabase; onPlay: PlayUpdater; onAbilities: () => void; onSpecialization: () => void }) {
+function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecialization }: { cfg: CompanionConfig; character: Character; content: ContentDatabase; onPlay: PlayUpdater; onAbilities: () => void; onSpecialization: () => void }) {
   const set = (patch: Partial<CompanionConfig>) => onPlay((p) => updatePlayCompanion(p, cfg.id, patch));
   const ec: EidolonConfig = cfg.eidolon ?? {};
   const setEid = (patch: Partial<EidolonConfig>) => set({ eidolon: { ...ec, ...patch } });
+  // Magical Understudy gives the EIDOLON cantrips, not the summoner. They are offered from the
+  // eidolon type's own tradition, which is what the feat says ("two cantrips of its tradition").
+  const eidCantripSlots = cfg.kind === 'eidolon' ? eidolonCantripSlots(character, content) : 0;
+  const eidTradition = cfg.typeId ? content.classes.summoner?.subclass?.options?.find((o) => o.id === cfg.typeId)?.tradition : undefined;
+  const eidCantripOptions = useMemo(
+    () =>
+      eidCantripSlots === 0
+        ? []
+        : Object.values(content.spells)
+            .filter((sp) => sp.rank === 0 && !sp.ritual && (!eidTradition || (sp.traditions ?? []).includes(eidTradition)))
+            .sort((a, b) => a.name.localeCompare(b.name)),
+    [content, eidTradition, eidCantripSlots],
+  );
   const type = cfg.kind === 'animal' && cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
   const isConstruct = type?.category === 'construct';
   const animalOpts = Object.values(content.animalCompanions).filter((t) => (t.category === 'construct') === isConstruct);
@@ -1169,6 +1188,35 @@ function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { 
               ))}
             </select>
           </div>
+
+          {eidCantripSlots > 0 && (
+            <>
+              <div className="cmp-crow cmp-crow-top">
+                <span className="cmp-lbl">Cantrips</span>
+                <div className="eid-cantrips">
+                  {Array.from({ length: eidCantripSlots }, (_, i) => (
+                    <select
+                      key={i}
+                      className="osel"
+                      aria-label={`Eidolon cantrip ${i + 1}`}
+                      value={ec.cantrips?.[i] ?? ''}
+                      onChange={(e) => {
+                        const next = Array.from({ length: eidCantripSlots }, (_, n) => ec.cantrips?.[n] ?? null);
+                        next[i] = e.target.value || null;
+                        setEid({ cantrips: next });
+                      }}
+                    >
+                      <option value="">— choose —</option>
+                      {eidCantripOptions.map((sp) => (
+                        <option key={sp.id} value={sp.id}>{sp.name}</option>
+                      ))}
+                    </select>
+                  ))}
+                </div>
+              </div>
+              <div className="cmp-hint">Cast as innate spells, using your own spell attack and DC.</div>
+            </>
+          )}
 
           <div className="cmp-crow cmp-crow-top">
             <span className="cmp-lbl">Ability mods</span>
@@ -1573,7 +1621,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           {(!canEdit || mode === 'stats') && block.node}
           {(!canEdit || mode === 'stats') && <CompanionSituational cfg={current} content={content} />}
           {canEdit && mode === 'edit' && onPlay && (
-            <EditChoices cfg={current} content={content} onPlay={onPlay} onAbilities={() => setAbilityFor(current.id)} onSpecialization={() => setSpecFor(current.id)} />
+            <EditChoices cfg={current} character={character} content={content} onPlay={onPlay} onAbilities={() => setAbilityFor(current.id)} onSpecialization={() => setSpecFor(current.id)} />
           )}
           {canEdit && mode === 'inv' && onPlay && (
             <CompanionInventory cfg={current} content={content} onPlay={onPlay} onAdd={() => setInvAddFor(current.id)} bulkMax={block.bulkMax} />

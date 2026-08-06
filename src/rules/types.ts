@@ -826,6 +826,9 @@ export interface EffectGrant {
   focusPoolBonus?: number;
   /** Item-only: worn/invested item bonuses of the chosen kind. */
   passive?: ItemPassiveEffects;
+  /** Extra damage the chosen option adds to Strikes. Potent Nectar's two branches are nothing
+   *  BUT this, and an EffectGrant could carry defences, senses and spells but no damage. */
+  strikeDamage?: StrikeDamageRider[];
   /** The chosen benefit applies ONLY while a state is on. Giant Instinct's Raging Resistance covers
    *  "bludgeoning and your choice of cold, electricity, or fire" — resolved picks otherwise land in
    *  `chosenEffects`, which deriveDefenses applies unconditionally, so the pick would have granted a
@@ -1201,6 +1204,10 @@ export interface FeatChoiceDef {
 
 export interface Feat extends ContentBase, DefenseGrants {
   level: number;
+  /** Cantrips this feat gives the summoner's EIDOLON, cast as innate spells (Magical Understudy
+   *  grants two). The eidolon had no spellcasting at all, so putting them in the feat's own
+   *  innateSpells would have granted them to the SUMMONER instead. */
+  eidolonCantrips?: number;
   category: FeatCategory;
   prerequisites?: string[];
   actionCost?: ActionCost;
@@ -2275,6 +2282,9 @@ export interface EidolonConfig {
   dexCap?: number;
   /** Primary unarmed attack: form name (Claw, Jaws…), damage type, and the stat-option id. */
   primary?: { name?: string; damageType?: DamageType; option?: string };
+  /** Cantrips the eidolon knows and casts as INNATE spells (Magical Understudy). One entry per
+   *  slot the summoner's feats grant, `null` until chosen. */
+  cantrips?: (string | null)[];
   /** Secondary unarmed attack (always 1d6, agile + finesse): form name + damage type. */
   secondary?: { name?: string; damageType?: DamageType };
 }
@@ -2496,6 +2506,15 @@ export interface StrikeDamageRider {
   /** Flat extra keyed to the STRIKE's weapon-proficiency rank (Spirit Striking: expert 2 / master 3 /
    *  legendary 4). Only applies at the listed ranks — a strike below the lowest key gets nothing. */
   byStrikeProficiency?: Partial<Record<'expert' | 'master' | 'legendary', number>>;
+  /** Restrict to ONE Strike by name, case-insensitively — Potent Nectar rides only on the nectar
+   *  attack Caustic Nectar grants, not on every unarmed Strike the character has. `appliesTo` is a
+   *  category and cannot say that. */
+  strikeName?: string;
+  /** The dice are PERSISTENT damage ("1d4 persistent acid"). Not multiplied on a critical hit, which
+   *  is how every record printing this phrases it. */
+  persistent?: boolean;
+  /** The dice are SPLASH damage. Likewise never multiplied on a crit. */
+  splash?: boolean;
   /** Short label for the source, shown in the strike breakdown. */
   note?: string;
 }

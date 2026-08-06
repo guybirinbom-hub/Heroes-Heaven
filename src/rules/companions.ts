@@ -672,6 +672,8 @@ export interface EidolonBlock extends Defenses {
    *  (7th) and Eidolon Transcendence (17th) — whose whole content is "you gain your type's ability" —
    *  arrived empty. */
   typeAbilities?: { tier: string; level: number; name: string; text: string }[];
+  /** Cantrip NAMES the eidolon knows and casts as innate spells (Magical Understudy). */
+  cantrips?: string[];
 }
 
 /** The eidolon's primary unarmed attack is chosen from these stat blocks (Secrets of Magic). The
@@ -865,5 +867,23 @@ export function deriveEidolon(
       const owned = (opt?.eidolonAbilities ?? []).filter((a) => character.level >= a.level);
       return owned.length ? { typeAbilities: owned } : {};
     })(),
+    // Magical Understudy: "It gains the Cast a Spell activity and learns two cantrips of its
+    // tradition, which it can cast as innate spells." Only the chosen ones are listed — an unfilled
+    // slot is a prompt in the editor, not a line on the stat block.
+    ...(() => {
+      const known = (cfg.eidolon?.cantrips ?? []).filter((id): id is string => !!id && !!content.spells[id]);
+      return known.length ? { cantrips: known.map((id) => content.spells[id].name) } : {};
+    })(),
   };
+}
+
+/**
+ * How many cantrips the summoner's feats give the EIDOLON (Magical Understudy: two).
+ *
+ * Summed rather than maxed: two feats each granting cantrips grant that many between them. This has
+ * to be its own lane because the eidolon has no spellcasting entry — putting the cantrips in the
+ * feat's own `innateSpells` would have handed them to the summoner.
+ */
+export function eidolonCantripSlots(character: Character, content: ContentDatabase): number {
+  return (character.feats ?? []).reduce((n, f) => n + (content.feats[f.featId]?.eidolonCantrips ?? 0), 0);
 }
