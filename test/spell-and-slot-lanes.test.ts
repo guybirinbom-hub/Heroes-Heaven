@@ -95,10 +95,15 @@ describe('extra spell slots', () => {
     expect(f.spellSlotBonus?.restricted?.from).toBe('subclass-granted');
   });
 
-  it('the restriction it cannot enforce is TOLD to the player, not faked', () => {
-    // Writing a `restriction` field nothing reads is how a fix becomes a lie.
-    expect(db.feats['conscious-spell-specialization'].dataWarning).toMatch(/conscious mind/i);
-    expect((db.feats['conscious-spell-specialization'].spellSlotBonus as Record<string, unknown>).restriction).toBeUndefined();
+  it('the restriction is ENFORCED now, not merely announced', () => {
+    // This used to assert a dataWarning saying the app could not restrict the slots — correct when it
+    // was written, and false once the restricted-slot lane was built for exactly this feat. A warning
+    // that outlives its cause shows the player a "Missing data" banner about something that works.
+    const b = db.feats['conscious-spell-specialization'].spellSlotBonus as Record<string, unknown>;
+    expect((b.restricted as Record<string, unknown>)?.from).toBe('subclass-granted');
+    // `restriction` is the DISPLAY-only string; writing one nothing reads is how a fix becomes a lie.
+    expect(b.restriction).toBeUndefined();
+    expect(db.feats['conscious-spell-specialization'].dataWarning).toBeUndefined();
   });
 
   it('Captivating Intensity is NOT a slot grant — it is innate USES', () => {
@@ -107,8 +112,10 @@ describe('extra spell slots', () => {
     // grants innate spells at fixed levels, not a slot ladder.
     expect(db.feats['captivating-intensity'].description).toMatch(/innate spell/i);
     expect(db.feats['captivating-intensity'].spellSlotBonus).toBeUndefined();
-    // No lane amends the daily uses of an ALREADY-granted innate spell, so the player is told.
-    expect(db.feats['captivating-intensity'].dataWarning).toMatch(/innate/i);
+    // Those extra uses now show on the sheet (see test/captivator-archetype.test.ts), so what remains
+    // is a NOTE about the one clause still untracked — not a warning that the feat does nothing.
+    expect(db.feats['captivating-intensity'].dataWarning).toBeUndefined();
+    expect(db.feats['captivating-intensity'].note).toMatch(/2\/day/);
   });
 });
 

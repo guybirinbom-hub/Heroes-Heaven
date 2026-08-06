@@ -21391,12 +21391,6 @@
   },
   {
     "category": "feats",
-    "id": "cathartic-focus-spell",
-    "field": "dataWarning",
-    "value": "grants the focus spell listed under your catharsis emotion — the Cathartic Mage emotion entries (and the focus spells they name) are not in the current data, so no spell or Focus Point is added"
-  },
-  {
-    "category": "feats",
     "id": "advanced-elemental-spell",
     "field": "effectChoices",
     "value": [
@@ -33163,12 +33157,6 @@
     "value": "Part of this effect references content missing from the current data — apply it manually. (Trained-with-4-named-weapons that scales with later class weapon-proficiency increases needs a per-weapon-base FeatGrant)"
   },
   {
-    "category": "classFeatures",
-    "id": "chirurgeon",
-    "field": "dataWarning",
-    "value": "Part of this effect references content missing from the current data — apply it manually. (Field Benefit substitutes the Crafting rank/modifier for all Medicine checks — a skill-substitution mechanism that does )"
-  },
-  {
     "category": "heritages",
     "id": "warrior-android",
     "field": "dataWarning",
@@ -33209,12 +33197,6 @@
     "id": "beast-gunner-dedication",
     "field": "dataWarning",
     "value": "Part of this effect references content missing from the current data — apply it manually. (Whole caster-dedication spellcasting: grants Cast a Spell, a spell repertoire with a chosen arcane/primal cantrip, spell)"
-  },
-  {
-    "category": "backgrounds",
-    "id": "second-chance-champion",
-    "field": "dataWarning",
-    "value": "This grants “You're trained in Acrobatics and the Gladiatorial Lore skill”, which isn't in the current data (a legacy entry not yet reprinted) — apply it manually."
   },
   {
     "category": "feats",
@@ -68046,12 +68028,6 @@
   },
   {
     "category": "feats",
-    "id": "captivating-intensity",
-    "field": "dataWarning",
-    "value": "Grants one extra daily casting of each captivator innate spell (except your two highest ranks) — the app does not yet track per-spell innate uses granted this way."
-  },
-  {
-    "category": "feats",
     "id": "reactive-charm",
     "field": "limitedUses",
     "value": {
@@ -72878,12 +72854,6 @@
       "max": 1,
       "per": "day"
     }
-  },
-  {
-    "category": "feats",
-    "id": "conscious-spell-specialization",
-    "field": "dataWarning",
-    "value": "These extra slots may only cast spells granted by your conscious mind — the app does not restrict them."
   },
   {
     "category": "feats",

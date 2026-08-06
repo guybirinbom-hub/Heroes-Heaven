@@ -159,6 +159,37 @@ describe('a cantrip grant that quietly grants slots', () => {
   });
 });
 
+describe('a warning that outlived the thing it warns about', () => {
+  it('no record warns about a mechanic it now carries', () => {
+    // `dataWarning` renders as a "Missing data — N effects reference content not in the current data"
+    // banner. Five of seventeen were describing mechanics the engine had since gained, so a psychic,
+    // an alchemist, a Cathartic Mage, a Second-Chance Champion and a captivator were each being told
+    // something was broken that works. Two of those five came back from a harvest of an older
+    // core.json, which cannot tell a field that was LOST from one that was deliberately removed.
+    //
+    // The rule: carrying a warning AND a structured mechanical field is a contradiction unless the
+    // warning is about a DIFFERENT clause of the same record, in which case it is listed here with
+    // its reason.
+    const MECHANICAL = ['spellSlotBonus', 'skillSubstitutions', 'focusSpells', 'focusPoolBonus', 'innateSpells', 'grantsClassFeatures', 'grantedFeatId', 'trainedSkill'];
+    const PARTIAL: Record<string, string> = {
+      'items/talisman-cord': 'the effectChoices pick the cord’s TALISMAN; the warning is about its magic-school attunement, which the Remaster deleted',
+      'items/talisman-cord-lesser': 'same as talisman-cord',
+      'items/talisman-cord-greater': 'same as talisman-cord',
+      'backgrounds/verduran-city-folk': 'the grants are present; the warning is about the second skill FEAT, whose name is missing from the source data',
+    };
+    const bad: string[] = [];
+    for (const cat of ['feats', 'classFeatures', 'heritages', 'backgrounds', 'items', 'ancestries'] as const) {
+      for (const [id, rec] of Object.entries(db[cat] ?? {})) {
+        const r = rec as Record<string, unknown>;
+        if (!r.dataWarning) continue;
+        const has = MECHANICAL.filter((f) => r[f] !== undefined);
+        if (has.length && !PARTIAL[`${cat}/${id}`]) bad.push(`${cat}/${id} warns but carries ${has.join(', ')}`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+});
+
 describe('content that a data regen would silently delete', () => {
   it('every mode in core.json exists in a source file', () => {
     // `npm run data` carries hand-authored buckets from the FROZEN Foundry backup, which has no modes
