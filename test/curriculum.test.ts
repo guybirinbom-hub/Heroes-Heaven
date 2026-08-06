@@ -83,3 +83,55 @@ describe('the curriculum slot', () => {
     expect(clr.spellcasting.find((e) => e.type === 'prepared')?.restrictedSlots ?? []).toEqual([]);
   });
 });
+
+describe('schools whose curriculum depends on a second choice', () => {
+  // Rooted Wisdom "adds one of the following five secondary branches"; the runelord studies one of
+  // seven sins. Both sets live in `public/ast/sidebar.json`, not on the school's own record, and the
+  // Thassilonian trunk lives under an arcaneSchool key the class data never names.
+  const cases = [
+    { id: 'school-of-rooted-wisdom', branches: 5, pick: 'tempest-sun-mages' },
+    { id: 'runelord', branches: 7, pick: 'envy' },
+  ];
+
+  it('each carries all of its branches, fully resolved', () => {
+    for (const c of cases) {
+      const rec = db.classFeatures[c.id];
+      expect(Object.keys(rec.curriculumBranches ?? {}), c.id).toHaveLength(c.branches);
+      for (const [branch, ranks] of Object.entries(rec.curriculumBranches!))
+        for (const ids of Object.values(ranks))
+          for (const id of ids) expect(db.spells[id], `${c.id}/${branch} → ${id}`).toBeTruthy();
+    }
+  });
+
+  it('offers the branch as a choice, keyed to the same values', () => {
+    for (const c of cases) {
+      const rec = db.classFeatures[c.id];
+      const values = (rec.choice?.options ?? []).map((o) => o.value).sort();
+      expect(values, c.id).toEqual(Object.keys(rec.curriculumBranches!).sort());
+      // Names must survive whole: "Tempest-Sun Mages" arrives split across four text runs.
+      expect(rec.choice!.options!.every((o) => o.label.length > 3), c.id).toBe(true);
+    }
+  });
+
+  it('the chosen branch merges into the curriculum slot, and no other branch does', () => {
+    const rec = db.classFeatures['school-of-rooted-wisdom'];
+    const ch = build('wizard', 9, {
+      subclassId: 'school-of-rooted-wisdom',
+      keyAbility: 'int',
+      featChoices: { 'feature:school-of-rooted-wisdom': 'tempest-sun-mages' },
+    } as never);
+    const slots = (ch.spellcasting.find((e) => e.type === 'prepared')?.restrictedSlots ?? []).filter((s) => s.label === 'Curriculum');
+    expect(slots.length).toBeGreaterThan(0);
+    const allowed = new Set(slots[slots.length - 1].allowed ?? []);
+    const mine = Object.values(rec.curriculumBranches!['tempest-sun-mages']).flat();
+    const trunk = Object.values(rec.curriculum ?? {}).flat();
+    // Its own branch is in…
+    expect(mine.some((id) => allowed.has(id)), 'none of the chosen branch is offered').toBe(true);
+    // …and another branch's exclusive spells are not.
+    const otherOnly = Object.values(rec.curriculumBranches!['uzunjati'])
+      .flat()
+      .filter((id) => !mine.includes(id) && !trunk.includes(id));
+    expect(otherOnly.length, 'the two branches share everything — this would prove nothing').toBeGreaterThan(0);
+    for (const id of otherOnly) expect(allowed.has(id), `${id} belongs to Uzunjati`).toBe(false);
+  });
+});

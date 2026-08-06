@@ -23,6 +23,8 @@ export function resolveRestrictedSlots(
   entry: Pick<SpellcastingEntry, 'id' | 'type' | 'slots' | 'prepared' | 'grantedRepertoire'>,
   level: number,
   groupKey: string,
+  /** The character's wizard curriculum, when the grant asks for it. */
+  curriculum?: Record<string, string[]>,
 ): RestrictedSlot[] {
   const castable = Object.keys(entry.slots ?? entry.prepared ?? {})
     .map(Number)
@@ -61,8 +63,11 @@ export function resolveRestrictedSlots(
     counts[top] = (counts[top] ?? 0) + grant.rankChoice.count;
   }
 
-  // "Whatever your subclass granted" — a psychic's conscious mind, which ships a real id list. A
-  // wizard's curriculum does NOT, so Sin Reservoir sets neither and keeps its restriction as prose.
+  // "Whatever your subclass granted" — a psychic's conscious mind, which ships a real id list.
+  // The wizard's curriculum, resolved by the caller and handed in — a Sin Reservoir slot may hold
+  // "only one of your curriculum spells", which is the school's trunk plus the sin being studied.
+  if (grant.from === 'curriculum' && curriculum)
+    for (const ids of Object.values(curriculum)) for (const s of ids) if (!allowed.includes(s)) allowed.push(s);
   if (grant.from === 'subclass-granted')
     for (const ids of Object.values(entry.grantedRepertoire ?? {})) for (const s of ids) if (!allowed.includes(s)) allowed.push(s);
 

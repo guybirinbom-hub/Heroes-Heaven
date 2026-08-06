@@ -795,7 +795,7 @@ export interface RestrictedSlotGrant {
    *  in `grantedRepertoire` (a psychic's conscious mind). Omit both when the restriction is prose the
    *  engine cannot check — a wizard's curriculum lives only in its school's description text, and
    *  that text is one of the ~829 AoN records with unsubstituted templates and dropped spell names. */
-  from?: 'subclass-granted';
+  from?: 'subclass-granted' | 'curriculum';
 }
 
 /** One restricted slot on a built character. */
@@ -1441,6 +1441,16 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
    * every one. School of Unified Magical Theory correctly has none — it prints "No Curriculum".
    */
   curriculum?: Record<string, string[]>;
+  /**
+   * Curriculum spells that depend on a SECOND choice within the school, merged over `curriculum`.
+   *
+   * Two schools work this way and neither could be expressed by a flat list. A School of Rooted
+   * Wisdom wizard picks one of five secondary branches ("you add one of the following five secondary
+   * branches"), and a Thassilonian rune-magic wizard studies one of the seven sins — each adding its
+   * own spells at each rank. Keyed by the value of this record's own `choice`, which is stored under
+   * `feature:<id>`.
+   */
+  curriculumBranches?: Record<string, Record<string, string[]>>;
   armorRestat?: {
     /** Only restat the item carrying this designation (the innovation, not other armor). */
     designated: ItemDesignation;

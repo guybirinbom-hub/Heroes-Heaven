@@ -1543,6 +1543,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const subclassOf = (id: string): string | null => (cls?.id === id ? build.subclassId : cls2?.id === id ? build.subclassId2 ?? null : null);
 
   const subOption = cls?.subclass?.options.find((o) => o.id === build.subclassId);
+  /**
+   * The wizard curriculum: the school's own list PLUS whichever branch or sin the character studies.
+   * Rooted Wisdom adds one of five secondary branches and Thassilonian rune magic one of seven sins,
+   * both of which are real curriculum spells.
+   *
+   * Hoisted because two places need the same answer — the curriculum slot itself, and Sin Reservoir's
+   * restricted slot, which may hold "only one of your curriculum spells". Computing it twice is how
+   * the two would come to disagree.
+   */
+  const wizardCurriculum = (() => {
+    const rec = subOption?.id ? content.classFeatures[subOption.id] : undefined;
+    if (!rec?.curriculum && !rec?.curriculumBranches) return undefined;
+    const picked = subOption?.id ? build.featChoices?.[`feature:${subOption.id}`] : undefined;
+    const extra = picked ? rec?.curriculumBranches?.[picked] : undefined;
+    const merged: Record<string, string[]> = { ...(rec?.curriculum ?? {}) };
+    for (const [rank, ids] of Object.entries(extra ?? {})) merged[rank] = [...new Set([...(merged[rank] ?? []), ...ids])];
+    return Object.keys(merged).length ? merged : undefined;
+  })();
   // Dual Class: the second class's chosen subclass also confers its grants (order skill, racket, etc.).
   const subOption2 = cls2?.subclass?.options.find((o) => o.id === build.subclassId2);
   // Sorcerer Draconic: the chosen dragon exemplar sets the spell tradition + the 2nd bloodline skill.
@@ -2110,7 +2128,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // your school's curriculum" — filling it from the whole spellbook, which is what a plain +1 did,
       // hands a wizard a free general slot at every rank. The list is the school's own, cumulative to
       // the slot's rank because a slot may hold any spell of its rank or lower.
-      const curriculum = subOption?.id ? content.classFeatures[subOption.id]?.curriculum : undefined;
+      // The school's list plus the chosen branch/sin — computed once, near subOption.
+      const curriculum = wizardCurriculum;
       for (const [rankStr, count] of Object.entries(slotCounts)) {
         const rank = Number(rankStr);
         const learned = build.spells[rank] ?? [];
@@ -3302,7 +3321,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (!entry) continue;
     // RESTRICTED slots live in their own list, never in `prepared`/`slots` — see RestrictedSlotGrant.
     if (bonus.restricted) {
-      (entry.restrictedSlots ??= []).push(...resolveRestrictedSlots(bonus.restricted, entry, level, String(restrictedGroup++)));
+      (entry.restrictedSlots ??= []).push(
+        ...resolveRestrictedSlots(bonus.restricted, entry, level, String(restrictedGroup++), wizardCurriculum),
+      );
       continue;
     }
     const add = (r: number, n: number) => {

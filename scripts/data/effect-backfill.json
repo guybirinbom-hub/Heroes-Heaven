@@ -66067,11 +66067,12 @@
       "entryId": "wizard-casting",
       "restricted": {
         "label": "Sin Reservoir",
-        "note": "Prepare only one of your curriculum spells here. Choose the slot’s rank at your daily preparations — anything up to two ranks below your highest.",
+        "note": "Only one of your curriculum spells — your school's list plus your chosen sin's. Choose the slot's rank at your daily preparations: anything up to two ranks below your highest.",
         "rankChoice": {
           "count": 1,
           "belowHighest": 2
-        }
+        },
+        "from": "curriculum"
       }
     }
   },
@@ -74170,8 +74171,8 @@
     "id": "school-of-rooted-wisdom",
     "field": "choice",
     "value": {
-      "flag": "magaambyaBranch",
-      "prompt": "Secondary branch",
+      "flag": "rootedBranch",
+      "prompt": "Your secondary branch — it adds its own curriculum spells",
       "kind": "array",
       "options": [
         {
@@ -90849,5 +90850,564 @@
     "id": "forgotten-presence",
     "field": "note",
     "value": "Characters attempting to Recall Knowledge about you take a −2 circumstance penalty — that penalty is on their check, not yours."
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-rooted-wisdom",
+    "field": "curriculumBranches",
+    "value": {
+      "cascade-bearers": {
+        "0": [
+          "telekinetic-projectile"
+        ],
+        "1": [
+          "force-barrage",
+          "mystic-armor"
+        ],
+        "2": [
+          "telekinetic-maneuver"
+        ],
+        "3": [
+          "levitate"
+        ],
+        "4": [
+          "flicker"
+        ],
+        "5": [
+          "telekinetic-haul"
+        ],
+        "6": [
+          "cursed-metamorphosis"
+        ],
+        "7": [
+          "contingency",
+          "project-image"
+        ],
+        "8": [
+          "pinpoint"
+        ],
+        "9": [
+          "detonate-magic"
+        ]
+      },
+      "emerald-boughs": {
+        "0": [
+          "summon-instrument"
+        ],
+        "1": [
+          "charm",
+          "disguise-magic"
+        ],
+        "2": [
+          "revealing-light"
+        ],
+        "3": [
+          "hypnotize"
+        ],
+        "4": [
+          "confusion"
+        ],
+        "5": [
+          "scouting-eye"
+        ],
+        "6": [
+          "scrying"
+        ],
+        "7": [
+          "true-target"
+        ],
+        "8": [
+          "disappearance"
+        ],
+        "9": [
+          "foresight"
+        ]
+      },
+      "rain-scribes": {
+        "0": [
+          "light"
+        ],
+        "1": [
+          "mending",
+          "summon-animal"
+        ],
+        "2": [
+          "shape-wood"
+        ],
+        "3": [
+          "cozy-cabin"
+        ],
+        "4": [
+          "liminal-doorway",
+          "unfettered-movement"
+        ],
+        "5": [
+          "magic-passage",
+          "summon-dragon"
+        ],
+        "6": [
+          "chain-lightning"
+        ],
+        "7": [
+          "planar-palace"
+        ],
+        "8": [
+          "earthquake"
+        ],
+        "9": [
+          "metamorphosis"
+        ]
+      },
+      "tempest-sun-mages": {
+        "0": [
+          "ignition"
+        ],
+        "1": [
+          "breathe-fire",
+          "fleet-step"
+        ],
+        "2": [
+          "blazing-bolt"
+        ],
+        "3": [
+          "fireball"
+        ],
+        "4": [
+          "fly"
+        ],
+        "5": [
+          "elemental-form"
+        ],
+        "6": [
+          "wall-of-force"
+        ],
+        "7": [
+          "fiery-body"
+        ],
+        "8": [
+          "monstrosity-form"
+        ],
+        "9": [
+          "implosion"
+        ]
+      },
+      "uzunjati": {
+        "0": [
+          "daze"
+        ],
+        "1": [
+          "mindlink",
+          "ventriloquism"
+        ],
+        "2": [
+          "kgalaserkes-axes"
+        ],
+        "3": [
+          "ibexs-harvest"
+        ],
+        "4": [
+          "telepathy"
+        ],
+        "5": [
+          "mind-probe",
+          "truespeech"
+        ],
+        "6": [
+          "mislead"
+        ],
+        "7": [
+          "retrocognition"
+        ],
+        "8": [
+          "hidden-mind"
+        ],
+        "9": [
+          "phantasmagoria"
+        ]
+      }
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "runelord",
+    "field": "curriculum",
+    "value": {
+      "0": [
+        "detect-magic",
+        "sigil"
+      ],
+      "1": [
+        "mystic-armor",
+        "runic-body",
+        "runic-weapon",
+        "sure-strike"
+      ],
+      "2": [
+        "darkvision",
+        "see-the-unseen"
+      ],
+      "3": [
+        "clairaudience",
+        "veil-of-privacy"
+      ],
+      "4": [
+        "clairvoyance",
+        "fly"
+      ],
+      "5": [
+        "mind-probe",
+        "sending"
+      ],
+      "6": [
+        "scrying",
+        "truesight"
+      ],
+      "7": [
+        "contingency",
+        "spell-riposte"
+      ],
+      "8": [
+        "hidden-mind",
+        "unrelenting-observation"
+      ],
+      "9": [
+        "foresight",
+        "personal-runewell"
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "runelord",
+    "field": "curriculumBranches",
+    "value": {
+      "envy": {
+        "0": [
+          "shield",
+          "tangle-vine"
+        ],
+        "1": [
+          "schadenfreude",
+          "enfeeble"
+        ],
+        "2": [
+          "dispel-magic",
+          "stupefy"
+        ],
+        "3": [
+          "earthbind",
+          "thief-of-fortune"
+        ],
+        "4": [
+          "containment",
+          "outcasts-curse"
+        ],
+        "5": [
+          "banishment",
+          "grisly-growths"
+        ],
+        "6": [
+          "cursed-metamorphosis",
+          "spellwrack"
+        ],
+        "7": [
+          "duplicate-foe",
+          "planar-seal"
+        ],
+        "8": [
+          "quandary"
+        ],
+        "9": [
+          "detonate-magic",
+          "cutting-eye"
+        ]
+      },
+      "gluttony": {
+        "0": [
+          "caustic-blast",
+          "void-warp"
+        ],
+        "1": [
+          "grim-tendrils",
+          "summon-undead"
+        ],
+        "2": [
+          "create-food",
+          "ghoulish-cravings"
+        ],
+        "3": [
+          "rouse-skeletons",
+          "vampiric-feast"
+        ],
+        "4": [
+          "seal-fate",
+          "vampiric-maiden"
+        ],
+        "5": [
+          "corrosive-muck",
+          "slither"
+        ],
+        "6": [
+          "disintegrate",
+          "vampiric-exsanguination"
+        ],
+        "7": [
+          "devouring-void",
+          "eclipse-burst"
+        ],
+        "8": [
+          "desiccate"
+        ],
+        "9": [
+          "massacre",
+          "all-encompassing-hunger"
+        ]
+      },
+      "greed": {
+        "0": [
+          "live-wire",
+          "read-aura"
+        ],
+        "1": [
+          "ant-haul",
+          "leaden-steps"
+        ],
+        "2": [
+          "enlarge",
+          "phantasmal-treasure"
+        ],
+        "3": [
+          "one-with-stone",
+          "shrink-item"
+        ],
+        "4": [
+          "aerial-form",
+          "shape-stone"
+        ],
+        "5": [
+          "elemental-form",
+          "impaling-spike"
+        ],
+        "6": [
+          "dragon-form",
+          "petrify"
+        ],
+        "7": [
+          "chrysopoetic-curse",
+          "lifewood-cage"
+        ],
+        "8": [
+          "monstrosity-form"
+        ],
+        "9": [
+          "metamorphosis",
+          "precious-gleam"
+        ]
+      },
+      "lust": {
+        "0": [
+          "daze",
+          "message"
+        ],
+        "1": [
+          "charm",
+          "command"
+        ],
+        "2": [
+          "charitable-urge",
+          "stupefy"
+        ],
+        "3": [
+          "dream-message",
+          "enthrall"
+        ],
+        "4": [
+          "confusion",
+          "suggestion"
+        ],
+        "5": [
+          "mind-probe",
+          "subconscious-suggestion"
+        ],
+        "6": [
+          "dominate",
+          "never-mind"
+        ],
+        "7": [
+          "loves-sacrifice",
+          "warp-mind"
+        ],
+        "8": [
+          "uncontrollable-dance"
+        ],
+        "9": [
+          "telepathic-demand",
+          "hearts-hook"
+        ]
+      },
+      "pride": {
+        "0": [
+          "bullhorn",
+          "figment"
+        ],
+        "1": [
+          "dizzying-colors",
+          "illusory-disguise"
+        ],
+        "2": [
+          "illusory-creature",
+          "invisibility"
+        ],
+        "3": [
+          "blindness",
+          "levitate"
+        ],
+        "4": [
+          "mirage",
+          "vision-of-death"
+        ],
+        "5": [
+          "cloak-of-colors",
+          "illusory-scene"
+        ],
+        "6": [
+          "phantasmal-calamity",
+          "vibrant-pattern"
+        ],
+        "7": [
+          "mask-of-terror",
+          "project-image"
+        ],
+        "8": [
+          "confusing-colors"
+        ],
+        "9": [
+          "overwhelming-presence",
+          "crescent-scepter"
+        ]
+      },
+      "sloth": {
+        "0": [
+          "telekinetic-hand",
+          "telekinetic-projectile"
+        ],
+        "1": [
+          "sleep",
+          "enfeeble"
+        ],
+        "2": [
+          "ghostly-carrier",
+          "summon-elemental"
+        ],
+        "3": [
+          "cozy-cabin",
+          "slow"
+        ],
+        "4": [
+          "dull-ambition",
+          "translocate"
+        ],
+        "5": [
+          "summon-dragon",
+          "telekinetic-haul"
+        ],
+        "6": [
+          "collective-transposition",
+          "teleport"
+        ],
+        "7": [
+          "indolent-haze",
+          "planar-palace"
+        ],
+        "8": [
+          "quandary"
+        ],
+        "9": [
+          "resplendent-mansion",
+          "reclined-apport"
+        ]
+      },
+      "wrath": {
+        "0": [
+          "frostbite",
+          "ignition"
+        ],
+        "1": [
+          "force-barrage",
+          "thunderstrike"
+        ],
+        "2": [
+          "blistering-invective",
+          "floating-flame"
+        ],
+        "3": [
+          "fireball",
+          "lightning-bolt"
+        ],
+        "4": [
+          "ice-storm",
+          "wall-of-fire"
+        ],
+        "5": [
+          "howling-blizzard",
+          "wall-of-ice"
+        ],
+        "6": [
+          "blinding-fury",
+          "disintegrate"
+        ],
+        "7": [
+          "eclipse-burst",
+          "fiery-body"
+        ],
+        "8": [
+          "earthquake"
+        ],
+        "9": [
+          "falling-stars",
+          "vengeful-glare"
+        ]
+      }
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "runelord",
+    "field": "choice",
+    "value": {
+      "flag": "thassilonianSin",
+      "prompt": "Your sin — it adds its own curriculum spells",
+      "kind": "array",
+      "options": [
+        {
+          "value": "envy",
+          "label": "Envy"
+        },
+        {
+          "value": "gluttony",
+          "label": "Gluttony"
+        },
+        {
+          "value": "greed",
+          "label": "Greed"
+        },
+        {
+          "value": "lust",
+          "label": "Lust"
+        },
+        {
+          "value": "pride",
+          "label": "Pride"
+        },
+        {
+          "value": "sloth",
+          "label": "Sloth"
+        },
+        {
+          "value": "wrath",
+          "label": "Wrath"
+        }
+      ]
+    }
   }
 ]

@@ -94,11 +94,40 @@ describe('Sin Reservoir — one slot whose rank the player chooses', () => {
     expect(top.rank).toBeGreaterThanOrEqual(8);
   });
 
-  it('carries the curriculum restriction as prose — the app cannot resolve a wizard curriculum', () => {
-    // The school's spell list lives only in its description text, so pretending to filter would be
-    // worse than showing the sentence.
-    const slot = rs(at(8), 'wizard-casting', 'Sin Reservoir')[0];
-    expect(slot.allowed).toBeUndefined();
+  it('offers the curriculum — the school’s trunk plus the sin being studied', () => {
+    // This used to assert the OPPOSITE, on the grounds that a wizard's curriculum "lives only in its
+    // description text". Only the TEXT is damaged: the AST carries every entry with a resolved id,
+    // and the Thassilonian trunk and its seven sins ship in sidebar.json.
+    const runelord = build('wizard', 8, {
+      featPicks: { '8:class:0': 'sin-reservoir' },
+      subclassId: 'runelord',
+      featChoices: { 'feature:runelord': 'envy' },
+    } as never);
+    const slot = rs(runelord, 'wizard-casting', 'Sin Reservoir')[0];
+    expect(slot, 'no Sin Reservoir slot').toBeTruthy();
+    const cur = db.classFeatures['runelord'];
+    const trunk = Object.values(cur.curriculum ?? {}).flat();
+    const envy = Object.values(cur.curriculumBranches?.envy ?? {}).flat();
+    expect(trunk.length).toBeGreaterThan(0);
+    expect(envy.length).toBeGreaterThan(0);
+    // A slot of rank N holds a spell of rank N or lower, so only the low ranks are on offer at 8.
+    for (const id of slot.allowed ?? []) expect([...trunk, ...envy], id).toContain(id);
+    expect(slot.allowed?.length).toBeGreaterThan(0);
+    // …and never another sin's spells, which belong to a different character's curriculum.
+    const wrathOnly = Object.values(cur.curriculumBranches?.wrath ?? {})
+      .flat()
+      .filter((s) => !trunk.includes(s) && !envy.includes(s));
+    expect(wrathOnly.length, 'wrath and envy share every spell — this would prove nothing').toBeGreaterThan(0);
+    for (const id of wrathOnly) expect(slot.allowed ?? [], `${id} belongs to wrath`).not.toContain(id);
+  });
+
+  it('is filtered from the moment the school is picked; the sin only widens it', () => {
+    const noSin = build('wizard', 8, {
+      featPicks: { '8:class:0': 'sin-reservoir' },
+      subclassId: 'runelord',
+    } as never);
+    const slot = rs(noSin, 'wizard-casting', 'Sin Reservoir')[0];
+    expect(slot.allowed?.length).toBeGreaterThan(0);
     expect(slot.note).toMatch(/curriculum/i);
   });
 });
