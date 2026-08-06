@@ -696,6 +696,17 @@ export interface SpellSlotBonus {
    * When present, this wins: `perRank` is ignored.
    */
   byRank?: Record<string, number>;
+  /**
+   * `byRank` may CREATE a rank the caster's table never gives it.
+   *
+   * The applier can otherwise only increment a rank that already exists, and three capstones grant a
+   * 10th-rank slot to classes whose slot tables stop at 9 (the psychic's Infinite Mind and Mind Over
+   * Matter, the animist's True Channel Spell) — so `byRank: {10: 1}` was silently inert.
+   *
+   * OPT-IN, because creating ranks by default would let any `byRank` row hand a low-level character a
+   * rank it cannot cast. Only a record whose own level already implies the rank should set it.
+   */
+  createRank?: boolean;
   /** Restrict to a specific entry id (defaults to the character's main slot caster). */
   entryId?: string;
   /**

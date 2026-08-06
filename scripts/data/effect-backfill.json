@@ -65542,5 +65542,38 @@
     "value": [
       "human"
     ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "infinite-mind",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      },
+      "createRank": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "mind-over-matter",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      },
+      "createRank": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "true-channel-spell",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      },
+      "createRank": true
+    }
   }
 ]

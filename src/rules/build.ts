@@ -3241,7 +3241,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (!entry) continue;
     const add = (r: number, n: number) => {
       if (entry.slots?.[r]) entry.slots[r].max += n;
+      // …and, when the record says so, CREATE the rank. The psychic's and animist's slot tables stop
+      // at 9, so the three capstones granting a 10th-rank slot incremented a rank that did not exist
+      // and vanished. A spontaneous entry needs the repertoire row too, or the slot has nothing that
+      // can be put in it.
+      else if (bonus.createRank && entry.slots) {
+        entry.slots[r] = { max: n, used: 0 };
+        if (entry.repertoire) entry.repertoire[r] ??= [];
+      }
       if (entry.prepared?.[r]) entry.prepared[r].push(...Array.from({ length: n }, () => ({ spellId: null, expended: false })));
+      else if (bonus.createRank && entry.prepared) {
+        entry.prepared[r] = Array.from({ length: n }, () => ({ spellId: null, expended: false }));
+      }
     };
     // SPECIFIC ranks ("two 4th-rank and one 3rd-rank") win over the per-rank spread. Without this
     // branch the four Rings of Wizardry — which all carry byRank — fell through to `perRank ?? 1`
