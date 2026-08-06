@@ -2588,7 +2588,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const lvl = Number(lvlStr);
     if (!Number.isFinite(lvl) || lvl > level) continue;
     takenFeats.add(featId);
-    feats.push({ featId, level: lvl, category: (cat as FeatCategory) ?? 'class', choice: featChoiceById[slotKey] });
+    // The slot key travels with the feat so a REPEATABLE feat's per-taking answers (its pick-a-feat
+    // choice) can be told apart. Keyed by feat id alone, take 2 and take 3 shared one answer.
+    feats.push({ featId, level: lvl, category: (cat as FeatCategory) ?? 'class', choice: featChoiceById[slotKey], slotKey });
   }
   // Dedication BONUS skill feats (Rogue Dedication: "You gain a skill feat"). Once the dedication is
   // among the taken feats, inject its chosen skill feat as an extra skill-feat slot at the dedication's
@@ -2614,11 +2616,28 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const fc of [...feats]) {
     const spec = FEAT_PICK_GRANTS[fc.featId];
     if (!spec) continue;
-    const chosen = build.pickFeatChoices?.[fc.featId];
-    if (!chosen || takenFeats.has(chosen) || !content.feats[chosen]) continue;
+    // SLOT KEY FIRST, feat id as the fallback. A repeatable feat (Advanced Arcana, Animist's Power —
+    // 25 of them ship with a spec already) fills several slots, and a feat-id key could hold only one
+    // answer, so takes 2+ silently granted nothing. The bare-id read stays for characters saved
+    // before this, exactly like the `<slotKey>#<i>` multi-pick lane.
+    const chosen = (fc.slotKey ? build.pickFeatChoices?.[fc.slotKey] : undefined) ?? build.pickFeatChoices?.[fc.featId];
+    if (!chosen || !content.feats[chosen]) continue;
+    // Count against the pick's OWN cap rather than "is it taken at all", so two takings of a
+    // repeatable grant can legitimately name the same repeatable feat.
+    const already = feats.reduce((n, f) => (f.featId === chosen ? n + 1 : n), 0);
+    if (already >= maxTakes(content.feats[chosen])) continue;
     if (!pickableFeats(spec, build, content).some((f) => f.id === chosen)) continue; // ignore an illegal pick
     takenFeats.add(chosen);
-    feats.push({ featId: chosen, level: fc.level, category: content.feats[chosen].category as FeatCategory, grantedBy: fc.featId, choice: grantedChoiceById[chosen] });
+    feats.push({
+      featId: chosen,
+      level: fc.level,
+      category: content.feats[chosen].category as FeatCategory,
+      grantedBy: fc.featId,
+      // WHICH taking granted it — so a rebuild from the character alone can pair each taking of a
+      // repeatable grant with its own pick instead of collapsing them.
+      ...(fc.slotKey ? { grantedBySlot: fc.slotKey } : {}),
+      choice: grantedChoiceById[chosen],
+    });
   }
   // A HERITAGE can carry the same kind of pick (Ancient Elf: a multiclass dedication at 1st level,
   // "even though you don't meet its level prerequisite" — the spec's maxLevel encodes that waiver).
@@ -2629,6 +2648,34 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       takenFeats.add(chosen);
       feats.push({ featId: chosen, level: 1, category: content.feats[chosen].category as FeatCategory, grantedBy: build.heritageId, choice: grantedChoiceById[chosen] });
     }
+  }
+  /*
+   * …and so can a BACKGROUND or a CLASS FEATURE. Both were unreachable: this lane was consulted for
+   * taken feat ids and `build.heritageId` and nothing else, so a background offering "one Athletics
+   * skill feat of your choice" and a subclass offering "a bonus 1st-level barbarian feat" each asked
+   * a question the engine never read.
+   *
+   * Granted at the level the source arrives — 1 for a background, the feature's own level otherwise —
+   * so a feat's level prerequisite is judged against the right level.
+   */
+  const pickFrom = (sourceId: string, level: number) => {
+    const spec = FEAT_PICK_GRANTS[sourceId];
+    if (!spec) return;
+    const chosen = build.pickFeatChoices?.[sourceId];
+    if (!chosen || takenFeats.has(chosen) || !content.feats[chosen]) return;
+    if (!pickableFeats(spec, build, content).some((f) => f.id === chosen)) return;
+    takenFeats.add(chosen);
+    feats.push({
+      featId: chosen,
+      level,
+      category: content.feats[chosen].category as FeatCategory,
+      grantedBy: sourceId,
+      choice: grantedChoiceById[chosen],
+    });
+  };
+  if (build.backgroundId) pickFrom(build.backgroundId, 1);
+  for (const fid of classFeatureIdsOwned(build, content)) {
+    pickFrom(fid, Math.max(1, Math.min(level, content.classFeatures[fid]?.level ?? 1)));
   }
   // Feats that GRANT another feat (Bastion-style dedications → a bonus feat, e.g. Lastwall Sentry →
   // Reactive Shield). Runs after ALL feats are placed (picks + class-granted + overrides) so every
@@ -4223,6 +4270,10 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     for (const fid of Object.values(b.gateExpands ?? {})) if (fid) autoGrantedFeatIds.add(fid);
   }
   const featsByLevel = new Map<number, FeatChoice[]>();
+  // Pick-a-feat answers recovered from the granted feats, to be re-keyed onto whatever slot each
+  // granting taking lands in below.
+  const pickByGrantingSlot = new Map<string, string>();
+  const pickByGrantingFeat = new Map<string, string>();
   for (const f of c.feats) {
     // A feat buildCharacter re-injects automatically (subclass/muse grant, option choice-feat, Voice of
     // Nature, Expand-the-Portal impulse): skip it entirely — no slot, no chip. It reappears on the sheet
@@ -4233,6 +4284,14 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     // resolved sub-choice (Seeker of Truths' Domain Initiate domain) DOES round-trip, keyed by feat id.
     if (f.grantedBy) {
       if (f.choice) (b.grantedFeatChoices ??= {})[f.featId] = f.choice.value;
+      // buildCharacter re-derives a pick-granted feat FROM `pickFeatChoices` — so rebuilding from the
+      // character alone (an import, a campaign copy) has to put the answer back, or every bonus feat
+      // a pick grant handed over silently disappears. Keyed by the granting TAKING, remapped to that
+      // taking's new slot below.
+      if (FEAT_PICK_GRANTS[f.grantedBy]) {
+        if (f.grantedBySlot) pickByGrantingSlot.set(f.grantedBySlot, f.featId);
+        else pickByGrantingFeat.set(f.grantedBy, f.featId); // saved before slots were recorded
+      }
       continue;
     }
     if (!bgFeatDropped && bgFeat && f.featId === bgFeat && f.level === 1 && f.category === 'skill') {
@@ -4335,6 +4394,12 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       const key = `${slot.level}:${slot.category}:${slot.idx}`;
       b.featPicks[key] = f.featId;
       if (f.choice) b.featChoices[key] = f.choice.value;
+      // Re-attach this taking's pick-a-feat answer to the slot it just landed in. `f.slotKey` is the
+      // slot it had BEFORE the rebuild, which is only a lookup key here — the new one is what counts.
+      const pick =
+        (f.slotKey ? pickByGrantingSlot.get(f.slotKey) : undefined) ??
+        (pickByGrantingSlot.size ? undefined : pickByGrantingFeat.get(f.featId));
+      if (pick) (b.pickFeatChoices ??= {})[key] = pick;
     } else {
       // No real slot exists for this feat (over-cap import, unknown class, extra archetype feats a
       // lossy source dumped in). Surface it as a visible granted-feat chip instead of a hidden slot.

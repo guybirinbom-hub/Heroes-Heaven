@@ -65483,5 +65483,17 @@
       "group": "chain",
       "value": 2
     }
+  },
+  {
+    "category": "backgrounds",
+    "id": "verduran-city-folk",
+    "field": "dataWarning",
+    "value": "The printed choice is between Streetwise and one other skill feat, whose name is missing from this data source. Streetwise is granted; if your table uses the other option, swap it in Overrides."
+  },
+  {
+    "category": "backgrounds",
+    "id": "verduran-city-folk",
+    "field": "grantedFeatId",
+    "value": "streetwise"
   }
 ]

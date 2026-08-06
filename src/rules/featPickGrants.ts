@@ -105,6 +105,39 @@ export const FEAT_PICK_GRANTS: Record<string, FeatPickSpec> = {
   // All 25 basic-* rows were registered and NONE of the 25 advanced-* ones were, so the second half
   // of every multiclass archetype asked no question and granted no feat. Each row below is the
   // basic row with the level cap changed; the class trait is verified to match the sibling.
+  /* ---- BACKGROUND- and CLASS-FEATURE-keyed picks -----------------------------------------------
+   * This lane was consulted for taken feat ids and `build.heritageId` only, so a background offering
+   * "one Athletics skill feat of your choice" and a subclass offering "a bonus 1st-level barbarian
+   * feat" each asked a question nothing read. buildCharacter now resolves both.
+   */
+  // BACKGROUND: "You're trained in Athletics and gain one Athletics skill feat of your choice."
+  // Listed by id, like natural-performer: no trait marks a feat as belonging to a skill — the tie is
+  // a 'trained in Athletics' prerequisite.
+  'kaiju-stalker': {
+    prompt: 'Choose an Athletics skill feat',
+    category: 'skill',
+    maxLevel: 'self',
+    ids: ['combat-climber', 'hefty-hauler', 'quick-jump', 'titan-wrestler', 'underwater-marauder', 'armor-assist', 'rope-runner', 'canopy-predator', 'mounting-leap', 'muscle-mimicry'],
+  },
+  // BACKGROUND: "one skill feat of your choice between the Specialty Crafting or Multilingual skill feat"
+  'professional-letter-writer': { prompt: 'Choose Specialty Crafting or Multilingual', maxLevel: 1, ids: ['specialty-crafting', 'multilingual'] },
+  // BACKGROUND: "your choice of the Dubious Knowledge or Quick Identification skill feat"
+  'sponsored-by-a-stranger': { prompt: 'Choose Dubious Knowledge or Quick Identification', maxLevel: 1, ids: ['dubious-knowledge', 'quick-identification'] },
+  // CLASS FEATURE (barbarian Fury instinct): "You gain a bonus 1st-level barbarian feat."
+  'fury-instinct': { prompt: 'Choose a 1st-level barbarian feat', category: 'class', maxLevel: 1, traits: ['barbarian'] },
+  // CLASS FEATURE (summoner): "You gain an evolution feat for your eidolon at 1st level."
+  'evolution-feat': { prompt: 'Choose an evolution feat', maxLevel: 'self', traits: ['evolution'] },
+  // The three siblings that were missing. Same row as the rest, from each feat's own text.
+  // (advanced-kata is NOT among them — it already ships above; the note calling it blocked on a
+  // missing `maxLevel: 'half'` predates that mode existing.)
+  // "You gain one kineticist feat… your kineticist level is equal to half your level."
+  'advanced-element-control': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['kineticist'] },
+  // "You gain one animist feat… You can't use this feat to gain animist feats with the wandering trait."
+  'animists-power': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['animist'], excludeTraits: ['wandering'] },
+  // "Gain a composite impulse feat that includes your kinetic element." Its extra clause — the feat's
+  // level must be LOWER than the level you took this at — is a per-SLOT cap the spec cannot express,
+  // so the picker stays slightly permissive, which is this file's stated convention.
+  'elemental-overlap': { prompt: "Choose a composite impulse feat", category: 'class', maxLevel: 'self', traits: ['composite', 'impulse'] },
   'advanced-arcana': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['wizard'] },
   'advanced-blood-potency': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['sorcerer'] },
   'advanced-breakthrough': { prompt: "Choose a class feat", category: 'class', maxLevel: 'half', traits: ['inventor'] },

@@ -2670,6 +2670,24 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           content={content}
         />
       )}
+      {/* A background can also offer a FEAT pick — "one Athletics skill feat of your choice",
+          "Specialty Crafting or Multilingual". buildCharacter resolves these now, so they need a
+          picker: without one the answer can never be given and the feat is never granted. */}
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && FEAT_PICK_GRANTS[background.id] && (() => {
+        const spec = FEAT_PICK_GRANTS[background.id];
+        const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description }));
+        return (
+          <SubCard icon="ti-medal" label={spec.prompt}>
+            <PopupSelect
+              title={spec.prompt}
+              placeholder={`${spec.prompt}…`}
+              value={build.pickFeatChoices?.[background.id] ?? ''}
+              onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [background.id]: v } })}
+              options={opts}
+            />
+          </SubCard>
+        );
+      })()}
       {showCustomBg && build.backgroundId === CUSTOM_BACKGROUND_ID && (
         <CustomBackgroundForm build={build} actions={actions} content={content} />
       )}

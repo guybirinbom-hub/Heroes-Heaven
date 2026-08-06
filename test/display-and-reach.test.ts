@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { ownedFeatureIds } from '../src/rules/derive';
-import { emptyBuild } from '../src/rules/build';
+import { emptyBuild, deriveBuildFromCharacter } from '../src/rules/build';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';
-import { FEAT_PICK_GRANTS } from '../src/rules/featPickGrants';
+import { FEAT_PICK_GRANTS, pickableFeats } from '../src/rules/featPickGrants';
 import { featEntries } from '../src/sheet/FeatsTab';
 
 /**
@@ -130,9 +130,26 @@ describe('the advanced half of every multiclass archetype', () => {
     expect(c.feats.some((f) => f.featId === 'advanced-arcana')).toBe(true);
   });
 
-  it('every registered id is a real feat', () => {
-    const dead = Object.keys(FEAT_PICK_GRANTS).filter((id) => !db.feats[id] && !db.heritages[id]);
+  it('every registered id names a real record that can actually grant it', () => {
+    // Widened as the lane widened: a pick grant may hang off a feat, a heritage, a BACKGROUND or a
+    // CLASS FEATURE — buildCharacter resolves all four. It may not hang off nothing, which is the
+    // typo this guard exists to catch.
+    const dead = Object.keys(FEAT_PICK_GRANTS).filter(
+      (id) => !db.feats[id] && !db.heritages[id] && !db.backgrounds[id] && !db.classFeatures[id],
+    );
     expect(dead).toEqual([]);
+  });
+
+  it('and every registered pick offers a NON-EMPTY pool', () => {
+    // A spec whose filters match nothing renders an empty picker while the audit records "fixed" —
+    // the exact failure the referential guard was added for.
+    const c = build('fighter', 20);
+    const b2 = deriveBuildFromCharacter(c, db);
+    const empty = Object.entries(FEAT_PICK_GRANTS)
+      .filter(([, spec]) => !spec.dynamicTrait && !spec.excludeDynamicTrait) // these depend on the character
+      .filter(([, spec]) => pickableFeats(spec, b2, db).length === 0)
+      .map(([id]) => id);
+    expect(empty).toEqual([]);
   });
 });
 

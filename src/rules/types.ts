@@ -2339,6 +2339,17 @@ export interface FeatChoice {
   /** Set when this feat was auto-granted by ANOTHER feat (FEAT_FEAT_GRANTS), not chosen in a slot —
    *  the granting feat's id. Lets the sheet tag it "granted by …". */
   grantedBy?: string;
+  /**
+   * The slot this feat was picked into (`"13:class"`), when it came from one.
+   *
+   * A REPEATABLE feat fills several slots, and every per-feat answer keyed by feat id alone can
+   * therefore hold only one answer — Advanced Arcana taken three times could record a single pick.
+   * The slot key is what distinguishes the takings.
+   */
+  slotKey?: string;
+  /** For a feat granted by a pick-a-feat grant: the SLOT of the taking that granted it. Lets a
+   *  rebuild pair each taking of a repeatable grant with the pick it actually made. */
+  grantedBySlot?: string;
 }
 
 /** Build log of skill increases (for the builder to validate progression). */

@@ -1150,6 +1150,24 @@ export function Builder({
                                 actions={actions}
                                 content={content}
                               />
+                              {/* …and a class feature can offer a FEAT pick: Fury instinct's "bonus
+                                  1st-level barbarian feat", the summoner's evolution feat. Same lane,
+                                  resolved by buildCharacter, so it needs a screen to answer it on. */}
+                              {FEAT_PICK_GRANTS[f.id] && (() => {
+                                const spec = FEAT_PICK_GRANTS[f.id];
+                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
+                                return (
+                                  <SubCard icon="ti-medal" label={spec.prompt}>
+                                    <PopupSelect
+                                      title={spec.prompt}
+                                      placeholder={`${spec.prompt}…`}
+                                      value={build.pickFeatChoices?.[f.id] ?? ''}
+                                      onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [f.id]: v } })}
+                                      options={opts}
+                                    />
+                                  </SubCard>
+                                );
+                              })()}
                             </div>
                           ))}
                         {/* Level-gated proficiency upgrades from feats taken EARLIER (Brilliant Crafter:
@@ -1251,6 +1269,25 @@ export function Builder({
                               content={content}
                             />
                           )}
+                          {/* A SUBCLASS can carry a feat pick too — Fury instinct's "bonus 1st-level
+                              barbarian feat". Mounted here beside its own effectChoices picker, since
+                              the subclass is not in `cls.features` and the feature loop never sees it. */}
+                          {cls?.subclass && subAnchorId && build.subclassId && FEAT_PICK_GRANTS[build.subclassId] && (() => {
+                            const sid = build.subclassId!;
+                            const spec = FEAT_PICK_GRANTS[sid];
+                            const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
+                            return (
+                              <SubCard icon="ti-medal" label={spec.prompt}>
+                                <PopupSelect
+                                  title={spec.prompt}
+                                  placeholder={`${spec.prompt}…`}
+                                  value={build.pickFeatChoices?.[sid] ?? ''}
+                                  onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [sid]: v } })}
+                                  options={opts}
+                                />
+                              </SubCard>
+                            );
+                          })()}
                           {/* EVERY granted feat's own sub-choice, wherever the grant came from.
                               build.ts grants feats from six lanes (a feat's pick, a heritage, a
                               subclass/extra-choice option, a class feature, an item, a background)
@@ -1483,13 +1520,17 @@ export function Builder({
                             (() => {
                               const spec = FEAT_PICK_GRANTS[picked];
                               const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description }));
+                              // Stored per SLOT, so a repeatable grant taken twice shows two pickers
+                              // rather than two views of one answer. The bare feat-id key is still
+                              // READ, so a character saved before this keeps the pick it had.
+                              const cur = build.pickFeatChoices?.[key] ?? build.pickFeatChoices?.[picked] ?? '';
                               return (
                                 <SubCard icon="ti-medal" label={spec.prompt}>
                                   <PopupSelect
                                     title={spec.prompt}
                                     placeholder={`${spec.prompt}…`}
-                                    value={build.pickFeatChoices?.[picked] ?? ''}
-                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [picked]: v } })}
+                                    value={cur}
+                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [key]: v } })}
                                     options={opts}
                                   />
                                 </SubCard>
