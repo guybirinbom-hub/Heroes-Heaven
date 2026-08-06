@@ -104,6 +104,8 @@ export interface BuildState {
    *  whichever dedication is in the feat list, because the 12th-level slot must offer ONLY destinies
    *  and every slot above it must exclude the other destinies' feats. */
   mythicDestiny?: string | null;
+  /** What this character rolls for initiative (a skill), or absent for Perception. */
+  initiativeSkill?: ProficiencyKey | null;
   /** Dual Class variant: the second class + its subclass. */
   classId2?: string | null;
   subclassId2?: string | null;
@@ -4010,6 +4012,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.hideLegacy ? { hideLegacy: true } : {}),
     ...(build.mythicEnabled && build.mythicCalling ? { mythicCalling: build.mythicCalling } : {}),
     ...(build.mythicEnabled && build.mythicDestiny ? { mythicDestiny: build.mythicDestiny } : {}),
+    ...(build.initiativeSkill ? { initiativeSkill: build.initiativeSkill } : {}),
     ...(build.mythicEnabled && build.mythicDestiny ? { mythicDestiny: build.mythicDestiny } : {}),
     ...(grantedFeatures.length ? { grantedFeatures } : {}),
     ...(naturalAttacks.length ? { naturalAttacks } : {}),
@@ -4248,6 +4251,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   if (c.mythicEnabled) b.mythicEnabled = true;
   if (c.mythicCalling) b.mythicCalling = c.mythicCalling;
   if (c.mythicDestiny) b.mythicDestiny = c.mythicDestiny;
+  if (c.initiativeSkill) b.initiativeSkill = c.initiativeSkill;
   if (c.mythicDestiny) b.mythicDestiny = c.mythicDestiny;
   if (c.kingmakerEnabled) b.kingmakerEnabled = true;
   if (c.naturalAttacks?.length) {

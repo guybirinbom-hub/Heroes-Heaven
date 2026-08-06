@@ -21,6 +21,10 @@ describe('situational target kinds stay in sync with StatRef', () => {
     skill: { kind: 'skill', skill: 'athletics' },
     save: { kind: 'save', save: 'fortitude' },
     perception: { kind: 'perception' },
+    // Initiative READS another statistic — Perception by default, a skill when the character rolls it
+    // with one — so its breakdown delegates to that one. It is a kind of its own so that bonuses
+    // applying to WHATEVER you roll are not pinned to Perception, where all 47 of them used to live.
+    initiative: { kind: 'initiative' },
     ac: { kind: 'ac' },
     attack: { kind: 'strikeAttack' },
     strikeAttack: { kind: 'strikeAttack' },

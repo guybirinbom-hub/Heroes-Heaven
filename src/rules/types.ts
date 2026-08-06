@@ -3068,6 +3068,9 @@ export interface Character {
   mythicCalling?: string | null;
   /** The chosen mythic destiny, as an archetype slug (War of Immortals: one destiny, taken at 12). */
   mythicDestiny?: string | null;
+  /** What this character rolls for initiative. Absent = Perception, the rules default. A skill here
+   *  is the "sometimes the GM calls for a different check" case — Stealth while Avoiding Notice. */
+  initiativeSkill?: ProficiencyKey | null;
   /** Dual Class: the second class id + its subclass (variant rule). */
   classId2?: string | null;
   subclassId2?: string | null;

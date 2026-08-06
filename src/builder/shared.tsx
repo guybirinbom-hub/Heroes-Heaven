@@ -1,5 +1,6 @@
 import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
+import { INITIATIVE_SKILLS } from '../rules/initiative';
 import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
@@ -1275,6 +1276,21 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
           </p>
         </SetupCard>
       )}
+      <SetupCard icon="ti-bolt" label="Initiative">
+        <PopupSelect
+          title="Roll initiative with"
+          value={build.initiativeSkill ?? ''}
+          onChange={(v) => actions.patch({ initiativeSkill: (v || null) as never })}
+          clearLabel="Perception (default)"
+          options={INITIATIVE_SKILLS.map((k) => ({ value: k, label: k.charAt(0).toUpperCase() + k.slice(1) }))}
+        />
+        <p className="setup-hint">
+          You normally roll Perception. The GM can call for something else to suit what you were doing &mdash;
+          Stealth while Avoiding Notice, Deception after Creating a Diversion &mdash; and several feats say so
+          outright. Bonuses that apply to <em>whatever</em> you roll follow this choice; ones that name Perception
+          apply only while it is set to Perception.
+        </p>
+      </SetupCard>
       {mythicRulesOpen && <MythicRules content={content} onClose={() => setMythicRulesOpen(false)} />}
     </>
   );

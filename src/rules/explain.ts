@@ -17,6 +17,7 @@ import type {
 } from './types';
 import type { BuildState } from './build';
 import { CLASS_ADVANCEMENT } from './advancement';
+import { deriveInitiative } from './initiative';
 import { conditionPenalty } from './conditions';
 import { modeModifiersFor, hasConditionalMode, activeModesTouch, type ModeTarget } from './modes';
 import { abpOn, abpSave, abpPerception, abpDefense, abpSkillBonus } from './abp';
@@ -73,6 +74,10 @@ export type StatRef =
   // spell — so this row exists purely to hold the conditional bonuses that modify it.
   | { kind: 'spellDamage'; entryId: string }
   | { kind: 'ability'; ability: AbilityId }
+  // Initiative, which READS another statistic — Perception by default, or a skill when the character
+  // rolls it with one. Its own kind so 'on initiative' bonuses have somewhere to live that is not
+  // Perception, which is where all ~45 of them were filed for want of anywhere better.
+  | { kind: 'initiative' }
   | { kind: 'hp' }
   | { kind: 'speed' }
   | { kind: 'strikeAttack'; instanceId: string }
@@ -605,6 +610,22 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         description: DESC[ref.save],
         roll: { label: cap(ref.save), modifier: d.modifier },
         situational,
+      };
+    }
+    case 'initiative': {
+      // Initiative READS another statistic, so its breakdown delegates to that one and relabels it.
+      // Delegating rather than recomputing is what keeps the two from drifting: whatever the player
+      // rolls initiative with, the parts they see are that statistic's own parts.
+      const init = deriveInitiative(c, db);
+      const inner = explainStat(c, db, init.stat === 'perception' ? { kind: 'perception' } : { kind: 'skill', skill: init.stat }, build);
+      return {
+        ...inner,
+        title: 'Initiative',
+        subtitle: `rolled with ${init.label}`,
+        totalText: formatMod(init.modifier),
+        // Its own situational lines PLUS the underlying stat's — an "on initiative" bonus is filed
+        // against Perception (there was nowhere else), and must not vanish when it is shown here.
+        situational: [...(inner.situational ?? []), ...situationalList([], featSituationalLines(c, db, ref))],
       };
     }
     case 'perception': {

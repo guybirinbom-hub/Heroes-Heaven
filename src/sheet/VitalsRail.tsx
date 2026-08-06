@@ -17,6 +17,7 @@ import {
   ownedFeatureIds,
   type DefenseSource,
 } from '../rules/derive';
+import { deriveInitiative } from '../rules/initiative';
 import {
   addCondition,
   applyDamage,
@@ -202,6 +203,7 @@ export function VitalsRail({
   const entry = primary?.e;
   const sc = primary?.sc ?? null;
   const perception = derivePerception(character, content);
+  const initiative = deriveInitiative(character, content);
   const speeds = deriveSpeeds(character, content);
   // A temporary Speed override (Hasted/Slowed/…) replaces the derived land Speed and is highlighted.
   const speedOverride = character.speedOverride;
@@ -622,6 +624,22 @@ export function VitalsRail({
           </span>
           <span className="stat-short">Perc</span>
           <span className="stat-mod">{formatMod(perception.modifier)}</span>
+        </div>
+        {/* Initiative is its own line now. It was rolled with Perception and shown nowhere, so a
+            character who rolls it with Stealth (Avoiding Notice) or Deception had no number to read,
+            and the ~45 initiative bonuses had only Perception to hang on. */}
+        <div
+          className={'stat-row' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'initiative' }, content)}
+          onClick={onOpenStat ? () => onOpenStat({ kind: 'initiative' }) : undefined}
+          title={onOpenStat ? 'Initiative — how is this calculated?' : undefined}
+        >
+          <RankPill rank={initiative.rank} />
+          <span className="stat-name">
+            Initiative
+            {statHasSituational(character, { kind: 'initiative' }, content) && <SituationalStar />}
+          </span>
+          <span className="stat-short">{initiative.label}</span>
+          <span className="stat-mod">{formatMod(initiative.modifier)}</span>
         </div>
         </div>
       </section>
