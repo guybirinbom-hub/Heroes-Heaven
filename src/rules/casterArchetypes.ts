@@ -42,9 +42,6 @@ export interface CasterArchetype {
   keyByTradition?: boolean;
   /** Magaambyan Attendant: grants a single INNATE cantrip of the chosen tradition — no spell slots. */
   innateCantrip?: boolean;
-  /** Bloodrager: a repertoire of cantrips only — no Basic/Expert/Master feats ship, so it never gains
-   *  ranked spell slots. */
-  cantripsOnly?: boolean;
   /** A non-standard slot schedule (Halcyon Speaker): each entry unlocks one slot of `rank` at character
    *  level `level` once `featId` is taken (the dedication counts as taken while active). Overrides the
    *  standard basic/expert/master RANK_UNLOCKS. */
@@ -66,18 +63,19 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   'prophet-of-kalistrade-dedication': mk('occult', 'cha', 3, 'prophet'),
   'rivethun-involutionist-dedication': mk('divine', 'wis', 2, 'rivethun'),
   // Bloodrager: a spontaneous repertoire of 2 cantrips from EITHER the arcane or divine list (player's
-  // choice), Cha key, trained spell attack/DC. No Basic/Expert/Master Bloodrager feats ship, so it stays
-  // a cantrips-only pool — the archetype's power is the rage synergy (see BLOODRAGER_NOTE) + Harvest Blood.
+  // choice), Cha key, trained spell attack/DC.
+  //
+  // ITS LADDER EXISTS — it is simply not named after the archetype. `basic-bloodrager-spellcasting`
+  // and its siblings genuinely do not ship, which is why this was read as cantrips-only; the three
+  // feats whose text is "You gain the benefits" are Rising Blood Magic (4), Surging Blood Magic (12)
+  // and Exultant Blood Magic (18). Without them the archetype never gained a single spell slot.
   'bloodrager-dedication': {
     ...mk('arcane', 'cha', 2, 'bloodrager', true),
-    // The comment above says it: no Basic/Expert/Master Bloodrager feats ship. mk() minted ids for
-    // them anyway, so clear them rather than keep three names that resolve to nothing.
-    basicId: undefined,
-    expertId: undefined,
-    masterId: undefined,
+    basicId: 'rising-blood-magic',
+    expertId: 'surging-blood-magic',
+    masterId: 'exultant-blood-magic',
     traditionOptions: ['arcane', 'divine'],
     repertoire: true,
-    cantripsOnly: true,
   },
   // Choice-tradition: the tradition follows a bloodline (sorcerer) / patron (witch);
   // the builder offers a tradition picker rather than modelling the full sub-choice.

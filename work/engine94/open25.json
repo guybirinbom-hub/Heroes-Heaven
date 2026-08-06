@@ -1,0 +1,143 @@
+[
+ {
+  "id": "advanced-red-mantis-magic",
+  "verdict": "STILL_BLOCKED",
+  "why": "byRank is static with no level gate (2nd at 6th, 3rd at 8th, 4th at 10th) and there is no red-mantis entry to target — with no entryId the bonus would land on the character's OWN class caster, over-granting. Needs a Red Mantis CASTER_ARCHETYPES entry plus level-gated slot unlocks."
+ },
+ {
+  "id": "advanced-school-spell",
+  "verdict": "STILL_BLOCKED",
+  "why": "The spell depends on the picked arcane school, so no data field on the feat can name it; needs 'advanced-school-spell': subOption?.advancedFocusSpell added to the ADV_SPELL map in build.ts (~line 1462). An effectChoices menu of all schools would let a wizard pick a school they don't have, i.e. over-grant."
+ },
+ {
+  "id": "basic-cathartic-spellcasting",
+  "verdict": "STILL_BLOCKED",
+  "why": "cathartic-mage-dedication has no CASTER_ARCHETYPES entry, so there is no archetype spellcasting entry for any slot lane to target; needs the archetype table row (tradition choice, key ability, repertoire), which is code."
+ },
+ {
+  "id": "candle-of-invocation",
+  "verdict": "STILL_BLOCKED",
+  "why": "'Two slots at HALF your highest rank' is relative to the caster's level; byRank is a literal rank map and cannot be computed, and the benefit is also deity-gated and consumed at daily preparations. Needs a relative-rank slot lane."
+ },
+ {
+  "id": "captivating-intensity",
+  "verdict": "STILL_BLOCKED",
+  "why": "Needs a lane that raises usesPerDay on innate spells ALREADY granted by other feats (and excludes the two highest ranks); innateSpells only adds new grants, it cannot amend existing ones."
+ },
+ {
+  "id": "cascade-bearers-spellcasting",
+  "verdict": "STILL_BLOCKED",
+  "why": "The halcyon-speaker cantrip count and slot unlocks are hardcoded in casterArchetypes.ts customUnlocks; there is no data field to add one cantrip + one 1st-rank spell to another feat's archetype entry, nor to widen its tradition list to divine/occult."
+ },
+ {
+  "id": "conscious-spell-specialization",
+  "verdict": "STILL_BLOCKED",
+  "why": "byRank could write {1:1,2:1,3:1,4:1}, but the slots are usable ONLY for conscious-mind spells and the 5th-rank slot arrives at 18th — writing them plain would hand a 14th-level psychic four unrestricted slots. Needs slot restriction by spell source plus a level-gated slot grant."
+ },
+ {
+  "id": "creed-magic",
+  "verdict": "STILL_BLOCKED",
+  "why": "Two slots restricted to a named spell list that both MOVES rank (2nd/3rd/4th at 6th/10th/14th) and grows its list. Needs slot restriction by spell id and a level-indexed rank ladder; byRank is static and unrestricted."
+ },
+ {
+  "id": "domain-fluency",
+  "verdict": "STILL_BLOCKED",
+  "why": "domains.ts holds only INITIAL domain spells, so choice{kind:'domains'} grants the wrong (and, after Domain Acumen, duplicate) spell. Needs an ADVANCED_DOMAIN_SPELLS table plus ADV_SPELL-style wiring; no field on the feat can name a domain-dependent spell."
+ },
+ {
+  "id": "exultant-blood-magic",
+  "verdict": "STILL_BLOCKED",
+  "why": "CASTER_ARCHETYPES['bloodrager-dedication'] is cantrips-only with no ranked slots, so there is nothing for a slot bonus to increment and no entryId to name; needs the bloodrager archetype's ranked slot progression first."
+ },
+ {
+  "id": "future-spell-learning",
+  "verdict": "STILL_BLOCKED",
+  "why": "Needs a 'add named spells to your spell list / spellbook / repertoire' lane; no field expands what a caster may prepare or learn from."
+ },
+ {
+  "id": "loaner-spell",
+  "verdict": "STILL_BLOCKED",
+  "why": "Needs a daily-preparations borrowed-spell lane plus a cast-using-class-DC path; no field expresses either."
+ },
+ {
+  "id": "magical-understudy",
+  "verdict": "STILL_BLOCKED",
+  "why": "Needs an eidolon innate-spellcasting lane — the eidolon has no spellcasting entry, and putting the two cantrips in the feat's own innateSpells/effectChoices would grant them to the SUMMONER, which over-grants."
+ },
+ {
+  "id": "plane-hopper-jotunborn",
+  "verdict": "STILL_BLOCKED",
+  "why": "The cantrip is already covered by effectChoices; the remaining half needs a size-LOWERING lane — build.ts:3062 only applies sizeOverride when it is LARGER than the ancestry size, so 'medium' on a Large jotunborn is discarded."
+ },
+ {
+  "id": "shattered-sacrament",
+  "verdict": "STILL_BLOCKED",
+  "why": "Needs a repertoire-add lane: extra spells KNOWN in an ARCHETYPE spellcasting entry. halcyon-speaker-dedication is repertoire:true in casterArchetypes.ts, but grantedRepertoire (types.ts:1786) is only ever written by SUBCLASS options (grantedSpells, types.ts:813); no feat-level field feeds it. FEAT_CANTRIP_GRANTS is the wrong lane — it injects picks into the INNATE entry (at-will/1-per-day), which would mis-grant. The 'cast a halcyon spell as divine instead' clause is display-only.",
+  "fix": null
+ },
+ {
+  "id": "sin-reservoir",
+  "verdict": "STILL_BLOCKED",
+  "why": "Needs a PLAYER-CHOSEN-RANK slot lane. byRank names fixed ranks; this grants ONE slot at a rank the player picks each day (any rank up to two below the highest wizard rank), further restricted to curriculum spells. perRank+exceptHighest:2 would add a slot at EVERY eligible rank (massive over-grant), and byRank cannot encode 'one, rank of your choice'. Also needs a slot-contents restriction (curriculum-only), which no field expresses.",
+  "fix": null
+ },
+ {
+  "id": "snowcaster",
+  "verdict": "STILL_BLOCKED",
+  "why": "Needs a casterArchetypes.ts entry for 'gelid-shard-dedication' (archetype spellcasting progression: cantrips, slot ladder, trained spell attack/DC, repertoire:true). CASTER_ARCHETYPES is a hand-maintained code table, not a data field in types.ts — there is no field on the feat that can declare 'you gain the basic spellcasting benefits'. spellcastingGrant only sets an attack/DC profile, not slots. expert-snowcasting / master-snowcasting are dead for the same reason.",
+  "fix": null
+ },
+ {
+  "id": "staff-nexus",
+  "verdict": "STILL_BLOCKED",
+  "why": "Needs a grants-an-inventory-item lane (no field creates an item in build.inventory) plus a staff charge pool fed by expending prepared spells at daily preparations, scaling to two spells at 8th and three at 16th. limitedUses is a fixed per-day counter and cannot model 'charges equal to the expended spell's rank'.",
+  "fix": null
+ },
+ {
+  "id": "draconic-paragon",
+  "verdict": "STILL_BLOCKED",
+  "why": "Three branches, none expressible. Benefactor's Strike adds the deadly d6 trait to already-granted jaws/claws/tail unarmed Strikes — no lane adds a trait to an existing Strike. Dracomancer increments another feat's innate-spell uses per day by 1 — innateSpells declares uses outright, there is no increment-another-record's-uses lane. Kobold Breath's crit-fail persistent damage is entirely target-side. Modes grant defences/senses/speeds/check bonuses, none of which apply. Missing lanes: add-a-trait-to-a-granted-Strike, and increment-another-feat's-innate-spell-uses."
+ },
+ {
+  "id": "haunting-memories",
+  "verdict": "STILL_BLOCKED",
+  "why": "No new lane touches it. FeatGrant.conditionalSkills carries a single base→upgraded pair per skill, so the two printed branches (untrained→expert OR trained→master, player's pick, re-made every day) cannot both be written; bonusSkillFeat has no rank gate and no daily reset; and FeatChoiceDef.daily only records an answer.",
+  "fix": null,
+  "missingLane": "needs a daily-preparations skill-rank lane with two alternative base→upgraded branches plus a rank-gated bonus skill feat"
+ },
+ {
+  "id": "potent-nectar",
+  "verdict": "STILL_BLOCKED",
+  "why": "Both branches attach damage to the nectar ranged unarmed Strike that Caustic Nectar grants, and core.feats['caustic-nectar'] has no grantedStrikes, so the Strike does not exist on the sheet. No lane (new or old) attaches a persistent/splash damage rider to another record's Strike; effectChoices' EffectGrant has no damage-rider field.",
+  "fix": null,
+  "missingLane": "needs a damage-rider lane on a granted Strike (persistent / splash), plus grantedStrikes on caustic-nectar"
+ },
+ {
+  "id": "sacred-spells",
+  "verdict": "STILL_BLOCKED",
+  "why": "The primary grant widens your spell LIST with seven named spells so they can be prepared or added to a repertoire. grantedSpells (types.ts:814) exists only on SubclassOption and adds spells to the known list, not to the list you may prepare from; innateSpells would over-grant (free daily casts instead of list access). No feat field widens a tradition's spell list.",
+  "fix": null,
+  "missingLane": "needs a spell-list-widening lane on feats (add spells to the list you prepare/repertoire from)"
+ },
+ {
+  "id": "ultimate-flexibility",
+  "verdict": "STILL_BLOCKED",
+  "why": "Combat/Improved Flexibility is hardcoded in build.ts (two 'bonus' slots at levels 9 and 15) with featSlots.ts capping each at a fighter feat of level ≤ slotLevel-1. Nothing keys 'ultimate-flexibility'. There is no data field that adds a third flexibility slot or raises the existing slots' level ceilings.",
+  "fix": null,
+  "missingLane": "needs a combat-flexibility slot-count / level-ceiling override lane"
+ },
+ {
+  "id": "unconventional-expertise",
+  "verdict": "STILL_BLOCKED",
+  "why": "mirrorBestCategory (lane 4) is the right mechanism but needs a STATIC weapons list, and here the weapon is whatever was chosen for Unconventional Weaponry — a choice value stored on a DIFFERENT feat. FeatGrant.choiceGrants is matched against the SAME feat's `fc.choice.value` (build.ts:2480), and unconventional-expertise carries no choice of its own; Unconventional Weaponry's own backfilled choice is still marked inert.",
+  "fix": null,
+  "missingLane": "needs a weaponFamiliarity whose weapon list is read from ANOTHER feat's choice value (cross-record choice reference)"
+ },
+ {
+  "id": "primal-howl",
+  "verdict": "STILL_BLOCKED",
+  "why": "AnimalCompanionType.maneuver (types.ts:1167) is a single string owned by the companion TYPE, and CompanionGrant has no maneuver field, so a feat cannot add an extra advanced maneuver to an existing companion. None of the four new lanes touches companions.",
+  "fix": null,
+  "missingLane": "needs a companion extra-advanced-maneuver lane"
+ }
+]

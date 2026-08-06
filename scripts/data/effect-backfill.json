@@ -65575,5 +65575,14 @@
       },
       "createRank": true
     }
+  },
+  {
+    "category": "feats",
+    "id": "exultant-blood-magic",
+    "field": "spellSlotBonus",
+    "value": {
+      "perRank": 1,
+      "entryId": "bloodrager-dedication-casting"
+    }
   }
 ]

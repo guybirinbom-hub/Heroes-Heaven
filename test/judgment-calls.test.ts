@@ -42,13 +42,18 @@ describe('Pitborn constrained skill-feat pick', () => {
 });
 
 describe('Bloodrager Dedication (caster archetype)', () => {
-  it('is a cantrips-only choice-tradition repertoire', () => {
+  it('is a choice-tradition repertoire WITH a slot ladder', () => {
+    // Corrected: this was recorded as cantrips-only because `basic-bloodrager-spellcasting` and its
+    // siblings do not ship — which is true, and the wrong conclusion. The three rungs are named after
+    // the blood, not the archetype, so the archetype never gained a single spell slot.
     const cfg = CASTER_ARCHETYPES['bloodrager-dedication'];
     expect(cfg.choiceTradition).toBe(true);
     expect(cfg.traditionOptions).toEqual(['arcane', 'divine']);
     expect(cfg.keyAbility).toBe('cha');
     expect(cfg.cantrips).toBe(2);
-    expect(cfg.cantripsOnly).toBe(true);
+    expect(cfg.basicId).toBe('rising-blood-magic');
+    expect(cfg.expertId).toBe('surging-blood-magic');
+    expect(cfg.masterId).toBe('exultant-blood-magic');
   });
   it('grants a Cha spell repertoire and the tradition skill (Arcana for arcane)', () => {
     const ch = build('barbarian', 4, {

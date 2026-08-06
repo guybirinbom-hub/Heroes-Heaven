@@ -3389,6 +3389,35 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         }
         spellcasting.push({ ...baseEntry, type: 'prepared', prepared });
       }
+      /*
+       * Slot bonuses that NAME this archetype entry are applied here, because the loop that applies
+       * every other one runs before this entry exists — its `find` returned undefined and the bonus
+       * was dropped. Exultant Blood Magic's "increase the spell slots you gain from the bloodrager
+       * archetype feats by 1 for each spell rank" is the case that exposed it.
+       *
+       * Only entryId-targeted bonuses: an untargeted one belongs to the character's own class caster
+       * and was already applied.
+       */
+      const archEntry = spellcasting.find((e) => e.id === baseEntry.id);
+      if (archEntry) {
+        for (const bonus of spellSlotBonuses) {
+          if (bonus.entryId !== baseEntry.id) continue;
+          const bump = (r: number, n: number) => {
+            if (archEntry.slots?.[r]) archEntry.slots[r].max += n;
+            if (archEntry.prepared?.[r]) archEntry.prepared[r].push(...Array.from({ length: n }, () => ({ spellId: null, expended: false })));
+          };
+          const ranks = Object.keys(archEntry.slots ?? archEntry.prepared ?? {}).map(Number).filter((r) => r > 0).sort((a, b) => a - b);
+          if (bonus.byRank) {
+            for (const [rank, n] of Object.entries(bonus.byRank)) if (Number(rank) > 0 && n > 0) bump(Number(rank), n);
+          } else if (bonus.highestOnly) {
+            const top = ranks[ranks.length - 1];
+            if (top != null) bump(top, bonus.perRank ?? 1);
+          } else {
+            const eligible = bonus.exceptHighest ? ranks.slice(0, Math.max(0, ranks.length - bonus.exceptHighest)) : ranks;
+            for (const r of eligible) bump(r, bonus.perRank ?? 1);
+          }
+        }
+      }
     }
   }
 
