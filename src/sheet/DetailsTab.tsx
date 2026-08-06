@@ -288,6 +288,21 @@ export function DetailsTab({
               <InfoTerm title={deity?.name ?? 'Deity'} description={deity?.description} descRefs={deity?.descRefs}>
                 {deity?.name ?? d.deityId}
               </InfoTerm>
+              {/* The three spells the deity grants to clerics. They were absent from the import
+                  entirely, so a worshipper had no way to see them and no record could name them. */}
+              {!!deity?.spells?.length && (
+                <div className="muted" style={{ fontSize: 12, marginTop: 2 }}>
+                  Cleric spells:{' '}
+                  {deity.spells.map((id, i) => (
+                    <span key={id}>
+                      {i > 0 && ', '}
+                      <InfoTerm title={content.spells[id]?.name ?? id} description={content.spells[id]?.description} descRefs={content.spells[id]?.descRefs}>
+                        {content.spells[id]?.name ?? id}
+                      </InfoTerm>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}

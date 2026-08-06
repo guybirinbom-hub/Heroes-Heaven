@@ -276,11 +276,18 @@ function ManageSpellsModal({
       ...(character.spellListAdditions?.['*'] ?? []),
       ...(character.spellListAdditions?.[entry.id] ?? []),
     ]);
+    // …and whole traditions opened by a rule rather than a list — "one spell in your spell repertoire
+    // not on the divine spell list" (Mysterious Repertoire). Expanding that into ids on the character
+    // would be ~1,500 entries in every saved roster to say one sentence.
+    const openTraditions = (character.spellListTraditions ?? []).filter((w) => !w.entryId || w.entryId === entry.id);
+    const anyTradition = openTraditions.some((w) => w.traditions === 'any');
+    const openSet = new Set(openTraditions.flatMap((w) => (w.traditions === 'any' ? [] : w.traditions)));
     for (const s of listValues(content, content.spells)) {
       const e = (s as { edition?: string }).edition;
       if (e === 'superseded') continue; // renamed/outdated half of a remaster change — always hidden
       if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) continue; // per-character Hide legacy data
-      if (s.traditions.includes(entry.tradition) || added.has(s.id)) (byRank[s.rank] ??= []).push(s);
+      const opened = anyTradition || s.traditions.some((t) => openSet.has(t));
+      if (s.traditions.includes(entry.tradition) || added.has(s.id) || opened) (byRank[s.rank] ??= []).push(s);
     }
     const upTo: Record<number, Spell[]> = {};
     let acc: Spell[] = [];
@@ -289,32 +296,38 @@ function ManageSpellsModal({
       upTo[r] = acc.slice().sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
     }
     return { byRank, upTo };
-  }, [content, entry.tradition, entry.id, character.hideLegacy, character.spellListAdditions]);
+  }, [content, entry.tradition, entry.id, character.hideLegacy, character.spellListAdditions, character.spellListTraditions]);
 
   // Spells you may add (spontaneous) / prepare (prepared) at a rank — rank ≤ the slot's rank.
   const optionsFor = (rank: number, restrictedId?: string): Spell[] => {
     // A restricted slot offers ONLY its allowed list — that is the entire point of the lane. When the
     // restriction is prose the engine can't check (a wizard's curriculum), `allowed` is absent and the
     // slot falls through to the normal options with the sentence shown beside it.
-    const rs = restrictedId ? entry.restrictedSlots?.find((s) => s.id === restrictedId) : undefined;
+    // The `#2` suffix names the SECOND spell of a Spell Combination slot; the slot itself is the id
+    // without it.
+    const rs = restrictedId ? entry.restrictedSlots?.find((s) => s.id === restrictedId.replace(/#2$/, '')) : undefined;
+    // A combination slot caps what it may hold BELOW its own rank ("each spell in the combination must
+    // be 2 or more spell ranks below the slot's rank"), so the ceiling is the slot's, not the rank
+    // being prepared.
+    const ceiling = Math.min(rank, rs?.maxRank ?? rank);
     if (rs?.allowed?.length) {
       return rs.allowed
         .map((id) => content.spells[id])
-        .filter((s): s is Spell => !!s && s.rank <= rank)
+        .filter((s): s is Spell => !!s && s.rank <= ceiling)
         .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
     }
     if (spontaneous) {
       const known = new Set(entry.repertoire?.[rank] ?? []);
-      const pool = rank === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[rank] ?? [];
+      const pool = ceiling === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[ceiling] ?? [];
       return pool.filter((s) => !known.has(s.id));
     }
     if (entry.spellbook) {
-      if (rank === 0) return (entry.spellbook[0] ?? []).map((id) => content.spells[id]).filter(Boolean) as Spell[];
+      if (ceiling === 0) return (entry.spellbook[0] ?? []).map((id) => content.spells[id]).filter(Boolean) as Spell[];
       const out: Spell[] = [];
-      for (let r = 1; r <= rank; r++) for (const id of entry.spellbook[r] ?? []) { const sp = content.spells[id]; if (sp) out.push(sp); }
+      for (let r = 1; r <= ceiling; r++) for (const id of entry.spellbook[r] ?? []) { const sp = content.spells[id]; if (sp) out.push(sp); }
       return out;
     }
-    return rank === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[rank] ?? [];
+    return ceiling === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[ceiling] ?? [];
   };
 
   // A spontaneous caster knows at most as many spells per rank as they have slots of that
@@ -524,15 +537,31 @@ function ManageSpellsModal({
                         </span>
                       </div>
                     );
+                  // Spell Combination: the slot holds TWO spells, so it shows two buttons. The second
+                  // is keyed `<id>#2`, which rides the same prepared-spells map as the first.
+                  const sp2 = slot.pairs && slot.spellId2 ? content.spells[slot.spellId2] : null;
                   return (
                     <div key={slot.id} style={{ display: 'flex', gap: 6, alignItems: 'stretch' }}>
                       <button className={'ms-slot' + (slot.spellId ? '' : ' empty')} style={{ flex: 1 }} onClick={() => setPicking({ rank: slot.rank, slot: null, restricted: slot.id })}>
                         <span className="ms-slot-name">
                           {sp?.name ?? (slot.spellId || 'Empty slot')}
-                          <em className="ms-slot-tag"> · {ord(slot.rank)} rank</em>
+                          <em className="ms-slot-tag"> · {ord(slot.rank)} rank{slot.maxRank ? ` · up to ${ord(slot.maxRank)}` : ''}</em>
                         </span>
                         <i className="ti ti-pencil" aria-hidden="true" />
                       </button>
+                      {slot.pairs && (
+                        <button
+                          className={'ms-slot' + (slot.spellId2 ? '' : ' empty')}
+                          style={{ flex: 1 }}
+                          onClick={() => setPicking({ rank: slot.rank, slot: null, restricted: `${slot.id}#2` })}
+                        >
+                          <span className="ms-slot-name">
+                            {sp2?.name ?? (slot.spellId2 || 'Empty — second spell')}
+                            <em className="ms-slot-tag"> · combined</em>
+                          </span>
+                          <i className="ti ti-pencil" aria-hidden="true" />
+                        </button>
+                      )}
                       {!!slot.rankOptions?.length && (
                         <select
                           className="ms-rank-select"
@@ -823,16 +852,19 @@ export function SpellsTab({
   const focusEntries = character.spellcasting.filter((e) => e.type === 'focus');
   const focus = focusEntries[0]; // first entry — for existence checks + maxCastRank; rendering uses focusEntries
   const itemEntries = character.spellcasting.filter((e) => e.type === 'items' || e.type === 'innate');
-  // The character's OWN rituals — added via Overrides → Add spell. Only these show; with none, the
-  // Rituals section (and its catalog bar) is hidden entirely.
-  const myRituals = useMemo(
-    () =>
-      (character.overrides?.addedSpells ?? [])
-        .map((a) => content.spells[a.spellId])
-        .filter((s): s is Spell => !!s && !!s.ritual)
-        .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name)),
-    [character.overrides, content],
-  );
+  // The character's OWN rituals: what Overrides → Add spell put here, PLUS what a record TAUGHT them
+  // — "You learn the Commune ritual if you didn't know it already". Eleven feats/features/items say
+  // exactly that, and none of them reached this list, so the section stayed empty for all of them.
+  // With none from either source the section (and its catalog bar) is hidden entirely.
+  const myRituals = useMemo(() => {
+    const granted = new Map((character.grantedRituals ?? []).map((g) => [g.spellId, g]));
+    const ids = [...new Set([...(character.overrides?.addedSpells ?? []).map((a) => a.spellId), ...granted.keys()])];
+    return ids
+      .map((id) => content.spells[id])
+      .filter((s): s is Spell => !!s && !!s.ritual)
+      .map((s) => ({ spell: s, grant: granted.get(s.id) }))
+      .sort((a, b) => a.spell.rank - b.spell.rank || a.spell.name.localeCompare(b.spell.name));
+  }, [character.overrides, character.grantedRituals, content]);
   // Highest rank the character can cast — bounds the heightening rank selector. Includes the focus
   // auto-heighten target (ceil(level/2)) so a focus-only caster (champion/monk) can still see the
   // heightened text of e.g. Lay on Hands.
@@ -1131,10 +1163,17 @@ export function SpellsTab({
         // Nothing is prepared into a spontaneous caster's restricted slot — it is one extra cast, so
         // the card names what it may be spent on rather than a spell.
         if (!sp && filtering) return null;
+        // A Spell Combination slot is ONE cast of two spells at once, so it reads as one card naming
+        // both — showing them as two cards would imply two casts.
+        const sp2 = slot.pairs && slot.spellId2 ? content.spells[slot.spellId2] : null;
         return (
           <SpellCard
             key={slot.id}
-            name={sp?.name ?? (slot.spontaneous ? allowedNames.slice(0, 3).join(' / ') || 'Extra cast' : 'Empty slot')}
+            name={
+              sp && sp2
+                ? `${sp.name} + ${sp2.name}`
+                : sp?.name ?? (slot.spontaneous ? allowedNames.slice(0, 3).join(' / ') || 'Extra cast' : 'Empty slot')
+            }
             marks={sp ? marksFor(slot.spellId!) : undefined}
             cost={sp?.cast}
             meta={`${ord(slot.rank)} rank · ${label.toLowerCase()}`}
@@ -1456,9 +1495,9 @@ export function SpellsTab({
     };
   });
 
-  // Rituals the character has (added via Overrides). Hidden entirely when there are none.
+  // Rituals the character has — granted by a record, or added via Overrides. Hidden when there are none.
   const ritualsNode: ReactNode = (() => {
-    const shown = query ? myRituals.filter((s) => s.name.toLowerCase().includes(query)) : myRituals;
+    const shown = query ? myRituals.filter((r) => r.spell.name.toLowerCase().includes(query)) : myRituals;
     if (!shown.length) return null;
     return (
       <section className="card">
@@ -1468,12 +1507,14 @@ export function SpellsTab({
         </div>
         {secOpen('rituals') && (
           <div className="spell-grid">
-            {shown.map((sp) => (
+            {shown.map(({ spell: sp, grant }) => (
               <SpellCard
                 key={`ritual:${sp.id}`}
                 name={sp.name} marks={marksFor(sp.id)}
                 cost={sp.cast}
-                meta={`rank ${sp.rank}${sp.ritualPrimary ? ` · ${sp.ritualPrimary}` : ''}`}
+                // The granting record and the clause it attaches — Read the Land's Commune is cast in
+                // 1 hour without a secondary caster, which is the whole reason to take the feat.
+                meta={`rank ${sp.rank}${sp.ritualPrimary ? ` · ${sp.ritualPrimary}` : ''}${grant ? ` · ${grant.from}` : ''}${grant?.note ? ` · ${grant.note}` : ''}`}
                 onClick={() => setDetail(sp)}
               />
             ))}

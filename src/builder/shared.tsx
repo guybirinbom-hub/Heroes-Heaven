@@ -51,6 +51,7 @@ import { activeCasterArchetype } from '../rules/casterArchetypes';
 import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY } from '../rules/snareFormulas';
 import { snareAllowanceFor } from '../rules/counterMods';
 import {
+  bodyRuneExcluded,
   abilityMod,
   deriveAc,
   deriveClassDc,
@@ -3141,6 +3142,39 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           })()}
         </SetupCard>
       )}
+      {/* Living Rune: "Your body can hold a single property rune." A rune with no item to sit on —
+          nothing etches it and every reader of etched runes walks the inventory — so it needs its own
+          choice here. The offered list applies the feat's own two exclusions. */}
+      {Object.values(build.featPicks).includes('living-rune') &&
+        (() => {
+          const opts = Object.values(content.runes ?? {})
+            .filter((r) => r.slot === 'armor' && r.kind === 'property' && !bodyRuneExcluded(r, content))
+            .sort((a, b) => (content.items[a.id]?.name ?? a.id).localeCompare(content.items[b.id]?.name ?? b.id));
+          const cur = build.bodyRune ?? '';
+          return (
+            <SetupCard icon="ti-body-scan" label="Living rune">
+              <PopupSelect
+                title="Property rune on your body"
+                value={opts.some((o) => o.id === cur) ? cur : ''}
+                onChange={(v) => actions.patch({ bodyRune: v || null })}
+                options={[
+                  { value: '', label: 'None yet' },
+                  ...opts.map((r) => ({
+                    value: r.id,
+                    label: content.items[r.id]?.name ?? r.id,
+                    description: content.items[r.id]?.description,
+                    descRefs: content.items[r.id]?.descRefs,
+                  })),
+                ]}
+              />
+              <div className="cmp-note">
+                Runes with a requirement on the type or category of armor, and runes whose effect is on the armor rather
+                than its wearer, can't go on your body — those are left out of this list. If you wear armor, this rune's
+                effects apply in addition to the armor's own.
+              </div>
+            </SetupCard>
+          );
+        })()}
       {/* Summoner Dedication (any class): pick the eidolon type — it grants the eidolon AND sets the
           archetype spell tradition. */}
       {Object.values(build.featPicks).includes('summoner-dedication') &&

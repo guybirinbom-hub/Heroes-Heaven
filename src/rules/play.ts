@@ -342,24 +342,42 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
       if (!g?.restricted) continue;
       const target = g.entryId ?? (isMainCaster ? e.id : null);
       if (target !== e.id) continue;
-      modeSlots.push(...resolveRestrictedSlots(g.restricted, e, ch.level, `m${i}`));
+      modeSlots.push(...resolveRestrictedSlots(g.restricted, e, ch.level, `m${i}`, undefined, content));
     }
     const baseRestricted = [...(e.restrictedSlots ?? []), ...modeSlots];
     if (baseRestricted.length) {
-      out = {
-        ...out,
-        restrictedSlots: baseRestricted.map((s) => {
-          // The chosen rank is stored under the slot's OWN id, so re-picking one slot's rank cannot
-          // disturb another's — the same reasoning as the bonus slots keyed off their source rank.
-          const picked = play.restrictedSlotRanks?.[s.id];
-          const moved = picked != null && picked !== s.rank && (s.rankOptions ?? []).includes(picked);
-          const rank = moved ? picked : s.rank;
-          // Moving the slot empties it: what was prepared there was chosen for the old rank and may
-          // be a spell the slot can no longer hold.
-          const spellId = moved ? null : play.preparedSpells?.[s.id] ?? s.spellId;
-          return { ...s, rank, spellId, expended: !!expended[s.id] };
-        }),
-      };
+      const resolved = baseRestricted.map((s) => {
+        // The chosen rank is stored under the slot's OWN id, so re-picking one slot's rank cannot
+        // disturb another's — the same reasoning as the bonus slots keyed off their source rank.
+        const picked = play.restrictedSlotRanks?.[s.id];
+        const moved = picked != null && picked !== s.rank && (s.rankOptions ?? []).includes(picked);
+        const rank = moved ? picked : s.rank;
+        // Moving the slot empties it: what was prepared there was chosen for the old rank and may
+        // be a spell the slot can no longer hold.
+        const spellId = moved ? null : play.preparedSpells?.[s.id] ?? s.spellId;
+        // A Spell Combination slot holds a SECOND spell, stored under a `#2` key so it rides the same
+        // preparedSpells map (and the same rank-move clearing) as the first.
+        const spellId2 = s.pairs ? (moved ? null : play.preparedSpells?.[`${s.id}#2`] ?? s.spellId2 ?? null) : undefined;
+        return { ...s, rank, spellId, ...(s.pairs ? { spellId2 } : {}), expended: !!expended[s.id] };
+      });
+      out = { ...out, restrictedSlots: resolved };
+      /*
+       * A group that CONVERTS rather than adds — Master Summoner: "you can designate one of your
+       * spell slots to become two summoning slots of the same spell rank". The ordinary slot it
+       * spends is deducted HERE rather than at build time, because a rank-choice group can be moved
+       * at daily preparations and the cost has to follow the group to its new rank.
+       */
+      const cost: Record<number, number> = {};
+      for (const s of resolved) if (s.costsSlot) cost[s.rank] = (cost[s.rank] ?? 0) + s.costsSlot;
+      for (const [rankStr, n] of Object.entries(cost)) {
+        const rank = Number(rankStr);
+        if (out.slots?.[rank]) {
+          const pool = out.slots[rank];
+          out = { ...out, slots: { ...out.slots, [rank]: { ...pool, max: Math.max(0, pool.max - n) } } };
+        } else if (out.prepared?.[rank]) {
+          out = { ...out, prepared: { ...out.prepared, [rank]: out.prepared[rank].slice(0, Math.max(0, out.prepared[rank].length - n)) } };
+        }
+      }
     }
     if (e.type === 'innate') {
       const used = play.innateUsed ?? {};
@@ -400,6 +418,53 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
         spellSources[b.spellId] = 'Borrowed today';
       }
       const merged = { ...base, repertoire, ...(Object.keys(innateUses).length ? { innateUses } : {}), spellSources };
+      if (i >= 0) spellcasting[i] = merged;
+      else spellcasting.push(merged);
+    }
+  }
+  /*
+   * Share Eidolon Magic: "You can cast the innate spells your eidolon gained from Magical Understudy,
+   * Magical Adept, and Magical Master. You and your eidolon share the same daily uses of these."
+   *
+   * Built here rather than at build time because half the answer lives in PLAY state — the eidolon's
+   * cantrips are chosen on the Companions tab — and because "the same daily uses" means ONE pool: the
+   * spells join the summoner's own innate entry, whose uses the sheet already tracks. Until now the
+   * eidolon's magic existed only on its stat block and on two feats marked "Recorded only".
+   */
+  if (ch.feats?.some((f) => f.featId === 'share-eidolon-magic')) {
+    const eidolon = (play.companions ?? ch.companions ?? []).find((c) => c.kind === 'eidolon');
+    const cantrips = (eidolon?.eidolon?.cantrips ?? []).filter((id): id is string => !!id && !!content.spells[id]);
+    const leveled = (ch.eidolonInnateSpells ?? []).filter((id) => content.spells[id]);
+    if (cantrips.length || leveled.length) {
+      const i = spellcasting.findIndex((e) => e.id === 'innate-casting');
+      const base: SpellcastingEntry =
+        i >= 0
+          ? spellcasting[i]
+          : {
+              id: 'innate-casting',
+              name: 'Innate spells',
+              type: 'innate',
+              tradition: spellcasting[0]?.tradition ?? 'arcane',
+              keyAbility: spellcasting[0]?.keyAbility ?? 'cha',
+              proficiency: spellcasting[0]?.proficiency ?? 'trained',
+              cantrips: [],
+              repertoire: {},
+            };
+      const repertoire: Record<number, string[]> = { ...(base.repertoire ?? {}) };
+      const spellSources = { ...(base.spellSources ?? {}) };
+      for (const id of leveled) {
+        const rank = content.spells[id].rank ?? 0;
+        if (rank <= 0) continue;
+        if (!(repertoire[rank] ??= []).includes(id)) repertoire[rank].push(id);
+        spellSources[id] = "Eidolon's magic";
+      }
+      for (const id of cantrips) spellSources[id] = "Eidolon's magic";
+      const merged = {
+        ...base,
+        cantrips: [...new Set([...(base.cantrips ?? []), ...cantrips])],
+        repertoire,
+        spellSources,
+      };
       if (i >= 0) spellcasting[i] = merged;
       else spellcasting.push(merged);
     }
@@ -579,6 +644,7 @@ export function setRestrictedSpell(play: PlayState, slotId: string, spellId: str
 export function setRestrictedRank(play: PlayState, slotId: string, rank: number): PlayState {
   const preparedSpells = { ...(play.preparedSpells ?? {}) };
   delete preparedSpells[slotId];
+  delete preparedSpells[`${slotId}#2`]; // a paired slot's second spell moves rank with the first
   const expendedSlots = { ...play.expendedSlots };
   delete expendedSlots[slotId];
   return { ...play, restrictedSlotRanks: { ...(play.restrictedSlotRanks ?? {}), [slotId]: rank }, preparedSpells, expendedSlots };

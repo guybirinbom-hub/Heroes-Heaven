@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
-import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable, isHandwraps } from '../rules/derive';
+import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable,
+  handwrapsRuneSharing, isHandwraps } from '../rules/derive';
 import { isAttachable, planAttach } from '../rules/attachments';
 import {
   addInventoryItem,
@@ -1039,15 +1040,23 @@ export function InventoryTab({
               const plan = attachHost && draggedItem && draggedInv ? planAttach(draggedItem, draggedInv, item, inv, character.inventory, content, character) : null;
               // Doubling Rings: a wielded weapon can borrow another wielded weapon's runes. Only offered
               // while the rings are invested and there's a second weapon to copy from.
+              // …and Cutting Heaven, Crushing Earth does the same from invested HANDWRAPS, which are
+              // worn rather than wielded and so were never among the sources this picker offered.
+              const hwSource = handwrapsRuneSharing(character, content, inv)
+                ? character.inventory.filter((x) => x.invested && (x.worn || x.equipped) && isHandwraps(content.items[x.itemId]))
+                : [];
               const runeCopy =
-                onPlay && drAvailable && inv.equipped && item.itemType === 'weapon' && !isHandwraps(item) && !mpActive(character, inv)
+                onPlay && (drAvailable || hwSource.length > 0) && inv.equipped && item.itemType === 'weapon' && !isHandwraps(item) && !mpActive(character, inv)
                   ? {
                       value: inv.copyRunesFrom,
                       options: [
                         { value: '', label: 'its own runes' },
-                        ...wieldedWeapons
-                          .filter((w) => w.instanceId !== inv.instanceId)
-                          .map((w) => ({ value: w.instanceId, label: content.items[w.itemId]!.name })),
+                        ...(drAvailable
+                          ? wieldedWeapons
+                              .filter((w) => w.instanceId !== inv.instanceId)
+                              .map((w) => ({ value: w.instanceId, label: content.items[w.itemId]!.name }))
+                          : []),
+                        ...hwSource.map((w) => ({ value: w.instanceId, label: content.items[w.itemId]!.name })),
                       ],
                       onChange: (v: string) => onPlay((p) => updateInventoryItem(p, inv.instanceId, { copyRunesFrom: v || undefined })),
                     }

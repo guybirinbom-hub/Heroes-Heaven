@@ -92803,5 +92803,4996 @@
   "id": "ultimate-polymath",
   "field": "note",
   "value": "Every spell in your repertoire is a signature spell — each can be cast from any slot of its rank or higher."
+ },
+ {
+  "category": "feats",
+  "id": "read-the-land",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "commune",
+    "note": "cast in 1 hour, no secondary caster"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "harrower-dedication",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "harrowing"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "awaken-others",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "awaken-animal"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "witness-of-earth",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "atone"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "feast-planner",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "fortifying-brew"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "patron-reborn",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "wish"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "rites-of-liberation",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "freedom"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "craft-runewell",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "create-demiplane"
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "tales-in-timber",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "collective-memories"
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "tales-in-timber-greater",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "collective-memories"
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "tales-in-timber-major",
+  "field": "grantsRituals",
+  "value": [
+   {
+    "spellId": "collective-memories"
+   }
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "maat",
+  "field": "spells",
+  "value": [
+   "gentle-landing",
+   "containment",
+   "mind-probe"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kostchtchie",
+  "field": "spells",
+  "value": [
+   "chilling-spray",
+   "enlarge",
+   "cone-of-cold"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kerkamoth",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "shadow-siphon",
+   "disintegrate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "otolmens",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "gravity-well",
+   "reverse-gravity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "valmallos",
+  "field": "spells",
+  "value": [
+   "mystic-armor",
+   "never-mind",
+   "contingency"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-godclaw",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "fire-shield",
+   "dominate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "wards-of-the-pharaoh",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "containment",
+   "disjunction"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "pillars-of-knowledge",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "hypercognition",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-path-of-the-heavens",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "floating-flame",
+   "gravity-well"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "demon-bringers",
+  "field": "spells",
+  "value": [
+   "mystic-armor",
+   "creation",
+   "true-target"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-freeing-flame",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "fireball",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sky-keepers",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "fly",
+   "storm-of-vengeance"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "touch-of-the-sun",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "false-vitality",
+   "fiery-body"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "conqueror-worm",
+  "field": "spells",
+  "value": [
+   "charm",
+   "mind-probe",
+   "warp-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "orcus",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "feral-shades",
+   "power-word-kill"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-endless-road",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "creation",
+   "unfettered-pack"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "graveladys-guard",
+  "field": "spells",
+  "value": [
+   "force-barrage",
+   "ghostly-weapon",
+   "wall-of-force"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "keepers-of-the-hearth",
+  "field": "spells",
+  "value": [
+   "mystic-armor",
+   "enlarge",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sorrows-sword",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "fire-shield",
+   "disintegrate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-deliberate-journey",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "knock",
+   "resplendent-mansion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-enlightened-scholars-path",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "secret-page",
+   "strange-geometry"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "hearth-and-harvest",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "shape-wood",
+   "speak-with-plants"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-laborers-bastion",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "enlarge",
+   "creation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-offering-plate",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "cozy-cabin",
+   "secret-chest"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "seafarers-hope",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "feet-to-fins",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "urban-prosperity",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "knock",
+   "containment"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-divine-dare",
+  "field": "spells",
+  "value": [
+   "jump",
+   "haste",
+   "winning-streak"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-last-breath",
+  "field": "spells",
+  "value": [
+   "endure",
+   "containment",
+   "prismatic-sphere"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-perplexing-jest",
+  "field": "spells",
+  "value": [
+   "grease",
+   "laughing-fit",
+   "uncontrollable-dance"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-resplendent-court",
+  "field": "spells",
+  "value": [
+   "shattering-gem",
+   "befitting-attire",
+   "cloak-of-colors"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "abadar",
+  "field": "spells",
+  "value": [
+   "illusory-object",
+   "creation",
+   "planar-palace"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "asmodeus",
+  "field": "spells",
+  "value": [
+   "charm",
+   "suggestion",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "calistria",
+  "field": "spells",
+  "value": [
+   "charm",
+   "enthrall",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cayden-cailean",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "stupefy",
+   "hallucination"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "desna",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "translocate",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "erastil",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "wall-of-thorns",
+   "natures-pathway"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "gorum",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "enlarge",
+   "weapon-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "gozreh",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "lightning-bolt",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "iomedae",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "enlarge",
+   "fire-shield"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "irori",
+  "field": "spells",
+  "value": [
+   "jump",
+   "haste",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lamashtu",
+  "field": "spells",
+  "value": [
+   "runic-body",
+   "animal-form",
+   "nightmare"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nethys",
+  "field": "spells",
+  "value": [
+   "force-barrage",
+   "embed-message",
+   "levitate",
+   "flicker",
+   "scouting-eye",
+   "wall-of-force",
+   "warp-mind",
+   "quandary",
+   "disjunction"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "norgorber",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "invisibility",
+   "phantasmal-killer"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "pharasma",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "ghostly-weapon",
+   "phantasmal-killer"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "rovagug",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "enlarge",
+   "disintegrate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sarenrae",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "fireball",
+   "wall-of-fire"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shelyn",
+  "field": "spells",
+  "value": [
+   "dizzying-colors",
+   "enthrall",
+   "creation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "torag",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "earthbind",
+   "creation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "urgathoa",
+  "field": "spells",
+  "value": [
+   "goblin-pox",
+   "false-vitality",
+   "mask-of-terror"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zon-kuthon",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "wall-of-thorns",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "green-faith",
+  "field": "spells",
+  "value": [
+   "summon-animal",
+   "speak-with-animals",
+   "wall-of-thorns"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "baekho",
+  "field": "spells",
+  "value": [
+   "thunderstrike",
+   "animal-vision",
+   "tree-of-seasons"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mugura-and-nrithu",
+  "field": "spells",
+  "value": [
+   "shockwave",
+   "hypnotize",
+   "mirrors-misfortune"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "phi-deva",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "flicker",
+   "project-image"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "srikalis-sritaming-and-sribaril",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "haste",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-lady-of-the-north-star",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "stupefy",
+   "blanket-of-stars"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "daikitsu",
+  "field": "spells",
+  "value": [
+   "pest-form",
+   "humanoid-form",
+   "illusory-scene"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "fumeiyoshi",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "feast-of-ashes",
+   "possession"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "general-susumu",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "marvelous-mount",
+   "wall-of-wind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "hei-feng",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "hydraulic-torrent",
+   "chain-lightning"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "jin-li",
+  "field": "spells",
+  "value": [
+   "jump",
+   "hydraulic-torrent",
+   "dragon-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kofusachi",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "laughing-fit",
+   "uncontrollable-dance"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lady-jingxi",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "mirror-image",
+   "chromatic-wall"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lady-nanbyo",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "control-water",
+   "dragon-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lao-shu-po",
+  "field": "spells",
+  "value": [
+   "summon-animal",
+   "knock",
+   "veil-of-privacy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nalinivati",
+  "field": "spells",
+  "value": [
+   "charm",
+   "invisibility",
+   "lightning-bolt",
+   "reflective-scales",
+   "subconscious-suggestion",
+   "mislead",
+   "contingency",
+   "confusing-colors",
+   "storm-of-vengeance"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "qi-zhong",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "false-vitality",
+   "containment"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shizuru",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "reflective-scales",
+   "planar-palace"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sun-wukong",
+  "field": "spells",
+  "value": [
+   "jump",
+   "mad-monkeys",
+   "creation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "tsukiyo",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "peaceful-bubble",
+   "hallucination"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yaezhing",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "invisibility",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yamatsumi",
+  "field": "spells",
+  "value": [
+   "shockwave",
+   "shifting-sand",
+   "volcanic-eruption"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "gogunta",
+  "field": "spells",
+  "value": [
+   "jump",
+   "stinking-cloud",
+   "black-tentacles"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ydersius",
+  "field": "spells",
+  "value": [
+   "runic-body",
+   "toxic-cloud",
+   "purple-worm-sting"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "treerazer",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "wall-of-thorns",
+   "tangling-creepers"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "achaekek",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "invisibility",
+   "phantasmal-killer"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "arazni",
+  "field": "spells",
+  "value": [
+   "endure",
+   "animus-mine",
+   "never-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ah-pook",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "moths-supper",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aleth",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "wall-of-shadow",
+   "shadow-raid"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "alseta",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "knock",
+   "translocate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "apsu",
+  "field": "spells",
+  "value": [
+   "runic-body",
+   "creation",
+   "dragon-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "atrogine",
+  "field": "spells",
+  "value": [
+   "summon-animal",
+   "mirrors-misfortune",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "besmara",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "feet-to-fins",
+   "mariners-curse"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "brigh",
+  "field": "spells",
+  "value": [
+   "temporary-tool",
+   "creation",
+   "duplicate-foe"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "camazotz",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "cup-of-dust",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "casandalee",
+  "field": "spells",
+  "value": [
+   "carryall",
+   "hypercognition",
+   "wall-of-force"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "chaldira",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "laughing-fit",
+   "cloak-of-colors"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dahak",
+  "field": "spells",
+  "value": [
+   "runic-body",
+   "fireball",
+   "dragon-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dajermube",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "penumbral-disguise",
+   "shadow-siphon"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-devourer",
+  "field": "spells",
+  "value": [
+   "pummeling-rubble",
+   "acid-grip",
+   "disintegrate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "embaral",
+  "field": "spells",
+  "value": [
+   "endure",
+   "slow",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "emmeton-galardaria",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "cozy-cabin",
+   "wall-of-force"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "genzaeri",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "hypercognition",
+   "weapon-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ghlaunder",
+  "field": "spells",
+  "value": [
+   "goblin-pox",
+   "vomit-swarm",
+   "insect-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "grandmother-spider",
+  "field": "spells",
+  "value": [
+   "pest-form",
+   "web",
+   "honeyed-words"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "groetus",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "wave-of-despair",
+   "detonate-magic"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "gruhastha",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "hypercognition",
+   "telepathy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "hanspur",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "aqueous-orb",
+   "solid-fog"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "izuyaku",
+  "field": "spells",
+  "value": [
+   "endure",
+   "haste",
+   "geyser"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kaldemash",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "clairvoyance",
+   "true-target"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kazutal",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "animal-form",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kurgess",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "enlarge",
+   "haste"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "milani",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "enthrall",
+   "fire-shield"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nin",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "telepathy",
+   "mind-probe"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nivi-rhombodazzle",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "invisibility",
+   "liminal-doorway"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nocticula",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "veil-of-privacy",
+   "creation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "obari",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "aqueous-orb",
+   "hydraulic-torrent"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "razmir",
+  "field": "spells",
+  "value": [
+   "charm",
+   "stupefy",
+   "mind-reading"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sivanah",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "blur",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vudravati",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "shape-stone",
+   "planar-palace"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zjar-tovan",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "ghostly-weapon",
+   "weapon-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zyphus",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "shatter",
+   "phantasmal-calamity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "esoteric-order-of-the-palatine-eye",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "time-pocket",
+   "synaptic-pulse"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-spirit-wall",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "cozy-cabin",
+   "wall-of-force"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "immaculate-growth",
+  "field": "spells",
+  "value": [
+   "endure",
+   "entangling-flora",
+   "tangling-creepers"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "blooms-of-the-spreading-weald",
+  "field": "spells",
+  "value": [
+   "flourishing-flora",
+   "oaken-resilience",
+   "natures-pathway"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "breath-of-the-endless-sky",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "wall-of-wind",
+   "punishing-winds"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "faith-in-the-fallen",
+  "field": "spells",
+  "value": [
+   "jump",
+   "translocate",
+   "cast-into-time"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "good-neighbors",
+  "field": "spells",
+  "value": [
+   "phantasmal-minion",
+   "cozy-cabin",
+   "telekinetic-haul"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "light-of-the-everlasting-flame",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "wall-of-fire",
+   "volcanic-eruption"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-pandemonia",
+  "field": "spells",
+  "value": [
+   "befuddle",
+   "hypnotize",
+   "vibrant-pattern"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-readied-strike",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "telepathy",
+   "collective-transposition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shadow-cabinet",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "clairvoyance",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shapes-of-the-fading-luster",
+  "field": "spells",
+  "value": [
+   "fold-metal",
+   "impaling-spike",
+   "ferrous-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "treasures-of-the-eternal-delve",
+  "field": "spells",
+  "value": [
+   "pummeling-rubble",
+   "earthbind",
+   "earthquake"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "waves-of-the-boundless-sea",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "aqueous-orb",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "children-of-the-night",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "wall-of-shadow",
+   "shadow-raid"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cosmic-caravan",
+  "field": "spells",
+  "value": [
+   "object-reading",
+   "revealing-light",
+   "blanket-of-stars"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "fortunes-fate",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "invisibility",
+   "true-target"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "guardians-of-the-sacred-self",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "threefold-aspect",
+   "flicker"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "radiant-prism",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "fireball",
+   "creation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sovyrian-conclave",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "shape-wood",
+   "natures-pathway"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "stones-blood",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "creation",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "talons-of-the-godclaw",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "mountain-resilience",
+   "flame-vortex"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "weight-of-the-world",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "howling-blizzard",
+   "chain-lightning"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "wheels-of-innovation",
+  "field": "spells",
+  "value": [
+   "temporary-tool",
+   "creation",
+   "metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "rivethun",
+  "field": "spells",
+  "value": [
+   "pummeling-rubble",
+   "summon-elemental",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "apollyon",
+  "field": "spells",
+  "value": [
+   "goblin-pox",
+   "vomit-swarm",
+   "toxic-cloud"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "charon",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "wave-of-despair",
+   "weird"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "szuriel",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "haste",
+   "weapon-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "trelmarixian",
+  "field": "spells",
+  "value": [
+   "grease",
+   "feast-of-ashes",
+   "acid-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "baalzebul",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "vomit-swarm",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "barbatos",
+  "field": "spells",
+  "value": [
+   "spider-sting",
+   "paralyze",
+   "clairvoyance"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "belial",
+  "field": "spells",
+  "value": [
+   "charm",
+   "humanoid-form",
+   "enthrall"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dispater",
+  "field": "spells",
+  "value": [
+   "tether",
+   "suggestion",
+   "petrify"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "geryon",
+  "field": "spells",
+  "value": [
+   "acidic-burst",
+   "animal-form",
+   "hypercognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mammon",
+  "field": "spells",
+  "value": [
+   "shattering-gem",
+   "creation",
+   "planar-palace"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mephistopheles",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "blistering-invective",
+   "subconscious-suggestion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "moloch",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "acid-storm",
+   "fiery-body"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "acavna",
+  "field": "spells",
+  "value": [
+   "protector-tree",
+   "containment",
+   "wall-of-force"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aesocar",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "false-vitality",
+   "creation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "amaznen",
+  "field": "spells",
+  "value": [
+   "temporary-tool",
+   "tree-of-seasons",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "elion",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "cozy-cabin",
+   "momentary-recovery"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "jaidi",
+  "field": "spells",
+  "value": [
+   "temporary-tool",
+   "shape-wood",
+   "wall-of-thorns"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lissala",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "secret-page",
+   "dominate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "myr",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "mountain-resilience",
+   "natures-reprisal"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "onos",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "one-with-stone",
+   "elemental-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "scal",
+  "field": "spells",
+  "value": [
+   "liberating-command",
+   "weapon-storm",
+   "phantasmal-calamity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sicva",
+  "field": "spells",
+  "value": [
+   "summon-animal",
+   "entangling-flora",
+   "toxic-cloud"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ulon",
+  "field": "spells",
+  "value": [
+   "vanishing-tracks",
+   "paranoia",
+   "suggestion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cihua-coatl",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "mountain-resilience",
+   "true-target"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "pahti-coatl",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "hypercognition",
+   "disintegrate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "tolte-coatl",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "hypercognition",
+   "quandary"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "anogetz",
+  "field": "spells",
+  "value": [
+   "summon-animal",
+   "reflective-scales",
+   "unfettered-pack"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cixyron",
+  "field": "spells",
+  "value": [
+   "conductive-weapon",
+   "toxic-cloud",
+   "chain-lightning"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "corosbel",
+  "field": "spells",
+  "value": [
+   "charm",
+   "nightmare",
+   "subconscious-suggestion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "laivatiniel",
+  "field": "spells",
+  "value": [
+   "agitate",
+   "enthrall",
+   "warp-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "pavnuri",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "feast-of-ashes",
+   "false-vision"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "tresmalvos",
+  "field": "spells",
+  "value": [
+   "animal-allies",
+   "hydraulic-torrent",
+   "desiccate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vorasha",
+  "field": "spells",
+  "value": [
+   "spider-sting",
+   "toxic-cloud",
+   "monstrosity-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "xsistaid",
+  "field": "spells",
+  "value": [
+   "goblin-pox",
+   "vomit-swarm",
+   "corrosive-body"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zelishkar",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "fire-shield",
+   "fiery-body"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "abraxas",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "ghostly-carrier",
+   "hypercognition",
+   "reflective-scales",
+   "slither",
+   "never-mind",
+   "contingency",
+   "unrelenting-observation",
+   "detonate-magic"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "areshkagal",
+  "field": "spells",
+  "value": [
+   "befuddle",
+   "translocate",
+   "never-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "baphomet",
+  "field": "spells",
+  "value": [
+   "summon-animal",
+   "enlarge",
+   "quandary"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cyth-vsug",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "fungal-hyphae",
+   "plant-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dagon",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "feet-to-fins",
+   "chain-lightning"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "haagenti",
+  "field": "spells",
+  "value": [
+   "summon-construct",
+   "humanoid-form",
+   "bestial-curse"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "jezelda",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "feral-shades",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kabriri",
+  "field": "spells",
+  "value": [
+   "jump",
+   "expeditious-excavation",
+   "paralyze"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nurgal",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "floating-flame",
+   "cup-of-dust"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "pazuzu",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "aerial-form",
+   "migration"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shax",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "invisibility",
+   "haste"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shivaska",
+  "field": "spells",
+  "value": [
+   "tether",
+   "phantom-prison",
+   "slither"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sifkesh",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "suggestion",
+   "wave-of-despair"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sithhud",
+  "field": "spells",
+  "value": [
+   "chilling-spray",
+   "slow",
+   "howling-blizzard"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vulot",
+  "field": "spells",
+  "value": [
+   "befuddle",
+   "honeyed-words",
+   "portrait-of-the-artist"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "xoveron",
+  "field": "spells",
+  "value": [
+   "pummeling-rubble",
+   "feast-of-ashes",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yhidothrus",
+  "field": "spells",
+  "value": [
+   "de-ja-vu",
+   "morass-of-ages",
+   "cast-into-time"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zevgavizeb",
+  "field": "spells",
+  "value": [
+   "pest-form",
+   "dinosaur-form",
+   "earthquake"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zura",
+  "field": "spells",
+  "value": [
+   "charm",
+   "vapor-form",
+   "mask-of-terror"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "angradd",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "blistering-invective",
+   "fireball"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "bolka",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "creation",
+   "collective-transposition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dranngvit",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "knock",
+   "magic-passage"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "droskar",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "haste",
+   "dominate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "folgrit",
+  "field": "spells",
+  "value": [
+   "endure",
+   "fire-shield",
+   "resplendent-mansion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kols",
+  "field": "spells",
+  "value": [
+   "phantasmal-minion",
+   "suggestion",
+   "unrelenting-observation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "magrim",
+  "field": "spells",
+  "value": [
+   "temporary-tool",
+   "expeditious-excavation",
+   "earthquake"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "trudd",
+  "field": "spells",
+  "value": [
+   "endure",
+   "haste",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "count-ranalc",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "peaceful-bubble",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-green-mother",
+  "field": "spells",
+  "value": [
+   "charm",
+   "suggestion",
+   "plant-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "imbrex",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "mountain-resilience",
+   "duplicate-foe"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-lantern-king",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "laughing-fit",
+   "cursed-metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-lost-prince",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "rewrite-memory",
+   "wave-of-despair"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "magdh",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "threefold-aspect",
+   "scrying"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ng",
+  "field": "spells",
+  "value": [
+   "vanishing-tracks",
+   "invisibility",
+   "flicker"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ragadahn",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "brine-dragon-bile",
+   "feet-to-fins"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shyka",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "haste",
+   "time-beacon"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "findeladlara",
+  "field": "spells",
+  "value": [
+   "illusory-object",
+   "creation",
+   "planar-palace"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ketephys",
+  "field": "spells",
+  "value": [
+   "vanishing-tracks",
+   "invisibility",
+   "animal-vision"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yuelral",
+  "field": "spells",
+  "value": [
+   "shattering-gem",
+   "shape-wood",
+   "one-with-stone",
+   "speak-with-plants",
+   "natures-pathway",
+   "tangling-creepers",
+   "unfettered-pack",
+   "prismatic-wall",
+   "natures-enmity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "andoletta",
+  "field": "spells",
+  "value": [
+   "shillelagh",
+   "aerial-form",
+   "collective-transposition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "arshea",
+  "field": "spells",
+  "value": [
+   "mystic-armor",
+   "humanoid-form",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ashava",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "revealing-light",
+   "uncontrollable-dance"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "bharnarol",
+  "field": "spells",
+  "value": [
+   "temporary-tool",
+   "creation",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "black-butterfly",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "blur",
+   "flicker"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dalenydra",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "liminal-doorway",
+   "contingency"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "eritrice",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "translate",
+   "enthrall"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "falayna",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "ghostly-weapon",
+   "cloak-of-colors"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "irez",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "mirror-image",
+   "secret-page"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kelinahat",
+  "field": "spells",
+  "value": [
+   "vanishing-tracks",
+   "ocular-overload",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "keltheald",
+  "field": "spells",
+  "value": [
+   "mud-pit",
+   "elemental-gift",
+   "natures-pathway"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "korada",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "slow",
+   "containment"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lalaci",
+  "field": "spells",
+  "value": [
+   "dizzying-colors",
+   "hypnotize",
+   "peaceful-bubble"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lorris",
+  "field": "spells",
+  "value": [
+   "endure",
+   "soft-landing",
+   "collective-transposition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "neshen",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "illusory-scene",
+   "vibrant-pattern"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "olheon",
+  "field": "spells",
+  "value": [
+   "draw-ire",
+   "suggestion",
+   "glimmer-of-charm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "pulura",
+  "field": "spells",
+  "value": [
+   "dizzying-colors",
+   "chromatic-wall",
+   "teleport"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ragathiel",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "haste",
+   "fire-shield"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "reymenda",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "vision-of-death",
+   "true-target"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "seramaydiel",
+  "field": "spells",
+  "value": [
+   "seashell-of-stolen-sound",
+   "infectious-melody",
+   "hallucination"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "soralyon",
+  "field": "spells",
+  "value": [
+   "summon-construct",
+   "one-with-stone",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "uskyeria",
+  "field": "spells",
+  "value": [
+   "lose-the-path",
+   "cozy-cabin",
+   "natures-reprisal"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "valani",
+  "field": "spells",
+  "value": [
+   "thunderstrike",
+   "dinosaur-form",
+   "elemental-confluence"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vildeis",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "slough-skin",
+   "synaptic-pulse"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ylimancha",
+  "field": "spells",
+  "value": [
+   "gentle-landing",
+   "feet-to-fins",
+   "fly"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zohls",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "hypercognition",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aegirran",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "aqueous-orb",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "bergelmir",
+  "field": "spells",
+  "value": [
+   "de-ja-vu",
+   "hypercognition",
+   "rewrite-memory"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "fandarra",
+  "field": "spells",
+  "value": [
+   "endure",
+   "wall-of-thorns",
+   "blister"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "haggakal",
+  "field": "spells",
+  "value": [
+   "endure",
+   "shift-blame",
+   "aberrant-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "minderhal",
+  "field": "spells",
+  "value": [
+   "summon-construct",
+   "ghostly-weapon",
+   "replicate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "skode",
+  "field": "spells",
+  "value": [
+   "negate-aroma",
+   "haste",
+   "weapon-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "skrymir",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "illusory-scene",
+   "true-target"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "thremyr",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "mantle-of-the-frozen-heart",
+   "frigid-flurry"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "tjasse",
+  "field": "spells",
+  "value": [
+   "animal-allies",
+   "haste",
+   "aerial-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "urazra",
+  "field": "spells",
+  "value": [
+   "draw-ire",
+   "slough-skin",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yrmidar",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "animal-form",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zursvaater",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "blazing-dive",
+   "elemental-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cong",
+  "field": "spells",
+  "value": [
+   "grease",
+   "laughing-fit",
+   "mad-monkeys"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "hadregash",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "shatter",
+   "monstrosity-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lurlup",
+  "field": "spells",
+  "value": [
+   "grease",
+   "bottomless-stomach",
+   "planar-palace"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "teki-stronggut",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "embed-message",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "venkelvore",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "illusory-disguise",
+   "cursed-metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zarongel",
+  "field": "spells",
+  "value": [
+   "vanishing-tracks",
+   "fireball",
+   "unfettered-pack"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zogmugot",
+  "field": "spells",
+  "value": [
+   "temporary-tool",
+   "creation",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zugero",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "invisibility",
+   "illusory-scene"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "alazhra",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "nightmare",
+   "dream-council"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "anubis",
+  "field": "spells",
+  "value": [
+   "phantasmal-minion",
+   "shifting-sand",
+   "wall-of-stone"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aroden",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "hypercognition",
+   "contingency"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cernunnos",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "animal-form",
+   "lightning-bolt"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "grundinnar",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "containment",
+   "wall-of-force"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "gyronna",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "paranoia",
+   "never-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "horus",
+  "field": "spells",
+  "value": [
+   "carryall",
+   "wall-of-wind",
+   "aerial-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "isis",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "humanoid-form",
+   "animal-vision",
+   "creation",
+   "control-water",
+   "wall-of-force",
+   "planar-palace",
+   "migration",
+   "metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mestama",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "threefold-aspect",
+   "cursed-metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "osiris",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "false-vitality",
+   "tangling-creepers"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ra",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "floating-flame",
+   "threefold-aspect"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "smiad",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "fire-shield",
+   "disintegrate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sturovenen",
+  "field": "spells",
+  "value": [
+   "charm",
+   "cloak-of-colors",
+   "dragon-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "thoth",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "sea-of-thought",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "bifrons",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "false-vision",
+   "true-target"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "furcas",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "fireball",
+   "plant-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "haborym",
+  "field": "spells",
+  "value": [
+   "thunderstrike",
+   "phantom-prison",
+   "wave-of-despair"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "malthus",
+  "field": "spells",
+  "value": [
+   "gentle-landing",
+   "cozy-cabin",
+   "weapon-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nergal",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "envenom-companion",
+   "toxic-cloud"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "titivilus",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "distracting-chatter",
+   "subconscious-suggestion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ussharassim",
+  "field": "spells",
+  "value": [
+   "charm",
+   "honeyed-words",
+   "cloak-of-colors"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vapula",
+  "field": "spells",
+  "value": [
+   "illusory-object",
+   "bottomless-stomach",
+   "liminal-doorway"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "atropos",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "shrink",
+   "stagnate-time"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "barzahk",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "knock",
+   "teleport"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ceyannan",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "embed-message",
+   "shadow-spy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dammar",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "insect-form",
+   "flammable-fumes"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dramindyr",
+  "field": "spells",
+  "value": [
+   "interposing-earth",
+   "containment",
+   "magic-passage"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ilsurrish",
+  "field": "spells",
+  "value": [
+   "lose-the-path",
+   "vapor-form",
+   "possession"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "inna",
+  "field": "spells",
+  "value": [
+   "fold-metal",
+   "fireball",
+   "creation"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "liisglan",
+  "field": "spells",
+  "value": [
+   "gravitational-pull",
+   "creation",
+   "detonate-magic"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mother-vulture",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "aerial-form",
+   "cursed-metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mrtyu",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "weapon-storm",
+   "wave-of-despair"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "narriseminek",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "confusion",
+   "synesthesia"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-pale-horse",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "feral-shades",
+   "ghostly-weapon"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "phlegyas",
+  "field": "spells",
+  "value": [
+   "illusory-object",
+   "threefold-aspect",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "saloc",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "hypercognition",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ssilameshnik",
+  "field": "spells",
+  "value": [
+   "liberating-command",
+   "mirrors-misfortune",
+   "synaptic-pulse"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "telastmar",
+  "field": "spells",
+  "value": [
+   "gravitational-pull",
+   "feet-to-fins",
+   "variable-gravity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "teshallas",
+  "field": "spells",
+  "value": [
+   "spider-sting",
+   "envenom-companion",
+   "corrosive-body"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vale",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "hypercognition",
+   "chromatic-image"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vavaalrav",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "mountain-resilience",
+   "momentary-recovery"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vonymos",
+  "field": "spells",
+  "value": [
+   "endure",
+   "blazing-dive",
+   "falling-sky"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ydajisk",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "blistering-invective",
+   "honeyed-words"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "grask-uldeth",
+  "field": "spells",
+  "value": [
+   "endure",
+   "enthrall",
+   "mask-of-terror"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "jukha",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "earthbind",
+   "unfettered-pack"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mahja-firehair",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "blazing-dive",
+   "mantle-of-the-magma-heart"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nulgreth",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "moths-supper",
+   "implosion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "rull",
+  "field": "spells",
+  "value": [
+   "thunderstrike",
+   "lightning-bolt",
+   "chain-lightning"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "uirch",
+  "field": "spells",
+  "value": [
+   "protector-tree",
+   "oaken-resilience",
+   "wall-of-fire"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "varg",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "creation",
+   "impaling-spike"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "wulgren",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "creation",
+   "phantasmal-calamity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ahriman",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "veil-of-privacy",
+   "wave-of-despair"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "erecura",
+  "field": "spells",
+  "value": [
+   "anticipate-peril",
+   "misdirection",
+   "veil-of-privacy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "thamir",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "shared-invisibility",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "azathoth",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "synaptic-pulse",
+   "unfathomable-song"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "bokrug",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "control-water",
+   "wrathful-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cthulhu",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "nightmare",
+   "strange-geometry"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "hastur",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "confusion",
+   "hallucination"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mhar",
+  "field": "spells",
+  "value": [
+   "shockwave",
+   "ash-cloud",
+   "volcanic-eruption"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nhimbaloth",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "entangling-flora",
+   "toxic-cloud"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nyarlathotep-the-crawling-chaos",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "humanoid-form",
+   "enthrall",
+   "suggestion",
+   "summon-entity",
+   "mislead",
+   "project-image",
+   "dream-council",
+   "weird"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nyarlathotep-the-faceless-sphinx",
+  "field": "spells",
+  "value": [
+   "charm",
+   "animus-mine",
+   "enthrall",
+   "suggestion",
+   "wave-of-despair",
+   "mislead",
+   "warp-mind",
+   "hidden-mind",
+   "phantasmagoria"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nyarlathotep-the-veiled-voice",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "blur",
+   "hypercognition",
+   "vapor-form",
+   "subconscious-suggestion",
+   "never-mind",
+   "contingency",
+   "disappearance",
+   "phantasmagoria"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "orgesh",
+  "field": "spells",
+  "value": [
+   "shockwave",
+   "bottomless-stomach",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "rhan-tegoth",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "one-with-stone",
+   "phantasmal-calamity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "xhamen-dor",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "wall-of-thorns",
+   "warp-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yig",
+  "field": "spells",
+  "value": [
+   "animal-allies",
+   "slough-skin",
+   "cursed-metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yog-sothoth",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "black-tentacles",
+   "time-beacon"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aonaurious",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "haste",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "chavazvug",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "wall-of-fire",
+   "volcanic-eruption"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "isph-aun-vuln",
+  "field": "spells",
+  "value": [
+   "goblin-pox",
+   "toxic-cloud",
+   "warp-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nyuo-ogh",
+  "field": "spells",
+  "value": [
+   "befuddle",
+   "false-nature",
+   "warp-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "oaur-ooung",
+  "field": "spells",
+  "value": [
+   "acidic-burst",
+   "control-water",
+   "monstrosity-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "thuskchoon",
+  "field": "spells",
+  "value": [
+   "endure",
+   "feast-of-ashes",
+   "acid-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yamasoth",
+  "field": "spells",
+  "value": [
+   "draw-ire",
+   "bestial-curse",
+   "mask-of-terror"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ardad-lili",
+  "field": "spells",
+  "value": [
+   "charm",
+   "enthrall",
+   "suggestion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "doloras",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "earthbind",
+   "synaptic-pulse"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "eiseth",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "fireball",
+   "translocate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mahathallah",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "misdirection",
+   "illusory-scene"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ananshea",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "animal-form",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "chamiaholom",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "paralyze",
+   "wave-of-despair"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "charg",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "hypnotize",
+   "stagnate-time"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dachzerul",
+  "field": "spells",
+  "value": [
+   "vanishing-tracks",
+   "time-jump",
+   "hallucination"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "hataam",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "aqueous-orb",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "iggeret",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "vision-of-death",
+   "project-image"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nameless",
+  "field": "spells",
+  "value": [
+   "liberating-command",
+   "clairaudience",
+   "synaptic-pulse"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ozranvial",
+  "field": "spells",
+  "value": [
+   "charm",
+   "enthrall",
+   "wave-of-despair"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shawnari",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "curse-of-lost-time",
+   "illusory-scene"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "velgaas",
+  "field": "spells",
+  "value": [
+   "charm",
+   "distracting-chatter",
+   "subconscious-suggestion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vermilion-mother",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "wall-of-thorns",
+   "plant-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "xiquiripat",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "blazing-dive",
+   "impaling-spike"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zipacna",
+  "field": "spells",
+  "value": [
+   "shockwave",
+   "shifting-sand",
+   "telekinetic-haul"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "alglenweis",
+  "field": "spells",
+  "value": [
+   "agitate",
+   "creation",
+   "cone-of-cold"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dolok-darkfur",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "enlarge",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kagia",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "animal-form",
+   "tangling-creepers"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ristrentho",
+  "field": "spells",
+  "value": [
+   "liberating-command",
+   "aqueous-orb",
+   "elemental-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "stag-mother-of-the-forest-of-stones",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "animal-form",
+   "petrify"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "arundhat",
+  "field": "spells",
+  "value": [
+   "shillelagh",
+   "ghostly-weapon",
+   "speak-with-plants"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ashukharma",
+  "field": "spells",
+  "value": [
+   "shattering-gem",
+   "shape-stone",
+   "wall-of-stone"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "chamidu",
+  "field": "spells",
+  "value": [
+   "summon-animal",
+   "lightning-bolt",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dhalavei",
+  "field": "spells",
+  "value": [
+   "fear",
+   "honeyed-words",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "diomazul",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "slough-skin",
+   "weapon-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lahkgya",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "mad-monkeys",
+   "confusion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "likha",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "enthrall",
+   "illusory-scene"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "matravash",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "slow",
+   "speak-with-plants"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ragdya",
+  "field": "spells",
+  "value": [
+   "shockwave",
+   "mad-monkeys",
+   "vapor-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "raumya",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "invisibility",
+   "weapon-storm"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ravithra",
+  "field": "spells",
+  "value": [
+   "charm",
+   "animal-form",
+   "clairvoyance"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "suyuddha",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "mirror-image",
+   "strange-geometry"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "vineshvakhi",
+  "field": "spells",
+  "value": [
+   "mystic-armor",
+   "enlarge",
+   "chain-lightning"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aakriti",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "insect-form",
+   "metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "etaris",
+  "field": "spells",
+  "value": [
+   "summon-animal",
+   "speak-with-animals",
+   "slither"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "gendowyn",
+  "field": "spells",
+  "value": [
+   "summon-fey",
+   "oaken-resilience",
+   "natures-pathway"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "immonhiel",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "cozy-cabin",
+   "plant-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "naderi",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "wave-of-despair",
+   "drop-dead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "rokoga-gin",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "haste",
+   "true-target"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yelayne",
+  "field": "spells",
+  "value": [
+   "animate-rope",
+   "cozy-cabin",
+   "vibrant-pattern"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "apep",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "hydraulic-torrent",
+   "monstrosity-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "bastet",
+  "field": "spells",
+  "value": [
+   "pest-form",
+   "animal-vision",
+   "peaceful-bubble"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "bes",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "laughing-fit",
+   "enthrall"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "hathor",
+  "field": "spells",
+  "value": [
+   "charm",
+   "one-with-plants",
+   "uncontrollable-dance"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "khepri",
+  "field": "spells",
+  "value": [
+   "flourishing-flora",
+   "floating-flame",
+   "elemental-absorption"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "neith",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "control-water",
+   "arrow-salvo"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nephthys",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "umbral-extraction",
+   "aerial-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ptah",
+  "field": "spells",
+  "value": [
+   "temporary-tool",
+   "wall-of-metal",
+   "ferrous-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sekhmet",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "wall-of-fire",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "selket",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "paralyze",
+   "purple-worm-sting"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "set",
+  "field": "spells",
+  "value": [
+   "penumbral-shroud",
+   "cup-of-dust",
+   "disintegrate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sobek",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "feet-to-fins",
+   "dinosaur-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "wadjet",
+  "field": "spells",
+  "value": [
+   "mystic-armor",
+   "animal-form",
+   "fly"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "angazhan",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "animal-form",
+   "moon-frenzy"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "arqueros",
+  "field": "spells",
+  "value": [
+   "endure",
+   "mountain-resilience",
+   "wall-of-stone"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "dammerich",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "paralyze",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "halcamora",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "stupefy",
+   "speak-with-plants"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "jaidz",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "haste",
+   "mask-of-terror"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lymnieris",
+  "field": "spells",
+  "value": [
+   "mystic-armor",
+   "threefold-aspect",
+   "containment"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "marishi",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "roaring-applause",
+   "winning-streak"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "picoperi",
+  "field": "spells",
+  "value": [
+   "grease",
+   "feet-to-fins",
+   "mislead"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "rowdrosh",
+  "field": "spells",
+  "value": [
+   "runic-body",
+   "speak-with-animals",
+   "animal-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shei",
+  "field": "spells",
+  "value": [
+   "liberating-command",
+   "hypercognition",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "tanagaar",
+  "field": "spells",
+  "value": [
+   "vanishing-tracks",
+   "animal-vision",
+   "aerial-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "thisamet",
+  "field": "spells",
+  "value": [
+   "dizzying-colors",
+   "enthrall",
+   "cloak-of-colors"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "winlas",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "translate",
+   "illusory-disguise"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "enkaar",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "mind-reading",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "eyes-that-watch",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "mind-reading",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "grasping-iovett",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "mind-reading",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "husk",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "mind-reading",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lady-razor",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "weapon-storm",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "reshmit-of-the-heavy-voice",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "mind-reading",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "thalaphyrr",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "slow",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aminara",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "cozy-cabin",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "granduncle-taproot",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "one-with-stone",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "green-man",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "entangling-flora",
+   "tangling-creepers"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kzininn",
+  "field": "spells",
+  "value": [
+   "goblin-pox",
+   "entangling-flora",
+   "wall-of-thorns"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "telvrys",
+  "field": "spells",
+  "value": [
+   "summon-plant-or-fungus",
+   "acid-grip",
+   "tangling-creepers"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cormigus",
+  "field": "spells",
+  "value": [
+   "message-rune",
+   "honeyed-words",
+   "unfathomable-song"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lorthact",
+  "field": "spells",
+  "value": [
+   "force-barrage",
+   "slow",
+   "never-mind"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "imot",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "paranoia",
+   "phantasmal-calamity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "narakaas",
+  "field": "spells",
+  "value": [
+   "endure",
+   "slough-skin",
+   "rewrite-memory"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "adanye",
+  "field": "spells",
+  "value": [
+   "gentle-landing",
+   "misdirection",
+   "planar-palace"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "balumbdar",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "enlarge",
+   "dinosaur-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "chohar",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "fireball",
+   "fire-shield"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kalekot",
+  "field": "spells",
+  "value": [
+   "vanishing-tracks",
+   "paralyze",
+   "phantasmal-killer"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kitumu",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "vomit-swarm",
+   "insect-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lubaiko",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "floating-flame",
+   "fiery-body"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "luhar",
+  "field": "spells",
+  "value": [
+   "sleep",
+   "shared-invisibility",
+   "umbral-journey"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "mazludeh",
+  "field": "spells",
+  "value": [
+   "share-lore",
+   "shape-stone",
+   "wall-of-stone"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "tlehar",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "enthrall",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "uvuko",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "haste",
+   "dragon-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "walkena",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "fireball",
+   "wall-of-fire"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "nyarlathotep-haunter-in-the-dark",
+  "field": "spells",
+  "value": [
+   "grim-tendrils",
+   "nightmare",
+   "summon-entity"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zibik",
+  "field": "spells",
+  "value": [
+   "flourishing-flora",
+   "life-draining-roots",
+   "tangling-creepers"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "atreia",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "ghostly-weapon",
+   "fire-shield"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ayrzul",
+  "field": "spells",
+  "value": [
+   "shockwave",
+   "summon-elemental",
+   "petrify"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ferrumnestra",
+  "field": "spells",
+  "value": [
+   "conductive-weapon",
+   "noxious-metals",
+   "rust-cloud"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "hshurha",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "summon-elemental",
+   "vapor-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "kelizandri",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "summon-elemental",
+   "hydraulic-torrent"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "laudinmio",
+  "field": "spells",
+  "value": [
+   "fold-metal",
+   "summon-elemental",
+   "impaling-spike"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "lysianassa",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "aqueous-orb",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ranginori",
+  "field": "spells",
+  "value": [
+   "liberating-command",
+   "aerial-form",
+   "chain-lightning"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sairazul",
+  "field": "spells",
+  "value": [
+   "shattering-gem",
+   "expeditious-excavation",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "shumunue",
+  "field": "spells",
+  "value": [
+   "weave-wood",
+   "summon-elemental",
+   "plant-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "verilorn",
+  "field": "spells",
+  "value": [
+   "protector-tree",
+   "oaken-resilience",
+   "natures-reprisal"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ymeri",
+  "field": "spells",
+  "value": [
+   "breathe-fire",
+   "summon-elemental",
+   "wall-of-fire"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-tides-of-chaos",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "invisibility",
+   "subconscious-suggestion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aerekostes",
+  "field": "spells",
+  "value": [
+   "object-reading",
+   "animated-assault",
+   "contingency"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "drokalion",
+  "field": "spells",
+  "value": [
+   "fleet-step",
+   "animal-form",
+   "chameleon-coat"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "iapholi",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "hidebound",
+   "monstrosity-form"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "pharimia",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "floating-flame",
+   "control-water"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "upion-and-warrik",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "laughing-fit",
+   "wall-of-force"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ytildos",
+  "field": "spells",
+  "value": [
+   "hydraulic-push",
+   "coral-scourge",
+   "whirlpool"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "zeaki",
+  "field": "spells",
+  "value": [
+   "ill-omen",
+   "animal-messenger",
+   "feet-to-fins",
+   "bestial-curse",
+   "moon-frenzy",
+   "cursed-metamorphosis",
+   "warp-mind",
+   "migration",
+   "metamorphosis"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "anras",
+  "field": "spells",
+  "value": [
+   "thunderstrike",
+   "wall-of-wind",
+   "chain-lightning"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "belech",
+  "field": "spells",
+  "value": [
+   "ant-haul",
+   "enlarge",
+   "mountain-resilience"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "cormion",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "honeyed-words",
+   "subconscious-suggestion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "deshto",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "enthrall",
+   "mariners-curse"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "oathos",
+  "field": "spells",
+  "value": [
+   "soothe",
+   "false-vitality",
+   "peaceful-bubble"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "umarik",
+  "field": "spells",
+  "value": [
+   "gust-of-wind",
+   "howling-blizzard",
+   "punishing-winds"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "ongalte",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "paranoia",
+   "disintegrate"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "brixori",
+  "field": "spells",
+  "value": [
+   "de-ja-vu",
+   "threefold-aspect",
+   "summon-dragon",
+   "quandary"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "gaasham",
+  "field": "spells",
+  "value": [
+   "object-reading",
+   "wave-of-despair",
+   "resplendent-mansion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "garhaazh",
+  "field": "spells",
+  "value": [
+   "noxious-vapors",
+   "haste",
+   "impaling-spike"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "otilaz",
+  "field": "spells",
+  "value": [
+   "phantom-pain",
+   "curse-of-lost-time",
+   "canticle-of-everlasting-grief"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "sarshallatu",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "enthrall",
+   "summon-dragon",
+   "unfathomable-song"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "turvu",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "translocate",
+   "cloak-of-colors"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "yluma",
+  "field": "spells",
+  "value": [
+   "telekinetic-maneuver",
+   "retrocognition",
+   "phantasmal-minion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "the-anointing-of-kings",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "enthrall",
+   "dreaming-potential"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "essence-dancers",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "hypercognition",
+   "summon-dragon",
+   "quandary"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "abrogail",
+  "field": "spells",
+  "value": [
+   "biting-words",
+   "honeyed-words",
+   "quandary"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aon-kugaptee",
+  "field": "spells",
+  "value": [
+   "charm",
+   "bestial-curse",
+   "tree-of-seasons"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aon-musagani",
+  "field": "spells",
+  "value": [
+   "illusory-disguise",
+   "enlarge",
+   "confusion"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aon-sigek",
+  "field": "spells",
+  "value": [
+   "pest-form",
+   "insect-form",
+   "grisly-growths"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "aon-followers-of-fate",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "threefold-aspect",
+   "scouting-eye"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "surveyors-of-the-deep",
+  "field": "spells",
+  "value": [
+   "tailwind",
+   "feet-to-fins",
+   "retrocognition"
+  ]
+ },
+ {
+  "category": "deities",
+  "id": "monad",
+  "field": "spells",
+  "value": [
+   "phantasmal-minion",
+   "ghostly-carrier",
+   "vapor-form"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "master-summoner",
+  "field": "spellSlotBonus",
+  "value": {
+   "restricted": {
+    "label": "Summoning slots",
+    "note": "Designated during daily preparations: one of your spell slots becomes these two.",
+    "rankChoice": {
+     "count": 2,
+     "belowHighest": 0
+    },
+    "traits": [
+     "summon",
+     "incarnate"
+    ],
+    "costsSlot": 1
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "mysterious-repertoire",
+  "field": "spellListAdditions",
+  "value": {
+   "traditions": "any",
+   "max": 1,
+   "as": "list"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "mysterious-repertoire",
+  "field": "note",
+  "value": "The spell picker offers every tradition. Only ONE off-tradition spell may be in your repertoire at a time — swap it as you would any oracle spell. You cast it as a divine spell."
+ },
+ {
+  "category": "feats",
+  "id": "blessed-blood-sorcerer",
+  "field": "spellListAdditions",
+  "value": {
+   "from": "deity",
+   "max": 3,
+   "as": "list"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "blessed-blood-sorcerer",
+  "field": "note",
+  "value": "Your deity's three cleric spells are added to your spell list — you still spend a repertoire slot to learn one. Pick a deity in Setup if you have not."
+ },
+ {
+  "category": "feats",
+  "id": "cutting-heaven-crushing-earth",
+  "field": "note",
+  "value": "Set the weapon’s rune source to your handwraps on the Inventory tab — its Strike then uses their runes. Offered on a wielded one-handed, agile or finesse melee weapon, matching Overwhelming Combination’s own requirement. The two off-guard clauses are turn-by-turn and stay yours to track."
+ },
+ {
+  "category": "feats",
+  "id": "master-summoner",
+  "field": "note",
+  "value": "Pick the rank on the Spells tab; the ordinary slot it costs is deducted there."
+ },
+ {
+  "category": "feats",
+  "id": "spell-combination",
+  "field": "spellSlotBonus",
+  "value": {
+   "restricted": {
+    "label": "Combination slots",
+    "note": "Two spells cast as one. Each must be 2+ ranks below the slot, target a single creature or object, and share how it is resolved (same save, both spell attacks, or both automatic).",
+    "perRankFrom": 3,
+    "pairs": true,
+    "ranksBelow": 2,
+    "costsSlot": 1
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "living-rune",
+  "field": "note",
+  "value": "Choose the rune in Setup → Living rune. Runes that require a particular armour type, or that act on the armour rather than its wearer, are left out of that list."
+ },
+ {
+  "category": "feats",
+  "id": "share-eidolon-magic",
+  "field": "note",
+  "value": "Your eidolon's cantrips (Magical Understudy) and innate spells (Magical Adept, Magical Master) appear in your own innate spells — one shared pool of daily uses, as the feat requires."
+ },
+ {
+  "category": "feats",
+  "id": "talismanic-sage",
+  "field": "note",
+  "value": "Affix a second talisman to one item on the Inventory tab. Treating another item means peeling one off the first, which is what \"this special treatment ends\" means."
+ },
+ {
+  "category": "feats",
+  "id": "sanguimancer-dedication",
+  "field": "note",
+  "value": "Sanguimancy HP is tracked as a resource on the sheet: a rest restores your level’s worth, and the cap is twice your level."
  }
 ]

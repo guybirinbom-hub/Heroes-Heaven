@@ -146,6 +146,8 @@ export interface BuildState {
   implementParagon?: string | null;
   /** Inventor armor innovation's base statistics (gates several armor modifications). */
   inventorArmorStats?: 'power-suit' | 'subterfuge-suit' | null;
+  /** Living Rune: the armour property rune etched on the character’s own body. */
+  bodyRune?: string | null;
   /** Inventor chosen modification ids by tier. */
   inventorModifications?: { initial?: string | null; breakthrough?: string | null; revolutionary?: string | null };
   /** Kineticist Fork the Path picks: Gate's Threshold level (string) → newly-gained element option id. */
@@ -318,6 +320,7 @@ export function emptyBuild(): BuildState {
     commanderTactics: [],
     grantedChoiceFeatTraits: {},
     inventorArmorStats: null,
+    bodyRune: null,
     inventorModifications: {},
     gateForks: {},
     gateExpands: {},
@@ -3176,10 +3179,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // means you already know it, 'font' makes it a legal divine-font choice. Class features carry these
   // too now, which is why the sins and the witch lessons could not be expressed before.
   let spellListAdditions: Record<string, string[]> | undefined;
+  const spellListTraditions: NonNullable<Character['spellListTraditions']> = [];
   const grantedRepertoireAdds: { entryId?: string; spells: string[] }[] = [];
   const fontAdds: { entryId?: string; spells: string[] }[] = [];
   {
-    const sources: (DefenseGrants | undefined)[] = [
+    const sources: ((DefenseGrants & { name?: string }) | undefined)[] = [
       ...feats.map((fc) => content.feats[fc.featId]),
       ...[...classFeatureIdsOwned(
         { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
@@ -3189,8 +3193,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const src of sources) {
       const list = src?.spellListAdditions;
       for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
-        // Never offer an id the picker cannot open.
-        const known = (add.spells ?? []).filter((s) => content.spells[s]);
+        // A whole-TRADITION widening is carried as a rule, not expanded into ids — see
+        // Character.spellListTraditions for why.
+        if (add.traditions) {
+          spellListTraditions.push({
+            ...(add.entryId ? { entryId: add.entryId } : {}),
+            traditions: add.traditions,
+            ...(add.max ? { max: add.max } : {}),
+            from: src?.name ?? 'A feat',
+          });
+        }
+        // Never offer an id the picker cannot open. `from: 'deity'` resolves against THIS character's
+        // deity — Blessed Blood adds "your deity's spells (spells your deity grants to clerics)",
+        // which differ per worshipper and so could never be written down as a static list.
+        const fromDeity = add.from === 'deity' && build.deityId ? content.deities[build.deityId]?.spells ?? [] : [];
+        const known = [...(add.spells ?? []), ...fromDeity].filter((s) => content.spells[s]);
         if (!known.length) continue;
         if (add.as === 'repertoire') grantedRepertoireAdds.push({ entryId: add.entryId, spells: known });
         else if (add.as === 'font') fontAdds.push({ entryId: add.entryId, spells: known });
@@ -3199,6 +3216,53 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           spellListAdditions = spellListAdditions ?? {};
           spellListAdditions[key] = [...new Set([...(spellListAdditions[key] ?? []), ...known])];
         }
+      }
+    }
+  }
+
+  /*
+   * Rituals a record HANDS the character — "You learn the Commune ritual if you didn't know it
+   * already". The Rituals section listed only what the player had added through Overrides, so eleven
+   * records granting one showed nothing at all, and the clause each of them adds ("with a casting
+   * time of 1 hour instead of 1 day and without a secondary caster") had nowhere to live either.
+   *
+   * Invested/worn items count: three grades of Tales in Timber grant Collective Memories.
+   */
+  /*
+   * The eidolon's own innate spells, chosen on Magical Adept (one 1st- and one 2nd-rank) and Magical
+   * Master (one of each rank it lacks). Both choices are MULTI-PICK, and a built FeatChoice keeps only
+   * the first answer, so nothing downstream could see the full set — the two feats shipped marked
+   * "Recorded only". Collected here so Share Eidolon Magic ("You can cast the innate spells your
+   * eidolon gained from Magical Understudy, Magical Adept, and Magical Master") has something to read.
+   */
+  const eidolonInnateSpells: string[] = [];
+  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+    if (featId !== 'magical-adept' && featId !== 'magical-master') continue;
+    for (const k of choiceKeys(slotKey, content.feats[featId]?.choice)) {
+      const v = build.featChoices?.[k];
+      if (v && content.spells[v] && !eidolonInnateSpells.includes(v)) eidolonInnateSpells.push(v);
+    }
+  }
+
+  const grantedRituals: NonNullable<Character['grantedRituals']> = [];
+  {
+    const named: { rec: { name: string; grantsRituals?: { spellId: string; note?: string }[] } | undefined }[] = [
+      ...feats.map((fc) => ({ rec: content.feats[fc.featId] })),
+      ...[...classFeatureIdsOwned(
+        { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+        content,
+      )].map((id) => ({ rec: content.classFeatures[id] })),
+      { rec: build.heritageId ? content.heritages[build.heritageId] : undefined },
+      { rec: build.backgroundId ? content.backgrounds[build.backgroundId] : undefined },
+      ...(build.inventory ?? [])
+        .filter((inv) => inv.invested || inv.worn || inv.equipped)
+        .map((inv) => ({ rec: content.items[inv.itemId] })),
+    ];
+    for (const { rec } of named) {
+      for (const g of rec?.grantsRituals ?? []) {
+        if (!content.spells[g.spellId]?.ritual) continue; // never list a non-ritual in the Rituals section
+        if (grantedRituals.some((r) => r.spellId === g.spellId)) continue;
+        grantedRituals.push({ spellId: g.spellId, from: rec!.name, ...(g.note ? { note: g.note } : {}) });
       }
     }
   }
@@ -3382,7 +3446,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // RESTRICTED slots live in their own list, never in `prepared`/`slots` — see RestrictedSlotGrant.
     if (bonus.restricted) {
       (entry.restrictedSlots ??= []).push(
-        ...resolveRestrictedSlots(bonus.restricted, entry, level, String(restrictedGroup++), wizardCurriculum),
+        ...resolveRestrictedSlots(bonus.restricted, entry, level, String(restrictedGroup++), wizardCurriculum, content),
       );
       continue;
     }
@@ -4111,6 +4175,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(resourceFloors ? { resourceFloors } : {}),
     ...(dyingThreshold ? { dyingThreshold } : {}),
     ...(spellListAdditions ? { spellListAdditions } : {}),
+    ...(spellListTraditions.length ? { spellListTraditions } : {}),
+    ...(grantedRituals.length ? { grantedRituals } : {}),
+    ...(eidolonInnateSpells.length ? { eidolonInnateSpells } : {}),
+    // Living Rune: the property rune on the character’s own flesh. Only carried when the feat that
+    // allows it is actually taken, and only for a rune that exists and is an ARMOUR property rune —
+    // the feat has no way to put a weapon rune on you.
+    ...(() => {
+      const id = build.bodyRune;
+      if (!id || !Object.values(build.featPicks ?? {}).includes('living-rune')) return {};
+      const def = content.runes?.[id];
+      return def && def.slot === 'armor' && def.kind === 'property' ? { bodyRune: id } : {};
+    })(),
     ...(investedBonus ? { investedLimit: 10 + investedBonus } : {}),
     ...(restRecovery ? { restRecovery } : {}),
     conditions: [],
@@ -4355,6 +4431,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   b.keyAbility = c.keyAbility;
   b.deityId = c.details?.deityId ?? null;
   if (c.customBackground) b.customBackground = c.customBackground;
+  b.bodyRune = c.bodyRune ?? null; // Living Rune, so re-opening the builder keeps the choice
   b.companions = c.companions ? structuredClone(c.companions) : [];
   b.inventory = c.inventory.map((it) => ({
     itemId: it.itemId,

@@ -803,6 +803,42 @@ export function propertyRuneDefs(inv: InventoryItem | undefined, db: ContentData
   return ids.map((id) => db.runes?.[id]).filter((r): r is RuneDef => !!r);
 }
 
+/** The property rune etched on the character's own body (Living Rune), if any. It sits on no item, so
+ *  every reader that walks `inventory[].runes` has to be told about it separately. */
+export function bodyRuneDef(c: Character, db: ContentDatabase): RuneDef | undefined {
+  return c.bodyRune ? db.runes?.[c.bodyRune] : undefined;
+}
+
+/**
+ * Armour property runes whose effect is ON THE ARMOUR rather than on its wearer — the second of Living
+ * Rune's two exclusions ("or if the property would affect the armor instead of its wearer").
+ *
+ * Curated rather than pattern-matched, because the wording does not separate the two cases: Slick,
+ * Quenching and Stanching all describe what the ARMOUR does and deliver their benefit to the person
+ * inside it, while these six need a suit of armour to act on and would do nothing on bare skin.
+ */
+const BODY_RUNE_EXCLUDED = new Set([
+  'portable', // folds THE ARMOR into a wearable trinket
+  'raiment', // changes the shape and appearance of THIS ARMOR
+  'ready', // speeds up DONNING armor
+  'ready-greater',
+  'swallow-spike', // "your armor suddenly grows spikes" and makes its own Strike
+  'swallow-spike-greater',
+  'swallow-spike-major',
+  'adamantine-echo', // a vambrace fragment that "functions as a +1 armor potency rune" on a suit
+  'mythic-armor-potency', // likewise a potency effect, which needs armour to be potent
+]);
+
+/** Whether a rune may NOT be etched on the character's own body. Living Rune excludes two kinds:
+ *  a rune "with requirements on the type or category of armor" — which the imported `usage` states
+ *  exactly (`etched-onto-heavy-armor`, `etched-onto-metal-armor`, …) — and one whose property affects
+ *  the armour rather than its wearer. */
+export function bodyRuneExcluded(rune: RuneDef, db: ContentDatabase): boolean {
+  if (BODY_RUNE_EXCLUDED.has(rune.id)) return true;
+  const usage = db.items[rune.id]?.usage;
+  return !!usage && usage !== 'etched-onto-armor';
+}
+
 /** 'holy', 'unholy', or null. Recorded as the deity's `sanctification` effect choice. */
 export function sanctificationOf(c: Character): 'holy' | 'unholy' | null {
   const label = (c.effectPicks ?? []).find((p) => p.choiceId === 'sanctification')?.label?.toLowerCase();
@@ -956,7 +992,9 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
     // deliver the same item bonus, and like every other source here it takes the highest.
     const actsAsPotency = Math.max(
       0,
-      ...propertyRuneDefs(worn.inv, db)
+      // The body rune counts alongside the armour's own: "If you wear armor, you gain the property
+      // rune's effects IN ADDITION to any effects of that armor."
+      ...[...propertyRuneDefs(worn.inv, db), ...(bodyRuneDef(c, db) ? [bodyRuneDef(c, db)!] : [])]
         .filter((r) => r.actsAs?.kind === 'potency')
         .map((r) => r.actsAs!.value),
     );
@@ -1750,21 +1788,53 @@ export function doublingRingsAvailable(c: Character, db: ContentDatabase): boole
   return wielded.length >= 2;
 }
 
+/**
+ * Whether THIS wielded weapon may borrow the runes of invested handwraps — Cutting Heaven, Crushing
+ * Earth. The feat limits it to a weapon "that can be used with your Overwhelming Combination
+ * ability", whose own requirement is "a one-handed melee weapon or a melee weapon with the agile or
+ * finesse trait", so that is the filter rather than a free choice of any weapon.
+ */
+export function handwrapsRuneSharing(c: Character, db: ContentDatabase, inv: InventoryItem): boolean {
+  if (!c.feats.some((f) => f.featId === 'cutting-heaven-crushing-earth')) return false;
+  if (!c.inventory.some((x) => x.invested && (x.worn || x.equipped) && isHandwraps(db.items[x.itemId]))) return false;
+  const item = db.items[inv.itemId];
+  if (!inv.equipped || item?.itemType !== 'weapon' || isHandwraps(item) || mpActive(c, inv)) return false;
+  const traits = item.traits ?? [];
+  // A MELEE weapon: a thrown one (dagger, "thrown-10") still carries a range and is melee, so the
+  // test is "has a range but is not thrown", the same rule deriveStrike uses to pick the attack ability.
+  const thrown = traits.some((t) => t === 'thrown' || t.startsWith('thrown-'));
+  if (item.range != null && !thrown) return false;
+  // "a one-handed melee weapon or a melee weapon with the agile or finesse trait"
+  return item.hands === 1 || traits.includes('agile') || traits.includes('finesse');
+}
+
 /** The runes a weapon Strike should actually use — its own, or (with Doubling Rings) the fundamental +
  *  property runes duplicated from another wielded weapon set as its `copyRunesFrom` source. The source's
  *  runes win where higher; the base rings require the two weapons to share a group (greater lifts that). */
 export function effectiveWeaponRunes(c: Character, db: ContentDatabase, inv: InventoryItem): WeaponRunes | undefined {
   const own = inv.runes as WeaponRunes | undefined;
   if (!inv.copyRunesFrom) return own;
-  const rings = investedRuneCopier(c, db);
-  if (!rings) return own;
   const source = c.inventory.find((x) => x.instanceId === inv.copyRunesFrom);
   const srcItem = source && db.items[source.itemId];
   const tgtItem = db.items[inv.itemId];
-  // Source must still be a wielded weapon; base rings also require the same weapon group.
-  if (!source?.equipped || srcItem?.itemType !== 'weapon' || mpActive(c, source)) return own;
-  const grp = (it: Item | undefined) => (it?.itemType === 'weapon' ? it.group : undefined);
-  if (!rings.greater && grp(srcItem) && grp(tgtItem) && grp(srcItem) !== grp(tgtItem)) return own;
+  // The OTHER way a weapon borrows runes: Cutting Heaven, Crushing Earth — "as long as you have
+  // invested and are wearing a set of handwraps of mighty blows, you also apply their runes to a
+  // single weapon you're wielding that can be used with your Overwhelming Combination ability".
+  // Handwraps are worn, never wielded, so the Doubling Rings path below rejects them outright.
+  const fromHandwraps =
+    !!source &&
+    handwrapsRuneSharing(c, db, inv) &&
+    (source.invested ?? false) &&
+    (source.worn || source.equipped) &&
+    isHandwraps(srcItem);
+  if (!fromHandwraps) {
+    const rings = investedRuneCopier(c, db);
+    if (!rings) return own;
+    // Source must still be a wielded weapon; base rings also require the same weapon group.
+    if (!source?.equipped || srcItem?.itemType !== 'weapon' || mpActive(c, source)) return own;
+    const grp = (it: Item | undefined) => (it?.itemType === 'weapon' ? it.group : undefined);
+    if (!rings.greater && grp(srcItem) && grp(tgtItem) && grp(srcItem) !== grp(tgtItem)) return own;
+  }
   const src = source.runes as WeaponRunes | undefined;
   if (!src) return own;
   const tier = (s?: WeaponRunes['striking']) => (s === 'mythic' ? 4 : s === 'major' ? 3 : s === 'greater' ? 2 : s === 'striking' ? 1 : 0);
@@ -3162,6 +3232,8 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
     if (!inv.worn || !inv.invested) continue;
     for (const r of propertyRuneDefs(inv, db)) runeBonus = Math.max(runeBonus, r.passiveEffects?.bulkLimitBonus ?? 0);
   }
+  // …and the rune on the character's own body (Living Rune), which is worn by definition.
+  runeBonus = Math.max(runeBonus, bodyRuneDef(c, db)?.passiveEffects?.bulkLimitBonus ?? 0);
   limitBonus += runeBonus;
   /** How much Bulk this feat set forgives on a given worn item — armour only, and never below 0. */
   const armorRelief = (inv: InventoryItem): number => {

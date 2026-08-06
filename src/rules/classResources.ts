@@ -26,12 +26,35 @@ export interface ClassResource {
   maxAtLevels?: [number, number][];
   /** A "meter" starts at 0 and fills UP to max (Cursebound); otherwise a pool starts full and depletes. */
   meter?: boolean;
+  /**
+   * A refreshed value BELOW the maximum, per level. Sanguimancy Hit Points cap at twice your level,
+   * but a night's rest only restores your level's worth — the rest is earned during the day (1 per 10
+   * HP that Treat Wounds restores on you). A pool that started full would hand out double.
+   */
+  initialPerLevel?: number;
   /** Also grant this resource to a character who owns this dedication feat (archetype parity), not just
    *  the base class. Only set for resources an archetype dedication actually grants with the same shape. */
   feat?: string;
 }
 
 export const CLASS_RESOURCES: Record<string, ClassResource[]> = {
+  /*
+   * Not a class. resourcesForCharacter walks every key and admits a resource when the character owns
+   * its `feat`, so a bucket whose key matches no class id contains exactly the archetype-only ones —
+   * a resource that belongs to an archetype and to no class had nowhere else to live.
+   */
+  archetype: [
+    {
+      id: 'sanguimancy-hp',
+      name: 'Sanguimancy HP',
+      kind: 'counter',
+      refresh: 'rest',
+      maxPerLevel: 2,
+      initialPerLevel: 1,
+      feat: 'sanguimancer-dedication',
+      note: 'Temporary HP you can also SPEND to power sanguimancy feats. Max twice your level; a full 8-hour rest restores your level’s worth (lasting 8 hours), and Treat Wounds adds 1 per 10 HP it restores.',
+    },
+  ],
   alchemist: [
     {
       id: 'versatile-vials',
@@ -128,10 +151,13 @@ export function resourceMaxFor(
   return Math.max(resourceMax(r, character.level, abilityMods), character.resourceFloors?.[r.id] ?? 0);
 }
 
-/** A resource's starting/refreshed value: toggles off, meters empty, pools full. */
+/** A resource's starting/refreshed value: toggles off, meters empty, pools full — except where a rest
+ *  restores less than the cap (`initialPerLevel`), which is Sanguimancy HP's whole shape. */
 export function resourceInitial(r: ClassResource, level: number, abilityMods: Record<AbilityId, number>): number {
   if (r.kind === 'toggle' || r.meter) return 0;
-  return resourceMax(r, level, abilityMods);
+  const max = resourceMax(r, level, abilityMods);
+  if (r.initialPerLevel != null) return Math.min(max, r.initialPerLevel * level);
+  return max;
 }
 
 /** The resources a character actually has: their base class's, PLUS any granted by an archetype

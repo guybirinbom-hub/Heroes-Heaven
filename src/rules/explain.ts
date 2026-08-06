@@ -200,6 +200,9 @@ function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
   if (c.heritageId) ids.push(c.heritageId);
   if (c.backgroundId) ids.push(c.backgroundId);
   if (db) for (const id of ownedFeatureIds(c, db)) ids.push(id);
+  // The property rune etched on the character's own body (Living Rune). It sits on no item, so the
+  // inventory walk below cannot reach it and its situational bonuses would silently not apply.
+  if (c.bodyRune) ids.push(c.bodyRune);
   for (const inv of c.inventory ?? []) {
     if (!(inv.equipped || inv.worn || inv.invested)) continue;
     ids.push(inv.itemId);

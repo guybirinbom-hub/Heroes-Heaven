@@ -440,6 +440,11 @@ export function Builder({
    */
   const listAdditions = useMemo(() => {
     const out = new Set<string>();
+    // A widening may name whole TRADITIONS rather than spells — "one spell in your spell repertoire
+    // not on the divine spell list" (Mysterious Repertoire). Expanded here, in a memo, rather than
+    // onto the character, where it would be ~1,500 ids in every saved roster entry.
+    const openTraditions = new Set<string>();
+    let anyTradition = false;
     for (const featId of Object.values(build.featPicks ?? {})) {
       const list = featId ? content.feats[featId]?.spellListAdditions : undefined;
       for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
@@ -447,10 +452,22 @@ export function Builder({
         // are applied by buildCharacter and are not the player's to choose here.
         if (add.as && add.as !== 'list') continue;
         for (const s of add.spells ?? []) if (content.spells[s]) out.add(s);
+        // "Add up to three of your deity's spells to your spell list" — resolved from the build's own
+        // deity, so the picker offers the right three the moment the player picks a deity.
+        if (add.from === 'deity' && build.deityId)
+          for (const s of content.deities[build.deityId]?.spells ?? []) if (content.spells[s]) out.add(s);
+        if (add.traditions === 'any') anyTradition = true;
+        else for (const t of add.traditions ?? []) openTraditions.add(t);
+      }
+    }
+    if (anyTradition || openTraditions.size) {
+      for (const s of Object.values(content.spells)) {
+        if (s.ritual) continue;
+        if (anyTradition || (s.traditions ?? []).some((t) => openTraditions.has(t))) out.add(s.id);
       }
     }
     return out;
-  }, [build.featPicks, content]);
+  }, [build.featPicks, build.deityId, content]);
   const eligibleSpells = (rank: number) => {
     if (!tradition) return NO_SPELLS;
     const base = rank === 0 ? spellIndex.cantrips[tradition] ?? NO_SPELLS : spellIndex.upTo[tradition]?.[rank] ?? NO_SPELLS;

@@ -243,6 +243,15 @@ interface ContentBase {
    * it never reached the list a player scans for something to do on their turn.
    */
   grantsActions?: string[];
+  /**
+   * Rituals this record teaches — "You learn the Commune ritual if you didn’t know it already".
+   *
+   * The Rituals section on the Spells tab listed only what the player added through Overrides, so
+   * eleven records that grant one showed nothing. `note` carries the clause that usually rides along
+   * ("with a casting time of 1 hour instead of 1 day and without a secondary caster"), which had no
+   * home either.
+   */
+  grantsRituals?: { spellId: string; note?: string }[];
   /** App-level link to the user Homebrew source that authored this entry (groups it in the Homebrew
    *  manager). Absent on imported/seed content. Ignored by the rules engine. */
   homebrewSourceId?: string;
@@ -820,11 +829,36 @@ export interface RestrictedSlotGrant {
   /** N slots at HALF the caster's highest rank, rounded down — a Candle of Invocation ("4th-rank
    *  slots if the caster can cast 8th-rank spells"). Relative to the caster, so byRank can't say it. */
   halfHighest?: number;
+  /** ONE slot at every rank the caster can cast from this rank upward — Spell Combination's "one slot
+   *  of each rank of spell you can cast, except 2nd rank and 1st rank". `byRank` is absolute and would
+   *  have to be rewritten at every level; this follows the caster's own table. */
+  perRankFrom?: number;
+  /** Each slot holds TWO spells rather than one (Spell Combination). */
+  pairs?: boolean;
+  /** How far BELOW the slot's own rank each spell in it must be — Spell Combination's "2 or more spell
+   *  ranks below the slot's rank". Narrows what the picker offers for that slot. */
+  ranksBelow?: number;
   /** N slots whose rank the player chooses at daily preparations, from every rank up to
    *  `belowHighest` below their highest — Sin Reservoir's "one slot of any level up to two below". */
   rankChoice?: { count: number; belowHighest: number };
   /** Only these spells may fill the slots. */
   spells?: string[];
+  /**
+   * …or every spell of the entry's tradition carrying ALL of these traits — Master Summoner's slots
+   * take "only summoning or incarnate spells", which is 200-odd spells and grows with the data. Given
+   * as alternatives: a spell matching ANY listed trait qualifies.
+   */
+  traits?: string[];
+  /**
+   * How many of the caster's OWN slots, at the same rank, this group consumes. Master Summoner does
+   * not add slots — it converts: "you can designate one of your spell slots to become two summoning
+   * slots of the same spell rank". Modelled as two restricted slots costing one ordinary one, so the
+   * exchange is visible rather than a silent +2.
+   *
+   * Deducted by the play overlay against the group's FINAL rank, since the player may move a
+   * rank-choice group at daily preparations.
+   */
+  costsSlot?: number;
   /** …or resolve the allowed set from the character: `subclass-granted` is whatever the subclass put
    *  in `grantedRepertoire` (a psychic's conscious mind). Omit both when the restriction is prose the
    *  engine cannot check — a wizard's curriculum lives only in its school's description text, and
@@ -849,6 +883,16 @@ export interface RestrictedSlot {
   /** The entry casts spontaneously, so nothing is prepared here — the slot is one extra cast drawn
    *  from `allowed` (or from the repertoire when the restriction is prose). */
   spontaneous?: boolean;
+  /** Ordinary slots of this rank the GROUP consumes (see RestrictedSlotGrant.costsSlot). Carried on
+   *  the FIRST slot of the group only, so the play overlay can sum it without regrouping. */
+  costsSlot?: number;
+  /** This slot holds TWO spells (Spell Combination). The second lives in `spellId2`, keyed in play
+   *  state under `<slot id>#2`. */
+  pairs?: boolean;
+  spellId2?: string | null;
+  /** Highest rank a spell in this slot may be — Spell Combination's "2 or more spell ranks below the
+   *  slot's rank". Absent means the slot's own rank, as everywhere else. */
+  maxRank?: number;
 }
 
 /** A concrete effect an EffectChoice option confers when picked. A subset of the effect lanes the
@@ -2032,6 +2076,15 @@ export interface Deity extends ContentBase {
    *  "chosen from among your deity's domains, your deity's alternate domains…" (Splinter Faith) could
    *  not be offered — 401 deities have alternates and none of them shipped. */
   alternateDomains?: string[];
+  /**
+   * The three spells the deity grants to clerics. Backfilled from the AoN mirror for 472 of the 485
+   * deities (the rest have no mirror record), following each renamed spell's `remaster_id` so a
+   * printed "True Strike" lands on Sure Strike rather than resolving to nothing.
+   *
+   * The import carried domains, font, favoured weapon and skill but never these, so no record could
+   * say "your deity's spells" — which is exactly what Blessed Blood adds to a sorcerer's list.
+   */
+  spells?: string[];
 }
 
 export interface Language {
@@ -2756,6 +2809,22 @@ export type ItemDesignation = 'innovation' | 'weapon-implement' | 'bonded' | 'ik
  */
 export interface SpellAccessGrant {
   spells?: string[];
+  /**
+   * …or a whole TRADITION rather than named spells — "You can have one spell in your spell repertoire
+   * not on the divine spell list… You cast that spell as a divine spell" (Mysterious Repertoire).
+   *
+   * Deliberately not expanded into ids: that would put ~1,500 spell ids on the character and into
+   * every saved roster entry, to say something a rule says in one line. `'any'` means every tradition.
+   */
+  traditions?: Tradition[] | 'any';
+  /** …or a set resolved from the CHARACTER rather than written down: `'deity'` is "your deity's spells
+   *  (spells your deity grants to clerics)", which differs per worshipper and so could never be a
+   *  static list. */
+  from?: 'deity';
+  /** How many spells the widening allows at once. The engine does not police repertoire contents, so
+   *  this is shown beside the widened options rather than enforced — saying it is honest, silently
+   *  allowing five is not. */
+  max?: number;
   /** Narrow to one spellcasting entry (a font addition belongs to the font's own entry). */
   entryId?: string;
   as?: 'list' | 'repertoire' | 'font';
@@ -3229,6 +3298,27 @@ export interface Character {
   /** Spell ids a feat added to the pool the prepare/repertoire picker offers, beyond what the entry's
    *  tradition contains. Keyed by spellcasting entry id; `'*'` applies to every entry. */
   spellListAdditions?: Record<string, string[]>;
+  /** Whole TRADITIONS a record opened to the picker, rather than named spells (Mysterious Repertoire:
+   *  "one spell in your spell repertoire not on the divine spell list"). Kept as a rule instead of
+   *  ~1,500 expanded ids; `max` and `from` are shown beside the widened options. */
+  spellListTraditions?: { entryId?: string; traditions: Tradition[] | 'any'; max?: number; from: string }[];
+  /** Spells the summoner's EIDOLON knows as innate spells, chosen on Magical Adept / Magical Master.
+   *  Both are multi-pick choices and a FeatChoice keeps only the first answer, so the full set has to
+   *  be collected at build time; Share Eidolon Magic then lets the summoner cast them too. */
+  eidolonInnateSpells?: string[];
+  /**
+   * The armour PROPERTY rune etched on the character’s own flesh — Living Rune: “Your body can hold a
+   * single property rune… If you wear armor, you gain the property rune’s effects in addition to any
+   * effects of that armor.”
+   *
+   * A rune with no item to sit on: it is not in the inventory, nothing etches it, and every reader of
+   * etched runes walks `inventory[].runes`, so there was no way to express it at all.
+   */
+  bodyRune?: string;
+  /** Rituals a feat/feature/heritage/invested item taught this character, with the record that did it
+   *  and any clause it attaches (Read the Land shortens Commune to 1 hour and drops the secondary
+   *  caster). Shown in the Rituals section alongside anything added through Overrides. */
+  grantedRituals?: { spellId: string; from: string; note?: string }[];
   /** How many magic items this character may invest — 10 by RAW, 12 with Incredible Investiture. */
   investedLimit?: number;
   /** What a full night's rest gives back: the HP multiplier on `level × Con mod` and how far a

@@ -88,7 +88,7 @@ export function planAttach(
   // A capacity FUNCTION, not a number: etching a potency rune changes the potency, and the slot
   // count that matters there is the one the item is about to have.
   if (rune) return planRune(rune, attachment, host, hostInv, (potency) => propertyRuneCapacity(character, hostInv, content, potency));
-  if (isAttachable(attachment)) return planAffix(attachment, attachmentInv, host, hostInv, inventory, content);
+  if (isAttachable(attachment)) return planAffix(attachment, attachmentInv, host, hostInv, inventory, content, character);
   return { ok: false, reason: `${attachment.name} isn’t a rune or an attachment — there’s nothing to affix onto another item.` };
 }
 
@@ -151,6 +151,7 @@ function planAffix(
   hostInv: InventoryItem,
   inventory: InventoryItem[],
   content: ContentDatabase,
+  character?: Character,
 ): AttachPlan {
   if (!isHost(host)) return { ok: false, reason: `You can only affix attachments to a weapon, armor, or shield — not ${host.name}.` };
   if (attachmentInv.attachedTo) return { ok: false, reason: `${attachment.name} is already affixed to another item — peel it off first.` };
@@ -159,11 +160,41 @@ function planAffix(
   if (!hosts.includes(host.itemType)) return { ok: false, reason: `${attachment.name} can only be affixed to ${hosts.join(' or ')} — not ${host.name}.` };
   const kind = attachKind(attachment);
   if (kind !== 'other') {
-    const siblings = inventory
-      .filter((i) => i.attachedTo === hostInv.instanceId)
-      .map((i) => content.items[i.itemId])
-      .filter((d): d is Item => !!d);
-    if (siblings.some((s) => attachKind(s) === kind)) return { ok: false, reason: `${host.name} already has a ${kind} affixed — only one ${kind} fits.` };
+    const affixedTo = (hostId: string) =>
+      inventory
+        .filter((i) => i.attachedTo === hostId)
+        .map((i) => content.items[i.itemId])
+        .filter((d): d is Item => !!d);
+    const same = affixedTo(hostInv.instanceId).filter((s) => attachKind(s) === kind).length;
+    /*
+     * Talismanic Sage: "when you Affix a Talisman, you can specially treat one item you're working
+     * on, allowing it to have two active talismans at once. This special treatment ends if you use
+     * Affix a Talisman to treat a new item."
+     *
+     * So the cap is two — for exactly ONE host at a time. Needing no designation control is the
+     * point: the second talisman IS the treatment, and treating another item means peeling one off
+     * the first, which the "one item at a time" test below enforces on its own.
+     */
+    const sage = kind === 'talisman' && !!character?.feats.some((f) => f.featId === 'talismanic-sage');
+    const anotherIsTreated =
+      sage &&
+      inventory.some(
+        (i) =>
+          i.instanceId !== hostInv.instanceId &&
+          affixedTo(i.instanceId).filter((s) => attachKind(s) === 'talisman').length >= 2,
+      );
+    const cap = sage && !anotherIsTreated ? 2 : 1;
+    if (same >= cap) {
+      return {
+        ok: false,
+        reason:
+          cap === 2
+            ? `${host.name} already has two talismans affixed — Talismanic Sage allows two, not three.`
+            : sage
+              ? `${host.name} already has a talisman, and another item is already your specially treated one — peel a talisman off it first.`
+              : `${host.name} already has a ${kind} affixed — only one ${kind} fits.`,
+      };
+    }
   }
   return { ok: true, action: 'affix', verb: 'Affix', prep: 'to' };
 }
