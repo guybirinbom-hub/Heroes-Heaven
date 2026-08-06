@@ -13,6 +13,23 @@ let cached: ContentDatabase | null = null;
 export function content(): ContentDatabase {
   if (cached) return cached;
   const core = JSON.parse(readFileSync('public/core.json', 'utf8')) as Record<string, Record<string, unknown>>;
+  /*
+   * Descriptions ship in a SECOND file (61% of the data, and nobody reads one until they open it), so
+   * the app fetches them in parallel and writes them back onto the same records. Tests do the same
+   * thing synchronously — which also makes every description-reading test a check that the split is
+   * lossless: if a record went missing on the way out or back, dozens of assertions notice.
+   */
+  const desc = JSON.parse(readFileSync('public/core-descriptions.json', 'utf8')) as Record<string, Record<string, { d?: string; r?: unknown }>>;
+  for (const [bucket, records] of Object.entries(desc)) {
+    const target = core[bucket] as Record<string, Record<string, unknown>> | undefined;
+    if (!target) continue;
+    for (const [id, v] of Object.entries(records)) {
+      const rec = target[id];
+      if (!rec) continue;
+      if (v.d !== undefined) rec.description = v.d;
+      if (v.r !== undefined) rec.descRefs = v.r;
+    }
+  }
   const merged: Record<string, unknown> = {};
   // Union of seed + core keys, so core-only catalogs (companionSpecializations, followers, pets)
   // are included just like the app's mergeWithSeed does.

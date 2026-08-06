@@ -263,6 +263,64 @@ export function rebuildContent(): ContentDatabase {
   return cached;
 }
 
+/** Set once the description file has been merged in, so a late subscriber is told immediately. */
+let descriptionsLoaded = false;
+
+const descListeners = new Set<(db: ContentDatabase) => void>();
+/** Subscribe to "descriptions have arrived". Returns an unsubscribe. */
+export function onDescriptionsLoaded(fn: (db: ContentDatabase) => void): () => void {
+  // Fire IMMEDIATELY when they have already arrived. main.tsx prefetches content before React mounts,
+  // so the descriptions usually land BEFORE App subscribes — a plain subscription misses the
+  // notification entirely and every description stays blank until something else forces a render.
+  if (descriptionsLoaded && cached) fn(cached);
+  descListeners.add(fn);
+  return () => {
+    descListeners.delete(fn);
+  };
+}
+
+let descPending: Promise<void> | null = null;
+/**
+ * Fetch public/core-descriptions.json and write each description back onto the record it belongs to.
+ *
+ * Writes each description onto the RAW core record and re-merges, so subscribers get a database with
+ * a NEW identity. That is the reason this split is a small change instead of a large one: 189 places
+ * read `record.description` synchronously and every one keeps working — the text simply appears a
+ * beat later. A failure here costs description text and nothing else, so it never rejects.
+ */
+export function loadDescriptions(): Promise<void> {
+  descPending ??= (async () => {
+    try {
+      const res = await fetch(`${import.meta.env.BASE_URL}core-descriptions.json`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const byBucket = (await res.json()) as Record<string, Record<string, { d?: string; r?: unknown }>>;
+      // Write into the RAW core, then rebuild. Mutating the merged database in place is not enough:
+      // several layers downstream snapshot it — applyOverrides copies edited records, and the sheet
+      // memoises a player-facing copy — so a mutation lands in objects nobody is reading any more and
+      // every description stays blank. A rebuild gives the database a new identity, which is what
+      // those memos are keyed on.
+      const db = cachedCore as unknown as Record<string, Record<string, Record<string, unknown>> | undefined>;
+      for (const [bucket, records] of Object.entries(byBucket)) {
+        const target = db?.[bucket];
+        if (!target) continue;
+        for (const [id, v] of Object.entries(records)) {
+          const rec = target[id];
+          if (!rec) continue;
+          if (v.d !== undefined) rec.description = v.d;
+          if (v.r !== undefined) rec.descRefs = v.r;
+        }
+      }
+      descriptionsLoaded = true;
+      const rebuilt = rebuildContent();
+      for (const fn of descListeners) fn(rebuilt);
+    } catch (err) {
+      // Descriptions are cosmetic relative to the engine: every number still derives without them.
+      console.error('Failed to load core-descriptions.json; descriptions will be blank.', err);
+    }
+  })();
+  return descPending;
+}
+
 /** Fetch + parse public/core.json once, merged with the seed. Concurrent callers share the
  *  in-flight promise (main.tsx prefetches before React mounts; App awaits the same load). */
 export function loadContent(): Promise<ContentDatabase> {
@@ -274,6 +332,10 @@ export function loadContent(): Promise<ContentDatabase> {
       const core = (await res.json()) as Partial<ContentDatabase>;
       cachedCore = core;
       cached = mergeWithSeed(core);
+      // Descriptions are 61% of the data and nobody reads one until they open it, so they ship in a
+      // SECOND file and fill in a moment later. Deliberately not awaited: the whole point is that the
+      // app becomes interactive after parsing ~8 MB instead of 22.5.
+      void loadDescriptions();
     } catch (err) {
       // Fall back to the seed alone so the app still boots (and the example
       // character resolves) if the data file is missing or unreadable.

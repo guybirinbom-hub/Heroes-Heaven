@@ -12,7 +12,7 @@ import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { UpdateNotice } from './sheet/UpdateNotice';
 import { WindowControls } from './sheet/WindowControls';
 import { HeroesHeavenLogo } from './sheet/Logo';
-import { loadContent, rebuildContent } from './data';
+import { loadContent, rebuildContent, onDescriptionsLoaded } from './data';
 import { pickScreen } from './appScreen';
 import { useAuth } from './data/useAuth';
 import { startCloudSync, hasSyncedOnce } from './data/cloudSync';
@@ -108,6 +108,13 @@ export default function App() {
     };
     window.addEventListener('pointerdown', cancel, true);
     window.addEventListener('keydown', cancel, true);
+    // Descriptions arrive in a second file after the app is already interactive, and the loader
+    // re-merges so they come back as a NEW database. Swapping it in is what makes them appear:
+    // several layers downstream memoise on the database identity (applyOverrides, the sheet's
+    // player-facing copy), so mutating records in place left every description blank — the failure
+    // mode this split could have shipped with. Subscribed BEFORE the load so a database that is
+    // already complete (main.tsx prefetches before React mounts) still reaches us.
+    const stopDesc = onDescriptionsLoaded((db) => setContent(db));
     loadContent().then((c) => {
       setContent(c);
       // Restore the last screen once content is ready (campaigns needs it). If the app was closed while
@@ -127,6 +134,7 @@ export default function App() {
     return () => {
       window.removeEventListener('pointerdown', cancel, true);
       window.removeEventListener('keydown', cancel, true);
+      stopDesc();
     };
   }, []);
   // Roster persistence is DEBOUNCED (see data/persist.ts): a burst of play mutations (HP ticks,

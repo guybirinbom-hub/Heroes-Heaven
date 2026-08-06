@@ -169,18 +169,23 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,woff,woff2,ttf,eot}'],
         // The Tabler icon font (~2.8 MB) must be precached so icons render offline — raise the cap
-        // above its size. (The ~19 MB core.json is handled separately via runtimeCaching below.)
+        // above its size. (The rules data is handled separately via runtimeCaching below.)
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
         navigateFallback: 'index.html',
-        // The ~19 MB rules file is cached at runtime on first (online) load rather than precached,
-        // so the service-worker install stays small; offline works after the first visit.
+        // The rules data is cached at runtime on first (online) load rather than precached, so the
+        // service-worker install stays small; offline works after the first visit.
+        //
+        // BOTH files must match. Descriptions were split into `core-descriptions.json` (15 MB of the
+        // old 22.5 MB core.json), and `endsWith('core.json')` does not match that name — an installed
+        // PWA would have gone offline with every description blank.
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.pathname.endsWith('core.json'),
+            urlPattern: ({ url }) => /\/core(-descriptions)?\.json$/.test(url.pathname),
             handler: 'CacheFirst',
             options: {
               cacheName: 'heroes-heaven-data',
-              expiration: { maxEntries: 3 },
+              // Two files per version now, so 3 was under one full set plus its predecessor.
+              expiration: { maxEntries: 6 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },

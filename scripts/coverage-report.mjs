@@ -21,6 +21,24 @@ import { dirname, join } from 'node:path';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const db = JSON.parse(read('public/core.json'));
+/*
+ * Descriptions live in a SECOND file now — 61% of the data, split out so the app becomes interactive
+ * after parsing 8 MB instead of 22.5. This report counts records BY THEIR TEXT ("does this feat's
+ * wording describe an effect the engine ought to model?"), so without the merge every denominator
+ * comes out zero and the ratchet reports perfect coverage of nothing.
+ */
+{
+  const desc = JSON.parse(read('public/core-descriptions.json'));
+  for (const [bucket, records] of Object.entries(desc)) {
+    if (!db[bucket]) continue;
+    for (const [id, v] of Object.entries(records)) {
+      const rec = db[bucket][id];
+      if (!rec) continue;
+      if (v.d !== undefined) rec.description = v.d;
+      if (v.r !== undefined) rec.descRefs = v.r;
+    }
+  }
+}
 
 /** Feat ids referenced by each registry that can model a player-facing pick or effect. */
 const REGISTRY_FILES = {

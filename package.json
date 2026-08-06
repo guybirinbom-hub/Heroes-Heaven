@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "data": "node scripts/import-core-v2.mjs",
+    "data": "node scripts/import-core-v2.mjs && node scripts/import-siege-and-gaps.mjs && node scripts/split-descriptions.mjs",
     "data:foundry": "node scripts/import-core.mjs",
     "build": "tsc -b && vite build",
     "build:web": "vite build",
