@@ -1,0 +1,162 @@
+[
+ {
+  "id": "advanced-order-training",
+  "name": "Advanced Order Training",
+  "level": 12
+ },
+ {
+  "id": "enticing-dwelling",
+  "name": "Enticing Dwelling",
+  "level": 12
+ },
+ {
+  "id": "exorcist-dedication",
+  "name": "Exorcist Dedication",
+  "level": 4
+ },
+ {
+  "id": "explosive-savant",
+  "name": "Explosive Savant",
+  "level": 1
+ },
+ {
+  "id": "flexible-spellcaster-dedication",
+  "name": "Flexible Spellcaster Dedication",
+  "level": 2
+ },
+ {
+  "id": "forgotten-presence",
+  "name": "Forgotten Presence",
+  "level": 8
+ },
+ {
+  "id": "frozen-breadth",
+  "name": "Frozen Breadth",
+  "level": 8
+ },
+ {
+  "id": "ghost-path-epiphany",
+  "name": "Ghost-path Epiphany",
+  "level": 10
+ },
+ {
+  "id": "hellknight-errant",
+  "name": "Hellknight-Errant",
+  "level": 6
+ },
+ {
+  "id": "hurl-at-the-horizon",
+  "name": "Hurl at the Horizon",
+  "level": 2
+ },
+ {
+  "id": "basic-modification",
+  "name": "Basic Modification",
+  "level": 8
+ },
+ {
+  "id": "living-rune",
+  "name": "Living Rune",
+  "level": 6
+ },
+ {
+  "id": "master-summoner",
+  "name": "Master Summoner",
+  "level": 6
+ },
+ {
+  "id": "miraculous-flight",
+  "name": "Miraculous Flight",
+  "level": 18
+ },
+ {
+  "id": "monstrous-inclinations",
+  "name": "Monstrous Inclinations",
+  "level": 16
+ },
+ {
+  "id": "mysterious-repertoire",
+  "name": "Mysterious Repertoire",
+  "level": 14
+ },
+ {
+  "id": "pack-rat",
+  "name": "Pack Rat",
+  "level": 1
+ },
+ {
+  "id": "quick-alchemy",
+  "name": "Quick Alchemy",
+  "level": 4
+ },
+ {
+  "id": "raging-thrower",
+  "name": "Raging Thrower",
+  "level": 1
+ },
+ {
+  "id": "read-the-land",
+  "name": "Read the Land",
+  "level": 12
+ },
+ {
+  "id": "bestial-brutality",
+  "name": "Bestial Brutality",
+  "level": 5
+ },
+ {
+  "id": "blessed-blood-sorcerer",
+  "name": "Blessed Blood (Sorcerer)",
+  "level": 1
+ },
+ {
+  "id": "sanguimancer-dedication",
+  "name": "Sanguimancer Dedication",
+  "level": 2
+ },
+ {
+  "id": "share-eidolon-magic",
+  "name": "Share Eidolon Magic",
+  "level": 14
+ },
+ {
+  "id": "signature-spell-expansion",
+  "name": "Signature Spell Expansion",
+  "level": 10
+ },
+ {
+  "id": "signature-spell-expansion-psychic",
+  "name": "Signature Spell Expansion (Psychic)",
+  "level": 10
+ },
+ {
+  "id": "spell-combination",
+  "name": "Spell Combination",
+  "level": 20
+ },
+ {
+  "id": "talismanic-sage",
+  "name": "Talismanic Sage",
+  "level": 14
+ },
+ {
+  "id": "terrifying-mien",
+  "name": "Terrifying Mien",
+  "level": 16
+ },
+ {
+  "id": "ultimate-polymath",
+  "name": "Ultimate Polymath",
+  "level": 20
+ },
+ {
+  "id": "cutting-heaven-crushing-earth",
+  "name": "Cutting Heaven, Crushing Earth",
+  "level": 6
+ },
+ {
+  "id": "deadly-aspect",
+  "name": "Deadly Aspect",
+  "level": 5
+ }
+]
