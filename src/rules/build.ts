@@ -3397,6 +3397,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       if (arch.config.innateCantrip) {
         // Magaambyan Attendant: the chosen cantrip(s) are cast as innate spells — no spell slots.
         spellcasting.push({ ...baseEntry, name: `${cap(archTradition)} innate (archetype)`, type: 'innate', repertoire: {} });
+      } else if (arch.config.innateRanked) {
+        // Captivator: one LEARNED spell of each unlocked rank, cast as an occult innate spell 1/day —
+        // no slots at all, so `slots` is read only for which ranks the character has reached.
+        const repertoire: Record<number, string[]> = {};
+        for (const rankStr of Object.keys(slots)) {
+          const rank = Number(rankStr);
+          repertoire[rank] = (srcSpells[rank] ?? []).slice(0, 1);
+        }
+        // Captivating Intensity: "cast each occult innate spell granted by captivator archetype feats
+        // one additional time per day … other than your two highest spell ranks". Cantrips are at-will
+        // already, so only the ranked spells move, and only those below the top two ranks reached.
+        const innateUses: Record<string, number> = {};
+        if (feats.some((f) => f.featId === 'captivating-intensity')) {
+          const ranks = Object.keys(repertoire).map(Number).sort((a, b) => b - a);
+          const exempt = new Set(ranks.slice(0, 2));
+          for (const [rankStr, ids] of Object.entries(repertoire)) {
+            if (exempt.has(Number(rankStr))) continue;
+            for (const id of ids) innateUses[id] = 2;
+          }
+        }
+        spellcasting.push({
+          ...baseEntry,
+          name: `${cap(archTradition)} innate (archetype)`,
+          type: 'innate',
+          repertoire,
+          ...(Object.keys(innateUses).length ? { innateUses } : {}),
+        });
       } else if (arch.config.repertoire) {
         // Spontaneous archetype (sorcerer/bard/oracle/psychic/summoner/eldritch-archer/beast-gunner):
         // a known-spell repertoire + a 1-slot-per-rank pool. No signature spells (no class feature).

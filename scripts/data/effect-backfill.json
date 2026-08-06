@@ -65986,8 +65986,8 @@
   {
     "category": "feats",
     "id": "captivating-intensity",
-    "field": "dataWarning",
-    "value": "Grants one extra daily casting of each captivator innate spell (except your two highest ranks) — the app does not yet track per-spell innate uses granted this way."
+    "field": "note",
+    "value": "Your captivator innate spells below your two highest ranks are already shown at 2/day. Not tracked: with Heightened Captivation, one of that spells two castings is heightened two ranks lower than your highest captivator rank."
   },
   {
     "category": "feats",

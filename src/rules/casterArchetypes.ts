@@ -42,6 +42,10 @@ export interface CasterArchetype {
   keyByTradition?: boolean;
   /** Magaambyan Attendant: grants a single INNATE cantrip of the chosen tradition — no spell slots. */
   innateCantrip?: boolean;
+  /** Captivator: its ranked spells are LEARNED and cast as INNATE spells — one spell of each unlocked
+   *  rank, 1/day each — not as prepared or spontaneous slots. Pair with `customUnlocks`, which then
+   *  describes when each rank is learned rather than when a slot appears. */
+  innateRanked?: boolean;
   /** A non-standard slot schedule (Halcyon Speaker): each entry unlocks one slot of `rank` at character
    *  level `level` once `featId` is taken (the dedication counts as taken while active). Overrides the
    *  standard basic/expert/master RANK_UNLOCKS. */
@@ -59,7 +63,31 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   'oracle-dedication': mk('divine', 'cha', 2, 'oracle'),
   'magus-dedication': mk('arcane', 'int', 4, 'magus'),
   'animist-dedication': mk('divine', 'wis', 2, 'animist'),
-  'captivator-dedication': mk('occult', 'cha', 2, 'captivator'),
+  // Captivator: NOT a slot caster, however much it looks like one. Every captivator spellcasting feat
+  // says "You Cast these Spells as occult innate spells" — you learn ONE spell of each rank and cast it
+  // from nothing, 1/day. Its ladder is also two levels ahead of the standard one from Expert onward and
+  // is the only archetype that reaches rank 9: 1st@4, 2nd@6, 3rd@8 (Basic) · 4th@10, 5th@12, 6th@14
+  // (Expert) · 7th@16, 8th@18, 9th@20 (Master). Each spell must be enchantment or illusion — a school
+  // restriction the Remaster data can no longer express, so it is left to the player.
+  'captivator-dedication': {
+    ...mk('occult', 'cha', 2, 'captivator'),
+    innateRanked: true,
+    customUnlocks: [
+      { rank: 1, level: 4, featId: 'basic-captivator-spellcasting' },
+      { rank: 2, level: 6, featId: 'basic-captivator-spellcasting' },
+      { rank: 3, level: 8, featId: 'basic-captivator-spellcasting' },
+      { rank: 4, level: 10, featId: 'expert-captivator-spellcasting' },
+      { rank: 5, level: 12, featId: 'expert-captivator-spellcasting' },
+      { rank: 6, level: 14, featId: 'expert-captivator-spellcasting' },
+      { rank: 7, level: 16, featId: 'master-captivator-spellcasting' },
+      { rank: 8, level: 18, featId: 'master-captivator-spellcasting' },
+      { rank: 9, level: 20, featId: 'master-captivator-spellcasting' },
+    ],
+    // customUnlocks otherwise pins proficiency at trained (correct for Halcyon Speaker); the captivator
+    // does advance, on its own two feats.
+    profExpertFeat: 'expert-captivator-spellcasting',
+    profMasterFeat: 'master-captivator-spellcasting',
+  },
   'prophet-of-kalistrade-dedication': mk('occult', 'cha', 3, 'prophet'),
   'rivethun-involutionist-dedication': mk('divine', 'wis', 2, 'rivethun'),
   // Bloodrager: a spontaneous repertoire of 2 cantrips from EITHER the arcane or divine list (player's
