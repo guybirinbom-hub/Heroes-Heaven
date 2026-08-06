@@ -108,6 +108,13 @@ export function DetailsTab({
     rank,
     desc: content.items[id]?.description,
   }));
+  // Group-wide familiarity ("treat bombs as simple weapons"), which is a rule rather than a list of
+  // weapons — it would otherwise be invisible here while quietly raising 172 Strikes.
+  const groupRanks: ProfRow[] = (character.proficiencies.weaponGroupRanks ?? []).map((r) => ({
+    name: r.category ? `${cap(r.category)} ${r.group}s` : `${cap(r.group)}s`,
+    rank: r.rank,
+    desc: `Weapons in the ${r.group} group${r.category ? ` with the ${r.category} category` : ''} count as this proficiency, whichever is higher.`,
+  }));
   const defenses: ProfRow[] = (['unarmored', 'light', 'medium', 'heavy'] as const).map((c) => ({
     name: cap(c),
     rank: character.proficiencies.defenses[c],
@@ -120,7 +127,7 @@ export function DetailsTab({
   }));
 
   const groups: { label: string; rows: ProfRow[] }[] = [
-    { label: 'Attacks', rows: [...attacks, ...overrides] },
+    { label: 'Attacks', rows: [...attacks, ...groupRanks, ...overrides] },
     { label: 'Defenses', rows: defenses },
     { label: 'Spellcasting', rows: spellRows },
     { label: 'Class', rows: [{ name: 'Class DC', rank: character.proficiencies.classDc, desc: proficiencyDesc('classDc') }] },

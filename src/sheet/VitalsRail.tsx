@@ -547,6 +547,7 @@ export function VitalsRail({
                 item={shieldItem}
                 content={content}
                 inventory={character.inventory}
+                feats={character.feats}
                 onPlay={onPlay}
                 activeModes={character.activeModes}
                 onClose={() => setShieldDetailOpen(false)}

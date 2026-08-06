@@ -207,8 +207,25 @@ export function MainTab({
     ...character.feats.map((f) => content.feats[f.featId]),
     ...[...ownedFeatureIds(character, content)].map((id) => content.classFeatures[id]),
   ];
+  // The actions a record HANDS you rather than IS. A passive feat whose text ends "you also gain the
+  // Warding Shift action" put nothing in this list: the feat itself is passive, and the action it
+  // grants sat in content.actions with nothing owning it. `grantsActions` names it — and that hid the
+  // barbarian's Rage, the magus's Spellstrike, the ranger's Hunt Prey and Reactive Strike, all of
+  // which are passive CLASS FEATURES here and 1-action records over in content.actions.
+  //
+  // Heritage and background are walked only for this: neither is ever an action itself (no record in
+  // either collection carries a non-passive cost), but 43 of them GRANT one — a Venomtail Kobold's
+  // Tail Toxin, a Jinxed Halfling's Jinx, a Doomcaller's Stellar Misfortune.
+  const grantedActions = [
+    ...actionRecords,
+    character.heritageId ? content.heritages[character.heritageId] : undefined,
+    character.backgroundId ? content.backgrounds[character.backgroundId] : undefined,
+  ]
+    .flatMap((f) => f?.grantsActions ?? [])
+    .map((id) => content.actions[id])
+    .filter((a): a is NonNullable<typeof a> => !!a);
   const seenActionNames = new Set<string>();
-  const featActions: Act[] = actionRecords
+  const featActions: Act[] = [...actionRecords, ...grantedActions]
     .filter((f) => !!f && isActionCost(f.actionCost) && !activityNames.has(f.name))
     .filter((f) => !seenActionNames.has(f!.name) && seenActionNames.add(f!.name))
     .map((f) => ({ name: f!.name, cost: f!.actionCost as ActionCost, desc: f!.description, descRefs: f!.descRefs, traits: f!.traits }));

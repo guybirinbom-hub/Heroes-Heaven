@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
+import type { Character, ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
 import { removeInventoryItem, setItemCounter, setItemDesignation, setItemQuantity, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
 import { containerOptionsFor } from '../rules/derive';
 import { formatPrice } from '../rules/wealth';
@@ -148,6 +148,7 @@ export function ItemDetail({
   charLevel = 1,
   activeModes = [],
   designationKinds = [],
+  feats = [],
   onEdit,
 }: {
   inv: InventoryItem;
@@ -157,6 +158,9 @@ export function ItemDetail({
   onPlay?: PlayUpdater;
   /** The character's full inventory — needed to show affixed attachments. */
   inventory?: InventoryItem[];
+  /** The character's feats — only so the stow control sizes containers the same way the Inventory
+   *  tab does (Pack Rat adds 50% to a mundane container). Omitted = printed capacity. */
+  feats?: Character["feats"];
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
   rationsDayTracking?: boolean;
   /** Character level — caps the applied Monster-Parts effect readout. */
@@ -452,7 +456,7 @@ export function ItemDetail({
               // Stow this item in a container (or take it out). This is the tap-friendly path — the
               // Inventory tab also allows drag-and-drop, but that's disabled on touch, so without this
               // control phone users can't nest anything and a backpack's ignored Bulk never applies.
-              const opts = containerOptionsFor(inventory, content, id);
+              const opts = containerOptionsFor(inventory, content, id, feats);
               const currentId = inv.containerInstanceId;
               if (opts.length === 0 && !currentId) return null; // nothing to stow into and not stowed
               const currentName = currentId

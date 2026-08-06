@@ -78,6 +78,12 @@ function normProficiencies(p: unknown): Proficiencies {
     classDc: src.classDc ?? UNTRAINED,
     weaponOverrides: src.weaponOverrides,
     weaponGroups: src.weaponGroups,
+    // This function REBUILDS the proficiency object, so a field it forgets is one the character loses
+    // on every load. `firearmProf` was forgotten: a gunslinger's per-category firearm rank — the whole
+    // reason that field exists, "master with simple firearms while advanced firearms stay trained" —
+    // survived until the roster was next read and then quietly fell back to the plain category rank.
+    firearmProf: src.firearmProf,
+    weaponGroupRanks: Array.isArray(src.weaponGroupRanks) ? src.weaponGroupRanks : undefined,
   };
 }
 

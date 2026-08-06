@@ -1627,9 +1627,45 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         .map((id) => content.classFeatures[id]),
     ];
     let n = 0;
-    for (const src of sources) n += src?.spellSlotBonus?.cantrips ?? 0;
+    for (const src of sources) {
+      const b = src?.spellSlotBonus;
+      if (!b) continue;
+      // `cantripsAt` is a LADDER, not an accumulation: Flexible Spellcaster Dedication reads "four
+      // cantrips per day instead of three. At 4th level, you have five instead of four" — the later
+      // rung REPLACES the earlier one, so adding them would give six.
+      const reached = (b.cantripsAt ?? []).filter((s) => s.level <= level).sort((x, y) => y.level - x.level)[0];
+      n += reached?.cantrips ?? b.cantrips ?? 0;
+    }
     return n;
   })();
+  /**
+   * Class-archetype changes to the SPELL tables — Flexible Spellcaster trades slots for flexibility:
+   * "your number of spell slots per day don't advance from 2 to 3 spells at even levels" and "reduce
+   * the number of cantrips you gain from your class by 2".
+   *
+   * Computed here rather than in the class-archetype block further down, which runs long after the
+   * spellcasting entries have been built — a slot cap applied there would change nothing.
+   */
+  const archSpellMods = (() => {
+    let slotCap: number | undefined;
+    let cantripDelta = 0;
+    for (const id of Object.values(build.featPicks ?? {})) {
+      const ca = id ? content.feats[id as string]?.classArchetype : undefined;
+      if (!ca) continue;
+      const classes = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
+      if (!classes.includes(build.classId ?? '') && !classes.includes(build.classId2 ?? '')) continue;
+      if (ca.slotCap != null) slotCap = Math.min(slotCap ?? Infinity, ca.slotCap);
+      cantripDelta += ca.cantripDelta ?? 0;
+    }
+    return { slotCap, cantripDelta };
+  })();
+  /** Apply a class archetype's per-rank slot ceiling. The archetype's own text exempts restricted
+   *  slots ("the wizard's specialist school spells or the cleric's divine font spells"), and those
+   *  live in `restrictedSlots` / `font` rather than in this table, so capping here is exactly right. */
+  const capSlots = (counts: Record<number, number>): Record<number, number> =>
+    archSpellMods.slotCap == null
+      ? counts
+      : Object.fromEntries(Object.entries(counts).map(([r, n]) => [r, Math.min(n, archSpellMods.slotCap!)]));
 
   const skills = {} as Record<ProficiencyKey, ProficiencyRank>;
   for (const sk of SKILLS) skills[sk] = 'untrained';
@@ -2057,7 +2093,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const tradition = dragon?.tradition ?? grantOptions.find((o) => o.tradition)?.tradition ?? sp.tradition;
     // A subclass can override the slot progression (cleric Battle Creed uses the reduced two-rank table).
     const progression = subOption?.slotProgression ?? sp.progression;
-    const slotCounts = casterSlots(level, progression); // rank -> number of slots
+    const slotCounts = capSlots(casterSlots(level, progression)); // rank -> number of slots
     // Wizard School of Unified Magical Theory (Player Core): "No Curriculum" — it grants NO curriculum
     // spell slot and NO extra school cantrip (unlike every other arcane school). Instead it gives a bonus
     // L1 wizard class feat + one extra spellbook spell (feat/spellbook grants handled elsewhere). Gate the
@@ -2077,7 +2113,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       proficiency: 'trained',
       // Dedup so a subclass-granted cantrip (psychic conscious mind) doesn't duplicate a
       // player-picked one.
-      cantrips: [...new Set([...build.cantrips.slice(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonus), ...(grantedByRank[0] ?? [])])],
+      cantrips: [...new Set([...build.cantrips.slice(0, Math.max(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonus + archSpellMods.cantripDelta)), ...(grantedByRank[0] ?? [])])],
     };
     if (sp.repertoire) {
       // Spontaneous: a repertoire of known spells per rank + a slot pool.
@@ -2104,9 +2140,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       }
       // Summoner's Unlimited Signature Spells (level 3): every spell in the repertoire is a signature
       // spell, so the summoner can heighten any known spell to any slot rank it can cast.
-      const unlimitedSig = (cls.features ?? []).some(
-        (f) => f.featureId === 'unlimited-signature-spells' && f.level <= level,
-      );
+      //
+      // The bard's Ultimate Polymath (20) says exactly the same thing — "All of the spells in your
+      // repertoire are signature spells for you" — so it takes the same route rather than a second
+      // implementation. Without it a 20th-level bard was still capped at the one signature per rank
+      // the base feature grants.
+      const unlimitedSig =
+        (cls.features ?? []).some((f) => f.featureId === 'unlimited-signature-spells' && f.level <= level) ||
+        // Read from the PICKS: the built `feats` array does not exist yet at this point in the build,
+        // the same reason `cantripBonus` above reads them directly.
+        Object.values(build.featPicks ?? {}).includes('ultimate-polymath');
       if (unlimitedSig) entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
     } else if (cls.id === 'wizard' || cls.id === 'witch') {
       // LEARNED prepared casters — build.spells is a SPELLBOOK of known spells (the wizard's
@@ -2245,7 +2288,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   if (cls2?.spellcasting && build.classId2) {
     const sp2 = cls2.spellcasting;
     const tradition2 = subOption2?.tradition ?? sp2.tradition;
-    const slotCounts2 = casterSlots(level, subOption2?.slotProgression ?? sp2.progression);
+    const slotCounts2 = capSlots(casterSlots(level, subOption2?.slotProgression ?? sp2.progression));
     // The second class's chosen spells live on BuildState.{cantrips2,spells2,signatures2} — mirroring
     // the primary surface — so a builder edit rebuilds the second entry with its spells INTACT.
     const cantrips2 = build.cantrips2 ?? [];
@@ -2257,7 +2300,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       tradition: tradition2,
       keyAbility: sp2.keyAbility,
       proficiency: 'trained',
-      cantrips: [...new Set([...cantrips2.slice(0, cantripsKnown(cls2.id) + cantripBonus)])],
+      cantrips: [...new Set([...cantrips2.slice(0, Math.max(0, cantripsKnown(cls2.id) + cantripBonus + archSpellMods.cantripDelta))])],
     };
     const hasSchool2 = cls2.id === 'wizard'; // wizard curriculum: +1 prepared slot per castable rank
     if (sp2.repertoire) {
@@ -3010,9 +3053,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (ca) archCarriers.push({ name: content.classFeatures[o.id].name, ca });
   }
   for (const { name, ca } of archCarriers) {
-    // Only applies to a character OF that class (either class when dual-classed).
-    if (ca.classId !== build.classId && ca.classId !== build.classId2) continue;
-    archClassId = ca.classId;
+    // Only applies to a character OF that class (either class when dual-classed). `classId` may name
+    // SEVERAL — Flexible Spellcaster restructures every prepared caster — so match against the list
+    // and record which of the character's own classes it landed on; storing the array here would file
+    // the substituted features under a class named "wizard,cleric".
+    const archClasses = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
+    const hit = [build.classId, build.classId2].find((c) => c && archClasses.includes(c));
+    if (!hit) continue;
+    archClassId = hit;
     for (const id of ca.suppressFeatures ?? []) archSuppressed.add(id);
     for (const af of ca.addFeatures ?? []) if (af.level <= level && content.classFeatures[af.featureId]) archAddedFeatures.push(af);
     for (const [c, r] of Object.entries(ca.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], r);
@@ -3203,6 +3251,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // exactly what "whenever a class feature grants you expert or greater proficiency" means.
   {
     const wo: Record<string, ProficiencyRank> = { ...(proficiencies.weaponOverrides ?? {}) };
+    const wgr: NonNullable<Proficiencies['weaponGroupRanks']> = [...(proficiencies.weaponGroupRanks ?? [])];
     let touched = false;
     const bestCategory = (['simple', 'martial', 'advanced'] as WeaponCategory[])
       .map((c) => proficiencies.attacks[c])
@@ -3212,8 +3261,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // A feat's flat familiarity PLUS the one selected by the player's weapon choice (Viking
       // Shieldbearer: "trained in your choice of the battle axe or longsword").
       const chosen = fc.choice?.value ? g?.choiceGrants?.[fc.choice.value]?.weaponFamiliarity : undefined;
-      for (const wf of [g?.weaponFamiliarity, chosen]) {
-        if (!wf) continue;
+      // A record may carry several clauses — one printed sentence can map two sets differently
+      // ("bombs and martial firearms as simple weapons, and advanced firearms as martial weapons").
+      const clauses = [g?.weaponFamiliarity, chosen].flatMap((x) => (Array.isArray(x) ? x : x ? [x] : []));
+      for (const wf of clauses) {
         // The weapon may be one the player CHOSE on this feat or on another one (Unconventional
         // Weaponry records it; Unconventional Expertise advances "the weapon you chose" for it).
         let weapons = wf.weapons;
@@ -3243,9 +3294,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           wo[w] = maxRank(wo[w] ?? 'untrained', rank);
           touched = true;
         }
+        // A GROUP clause is stored as a group rule rather than expanded into per-weapon overrides:
+        // "bombs count as simple weapons" is 172 weapons today and however many the data gains later,
+        // and every one of them would show as its own row in the Details tab's proficiency list.
+        for (const group of wf.groups ?? []) {
+          const at = wgr.find((r) => r.group === group && r.category === wf.category);
+          if (at) at.rank = maxRank(at.rank, rank);
+          else wgr.push({ group, ...(wf.category ? { category: wf.category } : {}), rank });
+        }
       }
     }
     if (touched) proficiencies.weaponOverrides = wo;
+    if (wgr.length) proficiencies.weaponGroupRanks = wgr;
   }
 
   // Class-archetype proficiency CEILINGS, applied last so they clamp the finished ranks (a Warrior of

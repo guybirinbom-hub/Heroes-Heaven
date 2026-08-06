@@ -1265,6 +1265,7 @@ export function InventoryTab({
           onClose={() => setDetail(null)}
           onPlay={onPlay}
           inventory={character.inventory}
+          feats={character.feats}
           rationsDayTracking={rationsDayTracking}
           charLevel={character.level}
           activeModes={character.activeModes}

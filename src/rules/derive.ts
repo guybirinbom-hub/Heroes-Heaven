@@ -46,6 +46,7 @@ import type {
 import { PROFICIENCY_RANKS } from './types';
 import { conditionPenalty, conditionTypedMods, drainedHpLoss } from './conditions';
 import { DOMAIN_SPELLS } from './domains';
+import { applyCounterMods } from './counterMods';
 import { armorSpecEffect, armorSpecValue } from './armorSpec';
 import { modeNumberBonus, modeTypedMods, poolTypedMods, type TypedMod } from './modes';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
@@ -1112,6 +1113,24 @@ export interface FormulaScope {
   level: number;
   abilities?: AbilityScores;
   speeds?: Speeds;
+  /** Archetype id → how many feats from that archetype the character has. See archetypeFeatCounts. */
+  archetypeFeats?: Record<string, number>;
+}
+
+/**
+ * How many feats the character has from each archetype — the number behind "equal to your number of
+ * archetype class feats from the Hellknight archetype".
+ *
+ * The dedication counts itself: it IS an archetype class feat, so a lone Hellknight Dedication gives
+ * resistance 1 + 1 = 2, matching the printed progression.
+ */
+export function archetypeFeatCounts(c: Character, db: ContentDatabase): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const f of c.feats) {
+    const arch = db.feats[f.featId]?.archetype;
+    if (arch) out[arch] = (out[arch] ?? 0) + 1;
+  }
+  return out;
 }
 
 /** Substitute the supported `@actor.…` tokens for their numbers. Unknown tokens are left alone so
@@ -1126,6 +1145,16 @@ function substituteTokens(v: string, scope: FormulaScope): string {
   }
   if (scope.speeds) {
     out = out.replace(/@actor\.speeds?\.(land|fly|swim|climb|burrow)/g, (_m, k: keyof Speeds) => String(scope.speeds![k] ?? 0));
+  }
+  if (scope.archetypeFeats) {
+    // "@actor.archetypeFeats.hellknight". The imported data spells this as a Foundry flag path
+    // (`@actor.flags.system.hellknightArchetype.featCount`), which no token here could ever match, so
+    // all seven records carrying one resolved to 0 — Hellknight Dedication printed resistance 1 +
+    // your Hellknight feats and granted nothing at all. effect-backfill.json rewrites them to this
+    // token; see scripts/data/effect-backfill.json.
+    out = out.replace(/@actor\.archetypeFeats\.([a-z0-9-]+)/g, (_m, id: string) =>
+      String(scope.archetypeFeats![id] ?? 0),
+    );
   }
   return out;
 }
@@ -1418,7 +1447,7 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   const imm = new Set<string>();
   // Formulas may reference the character's level and ability modifiers (Wyrmbane Aura's Cha-mod
   // resistance). Speed-relative formulas belong to deriveSpeeds, which knows the resolved Speeds.
-  const scope: FormulaScope = { level: c.level, abilities: c.abilities };
+  const scope: FormulaScope = { level: c.level, abilities: c.abilities, archetypeFeats: archetypeFeatCounts(c, db) };
   /** Every contributor, kept even when it loses — see DefenseSource. `applied` is decided at the end,
    *  once the winning value per type is known. */
   const attribution = new Map<string, DefenseSource[]>();
@@ -2026,16 +2055,24 @@ const RAGE_DAMAGE: Record<string, { tiers: [number, number, number]; type?: stri
 };
 
 /** The Rage bonus-damage rider for a Strike, present ONLY while the character is currently raging (the
- *  Rage class-resource is on). Melee & unarmed only; the leading `*` in the note flags the condition. */
-function rageStrikeRider(c: Character, opts: { ranged: boolean; unarmed: boolean; weaponType: string }): { text: string; note: string } | null {
+ *  Rage class-resource is on). Melee & unarmed only — plus thrown weapons with Raging Thrower. The
+ *  leading `*` in the note flags the condition. */
+function rageStrikeRider(
+  c: Character,
+  opts: { ranged: boolean; unarmed: boolean; weaponType: string; thrown?: boolean },
+): { text: string; note: string } | null {
   if (!c.classResources?.rage) return null; // not currently raging → no bonus
   const isBarb = c.classId === 'barbarian';
   const isArchetype = !isBarb && c.feats.some((f) => f.featId === 'barbarian-dedication');
   if (!isBarb && !isArchetype) return null;
-  if (opts.ranged) return null; // Rage never applies to ranged Strikes
+  // Rage never applies to ranged Strikes — except that Raging Thrower extends it to THROWN weapons
+  // ("You apply the additional damage from Rage to your thrown weapon attacks"). A thrown weapon is a
+  // ranged Strike here, so it fell into the blanket refusal and the feat did nothing.
+  const thrownRage = opts.ranged && opts.thrown && c.feats.some((f) => f.featId === 'raging-thrower');
+  if (opts.ranged && !thrownRage) return null;
   let value = 2;
   let type = opts.weaponType;
-  let note = '* while raging (melee & unarmed)';
+  let note = thrownRage ? '* while raging (thrown)' : '* while raging (melee & unarmed)';
   if (isBarb) {
     const inst = RAGE_DAMAGE[c.subclassId ?? ''];
     if (inst) {
@@ -2368,8 +2405,17 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // proficiency (alchemist bombs, gunslinger firearms — these beat the bare category rank).
   const rank = betterRank(
     betterRank(
-      betterRank(c.proficiencies.attacks[w.category], c.proficiencies.weaponOverrides?.[w.id]),
-      w.group ? c.proficiencies.weaponGroups?.[w.group] : undefined,
+      betterRank(
+        betterRank(c.proficiencies.attacks[w.category], c.proficiencies.weaponOverrides?.[w.id]),
+        w.group ? c.proficiencies.weaponGroups?.[w.group] : undefined,
+      ),
+      // "Treat bombs and martial firearms as simple weapons" — by group, optionally narrowed to the
+      // weapon's own printed category. An entry with no category covers the whole group.
+      w.group
+        ? (c.proficiencies.weaponGroupRanks ?? [])
+            .filter((r) => r.group === w.group && (!r.category || r.category === w.category))
+            .reduce<ProficiencyRank | undefined>((best, r) => betterRank(best ?? 'untrained', r.rank), undefined)
+        : undefined,
     ),
     // Gunslinger "firearms & crossbows" proficiency — by category, only for a firearm/crossbow weapon.
     w.group === 'firearm' || w.group === 'crossbow' ? c.proficiencies.firearmProf?.[w.category] : undefined,
@@ -2466,7 +2512,14 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     category: w.category,
     dieFaces: Number(String(w.damage.die).replace('d', '')) || 0,
   });
-  const rageRider = rageStrikeRider(c, { ranged, unarmed: false, weaponType: w.damage.type });
+  const rageRider = rageStrikeRider(c, {
+    ranged,
+    unarmed: false,
+    weaponType: w.damage.type,
+    // The trait ships as "thrown" on a melee weapon you may hurl and "thrown-20-ft" where a range is
+    // printed, so match the prefix rather than the bare word.
+    thrown: w.traits.some((t) => t === 'thrown' || t.startsWith('thrown-')),
+  });
   if (rageRider) conditionalDamage.push(rageRider);
 
   return {
@@ -3138,16 +3191,36 @@ export interface ContainerLoad {
   used: number;
   capacity?: number;
 }
+/** A container the rules call "magical or extradimensional storage" — Pack Rat explicitly excludes it,
+ *  and 44 of the 52 containers in the data are one. */
+const MAGICAL_STORAGE = new Set(['magical', 'extradimensional']);
+
 export function containerLoads(c: Character, db: ContentDatabase): Record<string, ContainerLoad> {
   const { effBulk, childrenOf } = makeEffBulk(c, db);
   const loads: Record<string, ContainerLoad> = {};
+  // Pack Rat and its kin: "you can fit an additional 50% of the listed Bulk capacity into MUNDANE
+  // storage containers". The printed capacity came straight off the item record with nothing able to
+  // change it, so the feat did nothing at all.
+  //
+  // `?? []` because containerOptionsFor calls this with `{ inventory } as Character` — a deliberate
+  // shortcut for callers that have no full character (the item-detail popup), documented on that
+  // function. A bare `c.feats.map` threw for every one of them.
+  const ownedIds = (c.feats ?? []).map((f) => f.featId);
   for (const inv of c.inventory) {
     const item = db.items[inv.itemId];
     if (item?.itemType === 'container') {
       // A direct child contributes its effective Bulk: a leaf item's raw Bulk, or a nested
       // container's own Bulk plus its (reduced) contents — so a loaded sub-container counts fully.
       const used = (childrenOf[inv.instanceId] ?? []).reduce((s, k) => s + effBulk(k, new Set([inv.instanceId])), 0);
-      loads[inv.instanceId] = { used: Math.round(used * 10) / 10, capacity: item.capacity?.bulk };
+      const printed = item.capacity?.bulk;
+      const mundane = !(item.traits ?? []).some((t) => MAGICAL_STORAGE.has(t));
+      const capacity =
+        printed == null || !mundane
+          ? printed
+          : // Rounded to a tenth rather than a whole number: applyCounterMods rounds to an integer,
+            // which is right for a count of snares and wrong for Bulk, where 0.5 is a real value.
+            Math.round(applyCounterMods('container-capacity', printed * 10, ownedIds)) / 10;
+      loads[inv.instanceId] = { used: Math.round(used * 10) / 10, capacity };
     }
   }
   return loads;
@@ -3171,9 +3244,18 @@ export interface ContainerOption {
  *  itself and any of its own descendants (which would form a cycle), each flagged with whether the
  *  item fits the remaining capacity. Mirrors InventoryTab's drag `canDrop`/`fitsIn` rules so a
  *  tap-to-stow control agrees with drag-and-drop. Takes the raw inventory so non-sheet callers (the
- *  item-detail popup) don't need a full Character — the derive helpers only read `.inventory`. */
-export function containerOptionsFor(inventory: InventoryItem[], db: ContentDatabase, instanceId: string): ContainerOption[] {
-  const c = { inventory } as Character;
+ *  item-detail popup) don't need a full Character — the derive helpers only read `.inventory`.
+ *
+ *  `feats` is optional and exists for one reason: capacity is no longer purely the item's printed
+ *  number (Pack Rat adds 50% to mundane containers). Pass them and this control agrees with the
+ *  Inventory tab; omit them and it falls back to the printed capacity. */
+export function containerOptionsFor(
+  inventory: InventoryItem[],
+  db: ContentDatabase,
+  instanceId: string,
+  feats: Character['feats'] = [],
+): ContainerOption[] {
+  const c = { inventory, feats } as Character;
   const inv = inventory.find((i) => i.instanceId === instanceId);
   if (!inv) return [];
   const { containerIds } = childrenByContainer(c, db);

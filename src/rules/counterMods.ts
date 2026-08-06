@@ -38,6 +38,11 @@ export const COUNTER_MODS: Record<string, CounterMod[]> = {
   // "You gain an additional ikon."
   'additional-ikon': [{ counter: 'ikon-picks', op: 'add', value: 1 }],
   'second-ikon': [{ counter: 'ikon-picks', op: 'add', value: 1 }],
+  // Pack Rat: "You can fit an additional 50% of the listed Bulk capacity into mundane storage
+  // containers." The printed examples — 6 Bulk in a backpack (4), 12 in a chest (8) — are exactly
+  // ×1.5, and MUNDANE is enforced at the call site: the same sentence excludes magical and
+  // extradimensional storage by name.
+  'pack-rat': [{ counter: 'container-capacity', op: 'mul', value: 1.5 }],
 };
 
 /**

@@ -233,6 +233,16 @@ interface ContentBase {
    * declared here rather than left as an untyped extra that typing could never catch.
    */
   note?: string;
+  /**
+   * Actions this record HANDS the character, by `content.actions` id — "You also gain the Warding
+   * Shift action".
+   *
+   * The encounter action list is built from records that ARE an action (whose own `actionCost` is
+   * 1–3 actions / reaction / free / variable). A PASSIVE record that grants one contributed nothing:
+   * the action was described inside the granting record's text and sat in content.actions unowned, so
+   * it never reached the list a player scans for something to do on their turn.
+   */
+  grantsActions?: string[];
   /** App-level link to the user Homebrew source that authored this entry (groups it in the Homebrew
    *  manager). Absent on imported/seed content. Ignored by the rules engine. */
   homebrewSourceId?: string;
@@ -674,8 +684,11 @@ export interface DefenseGrants {
 
 /** A class archetype: taking its dedication suppresses class features and substitutes replacements. */
 export interface ClassArchetype {
-  /** The class this archetype restructures (it only applies to a character of that class). */
-  classId: string;
+  /** The class this archetype restructures (it only applies to a character of that class). An ARRAY
+   *  where one archetype restructures several: Flexible Spellcaster alters "your spellcasting class
+   *  feature (such as Arcane Spellcasting for the wizard or Divine Spellcasting for the cleric)",
+   *  which is every prepared caster rather than one class. */
+  classId: string | string[];
   /** Class-feature ids the archetype REMOVES (Wizard's Arcane Bond, a Champion's armor training…). */
   suppressFeatures?: string[];
   /** Class features the archetype ADDS in their place, at the given character levels. */
@@ -688,6 +701,19 @@ export interface ClassArchetype {
    *  so a removal needs its own lane. Applied after all class advancement. */
   armorCap?: Partial<Record<ArmorCategory, ProficiencyRank>>;
   weaponCap?: Partial<Record<WeaponCategory, ProficiencyRank>>;
+  /**
+   * A ceiling on spell slots PER RANK — Flexible Spellcaster's "your number of spell slots per day
+   * don't advance from 2 to 3 spells at even levels", which is the price it pays for casting any
+   * prepared spell from any slot.
+   *
+   * Applies to the class slot table only. The archetype's own text exempts restricted slots ("the
+   * wizard's specialist school spells or the cleric's divine font spells"), and those already live in
+   * `restrictedSlots` / `font` rather than in that table, so nothing extra is needed to spare them.
+   */
+  slotCap?: number;
+  /** A change to the number of cantrips the CLASS grants ("reduce the number of cantrips you gain
+   *  from your class by 2"). Negative to reduce. Feats add theirs on top via `spellSlotBonus`. */
+  cantripDelta?: number;
   /** A short note shown on the sheet describing what the archetype changed. */
   note?: string;
 }
@@ -742,6 +768,14 @@ export interface SpellSlotBonus {
    * game, did nothing whatsoever.
    */
   cantrips?: number;
+  /**
+   * Cantrip counts that arrive at LATER levels, as a ladder — Flexible Spellcaster Dedication reads
+   * "four cantrips per day instead of three. At 4th level, you have five instead of four".
+   *
+   * The highest rung the character has reached REPLACES `cantrips` rather than adding to it, because
+   * the printed wording replaces ("five instead of four"), and accumulating would give six.
+   */
+  cantripsAt?: { level: number; cantrips: number }[];
   /**
    * Slots at the character's CURRENT highest castable rank (Gifted Power: "an extra spell slot of
    * your highest rank"). The rank moves with level, so `byRank` cannot say it and `perRank` would
@@ -2581,6 +2615,17 @@ export interface Proficiencies {
    *  firearm or crossbow group, so a gunslinger can be e.g. master with simple firearms while advanced firearms
    *  stay trained — which a single group rank can't express. Wins if higher than the plain category rank. */
   firearmProf?: Partial<Record<WeaponCategory, ProficiencyRank>>;
+  /**
+   * "Treat these weapons as if they were <category> weapons", by weapon GROUP and (optionally) the
+   * weapon's own printed category. Wins if higher than the plain category rank.
+   *
+   * Explosive Savant needs all three axes at once — bombs and MARTIAL firearms count as simple, while
+   * ADVANCED firearms count only as martial. `weaponGroups` is one rank for a whole group, so it would
+   * hand advanced firearms the simple rank the feat withholds; `firearmProf` splits by category but
+   * covers crossbows too, which the feat never mentions; and `weaponOverrides` would have to name all
+   * 292 weapons, flooding the proficiency list on the Details tab with a row each.
+   */
+  weaponGroupRanks?: { group: string; category?: WeaponCategory; rank: ProficiencyRank }[];
 }
 
 /** A feat the character has taken, and the slot it filled. */

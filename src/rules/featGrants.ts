@@ -54,6 +54,49 @@ export function featUpgradesAtLevel(featIds: Iterable<string>, level: number): {
   return out;
 }
 
+/**
+ * One "treat these weapons as if they were <category>" clause. A record may carry SEVERAL, because
+ * one printed sentence often maps two sets differently: Explosive Savant treats bombs and MARTIAL
+ * firearms as simple weapons and ADVANCED firearms as martial, which a single clause cannot say.
+ */
+export interface WeaponFamiliarity {
+  /** Named weapons by item id. */
+  weapons: string[];
+  /**
+   * …or every weapon in these GROUPS (bomb, firearm, sword…). Ancestry familiarity names a handful of
+   * weapons, but a group clause covers 172 bombs and 120 firearms — a list nobody would maintain by
+   * hand, and one that would go stale the moment the data gained another bomb.
+   */
+  groups?: string[];
+  /** Narrow `groups` to weapons of this printed category, so the two halves of "martial firearms as
+   *  simple, advanced firearms as martial" are two clauses over the same group. */
+  category?: WeaponCategory;
+  /**
+   * …or the weapon the player CHOSE, named by the `choice.flag` that recorded it.
+   *
+   * Unconventional Weaponry picks a weapon; Unconventional Expertise then advances "the weapon you
+   * chose for Unconventional Weaponry" — a different feat entirely. `weapons` is a static list, so
+   * neither could name it, and the base feat shipped marked "Recorded only". Resolved against the
+   * built feats, so the answer travels between the two.
+   */
+  weaponFromChoiceFlag?: string;
+  /**
+   * "for the purpose of proficiency, you treat it as a simple weapon" — and for the advanced-weapon
+   * branch, "as a martial weapon". One category DOWN, floored at simple, decided by the chosen
+   * weapon's own category rather than written out per feat.
+   */
+  treatAsLowerCategory?: boolean;
+  rank?: ProficiencyRank;
+  mirrorBestCategory?: boolean;
+  /**
+   * "…as if they were MARTIAL weapons" (Advanced Bow Training, Advanced Monastic Weaponry, …) —
+   * mirrors that ONE category's rank rather than the best of the three. `mirrorBestCategory` is
+   * wrong for these: a cleric with Archer Dedication is trained in martial but expert in simple,
+   * so the best-of rule would make their advanced bows expert when the feat says martial.
+   */
+  mirrorCategory?: WeaponCategory;
+}
+
 export interface FeatGrant {
   /** Armor category → minimum rank granted (e.g. Sentinel Dedication: light+medium trained). */
   armor?: Partial<Record<ArmorCategory, ProficiencyRank>>;
@@ -113,33 +156,7 @@ export interface FeatGrant {
    * deriveStrike already maxes against the weapon's own category rank — so this only ever helps
    * weapons the category doesn't already cover (advanced ancestry weapons, limited-expertise classes).
    */
-  weaponFamiliarity?: {
-    weapons: string[];
-    /**
-     * …or the weapon the player CHOSE, named by the `choice.flag` that recorded it.
-     *
-     * Unconventional Weaponry picks a weapon; Unconventional Expertise then advances "the weapon you
-     * chose for Unconventional Weaponry" — a different feat entirely. `weapons` is a static list, so
-     * neither could name it, and the base feat shipped marked "Recorded only". Resolved against the
-     * built feats, so the answer travels between the two.
-     */
-    weaponFromChoiceFlag?: string;
-    /**
-     * "for the purpose of proficiency, you treat it as a simple weapon" — and for the advanced-weapon
-     * branch, "as a martial weapon". One category DOWN, floored at simple, decided by the chosen
-     * weapon's own category rather than written out per feat.
-     */
-    treatAsLowerCategory?: boolean;
-    rank?: ProficiencyRank;
-    mirrorBestCategory?: boolean;
-    /**
-     * "…as if they were MARTIAL weapons" (Advanced Bow Training, Advanced Monastic Weaponry, …) —
-     * mirrors that ONE category's rank rather than the best of the three. `mirrorBestCategory` is
-     * wrong for these: a cleric with Archer Dedication is trained in martial but expert in simple,
-     * so the best-of rule would make their advanced bows expert when the feat says martial.
-     */
-    mirrorCategory?: WeaponCategory;
-  };
+  weaponFamiliarity?: WeaponFamiliarity | WeaponFamiliarity[];
   /**
    * The feat grants a BONUS skill feat the player picks (Rogue Dedication: "You gain a skill feat").
    * Injected as an extra level-<feat's level> skill-feat slot; the pick is stored in
@@ -263,6 +280,18 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
     weaponFamiliarity: { weapons: [], weaponFromChoiceFlag: 'unconventionalWeapon', mirrorBestCategory: true },
   },
   'advanced-bow-training': { weaponFamiliarity: { weapons: ['daikyu', 'hongali-hornbow', 'phalanx-piercer'], mirrorCategory: 'martial' } },
+  /* "You have familiarity with bombs and firearms; for the purposes of proficiency you treat bombs and
+     martial firearms as simple weapons, and advanced firearms as martial weapons." Three clauses over
+     two groups — 172 bombs and 120 firearms, which is why this reads by group rather than by name.
+     The advanced clause is separate and deliberately weaker: mirroring `simple` across the whole
+     firearm group would hand advanced firearms the simple rank the feat withholds. */
+  'explosive-savant': {
+    weaponFamiliarity: [
+      { weapons: [], groups: ['bomb'], mirrorCategory: 'simple' },
+      { weapons: [], groups: ['firearm'], category: 'martial', mirrorCategory: 'simple' },
+      { weapons: [], groups: ['firearm'], category: 'advanced', mirrorCategory: 'martial' },
+    ],
+  },
   'advanced-monastic-weaponry': { weaponFamiliarity: { weapons: ['butterfly-sword', 'feng-huo-lun', 'heavenly-rolling-flames', 'hook-sword'], mirrorCategory: 'martial' } },
   'advanced-firearm-familiarity': {
     weaponFamiliarity: {
