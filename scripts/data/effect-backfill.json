@@ -89386,5 +89386,32 @@
     "id": "wrecker",
     "field": "edition",
     "value": "remaster"
+  },
+  {
+    "category": "feats",
+    "id": "shattered-sacrament",
+    "field": "spellSlotBonus",
+    "value": {
+      "entryId": "halcyon-speaker-dedication-casting",
+      "cantrips": 1,
+      "byRank": {
+        "1": 1
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "shattered-sacrament",
+    "field": "note",
+    "value": "When you cast a halcyon spell you may choose divine instead of arcane or primal — pick the tradition at the table; the entry itself stays on its chosen list."
+  },
+  {
+    "category": "feats",
+    "id": "cascade-bearers-spellcasting",
+    "field": "spellSlotBonus",
+    "value": {
+      "entryId": "magaambyan-attendant-dedication-casting",
+      "cantrips": 1
+    }
   }
 ]

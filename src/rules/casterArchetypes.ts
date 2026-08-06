@@ -53,6 +53,22 @@ export interface CasterArchetype {
   /** Custom proficiency advancement: the feat ids that raise spell proficiency to expert / master. */
   profExpertFeat?: string;
   profMasterFeat?: string;
+  /**
+   * Feats that WIDEN the tradition choice. Cascade Bearer's Spellcasting lets a Magaambyan pick
+   * halcyon spells "from the divine or occult spell lists in addition to the arcane or primal".
+   * `traditionOptions` alone is fixed at the dedication and cannot grow.
+   */
+  traditionOptionFeats?: { featId: string; add: Tradition[] }[];
+}
+
+/** The tradition list an archetype offers, once its widening feats are counted. */
+export function archetypeTraditionOptions(a: Tier | ActiveCasterArchetype): Tradition[] | undefined {
+  const { config, taken } = asArch(a);
+  if (!config.traditionOptions) return undefined;
+  const out = [...config.traditionOptions];
+  for (const w of config.traditionOptionFeats ?? [])
+    if (taken.has(w.featId)) for (const t of w.add) if (!out.includes(t)) out.push(t);
+  return out;
 }
 
 export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
@@ -129,6 +145,12 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
     traditionOptions: ['arcane', 'primal'],
     keyByTradition: true,
     innateCantrip: true,
+    // Cascade Bearer's Spellcasting is what turns the Attendant from a one-cantrip innate caster into
+    // a halcyon caster: "You gain a halcyon cantrip and a halcyon 1st-rank spell", and the halcyon
+    // list widens to divine and occult. The extra cantrip rides on the feat's own spellSlotBonus.
+    customUnlocks: [{ rank: 1, level: 10, featId: 'cascade-bearers-spellcasting' }],
+    repertoire: true,
+    traditionOptionFeats: [{ featId: 'cascade-bearers-spellcasting', add: ['divine', 'occult'] }],
   },
   // Halcyon Speaker: spontaneous "halcyon" caster (spells shared by the arcane + primal lists). The
   // DEDICATION grants 2 cantrips + a 1st-rank slot at L6; Initiate (10) adds ranks 2-3, Adept (14) adds
@@ -288,11 +310,15 @@ function asArch(a: Tier | ActiveCasterArchetype): ActiveCasterArchetype {
 export function archetypeSlots(level: number, a: Tier | ActiveCasterArchetype): Record<number, number> {
   const arch = asArch(a);
   const out: Record<number, number> = {};
-  if (arch.config.innateCantrip) return out;
+  // customUnlocks is tested FIRST: the Magaambyan Attendant is an innate-cantrip archetype that gains
+  // a real 1st-rank slot from Cascade Bearer's Spellcasting, and the early return below would have
+  // discarded it before the schedule was ever read.
   if (arch.config.customUnlocks) {
     for (const u of arch.config.customUnlocks) if (arch.taken.has(u.featId) && level >= u.level) out[u.rank] = 1;
     return out;
   }
+  // An innate-cantrip archetype with no schedule of its own has no slots at all.
+  if (arch.config.innateCantrip) return out;
   for (const [rank, minLevel, t] of RANK_UNLOCKS) if (arch.tier[t] && level >= minLevel) out[rank] = 1;
   return out;
 }

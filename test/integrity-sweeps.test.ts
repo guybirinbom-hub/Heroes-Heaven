@@ -135,6 +135,30 @@ describe('a data field nothing reads', () => {
   });
 });
 
+describe('a cantrip grant that quietly grants slots', () => {
+  it('a cantrips-only spellSlotBonus adds no spell slots', () => {
+    // `perRank ?? 1` defaulted a bonus with no rank information to ONE SLOT AT EVERY RANK, so Cantrip
+    // Expansion — among the most-taken feats in the game — and Cantrip Casting each handed their
+    // owner a whole extra slot per rank on top of the cantrips they print.
+    const cantripsOnly: string[] = [];
+    for (const cat of ['feats', 'classFeatures', 'items', 'heritages'] as const) {
+      for (const [id, rec] of Object.entries(db[cat] ?? {})) {
+        const b = (rec as { spellSlotBonus?: Record<string, unknown> }).spellSlotBonus;
+        if (b?.cantrips && !b.byRank && !b.byRankAt && b.perRank === undefined && !b.highestOnly && !b.restricted) cantripsOnly.push(id);
+      }
+    }
+    expect(cantripsOnly.length, 'no cantrips-only record to test with').toBeGreaterThan(0);
+    const slotsOf = (c: ReturnType<typeof build>) =>
+      JSON.stringify(c.spellcasting.find((e) => e.type === 'prepared' || e.type === 'spontaneous')?.slots);
+    const base = build('wizard', 12);
+    for (const id of cantripsOnly) {
+      // Level 12 so a class feat slot at 12 exists for any of them.
+      const withIt = build('wizard', 12, { featPicks: { '12:class:0': id } } as never);
+      expect(slotsOf(withIt), id).toEqual(slotsOf(base));
+    }
+  });
+});
+
 describe('content that a data regen would silently delete', () => {
   it('every mode in core.json exists in a source file', () => {
     // `npm run data` carries hand-authored buckets from the FROZEN Foundry backup, which has no modes

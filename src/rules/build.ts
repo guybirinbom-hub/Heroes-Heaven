@@ -61,7 +61,7 @@ import { FEAT_CANTRIP_GRANTS } from './featCantripGrants';
 import { grantForSpellPick } from './spellChoice';
 import { DOMAIN_SPELLS } from './domains';
 import { initialClassResources } from './classResources';
-import { activeCasterArchetype, archetypeProficiency, archetypeSlots } from './casterArchetypes';
+import { activeCasterArchetype, archetypeProficiency, archetypeSlots, archetypeTraditionOptions } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { coinsToCp, cpToCoins, startingWealthGp } from './wealth';
 import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells } from './spellcasting';
@@ -3299,6 +3299,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       }
       continue;
     }
+    // A bonus that grants ONLY cantrips grants only cantrips. `perRank ?? 1` below defaults to one
+    // slot at every rank, so Cantrip Expansion — one of the most-taken feats in the game — and
+    // Cantrip Casting were each quietly handing their owner a whole extra slot at every rank they
+    // could cast. The cantrip count itself is read by the builder's cantrip cap, not here.
+    if (bonus.cantrips && bonus.perRank === undefined && !bonus.highestOnly) continue;
     const perRank = bonus.perRank ?? 1;
     const ranks = Object.keys(entry.slots ?? entry.prepared ?? {}).map(Number).filter((r) => r > 0).sort((a, b) => a - b);
     // "An extra spell slot of your highest rank." The rank moves with level, so byRank cannot say it
@@ -3368,16 +3373,51 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const srcTradition = twoCaster ? src?.tradition ?? null : build.archetypeTradition ?? null;
       const srcKey = twoCaster ? src?.keyAbility ?? null : build.archetypeKeyAbility ?? null;
       const slots = archetypeSlots(level, arch);
+      // "You gain a halcyon cantrip and a 1st-rank halcyon spell" (Shattered Sacrament, Cascade
+      // Bearer's Spellcasting) — extra spells KNOWN in the archetype entry, not extra casts.
+      //
+      // These have to land BEFORE the entry is built. The generic slot applier runs ~200 lines later
+      // and only raises `slots[r].max`; a spontaneous archetype's repertoire is sliced from `slots` at
+      // construction, so a bonus arriving afterwards gave the character a slot with nothing that could
+      // go in it. Folding it in here moves the pool and the known list together.
+      // It also replaces a SECOND application that used to run after the entry was built. Applying
+      // the same bonuses in both places double-granted, and that later pass had the cantrips-only
+      // fall-through too.
+      const archEntryId = `${arch.dedicationId}-casting`;
+      let archCantripBonus = 0;
+      for (const fc of feats) {
+        const b = content.feats[fc.featId]?.spellSlotBonus;
+        if (b?.entryId !== archEntryId) continue;
+        archCantripBonus += b.cantrips ?? 0;
+        const at = Object.keys(slots).map(Number).filter((r) => r > 0).sort((x, y) => x - y);
+        if (b.byRank) {
+          for (const [rank, n] of Object.entries(b.byRank)) {
+            const r = Number(rank);
+            if (Number.isFinite(r) && r > 0 && n > 0) slots[r] = (slots[r] ?? 0) + n;
+          }
+        } else if (b.highestOnly) {
+          const top = at[at.length - 1];
+          if (top != null) slots[top] += b.perRank ?? 1;
+        } else if (b.perRank !== undefined || !b.cantrips) {
+          // …and a cantrips-only bonus stops here: defaulting it to one slot per rank is what made
+          // Cantrip Expansion silently generous.
+          const eligible = b.exceptHighest ? at.slice(0, Math.max(0, at.length - b.exceptHighest)) : at;
+          for (const r of eligible) slots[r] += b.perRank ?? 1;
+        }
+      }
       // Summoner: the tradition follows the chosen eidolon TYPE, not a free pick.
       const eidolonTradition = arch.config.eidolonTradition
         ? content.classes.summoner?.subclass?.options.find((o) => o.id === build.archetypeEidolonType)?.tradition
         : undefined;
+      // Cascade Bearer's Spellcasting widens the halcyon list to divine and occult, so the offered
+      // set is not the dedication's fixed one.
+      const archTraditions = archetypeTraditionOptions(arch);
       const archTradition: Tradition =
         eidolonTradition ??
         (arch.config.choiceTradition
-          ? arch.config.traditionOptions?.includes(srcTradition as Tradition)
+          ? archTraditions?.includes(srcTradition as Tradition)
             ? (srcTradition as Tradition)
-            : srcTradition && !arch.config.traditionOptions
+            : srcTradition && !archTraditions
               ? srcTradition
               : arch.config.tradition
           : arch.config.tradition);
@@ -3396,13 +3436,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         tradition: archTradition,
         keyAbility: archKey,
         proficiency: archetypeProficiency(arch),
-        cantrips: srcCantrips.slice(0, arch.config.cantrips),
+        cantrips: srcCantrips.slice(0, arch.config.cantrips + archCantripBonus),
         ...(arch.dedicationId === 'bloodrager-dedication'
           ? { note: 'Bloodrager: pick 2 cantrips (≥1 needing a spell attack). While you rage they gain the rage trait; casting one makes you drained 1 (reduce only via Harvest Blood).' }
           : {}),
       };
-      if (arch.config.innateCantrip) {
+      if (arch.config.innateCantrip && !Object.keys(slots).length) {
         // Magaambyan Attendant: the chosen cantrip(s) are cast as innate spells — no spell slots.
+        // Once Cascade Bearer's Spellcasting grants a 1st-rank halcyon slot the Attendant is a real
+        // caster, and falls through to the spontaneous branch below, cantrips and all.
         spellcasting.push({ ...baseEntry, name: `${cap(archTradition)} innate (archetype)`, type: 'innate', repertoire: {} });
       } else if (arch.config.innateRanked) {
         // Captivator: one LEARNED spell of each unlocked rank, cast as an occult innate spell 1/day —
@@ -3478,25 +3520,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           archEntry.font.allowed = [...new Set([...(archEntry.font.allowed ?? []), ...spells])];
         }
       }
-      if (archEntry) {
-        for (const bonus of spellSlotBonuses) {
-          if (bonus.entryId !== baseEntry.id) continue;
-          const bump = (r: number, n: number) => {
-            if (archEntry.slots?.[r]) archEntry.slots[r].max += n;
-            if (archEntry.prepared?.[r]) archEntry.prepared[r].push(...Array.from({ length: n }, () => ({ spellId: null, expended: false })));
-          };
-          const ranks = Object.keys(archEntry.slots ?? archEntry.prepared ?? {}).map(Number).filter((r) => r > 0).sort((a, b) => a - b);
-          if (bonus.byRank) {
-            for (const [rank, n] of Object.entries(bonus.byRank)) if (Number(rank) > 0 && n > 0) bump(Number(rank), n);
-          } else if (bonus.highestOnly) {
-            const top = ranks[ranks.length - 1];
-            if (top != null) bump(top, bonus.perRank ?? 1);
-          } else {
-            const eligible = bonus.exceptHighest ? ranks.slice(0, Math.max(0, ranks.length - bonus.exceptHighest)) : ranks;
-            for (const r of eligible) bump(r, bonus.perRank ?? 1);
-          }
-        }
-      }
+      // Slot bonuses aimed at this entry are applied BEFORE it is built (see `archCantripBonus`
+      // above), so a spontaneous archetype's repertoire is sliced from the raised counts and the
+      // extra slot has something that can go in it. Re-applying them here as well double-granted.
     }
   }
 

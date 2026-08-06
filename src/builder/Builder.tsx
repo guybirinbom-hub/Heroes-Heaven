@@ -35,7 +35,7 @@ import {
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
 import { classFeatureIdsOwned, domainPoolFor } from '../rules/derive';
 import { signaturesAt } from '../rules/build';
-import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes';
+import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS } from '../rules/featFeatGrants';
@@ -570,7 +570,7 @@ export function Builder({
               <span className="spr-count">your choice</span>
             </div>
             <div className="spr-chips">
-              {(archCaster.config.traditionOptions ?? (['arcane', 'divine', 'occult', 'primal'] as const)).map((t) => (
+              {(archetypeTraditionOptions(archCaster) ?? (['arcane', 'divine', 'occult', 'primal'] as const)).map((t) => (
                 <button key={t} type="button" className={'inv-toggle' + (tradition === t ? ' on' : '')} onClick={() => actions.setArchetypeTradition(t)}>
                   {cap(t)}
                 </button>
