@@ -43,7 +43,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, InitiativeCard, SnareFormulasCard, SourcesCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { DescriptionModal } from '../sheet/DescriptionModal';
@@ -989,6 +989,7 @@ export function Builder({
                   <div className="lvl-cards">
                     <SkillEditor build={build} actions={actions} content={content} />
                     <LanguageEditor build={build} actions={actions} content={content} />
+                    <InitiativeCard build={build} actions={actions} content={content} />
                   </div>
                 </div>
                 {/* Per-character selections unlocked by a Setup toggle (Dual Class second class, ABP
