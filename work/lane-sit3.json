@@ -1,0 +1,623 @@
+[
+ {
+  "collection": "feats",
+  "id": "tweak-appearances",
+  "name": "Tweak Appearances",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "incredible-scout",
+  "name": "Incredible Scout",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "aegis-for-the-innocent",
+  "name": "Aegis for the Innocent",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "decree-of-prosperity",
+  "name": "Decree of Prosperity",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "living-god",
+  "name": "Living God",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-distant-grasp",
+  "name": "The Distant Grasp",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "swim-fins",
+  "name": "Swim Fins",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "addiction-suppressant",
+  "name": "Addiction Suppressant",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir",
+  "name": "Sixfingers Elixir",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fixer",
+  "name": "Fixer",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "skeptics-elixir",
+  "name": "Skeptic's Elixir",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "malleable-mixture",
+  "name": "Malleable Mixture",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "exploration-lens",
+  "name": "Exploration Lens",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "red-rib-gill-mask",
+  "name": "Red-Rib Gill Mask",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sense-dulling-hood",
+  "name": "Sense-Dulling Hood",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant",
+  "name": "Affliction Suppressant",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen",
+  "name": "Bendy-Arm Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen",
+  "name": "Deadweight Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen",
+  "name": "Sanguine Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "execution-powder",
+  "name": "Execution Powder",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shot",
+  "name": "Magnetic Shot",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom",
+  "name": "Bewitching Bloom",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "corruption-cassock",
+  "name": "Corruption Cassock",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom",
+  "name": "Words of Wisdom",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "globe-of-shrouds",
+  "name": "Globe of Shrouds",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "disguise-kit-elite-cosmetics",
+  "name": "Disguise Kit (Elite Cosmetics)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "alacritous-horseshoes-greater",
+  "name": "Alacritous Horseshoes (Greater)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "midnight-milk",
+  "name": "Midnight Milk",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "crimson-godsblood-serum",
+  "name": "Crimson Godsblood Serum",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge",
+  "name": "Essence Forge",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "psyche-salts",
+  "name": "Psyche Salts",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "champions-laurels",
+  "name": "Champions Laurels",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "strand-of-the-seven-births",
+  "name": "Strand of the Seven Births",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "oil-of-corpse-restoration",
+  "name": "Oil of Corpse Restoration",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "paradigm-cube",
+  "name": "Paradigm Cube",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "privacy-ward-fulu",
+  "name": "Privacy Ward Fulu",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "conrasu-coin",
+  "name": "Conrasu Coin",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "signifers-mask",
+  "name": "Signifer's Mask",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "hopeful-athamaru",
+  "name": "Hopeful Athamaru",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

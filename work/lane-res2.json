@@ -1,0 +1,21 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "patron-theme",
+  "name": "Patron Theme",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

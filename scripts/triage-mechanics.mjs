@@ -7,13 +7,14 @@
  * and nothing is silently skipped. Records with NO detected signal are reported too, with a count,
  * so "we looked at everything" is a checkable statement rather than a promise.
  *
- *   node scripts/triage-mechanics.mjs            # summary
- *   node scripts/triage-mechanics.mjs --json     # full per-record ledger (large)
- *   node scripts/triage-mechanics.mjs --lane choice --out work/lane-choice.json
+ *   npx jiti scripts/triage-mechanics.mjs        # summary (jiti: it imports the app's own hide rules)
+ *   npx jiti scripts/triage-mechanics.mjs --json # full per-record ledger (large)
+ *   npx jiti scripts/triage-mechanics.mjs --lane choice --out work/lane-choice.json
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { findDuplicateIds, findUmbrellaIds } from '../src/data';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
@@ -256,20 +257,48 @@ const LANES = [
     id: 'defense',
     what: 'grants resistance, immunity, weakness or a sense',
     re: /\b(resistance \d|immunity to|immune to|weakness \d|darkvision|low-light vision|scent|tremorsense)\b/i,
-    /** `defenses` is the wrapper NO record actually uses; the real storage is direct fields, which is
-     *  also where derive.ts reads from. Checking only defenses/senses under-reported every applied
-     *  resistance, immunity and weakness — the mirror image of the proficiency over-count above. */
+    /**
+     * `defenses` is the wrapper NO record actually uses; the real storage is direct fields, which is
+     * also where derive.ts reads from. Checking only defenses/senses under-reported every applied
+     * resistance, immunity and weakness — the mirror image of the proficiency over-count above.
+     *
+     * ⚠ An ITEM's defences live under `passiveEffects` and nowhere else: a top-level `resistances`
+     * on an item record is read by nothing. Leaving that out reported all 58 items in this lane as
+     * outstanding when 57 of them already carried the resistance, and it took an authoring pass over
+     * all 58 to discover that only one was real. `modes` counts too — a defence the player toggles on
+     * is modelled, just not always-on.
+     */
     modelled: (r) =>
       !!r.defenses || !!r.senses || !!r.resistances || !!r.weaknesses || !!r.immunities ||
-      !!r.speeds || !!r.whileActive,
+      !!r.speeds || !!r.whileActive || !!r.passiveEffects || !!r.modes,
   },
 ];
 
 const COLLECTIONS = ['feats', 'classFeatures', 'items', 'heritages', 'ancestries', 'backgrounds', 'animalCompanions', 'specificFamiliars', 'companionSpecializations', 'deities'];
 
+/*
+ * Records NO CHARACTER CAN REACH are excluded from the ledger entirely.
+ *
+ * Two kinds, both hidden from every picker by src/data/index.ts: an `aon-` scrape that collides by
+ * name with a canonical record, and an unpriced family head with priced kin. A mechanical field on
+ * either reaches nobody, so listing them as work is worse than useless — an authoring pass reads the
+ * record, writes a correct entry, and the entry renders for no one. Sixty of the situational lane's
+ * outstanding rows were exactly this, and the same shape produced the Ruling A regression where
+ * writing `situational` onto a family head UN-HIDES it and puts a priceless duplicate in the shop.
+ *
+ * The rules are imported rather than re-implemented; a private copy of "what counts as hidden" is
+ * how a report drifts away from the app it is reporting on.
+ */
+const hidden = new Set([...findDuplicateIds(db), ...findUmbrellaIds(db)]);
+
 const ledger = [];
+let excluded = 0;
 for (const coll of COLLECTIONS) {
   for (const r of Object.values(db[coll] ?? {})) {
+    if (hidden.has(r.id)) {
+      excluded++;
+      continue;
+    }
     const text = String(r.description ?? '');
     const hits = [];
     for (const lane of LANES) {
