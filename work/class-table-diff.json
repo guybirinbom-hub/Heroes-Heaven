@@ -1,0 +1,211 @@
+[
+ {
+  "classId": "magus",
+  "printed": 14,
+  "inApp": 19,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "summoner",
+  "printed": 19,
+  "inApp": 24,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "inventor",
+  "printed": 21,
+  "inApp": 26,
+  "missing": [
+   {
+    "id": "resolve",
+    "name": "Resolve",
+    "level": 11,
+    "recordExists": true
+   },
+   {
+    "id": "juggernaut",
+    "name": "Juggernaut",
+    "level": 17,
+    "recordExists": true
+   }
+  ],
+  "levelMismatch": []
+ },
+ {
+  "classId": "gunslinger",
+  "printed": 15,
+  "inApp": 17,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "kineticist",
+  "printed": 17,
+  "inApp": 27,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "bard",
+  "printed": 13,
+  "inApp": 17,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "cleric",
+  "printed": 6,
+  "inApp": 16,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "druid",
+  "printed": 11,
+  "inApp": 17,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "fighter",
+  "printed": 14,
+  "inApp": 16,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "ranger",
+  "printed": 18,
+  "inApp": 20,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "rogue",
+  "printed": 17,
+  "inApp": 20,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "witch",
+  "printed": 11,
+  "inApp": 15,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "wizard",
+  "printed": 11,
+  "inApp": 15,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "alchemist",
+  "printed": 17,
+  "inApp": 23,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "barbarian",
+  "printed": 16,
+  "inApp": 19,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "champion",
+  "printed": 17,
+  "inApp": 23,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "investigator",
+  "printed": 17,
+  "inApp": 21,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "monk",
+  "printed": 16,
+  "inApp": 18,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "oracle",
+  "printed": 16,
+  "inApp": 21,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "sorcerer",
+  "printed": 12,
+  "inApp": 17,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "swashbuckler",
+  "printed": 19,
+  "inApp": 24,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "animist",
+  "printed": 12,
+  "inApp": 15,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "exemplar",
+  "printed": 17,
+  "inApp": 20,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "commander",
+  "printed": 14,
+  "inApp": 18,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "guardian",
+  "printed": 14,
+  "inApp": 18,
+  "missing": [],
+  "levelMismatch": []
+ },
+ {
+  "classId": "psychic",
+  "printed": 14,
+  "inApp": 20,
+  "missing": [
+   {
+    "id": "weapon-specialization",
+    "name": "Weapon Specialization",
+    "level": 13,
+    "recordExists": true
+   }
+  ],
+  "levelMismatch": []
+ },
+ {
+  "classId": "thaumaturge",
+  "printed": 20,
+  "inApp": 24,
+  "missing": [],
+  "levelMismatch": []
+ }
+]

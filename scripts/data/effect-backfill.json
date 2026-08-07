@@ -35183,10 +35183,7 @@
     "category": "classFeatures",
     "id": "patron-theme",
     "field": "limitedUses",
-    "value": {
-      "max": 1,
-      "per": "round"
-    }
+    "value": null
   },
   {
     "category": "classFeatures",
@@ -45471,31 +45468,31 @@
     "category": "classFeatures",
     "id": "perpetual-infusions-bomber",
     "field": "edition",
-    "value": "superseded"
+    "value": "legacy"
   },
   {
     "category": "classFeatures",
     "id": "perpetual-perfection-bomber",
     "field": "edition",
-    "value": "superseded"
+    "value": "legacy"
   },
   {
     "category": "classFeatures",
     "id": "perpetual-perfection-chirurgeon",
     "field": "edition",
-    "value": "superseded"
+    "value": "legacy"
   },
   {
     "category": "classFeatures",
     "id": "perpetual-perfection-mutagenist",
     "field": "edition",
-    "value": "superseded"
+    "value": "legacy"
   },
   {
     "category": "classFeatures",
     "id": "perpetual-potency-toxicologist",
     "field": "edition",
-    "value": "superseded"
+    "value": "legacy"
   },
   {
     "category": "classFeatures",
@@ -102147,5 +102144,77 @@
         "deityDomainsFromChoice": true
       }
     ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-infusions",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-potency",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-perfection",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-potency-bomber",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-infusions-chirurgeon",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-potency-chirurgeon",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-infusions-mutagenist",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-potency-mutagenist",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-infusions-toxicologist",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-perfection-toxicologist",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "classFeatures",
+    "id": "mutagenic-flashback",
+    "field": "edition",
+    "value": "legacy"
+  },
+  {
+    "category": "actions",
+    "id": "mutagenic-flashback",
+    "field": "edition",
+    "value": "legacy"
   }
 ]
