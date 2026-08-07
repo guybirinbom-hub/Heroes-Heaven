@@ -674,6 +674,10 @@ export interface EidolonBlock extends Defenses {
   typeAbilities?: { tier: string; level: number; name: string; text: string }[];
   /** Cantrip NAMES the eidolon knows and casts as innate spells (Magical Understudy). */
   cantrips?: string[];
+  /** Leveled innate spell NAMES from Magical Adept / Magical Master, each once per day. Both feats
+   *  shipped marked “Recorded only” and the block had no field for them, so the answers the player
+   *  gave in the builder appeared nowhere at all. */
+  innateSpells?: { name: string; rank: number }[];
 }
 
 /** The eidolon's primary unarmed attack is chosen from these stat blocks (Secrets of Magic). The
@@ -873,6 +877,14 @@ export function deriveEidolon(
     ...(() => {
       const known = (cfg.eidolon?.cantrips ?? []).filter((id): id is string => !!id && !!content.spells[id]);
       return known.length ? { cantrips: known.map((id) => content.spells[id].name) } : {};
+    })(),
+    // Magical Adept ("one 1st-rank and one 2nd-rank spell, each once per day") and Magical Master.
+    // The summoner picks these in the builder; nothing displayed them, on the eidolon or anywhere.
+    ...(() => {
+      const known = (character.eidolonInnateSpells ?? []).filter((id) => content.spells[id]);
+      return known.length
+        ? { innateSpells: known.map((id) => ({ name: content.spells[id].name, rank: content.spells[id].rank ?? 1 })).sort((a, b) => a.rank - b.rank) }
+        : {};
     })(),
   };
 }

@@ -797,3 +797,41 @@ export const MP_MODE_DESCRIPTIONS: Record<MonsterPartsMode, string> = {
   light: 'Replaces only currency; runes and other magic items still exist (the party builds only a few part-items).',
   hybrid: 'Replaces currency + about half of the permanent items; keeps the rest and all consumables.',
 };
+
+/**
+ * Spell IDS an item's imbued properties grant, matched from `imbuementGrantedSpells`' candidate
+ * NAMES against the shipped spell database.
+ *
+ * That function has always returned names and always said "the caller matches them to the content
+ * spell DB" — and had no caller at all, so 70 spell grants across 18 catalog paths existed only as
+ * prose on the item card. Imbue a weapon with fire and it told you that you could Cast Ignition as a
+ * cantrip and fireball once a day; neither ever reached the Spells page.
+ *
+ * Only an item that is actually in Monster-Parts mode contributes, and only names that resolve.
+ */
+export function mpImbuedSpellIds(
+  inv: { monsterPart?: ItemMonsterPart } | undefined,
+  db: { spells: Record<string, { id: string; name: string }> },
+  characterLevel: number,
+): string[] {
+  const mp = inv?.monsterPart;
+  if (!mp?.imbuements?.length) return [];
+  const byName = new Map<string, string>();
+  for (const [id, sp] of Object.entries(db.spells)) {
+    const k = sp.name.toLowerCase();
+    if (!byName.has(k)) byName.set(k, id);
+  }
+  const out = new Set<string>();
+  for (const im of mp.imbuements) {
+    const prop = getMpProperty(im.propertyId);
+    const path = prop?.paths.find((pa) => pa.id === im.path) ?? prop?.paths[0];
+    if (!path) continue;
+    const level = mpEffectiveImbueLevel(mp, im, characterLevel);
+    if (level <= 0) continue;
+    for (const g of imbuementGrantedSpells(path, level)) {
+      const id = byName.get(g.name.toLowerCase());
+      if (id) out.add(id);
+    }
+  }
+  return [...out];
+}

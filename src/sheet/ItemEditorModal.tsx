@@ -916,7 +916,7 @@ export function ItemEditorModal({
 
                   {onPlay && inv && item && (item.itemType === 'weapon' || item.itemType === 'armor' || item.itemType === 'shield') && (
                     <AccRow id="runes" icon="ti-sparkles" name={mpActiveHere ? 'Monster Parts' : 'Runes & upgrades'}>
-                      {mpEligible && <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} available={availableParts} onPlay={onPlay} onSalvage={onSalvage} />}
+                      {mpEligible && <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} available={availableParts} inventory={inventory} content={content} onPlay={onPlay} onSalvage={onSalvage} />}
                       {/* A Monster-Parts item ignores runes/attachments (either/or) — hide the rune editor. */}
                       {!mpActiveHere && (
                         <>
@@ -933,7 +933,7 @@ export function ItemEditorModal({
                       Parts — give it its own panel. */}
                   {mpEligible && item && item.itemType === 'equipment' && inv && onPlay && (
                     <AccRow id="monster-parts" icon="ti-bone" name="Monster Parts">
-                      <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} available={availableParts} onPlay={onPlay} onSalvage={onSalvage} />
+                      <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} available={availableParts} inventory={inventory} content={content} onPlay={onPlay} onSalvage={onSalvage} />
                     </AccRow>
                   )}
 

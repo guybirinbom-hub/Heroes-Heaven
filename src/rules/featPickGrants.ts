@@ -40,6 +40,25 @@ export interface FeatPickSpec {
 
 export const FEAT_PICK_GRANTS: Record<string, FeatPickSpec> = {
   'advanced-general-training': { prompt: "Choose a general feat", category: 'general', maxLevel: 7 },
+  /*
+   * Hellknight Order Training: "you gain an order feat". Those 14 order feats are the ONLY records in
+   * the data carrying category 'bonus', and the bonus slot belongs to the fighter's Combat
+   * Flexibility — it demands the fighter trait, which no Hellknight feat has. A Hellknight was told
+   * they gained an order feat and offered none of the fourteen that exist.
+   *
+   * Listed by id rather than by a category filter for exactly that reason: 'bonus' is not a real feat
+   * category here, it is where these fourteen happened to land, and a category rule would collide
+   * with the fighter slot again the moment anything else landed there.
+   */
+  'order-training': {
+    prompt: 'Choose a Hellknight order feat',
+    maxLevel: 'self',
+    ids: [
+      'shackles-of-law', 'sturdy-bindings', 'devil-allies', 'locate-lawbreakers', 'blessing-of-the-five',
+      'dedication-to-the-five', 'reveal-beasts', 'trailblazing-stride', 'righteous-resistance',
+      'spiritual-disruption', 'disillusionment', 'silence-heresy', 'fear-no-law-fear-no-one', 'seek-injustice',
+    ],
+  },
   /* ---- pick-a-feat grants found by the coverage sweep ---------------------------------------
    * Each offers exactly what its own text offers, and no more. Where the text names the options,
    * they are listed by id rather than approximated with a category+level filter — every id below

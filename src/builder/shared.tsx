@@ -1343,6 +1343,7 @@ export function VariantRulesCard({ build, actions }: EditorProps) {
             ['proficiencyWithoutLevel', 'Proficiency w/o Level', 'Remove your level from proficiency: untrained −2, trained +2, expert +4, master +6, legendary +8.'],
             ['abp', 'Automatic Bonus Progression', 'Gain item-equivalent attack/AC/save/Perception/skill bonuses automatically by level (replaces fundamental runes).'],
             ['dualClass', 'Dual Class', 'Gain the proficiencies, Hit Points, class features and class feats of a second class.'],
+            ['pervasiveMagic', 'Pervasive Magic', 'Secrets of Magic variant: magic is common enough that any character can pick up minor spellcasting. Adds the Cantrip Casting / Basic / Expert / Master Spellcasting feat ladder to class feat slots.'],
             ['monsterParts', 'Monster Parts', 'Harvest parts from defeated monsters to refine (fundamental-rune-equivalent bonuses) and imbue (special properties) your weapons, armor, shields, and Perception/skill items in place of runes and precious materials. An item uses either Monster Parts or normal runes — never both.'],
           ] as const
         ).map(([flag, label, desc]) => (
@@ -1550,6 +1551,7 @@ export function CampaignOptionsCard({ build, actions }: EditorProps) {
           [
             ['mythicEnabled', 'Mythic', 'War of Immortals mythic rules: gain a mythic calling + destiny, mythic feats, and mythic points. Off hides all mythic-trait content.'],
             ['kingmakerEnabled', 'Kingmaker', 'Kingmaker Adventure Path player content: its backgrounds, feats, spells, items, and the camping activities (plus kingdom/army rules content).'],
+            ['deviantEnabled', 'Deviant abilities', 'Dark Archive deviant abilities — unstable powers a GM grants. On, a class feat can buy one of the 30 deviant feats; off, they are hidden. The rules put them entirely at the GM’s discretion, which is why they are a table opt-in rather than an ordinary feat.'],
           ] as const
         ).map(([flag, label, desc]) => (
           <ToggleWithInfo
@@ -2074,6 +2076,31 @@ export function OverridesCard({ build, actions, content, character }: EditorProp
               </label>
             );
           })}
+        </div>
+      </SubCard>
+
+      {/* Maximum HP. The engine has honoured hitPoints.maxOverride and had a dedicated breakdown
+          line for it all along; nothing anywhere ever wrote it, so a finished feature had no control
+          and the breakdown branch could never be seen. */}
+      <SubCard icon="ti-heart" label="Set maximum HP" count={ov.maxHp != null ? 1 : undefined}>
+        <div className="ovr-attrs">
+          <label className={'ovr-attr' + (ov.maxHp != null ? ' on' : '')}>
+            <span className="ovr-attr-k">Max HP</span>
+            <input
+              type="number"
+              className="ovr-attr-in"
+              value={ov.maxHp ?? character.hitPoints.current}
+              onChange={(e) => {
+                const n = parseInt(e.target.value, 10);
+                writeOv({ maxHp: Number.isNaN(n) ? undefined : Math.max(1, n) });
+              }}
+            />
+            {ov.maxHp != null && (
+              <button type="button" className="ovr-attr-x" title="Revert to computed" onClick={() => writeOv({ maxHp: undefined })} aria-label="Revert maximum HP">
+                <i className="ti ti-arrow-back-up" aria-hidden="true" />
+              </button>
+            )}
+          </label>
         </div>
       </SubCard>
 

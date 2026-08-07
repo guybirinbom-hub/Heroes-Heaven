@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Item, InventoryItem, ItemImbuement, ItemMonsterPart, ProficiencyKey } from '../rules/types';
+import type { ContentDatabase, Item, InventoryItem, ItemImbuement, ItemMonsterPart, ProficiencyKey } from '../rules/types';
 import { SKILLS } from '../rules/types';
 import { setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import {
@@ -19,6 +19,7 @@ import {
   resolvePath,
   formatMpDamage,
   salvageValue,
+  transferCost,
   itemPartValue,
   hasMatchingPart,
   propertyRequirementTags,
@@ -81,6 +82,8 @@ export function MonsterPartsSection({
   item,
   charLevel,
   available,
+  inventory = [],
+  content,
   onSalvage,
   onPlay,
 }: {
@@ -89,6 +92,10 @@ export function MonsterPartsSection({
   charLevel: number;
   /** The character's harvested monster parts (total gp + union of tags), for the reference display. */
   available: AvailableParts;
+  /** The rest of the inventory + the item database — needed to offer TRANSFER targets. Optional so a
+   *  caller with neither still gets the rest of the panel. */
+  inventory?: InventoryItem[];
+  content?: ContentDatabase;
   /** Salvage this item into a generic monster-part inventory item (registers + adds it). Phase-2 wiring;
    *  when absent, the salvage button is hidden. */
   onSalvage?: () => void;
@@ -203,6 +210,39 @@ export function MonsterPartsSection({
     )
       return;
     onSalvage();
+  };
+
+  /*
+   * TRANSFER — "you can transfer a refinement value to another item of the same type" for 10% of the
+   * difference. `transferCost` computed exactly that number and had no caller anywhere: the rules
+   * page documented transferring and the editor never offered it.
+   *
+   * Targets are same-KIND items (a weapon refinement moves to another weapon), this one excluded.
+   */
+  const transferTargets = content
+    ? inventory
+        .filter((other) => {
+          if (other.instanceId === inv.instanceId) return false;
+          const oi = content.items[other.itemId];
+          if (!oi || !mp) return false;
+          return (other.monsterPart?.kind ?? autoKind(oi)) === mp.kind;
+        })
+        .map((other) => ({ other, name: content.items[other.itemId]!.name, value: itemPartValue(other.monsterPart) }))
+    : [];
+  const transfer = async (targetId: string) => {
+    const target = transferTargets.find((t) => t.other.instanceId === targetId);
+    if (!target || !mp) return;
+    const cost = transferCost(totalInvested, target.value);
+    const ok = await confirmDialog({
+      title: `Transfer to ${target.name}?`,
+      message:
+        `This item's refinement and imbuements (${gp(totalInvested)} of parts) move to ${target.name}, which ` +
+        `currently holds ${gp(target.value)}. The transfer costs ${gp(cost)} of parts — 10% of the difference. ` +
+        `This item reverts to a mundane item. You can undo with Ctrl+Z.`,
+      confirmLabel: 'Transfer',
+    });
+    if (!ok) return;
+    onPlay((pl) => setItemMonsterPart(setItemMonsterPart(pl, target.other.instanceId, { ...mp }), inv.instanceId, undefined));
   };
 
   return (
@@ -462,6 +502,30 @@ export function MonsterPartsSection({
           <i className="ti ti-recycle" aria-hidden="true" /> Salvage — recover {gp(salvageValue(blob))} (50%) as a monster-part item
         </button>
       )}
+      {totalInvested > 0 && transferTargets.length > 0 && (
+        <label className="mp-transfer">
+          <span className="mp-transfer-lbl">
+            <i className="ti ti-arrows-exchange" aria-hidden="true" /> Transfer to another {mp?.kind ?? 'item'}
+          </span>
+          <select
+            className="osel"
+            aria-label="Transfer this refinement to another item"
+            value=""
+            onChange={(e) => {
+              const v = e.target.value;
+              e.currentTarget.value = '';
+              if (v) void transfer(v);
+            }}
+          >
+            <option value="">Choose an item…</option>
+            {transferTargets.map((t) => (
+              <option key={t.other.instanceId} value={t.other.instanceId}>
+                {t.name} — costs {gp(transferCost(totalInvested, t.value))}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
     </div>
   );
 }
@@ -475,6 +539,8 @@ export function MonsterPartsPanel({
   item,
   charLevel,
   available,
+  inventory,
+  content,
   onSalvage,
   onPlay,
 }: {
@@ -482,6 +548,9 @@ export function MonsterPartsPanel({
   item: Item;
   charLevel: number;
   available: AvailableParts;
+  /** Passed straight through so the section can offer TRANSFER targets. */
+  inventory?: InventoryItem[];
+  content?: ContentDatabase;
   onSalvage?: () => void;
   onPlay: PlayUpdater;
 }) {
@@ -528,6 +597,8 @@ export function MonsterPartsPanel({
           item={item}
           charLevel={charLevel}
           available={available}
+          inventory={inventory}
+          content={content}
           onSalvage={onSalvage}
           onPlay={onPlay}
         />

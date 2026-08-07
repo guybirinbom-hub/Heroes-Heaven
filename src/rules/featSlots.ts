@@ -90,17 +90,32 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
         (her?.versatile && f.traits.includes(her.id)) ||
         // …and a heritage that opens ANOTHER ancestry's list: "you can select elf, half-elf, and
         // human feats whenever you gain an ancestry feat" (half-elf, half-orc).
-        (her?.extraAncestryFeatTraits ?? []).some((t) => f.traits.includes(t));
+        (her?.extraAncestryFeatTraits ?? []).some((t) => f.traits.includes(t)) ||
+        // UNIVERSAL ANCESTRY — a feat ANY ancestry may take (the six Impossible Lands fey feats).
+        // The trait IS that rule and belongs to no ancestry, so a gate that only ever asked "does
+        // this carry my ancestry's trait" could never admit one.
+        f.traits.includes('universal-ancestry');
       if (!ok) return false;
     }
     // Class slots take your class's feats OR any archetype feat (multiclass/archetypes). Dual Class
     // also accepts the second class's feats.
+    //
+    // …and a DEVIANT or AFTERMATH ability, once the GM has switched them on. Dark Archive grants
+    // both as class feats and their records carry no class trait at all ("GMs can use the rules here
+    // to GRANT these so-called deviant abilities to their players"; aftermath is "special abilities
+    // gained after exposure to the weird and deadly"), so all 41 were readable and un-takeable.
+    //
+    // …and the four PERVASIVE MAGIC feats, which belong to the Secrets of Magic variant where every
+    // character picks up minor spellcasting. They are a variant-rule ladder, not class feats, so they
+    // ride that toggle rather than a class trait.
     if (
       p.category === 'class' &&
       build.classId &&
       !f.traits.includes(build.classId) &&
       !(build.variantRules?.dualClass && build.classId2 && f.traits.includes(build.classId2)) &&
-      !f.traits.includes('archetype')
+      !f.traits.includes('archetype') &&
+      !(build.deviantEnabled && (f.traits.includes('deviant') || f.traits.includes('aftermath'))) &&
+      !(build.variantRules?.pervasiveMagic && f.traits.includes('pervasive-magic'))
     )
       return false;
     // Kineticist impulses are gated to the elements of your kinetic gate (incl. elements gained via
@@ -148,6 +163,8 @@ export function findHiddenFeatMatches(opts: {
   enabledBooks: Set<string>;
   mythicEnabled?: boolean;
   kingmakerEnabled?: boolean;
+  deviantEnabled?: boolean;
+  pervasiveMagic?: boolean;
   /** True for a class slot with the Archetypes toggle off. */
   archetypesHidden: boolean;
 }): HiddenFeatMatches | null {
@@ -165,7 +182,9 @@ export function findHiddenFeatMatches(opts: {
     } else if (
       // Mirrors applyContentToggles: these stay hidden even with every source book enabled.
       (!opts.mythicEnabled && f.traits.includes('mythic')) ||
-      (!opts.kingmakerEnabled && /kingmaker/i.test(f.source?.book ?? ''))
+      (!opts.kingmakerEnabled && /kingmaker/i.test(f.source?.book ?? '')) ||
+      (!opts.deviantEnabled && (f.traits.includes('deviant') || f.traits.includes('aftermath'))) ||
+      (!opts.pervasiveMagic && f.traits.includes('pervasive-magic'))
     ) {
       campaign++;
     } else if (opts.archetypesHidden && f.traits.includes('archetype')) {

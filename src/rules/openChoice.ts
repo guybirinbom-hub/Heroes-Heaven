@@ -191,6 +191,15 @@ export function openChoiceOptions(
  *  a disabled source book) — showing the slug is better than showing a blank row. */
 export function openChoiceLabel(id: string, content: ContentDatabase): string {
   if (!id) return '';
-  const rec = content.spells[id] ?? content.feats[id] ?? content.items[id] ?? content.languages?.[id];
+  const rec =
+    content.spells[id] ??
+    content.feats[id] ??
+    content.items[id] ??
+    content.languages?.[id] ??
+    // …and the buckets an open choice can also name: Late Awakener picks a HERITAGE, and other picks
+    // name an ancestry or a class feature. Without these the sheet fell back to the raw slug.
+    content.heritages?.[id] ??
+    content.ancestries?.[id] ??
+    content.classFeatures?.[id];
   return rec?.name ?? id;
 }

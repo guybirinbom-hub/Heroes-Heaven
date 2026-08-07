@@ -3047,6 +3047,10 @@ export interface VariantRules {
   abp?: boolean;
   /** Dual Class — gain the proficiencies, HP, features and feats of a second class. */
   dualClass?: boolean;
+  /** Pervasive Magic (Secrets of Magic) — magic is common enough that any character can pick up minor
+   *  spellcasting. Its four feats (Cantrip Casting, Basic/Expert/Master Spellcasting) carry the
+   *  `pervasive-magic` trait and no class trait, so without this toggle no slot could ever offer them. */
+  pervasiveMagic?: boolean;
   /** Monster Parts (Battlezoo, Remaster conversion) — harvest parts to refine/imbue items in place of
    *  runes/materials. When on, eligible items may switch to Monster-Parts mode. */
   monsterParts?: boolean;
@@ -3138,6 +3142,11 @@ export interface BuildOverrides {
    *  rituals. Non-rituals surface as a "Added spells" entry (at the chosen rank); rituals show in
    *  the Spells page's Rituals section. */
   addedSpells?: { spellId: string; rank: number }[];
+  /** Force-set the character's MAXIMUM Hit Points, ignoring the class/ancestry/Con math. The engine
+   *  has honoured `hitPoints.maxOverride` and carried a dedicated breakdown line for it all along,
+   *  and nothing in the app ever wrote it — a finished feature with no control anywhere. It belongs
+   *  here rather than on the sheet because it is precisely what this section is for. */
+  maxHp?: number;
   /** Edits to existing entries' fields (name/description/traits/…). Applied as a shallow content
    *  overlay so the shared database is never mutated. Display-safe fields are the intended use. */
   contentEdits?: {
@@ -3195,6 +3204,9 @@ export interface Character {
    *  from the player and the mythic subsystem is inactive. Kingmaker: on → its actions/conditions show. */
   mythicEnabled?: boolean;
   kingmakerEnabled?: boolean;
+  /** Dark Archive DEVIANT + AFTERMATH abilities. Their 41 feat records carry no class trait — the
+   *  rules hand them out at the GM’s discretion — so like Mythic they hide until the table opts in. */
+  deviantEnabled?: boolean;
   /** "Hide legacy data": mirrors the build flag onto the character so the sheet's Add pickers can filter
    *  legacy/legacy-era content the same way the builder does. */
   hideLegacy?: boolean;

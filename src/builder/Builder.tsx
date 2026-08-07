@@ -133,7 +133,7 @@ export function Builder({
     const enabled = enabledBookSet(build.enabledSources);
     const sourced = sourceCat.allBooks.every((b) => enabled.has(b)) ? ovContent : applySources(ovContent, enabled, keep);
     // Mythic/Kingmaker campaign toggles hide their content from the pickers (off by default).
-    const toggled = applyContentToggles(sourced, { mythicEnabled: build.mythicEnabled, kingmakerEnabled: build.kingmakerEnabled }, keep);
+    const toggled = applyContentToggles(sourced, { mythicEnabled: build.mythicEnabled, kingmakerEnabled: build.kingmakerEnabled, deviantEnabled: build.deviantEnabled }, keep);
     // "Hide legacy data": drop legacy/legacy-era content (superseded is already pruned at import).
     return applyEditionFilter(toggled, { hideLegacy: build.hideLegacy }, keep);
     // `build` is read for keepIds but intentionally not a dep: re-running only when sources change is
@@ -1892,13 +1892,15 @@ export function Builder({
                 enabledBooks,
                 mythicEnabled: build.mythicEnabled,
                 kingmakerEnabled: build.kingmakerEnabled,
+                deviantEnabled: build.deviantEnabled,
+                pervasiveMagic: build.variantRules?.pervasiveMagic,
                 archetypesHidden: archHidden,
               });
               if (!hidden) return null;
               const parts: string[] = [];
               if (hidden.sources.length) parts.push(`${hidden.sources.length} from disabled source books — shown below`);
               if (hidden.archetype) parts.push(`${hidden.archetype} archetype feat${hidden.archetype === 1 ? '' : 's'} — turn on “Archetypes” above`);
-              if (hidden.campaign) parts.push(`${hidden.campaign} behind a campaign toggle (Mythic / Kingmaker — see Setup)`);
+              if (hidden.campaign) parts.push(`${hidden.campaign} behind a Setup toggle (Mythic / Kingmaker / Deviant abilities / Pervasive Magic)`);
               if (hidden.invalid) parts.push(`${hidden.invalid} not valid for this slot (wrong type, level too high, or already taken)`);
               const CAP = 20;
               return (

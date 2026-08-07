@@ -60,6 +60,8 @@ import { FEAT_PICK_GRANTS, pickableFeats } from './featPickGrants';
 import { FEAT_CANTRIP_GRANTS } from './featCantripGrants';
 import { grantForSpellPick } from './spellChoice';
 import { DOMAIN_SPELLS } from './domains';
+import { mpImbuedSpellIds } from './monsterParts';
+import { openChoiceLabel } from './openChoice';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeProficiency, archetypeSlots, archetypeTraditionOptions } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
@@ -94,6 +96,8 @@ export interface BuildState {
   /** Campaign content toggles (off by default). Mythic → enables the mythic subsystem + shows
    *  `mythic`-trait content; Kingmaker → shows its actions/conditions. */
   mythicEnabled?: boolean;
+  /** Dark Archive deviant + aftermath abilities: off hides them, on lets a class feat buy one. */
+  deviantEnabled?: boolean;
   kingmakerEnabled?: boolean;
   /** "Hide legacy data": when true, legacy + legacy-era (pre-remaster-exclusive) content is hidden from
    *  every picker, for a pure remaster/neutral experience. Superseded content is always hidden regardless. */
@@ -1489,15 +1493,19 @@ export function applyEditionFilter(
 
 export function applyContentToggles(
   content: ContentDatabase,
-  opts: { mythicEnabled?: boolean; kingmakerEnabled?: boolean },
+  opts: { mythicEnabled?: boolean; kingmakerEnabled?: boolean; deviantEnabled?: boolean },
   keepIds: Set<string>,
 ): ContentDatabase {
   const dropMythic = !opts.mythicEnabled;
   const dropKM = !opts.kingmakerEnabled;
-  if (!dropMythic && !dropKM) return content;
+  // Deviant abilities are GM-granted (Dark Archive), so they hide exactly like mythic content until
+  // the table turns them on.
+  const dropDeviant = !opts.deviantEnabled;
+  if (!dropMythic && !dropKM && !dropDeviant) return content;
   const maps = new Set<string>();
   if (dropMythic) ['feats', 'spells', 'items', 'actions'].forEach((m) => maps.add(m));
   if (dropKM) ['actions', 'conditions', 'feats', 'backgrounds', 'items'].forEach((m) => maps.add(m));
+  if (dropDeviant) maps.add('feats');
   let next: ContentDatabase = content;
   let changed = false;
   for (const m of maps) {
@@ -1508,7 +1516,8 @@ export function applyContentToggles(
     for (const [id, e] of Object.entries(map)) {
       const hideMythic = dropMythic && (e.traits ?? []).includes('mythic');
       const hideKM = dropKM && /kingmaker/i.test(e.source?.book ?? '');
-      if (keepIds.has(id) || (!hideMythic && !hideKM)) filtered[id] = e;
+      const hideDeviant = dropDeviant && m === 'feats' && ((e.traits ?? []).includes('deviant') || (e.traits ?? []).includes('aftermath'));
+      if (keepIds.has(id) || (!hideMythic && !hideKM && !hideDeviant)) filtered[id] = e;
       else dropped = true;
     }
     if (dropped) {
@@ -1921,8 +1930,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     let contributedSpell = false;
     const def = feat.choice;
     if (def && choiceValue) {
-      const raw = def.options?.find((o) => o.value === choiceValue)?.label ?? choiceValue;
-      resolved = { value: choiceValue, label: def.kind === 'domains' ? cap(choiceValue) : featChoiceLabel(raw) };
+      const opt = def.options?.find((o) => o.value === choiceValue);
+      // An OPEN choice has no `options` to look a label up in, so featChoiceLabel was handed the raw
+      // id and returned it unchanged: 35 feats read "Adapted Cantrip (electric-arc)" on the sheet — a
+      // lowercase slug where the player picked a properly-named option one screen earlier, which
+      // looks like a data bug on every one of them. `openChoiceLabel` resolves an id to its record's
+      // name and nothing was calling it.
+      resolved = {
+        value: choiceValue,
+        label:
+          def.kind === 'domains'
+            ? cap(choiceValue)
+            : opt
+              ? featChoiceLabel(opt.label)
+              : openChoiceLabel(choiceValue, content),
+      };
       if (def.kind === 'domains' && DOMAIN_SPELLS[choiceValue] && content.spells[DOMAIN_SPELLS[choiceValue]]) {
         featFocusSpells.push(DOMAIN_SPELLS[choiceValue]);
         focusSource[DOMAIN_SPELLS[choiceValue]] ??= feat.name;
@@ -3796,12 +3818,31 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const instanceId = (it as { instanceId?: string }).instanceId ?? `inv-${i}`;
       if (!item) return;
       // A generic scroll/wand (item.spellSlot) holds the spell the player chose for this instance.
-      const held =
+      let held =
         it.heldSpellsOverride && Object.keys(it.heldSpellsOverride).length
           ? it.heldSpellsOverride
           : item.spellSlot && it.heldSpell && content.spells[it.heldSpell]
             ? { [item.spellSlot.rank]: [it.heldSpell] }
             : item.heldSpells;
+      /*
+       * …plus the spells an IMBUED Monster-Parts property grants. `imbuementGrantedSpells` has never
+       * had a caller, so an imbued weapon told you in prose that you could Cast Ignition as a cantrip
+       * and fireball once a day, and neither ever reached the Spells page: no cast button, no spell
+       * attack or DC line, no per-day tracker. 70 grants across 18 of the catalog's paths.
+       *
+       * Names are matched to the spell database here, which is exactly what that function's own
+       * documentation says its caller owes it.
+       */
+      const mpSpells = mpImbuedSpellIds(it as Parameters<typeof mpImbuedSpellIds>[0], content, level);
+      if (mpSpells.length) {
+        const merged: Record<number, string[]> = {};
+        for (const [r, ids] of Object.entries(held ?? {})) merged[Number(r)] = [...ids];
+        for (const id of mpSpells) {
+          const rank = content.spells[id]?.rank ?? 0;
+          merged[rank] = [...new Set([...(merged[rank] ?? []), id])];
+        }
+        held = merged;
+      }
       if (!held || !Object.keys(held).length) return;
       const tradCount: Record<string, number> = {};
       for (const ids of Object.values(held))
@@ -4153,6 +4194,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.enabledSources ? { enabledSources: build.enabledSources } : {}),
     ...(build.campaignIds && build.campaignIds.length ? { campaignIds: build.campaignIds } : {}),
     ...(build.mythicEnabled ? { mythicEnabled: true } : {}),
+    ...(build.deviantEnabled ? { deviantEnabled: true } : {}),
     ...(build.kingmakerEnabled ? { kingmakerEnabled: true } : {}),
     ...(build.hideLegacy ? { hideLegacy: true } : {}),
     ...(build.mythicEnabled && build.mythicCalling ? { mythicCalling: build.mythicCalling } : {}),
@@ -4168,7 +4210,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     abilities,
     partialBoosts,
     proficiencies,
-    hitPoints: { current: hpMax + featHp, temp: 0 },
+    hitPoints: {
+      current: build.overrides?.maxHp ?? hpMax + featHp,
+      temp: 0,
+      // Overrides → “Set maximum HP”. deriveMaxHp already preferred this over the whole computation.
+      ...(build.overrides?.maxHp != null ? { maxOverride: build.overrides.maxHp } : {}),
+    },
     heroPoints: 1,
     ...(focus ? { focus } : {}),
     ...(advancedAlchemy ? { advancedAlchemy } : {}),

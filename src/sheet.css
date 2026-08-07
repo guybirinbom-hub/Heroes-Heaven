@@ -6183,6 +6183,25 @@ button.strike-name:hover {
   border-color: var(--app-accent);
   color: var(--app-text);
 }
+/* Transfer a refinement to another item of the same kind — sits beside Salvage and reads as one
+   control (label + select), since the destination is a choice rather than a confirm. */
+.mp-transfer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--app-text-dim);
+}
+.mp-transfer-lbl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.mp-transfer .osel {
+  max-width: 260px;
+}
 .mp-hint {
   font-size: 11px;
   line-height: 1.45;

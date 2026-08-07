@@ -612,7 +612,16 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
   const isConstruct = b.category === 'construct';
   const over = b.bulk.carried > b.bulk.max;
   return (
-    <StatBlock name={b.name} kind={isConstruct ? 'Construct companion' : 'Animal companion'} level={b.level} icon={isConstruct ? 'ti-robot' : 'ti-paw'}>
+    <StatBlock
+      name={b.name}
+      // The SPECIES, derived and never shown. Name your bear "Fang" and the header read
+      // "Fang — Animal companion 5": its attacks, size, senses and advanced maneuvers all came from
+      // one of 98 companion types and nothing on the sheet said which one. The moment a player
+      // personalised the companion, the mechanically relevant label disappeared.
+      kind={`${isConstruct ? 'Construct' : 'Animal'} companion${b.typeName && b.typeName !== b.name ? ` · ${b.typeName}` : ''}`}
+      level={b.level}
+      icon={isConstruct ? 'ti-robot' : 'ti-paw'}
+    >
       <div className="sb-traits">
         <TraitChipTerm trait={isConstruct ? 'construct' : 'animal'} label={isConstruct ? 'Construct' : 'Animal'} />
         <span className="sb-trait">{b.size}</span>
@@ -815,6 +824,12 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
       {b.cantrips?.length ? (
         <div className="sb-line">
           <b>Innate cantrips</b> {b.cantrips.join(", ")} <span className="sb-muted">(your spell attack and DC)</span>
+        </div>
+      ) : null}
+      {b.innateSpells?.length ? (
+        <div className="sb-line">
+          <b>Innate spells</b> {b.innateSpells.map((s) => `${s.name} (${s.rank})`).join(", ")}{" "}
+          <span className="sb-muted">each 1/day</span>
         </div>
       ) : null}
       {b.typeAbilities?.length ? (

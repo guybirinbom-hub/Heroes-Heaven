@@ -846,6 +846,10 @@ export function MainTab({
                           {' '}
                           · folio {character.commanderTactics.folio.length}/{character.commanderTactics.folioMax} · prepared{' '}
                           {preparedTactics.size}/{tacticPreparedMax} · {character.commanderTactics.squadmates} squadmates
+                          {/* The highest tactic TIER this commander has unlocked. It is computed on
+                              the character and was read by nothing, so the one number that says which
+                              tactics you may add was visible only inside the builder's picker. */}
+                          {character.commanderTactics.maxTier ? ` · up to ${character.commanderTactics.maxTier} tactics` : ''}
                         </span>
                       )
                     }

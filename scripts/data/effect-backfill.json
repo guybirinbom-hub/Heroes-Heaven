@@ -97794,5 +97794,531 @@
   "id": "sanguimancer-dedication",
   "field": "note",
   "value": "Sanguimancy HP is tracked as a resource on the sheet: a rest restores your level’s worth, and the cap is twice your level."
+ },
+ {
+  "category": "feats",
+  "id": "sanguimancer-dedication",
+  "field": "traits",
+  "value": [
+   "archetype",
+   "dedication"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "this-time-bring-the-body",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "lets-try-that-again",
+  "field": "traits",
+  "value": [
+   "fortune",
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "like-a-roach",
+  "field": "traits",
+  "value": [
+   "downtime",
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "weight-of-experience",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "wisdom-from-another-life",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "animal-soul-siblings",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "empathy-incarnate",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "ive-had-many-jobs",
+  "field": "traits",
+  "value": [
+   "downtime",
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "reincarnated-ridiculer",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sleep-of-the-reborn",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "lingering-echoes",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "plant-soul-siblings",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "rapid-retraining",
+  "field": "traits",
+  "value": [
+   "downtime",
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "you-seem-somewhat-familiar",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "clinging-to-life",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "i-sense-malevolence",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "linguistic-revival",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "pain-is-temporary",
+  "field": "traits",
+  "value": [
+   "concentrate",
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "stone-soul-siblings",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "unbreakable-resolve",
+  "field": "traits",
+  "value": [
+   "fortune",
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "boneyard-acquaintance",
+  "field": "traits",
+  "value": [
+   "force",
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "indomitable-spirit",
+  "field": "traits",
+  "value": [
+   "concentrate",
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "release-the-light",
+  "field": "traits",
+  "value": [
+   "light",
+   "reincarnated",
+   "samsaran",
+   "visual"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "see-you-in-hell",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "this-is-what-its-like-to-die",
+  "field": "traits",
+  "value": [
+   "reincarnated",
+   "samsaran"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "caustic-nectar",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "ghoran",
+   "leshy"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "wilderness-born",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "ghoran",
+   "leshy"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "quick-root",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "ghoran",
+   "leshy"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "pollinate",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "ghoran",
+   "leshy"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "one-with-the-wild",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "ghoran",
+   "leshy"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "unfettered-growth",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "ghoran",
+   "leshy"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "potent-nectar",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "ghoran",
+   "leshy"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "fey-influence",
+  "field": "traits",
+  "value": [
+   "universal-ancestry"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "fey-ascension",
+  "field": "traits",
+  "value": [
+   "universal-ancestry"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "cannibalize-magic",
+  "field": "traits",
+  "value": [
+   "universal-ancestry"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "glamour",
+  "field": "traits",
+  "value": [
+   "universal-ancestry"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "eldritch-calm",
+  "field": "traits",
+  "value": [
+   "universal-ancestry"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "fey-transcendence",
+  "field": "traits",
+  "value": [
+   "universal-ancestry"
+  ]
+ },
+ {
+  "category": "classes",
+  "id": "champion",
+  "field": "features",
+  "value": [
+   {
+    "level": 7,
+    "featureId": "armor-expertise"
+   },
+   {
+    "level": 9,
+    "featureId": "champion-expertise"
+   },
+   {
+    "level": 9,
+    "featureId": "reflex-expertise"
+   },
+   {
+    "level": 17,
+    "featureId": "champion-mastery"
+   },
+   {
+    "level": 7,
+    "featureId": "weapon-specialization"
+   },
+   {
+    "level": 1,
+    "featureId": "deity-champion"
+   },
+   {
+    "level": 1,
+    "featureId": "cause"
+   },
+   {
+    "level": 17,
+    "featureId": "legendary-armor"
+   },
+   {
+    "level": 11,
+    "featureId": "exalted-reaction"
+   },
+   {
+    "level": 1,
+    "featureId": "devotion-spells"
+   },
+   {
+    "level": 1,
+    "featureId": "shield-block"
+   },
+   {
+    "level": 3,
+    "featureId": "blessing-of-the-devoted"
+   },
+   {
+    "level": 11,
+    "featureId": "divine-will"
+   },
+   {
+    "level": 9,
+    "featureId": "relentless-reaction"
+   },
+   {
+    "level": 5,
+    "featureId": "weapon-expertise"
+   },
+   {
+    "level": 11,
+    "featureId": "perception-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "armor-mastery"
+   },
+   {
+    "level": 9,
+    "featureId": "sacred-body"
+   },
+   {
+    "level": 19,
+    "featureId": "heros-defiance"
+   },
+   {
+    "level": 15,
+    "featureId": "greater-weapon-specialization"
+   },
+   {
+    "level": 13,
+    "featureId": "martial-weapon-mastery"
+   },
+   {
+    "level": 1,
+    "featureId": "deific-weapon"
+   },
+   {
+    "level": 1,
+    "featureId": "champions-aura"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "drain-emotion",
+  "field": "traits",
+  "value": [
+   "mental",
+   "universal-ancestry"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "grow-tool",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "ghoran",
+   "leshy",
+   "plant",
+   "primal"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "irresistible-bloom",
+  "field": "traits",
+  "value": [
+   "ardande",
+   "conrasu",
+   "emotion",
+   "ghoran",
+   "incapacitation",
+   "leshy",
+   "mental",
+   "olfactory",
+   "visual"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "irezoko-tattoo",
+  "field": "traits",
+  "value": [
+   "bard",
+   "champion",
+   "cleric",
+   "druid",
+   "magus",
+   "monk",
+   "oracle",
+   "psychic",
+   "ranger",
+   "sorcerer",
+   "summoner",
+   "witch",
+   "wizard"
+  ]
  }
 ]

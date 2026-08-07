@@ -1,10 +1,11 @@
 import { useRef } from 'react';
 import type { Character, ContentDatabase, ProficiencyRank, SenseEntry, CharacterDetails } from '../rules/types';
 import { RankPill } from './widgets';
+import { RANK_LABEL } from '../rules/explain';
 import { InfoTerm } from './InfoTerm';
 import { deriveDefenses } from '../rules/derive';
 import { setDetail, setPortrait, type PlayUpdater } from '../rules/play';
-import { proficiencyDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
+import { proficiencyDesc, rankDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
 import { processPortrait } from './imageUtil';
 import { usePortrait } from './usePortrait';
 import { newPortraitRef, setSharpPortrait } from '../data/portraitStore';
@@ -115,6 +116,25 @@ export function DetailsTab({
     rank: r.rank,
     desc: `Weapons in the ${r.group} group${r.category ? ` with the ${r.category} category` : ''} count as this proficiency, whichever is higher.`,
   }));
+  /*
+   * The two proficiency tracks that ARE the chassis of their class, and which this page never showed.
+   *
+   * `weaponGroups` is the alchemist's bombs and the fighter's chosen Weapon Mastery group;
+   * `firearmProf` is the gunslinger's per-category firearms-and-crossbows rank. Both are computed by
+   * the builder and consumed only by deriveStrike — so a gunslinger's Proficiencies page read
+   * "Simple Trained / Martial Trained / Advanced Untrained" at every level from 1 to 20 while the
+   * engine knew they were legendary with firearms.
+   */
+  const groupTracks: ProfRow[] = Object.entries(character.proficiencies.weaponGroups ?? {}).map(([group, rank]) => ({
+    name: `${cap(group)} weapons`,
+    rank,
+    desc: `Your proficiency with weapons in the ${group} group, which advances on its own track — it beats the plain category rank whenever it is higher.`,
+  }));
+  const firearmRows: ProfRow[] = Object.entries(character.proficiencies.firearmProf ?? {}).map(([category, rank]) => ({
+    name: `${cap(category)} firearms & crossbows`,
+    rank: rank as ProfRow['rank'],
+    desc: 'Your gunslinger proficiency with firearms and crossbows of this category. It advances separately from the plain weapon categories, so it can be higher than either.',
+  }));
   const defenses: ProfRow[] = (['unarmored', 'light', 'medium', 'heavy'] as const).map((c) => ({
     name: cap(c),
     rank: character.proficiencies.defenses[c],
@@ -127,7 +147,7 @@ export function DetailsTab({
   }));
 
   const groups: { label: string; rows: ProfRow[] }[] = [
-    { label: 'Attacks', rows: [...attacks, ...groupRanks, ...overrides] },
+    { label: 'Attacks', rows: [...attacks, ...groupTracks, ...firearmRows, ...groupRanks, ...overrides] },
     { label: 'Defenses', rows: defenses },
     { label: 'Spellcasting', rows: spellRows },
     { label: 'Class', rows: [{ name: 'Class DC', rank: character.proficiencies.classDc, desc: proficiencyDesc('classDc') }] },
@@ -436,7 +456,13 @@ export function DetailsTab({
             <div className="prof-grid">
               {g.rows.map((row, i) => (
                 <div className="prof-cell" key={g.label + ':' + i}>
-                  <RankPill rank={row.rank} />
+                  {/* The RANK itself is explainable too. Tapping "Simple" already told you what a
+                      simple weapon is; the Legendary pill beside it explained nothing, even though
+                      the five blurbs (Expert is +4, Legendary is +8) have been in the codebase all
+                      along with no call site. */}
+                  <InfoTerm title={RANK_LABEL[row.rank]} description={rankDesc(row.rank)}>
+                    <RankPill rank={row.rank} />
+                  </InfoTerm>
                   <InfoTerm className="prof-name" title={row.name} description={row.desc}>
                     {row.name}
                   </InfoTerm>
