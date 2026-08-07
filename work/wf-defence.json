@@ -1,0 +1,419 @@
+[
+ {
+  "id": "greater-pickled-demon-tongue",
+  "action": "skip",
+  "conditional": false,
+  "quote": "Resistance when affixed to armor is 5",
+  "skipReason": "Already present: passiveEffects.resistances acid 5, and effect-backfill.json carries it. Two caveats noted, neither authored: (a) the resistance only exists when the spellheart is affixed to ARMOR (affixed to a weapon it grants none), so the passive entry over-applies in the weapon usage; (b) the base clause also grants resistance to 'attacks by demons', which is not a PF2e damage/effect type and has no IWR representation."
+ },
+ {
+  "id": "major-pickled-demon-tongue",
+  "action": "skip",
+  "conditional": false,
+  "quote": "Resistance when affixed to armor is 10",
+  "skipReason": "Already present: passiveEffects.resistances acid 10. Same armor-only-affix and 'attacks by demons' caveats as the Greater version; neither is authorable as a standard IWR type."
+ },
+ {
+  "id": "polished-demon-horn",
+  "action": "skip",
+  "conditional": false,
+  "quote": "Armor You gain resistance 2 to unholy.",
+  "skipReason": "Already present: passiveEffects.resistances unholy 2. Applies only when affixed to armor; the weapon usage grants no resistance."
+ },
+ {
+  "id": "greater-polished-demon-horn",
+  "action": "skip",
+  "conditional": false,
+  "quote": "Resistance when affixed to armor is 5",
+  "skipReason": "Already present: passiveEffects.resistances unholy 5. Armor-affix-only caveat as above."
+ },
+ {
+  "id": "major-polished-demon-horn",
+  "action": "skip",
+  "conditional": false,
+  "quote": "Resistance when affixed to armor is 10",
+  "skipReason": "Already present: passiveEffects.resistances unholy 10. Armor-affix-only caveat as above."
+ },
+ {
+  "id": "sihedron-ring",
+  "action": "skip",
+  "conditional": false,
+  "quote": "rendering them immune to severe cold and heat",
+  "skipReason": "Already present: passiveEffects.immunities ['severe cold','severe heat']. Unconditional while invested. Verified against AoN mirror equipment-4044-3726.json."
+ },
+ {
+  "id": "greater-sihedron-ring",
+  "action": "skip",
+  "conditional": false,
+  "quote": "rendering them immune to severe cold and heat",
+  "skipReason": "Already present: passiveEffects.immunities ['severe cold','severe heat']. The Greater block reads 'The ring protects from extreme cold or heat' — an upgrade from severe to extreme — but it says 'protects from', never 'immune to', so I did not author extreme cold/heat immunities. The existing severe entry is a safe subset. Verified against AoN mirror equipment-4044-3727.json."
+ },
+ {
+  "id": "sihedron-ring-greater",
+  "action": "skip",
+  "conditional": false,
+  "quote": "rendering them immune to severe cold and heat",
+  "skipReason": "Already present: passiveEffects.immunities ['severe cold','severe heat']. This is a duplicate record of greater-sihedron-ring (same item, both level 12, different ids and prices — 2000 gp here vs 200 gp there); worth a dedupe pass outside this task. Same 'protects from extreme' wording caveat."
+ },
+ {
+  "id": "resolute-mind-wrap",
+  "action": "skip",
+  "conditional": false,
+  "quote": "The resolute mind wrap grants you mental resistance 5.",
+  "skipReason": "Already present: passiveEffects.resistances mental 5. The escalation to resistance 10 is conditional (requires the once/day Shield Thoughts reaction AND a successful Will save, lasts 1 minute) and correctly not passive. Verified against AoN mirror equipment-3136.json."
+ },
+ {
+  "id": "anima-robe-heroic",
+  "action": "skip",
+  "conditional": false,
+  "quote": "you gain resistance 15 to mental damage",
+  "skipReason": "Already present: passiveEffects.resistances mental 15 (plus skills.performance 3). No senses authored on purpose: the 'precise low-light vision and hearing within 30 feet' line is the intelligent item's OWN Perception stat block, not a sense granted to the wearer."
+ },
+ {
+  "id": "chromatic-robe",
+  "action": "skip",
+  "conditional": false,
+  "quote": "The robe grants resistance 5 to acid, cold, electricity, and fire damage.",
+  "skipReason": "Already present: passiveEffects.resistances acid/cold/electricity/fire 5 each. The Align Energy activation (1 Mythic Point, resistance 15 to one type and none to the other three until daily preparations) is conditional and correctly not passive. Not in the AoN mirror — this is a newer mythic item — so the record's own text is ground truth."
+ },
+ {
+  "id": "energy-robe-of-acid",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to acid.",
+  "skipReason": "Already present: passiveEffects.resistances acid 5. Unconditional while invested; the once/day climb Speed activation grants no defence."
+ },
+ {
+  "id": "energy-robe-of-cold",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to cold.",
+  "skipReason": "Already present: passiveEffects.resistances cold 5. Unconditional while invested."
+ },
+ {
+  "id": "energy-robe-of-electricity",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to electricity.",
+  "skipReason": "Already present: passiveEffects.resistances electricity 5. Unconditional while invested."
+ },
+ {
+  "id": "energy-robe-of-fire",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to fire.",
+  "skipReason": "Already present: passiveEffects.resistances fire 5. Unconditional while invested. Note these four ids duplicate records 7-10 of the same todo file (energy-robe-fire/cold/acid/electricity), which carry identical values."
+ },
+ {
+  "id": "frost-brand",
+  "action": "skip",
+  "conditional": false,
+  "quote": "While wielding it, you gain fire resistance 5.",
+  "skipReason": "Already present: passiveEffects.resistances fire 5. Wielding is the item's normal equipped state, so passive is correct. Verified against AoN mirror equipment-387.json."
+ },
+ {
+  "id": "slithermaws-bane-heroic",
+  "action": "skip",
+  "conditional": false,
+  "quote": "grants his wearer poison resistance 15",
+  "skipReason": "Already present: passiveEffects.resistances poison 15. The Terrain Adaptation activation's protection from severe/extreme heat or cold is conditional (once per hour, one terrain choice, until next daily preparations) and correctly not passive. No senses authored: the low-light vision line is the intelligent armour's own Perception block, not the wearer's."
+ },
+ {
+  "id": "sorshens-scintillating-garment",
+  "action": "skip",
+  "conditional": false,
+  "quote": "you're immune to mental effects unless you choose otherwise",
+  "skipReason": "Already present: passiveEffects.immunities ['mental']. The 'unless you choose otherwise' opt-out is a waiver, not a condition on the immunity, so passive is correct. Not in the AoN mirror — record text is ground truth."
+ },
+ {
+  "id": "icicle",
+  "action": "skip",
+  "conditional": false,
+  "quote": "While wielding it, you gain fire resistance 5.",
+  "skipReason": "Already correct: passiveEffects.resistances already carries fire 5. Nothing else in the text is passive — Quench Flames and Ice Spike are both Activate-gated and grant no defence."
+ },
+ {
+  "id": "storm-herald",
+  "action": "skip",
+  "conditional": false,
+  "quote": "granting you resistance 5 to electricity and sonic damage",
+  "skipReason": "Already correct: passiveEffects.resistances already carries electricity 5 and sonic 5. Call the Storm is an activation that deals damage, granting no defence."
+ },
+ {
+  "id": "ghoul-hide",
+  "action": "skip",
+  "conditional": false,
+  "quote": "makes you immune to the stench of ghouls",
+  "skipReason": "Already correct: passiveEffects.immunities already carries 'ghoul stench'. The other printed benefit is a +1 item bonus to saves vs curses (and a resilient-rune interaction) — a save bonus, not an IWR entry, so out of scope here. Verified against AoN mirror equipment-3272.json."
+ },
+ {
+  "id": "heavenly-rolling-flames",
+  "action": "skip",
+  "conditional": false,
+  "quote": "While wielded, you gain cold resistance 2",
+  "skipReason": "Already correct: passiveEffects.resistances already carries cold 2. 'Treat the effects of environmental cold as one degree lower' is an environment rule, not IWR; both activations grant no defence."
+ },
+ {
+  "id": "navaratna-of-the-solar-ruby",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You are also immune to damage from starvation.",
+  "skipReason": "Already correct: passiveEffects.immunities already carries 'starvation'. The text explicitly disclaims anything further — it does not otherwise grant resistance against damage — so no additional IWR may be written. Verified against AoN mirror equipment-3480.json."
+ },
+ {
+  "id": "final-scalecloak",
+  "action": "skip",
+  "conditional": false,
+  "quote": "resistance 15 to physical and precision damage, immunity to electricity, and a Fly speed of 60 feet",
+  "skipReason": "Already correct and complete: physical 15, precision 15, immunity electricity, and speeds.fly 60 are all present. 'Unaffected by strong winds while flying' is not IWR/sense; Embody the Storm grants an AC bonus and is activation-gated."
+ },
+ {
+  "id": "choral-toga",
+  "action": "skip",
+  "conditional": true,
+  "quote": "You gain resistance to poison 20 and become immune to deafened.",
+  "skipReason": "Already correct: poison 20 and immunity 'deafened' are both present. The remaining defences are conditional and correctly absent from passiveEffects — Elysium's Gasp grants immunity to inhaled poisons for 1 minute on a trigger, and Elysium's Breath grants 8-hour immunity to inhaled diseases only after a 1-minute activation."
+ },
+ {
+  "id": "zeto-geki-hide-armor",
+  "action": "skip",
+  "conditional": true,
+  "quote": "you gain resistance 5 to bludgeoning, piercing, and slashing damage",
+  "skipReason": "The only passive defence is the fire-resistant armour rune on the '+1 fire-resistant hide armor' base, and fire 5 is already present. The quoted bludgeoning/piercing/slashing 5 comes solely from the Shift Scales activation and lasts only until the end of your next turn (and costs 10 feet of Speed), so it is conditional and must not be written as passive. Verified against AoN mirror equipment-3667.json."
+ },
+ {
+  "id": "cindergrass-cloak",
+  "action": "skip",
+  "conditional": true,
+  "quote": "While wearing this cloak, you have resistance 5 to fire.",
+  "skipReason": "Already correct: fire 5 is present. The increase to fire resistance 15 applies only against a single triggering effect via the Shed Cinders reaction (and can break the cloak), so it is conditional and correctly excluded."
+ },
+ {
+  "id": "aurochs-hide-armor",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to poison damage.",
+  "skipReason": "Already correct: passiveEffects.resistances already carries poison 5. Stubborn Skin is an activation granting save modifiers, not IWR."
+ },
+ {
+  "id": "heros-plate",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to mental damage",
+  "skipReason": "Already correct: passiveEffects.resistances already carries mental 5. The +1 status bonus to saves against fear is a save bonus, not IWR; Personal Legend is activation-gated."
+ },
+ {
+  "id": "greater-heros-plate",
+  "action": "skip",
+  "conditional": false,
+  "quote": "the resistance increases to 10",
+  "skipReason": "Already correct: passiveEffects.resistances already carries mental 10, matching the greater version's uplift from the base item's mental 5."
+ },
+ {
+  "id": "anima-robe-artifact",
+  "action": "skip",
+  "conditional": false,
+  "quote": "you gain resistance 15 to mental damage",
+  "skipReason": "Already correct: passiveEffects.resistances already carries mental 15 (the non-artifact Anima Robe prints 10, confirming the artifact's uplift — AoN mirror equipment-3697.json). Deliberately NOT authoring senses: 'precise low-light vision and hearing within 30 feet' is the intelligent item's OWN Perception entry, not a sense granted to the wearer."
+ },
+ {
+  "id": "slithermaws-bane-artifact",
+  "action": "skip",
+  "conditional": true,
+  "quote": "grants his wearer poison resistance 15",
+  "skipReason": "Already correct: passiveEffects.resistances already carries poison 15. The resilient-rune uplift to +4 vs poison is a save bonus, not IWR. The Adaptation activation's protection from severe/extreme heat or cold is conditional (once per hour, chosen terrain, expires at daily preparations) and correctly excluded."
+ },
+ {
+  "id": "ankhrav-carapace",
+  "action": "skip",
+  "conditional": false,
+  "quote": "you gain resistance 2 to acid damage",
+  "skipReason": "Already correct: passiveEffects.resistances already carries acid 2. The Dig activation grants a burrow Speed for 1 minute, which is conditional and not a defence."
+ },
+ {
+  "id": "belkzen-deadsmasher",
+  "action": "skip",
+  "conditional": false,
+  "quote": "grants void resistance 5 to any living creature who wields it",
+  "skipReason": "Already correct: passiveEffects.resistances already carries void 5. Untouchable Spirit is a triggered fortune reroll, not an IWR entry."
+ },
+ {
+  "id": "greater-belkzen-deadsmasher",
+  "action": "skip",
+  "conditional": false,
+  "quote": "grants its wielder void resistance 10",
+  "skipReason": "Already correct: passiveEffects.resistances already carries void 10, matching the greater version's uplift from the base item's void 5."
+ },
+ {
+  "id": "fireproof-gloves",
+  "action": "skip",
+  "conditional": false,
+  "quote": "When wearing these gloves, you gain fire resistance 5.",
+  "skipReason": "Already correct: passiveEffects.resistances already carries fire 5. Release Heat is an activation that deals damage, granting no defence."
+ },
+ {
+  "id": "greater-fireproof-gloves",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain fire resistance 10 when wearing the gloves.",
+  "skipReason": "Already correct: passiveEffects.resistances already carries fire 10, matching the greater version's uplift from the base item's fire 5."
+ },
+ {
+  "id": "pickled-demon-tongue",
+  "action": "author",
+  "conditional": false,
+  "quote": "Armor You gain resistance 2 to acid and attacks by demons.",
+  "passiveEffects": {
+   "resistances": [
+    {
+     "type": "acid",
+     "value": 2
+    },
+    {
+     "type": "attacks by demons",
+     "value": 2
+    }
+   ]
+  }
+ },
+ {
+  "id": "elemental-wayfinder-fire",
+  "action": "skip",
+  "conditional": false,
+  "quote": "Additionally, you gain resistance 5 to fire.",
+  "skipReason": "Already present: passiveEffects.resistances = [fire 5] in public/core.json. Matches AoN mirror equipment/equipment-470-877.json exactly. The Fireball activation is the only other clause and grants no defence."
+ },
+ {
+  "id": "dragonscale-amulet",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to acid, cold, electricity, fire, and poison.",
+  "skipReason": "Already present: passiveEffects.resistances = [acid 5, cold 5, electricity 5, fire 5, poison 5]. Verified against AoN equipment-540.json. The escalation to 20 is conditional (only for 10 minutes after taking that damage type from a dragon's Breath Weapon) and correctly excluded."
+ },
+ {
+  "id": "numerian-steel-breastplate",
+  "action": "skip",
+  "conditional": false,
+  "quote": "granting the wearer fire resistance 5",
+  "skipReason": "Already present: passiveEffects.resistances = [fire 5]. Matches AoN equipment-811.json. The once-per-day electric field is an activation and grants no defence."
+ },
+ {
+  "id": "diviners-nose-chain",
+  "action": "skip",
+  "conditional": false,
+  "quote": "The diviner's nose chain grants you scent out to 30 feet as an imprecise sense",
+  "skipReason": "Already present: passiveEffects.senses = [scent, range 30, imprecise]. Matches AoN equipment-855.json. The +1 item bonus to Seek/Sense Motive is a skill bonus, not a defence, and out of scope for this lane."
+ },
+ {
+  "id": "oath-of-the-devoted",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain fire and mental resistance 5.",
+  "skipReason": "Already present: passiveEffects.resistances = [fire 5, mental 5]. Matches AoN equipment-958.json. The rise-as-zombie clause and the once-per-day Will bonus are not IWR."
+ },
+ {
+  "id": "scarab-cuirass",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to void damage.",
+  "skipReason": "Already present: passiveEffects.resistances = [void 5]. AoN mirror (equipment-1243.json) carries the pre-remaster wording 'resistance 5 to negative damage'; the stored 'void' is the correct remaster mapping and the work-file text already says void."
+ },
+ {
+  "id": "psychic-brigandine",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to mental damage.",
+  "skipReason": "Already present: passiveEffects.resistances = [mental 5]. Matches AoN equipment-1301.json. The extra mental-effect check applies only while invisible, so it is conditional and rightly not passive."
+ },
+ {
+  "id": "energy-robe-fire",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to fire.",
+  "skipReason": "Already present: passiveEffects.resistances = [fire 5]. Matches AoN equipment-1317-1216.json. The variant text block lists all four robes; only the fire line applies to this record and the +30-foot Speed is activation-only."
+ },
+ {
+  "id": "energy-robe-cold",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to cold.",
+  "skipReason": "Already present: passiveEffects.resistances = [cold 5]. Correct variant assignment confirmed against AoN equipment-1317-1217.json; water walk is activation-only."
+ },
+ {
+  "id": "energy-robe-acid",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to acid.",
+  "skipReason": "Already present: passiveEffects.resistances = [acid 5]. Correct variant assignment confirmed against AoN equipment-1317-1218.json; climb Speed is activation-only."
+ },
+ {
+  "id": "energy-robe-electricity",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to electricity.",
+  "skipReason": "Already present: passiveEffects.resistances = [electricity 5]. Correct variant assignment confirmed against AoN equipment-1317-1219.json; fly Speed is activation-only."
+ },
+ {
+  "id": "crown-of-the-fire-eater",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You gain resistance 5 to fire.",
+  "skipReason": "Already present: passiveEffects.resistances = [fire 5]. Matches AoN equipment-1435-1357.json (base crown). The increase to 15 is a triggered once-per-day activation; the 10/15 constants belong to the Greater/Major variants, which are separate records not in this batch."
+ },
+ {
+  "id": "mantle-of-the-grogrisant",
+  "action": "skip",
+  "conditional": false,
+  "quote": "The Mantle of the Grogrisant grants you fire resistance 15 and physical resistance 5 (except bludgeoning).",
+  "skipReason": "Already present: passiveEffects.resistances = [fire 15, piercing 5, slashing 5]. The 'physical except bludgeoning' exception is correctly decomposed into piercing + slashing, which loses nothing. Matches AoN equipment-1476.json."
+ },
+ {
+  "id": "redsand-hourglass",
+  "action": "skip",
+  "conditional": false,
+  "quote": "While the hourglass is in your possession, you're immune to the paralyzed, slowed, and stunned conditions.",
+  "skipReason": "Already present: passiveEffects.immunities = [paralyzed, slowed, stunned]. Matches AoN equipment-1815.json. All three Activate entries are time-manipulation effects with no defensive grant."
+ },
+ {
+  "id": "arachnid-harness",
+  "action": "skip",
+  "conditional": false,
+  "quote": "The armor grants you resistance 2 to poison damage.",
+  "skipReason": "Already present: passiveEffects.resistances = [poison 2]. Base-item value confirmed against AoN equipment-1839-1600.json. The spider-limb climb Speed is activation-only."
+ },
+ {
+  "id": "arachnid-harness-greater",
+  "action": "skip",
+  "conditional": false,
+  "quote": "The armor grants you resistance 5 to poison damage.",
+  "skipReason": "Already present: passiveEffects.resistances = [poison 5]. Greater-variant value confirmed against the AoN variant line 'the resistance is 5' (equipment-1839-1601.json)."
+ },
+ {
+  "id": "the-deck-of-destiny",
+  "action": "skip",
+  "conditional": false,
+  "quote": "granting you immunity to fortune and misfortune effects",
+  "skipReason": "Already present: passiveEffects.immunities = [fortune, misfortune]. The immunity holds while the complete deck is carried and invested, so it is passive; the opt-in rider ('though you can be affected by such effects if you wish') does not make it situational. The three Activate entries grant no defence."
+ },
+ {
+  "id": "robe-of-stone",
+  "action": "skip",
+  "conditional": false,
+  "quote": "While wearing it, you gain imprecise tremorsense in a radius of 10 feet",
+  "skipReason": "Already present: passiveEffects.senses = [tremorsense, range 10, imprecise]. Matches AoN equipment-2593.json. The increase to 30 feet applies only while the Become Stone activation is running, so it is correctly excluded."
+ },
+ {
+  "id": "ash-gown",
+  "action": "skip",
+  "conditional": false,
+  "quote": "The gown grants you resistance 5 to fire and a +1 item bonus to Intimidation checks.",
+  "skipReason": "Already present: passiveEffects.resistances = [fire 5] plus passiveEffects.skills.intimidation = 1. Base-item values confirmed against AoN equipment-2599-2354.json; the fire 10 / Intimidation +2 line belongs to Ash Gown (Greater), a separate record."
+ },
+ {
+  "id": "demons-knot",
+  "action": "skip",
+  "conditional": false,
+  "quote": "You become immune to the confused and controlled conditions. ... You gain weakness to cold iron 10 and holy 10.",
+  "skipReason": "Already present: passiveEffects.weaknesses = [cold-iron 10, holy 10] and passiveEffects.immunities = [confused, controlled]. AoN equipment-2674.json carries the pre-remaster 'good 10'; the stored 'holy' is the correct remaster mapping. The -1 Will penalty is an aura on other creatures, and the frightened-near-celestials clause is conditional, so neither belongs here."
+ }
+]

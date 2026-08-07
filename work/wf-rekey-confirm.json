@@ -1,0 +1,290 @@
+[
+ {
+  "id": "lesser-crimson-godsblood-serum",
+  "ownable": true,
+  "ok": true,
+  "problem": "Exists in items, priced 50 gp, level 6; not aon-, not in NEAR_DUPLICATE_IDS, not caught by findUmbrellaIds (only the unpriced head crimson-godsblood-serum is). Printed line verbatim: 'The potion grants a +2 status bonus and restores 2d8+5 Hit Points.' Family text: 'status bonus to physical damage rolls for 1 minute' and the 0-HP clause (avoid knocked out, confused 1 round, wounded +1) both match. Grades differ (+2/+3/+4, 2d8+5 / 3d8+10 / 6d8+20), so no copy artifact."
+ },
+ {
+  "id": "moderate-crimson-godsblood-serum",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 400 gp, level 12. Printed verbatim: 'The potion grants a +3 status bonus and restores 3d8+10 Hit Points.' Bonus type (status), target (physical damage rolls, 1 minute) and HP clause all match."
+ },
+ {
+  "id": "greater-crimson-godsblood-serum",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 5,000 gp, level 18. Printed verbatim: 'The potion grants a +4 status bonus and restores 6d8+20 Hit Points.' Matches."
+ },
+ {
+  "id": "essence-forge-lesser",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 250 gp, level 6. Own description: 'granting a +1 item bonus to the skill you used to Prime the Forge for the next 24 hours'; head text confirms 'DC 20 check to use the forge... you gain a +1 item bonus'. Skill set Arcana/Nature/Occultism/Religion matches 'Attempt an Arcana, Nature, Occultism, or Religion check'. DC 20/30/40 and +1/+2/+3 differ per grade. Incomplete but not wrong: the Absorb Essence healing (50 gp -> 3d8+10 HP) is not modelled."
+ },
+ {
+  "id": "essence-forge-moderate",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 2,000 gp, level 12. Own text: '+2 item bonus ... for the next 24 hours', head text 'DC 30 check to use the forge ... +2 item bonus'. Matches. Absorb Essence healing (400 gp -> 6d8+20 HP) omitted."
+ },
+ {
+  "id": "essence-forge-greater",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 24,000 gp, level 18. Own text: '+3 item bonus ... 24 hours', head text 'DC 40 check ... +3 item bonus'. Matches. Absorb Essence healing (5,000 gp -> 8d8+30 HP) omitted."
+ },
+ {
+  "id": "champions-laurels-amateur",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 6 gp, level 2. Trigger/Requirements quoted verbatim from the head; own description: '+1 status bonus to the triggering check. If you critically succeed ... you gain 2 temporary Hit Points that last for 1 minute.' Temp HP 2 = item level 2. Correct."
+ },
+ {
+  "id": "champions-laurels-professional",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 160 gp, level 10. Own description: '+2 status bonus ... you gain 10 temporary Hit Points'. Temp HP 10 = item level 10. Correct and distinct from the other grades."
+ },
+ {
+  "id": "champions-laurels-renowned",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 3,200 gp, level 18. Own description: '+3 status bonus ... you gain 18 temporary Hit Points'. Temp HP 18 = item level 18. Correct."
+ },
+ {
+  "id": "privacy-ward-fulu-hallway",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 4 gp, level 1. Own description carries both quoted sentences verbatim: the Stealth-vs-outside framing and 'The privacy ward fulu can shield a room of up to 10 square feet, grants a +1 item bonus, and has a duration of 1 hour.' No undetected clause at this grade, and the entry correctly omits it."
+ },
+ {
+  "id": "privacy-ward-fulu-room",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 25 gp, level 5. Own description verbatim: '30 square feet, grants a +1 item bonus ... duration of 8 hours' plus the undetected clause. 'creatures of the fulu's level or lower' resolved to level 5 = this record's level, correct. NOTE the +1 is shared with the Hallway grade, but that is the printed value for both (they differ by area and duration), verified from each record's own text, not a re-key copy."
+ },
+ {
+  "id": "privacy-ward-fulu-chamber",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 120 gp, level 9. Own description verbatim: '90 square feet, grants a +2 item bonus ... duration of 24 hours' plus the undetected clause; 'fulu's level or lower' resolved to level 9 = this record's level, correct."
+ },
+ {
+  "id": "exploration-lens-detecting",
+  "ownable": true,
+  "ok": true,
+  "problem": "Exists in items, priced 1,000 gp, not umbrella (head `exploration-lens` IS umbrella-hidden, correct replaces target), not aon-. Own description contains the quote verbatim; +2 item to Identify Magic (arcana/nature/occultism/religion) matches. Family is by type, not grade: +2 / +1 / +2 are genuinely different per record."
+ },
+ {
+  "id": "exploration-lens-investigating",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 1,750 gp, not umbrella/duplicate. Own text: \"+1 item bonus to skill checks to Recall Knowledge while Investigating\" — skill:all + '+1 item' matches."
+ },
+ {
+  "id": "exploration-lens-searching",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 4,000 gp, not umbrella/duplicate. Own text: \"+2 item bonus to Perception checks to spot such features while Searching\" — perception + '+2 item' matches."
+ },
+ {
+  "id": "red-rib-gill-mask-lesser",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 7 gp, not umbrella/duplicate. Own description carries the grade line verbatim under \"Type: Lesser\": +1, +2 vs Dead Man's Breath, 10 minutes. Base text (also in this record) confirms the target is Fortitude saves vs inhaled effects."
+ },
+ {
+  "id": "red-rib-gill-mask-moderate",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 100 gp. Own text: +2 / +3 vs Dead Man's Breath / 1 hour — distinct from both siblings, so not a copied re-key."
+ },
+ {
+  "id": "red-rib-gill-mask-greater",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 700 gp. Own text: +3 / +4 vs Dead Man's Breath / 8 hours — matches."
+ },
+ {
+  "id": "midnight-milk-experimental",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 30 gp, not umbrella/duplicate. Own text: \"Stage 1 +2 item bonus to Perception (1 hour)\". Caveat: the DC 19 cited in the `when` is NOT in this record's own description (its Saving Throw line was stripped of the DC by the import) — it comes from the family head's per-grade line, where it is correctly this grade's DC. The bonus value/type/target itself is fully verified."
+ },
+ {
+  "id": "midnight-milk-refined",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 400 gp. Own text: \"Stage 1 +3 item bonus to Perception (1 hour)\". Same DC caveat (DC 29 sourced from the head's Refined line, not this record's own stripped Saving Throw line)."
+ },
+ {
+  "id": "midnight-milk-pure",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 14,000 gp. Own text: \"Stage 1 +3 item bonus to Perception checks and Will saving throws\" — both targets and the +3 verified. Note Refined and Pure share +3 to Perception; I checked the source text specifically for a copied re-key and it is genuine — Pure differs by adding Will saves and by having no listed duration (correctly omitted from the entry). DC 43 has the same head-sourced caveat."
+ },
+ {
+  "id": "crimson-godsblood-serum-lesser",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 50 gp, not umbrella/duplicate. The literal `quote` string is taken from the family head, not this record's own description — but the record's own text independently states \"+2 status bonus to physical damage rolls\" and \"regain 2d8+5 Hit Points\", so value, type and target all match this record. Targeting both strikeDamage and spellDamage is defensible for \"physical damage rolls\"; both are prose-only surfaces."
+ },
+ {
+  "id": "crimson-godsblood-serum-moderate",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 400 gp. Same head-sourced-quote caveat; record's own text confirms \"+3 status bonus to physical damage rolls\" and \"regain 3d8+10 Hit Points\"."
+ },
+ {
+  "id": "crimson-godsblood-serum-greater",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 5,000 gp. Same head-sourced-quote caveat; record's own text confirms \"+4 status bonus to physical damage rolls\" and \"regain 6d8+20 Hit Points\". All three grades differ (+2/+3/+4, 2d8+5 / 3d8+10 / 6d8+20)."
+ },
+ {
+  "id": "gravelands-herbalist",
+  "ownable": true,
+  "ok": true,
+  "problem": "Feat exists in core.json (level 4, Knights of Lastwall archetype); not an item so no price needed, not umbrella, not aon-. Its own printed text reads \"At 10th level, you can make Lastwall Soup (Improved) that grants a +3 item bonus. At 18th level, ... Lastwall Soup (Greater) that grants a +4 item bonus, and ... 10 temporary Hit Points that last up to 10 minutes\" — so +3/+4 item and the 10 temp HP / 10 min all match, and the two grades carry different numbers. Target (Stealth checks and DCs vs undead) is not in the feat's own text but is the bonus the referenced soup grants (lastwall-soup: \"+2 item bonus to Stealth checks and DCs against undead\"), so it is the correct target. FYI conflict for the parent: the app's own item lastwall-soup-greater prints \"+3 item bonus\" (AoN's item text disagrees with the feat's +4); the entry follows the feat, which is the record being authored. No existing registry entry for this id."
+ },
+ {
+  "id": "dragon-transformation",
+  "ownable": true,
+  "ok": true,
+  "problem": "Feat exists (level 16 barbarian); also a stances entry of the same id, but FEAT_SITUATIONAL is keyed by feat id so no clash. Not an item, not umbrella, not aon-, not in EXCLUDED_FEATS. Printed text verbatim: \"you use your own AC and attack modifier, you apply your extra damage from Rage, and the Dragon Breath action uses your class DC ... At 18th level, you gain a +20-foot status bonus to your fly Speed, your damage bonus with dragon Strikes increases to +12, and you gain a +14 status bonus to your Dragon Breath damage.\" All four sub-entries match value, type and target; the three graded numbers (+20 ft, +12, +14) are distinct. No existing registry entry."
+ },
+ {
+  "id": "alacritous-horseshoes",
+  "ownable": true,
+  "ok": true,
+  "problem": "Item exists, priced 340 gp, level 7, has passiveEffects {speedBonus:5} so it can never be umbrella-flagged; not aon-. Own text: \"a +2 circumstance bonus to Athletics checks to High Jump and Long Jump\" — value, type and target all match. Redundancy warning: this exact entry already ships at src/rules/situationalBonuses.ts:2243, character-for-character identical. Re-authoring it would add a duplicate key to the FEAT_SITUATIONAL object literal (one literal spanning lines 84-3065)."
+ },
+ {
+  "id": "alacritous-horseshoes-greater",
+  "ownable": true,
+  "ok": false,
+  "problem": "Ownable is fine (priced 4,250 gp, level 14, passiveEffects {speedBonus:10}, not umbrella, not aon-, no existing registry entry). But the BONUS TYPE is wrong. This record's own printed text reads: \"that creature gains a +10-foot item bonus to its land Speed and a +3 ITEM bonus to Athletics checks to High Jump and Long Jump.\" The entry says \"+3 circumstance\" — the type was copied from the base record (which does print \"+2 circumstance\") instead of read off this one. The value +3 and the target are right; only the type is wrong. Also, the supplied quote is not this record's text: there is no \"Alacritous Horseshoes (Greater): The bonus to Speed is +10 feet, and the bonus to Athletics checks is +3\" line anywhere in core-descriptions.json — the greater item carries a full standalone paragraph, and the quote appears to have been reconstructed rather than read."
+ },
+ {
+  "id": "addiction-suppressant-lesser",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 2 gp, level 1, not umbrella, not aon-. The `replaces` is correct: base addiction-suppressant is unpriced with 4 kin and no mechanical field, so findUmbrellaIds hides it (I re-ran the real algorithm: umbrella=true). Own text: \"You also gain a +1 item bonus against the ongoing save against the drug's addiction\" — value and type match, and the four grades print four different numbers. Fortitude is the right save (addiction is an affliction). Redundancy: already shipped verbatim at situationalBonuses.ts:2359."
+ },
+ {
+  "id": "addiction-suppressant-moderate",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 30 gp, level 6, not umbrella, not aon-; base correctly identified as umbrella-hidden. Own text prints \"+2 item bonus against the ongoing save against the drug's addiction\" — matches. Redundancy: already shipped verbatim at situationalBonuses.ts:2361."
+ },
+ {
+  "id": "addiction-suppressant-greater",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 140 gp, level 10, not umbrella, not aon-. Own text prints \"+3 item bonus against the ongoing save against the drug's addiction\" — matches. Redundancy: already shipped verbatim at situationalBonuses.ts:2358."
+ },
+ {
+  "id": "addiction-suppressant-major",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 500 gp, level 14, not umbrella, not aon-. Own text prints \"+4 item bonus against the ongoing save against the drug's addiction\" — matches. Redundancy: already shipped verbatim at situationalBonuses.ts:2360."
+ },
+ {
+  "id": "noqual-armor-standard-grade",
+  "ownable": true,
+  "ok": false,
+  "problem": "Ownable is fine (priced 1,600 gp, level 12, not umbrella, not aon-; base `noqual` is correctly umbrella-hidden — unpriced, 13 kin, no mechanical field). Two problems with `ok`. (1) The +4 circumstance save clause is NOT in this record's own printed text — it appears only on the family head `noqual` (\"Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic\"), and all four proposed noqual entries carry the identical number, the exact signature the brief warns about. What this record actually prints is different: \"While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails.\" (2) DESTRUCTIVE COLLISION: this id already has an entry at situationalBonuses.ts:1135 — `[{ targets: [{ kind: 'ac' }], when: \"against spell attack rolls, while wearing the noqual armor\", bonus: \"+1 circumstance\" }]`. FEAT_SITUATIONAL is one object literal (lines 84-3065), so authoring this as a new single-element array would overwrite and silently delete the correct record-specific entry. Note for the parent: the +4 value itself IS rules-correct and matches the shipped sovereign-steel precedent (lines 912-913, 2710-2711, 3061-3065) — but there the +4 line sits ALONGSIDE the +1 AC line in the same array. The fix is to APPEND, not replace."
+ },
+ {
+  "id": "noqual-armor-high-grade",
+  "ownable": true,
+  "ok": false,
+  "problem": "Ownable is fine (priced 32,000 gp, level 19, not umbrella, not aon-). Same two failures as the standard grade. Its description text is byte-identical to noqual-armor-standard-grade — there is no per-grade text at all, so nothing in this record prints a +4 or any save clause; that comes from the umbrella head `noqual`. And situationalBonuses.ts:1136 already holds the record-correct `[{ kind: 'ac' }] ... \"+1 circumstance\"` entry that this proposal would clobber. Correct action is to append the +4 save line to the existing array (as sovereign-steel-armor-high-grade does at line 913), not to author a replacement."
+ },
+ {
+  "id": "noqual-weapon-standard-grade",
+  "ownable": true,
+  "ok": false,
+  "problem": "Ownable is fine (priced 1,600 gp, level 12, not umbrella, not aon-). Same two failures. This record's own printed text is about damage, not saves: \"Against such targets, a Strike with a noqual weapon gains a circumstance bonus to damage equal to twice the number of weapon damage dice ... stupefied 1 for 1 round on a critical hit\" — no +4, no save clause. And situationalBonuses.ts:1138 already holds `[{ kind: 'strikeDamage' }] ... \"+2 circumstance per weapon damage die\"`, which this proposal would overwrite in the shared FEAT_SITUATIONAL literal. Append (cf. sovereign-steel-weapon-standard-grade at line 2711), do not replace."
+ },
+ {
+  "id": "noqual-weapon-high-grade",
+  "ownable": true,
+  "ok": false,
+  "problem": "Ownable is fine (priced 24,000 gp, level 18, not umbrella, not aon-). Same two failures: description is byte-identical to the standard grade and prints only the summoned-creature damage rule plus the stupefied rider, never a +4 or a save; and situationalBonuses.ts:1139 already holds the correct `[{ kind: 'strikeDamage' }] ... \"+2 circumstance per weapon damage die\"` entry that this would clobber. Append the +4 save line (cf. sovereign-steel-weapon-high-grade at line 2710) rather than authoring a replacement."
+ },
+ {
+  "id": "conrasu-coin-arbiter",
+  "ownable": true,
+  "ok": true,
+  "problem": "Clean. items['conrasu-coin-arbiter'], Item 3, price 7 gp (AoN mirror: 700 cp). Not umbrella (the unpriced head 'conrasu-coin' IS umbrella:true, correctly the `replaces` target), not aon-hidden. Own text: '+2 circumstance bonus on the Diplomacy check, which increases to a +3 circumstance bonus to make-an-impression on a creature with the aeon trait' — value/type/target all match, and +2/+3 differ from the bythos coin's +2 AC, so no cross-grade copy. Note only: the record is a one-use talisman (uses 1/1, consumable+talisman traits); the `when` says free action/concentrate, which matches the record's ⟨4⟩ + (concentrate) glyphs (legacy AoN prints 'Free Action envision', and legacy also says 'lawful creature' where this remaster record says 'aeon trait' — the entry correctly quotes THIS record)."
+ },
+ {
+  "id": "conrasu-coin-bythos",
+  "ownable": true,
+  "ok": true,
+  "problem": "Clean. items['conrasu-coin-bythos'], Item 10, price 200 gp (mirror: 20000 cp). Own text: '+2 circumstance bonus to AC against the attack, and after resolving the attack, you can Stride up to 10 feet without triggering reactions… 20 feet with Nimble Roll if it misses' — value, type and AC target all match, trigger wording matches. Note only: also a one-use talisman (uses 1/1) and the entry's prose doesn't say so, but the record's own `uses` pips carry that."
+ },
+ {
+  "id": "fixer-basic-informant",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 5 sp; the unpriced 'aon-fixer' is duplicate:true (correct `replaces`), and the non-aon 'fixer' head is a separate visible record. Printed: '+1 circumstance bonus' for an informant — value and type match, and it differs from the expert's +2, so not a copied grade. Precision note only: targets skill:'all' where the printed actions are Gather Information (Diplomacy-only) and Recall Knowledge (any skill), so it will star every skill for the Gather Information half; the existing registry entry at situationalBonuses.ts:1026 splits those two into diplomacy + all."
+ },
+ {
+  "id": "fixer-expert-informant",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 1 gp, not hidden. Printed verbatim: 'An expert informant critically succeeds at Aiding you, granting a +2 circumstance bonus.' Value/type match and differ from the basic grade. Same skill:'all' coarseness note as the basic informant."
+ },
+ {
+  "id": "fixer-basic-councelor",
+  "ownable": true,
+  "ok": false,
+  "problem": "ownable is fine (priced 1 gp, not umbrella, not aon-hidden). ok fails the stated test: the +1 is NOT in this record's printed text. Both core-descriptions and the AoN mirror print a number only for the EXPERT counselor ('+2 circumstance'); the basic-counselor sentence says only 'A counselor automatically Aids you on attempts to Impersonate, Lie, Make an Impression, and Request…' with no value. The entry's own `when` concedes this ('the text prints only the expert's number, so the base value is the standard successful-Aid bonus'), i.e. it is a rules inference from generic Aid, not a reading of the record. Defaulting to false as instructed. (The targets — deception for Impersonate/Lie, diplomacy for Make an Impression/Request — are correct, and the same +1 already sits in the registry at situationalBonuses.ts:2220, so this is a pre-existing inference rather than a new one.)"
+ },
+ {
+  "id": "fixer-expert-councelor",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 2 gp, not hidden. Printed verbatim: 'An expert counselor critically succeeds at Aiding you, granting a +2 circumstance bonus.' Targets deception (Impersonate, Lie) + diplomacy (Make an Impression, Request) match the printed action list; +2 differs from the basic grade."
+ },
+ {
+  "id": "busine-of-divine-reinforcement",
+  "ownable": true,
+  "ok": true,
+  "problem": "Clean. Item 15, price 6,000 gp (mirror: 600000 cp), Usage held in 2 hands. 'aon-busine-of-divine-reinforcement' is duplicate:true, so the `replaces` target is right. Printed: '+2 item bonus to Performance checks' when played as an instrument — value, item type and Performance target all match."
+ },
+ {
+  "id": "sleuths-pipe",
+  "ownable": false,
+  "ok": true,
+  "problem": "ownable FALSE: items['sleuths-pipe'] has no `price` key at all, and the AoN mirror confirms the record genuinely prints no Price line — it is a relic seed (traits magical+relic, Treasure Vault pg. 205), not a purchasable item. It is not umbrella-hidden (0 kin) and not aon-hidden (the duplicate is 'aon-sleuth-s-pipe'), so it is visible; it simply fails the 'if it is an item it has a price' condition. The bonus itself is right: printed '+1 item bonus to Perception checks to Sense Motive, and if you're an investigator, any checks you make to Pursue a Lead' — both rows match, and the second row's perception+skill:'all' is actually more faithful to 'any checks' than the current registry entry at situationalBonuses.ts:1513."
+ },
+ {
+  "id": "medal-of-gorillas-might",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 25 gp (mirror: 2500 cp), Item 3, not umbrella, not aon-hidden; 'aon-magical-medals' (the `replaces` target) is both umbrella:true and duplicate:true. Printed: '+1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump' plus 'Activate—Gorila's Second Leap Reaction (concentrate, fortune) Frequency once per day… You reroll the failed check' — both rows match, and the AoN mirror confirms Reaction. A non-numeric `bonus` string is legal (SituationalBonus.bonus is documented as 'a modifier … or a short effect phrase'). Data note, not a defect in this entry: core.json carries a SECOND, parallel medal family — magical-medal-gorillas-might / -griffons-heart / -wolf-pack / -unicorns-purity / -phoenixs-fire, same prices, already holding their own situational rows (situationalBonuses.ts:1926-1928), and itemAliases.ts:176-180 routes the aon- medal ids to THAT spelling. Authoring only the medal-of-* ids leaves the twin family stale."
+ },
+ {
+  "id": "medal-of-griffons-heart",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 80 gp (mirror: 8000 cp), Item 4, not hidden. Printed: '+1 item bonus to saving throws against fear and mental effects' — value, item type and save:'all' target all match. Distinct from its kin (gorilla +1 item Athletics, wolf +2 circumstance damage), so no copied-number artifact; the innate forbidding ward is already on the record as `innateSpells`. Same magical-medal-griffons-heart twin note as above."
+ },
+ {
+  "id": "medal-of-the-wolf-pack",
+  "ownable": true,
+  "ok": true,
+  "problem": "Priced 350 gp (mirror: 35000 cp), Item 7, not hidden. Printed: '+2 circumstance bonus to damage rolls against enemies you are flanking' — value and circumstance type match. Target note: strikeDamage is the only damage target the vocabulary offers, so it narrows 'damage rolls' to Strikes; the entry discloses that in its `when`. Same magical-medal-wolf-pack twin note as above."
+ },
+ {
+  "id": "emotion-surge",
+  "ownable": false,
+  "ok": true,
+  "problem": "ownable FALSE: items['emotion-surge'] has no `price` key, and the AoN mirror files it under category `relic` (/Relics.aspx?ID=204), not equipment — it is a Relic Gift mis-imported into `items`, exactly the class of record the UMBRELLA_KEEP comment describes for 'inspiring'. It is not umbrella-hidden (0 kin) and not aon-hidden ('aon-emotion-surge' is the duplicate and the correct `replaces` target), so it is visible, but it fails the priced-item condition and is not something a character buys. The bonus is right: printed '+1 status bonus to skill checks determined by the relic's emotion… lasts 1 minute', Frequency once per hour, and all ten emotion→skill mappings in the `when` (Anger Athletics, Awe Performance, Dedication Recall Knowledge, Fear Stealth, Hatred Intimidation, Joy Diplomacy, Love Medicine, Misery Survival, Pride Society, Remorse Deception) match the printed table exactly — an improvement on the truncated registry row at situationalBonuses.ts:2149."
+ }
+]

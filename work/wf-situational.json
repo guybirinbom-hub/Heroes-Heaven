@@ -1,0 +1,2940 @@
+[
+ {
+  "id": "skeptics-elixir",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain an item bonus to Perception checks and Perception DCs to notice falsehoods, whether they're spoken lies or written deceit. You gain this same item bonus to Will saves.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "after drinking the elixir, to notice falsehoods — spoken lies or written deceit",
+    "bonus": "+1 item (lesser) / +2 (moderate) / +3 (greater)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "will"
+     }
+    ],
+    "when": "for the elixir's duration (1 minute lesser / 10 minutes moderate / 1 hour greater)",
+    "bonus": "+1 item (lesser) / +2 (moderate) / +3 (greater)"
+   }
+  ]
+ },
+ {
+  "id": "malleable-mixture",
+  "collection": "items",
+  "action": "author",
+  "quote": "you gain an item bonus to your Fortitude and Reflex DCs against attempts to Grapple, Shove, or Trip you",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude",
+      "dcOnly": true
+     },
+     {
+      "kind": "save",
+      "detail": "reflex",
+      "dcOnly": true
+     }
+    ],
+    "when": "against attempts to Grapple, Shove or Trip you, while the mixture lasts (1 minute lesser / 10 minutes greater)",
+    "bonus": "+2 item (lesser) / +3 (greater)"
+   }
+  ]
+ },
+ {
+  "id": "noqual",
+  "collection": "items",
+  "action": "author",
+  "quote": "Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect a noqual item of yours from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "noqual-chunk",
+  "collection": "items",
+  "action": "author",
+  "quote": "Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the Rusting Grasp spell).",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this noqual chunk from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "noqual-ingot",
+  "collection": "items",
+  "action": "author",
+  "quote": "Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the Rusting Grasp spell).",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this noqual ingot from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "noqual-object-standard-grade",
+  "collection": "items",
+  "action": "author",
+  "quote": "Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this noqual object from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "noqual-object-high-grade",
+  "collection": "items",
+  "action": "author",
+  "quote": "Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this noqual object from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "noqual-shield",
+  "collection": "items",
+  "action": "author",
+  "quote": "When you have a noqual shield Raised, you gain its circumstance bonus to saving throws against spells that target you (as well as AC).",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against spells that target you, while the noqual shield is Raised",
+    "bonus": "the shield's circumstance bonus (the same one it gives AC)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect your noqual shield from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "exploration-lens",
+  "collection": "items",
+  "action": "author",
+  "quote": "You also gain a +2 item bonus to checks to Identify Magic within the light. … the lens grants you a +1 item bonus to skill checks to Recall Knowledge while Investigating … granting you a +2 item bonus to Perception checks to spot such features while Searching.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "arcana"
+     },
+     {
+      "kind": "skill",
+      "detail": "nature"
+     },
+     {
+      "kind": "skill",
+      "detail": "occultism"
+     },
+     {
+      "kind": "skill",
+      "detail": "religion"
+     }
+    ],
+    "when": "to Identify Magic within the lantern's (or wayfinder's) light, with a Detecting lens",
+    "bonus": "+2 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on Recall Knowledge checks made while Investigating, with an Investigating lens",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "on Perception checks to spot hidden doors and concealed hazards while Searching, with a Searching lens",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "red-rib-gill-mask",
+  "collection": "items",
+  "action": "author",
+  "quote": "After Activating the mask, you also gain the listed item bonus to Fortitude saves against inhaled effects; this bonus is increased against the deadly volcanic gas known around Terwa Lake as Dead Man's Breath",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "against inhaled effects, after you Activate the mask (10 minutes lesser / 1 hour moderate / 8 hours greater)",
+    "bonus": "+1 item (lesser) / +2 (moderate) / +3 (greater)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "against Dead Man's Breath (and similar volcanic gases at the GM's discretion), after you Activate the mask",
+    "bonus": "+2 item (lesser) / +3 (moderate) / +4 (greater)"
+   }
+  ]
+ },
+ {
+  "id": "spiderfoot-brew-major",
+  "collection": "items",
+  "action": "author",
+  "quote": "granting you a climb Speed and an item bonus to Athletics checks made to climb for the listed duration … The climb speed is 25 feet, the item bonus is +3, and the duration is 1 hour.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "while a major spiderfoot brew is active (1 hour), on Athletics checks to Climb",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "qat",
+  "collection": "items",
+  "action": "author",
+  "quote": "Stage 1 +1 item bonus to Reflex saves (10 minutes)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "reflex"
+     }
+    ],
+    "when": "while qat is at stage 1 (10 minutes, after a 10-minute onset); stage 2 makes you stupefied 1",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "grit",
+  "collection": "items",
+  "action": "author",
+  "quote": "Stage 1 +1 item bonus to Athletics, Crafting, and Performance checks (10 minutes) Stage 2 +1 item bonus to Athletics, Crafting, and Performance checks, -2 item penalty to Perception checks (1 hour) Stage 3 -4 item penalty to Perception checks (1 hour)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     },
+     {
+      "kind": "skill",
+      "detail": "crafting"
+     },
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "while grit is at stage 1 (10 minutes) or stage 2 (1 hour), after a 1-minute onset",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "while grit is at stage 2 (1 hour)",
+    "bonus": "-2 item (PENALTY, not a bonus)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "while grit is at stage 3 or stage 4 (1 hour each)",
+    "bonus": "-4 item (PENALTY, not a bonus)"
+   }
+  ]
+ },
+ {
+  "id": "demon-dust",
+  "collection": "items",
+  "action": "author",
+  "quote": "Stage 1 +2 item bonus to Athletics checks and treat up to 4 Bulk as being negligible in weight (1 minute) Stage 2 +2 item bonus to Athletics checks, treat up to 4 Bulk as being negligible in weight, and Stupefied 1 (1 hour)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "while demon dust is at stage 1 (1 minute) or stage 2 (1 hour; stage 2 also makes you stupefied 1)",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "succubus-kiss",
+  "collection": "items",
+  "action": "author",
+  "quote": "Stage 1 +2 item bonus to initiative checks (10 minutes) and to all saving throws against emotion and mental effects",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "initiative"
+     }
+    ],
+    "when": "while succubus kiss is at stage 1 (10 minutes, after a 1-minute onset); stages 2 and 3 carry it too",
+    "bonus": "+2 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against emotion and mental effects, while succubus kiss is at stage 1 (stage 2 adds drained 1; stage 3 adds blindness or deafness)",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "fury-cocktail",
+  "collection": "items",
+  "action": "author",
+  "quote": "Benefit You gain an item bonus to melee attack rolls … Skeptical … You gain a +1 item bonus to saves against magic. This bonus is +2 for a moderate fury cocktail or +3 for a greater fury cocktail. … Drawback You take a –1 penalty to AC and a –2 penalty to Reflex saves.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeAttack"
+     }
+    ],
+    "when": "on MELEE Strikes only, after drinking (10 minutes lesser / 1 hour moderate, greater)",
+    "bonus": "+2 item (lesser) / +3 (moderate) / +4 (greater)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on saves against magic — only if the cocktail was mixed with the Skeptical additive",
+    "bonus": "+1 item (lesser) / +2 (moderate) / +3 (greater)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "for the whole time the cocktail lasts (drawback — always applies)",
+    "bonus": "-1 untyped penalty"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "reflex"
+     }
+    ],
+    "when": "for the whole time the cocktail lasts (drawback — always applies)",
+    "bonus": "-2 untyped penalty"
+   }
+  ]
+ },
+ {
+  "id": "colorful-coating",
+  "collection": "items",
+  "action": "author",
+  "quote": "The coating also slows any collapse, making it easier to avoid and granting a +1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse. … It imposes a –2 circumstance penalty to checks to Climb the coated surface. … It provides a +2 circumstance bonus to checks to Climb the coated surface.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "reflex"
+     }
+    ],
+    "when": "to a Reflex save reacting to the collapse of a BLUE-coated surface (the coating lasts 1 minute)",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "to Climb a YELLOW-coated wall or ceiling (the coating lasts 1 minute)",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "to Climb a GREEN-coated wall or ceiling (the coating lasts 1 minute)",
+    "bonus": "-2 circumstance (PENALTY, not a bonus)"
+   }
+  ]
+ },
+ {
+  "id": "emetic-paste",
+  "collection": "items",
+  "action": "author",
+  "quote": "The paste grants the target an item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "to the immediate save the paste grants and to every save to reduce your sickened condition for 1 hour, when the paste was applied to you",
+    "bonus": "+2 item (lesser) / +3 (moderate) / +4 (greater)"
+   }
+  ]
+ },
+ {
+  "id": "healing-vapor",
+  "collection": "items",
+  "action": "author",
+  "quote": "While affected, a creature also gains an item bonus to saving throws against diseases and poisons.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against diseases and poisons, while you are one of the (up to four) creatures inside the deployed vapor's 5-foot burst (10 minutes)",
+    "bonus": "+1 item (lesser, moderate) / +2 (greater) / +3 (major)"
+   }
+  ]
+ },
+ {
+  "id": "sense-dulling-hood",
+  "collection": "items",
+  "action": "skip",
+  "quote": "The mask grants you an item bonus to saving throws against auditory, olfactory, and visual effects for a time, according to the mask's type.",
+  "skipReason": "Umbrella summary (unpriced, no mechanical field, 2 kin) — hidden and unownable under Ruling A, so a star can never reach a sheet; sense-dulling-hood-lesser/-greater are already authored."
+ },
+ {
+  "id": "affliction-suppressant",
+  "collection": "items",
+  "action": "skip",
+  "quote": "Upon drinking an affliction suppressant, you gain an item bonus to all saves against afflictions for 10 minutes.",
+  "skipReason": "Umbrella summary (unpriced, 4 kin) — hidden under Ruling A; all four -lesser/-moderate/-greater/-major variants already carry the entry."
+ },
+ {
+  "id": "bendy-arm-mutagen",
+  "collection": "items",
+  "action": "skip",
+  "quote": "Benefit You gain the listed item bonus to Acrobatics checks to Escape, Squeeze, and Tumble Through",
+  "skipReason": "Umbrella summary (unpriced, 4 kin) — hidden under Ruling A; all four graded variants already carry the benefit and the drawback penalties."
+ },
+ {
+  "id": "deadweight-mutagen",
+  "collection": "items",
+  "action": "skip",
+  "quote": "Benefit You gain an item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you",
+  "skipReason": "Umbrella summary (unpriced, 4 kin) — hidden under Ruling A; all four graded variants already carry the entry."
+ },
+ {
+  "id": "sanguine-mutagen",
+  "collection": "items",
+  "action": "skip",
+  "quote": "Benefit You gain an item bonus to Fortitude and Reflex saves. This bonus improves when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition.",
+  "skipReason": "Umbrella summary (unpriced, 4 kin) — hidden under Ruling A; all four graded variants already carry the entry."
+ },
+ {
+  "id": "execution-powder",
+  "collection": "items",
+  "action": "skip",
+  "quote": "the spores from their last breath alight on a random creature adjacent to the victim, granting that creature 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes",
+  "skipReason": "Every effect lands on someone else — the poison's damage and death save hit the poisoned enemy, and the temp HP / +1 status goes to a GM-chosen random creature adjacent to the victim, not reliably the character."
+ },
+ {
+  "id": "magnetic-shot",
+  "collection": "items",
+  "action": "skip",
+  "quote": "The activated ammunition grants a circumstance bonus to attack rolls against such targets, according to its type.",
+  "skipReason": "Umbrella summary (unpriced, 3 kin) — hidden under Ruling A; magnetic-shot-lesser/-moderate/-greater are already authored."
+ },
+ {
+  "id": "bewitching-bloom",
+  "collection": "items",
+  "action": "skip",
+  "quote": "Choose a willing ally you can see within 30 feet. The ally fills with an emotion themed to the flower and gains the benefit listed for the type of bewitching bloom you have.",
+  "skipReason": "Umbrella summary (unpriced, 9 kin) hidden under Ruling A, and every variant's benefit lands on the chosen ally rather than the wearer; the six variants with a rollable target are already authored."
+ },
+ {
+  "id": "heartblood-ring",
+  "collection": "items",
+  "action": "author",
+  "quote": "Also, you gain a +1 circumstance bonus to saving throws (or any other defense) against death effects, disease, paralysis, poison, and sleep. Treat the outcome of any saving throw you roll against death, paralyze, or sleep effects as one step better. … a dose of heartblood imposes a –2 status penalty to your saving throws against the powers of the vampire who created it. … Reduce your current and maximum Hit Points by 2 × your level",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     },
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "at Stage 1 of heartblood, against death effects, disease, paralysis, poison and sleep — saves or any other defense",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "at Stage 1 of heartblood, on saves against death, paralyze or sleep effects",
+    "bonus": "treat the outcome as one step better (untyped)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against the powers of the vampire who created your heartblood",
+    "bonus": "-2 status (PENALTY, not a bonus)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "at Stage 2 of heartblood or higher",
+    "bonus": "current and maximum Hit Points reduced by 2 × your level (4 × your level, rounded up, at Stage 3)"
+   }
+  ]
+ },
+ {
+  "id": "void-fragment",
+  "collection": "items",
+  "action": "author",
+  "quote": "you are under the effects of Hidden Mind, except that its status bonus is +1 … If any creatures can be detected by your thoughtsense, you take a –1 penalty to Perception checks. … The mental noise increases the penalty to Perception to –2.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "at Stage 1 of the void fragment, against mental effects — Hidden Mind's own bonus, reduced to +1",
+    "bonus": "+1 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "at Stage 2 of the void fragment, whenever a creature can be detected by your thoughtsense (-2 from Stage 3)",
+    "bonus": "-1 (PENALTY, not a bonus)"
+   }
+  ]
+ },
+ {
+  "id": "corruption-cassock",
+  "collection": "items",
+  "action": "author",
+  "quote": "while you remain loyal to another deity, you believe the cassock grants you a +2 item bonus to Religion checks and a +1 item bonus to the divine skill of the deity to whom you believe the cassock is dedicated. It does neither. … If you convert to following the cassock's true unholy deity, however, these bonuses function normally for you.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "religion"
+     }
+    ],
+    "when": "only while you follow the cassock's true unholy deity — while loyal to another deity you merely believe you have it and the GM secretly adjusts your checks instead",
+    "bonus": "+2 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on the divine skill of the cassock's deity, and only while you follow that deity — otherwise the bonus is an illusion",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "canary-tail-first-week",
+  "collection": "items",
+  "action": "author",
+  "quote": "Canary tails follow a specific individual. For each week that they are hired, you gain a +1 circumstance bonus on your check to Gather Information on the movements and mannerisms of the individual, up to a maximum of four weeks for a +4 bonus.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "on Gather Information checks about the movements and mannerisms of the individual your canary tail is following",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "bangles-of-crowns",
+  "collection": "items",
+  "action": "author",
+  "quote": "Trigger An enemy within 60 feet becomes frightened Effect You become emboldened by your enemy's fear. You gain a +1 circumstance bonus to checks against the triggering creature for 1 round. You also gain 15 temporary Hit Points. You lose any remaining temporary Hit Points after 1 minute.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     },
+     {
+      "kind": "perception"
+     },
+     {
+      "kind": "strikeAttack"
+     },
+     {
+      "kind": "spell",
+      "detail": "attack"
+     }
+    ],
+    "when": "for 1 round after the reaction (once per hour) an enemy within 60 feet becoming frightened triggers, on checks against that creature",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "on that same reaction; anything left is lost after 1 minute",
+    "bonus": "15 temporary HP"
+   }
+  ]
+ },
+ {
+  "id": "words-of-wisdom",
+  "collection": "items",
+  "action": "skip",
+  "quote": "During this time, you gain a +1 item bonus to Diplomacy checks and checks of the skill associated with your phrase.",
+  "skipReason": "Umbrella summary (unpriced, 3 kin) — hidden and unownable under Ruling A; the -lesser/-moderate/-greater records carry the entries."
+ },
+ {
+  "id": "words-of-wisdom-lesser",
+  "collection": "items",
+  "action": "author",
+  "quote": "You speak your meaningful phrase from your tattoo out loud, emboldening your words for 1 minute. During this time, you gain a +1 item bonus to Diplomacy checks and checks of the skill associated with your phrase. When you roll a critical failure on a Diplomacy check or the associated skill during this time, you get a failure instead.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     },
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     },
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "for the 1 minute after you Activate the tattoo (once per day) — Diplomacy plus the one skill your phrase names (Intimidation, Deception or Performance)",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     },
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     },
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "on a critical failure with Diplomacy or your phrase's skill during that 1 minute",
+    "bonus": "critical failure becomes a failure instead (untyped)"
+   }
+  ]
+ },
+ {
+  "id": "words-of-wisdom-moderate",
+  "collection": "items",
+  "action": "author",
+  "quote": "You speak your meaningful phrase from your tattoo out loud, emboldening your words for 10 minutes. During this time, you gain a +2 item bonus to Diplomacy checks and checks of the skill associated with your phrase. When you roll a critical failure on a Diplomacy check or the associated skill during this time, you get a failure instead.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     },
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     },
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "for the 10 minutes after you Activate the tattoo (once per day) — Diplomacy plus the one skill your phrase names (Intimidation, Deception or Performance)",
+    "bonus": "+2 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     },
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     },
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "on a critical failure with Diplomacy or your phrase's skill during those 10 minutes",
+    "bonus": "critical failure becomes a failure instead (untyped)"
+   }
+  ]
+ },
+ {
+  "id": "words-of-wisdom-greater",
+  "collection": "items",
+  "action": "author",
+  "quote": "You speak your meaningful phrase from your tattoo out loud, emboldening your words for 1 hour. During this time, you gain a +3 item bonus to Diplomacy checks and checks of the skill associated with your phrase. When you roll a critical failure on a Diplomacy check or the associated skill during this time, you get a failure instead.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     },
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     },
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "for the 1 hour after you Activate the tattoo (once per day) — Diplomacy plus the one skill your phrase names (Intimidation, Deception or Performance)",
+    "bonus": "+3 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     },
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     },
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "on a critical failure with Diplomacy or your phrase's skill during that hour",
+    "bonus": "critical failure becomes a failure instead (untyped)"
+   }
+  ]
+ },
+ {
+  "id": "globe-of-shrouds",
+  "collection": "items",
+  "action": "skip",
+  "quote": "An ally in the aura is concealed and gains a +2 status bonus to Stealth checks. Any enemy in the aura that is or becomes invisible appears as a translucent shape to you and your allies",
+  "skipReason": "The Stealth bonus and concealment are printed for an ally in the aura, and you are not your own ally; the invisibility clause changes an enemy's detected status, not any check the character rolls."
+ },
+ {
+  "id": "spiny-lodestone",
+  "collection": "items",
+  "action": "author",
+  "quote": "Armor You gain a +1 item bonus to Athletics checks and resistance 2 to nonlethal damage. Weapon After you cast a spell by Activating the spiny lodestone, your Strikes with the weapon deal an additional 1d4 piercing damage until the end of your next turn.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "while the spiny lodestone is affixed to your metal armor rather than a weapon",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "affixed to a weapon, on Strikes with that weapon until the end of your next turn after you Activate the lodestone to cast a spell",
+    "bonus": "+1d4 piercing"
+   }
+  ]
+ },
+ {
+  "id": "spiny-lodestone-greater",
+  "collection": "items",
+  "action": "author",
+  "quote": "**Armor** You gain a +1 item bonus to Athletics checks and resistance 5 to nonlethal damage. - **Weapon** After you cast a spell by Activating the *spiny lodestone*, your Strikes with the weapon deal an additional 1d6 piercing damage until the end of your next turn.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "while the lodestone is affixed to metal armor (no bonus if affixed to a weapon)",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "with the weapon the lodestone is affixed to, until the end of your next turn after you Activate it to Cast a Spell",
+    "bonus": "+1d6 piercing"
+   }
+  ]
+ },
+ {
+  "id": "spiny-lodestone-major",
+  "collection": "items",
+  "action": "author",
+  "quote": "**Armor** You gain a +2 item bonus to Athletics checks and resistance 10 to nonlethal damage. - **Weapon** After you cast a spell by Activating the spiny lodestone, your Strikes with the weapon deal an additional 1d8 piercing damage until the end of your next turn.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "while the lodestone is affixed to metal armor (no bonus if affixed to a weapon)",
+    "bonus": "+2 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "with the weapon the lodestone is affixed to, until the end of your next turn after you Activate it to Cast a Spell",
+    "bonus": "+1d8 piercing"
+   }
+  ]
+ },
+ {
+  "id": "therapeutic-snap-peas",
+  "collection": "items",
+  "action": "author",
+  "quote": "Up to 5 creatures of your choice within 30 feet regain 4d8+10 Hit Points and gain a +2 item bonus to all saves against poisons or diseases for 1 minute.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against poisons or diseases, for 1 minute after a Healing Pod, if you were one of the 5 creatures chosen",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "prey-mutagen",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a status bonus to your speed and are able to use the following reaction: Timely Dodge Trigger You are targeted by a Strike; Effect You dart aside, gaining a circumstance bonus to AC, then Step after the Strike resolves. Drawback ... Animals and beasts gain a +2 circumstance bonus to attack rolls against you.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "while a prey mutagen is active (lesser 1 minute / moderate 10 minutes / greater and major 1 hour)",
+    "bonus": "+10 to +40 feet status (by grade)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "on Timely Dodge (reaction), against the Strike that targeted you, while a prey mutagen is active",
+    "bonus": "+1 to +4 circumstance (by grade)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "drawback - while a prey mutagen is active",
+    "bonus": "animals and beasts gain +2 circumstance to attack rolls against you"
+   }
+  ]
+ },
+ {
+  "id": "prey-mutagen-lesser",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +10 status bonus to your speed ... Timely Dodge ... You dart aside, gaining a +1 circumstance bonus to AC, then Step after the Strike resolves. Drawback ... Animals and beasts gain a +2 circumstance bonus to attack rolls against you. The duration is 1 minute.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "while the lesser prey mutagen is active (1 minute)",
+    "bonus": "+10 feet status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "on Timely Dodge (reaction), against the Strike that targeted you, while the lesser prey mutagen is active",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "drawback - while the lesser prey mutagen is active",
+    "bonus": "animals and beasts gain +2 circumstance to attack rolls against you"
+   }
+  ]
+ },
+ {
+  "id": "prey-mutagen-moderate",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +20 status bonus to your speed ... gaining a +2 circumstance bonus to AC, then Step after the Strike resolves. ... Animals and beasts gain a +2 circumstance bonus to attack rolls against you. The duration is 10 minute.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "while the moderate prey mutagen is active (10 minutes)",
+    "bonus": "+20 feet status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "on Timely Dodge (reaction), against the Strike that targeted you, while the moderate prey mutagen is active",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "drawback - while the moderate prey mutagen is active",
+    "bonus": "animals and beasts gain +2 circumstance to attack rolls against you"
+   }
+  ]
+ },
+ {
+  "id": "prey-mutagen-greater",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +30 status bonus to your speed ... gaining a +3 circumstance bonus to AC, then Step after the Strike resolves. ... Animals and beasts gain a +2 circumstance bonus to attack rolls against you. The duration is 1 hour.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "while the greater prey mutagen is active (1 hour)",
+    "bonus": "+30 feet status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "on Timely Dodge (reaction), against the Strike that targeted you, while the greater prey mutagen is active",
+    "bonus": "+3 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "drawback - while the greater prey mutagen is active",
+    "bonus": "animals and beasts gain +2 circumstance to attack rolls against you"
+   }
+  ]
+ },
+ {
+  "id": "prey-mutagen-major",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +40 status bonus to your speed ... gaining a +4 circumstance bonus to AC, then Step after the Strike resolves. ... Animals and beasts gain a +2 circumstance bonus to attack rolls against you. The duration is 1 hour.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "while the major prey mutagen is active (1 hour)",
+    "bonus": "+40 feet status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "on Timely Dodge (reaction), against the Strike that targeted you, while the major prey mutagen is active",
+    "bonus": "+4 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "drawback - while the major prey mutagen is active",
+    "bonus": "animals and beasts gain +2 circumstance to attack rolls against you"
+   }
+  ]
+ },
+ {
+  "id": "armor-polishing-kit",
+  "collection": "items",
+  "action": "author",
+  "quote": "Creatures wearing armor that has been maintained by this kit gain a +1 circumstance bonus on Diplomacy checks to Make an Impression on soldiers, guards, Gorumites, and other martially minded characters. This bonus expires after 24 hours, or if the armor is soiled in some way.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "to Make an Impression on soldiers, guards, Gorumites and other martially minded characters, while wearing armor maintained with the kit (24 hours, or until the armor is soiled)",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "disguise-kit-elite-cosmetics",
+  "collection": "items",
+  "action": "skip",
+  "quote": "An elite disguise kit adds a +1 item bonus to relevant checks. If you've crafted a large number of disguises, you can replenish your cosmetics supply with replacement cosmetics.",
+  "skipReason": "This is the 5 sp replacement-cosmetics refill, not a kit — the +1 item bonus belongs to Disguise Kit (Elite), already authored as `disguise-kit-elite`; the bonus sentence is shared umbrella text bleeding into the sub-record."
+ },
+ {
+  "id": "antidote",
+  "collection": "items",
+  "action": "author",
+  "quote": "Upon drinking an antidote, you gain an item bonus to Fortitude saving throws against poisons for 6 hours. ... (Lesser) You gain a +2 item bonus. ... (Moderate) +3 ... (Greater) +4 ... (Major) +4 item bonus.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "on Fortitude saves against poisons, for 6 hours after you drink an antidote (lesser +2 / moderate +3 / greater and major +4)",
+    "bonus": "+2 to +4 item (by grade)"
+   }
+  ]
+ },
+ {
+  "id": "antiplague",
+  "collection": "items",
+  "action": "author",
+  "quote": "Upon drinking an antiplague, you gain an item bonus to Fortitude saving throws against diseases for 24 hours; this applies to your daily save against a disease's progression. ... (Lesser) +2 ... (Moderate) +3 ... (Greater) +4 ... (Major) +4 item bonus.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "on Fortitude saves against diseases, for 24 hours after you drink an antiplague, including your daily save against a disease's progression (lesser +2 / moderate +3 / greater and major +4)",
+    "bonus": "+2 to +4 item (by grade)"
+   }
+  ]
+ },
+ {
+  "id": "alacritous-horseshoes-greater",
+  "collection": "items",
+  "action": "author",
+  "quote": "that creature gains a +10-foot item bonus to its land Speed and a +3 item bonus to Athletics checks to High Jump and Long Jump (AoN: \"a +2 circumstance bonus to Athletics checks\"; greater — \"the bonus to Athletics checks is +3\")",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on the animal companion's Athletics checks to High Jump and Long Jump, while it has the horseshoes invested",
+    "bonus": "+3 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "maestros-instrument",
+  "collection": "items",
+  "action": "author",
+  "quote": "A maestro's instrument grants you a +1 item bonus to Performance checks while playing music with the instrument. ... (Moderate) The item bonus is +2 ... (Greater) The item bonus is +3.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "while playing music with the instrument (lesser +1 / moderate +2 / greater +3)",
+    "bonus": "+1 to +3 item (by grade)"
+   }
+  ]
+ },
+ {
+  "id": "staff-of-healing",
+  "collection": "items",
+  "action": "author",
+  "quote": "A *staff of healing* grants a +1 item bonus to the Hit Points you restore anytime you cast the *heal* spell using your own spell slots or charges from the staff.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "to the Hit Points restored, whenever you cast Heal from your own spell slots or from the staff's charges",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "staff-of-healing-greater",
+  "collection": "items",
+  "action": "author",
+  "quote": "A *staff of healing* grants a +2 item bonus to the Hit Points you restore anytime you cast the *heal* spell using your own spell slots or charges from the staff.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "to the Hit Points restored, whenever you cast Heal from your own spell slots or from the staff's charges",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "staff-of-healing-major",
+  "collection": "items",
+  "action": "author",
+  "quote": "A *staff of healing* grants a +3 item bonus to the Hit Points you restore anytime you cast the *heal* spell using your own spell slots or charges from the staff.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "to the Hit Points restored, whenever you cast Heal from your own spell slots or from the staff's charges",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "staff-of-healing-true",
+  "collection": "items",
+  "action": "author",
+  "quote": "A *staff of healing* grants a +4 item bonus to the Hit Points you restore anytime you cast the *heal* spell using your own spell slots or charges from the staff.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "to the Hit Points restored, whenever you cast Heal from your own spell slots or from the staff's charges",
+    "bonus": "+4 item"
+   }
+  ]
+ },
+ {
+  "id": "bracelet-of-dashing",
+  "collection": "items",
+  "action": "author",
+  "quote": "**Activate—Jangling Dash** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** You gain a +10-foot status bonus to Speed for 1 minute.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "for 1 minute after Jangling Dash (⟨1⟩ concentrate, once per day)",
+    "bonus": "+10-foot status"
+   }
+  ]
+ },
+ {
+  "id": "oil-of-corpse-restoration",
+  "collection": "items",
+  "action": "skip",
+  "quote": "The dead creature's flesh looks healthy and whole. It gains a +2 circumstance bonus on Deception checks to look like a living creature.",
+  "skipReason": "The +2 lands on the undead creature or lifeless corpse the oil is spread over, not on the character who Activates it, so there is no roll on this sheet to star."
+ },
+ {
+  "id": "paradigm-cube",
+  "collection": "items",
+  "action": "skip",
+  "quote": "Allies in the area gain a +2 item bonus to Intimidation checks to Coerce. ... Allies in the area gain a +2 item bonus to Performance checks ... to Lore checks to Recall Knowledge ... to Perception checks to Sense Motive ... to Stealth checks to Hide.",
+  "skipReason": "Every colour (and every mythic enhancement) benefits only \"allies in the area\"; you are not your own ally, so the activator gains no rollable bonus."
+ },
+ {
+  "id": "privacy-ward-fulu",
+  "collection": "items",
+  "action": "author",
+  "quote": "When applied to a wall inside a room, all creatures within the room gain an item bonus to Stealth checks against creatures outside the room.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "while inside the room warded by the affixed fulu, against creatures outside it",
+    "bonus": "+1 item (hallway, room; +2 chamber)"
+   }
+  ]
+ },
+ {
+  "id": "conrasu-coin",
+  "collection": "items",
+  "action": "author",
+  "quote": "When you activate the coin, you gain a +2 circumstance bonus on the Diplomacy check, which increases to a +3 circumstance bonus to Make an Impression on a creature with the aeon trait. ... You gain a +2 circumstance bonus to AC against the attack",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "on the triggering Diplomacy check to Make an Impression, when you activate an arbiter coin",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "instead, to Make an Impression on a creature with the aeon trait (arbiter coin)",
+    "bonus": "+3 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "against a single attack, activating a bythos coin after you're targeted but before the attacker rolls",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "fate-tempters-ring",
+  "collection": "items",
+  "action": "author",
+  "quote": "When you invest this silver ring, choose a skill; you gain an item bonus to that skill equal to your doomed value.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "while you are doomed, on the one skill you chose when you invested the ring",
+    "bonus": "item bonus equal to your doomed value"
+   }
+  ]
+ },
+ {
+  "id": "olfactory-obfuscator-lesser",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "for 10 minutes after drinking, against Seek attempts by creatures using only scent (no bonus if they use any other sense)",
+    "bonus": "+4 item"
+   }
+  ]
+ },
+ {
+  "id": "signifers-mask",
+  "collection": "items",
+  "action": "author",
+  "quote": "While wearing your signifer's mask, you gain a +1 circumstance bonus to Deception checks to lie, Intimidation checks to coerce, and Deception DCs against sense-motive.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "to Lie, and to your Deception DC against Sense Motive, while wearing the mask",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     }
+    ],
+    "when": "to Coerce, while wearing the mask",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "aon-fixer",
+  "collection": "items",
+  "action": "author",
+  "quote": "An informant automatically Aids you on attempts to Gather Information and Recall Knowledge about your specific location, granting you a +1 circumstance bonus to such checks. An expert informant critically succeeds at Aiding you, granting a +2 circumstance bonus. ... A counselor automatically Aids you on attempts to Impersonate, Lie, Make an Impression, and Request when speaking with individuals within the location of the counselor's expertise.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "an informant fixer Aids your Gather Information and Recall Knowledge checks about their location",
+    "bonus": "+1 circumstance (+2 from an expert informant)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "a counselor fixer Aids you to Impersonate, Lie, Make an Impression or Request within their location",
+    "bonus": "+1 circumstance (+2 from an expert counselor)"
+   }
+  ]
+ },
+ {
+  "id": "aon-busine-of-divine-reinforcement",
+  "collection": "items",
+  "action": "author",
+  "quote": "When played as an instrument, the busine generates powerful and harmonious notes and grants a +2 item bonus to Performance checks.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "on Performance checks made by playing the busine as an instrument (held in two hands)",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "aon-sleuth-s-pipe",
+  "collection": "items",
+  "action": "author",
+  "quote": "it grants you a +1 item bonus to Perception checks to Sense Motive, and if you're an investigator, any checks you make to Pursue a Lead",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "on Perception checks to Sense Motive",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     },
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "investigator only: on checks to investigate the subject of your Pursue a Lead",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "aon-magical-medals",
+  "collection": "items",
+  "action": "author",
+  "quote": "it grants you a +1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump. ... Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect ... You reroll the failed check. ... it grants you a +1 item bonus to saving throws against fear and mental effects. ... While wearing the medal of the wolf pack, you gain a +2 circumstance bonus to damage rolls against enemies you are flanking.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on Athletics checks to Climb, Force Open, High Jump, or Long Jump (gorilla medal)",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "you would fail but not critically fail a High Jump or Long Jump (Gorilla's Second Leap, once per day)",
+    "bonus": "fortune: reroll the failed check"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against fear effects and mental effects (griffon medal)",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "on damage rolls against an enemy you are flanking (medal of the wolf pack)",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "aon-emotion-surge",
+  "collection": "items",
+  "action": "author",
+  "quote": "A surge of emotion emanates from your relic, granting a +1 status bonus to skill checks determined by the relic's emotion. This bonus lasts for 1 minute.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "for 1 minute after activating the relic, on checks with the one skill set by the relic's emotion",
+    "bonus": "+1 status"
+   }
+  ]
+ },
+ {
+  "id": "hopeful-athamaru",
+  "collection": "heritages",
+  "action": "skip",
+  "quote": "You have a 10-foot aura that grants any ally in it a +1 circumstance bonus to saving throws against fear",
+  "skipReason": "The aura's +1 vs fear benefits only allies standing in it — you are not your own ally — and the Large size change touches no rollable stat."
+ },
+ {
+  "id": "born-of-item",
+  "collection": "heritages",
+  "action": "author",
+  "quote": "Humanoid Form ... You gain a +1 circumstance bonus to the Lore skill you obtained through this heritage. - Yaoguai Form ... If you roll a success on a mental effect, you gain a critical success instead.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "lore:*"
+     }
+    ],
+    "when": "in humanoid form, on the Lore skill this heritage made you trained in",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "in yaoguai form, on a save against a mental effect",
+    "bonus": "a success becomes a critical success"
+   }
+  ]
+ },
+ {
+  "id": "mechanical-symbiosis",
+  "collection": "backgrounds",
+  "action": "author",
+  "quote": "Any time you attempt a skill check for the entity's skill, the GM can offer you a +1 circumstance bonus to the check, as though the entity were Aiding you. If you accept but fail the check, the entity clenches up and you are Stunned 1 (Stunned 2 on a critical failure).",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on a check with the clockwork entity's GM-chosen skill, if you accept its offered Aid — failing then leaves you Stunned 1",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "close-ties",
+  "collection": "backgrounds",
+  "action": "author",
+  "quote": "Bickering: ... Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "Bickering adjustment only: until the end of your next turn after you witness a sibling PC critically fail a check or attack",
+    "bonus": "+1 status"
+   }
+  ]
+ },
+ {
+  "id": "reborn-soul",
+  "collection": "backgrounds",
+  "action": "author",
+  "quote": "The GM can offer you a +1 circumstance bonus on skill checks with either of these Lore skills or on other skill checks that echo your past life. If you accept but fail the check, you're Stupefied 1 for 1 minute",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on your two past-life Lore skills, or a check that echoes your past life, if you accept the GM's offer — failing then leaves you Stupefied 1",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "tweak-appearances",
+  "collection": "feats",
+  "action": "skip",
+  "quote": "the target gains a +1 item bonus to Diplomacy and Performance checks",
+  "skipReason": "The bonus lands on the person you groom — the text separates you (whose Crafting proficiency sets the size) from \"the target\", so it never touches your own rolls."
+ },
+ {
+  "id": "clans-edge",
+  "collection": "feats",
+  "action": "author",
+  "quote": "You then use an Interact action to gain the +1 circumstance bonus to your AC from your clan dagger's parrying trait.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "after the two Strikes of Clan's Edge, once you position your clan dagger to parry",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "battleforger",
+  "collection": "feats",
+  "action": "author",
+  "quote": "gaining a +1 item bonus to attack rolls for a weapon or increasing armor's item bonus to AC by 1. This has no effect if the weapon or armor already had a potency rune.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeAttack"
+     }
+    ],
+    "when": "with a weapon you spent 1 hour Battleforging that had no potency rune, until your next daily preparations",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "while wearing armor you spent 1 hour Battleforging that had no potency rune, until your next daily preparations",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "skull-creeper",
+  "collection": "feats",
+  "action": "author",
+  "quote": "If you pay 50 gp for a splendid skull mask, the mask grants you a +1 item bonus to Intimidation; its usage is worn (mask).",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     }
+    ],
+    "when": "while wearing a splendid skull mask you paid 50 gp for",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "stoked-flame-stance",
+  "collection": "feats",
+  "action": "author",
+  "quote": "While in Stoked Flame Stance, you gain a +5-foot status bonus to your Speed. If you have incredible movement, increase the benefit from incredible movement to a +15-foot status bonus plus 5 feet for every 4 levels beyond 3rd.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "while you're in Stoked Flame Stance (you must be unarmored)",
+    "bonus": "+5-foot status; with incredible movement that becomes +15-foot plus 5 feet per 4 levels after 3rd instead"
+   }
+  ]
+ },
+ {
+  "id": "vehicle-mechanic-dedication",
+  "collection": "feats",
+  "action": "author",
+  "quote": "pilots gain a +1 circumstance bonus to any piloting checks they make to control your signature vehicle. If you are a master in Crafting, this bonus increases to +2.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on piloting checks to control your signature vehicle, in whichever skill it requires (every pilot gets it, you included)",
+    "bonus": "+1 circumstance (+2 if you're a master in Crafting)"
+   }
+  ]
+ },
+ {
+  "id": "gravelands-herbalist",
+  "collection": "feats",
+  "action": "author",
+  "quote": "At 10th level, you can make Lastwall Soup (Improved) that grants a +3 item bonus. At 18th level, you can make Lastwall Soup (Greater) that grants a +4 item bonus, and its nourishing properties grant you 10 temporary Hit Points that last up to 10 minutes after eating it.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "on Stealth checks and Stealth DCs against undead, for 1 hour after you eat improved or greater Lastwall soup you made",
+    "bonus": "+3 item (improved, 10th) or +4 item (greater, 18th)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "for 10 minutes after you eat greater Lastwall soup you made (18th level)",
+    "bonus": "10 temporary Hit Points"
+   }
+  ]
+ },
+ {
+  "id": "wormskin",
+  "collection": "feats",
+  "action": "author",
+  "quote": "When you're unarmored, your flesh gives you a +2 item bonus to AC with a Dexterity cap of +3.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "while you're unarmored (Dex cap +3)",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "uncanny-bombs",
+  "collection": "feats",
+  "action": "author",
+  "quote": "you reduce any circumstance bonus to the target's AC from cover by 1, and you automatically succeed at the flat check when targeting a concealed creature",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeAttack"
+     }
+    ],
+    "when": "when you throw an alchemical bomb at a target that has cover",
+    "bonus": "reduce the cover circumstance bonus to its AC by 1"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeAttack"
+     }
+    ],
+    "when": "when you throw an alchemical bomb at a concealed creature",
+    "bonus": "automatically succeed at the flat check"
+   }
+  ]
+ },
+ {
+  "id": "dragon-transformation",
+  "collection": "feats",
+  "action": "author",
+  "quote": "At 18th level, you gain a +20-foot status bonus to your fly Speed, your damage bonus with dragon Strikes increases to +12, and you gain a +14 status bonus to your Dragon Breath damage.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "to your fly Speed while transformed by Dragon Transformation, from 18th level",
+    "bonus": "+20-foot status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "on dragon Strikes while transformed by Dragon Transformation, from 18th level",
+    "bonus": "the form's damage bonus increases to +12"
+   },
+   {
+    "targets": [
+     {
+      "kind": "classDc"
+     }
+    ],
+    "when": "on the Dragon Breath action while you're transformed by Dragon Transformation",
+    "bonus": "it uses your class DC; from 18th level its damage also gains +14 status"
+   }
+  ]
+ },
+ {
+  "id": "endemic-herbs",
+  "collection": "feats",
+  "action": "author",
+  "quote": "When a creature consumes one of your herbal items, that creature gains the benefit matching the location where you created that item. If the benefit is not immediate, it lasts for 1 minute unless otherwise stated. - Aquatic Gain a +1 circumstance bonus to Fortitude saves. … - Underground Gain a +1 circumstance bonus to Perception.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "for 1 minute after you consume one of your own herbal items made in an aquatic location",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against disease and poison, for 1 minute after you consume one of your own herbal items made in a forest",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "reflex"
+     }
+    ],
+    "when": "for 1 minute after you consume one of your own herbal items made in the mountains",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "will"
+     }
+    ],
+    "when": "for 1 minute after you consume one of your own herbal items made on the plains",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "for 1 minute after you consume one of your own herbal items made underground",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "medic-dedication",
+  "collection": "feats",
+  "action": "author",
+  "quote": "When you succeed with Battle Medicine or Treat Wounds, the target gains a circumstance bonus to the number of Hit Points they regain equal to 5 HP at DC 20, 10 HP at DC 30, or 15 HP at DC 40.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "on the Hit Points you regain when you succeed at Battle Medicine or Treat Wounds on yourself at a raised DC",
+    "bonus": "+5 circumstance HP at DC 20, +10 at DC 30, +15 at DC 40"
+   }
+  ]
+ },
+ {
+  "id": "incredible-scout",
+  "collection": "feats",
+  "action": "skip",
+  "quote": "When using the Scout exploration activity, you grant your allies a +2 circumstance bonus to their initiative rolls instead of a +1 circumstance bonus.",
+  "skipReason": "The upgrade is written for your allies' initiative; Scout's own +1 to every creature in your party is what you keep, so starring your initiative would promise a +2 you don't have."
+ },
+ {
+  "id": "regional-specialty",
+  "collection": "feats",
+  "action": "author",
+  "quote": "Each element has an immediate benefit and a +3 item bonus to certain saves that lasts for 1 hour after the food is consumed. The item bonus increases to +4 if the alchemical item is 18th level or higher.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against disease and poison, for 1 hour after you eat a wood Morning Side Dish you made",
+    "bonus": "+3 item (+4 if the food is 18th level or higher)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against becoming doomed or frightened, for 1 hour after you eat a fire Morning Side Dish you made",
+    "bonus": "+3 item (+4 if the food is 18th level or higher)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against becoming enfeebled, for 1 hour after you eat an earth Morning Side Dish you made",
+    "bonus": "+3 item (+4 if the food is 18th level or higher)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against becoming stupefied, for 1 hour after you eat a metal Morning Side Dish you made",
+    "bonus": "+3 item (+4 if the food is 18th level or higher)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against becoming deafened or drained, for 1 hour after you eat a water Morning Side Dish you made",
+    "bonus": "+3 item (+4 if the food is 18th level or higher)"
+   }
+  ]
+ },
+ {
+  "id": "prepare-elemental-medicine",
+  "collection": "feats",
+  "action": "author",
+  "quote": "prepare an excellent elemental medicine that grants the recipient a +2 circumstance bonus to saves against the affliction. Success As critical success, but the bonus is +1. … your mistaken treatment imposes a –1 circumstance penalty to saves against the affliction.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against the affliction treated, for 24 hours, when the elemental medicine you prepared was administered to you",
+    "bonus": "+2 circumstance on a critical success, +1 on a success (–1 circumstance on a critical failure)"
+   }
+  ]
+ },
+ {
+  "id": "aegis-for-the-innocent",
+  "collection": "feats",
+  "action": "skip",
+  "quote": "You transfer a portion of your divine spark to an ally… The target gains a +1 status bonus to AC.",
+  "skipReason": "The +1 status AC lands on the ally you encase, and the enemy's Fortitude save just uses your existing class or spell DC with no bonus added."
+ },
+ {
+  "id": "decree-of-prosperity",
+  "collection": "feats",
+  "action": "skip",
+  "quote": "all your knights who hear your decree treat failures (but not critical failures) on non-attack skill checks as successes for 1 minute… Each individual receives a +2 status bonus to all checks to Earn Income",
+  "skipReason": "Every benefit is aimed at your knights and at the populace your decree inspires — the speaker gains free lodging and half-price goods, not a bonus to any roll of their own."
+ },
+ {
+  "id": "mask-of-the-12th-step",
+  "collection": "feats",
+  "action": "author",
+  "quote": "A Silver Razmiri Mask grants a +2 item bonus to Deception checks to Lie or Feint",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "to Lie or Feint while wearing your silver Razmiri mask",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "mask-of-the-15th-step",
+  "collection": "feats",
+  "action": "author",
+  "quote": "A gold Razmiri mask grants a +3 item bonus to Deception checks to Lie or Feint",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "to Lie or Feint while wearing your gold Razmiri mask",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "diplomats-badge",
+  "collection": "items",
+  "action": "author",
+  "quote": "If you succeed, the badge's bonus increases to +2 for Diplomacy checks with creatures of that group for the rest of the day.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "with creatures of the group you succeeded at Recalling Knowledge about via Diplomat's Bearing, for the rest of the day",
+    "bonus": "+2 item (instead of the badge's usual +1)"
+   }
+  ]
+ },
+ {
+  "id": "lovers-gloves",
+  "collection": "items",
+  "action": "author",
+  "quote": "The creature gains a +1 status bonus to saving throws and 10 temporary Hit Points for 10 minutes. If the creature shares your feelings, you gain the same benefits, and for the duration, when you both roll a success on a saving throw against an emotion effect that causes negative emotions, you both get a critical success instead.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "for 10 minutes after you Activate Bond, if the creature whose hands you grasped shares your feelings",
+    "bonus": "+1 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "for 10 minutes after you Activate Bond, if the creature shares your feelings",
+    "bonus": "10 temporary Hit Points"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a success against an emotion effect that causes negative emotions, while a shared Bond lasts",
+    "bonus": "the success becomes a critical success"
+   }
+  ]
+ },
+ {
+  "id": "camouflaging-chromatophores",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain the listed item bonus to Stealth checks to Sneak and Hide.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "on Stealth checks to Sneak or Hide",
+    "bonus": "+1 item (lesser) / +2 (greater)"
+   }
+  ]
+ },
+ {
+  "id": "cauthooj-bagpipes",
+  "collection": "items",
+  "action": "author",
+  "quote": "The pipes grant a +2 item bonus to Performance checks while playing music with them.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "while playing music with the bagpipes",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "bombers-eye-elixir-lesser",
+  "collection": "items",
+  "action": "author",
+  "quote": "For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 1.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeAttack"
+     }
+    ],
+    "when": "on alchemical bomb Strikes, for 5 minutes after drinking",
+    "bonus": "your targets' circumstance bonus to AC from cover is reduced by 1"
+   }
+  ]
+ },
+ {
+  "id": "bombers-eye-elixir-greater",
+  "collection": "items",
+  "action": "author",
+  "quote": "For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 2.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeAttack"
+     }
+    ],
+    "when": "on alchemical bomb Strikes, for 5 minutes after drinking",
+    "bonus": "your targets' circumstance bonus to AC from cover is reduced by 2"
+   }
+  ]
+ },
+ {
+  "id": "bestial-mutagen",
+  "collection": "items",
+  "action": "author",
+  "quote": "Benefit You gain an item bonus to Athletics checks and unarmed attack rolls. […] Drawback You take a –2 penalty to Reflex saves, Acrobatics checks, and Stealth checks.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "while a bestial mutagen is active (lesser +1 / moderate +2 / greater +3 / major +4)",
+    "bonus": "+1 to +4 item (by grade)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeAttack"
+     }
+    ],
+    "when": "on unarmed attack rolls, while a bestial mutagen is active",
+    "bonus": "+1 to +4 item (by grade)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "reflex"
+     },
+     {
+      "kind": "skill",
+      "detail": "acrobatics"
+     },
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "drawback - while a bestial mutagen is active",
+    "bonus": "-2 untyped"
+   }
+  ]
+ },
+ {
+  "id": "drakeheart-mutagen",
+  "collection": "items",
+  "action": "author",
+  "quote": "Benefit You gain the listed bonus to AC, a Dexterity cap of +2 […] and an item bonus to Perception checks. […] Drawback You take a –1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "while a drakeheart mutagen is active (lesser +4 / moderate +5 / greater +6 / major +7; Dex cap +2)",
+    "bonus": "+4 to +7 item (by grade)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "while a drakeheart mutagen is active (lesser +1 / moderate +2 / greater +3 / major +4)",
+    "bonus": "+1 to +4 item (by grade)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "will"
+     },
+     {
+      "kind": "save",
+      "detail": "reflex"
+     }
+    ],
+    "when": "drawback - while a drakeheart mutagen is active",
+    "bonus": "-1 untyped"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "drawback - on skill checks to Recall Knowledge, while a drakeheart mutagen is active",
+    "bonus": "-1 untyped"
+   }
+  ]
+ },
+ {
+  "id": "potion-of-disguise",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "to your Deception DC against onlookers' Perception checks, while disguised by the potion (you add your level even if untrained)",
+    "bonus": "+4 status"
+   }
+  ]
+ },
+ {
+  "id": "potion-of-disguise-lesser",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "to your Deception DC against onlookers' Perception checks, while disguised by the potion (you add your level even if untrained)",
+    "bonus": "+4 status"
+   }
+  ]
+ },
+ {
+  "id": "potion-of-disguise-moderate",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "to your Deception DC against onlookers' Perception checks, while disguised by the potion (you add your level even if untrained)",
+    "bonus": "+4 status"
+   }
+  ]
+ },
+ {
+  "id": "potion-of-disguise-greater",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "to your Deception DC against onlookers' Perception checks, while disguised by the potion (you add your level even if untrained)",
+    "bonus": "+4 status"
+   }
+  ]
+ },
+ {
+  "id": "midnight-milk",
+  "collection": "items",
+  "action": "author",
+  "quote": "Stage 1 +2 item bonus to Perception (1 hour) […] Stage 1 +3 item bonus to Perception checks and Will saving throws",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "at stage 1 of midnight milk, after you fail its Fortitude save (1 hour)",
+    "bonus": "+2 item (experimental) / +3 (refined or pure)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "will"
+     }
+    ],
+    "when": "at stage 1 of PURE midnight milk only",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "antifungal-salve",
+  "collection": "items",
+  "action": "author",
+  "quote": "Spreading the salve on exposed skin grants an item bonus to saving throws against all afflictions that have the fungus trait or that originate from creatures with the fungus trait. The bonus lasts for 6 hours.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against afflictions with the fungus trait or from fungus creatures, for 6 hours after applying the salve",
+    "bonus": "+2 item (lesser) / +3 (moderate) / +4 (greater, major)"
+   }
+  ]
+ },
+ {
+  "id": "crimson-godsblood-serum",
+  "collection": "items",
+  "action": "author",
+  "quote": "While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. The first time during that minute you're reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain the listed amount of Hit Points…",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     },
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "on physical damage rolls, for 1 minute after drinking the serum",
+    "bonus": "+2 status (lesser) / +3 (moderate) / +4 (greater)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "the first time in that minute you're reduced to 0 HP without being killed — you avoid being knocked out, then are confused 1 round and wounded +1",
+    "bonus": "regain 2d8+5 HP (lesser) / 3d8+10 (moderate) / 6d8+20 (greater)"
+   }
+  ]
+ },
+ {
+  "id": "essence-forge",
+  "collection": "items",
+  "action": "author",
+  "quote": "Additional essence overflows back into you, granting an item bonus to the skill you used to Prime the Forge for the next 24 hours.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "arcana"
+     },
+     {
+      "kind": "skill",
+      "detail": "nature"
+     },
+     {
+      "kind": "skill",
+      "detail": "occultism"
+     },
+     {
+      "kind": "skill",
+      "detail": "religion"
+     }
+    ],
+    "when": "for 24 hours after you CRITICALLY succeed at Priming the Forge — only to the skill you used",
+    "bonus": "+1 to +3 item (lesser +1, moderate +2, greater +3)"
+   }
+  ]
+ },
+ {
+  "id": "psyche-salts",
+  "collection": "items",
+  "action": "skip",
+  "quote": "you uncork and pass the open end of the vial near the head of an adjacent creature […] The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes.",
+  "skipReason": "The bonus lands on the adjacent creature you activate the vial on, never on the user — ruling F says a teammate's bonus puts nothing on your sheet."
+ },
+ {
+  "id": "champions-laurels",
+  "collection": "items",
+  "action": "author",
+  "quote": "Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you. […] you draw strength from your adoring crowd and gain a status bonus to the triggering check. If you critically succeed at the check, you gain temporary Hit Points equal to the item's level that last for 1 minute.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "acrobatics"
+     },
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on the Acrobatics or Athletics check you Activate the laurels for, if you're trained in it and can perceive 12+ allies or friendly bystanders cheering you",
+    "bonus": "+1 status (amateur) / +2 (professional) / +3 (renowned)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "if you critically succeed at the check the laurels boosted",
+    "bonus": "temporary Hit Points equal to the item's level (1 minute)"
+   }
+  ]
+ },
+ {
+  "id": "strand-of-the-seven-births",
+  "collection": "items",
+  "action": "skip",
+  "quote": "Allies within the image's bright light […] gain a +2 status bonus to saving throws against auditory effects. Enemies entering or ending their term in the image's radius of bright light must attempt a save.",
+  "skipReason": "Both halves land on someone else — the +2 status to auditory saves goes to ALLIES (you are not your own ally) and the fascinated/–2 Perception rider goes to enemies; nothing touches a stat the owner rolls."
+ },
+ {
+  "id": "living-god",
+  "collection": "feats",
+  "action": "skip",
+  "quote": "A Porcelain Razmiri Mask grants a +4 item bonus to Deception checks to Lie or Feint, is an 18th-level item, and is an apex item that increases your Charisma modifier by 1",
+  "skipReason": "The bonus is the Porcelain Razmiri Mask's, not the feat's — the feat only lets you Craft/upgrade that mask, and items/razmiri-mask-porcelain already carries the +4 item Deception entry (line 1941); the once-a-day 10th-rank spell activation changes no rollable stat."
+ },
+ {
+  "id": "vellumis-excision",
+  "collection": "feats",
+  "action": "author",
+  "quote": "any living creatures in the area when you Sustain the spell gain a +2 status bonus to saving throws against curses, diseases, and poisons for 1 round",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "for 1 round, against curses, diseases and poisons, if you are in the area when you Sustain your halcyon field of life cast as a primal spell",
+    "bonus": "+2 status"
+   }
+  ]
+ },
+ {
+  "id": "field-propagandist-dedication",
+  "collection": "feats",
+  "action": "author",
+  "quote": "You gain a +2 circumstance bonus to your Perception DC against attempts made by others to Lie to you. If you have the Lie to Me skill feat, you gain a +2 circumstance bonus to your Deception DC.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "to your Perception DC against attempts to Lie to you (a DC, not a roll you make)",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "to your Deception DC (not your Deception checks), only if you have the Lie to Me skill feat",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "gate-junction",
+  "collection": "classFeatures",
+  "action": "author",
+  "quote": "While your kinetic aura is active, you gain a +1 status bonus to the listed skill; the bonus increases to +2 at 10th level and +3 at 17th level.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     },
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     },
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     },
+     {
+      "kind": "skill",
+      "detail": "crafting"
+     },
+     {
+      "kind": "skill",
+      "detail": "survival"
+     }
+    ],
+    "when": "while your kinetic aura is active, on the skill of a skill junction you took — air Stealth, earth or water Athletics, fire Intimidation, metal Crafting, wood Survival",
+    "bonus": "+1 status (+2 at 10th level, +3 at 17th)"
+   }
+  ]
+ },
+ {
+  "id": "lantern",
+  "collection": "classFeatures",
+  "action": "author",
+  "quote": "You and your allies in the lantern's aura gain a +1 status bonus to visual Perception checks to notice anything that is also within the aura and a +1 status bonus to checks to Recall Knowledge against creatures within the aura",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "while your lantern implement is lit, on visual Perception checks to notice anything that is also inside its aura",
+    "bonus": "+1 status (+2 against the target of your Exploit Vulnerability, from 9th level)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "while your lantern implement is lit, to Recall Knowledge against a creature inside its aura",
+    "bonus": "+1 status (+2 against the target of your Exploit Vulnerability, from 9th level)"
+   }
+  ]
+ },
+ {
+  "id": "shield",
+  "collection": "classFeatures",
+  "action": "author",
+  "quote": "When you have your shield implement raised, you gain a status bonus to your saves against spells and other magic effects equal to your circumstance bonus to AC from your shield.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "with your shield implement raised, against spells and other magic effects (adept benefit, 7th level)",
+    "bonus": "+status equal to your shield's circumstance bonus to AC"
+   },
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "while your shield implement is broken — it is reduced to 1 Hit Point instead of 0, and you can't Shield Block with it until the broken condition ends",
+    "bonus": "-1 circumstance to its Raise a Shield bonus (never below +0)"
+   }
+  ]
+ },
+ {
+  "id": "the-distant-grasp",
+  "collection": "classFeatures",
+  "action": "skip",
+  "quote": "Guard Rather than attacking, the weapon grants a +2 circumstance bonus to AC against melee attacks to the creature it's following.",
+  "skipReason": "Its only player-facing bonus is the amped dancing blade's Guard, already surfaced by SPELL_MARKERS['dancing-blade'] with source 'the-distant-grasp'; everything else in the record (telekinetic hand Shove, phase bolt's cover reduction, telekinetic projectile push) lands on an enemy."
+ },
+ {
+  "id": "the-unbound-step",
+  "collection": "classFeatures",
+  "action": "author",
+  "quote": "You warp space more compactly, granting you a +10-foot status to your Speed instead of a +5-foot status bonus when you warp step.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "until the end of your turn when you Cast warp step — this raises the cantrip's own Speed bonus",
+    "bonus": "+10-foot status (instead of the spell's usual +5)"
+   }
+  ]
+ },
+ {
+  "id": "weapon-innovation",
+  "collection": "classFeatures",
+  "action": "author",
+  "quote": "When it's collapsed to light Bulk, it has the concealable trait, which grants you a +2 circumstance bonus to Stealth checks and DCs to hide or conceal the weapon.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "Segmented Frame only, while your innovation is collapsed to light Bulk — on Stealth checks and DCs to hide or conceal it",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "infiltrators-elixir",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +4 status bonus to your Deception DC to avoid others seeing through your disguise, and you add your level to this DC even if untrained.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "for the 10 minutes the elixir lasts, on your Deception DC to keep others from seeing through the disguise (you add your level to it even if untrained)",
+    "bonus": "+4 status"
+   }
+  ]
+ },
+ {
+  "id": "swim-fins",
+  "collection": "items",
+  "action": "skip",
+  "quote": "you gain a +5-foot item bonus to the distance you move when rolling Athletics to Swim, not when using a swim Speed, and you take a –10-foot item penalty to your Speed",
+  "skipReason": "The +5 feet is distance moved on a successful Athletics Swim, not a bonus to any roll and explicitly not a Speed — that is the RECORD_MARKERS lane (cf. armbands-of-athleticism-greater); the -10-foot Speed penalty is unconditional and already a flat passiveEffects.speedPenalty."
+ },
+ {
+  "id": "addiction-suppressant",
+  "collection": "items",
+  "action": "author",
+  "quote": "You also gain an item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "on the ongoing save against the addiction of the drug this suppressant was crafted for",
+    "bonus": "+1 item lesser, +2 moderate, +3 greater, +4 major"
+   }
+  ]
+ },
+ {
+  "id": "sovereign-steel",
+  "collection": "items",
+  "action": "author",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect a sovereign steel item of yours from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "sovereign-steel-chunk",
+  "collection": "items",
+  "action": "author",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the *rusting grasp* spell)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this sovereign steel item from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "sovereign-steel-ingot",
+  "collection": "items",
+  "action": "author",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the *rusting grasp* spell)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this sovereign steel item from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "sovereign-steel-object-standard-grade",
+  "collection": "items",
+  "action": "author",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this sovereign steel object from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "sovereign-steel-object-high-grade",
+  "collection": "items",
+  "action": "author",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this sovereign steel object from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "sixfingers-elixir",
+  "collection": "items",
+  "action": "author",
+  "quote": "You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a climb Speed of 20 feet for the listed duration.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "reflex",
+      "dcOnly": true
+     }
+    ],
+    "when": "for the elixir's duration (10 minutes lesser, 1 hour moderate, 8 hours greater), when a creature tries to Disarm you",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "fixer",
+  "collection": "items",
+  "action": "author",
+  "quote": "An informant automatically Aids you on attempts to Gather Information and Recall Knowledge about your specific location, granting you a +1 circumstance bonus to such checks. An expert informant critically succeeds at Aiding you, granting a +2 circumstance bonus.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "while a hired informant Aids you, on Gather Information about the location they know",
+    "bonus": "+1 circumstance (+2 from an expert informant)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "while a hired informant Aids you, on Recall Knowledge about the location they know",
+    "bonus": "+1 circumstance (+2 from an expert informant)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     }
+    ],
+    "when": "while a hired counselor Aids you, to Impersonate or Lie with people inside their location of expertise",
+    "bonus": "+1 circumstance (+2 from an expert counselor)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "while a hired counselor Aids you, to Make an Impression or Request with people inside their location of expertise",
+    "bonus": "+1 circumstance (+2 from an expert counselor)"
+   }
+  ]
+ }
+]

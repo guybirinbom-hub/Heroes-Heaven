@@ -1,0 +1,1225 @@
+[
+ {
+  "id": "exploration-lens",
+  "action": "drop",
+  "dropReason": "Unpriced AoN family head with 3 priced kin — findUmbrellaIds() hides it from every item list, so no character can own it and the star could never fire. Writing `situational` onto it would also un-hide an AoN summary row (situational is in UMBRELLA_MECHANICAL_FIELDS). Re-keyed onto the three priced lenses."
+ },
+ {
+  "id": "exploration-lens-detecting",
+  "action": "author",
+  "replaces": "exploration-lens",
+  "quote": "You also gain a +2 item bonus to checks to Identify Magic within the light.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "arcana"
+     },
+     {
+      "kind": "skill",
+      "detail": "nature"
+     },
+     {
+      "kind": "skill",
+      "detail": "occultism"
+     },
+     {
+      "kind": "skill",
+      "detail": "religion"
+     }
+    ],
+    "when": "to Identify Magic within the bull's-eye lantern's (or wayfinder's) light, while the Detecting lens is installed",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "exploration-lens-investigating",
+  "action": "author",
+  "replaces": "exploration-lens",
+  "quote": "the lens grants you a +1 item bonus to skill checks to Recall Knowledge while Investigating",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on Recall Knowledge checks made while Investigating, while the lens is activated",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "exploration-lens-searching",
+  "action": "author",
+  "replaces": "exploration-lens",
+  "quote": "granting you a +2 item bonus to Perception checks to spot such features while Searching",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "on Perception checks to spot hidden doors and concealed hazards while Searching, while the lens is activated",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "red-rib-gill-mask",
+  "action": "drop",
+  "dropReason": "Unpriced umbrella head with 3 priced kin, hidden by findUmbrellaIds() — not wearable by any character. Re-keyed per grade with each grade's own printed numbers."
+ },
+ {
+  "id": "red-rib-gill-mask-lesser",
+  "action": "author",
+  "replaces": "red-rib-gill-mask",
+  "quote": "The item bonus is +1, or +2 against Dead Man's Breath, and the duration is 10 minutes.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "against inhaled effects, for 10 minutes after you Activate the mask",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "against Dead Man's Breath (or similar volcanic gases at the GM's discretion) instead of the usual +1, for 10 minutes after you Activate the mask",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "red-rib-gill-mask-moderate",
+  "action": "author",
+  "replaces": "red-rib-gill-mask",
+  "quote": "The item bonus is +2, or +3 against Dead Man's Breath, and the duration is 1 hour.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "against inhaled effects, for 1 hour after you Activate the mask",
+    "bonus": "+2 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "against Dead Man's Breath (or similar volcanic gases at the GM's discretion) instead of the usual +2, for 1 hour after you Activate the mask",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "red-rib-gill-mask-greater",
+  "action": "author",
+  "replaces": "red-rib-gill-mask",
+  "quote": "The item bonus is +3, or +4 against Dead Man's Breath, and the duration is 8 hours.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "against inhaled effects, for 8 hours after you Activate the mask",
+    "bonus": "+3 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "against Dead Man's Breath (or similar volcanic gases at the GM's discretion) instead of the usual +3, for 8 hours after you Activate the mask",
+    "bonus": "+4 item"
+   }
+  ]
+ },
+ {
+  "id": "midnight-milk",
+  "action": "drop",
+  "dropReason": "AoN family summary: unpriced, three priced kin, no mechanical field — findUmbrellaIds() hides it from every picker, so it is unownable, and authoring `situational` onto it would un-hide an AoN summary row in Add Items against the shipped owner ruling. Re-keyed per grade."
+ },
+ {
+  "id": "midnight-milk-experimental",
+  "action": "author",
+  "replaces": "midnight-milk",
+  "quote": "Stage 1 +2 item bonus to Perception (1 hour)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "at stage 1 of experimental midnight milk, after you fail its DC 19 Fortitude save (1 hour)",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "midnight-milk-refined",
+  "action": "author",
+  "replaces": "midnight-milk",
+  "quote": "Stage 1 +3 item bonus to Perception (1 hour)",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "at stage 1 of refined midnight milk, after you fail its DC 29 Fortitude save (1 hour)",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "midnight-milk-pure",
+  "action": "author",
+  "replaces": "midnight-milk",
+  "quote": "Stage 1 +3 item bonus to Perception checks and Will saving throws",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "at stage 1 of pure midnight milk, after you fail its DC 43 Fortitude save",
+    "bonus": "+3 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "will"
+     }
+    ],
+    "when": "at stage 1 of pure midnight milk, after you fail its DC 43 Fortitude save",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "crimson-godsblood-serum",
+  "action": "drop",
+  "dropReason": "Unpriced umbrella head with kin crimson-godsblood-serum-lesser/-moderate/-greater — hidden by findUmbrellaIds(), so unownable. Re-keyed per grade. NOTE: core.json carries TWO visible ownable families for this potion — crimson-godsblood-serum-{lesser,moderate,greater} (the fuller records, with usage/activationCost/uses) and lesser-/moderate-/greater-crimson-godsblood-serum (bare stubs). Neither is `aon-` prefixed and neither is in NEAR_DUPLICATE_IDS, so BOTH appear in Add Items; entries are authored on all six so the star fires whichever the character bought. Deduping the stub family is a separate cleanup."
+ },
+ {
+  "id": "crimson-godsblood-serum-lesser",
+  "action": "author",
+  "replaces": "crimson-godsblood-serum",
+  "quote": "The potion grants a +2 status bonus and restores 2d8+5 Hit Points.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     },
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "on physical damage rolls, for 1 minute after drinking the serum",
+    "bonus": "+2 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "the first time in that minute you're reduced to 0 HP without being immediately killed — you avoid being knocked out, become confused 1 round, and your wounded value increases by 1",
+    "bonus": "regain 2d8+5 HP"
+   }
+  ]
+ },
+ {
+  "id": "crimson-godsblood-serum-moderate",
+  "action": "author",
+  "replaces": "crimson-godsblood-serum",
+  "quote": "The potion grants a +3 status bonus and restores 3d8+10 Hit Points.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     },
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "on physical damage rolls, for 1 minute after drinking the serum",
+    "bonus": "+3 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "the first time in that minute you're reduced to 0 HP without being immediately killed — you avoid being knocked out, become confused 1 round, and your wounded value increases by 1",
+    "bonus": "regain 3d8+10 HP"
+   }
+  ]
+ },
+ {
+  "id": "crimson-godsblood-serum-greater",
+  "action": "author",
+  "replaces": "crimson-godsblood-serum",
+  "quote": "The potion grants a +4 status bonus and restores 6d8+20 Hit Points.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     },
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "on physical damage rolls, for 1 minute after drinking the serum",
+    "bonus": "+4 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "the first time in that minute you're reduced to 0 HP without being immediately killed — you avoid being knocked out, become confused 1 round, and your wounded value increases by 1",
+    "bonus": "regain 6d8+20 HP"
+   }
+  ]
+ },
+ {
+  "id": "lesser-crimson-godsblood-serum",
+  "action": "author",
+  "replaces": "crimson-godsblood-serum",
+  "quote": "The potion grants a +2 status bonus and restores 2d8+5 Hit Points.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     },
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "on physical damage rolls, for 1 minute after drinking the serum",
+    "bonus": "+2 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "the first time in that minute you're reduced to 0 HP without being immediately killed — you avoid being knocked out, become confused 1 round, and your wounded value increases by 1",
+    "bonus": "regain 2d8+5 HP"
+   }
+  ]
+ },
+ {
+  "id": "moderate-crimson-godsblood-serum",
+  "action": "author",
+  "replaces": "crimson-godsblood-serum",
+  "quote": "The potion grants a +3 status bonus and restores 3d8+10 Hit Points.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     },
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "on physical damage rolls, for 1 minute after drinking the serum",
+    "bonus": "+3 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "the first time in that minute you're reduced to 0 HP without being immediately killed — you avoid being knocked out, become confused 1 round, and your wounded value increases by 1",
+    "bonus": "regain 3d8+10 HP"
+   }
+  ]
+ },
+ {
+  "id": "greater-crimson-godsblood-serum",
+  "action": "author",
+  "replaces": "crimson-godsblood-serum",
+  "quote": "The potion grants a +4 status bonus and restores 6d8+20 Hit Points.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     },
+     {
+      "kind": "spellDamage"
+     }
+    ],
+    "when": "on physical damage rolls, for 1 minute after drinking the serum",
+    "bonus": "+4 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "the first time in that minute you're reduced to 0 HP without being immediately killed — you avoid being knocked out, become confused 1 round, and your wounded value increases by 1",
+    "bonus": "regain 6d8+20 HP"
+   }
+  ]
+ },
+ {
+  "id": "essence-forge",
+  "action": "drop",
+  "dropReason": "Unpriced umbrella head with kin essence-forge-lesser/-moderate/-greater, hidden by findUmbrellaIds() — unownable. Re-keyed per grade with each grade's own printed bonus."
+ },
+ {
+  "id": "essence-forge-lesser",
+  "action": "author",
+  "replaces": "essence-forge",
+  "quote": "When you critically succeed at Priming the Forge, you gain a +1 item bonus",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "arcana"
+     },
+     {
+      "kind": "skill",
+      "detail": "nature"
+     },
+     {
+      "kind": "skill",
+      "detail": "occultism"
+     },
+     {
+      "kind": "skill",
+      "detail": "religion"
+     }
+    ],
+    "when": "for 24 hours after you CRITICALLY succeed at the DC 20 check to Prime the Forge — only to the skill you used",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "essence-forge-moderate",
+  "action": "author",
+  "replaces": "essence-forge",
+  "quote": "When you critically succeed at Priming the Forge, you gain a +2 item bonus",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "arcana"
+     },
+     {
+      "kind": "skill",
+      "detail": "nature"
+     },
+     {
+      "kind": "skill",
+      "detail": "occultism"
+     },
+     {
+      "kind": "skill",
+      "detail": "religion"
+     }
+    ],
+    "when": "for 24 hours after you CRITICALLY succeed at the DC 30 check to Prime the Forge — only to the skill you used",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "essence-forge-greater",
+  "action": "author",
+  "replaces": "essence-forge",
+  "quote": "When you critically succeed at Priming the Forge, you gain a +3 item bonus",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "arcana"
+     },
+     {
+      "kind": "skill",
+      "detail": "nature"
+     },
+     {
+      "kind": "skill",
+      "detail": "occultism"
+     },
+     {
+      "kind": "skill",
+      "detail": "religion"
+     }
+    ],
+    "when": "for 24 hours after you CRITICALLY succeed at the DC 40 check to Prime the Forge — only to the skill you used",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "signifers-mask",
+  "action": "drop",
+  "dropReason": "Already shipped. public/core.json items['signifers-mask'] already carries both entries verbatim (deception '+1 circumstance' / 'to Lie, and to your Deception DC against Sense Motive'; intimidation '+1 circumstance' / 'to Coerce'). entriesFor() concatenates authored onto shipped, so re-authoring would render +1 twice on each skill. The same bonus is also already registered on the feat 'hellknight-signifer-preferment'."
+ },
+ {
+  "id": "champions-laurels",
+  "action": "drop",
+  "dropReason": "Umbrella head: no price, kin -amateur/-professional/-renowned, so findUmbrellaIds() hides it from every item list and no character can own it. Doubly wrong here — `situational` is itself one of UMBRELLA_MECHANICAL_FIELDS, so authoring onto this record would resurrect the summary row into the shop. Re-keyed onto the three priced grades below."
+ },
+ {
+  "id": "champions-laurels-amateur",
+  "action": "author",
+  "replaces": "champions-laurels",
+  "quote": "Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you. […] These laurels grant a +1 status bonus to the check.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "acrobatics"
+     },
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on the triggering Acrobatics or Athletics check you Activate the laurels for, if you're trained or better in that skill and can perceive at least 12 allies or friendly bystanders encouraging you",
+    "bonus": "+1 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "if you critically succeed at the check the amateur laurels boosted",
+    "bonus": "2 temporary Hit Points (equal to the item's level) for 1 minute"
+   }
+  ]
+ },
+ {
+  "id": "champions-laurels-professional",
+  "action": "author",
+  "replaces": "champions-laurels",
+  "quote": "Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you. […] These laurels grant a +2 status bonus to the check.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "acrobatics"
+     },
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on the triggering Acrobatics or Athletics check you Activate the laurels for, if you're trained or better in that skill and can perceive at least 12 allies or friendly bystanders encouraging you",
+    "bonus": "+2 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "if you critically succeed at the check the professional laurels boosted",
+    "bonus": "10 temporary Hit Points (equal to the item's level) for 1 minute"
+   }
+  ]
+ },
+ {
+  "id": "champions-laurels-renowned",
+  "action": "author",
+  "replaces": "champions-laurels",
+  "quote": "Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you. […] These laurels grant a +3 status bonus to the check.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "acrobatics"
+     },
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on the triggering Acrobatics or Athletics check you Activate the laurels for, if you're trained or better in that skill and can perceive at least 12 allies or friendly bystanders encouraging you",
+    "bonus": "+3 status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "if you critically succeed at the check the renowned laurels boosted",
+    "bonus": "18 temporary Hit Points (equal to the item's level) for 1 minute"
+   }
+  ]
+ },
+ {
+  "id": "privacy-ward-fulu",
+  "action": "drop",
+  "dropReason": "Umbrella head: no price, kin -hallway/-room/-chamber, hidden by findUmbrellaIds() and unownable. Also collapsed three different bonuses and three different durations into one string. Re-keyed onto the three priced grades below."
+ },
+ {
+  "id": "privacy-ward-fulu-hallway",
+  "action": "author",
+  "replaces": "privacy-ward-fulu",
+  "quote": "When applied to a wall inside a room, all creatures within the room gain an item bonus to Stealth checks against creatures outside the room. […] The privacy ward fulu can shield a room of up to 10 square feet, grants a +1 item bonus, and has a duration of 1 hour.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "while inside the room (up to 10 square feet) warded by the affixed fulu, against creatures outside it, for 1 hour",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "privacy-ward-fulu-room",
+  "action": "author",
+  "replaces": "privacy-ward-fulu",
+  "quote": "The fulu can shield a room of up to 30 square feet, grants a +1 item bonus, and has a duration of 8 hours. If you become hidden within the room, you automatically become undetected to creatures of the fulu's level or lower.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "while inside the room (up to 30 square feet) warded by the affixed fulu, against creatures outside it, for 8 hours; if you become hidden within the room you are automatically undetected to creatures of level 5 or lower",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "privacy-ward-fulu-chamber",
+  "action": "author",
+  "replaces": "privacy-ward-fulu",
+  "quote": "The fulu can shield a room of up to 90 square feet, grants a +2 item bonus, and has a duration of 24 hours. If you become hidden within the room, you automatically become undetected to creatures of the fulu's level or lower.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "while inside the room (up to 90 square feet) warded by the affixed fulu, against creatures outside it, for 24 hours; if you become hidden within the room you are automatically undetected to creatures of level 9 or lower",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "conrasu-coin",
+  "action": "drop",
+  "dropReason": "Umbrella head: no price, kin -arbiter/-bythos, hidden by findUmbrellaIds() and unownable. It also mixed two unrelated coins into one record — the Diplomacy bonuses are the arbiter coin's, the AC bonus is the bythos coin's. Split onto the two priced records below."
+ },
+ {
+  "id": "conrasu-coin-arbiter",
+  "action": "author",
+  "replaces": "conrasu-coin",
+  "quote": "Trigger You attempt a Diplomacy check to Make an Impression. […] When you activate the coin, you gain a +2 circumstance bonus on the Diplomacy check, which increases to a +3 circumstance bonus to Make an Impression on a creature with the aeon trait.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "on the triggering Diplomacy check to Make an Impression, when you Activate the affixed arbiter coin (free action, concentrate)",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "instead, when that Make an Impression targets a creature with the aeon trait",
+    "bonus": "+3 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "conrasu-coin-bythos",
+  "action": "author",
+  "replaces": "conrasu-coin",
+  "quote": "Trigger You're targeted with an attack but the opponent hasn't rolled yet. […] You gain a +2 circumstance bonus to AC against the attack, and after resolving the attack, you can Stride up to 10 feet without triggering reactions.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "ac"
+     }
+    ],
+    "when": "against the triggering attack, when you Activate the affixed bythos coin after you're targeted but before the opponent rolls (you can then Stride up to 10 feet without triggering reactions — 20 feet if you have Nimble Roll and the attack missed)",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "aon-fixer",
+  "action": "drop",
+  "dropReason": "Wrong record twice over. `aon-fixer` is an aon- scrape colliding by name with canonical `fixer` (both named \"Fixer\"), so findDuplicateIds() hides it; and canonical `fixer` is itself an unpriced umbrella head with four kin, so findUmbrellaIds() hides that too. Neither is ownable. The single combined entry also collapsed the informant/counselor and basic/expert split that the DB already models as four purchasable records. Re-keyed onto those four below."
+ },
+ {
+  "id": "fixer-basic-informant",
+  "action": "author",
+  "replaces": "aon-fixer",
+  "quote": "An informant automatically Aids you on attempts to Gather Information and Recall Knowledge about your specific location, granting you a +1 circumstance bonus to such checks.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on Gather Information and Recall Knowledge checks about the specific location this informant knows, while hired (they automatically Aid you)",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "fixer-expert-informant",
+  "action": "author",
+  "replaces": "aon-fixer",
+  "quote": "An expert informant critically succeeds at Aiding you, granting a +2 circumstance bonus.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on Gather Information and Recall Knowledge checks about the specific location this informant knows, while hired (they automatically critically succeed at Aiding you)",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "fixer-basic-councelor",
+  "action": "author",
+  "replaces": "aon-fixer",
+  "quote": "A counselor automatically Aids you on attempts to Impersonate, Lie, Make an Impression, and Request when speaking with individuals within the location of the counselor's expertise.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "to Impersonate, Lie, Make an Impression or Request when speaking with individuals within this counselor's location of expertise, while hired (they automatically Aid you; the text prints only the expert's number, so the base value is the standard successful-Aid bonus)",
+    "bonus": "+1 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "fixer-expert-councelor",
+  "action": "author",
+  "replaces": "aon-fixer",
+  "quote": "An expert counselor critically succeeds at Aiding you, granting a +2 circumstance bonus.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "deception"
+     },
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "to Impersonate, Lie, Make an Impression or Request when speaking with individuals within this counselor's location of expertise, while hired (they automatically critically succeed at Aiding you)",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "busine-of-divine-reinforcement",
+  "action": "author",
+  "replaces": "aon-busine-of-divine-reinforcement",
+  "quote": "When played as an instrument, the busine generates powerful and harmonious notes and grants a +2 item bonus to Performance checks.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "performance"
+     }
+    ],
+    "when": "on Performance checks made by playing the busine as an instrument (held in two hands)",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "busine-of-divine-reinforcements",
+  "action": "drop",
+  "replaces": "aon-busine-of-divine-reinforcement",
+  "dropReason": "Already carries the equivalent, as a flat passiveEffects.skills.performance = 2. This plural-name record (6,000 gp, visible, level 15, same Knights of Lastwall source) is a second copy of the single AoN record equipment-1566 'Busine of Divine Reinforcement'; findDuplicateIds() misses it because it has no aon- prefix and its name differs by the trailing 's'. Adding the situational entry here would stack a second +2 item Performance on top of the passiveEffect it already applies. The real fix is deduping (add 'busine-of-divine-reinforcements' to NEAR_DUPLICATE_IDS in src/data/index.ts, which currently only guards backgrounds), not authoring a bonus."
+ },
+ {
+  "id": "sleuths-pipe",
+  "action": "author",
+  "replaces": "aon-sleuth-s-pipe",
+  "quote": "Even while this sapience sleeps within the pipe, it grants you a +1 item bonus to Perception checks to Sense Motive, and if you're an investigator, any checks you make to Pursue a Lead.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "on Perception checks to Sense Motive",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     },
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "investigator only: on any check you make to Pursue a Lead",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "aon-magical-medals",
+  "action": "drop",
+  "dropReason": "Unownable twice over and the wrong kind of record: it is an aon- name-collision duplicate of canonical 'magical-medals' AND it is listed by id in UMBRELLA_EXTRA_IDS in src/data/index.ts, so both findDuplicateIds() and findUmbrellaIds() hide it (confirmed by replaying both functions over public/core.json: dup=true, umbrella=true). It is AoN's category page equipment-3971, whose only own text is 'No matter how many magical medals you have, they collectively count as one invested item' - no bonus of its own. As authored it also bundled three unrelated medals' bonuses onto one record, so a character owning the 25 gp gorilla medal would have gained the griffon and wolf-pack bonuses too. Split into the three per-medal entries below."
+ },
+ {
+  "id": "medal-of-gorillas-might",
+  "action": "author",
+  "replaces": "aon-magical-medals",
+  "quote": "It's typically given in recognition of physical prowess, and it grants you a +1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump. Activate-Gorila's Second Leap (reaction, concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect ... You reroll the failed check.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on Athletics checks to Climb, Force Open, High Jump, or Long Jump",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "Gorilla's Second Leap (reaction, fortune, once per day): you would fail but not critically fail an Athletics check to High Jump or Long Jump",
+    "bonus": "reroll the failed check"
+   }
+  ]
+ },
+ {
+  "id": "medal-of-griffons-heart",
+  "action": "author",
+  "replaces": "aon-magical-medals",
+  "quote": "It is given in recognition of remarkable bravery, and it grants you a +1 item bonus to saving throws against fear and mental effects.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against fear effects and mental effects",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "medal-of-the-wolf-pack",
+  "action": "author",
+  "replaces": "aon-magical-medals",
+  "quote": "While wearing the medal of the wolf pack, you gain a +2 circumstance bonus to damage rolls against enemies you are flanking.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "against an enemy you are flanking (printed as 'damage rolls', not Strikes only)",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "magical-medals",
+  "action": "drop",
+  "dropReason": "No entry belongs here either. The canonical 'magical-medals' (unpriced, no kin ids, so neither umbrella-hidden nor aon-hidden - it is currently VISIBLE and buyable) is the same AoN category page as the aon- copy: its only mechanic is the shared-investiture clause. Every real bonus lives on the five separately-ided medals. Flagging it as a candidate for UMBRELLA_EXTRA_IDS in src/data/index.ts alongside 'aon-magical-medals', since the price-and-kin rule cannot reach it (the medal ids do not share its prefix). Note also that medal-of-unicorns-purity and medal-of-phoenixs-fire correctly get NO situational entry - both are once-per-day healing reactions, not check bonuses."
+ },
+ {
+  "id": "emotion-surge",
+  "action": "author",
+  "replaces": "aon-emotion-surge",
+  "quote": "A surge of emotion emanates from your relic, granting a +1 status bonus to skill checks determined by the relic's emotion. This bonus lasts for 1 minute.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "for 1 minute after activating the relic (once per hour), on the checks set by the relic's emotion: Anger Athletics, Awe Performance, Dedication checks to Recall Knowledge, Fear Stealth, Hatred Intimidation, Joy Diplomacy, Love Medicine, Misery Survival, Pride Society, Remorse Deception",
+    "bonus": "+1 status"
+   }
+  ]
+ },
+ {
+  "id": "corruption-cassock",
+  "action": "drop",
+  "dropReason": "Confirmed against AoN equipment-2376 (Treasure Vault Remastered pg. 190) and equipment-4905 (legacy). The printed text is a trap, not a bonus: 'while you remain loyal to another deity, you believe the cassock grants you a +2 item bonus to Religion checks and a +1 item bonus to the divine skill of the deity to whom you believe the cassock is dedicated. It does neither. The GM secretly adjusts your checks with those skills.' The bonuses function only if the wearer converts to the cassock's TRUE unholy deity, which is GM-secret and unmodelled by the app, so the condition can never resolve true on a sheet. Authoring it would put a star promising +2 Religion on a character who has no bonus at all. The entry also omitted the negation clause ('If you have multiple equal or lower item bonuses to the affected skills, the cassock takes precedence, negating those bonuses'), which is the only real mechanical effect and is a SUPPRESSION, not a bonus — a situational star cannot express it. corruption-cassock is priced (1150 gp) and ownable, so this is a rules defect, not an ownability one: no situational entry belongs on it in any form."
+ },
+ {
+  "id": "gravelands-herbalist",
+  "action": "author",
+  "quote": "At 10th level, you can make an improved version of Lastwall soup that grants a +3 item bonus. At 18th level, you can make a greater version of Lastwall soup that grants a +4 item bonus, and its nourishing properties grant you 10 temporary Hit Points that last up to 10 minutes after eating it.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "on Stealth checks and Stealth DCs against undead, for 1 hour after you eat improved or greater Lastwall soup you made",
+    "bonus": "+3 item (improved, 10th) or +4 item (greater, 18th)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "hp"
+     }
+    ],
+    "when": "for 10 minutes after you eat greater Lastwall soup you made (18th level)",
+    "bonus": "10 temporary Hit Points"
+   }
+  ]
+ },
+ {
+  "id": "dragon-transformation",
+  "action": "author",
+  "quote": "You transform into a ferocious Large dragon, gaining the effects of 6th-rank dragon form except that you use your own AC and attack modifier, you apply your extra damage from Rage, and the Dragon Breath action uses your class DC. … At 18th level, you gain a +20-foot status bonus to your fly Speed, your damage bonus with dragon Strikes increases to +12, and you gain a +14 status bonus to your Dragon Breath damage.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "speed"
+     }
+    ],
+    "when": "to your fly Speed while transformed by Dragon Transformation, from 18th level",
+    "bonus": "+20-foot status"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "on dragon Strikes while transformed by Dragon Transformation, from 18th level",
+    "bonus": "the form's damage bonus increases to +12"
+   },
+   {
+    "targets": [
+     {
+      "kind": "classDc"
+     }
+    ],
+    "when": "the Dragon Breath action granted while you're transformed by Dragon Transformation",
+    "bonus": "the DC is your class DC"
+   },
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "on Dragon Breath damage while transformed by Dragon Transformation, from 18th level",
+    "bonus": "+14 status"
+   }
+  ]
+ },
+ {
+  "id": "alacritous-horseshoes",
+  "action": "author",
+  "quote": "that creature gains a +5-foot item bonus to its land Speed and a +2 circumstance bonus to Athletics checks to High Jump and Long Jump",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on the animal companion's Athletics checks to High Jump and Long Jump, while it has the horseshoes invested",
+    "bonus": "+2 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "alacritous-horseshoes-greater",
+  "action": "author",
+  "quote": "that creature gains a +5-foot item bonus to its land Speed and a +2 circumstance bonus to Athletics checks to High Jump and Long Jump … Alacritous Horseshoes (Greater): The bonus to Speed is +10 feet, and the bonus to Athletics checks is +3.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "athletics"
+     }
+    ],
+    "when": "on the animal companion's Athletics checks to High Jump and Long Jump, while it has the horseshoes invested",
+    "bonus": "+3 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "addiction-suppressant",
+  "action": "drop",
+  "dropReason": "Umbrella family head: unpriced with four priced kin and no mechanical field, so findUmbrellaIds() hides it from every item list and no character can ever hold it. Worse, `situational` is in UMBRELLA_MECHANICAL_FIELDS, so writing this field onto the record would un-hide it and re-add a priceless duplicate to the shop (Ruling A regression). Re-keyed onto the four priced variants below, each with its own printed number."
+ },
+ {
+  "id": "addiction-suppressant-lesser",
+  "action": "author",
+  "replaces": "addiction-suppressant",
+  "quote": "You also gain a +1 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "on the ongoing save against the addiction of the drug this suppressant was crafted for",
+    "bonus": "+1 item"
+   }
+  ]
+ },
+ {
+  "id": "addiction-suppressant-moderate",
+  "action": "author",
+  "replaces": "addiction-suppressant",
+  "quote": "You also gain a +2 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "on the ongoing save against the addiction of the drug this suppressant was crafted for",
+    "bonus": "+2 item"
+   }
+  ]
+ },
+ {
+  "id": "addiction-suppressant-greater",
+  "action": "author",
+  "replaces": "addiction-suppressant",
+  "quote": "You also gain a +3 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "on the ongoing save against the addiction of the drug this suppressant was crafted for",
+    "bonus": "+3 item"
+   }
+  ]
+ },
+ {
+  "id": "addiction-suppressant-major",
+  "action": "author",
+  "replaces": "addiction-suppressant",
+  "quote": "You also gain a +4 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "fortitude"
+     }
+    ],
+    "when": "on the ongoing save against the addiction of the drug this suppressant was crafted for",
+    "bonus": "+4 item"
+   }
+  ]
+ },
+ {
+  "id": "sixfingers-elixir",
+  "action": "drop",
+  "dropReason": "Confirmed unpriced umbrella head (3 kin: -lesser/-moderate/-greater), hidden by findUmbrellaIds(); authoring `situational` would un-hide it since `situational` is an UMBRELLA_MECHANICAL_FIELD. Nothing to re-key: all three priced kin ALREADY carry the identical entry in src/rules/situationalBonuses.ts (lines 2497-2499), each with its own printed duration (10 minutes / 1 hour / 8 hours) and the correct +2 item, dcOnly:true on the Reflex DC. Authored entries ADD to shipped ones (entriesFor merges, never replaces), so re-emitting them would double the popup lines."
+ },
+ {
+  "id": "fixer",
+  "action": "drop",
+  "dropReason": "Confirmed unpriced umbrella head (4 kin), hidden by findUmbrellaIds(). All four priced kin already carry the correctly-split rows with their OWN value in src/rules/situationalBonuses.ts: fixer-basic-informant +1 circumstance (line 1034), fixer-expert-informant +2 (1035), fixer-basic-councelor +1 (2278), fixer-expert-councelor +2 (1036) — informant rows on Gather Information / Recall Knowledge, counselor rows on Impersonate-or-Lie and Make-an-Impression-or-Request. The parent's combined \"+1 (+2 from an expert)\" string is also wrong per record. Nothing to author."
+ },
+ {
+  "id": "skeptics-elixir",
+  "action": "drop",
+  "dropReason": "Confirmed unpriced umbrella head (3 kin), hidden by findUmbrellaIds(). AoN equipment-917 gives the per-grade numbers: lesser +1 / 1 minute, moderate +2 / 10 minutes, greater +3 / 1 hour. All three priced kin already carry exactly those, both rows each (Perception to notice falsehoods, Will saves), in src/rules/situationalBonuses.ts lines 1048-1050. Nothing to author."
+ },
+ {
+  "id": "malleable-mixture",
+  "action": "drop",
+  "dropReason": "Confirmed unpriced umbrella head (2 kin), hidden by findUmbrellaIds(). AoN equipment-1263: lesser +2 / 1 minute, greater +3 / 10 minutes. Both priced kin already carry those values in src/rules/situationalBonuses.ts (lines 1096-1097), split into a Fortitude row (Grapple/Shove) and a Reflex row (Trip). Re-authoring would duplicate the lines — poolSituationalLines only collapses rows whose trigger TEXT matches, and mine would not. NOTE for a separate fix: those two shipped entries state the DC-only nature in prose but omit the `dcOnly: true` flag, so the star lands on the save name instead of the save DC. That is an edit to situationalBonuses.ts, not an authored core.json field."
+ },
+ {
+  "id": "noqual",
+  "action": "drop",
+  "dropReason": "Confirmed unpriced umbrella head (kin include -chunk/-ingot/-object-*/-armor*/-shield*/-weapon*), hidden by findUmbrellaIds(). The +4 clause is already shipped on noqual-chunk, noqual-ingot, noqual-object-standard-grade, noqual-object-high-grade (lines 3039-3042), noqual-buckler-high-grade, noqual-shield-high-grade (2282-2283) and noqual-shield (3043). The verifier's suggested extension list was partly stale: buckler-high-grade and shield-high-grade are already covered. Only the four armor/weapon grades were genuinely uncovered, and they are emitted separately below."
+ },
+ {
+  "id": "noqual-armor-standard-grade",
+  "action": "author",
+  "replaces": "noqual",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this noqual armor from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "noqual-armor-high-grade",
+  "action": "author",
+  "replaces": "noqual",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this noqual armor from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "noqual-weapon-standard-grade",
+  "action": "author",
+  "replaces": "noqual",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this noqual weapon from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ },
+ {
+  "id": "noqual-weapon-high-grade",
+  "action": "author",
+  "replaces": "noqual",
+  "quote": "grant their bonus to saves the owner makes specifically to protect the item from magic",
+  "situational": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "on a save you make specifically to protect this noqual weapon from magic (e.g. against rusting grasp)",
+    "bonus": "+4 circumstance"
+   }
+  ]
+ }
+]

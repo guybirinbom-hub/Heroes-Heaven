@@ -1,0 +1,1829 @@
+[
+ {
+  "id": "intercept-attack",
+  "verdict": "duplicate",
+  "reason": "AoN files Intercept Attack as an Action (action/action-3305.json, Guardian trait), not a class feature, and the routed guardian L1 feature `guardians-techniques` already carries `grantsActions:[\"intercept-attack\"]` plus a descRef to it — the classFeatures copy has no fields the action lacks.",
+  "duplicateOf": [
+   "guardians-techniques",
+   "actions/intercept-attack"
+  ]
+ },
+ {
+  "id": "iron-will",
+  "verdict": "duplicate",
+  "reason": "This is the legacy CRB umbrella (AoN has it only as Alchemist 7 / Ranger 3, both Core Rulebook); the Remaster record `will-expertise` carries the identical \"Will saves increase to expert\" and is routed at ranger L3, kineticist L3 and alchemist L7.",
+  "duplicateOf": [
+   "will-expertise"
+  ]
+ },
+ {
+  "id": "ki-spells",
+  "verdict": "not-a-gap",
+  "reason": "A legacy CRB rules-explainer sidebar — no monk class table ever grants \"Ki Spells\" (AoN has no class-feature record for it), and everything it describes is the generic focus-pool engine plus the reachable Remaster feat `qi-spells`, which carries the tradition/key-ability/spell pick itself."
+ },
+ {
+  "id": "life-draining",
+  "verdict": "needs-route",
+  "reason": "This is the Verdant Core deviation's Backlash and it carries real mechanics (Drained 1/2/3, fatigued, timed recuperation); `verdant-core-deviant-classification` links it by descRef but nothing owns it, and that classification is itself unrouted, so a character who takes Sprout Fruit/Vine Lash never gains it.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "verdant-core-deviant-classification",
+   "level": 2,
+   "detail": "Add `grantsClassFeatures: [\"life-draining\"]` to classFeatures.verdant-core-deviant-classification, and route that classification itself by adding `grantsClassFeatures: [\"verdant-core-deviant-classification\"]` to the four Verdant Core deviant feats (sprout-fruit, vine-lash, defensive-growth, disperse-into-petals) — earliest is level 2."
+  }
+ },
+ {
+  "id": "lust",
+  "verdict": "duplicate",
+  "reason": "The reachable wizard subclass option `runelord` already carries this sin in full — `effectChoices.sin` option \"lust\" grants the Heart's Hook focus spell and states the anathema, and `curriculumBranches.lust` lists exactly the sin spells this record prints (daze/message, charm/command, … telepathic-demand/hearts-hook).",
+  "duplicateOf": [
+   "runelord"
+  ]
+ },
+ {
+  "id": "manifest-eidolon",
+  "verdict": "duplicate",
+  "reason": "AoN files Manifest Eidolon as an Action (action/action-757.json, Summoner trait), and the routed summoner L1 feature `eidolon` already carries `grantsActions:[\"share-senses\",\"manifest-eidolon\",\"act-together\"]`; the classFeatures copy adds nothing over actions/manifest-eidolon.",
+  "duplicateOf": [
+   "eidolon",
+   "actions/manifest-eidolon"
+  ]
+ },
+ {
+  "id": "manifold-alloy",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now: `otherTags:[\"weapon-innovation-modification\"]` + level 7 puts it in the inventor's breakthrough-tier picker (build.ts inventorModificationOptions), the pick is stored on `c.inventor.modifications`, and derive.ts ownedFeatureIds explicitly owns those ids — the orphan scan just does not model that route."
+ },
+ {
+  "id": "mirrored-wall",
+  "verdict": "duplicate",
+  "reason": "AoN files this as a Tactic (tactic/tactic-22.json); the app's reachable copy is actions/mirrored-wall with `tacticTier:\"master\"`, offered by commanderTacticOptions to a level-15+ commander's folio, and the classFeatures copy lacks even the tier field.",
+  "duplicateOf": [
+   "actions/mirrored-wall",
+   "tactic/mirrored-wall"
+  ]
+ },
+ {
+  "id": "modular-head",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now: `otherTags:[\"weapon-innovation-modification\"]` at level 1 makes it an initial-tier inventor modification pick (inventorModificationOptions), stored on `c.inventor.modifications` and owned by derive.ts ownedFeatureIds; its `weaponTraits` rider already fires from there."
+ },
+ {
+  "id": "mountaineering-training",
+  "verdict": "duplicate",
+  "reason": "AoN files this as a Tactic (tactic/tactic-3.json); actions/mountaineering-training carries `tacticTier:\"basic\"` and is selectable into any commander's folio from level 1 via commanderTacticOptions.",
+  "duplicateOf": [
+   "actions/mountaineering-training",
+   "tactic/mountaineering-training"
+  ]
+ },
+ {
+  "id": "multisensory-mask",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now: `armor-innovation-modification` + `subterfuge-suit-modification` at level 15 makes it a revolutionary-tier pick for an armor-innovation inventor whose `inventorArmorStats` is subterfuge-suit (the builder exposes that toggle at shared.tsx:2992), and the pick is owned via `c.inventor.modifications`."
+ },
+ {
+  "id": "muscular-exoskeleton",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now: `armor-innovation-modification` + `power-suit-modification` at level 1 makes it an initial-tier pick for an armor-innovation inventor with power-suit stats (the builder's default), owned via `c.inventor.modifications`."
+ },
+ {
+  "id": "naval-training",
+  "verdict": "duplicate",
+  "reason": "AoN files this as a Tactic (tactic/tactic-4.json); actions/naval-training carries `tacticTier:\"basic\"` and is selectable into a commander's folio from level 1 via commanderTacticOptions.",
+  "duplicateOf": [
+   "actions/naval-training",
+   "tactic/naval-training"
+  ]
+ },
+ {
+  "id": "nudging-whisper",
+  "verdict": "duplicate",
+  "reason": "Not a class feature at all — it is the kitsune heritage `palace-echoes-kitsune`'s granted action (\"You gain the Nudging Whisper action\", with a descRef to actions/nudging-whisper); the fix belongs on that heritage as `grantsActions:[\"nudging-whisper\"]` like its 24 sibling heritages, not as a class-feature route.",
+  "duplicateOf": [
+   "actions/nudging-whisper"
+  ]
+ },
+ {
+  "id": "omnirange-stabilizers",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now: `weapon-innovation-modification` at level 15 makes it a revolutionary-tier inventor modification pick (inventorModificationOptions), stored on `c.inventor.modifications` and owned by derive.ts ownedFeatureIds."
+ },
+ {
+  "id": "pacification-tools",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now: `weapon-innovation-modification` at level 1 makes it an initial-tier inventor modification pick, stored on `c.inventor.modifications` and owned by derive.ts ownedFeatureIds."
+ },
+ {
+  "id": "pacifying-infusion",
+  "verdict": "duplicate",
+  "reason": "AoN has no class-feature record for it; it is the free action granted by the kineticist feat Safe Elements, and `feats/safe-elements` already carries `grantsActions:[\"pacifying-infusion\"]` pointing at actions/pacifying-infusion.",
+  "duplicateOf": [
+   "actions/pacifying-infusion"
+  ]
+ },
+ {
+  "id": "paragon-benefit-amulet",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: build.ts (~line 4122) pushes `paragon-benefit-<implement>` into `classChoices` at level 17 for the thaumaturge's Implement Paragon pick, and amulet is one of the ten implement options — its `situationalBonuses` entry for Amulet's Abeyance already fires from there."
+ },
+ {
+  "id": "paragon-benefit-bell",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: the thaumaturge's Implement Paragon pick pushes `paragon-benefit-bell` into `classChoices` at level 17 (build.ts pushBenefit), and bell is a listed implement option."
+ },
+ {
+  "id": "paragon-benefit-lantern",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: the thaumaturge's Implement Paragon pick pushes `paragon-benefit-lantern` into `classChoices` at level 17 (build.ts pushBenefit), and lantern is a listed implement option."
+ },
+ {
+  "id": "paragon-benefit-mirror",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: the thaumaturge's Implement Paragon pick pushes `paragon-benefit-mirror` into `classChoices` at level 17, and its Mirror's Reflection rider is already authored in situationalBonuses keyed on that id."
+ },
+ {
+  "id": "paragon-benefit-regalia",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: the thaumaturge's Implement Paragon pick pushes `paragon-benefit-regalia` into `classChoices` at level 17, and its Coerce/Make an Impression star is already authored in situationalBonuses keyed on that id."
+ },
+ {
+  "id": "paragon-benefit-shield",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: `shield` is one of the ten thaumaturge implement options, so the Implement Paragon pick at level 17 pushes `paragon-benefit-shield` into `classChoices` (build.ts pushBenefit)."
+ },
+ {
+  "id": "paragon-benefit-tome",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: the thaumaturge's Implement Paragon pick pushes `paragon-benefit-tome` into `classChoices` at level 17, and its Recall Knowledge / Esoteric Lore initiative stars are already authored in situationalBonuses keyed on that id."
+ },
+ {
+  "id": "paragon-benefit-wand",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: the thaumaturge's Implement Paragon pick pushes `paragon-benefit-wand` into `classChoices` at level 17, and its Fling Magic rider is already authored in situationalBonuses keyed on that id."
+ },
+ {
+  "id": "paragon-benefit-weapon",
+  "verdict": "not-a-gap",
+  "reason": "Reachable now via route 4: the thaumaturge's Implement Paragon pick pushes `paragon-benefit-weapon` into `classChoices` at level 17, and weapon is a listed implement option."
+ },
+ {
+  "id": "passage-of-lines",
+  "verdict": "duplicate",
+  "reason": "AoN files this as a Tactic (tactic/tactic-5.json); actions/passage-of-lines carries `tacticTier:\"basic\"` and is selectable into a commander's folio from level 1 via commanderTacticOptions.",
+  "duplicateOf": [
+   "actions/passage-of-lines",
+   "tactic/passage-of-lines"
+  ]
+ },
+ {
+  "id": "initiate-benefit-wand",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable twice over: build.ts `pushBenefit('initiate', imp, extraPickLevel(...))` pushes `initiate-benefit-<implement>` into classChoices for every thaumaturge implement pick, and the archetype feat `implement-initiate` carries `derivedGrant {fromFeat:'thaumaturge-dedication', prefix:'initiate-benefit-'}` — the orphan scan only looked at static class/subclass/extraChoice data and missed the code route."
+ },
+ {
+  "id": "adept-benefit-wand",
+  "verdict": "not-a-gap",
+  "reason": "build.ts's thaumaturge block pushes `adept-benefit-<implement>` into classChoices at level 7 (Implement Adept), level 11 (Second Adept) and via Intense Implement for the third implement, so a wand thaumaturge owns it through the classChoices route."
+ },
+ {
+  "id": "bloody-guillotine",
+  "verdict": "duplicate",
+  "reason": "All 37 tactics exist in both classFeatures and actions/tactic with identical text; the reachable copy is `actions.bloody-guillotine` (tacticTier 'legendary'), selected into `character.commanderTactics.folio` at level 19 — note the once/day `limitedUses` is authored only on the dead classFeatures copy.",
+  "duplicateOf": [
+   "bloody-guillotine"
+  ]
+ },
+ {
+  "id": "clue-in",
+  "verdict": "duplicate",
+  "reason": "`classFeatures.on-the-case` (investigator level 1) carries `grantsActions: ['clue-in']`, which resolves to `actions.clue-in` with the same text — the classFeatures copy is the redundant twin (it alone holds the 1-per-10-minutes limitedUses).",
+  "duplicateOf": [
+   "clue-in"
+  ]
+ },
+ {
+  "id": "cry-havoc",
+  "verdict": "duplicate",
+  "reason": "Same content as the reachable `actions.cry-havoc` (traits commander/tactic, tacticTier 'legendary'), which a commander puts in their folio; the classFeatures twin has no folio route and never will.",
+  "duplicateOf": [
+   "cry-havoc"
+  ]
+ },
+ {
+  "id": "dense-plating",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` at level 7, so `inventorModificationOptions()` offers it as the breakthrough pick, the Builder writes it to `build.inventorModifications.breakthrough`, and derive.ts's `ownedFeatureIds` adds every id in `c.inventor.modifications` — a route the orphan scan does not model."
+ },
+ {
+  "id": "drain-bonded-item",
+  "verdict": "duplicate",
+  "reason": "`classFeatures.arcane-bond` (wizard level 1) carries `grantsActions: ['drain-bonded-item']` and the 1/day limitedUses, and MainTab resolves that to the identical `actions.drain-bonded-item` record.",
+  "duplicateOf": [
+   "drain-bonded-item"
+  ]
+ },
+ {
+  "id": "drink-from-the-chalice",
+  "verdict": "duplicate",
+  "reason": "`classFeatures.initiate-benefit-chalice` carries `grantsActions: ['drink-from-the-chalice']` and is itself reachable (build.ts implement-benefit push), so the identical `actions.drink-from-the-chalice` is what a chalice thaumaturge actually gets.",
+  "duplicateOf": [
+   "drink-from-the-chalice"
+  ]
+ },
+ {
+  "id": "energy-barrier",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` at level 15, so it is offered by `inventorModificationOptions()` as the revolutionary pick and reaches the character through `c.inventor.modifications` in `ownedFeatureIds`."
+ },
+ {
+  "id": "executioners-volley",
+  "verdict": "duplicate",
+  "reason": "Identical text to the reachable `actions.executioners-volley` (tacticTier 'legendary') that a level-19 commander selects into their folio; the classFeatures copy has no commander route.",
+  "duplicateOf": [
+   "executioners-volley"
+  ]
+ },
+ {
+  "id": "for-talmandor-for-freedom",
+  "verdict": "duplicate",
+  "reason": "Identical text to the reachable `actions.for-talmandor-for-freedom` (tacticTier 'legendary') selected via `commanderTactics.folio`; the classFeatures copy is the importer's redundant twin.",
+  "duplicateOf": [
+   "for-talmandor-for-freedom"
+  ]
+ },
+ {
+  "id": "glimpse-vulnerability",
+  "verdict": "duplicate",
+  "reason": "`feats.thaumaturge-dedication` carries `grantsActions: ['glimpse-vulnerability']` (AoN feat-8398 prints the action inline inside the dedication), so the identical `actions.glimpse-vulnerability` is the reachable copy — a full thaumaturge gets Exploit Vulnerability instead, so no class route belongs here.",
+  "duplicateOf": [
+   "glimpse-vulnerability"
+  ]
+ },
+ {
+  "id": "harmonic-oscillator",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` at level 1, so it is an initial-tier option from `inventorModificationOptions()` and becomes owned through `c.inventor.modifications` in `ownedFeatureIds`."
+ },
+ {
+  "id": "incredible-resistance",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` at level 15, offered as a revolutionary-tier pick by `inventorModificationOptions()` and owned via `c.inventor.modifications`; its 'choose dense plating, layered mesh, or tensile absorption' prerequisite is unenforced but does not affect reachability."
+ },
+ {
+  "id": "initiate-benefit-bell",
+  "verdict": "not-a-gap",
+  "reason": "Reached by build.ts's `pushBenefit('initiate', 'bell', …)` into classChoices whenever bell is a chosen implement, and separately by the archetype feat `implement-initiate`'s `derivedGrant` prefix `initiate-benefit-`."
+ },
+ {
+  "id": "initiate-benefit-chalice",
+  "verdict": "not-a-gap",
+  "reason": "Reached by build.ts's `pushBenefit('initiate', 'chalice', …)` into classChoices when chalice is a chosen implement, and by `implement-initiate`'s `derivedGrant {prefix:'initiate-benefit-'}` for the archetype."
+ },
+ {
+  "id": "insta-ballista",
+  "verdict": "duplicate",
+  "reason": "Identical text to the reachable `actions.insta-ballista` (tacticTier 'legendary') taken into `commanderTactics.folio`; separately worth noting that `SITUATIONAL['insta-ballista']` never fires because `characterSituationalIds` walks feats/ownedFeatureIds/inventory but not the folio — an engine keying issue, not a missing feature route.",
+  "duplicateOf": [
+   "insta-ballista"
+  ]
+ },
+ {
+  "id": "layered-mesh",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` at level 7, offered as the breakthrough pick by `inventorModificationOptions()` and owned through `c.inventor.modifications` in `ownedFeatureIds`."
+ },
+ {
+  "id": "metallic-reactance",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` at level 1, an initial-tier option from `inventorModificationOptions()` reaching the character via `c.inventor.modifications`."
+ },
+ {
+  "id": "momentum-enhancer",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `['melee','weapon-innovation-modification']` at level 15, so a weapon-innovation inventor picks it at the revolutionary tier and it is owned via `c.inventor.modifications`."
+ },
+ {
+  "id": "mutagenic-flashback",
+  "verdict": "not-a-gap",
+  "reason": "Legacy Core Rulebook only: AoN research-field-3 (CRB Mutagenist) says \"You also gain the following free action\", while research-field-7 (Player Core 2 Mutagenist, the only mutagenist the app models) drops it entirely — routing it would hand remaster alchemists a free action they do not have; it should instead be tagged `edition: 'legacy-era'` like its `actions` twin already is."
+ },
+ {
+  "id": "otherworldly-protection",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` at level 1, offered as an initial-tier pick by `inventorModificationOptions()` and owned through `c.inventor.modifications`."
+ },
+ {
+  "id": "paragon-benefit-chalice",
+  "verdict": "not-a-gap",
+  "reason": "build.ts's thaumaturge block pushes `paragon-benefit-<implement>` into classChoices at level 17 for the implement chosen via `build.implementParagon` (restricted to implements that already have an adept benefit), so a chalice thaumaturge owns it."
+ },
+ {
+  "id": "patron-theme",
+  "verdict": "not-a-gap",
+  "reason": "It is AoN category-page-141 \"Patron Themes\" — the index page explaining what a patron entry contains (Spell List / Patron Skill / Initial Lesson / Familiar Ability); the actual rules are delivered by `classFeatures.patron` (witch level 1) plus the chosen patron subclass option, and its `limitedUses {1/round}` was mis-mined from the sentence describing the familiar ability."
+ },
+ {
+  "id": "perfect-fortification",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `['armor-innovation-modification','power-suit-modification']` at level 15; `inventorModificationOptions()` offers it at the revolutionary tier whenever `armorStats === 'power-suit'` (which is the default in build.ts), and it is owned via `c.inventor.modifications`."
+ },
+ {
+  "id": "perpetual-infusions-chirurgeon",
+  "verdict": "not-a-gap",
+  "reason": "Legacy Core Rulebook feature — AoN class-56 (the Player Core 2 alchemist the app models) contains no \"Perpetual\" text at all and the class's level-7 slot is Alchemical Weapon Expertise / Will Expertise, so adding a `7:perpetual-infusions` entry would invent a feature the remaster alchemist does not have; the record should be marked `edition: 'legacy-era'` instead."
+ },
+ {
+  "id": "perpetual-infusions-mutagenist",
+  "verdict": "not-a-gap",
+  "reason": "Same legacy-only case as the chirurgeon variant: Perpetual Infusions exists only in the CRB alchemist (AoN research-field-3), not in the Player Core 2 rebuild that `classes.alchemist` encodes, so no route belongs on the remaster class."
+ },
+ {
+  "id": "perpetual-infusions-toxicologist",
+  "verdict": "not-a-gap",
+  "reason": "Perpetual Infusions is a Core Rulebook (legacy) alchemist L7 feature that the Remaster deleted — the app's alchemist is edition:\"remaster\" with the Player Core 2 table (versatile-vials/advanced-vials/abundant-vials, L7 = alchemical-weapon-expertise + will-expertise), and AoN's Player Core 2 alchemist page contains no \"Perpetual Infusions\", so routing it would invent a feature the modelled class does not have."
+ },
+ {
+  "id": "phlogistonic-regulator",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: it carries otherTags [\"armor-innovation-modification\"] and level 1, so inventorModificationOptions (build.ts:1151) offers it at the initial tier and derive.ts:2012 adds c.inventor.modifications values to ownedFeatureIds."
+ },
+ {
+  "id": "physical-protections",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags [\"armor-innovation-modification\"] at level 15 ≤ INVENTOR_TIER_LEVEL.revolutionary (15), so it is offered by inventorModificationOptions and owned via c.inventor.modifications in derive.ts:2012."
+ },
+ {
+  "id": "sanguine-revitalization",
+  "verdict": "duplicate",
+  "reason": "The reachable carrier is the identically-named record in the `actions` collection (traits [commander,tactic], tacticTier \"legendary\"), which the commander folio picker offers via build.ts:1087 — note the action copy is missing the classFeature's limitedUses {max:1,per:\"day\"}, so that field should be moved onto the action rather than this record routed.",
+  "duplicateOf": [
+   "sanguine-revitalization"
+  ]
+ },
+ {
+  "id": "school-of-thassilonian-rune-magic",
+  "verdict": "duplicate",
+  "reason": "The reachable wizard subclass option `runelord` (classes.wizard.subclass.options) is a classFeature that carries strictly more of the same content — the full `curriculum` map plus `curriculumBranches` for all seven sins and a sin `effectChoices` list with per-sin focus-spell grants — whereas this record only repeats the bare seven-sin choice with no grants.",
+  "duplicateOf": [
+   "runelord"
+  ]
+ },
+ {
+  "id": "tensile-absorption",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags [\"armor-innovation-modification\"] at level 7 ≤ INVENTOR_TIER_LEVEL.breakthrough (7), so inventorModificationOptions offers it and derive.ts:2012 owns the pick."
+ },
+ {
+  "id": "valkyries-charge",
+  "verdict": "duplicate",
+  "reason": "The reachable carrier is `actions.valkyries-charge` (traits [brandish,commander,tactic], tacticTier \"legendary\") offered by the commander folio picker — the action copy lacks the classFeature's limitedUses {max:1,per:\"day\"}, which should be copied onto the action rather than this record routed.",
+  "duplicateOf": [
+   "valkyries-charge"
+  ]
+ },
+ {
+  "id": "ability-boosts",
+  "verdict": "not-a-gap",
+  "reason": "This is the generic legacy class-table row (\"At 5th level and every 5 levels thereafter, boost four different ability scores\") that all 22 legacy classes printed; the app implements it natively via ATTRIBUTE_BOOST_LEVELS = [5,10,15,20] in build.ts:488, the record has no engine fields (mechanicalFields is empty), and no class's feature list references an `ability-boosts` id."
+ },
+ {
+  "id": "acrobats-calling",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: the Mythic Calling picker (builder/shared.tsx:1236 and MythicRules.tsx:70) offers every classFeature with the `calling` trait, which this record has, and derive.ts:2130 adds c.mythicCalling to ownedFeatureIds."
+ },
+ {
+  "id": "act-together",
+  "verdict": "duplicate",
+  "reason": "The reachable carrier is `actions.act-together`, handed over by the summoner's L1 `eidolon` class feature whose grantsActions is [\"share-senses\",\"manifest-eidolon\",\"act-together\"]; AoN also files Act Together as an action (action-758), not a class-table feature.",
+  "duplicateOf": [
+   "act-together"
+  ]
+ },
+ {
+  "id": "adept-benefit-amulet",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7, AoN class-feature-1180) says \"Choose one of your implements and gain the adept benefit for that implement\", but nothing in the app reaches this record — the `amulet` implement option carries no featureIds/grantsClassFeatures and its description leaves the \"### **Adept Benefit**\" heading empty, while the sibling `initiate-benefit-*` family is routed only by the archetype feat `implement-initiate`'s derivedGrant.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add a second extraChoices group to classes.thaumaturge.extraChoices — id \"implement-adept\", pickByLevel {7:1, 11:2} (Implement Adept L7 + Second Adept L11) — whose option ids are the adept-benefit-* records, restricted to implements already picked in the `implement` group; classChoices option ids are added to owned features by derive.ts:2072"
+  }
+ },
+ {
+  "id": "adept-benefit-bell",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7) grants the adept benefit of a chosen implement, yet nothing reaches this record — the `bell` implement option has no featureIds and its description's \"### **Adept Benefit**\" section is empty, so the printed \"conditions from Ring Bell last 3 rounds instead of 1\" is stored and shown to nobody.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add adept-benefit-bell to the new classes.thaumaturge.extraChoices group \"implement-adept\" (pickByLevel {7:1, 11:2}, restricted to implements already chosen in the `implement` group)"
+  }
+ },
+ {
+  "id": "adept-benefit-chalice",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7) grants the adept benefit of a chosen implement, but no route reaches this record — the `chalice` implement option carries no featureIds and its \"### **Adept Benefit**\" heading is empty.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add adept-benefit-chalice to the new classes.thaumaturge.extraChoices group \"implement-adept\" (pickByLevel {7:1, 11:2}, restricted to implements already chosen in the `implement` group)"
+  }
+ },
+ {
+  "id": "adept-benefit-lantern",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7) grants the adept benefit of a chosen implement, but no route reaches this record — the `lantern` implement option carries no featureIds and its \"### **Adept Benefit**\" heading is empty, so the invisible/ethereal-revealing aura is unreachable.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add adept-benefit-lantern to the new classes.thaumaturge.extraChoices group \"implement-adept\" (pickByLevel {7:1, 11:2}, restricted to implements already chosen in the `implement` group)"
+  }
+ },
+ {
+  "id": "adept-benefit-mirror",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7) grants the adept benefit of a chosen implement, but no route reaches this record — the `mirror` implement option carries no featureIds and its \"### **Adept Benefit**\" heading is empty.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add adept-benefit-mirror to the new classes.thaumaturge.extraChoices group \"implement-adept\" (pickByLevel {7:1, 11:2}, restricted to implements already chosen in the `implement` group)"
+  }
+ },
+ {
+  "id": "adept-benefit-regalia",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7) grants the adept benefit of a chosen implement, but no route reaches this record — the `regalia` implement option carries no featureIds and its \"### **Adept Benefit**\" heading is empty, so its +2 Deception/Diplomacy/Intimidation circumstance bonus and the scaling status bonus to damage rolls reach nobody.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add adept-benefit-regalia to the new classes.thaumaturge.extraChoices group \"implement-adept\" (pickByLevel {7:1, 11:2}, restricted to implements already chosen in the `implement` group)"
+  }
+ },
+ {
+  "id": "adept-benefit-shield",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7) grants the adept benefit of a chosen implement and nothing reaches this record; the reachable `shield` implement option does reprint the same prose inside its description, but ungated (it reads at level 1, before Implement Adept exists) and unselectable at Implement Adept, so `shield` is not a variant that carries this feature's role.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add adept-benefit-shield to the new classes.thaumaturge.extraChoices group \"implement-adept\" (pickByLevel {7:1, 11:2}); once routed, drop the duplicated \"### **Adept Benefit**\" prose from the `shield` implement option description so it is not shown twice"
+  }
+ },
+ {
+  "id": "adept-benefit-tome",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7) grants the adept benefit of a chosen implement, but no route reaches this record — the `tome` implement option carries no featureIds and its \"### **Adept Benefit**\" heading is empty, so the expert/master daily skill proficiencies are unreachable.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add adept-benefit-tome to the new classes.thaumaturge.extraChoices group \"implement-adept\" (pickByLevel {7:1, 11:2}, restricted to implements already chosen in the `implement` group)"
+  }
+ },
+ {
+  "id": "adept-benefit-weapon",
+  "verdict": "needs-route",
+  "reason": "Implement Adept (thaumaturge L7) grants the adept benefit of a chosen implement, but no route reaches this record — the `weapon` implement option carries no featureIds and its \"### **Adept Benefit**\" heading is empty.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "thaumaturge",
+   "level": 7,
+   "detail": "add adept-benefit-weapon to the new classes.thaumaturge.extraChoices group \"implement-adept\" (pickByLevel {7:1, 11:2}, restricted to implements already chosen in the `implement` group)"
+  }
+ },
+ {
+  "id": "advanced-design",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags [\"weapon-innovation-modification\"] at level 1, so inventorModificationOptions offers it at the initial tier and derive.ts:2012 adds the c.inventor.modifications pick to ownedFeatureIds."
+ },
+ {
+  "id": "advanced-rangefinder",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags [\"ranged\",\"weapon-innovation-modification\"] at level 7 ≤ INVENTOR_TIER_LEVEL.breakthrough (7), so it is offered by inventorModificationOptions and owned via c.inventor.modifications."
+ },
+ {
+  "id": "aerodynamic-construction",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags [\"melee\",\"weapon-innovation-modification\"] at level 7 ≤ INVENTOR_TIER_LEVEL.breakthrough (7), so it is offered by inventorModificationOptions and owned via c.inventor.modifications."
+ },
+ {
+  "id": "alchemical-alacrity",
+  "verdict": "not-a-gap",
+  "reason": "A Core Rulebook (legacy) alchemist L15 feature that the Remaster deleted along with infused reagents — the app's alchemist is edition:\"remaster\" (Player Core 2), whose L15 features are alchemical-weapon-mastery and explosion-dodger and whose AoN class page contains no \"Alchemical Alacrity\", so routing it would give the modelled class a feature it does not have."
+ },
+ {
+  "id": "alchemist-armor-expertise-level-13",
+  "verdict": "duplicate",
+  "reason": "The reachable `medium-armor-expertise` (in classes.alchemist.features at level 13) carries the identical rule — \"Your proficiency ranks for light armor, medium armor, and unarmored defense increase to expert\" — this record is only the legacy CRB name for the same L13 row.",
+  "duplicateOf": [
+   "medium-armor-expertise"
+  ]
+ },
+ {
+  "id": "alchemist-armor-mastery-level-19",
+  "verdict": "duplicate",
+  "reason": "The reachable `medium-armor-mastery` (in classes.alchemist.features at level 19) carries the identical rule — \"Your proficiency ranks for light and medium armor, as well as for unarmored defense, increase to master\" — this record is only the legacy CRB name for the same L19 row.",
+  "duplicateOf": [
+   "medium-armor-mastery"
+  ]
+ },
+ {
+  "id": "alley-oop",
+  "verdict": "duplicate",
+  "reason": "The reachable carrier is `actions.alley-oop` (traits [commander,tactic], tacticTier \"expert\", same 1-action cost and same description text), which the commander folio picker offers via the tactic-trait filter in build.ts:1087; commanders pick tactics into a folio, never as class-table features.",
+  "duplicateOf": [
+   "alley-oop"
+  ]
+ },
+ {
+  "id": "anathema-cleric",
+  "verdict": "duplicate",
+  "reason": "The reachable `deity-cleric` (classes.cleric.features level 1) already carries the whole \"## Anathema\" section verbatim in its description, and in the current Player Core wording — whereas this orphan holds the superseded alignment-based CRB text (\"anathema to your deity's alignment\", \"spells with the evil trait\") despite claiming Player Core as its source.",
+  "duplicateOf": [
+   "deity-cleric"
+  ]
+ },
+ {
+  "id": "fungal-rot",
+  "verdict": "needs-route",
+  "reason": "It is the Backlash of the Blight Soul deviant classification (AoN deviant-ability-classification-4: \"Feats Backlash: Fungal Rot\"), and the app already ships the Blight Soul deviant feats (release-spores/rotten-slurry lvl 2, irradiate lvl 6, unleash-the-blight lvl 10) behind the Setup toggle build.deviantEnabled, so a real player can have it, but nothing grants it and blight-soul-deviant-classification is orphaned too.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "blight-soul-deviant-classification",
+   "detail": "add grantsClassFeatures:['fungal-rot'] to classFeatures.blight-soul-deviant-classification (its own description carries only the flavour line and the generic backlash rules, not the mild/moderate/severe entries), and add grantsClassFeatures:['blight-soul-deviant-classification'] to feats release-spores, rotten-slurry, irradiate and unleash-the-blight so taking any Blight Soul deviant feat pulls the chain in",
+   "level": 2
+  }
+ },
+ {
+  "id": "furious-strike",
+  "verdict": "duplicate",
+  "reason": "AoN eidolon-2 (Anger Phantom) lists it as the Initial eidolon ability, and classes.summoner.subclass.options.anger-phantom-eidolon carries it in eidolonAbilities (tier initial, level 1) plus a descRef into actions/furious-strike, which companions.ts:891 renders on the eidolon stat block; the classFeatures copy adds no field the actions record lacks.",
+  "duplicateOf": [
+   "anger-phantom-eidolon"
+  ]
+ },
+ {
+  "id": "gather-to-me",
+  "verdict": "duplicate",
+  "reason": "The reachable copy is actions/gather-to-me, which carries tacticTier:'basic' and the tactic trait and so is offered by the commander folio picker (build.ts:1087 filters content.actions by traits.includes('tactic')); the classFeatures copy has no tacticTier and no extra mechanics.",
+  "duplicateOf": [
+   "gather-to-me"
+  ]
+ },
+ {
+  "id": "gluttony",
+  "verdict": "needs-route",
+  "reason": "The Runelord wizard class archetype is a live subclass option and its text says \"you must choose one sin to specialize in\", but classes.wizard has only the `thesis` extra-choice group and the runelord option has no featureIds, so all seven sins (envy, gluttony, greed, lust, pride, sloth, wrath) are unreachable even though each carries an anathema, a full sin-spell curriculum and an initial school spell.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "wizard",
+   "detail": "add a new extraChoices group (id `sin`, pickByLevel {\"1\":1}) to classes.wizard whose options are the seven sin classFeatures — envy, gluttony, greed, lust, pride, sloth, wrath — offered only when subclassId === 'runelord'; the pick lands in classChoices, which ownedFeatureIds already reads",
+   "level": 1
+  }
+ },
+ {
+  "id": "greater-resolve",
+  "verdict": "duplicate",
+  "reason": "This is the pre-remaster APG Investigator 17 feature (AoN class-feature-332, verbatim); the app's investigator table names greater-dogged-will at 17, whose text carries the identical mechanics (Will legendary, success→critical success, critical failure→failure, failure vs damage→half).",
+  "duplicateOf": [
+   "greater-dogged-will"
+  ]
+ },
+ {
+  "id": "greed",
+  "verdict": "needs-route",
+  "reason": "Same family as gluttony — a Runelord wizard must choose one of the seven sins, and the runelord subclass option carries no featureIds and the wizard has no sin extra-choice group, so this sin's anathema, curriculum spells and Precious Gleam school spell reach nobody.",
+  "route": {
+   "kind": "extra-choice-option",
+   "carrier": "wizard",
+   "detail": "add a new extraChoices group (id `sin`, pickByLevel {\"1\":1}) to classes.wizard whose options are the seven sin classFeatures — envy, gluttony, greed, lust, pride, sloth, wrath — offered only when subclassId === 'runelord'",
+   "level": 1
+  }
+ },
+ {
+  "id": "guardians-calling",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: the Mythic Calling picker in shared.tsx:1244 lists every classFeature with the `calling` trait, the pick is stored as build.mythicCalling, and ownedFeatureIds explicitly adds `c.mythicCalling` — this is a route the orphan scan did not model."
+ },
+ {
+  "id": "hampering-spikes",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: it is tagged `weapon-innovation-modification` at level 1, so inventorModificationOptions offers it in the Initial/Breakthrough/Revolutionary picker for a weapon-innovation inventor, and ownedFeatureIds adds every id in c.inventor.modifications."
+ },
+ {
+  "id": "handlers-calling",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: it carries the `calling` trait, so the Mythic Calling picker offers it once mythic is enabled in Setup, and ownedFeatureIds adds c.mythicCalling."
+ },
+ {
+  "id": "haunting-visage",
+  "verdict": "duplicate",
+  "reason": "AoN eidolon-13 (Swarm) grants it in Swarm Form (\"While condensed, it can use the Haunting Visage action\"), and classes.summoner.subclass.options.swarm-eidolon carries that text in eidolonAbilities plus a descRef into actions/haunting-visage, which holds the full reaction text; the classFeatures copy carries nothing extra.",
+  "duplicateOf": [
+   "swarm-eidolon"
+  ]
+ },
+ {
+  "id": "heavy-construction",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: tagged `armor-innovation-modification` + `power-suit-modification` at level 7, so inventorModificationOptions offers it to a power-suit armor-innovation inventor at breakthrough (7) and revolutionary (15); its armorRestat then fires through c.inventor.modifications."
+ },
+ {
+  "id": "hefty-composition",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: tagged `weapon-innovation-modification` at level 1, offered in all three modification tiers for a weapon-innovation inventor; its weaponTraits add fires via c.inventor.modifications."
+ },
+ {
+  "id": "heightened-senses",
+  "verdict": "duplicate",
+  "reason": "This is the pre-remaster CRB Barbarian 17 feature (AoN class-feature-51); the app's barbarian table names perception-mastery at 7, whose Barbarian branch is the same sentence verbatim (\"Your instinct heightens each of your senses further. Your proficiency rank for Perception increases to master.\").",
+  "duplicateOf": [
+   "perception-mastery"
+  ]
+ },
+ {
+  "id": "hunters-calling",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: it carries the `calling` trait, so the Mythic Calling picker offers it once mythic is enabled, and ownedFeatureIds adds c.mythicCalling."
+ },
+ {
+  "id": "hyper-boosters",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: tagged `armor-innovation-modification` at level 7 with no suit sub-gate, so inventorModificationOptions offers it to both power-suit and subterfuge-suit armor inventors at breakthrough and revolutionary; its landSpeedBonus fires via c.inventor.modifications."
+ },
+ {
+  "id": "impossible-alloy",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: tagged `weapon-innovation-modification` at level 15, so it is offered in the Revolutionary modification slot for a weapon-innovation inventor."
+ },
+ {
+  "id": "improved-evasion",
+  "verdict": "duplicate",
+  "reason": "Umbrella copy of the legacy Rogue 13 / Swashbuckler 13 / Ranger 15 feature (AoN class-feature-251, -384, -227); the remaster tables name greater-rogue-reflexes (rogue 13), assured-evasion (swashbuckler 13) and greater-natural-reflexes (ranger 15), all reachable and all carrying the same Reflex-legendary / critical-failure→failure / failure-vs-damage→half text — assured-evasion is word-for-word identical to this record.",
+  "duplicateOf": [
+   "greater-rogue-reflexes",
+   "assured-evasion",
+   "greater-natural-reflexes"
+  ]
+ },
+ {
+  "id": "inconspicuous-appearance",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: tagged `weapon-innovation-modification` at level 7, offered in the Breakthrough and Revolutionary slots for a weapon-innovation inventor; its weaponTraits (melee-gated) fire via c.inventor.modifications."
+ },
+ {
+  "id": "infused-reagents",
+  "verdict": "duplicate",
+  "reason": "The pre-remaster CRB alchemist resource; the app's alchemist is the remastered one and its level-1 table names versatile-vials, advanced-alchemy and quick-alchemy, which together carry the whole daily-preparation resource this record describes — routing it as well would hand an alchemist a second, duplicated reagent pool.",
+  "duplicateOf": [
+   "versatile-vials",
+   "advanced-alchemy",
+   "quick-alchemy"
+  ]
+ },
+ {
+  "id": "initiate-benefit-lantern",
+  "verdict": "needs-route",
+  "reason": "The reachable carrier is classFeatures.lantern (an option of classes.thaumaturge.extraChoices[implement]), and its description's \"### **Initiate Benefit**\" heading is empty — the +1 status bonus to visual Perception and Recall Knowledge, the 20-foot light aura and the automatic secret checks exist only on this record, which nothing reaches.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "lantern",
+   "detail": "add grantsClassFeatures:['initiate-benefit-lantern'] to classFeatures.lantern; the implement pick already lands in classChoices, which ownedFeatureIds reads, and the grantsClassFeatures pass then pulls the benefit in",
+   "level": 1
+  }
+ },
+ {
+  "id": "initiate-benefit-mirror",
+  "verdict": "needs-route",
+  "reason": "classFeatures.mirror is reachable but its \"### **Initiate Benefit**\" heading is empty; this record is the only thing that says a mirror thaumaturge gains Mirror's Reflection, and it is the sole holder of grantsClassFeatures:['mirrors-reflection'] — mirrors-reflection is itself reachable by nothing else (verified: zero inbound references).",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "mirror",
+   "detail": "add grantsClassFeatures:['initiate-benefit-mirror'] to classFeatures.mirror, which chains on to mirrors-reflection through the existing multi-pass grantsClassFeatures loop in ownedFeatureIds",
+   "level": 1
+  }
+ },
+ {
+  "id": "initiate-benefit-regalia",
+  "verdict": "needs-route",
+  "reason": "classFeatures.regalia is reachable but its \"### **Initiate Benefit**\" heading is empty — the +1 circumstance bonus to Deception/Diplomacy/Intimidation, the Follow the Expert allowance and the 15-foot inspiring aura (+1 status vs fear, allied frightened reduction) live only on this unreachable record.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "regalia",
+   "detail": "add grantsClassFeatures:['initiate-benefit-regalia'] to classFeatures.regalia",
+   "level": 1
+  }
+ },
+ {
+  "id": "initiate-benefit-shield",
+  "verdict": "duplicate",
+  "reason": "Unlike the other nine implements, classFeatures.shield (and the matching extraChoices[implement] option) already contains this exact text under a filled \"### **Initiate Benefit**\" heading, including the 5th-level \"Raise a Shield as a free action\" clause; both records are prose-only, so nothing mechanical is lost.",
+  "duplicateOf": [
+   "shield"
+  ]
+ },
+ {
+  "id": "initiate-benefit-tome",
+  "verdict": "needs-route",
+  "reason": "classFeatures.tome is reachable but its \"### **Initiate Benefit**\" heading is empty — the +1 circumstance bonus to Recall Knowledge and the two daily-preparation skill trainings that scale to expert at 3rd and 5th level exist only on this unreachable record.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "tome",
+   "detail": "add grantsClassFeatures:['initiate-benefit-tome'] to classFeatures.tome",
+   "level": 1
+  }
+ },
+ {
+  "id": "initiate-benefit-weapon",
+  "verdict": "needs-route",
+  "reason": "classFeatures.weapon is reachable but its \"### **Initiate Benefit**\" heading is empty; this record is the only holder of grantsClassFeatures:['implements-interruption'] (which nothing else references) and of critSpecWeapons {designated:'weapon-implement'} with critSpecLevel 5, so both the reaction and the implement-specific critical specialization are inert.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "weapon",
+   "detail": "add grantsClassFeatures:['initiate-benefit-weapon'] to classFeatures.weapon, which chains on to implements-interruption via the existing grantsClassFeatures loop",
+   "level": 1
+  }
+ },
+ {
+  "id": "inspired-stratagem",
+  "verdict": "duplicate",
+  "reason": "feats/inspired-stratagem (level 8 rogue class feat) carries grantsActions:['inspired-stratagem'], and actions/inspired-stratagem holds the identical trigger/effect text with the reaction cost; the classFeatures copy is a stray third copy with no extra fields.",
+  "duplicateOf": [
+   "inspired-stratagem"
+  ]
+ },
+ {
+  "id": "integrated-gauntlet",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: tagged `weapon-innovation-modification` at level 7, offered in the Breakthrough and Revolutionary slots for a weapon-innovation inventor; its weaponTraits add (free-hand, excluding two-hand/fatal-aim) fires via c.inventor.modifications."
+ },
+ {
+  "id": "razor-prongs",
+  "verdict": "not-a-gap",
+  "reason": "Reachable already: it carries otherTags `weapon-innovation-modification` (level 1), so `inventorModificationOptions` (build.ts:1151) offers it at the initial tier and `ownedFeatureIds` (derive.ts) owns everything in `c.inventor.modifications` — a route the six-route list does not model."
+ },
+ {
+  "id": "ready-aim-fire",
+  "verdict": "duplicate",
+  "reason": "The commander folio is built from `content.actions` filtered by the `tactic` trait (build.ts:1087), and `actions:ready-aim-fire` exists with tacticTier \"master\" and byte-identical description text, so the classFeature copy carries nothing extra.",
+  "duplicateOf": [
+   "ready-aim-fire"
+  ]
+ },
+ {
+  "id": "redistribute",
+  "verdict": "needs-route",
+  "reason": "The Swarm eidolon's symbiosis ability Sudden Shift says \"your eidolon gains the Redistribute reaction\" (swarm-eidolon eidolonAbilities, tier symbiosis, level 7), but `swarm-eidolon` has no `featureIds` and nothing grants the action, so the reaction's rules never reach the player.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "swarm-eidolon",
+   "detail": "add {id:\"redistribute\", level:7} to classes.summoner.subclass.options[swarm-eidolon].featureIds (subclassFeatureIds already accepts {id,level})",
+   "level": 7
+  }
+ },
+ {
+  "id": "reload",
+  "verdict": "duplicate",
+  "reason": "`actions:reload` exists with the `commander`/`tactic` traits, tacticTier \"basic\", and identical description text, and the commander folio picker reads content.actions — so the tactic is reachable.",
+  "duplicateOf": [
+   "reload"
+  ]
+ },
+ {
+  "id": "reloading-strike",
+  "verdict": "needs-route",
+  "reason": "Way of the Drifter's own description names it: \"**Slinger's Reload** Reloading Strike\" (Guns & Gears p.108), but `way-of-the-drifter`.featureIds routes only the three deeds (into-the-fray/finish-the-job/drifters-wake) — all six slinger's reloads (reloading-strike, raconteurs-reload, covered-reload, thoughtful-reload, touch-and-go, clear-a-path) are unrouted as a family.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "way-of-the-drifter",
+   "detail": "add {id:\"reloading-strike\", level:1} to classes.gunslinger.subclass.options[way-of-the-drifter].featureIds — the slinger's reload arrives with Gunslinger's Way at 1st level",
+   "level": 1
+  }
+ },
+ {
+  "id": "ring-bell",
+  "verdict": "duplicate",
+  "reason": "`initiate-benefit-bell` carries grantsActions:[\"ring-bell\"], and build.ts:4171 pushes `initiate-benefit-<implement>` into classChoices for every implement a thaumaturge picks (and `implement-initiate`'s derivedGrant does it for the archetype), so the reachable `actions:ring-bell` record with identical text is delivered.",
+  "duplicateOf": [
+   "initiate-benefit-bell",
+   "ring-bell"
+  ]
+ },
+ {
+  "id": "roaring-charge",
+  "verdict": "duplicate",
+  "reason": "`actions:roaring-charge` exists with the tactic trait, tacticTier \"master\", and identical text, and commander folio options come from content.actions.",
+  "duplicateOf": [
+   "roaring-charge"
+  ]
+ },
+ {
+  "id": "rope-shot",
+  "verdict": "not-a-gap",
+  "reason": "Reachable already: otherTags `weapon-innovation-modification` at level 7 puts it in `inventorModificationOptions` for the breakthrough tier (INVENTOR_TIER_LEVEL.breakthrough = 7) and `ownedFeatureIds` owns `c.inventor.modifications`."
+ },
+ {
+  "id": "rune-capacity",
+  "verdict": "not-a-gap",
+  "reason": "Reachable already: otherTags carry both `armor-innovation-modification` and `weapon-innovation-modification` at level 15, matching the revolutionary tier (INVENTOR_TIER_LEVEL.revolutionary = 15); its `propertyRuneBonus` fires through the inventor-modifications branch of ownedFeatureIds."
+ },
+ {
+  "id": "runelords-calling",
+  "verdict": "not-a-gap",
+  "reason": "Reachable already: it has the `calling` trait, so `mythicCallings()` (src/sheet/MythicRules.tsx:70) offers it, the builder writes it to `build.mythicCalling`, and derive.ts:2129 owns it — a route outside the six listed."
+ },
+ {
+  "id": "sagas-calling",
+  "verdict": "not-a-gap",
+  "reason": "Same `calling`-trait route as every other mythic calling: picked in the mythic section and owned via `c.mythicCalling` in ownedFeatureIds (derive.ts:2129)."
+ },
+ {
+  "id": "sages-calling",
+  "verdict": "not-a-gap",
+  "reason": "Same `calling`-trait route: surfaced by mythicCallings(), stored as build.mythicCalling, owned at derive.ts:2129."
+ },
+ {
+  "id": "second-skin",
+  "verdict": "duplicate",
+  "reason": "AoN class-feature-230 shows Second Skin is the LEGACY Core Rulebook ranger level-19 feature; the Remaster Player Core ranger table (AoN class-36) replaced it with Medium Armor Mastery, and the app routes `19:medium-armor-mastery`, whose text grants the same light/medium/unarmored master proficiency.",
+  "duplicateOf": [
+   "medium-armor-mastery"
+  ]
+ },
+ {
+  "id": "seek-and-destroy",
+  "verdict": "duplicate",
+  "reason": "`actions:seek-and-destroy` exists with the tactic trait, tacticTier \"expert\", and identical text; commander folio options are read from content.actions.",
+  "duplicateOf": [
+   "seek-and-destroy"
+  ]
+ },
+ {
+  "id": "seething-frenzy",
+  "verdict": "needs-route",
+  "reason": "The Anger Phantom eidolon's symbiosis ability says \"It gains the Seething Frenzy action\" (anger-phantom-eidolon eidolonAbilities, tier symbiosis, level 7), but the option has no featureIds and nothing grants the action, so the frenzy's actual rules (boost eidolon, temp HP, -2 AC, 1 minute) reach nobody.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "anger-phantom-eidolon",
+   "detail": "add {id:\"seething-frenzy\", level:7} to classes.summoner.subclass.options[anger-phantom-eidolon].featureIds",
+   "level": 7
+  }
+ },
+ {
+  "id": "segmented-frame",
+  "verdict": "not-a-gap",
+  "reason": "Reachable already: otherTags `weapon-innovation-modification` at level 1 (initial tier). derive.ts's inventor branch cites this exact record — \"Segmented Frame's +2 Stealth is the case that surfaced it\"."
+ },
+ {
+  "id": "sever-conduit",
+  "verdict": "duplicate",
+  "reason": "Not a class feature at all — AoN spell-1011 shows it is the reaction granted by the 2nd-rank spell Summoner's Precaution. The reachable spell's description says \"You gain the Sever Conduit reaction\" with a descRef into `actions`, and `actions:sever-conduit` holds byte-identical text; no spell in core.json carries grantsClassFeatures, so there is no class-feature route to add.",
+  "duplicateOf": [
+   "sever-conduit"
+  ]
+ },
+ {
+  "id": "shadows-in-the-moonlight",
+  "verdict": "duplicate",
+  "reason": "`actions:shadows-in-the-moonlight` exists with the tactic trait, tacticTier \"basic\", and identical text; the folio picker reads content.actions.",
+  "duplicateOf": [
+   "shadows-in-the-moonlight"
+  ]
+ },
+ {
+  "id": "share-senses",
+  "verdict": "duplicate",
+  "reason": "The summoner's level-1 `eidolon` class feature carries grantsActions:[\"share-senses\"], so the reachable `actions:share-senses` record (identical text) already reaches every summoner.",
+  "duplicateOf": [
+   "eidolon",
+   "share-senses"
+  ]
+ },
+ {
+  "id": "shed-spirit",
+  "verdict": "needs-route",
+  "reason": "AoN feat-5006 shows Shed Spirit is granted by the witch feat Spirit Familiar (Witch), level 8 — \"Your familiar gains the Shed Spirit activity\". `spirit-familiar-witch` exists in core.json but carries no grantsActions/grantsClassFeatures, so only a description link reaches it; 93 other feats already use grantsActions for exactly this.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "spirit-familiar-witch",
+   "detail": "add grantsClassFeatures:[\"shed-spirit\"] (or grantsActions:[\"shed-spirit\"], matching the 93 feats that already do this) to feats.spirit-familiar-witch",
+   "level": 8
+  }
+ },
+ {
+  "id": "shields-up",
+  "verdict": "duplicate",
+  "reason": "`actions:shields-up` exists with the tactic trait, tacticTier \"basic\", and identical text, reachable through the commander folio.",
+  "duplicateOf": [
+   "shields-up"
+  ]
+ },
+ {
+  "id": "sickening-assault",
+  "verdict": "needs-route",
+  "reason": "The Swarm eidolon's transcendence ability Sickening Swarm says \"your eidolon gains the Sickening Assault action\" (swarm-eidolon eidolonAbilities, tier transcendence, level 17 — matching the summoner's 17:eidolon-transcendence), but swarm-eidolon has no featureIds and nothing grants the action.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "swarm-eidolon",
+   "detail": "add {id:\"sickening-assault\", level:17} to classes.summoner.subclass.options[swarm-eidolon].featureIds",
+   "level": 17
+  }
+ },
+ {
+  "id": "slip-and-sizzle",
+  "verdict": "duplicate",
+  "reason": "`actions:slip-and-sizzle` exists with the tactic trait, tacticTier \"expert\", and identical text; commander folio options come from content.actions.",
+  "duplicateOf": [
+   "slip-and-sizzle"
+  ]
+ },
+ {
+  "id": "sloth",
+  "verdict": "duplicate",
+  "reason": "The reachable wizard arcane-school option `runelord` carries a `sin` effectChoice whose Sloth entry is \"Sloth — Reclined Apport\", granting focusSpells:[\"reclined-apport\"] with the anathema and the curriculum additions in its note — the same content as this record. All seven sins plus school-of-thassilonian-rune-magic sit in the same state, and the sin is an effectChoice value, not a routable feature id.",
+  "duplicateOf": [
+   "runelord"
+  ]
+ },
+ {
+  "id": "speed-boosters",
+  "verdict": "not-a-gap",
+  "reason": "Reachable already: otherTags `armor-innovation-modification` at level 1 with no power-suit/subterfuge sub-gate, so inventorModificationOptions offers it at the initial tier and ownedFeatureIds owns c.inventor.modifications."
+ },
+ {
+  "id": "stitching-strike",
+  "verdict": "needs-route",
+  "reason": "AoN feat-5007 shows Stitching Strike is granted by the witch feat Stitched Familiar, level 8 — \"Your familiar gains the Stitching Strike activity\". `stitched-familiar` exists in core.json with only a descRef link and no grantsActions/grantsClassFeatures, so the activity never lands on the character.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "stitched-familiar",
+   "detail": "add grantsClassFeatures:[\"stitching-strike\"] (or grantsActions:[\"stitching-strike\"]) to feats.stitched-familiar",
+   "level": 8
+  }
+ },
+ {
+  "id": "strike-hard",
+  "verdict": "duplicate",
+  "reason": "`actions:strike-hard` exists with the brandish/commander/tactic traits, tacticTier \"basic\", and identical text, reachable through the commander folio.",
+  "duplicateOf": [
+   "strike-hard"
+  ]
+ },
+ {
+  "id": "antimagic-plating",
+  "verdict": "not-a-gap",
+  "reason": "Reachable by a lane the orphan scan does not walk: it is tagged `armor-innovation-modification` (level 7), so `inventorModificationOptions` offers it at the breakthrough/revolutionary tiers and `derive.ts ownedFeatureIds` adds `c.inventor.modifications` — simulated the filter and it returns true."
+ },
+ {
+  "id": "armor-of-fury",
+  "verdict": "duplicate",
+  "reason": "Legacy CRB name for the barbarian's level-19 armour feature; the reachable `armor-mastery` (barbarian features list, `19:armor-mastery`) carries the identical text under its \"**Barbarian**\" paragraph, and AoN's Player Core 2 barbarian prints that same wording under the name Armor Mastery.",
+  "duplicateOf": [
+   "armor-mastery"
+  ]
+ },
+ {
+  "id": "artisans-calling",
+  "verdict": "not-a-gap",
+  "reason": "Reachable via the mythic lane the scan does not walk: `traits` contains `calling`, so the Setup \"Mythic Calling\" PopupSelect (src/builder/shared.tsx) lists it and `ownedFeatureIds` adds `c.mythicCalling`."
+ },
+ {
+  "id": "attack-refiner",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `weapon-innovation-modification` at level 15, so `inventorModificationOptions` offers it at the revolutionary tier and the chosen id is owned through `c.inventor.modifications`."
+ },
+ {
+  "id": "automated-impediments",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` at level 15, offered by `inventorModificationOptions` at the revolutionary tier and owned through `c.inventor.modifications`."
+ },
+ {
+  "id": "beasts-charge",
+  "verdict": "needs-route",
+  "reason": "AoN eidolon-3 (Beast) lists \"**Eidolon Abilities** - **Initial** Beast's Charge\", but `beast-eidolon` has no `featureIds` at all — every one of the 19 eidolon-trait class features is currently unreachable.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "beast-eidolon",
+   "level": 1,
+   "detail": "add {id:\"beasts-charge\", level:1} to classes.summoner.subclass.options[beast-eidolon].featureIds (its Symbiosis `primal-roar` @7 and Transcendence `whirlwind-maul` @17 belong on the same list)"
+  }
+ },
+ {
+  "id": "blight-soul-deviant-classification",
+  "verdict": "needs-route",
+  "reason": "Dragon/troll/wraith/flicker/leech classifications are reached because each of their deviant feats carries `grantsClassFeatures`; the four Blight Soul feats named in this record's own text (Release Spores, Rotten Slurry, Irradiate, Unleash the Blight) all exist in core.json with no such field, so this classification and its backlash table reach nobody.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "release-spores",
+   "level": 2,
+   "detail": "add grantsClassFeatures:[\"blight-soul-deviant-classification\"] to feats release-spores, rotten-slurry (both L2), irradiate (L6) and unleash-the-blight (L10) — the same pattern already used by the Dragon deviant feats"
+  }
+ },
+ {
+  "id": "blunt-shot",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `weapon-innovation-modification` at level 1; `inventorModificationOptions` has no gate on the `ranged` tag (weapon sub-gates are deliberately not modelled), so it is offered at every tier and owned through `c.inventor.modifications`."
+ },
+ {
+  "id": "bookkeepers-calling",
+  "verdict": "not-a-gap",
+  "reason": "Has the `calling` trait, so it is offered by the Setup \"Mythic Calling\" picker and owned via `c.mythicCalling` in ownedFeatureIds."
+ },
+ {
+  "id": "brandish-the-gorgons-gaze",
+  "verdict": "needs-route",
+  "reason": "AoN feat-8011 \"Shield of Stone\" (Feat 6, exemplar/ikon) reads \"**Transcendence—Brandish the Gorgon's Gaze**\"; the feat exists in core.json as `shield-of-stone` with no `grantsClassFeatures`, while 19 sibling ikon feats already route their transcendence exactly that way.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "shield-of-stone",
+   "level": 6,
+   "detail": "add grantsClassFeatures:[\"brandish-the-gorgons-gaze\"] to feats.shield-of-stone, matching steel-on-steel → ringing-challenge and the other 18 ikon feats"
+  }
+ },
+ {
+  "id": "breath-weapon",
+  "verdict": "needs-route",
+  "reason": "AoN eidolon-7 (Dragon) lists \"**Eidolon Abilities** - **Initial** Breath Weapon\"; `dragon-eidolon` already carries the `eidolonBreathDamage` damage-type choice this action needs but has no `featureIds`, so the action it gates is unreachable.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "dragon-eidolon",
+   "level": 1,
+   "detail": "add {id:\"breath-weapon\", level:1} to classes.summoner.subclass.options[dragon-eidolon].featureIds (Symbiosis `draconic-frenzy` @7 and Transcendence `wyrms-breath` @17 belong on the same list)"
+  }
+ },
+ {
+  "id": "buckle-cut-blitz",
+  "verdict": "duplicate",
+  "reason": "The identical record exists in `actions` with `tacticTier:\"expert\"` and is reachable through the commander folio (`commanderTacticOptions` filters actions by the `tactic` trait); descriptions compare byte-identical, so the classFeatures copy carries nothing extra.",
+  "duplicateOf": [
+   "actions:buckle-cut-blitz"
+  ]
+ },
+ {
+  "id": "camouflage-pigmentation",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `armor-innovation-modification` + `subterfuge-suit-modification` at level 7; `inventorModificationOptions` offers it whenever `build.inventorArmorStats === 'subterfuge-suit'` (a real Setup toggle), and the pick is owned through `c.inventor.modifications`."
+ },
+ {
+  "id": "caretakers-calling",
+  "verdict": "not-a-gap",
+  "reason": "Has the `calling` trait, so the Setup \"Mythic Calling\" picker lists it and `ownedFeatureIds` adds `c.mythicCalling`."
+ },
+ {
+  "id": "cascade-bearers",
+  "verdict": "duplicate",
+  "reason": "On AoN this is sidebar-2806 \"Branch Curriculums\", a section of the School of Rooted Wisdom page, not a feature of its own; its whole rules content is the Additional Curriculum list, which the reachable `school-of-rooted-wisdom` already carries as `curriculumBranches[\"cascade-bearers\"]` and delivers through its existing `rootedBranch` choice (build.ts wizardCurriculum). The record has no mechanicalFields.",
+  "duplicateOf": [
+   "school-of-rooted-wisdom"
+  ]
+ },
+ {
+  "id": "catharsis-emotion",
+  "verdict": "not-a-gap",
+  "reason": "A format legend, not a rule: the text only defines the entry fields (\"**Catharsis Trigger** The event or conditions you must meet to take your Catharsis reaction\", \"**Emotional Fallout** The effect you experience when your emotional fervor ends\"). No such record exists on AoN at all."
+ },
+ {
+  "id": "champions-reaction",
+  "verdict": "not-a-gap",
+  "reason": "A pointer with no rules of its own — the whole text is \"Your cause gives you a special reaction. See specific causes for more information.\" The app's champion is the Remaster one, and all seven causes already carry their reaction through subclass featureIds (retributive-strike, glimpse-of-redemption, liberating-step, selfish-shield, flash-of-grandeur, destructive-vengeance, iron-command)."
+ },
+ {
+  "id": "clear-a-path",
+  "verdict": "needs-route",
+  "reason": "AoN way-4 (Way of the Vanguard) markdown names action-918 as its Slinger's Reload, and action-918 is Clear a Path; the app's `way-of-the-vanguard` featureIds lists only the three deeds (living-fortification/spinning-crush/siegebreaker), so no vanguard gunslinger ever gets their reload.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "way-of-the-vanguard",
+   "level": 1,
+   "detail": "add {id:\"clear-a-path\", level:1} to classes.gunslinger.subclass.options[way-of-the-vanguard].featureIds"
+  }
+ },
+ {
+  "id": "command-a-construct",
+  "verdict": "needs-route",
+  "reason": "AoN innovation-2 (Construct) says the innovation \"is a prototype construct companion\", and Command a Construct is how a construct companion is commanded; only the feat `prototype-companion` grants it (grantsActions), so an inventor whose innovation IS the construct never receives the action.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "construct-innovation",
+   "level": 1,
+   "detail": "add grantsClassFeatures:[\"command-a-construct\"] to classFeatures.construct-innovation (equivalently grantsActions:[\"command-a-construct\"], the shape prototype-companion already uses; MainTab dedups by action name so holding both cannot double it)"
+  }
+ },
+ {
+  "id": "complex-simplicity",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `weapon-innovation-modification` at level 1, so `inventorModificationOptions` offers it at every tier and the pick is owned through `c.inventor.modifications`."
+ },
+ {
+  "id": "coordinating-maneuvers",
+  "verdict": "duplicate",
+  "reason": "The same record exists in `actions` with `tacticTier:\"basic\"` and is offered by `commanderTacticOptions` for the folio from level 1; the two descriptions are identical.",
+  "duplicateOf": [
+   "actions:coordinating-maneuvers"
+  ]
+ },
+ {
+  "id": "corpse-crenellation",
+  "verdict": "duplicate",
+  "reason": "The `actions` twin carries `tacticTier:\"master\"` and is reachable through the commander folio at level 15+; descriptions (including the \"once per 10 minutes\" frequency and the Special clause) are identical.",
+  "duplicateOf": [
+   "actions:corpse-crenellation"
+  ]
+ },
+ {
+  "id": "covered-reload",
+  "verdict": "needs-route",
+  "reason": "AoN way-3 (Way of the Sniper) markdown names action-914 as its Slinger's Reload, and action-914 is Covered Reload; `way-of-the-sniper` featureIds carries only one-shot-one-kill/vital-shot/ghost-shot, so the reload reaches no sniper (the sibling `raconteurs-reload` is orphaned the same way).",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "way-of-the-sniper",
+   "level": 1,
+   "detail": "add {id:\"covered-reload\", level:1} to classes.gunslinger.subclass.options[way-of-the-sniper].featureIds"
+  }
+ },
+ {
+  "id": "deadly-strike",
+  "verdict": "not-a-gap",
+  "reason": "Tagged `weapon-innovation-modification` at level 15, offered by `inventorModificationOptions` at the revolutionary tier and owned through `c.inventor.modifications`."
+ },
+ {
+  "id": "defensive-retreat",
+  "verdict": "duplicate",
+  "reason": "The `actions` twin carries `tacticTier:\"basic\"` and is selectable into the commander folio from level 1; the classFeatures copy has the identical description and no extra fields.",
+  "duplicateOf": [
+   "actions:defensive-retreat"
+  ]
+ },
+ {
+  "id": "demagogues-calling",
+  "verdict": "not-a-gap",
+  "reason": "Has the `calling` trait, so it appears in the Setup \"Mythic Calling\" picker and is owned via `c.mythicCalling` in ownedFeatureIds."
+ },
+ {
+  "id": "demoralizing-charge",
+  "verdict": "duplicate",
+  "reason": "The `actions` twin carries `tacticTier:\"expert\"` and is reachable through the commander folio at level 7+; the descriptions match exactly.",
+  "duplicateOf": [
+   "actions:demoralizing-charge"
+  ]
+ },
+ {
+  "id": "doomsayers-calling",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: the Mythic Calling picker (builder/shared.tsx SetupUnlockedChoices) lists every calling-trait classFeature and derive.ts:2130 adds c.mythicCalling to ownedFeatureIds — the orphan scan just did not model that route (all 18 callings are in todo-orphans.json)."
+ },
+ {
+  "id": "double-team",
+  "verdict": "duplicate",
+  "reason": "The identical record lives in content.actions (tacticTier 'basic'); commanderTacticOptions() reads content.actions by the 'tactic' trait into build.commanderTactics, and MainTab.tsx:249 renders the folio from content.actions — 37 tactic classFeatures mirror 37 tactic actions exactly.",
+  "duplicateOf": [
+   "double-team"
+  ]
+ },
+ {
+  "id": "draconic-frenzy",
+  "verdict": "needs-route",
+  "reason": "classes.summoner.subclass.options[dragon-eidolon].eidolonAbilities lists 'Draconic Frenzy' at tier symbiosis, level 7, but only as a blurb ('They gain the Draconic Frenzy activity'); a whole-core.json structural scan finds zero references to the id, so the full 2-action rules text reaches no summoner.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "dragon-eidolon",
+   "level": 7,
+   "detail": "add {id:'draconic-frenzy', level:7} to classes.summoner.subclass.options[dragon-eidolon].featureIds (subclassFeatureIds honours the {id,level} form; Eidolon Symbiosis is the summoner's 7th-level feature)"
+  }
+ },
+ {
+  "id": "drain-life",
+  "verdict": "needs-route",
+  "reason": "undead-eidolon's eidolonAbilities names 'Drain Life' at tier symbiosis, level 7 as a blurb only; the sole structural reference to the id anywhere in core.json is sorcerer.subclass.options[16].advancedFocusSpell (a different, spell record), so the eidolon activity itself is unreachable.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "undead-eidolon",
+   "level": 7,
+   "detail": "add {id:'drain-life', level:7} to classes.summoner.subclass.options[undead-eidolon].featureIds"
+  }
+ },
+ {
+  "id": "dreamers-calling",
+  "verdict": "not-a-gap",
+  "reason": "Same as the other callings — selectable in the Mythic Calling PopupSelect (which filters classFeatures by the 'calling' trait) and added to ownedFeatureIds by derive.ts:2130; it is also present in the mythicCalling collection."
+ },
+ {
+  "id": "druid-weapon-expertise",
+  "verdict": "duplicate",
+  "reason": "The druid class table routes 11:weapon-expertise, and that umbrella record's description carries the exact druid paragraph ('**Druid, Kineticist** ... simple weapons and unarmed attacks increases to expert') plus the critSpec field; druid-weapon-expertise has no mechanical fields at all (id/name/traits/rarity/source/level/actionCost only).",
+  "duplicateOf": [
+   "weapon-expertise"
+  ]
+ },
+ {
+  "id": "dutiful-retaliation",
+  "verdict": "needs-route",
+  "reason": "devotion-phantom-eidolon's eidolonAbilities lists 'Dutiful Retaliation' as its tier-initial (level 1) ability, but only as a blurb; zero structural references to the id exist in core.json, so the reaction's trigger/requirements/effect text reaches nobody.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "devotion-phantom-eidolon",
+   "level": 1,
+   "detail": "add 'dutiful-retaliation' (level 1, so the plain string form is fine) to classes.summoner.subclass.options[devotion-phantom-eidolon].featureIds"
+  }
+ },
+ {
+  "id": "dynamic-weighting",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: it carries otherTags 'weapon-innovation-modification' at level 1, so inventorModificationOptions() offers it in the initial/breakthrough/revolutionary pickers, and derive.ts:2105 adds every c.inventor.modifications value to ownedFeatureIds — the scan did not model that route (all 26 weapon and 22 armor modifications are in todo-orphans.json)."
+ },
+ {
+  "id": "echoes-of-the-scrolls",
+  "verdict": "not-a-gap",
+  "reason": "Carries the 'calling' trait, so mythicCallings()/the Mythic Calling PopupSelect list it (all 18 calling-trait classFeatures are offered, not just the 15 in the mythicCalling collection) and derive.ts:2130 owns it once picked."
+ },
+ {
+  "id": "echoes-of-the-spells",
+  "verdict": "not-a-gap",
+  "reason": "Same route as the other callings — the picker filters classFeatures by the 'calling' trait, which this record has, and c.mythicCalling feeds ownedFeatureIds."
+ },
+ {
+  "id": "echoes-of-the-swords",
+  "verdict": "not-a-gap",
+  "reason": "Same route as the other callings — 'calling'-trait classFeature, selectable in the Mythic Calling picker, owned via derive.ts:2130."
+ },
+ {
+  "id": "elemental-burst",
+  "verdict": "needs-route",
+  "reason": "elemental-eidolon's eidolonAbilities names 'Elemental Burst' at tier symbiosis, level 7, but only as a one-line blurb; no structural reference to the id exists anywhere in core.json, so the frequency/damage/save text is unreachable.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "elemental-eidolon",
+   "level": 7,
+   "detail": "add {id:'elemental-burst', level:7} to classes.summoner.subclass.options[elemental-eidolon].featureIds"
+  }
+ },
+ {
+  "id": "elemental-maelstrom",
+  "verdict": "needs-route",
+  "reason": "elemental-eidolon's eidolonAbilities names 'Elemental Maelstrom' at tier transcendence, level 17, blurb only; zero structural references to the id in core.json, so the 3-action activity text reaches no summoner.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "elemental-eidolon",
+   "level": 17,
+   "detail": "add {id:'elemental-maelstrom', level:17} to classes.summoner.subclass.options[elemental-eidolon].featureIds (Eidolon Transcendence is the summoner's 17th-level feature)"
+  }
+ },
+ {
+  "id": "elemental-school",
+  "verdict": "duplicate",
+  "reason": "This is the 'Wizard Elementalist Adjustments' paragraph of the Elementalist class archetype, and the reachable elemental-magic record (granted by elementalist-dedication.grantsClassFeatures) already contains that paragraph verbatim, including 'your curriculum spells can be any spells ... 1st-rank spell as your initial school spell and the 3rd-rank spell as the advanced school spell'.",
+  "duplicateOf": [
+   "elemental-magic"
+  ]
+ },
+ {
+  "id": "emerald-boughs",
+  "verdict": "duplicate",
+  "reason": "Its whole content is the Magaambya branch's extra curriculum, and the reachable wizard arcane school school-of-rooted-wisdom carries it as curriculumBranches['emerald-boughs'] ({0:[summon-instrument],1:[charm,disguise-magic],...,9:[foresight]}), which build.ts:1567 merges into the curriculum when the rootedBranch choice is answered; the orphan record itself has no mechanical fields.",
+  "duplicateOf": [
+   "school-of-rooted-wisdom"
+  ]
+ },
+ {
+  "id": "end-it",
+  "verdict": "duplicate",
+  "reason": "Identical record exists in content.actions with tacticTier 'basic'; commanderTacticOptions() builds the tactics folio from content.actions by the 'tactic' trait and MainTab.tsx:249 renders it from there. The classFeatures copy is the mirror half of the 37/37 tactic duplication.",
+  "duplicateOf": [
+   "end-it"
+  ]
+ },
+ {
+  "id": "enhanced-damage",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags 'weapon-innovation-modification' at level 15, so inventorModificationOptions() offers it for the revolutionary tier (INVENTOR_TIER_LEVEL.revolutionary = 15) and derive.ts:2105 owns whatever lands in c.inventor.modifications."
+ },
+ {
+  "id": "enhanced-resistance",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags 'armor-innovation-modification' at level 7, so it is offered for the breakthrough tier (INVENTOR_TIER_LEVEL.breakthrough = 7) to an armor-innovation inventor, and derive.ts:2105 adds the pick to ownedFeatureIds — its resistanceLevelUpgrade field fires from there."
+ },
+ {
+  "id": "entangling-form",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags 'weapon-innovation-modification' at level 1, offered in the inventor's initial-modification picker (weapon sub-gates are deliberately not enforced), owned via c.inventor.modifications."
+ },
+ {
+  "id": "envy",
+  "verdict": "duplicate",
+  "reason": "The sin's mechanics are carried entirely by the reachable wizard arcane school runelord: curriculumBranches['envy'] holds the full sin spell list (shield/tangle-vine ... detonate-magic/cutting-eye) and effectChoices[0].options[0] grants the Cutting Eye focus spell plus the anathema note; the orphan record has no mechanical fields.",
+  "duplicateOf": [
+   "runelord"
+  ]
+ },
+ {
+  "id": "evasion",
+  "verdict": "duplicate",
+  "reason": "This is the LEGACY Guns & Gears gunslinger Evasion (traits: ['gunslinger'] only, single-class description — unlike the multi-class umbrella weapon-expertise). Its remaster rename blast-dodger (Guns & Gears Remastered p.105, Class Gunslinger, identical text) is routed by the gunslinger table at 11. Every other class that printed Evasion has its own routed remaster name (evasive-reflexes/rogue 7, natural-reflexes/ranger 7, confident-evasion/swashbuckler 7, explosion-dodger/alchemist 15, savvy-reflexes/investigator 15, tempered-reflexes/fighter 15).",
+  "duplicateOf": [
+   "blast-dodger"
+  ]
+ },
+ {
+  "id": "expeditious-inspection",
+  "verdict": "duplicate",
+  "reason": "The reachable investigator methodology empiricism-methodology (a subclass option) has grantsActions:['expeditious-inspection'], and MainTab.tsx:224 resolves grantsActions through content.actions — where an expeditious-inspection record with the identical frequency/effect text exists.",
+  "duplicateOf": [
+   "empiricism-methodology",
+   "expeditious-inspection"
+  ]
+ },
+ {
+  "id": "extensible-weapon",
+  "verdict": "not-a-gap",
+  "reason": "Already reachable: otherTags 'weapon-innovation-modification' at level 15, offered in the revolutionary-tier picker and owned through c.inventor.modifications (derive.ts:2105)."
+ },
+ {
+  "id": "field-of-roots",
+  "verdict": "needs-route",
+  "reason": "plant-eidolon's eidolonAbilities names 'Field of Roots' at tier transcendence, level 17, but only as a blurb ('It gains the Field of Roots activity'); a structural scan of core.json finds zero references to the id, so the save table and the immobilized clause reach no summoner.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "plant-eidolon",
+   "level": 17,
+   "detail": "add {id:'field-of-roots', level:17} to classes.summoner.subclass.options[plant-eidolon].featureIds"
+  }
+ },
+ {
+  "id": "fire-in-the-hole",
+  "verdict": "duplicate",
+  "reason": "It is the HAZARD's reaction printed inside the alchemist feat Demolition Charge (APG p.106), and the reachable demolition-charge feat's own description already reproduces the whole block verbatim ('**Fire in the Hole** ... Calculated Splash and similar effects don't apply'); the same text also sits in content.actions.",
+  "duplicateOf": [
+   "demolition-charge"
+  ]
+ },
+ {
+  "id": "fling-magic",
+  "verdict": "duplicate",
+  "reason": "The thaumaturge wand implement's benefit record initiate-benefit-wand has grantsActions:['fling-magic'] and is itself reached through classChoices (build.ts pushBenefit for each implement pick); MainTab.tsx:224 resolves that to the content.actions record, which carries the identical requirements/damage/boost text.",
+  "duplicateOf": [
+   "initiate-benefit-wand",
+   "fling-magic"
+  ]
+ },
+ {
+  "id": "focus-spells",
+  "verdict": "not-a-gap",
+  "reason": "General rules text, not a class feature — no class table grants 'Focus Spells', and the same document exists as rules/focus-spells and sidebar/focus-spells in core.json. Its content is the Focus Points/Refocus chapter, which the engine implements natively."
+ },
+ {
+  "id": "stupefying-raid",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "actions:stupefying-raid"
+  ],
+  "reason": "The identical record (byte-identical description, tacticTier \"expert\") lives in content.actions with the `tactic` trait, and commanderTacticOptions() in build.ts builds the commander's folio straight out of content.actions — so the tactic already reaches a commander and the classFeatures copy carries no mechanicalFields of its own."
+ },
+ {
+  "id": "subtle-dampeners",
+  "verdict": "not-a-gap",
+  "reason": "It is already reachable: ownedFeatureIds() explicitly walks `c.inventor.modifications`, and inventorModificationOptions() offers every classFeature tagged `armor-innovation-modification` (sub-gated to `subterfuge-suit`) at the Initial tier — subtle-dampeners is level 1 and appears in that list, so the six-route summary simply omits the inventor-modification route."
+ },
+ {
+  "id": "swarming-assault",
+  "verdict": "needs-route",
+  "reason": "The Swarm eidolon's Initial ability Swarm Form says \"While dispersed, it can use the Swarming Assault activity\" (Battlecry! p.72), but summoner subclass options carry no featureIds at all, so nothing owns the record.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "swarm-eidolon",
+   "level": 1,
+   "detail": "add {level:1, id:\"swarming-assault\"} to classes.summoner.subclass.options[swarm-eidolon].featureIds (the option currently has no featureIds array; the whole eidolon-activity family — beasts-charge, primal-roar, breath-weapon, draconic-frenzy, field-of-roots, sickening-assault, redistribute, haunting-visage — is orphaned the same way)"
+  }
+ },
+ {
+  "id": "tactical-takedown",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "actions:tactical-takedown"
+  ],
+  "reason": "Byte-identical record in content.actions with traits [commander, tactic] and tacticTier \"basic\"; commanderTacticOptions() sources the folio from content.actions, so a commander can already put it in their folio and the classFeatures copy has no mechanicalFields."
+ },
+ {
+  "id": "take-the-high-ground",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "actions:take-the-high-ground"
+  ],
+  "reason": "Byte-identical record in content.actions with tacticTier \"expert\"; the commander tactics folio is built from content.actions by commanderTacticOptions(), so the content reaches the player and the classFeatures copy carries nothing extra."
+ },
+ {
+  "id": "tangle-in-riddle",
+  "verdict": "needs-route",
+  "reason": "AoN feat-8010 Riddle the Sphinx (Exemplar/Ikon, Feat 6, PF #217) reads \"Transcendence—Tangle in Riddle\" and then prints exactly this text; the feat exists in core.json but has no grantsClassFeatures, so the transcendence is owned by nothing.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "riddle-the-sphinx",
+   "level": 6,
+   "detail": "set feats.riddle-the-sphinx.grantsClassFeatures = [\"tangle-in-riddle\"], matching the 22 other exemplar ikon feats that already do this (steel-on-steel→ringing-challenge, motionless-cutter→sever-four-dragonfly-wings, …)"
+  }
+ },
+ {
+  "id": "tangle-line",
+  "verdict": "not-a-gap",
+  "reason": "Reachable as a weapon innovation modification: inventorModificationOptions() returns every classFeature tagged `weapon-innovation-modification` with level ≤ the tier level (Breakthrough = 7, and tangle-line is level 7), and ownedFeatureIds() adds `c.inventor.modifications`, which is also what makes its `weaponTraits` rider (parry/ranged-trip/tethered on the designated innovation) fire in applyWeaponRiders()."
+ },
+ {
+  "id": "tempest-sun-mages",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "school-of-rooted-wisdom"
+  ],
+  "reason": "Its only mechanical content is the Additional Curriculum list, and classFeatures.school-of-rooted-wisdom.curriculumBranches['tempest-sun-mages'] already holds that exact spell list (ignition; breathe-fire, fleet-step; blazing-bolt; fireball; fly; elemental-form; wall-of-force; fiery-body; monstrosity-form; implosion), selected by its `rootedBranch` choice — and AoN's Branch Curriculums sidebar names \"Parent page School of Rooted Wisdom\"."
+ },
+ {
+  "id": "tendril-strike",
+  "verdict": "needs-route",
+  "reason": "The Plant eidolon's Initial ability is Tendril Strike (\"It gains the Tendril Strike action\", eidolonAbilities tier \"initial\", level 1), but summoner subclass options carry no featureIds, so nothing owns the record that holds the actual rules.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "plant-eidolon",
+   "level": 1,
+   "detail": "add {level:1, id:\"tendril-strike\"} to classes.summoner.subclass.options[plant-eidolon].featureIds"
+  }
+ },
+ {
+  "id": "the-bigger-they-are",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "actions:the-bigger-they-are"
+  ],
+  "reason": "Byte-identical record in content.actions with traits [brandish, commander, tactic] and tacticTier \"master\", reachable through the commander folio built by commanderTacticOptions(); the same id in content.feats is an unrelated swashbuckler bravado feat (level 12), not this tactic."
+ },
+ {
+  "id": "thespians-calling",
+  "verdict": "not-a-gap",
+  "reason": "Reachable already: the Mythic Calling picker in SetupUnlockedChoices lists every classFeature with the `calling` trait (this record has [calling, mythic]) and ownedFeatureIds() adds `c.mythicCalling` explicitly — the six-route summary just omits the mythic-calling route."
+ },
+ {
+  "id": "thiefs-calling",
+  "verdict": "not-a-gap",
+  "reason": "Same as the other callings: it carries the `calling` trait, so it is offered by the Mythic Calling PopupSelect once mythic is enabled, and ownedFeatureIds() adds `c.mythicCalling` to the owned set."
+ },
+ {
+  "id": "thoughtful-reload",
+  "verdict": "needs-route",
+  "reason": "Way of the Spellshot's own description in core.json says \"**Slinger's Reload** Thoughtful Reload\", and the slinger's reload is part of Gunslinger's Way at 1st level; the way's featureIds list only its three deeds, so all six slinger's reloads (clear-a-path, covered-reload, raconteurs-reload, reloading-strike, thoughtful-reload, touch-and-go) are orphaned.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "way-of-the-spellshot",
+   "level": 1,
+   "detail": "add {level:1, id:\"thoughtful-reload\"} to classes.gunslinger.subclass.options[way-of-the-spellshot].featureIds, beside the existing energy-shot/recall-ammunition/dispelling-bullet deeds"
+  }
+ },
+ {
+  "id": "touch-and-go",
+  "verdict": "needs-route",
+  "reason": "Way of the Triggerbrand's description in core.json says \"**Slinger's Reload** Touch and Go\"; the way's featureIds carry only spring-the-trap/wind-them-up/break-them-down, so the 1st-level slinger's reload reaches nothing.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "way-of-the-triggerbrand",
+   "level": 1,
+   "detail": "add {level:1, id:\"touch-and-go\"} to classes.gunslinger.subclass.options[way-of-the-triggerbrand].featureIds"
+  }
+ },
+ {
+  "id": "true-shapeshift",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "actions:true-shapeshift"
+  ],
+  "reason": "feats.true-shapeshifter (druid, level 20) already has grantsActions:[\"true-shapeshift\"], and MainTab's grantedActions walk puts that content.actions record — whose description is byte-identical to this one — on the player's action list; the classFeatures copy has no mechanicalFields."
+ },
+ {
+  "id": "unravel-the-future",
+  "verdict": "needs-route",
+  "reason": "AoN feat-8008 Follow the Threads of Fate (Exemplar/Fortune/Ikon, Feat 4, PF #217) reads \"Transcendence—Unravel the Future\" followed by exactly this text; the feat is in core.json with no grantsClassFeatures, so the transcendence is unreachable.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "follow-the-threads-of-fate",
+   "level": 4,
+   "detail": "set feats.follow-the-threads-of-fate.grantsClassFeatures = [\"unravel-the-future\"], the same pattern as through-the-needles-eye→blinding-of-the-needle and the other 22 ikon feats"
+  }
+ },
+ {
+  "id": "uzunjati",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "school-of-rooted-wisdom"
+  ],
+  "reason": "Its whole payload is the Additional Curriculum, and classFeatures.school-of-rooted-wisdom.curriculumBranches['uzunjati'] already carries it (daze; mindlink, ventriloquism; kgalaserkes-axes; ibexs-harvest; telepathy; mind-probe, truespeech; mislead; retrocognition; hidden-mind; phantasmagoria) — in fact more completely than this record's text, whose 1st/7th/9th entries are truncated."
+ },
+ {
+  "id": "verdant-core-deviant-classification",
+  "verdict": "needs-route",
+  "reason": "Five of the seven deviant classifications are reached by their own feats carrying grantsClassFeatures (e.g. feats.blasting-beams → dragon-deviant-classification); the four Verdant Core feats named in this record — sprout-fruit, vine-lash, defensive-growth, disperse-into-petals — all exist in core.json but none of them carries that field, so the classification and its Life-Draining backlash reach nobody.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "sprout-fruit",
+   "level": 2,
+   "detail": "set grantsClassFeatures:[\"verdant-core-deviant-classification\"] on feats.sprout-fruit (2), feats.vine-lash (2), feats.defensive-growth (6) and feats.disperse-into-petals (10), exactly as the dragon/troll/wraith/flicker/leech families already do"
+  }
+ },
+ {
+  "id": "verdant-rest",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "actions:verdant-rest"
+  ],
+  "reason": "feats.verdant-metamorphosis (druid, level 14) already has grantsActions:[\"verdant-rest\"], so MainTab surfaces the content.actions record — byte-identical text — on the sheet; the classFeatures copy carries no mechanicalFields."
+ },
+ {
+  "id": "visions-of-sin",
+  "verdict": "needs-route",
+  "reason": "The Demon eidolon's Symbiosis ability (7th level) is Visions of Sin — core.json's demon-eidolon description reads \"Visions of Sin 7th\" and its eidolonAbilities entry is tier \"symbiosis\", level 7 — but summoner subclass options carry no featureIds, so only the one-line summary is shown and the record with the Will-save rules is owned by nothing.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "demon-eidolon",
+   "level": 7,
+   "detail": "add {level:7, id:\"visions-of-sin\"} to classes.summoner.subclass.options[demon-eidolon].featureIds (gated by the summoner's 7th-level Eidolon Symbiosis class feature)"
+  }
+ },
+ {
+  "id": "wait-for-it",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "actions:wait-for-it"
+  ],
+  "reason": "Byte-identical record in content.actions with traits [commander, tactic] and tacticTier \"expert\"; commanderTacticOptions() builds the folio from content.actions, so the tactic is already selectable and the classFeatures copy has no mechanicalFields."
+ },
+ {
+  "id": "warden-spells",
+  "verdict": "needs-route",
+  "reason": "Player Core's ranger entry states the trigger outright — \"Certain feats grant you warden spells… When you gain your first warden spell, you also gain a focus pool of 1 FP\" — so any ranger holding Gravity Weapon has this feature, yet it is in no class feature list and nothing grants it, unlike every sibling umbrella (hex-spells, composition-spells, devotion-spells, revelation-spells, conflux-spells all sit in their class's features list).",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "gravity-weapon",
+   "level": 1,
+   "detail": "set grantsClassFeatures:[\"warden-spells\"] on each of the 12 ranger feats that already carry focusSpells — gravity-weapon (1), heal-companion (1), magic-hide (2), snare-hopping (2), animal-feature (4), hunters-luck (4), soothing-mist (4), ephemeral-tracking (6), rangers-bramble (6), enlarge-companion (8), hunters-vision (10), terrain-transposition (10)"
+  }
+ },
+ {
+  "id": "whirlwind-maul",
+  "verdict": "needs-route",
+  "reason": "The Beast eidolon's Transcendence ability at 17th level is Whirlwind Maul (core.json beast-eidolon description heading \"Whirlwind Maul 17th\", eidolonAbilities tier \"transcendence\", level 17); summoner subclass options carry no featureIds, so the record with the four-target Strike rules is owned by nothing.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "beast-eidolon",
+   "level": 17,
+   "detail": "add {level:17, id:\"whirlwind-maul\"} to classes.summoner.subclass.options[beast-eidolon].featureIds (gated by the summoner's 17th-level Eidolon Transcendence)"
+  }
+ },
+ {
+  "id": "witch-lessons",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "lesson-of-dreams",
+   "lesson-of-elements",
+   "lesson-of-life",
+   "lesson-of-protection",
+   "lesson-of-vengeance",
+   "lesson-of-calamity",
+   "lesson-of-mischief",
+   "lesson-of-shadow",
+   "lesson-of-snow",
+   "lesson-of-favors",
+   "lesson-of-decay",
+   "lesson-of-the-flock",
+   "lesson-of-the-shark",
+   "lesson-of-bargains",
+   "lesson-of-death",
+   "lesson-of-renewal",
+   "lesson-of-the-frozen-queen"
+  ],
+  "reason": "The record is an index of every lesson and carries no fields beyond id/name/traits/rarity/source/level/actionCost; each individual lesson it lists exists as its own classFeature and is already owned through choiceOwnedFeatureIds, because feats.basic-lesson / greater-lesson / major-lesson all have choice.ownsFeature = true."
+ },
+ {
+  "id": "wizard-weapon-expertise",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "weapon-expertise"
+  ],
+  "reason": "This is the legacy Core Rulebook version (AoN class-feature-298, Core Rulebook, \"club, crossbow, dagger, heavy crossbow, staff\"); the wizard's own feature list already carries `11:weapon-expertise`, and that reachable umbrella's description has the Remaster paragraph \"**Witch, Wizard** …simple weapons and unarmed attacks increase to expert\", which is what the app should use."
+ },
+ {
+  "id": "wrath",
+  "verdict": "duplicate",
+  "duplicateOf": [
+   "runelord"
+  ],
+  "reason": "classFeatures.runelord is a reachable wizard subclass option that already carries the whole content of this record: curriculumBranches.wrath holds the sin spell list (frostbite/ignition … falling-stars, vengeful-glare) and its effectChoices `sin` option \"wrath\" grants focusSpells:[\"vengeful-glare\"] with the anathema note \"using your magic to protect or create\"."
+ },
+ {
+  "id": "wyrms-breath",
+  "verdict": "needs-route",
+  "reason": "The Dragon eidolon's Transcendence ability at 17th level is Wyrm's Breath (core.json dragon-eidolon description heading \"Wyrm's Breath 17th\", eidolonAbilities tier \"transcendence\", level 17); summoner subclass options carry no featureIds, so the record holding the doubled-dice/doubled-area rules reaches nothing.",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "dragon-eidolon",
+   "level": 17,
+   "detail": "add {level:17, id:\"wyrms-breath\"} to classes.summoner.subclass.options[dragon-eidolon].featureIds (gated by the summoner's 17th-level Eidolon Transcendence)"
+  }
+ },
+ {
+  "id": "patrons-claim",
+  "verdict": "needs-route",
+  "reason": "The witch feat `patrons-claim` (Feat 18, Player Core) is takeable and its text reads \"Your familiar gains the Patron's Claim activity\", but the feat carries no grantsActions/grantsClassFeatures and there is no COMPANION_MODS entry, so the 10d10 spirit / drained / refocus activity reaches no sheet — the byte-identical `actions.patrons-claim` twin is itself granted by nothing.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "patrons-claim",
+   "level": 18,
+   "detail": "add \"patrons-claim\" to feats[\"patrons-claim\"].grantsClassFeatures (via scripts/data/effect-backfill.json). The app-idiomatic alternative is feats[\"patrons-claim\"].grantsActions = [\"patrons-claim\"] — 93 feats already use that lane and the identical actions record already ships; either puts the 2-action activity in MainTab's action list."
+  }
+ },
+ {
+  "id": "patrons-presence",
+  "verdict": "needs-route",
+  "reason": "Same shape as Patron's Claim: witch feat `patrons-presence` (Feat 14, Player Core) says \"Your familiar gains the Patron's Presence activity\" but has no grantsActions/grantsClassFeatures and no COMPANION_MODS entry, so the stupefied-2 aura activity never appears; the identical `actions.patrons-presence` twin is granted by nothing either.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "patrons-presence",
+   "level": 14,
+   "detail": "add \"patrons-presence\" to feats[\"patrons-presence\"].grantsClassFeatures (via scripts/data/effect-backfill.json); equivalently feats[\"patrons-presence\"].grantsActions = [\"patrons-presence\"], matching the 93 feats already using that lane."
+  }
+ },
+ {
+  "id": "perpetual-infusions",
+  "verdict": "not-a-gap",
+  "reason": "Superseded pre-remaster alchemist table: classes.alchemist.features is the Player Core 2 list (1 versatile-vials … 11 advanced-vials, 17 abundant-vials) with no Perpetual entry at any level, so no character the app can build has 7th-level Perpetual Infusions; routing it would hand a remaster alchemist a feature the remaster deleted."
+ },
+ {
+  "id": "perpetual-infusions-bomber",
+  "verdict": "not-a-gap",
+  "reason": "Research-field variant of the same deleted legacy feature (record itself carries edition:\"superseded\", which build.ts line 1482 always hides); alchemist L7 in this app is alchemical-weapon-expertise + will-expertise, and the bomber's L11 slot is advanced-vials-bomber, which is routed."
+ },
+ {
+  "id": "perpetual-perfection",
+  "verdict": "not-a-gap",
+  "reason": "Legacy CRB alchemist 17th-level feature; classes.alchemist.features lists 17:abundant-vials and 17:alchemical-mastery instead, so no buildable alchemist can have Perpetual Perfection."
+ },
+ {
+  "id": "perpetual-perfection-bomber",
+  "verdict": "not-a-gap",
+  "reason": "Bomber variant of the deleted 17th-level legacy feature, and the record is flagged edition:\"superseded\" (always hidden); the bomber's routed 17th-level content is abundant-vials."
+ },
+ {
+  "id": "perpetual-perfection-chirurgeon",
+  "verdict": "not-a-gap",
+  "reason": "Chirurgeon variant of the deleted 17th-level legacy feature, flagged edition:\"superseded\"; the remaster alchemist's 17th level is abundant-vials + alchemical-mastery, both routed."
+ },
+ {
+  "id": "perpetual-perfection-mutagenist",
+  "verdict": "not-a-gap",
+  "reason": "Mutagenist variant of the deleted 17th-level legacy feature, flagged edition:\"superseded\"; nothing in the Player Core 2 alchemist table it could attach to."
+ },
+ {
+  "id": "perpetual-perfection-toxicologist",
+  "verdict": "not-a-gap",
+  "reason": "Toxicologist variant of the deleted 17th-level legacy feature (its three siblings are flagged superseded; this one's edition flag is simply missing, not evidence of a route), and the remastered alchemist has no Perpetual Perfection at any level."
+ },
+ {
+  "id": "perpetual-potency",
+  "verdict": "not-a-gap",
+  "reason": "Legacy CRB alchemist 11th-level feature; the app's alchemist gains 11:advanced-vials and 11:chemical-hardiness instead, so Perpetual Potency belongs to no buildable character."
+ },
+ {
+  "id": "perpetual-potency-bomber",
+  "verdict": "not-a-gap",
+  "reason": "Bomber variant of the deleted 11th-level legacy feature; the reachable 11th-level bomber content is advanced-vials-bomber (subvariant:alchemist/bomber L11)."
+ },
+ {
+  "id": "perpetual-potency-chirurgeon",
+  "verdict": "not-a-gap",
+  "reason": "Chirurgeon variant of the deleted 11th-level legacy feature; advanced-vials-chirurgeon is what the remastered class table names at L11."
+ },
+ {
+  "id": "perpetual-potency-mutagenist",
+  "verdict": "not-a-gap",
+  "reason": "Mutagenist variant of the deleted 11th-level legacy feature; advanced-vials-mutagenist occupies that level in the Player Core 2 table."
+ },
+ {
+  "id": "perpetual-potency-toxicologist",
+  "verdict": "not-a-gap",
+  "reason": "Toxicologist variant of the deleted 11th-level legacy feature, flagged edition:\"superseded\"; advanced-vials-toxicologist is the routed replacement."
+ },
+ {
+  "id": "pincer-attack",
+  "verdict": "duplicate",
+  "reason": "Byte-identical twin of `actions.pincer-attack`, which carries traits [commander, tactic] + tacticTier \"basic\" and is reachable through the commander tactics folio (commanderTacticOptions in build.ts filters content.actions by the tactic trait; build.commanderTactics feeds MainTab's tacticActions list) — the classFeature copy carries no tacticTier and nothing reads it.",
+  "duplicateOf": [
+   "pincer-attack"
+  ]
+ },
+ {
+  "id": "piranha-assault",
+  "verdict": "duplicate",
+  "reason": "Byte-identical twin of `actions.piranha-assault` (tacticTier \"master\"), which a commander of level 15+ picks into their tactics folio via commanderTacticOptions; the classFeature copy adds nothing.",
+  "duplicateOf": [
+   "piranha-assault"
+  ]
+ },
+ {
+  "id": "pointed-question",
+  "verdict": "needs-route",
+  "reason": "The action twin is delivered (classFeatures[\"interrogation-methodology\"].grantsActions = [\"pointed-question\"], authored in effect-backfill.json) so the text reaches the sheet, BUT FEAT_SITUATIONAL[\"pointed-question\"] (+2 circumstance, +4 on a crit success, to your Perception DC when the target Lies) is keyed on the id and characterSituationalIds only reads feat ids + ownedFeatureIds — so that entry has never fired.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "interrogation-methodology",
+   "level": 1,
+   "detail": "add \"pointed-question\" to classFeatures[\"interrogation-methodology\"].grantsClassFeatures in scripts/data/effect-backfill.json (alongside the existing grantsActions row). Text is already delivered; this route exists purely so the authored FEAT_SITUATIONAL Perception-DC entry becomes live. MainTab dedupes by action name, so no double listing."
+  }
+ },
+ {
+  "id": "pop-drop-and-lock",
+  "verdict": "duplicate",
+  "reason": "Byte-identical twin of `actions.pop-drop-and-lock` (traits brandish/commander/tactic, tacticTier \"master\"), reachable through the commander tactics folio picker; the classFeature copy lacks tacticTier and is read by nothing.",
+  "duplicateOf": [
+   "pop-drop-and-lock"
+  ]
+ },
+ {
+  "id": "pride",
+  "verdict": "duplicate",
+  "reason": "`runelord` is a reachable wizard subclass option and already carries every mechanic on this record: curriculumBranches.pride (the full Sin Spells list, more complete than this truncated description — it includes Invisibility and Illusory Scene), the `thassilonianSin` choice that selects it, and an effectChoices `sin` option granting the Crescent Scepter focus spell and stating Pride's anathema. build.ts wizardCurriculum merges curriculumBranches[picked] into the curriculum.",
+  "duplicateOf": [
+   "runelord"
+  ]
+ },
+ {
+  "id": "primal-howl",
+  "verdict": "duplicate",
+  "reason": "The druid feat `primal-howl` (L10, Player Core) is freely takeable and COMPANION_MODS['primal-howl'].maneuvers already delivers this advanced maneuver to the animal-companion block, keyed on the owner's feat id — with the CORRECT full text; this classFeature copy is the truncated import (\"All creatures in a take damage\") that companionGrants.ts explicitly refuses to use.",
+  "duplicateOf": [
+   "primal-howl"
+  ]
+ },
+ {
+  "id": "primal-roar",
+  "verdict": "duplicate",
+  "reason": "`beast-eidolon` is a reachable summoner subclass option and carries eidolonAbilities [{tier:\"symbiosis\", level:7, name:\"Primal Roar\", …}], which companions.ts line 891 filters by character level and renders; its description also ref-links \"Primal Roar\" → the byte-identical actions record. Its siblings beasts-charge and whirlwind-maul are orphaned the same way, by the same design.",
+  "duplicateOf": [
+   "beast-eidolon"
+  ]
+ },
+ {
+  "id": "protective-screen",
+  "verdict": "duplicate",
+  "reason": "Byte-identical twin of `actions.protective-screen` (traits brandish/commander/tactic, tacticTier \"basic\"), reachable through the commander tactics folio; the classFeature copy carries no tacticTier and nothing reads it.",
+  "duplicateOf": [
+   "protective-screen"
+  ]
+ },
+ {
+  "id": "psychic-weapon-expertise",
+  "verdict": "duplicate",
+  "reason": "The umbrella `weapon-expertise` is reached at psychic L11 (classes.psychic.features has {level:11, featureId:\"weapon-expertise\"}) and its description contains the Psychic paragraph verbatim (\"Your proficiency rank for simple weapons and unarmed attacks increases to expert\"); the proficiency itself is delivered by advancement.ts psychic rows {level:11, track:'unarmed'|'simple', rank:'expert', source:'weapon-expertise'}. No `weapon-expertise-psychic` variant exists — the umbrella IS the route.",
+  "duplicateOf": [
+   "weapon-expertise"
+  ]
+ },
+ {
+  "id": "pursue-a-lead",
+  "verdict": "needs-route",
+  "reason": "`on-the-case` (investigator L1) says \"You gain one activity and one reaction … Pursue a Lead and Clue In\" but its authored grantsActions row lists only [\"clue-in\"], and the identical `actions.pursue-a-lead` twin is granted by nothing — so the investigator's signature activity reaches no sheet AND the authored FEAT_SITUATIONAL[\"pursue-a-lead\"] (+1 circumstance to Perception and all skill checks toward an active investigation) has never fired, since characterSituationalIds reads only feat ids + ownedFeatureIds.",
+  "route": {
+   "kind": "grantsClassFeatures",
+   "carrier": "on-the-case",
+   "level": 1,
+   "detail": "add \"pursue-a-lead\" to classFeatures[\"on-the-case\"].grantsClassFeatures in scripts/data/effect-backfill.json (the file already holds the on-the-case grantsActions:[\"clue-in\"] row, and anything not in effect-backfill.json is lost at the next `npm run data`). grantsClassFeatures rather than grantsActions is required here, because only ownedFeatureIds lights up the +1 investigation bonus."
+  }
+ },
+ {
+  "id": "quick-tincture",
+  "verdict": "duplicate",
+  "reason": "Byte-identical twin of `actions.quick-tincture`, which classFeatures[\"alchemical-sciences-methodology\"].grantsActions already delivers — that methodology is a reachable investigator subclass option, so a player who has Quick Tincture sees the full text in MainTab's action list. The record carries no mechanical fields and no FEAT_SITUATIONAL entry, so nothing else is lost.",
+  "duplicateOf": [
+   "quick-tincture"
+  ]
+ },
+ {
+  "id": "raconteurs-reload",
+  "verdict": "needs-route",
+  "reason": "Raconteur's Reload is Way of the Pistolero's slinger's reload (\"**Slinger's Reload** Raconteur's Reload\" in the option's own description; Gunslinger's Way: \"At 1st level, your way grants you an initial deed, a unique reload action called a slinger's reload, and proficiency with a particular skill\"). way-of-the-pistolero.featureIds routes only the three deeds (ten-paces L1, pistoleros-retort L9, grim-swagger L15) — all six ways drop their slinger's reload the same way (reloading-strike, raconteurs-reload, covered-reload, touch-and-go, clear-a-path, thoughtful-reload are all unreachable).",
+  "route": {
+   "kind": "subclass-featureIds",
+   "carrier": "way-of-the-pistolero",
+   "level": 1,
+   "detail": "add {id:\"raconteurs-reload\", level:1} to classes.gunslinger.subclass.options[way-of-the-pistolero].featureIds, beside the existing ten-paces/pistoleros-retort/grim-swagger entries. Same fix applies across the family: reloading-strike→way-of-the-drifter, covered-reload→way-of-the-sniper, touch-and-go→way-of-the-triggerbrand, clear-a-path→way-of-the-vanguard, thoughtful-reload→way-of-the-spellshot, all at level 1."
+  }
+ },
+ {
+  "id": "rain-scribes",
+  "verdict": "duplicate",
+  "reason": "`school-of-rooted-wisdom` is a reachable wizard subclass option and already carries curriculumBranches[\"rain-scribes\"] (the identical Additional Curriculum list, plus Metamorphosis at 9th which this truncated description drops) together with the `rootedBranch` choice that selects it; build.ts wizardCurriculum merges the picked branch into the school's own curriculum. The branch's only mechanics are those spells — the rest of the record is flavour.",
+  "duplicateOf": [
+   "school-of-rooted-wisdom"
+  ]
+ }
+]

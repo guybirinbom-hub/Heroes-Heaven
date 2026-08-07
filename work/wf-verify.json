@@ -1,0 +1,486 @@
+[
+ {
+  "id": "demon-dust",
+  "ok": true
+ },
+ {
+  "id": "succubus-kiss",
+  "ok": true
+ },
+ {
+  "id": "fury-cocktail",
+  "ok": true
+ },
+ {
+  "id": "colorful-coating",
+  "ok": true
+ },
+ {
+  "id": "emetic-paste",
+  "ok": true
+ },
+ {
+  "id": "healing-vapor",
+  "ok": true
+ },
+ {
+  "id": "heartblood-ring",
+  "ok": true
+ },
+ {
+  "id": "void-fragment",
+  "ok": true
+ },
+ {
+  "id": "corruption-cassock",
+  "ok": false,
+  "problem": "Both bonuses are advertised as real, but the printed text says the opposite for every wearer the app can actually model: 'While you remain loyal to another deity, you BELIEVE the cassock grants you a +2 item bonus to Religion checks and a +1 item bonus to the divine skill... It does NEITHER. The GM secretly adjusts your checks with those skills, causing you to fail at religious tasks more often.' The app has no way to know the cassock's secret true unholy deity, so the authored condition can never resolve true, and the sheet will show a star promising +2 Religion to a character who has no bonus at all. The entry also omits the load-bearing negation clause ('If you have multiple equal or lower item bonuses to the affected skills, the cassock takes precedence, negating those bonuses') -- so it surfaces only the half of the rule that helps. Secondary: the second bonus uses targets skill/'all', which stars EVERY skill on the sheet for a bonus that only one deity-specific skill would ever get.",
+  "correction": "drop"
+ },
+ {
+  "id": "canary-tail-first-week",
+  "ok": true
+ },
+ {
+  "id": "bangles-of-crowns",
+  "ok": true
+ },
+ {
+  "id": "words-of-wisdom-lesser",
+  "ok": true
+ },
+ {
+  "id": "words-of-wisdom-moderate",
+  "ok": true
+ },
+ {
+  "id": "words-of-wisdom-greater",
+  "ok": true
+ },
+ {
+  "id": "spiny-lodestone",
+  "ok": true
+ },
+ {
+  "id": "spiny-lodestone-greater",
+  "ok": true
+ },
+ {
+  "id": "spiny-lodestone-major",
+  "ok": true
+ },
+ {
+  "id": "therapeutic-snap-peas",
+  "ok": true
+ },
+ {
+  "id": "prey-mutagen",
+  "ok": true
+ },
+ {
+  "id": "prey-mutagen-lesser",
+  "ok": true
+ },
+ {
+  "id": "prey-mutagen-moderate",
+  "ok": true
+ },
+ {
+  "id": "prey-mutagen-greater",
+  "ok": true
+ },
+ {
+  "id": "clans-edge",
+  "ok": true
+ },
+ {
+  "id": "battleforger",
+  "ok": true
+ },
+ {
+  "id": "skull-creeper",
+  "ok": true
+ },
+ {
+  "id": "stoked-flame-stance",
+  "ok": true
+ },
+ {
+  "id": "vehicle-mechanic-dedication",
+  "ok": true
+ },
+ {
+  "id": "gravelands-herbalist",
+  "ok": false,
+  "problem": "The two situational clauses are mechanically correct (Lastwall Soup, equipment-516, grants '+2 item bonus to Stealth checks and DCs against undead' for 1 hour, so the improved/greater versions scale that to +3/+4; the 10 temporary HP for 10 minutes is printed). But the `quote` field is NOT the printed text — the feat says 'At 10th level, you can make an improved version of Lastwall soup that grants a +3 item bonus. At 18th level, you can make a greater version of Lastwall soup that grants a +4 item bonus...'. The strings 'Lastwall Soup (Improved)' and 'Lastwall Soup (Greater)' appear nowhere in feat-3614.",
+  "correction": "Keep BOTH situational clauses exactly as authored — they are correct. Only replace the quote with the verbatim sentence: 'At 10th level, you can make an improved version of Lastwall soup that grants a +3 item bonus. At 18th level, you can make a greater version of Lastwall soup that grants a +4 item bonus, and its nourishing properties grant you 10 temporary Hit Points that last up to 10 minutes after eating it.'"
+ },
+ {
+  "id": "wormskin",
+  "ok": true
+ },
+ {
+  "id": "uncanny-bombs",
+  "ok": true
+ },
+ {
+  "id": "dragon-transformation",
+  "ok": false,
+  "problem": "Third clause is wrong: it hangs a '+14 status' off a `classDc` target. The printed text says two separate things — 'the Dragon Breath action uses your class DC' (no numeric bonus at all) and, at 18th level, 'you gain a +14 status bonus to your Dragon Breath damage'. The +14 is a DAMAGE bonus, not a bonus to your class DC. As authored, a reader of the Class DC stat sees '+14 status' and will believe their class DC is +14, which is a bonus that does not exist. The first two clauses (+20-foot status fly Speed, dragon Strike damage bonus to +12, both at 18th) are correct.",
+  "correction": "Split the third clause in two. (a) targets classDc, when: 'on the Dragon Breath action while you're transformed by Dragon Transformation', bonus: 'the DC is your class DC' — no numeric value. (b) targets strikeDamage (or a damage/note target), when: 'on Dragon Breath damage while transformed, from 18th level', bonus: '+14 status'. Do not leave any numeric bonus attached to classDc."
+ },
+ {
+  "id": "endemic-herbs",
+  "ok": true
+ },
+ {
+  "id": "medic-dedication",
+  "ok": true
+ },
+ {
+  "id": "regional-specialty",
+  "ok": true
+ },
+ {
+  "id": "prepare-elemental-medicine",
+  "ok": true
+ },
+ {
+  "id": "mask-of-the-12th-step",
+  "ok": true
+ },
+ {
+  "id": "mask-of-the-15th-step",
+  "ok": true
+ },
+ {
+  "id": "vellumis-excision",
+  "ok": true
+ },
+ {
+  "id": "field-propagandist-dedication",
+  "ok": true
+ },
+ {
+  "id": "gate-junction",
+  "ok": true
+ },
+ {
+  "id": "lantern",
+  "ok": true
+ },
+ {
+  "id": "shield",
+  "ok": true
+ },
+ {
+  "id": "the-unbound-step",
+  "ok": true
+ },
+ {
+  "id": "weapon-innovation",
+  "ok": true
+ },
+ {
+  "id": "prey-mutagen-major",
+  "ok": true
+ },
+ {
+  "id": "armor-polishing-kit",
+  "ok": true
+ },
+ {
+  "id": "antidote",
+  "ok": true
+ },
+ {
+  "id": "antiplague",
+  "ok": true
+ },
+ {
+  "id": "alacritous-horseshoes-greater",
+  "ok": false,
+  "problem": "Bonus TYPE is not confirmed by the record's own printed text. The work-file record (and the legacy printing, AoN equipment-406 'Horseshoes of Speed', CRB pg. 604) both say '+3 item bonus to Athletics checks'; only the remastered AoN record (equipment-3013, GM Core pg. 272) says '+2 circumstance bonus' (greater: '+3'). Authoring '+3 circumstance' makes the star contradict the description shown next to it in the app. (Target is fine: CompanionsTab.tsx:461-468 surfaces FEAT_SITUATIONAL[inv.itemId] on the companion block, so an animal-companion Athletics bonus does have a display surface, matching the existing 'steadyfoot-tassel' precedent.)",
+  "correction": "+3 item — match the record's own text; if the GM Core remaster wording is preferred instead, fix the record's description to say 'circumstance' first so the two agree"
+ },
+ {
+  "id": "maestros-instrument",
+  "ok": true
+ },
+ {
+  "id": "staff-of-healing",
+  "ok": true
+ },
+ {
+  "id": "staff-of-healing-greater",
+  "ok": true
+ },
+ {
+  "id": "staff-of-healing-major",
+  "ok": true
+ },
+ {
+  "id": "staff-of-healing-true",
+  "ok": true
+ },
+ {
+  "id": "bracelet-of-dashing",
+  "ok": true
+ },
+ {
+  "id": "diplomats-badge",
+  "ok": true
+ },
+ {
+  "id": "lovers-gloves",
+  "ok": true
+ },
+ {
+  "id": "camouflaging-chromatophores",
+  "ok": true
+ },
+ {
+  "id": "cauthooj-bagpipes",
+  "ok": true
+ },
+ {
+  "id": "bombers-eye-elixir-lesser",
+  "ok": true
+ },
+ {
+  "id": "bombers-eye-elixir-greater",
+  "ok": true
+ },
+ {
+  "id": "bestial-mutagen",
+  "ok": true
+ },
+ {
+  "id": "drakeheart-mutagen",
+  "ok": true
+ },
+ {
+  "id": "potion-of-disguise",
+  "ok": true
+ },
+ {
+  "id": "potion-of-disguise-lesser",
+  "ok": true
+ },
+ {
+  "id": "potion-of-disguise-moderate",
+  "ok": true
+ },
+ {
+  "id": "infiltrators-elixir",
+  "ok": true
+ },
+ {
+  "id": "addiction-suppressant",
+  "ok": false,
+  "problem": "Rules content is right (+1/+2/+3/+4 item on the ongoing Fortitude save vs the drug's addiction), but the entry is filed on a record no character can ever hold. `addiction-suppressant` is an unpriced family head with 4 kin, so findUmbrellaIds() (src/data/index.ts) hides it from every item list — characterSituationalIds() only walks inventory, so this star can never fire. Worse, `situational` is in UMBRELLA_MECHANICAL_FIELDS, so writing this field onto the record un-hides it and re-adds a priceless duplicate to the shop (Ruling A regression).",
+  "correction": "Move to the four priced variants: addiction-suppressant-lesser (+1 item), -moderate (+2), -greater (+3), -major (+4), each on Fortitude vs the ongoing addiction save of the drug it was crafted for. Drop the parent."
+ },
+ {
+  "id": "sovereign-steel",
+  "ok": true
+ },
+ {
+  "id": "sovereign-steel-chunk",
+  "ok": true
+ },
+ {
+  "id": "sovereign-steel-ingot",
+  "ok": true
+ },
+ {
+  "id": "sovereign-steel-object-standard-grade",
+  "ok": true
+ },
+ {
+  "id": "sovereign-steel-object-high-grade",
+  "ok": true
+ },
+ {
+  "id": "sixfingers-elixir",
+  "ok": false,
+  "problem": "+2 item to the Reflex DC vs Disarm is correct and dcOnly is correctly set, but `sixfingers-elixir` is an unpriced umbrella head (3 kin) hidden by findUmbrellaIds(), so it can never be in inventory and the star can never fire. The three reachable variants already carry this exact entry in src/rules/situationalBonuses.ts (sixfingers-elixir-lesser/-moderate/-greater), so this adds nothing except the risk of un-hiding the umbrella (`situational` is an UMBRELLA_MECHANICAL_FIELD).",
+  "correction": "drop"
+ },
+ {
+  "id": "fixer",
+  "ok": false,
+  "problem": "All four rows read correctly off the printed text, but `fixer` is an unpriced umbrella head (4 kin) that findUmbrellaIds() hides, so no character can hire it and the stars can never fire. The informant and counselor rows also belong to different purchases, and the four priced records already separate them. (Minor: the printed counselor paragraph states only the expert's +2 — the basic +1 comes from the Aid rules, not from this item's text.)",
+  "correction": "Move to the priced records: fixer-basic-informant (+1 circumstance) and fixer-expert-informant (+2) get the Gather Information / Recall Knowledge rows; fixer-basic-councelor (+1) and fixer-expert-councelor (+2) get the Impersonate-or-Lie and Make-an-Impression-or-Request rows. Drop the parent."
+ },
+ {
+  "id": "skeptics-elixir",
+  "ok": false,
+  "problem": "Values and targets match the printed text (+1/+2/+3 item to Perception to notice falsehoods and to Will saves), but `skeptics-elixir` is an unpriced umbrella head (3 kin) hidden by findUmbrellaIds(), so the entry is unreachable, and authoring `situational` onto it un-hides a priceless duplicate.",
+  "correction": "Move to skeptics-elixir-lesser (+1 item, 1 minute), -moderate (+2, 10 minutes), -greater (+3, 1 hour), each with both rows. Drop the parent."
+ },
+ {
+  "id": "malleable-mixture",
+  "ok": false,
+  "problem": "+2/+3 item to the Fortitude and Reflex DCs vs Grapple/Shove/Trip is correct and dcOnly is right, but `malleable-mixture` is an unpriced umbrella head (2 kin) hidden by findUmbrellaIds(), so the star can never appear on a sheet.",
+  "correction": "Move to malleable-mixture-lesser (+2 item, 1 minute) and malleable-mixture-greater (+3 item, 10 minutes). Drop the parent."
+ },
+ {
+  "id": "noqual",
+  "ok": false,
+  "problem": "The +4 circumstance clause is quoted correctly, but `noqual` is an unpriced umbrella head hidden by findUmbrellaIds(), so it can never be in inventory; and the four priced material records in this same batch (noqual-chunk/-ingot/-object-standard-grade/-object-high-grade) already carry the identical entry.",
+  "correction": "drop — instead extend the same +4 circumstance entry to the other priced noqual records that are still uncovered (noqual-armor-standard-grade/-high-grade, noqual-weapon-standard-grade/-high-grade, noqual-buckler-high-grade, noqual-shield-high-grade)."
+ },
+ {
+  "id": "noqual-chunk",
+  "ok": true
+ },
+ {
+  "id": "noqual-ingot",
+  "ok": true
+ },
+ {
+  "id": "noqual-object-standard-grade",
+  "ok": true
+ },
+ {
+  "id": "noqual-object-high-grade",
+  "ok": true
+ },
+ {
+  "id": "noqual-shield",
+  "ok": true
+ },
+ {
+  "id": "exploration-lens",
+  "ok": false,
+  "problem": "Each row's bonus and target match its lens (Detecting +2 item to Identify Magic; Investigating +1 item to Recall Knowledge while Investigating; Searching +2 item to Perception while Searching), but they are three separate purchasable items and all three are filed on `exploration-lens`, an unpriced umbrella head (3 kin) that findUmbrellaIds() hides. Nothing can ever own the parent, so none of the three stars can fire, and writing `situational` onto it would un-hide it.",
+  "correction": "Split one row per record: exploration-lens-detecting (+2 item to Arcana/Nature/Occultism/Religion to Identify Magic within the light), exploration-lens-investigating (+1 item to any skill for Recall Knowledge while Investigating, while activated), exploration-lens-searching (+2 item to Perception to spot hidden doors and concealed hazards while Searching). Drop the parent."
+ },
+ {
+  "id": "red-rib-gill-mask",
+  "ok": false,
+  "problem": "Values match the printed text (+1/+2/+3 item vs inhaled, or +2/+3/+4 vs Dead Man's Breath), but `red-rib-gill-mask` is an unpriced umbrella head (3 kin) hidden by findUmbrellaIds(), so no character can wear it and the star can never fire.",
+  "correction": "Move to red-rib-gill-mask-lesser (+1 item, +2 vs Dead Man's Breath, 10 minutes), -moderate (+2 / +3, 1 hour), -greater (+3 / +4, 8 hours). Keep the second row phrased as a replacement value, not an addition. Drop the parent."
+ },
+ {
+  "id": "spiderfoot-brew-major",
+  "ok": true
+ },
+ {
+  "id": "qat",
+  "ok": true
+ },
+ {
+  "id": "grit",
+  "ok": true
+ },
+ {
+  "id": "potion-of-disguise-greater",
+  "ok": true
+ },
+ {
+  "id": "midnight-milk",
+  "ok": false,
+  "problem": "Values and types are right (Experimental Stage 1 +2 item Perception; Refined +3; Pure +3 Perception AND Will), but the target RECORD is wrong. `midnight-milk` in public/core.json is the AoN family summary: no price, three kin (midnight-milk-experimental/-refined/-pure), no mechanical field, so findUmbrellaIds() hides it from every picker. A character can never own it, so the star can never fire — and if the applier writes `situational` onto the record, `situational` is in UMBRELLA_MECHANICAL_FIELDS, so it would UN-HIDE an AoN summary row in Add Items, against the shipped owner ruling.",
+  "correction": "Re-key per grade: midnight-milk-experimental → perception '+2 item'; midnight-milk-refined → perception '+3 item'; midnight-milk-pure → perception '+3 item' AND save/will '+3 item'. Drop the range string and the '(1 hour)' from the Pure entry (Pure Stage 1 prints no duration)."
+ },
+ {
+  "id": "antifungal-salve",
+  "ok": true
+ },
+ {
+  "id": "crimson-godsblood-serum",
+  "ok": false,
+  "problem": "Text checks out (+2/+3/+4 status to physical damage; 2d8+5 / 3d8+10 / 6d8+20 on the 0-HP trigger), but `crimson-godsblood-serum` is umbrella-hidden — unpriced with three kin — so it is not ownable and the star cannot reach a character.",
+  "correction": "Re-key per grade onto crimson-godsblood-serum-lesser (+2 status, 2d8+5), -moderate (+3, 3d8+10), -greater (+4, 6d8+20). Note the DB also carries a duplicate lesser-/moderate-/greater-crimson-godsblood-serum family that would need the same entries or deduping."
+ },
+ {
+  "id": "essence-forge",
+  "ok": false,
+  "problem": "Clause is verbatim correct (crit success on Prime the Forge → item bonus to the skill used, 24 hours, +1/+2/+3 by grade), but `essence-forge` is umbrella-hidden (no price, kin essence-forge-lesser/-moderate/-greater) so it is not ownable.",
+  "correction": "Re-key per grade: essence-forge-lesser '+1 item', essence-forge-moderate '+2 item', essence-forge-greater '+3 item', each keeping the arcana/nature/occultism/religion target list and the 'only the skill you used' when."
+ },
+ {
+  "id": "champions-laurels",
+  "ok": false,
+  "problem": "Rules content verified (trained requirement, 12 cheering onlookers, +1/+2/+3 status, temp HP = item level for 1 minute), but `champions-laurels` is umbrella-hidden (no price, kin -amateur/-professional/-renowned) so no character can own the record the star is attached to.",
+  "correction": "Re-key per grade: champions-laurels-amateur '+1 status', -professional '+2 status', -renowned '+3 status', each with the matching hp/temp-HP rider."
+ },
+ {
+  "id": "privacy-ward-fulu",
+  "ok": false,
+  "problem": "Values are right (+1 hallway, +1 room, +2 chamber, item bonus to Stealth against creatures outside the room), but `privacy-ward-fulu` is umbrella-hidden (no price, kin -hallway/-room/-chamber) and cannot be owned.",
+  "correction": "Re-key: privacy-ward-fulu-hallway '+1 item' (1 hour), -room '+1 item' (8 hours), -chamber '+2 item' (24 hours) — the durations are printed per grade and belong in each `when`."
+ },
+ {
+  "id": "conrasu-coin",
+  "ok": false,
+  "problem": "All three bonuses match the printed text, but they belong to two different coins and `conrasu-coin` is the umbrella head (no price, kin -arbiter/-bythos) so it is hidden and unownable.",
+  "correction": "Split: conrasu-coin-arbiter gets the two Diplomacy entries (+2 circumstance, +3 vs a creature with the aeon trait); conrasu-coin-bythos gets the AC entry (+2 circumstance against the triggering attack)."
+ },
+ {
+  "id": "fate-tempters-ring",
+  "ok": true
+ },
+ {
+  "id": "olfactory-obfuscator-lesser",
+  "ok": true
+ },
+ {
+  "id": "signifers-mask",
+  "ok": false,
+  "problem": "Already authored. public/core.json items['signifers-mask'] ALREADY carries these exact two bonuses (deception '+1 circumstance' / 'to Lie, and to your Deception DC against Sense Motive', intimidation '+1 circumstance' / 'to Coerce') — and the todo record's own `fields.situational` shows them too. entriesFor() concatenates authored entries onto shipped ones rather than replacing, so this would render the same +1 twice on Deception and twice on Intimidation. The same bonus is also already on the feat 'hellknight-signifer-preferment' in the registry.",
+  "correction": "drop"
+ },
+ {
+  "id": "aon-fixer",
+  "ok": false,
+  "problem": "Wrong record, twice over. `aon-fixer` is an aon- scrape colliding by name with canonical `fixer`, so findDuplicateIds() hides it from every list; and canonical `fixer` is itself umbrella-hidden (no price, four kin). Neither is ownable. Separately, the single combined entry loses the informant/counselor and basic/expert split that the DB already models as four purchasable records. (The base counselor's +1 is also inferred from the Aid rules — the text prints only the expert's +2.)",
+  "correction": "Author four entries instead: fixer-basic-informant → skill/all, '+1 circumstance', Gather Information and Recall Knowledge about their location; fixer-expert-informant → same, '+2 circumstance'; fixer-basic-councelor → deception+diplomacy, '+1 circumstance', to Impersonate, Lie, Make an Impression or Request within their location; fixer-expert-councelor → same, '+2 circumstance'."
+ },
+ {
+  "id": "aon-busine-of-divine-reinforcement",
+  "ok": false,
+  "problem": "The +2 item bonus to Performance and the two-hand usage are both confirmed against the AoN mirror (equipment-1566.json), but `aon-busine-of-divine-reinforcement` is an aon- duplicate of canonical `busine-of-divine-reinforcement` (identical name), so findDuplicateIds() hides it and no character can own it. The canonical record carries no `situational` today.",
+  "correction": "Re-key to `busine-of-divine-reinforcement` (6,000 gp, visible). The DB also holds a third, non-aon record `busine-of-divine-reinforcements` (plural) that is not caught by the dedupe rule and would need the same entry or deduping."
+ },
+ {
+  "id": "aon-sleuth-s-pipe",
+  "ok": false,
+  "problem": "Text confirmed, but `aon-sleuth-s-pipe` is an aon- name-collision duplicate of canonical `sleuths-pipe` and is hidden from every picker; the canonical record has no `situational`.",
+  "correction": "Re-key both bonuses to `sleuths-pipe`."
+ },
+ {
+  "id": "aon-magical-medals",
+  "ok": false,
+  "problem": "Hidden two different ways, and it is the wrong kind of record. `aon-magical-medals` is an aon- duplicate of canonical `magical-medals`, AND it is listed by id in UMBRELLA_EXTRA_IDS in src/data/index.ts with the comment \"AoN's category page for medals; the medals themselves are unrelated ids\". Even the canonical `magical-medals` is AoN's category page — the five ownable medals are separate records (medal-of-gorillas-might, medal-of-griffons-heart, medal-of-the-wolf-pack, medal-of-unicorns-purity, medal-of-phoenixs-fire), none of which carries any situational data. As authored, one owned record would also hand a player all four unrelated medals' bonuses at once.",
+  "correction": "Split onto the individual medals: medal-of-gorillas-might → athletics '+1 item' (Climb, Force Open, High Jump, Long Jump) plus the once-per-day Gorilla's Second Leap reroll; medal-of-griffons-heart → save/all '+1 item' against fear and mental effects; medal-of-the-wolf-pack → strikeDamage '+2 circumstance' against enemies you're flanking (printed as 'damage rolls', not Strikes only)."
+ },
+ {
+  "id": "aon-emotion-surge",
+  "ok": false,
+  "problem": "+1 status for 1 minute is correct, but `aon-emotion-surge` is an aon- duplicate of canonical `emotion-surge` and is hidden from all lists; the canonical record has no `situational`. The `when` is also slightly off for one emotion: the Dedication aspect grants the bonus to 'Checks to Recall Knowledge', which is not a single skill.",
+  "correction": "Re-key to `emotion-surge`, and word the when as 'on the checks set by the relic's emotion (one skill, or Recall Knowledge for Dedication)'."
+ },
+ {
+  "id": "born-of-item",
+  "ok": true
+ },
+ {
+  "id": "mechanical-symbiosis",
+  "ok": true
+ },
+ {
+  "id": "close-ties",
+  "ok": true
+ },
+ {
+  "id": "reborn-soul",
+  "ok": true
+ },
+ {
+  "id": "pickled-demon-tongue",
+  "ok": true
+ }
+]
