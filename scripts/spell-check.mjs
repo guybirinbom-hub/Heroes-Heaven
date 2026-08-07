@@ -111,6 +111,27 @@ for (const [id, rec] of Object.entries(db.spells ?? {})) {
       }
     }
   }
+
+  /* ---- area: size and SHAPE, from the printed line ---- */
+  if (rec.baseArea?.value) {
+    // Read the remaster half where the two differ — Door to Beyond was a 20-foot emanation in Gods &
+    // Magic and is a 20-foot burst in Divine Mysteries, and Distortion Lens went from a 5-foot square
+    // to a 5-foot burst.
+    const remaster = list.filter((m) => !m.remaster_id);
+    const pool = remaster.length ? remaster : list;
+    const areas = new Set();
+    for (const m of pool) {
+      const am = /\bArea\s+(?:one\s+)?(\d+)[- ]foot\s+(burst|cone|emanation|line|square)/i.exec(String(m.text ?? '').replace(/\s+/g, ' '));
+      if (am) areas.add(`${am[1]}|${norm(am[2])}`);
+    }
+    if (areas.size === 1) {
+      compared++;
+      const [size, kind] = [...areas][0].split('|');
+      if (Number(size) !== rec.baseArea.value || kind !== norm(rec.baseArea.kind)) {
+        bad.push({ id, field: 'area', have: `${rec.baseArea.value}ft ${rec.baseArea.kind}`, want: `${size}ft ${kind}` });
+      }
+    }
+  }
 }
 
 console.log(`spell fields compared: ${compared}`);

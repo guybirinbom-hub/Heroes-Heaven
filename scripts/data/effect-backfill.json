@@ -103797,5 +103797,641 @@
       "type": "fortitude",
       "basic": true
     }
+  },
+  {
+    "category": "feats",
+    "id": "reflexive-catch",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "banishing-blow",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "reclaim-spell",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "ambushing-knockdown",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "field-artillery",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "explosive-entry",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "thwart-evil",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "hijack-undead",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 3
+    }
+  },
+  {
+    "category": "feats",
+    "id": "envenom-strike",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "ragdyas-dance",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "swift-application",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "vicious-venom",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "counterclockwork-focus",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "were-on-the-list",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "hook-em",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "universal-longevity",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "leshy-glide",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "ritual-reversion",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "sabotage",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "shore-gift",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "pack-takedown",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "powerful-lash",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "terraforming-trickery",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "unobstructed-shot",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "mooneater",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "sword-of-sealing",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "mythic-allies",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "break-the-causal-chain",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 3
+    }
+  },
+  {
+    "category": "feats",
+    "id": "disperse-into-petals",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "soul-oubliette",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "battlefield-arcana",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "follow-the-threads-of-fate",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "scholars-hunch",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "daunting-spell",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "momentary-respite",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "not-this-time",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "defy-chains",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "keep-up-the-good-fight-knight-vigilant",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "beast-dynamo-howl",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "inspired-stratagem",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "healing-bomb",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "combine-elixirs",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "debilitating-bomb",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "sticky-bomb",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "exploitive-bomb",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "mega-bomb",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "instinctive-strike",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "cruelty",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "mercy",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "dual-weapon-reload",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "chemical-contagion",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "improvised-pummel",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "spellshot-dedication",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "smoke-bomb",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "endure-deaths-touch",
+    "field": "actionCost",
+    "value": {
+      "type": "reaction"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "educated-assessment",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "blood-frenzy",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "merciless-rend",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "dominion-aura",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "fierce-competitor",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "whirlwind-toss",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "forestall-curse",
+    "field": "actionCost",
+    "value": {
+      "type": "free"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "five-breaths-one-death",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "profane-bargain",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "my-kingdom-my-blood",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "infused-with-belkzens-might",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "throw-and-catch",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "feats",
+    "id": "exude-demonic-corruption",
+    "field": "actionCost",
+    "value": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "category": "spells",
+    "id": "rainbows-end",
+    "field": "area",
+    "value": "10-foot emanation"
+  },
+  {
+    "category": "spells",
+    "id": "rainbows-end",
+    "field": "baseArea",
+    "value": {
+      "value": 10,
+      "kind": "emanation"
+    }
+  },
+  {
+    "category": "spells",
+    "id": "door-to-beyond",
+    "field": "area",
+    "value": "20-foot burst"
+  },
+  {
+    "category": "spells",
+    "id": "door-to-beyond",
+    "field": "baseArea",
+    "value": {
+      "value": 20,
+      "kind": "burst"
+    }
+  },
+  {
+    "category": "spells",
+    "id": "distortion-lens",
+    "field": "area",
+    "value": "5-foot burst"
+  },
+  {
+    "category": "spells",
+    "id": "distortion-lens",
+    "field": "baseArea",
+    "value": {
+      "value": 5,
+      "kind": "burst"
+    }
   }
 ]
