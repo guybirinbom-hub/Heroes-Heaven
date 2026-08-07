@@ -14,10 +14,29 @@ const key = (n: string) => n.toLowerCase().replace(/[^a-z0-9]/g, '');
  * of their content.
  */
 describe('aon- duplicate suppression', () => {
-  it('flags only aon- records that collide with a canonical twin', () => {
+  it('hides only an aon- collision or a grade-spelling twin — never anything else', () => {
     const dupes = c.duplicateIds!;
     expect(dupes.size).toBeGreaterThan(0);
-    for (const id of dupes) expect(id.startsWith('aon-'), id).toBe(true);
+    // A third mechanism joined the two aon- ones: "Greater Nail Bomb" and "Nail Bomb (Greater)" are
+    // the same item under two spellings, so neither the exact-name rule nor the curated near-miss
+    // list saw them and the shop listed 180 pairs twice. Those hidden ids are NOT aon-prefixed, so
+    // the old blanket assertion is replaced by the guarantee that actually matters: an id is only
+    // ever hidden when a visible record of the same thing exists to take its place.
+    const GRADES = ['lesser', 'moderate', 'greater', 'major', 'minor', 'true', 'supreme'];
+    // Indexed once — a scan per hidden id is 180 x 7,500 comparisons and times the test out.
+    const visibleByName = new Map<string, string>();
+    for (const [tid, t] of Object.entries(c.items)) {
+      if (!dupes.has(tid) && t?.name) visibleByName.set(key(t.name), tid);
+    }
+    for (const id of dupes) {
+      if (id.startsWith('aon-')) continue;
+      const rec = c.items[id];
+      expect(rec, `${id} hidden but not an item`).toBeTruthy();
+      expect(GRADES.some((g) => rec.name.toLowerCase().startsWith(`${g} `)), `${id} is a "Grade Name" spelling`).toBe(true);
+      // …and its "Name (Grade)" twin is visible. "Greater Nail Bomb" -> "Nail Bomb (Greater)".
+      const twinName = rec.name.replace(/^(\w+)\s+(.*)$/, '$2 ($1)');
+      expect(visibleByName.get(key(twinName)), `${id} has a visible twin`).toBeTruthy();
+    }
   });
 
   it('never hides an aon- record that is the ONLY copy of its content', () => {

@@ -1,0 +1,2882 @@
+[
+ {
+  "ids": [
+   "greater-staff-of-arcane-might",
+   "staff-of-arcane-might-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "staff-of-arcane-might-greater",
+  "hide": [
+   "greater-staff-of-arcane-might"
+  ],
+  "scores": [
+   "staff-of-arcane-might-greater:3",
+   "greater-staff-of-arcane-might:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-staff-of-arcane-might",
+   "staff-of-arcane-might-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "staff-of-arcane-might-major",
+  "hide": [
+   "major-staff-of-arcane-might"
+  ],
+  "scores": [
+   "staff-of-arcane-might-major:3",
+   "major-staff-of-arcane-might:2"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-aetheric-irritant",
+   "aetheric-irritant-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aetheric-irritant-lesser",
+  "hide": [
+   "lesser-aetheric-irritant"
+  ],
+  "scores": [
+   "aetheric-irritant-lesser:2",
+   "lesser-aetheric-irritant:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-aetheric-irritant",
+   "aetheric-irritant-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aetheric-irritant-moderate",
+  "hide": [
+   "moderate-aetheric-irritant"
+  ],
+  "scores": [
+   "aetheric-irritant-moderate:2",
+   "moderate-aetheric-irritant:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-aetheric-irritant",
+   "aetheric-irritant-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aetheric-irritant-greater",
+  "hide": [
+   "greater-aetheric-irritant"
+  ],
+  "scores": [
+   "aetheric-irritant-greater:2",
+   "greater-aetheric-irritant:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-aetheric-irritant",
+   "aetheric-irritant-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aetheric-irritant-major",
+  "hide": [
+   "major-aetheric-irritant"
+  ],
+  "scores": [
+   "aetheric-irritant-major:2",
+   "major-aetheric-irritant:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-maelstromic-destabilizer",
+   "maelstromic-destabilizer-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "maelstromic-destabilizer-lesser",
+  "hide": [
+   "lesser-maelstromic-destabilizer"
+  ],
+  "scores": [
+   "maelstromic-destabilizer-lesser:2",
+   "lesser-maelstromic-destabilizer:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-maelstromic-destabilizer",
+   "maelstromic-destabilizer-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "maelstromic-destabilizer-moderate",
+  "hide": [
+   "moderate-maelstromic-destabilizer"
+  ],
+  "scores": [
+   "maelstromic-destabilizer-moderate:2",
+   "moderate-maelstromic-destabilizer:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-maelstromic-destabilizer",
+   "maelstromic-destabilizer-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "maelstromic-destabilizer-major",
+  "hide": [
+   "major-maelstromic-destabilizer"
+  ],
+  "scores": [
+   "maelstromic-destabilizer-major:2",
+   "major-maelstromic-destabilizer:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-moritype",
+   "moritype-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "moritype-greater",
+  "hide": [
+   "greater-moritype"
+  ],
+  "scores": [
+   "moritype-greater:2",
+   "greater-moritype:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-portable-seal",
+   "portable-seal-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "portable-seal-lesser",
+  "hide": [
+   "lesser-portable-seal"
+  ],
+  "scores": [
+   "portable-seal-lesser:2",
+   "lesser-portable-seal:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-portable-seal",
+   "portable-seal-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "portable-seal-moderate",
+  "hide": [
+   "moderate-portable-seal"
+  ],
+  "scores": [
+   "portable-seal-moderate:2",
+   "moderate-portable-seal:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-portable-seal",
+   "portable-seal-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "portable-seal-major",
+  "hide": [
+   "major-portable-seal"
+  ],
+  "scores": [
+   "portable-seal-major:2",
+   "major-portable-seal:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-quartz-coil-rail-transport",
+   "quartz-coil-rail-transport-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "quartz-coil-rail-transport-lesser",
+  "hide": [
+   "lesser-quartz-coil-rail-transport"
+  ],
+  "scores": [
+   "quartz-coil-rail-transport-lesser:2",
+   "lesser-quartz-coil-rail-transport:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-quartz-coil-rail-transport",
+   "quartz-coil-rail-transport-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "quartz-coil-rail-transport-moderate",
+  "hide": [
+   "moderate-quartz-coil-rail-transport"
+  ],
+  "scores": [
+   "quartz-coil-rail-transport-moderate:2",
+   "moderate-quartz-coil-rail-transport:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-quartz-coil-rail-transport",
+   "quartz-coil-rail-transport-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "quartz-coil-rail-transport-greater",
+  "hide": [
+   "greater-quartz-coil-rail-transport"
+  ],
+  "scores": [
+   "quartz-coil-rail-transport-greater:2",
+   "greater-quartz-coil-rail-transport:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-quartz-coil-rail-transport",
+   "quartz-coil-rail-transport-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "quartz-coil-rail-transport-major",
+  "hide": [
+   "major-quartz-coil-rail-transport"
+  ],
+  "scores": [
+   "quartz-coil-rail-transport-major:2",
+   "major-quartz-coil-rail-transport:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-tangibility-resonator",
+   "tangibility-resonator-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "tangibility-resonator-lesser",
+  "hide": [
+   "lesser-tangibility-resonator"
+  ],
+  "scores": [
+   "tangibility-resonator-lesser:2",
+   "lesser-tangibility-resonator:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-tangibility-resonator",
+   "tangibility-resonator-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "tangibility-resonator-moderate",
+  "hide": [
+   "moderate-tangibility-resonator"
+  ],
+  "scores": [
+   "tangibility-resonator-moderate:2",
+   "moderate-tangibility-resonator:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-tangibility-resonator",
+   "tangibility-resonator-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "tangibility-resonator-major",
+  "hide": [
+   "major-tangibility-resonator"
+  ],
+  "scores": [
+   "tangibility-resonator-major:2",
+   "major-tangibility-resonator:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-vanishing-shocker",
+   "vanishing-shocker-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "vanishing-shocker-lesser",
+  "hide": [
+   "lesser-vanishing-shocker"
+  ],
+  "scores": [
+   "vanishing-shocker-lesser:2",
+   "lesser-vanishing-shocker:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-vanishing-shocker",
+   "vanishing-shocker-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "vanishing-shocker-moderate",
+  "hide": [
+   "moderate-vanishing-shocker"
+  ],
+  "scores": [
+   "vanishing-shocker-moderate:2",
+   "moderate-vanishing-shocker:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-vanishing-shocker",
+   "vanishing-shocker-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "vanishing-shocker-greater",
+  "hide": [
+   "greater-vanishing-shocker"
+  ],
+  "scores": [
+   "vanishing-shocker-greater:2",
+   "greater-vanishing-shocker:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-vanishing-shocker",
+   "vanishing-shocker-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "vanishing-shocker-major",
+  "hide": [
+   "major-vanishing-shocker"
+  ],
+  "scores": [
+   "vanishing-shocker-major:2",
+   "major-vanishing-shocker:1"
+  ]
+ },
+ {
+  "ids": [
+   "minor-bloodstone-doll",
+   "bloodstone-doll-minor"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "bloodstone-doll-minor",
+  "hide": [
+   "minor-bloodstone-doll"
+  ],
+  "scores": [
+   "bloodstone-doll-minor:2",
+   "minor-bloodstone-doll:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-bloodstone-doll",
+   "bloodstone-doll-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "bloodstone-doll-moderate",
+  "hide": [
+   "moderate-bloodstone-doll"
+  ],
+  "scores": [
+   "bloodstone-doll-moderate:2",
+   "moderate-bloodstone-doll:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-bloodstone-doll",
+   "bloodstone-doll-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "bloodstone-doll-major",
+  "hide": [
+   "major-bloodstone-doll"
+  ],
+  "scores": [
+   "bloodstone-doll-major:2",
+   "major-bloodstone-doll:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-skitter-knot",
+   "skitter-knot-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "skitter-knot-lesser",
+  "hide": [
+   "lesser-skitter-knot"
+  ],
+  "scores": [
+   "skitter-knot-lesser:2",
+   "lesser-skitter-knot:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-skitter-knot",
+   "skitter-knot-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "skitter-knot-greater",
+  "hide": [
+   "greater-skitter-knot"
+  ],
+  "scores": [
+   "skitter-knot-greater:2",
+   "greater-skitter-knot:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-skitter-knot",
+   "skitter-knot-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "skitter-knot-major",
+  "hide": [
+   "major-skitter-knot"
+  ],
+  "scores": [
+   "skitter-knot-major:2",
+   "major-skitter-knot:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-heros-plate",
+   "heros-plate-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "heros-plate-greater",
+  "hide": [
+   "greater-heros-plate"
+  ],
+  "scores": [
+   "heros-plate-greater:4",
+   "greater-heros-plate:3"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-defoliation-bomb",
+   "defoliation-bomb-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "defoliation-bomb-lesser",
+  "hide": [
+   "lesser-defoliation-bomb"
+  ],
+  "scores": [
+   "defoliation-bomb-lesser:2",
+   "lesser-defoliation-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-defoliation-bomb",
+   "defoliation-bomb-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "defoliation-bomb-moderate",
+  "hide": [
+   "moderate-defoliation-bomb"
+  ],
+  "scores": [
+   "defoliation-bomb-moderate:2",
+   "moderate-defoliation-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-defoliation-bomb",
+   "defoliation-bomb-greater"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "defoliation-bomb-greater",
+  "hide": [
+   "greater-defoliation-bomb"
+  ],
+  "scores": [
+   "defoliation-bomb-greater:2",
+   "greater-defoliation-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-defoliation-bomb",
+   "defoliation-bomb-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "defoliation-bomb-major",
+  "hide": [
+   "major-defoliation-bomb"
+  ],
+  "scores": [
+   "defoliation-bomb-major:2",
+   "major-defoliation-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-nail-bomb",
+   "nail-bomb-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "nail-bomb-lesser",
+  "hide": [
+   "lesser-nail-bomb"
+  ],
+  "scores": [
+   "nail-bomb-lesser:2",
+   "lesser-nail-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-nail-bomb",
+   "nail-bomb-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "nail-bomb-moderate",
+  "hide": [
+   "moderate-nail-bomb"
+  ],
+  "scores": [
+   "nail-bomb-moderate:2",
+   "moderate-nail-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-nail-bomb",
+   "nail-bomb-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "nail-bomb-greater",
+  "hide": [
+   "greater-nail-bomb"
+  ],
+  "scores": [
+   "nail-bomb-greater:2",
+   "greater-nail-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-nail-bomb",
+   "nail-bomb-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "nail-bomb-major",
+  "hide": [
+   "major-nail-bomb"
+  ],
+  "scores": [
+   "nail-bomb-major:2",
+   "major-nail-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-bougainvillea-blossom",
+   "bougainvillea-blossom-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "bougainvillea-blossom-lesser",
+  "hide": [
+   "lesser-bougainvillea-blossom"
+  ],
+  "scores": [
+   "bougainvillea-blossom-lesser:2",
+   "lesser-bougainvillea-blossom:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-bougainvillea-blossom",
+   "bougainvillea-blossom-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "bougainvillea-blossom-moderate",
+  "hide": [
+   "moderate-bougainvillea-blossom"
+  ],
+  "scores": [
+   "bougainvillea-blossom-moderate:2",
+   "moderate-bougainvillea-blossom:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-bougainvillea-blossom",
+   "bougainvillea-blossom-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "bougainvillea-blossom-greater",
+  "hide": [
+   "greater-bougainvillea-blossom"
+  ],
+  "scores": [
+   "bougainvillea-blossom-greater:2",
+   "greater-bougainvillea-blossom:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-bougainvillea-blossom",
+   "bougainvillea-blossom-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "bougainvillea-blossom-major",
+  "hide": [
+   "major-bougainvillea-blossom"
+  ],
+  "scores": [
+   "bougainvillea-blossom-major:2",
+   "major-bougainvillea-blossom:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-feral-linguist",
+   "feral-linguist-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "feral-linguist-greater",
+  "hide": [
+   "greater-feral-linguist"
+  ],
+  "scores": [
+   "feral-linguist-greater:2",
+   "greater-feral-linguist:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-foxglove-token",
+   "foxglove-token-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "foxglove-token-greater",
+  "hide": [
+   "greater-foxglove-token"
+  ],
+  "scores": [
+   "foxglove-token-greater:4",
+   "greater-foxglove-token:3"
+  ]
+ },
+ {
+  "ids": [
+   "major-foxglove-token",
+   "foxglove-token-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "foxglove-token-major",
+  "hide": [
+   "major-foxglove-token"
+  ],
+  "scores": [
+   "foxglove-token-major:3",
+   "major-foxglove-token:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-heartmoss",
+   "heartmoss-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "heartmoss-greater",
+  "hide": [
+   "greater-heartmoss"
+  ],
+  "scores": [
+   "heartmoss-greater:4",
+   "greater-heartmoss:3"
+  ]
+ },
+ {
+  "ids": [
+   "major-heartmoss",
+   "heartmoss-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "heartmoss-major",
+  "hide": [
+   "major-heartmoss"
+  ],
+  "scores": [
+   "heartmoss-major:4",
+   "major-heartmoss:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-clay-sphere",
+   "clay-sphere-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "clay-sphere-greater",
+  "hide": [
+   "greater-clay-sphere"
+  ],
+  "scores": [
+   "clay-sphere-greater:3",
+   "greater-clay-sphere:3"
+  ]
+ },
+ {
+  "ids": [
+   "major-clay-sphere",
+   "clay-sphere-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "clay-sphere-major",
+  "hide": [
+   "major-clay-sphere"
+  ],
+  "scores": [
+   "clay-sphere-major:3",
+   "major-clay-sphere:3"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-necrotic-cap",
+   "necrotic-cap-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "necrotic-cap-lesser",
+  "hide": [
+   "lesser-necrotic-cap"
+  ],
+  "scores": [
+   "necrotic-cap-lesser:2",
+   "lesser-necrotic-cap:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-necrotic-cap",
+   "necrotic-cap-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "necrotic-cap-moderate",
+  "hide": [
+   "moderate-necrotic-cap"
+  ],
+  "scores": [
+   "necrotic-cap-moderate:2",
+   "moderate-necrotic-cap:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-necrotic-cap",
+   "necrotic-cap-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "necrotic-cap-greater",
+  "hide": [
+   "greater-necrotic-cap"
+  ],
+  "scores": [
+   "necrotic-cap-greater:2",
+   "greater-necrotic-cap:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-necrotic-cap",
+   "necrotic-cap-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "necrotic-cap-major",
+  "hide": [
+   "major-necrotic-cap"
+  ],
+  "scores": [
+   "necrotic-cap-major:2",
+   "major-necrotic-cap:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-wood-rotted-root",
+   "wood-rotted-root-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "wood-rotted-root-lesser",
+  "hide": [
+   "lesser-wood-rotted-root"
+  ],
+  "scores": [
+   "wood-rotted-root-lesser:2",
+   "lesser-wood-rotted-root:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-wood-rotted-root",
+   "wood-rotted-root-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "wood-rotted-root-moderate",
+  "hide": [
+   "moderate-wood-rotted-root"
+  ],
+  "scores": [
+   "wood-rotted-root-moderate:2",
+   "moderate-wood-rotted-root:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-wood-rotted-root",
+   "wood-rotted-root-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "wood-rotted-root-greater",
+  "hide": [
+   "greater-wood-rotted-root"
+  ],
+  "scores": [
+   "wood-rotted-root-greater:2",
+   "greater-wood-rotted-root:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-wood-rotted-root",
+   "wood-rotted-root-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "wood-rotted-root-major",
+  "hide": [
+   "major-wood-rotted-root"
+  ],
+  "scores": [
+   "wood-rotted-root-major:2",
+   "major-wood-rotted-root:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-inflammation-flask",
+   "inflammation-flask-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "inflammation-flask-lesser",
+  "hide": [
+   "lesser-inflammation-flask"
+  ],
+  "scores": [
+   "inflammation-flask-lesser:2",
+   "lesser-inflammation-flask:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-inflammation-flask",
+   "inflammation-flask-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "inflammation-flask-moderate",
+  "hide": [
+   "moderate-inflammation-flask"
+  ],
+  "scores": [
+   "inflammation-flask-moderate:2",
+   "moderate-inflammation-flask:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-inflammation-flask",
+   "inflammation-flask-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "inflammation-flask-greater",
+  "hide": [
+   "greater-inflammation-flask"
+  ],
+  "scores": [
+   "inflammation-flask-greater:2",
+   "greater-inflammation-flask:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-inflammation-flask",
+   "inflammation-flask-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "inflammation-flask-major",
+  "hide": [
+   "major-inflammation-flask"
+  ],
+  "scores": [
+   "inflammation-flask-major:2",
+   "major-inflammation-flask:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-spider-satchel",
+   "spider-satchel-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "spider-satchel-lesser",
+  "hide": [
+   "lesser-spider-satchel"
+  ],
+  "scores": [
+   "spider-satchel-lesser:2",
+   "lesser-spider-satchel:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-spider-satchel",
+   "spider-satchel-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "spider-satchel-moderate",
+  "hide": [
+   "moderate-spider-satchel"
+  ],
+  "scores": [
+   "spider-satchel-moderate:2",
+   "moderate-spider-satchel:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-spider-satchel",
+   "spider-satchel-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "spider-satchel-greater",
+  "hide": [
+   "greater-spider-satchel"
+  ],
+  "scores": [
+   "spider-satchel-greater:2",
+   "greater-spider-satchel:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-spider-satchel",
+   "spider-satchel-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "spider-satchel-major",
+  "hide": [
+   "major-spider-satchel"
+  ],
+  "scores": [
+   "spider-satchel-major:2",
+   "major-spider-satchel:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-burglars-rosebud",
+   "burglars-rosebud-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "burglars-rosebud-greater",
+  "hide": [
+   "greater-burglars-rosebud"
+  ],
+  "scores": [
+   "burglars-rosebud-greater:2",
+   "greater-burglars-rosebud:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-durian-bomb",
+   "durian-bomb-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "durian-bomb-lesser",
+  "hide": [
+   "lesser-durian-bomb"
+  ],
+  "scores": [
+   "durian-bomb-lesser:2",
+   "lesser-durian-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-durian-bomb",
+   "durian-bomb-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "durian-bomb-moderate",
+  "hide": [
+   "moderate-durian-bomb"
+  ],
+  "scores": [
+   "durian-bomb-moderate:2",
+   "moderate-durian-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-durian-bomb",
+   "durian-bomb-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "durian-bomb-greater",
+  "hide": [
+   "greater-durian-bomb"
+  ],
+  "scores": [
+   "durian-bomb-greater:2",
+   "greater-durian-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-durian-bomb",
+   "durian-bomb-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "durian-bomb-major",
+  "hide": [
+   "major-durian-bomb"
+  ],
+  "scores": [
+   "durian-bomb-major:2",
+   "major-durian-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-irritating-seedpod",
+   "irritating-seedpod-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "irritating-seedpod-lesser",
+  "hide": [
+   "lesser-irritating-seedpod"
+  ],
+  "scores": [
+   "irritating-seedpod-lesser:2",
+   "lesser-irritating-seedpod:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-irritating-seedpod",
+   "irritating-seedpod-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "irritating-seedpod-greater",
+  "hide": [
+   "greater-irritating-seedpod"
+  ],
+  "scores": [
+   "irritating-seedpod-greater:2",
+   "greater-irritating-seedpod:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-irritating-seedpod",
+   "irritating-seedpod-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "irritating-seedpod-major",
+  "hide": [
+   "major-irritating-seedpod"
+  ],
+  "scores": [
+   "irritating-seedpod-major:2",
+   "major-irritating-seedpod:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-tenderizer-grenade",
+   "tenderizer-grenade-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "tenderizer-grenade-lesser",
+  "hide": [
+   "lesser-tenderizer-grenade"
+  ],
+  "scores": [
+   "tenderizer-grenade-lesser:2",
+   "lesser-tenderizer-grenade:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-tenderizer-grenade",
+   "tenderizer-grenade-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "tenderizer-grenade-moderate",
+  "hide": [
+   "moderate-tenderizer-grenade"
+  ],
+  "scores": [
+   "tenderizer-grenade-moderate:2",
+   "moderate-tenderizer-grenade:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-tenderizer-grenade",
+   "tenderizer-grenade-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "tenderizer-grenade-greater",
+  "hide": [
+   "greater-tenderizer-grenade"
+  ],
+  "scores": [
+   "tenderizer-grenade-greater:2",
+   "greater-tenderizer-grenade:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-tenderizer-grenade",
+   "tenderizer-grenade-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "tenderizer-grenade-major",
+  "hide": [
+   "major-tenderizer-grenade"
+  ],
+  "scores": [
+   "tenderizer-grenade-major:2",
+   "major-tenderizer-grenade:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-gasping-lament",
+   "gasping-lament-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "gasping-lament-greater",
+  "hide": [
+   "greater-gasping-lament"
+  ],
+  "scores": [
+   "gasping-lament-greater:2",
+   "greater-gasping-lament:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-aurochs-might-tattoo",
+   "aurochs-might-tattoo-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aurochs-might-tattoo-lesser",
+  "hide": [
+   "lesser-aurochs-might-tattoo"
+  ],
+  "scores": [
+   "aurochs-might-tattoo-lesser:3",
+   "lesser-aurochs-might-tattoo:2"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-aurochs-might-tattoo",
+   "aurochs-might-tattoo-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aurochs-might-tattoo-moderate",
+  "hide": [
+   "moderate-aurochs-might-tattoo"
+  ],
+  "scores": [
+   "aurochs-might-tattoo-moderate:3",
+   "moderate-aurochs-might-tattoo:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-aurochs-might-tattoo",
+   "aurochs-might-tattoo-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aurochs-might-tattoo-greater",
+  "hide": [
+   "greater-aurochs-might-tattoo"
+  ],
+  "scores": [
+   "aurochs-might-tattoo-greater:3",
+   "greater-aurochs-might-tattoo:2"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-cleft-head-marking",
+   "cleft-head-marking-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "cleft-head-marking-lesser",
+  "hide": [
+   "lesser-cleft-head-marking"
+  ],
+  "scores": [
+   "cleft-head-marking-lesser:3",
+   "lesser-cleft-head-marking:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-cleft-head-marking",
+   "cleft-head-marking-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "cleft-head-marking-greater",
+  "hide": [
+   "greater-cleft-head-marking"
+  ],
+  "scores": [
+   "cleft-head-marking-greater:3",
+   "greater-cleft-head-marking:2"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-flowing-water",
+   "flowing-water-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "flowing-water-lesser",
+  "hide": [
+   "lesser-flowing-water"
+  ],
+  "scores": [
+   "flowing-water-lesser:3",
+   "lesser-flowing-water:2"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-flowing-water",
+   "flowing-water-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "flowing-water-moderate",
+  "hide": [
+   "moderate-flowing-water"
+  ],
+  "scores": [
+   "flowing-water-moderate:3",
+   "moderate-flowing-water:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-flowing-water",
+   "flowing-water-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "flowing-water-greater",
+  "hide": [
+   "greater-flowing-water"
+  ],
+  "scores": [
+   "flowing-water-greater:3",
+   "greater-flowing-water:2"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-rending-gauntlets",
+   "rending-gauntlets-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "rending-gauntlets-lesser",
+  "hide": [
+   "lesser-rending-gauntlets"
+  ],
+  "scores": [
+   "rending-gauntlets-lesser:3",
+   "lesser-rending-gauntlets:2"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-rending-gauntlets",
+   "rending-gauntlets-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "rending-gauntlets-moderate",
+  "hide": [
+   "moderate-rending-gauntlets"
+  ],
+  "scores": [
+   "rending-gauntlets-moderate:3",
+   "moderate-rending-gauntlets:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-rending-gauntlets",
+   "rending-gauntlets-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "rending-gauntlets-greater",
+  "hide": [
+   "greater-rending-gauntlets"
+  ],
+  "scores": [
+   "rending-gauntlets-greater:3",
+   "greater-rending-gauntlets:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-stormshard",
+   "stormshard-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "stormshard-greater",
+  "hide": [
+   "greater-stormshard"
+  ],
+  "scores": [
+   "stormshard-greater:3",
+   "greater-stormshard:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-stormshard",
+   "stormshard-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "stormshard-major",
+  "hide": [
+   "major-stormshard"
+  ],
+  "scores": [
+   "stormshard-major:3",
+   "major-stormshard:2"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-roc-shaft-arrow",
+   "roc-shaft-arrow-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "roc-shaft-arrow-lesser",
+  "hide": [
+   "lesser-roc-shaft-arrow"
+  ],
+  "scores": [
+   "roc-shaft-arrow-lesser:2",
+   "lesser-roc-shaft-arrow:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-roc-shaft-arrow",
+   "roc-shaft-arrow-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "roc-shaft-arrow-moderate",
+  "hide": [
+   "moderate-roc-shaft-arrow"
+  ],
+  "scores": [
+   "roc-shaft-arrow-moderate:2",
+   "moderate-roc-shaft-arrow:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-roc-shaft-arrow",
+   "roc-shaft-arrow-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "roc-shaft-arrow-greater",
+  "hide": [
+   "greater-roc-shaft-arrow"
+  ],
+  "scores": [
+   "roc-shaft-arrow-greater:2",
+   "greater-roc-shaft-arrow:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-black-ash",
+   "black-ash-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "black-ash-greater",
+  "hide": [
+   "greater-black-ash"
+  ],
+  "scores": [
+   "black-ash-greater:2",
+   "greater-black-ash:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-black-ash",
+   "black-ash-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "black-ash-major",
+  "hide": [
+   "major-black-ash"
+  ],
+  "scores": [
+   "black-ash-major:2",
+   "major-black-ash:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-antifungal-salve",
+   "antifungal-salve-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "antifungal-salve-greater",
+  "hide": [
+   "greater-antifungal-salve"
+  ],
+  "scores": [
+   "antifungal-salve-greater:2",
+   "greater-antifungal-salve:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-antifungal-salve",
+   "antifungal-salve-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "antifungal-salve-major",
+  "hide": [
+   "major-antifungal-salve"
+  ],
+  "scores": [
+   "antifungal-salve-major:2",
+   "major-antifungal-salve:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-antifungal-salve",
+   "antifungal-salve-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "antifungal-salve-lesser",
+  "hide": [
+   "lesser-antifungal-salve"
+  ],
+  "scores": [
+   "antifungal-salve-lesser:2",
+   "lesser-antifungal-salve:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-antifungal-salve",
+   "antifungal-salve-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "antifungal-salve-moderate",
+  "hide": [
+   "moderate-antifungal-salve"
+  ],
+  "scores": [
+   "antifungal-salve-moderate:2",
+   "moderate-antifungal-salve:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-crimson-godsblood-serum",
+   "crimson-godsblood-serum-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "crimson-godsblood-serum-lesser",
+  "hide": [
+   "lesser-crimson-godsblood-serum"
+  ],
+  "scores": [
+   "crimson-godsblood-serum-lesser:2",
+   "lesser-crimson-godsblood-serum:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-crimson-godsblood-serum",
+   "crimson-godsblood-serum-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "crimson-godsblood-serum-moderate",
+  "hide": [
+   "moderate-crimson-godsblood-serum"
+  ],
+  "scores": [
+   "crimson-godsblood-serum-moderate:2",
+   "moderate-crimson-godsblood-serum:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-crimson-godsblood-serum",
+   "crimson-godsblood-serum-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "crimson-godsblood-serum-greater",
+  "hide": [
+   "greater-crimson-godsblood-serum"
+  ],
+  "scores": [
+   "crimson-godsblood-serum-greater:2",
+   "greater-crimson-godsblood-serum:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-godrending-ammunition",
+   "godrending-ammunition-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "godrending-ammunition-greater",
+  "hide": [
+   "greater-godrending-ammunition"
+  ],
+  "scores": [
+   "godrending-ammunition-greater:1",
+   "greater-godrending-ammunition:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-bolkas-blessing",
+   "bolkas-blessing-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "bolkas-blessing-greater",
+  "hide": [
+   "greater-bolkas-blessing"
+  ],
+  "scores": [
+   "bolkas-blessing-greater:4",
+   "greater-bolkas-blessing:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-kolss-oath",
+   "kolss-oath-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "kolss-oath-greater",
+  "hide": [
+   "greater-kolss-oath"
+  ],
+  "scores": [
+   "kolss-oath-greater:4",
+   "greater-kolss-oath:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-trudds-strength",
+   "trudds-strength-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "trudds-strength-greater",
+  "hide": [
+   "greater-trudds-strength"
+  ],
+  "scores": [
+   "trudds-strength-greater:4",
+   "greater-trudds-strength:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-mitigation-mail",
+   "mitigation-mail-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "mitigation-mail-greater",
+  "hide": [
+   "greater-mitigation-mail"
+  ],
+  "scores": [
+   "mitigation-mail-greater:3",
+   "greater-mitigation-mail:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-mitigation-mail",
+   "mitigation-mail-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "mitigation-mail-major",
+  "hide": [
+   "major-mitigation-mail"
+  ],
+  "scores": [
+   "mitigation-mail-major:3",
+   "major-mitigation-mail:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-reactive-mail",
+   "reactive-mail-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "reactive-mail-greater",
+  "hide": [
+   "greater-reactive-mail"
+  ],
+  "scores": [
+   "reactive-mail-greater:3",
+   "greater-reactive-mail:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-reactive-mail",
+   "reactive-mail-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "reactive-mail-major",
+  "hide": [
+   "major-reactive-mail"
+  ],
+  "scores": [
+   "reactive-mail-major:3",
+   "major-reactive-mail:2"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-energized-shield",
+   "energized-shield-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "energized-shield-lesser",
+  "hide": [
+   "lesser-energized-shield"
+  ],
+  "scores": [
+   "energized-shield-lesser:3",
+   "lesser-energized-shield:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-energized-shield",
+   "energized-shield-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "energized-shield-moderate",
+  "hide": [
+   "moderate-energized-shield"
+  ],
+  "scores": [
+   "energized-shield-moderate:3",
+   "moderate-energized-shield:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-energized-shield",
+   "energized-shield-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "energized-shield-greater",
+  "hide": [
+   "greater-energized-shield"
+  ],
+  "scores": [
+   "energized-shield-greater:3",
+   "greater-energized-shield:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-energized-shield",
+   "energized-shield-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "energized-shield-major",
+  "hide": [
+   "major-energized-shield"
+  ],
+  "scores": [
+   "energized-shield-major:3",
+   "major-energized-shield:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-testudo-shield",
+   "testudo-shield-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "testudo-shield-greater",
+  "hide": [
+   "greater-testudo-shield"
+  ],
+  "scores": [
+   "testudo-shield-greater:3",
+   "greater-testudo-shield:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-belkzen-deadsmasher",
+   "belkzen-deadsmasher-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "belkzen-deadsmasher-greater",
+  "hide": [
+   "greater-belkzen-deadsmasher"
+  ],
+  "scores": [
+   "belkzen-deadsmasher-greater:5",
+   "greater-belkzen-deadsmasher:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-chainbreaker",
+   "chainbreaker-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "chainbreaker-greater",
+  "hide": [
+   "greater-chainbreaker"
+  ],
+  "scores": [
+   "chainbreaker-greater:4",
+   "greater-chainbreaker:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-talonstrike-blade",
+   "talonstrike-blade-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "talonstrike-blade-greater",
+  "hide": [
+   "greater-talonstrike-blade"
+  ],
+  "scores": [
+   "talonstrike-blade-greater:4",
+   "greater-talonstrike-blade:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-burrowing-bolt",
+   "burrowing-bolt-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "burrowing-bolt-greater",
+  "hide": [
+   "greater-burrowing-bolt"
+  ],
+  "scores": [
+   "burrowing-bolt-greater:1",
+   "greater-burrowing-bolt:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-ethereal-crescent",
+   "ethereal-crescent-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "ethereal-crescent-greater",
+  "hide": [
+   "greater-ethereal-crescent"
+  ],
+  "scores": [
+   "ethereal-crescent-greater:2",
+   "greater-ethereal-crescent:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-toothy-knife",
+   "toothy-knife-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "toothy-knife-greater",
+  "hide": [
+   "greater-toothy-knife"
+  ],
+  "scores": [
+   "toothy-knife-greater:2",
+   "greater-toothy-knife:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-arcane-standard",
+   "arcane-standard-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "arcane-standard-greater",
+  "hide": [
+   "greater-arcane-standard"
+  ],
+  "scores": [
+   "arcane-standard-greater:3",
+   "greater-arcane-standard:2"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-banner-of-creeping-death",
+   "banner-of-creeping-death-lesser"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "banner-of-creeping-death-lesser",
+  "hide": [
+   "lesser-banner-of-creeping-death"
+  ],
+  "scores": [
+   "banner-of-creeping-death-lesser:3",
+   "lesser-banner-of-creeping-death:2"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-banner-of-creeping-death",
+   "banner-of-creeping-death-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "banner-of-creeping-death-moderate",
+  "hide": [
+   "moderate-banner-of-creeping-death"
+  ],
+  "scores": [
+   "banner-of-creeping-death-moderate:3",
+   "moderate-banner-of-creeping-death:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-banner-of-creeping-death",
+   "banner-of-creeping-death-greater"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "banner-of-creeping-death-greater",
+  "hide": [
+   "greater-banner-of-creeping-death"
+  ],
+  "scores": [
+   "banner-of-creeping-death-greater:3",
+   "greater-banner-of-creeping-death:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-banner-of-creeping-death",
+   "banner-of-creeping-death-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "banner-of-creeping-death-major",
+  "hide": [
+   "major-banner-of-creeping-death"
+  ],
+  "scores": [
+   "banner-of-creeping-death-major:3",
+   "major-banner-of-creeping-death:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-banner-of-piercing-shards",
+   "banner-of-piercing-shards-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "banner-of-piercing-shards-greater",
+  "hide": [
+   "greater-banner-of-piercing-shards"
+  ],
+  "scores": [
+   "banner-of-piercing-shards-greater:3",
+   "greater-banner-of-piercing-shards:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-banner-of-piercing-shards",
+   "banner-of-piercing-shards-major"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "banner-of-piercing-shards-major",
+  "hide": [
+   "major-banner-of-piercing-shards"
+  ],
+  "scores": [
+   "banner-of-piercing-shards-major:3",
+   "major-banner-of-piercing-shards:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-banner-of-the-restful",
+   "banner-of-the-restful-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "banner-of-the-restful-greater",
+  "hide": [
+   "greater-banner-of-the-restful"
+  ],
+  "scores": [
+   "banner-of-the-restful-greater:1",
+   "greater-banner-of-the-restful:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-banner-of-the-restful",
+   "banner-of-the-restful-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "banner-of-the-restful-major",
+  "hide": [
+   "major-banner-of-the-restful"
+  ],
+  "scores": [
+   "banner-of-the-restful-major:1",
+   "major-banner-of-the-restful:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-blazing-banner",
+   "blazing-banner-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "blazing-banner-greater",
+  "hide": [
+   "greater-blazing-banner"
+  ],
+  "scores": [
+   "blazing-banner-greater:2",
+   "greater-blazing-banner:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-blazing-banner",
+   "blazing-banner-major"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "blazing-banner-major",
+  "hide": [
+   "major-blazing-banner"
+  ],
+  "scores": [
+   "blazing-banner-major:2",
+   "major-blazing-banner:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-dawnfire-beacon",
+   "dawnfire-beacon-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "dawnfire-beacon-major",
+  "hide": [
+   "major-dawnfire-beacon"
+  ],
+  "scores": [
+   "dawnfire-beacon-major:1",
+   "major-dawnfire-beacon:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-flag-of-the-stronghold",
+   "flag-of-the-stronghold-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "flag-of-the-stronghold-major",
+  "hide": [
+   "major-flag-of-the-stronghold"
+  ],
+  "scores": [
+   "flag-of-the-stronghold-major:2",
+   "major-flag-of-the-stronghold:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-hexwise-banner",
+   "hexwise-banner-major"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "hexwise-banner-major",
+  "hide": [
+   "major-hexwise-banner"
+  ],
+  "scores": [
+   "hexwise-banner-major:2",
+   "major-hexwise-banner:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-knaves-standard",
+   "knaves-standard-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "greater-knaves-standard",
+  "hide": [
+   "knaves-standard-greater"
+  ],
+  "scores": [
+   "greater-knaves-standard:2",
+   "knaves-standard-greater:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-knaves-standard",
+   "knaves-standard-major"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "knaves-standard-major",
+  "hide": [
+   "major-knaves-standard"
+  ],
+  "scores": [
+   "knaves-standard-major:2",
+   "major-knaves-standard:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-stalwarts-banner",
+   "stalwarts-banner-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "stalwarts-banner-greater",
+  "hide": [
+   "greater-stalwarts-banner"
+  ],
+  "scores": [
+   "stalwarts-banner-greater:3",
+   "greater-stalwarts-banner:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-stalwarts-banner",
+   "stalwarts-banner-major"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "stalwarts-banner-major",
+  "hide": [
+   "major-stalwarts-banner"
+  ],
+  "scores": [
+   "stalwarts-banner-major:3",
+   "major-stalwarts-banner:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-swift-standard",
+   "swift-standard-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "greater-swift-standard",
+  "hide": [
+   "swift-standard-greater"
+  ],
+  "scores": [
+   "greater-swift-standard:1",
+   "swift-standard-greater:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-swift-standard",
+   "swift-standard-major"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "major-swift-standard",
+  "hide": [
+   "swift-standard-major"
+  ],
+  "scores": [
+   "major-swift-standard:1",
+   "swift-standard-major:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-timepiece-standard",
+   "timepiece-standard-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "major-timepiece-standard",
+  "hide": [
+   "timepiece-standard-major"
+  ],
+  "scores": [
+   "major-timepiece-standard:1",
+   "timepiece-standard-major:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-boots-of-the-secret-blade",
+   "boots-of-the-secret-blade-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "boots-of-the-secret-blade-greater",
+  "hide": [
+   "greater-boots-of-the-secret-blade"
+  ],
+  "scores": [
+   "boots-of-the-secret-blade-greater:3",
+   "greater-boots-of-the-secret-blade:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-boots-of-the-secret-blade",
+   "boots-of-the-secret-blade-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "boots-of-the-secret-blade-major",
+  "hide": [
+   "major-boots-of-the-secret-blade"
+  ],
+  "scores": [
+   "boots-of-the-secret-blade-major:3",
+   "major-boots-of-the-secret-blade:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-endless-quiver",
+   "endless-quiver-greater"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "endless-quiver-greater",
+  "hide": [
+   "greater-endless-quiver"
+  ],
+  "scores": [
+   "endless-quiver-greater:3",
+   "greater-endless-quiver:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-fireproof-gloves",
+   "fireproof-gloves-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "fireproof-gloves-greater",
+  "hide": [
+   "greater-fireproof-gloves"
+  ],
+  "scores": [
+   "fireproof-gloves-greater:4",
+   "greater-fireproof-gloves:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-killers-belt",
+   "killers-belt-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "killers-belt-greater",
+  "hide": [
+   "greater-killers-belt"
+  ],
+  "scores": [
+   "killers-belt-greater:4",
+   "greater-killers-belt:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-medics-armband",
+   "medics-armband-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "medics-armband-greater",
+  "hide": [
+   "greater-medics-armband"
+  ],
+  "scores": [
+   "medics-armband-greater:3",
+   "greater-medics-armband:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-sailors-collar",
+   "sailors-collar-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "sailors-collar-greater",
+  "hide": [
+   "greater-sailors-collar"
+  ],
+  "scores": [
+   "sailors-collar-greater:4",
+   "greater-sailors-collar:3"
+  ]
+ },
+ {
+  "ids": [
+   "minor-soldiers-syrup",
+   "soldiers-syrup-minor"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "soldiers-syrup-minor",
+  "hide": [
+   "minor-soldiers-syrup"
+  ],
+  "scores": [
+   "soldiers-syrup-minor:2",
+   "minor-soldiers-syrup:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-soldiers-syrup",
+   "soldiers-syrup-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "soldiers-syrup-lesser",
+  "hide": [
+   "lesser-soldiers-syrup"
+  ],
+  "scores": [
+   "soldiers-syrup-lesser:2",
+   "lesser-soldiers-syrup:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-soldiers-syrup",
+   "soldiers-syrup-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "soldiers-syrup-moderate",
+  "hide": [
+   "moderate-soldiers-syrup"
+  ],
+  "scores": [
+   "soldiers-syrup-moderate:2",
+   "moderate-soldiers-syrup:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-soldiers-syrup",
+   "soldiers-syrup-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "soldiers-syrup-greater",
+  "hide": [
+   "greater-soldiers-syrup"
+  ],
+  "scores": [
+   "soldiers-syrup-greater:2",
+   "greater-soldiers-syrup:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-soldiers-syrup",
+   "soldiers-syrup-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "soldiers-syrup-major",
+  "hide": [
+   "major-soldiers-syrup"
+  ],
+  "scores": [
+   "soldiers-syrup-major:2",
+   "major-soldiers-syrup:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-anti-dragon-barding",
+   "anti-dragon-barding-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "anti-dragon-barding-greater",
+  "hide": [
+   "greater-anti-dragon-barding"
+  ],
+  "scores": [
+   "anti-dragon-barding-greater:1",
+   "greater-anti-dragon-barding:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-dragons-tongue",
+   "dragons-tongue-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "dragons-tongue-greater",
+  "hide": [
+   "greater-dragons-tongue"
+  ],
+  "scores": [
+   "dragons-tongue-greater:2",
+   "greater-dragons-tongue:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-dragons-tongue",
+   "dragons-tongue-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "dragons-tongue-major",
+  "hide": [
+   "major-dragons-tongue"
+  ],
+  "scores": [
+   "dragons-tongue-major:2",
+   "major-dragons-tongue:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-dragon-scute",
+   "dragon-scute-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "dragon-scute-lesser",
+  "hide": [
+   "lesser-dragon-scute"
+  ],
+  "scores": [
+   "dragon-scute-lesser:2",
+   "lesser-dragon-scute:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-dragon-scute",
+   "dragon-scute-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "dragon-scute-moderate",
+  "hide": [
+   "moderate-dragon-scute"
+  ],
+  "scores": [
+   "dragon-scute-moderate:2",
+   "moderate-dragon-scute:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-dragon-scute",
+   "dragon-scute-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "dragon-scute-greater",
+  "hide": [
+   "greater-dragon-scute"
+  ],
+  "scores": [
+   "dragon-scute-greater:2",
+   "greater-dragon-scute:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-stalk-goggles",
+   "stalk-goggles-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "stalk-goggles-greater",
+  "hide": [
+   "greater-stalk-goggles"
+  ],
+  "scores": [
+   "stalk-goggles-greater:3",
+   "greater-stalk-goggles:2"
+  ]
+ },
+ {
+  "ids": [
+   "major-stalk-goggles",
+   "stalk-goggles-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "stalk-goggles-major",
+  "hide": [
+   "major-stalk-goggles"
+  ],
+  "scores": [
+   "stalk-goggles-major:3",
+   "major-stalk-goggles:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-pickled-demon-tongue",
+   "pickled-demon-tongue-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "pickled-demon-tongue-greater",
+  "hide": [
+   "greater-pickled-demon-tongue"
+  ],
+  "scores": [
+   "pickled-demon-tongue-greater:4",
+   "greater-pickled-demon-tongue:3"
+  ]
+ },
+ {
+  "ids": [
+   "major-pickled-demon-tongue",
+   "pickled-demon-tongue-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "pickled-demon-tongue-major",
+  "hide": [
+   "major-pickled-demon-tongue"
+  ],
+  "scores": [
+   "pickled-demon-tongue-major:4",
+   "major-pickled-demon-tongue:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-polished-demon-horn",
+   "polished-demon-horn-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "greater-polished-demon-horn",
+  "hide": [
+   "polished-demon-horn-greater"
+  ],
+  "scores": [
+   "greater-polished-demon-horn:3",
+   "polished-demon-horn-greater:3"
+  ]
+ },
+ {
+  "ids": [
+   "major-polished-demon-horn",
+   "polished-demon-horn-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "major-polished-demon-horn",
+  "hide": [
+   "polished-demon-horn-major"
+  ],
+  "scores": [
+   "major-polished-demon-horn:3",
+   "polished-demon-horn-major:3"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-aether-marbles",
+   "aether-marbles-lesser"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aether-marbles-lesser",
+  "hide": [
+   "lesser-aether-marbles"
+  ],
+  "scores": [
+   "aether-marbles-lesser:2",
+   "lesser-aether-marbles:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-aether-marbles",
+   "aether-marbles-moderate"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aether-marbles-moderate",
+  "hide": [
+   "moderate-aether-marbles"
+  ],
+  "scores": [
+   "aether-marbles-moderate:2",
+   "moderate-aether-marbles:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-aether-marbles",
+   "aether-marbles-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "aether-marbles-greater",
+  "hide": [
+   "greater-aether-marbles"
+  ],
+  "scores": [
+   "aether-marbles-greater:2",
+   "greater-aether-marbles:1"
+  ]
+ },
+ {
+  "ids": [
+   "lesser-elixir-of-the-peaks",
+   "elixir-of-the-peaks-lesser"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "elixir-of-the-peaks-lesser",
+  "hide": [
+   "lesser-elixir-of-the-peaks"
+  ],
+  "scores": [
+   "elixir-of-the-peaks-lesser:2",
+   "lesser-elixir-of-the-peaks:1"
+  ]
+ },
+ {
+  "ids": [
+   "moderate-elixir-of-the-peaks",
+   "elixir-of-the-peaks-moderate"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "elixir-of-the-peaks-moderate",
+  "hide": [
+   "moderate-elixir-of-the-peaks"
+  ],
+  "scores": [
+   "elixir-of-the-peaks-moderate:2",
+   "moderate-elixir-of-the-peaks:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-elixir-of-the-peaks",
+   "elixir-of-the-peaks-greater"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "elixir-of-the-peaks-greater",
+  "hide": [
+   "greater-elixir-of-the-peaks"
+  ],
+  "scores": [
+   "elixir-of-the-peaks-greater:2",
+   "greater-elixir-of-the-peaks:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-elixir-of-the-peaks",
+   "elixir-of-the-peaks-major"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "elixir-of-the-peaks-major",
+  "hide": [
+   "major-elixir-of-the-peaks"
+  ],
+  "scores": [
+   "elixir-of-the-peaks-major:2",
+   "major-elixir-of-the-peaks:1"
+  ]
+ },
+ {
+  "ids": [
+   "greater-sihedron-medallion",
+   "sihedron-medallion-greater"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "greater-sihedron-medallion",
+  "hide": [
+   "sihedron-medallion-greater"
+  ],
+  "scores": [
+   "greater-sihedron-medallion:3",
+   "sihedron-medallion-greater:3"
+  ]
+ },
+ {
+  "ids": [
+   "major-sihedron-medallion",
+   "sihedron-medallion-major"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "major-sihedron-medallion",
+  "hide": [
+   "sihedron-medallion-major"
+  ],
+  "scores": [
+   "major-sihedron-medallion:3",
+   "sihedron-medallion-major:3"
+  ]
+ },
+ {
+  "ids": [
+   "greater-sihedron-ring",
+   "sihedron-ring-greater"
+  ],
+  "same": false,
+  "sameText": false,
+  "keep": "greater-sihedron-ring",
+  "hide": [
+   "sihedron-ring-greater"
+  ],
+  "scores": [
+   "greater-sihedron-ring:2",
+   "sihedron-ring-greater:2"
+  ]
+ },
+ {
+  "ids": [
+   "greater-silversoul-bomb",
+   "silversoul-bomb-greater"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "silversoul-bomb-greater",
+  "hide": [
+   "greater-silversoul-bomb"
+  ],
+  "scores": [
+   "silversoul-bomb-greater:2",
+   "greater-silversoul-bomb:1"
+  ]
+ },
+ {
+  "ids": [
+   "major-silversoul-bomb",
+   "silversoul-bomb-major"
+  ],
+  "same": true,
+  "sameText": false,
+  "keep": "silversoul-bomb-major",
+  "hide": [
+   "major-silversoul-bomb"
+  ],
+  "scores": [
+   "silversoul-bomb-major:2",
+   "major-silversoul-bomb:1"
+  ]
+ }
+]

@@ -102262,5 +102262,400 @@
         }
       ]
     }
+  },
+  {
+    "category": "items",
+    "id": "foxglove-token-major",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "poison",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "clay-sphere-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "precision",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "clay-sphere-major",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "precision",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "polished-demon-horn-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "unholy",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "polished-demon-horn-major",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "unholy",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-medallion-greater",
+    "field": "passiveEffects",
+    "value": {
+      "saves": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-medallion-major",
+    "field": "passiveEffects",
+    "value": {
+      "saves": 2
+    }
+  },
+  {
+    "category": "items",
+    "id": "rusting-ammunition-greater",
+    "field": "price",
+    "value": {
+      "gp": 3600
+    }
+  },
+  {
+    "category": "items",
+    "id": "undertakers-manifest",
+    "field": "price",
+    "value": {
+      "gp": 220
+    }
+  },
+  {
+    "category": "items",
+    "id": "lyrakien-staff",
+    "field": "price",
+    "value": {
+      "gp": 225
+    }
+  },
+  {
+    "category": "items",
+    "id": "the-lens-of-the-outreaching-eye",
+    "field": "price",
+    "value": {
+      "sp": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "dark-pepper-powder",
+    "field": "price",
+    "value": {
+      "gp": 7
+    }
+  },
+  {
+    "category": "items",
+    "id": "steelscour-major",
+    "field": "price",
+    "value": {
+      "gp": 210
+    }
+  },
+  {
+    "category": "items",
+    "id": "elven-chain-standard-grade",
+    "field": "price",
+    "value": {
+      "gp": 2500
+    }
+  },
+  {
+    "category": "items",
+    "id": "elven-chain-high-grade",
+    "field": "price",
+    "value": {
+      "gp": 52000
+    }
+  },
+  {
+    "category": "items",
+    "id": "mentalists-staff-greater",
+    "field": "price",
+    "value": {
+      "gp": 460
+    }
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-peering",
+    "field": "price",
+    "value": {
+      "gp": 9500
+    }
+  },
+  {
+    "category": "items",
+    "id": "bleeding-canines",
+    "field": "price",
+    "value": {
+      "gp": 520
+    }
+  },
+  {
+    "category": "items",
+    "id": "slumber-arrow",
+    "field": "price",
+    "value": {
+      "gp": 10
+    }
+  },
+  {
+    "category": "items",
+    "id": "sanguine-pendant-greater",
+    "field": "price",
+    "value": {
+      "gp": 13000
+    }
+  },
+  {
+    "category": "items",
+    "id": "temperbrand",
+    "field": "price",
+    "value": {
+      "gp": 7000
+    }
+  },
+  {
+    "category": "items",
+    "id": "diglys-oil-of-sympathy-minor",
+    "field": "price",
+    "value": {
+      "gp": 40
+    }
+  },
+  {
+    "category": "items",
+    "id": "bellows-pipes",
+    "field": "price",
+    "value": {
+      "gp": 50
+    }
+  },
+  {
+    "category": "items",
+    "id": "hero-killer",
+    "field": "price",
+    "value": {
+      "gp": 120
+    }
+  },
+  {
+    "category": "items",
+    "id": "paradigm-cube",
+    "field": "price",
+    "value": {
+      "gp": 450
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-medallion",
+    "field": "price",
+    "value": {
+      "gp": 16
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-ring",
+    "field": "price",
+    "value": {
+      "gp": 25
+    }
+  },
+  {
+    "category": "items",
+    "id": "hollow-robes",
+    "field": "price",
+    "value": {
+      "gp": 300
+    }
+  },
+  {
+    "category": "items",
+    "id": "panaceatic-salve",
+    "field": "price",
+    "value": {
+      "gp": 155
+    }
+  },
+  {
+    "category": "items",
+    "id": "fan-of-falling-words",
+    "field": "price",
+    "value": {
+      "gp": 1300
+    }
+  },
+  {
+    "category": "items",
+    "id": "traitors-ring",
+    "field": "price",
+    "value": {
+      "gp": 1,
+      "sp": 5
+    }
+  },
+  {
+    "category": "items",
+    "id": "ring-of-fair-assessment",
+    "field": "price",
+    "value": {
+      "gp": 35
+    }
+  },
+  {
+    "category": "items",
+    "id": "fearcracker",
+    "field": "price",
+    "value": {
+      "gp": 5
+    }
+  },
+  {
+    "category": "items",
+    "id": "aon-bird",
+    "field": "price",
+    "value": {
+      "sp": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "aon-cat",
+    "field": "price",
+    "value": {
+      "cp": 3
+    }
+  },
+  {
+    "category": "items",
+    "id": "aon-lizard",
+    "field": "price",
+    "value": {
+      "sp": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "aon-submersible-helm",
+    "field": "price",
+    "value": {
+      "gp": 660
+    }
+  },
+  {
+    "category": "items",
+    "id": "aon-spore-shepherd-s-staff",
+    "field": "price",
+    "value": {
+      "gp": 100
+    }
+  },
+  {
+    "category": "items",
+    "id": "defoliation-bomb-greater",
+    "field": "price",
+    "value": {
+      "gp": 35
+    }
+  },
+  {
+    "category": "items",
+    "id": "elixir-of-the-peaks-lesser",
+    "field": "price",
+    "value": {
+      "gp": 1,
+      "sp": 5
+    }
+  },
+  {
+    "category": "items",
+    "id": "elixir-of-the-peaks-moderate",
+    "field": "price",
+    "value": {
+      "gp": 6
+    }
+  },
+  {
+    "category": "items",
+    "id": "elixir-of-the-peaks-greater",
+    "field": "price",
+    "value": {
+      "gp": 25
+    }
+  },
+  {
+    "category": "items",
+    "id": "elixir-of-the-peaks-major",
+    "field": "price",
+    "value": {
+      "gp": 120
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-medallion-greater",
+    "field": "price",
+    "value": {
+      "gp": 70
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-medallion-major",
+    "field": "price",
+    "value": {
+      "gp": 650
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-ring-greater",
+    "field": "price",
+    "value": {
+      "gp": 200
+    }
   }
 ]

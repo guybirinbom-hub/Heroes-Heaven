@@ -92,7 +92,75 @@ export function findDuplicateIds(db: ContentDatabase): Set<string> {
       if ((db[mapName] as unknown as Record<string, unknown> | undefined)?.[id]) dupes.add(id);
     }
   }
+  for (const id of gradeSpellingDuplicates(db)) dupes.add(id);
   return dupes;
+}
+
+/** The grade words PF2e puts on an item family, in both spellings. */
+const GRADE_WORDS = ['lesser', 'moderate', 'greater', 'major', 'minor', 'true', 'supreme'];
+
+/**
+ * "Greater Nail Bomb" and "Nail Bomb (Greater)" — the SAME item under two spellings, so neither the
+ * exact-name rule nor the curated near-miss list hides either, and the shop lists both. 180 item
+ * pairs were in that state: two importer generations of the same record, and a player searching
+ * "nail bomb" got eight rows for four items.
+ *
+ * The signal is exact rather than fuzzy, which is what makes a computed rule safe here where a
+ * similarity threshold would not be (see NEAR_DUPLICATE_IDS on why Minor vs Major Astonishing Ink
+ * must not collapse): the two names must be identical once the grade word moves, AND the two records
+ * must agree on level AND on price. Grade IS part of the key, so a lesser and a greater never merge.
+ *
+ * The loser is the "Grade Name" spelling. AoN prints "Name (Grade)", every one of the 180 clean
+ * records uses it, and the "Grade Name" half is the older scrape whose description still carries the
+ * page furniture ("May contain spoilers from…", a repeated Source/Usage/Bulk line) and covers all
+ * grades at once. Note the loser cannot be chosen by that text: descriptions live in a second file
+ * that has not loaded when this runs, so the choice is made on the NAME shape, which is in core.json.
+ *
+ * Hidden, never deleted — a saved character may already carry one in its inventory.
+ */
+function gradeSpellingDuplicates(db: ContentDatabase): string[] {
+  type Priced = { name?: string; level?: number; price?: Record<string, number> };
+  const items = db.items as unknown as Record<string, Priced> | undefined;
+  if (!items) return [];
+  /** In copper, so `{gp: 70000}` and `{pp:0, gp:70000, sp:0, cp:0}` compare equal. */
+  const copper = (p: Priced['price']) =>
+    (p?.pp ?? 0) * 1000 + (p?.gp ?? 0) * 100 + (p?.sp ?? 0) * 10 + (p?.cp ?? 0);
+  /** "Greater Nail Bomb" and "Nail Bomb (Greater)" both key to "nail bomb|greater". */
+  const key = (name: string): string | null => {
+    let s = name.toLowerCase().replace(/['’]/g, '').trim();
+    let grade: string | null = null;
+    const paren = /\s*\(([^)]+)\)\s*$/.exec(s);
+    if (paren && GRADE_WORDS.includes(paren[1].trim())) {
+      grade = paren[1].trim();
+      s = s.slice(0, paren.index);
+    } else {
+      const first = /^([a-z]+)\s+/.exec(s);
+      if (first && GRADE_WORDS.includes(first[1])) {
+        grade = first[1];
+        s = s.slice(first[0].length);
+      }
+    }
+    return grade ? `${s.replace(/[^a-z0-9]+/g, ' ').trim()}|${grade}` : null;
+  };
+  const byKey = new Map<string, string[]>();
+  for (const [id, rec] of Object.entries(items)) {
+    if (!rec?.name) continue;
+    const k = key(rec.name);
+    if (!k) continue;
+    const list = byKey.get(k);
+    if (list) list.push(id);
+    else byKey.set(k, [id]);
+  }
+  const out: string[] = [];
+  for (const ids of byKey.values()) {
+    if (ids.length < 2) continue;
+    if (new Set(ids.map((i) => items[i].level ?? null)).size !== 1) continue; // different item — leave both
+    if (new Set(ids.map((i) => copper(items[i].price))).size !== 1) continue;
+    // Keep the "Name (Grade)" spelling; hide the "Grade Name" one.
+    const prefixed = ids.filter((i) => !/\)\s*$/.test(items[i].name!));
+    if (prefixed.length && prefixed.length < ids.length) out.push(...prefixed);
+  }
+  return out;
 }
 
 /**

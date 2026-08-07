@@ -1,0 +1,725 @@
+{
+ "plan": [
+  {
+   "hide": "greater-staff-of-arcane-might",
+   "keep": "staff-of-arcane-might-greater"
+  },
+  {
+   "hide": "major-staff-of-arcane-might",
+   "keep": "staff-of-arcane-might-major"
+  },
+  {
+   "hide": "lesser-aetheric-irritant",
+   "keep": "aetheric-irritant-lesser"
+  },
+  {
+   "hide": "moderate-aetheric-irritant",
+   "keep": "aetheric-irritant-moderate"
+  },
+  {
+   "hide": "greater-aetheric-irritant",
+   "keep": "aetheric-irritant-greater"
+  },
+  {
+   "hide": "major-aetheric-irritant",
+   "keep": "aetheric-irritant-major"
+  },
+  {
+   "hide": "lesser-maelstromic-destabilizer",
+   "keep": "maelstromic-destabilizer-lesser"
+  },
+  {
+   "hide": "moderate-maelstromic-destabilizer",
+   "keep": "maelstromic-destabilizer-moderate"
+  },
+  {
+   "hide": "major-maelstromic-destabilizer",
+   "keep": "maelstromic-destabilizer-major"
+  },
+  {
+   "hide": "greater-moritype",
+   "keep": "moritype-greater"
+  },
+  {
+   "hide": "lesser-portable-seal",
+   "keep": "portable-seal-lesser"
+  },
+  {
+   "hide": "moderate-portable-seal",
+   "keep": "portable-seal-moderate"
+  },
+  {
+   "hide": "major-portable-seal",
+   "keep": "portable-seal-major"
+  },
+  {
+   "hide": "lesser-quartz-coil-rail-transport",
+   "keep": "quartz-coil-rail-transport-lesser"
+  },
+  {
+   "hide": "moderate-quartz-coil-rail-transport",
+   "keep": "quartz-coil-rail-transport-moderate"
+  },
+  {
+   "hide": "greater-quartz-coil-rail-transport",
+   "keep": "quartz-coil-rail-transport-greater"
+  },
+  {
+   "hide": "major-quartz-coil-rail-transport",
+   "keep": "quartz-coil-rail-transport-major"
+  },
+  {
+   "hide": "lesser-tangibility-resonator",
+   "keep": "tangibility-resonator-lesser"
+  },
+  {
+   "hide": "moderate-tangibility-resonator",
+   "keep": "tangibility-resonator-moderate"
+  },
+  {
+   "hide": "major-tangibility-resonator",
+   "keep": "tangibility-resonator-major"
+  },
+  {
+   "hide": "lesser-vanishing-shocker",
+   "keep": "vanishing-shocker-lesser"
+  },
+  {
+   "hide": "moderate-vanishing-shocker",
+   "keep": "vanishing-shocker-moderate"
+  },
+  {
+   "hide": "greater-vanishing-shocker",
+   "keep": "vanishing-shocker-greater"
+  },
+  {
+   "hide": "major-vanishing-shocker",
+   "keep": "vanishing-shocker-major"
+  },
+  {
+   "hide": "minor-bloodstone-doll",
+   "keep": "bloodstone-doll-minor"
+  },
+  {
+   "hide": "moderate-bloodstone-doll",
+   "keep": "bloodstone-doll-moderate"
+  },
+  {
+   "hide": "major-bloodstone-doll",
+   "keep": "bloodstone-doll-major"
+  },
+  {
+   "hide": "lesser-skitter-knot",
+   "keep": "skitter-knot-lesser"
+  },
+  {
+   "hide": "greater-skitter-knot",
+   "keep": "skitter-knot-greater"
+  },
+  {
+   "hide": "major-skitter-knot",
+   "keep": "skitter-knot-major"
+  },
+  {
+   "hide": "greater-heros-plate",
+   "keep": "heros-plate-greater"
+  },
+  {
+   "hide": "lesser-defoliation-bomb",
+   "keep": "defoliation-bomb-lesser"
+  },
+  {
+   "hide": "moderate-defoliation-bomb",
+   "keep": "defoliation-bomb-moderate"
+  },
+  {
+   "hide": "greater-defoliation-bomb",
+   "keep": "defoliation-bomb-greater"
+  },
+  {
+   "hide": "major-defoliation-bomb",
+   "keep": "defoliation-bomb-major"
+  },
+  {
+   "hide": "lesser-nail-bomb",
+   "keep": "nail-bomb-lesser"
+  },
+  {
+   "hide": "moderate-nail-bomb",
+   "keep": "nail-bomb-moderate"
+  },
+  {
+   "hide": "greater-nail-bomb",
+   "keep": "nail-bomb-greater"
+  },
+  {
+   "hide": "major-nail-bomb",
+   "keep": "nail-bomb-major"
+  },
+  {
+   "hide": "lesser-bougainvillea-blossom",
+   "keep": "bougainvillea-blossom-lesser"
+  },
+  {
+   "hide": "moderate-bougainvillea-blossom",
+   "keep": "bougainvillea-blossom-moderate"
+  },
+  {
+   "hide": "greater-bougainvillea-blossom",
+   "keep": "bougainvillea-blossom-greater"
+  },
+  {
+   "hide": "major-bougainvillea-blossom",
+   "keep": "bougainvillea-blossom-major"
+  },
+  {
+   "hide": "greater-feral-linguist",
+   "keep": "feral-linguist-greater"
+  },
+  {
+   "hide": "greater-foxglove-token",
+   "keep": "foxglove-token-greater"
+  },
+  {
+   "hide": "major-foxglove-token",
+   "keep": "foxglove-token-major"
+  },
+  {
+   "hide": "greater-heartmoss",
+   "keep": "heartmoss-greater"
+  },
+  {
+   "hide": "major-heartmoss",
+   "keep": "heartmoss-major"
+  },
+  {
+   "hide": "greater-clay-sphere",
+   "keep": "clay-sphere-greater"
+  },
+  {
+   "hide": "major-clay-sphere",
+   "keep": "clay-sphere-major"
+  },
+  {
+   "hide": "lesser-necrotic-cap",
+   "keep": "necrotic-cap-lesser"
+  },
+  {
+   "hide": "moderate-necrotic-cap",
+   "keep": "necrotic-cap-moderate"
+  },
+  {
+   "hide": "greater-necrotic-cap",
+   "keep": "necrotic-cap-greater"
+  },
+  {
+   "hide": "major-necrotic-cap",
+   "keep": "necrotic-cap-major"
+  },
+  {
+   "hide": "lesser-wood-rotted-root",
+   "keep": "wood-rotted-root-lesser"
+  },
+  {
+   "hide": "moderate-wood-rotted-root",
+   "keep": "wood-rotted-root-moderate"
+  },
+  {
+   "hide": "greater-wood-rotted-root",
+   "keep": "wood-rotted-root-greater"
+  },
+  {
+   "hide": "major-wood-rotted-root",
+   "keep": "wood-rotted-root-major"
+  },
+  {
+   "hide": "lesser-inflammation-flask",
+   "keep": "inflammation-flask-lesser"
+  },
+  {
+   "hide": "moderate-inflammation-flask",
+   "keep": "inflammation-flask-moderate"
+  },
+  {
+   "hide": "greater-inflammation-flask",
+   "keep": "inflammation-flask-greater"
+  },
+  {
+   "hide": "major-inflammation-flask",
+   "keep": "inflammation-flask-major"
+  },
+  {
+   "hide": "lesser-spider-satchel",
+   "keep": "spider-satchel-lesser"
+  },
+  {
+   "hide": "moderate-spider-satchel",
+   "keep": "spider-satchel-moderate"
+  },
+  {
+   "hide": "greater-spider-satchel",
+   "keep": "spider-satchel-greater"
+  },
+  {
+   "hide": "major-spider-satchel",
+   "keep": "spider-satchel-major"
+  },
+  {
+   "hide": "greater-burglars-rosebud",
+   "keep": "burglars-rosebud-greater"
+  },
+  {
+   "hide": "lesser-durian-bomb",
+   "keep": "durian-bomb-lesser"
+  },
+  {
+   "hide": "moderate-durian-bomb",
+   "keep": "durian-bomb-moderate"
+  },
+  {
+   "hide": "greater-durian-bomb",
+   "keep": "durian-bomb-greater"
+  },
+  {
+   "hide": "major-durian-bomb",
+   "keep": "durian-bomb-major"
+  },
+  {
+   "hide": "lesser-irritating-seedpod",
+   "keep": "irritating-seedpod-lesser"
+  },
+  {
+   "hide": "greater-irritating-seedpod",
+   "keep": "irritating-seedpod-greater"
+  },
+  {
+   "hide": "major-irritating-seedpod",
+   "keep": "irritating-seedpod-major"
+  },
+  {
+   "hide": "lesser-tenderizer-grenade",
+   "keep": "tenderizer-grenade-lesser"
+  },
+  {
+   "hide": "moderate-tenderizer-grenade",
+   "keep": "tenderizer-grenade-moderate"
+  },
+  {
+   "hide": "greater-tenderizer-grenade",
+   "keep": "tenderizer-grenade-greater"
+  },
+  {
+   "hide": "major-tenderizer-grenade",
+   "keep": "tenderizer-grenade-major"
+  },
+  {
+   "hide": "greater-gasping-lament",
+   "keep": "gasping-lament-greater"
+  },
+  {
+   "hide": "lesser-aurochs-might-tattoo",
+   "keep": "aurochs-might-tattoo-lesser"
+  },
+  {
+   "hide": "moderate-aurochs-might-tattoo",
+   "keep": "aurochs-might-tattoo-moderate"
+  },
+  {
+   "hide": "greater-aurochs-might-tattoo",
+   "keep": "aurochs-might-tattoo-greater"
+  },
+  {
+   "hide": "lesser-cleft-head-marking",
+   "keep": "cleft-head-marking-lesser"
+  },
+  {
+   "hide": "greater-cleft-head-marking",
+   "keep": "cleft-head-marking-greater"
+  },
+  {
+   "hide": "lesser-flowing-water",
+   "keep": "flowing-water-lesser"
+  },
+  {
+   "hide": "moderate-flowing-water",
+   "keep": "flowing-water-moderate"
+  },
+  {
+   "hide": "greater-flowing-water",
+   "keep": "flowing-water-greater"
+  },
+  {
+   "hide": "lesser-rending-gauntlets",
+   "keep": "rending-gauntlets-lesser"
+  },
+  {
+   "hide": "moderate-rending-gauntlets",
+   "keep": "rending-gauntlets-moderate"
+  },
+  {
+   "hide": "greater-rending-gauntlets",
+   "keep": "rending-gauntlets-greater"
+  },
+  {
+   "hide": "greater-stormshard",
+   "keep": "stormshard-greater"
+  },
+  {
+   "hide": "major-stormshard",
+   "keep": "stormshard-major"
+  },
+  {
+   "hide": "lesser-roc-shaft-arrow",
+   "keep": "roc-shaft-arrow-lesser"
+  },
+  {
+   "hide": "moderate-roc-shaft-arrow",
+   "keep": "roc-shaft-arrow-moderate"
+  },
+  {
+   "hide": "greater-roc-shaft-arrow",
+   "keep": "roc-shaft-arrow-greater"
+  },
+  {
+   "hide": "greater-black-ash",
+   "keep": "black-ash-greater"
+  },
+  {
+   "hide": "major-black-ash",
+   "keep": "black-ash-major"
+  },
+  {
+   "hide": "greater-antifungal-salve",
+   "keep": "antifungal-salve-greater"
+  },
+  {
+   "hide": "major-antifungal-salve",
+   "keep": "antifungal-salve-major"
+  },
+  {
+   "hide": "lesser-antifungal-salve",
+   "keep": "antifungal-salve-lesser"
+  },
+  {
+   "hide": "moderate-antifungal-salve",
+   "keep": "antifungal-salve-moderate"
+  },
+  {
+   "hide": "lesser-crimson-godsblood-serum",
+   "keep": "crimson-godsblood-serum-lesser"
+  },
+  {
+   "hide": "moderate-crimson-godsblood-serum",
+   "keep": "crimson-godsblood-serum-moderate"
+  },
+  {
+   "hide": "greater-crimson-godsblood-serum",
+   "keep": "crimson-godsblood-serum-greater"
+  },
+  {
+   "hide": "greater-godrending-ammunition",
+   "keep": "godrending-ammunition-greater"
+  },
+  {
+   "hide": "greater-bolkas-blessing",
+   "keep": "bolkas-blessing-greater"
+  },
+  {
+   "hide": "greater-kolss-oath",
+   "keep": "kolss-oath-greater"
+  },
+  {
+   "hide": "greater-trudds-strength",
+   "keep": "trudds-strength-greater"
+  },
+  {
+   "hide": "greater-mitigation-mail",
+   "keep": "mitigation-mail-greater"
+  },
+  {
+   "hide": "major-mitigation-mail",
+   "keep": "mitigation-mail-major"
+  },
+  {
+   "hide": "greater-reactive-mail",
+   "keep": "reactive-mail-greater"
+  },
+  {
+   "hide": "major-reactive-mail",
+   "keep": "reactive-mail-major"
+  },
+  {
+   "hide": "lesser-energized-shield",
+   "keep": "energized-shield-lesser"
+  },
+  {
+   "hide": "moderate-energized-shield",
+   "keep": "energized-shield-moderate"
+  },
+  {
+   "hide": "greater-energized-shield",
+   "keep": "energized-shield-greater"
+  },
+  {
+   "hide": "major-energized-shield",
+   "keep": "energized-shield-major"
+  },
+  {
+   "hide": "greater-testudo-shield",
+   "keep": "testudo-shield-greater"
+  },
+  {
+   "hide": "greater-belkzen-deadsmasher",
+   "keep": "belkzen-deadsmasher-greater"
+  },
+  {
+   "hide": "greater-chainbreaker",
+   "keep": "chainbreaker-greater"
+  },
+  {
+   "hide": "greater-talonstrike-blade",
+   "keep": "talonstrike-blade-greater"
+  },
+  {
+   "hide": "greater-burrowing-bolt",
+   "keep": "burrowing-bolt-greater"
+  },
+  {
+   "hide": "greater-ethereal-crescent",
+   "keep": "ethereal-crescent-greater"
+  },
+  {
+   "hide": "greater-toothy-knife",
+   "keep": "toothy-knife-greater"
+  },
+  {
+   "hide": "greater-arcane-standard",
+   "keep": "arcane-standard-greater"
+  },
+  {
+   "hide": "lesser-banner-of-creeping-death",
+   "keep": "banner-of-creeping-death-lesser"
+  },
+  {
+   "hide": "moderate-banner-of-creeping-death",
+   "keep": "banner-of-creeping-death-moderate"
+  },
+  {
+   "hide": "greater-banner-of-creeping-death",
+   "keep": "banner-of-creeping-death-greater"
+  },
+  {
+   "hide": "major-banner-of-creeping-death",
+   "keep": "banner-of-creeping-death-major"
+  },
+  {
+   "hide": "greater-banner-of-piercing-shards",
+   "keep": "banner-of-piercing-shards-greater"
+  },
+  {
+   "hide": "major-banner-of-piercing-shards",
+   "keep": "banner-of-piercing-shards-major"
+  },
+  {
+   "hide": "greater-banner-of-the-restful",
+   "keep": "banner-of-the-restful-greater"
+  },
+  {
+   "hide": "major-banner-of-the-restful",
+   "keep": "banner-of-the-restful-major"
+  },
+  {
+   "hide": "greater-blazing-banner",
+   "keep": "blazing-banner-greater"
+  },
+  {
+   "hide": "major-blazing-banner",
+   "keep": "blazing-banner-major"
+  },
+  {
+   "hide": "major-dawnfire-beacon",
+   "keep": "dawnfire-beacon-major"
+  },
+  {
+   "hide": "major-flag-of-the-stronghold",
+   "keep": "flag-of-the-stronghold-major"
+  },
+  {
+   "hide": "major-hexwise-banner",
+   "keep": "hexwise-banner-major"
+  },
+  {
+   "hide": "greater-knaves-standard",
+   "keep": "knaves-standard-greater"
+  },
+  {
+   "hide": "major-knaves-standard",
+   "keep": "knaves-standard-major"
+  },
+  {
+   "hide": "greater-stalwarts-banner",
+   "keep": "stalwarts-banner-greater"
+  },
+  {
+   "hide": "major-stalwarts-banner",
+   "keep": "stalwarts-banner-major"
+  },
+  {
+   "hide": "greater-swift-standard",
+   "keep": "swift-standard-greater"
+  },
+  {
+   "hide": "major-swift-standard",
+   "keep": "swift-standard-major"
+  },
+  {
+   "hide": "major-timepiece-standard",
+   "keep": "timepiece-standard-major"
+  },
+  {
+   "hide": "greater-boots-of-the-secret-blade",
+   "keep": "boots-of-the-secret-blade-greater"
+  },
+  {
+   "hide": "major-boots-of-the-secret-blade",
+   "keep": "boots-of-the-secret-blade-major"
+  },
+  {
+   "hide": "greater-endless-quiver",
+   "keep": "endless-quiver-greater"
+  },
+  {
+   "hide": "greater-fireproof-gloves",
+   "keep": "fireproof-gloves-greater"
+  },
+  {
+   "hide": "greater-killers-belt",
+   "keep": "killers-belt-greater"
+  },
+  {
+   "hide": "greater-medics-armband",
+   "keep": "medics-armband-greater"
+  },
+  {
+   "hide": "greater-sailors-collar",
+   "keep": "sailors-collar-greater"
+  },
+  {
+   "hide": "minor-soldiers-syrup",
+   "keep": "soldiers-syrup-minor"
+  },
+  {
+   "hide": "lesser-soldiers-syrup",
+   "keep": "soldiers-syrup-lesser"
+  },
+  {
+   "hide": "moderate-soldiers-syrup",
+   "keep": "soldiers-syrup-moderate"
+  },
+  {
+   "hide": "greater-soldiers-syrup",
+   "keep": "soldiers-syrup-greater"
+  },
+  {
+   "hide": "major-soldiers-syrup",
+   "keep": "soldiers-syrup-major"
+  },
+  {
+   "hide": "greater-anti-dragon-barding",
+   "keep": "anti-dragon-barding-greater"
+  },
+  {
+   "hide": "greater-dragons-tongue",
+   "keep": "dragons-tongue-greater"
+  },
+  {
+   "hide": "major-dragons-tongue",
+   "keep": "dragons-tongue-major"
+  },
+  {
+   "hide": "lesser-dragon-scute",
+   "keep": "dragon-scute-lesser"
+  },
+  {
+   "hide": "moderate-dragon-scute",
+   "keep": "dragon-scute-moderate"
+  },
+  {
+   "hide": "greater-dragon-scute",
+   "keep": "dragon-scute-greater"
+  },
+  {
+   "hide": "greater-stalk-goggles",
+   "keep": "stalk-goggles-greater"
+  },
+  {
+   "hide": "major-stalk-goggles",
+   "keep": "stalk-goggles-major"
+  },
+  {
+   "hide": "greater-pickled-demon-tongue",
+   "keep": "pickled-demon-tongue-greater"
+  },
+  {
+   "hide": "major-pickled-demon-tongue",
+   "keep": "pickled-demon-tongue-major"
+  },
+  {
+   "hide": "greater-polished-demon-horn",
+   "keep": "polished-demon-horn-greater"
+  },
+  {
+   "hide": "major-polished-demon-horn",
+   "keep": "polished-demon-horn-major"
+  },
+  {
+   "hide": "lesser-aether-marbles",
+   "keep": "aether-marbles-lesser"
+  },
+  {
+   "hide": "moderate-aether-marbles",
+   "keep": "aether-marbles-moderate"
+  },
+  {
+   "hide": "greater-aether-marbles",
+   "keep": "aether-marbles-greater"
+  },
+  {
+   "hide": "lesser-elixir-of-the-peaks",
+   "keep": "elixir-of-the-peaks-lesser"
+  },
+  {
+   "hide": "moderate-elixir-of-the-peaks",
+   "keep": "elixir-of-the-peaks-moderate"
+  },
+  {
+   "hide": "greater-elixir-of-the-peaks",
+   "keep": "elixir-of-the-peaks-greater"
+  },
+  {
+   "hide": "major-elixir-of-the-peaks",
+   "keep": "elixir-of-the-peaks-major"
+  },
+  {
+   "hide": "greater-sihedron-medallion",
+   "keep": "sihedron-medallion-greater"
+  },
+  {
+   "hide": "major-sihedron-medallion",
+   "keep": "sihedron-medallion-major"
+  },
+  {
+   "hide": "greater-sihedron-ring",
+   "keep": "sihedron-ring-greater"
+  },
+  {
+   "hide": "greater-silversoul-bomb",
+   "keep": "silversoul-bomb-greater"
+  },
+  {
+   "hide": "major-silversoul-bomb",
+   "keep": "silversoul-bomb-major"
+  }
+ ],
+ "conflicts": []
+}

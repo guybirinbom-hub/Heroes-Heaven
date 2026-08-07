@@ -1,0 +1,23 @@
+[
+ {
+  "id": "martyrs-shield",
+  "name": "Martyr's Shield",
+  "app": 0,
+  "aon": 36000,
+  "ratio": 0
+ },
+ {
+  "id": "judgment-thurible-greater",
+  "name": "Judgment Thurible (Greater)",
+  "app": 1400000,
+  "aon": 6500000,
+  "ratio": 0.2153846153846154
+ },
+ {
+  "id": "judgment-thurible-major",
+  "name": "Judgment Thurible (Major)",
+  "app": 6500000,
+  "aon": 1400000,
+  "ratio": 4.642857142857143
+ }
+]

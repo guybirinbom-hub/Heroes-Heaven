@@ -23,12 +23,37 @@ ok('repaired description present', !/\battempt an checks?\b/.test(String(core.ac
 // ---- the overlay: the only thing that survives a regen ----
 const ov = JSON.parse(readFileSync(p('scripts/data/effect-backfill.json'), 'utf8'));
 ok('overlay parses', Array.isArray(ov), `${ov.length} patches`);
-const drift = ov.filter((x) => {
-  const live = core[x.category]?.[x.id]?.[x.field];
+/*
+ * Three row shapes are NOT a plain `core[category][id][field] = value`, and comparing them that way
+ * reported 383 phantom drifts on every run — a check that always fails is a check nobody reads.
+ *
+ *   description / descRefs  live in public/core-descriptions.json since the split; core.json no
+ *                           longer holds them at all.
+ *   create: true            builds a whole record, so there is no single field to compare.
+ *   path                    writes into a nested location, which this flat lookup cannot address.
+ */
+const descSplit = JSON.parse(readFileSync(p('public/core-descriptions.json'), 'utf8'));
+const liveValue = (x) => {
+  if (x.field === 'description') return descSplit[x.category]?.[x.id]?.d;
+  if (x.field === 'descRefs') return descSplit[x.category]?.[x.id]?.r;
+  return core[x.category]?.[x.id]?.[x.field];
+};
+const comparable = ov.filter((x) => !x.create && !x.path);
+const drift = comparable.filter((x) => {
+  const live = liveValue(x);
   if (x.value === null && live === undefined) return false;
   return JSON.stringify(live) !== JSON.stringify(x.value);
 });
-ok('overlay matches core.json', drift.length === 0, drift.length ? `${drift.length} drifted` : 'no drift');
+ok(
+  'overlay matches core.json',
+  drift.length === 0,
+  drift.length
+    ? `${drift.length} drifted, e.g. ${drift.slice(0, 3).map((d) => `${d.category}/${d.id}.${d.field}`).join(', ')}`
+    : `no drift (${comparable.length} comparable of ${ov.length}; ${ov.length - comparable.length} are create/path rows)`,
+);
+// A create/path row still has to land, so check the RECORD exists rather than a single field.
+const missing = ov.filter((x) => (x.create || x.path) && !core[x.category]?.[x.id]);
+ok('create/path rows produced a record', missing.length === 0, missing.length ? `${missing.length} missing` : `${ov.length - comparable.length} checked`);
 
 // ---- the registry ----
 const reg = readFileSync(p('src/rules/situationalBonuses.ts'), 'utf8');
