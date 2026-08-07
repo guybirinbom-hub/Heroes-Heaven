@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { listValues } from '../data';
-import type { ActionCost, Character, ContentDatabase, DescRef, PinnedDesc, ProficiencyKey } from '../rules/types';
+import type { ActionCost, Character, ContentDatabase, DescRef, LimitedUses, PinnedDesc, ProficiencyKey } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import {
   abilityMod,
@@ -16,6 +16,7 @@ import {
 } from '../rules/derive';
 import { togglePin, togglePinnedDesc, toggleTactic, setActiveStance, descId, type PlayUpdater } from '../rules/play';
 import { resourcesForCharacter } from '../rules/classResources';
+import { featUse, spendFeatUse, refundFeatUse } from '../rules/featUses';
 import { actionGate, gateLabel, type ResourceGate } from '../rules/actionGates';
 import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
@@ -90,6 +91,10 @@ interface Act {
    *  activities): the full rules description + its cross-references from content.actions. */
   fullDesc?: string;
   fullRefs?: DescRef[];
+  /** The record whose `limitedUses` governs this action. Eight BACKGROUNDS grant a once-per-day
+   *  action (Genie-Blessed → Wish for Luck); the pip lookup only ever took a feat or a class feature,
+   *  and a background has neither id, so every one of them showed an untracked action. */
+  usesFrom?: { id: string; name: string; limitedUses?: LimitedUses };
 }
 
 /** An action opened in the compact-mode detail popup. `prepare` carries a Commander tactic's
@@ -221,14 +226,25 @@ export function MainTab({
     character.heritageId ? content.heritages[character.heritageId] : undefined,
     character.backgroundId ? content.backgrounds[character.backgroundId] : undefined,
   ]
-    .flatMap((f) => f?.grantsActions ?? [])
-    .map((id) => content.actions[id])
+    .flatMap((f) => (f?.grantsActions ?? []).map((id) => ({ id, from: f! })))
+    .map(({ id, from }) => {
+      const act = content.actions[id];
+      // Carry the granter when IT holds the per-day limit — the action record itself does not.
+      return act && from.limitedUses ? { ...act, usesFrom: from } : act;
+    })
     .filter((a): a is NonNullable<typeof a> => !!a);
   const seenActionNames = new Set<string>();
   const featActions: Act[] = [...actionRecords, ...grantedActions]
     .filter((f) => !!f && isActionCost(f.actionCost) && !activityNames.has(f.name))
     .filter((f) => !seenActionNames.has(f!.name) && seenActionNames.add(f!.name))
-    .map((f) => ({ name: f!.name, cost: f!.actionCost as ActionCost, desc: f!.description, descRefs: f!.descRefs, traits: f!.traits }));
+    .map((f) => ({
+      name: f!.name,
+      cost: f!.actionCost as ActionCost,
+      desc: f!.description,
+      descRefs: f!.descRefs,
+      traits: f!.traits,
+      ...((f as { usesFrom?: Act['usesFrom'] }).usesFrom ? { usesFrom: (f as { usesFrom?: Act['usesFrom'] }).usesFrom } : {}),
+    }));
   // Commander folio tactics are Action items the character knows — listed in their own section.
   const tacticActions: (Act & { id: string })[] = (character.commanderTactics?.folio ?? [])
     .map((id) => content.actions[id])
@@ -411,6 +427,49 @@ export function MainTab({
     );
   }
 
+  /**
+   * Per-day pips for an action whose limit lives on the record that GRANTED it — eight backgrounds
+   * grant a once-per-day action (Genie-Blessed's Wish for Luck, Doomcaller's Stellar Misfortune) and
+   * carry the `limitedUses` themselves. The pip lookup only ever took a feat or a class feature, and
+   * a background row has neither id, so all eight showed an action with no tracker at all.
+   *
+   * Spent uses key off the GRANTER's id, which is exactly what PlayState.featUses already stores.
+   */
+  function ActionUses({ a }: { a: Act }) {
+    if (!a.usesFrom || !onPlay) return null;
+    const use = featUse(character, a.usesFrom as Parameters<typeof featUse>[1], content);
+    if (!use) return null;
+    const stop = (ev: React.MouseEvent) => ev.stopPropagation();
+    return (
+      <span className="ff-uses" title={`${use.current}/${use.max} left — refills on daily preparations`}>
+        <i className="ti ti-battery-2" aria-hidden="true" />
+        <button
+          aria-label={`Spend a use of ${use.name}`}
+          disabled={use.current <= 0}
+          onClick={(ev) => {
+            stop(ev);
+            onPlay((p) => ({ ...p, featUses: spendFeatUse(p.featUses, use.featId, use.max) }), `featuses:${use.featId}`);
+          }}
+        >
+          <i className="ti ti-minus" aria-hidden="true" />
+        </button>
+        <span className="ff-uses-n">
+          {use.current}/{use.max}
+        </span>
+        <button
+          aria-label={`Restore a use of ${use.name}`}
+          disabled={use.current >= use.max}
+          onClick={(ev) => {
+            stop(ev);
+            onPlay((p) => ({ ...p, featUses: refundFeatUse(p.featUses, use.featId) }), `featuses:${use.featId}`);
+          }}
+        >
+          <i className="ti ti-plus" aria-hidden="true" />
+        </button>
+      </span>
+    );
+  }
+
   function ActionRow({
     a,
     pinnable = true,
@@ -457,6 +516,7 @@ export function MainTab({
             {a.cost ? <ActionGlyph cost={a.cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
           </span>
           <span className="action-chip-name">{a.name}</span>
+          <ActionUses a={a} />
           <MarkTag />
           {gate && <span className="needs-badge" title={`Requires ${gateLabel(gate)}`}><i className="ti ti-lock" aria-hidden="true" />{gateLabel(gate)}</span>}
           {a.skill && <span className="action-skill">{a.skill}</span>}
@@ -484,6 +544,7 @@ export function MainTab({
             <MarkTag />
             {gate && <span className="needs-badge" title={`Requires ${gateLabel(gate)}`}><i className="ti ti-lock" aria-hidden="true" />Needs {gateLabel(gate)}</span>}
             {a.skill && <span className="action-skill">{a.skill}</span>}
+            <ActionUses a={a} />
           </div>
           <div className="action-desc">{toPlainText(a.desc)}</div>
         </div>

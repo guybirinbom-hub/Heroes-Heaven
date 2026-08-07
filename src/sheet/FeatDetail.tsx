@@ -1,4 +1,4 @@
-import type { ActionCost, DescRef } from '../rules/types';
+import type { ActionCost, DescRef, LimitedUses } from '../rules/types';
 import { ActionGlyph, isActionCost } from './widgets';
 import { DescBody } from './DescBody';
 import { InfoTerm } from './InfoTerm';
@@ -35,6 +35,10 @@ export interface FeatEntry {
   /** The core.json feat id, for rows that are real feats (features and heritages leave it unset).
    *  Needed to look up per-day uses; `key` can't serve, since it embeds the level for uniqueness. */
   featId?: string;
+  /** A HERITAGE or BACKGROUND row's own record, for the same reason `featureId` exists. Twelve of
+   *  them carry `limitedUses` ("once per day") and drew no pips, because featUse() was only ever
+   *  handed a feat or a class feature and these rows carry neither id. */
+  usesRecord?: { limitedUses?: LimitedUses };
 }
 
 function cap(s: string): string {

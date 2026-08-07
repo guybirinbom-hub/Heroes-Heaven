@@ -246,6 +246,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       ...(hid === character.secondHeritageId && hid !== character.heritageId
         ? { groupLabel: 'Second heritage' }
         : {}),
+      // Four heritages print "once per day"; the pip lookup takes a feat or a class feature and a
+      // heritage row has neither id, so all four drew nothing.
+      usesRecord: heritage,
       rarity: heritage.rarity,
     });
   }
@@ -394,7 +397,7 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                         ? content.feats[e.featId]
                         : e.featureId
                           ? (content.classFeatures[e.featureId] as unknown as typeof content.feats[string])
-                          : undefined;
+                          : (e.usesRecord as typeof content.feats[string] | undefined);
                       const use = featUse(character, rec, content);
                       if (!use || !onPlay) return null;
                       const stop = (ev: React.MouseEvent) => ev.stopPropagation();

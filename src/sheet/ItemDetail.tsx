@@ -341,6 +341,50 @@ export function ItemDetail({
               })}
             </div>
           )}
+          {/* The item's own embedded question ("Tradition", "Skill", the Lore a tattoo records).
+              Nine of these set `daily: true` and are asked at daily preparations; the other ten were
+              asked nowhere at all. The answer is kept beside the effect-choice answers, keyed by the
+              choice's flag. */}
+          {onPlay && item.choice && !item.choice.daily && (
+            <div className="sd-uses">
+              <span className="sd-uses-title">{item.choice.prompt}</span>
+              <label className="sd-choice-row">
+                {item.choice.kind === 'array' && (item.choice.options ?? []).length > 0 ? (
+                  <select
+                    value={inv.effectChoices?.[item.choice.flag] ?? ''}
+                    onChange={(e) =>
+                      onPlay((p) =>
+                        updateInventoryItem(p, inv.instanceId, {
+                          effectChoices: { ...(inv.effectChoices ?? {}), [item.choice!.flag]: e.currentTarget.value },
+                        }),
+                      )
+                    }
+                  >
+                    <option value="">Choose…</option>
+                    {(item.choice.options ?? []).map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    type="text"
+                    placeholder="Type an answer…"
+                    value={inv.effectChoices?.[item.choice.flag] ?? ''}
+                    onChange={(e) =>
+                      onPlay((p) =>
+                        updateInventoryItem(p, inv.instanceId, {
+                          effectChoices: { ...(inv.effectChoices ?? {}), [item.choice!.flag]: e.currentTarget.value },
+                        }),
+                      )
+                    }
+                  />
+                )}
+              </label>
+              {item.choice.inert && <div className="sd-choice-note">{item.choice.inert}</div>}
+            </div>
+          )}
           {onPlay && counters.length > 0 && (
             <div className="sd-uses">
               <span className="sd-uses-title">Uses</span>

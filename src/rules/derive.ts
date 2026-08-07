@@ -364,6 +364,9 @@ export function skillSubstitutions(c: Character, db: ContentDatabase | undefined
     if (!(inv.worn || inv.invested || inv.equipped)) continue;
     const item = db.items[inv.itemId];
     take(item?.passiveEffects?.skillSubstitutions, inv.itemId, item?.name ?? inv.itemId);
+    // …and the TOP-LEVEL form. self-emptying-pocket carries its substitution there and has no
+    // passiveEffects key at all, so reading only the nested copy made the item do nothing.
+    take((item as DefenseGrants | undefined)?.skillSubstitutions, inv.itemId, item?.name ?? inv.itemId);
   }
   return out;
 }
@@ -543,7 +546,12 @@ function applyArmorAdjusts(c: Character, db: ContentDatabase, worn: WornArmor): 
     if (!adjust) continue;
     // "You can't use a plated duster alongside an armored skirt or any other item that adjusts an
     // armor's statistics." One adjusting item per suit; the first worn wins.
-    if (adjustedBy.length) continue;
+    //
+    // Read off the RECORD rather than applied unconditionally. Both shipped adjusters print the
+    // clause and both carry `exclusive`, so behaviour is unchanged today — but the field was
+    // declared, carried and read by nothing, which meant a future adjuster that does NOT print the
+    // clause would have been silently suppressed anyway.
+    if (adjustedBy.length && (adjust.exclusive ?? true)) continue;
     const mode = armorAdjustMode(adjust, out);
     if (!mode) continue;
     if (mode.acBonus) out = { ...out, acBonus: out.acBonus + mode.acBonus };
@@ -1372,11 +1380,19 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   // nothing else — so the poppet's Flammable ("weakness to fire equal to one-third your level") had
   // nowhere to live, and Sealed Poppet had nothing to remove.
   //
-  // Only the IWR fields: an ancestry also carries `senses` and `speeds`, which deriveSpeeds and the
-  // vision path already consume, and pushing the whole record would count those twice.
+  // IWR *and* SENSES. The comment here used to claim the vision path already consumed an ancestry's
+  // `senses`; it reads `vision` and nothing else, so the 13 ancestries carrying a structured sense
+  // (scent, tremorsense, wavesense) granted none of it. `speeds` is still left to deriveSpeeds.
   if (c.ancestryId && db.ancestries[c.ancestryId]) {
-    const a = db.ancestries[c.ancestryId];
-    push(a.name ?? 'Ancestry', { resistances: a.resistances, weaknesses: a.weaknesses, immunities: a.immunities });
+    const a = db.ancestries[c.ancestryId] as { name?: string; resistances?: unknown; weaknesses?: unknown; immunities?: unknown; senses?: SenseEntry[] };
+    push(a.name ?? 'Ancestry', { resistances: a.resistances, weaknesses: a.weaknesses, immunities: a.immunities, senses: a.senses } as DefenseGrants);
+  }
+  // The BACKGROUND. `grep "backgrounds[" derive.ts` returned zero hits before this line: the
+  // aggregator walked heritage, ancestry, feats, class features, items, stances and daily choices,
+  // and never the background — so a background carrying a sense granted nothing.
+  if (c.backgroundId && db.backgrounds[c.backgroundId]) {
+    const bg = db.backgrounds[c.backgroundId] as { name?: string } & DefenseGrants;
+    push(bg.name ?? 'Background', bg);
   }
   for (const f of c.feats) {
     const feat = db.feats[f.featId];
@@ -1411,7 +1427,14 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   // grant sources too — the generic magic-item lane.
   for (const inv of c.inventory) {
     if (!(inv.worn || inv.invested || inv.equipped)) continue;
-    for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
+    for (const pe of [
+      db.items[inv.itemId]?.passiveEffects,
+      c.resolvedItemPassives?.[inv.itemId],
+      // …and the TOP-LEVEL form. Twelve items carry `senses`/`resistances` there as well as under
+      // passiveEffects, so nothing changes for them — but only the nested copy was ever read, and an
+      // item carrying only the top-level one would have granted nothing.
+      db.items[inv.itemId] as DefenseGrants | undefined,
+    ]) {
       if (pe && (pe.senses || pe.resistances || pe.immunities || pe.weaknesses)) {
         push(db.items[inv.itemId]?.name ?? inv.itemId, {
           senses: pe.senses,
@@ -1582,7 +1605,9 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   // Choice-resistance heritage (Deep Fetchling: cold/void; Elementheart Kobold: an element's type): the
   // player's chosen damage type, resistance = half level (min 1). Same-type resistances don't stack.
   if (heritage?.choiceResistance && c.heritageResistanceChoice) {
-    const v = Math.max(1, Math.floor(c.level / 2));
+    // `halfLevel` was declared REQUIRED, carried by both heritages, and read by nothing while the
+    // formula was hard-coded beside it. Reading it is what makes the data mean what it says.
+    const v = heritage.choiceResistance.halfLevel === false ? 1 : Math.max(1, Math.floor(c.level / 2));
     res.set(c.heritageResistanceChoice, Math.max(res.get(c.heritageResistanceChoice) ?? 0, v));
   }
 

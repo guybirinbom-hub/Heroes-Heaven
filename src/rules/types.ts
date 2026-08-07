@@ -255,6 +255,25 @@ interface ContentBase {
   /** App-level link to the user Homebrew source that authored this entry (groups it in the Homebrew
    *  manager). Absent on imported/seed content. Ignored by the rules engine. */
   homebrewSourceId?: string;
+  /**
+   * Which side of the Remaster this record sits on. Carried by 21,906 records across 68 buckets and
+   * declared nowhere, so every reader cast around the type system —
+   * `(s as { edition?: string }).edition` in four separate files — and a typo in any of them would
+   * have compiled.
+   *
+   * 'superseded' is the retired half of a rename and is ALWAYS hidden; 'legacy'/'legacy-era' are
+   * hidden per-character by the "Hide legacy data" switch.
+   */
+  /**
+   * A structured per-period limit the sheet can actually track. Items have carried one for a while
+   * (item.frequency → use pips via itemUses.ts); feats had nothing, so "once per day" on a feat was
+   * text the player had to remember unaided. Spent uses live in PlayState.featUses and reset at rest.
+   *
+   * On ContentBase rather than on Feat: four HERITAGES, eight BACKGROUNDS and one item carry one too,
+   * and while it sat on Feat alone the type system said those twelve records could not exist.
+   */
+  limitedUses?: LimitedUses;
+  edition?: 'remaster' | 'remaster-era' | 'neutral' | 'legacy' | 'legacy-era' | 'superseded';
 }
 
 /** A precise/imprecise/vague sense granted by a feat, heritage, or class feature. */
@@ -1326,12 +1345,6 @@ export interface Feat extends ContentBase, DefenseGrants {
    *  editor round-trips it. The TRACKABLE limit is `limitedUses` below. */
   frequency?: string;
   /**
-   * A structured per-period limit the sheet can actually track. Items have carried one for a while
-   * (item.frequency → use pips via itemUses.ts); feats had nothing, so "once per day" on a feat was
-   * text the player had to remember unaided. Spent uses live in PlayState.featUses and reset at rest.
-   */
-  limitedUses?: LimitedUses;
-  /**
    * This feat RETUNES another feat's limit instead of having one of its own — "You can use Cat's Luck
    * once per hour, rather than once per day" (Reliable Luck). Thirty feats read like that, and without
    * this they either did nothing or, if given a `limitedUses` of their own, invented a second pool
@@ -1920,6 +1933,16 @@ interface ItemBase extends ContentBase {
   /** "Choose one of N" passive effects (Energy Robe's resistance type). Same mechanism as
    *  DefenseGrants.effectChoices, resolved into resolvedItemPassives when worn. */
   effectChoices?: EffectChoice[];
+  /**
+   * The item's own embedded "choose one" — a Dweomerveil's tradition, a Muse's skill, the Lore a
+   * Storied Skin records. Same shape as a feat's.
+   *
+   * It was DECLARED NOWHERE and read through an `as never` cast in derive.ts's daily-choice walk,
+   * so only the 9 that set `daily: true` ever reached a screen; the other 10 asked a question with
+   * nowhere to answer it. Non-daily answers are stored on the inventory entry under the choice's
+   * `flag`, beside the effect-choice answers.
+   */
+  choice?: FeatChoiceDef;
   /** Sheet-visible warning that this item's effect references missing (legacy) content. */
   dataWarning?: string;
   /** INTERNAL, never rendered: marks a synthetic Add-Items row that isn't a real inventory item but a

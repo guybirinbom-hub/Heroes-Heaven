@@ -818,6 +818,20 @@ export default function App() {
       {/* App-wide banners. On desktop these sit in normal flow above the app; on mobile the app
           shell is position:fixed;inset:0 and would paint over them, so .app-banners floats fixed at
           the top (with safe-area padding) — see the mobile block in sheet.css. */}
+      {/* Undo/redo OUTSIDE the character sheet. The sheet has had a visible pair in its header; every
+          other screen — the roster (where you can delete a character), the builder, homebrew,
+          campaigns, settings — was keyboard-only, even though the Ctrl+Z handler is registered
+          app-wide with no mode gate. A mouse or tablet user had no way to undo on any of them. */}
+      {which !== 'sheet' && which !== 'loading' && (canUndo || canRedo) && (
+        <div className="app-undo" role="group" aria-label="Undo and redo">
+          <button className="icon-btn" title="Undo (Ctrl+Z)" aria-label="Undo" disabled={!canUndo} onClick={() => canUndo && undo()}>
+            <i className="ti ti-arrow-back-up" aria-hidden="true" />
+          </button>
+          <button className="icon-btn" title="Redo (Ctrl+Shift+Z)" aria-label="Redo" disabled={!canRedo} onClick={() => canRedo && redo()}>
+            <i className="ti ti-arrow-forward-up" aria-hidden="true" />
+          </button>
+        </div>
+      )}
       <div className="app-banners">
         {/* The manual "new version — download it" banner is for the INSTALLED apps only. The web build
             auto-updates through its service worker, so nudging web users to download a release is wrong. */}

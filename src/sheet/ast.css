@@ -159,3 +159,11 @@
 }
 .ast-aside > .ast-h2, .ast-aside > .ast-h3 { border: none; margin-top: 0; padding-bottom: 0; color: var(--app-text); }
 .ast-aside p:last-child { margin-bottom: 0; }
+
+/* A trait chip whose rules record does not ship. Inert on purpose: it keeps the chip's shape so the
+   trait line still reads correctly, without the pointer, hover border or focus ring that promise a
+   popup nothing can open. */
+.ast-tr-dead {
+  cursor: default;
+  opacity: 0.82;
+}

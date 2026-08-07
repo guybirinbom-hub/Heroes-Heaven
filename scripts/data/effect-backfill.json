@@ -98320,5 +98320,173 @@
    "witch",
    "wizard"
   ]
+ },
+ {
+  "category": "items",
+  "id": "aon-grisantian-pelt-armor",
+  "field": "baseItem",
+  "value": null
+ },
+ {
+  "category": "items",
+  "id": "aon-dragonhide-armor",
+  "field": "baseItem",
+  "value": null
+ },
+ {
+  "category": "trait",
+  "id": "negative",
+  "field": "__record",
+  "value": {
+   "id": "negative",
+   "name": "Negative",
+   "traits": [],
+   "rarity": "common",
+   "description": "Effects with this trait heal undead creatures with negative energy, deal negative damage to living creatures, or manipulate negative energy. Planes with this trait are vast, empty reaches that suck the life from the living. Creatures with this trait are natives of the Negative Energy Plane. They can survive the basic environmental effects of the Negative Energy Plane."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "positive",
+  "field": "__record",
+  "value": {
+   "id": "positive",
+   "name": "Positive",
+   "traits": [],
+   "rarity": "common",
+   "description": "Effects with this trait heal living creatures with positive energy, deal positive energy damage to undead, or manipulate positive energy. Planes with this trait are awash with life energy of such intensity that it can harm living creatures. Creatures with this trait are natives of the Positive Energy Plane. They can survive the basic environmental effects of the Positive Energy Plane."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "metamagic",
+  "field": "__record",
+  "value": {
+   "id": "metamagic",
+   "name": "Metamagic",
+   "traits": [],
+   "rarity": "common",
+   "description": "Actions with the metamagic trait, usually from metamagic feats, tweak the properties of your spells. You must use a metamagic action directly before Casting the Spell you want to alter. If you use any action (including free actions and reactions) other than Cast a Spell directly after, you waste the benefits of the metamagic action. Any additional effects added by a metamagic action are part of the spell’s effect, not of the metamagic action itself."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "half-elf",
+  "field": "__record",
+  "value": {
+   "id": "half-elf",
+   "name": "Half-Elf",
+   "traits": [],
+   "rarity": "common",
+   "description": "A creature with this trait is part human and part elf. An ability with this trait can be used or selected only by half-elves."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "half-orc",
+  "field": "__record",
+  "value": {
+   "id": "half-orc",
+   "name": "Half-Orc",
+   "traits": [],
+   "rarity": "common",
+   "description": "A creature with this trait is part human and part orc. An ability with this trait can be used or selected only by half-orcs."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "gnoll",
+  "field": "__record",
+  "value": {
+   "id": "gnoll",
+   "name": "Gnoll",
+   "traits": [],
+   "rarity": "common",
+   "description": "Gnolls are humanoids that resemble hyenas."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "tiny",
+  "field": "__record",
+  "value": {
+   "id": "tiny",
+   "name": "Tiny",
+   "traits": [],
+   "rarity": "common",
+   "description": "A Tiny creature occupies less than a 5-foot square but still takes up a full square in an encounter; its reach is normally 0 feet, so it must enter an enemy’s square to attack. Two or more Tiny creatures can share a square."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "small",
+  "field": "__record",
+  "value": {
+   "id": "small",
+   "name": "Small",
+   "traits": [],
+   "rarity": "common",
+   "description": "A Small creature takes up one 5-foot square and normally has a 5-foot reach. Small creatures use the same weapon damage as Medium ones."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "medium",
+  "field": "__record",
+  "value": {
+   "id": "medium",
+   "name": "Medium",
+   "traits": [],
+   "rarity": "common",
+   "description": "A Medium creature takes up one 5-foot square and normally has a 5-foot reach. Most ancestries are Medium."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "large",
+  "field": "__record",
+  "value": {
+   "id": "large",
+   "name": "Large",
+   "traits": [],
+   "rarity": "common",
+   "description": "A Large creature takes up a 10-foot square (four squares) and normally has a 10-foot reach."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "huge",
+  "field": "__record",
+  "value": {
+   "id": "huge",
+   "name": "Huge",
+   "traits": [],
+   "rarity": "common",
+   "description": "A Huge creature takes up a 15-foot square (nine squares) and normally has a 15-foot reach."
+  },
+  "create": true
+ },
+ {
+  "category": "trait",
+  "id": "gargantuan",
+  "field": "__record",
+  "value": {
+   "id": "gargantuan",
+   "name": "Gargantuan",
+   "traits": [],
+   "rarity": "common",
+   "description": "A Gargantuan creature takes up at least a 20-foot square (sixteen squares) and normally has a 20-foot reach."
+  },
+  "create": true
  }
 ]

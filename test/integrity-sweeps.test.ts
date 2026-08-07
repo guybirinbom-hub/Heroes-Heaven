@@ -126,8 +126,22 @@ describe('a data field nothing reads', () => {
     walk('src');
     // Comments stripped: a field only NAMED in prose is not a reader.
     const code = src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
-    const bf = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as { field?: string }[];
-    const dead = [...new Set(bf.map((e) => e.field).filter(Boolean) as string[])].filter((f) => {
+    const bf = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as {
+      field?: string;
+      value?: unknown;
+      create?: boolean;
+    }[];
+    const dead = [
+      ...new Set(
+        bf
+          // A DELETION (`value: null`) removes a field; a whole-record creation (`create: true`,
+          // field `__record`) authors no field at all. Neither is an authored-but-dead field, and for
+          // a deletion "nothing reads it" is the entire point.
+          .filter((e) => e.value !== null && !e.create && e.field !== '__record')
+          .map((e) => e.field)
+          .filter(Boolean) as string[],
+      ),
+    ].filter((f) => {
       const esc = f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       return !new RegExp(`\\.\\s*${esc}\\b|\\b${esc}\\s*[,}:?)\\]]|['"\`]${esc}['"\`]`).test(code);
     });
@@ -184,8 +198,23 @@ describe('a field that only LOOKS read', () => {
     };
     walk('src');
 
-    const bf = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as { category?: string; field?: string }[];
-    const pairs = [...new Set(bf.filter((e) => e.category && e.field).map((e) => `${e.category}|${e.field}`))];
+    const bf = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as {
+      category?: string;
+      field?: string;
+      value?: unknown;
+      create?: boolean;
+    }[];
+    const pairs = [
+      ...new Set(
+        bf
+          .filter((e) => e.category && e.field)
+          // A DELETION (`value: null`) REMOVES a field rather than authoring one, and a whole-record
+          // creation (`create: true`, field `__record`) is not a field at all. Asking "is this read?"
+          // of either is the wrong question — for a deletion the right answer is precisely "no".
+          .filter((e) => e.value !== null && !e.create && e.field !== '__record')
+          .map((e) => `${e.category}|${e.field}`),
+      ),
+    ];
     const dead: string[] = [];
     for (const pair of pairs) {
       const [collection, field] = pair.split('|');

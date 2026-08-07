@@ -81,9 +81,33 @@ function refSlug(s: string): string {
   return String(s).toLowerCase().normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 /** A trait chip → its "trait" reference bucket slug (traits are shipped as a reference bucket, so clicking a
- *  chip opens the trait's rules — matching the archives app, where every trait chip is a link). */
-function traitRef(label: string): string {
-  return refSlug(label);
+ *  chip opens the trait's rules — matching the archives app, where every trait chip is a link).
+ *
+ *  A weapon trait is printed WITH ITS PARAMETER — "Deadly d8", "Versatile P", "Thrown 20 ft." — and
+ *  the rules record is the bare trait. Slugging the whole label produced trait:deadly-d8, which ships
+ *  nowhere, so tapping the most tappable chips on a weapon did nothing. Falls back to the base word.
+ */
+function traitRef(label: string, has?: (bucket: string, slug: string) => boolean): string {
+  const full = refSlug(label);
+  if (!has || has('trait', full)) return full;
+  /*
+   * Strip the parameter and try the bare trait. The printed forms vary more than they look:
+   *   deadly-d8 · fatal-1d12 · two-hand-d10 · two-hand-1d8   (a die, with or without a count)
+   *   versatile-p · modular-b-p-or-s                         (damage letters)
+   *   thrown-20-ft · thrown-20-feet · volley-30-ft           (a distance)
+   *   capacity-3 · reload-1 · additive-2 · hefty-2           (a bare number)
+   *   twin-sheath · jousting-d6 · scatter-10-ft
+   * Candidates are tried in order and accepted only if the bare trait actually ships.
+   */
+  const candidates = [
+    full.replace(/-\d*d\d+$/, ''),
+    full.replace(/-\d+(?:-(?:ft|feet))?$/, ''),
+    full.replace(/-[a-z](?:-(?:or-)?[a-z])*$/, ''),
+    full.replace(/-\d+(?:-(?:ft|feet))?-.*$/, ''),
+    full.split('-')[0],
+  ];
+  for (const c of candidates) if (c && c !== full && has('trait', c)) return c;
+  return full;
 }
 
 /* ---------- inline rendering ---------- */
@@ -402,12 +426,18 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
           {sortTraits(traitLabels).map((tn, i) => {
             const kind = traitKind(tn);
             const cls = 'ast-tr' + (kind ? ' ast-tr-' + kind : '');
-            // Every trait chip is a link to its trait rules (traits are a shipped reference bucket), the way
-            // the archives app renders them. A trait HH doesn't ship simply no-ops (openRef guards).
+            // Every trait chip links to its trait rules (traits are a shipped reference bucket), the
+            // way the archives app renders them — but ONLY when the target ships. The inline-link path
+            // has always fallen back to an inert style for a missing target; this one did not, so 484
+            // chips across 439 pages looked and behaved like buttons (hover state, keyboard focus) and
+            // did nothing on click. Looking clickable and doing nothing is worse than looking inert.
+            const slug = traitRef(tn, ctx.hasRef);
+            if (ctx.hasRef && !ctx.hasRef('trait', slug))
+              return <span key={i} className={cls + ' ast-tr-dead'}>{tn}</span>;
             return (
               <a key={i} className={cls + ' ast-tr-link'} role="button" tabIndex={0}
-                 onClick={(e) => { e.preventDefault(); ctx.onOpenRef('trait', traitRef(tn)); }}
-                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ctx.onOpenRef('trait', traitRef(tn)); } }}>
+                 onClick={(e) => { e.preventDefault(); ctx.onOpenRef('trait', slug); }}
+                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ctx.onOpenRef('trait', slug); } }}>
                 {tn}
               </a>
             );
