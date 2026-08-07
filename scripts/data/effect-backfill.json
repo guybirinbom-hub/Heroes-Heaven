@@ -103679,5 +103679,94 @@
     "id": "blowgun-darts",
     "field": "bulk",
     "value": 0.1
+  },
+  {
+    "category": "deities",
+    "id": "the-enlightened-scholars-path",
+    "field": "skill",
+    "value": "lore"
+  },
+  {
+    "category": "deities",
+    "id": "thremyr",
+    "field": "skill",
+    "value": "religion"
+  },
+  {
+    "category": "deities",
+    "id": "srikalis-sritaming-and-sribaril",
+    "field": "divineFont",
+    "value": [
+      "heal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "treerazer",
+    "field": "divineFont",
+    "value": [
+      "harm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "thamir",
+    "field": "divineFont",
+    "value": [
+      "harm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "imot",
+    "field": "divineFont",
+    "value": [
+      "harm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "telvrys",
+    "field": "divineFont",
+    "value": [
+      "harm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "umarik",
+    "field": "divineFont",
+    "value": [
+      "harm"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "diomazul",
+    "field": "divineFont",
+    "value": [
+      "harm",
+      "heal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cormion",
+    "field": "divineFont",
+    "value": [
+      "harm",
+      "heal"
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "laudinmio",
+    "field": "domains",
+    "value": [
+      "change",
+      "creation",
+      "metal",
+      "sorrow"
+    ]
   }
 ]

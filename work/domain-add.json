@@ -1,0 +1,128 @@
+[
+ {
+  "key": "abomination",
+  "id": "lift-natures-caul",
+  "name": "Abomination",
+  "advanced": "fearful-feast"
+ },
+ {
+  "key": "change",
+  "id": "adapt-self",
+  "name": "Change",
+  "advanced": "adaptive-ablation"
+ },
+ {
+  "key": "decay",
+  "id": "withering-grasp",
+  "name": "Decay",
+  "advanced": "fallow-field"
+ },
+ {
+  "key": "disorientation",
+  "id": "clouded-focus",
+  "name": "Disorientation",
+  "advanced": "ephemeral-hazards"
+ },
+ {
+  "key": "dust",
+  "id": "parch",
+  "name": "Dust",
+  "advanced": "dust-storm"
+ },
+ {
+  "key": "duty",
+  "id": "swear-oath",
+  "name": "Duty",
+  "advanced": "dutiful-challenge"
+ },
+ {
+  "key": "glyph",
+  "id": "redact",
+  "name": "Glyph",
+  "advanced": "ghostly-transcription"
+ },
+ {
+  "key": "lightning",
+  "id": "charged-javelin",
+  "name": "Lightning",
+  "advanced": "bottle-the-storm"
+ },
+ {
+  "key": "metal",
+  "id": "serrate",
+  "name": "Metal",
+  "advanced": "repel-metal"
+ },
+ {
+  "key": "naga",
+  "id": "chastising-retort",
+  "name": "Naga",
+  "advanced": "show-the-path"
+ },
+ {
+  "key": "nothingness",
+  "id": "empty-inside",
+  "name": "Nothingness",
+  "advanced": "door-to-beyond"
+ },
+ {
+  "key": "repose",
+  "id": "share-burden",
+  "name": "Repose",
+  "advanced": "font-of-serenity"
+ },
+ {
+  "key": "sorrow",
+  "id": "lament",
+  "name": "Sorrow",
+  "advanced": "overflowing-sorrow"
+ },
+ {
+  "key": "soul",
+  "id": "eject-soul",
+  "name": "Soul",
+  "advanced": "ectoplasmic-interstice"
+ },
+ {
+  "key": "time",
+  "id": "delay-consequence",
+  "name": "Time",
+  "advanced": "stasis"
+ },
+ {
+  "key": "toil",
+  "id": "practice-makes-perfect",
+  "name": "Toil",
+  "advanced": "tireless-worker"
+ },
+ {
+  "key": "vigil",
+  "id": "object-memory",
+  "name": "Vigil",
+  "advanced": "remember-the-lost"
+ },
+ {
+  "key": "wood",
+  "id": "arms-of-nature",
+  "name": "Wood",
+  "advanced": "wood-walk"
+ },
+ {
+  "key": "void",
+  "id": "empty-inside",
+  "name": "Void",
+  "advanced": "door-to-beyond"
+ },
+ {
+  "key": "wyrmkin",
+  "id": "draconic-barrage",
+  "name": "Wyrmkin",
+  "advanced": null
+ },
+ {
+  "key": "darkness",
+  "id": "cloak-of-shadow",
+  "name": "Darkness",
+  "advanced": "darkened-sight"
+ }
+]
