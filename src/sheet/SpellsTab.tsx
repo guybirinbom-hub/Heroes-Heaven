@@ -3,7 +3,7 @@ import { cleanRun } from './RichText';
 import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
 import { deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
-import {
+import { toggleKnownRitual,
   poolKey,
   removeInventoryItem,
   resetPreparedEntry,
@@ -818,6 +818,9 @@ export function SpellsTab({
   // looking at when you cast it". Gated on the character actually having the record that grants it.
   const marksFor = (spellId?: string) => (spellId ? spellSituationalFor(character, content, spellId) : []);
   const [filters, setFilters] = useState<Set<string>>(new Set());
+  /** The "Learn a ritual" picker. Rituals are tradition-less by rule, so 148 of the 151 are on no
+   *  spell list and had no route onto the sheet except Setup → Overrides, the rule-breaking panel. */
+  const [learningRitual, setLearningRitual] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false); // mobile: filter row toggles open over the results
   const [search, setSearch] = useState('');
   const [detail, setDetail] = useState<Spell | null>(null);
@@ -858,13 +861,23 @@ export function SpellsTab({
   // With none from either source the section (and its catalog bar) is hidden entirely.
   const myRituals = useMemo(() => {
     const granted = new Map((character.grantedRituals ?? []).map((g) => [g.spellId, g]));
-    const ids = [...new Set([...(character.overrides?.addedSpells ?? []).map((a) => a.spellId), ...granted.keys()])];
+    const ids = [
+      ...new Set([
+        ...(character.overrides?.addedSpells ?? []).map((a) => a.spellId),
+        ...granted.keys(),
+        // …and the ones the player LEARNED, through the picker in the section below. 148 of the 151
+        // rituals are on no spell list (rituals are tradition-less by rule), so before this the only
+        // route to one was Setup → Overrides — the rule-BREAKING panel — for an ordinary thing a
+        // character does.
+        ...(character.knownRituals ?? []),
+      ]),
+    ];
     return ids
       .map((id) => content.spells[id])
       .filter((s): s is Spell => !!s && !!s.ritual)
       .map((s) => ({ spell: s, grant: granted.get(s.id) }))
       .sort((a, b) => a.spell.rank - b.spell.rank || a.spell.name.localeCompare(b.spell.name));
-  }, [character.overrides, character.grantedRituals, content]);
+  }, [character.overrides, character.grantedRituals, character.knownRituals, content]);
   // Highest rank the character can cast — bounds the heightening rank selector. Includes the focus
   // auto-heighten target (ceil(level/2)) so a focus-only caster (champion/monk) can still see the
   // heightened text of e.g. Lay on Hands.
@@ -917,7 +930,11 @@ export function SpellsTab({
   // Only bail when the character has NO castable magic at all — a focus-only caster (champion, monk/
   // ranger with focus feats) or a staff/wand holder has no prepared/spontaneous pool but still needs
   // the focus / item / innate sections below.
-  if (!mains.length && !focus && !itemEntries.length) {
+  //
+  // RITUALS are not spellcasting: "anyone can cast a ritual" given the skill proficiency, so a
+  // fighter who has learned Commune belongs on this page. Bailing before the rituals section left a
+  // non-caster unable to see one, learn one, or read one.
+  if (!mains.length && !focus && !itemEntries.length && !myRituals.length && !onPlay) {
     return (
       <div className="placeholder">
         <i className="ti ti-sparkles" aria-hidden="true" />
@@ -1498,7 +1515,9 @@ export function SpellsTab({
   // Rituals the character has — granted by a record, or added via Overrides. Hidden when there are none.
   const ritualsNode: ReactNode = (() => {
     const shown = query ? myRituals.filter((r) => r.spell.name.toLowerCase().includes(query)) : myRituals;
-    if (!shown.length) return null;
+    // Shown whenever the character CAN learn one, not only once they have one — otherwise the picker
+    // that learns your first ritual lives inside a section that only appears after you have a ritual.
+    if (!shown.length && !onPlay) return null;
     return (
       <section className="card">
         <div className="ct" style={{ margin: secOpen('rituals') ? '0 0 10px' : 0 }}>
@@ -1518,6 +1537,11 @@ export function SpellsTab({
                 onClick={() => setDetail(sp)}
               />
             ))}
+            {onPlay && (
+              <button className="ms-add" onClick={() => setLearningRitual(true)}>
+                <i className="ti ti-plus" aria-hidden="true" /> Learn a ritual
+              </button>
+            )}
           </div>
         )}
       </section>
@@ -1744,6 +1768,40 @@ export function SpellsTab({
         })()}
       {detail && (
         <SpellDetail key={detail.id} spell={detail} maxRank={maxRank} signature={signatureIds.has(detail.id)} onClose={() => setDetail(null)} />
+      )}
+      {/* Learn (or forget) a ritual. Rituals are tradition-less by rule, so no spell list carries
+          them and the only previous route was Setup → Overrides — the panel for deliberately breaking
+          rules — to do something the rules simply let a character do. */}
+      {learningRitual && onPlay && (
+        <div className="picker-backdrop" onClick={() => setLearningRitual(false)}>
+          <div className="picker" onClick={(e) => e.stopPropagation()}>
+            <FilterableSelect
+              title="Learn a ritual"
+              items={listValues(content, content.spells).filter((s) => s.ritual)}
+              spec={SPELL_SPEC_BUILDER}
+              rowKey={(s) => s.id}
+              onClose={() => setLearningRitual(false)}
+              renderRow={(s, openDesc) => {
+                const node = descNodeOf(s, 'spells');
+                const known = (character.knownRituals ?? []).includes(s.id);
+                return (
+                  <PickerRow
+                    name={s.name}
+                    meta={
+                      <div className="picker-traits">
+                        {`${ord(s.rank)} rank`}
+                        {s.ritualPrimary ? ` · ${s.ritualPrimary}` : ''}
+                      </div>
+                    }
+                    onOpenDesc={node ? () => openDesc(node) : undefined}
+                    selectLabel={known ? 'Forget' : 'Learn'}
+                    onSelect={() => onPlay((p) => toggleKnownRitual(p, s.id))}
+                  />
+                );
+              }}
+            />
+          </div>
+        </div>
       )}
       {itemView &&
         (() => {

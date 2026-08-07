@@ -149,6 +149,7 @@ export function ItemDetail({
   activeModes = [],
   designationKinds = [],
   feats = [],
+  gmView = false,
   onEdit,
 }: {
   inv: InventoryItem;
@@ -161,6 +162,8 @@ export function ItemDetail({
   /** The character's feats — only so the stow control sizes containers the same way the Inventory
    *  tab does (Pack Rat adds 50% to a mundane container). Omitted = printed capacity. */
   feats?: Character["feats"];
+  /** The GM’s view of a shared character — unlocks planting a cursed item disguised as its twin. */
+  gmView?: boolean;
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
   rationsDayTracking?: boolean;
   /** Character level — caps the applied Monster-Parts effect readout. */
@@ -450,6 +453,25 @@ export function ItemDetail({
           {/* Which class thing this item IS. Nothing linked a class choice to an inventory item, so
               every "your innovation gains…" modification pointed at an object the app could not name.
               Exclusive: marking one moves the designation off whatever held it before. */}
+          {/* PLANT THIS CURSED ITEM HIDDEN. The subsystem behind it — the player sees the innocent
+              twin, its name, description and bonuses, while the GM view keeps the true record — was
+              fully wired in the rules layer and could never fire: no item carried `disguisedAs` and
+              nothing anywhere set `hiddenCurse`. GM-only, because a player toggling it would be
+              telling themselves the secret. */}
+          {onPlay && gmView && item.disguisedAs && (
+            <label className="sd-choice-row sd-hidden-curse">
+              <input
+                type="checkbox"
+                checked={!!inv.hiddenCurse}
+                onChange={(e) =>
+                  onPlay((p) => updateInventoryItem(p, inv.instanceId, { hiddenCurse: e.currentTarget.checked || undefined }))
+                }
+              />
+              <span>
+                Planted hidden — the player sees {content.items[item.disguisedAs]?.name ?? item.disguisedAs}
+              </span>
+            </label>
+          )}
           {onPlay && designationKinds.length > 0 && (
             <div className="sd-uses">
               <span className="sd-uses-title">This is my</span>

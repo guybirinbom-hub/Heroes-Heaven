@@ -3368,6 +3368,9 @@ export interface Character {
    * etched runes walks `inventory[].runes`, so there was no way to express it at all.
    */
   bodyRune?: string;
+  /** Rituals the character LEARNED in play (the Rituals section’s picker). Separate from
+   *  `grantedRituals`, which a record taught them. */
+  knownRituals?: string[];
   /** Rituals a feat/feature/heritage/invested item taught this character, with the record that did it
    *  and any clause it attaches (Read the Land shortens Commune to 1 hour and drops the secondary
    *  caster). Shown in the Rituals section alongside anything added through Overrides. */

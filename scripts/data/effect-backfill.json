@@ -98642,5 +98642,59 @@
   "id": "order-cross-training",
   "field": "note",
   "value": "Your answer is recorded on the sheet; this feat’s effect is one the app does not compute, so no number changes here."
+ },
+ {
+  "category": "items",
+  "id": "gaffe-glasses",
+  "field": "disguisedAs",
+  "value": "glasses-of-sociability"
+ },
+ {
+  "category": "items",
+  "id": "ring-of-ravenousness",
+  "field": "disguisedAs",
+  "value": "ring-of-sustenance"
+ },
+ {
+  "category": "items",
+  "id": "shrieking-key",
+  "field": "disguisedAs",
+  "value": "skeleton-key"
+ },
+ {
+  "category": "items",
+  "id": "sluggish-bracelet",
+  "field": "disguisedAs",
+  "value": "bracelet-of-dashing"
+ },
+ {
+  "category": "items",
+  "id": "bag-of-devouring",
+  "field": "disguisedAs",
+  "value": "spacious-pouch"
+ },
+ {
+  "category": "items",
+  "id": "bag-of-devouring-type-i",
+  "field": "disguisedAs",
+  "value": "spacious-pouch"
+ },
+ {
+  "category": "items",
+  "id": "bag-of-devouring-type-ii",
+  "field": "disguisedAs",
+  "value": "spacious-pouch"
+ },
+ {
+  "category": "items",
+  "id": "bag-of-devouring-type-iii",
+  "field": "disguisedAs",
+  "value": "spacious-pouch"
+ },
+ {
+  "category": "items",
+  "id": "gloves-of-carelessness",
+  "field": "disguisedAs",
+  "value": "retrieval-belt"
  }
 ]

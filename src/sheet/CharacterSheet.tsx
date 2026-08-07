@@ -652,7 +652,7 @@ export function CharacterSheet({
           ) : tab === 'Spells' ? (
             <SpellsTab character={character} content={content} onPlay={onPlay} onOpenStat={setStatRef} />
           ) : tab === 'Inventory' ? (
-            <InventoryTab character={character} content={content} onPlay={onPlay} onCreateItem={onCreateItem} />
+            <InventoryTab character={character} content={content} onPlay={onPlay} onCreateItem={onCreateItem} gmView={!!gmEdit} />
           ) : tab === 'Feats & features' ? (
             <FeatsTab character={character} content={content} onPlay={onPlay} />
           ) : tab === 'Details' ? (

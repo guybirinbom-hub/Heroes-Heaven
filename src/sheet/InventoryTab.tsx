@@ -496,11 +496,14 @@ export function InventoryTab({
   content,
   onPlay,
   onCreateItem,
+  gmView = false,
 }: {
   character: Character;
   content: ContentDatabase;
   onPlay?: PlayUpdater;
   onCreateItem?: (item: Item) => void;
+  /** The GM’s own view of a shared character. Only the GM may plant a cursed item disguised. */
+  gmView?: boolean;
 }) {
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
   const [detail, setDetail] = useState<{ inv: InventoryItem; item: Item } | null>(null);
@@ -1275,6 +1278,7 @@ export function InventoryTab({
           onPlay={onPlay}
           inventory={character.inventory}
           feats={character.feats}
+          gmView={gmView}
           rationsDayTracking={rationsDayTracking}
           charLevel={character.level}
           activeModes={character.activeModes}

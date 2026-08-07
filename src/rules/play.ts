@@ -87,6 +87,10 @@ export interface PlayState {
    * a rest is the coarsest boundary the sheet models.
    */
   featUses?: Record<string, number>;
+  /** Rituals the character has LEARNED in play, by spell id. Rituals are tradition-less by rule, so
+   *  148 of the 151 are on no spell list and had no route onto the sheet except Setup → Overrides —
+   *  the rule-BREAKING panel — for an ordinary thing a character does. */
+  knownRituals?: string[];
   /* An item's "choose one of N" answer lives on the INVENTORY INSTANCE (InventoryItem.effectChoices),
    * not here, so two copies of the same item can differ. */
   /** Notes pages; when set, overrides the build's notes (so the sheet can edit them). */
@@ -496,6 +500,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     dailyChoices: play.dailyChoices ?? ch.dailyChoices,
     dailyItems: play.dailyItems ?? ch.dailyItems,
     featUses: play.featUses ?? ch.featUses,
+    ...(play.knownRituals?.length ? { knownRituals: play.knownRituals } : {}),
     notes: play.notes ?? ch.notes,
     companionConditions: play.companionConditions ?? ch.companionConditions ?? {},
     companionHp: play.companionHp ?? ch.companionHp ?? {},
@@ -638,6 +643,12 @@ export function setRestrictedSpell(play: PlayState, slotId: string, spellId: str
   const expendedSlots = { ...play.expendedSlots };
   delete expendedSlots[slotId];
   return { ...play, preparedSpells, expendedSlots };
+}
+
+/** Learn or forget a ritual (the Rituals section's picker). */
+export function toggleKnownRitual(play: PlayState, spellId: string): PlayState {
+  const have = play.knownRituals ?? [];
+  return { ...play, knownRituals: have.includes(spellId) ? have.filter((x) => x !== spellId) : [...have, spellId] };
 }
 
 /** Move a restricted slot to a different rank at daily preparations. Empties it — see the overlay. */

@@ -10904,3 +10904,13 @@ button.strike-name:hover {
   flex: none;
   margin-top: 1px;
 }
+
+/* The GM-only "planted hidden" switch on a disguised cursed item. Deliberately plain: it is a
+   secret being set, not an effect being applied. */
+.sd-hidden-curse {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--app-text-dim);
+}
