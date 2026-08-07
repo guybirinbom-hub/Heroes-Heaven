@@ -3082,16 +3082,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const archCaps: { armor?: ClassArchetype['armorCap']; weapon?: ClassArchetype['weaponCap'] }[] = [];
   // An archetype may be carried by the dedication FEAT or by a chosen subclass/extra-choice option
   // (the wizard's Runelord school is both the school and the archetype), so scan both.
-  const archCarriers: { name: string; ca: ClassArchetype }[] = [];
+  const archCarriers: { id: string; name: string; ca: ClassArchetype }[] = [];
+  let archSpellList: Character['spellListReplacement'];
   for (const fc of feats) {
     const ca = content.feats[fc.featId]?.classArchetype;
-    if (ca) archCarriers.push({ name: content.feats[fc.featId].name, ca });
+    if (ca) archCarriers.push({ id: fc.featId, name: content.feats[fc.featId].name, ca });
   }
   for (const o of grantOptions) {
     const ca = content.classFeatures[o.id]?.classArchetype;
-    if (ca) archCarriers.push({ name: content.classFeatures[o.id].name, ca });
+    if (ca) archCarriers.push({ id: o.id, name: content.classFeatures[o.id].name, ca });
   }
-  for (const { name, ca } of archCarriers) {
+  for (const { id: carrierId, name, ca } of archCarriers) {
     // Only applies to a character OF that class (either class when dual-classed). `classId` may name
     // SEVERAL — Flexible Spellcaster restructures every prepared caster — so match against the list
     // and record which of the character's own classes it landed on; storing the array here would file
@@ -3105,6 +3106,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const [c, r] of Object.entries(ca.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], r);
     for (const [c, r] of Object.entries(ca.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = maxRank(proficiencies.attacks[c as WeaponCategory], r);
     if (ca.armorCap || ca.weaponCap) archCaps.push({ armor: ca.armorCap, weapon: ca.weaponCap });
+    // The substituted spell list. It replaces the tradition in the PICKER only, so it is resolved
+    // against the class's own entry (`${classId}-casting`) and leaves an archetype-granted entry —
+    // a multiclass dedication's — casting from its own tradition, which is what the rule says.
+    if (ca.spellListReplacement) {
+      const r = ca.spellListReplacement;
+      const picked = r.choiceId ? build.effectChoices?.[`${carrierId}:${r.choiceId}`] : undefined;
+      const v = picked ? r.variants?.[picked] : undefined;
+      archSpellList = {
+        entryId: `${hit}-casting`,
+        list: r.list,
+        anyTrait: v?.anyTrait ?? [],
+        excludeTraits: v?.excludeTraits ?? [],
+        from: name,
+        ...(v ? {} : { note: 'Choose your elemental philosophy on this feat — until you do, only the universal elemental spells are offered.' }),
+      };
+    }
     if (ca.note) archNotes.push(`${name}: ${ca.note}`);
   }
 
@@ -4251,6 +4268,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(dyingThreshold ? { dyingThreshold } : {}),
     ...(spellListAdditions ? { spellListAdditions } : {}),
     ...(spellListTraditions.length ? { spellListTraditions } : {}),
+    ...(archSpellList ? { spellListReplacement: archSpellList } : {}),
     ...(grantedRituals.length ? { grantedRituals } : {}),
     ...(eidolonInnateSpells.length ? { eidolonInnateSpells } : {}),
     // Extra RESTRICTED reactions. Everyone has one unrestricted reaction; 15 feats grant a second

@@ -101,16 +101,20 @@ describe('derive math is NaN-proof against stat-less items', () => {
   });
 });
 
-// Three focus spells import with empty traits.traditions in the Foundry source, making them invisible
-// in every spell list. A targeted override (fixes.json) sets their real traditions.
-describe('empty-tradition focus spells get their traditions restored', () => {
+// Three spells import with empty traits.traditions in the Foundry source, making them invisible in
+// every spell list. The first two now come from the printed "Traditions" line in the AoN mirror
+// rather than from the single-tradition guess the original fix made: Soulshelter Vessel is on all
+// three of divine/occult/primal, and Suffocate is arcane and divine — never occult.
+// Web of Influence keeps its guess: the AoN record prints no Traditions line at all (it is an
+// Adventure Path spell), and removing the tradition would make it unreachable outside Overrides.
+describe('empty-tradition spells get their traditions restored', () => {
   it.each([
-    ['soulshelter-vessel', 'divine'],
-    ['suffocate', 'occult'],
-    ['web-of-influence', 'occult'],
-  ])('%s has tradition %s', (id, tradition) => {
+    ['soulshelter-vessel', ['divine', 'occult', 'primal']],
+    ['suffocate', ['arcane', 'divine']],
+    ['web-of-influence', ['occult']],
+  ] as [string, string[]][])('%s has traditions %s', (id, traditions) => {
     const sp = c.spells[id];
     expect(sp).toBeTruthy();
-    expect(sp.traditions).toContain(tradition);
+    expect([...sp.traditions].sort()).toEqual([...traditions].sort());
   });
 });

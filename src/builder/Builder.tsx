@@ -468,9 +468,36 @@ export function Builder({
     }
     return out;
   }, [build.featPicks, build.deityId, content]);
+  /**
+   * A class archetype that REPLACES the list ("Replace your spell list with the elemental spell
+   * list"). The tradition index is still the right starting point for everyone else, so this
+   * narrows it in place rather than being folded into spellIndex — and it has to be here as well as
+   * in the sheet, because a wizard prepares from the SPELLBOOK and the spellbook is filled here.
+   */
+  const listReplacement = featPrereqChar.spellListReplacement;
+  const onReplacedList = (s: Sp) => {
+    const r = listReplacement!;
+    // Only a spell that is on SOME list can be on a replaced one. Focus spells, rituals and the
+    // class-granted cantrips (bard compositions, witch hexes, psychic amps) all carry no tradition,
+    // which is exactly what kept them out of the ordinary picker for free — a rule written on
+    // traits has to say so, or an elementalist wizard is offered Crushing Ground to learn.
+    if (!s.traditions.length) return !!s.spellLists?.includes(r.list);
+    if (s.spellLists?.includes(r.list)) return true;
+    if (!r.anyTrait.length) return false;
+    const t = s.traits ?? [];
+    return t.some((x) => r.anyTrait.includes(x)) && !t.some((x) => r.excludeTraits.includes(x));
+  };
   const eligibleSpells = (rank: number) => {
     if (!tradition) return NO_SPELLS;
-    const base = rank === 0 ? spellIndex.cantrips[tradition] ?? NO_SPELLS : spellIndex.upTo[tradition]?.[rank] ?? NO_SPELLS;
+    let base = rank === 0 ? spellIndex.cantrips[tradition] ?? NO_SPELLS : spellIndex.upTo[tradition]?.[rank] ?? NO_SPELLS;
+    if (listReplacement) {
+      // The replaced list is not a subset of the tradition — an inner sea elementalist wizard gets
+      // primal water spells — so it is rebuilt from the whole spell set, not filtered out of `base`.
+      const pool = Object.values(content.spells).filter(
+        (s) => (rank === 0 ? s.rank === 0 : s.rank > 0 && s.rank <= rank) && onReplacedList(s as Sp),
+      ) as Sp[];
+      base = pool.sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
+    }
     if (!listAdditions.size) return base;
     const have = new Set(base.map((s) => s.id));
     const extra = [...listAdditions]
@@ -580,6 +607,13 @@ export function Builder({
         <div className="bsec-title">
           {atFirst ? `Spells — ${cap(tradition ?? '')} ${castType}${archCaster ? ' (archetype)' : ''}` : 'Spells gained this level'}
         </div>
+        {atFirst && listReplacement && (
+          <p className="setup-hint">
+            {listReplacement.from} replaced your spell list with the {listReplacement.list} spell list — you still cast
+            on the {cap(tradition ?? '')} tradition, but you choose your spells from that list instead.
+            {listReplacement.note ? ` ${listReplacement.note}` : ''}
+          </p>
+        )}
         {atFirst && archCaster?.config.choiceTradition && (
           <div className="spell-pick-row">
             <div className="spr-head">

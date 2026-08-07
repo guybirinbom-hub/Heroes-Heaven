@@ -756,6 +756,25 @@ export interface ClassArchetype {
   /** A change to the number of cantrips the CLASS grants ("reduce the number of cantrips you gain
    *  from your class by 2"). Negative to reduce. Feats add theirs on top via `spellSlotBonus`. */
   cantripDelta?: number;
+  /**
+   * "Replace your spell list with the elemental spell list" (Elemental Magic). The entry keeps its
+   * tradition — spell attack rolls, DC and the slot table are untouched — but the pool the picker
+   * offers is the named list instead.
+   *
+   * The list has two halves. `list` names the printed universal one, matched against a spell's
+   * `spellLists`. `variants` is the elemental philosophy: the chosen option's traits extend the list
+   * with "any spell that shares one or more traits with those in your elemental philosophy, and
+   * doesn't have any traits that aren't in your elemental philosophy" — hence a positive set AND an
+   * exclusion set, since earth+fire is legal for an elemental cycle elementalist and air+fire is not.
+   *
+   * `choiceId` names the effectChoice on the carrier that holds the pick. Until the player makes it,
+   * only the universal half is offered, and `note` says so.
+   */
+  spellListReplacement?: {
+    list: string;
+    choiceId?: string;
+    variants?: Record<string, { anyTrait: string[]; excludeTraits?: string[] }>;
+  };
   /** A short note shown on the sheet describing what the archetype changed. */
   note?: string;
 }
@@ -1825,6 +1844,10 @@ export interface Spell extends ContentBase {
   /** 0 = cantrip. */
   rank: SpellRank;
   traditions: Tradition[];
+  /** Named lists this spell appears on BESIDES the four traditions — what AoN prints under "Spell
+   *  Lists". Only `elemental` is used today: it is the universal half of the list Elemental Magic
+   *  swaps in, and it is not a tradition (an elementalist's own tradition is unchanged). */
+  spellLists?: string[];
   /** A ritual (tradition-less; cast by anyone meeting the primary-check proficiency). */
   ritual?: boolean;
   /** The ritual's primary skill check (e.g. "Religion (master)"). */
@@ -3385,6 +3408,13 @@ export interface Character {
    *  "one spell in your spell repertoire not on the divine spell list"). Kept as a rule instead of
    *  ~1,500 expanded ids; `max` and `from` are shown beside the widened options. */
   spellListTraditions?: { entryId?: string; traditions: Tradition[] | 'any'; max?: number; from: string }[];
+  /** The spell list a CLASS ARCHETYPE substituted for the entry's tradition — "Replace your spell
+   *  list with the elemental spell list. Your actual magical tradition is unchanged, but you choose
+   *  your spells from the elemental list instead" (Elemental Magic). Unlike the two fields above this
+   *  NARROWS the picker, so it is resolved to concrete membership rules at build time: `list` names
+   *  the printed list, and a spell also joins it when it carries one of `anyTrait` and none of
+   *  `excludeTraits` (the elemental philosophy). */
+  spellListReplacement?: { entryId?: string; list: string; anyTrait: string[]; excludeTraits: string[]; from: string; note?: string };
   /** Spells the summoner's EIDOLON knows as innate spells, chosen on Magical Adept / Magical Master.
    *  Both are multi-pick choices and a FeatChoice keeps only the first answer, so the full set has to
    *  be collected at build time; Share Eidolon Magic then lets the summoner cast them too. */

@@ -282,12 +282,32 @@ function ManageSpellsModal({
     const openTraditions = (character.spellListTraditions ?? []).filter((w) => !w.entryId || w.entryId === entry.id);
     const anyTradition = openTraditions.some((w) => w.traditions === 'any');
     const openSet = new Set(openTraditions.flatMap((w) => (w.traditions === 'any' ? [] : w.traditions)));
+    // A class archetype may REPLACE the list rather than widen it — "Replace your spell list with the
+    // elemental spell list … your actual magical tradition is unchanged". So this stands in for the
+    // tradition test; everything else (feat additions, opened traditions) still applies on top.
+    const rep = character.spellListReplacement;
+    const repActive = !!rep && (!rep.entryId || rep.entryId === entry.id);
+    const onList = (s: Spell): boolean => {
+      if (!rep || !repActive) return s.traditions.includes(entry.tradition);
+      // Only a spell that is on SOME list can be on a replaced one. Focus spells, rituals and the
+      // class-granted cantrips (bard compositions, witch hexes, psychic amps) all carry no
+      // tradition, which is exactly what kept them out of the ordinary picker for free — a rule
+      // written on traits has to say so, or an elementalist wizard is offered Crushing Ground and
+      // Entropic Wheel to write in a spellbook.
+      if (!s.traditions.length) return !!s.spellLists?.includes(rep.list);
+      if (s.spellLists?.includes(rep.list)) return true;
+      // "Any spell that shares one or more traits with those in your elemental philosophy, and
+      // doesn't have any traits that aren't in your elemental philosophy."
+      if (!rep.anyTrait.length) return false;
+      const t = s.traits ?? [];
+      return t.some((x) => rep.anyTrait.includes(x)) && !t.some((x) => rep.excludeTraits.includes(x));
+    };
     for (const s of listValues(content, content.spells)) {
       const e = (s as { edition?: string }).edition;
       if (e === 'superseded') continue; // renamed/outdated half of a remaster change — always hidden
       if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) continue; // per-character Hide legacy data
       const opened = anyTradition || s.traditions.some((t) => openSet.has(t));
-      if (s.traditions.includes(entry.tradition) || added.has(s.id) || opened) (byRank[s.rank] ??= []).push(s);
+      if (onList(s) || added.has(s.id) || opened) (byRank[s.rank] ??= []).push(s);
     }
     const upTo: Record<number, Spell[]> = {};
     let acc: Spell[] = [];
@@ -296,7 +316,12 @@ function ManageSpellsModal({
       upTo[r] = acc.slice().sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
     }
     return { byRank, upTo };
-  }, [content, entry.tradition, entry.id, character.hideLegacy, character.spellListAdditions, character.spellListTraditions]);
+  }, [content, entry.tradition, entry.id, character.hideLegacy, character.spellListAdditions, character.spellListTraditions, character.spellListReplacement]);
+
+  const listReplacement = (() => {
+    const r = character.spellListReplacement;
+    return r && (!r.entryId || r.entryId === entry.id) ? r : undefined;
+  })();
 
   // Spells you may add (spontaneous) / prepare (prepared) at a rank — rank ≤ the slot's rank.
   const optionsFor = (rank: number, restrictedId?: string): Spell[] => {
@@ -379,11 +404,22 @@ function ManageSpellsModal({
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker manage-spells" onClick={(e) => e.stopPropagation()}>
         <div className="picker-head">
-          <span>{`${spontaneous ? 'Repertoire' : 'Prepare'} — ${cap(entry.tradition)} spells`}</span>
+          <span>
+            {/* A replaced list still casts on its own tradition, so name BOTH — an elementalist wizard
+                is an arcane caster picking from the elemental list, and the header used to say only
+                "Arcane spells" while offering something else entirely. */}
+            {`${spontaneous ? 'Repertoire' : 'Prepare'} — ${listReplacement ? `${cap(listReplacement.list)} list (${cap(entry.tradition)})` : `${cap(entry.tradition)} spells`}`}
+          </span>
           <button className="picker-close" style={{ marginLeft: 'auto' }} onClick={onClose} aria-label="Close">
             <i className="ti ti-x" aria-hidden="true" />
           </button>
         </div>
+        {listReplacement && (
+          <div className="hint" style={{ margin: '0 0 8px' }}>
+            {listReplacement.from} replaced your spell list with the {listReplacement.list} spell list; your tradition is
+            unchanged.{listReplacement.note ? ` ${listReplacement.note}` : ''}
+          </div>
+        )}
 
         {picking ? (
           <FilterableSelect
