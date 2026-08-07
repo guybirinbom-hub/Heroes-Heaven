@@ -15,7 +15,7 @@
     "android:release": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android-release.ps1",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "jiti scripts/verify-characters.mjs && node scripts/class-table-diff.mjs && jiti scripts/orphan-features.mjs && node scripts/price-check.mjs",
+    "verify": "jiti scripts/verify-characters.mjs && node scripts/class-table-diff.mjs && jiti scripts/orphan-features.mjs && node scripts/price-check.mjs && node scripts/field-diff.mjs",
     "triage": "node scripts/triage-mechanics.mjs",
     "coverage": "node scripts/coverage-report.mjs"
   },

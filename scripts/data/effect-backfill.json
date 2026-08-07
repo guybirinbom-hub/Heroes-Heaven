@@ -102903,5 +102903,119 @@
     "id": "dual-weapon-reload",
     "field": "level",
     "value": 4
+  },
+  {
+    "category": "items",
+    "id": "addiction-suppressant-lesser",
+    "field": "rarity",
+    "value": "rare"
+  },
+  {
+    "category": "items",
+    "id": "addiction-suppressant-moderate",
+    "field": "rarity",
+    "value": "rare"
+  },
+  {
+    "category": "items",
+    "id": "addiction-suppressant-greater",
+    "field": "rarity",
+    "value": "rare"
+  },
+  {
+    "category": "items",
+    "id": "addiction-suppressant-major",
+    "field": "rarity",
+    "value": "rare"
+  },
+  {
+    "category": "items",
+    "id": "forgefathers-seal",
+    "field": "rarity",
+    "value": "unique"
+  },
+  {
+    "category": "items",
+    "id": "calamity-glass",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "golden-goose",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "mistranslators-draft",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "ring-of-sneering-charity",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "rose-of-loves-lost",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "tablet-of-chained-souls",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "taletellers-ring",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "feats",
+    "id": "devoted-focus",
+    "field": "level",
+    "value": 12
+  },
+  {
+    "category": "feats",
+    "id": "twin-psyche",
+    "field": "level",
+    "value": 20
+  },
+  {
+    "category": "feats",
+    "id": "blade-of-law",
+    "field": "level",
+    "value": 10
+  },
+  {
+    "category": "spells",
+    "id": "adapt-self",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "spells",
+    "id": "return-the-favor",
+    "field": "rarity",
+    "value": "rare"
+  },
+  {
+    "category": "spells",
+    "id": "over-the-coals",
+    "field": "rarity",
+    "value": "rare"
+  },
+  {
+    "category": "items",
+    "id": "rattling-bolt-greater",
+    "field": "level",
+    "value": 16
   }
 ]

@@ -1,0 +1,3004 @@
+[
+ {
+  "coll": "items",
+  "id": "alchemist-goggles",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "4|common",
+   "0|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "energy-mutagen",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "1|common",
+   "0|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "stone-body-mutagen",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "5|common",
+   "0|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "cursed-dreamstone",
+  "resolved": false,
+  "appBook": "147 tomorrow must burn",
+  "options": [
+   "9|uncommon",
+   "9|rare"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "inspiring-spotlight",
+  "resolved": false,
+  "appBook": "152 legacy of the lost god",
+  "options": [
+   "9|rare",
+   "9|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "vaccine",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "1|common",
+   "0|rare"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "addiction-suppressant-lesser",
+  "resolved": true,
+  "appBook": "legends",
+  "level": null,
+  "rarity": {
+   "have": "common",
+   "want": "rare"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "addiction-suppressant-moderate",
+  "resolved": true,
+  "appBook": "legends",
+  "level": null,
+  "rarity": {
+   "have": "common",
+   "want": "rare"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "addiction-suppressant-greater",
+  "resolved": true,
+  "appBook": "legends",
+  "level": null,
+  "rarity": {
+   "have": "common",
+   "want": "rare"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "addiction-suppressant-major",
+  "resolved": true,
+  "appBook": "legends",
+  "level": null,
+  "rarity": {
+   "have": "common",
+   "want": "rare"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "wand-of-noisome-acid",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "6|common",
+   "6|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "wand-of-noisome-acid-2nd-level-spell",
+  "resolved": true,
+  "appBook": "the slithering",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "wand-of-noisome-acid-4th-level-spell",
+  "resolved": true,
+  "appBook": "the slithering",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "wand-of-noisome-acid-6th-level-spell",
+  "resolved": true,
+  "appBook": "the slithering",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "wand-of-noisome-acid-8th-level-spell",
+  "resolved": true,
+  "appBook": "the slithering",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "pacifying",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "5|common",
+   "5|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "ring-of-discretion",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "1|common",
+   "1|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "swarmeaters-clasp",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "8|common",
+   "8|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "vaultbreakers-harness",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "6|common",
+   "6|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "everyneed-pack",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "3|uncommon",
+   "0|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "talisman-cord",
+  "resolved": false,
+  "appBook": "pathfinder society guide",
+  "options": [
+   "10|uncommon",
+   "4|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "stupor-poison",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "7|uncommon",
+   "4|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "goz-mask",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "2|common",
+   "0|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "mask-of-mercy",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "4|common",
+   "4|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "rhinoceros-mask",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "4|uncommon",
+   "0|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "shapespeak-mask",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "4|common",
+   "4|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "skittering-mask",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "2|common",
+   "0|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "tlil-mask",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "5|uncommon",
+   "0|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "electromuscular-stimulator",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "tin-cobra",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "timepiece-grand-clock",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "awakened-metal-shot",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "awakened-metal-shot-awakened-adamantine-shot",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "awakened-metal-shot-awakened-cold-iron-shot",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "awakened-metal-shot-awakened-silver-shot",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "black-powder",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "black-powder-dose-or-round",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "black-powder-horn",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "black-powder-keg",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "dragon-rune-bracelet",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "11|uncommon",
+   "11|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "spiderfoot-brew",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "17|uncommon",
+   "3|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "candlecap",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "1|unique",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "sure-step-crampons",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "6|uncommon",
+   "6|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "peachwood",
+  "resolved": false,
+  "appBook": "tian xia character guide",
+  "options": [
+   "0|uncommon",
+   "8|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "peachwood-weapon",
+  "resolved": false,
+  "appBook": "tian xia character guide",
+  "options": [
+   "0|uncommon",
+   "12|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "silver-ingot",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "ouroboros-buckles",
+  "resolved": true,
+  "appBook": "treasure vault",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "solar-shellflower",
+  "resolved": true,
+  "appBook": "treasure vault",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "spark-dancer",
+  "resolved": true,
+  "appBook": "treasure vault",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "theatrical-mutagen-greater",
+  "resolved": true,
+  "appBook": "treasure vault",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "black-tendril-shot",
+  "resolved": true,
+  "appBook": "treasure vault",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "black-tendril-shot-lesser",
+  "resolved": true,
+  "appBook": "treasure vault",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "fey-dragonet-liqueur",
+  "resolved": false,
+  "appBook": "treasure vault",
+  "options": [
+   "12|uncommon",
+   "7|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "olfactory-stimulators",
+  "resolved": true,
+  "appBook": "treasure vault",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "the-brass-dwarf",
+  "resolved": false,
+  "appBook": "190 the choosing",
+  "options": [
+   "20|unique",
+   "20|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "the-empty-throne",
+  "resolved": false,
+  "appBook": "190 the choosing",
+  "options": [
+   "20|unique",
+   "20|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "the-paladin",
+  "resolved": false,
+  "appBook": "190 the choosing",
+  "options": [
+   "20|unique",
+   "20|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "the-rabbit-prince",
+  "resolved": false,
+  "appBook": "190 the choosing",
+  "options": [
+   "20|unique",
+   "20|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "furnace-of-endings",
+  "resolved": false,
+  "appBook": "highhelm",
+  "options": [
+   "5|uncommon",
+   "2|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "atmospheric-staff",
+  "resolved": false,
+  "appBook": "rage of elements",
+  "options": [
+   "8|uncommon",
+   "4|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "survey-map",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "spellcasting",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "armor-potency",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "resilient",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "energy-resistant",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "fortification",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "invisibility",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "ready",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "shadow",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "slick",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "winged",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "adamantine-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "cold-iron-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "elven-chain",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "orichalcum-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "silver-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "magic-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "adamantine-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "cold-iron-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "orichalcum-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "silver-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "floating-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "sturdy-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "striking",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "weapon-potency",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "brilliant",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "corrosive",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "extending",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "fearsome",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "flaming",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "frost",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "shock",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "thundering",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "adamantine-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "cold-iron-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "orichalcum-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "silver-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "magic-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "storm-flash",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "acid-flask",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "alchemists-fire",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "dread-ampoule",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "glue-bomb",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "antidote",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "antiplague",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "bombers-eye-elixir",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "4|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "bravos-brew",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "2|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "cheetahs-elixir",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "darkvision-elixir",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "2|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "eagle-eye-elixir",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "elixir-of-life",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "mistform-elixir",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "4|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "sea-touch-elixir",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "5|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "lethargy-poison",
+  "resolved": false,
+  "appBook": "gm core",
+  "options": [
+   "2|uncommon",
+   "2|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "smoke-ball",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "0|common",
+   "1|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "adamantine",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "cold-iron",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "orichalcum",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "silver",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "explosive-ammunition",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "spellstrike-ammunition",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "oil-of-unlife",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "oil-of-weightlessness",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "salve-of-antiparalysis",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "healing-potion",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "potion-of-flying",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "potion-of-resistance",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "potion-of-swimming",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "potion-of-water-breathing",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "shrinking-potion",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "crystal-ball",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "maestros-instrument",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "marvelous-medicines",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "skeleton-key",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "thurible-of-revelation",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "animal-staff",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "mentalists-staff",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "staff-of-fire",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "staff-of-healing",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "verdant-staff",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "armbands-of-athleticism",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "boots-of-bounding",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "bracers-of-missile-deflection",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "choker-of-elocution",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "clandestine-cloak",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "coyote-cloak",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "crafters-eyepiece",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "dancing-scarf",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "daredevil-boots",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "demon-mask",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "doubling-rings",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "handwraps-of-mighty-blows",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "healers-gloves",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "messengers-ring",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "pendant-of-the-occult",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "persona-mask",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "primeval-mistletoe",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "sleeves-of-storage",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "trackers-goggles",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "ventriloquists-ring",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "wayfinder",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "forgefathers-seal",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": {
+   "have": "rare",
+   "want": "unique"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "philosophers-extractor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "martyrs-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "dragonhide",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "dragonhide-armor",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "dragonhide-shield",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "medusas-scream",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "blight-bomb",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "bottled-lightning",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "crystal-shards",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "frost-vial",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "ghost-charge",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "comprehension-elixir",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "bestial-mutagen",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "cognitive-mutagen",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "drakeheart-mutagen",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "juggernaut-mutagen",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "quicksilver-mutagen",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "serene-mutagen",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "silvertongue-mutagen",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "bomb-snare",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "potion-of-disguise",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "potion-of-retaliation",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "ration-tonic",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "dust-of-corpse-animation",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "staff-of-impossible-visions",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "staff-of-providence",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "berserkers-cloak",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "ring-of-maniacal-devices",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "dragon-pearl",
+  "resolved": true,
+  "appBook": "tian xia character guide",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "irritating-seedpod",
+  "resolved": false,
+  "appBook": "203 shepherd of decay",
+  "options": [
+   "7|uncommon",
+   "3|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "banner-of-the-restful",
+  "resolved": true,
+  "appBook": "battlecry",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "war-saddle",
+  "resolved": true,
+  "appBook": "battlecry",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "thundering-fury-dadao",
+  "resolved": false,
+  "appBook": "season of ghosts hardcover compilation",
+  "options": [
+   "11|rare",
+   "12|rare"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "skyfang-crystal",
+  "resolved": false,
+  "appBook": "season of ghosts hardcover compilation",
+  "options": [
+   "11|rare",
+   "12|rare"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "calamity-glass",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "rare",
+   "want": "common"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "golden-goose",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "rare",
+   "want": "common"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "mistranslators-draft",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "rare",
+   "want": "common"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "ring-of-sneering-charity",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "rare",
+   "want": "common"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "rose-of-loves-lost",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "rare",
+   "want": "common"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "tablet-of-chained-souls",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "rare",
+   "want": "common"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "taletellers-ring",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "rare",
+   "want": "common"
+  }
+ },
+ {
+  "coll": "items",
+  "id": "aldori-dueling-sword",
+  "resolved": false,
+  "appBook": "battlecry",
+  "options": [
+   "1|uncommon",
+   "0|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "bola",
+  "resolved": false,
+  "appBook": "player core",
+  "options": [
+   "0|uncommon",
+   "0|common"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "repeating-hand-crossbow",
+  "resolved": false,
+  "appBook": "battlecry",
+  "options": [
+   "0|uncommon",
+   "1|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "backpack-catapult",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "repeating-crossbow",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "composite-longbow",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "composite-shortbow",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "flying-talon",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-awakened-metal-shot",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-peachwood",
+  "resolved": false,
+  "appBook": "book of the dead",
+  "options": [
+   "0|uncommon",
+   "8|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "aon-peachwood-weapon",
+  "resolved": false,
+  "appBook": "book of the dead",
+  "options": [
+   "0|uncommon",
+   "12|uncommon"
+  ]
+ },
+ {
+  "coll": "items",
+  "id": "aon-spellcasting",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-adamantine-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-cold-iron-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-orichalcum-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-silver-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-magic-armor",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-adamantine-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-cold-iron-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-orichalcum-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-silver-shield",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-adamantine-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-cold-iron-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-orichalcum-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-silver-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-magic-weapon",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-adamantine",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-cold-iron",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-orichalcum",
+  "resolved": true,
+  "appBook": "gm core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-dragonhide",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-dragonhide-armor",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-dragonhide-shield",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "items",
+  "id": "aon-potion-of-retaliation",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "water-step",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "unstoppable-juggernaut",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "20|uncommon",
+   "20|common"
+  ]
+ },
+ {
+  "coll": "feats",
+  "id": "spell-mastery",
+  "resolved": false,
+  "appBook": "player core",
+  "options": [
+   "20|uncommon",
+   "20|common"
+  ]
+ },
+ {
+  "coll": "feats",
+  "id": "ultimate-flexibility",
+  "resolved": false,
+  "appBook": "player core",
+  "options": [
+   "20|uncommon",
+   "20|common"
+  ]
+ },
+ {
+  "coll": "feats",
+  "id": "draconic-scent",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "breath-of-the-dragon",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "daywalker",
+  "resolved": true,
+  "appBook": "ancestry guide",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "know-it-all",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "riptide",
+  "resolved": true,
+  "appBook": "absalom city of lost omens",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "jellyfish-stance",
+  "resolved": false,
+  "appBook": "fists of the ruby phoenix hardcover compilation",
+  "options": [
+   "6|uncommon",
+   "8|uncommon"
+  ]
+ },
+ {
+  "coll": "feats",
+  "id": "sixth-pillar-mastery",
+  "resolved": false,
+  "appBook": "fists of the ruby phoenix hardcover compilation",
+  "options": [
+   "16|common",
+   "14|common"
+  ]
+ },
+ {
+  "coll": "feats",
+  "id": "touch-focus",
+  "resolved": false,
+  "appBook": "fists of the ruby phoenix hardcover compilation",
+  "options": [
+   "14|common",
+   "16|common"
+  ]
+ },
+ {
+  "coll": "feats",
+  "id": "coughing-dragon-display",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "scrutinizing-gaze",
+  "resolved": true,
+  "appBook": "guns gears",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "voice-of-the-elements",
+  "resolved": true,
+  "appBook": "draconic codex",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "animal-elocutionist",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "hold-mark",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "watch-your-back",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "knowledge-is-power",
+  "resolved": true,
+  "appBook": "secrets of magic",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "inventor",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "well-groomed",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "one-toed-hop",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "soaring-flight",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "soaring-form",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "whirlwind-toss",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "annihilating-swing",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "iron-repercussions",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "divine-health",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "cruelty",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "expand-aura",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "greater-cruelty",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "devoted-focus",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": {
+   "have": 10,
+   "want": 12
+  },
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "gruesome-strike",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "instrument-of-slaughter",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "connect-the-dots",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "fuse-stance",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "oracular-warning",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "surging-might",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "energy-ward",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "even-the-odds",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "shield-salvation",
+  "resolved": false,
+  "appBook": "battlecry",
+  "options": [
+   "12|common",
+   "10|common"
+  ]
+ },
+ {
+  "coll": "feats",
+  "id": "play-to-the-crowd",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "rallying-charge",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "chemical-contagion",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "mighty-bulwark",
+  "resolved": true,
+  "appBook": "battlecry",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "many-guises",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "backup-disguise",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "sanctify-water",
+  "resolved": true,
+  "appBook": "player core 2",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "death-from-above",
+  "resolved": true,
+  "appBook": "201 pactbreaker",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "animal-soul-siblings",
+  "resolved": false,
+  "appBook": "season of ghosts hardcover compilation",
+  "options": [
+   "5|rare",
+   "1|rare"
+  ]
+ },
+ {
+  "coll": "feats",
+  "id": "twin-psyche",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": {
+   "have": 18,
+   "want": 20
+  },
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "sleepwalker-dedication",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "hellknight-dedication",
+  "resolved": true,
+  "appBook": "hellfire dispatches",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "order-training",
+  "resolved": true,
+  "appBook": "hellfire dispatches",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "blade-of-law",
+  "resolved": true,
+  "appBook": "hellfire dispatches",
+  "level": {
+   "have": 12,
+   "want": 10
+  },
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "advanced-order-training",
+  "resolved": true,
+  "appBook": "hellfire dispatches",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "feats",
+  "id": "paragon-battle-medicine",
+  "resolved": true,
+  "appBook": "hellfire dispatches",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "imprint-message",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "1|common",
+   "1|uncommon"
+  ]
+ },
+ {
+  "coll": "spells",
+  "id": "object-reading",
+  "resolved": false,
+  "appBook": "player core 2",
+  "options": [
+   "1|common",
+   "1|uncommon"
+  ]
+ },
+ {
+  "coll": "spells",
+  "id": "tireless-worker",
+  "resolved": false,
+  "appBook": "divine mysteries",
+  "options": [
+   "4|common",
+   "4|uncommon"
+  ]
+ },
+ {
+  "coll": "spells",
+  "id": "verdant-sprout",
+  "resolved": false,
+  "appBook": "151 the show must go on",
+  "options": [
+   "1|common",
+   "1|uncommon"
+  ]
+ },
+ {
+  "coll": "spells",
+  "id": "pillar-of-water",
+  "resolved": false,
+  "appBook": "rage of elements",
+  "options": [
+   "3|common",
+   "3|uncommon"
+  ]
+ },
+ {
+  "coll": "spells",
+  "id": "protection",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "speak-with-plants",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "enlarge-companion",
+  "resolved": true,
+  "appBook": "player core",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "pocket-library",
+  "resolved": true,
+  "appBook": "rival academies",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "cloak-of-light",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "fear-the-sun",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "moonburst",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "moonlight-ray",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "penumbral-disguise",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "radiant-field",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "wall-of-radiance",
+  "resolved": true,
+  "appBook": "172 secrets of the temple city",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "wall-of-shadow",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "adapt-self",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": {
+   "have": "common",
+   "want": "uncommon"
+  }
+ },
+ {
+  "coll": "spells",
+  "id": "adaptive-ablation",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "winter-bolt",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "diamond-dust",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "withering-grasp",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "fallow-field",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "ephemeral-hazards",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "draconic-barrage",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "parch",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "dust-storm",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "dutiful-challenge",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "redact",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "ghostly-transcription",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "charged-javelin",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "bottle-the-storm",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "empty-inside",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "door-to-beyond",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "divine-plagues",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "foul-miasma",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "share-burden",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "font-of-serenity",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "lament",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "overflowing-sorrow",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "eject-soul",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "ectoplasmic-interstice",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "zenith-star",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "asterism",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "swarmsense",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "swarm-form",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "delay-consequence",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "stasis",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "object-memory",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "remember-the-lost",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "pact-broker",
+  "resolved": true,
+  "appBook": "divine mysteries",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "dancing-shield",
+  "resolved": true,
+  "appBook": "battlecry",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "desperate-repair",
+  "resolved": true,
+  "appBook": "battlecry",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "dividing-trench",
+  "resolved": true,
+  "appBook": "battlecry",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "forced-mercy",
+  "resolved": true,
+  "appBook": "battlecry",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "lock-item",
+  "resolved": true,
+  "appBook": "battlecry",
+  "level": null,
+  "rarity": null
+ },
+ {
+  "coll": "spells",
+  "id": "return-the-favor",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "uncommon",
+   "want": "rare"
+  }
+ },
+ {
+  "coll": "spells",
+  "id": "over-the-coals",
+  "resolved": true,
+  "appBook": "dark archive",
+  "level": null,
+  "rarity": {
+   "have": "uncommon",
+   "want": "rare"
+  }
+ }
+]
