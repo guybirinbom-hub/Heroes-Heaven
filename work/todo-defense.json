@@ -1,0 +1,1691 @@
+[
+ {
+  "collection": "items",
+  "id": "elemental-wayfinder-fire",
+  "name": "Elemental Wayfinder (Fire)",
+  "fields": {
+   "level": 9,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "worn",
+   "bulk": 0,
+   "price": {
+    "gp": 700
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Pathfinder Society researchers recently created elemental wayfinders with the assistance of the Society's elemental allies. In addition to the effects of a Wayfinder, these wayfinders each grant the ability to cast a particular elemental spell once per day, and can assist Pathfinders in exploring areas associated with their element. Each has the trait associated with its element. --- **Activate** ⟨2⟩ command **Frequency** once per day --- **Effect** The wayfinder can cast 4th-rank Fireball. --- Additionally, you gain resistance 5 to fire."
+ },
+ {
+  "collection": "items",
+  "id": "dragonscale-amulet",
+  "name": "Dragonscale Amulet",
+  "fields": {
+   "level": 15,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "usage": "worn",
+   "bulk": 0,
+   "price": {
+    "gp": 5800
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "acid",
+      "value": 5
+     },
+     {
+      "type": "cold",
+      "value": 5
+     },
+     {
+      "type": "electricity",
+      "value": 5
+     },
+     {
+      "type": "fire",
+      "value": 5
+     },
+     {
+      "type": "poison",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This amulet is made from the scales of five ancient dragons. You gain resistance 5 to acid, cold, electricity, fire, and poison. If you take damage of one of these types from a dragon's Breath Weapon, the amulet begins to glow brightly; for the next 10 minutes, your resistance against that type of damage increases to 20. If you are subjected to a dragon's frightful presence, you can roll your saving throw twice and use the higher result to determine the aura's effects. This is a fortune effect. --- **Activate** ⟨2⟩ command **Frequency** once per day **Effect** You exude an aura that terrifies all foes in a 60-foot radius, as the frightful presence ability with a save."
+ },
+ {
+  "collection": "items",
+  "id": "numerian-steel-breastplate",
+  "name": "Numerian Steel Breastplate",
+  "fields": {
+   "level": 10,
+   "traits": [],
+   "rarity": "rare",
+   "itemType": "armor",
+   "category": "medium",
+   "bulk": 2,
+   "price": {
+    "gp": 900
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This +1 resilient breastplate is constructed from the salvaged armor plating of one of Numeria's large robots. It protects the wearer from harsh elements and common laser fire, granting the wearer fire resistance 5. **Activate** ⟨1⟩ command **Frequency** once per day --- **Effect** You activate the remnants of mysterious technology within the breastplate to encase yourself in an electric field. For 1 minute, adjacent creatures that hit you with a melee Strike, as well as creatures that touch you or hit you with an unarmed attack, take 1d10 damage per hit."
+ },
+ {
+  "collection": "items",
+  "id": "diviners-nose-chain",
+  "name": "Diviner's Nose Chain",
+  "fields": {
+   "level": 9,
+   "traits": [
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "worn",
+   "bulk": 0,
+   "price": {
+    "gp": 650
+   },
+   "passiveEffects": {
+    "senses": [
+     {
+      "name": "scent",
+      "range": 30,
+      "acuity": "imprecise"
+     }
+    ]
+   }
+  },
+  "text": "The diviner's nose chain is worn by attaching piercings to the ear and nose, creating a connection between the senses of hearing and smell. The diviner's nose chain grants you scent out to 30 feet as an imprecise sense, and a +1 item bonus to checks to Seek or Sense Motive."
+ },
+ {
+  "collection": "items",
+  "id": "oath-of-the-devoted",
+  "name": "Oath of the Devoted",
+  "fields": {
+   "level": 9,
+   "traits": [
+    "contract",
+    "divine",
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "usage": "held-in-one-hand",
+   "bulk": 0,
+   "price": {},
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     },
+     {
+      "type": "mental",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "You gain fire and mental resistance 5. When you die, you rise as an undead creature with the zombie trait on the next round; if you are a PC, you become an NPC under Walkena's control. Your stats remain the same, except that your alignment changes to evil. If you reach 0 Hit Points as a zombie, you are destroyed and do not rise again. --- **Activate** ⟨1⟩ command **Frequency** once per day --- **Effect** You gain a +1 status bonus to Will saves. Choose a weapon or an unarmed Strike; your chosen attack deals an extra 1d6 damage for the next 1 minute. --- **Special** If you are a zombie at a time when Mzali is entirely purged of foreigners, your duty is fulfilled and you are immediately destroyed."
+ },
+ {
+  "collection": "items",
+  "id": "scarab-cuirass",
+  "name": "Scarab Cuirass",
+  "fields": {
+   "level": 10,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "armor",
+   "category": "light",
+   "bulk": 1,
+   "price": {
+    "gp": 1000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "void",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "The cuirass of this *+1 deathless resilient leather armor*, stitched to resemble an Osiriani scarab beetle, feels strangely chitinous. You gain resistance 5 to void damage. --- **Activate** ⟨2⟩ command, Interact --- **Effect** You cast a 1st-rank Pest Form. You can only become a scarab beetle. --- **Craft Requirements** Supply one casting of *pest form*."
+ },
+ {
+  "collection": "items",
+  "id": "psychic-brigandine",
+  "name": "Psychic Brigandine",
+  "fields": {
+   "level": 13,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "armor",
+   "category": "heavy",
+   "bulk": 1,
+   "price": {
+    "gp": 3000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "mental",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Transparent crystals as hard as steel take the place of metal plates on this suit of +2 greater invisibility splint mail. Also known as a coat of a thousand thoughts in Vudra and Jalmeray, where it was first developed by psychic warriors, it makes your mind an indomitable fortress. You gain resistance 5 to mental damage. Whenever you use the armor to become invisible, you also become psychically invisible. Each time you would be affected by an effect with the mental trait while you are invisible, attempt a check. On a success, it doesn't affect you."
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-fire",
+  "name": "Energy Robe (Fire)",
+  "fields": {
+   "level": 7,
+   "traits": [
+    "invested",
+    "magical",
+    "transmutation"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 320
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-cold",
+  "name": "Energy Robe (Cold)",
+  "fields": {
+   "level": 8,
+   "traits": [
+    "invested",
+    "magical",
+    "transmutation"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 450
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "cold",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-acid",
+  "name": "Energy Robe (Acid)",
+  "fields": {
+   "level": 9,
+   "traits": [
+    "invested",
+    "magical",
+    "transmutation"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 575
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "acid",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-electricity",
+  "name": "Energy Robe (Electricity)",
+  "fields": {
+   "level": 10,
+   "traits": [
+    "invested",
+    "magical",
+    "transmutation"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 900
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "electricity",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "crown-of-the-fire-eater",
+  "name": "Crown of the Fire Eater",
+  "fields": {
+   "level": 8,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "worn",
+   "bulk": 0,
+   "price": {
+    "gp": 500
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "A wreath of flames dances around the rim of this golden crown. You gain resistance 5 to fire. --- **Activate** ⟨5⟩ command **Frequency** once per day **Trigger** You take fire damage --- **Effect** You absorb some of the flame that would harm you. Increase your fire resistance from the crown from 5 to 15. Just after taking any remaining fire damage, you regain a number of Hit Points equal to 15 or the fire damage dealt by the triggering attack before damage resistance, whichever is less."
+ },
+ {
+  "collection": "items",
+  "id": "mantle-of-the-grogrisant",
+  "name": "Mantle of the Grogrisant",
+  "fields": {
+   "level": 18,
+   "traits": [
+    "invested",
+    "primal"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "usage": "worncloak",
+   "bulk": 0.1,
+   "price": {
+    "gp": 22000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 15
+     },
+     {
+      "type": "piercing",
+      "value": 5
+     },
+     {
+      "type": "slashing",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This long, golden cloak is among the royal regalia of the emperors of Taldor. It was fashioned from the pelt of Grogrisant itself, after being slain by Taldaris, and Grogrisant's mane was fashioned into a thick fringe that runs all along the mantle's edges. The paws of the Grogrisant cross beneath the wearer's throat, giving you an imposing appearance. The *Mantle of the Grogrisant* grants you fire resistance 15 and physical resistance 5 (except bludgeoning). **Activate** ⟨1⟩ envision, Interact (evocation, incapacitation, light, primal, visual) **Frequency** once per day --- **Effect** You pull the hood of the mantle over your face, revealing the six eyes of Grogrisant. The mantle gives off a flash of blinding light in a . All enemies within this area must attempt a saving throw. On a failure, they're blinded for 1 minute. On a critical failure, they're permanently blinded."
+ },
+ {
+  "collection": "items",
+  "id": "redsand-hourglass",
+  "name": "Redsand Hourglass",
+  "fields": {
+   "level": 23,
+   "traits": [
+    "artifact",
+    "divine"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "usage": "held-in-one-hand",
+   "bulk": 1,
+   "price": {},
+   "passiveEffects": {
+    "immunities": [
+     "paralyzed",
+     "slowed",
+     "stunned"
+    ]
+   }
+  },
+  "text": "This platinum hourglass is filled with red sand, is decorated with imagery of roses and whippoorwills with tiny black onyx eyes, and has the ability to manipulate time. Once used by Pharasma herself, the *Redsand Hourglass* was stolen from Pharasma's court a millennia ago. While the hourglass is in your possession, you're immune to the paralyzed, slowed, and stunned conditions. **Activate** ⟨5⟩ Interact (divine, fortune, transmutation) **Frequency** once per day **Trigger** You fail a saving throw --- **Effect** You flip the hourglass upside down then immediately right it again, rewinding time by a few moments. Reroll the saving throw with a +4 circumstance bonus. You must use the results of this new saving throw. **Activate** ⟨2⟩ Interact (divine, transmutation) **Frequency** once per day --- **Effect** You flip the hourglass upside down, unhinging you from the flow of time. You become quickened for 1 minute. You can use this extra action only to Step, Stride, or Sustain a Spell. **Activate** ⟨3⟩ Interact (divine, transmutation) **Frequency** once per week --- **Effect** You flip the hourglass sideways, pausing time for everyone but yourself. You cast Freeze Time. **Destruction** The *Redsand Hourglass* is destroyed if it's used within the Dimension of Time."
+ },
+ {
+  "collection": "items",
+  "id": "arachnid-harness",
+  "name": "Arachnid Harness",
+  "fields": {
+   "level": 7,
+   "traits": [],
+   "rarity": "common",
+   "itemType": "armor",
+   "category": "light",
+   "bulk": 1,
+   "price": {
+    "gp": 360
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "poison",
+      "value": 2
+     }
+    ]
+   }
+  },
+  "text": "This *+1 leather armor* has four knobbed ribs that wrap around the torso. The armor grants you resistance 2 to poison damage. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once per day **Effect** The ribs from the armor spread into functional spider limbs. For 1 minute, you gain a climb Speed equal to half your land Speed and have your limbs free as you climb. If you use all your free limbs to help you Climb, your climb Speed equals your land Speed. --- **Requirements** The initial raw materials must include four intact legs from a giant tarantula."
+ },
+ {
+  "collection": "items",
+  "id": "arachnid-harness-greater",
+  "name": "Arachnid Harness (Greater)",
+  "fields": {
+   "level": 9,
+   "traits": [],
+   "rarity": "common",
+   "itemType": "armor",
+   "category": "light",
+   "bulk": 1,
+   "price": {
+    "gp": 700
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "poison",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This *+1 resilient leather armor* has four knobbed ribs that wrap around the torso. The armor grants you resistance 5 to poison damage. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once per 10 minutes **Effect** The ribs from the armor spread into functional spider limbs. For 1 minute, you gain a climb Speed equal to half your land Speed and have your limbs free as you climb. If you use all your free limbs to help you Climb, your climb Speed equals your land Speed. --- **Craft Requirements** The initial raw materials must include four intact legs from a goliath spider."
+ },
+ {
+  "collection": "items",
+  "id": "the-deck-of-destiny",
+  "name": "The Deck of Destiny",
+  "fields": {
+   "level": 25,
+   "traits": [
+    "artifact",
+    "invested",
+    "magical"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "usage": "held-in-one-hand",
+   "bulk": 0.1,
+   "price": {},
+   "passiveEffects": {
+    "immunities": [
+     "fortune",
+     "misfortune"
+    ]
+   }
+  },
+  "text": "Composed of 54 cards that are powerful in their own right, the Deck of Destiny epitomizes the powers of the harrow and divination. The deck only has its full suite of abilities while complete. Completing the deck requires all 54 cards to be placed together and shuffled into their complete state over the span of 1 minute; the cards merely being in proximity of each other is not enough to complete the deck. Once complete, the deck can be invested normally. While the complete deck is on your person or in hand and invested, you gain a natural insight into events to be. Any divination effects you create become heightened to 10th level for the purpose of determining their counteract rank. Additionally, divination effects you create gain a +4 item bonus to their DC and to spell attack rolls. The deck also helps you maintain control of your own fate, granting you immunity to fortune and misfortune effects, though you can be affected by such effects if you wish. --- **Activate** envision (daily preparations) When you perform your daily preparations, you can share the Deck of Destiny with your companions, allowing them to invest a hand of up to 5 cards each as if they carried the cards. When one of your companions activates one of their invested cards, an illusory image of the card appears in their hand, but the card's effects are otherwise unaltered. This lasts until the next time you perform your daily preparations. --- **Activate** ⟨5⟩ envision **Trigger** A creature you can see within 60 feet is about to attempt a check **Effect** You quickly draw a card to alter the triggering creature's fate. Choose either weal or woe. With weal (a fortune effect), the triggering creature rolls twice and takes the better result on their check. With woe (a misfortune effect), the triggering creature is forced to roll twice and take the worse result. If the card you drew is related to the check, such as drawing a card from the suit of shields for a Fortitude saving throw or a card from the suit of crowns for a Deception check, the creature is affected further. When choosing weal, the creature gains a +4 circumstance bonus to the triggering check. When faced with woe, the triggering creature takes a –4 circumstance penalty to the triggering check. Regardless of whether they faced weal or woe, the triggering creature becomes temporarily immune to this ability for 24 hours. --- **Activate** ⟨3⟩ envision, Interact **Effect** You call upon the deck in an attempt to put an end to a creature's life by visiting upon them a particularly grisly fate. Choose a creature within 60 feet. The deck casts Phantasmal Killer ( and , heightened to 10th level) on that creature. This effect doesn't have the emotion, fear, illusion, or mental traits, as it actually alters reality to rewrite a creature's doom. Regardless of the results, the creature becomes temporarily immune to this effect for 1 week. --- **Activate** 1 hour (envision, Interact) **Frequency** once per year **Effect** You attempt to undo a creature's untimely death and return them to life. The deck performs a 10th-rank Resurrect ritual. This ritual doesn't have any cost and doesn't require any secondary casters. Instead, you are the primary caster and must attempt a DC 50 Occultism check to complete the ritual as you perform a Harrowing, perform that same harrowing in reverse in an attempt to pull back the threads of fate, and perform one final harrowing to \"rewrite\" the target's destiny. --- **Destruction** The Deck of Destiny is inherently connected to the fate of Golarion. If the deck is used in a harrow reading to determine the destiny of the entire planet, or if the planet itself is destroyed or removed from this reality, the cards crumble to dust after the harrowing is complete or the planet is gone."
+ },
+ {
+  "collection": "items",
+  "id": "robe-of-stone",
+  "name": "Robe of Stone",
+  "fields": {
+   "level": 11,
+   "traits": [
+    "earth",
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "worngarment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 1400
+   },
+   "passiveEffects": {
+    "senses": [
+     {
+      "name": "tremorsense",
+      "range": 10,
+      "acuity": "imprecise"
+     }
+    ]
+   }
+  },
+  "text": "A *robe of stone*, decorated with patterns reminiscent of gems and geodes, constantly sheds tiny amounts of dust. While wearing it, you gain imprecise tremorsense in a radius of 10 feet, and you can speak and read Petran. Also, you can eat earth (soil, sand), gems (crystals, glass), and metal instead of food to meet your daily nutrition requirements. You find eating these materials as pleasant as food—the more valuable, the more delicious. **Activate—Become Stone** ⟨2⟩ (concentrate, manipulate, polymorph) **Frequency** once per day --- **Effect** The cloak casts Elemental Form on you, transforming you into an earth elemental. In addition to the spell's normal effects, you can Burrow through any earthen matter, including rock, moving at the spell's burrow Speed, leaving no tunnels or signs of your passing. Also, the range of the tremorsense you gain from the robe increases to 30 feet."
+ },
+ {
+  "collection": "items",
+  "id": "ash-gown",
+  "name": "Ash Gown",
+  "fields": {
+   "level": 7,
+   "traits": [
+    "fire",
+    "invested",
+    "magical"
+   ],
+   "rarity": "common",
+   "itemType": "equipment",
+   "usage": "wornclothing",
+   "bulk": 0.1,
+   "price": {
+    "gp": 350
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ],
+    "skills": {
+     "intimidation": 1
+    }
+   }
+  },
+  "text": "*Ash gowns* are formal wear spun from smoke, ash, and char collected from the Plane of Fire. Typically, they're voluminous floor-length dresses or three-piece suits, but regardless of their specific tailoring, *ash gowns* are always an ostentatious display of wealth and loyalty to the powers of the Plane of Fire. They're exceptionally popular in the courts of the Elemental Lords and among the high society of Medina Mudii'a. The gown grants you resistance 5 to fire and a +1 item bonus to Intimidation checks. --- **Activate—Blazing Promenade** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** The *ash gown* ignites in a ferocious blaze, flames licking the floor and trailing behind you like a dancing cape. You Stride and make a Strike at the end of your movement. During the Stride, your flames incinerate minor obstacles in your path; you ignore non-magical difficult terrain, and any you move through is destroyed. Creatures that are adjacent to you at any point during your movement take 2d6 damage with a save. A creature doesn't need to attempt this save more than once, even if you move past it multiple times."
+ },
+ {
+  "collection": "items",
+  "id": "demons-knot",
+  "name": "Demon's Knot",
+  "fields": {
+   "level": 15,
+   "traits": [
+    "artifact",
+    "cursed",
+    "evil",
+    "invested",
+    "magical",
+    "unholy"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "usage": "wornnecklace",
+   "bulk": 0.1,
+   "price": {},
+   "passiveEffects": {
+    "weaknesses": [
+     {
+      "type": "cold-iron",
+      "value": 10
+     },
+     {
+      "type": "holy",
+      "value": 10
+     }
+    ],
+    "immunities": [
+     "confused",
+     "controlled"
+    ]
+   }
+  },
+  "text": "The demon Kaivirris is housed in the magnificent ruby that serves as the centerpiece of this beautiful, goldplated, cold iron pendant necklace. Creatures within 30 feet of the *demon's knot* feel a subtle urge to acquire the necklace and take a –1 status penalty to Will saves. Upon donning the *demon's knot*, it fuses to you. You are subject to a Geas that requires you to free Kaivirris from his prison. If you die without completing this task, you become a sulfur zombie that always remains within 100 feet of the demon's knot and is under the control of whoever is cursed by the *demon's knot*. The *demon's knot* sustains your physical form and protects your mind from mental control. You don't need to eat or drink. You become immune to the confused and controlled conditions. The *demon's knot* corrupts anyone wearing it. You gain weakness to cold iron 10 and holy 10. Whenever you're within 60 feet of a celestial, you're Frightened 2 and can't reduce the value of the frightened condition below 2. --- **Activate** ⟨1⟩ command **Frequency** once per day **Effect** You allow Kaivirris's corrupting influence over you to outwardly manifest. For 1 minute, your features adopt a cruel cast, and you radiate a palpable aura of evil. During this time, you gain a +2 status bonus to Intimidation checks, and your Strikes deal an additional 1d6 damage. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day **Effect** The demon's knot casts Chilling Darkness."
+ },
+ {
+  "collection": "items",
+  "id": "icicle",
+  "name": "Icicle",
+  "fields": {
+   "level": 16,
+   "traits": [
+    "cold",
+    "reach"
+   ],
+   "rarity": "common",
+   "itemType": "weapon",
+   "category": "simple",
+   "usage": "held-in-two-hands",
+   "bulk": 2,
+   "price": {
+    "gp": 10000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This *+2 greater striking greater frost longspear* appears to be a single continuous icicle stretching over 6 feet long. The icicle automatically extinguishes non-magical fires in a . While wielding it, you gain fire resistance 5. --- **Activate—Quench Flames** ⟨2⟩ (concentrate, manipulate) **Effect** You swing the icicle into the area of an ongoing magical fire, and the spear attempts to counteract the fire with a counteract modifier of +27. If it fails, it can't attempt to counteract the same fire again. --- **Activate—Ice Spike** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** The icicle grows rapidly, piercing creatures in a . Each creature in the area takes damage with a . A creature that fails its save also takes 3d6 damage (double on a critical failure)."
+ },
+ {
+  "collection": "items",
+  "id": "storm-herald",
+  "name": "Storm Herald",
+  "fields": {
+   "level": 12,
+   "traits": [
+    "agile",
+    "backstabber",
+    "deadly-d6",
+    "electricity",
+    "finesse",
+    "magical",
+    "monk",
+    "sonic"
+   ],
+   "rarity": "uncommon",
+   "itemType": "weapon",
+   "category": "martial",
+   "usage": "held-in-one-hand",
+   "bulk": 0.1,
+   "price": {
+    "gp": 2000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "electricity",
+      "value": 5
+     },
+     {
+      "type": "sonic",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This iridescent, black *+2 striking Shock Thundering fighting fan* is crafted from the crackling feathers of thunderbirds to resemble one of the beast's mighty wings. Channeling the avian's tempestuous nature, you are surrounded by a stormy shell of wind and electricity while wielding a *storm herald*, granting you resistance 5 to electricity and sonic damage. --- **Activate—Call the Storm** ⟨2⟩ (concentrate, magical, manipulate) **Frequency** once per day **Effect** You channel the full might of a storm with you as its epicenter. All creatures within 30 feet take 3d10 electricity damage and 3d10 sonic damage ( save). --- **Craft Requirements** The initial raw materials must include feathers from a thunderbird."
+ },
+ {
+  "collection": "items",
+  "id": "ghoul-hide",
+  "name": "Ghoul Hide",
+  "fields": {
+   "level": 6,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "armor",
+   "category": "medium",
+   "bulk": 2,
+   "price": {
+    "gp": 220
+   },
+   "passiveEffects": {
+    "immunities": [
+     "ghoul stench"
+    ]
+   }
+  },
+  "text": "Stitched together from pieces of ghoul skin, this suit of *+1 hide armor* grants you a +1 item bonus to saving throws against curses and makes you immune to the stench of ghouls. Ghoul hide with a resilient rune increases the resilient rune's item bonus to saving throws against curses by 1 (maximum +4)."
+ },
+ {
+  "collection": "items",
+  "id": "heavenly-rolling-flames",
+  "name": "Heavenly Rolling Flames",
+  "fields": {
+   "level": 14,
+   "traits": [
+    "agile",
+    "disarm",
+    "finesse",
+    "magical",
+    "monk",
+    "parry",
+    "twin",
+    "versatile-p"
+   ],
+   "rarity": "uncommon",
+   "itemType": "weapon",
+   "category": "advanced",
+   "usage": "held-in-one-hand",
+   "bulk": 0.1,
+   "price": {
+    "gp": 4500
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "cold",
+      "value": 2
+     }
+    ]
+   }
+  },
+  "text": "This set of *+2 greater striking flaming feng huo lun* is warm to the touch and wreathed in the bright red and orange glow of a constantly flickering flame. While wielded, you gain cold resistance 2, and you treat the effects of environmental cold as one degree lower. Heavenly rolling flames can be Activated only if you wield two of them, and Activating them counts against the frequency for both weapons. **Activate—Rolling Flight** ⟨2⟩ (concentrate) **Frequency** once per hour --- **Effect** You attach the wheels to your feet, and their constant movement and energy allow you to move through the air. You gain a fly Speed of 20 feet for 10 minutes. While in use in this way, you can't wield the wheels as weapons. You can spend an Interact action at any time to end this effect and re-grip the heavenly rolling flames. If you lack enough free hands to wield them, you drop them in your space. **Activate—Speed of Heaven** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** You cast Haste as a 3rd-rank occult spell, but you can target only yourself."
+ },
+ {
+  "collection": "items",
+  "id": "navaratna-of-the-solar-ruby",
+  "name": "Navaratna of the Solar Ruby",
+  "fields": {
+   "level": 13,
+   "traits": [
+    "artifact",
+    "divine"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "usage": "worn",
+   "bulk": 0.1,
+   "price": {},
+   "passiveEffects": {
+    "immunities": [
+     "starvation"
+    ]
+   }
+  },
+  "text": "These nine flawless gems are set within a golden necklace, their centerpiece a holy ruby pulled from the center of a sun. So long as you are wearing the navaratna, you ignore all environmental effects due to temperature, do not take penalties due to wind, and ignore all damage and effects from droughts, floods, and earthquakes. You are also immune to damage from starvation. The navaratna does not otherwise grant you resistance against damage (such as fire or cold damage). **Activate—Sutra of the Flawless Servant** ⟨5⟩ (concentrate, divine, fortune) **Frequency** once per hour **Trigger** An ally within 30 feet fails a saving throw against an environmental effect or a spell with the air, earth, fire, or water trait --- **Effect** You offer a prayer for your divine protection to extend to your companion. The creature rerolls the triggering saving throw with a +2 item bonus. They must take the new result, even if it is worse. --- **Destruction** The navaratna must be swallowed by a fiendish divine lion; the lion must then by killed by drowning in a lake of naga venom and left to rot for a year. At the stroke of midnight on the final day, the artifact is destroyed."
+ },
+ {
+  "collection": "items",
+  "id": "final-scalecloak",
+  "name": "Final Scalecloak",
+  "fields": {
+   "level": 20,
+   "traits": [
+    "artifact",
+    "invested",
+    "magical",
+    "mythic"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "usage": "worncloak",
+   "bulk": 0.1,
+   "price": {},
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "physical",
+      "value": 15
+     },
+     {
+      "type": "precision",
+      "value": 15
+     }
+    ],
+    "immunities": [
+     "electricity"
+    ],
+    "speeds": {
+     "fly": 60
+    }
+   }
+  },
+  "text": "Fashioned from a swath of Mogaru's red-and-black hide and trimmed with Agyra's rough scales in green, blue, and white, this cloak draws upon the power of both kaiju, but at considerable cost. Any kaiju within a 5-mile radius of the *Final Scalecloak* can sense the presence and nature of the item, and can also determine whether it's being worn by a mortal. This sense grows stronger as the item and kaiju near one another, until the kaiju can pinpoint exactly where the cloak is and who currently possesses it. When worn, the *Final Scalecloak* grants you resistance 15 to physical and precision damage, immunity to electricity, and a Fly speed of 60 feet. You are unaffected by strong winds while flying. --- **Activate—Commune with Kaiju** ⟨2⟩ (concentrate, manipulate, primal) **Frequency** once per day **Effect** Spend a Mythic Point; you gain the effects of a 6th-rank Telepathy spell but can use it only to communicate with Gargantuan animals and beasts. Most kaiju are hostile toward you for wearing the *Final Scalecloak*, however, requiring great effort to calm them enough to have a conversation. --- **Activate—Embody the Storm** ⟨2⟩ (concentrate, manipulate, primal) **Frequency** once per hour **Effect** Spend a Mythic Point; a nimbus of crackling electricity surrounds you for 1 minute. You gain a +4 status bonus to AC against ranged projectiles that are at least partly made of metal. If a foe attempts to Strike you with an unarmed attack or melee attack with a weapon at least partly made of metal, that creature takes 3d10 damage ( save). --- **Destruction** The *Final Scalecloak* is torn to shreds if the wearer is struck by an attack or effect from both Agyra and Mogaru within the same round."
+ },
+ {
+  "collection": "items",
+  "id": "choral-toga",
+  "name": "Choral Toga",
+  "fields": {
+   "level": 19,
+   "traits": [
+    "apex",
+    "holy",
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "usage": "wornclothing",
+   "bulk": 0.1,
+   "price": {
+    "gp": 40000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "poison",
+      "value": 20
+     }
+    ],
+    "immunities": [
+     "deafened"
+    ]
+   }
+  },
+  "text": "This elegant toga is infused with inexhaustible energy to enjoy life possessed by azatas. You gain resistance to poison 20 and become immune to deafened. When you invest in the robes, you either increase your Constitution score by 2 or increase it to 18, whichever would give you a higher score. If you are unholy, you become deafened while wearing the toga. --- **Activate—Elysium's Gasp** ⟨5⟩ (concentrate) **Frequency** once per hour **Trigger** You are exposed to an inhaled poison **Effect** Purifying gusts of sweet-scented air swirl around you, making you immune to inhaled poisons for 1 minute. --- **Activate—Elysium's Breath** 1 minute (concentrate, healing) **Frequency** once per day **Effect** The air around the robe constantly circulates to keep you healthy. For 8 hours, you become immune to diseases spread via inhalation, olfactory effects, and environmental effects that would prevent you from breathing (including being underwater or from being strangled)."
+ },
+ {
+  "collection": "items",
+  "id": "zeto-geki-hide-armor",
+  "name": "Zeto Geki Hide Armor",
+  "fields": {
+   "level": 8,
+   "traits": [
+    "earth",
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 2,
+   "price": {
+    "gp": 500
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Zeto Geki Hide Armor May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 500 gp Usage worn armor Bulk 2 Base Armor Hide Armor This +1 fire-resistant hide armor is adorned with the shale-like scales of the zetogeki, a giant reptile that dwells near sites of volcanic activity. Like the armor’s namesake, you can adjust the scales to better absorb kinetic energy at the cost of some mobility. Activate Shift Scales; Frequency once per day; Effect Until the end of your next turn, you gain resistance 5 to bludgeoning, piercing, and slashing damage, but your Speeds are reduced by 10 feet (minimum 5 feet)."
+ },
+ {
+  "collection": "items",
+  "id": "cindergrass-cloak",
+  "name": "Cindergrass Cloak",
+  "fields": {
+   "level": 7,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "worncloak",
+   "bulk": 0.1,
+   "price": {
+    "gp": 250
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This hooded cloak woven of long, waxy grass is designed so it can close over your entire body. While wearing this cloak, you have resistance 5 to fire. --- **Shed Cinders** ⟨5⟩ (manipulate) **Frequency** once per hour **Trigger** You would take fire damage **Effect** With a flick of the cloak, you deflect and smother the flames. The cloak's resistance to fire increases to 15 against the triggering effect. Until the end of your next turn, your flat check to remove persistent fire damage is 10 instead of 15, which is reduced to 5 if another creature uses a particularly appropriate action to help. If you take at least 5 points of fire damage after applying the fire resistance, the cloak gains the broken condition."
+ },
+ {
+  "collection": "items",
+  "id": "aurochs-hide-armor",
+  "name": "Aurochs Hide Armor",
+  "fields": {
+   "level": 10,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "armor",
+   "category": "medium",
+   "bulk": 2,
+   "price": {
+    "gp": 1000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "poison",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Made of the sturdy, thick hide of the aurochs and tempered to be both flexible and durable, this *+1 resilient hide armor* is imbued with the aurochs' natural defenses against venomous predators. You gain resistance 5 to poison damage. **Activate—Stubborn Skin** ⟨1⟩ You pull the layers of the armor taut, stiffening your body against incoming forces for 1 minute. While the armor is taut, you have a –1 penalty to Reflex saves and a +2 item bonus to Fortitude saves."
+ },
+ {
+  "collection": "items",
+  "id": "heros-plate",
+  "name": "Hero's Plate",
+  "fields": {
+   "level": 10,
+   "traits": [
+    "bulwark"
+   ],
+   "rarity": "rare",
+   "itemType": "armor",
+   "category": "heavy",
+   "bulk": 4,
+   "price": {
+    "gp": 1000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "mental",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Golden images of heroic deeds decorate the black plates of this *+1 resilient full plate*. You gain resistance 5 to mental damage and a +1 status bonus to saves against fear. **Activate—Personal Legend** ⟨1⟩ (concentration) **Frequency** once per day --- **Effect** The scenes depicted on your armor shift and change, making room to accommodate your current heroic feats. You cast Heroism on yourself."
+ },
+ {
+  "collection": "items",
+  "id": "greater-heros-plate",
+  "name": "Greater Hero’s Plate",
+  "fields": {
+   "level": 18,
+   "traits": [
+    "magical"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "bulk": 4,
+   "price": {
+    "gp": 22500
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "mental",
+      "value": 10
+     }
+    ]
+   }
+  },
+  "text": "Hero's Plate May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 77 Usage worn armor Bulk 4 Base Armor Full Plate Golden images of heroic deeds decorate the black plates of this +1 resilient full plate. You gain resistance 5 to mental damage and a +1 status bonus to saves against fear. Activate—Personal Legend (concentrate) Frequency once per day; Effect The scenes depicted on your armor shift and change, making room to accommodate your current heroic feats. You cast heroism on yourself. Hero’s Plate Source Pathfinder #202: Severed at the Root pg. 77 Price 1,000 gp Greater Hero’s Plate Source Pathfinder #202: Severed at the Root pg. 77 Price 22,500 gp The armor is +2 greater resilient full plate, the resistance increases to 10, the status bonus increases to +2, and heroism is heightened to 6th-rank."
+ },
+ {
+  "collection": "items",
+  "id": "anima-robe-artifact",
+  "name": "Anima Robe (Artifact)",
+  "fields": {
+   "level": 20,
+   "traits": [
+    "artifact",
+    "illusion",
+    "intelligent",
+    "invested",
+    "magical"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "passiveEffects": {
+    "skills": {
+     "performance": 3
+    },
+    "resistances": [
+     {
+      "type": "mental",
+      "value": 15
+     }
+    ]
+   }
+  },
+  "text": "Anima Robe (Artifact) May contain spoilers from Spore War Source Pathfinder #212: A Voice in the Blight pg. 72 Usage worn garment Bulk L Perception +33; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Deception +35, Occultism +34, Performance +35 Int +6, Wis +5, Cha +7 Will +33 The artistic echo of the Ekujae hero Iyalirrin animates the Anima Robe’s stitching to display embroidered reactions to situations experienced by the wearer. The Anima Robe’s telepathic voice is filled with confidence (almost to the point of cockiness) and is supportive, often encouraging his partner to take risky or showy actions yet never to the extent that would put them in significant harm’s way. The Anima Robe grants a +3 item bonus to Diplomacy checks made to Make an Impression and to all Performance checks, and you gain resistance 15 to mental damage. Activate—Billowing Distraction (concentrate) Effect The Anima Robe billows as if in a blustery wind and attempts to Feint a creature you’re adjacent to. Activate—Who Am I? (concentrate) Effect The robe’s hood rises up over your head, casting a 4th-rank illusory disguise to your specifications. Activate—Who Are We? (concentrate) Frequency once per hour; Effect The robe’s hem swishes, casting a 7th-rank illusory disguise to your specifications. Activate—Who Are They? (concentrate) Frequency once per hour; Effect An image of a creature shows up in the robe’s stitching, then appears to come to life; the robe casts an 8th-rank illusory creature to your specifications. The robe can use an action to Sustain this activation for up to 1 minute. Nethys Note: the non-artifact version of the item is here. This artifact's heroic legacy, and its subsequent skills and ability attribute, are presented here."
+ },
+ {
+  "collection": "items",
+  "id": "slithermaws-bane-artifact",
+  "name": "Slithermaw's Bane (Artifact)",
+  "fields": {
+   "level": 20,
+   "traits": [
+    "artifact",
+    "intelligent",
+    "invested",
+    "magical"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "poison",
+      "value": 15
+     }
+    ]
+   }
+  },
+  "text": "Slithermaw's Bane (Artifact) May contain spoilers from Spore War Source Pathfinder #212: A Voice in the Blight pg. 73 Usage worn armor Bulk L Perception +34; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Intimidation +35, Society +33, Warfare Lore +33 Int +5, Wis +6, Cha +7 Will +34 The heroism of Kyloss Syndar, founder of Greengold and slayer of the demonic hydra Slithermaw, imprinted this suit of armor with a gleaming, prismatic sheen that sparkles under bright light. The telepathic voice of Slithermaw’s Bane is boisterous and grandiose, encouraging his partner to take up leadership roles while also providing advice to maintain loyalty and strengthen bonds of friendship. Slithermaw’s Bane is a suit of +3 major resilient greater fortification high-grade elven chain that grants his wearer poison resistance 15, and the item bonus his resilient rune grants to saving throws versus poison increases by 1 to +4. Activate—Calistria’s Sting (concentrate, poison) Frequency once per day; Trigger A creature grapples you; Effect Poison wells up from the armor’s links to seep into the triggering creature’s body, causing it to suffer wracking pains as if it was being stung by thousands of angry wasps. The triggering creature takes 7d6 persistent poison damage (DC 34 basic Fortitude save); this persistent damage can’t be ended as long as the triggering creature continues to grapple you. Slithermaw’s Bane can’t activate Calistria’s Sting using his actions. Activate—Purge Toxins (concentrate) Frequency once per minute; Effect Slithermaw’s Bane attempts to counteract a disease or poison affliction affecting you, with a counteract rank of 9th and a +25 modifier to the roll (+30 modifier if the source of the disease or poison effect on you was created by a fiend). Activate—Adaptation (concentrate) Frequency once per hour; Effect You alter the exterior of the armor to better adapt to the surrounding terrain: aquatic, arctic, desert, forest, mountain, plains, sky, swamp, or underground. You ignore difficult terrain within the chosen environment and gain a +2 circumstance bonus to saving throws against environmental hazards, natural disasters, and extreme temperatures that originate from that terrain. You’re also protected from severe and extreme heat or severe and extreme cold (your choice when you activate this ability). This effect lasts until your next daily preparations or the next time you activate it, whichever comes first. _Nethys Note: the non-artifact version of the item is here. This artifact's heroic legacy, and its subsequent skills and ability attribute, are presented here. _"
+ },
+ {
+  "collection": "items",
+  "id": "ankhrav-carapace",
+  "name": "Ankhrav Carapace",
+  "fields": {
+   "level": 7,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "armor",
+   "category": "light",
+   "bulk": 1,
+   "price": {
+    "gp": 350
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "acid",
+      "value": 2
+     }
+    ]
+   }
+  },
+  "text": "This *+1 leather armor* has interlocking panels and short bristles along the outer edges of the arms and legs. While wearing this armor, you gain resistance 2 to acid damage. **Activate—Dig** ⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** The bristles along your limbs enable you to tunnel through dirt and sand. For 1 minute, you gain a burrow Speed equal to half your land Speed."
+ },
+ {
+  "collection": "items",
+  "id": "belkzen-deadsmasher",
+  "name": "Belkzen Deadsmasher",
+  "fields": {
+   "level": 13,
+   "traits": [
+    "magical",
+    "versatile-p"
+   ],
+   "rarity": "uncommon",
+   "itemType": "weapon",
+   "category": "simple",
+   "usage": "held-in-one-hand",
+   "bulk": 1,
+   "price": {
+    "gp": 2800
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "void",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "The head of this imposing steel *+2 greater striking vitalizing morningstar* is shaped to resemble a cluster of snarling orc faces, their sharpened tusks serving as the spikes. Forged deep in the Hold of Belkzen and wielded by elite warriors tasked with protecting their lands from the servants of the Whispering Tyrant, this brutal weapon grants void resistance 5 to any living creature who wields it. --- **Activate—Untouchable Spirit** ⟨5⟩ (fortune) **Frequency** once per day **Trigger** You fail or critically fail a saving throw against an effect originating from an undead creature that would inflict void damage **Effect** Reroll the saving throw and take the better result."
+ },
+ {
+  "collection": "items",
+  "id": "greater-belkzen-deadsmasher",
+  "name": "Greater Belkzen Deadsmasher",
+  "fields": {
+   "level": 18,
+   "traits": [
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 1,
+   "price": {
+    "gp": 22000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "void",
+      "value": 10
+     }
+    ]
+   }
+  },
+  "text": "Belkzen Deadsmasher Source Battlecry! pg. 126 Usage held in 1 hand Bulk 1 Base Weapon Morningstar The head of this imposing steel +2 greater striking vitalizing morningstar is shaped to resemble a cluster of snarling orc faces, their sharpened tusks serving as the spikes. Forged deep in the Hold of Belkzen and wielded by elite warriors tasked with protecting their lands from the servants of the Whispering Tyrant, this brutal weapon grants void resistance 5 to any living creature who wields it. Activate—Untouchable Spirit (fortune) Frequency once per day; Trigger You fail or critically fail a saving throw against an effect originating from an undead creature that would inflict void damage; Effect Reroll the saving throw and take the better result. Belkzen Deadsmasher Source Battlecry! pg. 126 Price 2,800 gp Greater Belkzen Deadsmasher Source Battlecry! pg. 126 Price 22,000 gp This +3 greater striking ghost touch greater vitalizing morningstar grants its wielder void resistance 10."
+ },
+ {
+  "collection": "items",
+  "id": "fireproof-gloves",
+  "name": "Fireproof Gloves",
+  "fields": {
+   "level": 9,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "common",
+   "itemType": "equipment",
+   "usage": "worngloves",
+   "bulk": 0.1,
+   "price": {
+    "gp": 650
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "First developed by blacksmiths to move burning hot workpieces around, fireproof gloves then became popular with soldiers responsible for disabling bombs and magical traps. The thick tan gloves come up over the arm. When wearing these gloves, you gain fire resistance 5. **Activate—Release Heat** ⟨1⟩ (concentrate, fire) **Frequency** once per day **Requirements** You have a free hand --- **Effect** You take the heat that's built up in your gloves and discharge it onto an enemy. You deal 6d8 damage to one creature within reach ( save)."
+ },
+ {
+  "collection": "items",
+  "id": "greater-fireproof-gloves",
+  "name": "Greater Fireproof Gloves",
+  "fields": {
+   "level": 13,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "common",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 2500
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 10
+     }
+    ]
+   }
+  },
+  "text": "Fireproof Gloves Source Battlecry! pg. 149 Usage worn gloves Bulk L First developed by blacksmiths to move burning hot workpieces around, fireproof gloves then became popular with soldiers responsible for disabling bombs and magical traps. The thick tan gloves come up over the arm. When wearing these gloves, you gain fire resistance 5. Activate—Release Heat (concentrate, fire) Frequency once per day; Requirements You have a free hand; Effect You take the heat that’s built up in your gloves and discharge it onto an enemy. You deal 6d8 fire damage to one creature within reach (DC 26 basic Reflex save). Fireproof Gloves Source Battlecry! pg. 149 Price 650 gp Greater Fireproof Gloves Source Battlecry! pg. 149 Price 2,500 gp You gain fire resistance 10 when wearing the gloves. When you Release Heat, you instead deal 10d8 fire damage, and the DC is 31."
+ },
+ {
+  "collection": "items",
+  "id": "pickled-demon-tongue",
+  "name": "Pickled Demon Tongue",
+  "fields": {
+   "level": 3,
+   "traits": [
+    "acid",
+    "divine",
+    "spellheart"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "affixed-to-armor-or-a-weapon",
+   "bulk": 0,
+   "price": {
+    "gp": 60
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "acid",
+      "value": 2
+     }
+    ]
+   }
+  },
+  "text": "This small crystal vial contains the forked end of a demon's tongue, preserved in brine. The spell attack roll of any spell cast by Activating this item is +7, and the spell DC is 17. - **Armor** You gain resistance 2 to acid and attacks by demons. - **Weapon** After you cast an acid spell by Activating the *pickled demon tongue*, your Strikes with the weapon deal an additional 1d4 damage until end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Caustic Blast."
+ },
+ {
+  "collection": "items",
+  "id": "greater-pickled-demon-tongue",
+  "name": "Greater Pickled Demon Tongue",
+  "fields": {
+   "level": 8,
+   "traits": [
+    "acid",
+    "divine",
+    "spellheart"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 460
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "acid",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Pickled Demon Tongue May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 232 Usage affixed to armor or a weapon Bulk L This small crystal vial contains the forked end of a demon’s tongue, preserved in brine. The spell attack roll of any spell cast by Activating this item is +7, and the spell DC is 17. Armor You gain resistance 2 to acid and attacks by demons. Weapon After you cast an acid spell by Activating the pickled demon tongue, your Strikes with the weapon deal an additional 1d4 acid damage until end of your next turn Activate Cast a Spell; Effect You cast caustic blast. Pickled Demon Tongue Source Gatewalkers (Hardcover) pg. 233 Price 60 gp Greater Pickled Demon Tongue Source Gatewalkers (Hardcover) pg. 233 Price 460 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, the spell attack roll is +14, and the spell DC is 24. Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank acidic burst. Major Pickled Demon Tongue Source Gatewalkers (Hardcover) pg. 233 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, the spell attack roll is +19, and the spell DC is 29. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank acid grip. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank acidic burst."
+ },
+ {
+  "collection": "items",
+  "id": "major-pickled-demon-tongue",
+  "name": "Major Pickled Demon Tongue",
+  "fields": {
+   "level": 12,
+   "traits": [
+    "acid",
+    "divine",
+    "spellheart"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 1750
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "acid",
+      "value": 10
+     }
+    ]
+   }
+  },
+  "text": "Pickled Demon Tongue May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 232 Usage affixed to armor or a weapon Bulk L This small crystal vial contains the forked end of a demon’s tongue, preserved in brine. The spell attack roll of any spell cast by Activating this item is +7, and the spell DC is 17. Armor You gain resistance 2 to acid and attacks by demons. Weapon After you cast an acid spell by Activating the pickled demon tongue, your Strikes with the weapon deal an additional 1d4 acid damage until end of your next turn Activate Cast a Spell; Effect You cast caustic blast. Pickled Demon Tongue Source Gatewalkers (Hardcover) pg. 233 Price 60 gp Greater Pickled Demon Tongue Source Gatewalkers (Hardcover) pg. 233 Price 460 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, the spell attack roll is +14, and the spell DC is 24. Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank acidic burst. Major Pickled Demon Tongue Source Gatewalkers (Hardcover) pg. 233 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, the spell attack roll is +19, and the spell DC is 29. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank acid grip. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank acidic burst."
+ },
+ {
+  "collection": "items",
+  "id": "polished-demon-horn",
+  "name": "Polished Demon Horn",
+  "fields": {
+   "level": 3,
+   "traits": [
+    "divine",
+    "spellheart"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "affixed-to-armor-or-a-weapon",
+   "bulk": 0,
+   "price": {
+    "gp": 55
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "unholy",
+      "value": 2
+     }
+    ]
+   }
+  },
+  "text": "This spellheart is fashioned from the tip of a demon's horn that's been polished until smooth and shiny. The spell DC of any spell cast by Activating this item is 17. - **Armor** You gain resistance 2 to unholy. - **Weapon** After you cast an enchantment spell by Activating the *horn*, your Strikes with the weapon deal an additional 1d4 mental damage until end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Daze ()."
+ },
+ {
+  "collection": "items",
+  "id": "greater-polished-demon-horn",
+  "name": "Greater Polished Demon Horn",
+  "fields": {
+   "level": 8,
+   "traits": [
+    "divine",
+    "spellheart"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 450
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "unholy",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "Polished Demon Horn May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 233 Usage affixed to armor or a weapon Bulk L This spellheart is fashioned from the tip of a demon’s horn that’s been polished until smooth and shiny. The spell DC of any spell cast by Activating this item is 17. Armor You gain resistance 2 to unholy. Weapon After you cast an enchantment spell by Activating the horn, your Strikes with the weapon deal an additional 1d4 mental damage until end of your next turn. Activate Cast a Spell; Effect You cast daze. Polished Demon Horn Source Gatewalkers (Hardcover) pg. 233 Price 55 gp Greater Polished Demon Horn Source Gatewalkers (Hardcover) pg. 233 Price 450 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, and the spell DC is 24. Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank fear. Major Polished Demon Horn Source Gatewalkers (Hardcover) pg. 233 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, and the spell DC is 29. Activate Cast a Spell; Frequency once per day; Effect You cast outcast’s curse. Activate Cast a Spell; Frequency once per day; Effect You cast vision of death."
+ },
+ {
+  "collection": "items",
+  "id": "major-polished-demon-horn",
+  "name": "Major Polished Demon Horn",
+  "fields": {
+   "level": 12,
+   "traits": [
+    "divine",
+    "spellheart"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "bulk": 0.1,
+   "price": {
+    "gp": 1750
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "unholy",
+      "value": 10
+     }
+    ]
+   }
+  },
+  "text": "Polished Demon Horn May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 233 Usage affixed to armor or a weapon Bulk L This spellheart is fashioned from the tip of a demon’s horn that’s been polished until smooth and shiny. The spell DC of any spell cast by Activating this item is 17. Armor You gain resistance 2 to unholy. Weapon After you cast an enchantment spell by Activating the horn, your Strikes with the weapon deal an additional 1d4 mental damage until end of your next turn. Activate Cast a Spell; Effect You cast daze. Polished Demon Horn Source Gatewalkers (Hardcover) pg. 233 Price 55 gp Greater Polished Demon Horn Source Gatewalkers (Hardcover) pg. 233 Price 450 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, and the spell DC is 24. Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank fear. Major Polished Demon Horn Source Gatewalkers (Hardcover) pg. 233 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, and the spell DC is 29. Activate Cast a Spell; Frequency once per day; Effect You cast outcast’s curse. Activate Cast a Spell; Frequency once per day; Effect You cast vision of death."
+ },
+ {
+  "collection": "items",
+  "id": "sihedron-ring",
+  "name": "Sihedron Ring",
+  "fields": {
+   "level": 6,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "usage": "worn",
+   "bulk": 0,
+   "price": {
+    "gp": 250
+   },
+   "passiveEffects": {
+    "immunities": [
+     "severe cold",
+     "severe heat"
+    ]
+   }
+  },
+  "text": "Though simple in appearance, Sihedron rings are among the most treasured tokens a runelord would bestow on an agent in times past. Like the more common Sihedron medallion, Sihedron rings created by the original runelords allow for easier scrying of and speaking through those who wear them; Sihedron rings created in modern times don't have this disadvantage. As long as it's invested, a Sihedron ring protects its wearer from environmental extremes, rendering them immune to severe cold and heat. The ring also grants a +1 status bonus to AC against attacks made during reactions. **Activate—Costume Change** ⟨1⟩ (concentrate) --- **Effect** You change the shape and appearance of any armor or clothing you wear to appear as ordinary or fancy clothing or armor of your imagining. The actual statistics for what you're wearing doesn't change. Only a creature that's benefiting from truesight or a similar effect can attempt to disbelieve this illusion, with a DC of 20."
+ },
+ {
+  "collection": "items",
+  "id": "greater-sihedron-ring",
+  "name": "Greater Sihedron Ring",
+  "fields": {
+   "level": 12,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "bulk": 0,
+   "price": {
+    "gp": 200
+   },
+   "passiveEffects": {
+    "immunities": [
+     "severe cold",
+     "severe heat"
+    ]
+   }
+  },
+  "text": "Sihedron Ring May contain spoilers from Revenge of the Runelords Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Usage worn Though simple in appearance, Sihedron rings are among the most treasured tokens a runelord would bestow on an agent in times past. Like the more common Sihedron medallion, Sihedron rings created by the original runelords allow for easier scrying of and speaking through those who wear them; Sihedron rings created in modern times don’t have this disadvantage. As long as it’s invested, a Sihedron ring protects its wearer from environmental extremes, rendering them immune to severe cold and heat. The ring also grants a +1 status bonus to AC against attacks made during reactions. Activate—Costume Change (concentrate) Effect You change the shape and appearance of any armor or clothing you wear to appear as ordinary or fancy clothing or armor of your imagining. The actual statistics for what you’re wearing doesn’t change. Only a creature that’s benefiting from truesight or a similar effect can attempt to disbelieve this illusion, with a DC of 20. Sihedron Ring Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 25 gp Usage worn Activate (concentrate) Greater Sihedron Ring Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 70 Price 200 gp Usage worn Activate (concentrate) The ring protects from extreme cold or heat and grants a +2 status bonus to AC against attacks made during reactions. Costume Change becomes a free action, with a DC of 29."
+ },
+ {
+  "collection": "items",
+  "id": "resolute-mind-wrap",
+  "name": "Resolute Mind Wrap",
+  "fields": {
+   "level": 7,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "usage": "wornheadwear",
+   "bulk": 0,
+   "price": {
+    "gp": 360
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "mental",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "The followers of the Tan Sugi monastery understood the value of protecting the mind from the intrusion of violence and anger and infused this strip of striped green and brown cloth with their beliefs. Wrapped around the head, the stripes almost evoke the patterns of sugi branches coiled around the wearer's skull. The *resolute mind wrap* grants you mental resistance 5. **Activate—Shield Thoughts** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You attempt a Will saving throw against a mental effect --- **Effect** The *resolute mind wrap* clings more tightly to your head, granting you a +1 item bonus to your Will saving throw. If you succeed at this saving throw, the resistance to mental damage granted by the *resolute mind wrap* increases to 10 for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "anima-robe-heroic",
+  "name": "Anima Robe (Heroic)",
+  "fields": {
+   "level": 20,
+   "traits": [
+    "apex",
+    "artifact",
+    "illusion",
+    "intelligent",
+    "invested",
+    "magical"
+   ],
+   "rarity": "unique",
+   "itemType": "equipment",
+   "usage": "worngarment",
+   "bulk": 0.1,
+   "price": {},
+   "passiveEffects": {
+    "skills": {
+     "performance": 3
+    },
+    "resistances": [
+     {
+      "type": "mental",
+      "value": 15
+     }
+    ]
+   }
+  },
+  "text": "**Perception** +33; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Deception +35, Occultism +34, Performance +35 **Int** +6, **Wis** +5, **Cha** +7 **Will** +33 --- The artistic echo of the Ekujae hero Iyalirrin animates the *Anima Robe's* stitching to display embroidered reactions to situations experienced by the wearer. The *Anima Robe's* telepathic voice is filled with confidence (almost to the point of cockiness) and is supportive, often encouraging his partner to take risky or showy actions yet never to the extent that would put them in significant harm's way. The *Anima Robe* grants a +3 item bonus to Diplomacy checks made to Make an Impression and to all Performance checks, and you gain resistance 15 to mental damage. --- **Activate–Billowing Distraction** ⟨2⟩ (concentrate) **Effect** The *Anima Robe* billows as if in a blustery wind and attempts to Feint a creature you're adjacent to. --- **Activate–Who Am I?** ⟨2⟩ (concentrate) **Effect** The robe's hood rises up over your head, casting a 4th-rank Illusory Disguise to your specifications. --- **Activate–Who Are We?** ⟨2⟩ (concentrate) **Frequency** once per hour **Effect** The robe's hem swishes, casting a 7th-rank *illusory disguise* to your specifications. --- **Activate—Who Are They?** ⟨2⟩ (concentrate) **Frequency** once per hour **Effect** An image of a creature shows up in the robe's stitching, then appears to come to life; the robe casts an 8th-rank Illusory Creature to your specifications. The robe can use an action to Sustain this activation for up to 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "chromatic-robe",
+  "name": "Chromatic Robe",
+  "fields": {
+   "level": 16,
+   "traits": [
+    "invested",
+    "magical",
+    "mythic"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "usage": "worn",
+   "bulk": 0,
+   "price": {
+    "gp": 9500
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "acid",
+      "value": 5
+     },
+     {
+      "type": "cold",
+      "value": 5
+     },
+     {
+      "type": "electricity",
+      "value": 5
+     },
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "The fabric of this robe is infused with ever-shifting magical energy. The robe grants resistance 5 to acid, cold, electricity, and fire damage. **Activate—Align Energy** ⟨1⟩ (concentrate) --- **Effect** Spend 1 Mythic Point. You align the robe's magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose acid, cold, electricity, or fire. The robe grants resistance 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again."
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-of-acid",
+  "name": "Energy Robe of Acid",
+  "fields": {
+   "level": 9,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "wornclothing",
+   "bulk": 0.1,
+   "price": {
+    "gp": 575
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "acid",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. You gain resistance 5 to acid. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day --- **Effect** You speak a command word, and the embroidered threads in the robe glow vividly. You gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds."
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-of-cold",
+  "name": "Energy Robe of Cold",
+  "fields": {
+   "level": 8,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "wornclothing",
+   "bulk": 0.1,
+   "price": {
+    "gp": 450
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "cold",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. You gain resistance 5 to cold. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day --- **Effect** You speak a command word, and the embroidered threads in the robe glow vividly. You gain the effects of Water Walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it."
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-of-electricity",
+  "name": "Energy Robe of Electricity",
+  "fields": {
+   "level": 10,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "wornclothing",
+   "bulk": 0.1,
+   "price": {
+    "gp": 900
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "electricity",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. You gain resistance 5 to electricity. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day --- **Effect** You speak a command word, and the embroidered threads in the robe glow vividly. You gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-of-fire",
+  "name": "Energy Robe of Fire",
+  "fields": {
+   "level": 7,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "equipment",
+   "usage": "wornclothing",
+   "bulk": 0.1,
+   "price": {
+    "gp": 320
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. You gain resistance 5 to fire. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day --- **Effect** You speak a command word, and the embroidered threads in the robe glow vividly. You gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up."
+ },
+ {
+  "collection": "items",
+  "id": "frost-brand",
+  "name": "Frost Brand",
+  "fields": {
+   "level": 16,
+   "traits": [
+    "cold",
+    "magical",
+    "versatile-p"
+   ],
+   "rarity": "common",
+   "itemType": "weapon",
+   "category": "martial",
+   "usage": "held-in-two-hands",
+   "bulk": 2,
+   "price": {
+    "gp": 10000
+   },
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ]
+   }
+  },
+  "text": "The blade of this *+2 greater striking Frost (Greater) greatsword* appears to be nothing but icy shards. The *frost brand* automatically extinguishes non-magical fires in a . While wielding it, you gain fire resistance 5. --- **Activate** ⟨2⟩ command, Interact **Effect** You swing the *frost brand* into the area of an ongoing magical fire, and the blade attempts to counteract the fire with a counteract modifier of +27. If it fails, it can't attempt to counteract the same fire again."
+ },
+ {
+  "collection": "items",
+  "id": "sihedron-ring-greater",
+  "name": "Sihedron Ring (Greater)",
+  "fields": {
+   "level": 12,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "itemType": "equipment",
+   "usage": "worn",
+   "bulk": 0,
+   "price": {
+    "gp": 2000
+   },
+   "passiveEffects": {
+    "immunities": [
+     "severe cold",
+     "severe heat"
+    ]
+   }
+  },
+  "text": "Though simple in appearance, Sihedron rings are among the most treasured tokens a runelord would bestow on an agent in times past. Like the more common Sihedron medallion, Sihedron rings created by the original runelords allow for easier scrying of and speaking through those who wear them; Sihedron rings created in modern times don't have this disadvantage. As long as it's invested, a Sihedron ring protects its wearer from environmental extremes, rendering them immune to severe cold and heat. The ring also grants a +2 status bonus to AC against attacks made during reactions. **Activate—Costume Change** ⟨1⟩ (concentrate) --- **Effect** You change the shape and appearance of any armor or clothing you wear to appear as ordinary or fancy clothing or armor of your imagining. The actual statistics for what you're wearing doesn't change. Only a creature that's benefiting from truesight or a similar effect can attempt to disbelieve this illusion, with a DC of 29."
+ },
+ {
+  "collection": "items",
+  "id": "slithermaws-bane-heroic",
+  "name": "Slithermaw's Bane (Heroic)",
+  "fields": {
+   "level": 20,
+   "traits": [
+    "apex",
+    "artifact",
+    "flexible",
+    "intelligent",
+    "invested",
+    "magical"
+   ],
+   "rarity": "unique",
+   "itemType": "armor",
+   "category": "light",
+   "bulk": 0.1,
+   "price": {},
+   "passiveEffects": {
+    "resistances": [
+     {
+      "type": "poison",
+      "value": 15
+     }
+    ]
+   }
+  },
+  "text": "**Perception** +34; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Intimidation +35, Society +33, Warfare +33 **Int** +5, **Wis** +6, **Cha** +7 **Will** +34 --- The heroism of Kyloss Syndar, founder of Greengold and slayer of the demonic hydra Slithermaw, imprinted this suit of armor with a gleaming, prismatic sheen that sparkles under bright light. The telepathic voice of *Slithermaw's Bane* is boisterous and grandiose, encouraging his partner to take up leadership roles while also providing advice to maintain loyalty and strengthen bonds of friendship. *Slithermaw's Bane* is a suit of *+3 major resilient greater fortification high-grade elven chain* that grants his wearer poison resistance 15, and the item bonus this resilient rune grants to saving throws versus poison increases by 1 to +4. --- **Activate—Calistria's Sting** ⟨5⟩ (concentrate, poison) **Frequency** once per day **Trigger** A creature grapples you **Effect** Poison wells up from the armor's links to seep into the triggering creature's body, causing it to suffer wracking pains as if it was being stung by thousands of angry wasps. The triggering creature takes 7d6 damage ( save); this persistent damage can't be ended as long as the triggering creature continues to grapple you. *Slithermaw's Bane* can't activate Calistria's Sting using his actions. --- **Activate—Purge Toxins** ⟨2⟩ (concentrate) **Frequency** once per minute **Effect** *Slithermaw's Bane* attempts to counteract a disease or poison affliction affecting you, with a counteract rank of 9th and a +25 modifier to the roll (+30 modifier if the source of the disease or poison effect on you was created by a fiend). --- **Activate—Terrain Adaptation** ⟨2⟩ (concentrate) **Frequency** once per hour **Effect** You alter the exterior of the armor to better adapt to the surrounding terrain: aquatic, arctic, desert, forest, mountain, plains, sky, swamp, or underground. You ignore difficult terrain within the chosen environment and gain a +2 circumstance bonus to saving throws against environmental hazards, natural disasters, and extreme temperatures that originate from that terrain. You're also protected from severe and extreme heat or severe and extreme cold (your choice when you activate this ability). This effect lasts until your next daily preparations or the next time you activate it, whichever comes first."
+ },
+ {
+  "collection": "items",
+  "id": "sorshens-scintillating-garment",
+  "name": "Sorshen's Scintillating Garment",
+  "fields": {
+   "level": 20,
+   "traits": [
+    "apex",
+    "artifact",
+    "comfort",
+    "mythic"
+   ],
+   "rarity": "unique",
+   "itemType": "armor",
+   "category": "unarmored",
+   "bulk": 0.1,
+   "price": {
+    "cp": 0,
+    "gp": 0,
+    "pp": 0
+   },
+   "passiveEffects": {
+    "immunities": [
+     "mental"
+    ]
+   }
+  },
+  "text": "The traditional robes of Sorshen, Runelord of Lust, this garment combines a powerful artifact with a sign of office, as with many runelords' accoutrements. Woven of the finest silks and accented with precious stones, the garment is light and easy to move in. Sorshen created, then expanded on the artifact throughout her time as the runelord of lust, adding to it during much of the Age of Legend. This ever-shifting garment of silk and gems subtly reshapes itself in response to its wearer, adopting an appearance most flattering to their form. It's a set of *+3 greater resilient explorer's clothing*. The garment's four pockets each function as separate *Spacious Pouches (Type IV)*. While wearing the garment, you're immune to mental effects unless you choose otherwise. When you invest *Sorshen's Scintillating Garment*, you increase your Charisma modifier by 1, or increase it to +4, whichever would give you a higher value. **Activate—Scintillating Colors** ⟨2⟩ (arcane, aura, visual) **Frequency** once per hour --- **Effect** *Sorshen's Scintillating Garment* casts Dizzying Colors (DC 41), heightened to 10th rank, to your specifications. If you spend 1 Mythic Point as part of this activation, the spell's area changes to a , and you can designate any number of creatures in that area to be immune to the spell's effects, and the spell loses the incapacitation trait. --- **Destruction** *Sorshen's Scintillating Garment* is destroyed if it's immersed in the waters of a destroyed *Runewell of Lust*."
+ }
+]

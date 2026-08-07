@@ -22,8 +22,8 @@
 
 // The conditional-bonus shape is defined next to the shipped registry that uses it. Re-exported here
 // so a player-authored entry is the SAME type as a shipped one — one display path, not two.
-import type { SituationalBonus } from './situationalBonuses';
-export type { SituationalBonus, SituationalTarget } from './situationalBonuses';
+import type { RecordMarker, SituationalBonus } from './situationalBonuses';
+export type { RecordMarker, SituationalBonus, SituationalTarget } from './situationalBonuses';
 
 /* =========================================================================
  * 1. Canonical vocabularies + primitive types
@@ -243,6 +243,12 @@ interface ContentBase {
    * it never reached the list a player scans for something to do on their turn.
    */
   grantsActions?: string[];
+  /**
+   * Changes this record makes to what ANOTHER record granted. See GrantModification — every other
+   * lane grants something outright, so a record whose whole content is "the thing you already have
+   * gets better" had nowhere to go and could only be stated in prose.
+   */
+  modifiesGrant?: GrantModification[];
   /**
    * "At the start of each of your turns, you gain an additional reaction that you can use only to
    * Shield Block."
@@ -725,6 +731,44 @@ export interface DefenseGrants {
 }
 
 /** A class archetype: taking its dedication suppresses class features and substitutes replacements. */
+/**
+ * A record that CHANGES what ANOTHER record granted, instead of granting anything itself.
+ *
+ * Every other lane in this app grants something outright, so a record whose entire content is "the
+ * thing you already have gets better" had nowhere to live and could only be stated in prose.
+ *
+ *   Draconic Paragon — "You gain additional effects for the prerequisite kobold feat … **Dracomancer**
+ *   Increase the number of times per day you can cast each of the granted 1st- and 2nd-rank innate
+ *   spells by 1. **Kobold Breath** Creatures that critically fail their save take 3d4 persistent
+ *   damage." Neither clause names a spell or an action of its own; both name another feat's grant,
+ *   and a kobold may have any combination of the three prerequisites.
+ *
+ *   Splinter Faith — "For the purpose of abilities that depend on your deity's domains, the four
+ *   domains you chose are your deity's domains, and any of your deity's domains you didn't choose
+ *   are now among your deity's alternate domains." The grant being modified belongs to the DEITY.
+ *
+ * The gate is the point: nothing here applies unless the character actually has `from`. A registry
+ * marker keyed on Draconic Paragon alone would tell a kobold who took only Benefactor's Strike that
+ * their Kobold Breath inflicts persistent damage, and they have no Kobold Breath.
+ */
+export interface GrantModification {
+  /** The record whose grant this changes — a feat or class-feature id, or the literal `'deity'` for
+   *  the character's own deity. Applied only when the character has it. */
+  from: string;
+  /** Added to the uses per day of every INNATE spell `from` granted (Draconic Paragon → Dracomancer:
+   *  each of Dracomancer's two chosen spells goes from 1/day to 2/day). */
+  innateUsesPerDay?: number;
+  /** A rider on the action `from` grants — or IS, when `from` is itself an action record — for an
+   *  addition that changes no number the sheet holds. Rendered as a RecordMarker on that action row,
+   *  by the same route as the shipped ones, so there is no second display path. */
+  actionRider?: { actionId?: string; value?: string; note: string };
+  /** `from: 'deity'` only. This record's OWN `choice` answers replace the deity's domains; the
+   *  printed domains they displace become its alternates. Read through `deityDomainsOf` (finished
+   *  characters) or `splinterDomainsOf` (a build still being answered) — never off the deity record
+   *  directly, or the four domain pickers drift apart. */
+  deityDomainsFromChoice?: boolean;
+}
+
 export interface ClassArchetype {
   /** The class this archetype restructures (it only applies to a character of that class). An ARRAY
    *  where one archetype restructures several: Flexible Spellcaster alters "your spellcasting class
@@ -3415,6 +3459,14 @@ export interface Character {
    *  the printed list, and a spell also joins it when it carries one of `anyTrait` and none of
    *  `excludeTraits` (the elemental philosophy). */
   spellListReplacement?: { entryId?: string; list: string; anyTrait: string[]; excludeTraits: string[]; from: string; note?: string };
+  /** The deity's domain lists after a record REPLACED them (Splinter Faith). Every domain picker
+   *  reads them through `deityDomainsOf`, so the four call sites cannot disagree about which four
+   *  domains a splinter-faith cleric actually has. */
+  deityDomains?: { domains: string[]; alternateDomains: string[]; from: string };
+  /** Action/condition marks a GRANT MODIFICATION contributed, keyed by the id that carries them —
+   *  the same key shape as RECORD_MARKERS, so they render by the same route. Unlike the registry
+   *  these are gated: they are only here because the character has the record being modified. */
+  grantMarkers?: Record<string, RecordMarker[]>;
   /** Spells the summoner's EIDOLON knows as innate spells, chosen on Magical Adept / Magical Master.
    *  Both are multi-pick choices and a FeatChoice keeps only the first answer, so the full set has to
    *  be collected at build time; Share Eidolon Magic then lets the summoner cast them too. */

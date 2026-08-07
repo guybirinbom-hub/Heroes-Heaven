@@ -48,10 +48,10 @@ import type {
   WeaponRunes,
   PinnedDesc,
 } from './types';
-import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
+import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod, choiceOwnedFeatureIds, classFeatureIdsOwned, profBonus, resolveFormula } from './derive';
+import { abilityMod, choiceOwnedFeatureIds, classFeatureIdsOwned, profBonus, resolveFormula, splinterDomainsOf } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { applyCounterMods } from './counterMods';
 import { FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
@@ -3022,6 +3022,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const chosenInnateGrants: InnateSpellGrant[] = [];
   /** Which record's choice produced each chosen innate spell (for the Spells page's source labels). */
   const chosenInnateSource: Record<string, string> = {};
+  /** …and the record id that granted each, for a modification that names the granting record. */
+  const chosenInnateRecord: Record<string, string> = {};
   const resolvedItemPassives: Record<string, ItemPassiveEffects> = {};
   const effectWarnings: { source: string; message: string }[] = [];
   const effectPicks: NonNullable<Character['effectPicks']> = [];
@@ -3049,7 +3051,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (g.strikeDamage?.length) (into.strikeDamage ??= []).push(...g.strikeDamage);
     if (g.staffSpells?.length) grantedStaffSpells.push(...g.staffSpells);
   };
-  const resolvePick = (recordId: string, choices: EffectChoice[] | undefined, sink: (g: EffectGrant, srcName: string) => void, srcName: string) => {
+  const resolvePick = (recordId: string, choices: EffectChoice[] | undefined, sink: (g: EffectGrant, srcName: string, recordId: string) => void, srcName: string) => {
     for (const ch of choices ?? []) {
       const val = build.effectChoices?.[`${recordId}:${ch.id}`];
       let g: EffectGrant | undefined;
@@ -3067,7 +3069,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       if (!g) continue;
       // Warn if a chosen innate spell isn't in the shipped data (legacy) but should reach the sheet.
       for (const s of g.innateSpells ?? []) if (!content.spells[s.spellId]) effectWarnings.push({ source: srcName, message: `references the missing spell “${s.spellId}”` });
-      sink(g, srcName);
+      sink(g, srcName, recordId);
     }
   };
   // CLASS ARCHETYPES (Runelord, War Magic, …): unlike a normal archetype these RESTRUCTURE the class —
@@ -3131,13 +3133,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...archAddedFeatures.map((f) => f.featureId),
   ]);
   for (const id of archSuppressed) ownedFeatureIds.delete(id);
-  const applyAlwaysOn = (g: EffectGrant, srcName?: string) => {
+  const applyAlwaysOn = (g: EffectGrant, srcName?: string, recordId?: string) => {
     mergeEffect(chosenEffects, g);
     for (const [k, r] of Object.entries(g.skills ?? {})) if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', r);
     for (const s of g.innateSpells ?? []) {
       if (!content.spells[s.spellId]) continue;
       chosenInnateGrants.push(s);
       if (srcName) chosenInnateSource[s.spellId] ??= srcName;
+      // WHICH RECORD, not just its name — a grant modification names the record that made the grant
+      // ("each of the granted 1st- and 2nd-rank innate spells"), and names are not identities.
+      if (recordId) chosenInnateRecord[s.spellId] ??= recordId;
     }
   };
   for (const fc of feats) resolvePick(fc.featId, content.feats[fc.featId]?.effectChoices, applyAlwaysOn, content.feats[fc.featId]?.name ?? fc.featId);
@@ -3237,6 +3242,51 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // "Increase your limit on invested items from 10 to 12" (Incredible Investiture). The inventory
   // capped investment at a bare const, so the feat raised nothing.
   const investedBonus = feats.reduce((n, fc) => n + (content.feats[fc.featId]?.investedLimitBonus ?? 0), 0);
+
+  /*
+   * GRANT MODIFICATIONS — records whose whole content is "the thing you already have gets better".
+   *
+   * Every other lane grants something outright, so Draconic Paragon ("increase the number of times
+   * per day you can cast each of the GRANTED 1st- and 2nd-rank innate spells by 1") and Splinter
+   * Faith ("the four domains you chose are your deity's domains") had nowhere to go and were stated
+   * in prose. The gate is the whole point: nothing applies unless the character actually has the
+   * record being modified — a kobold who took only Benefactor's Strike must not be told their Kobold
+   * Breath inflicts persistent damage.
+   */
+  const grantMods: { by: string; byName: string; mod: GrantModification }[] = [];
+  {
+    const ownedIds = new Set<string>([
+      ...feats.map((f) => f.featId),
+      ...classFeatureIdsOwned({ classId: build.classId, subclassId: build.subclassId, level }, content),
+    ]);
+    for (const id of ownedIds) {
+      const rec = content.feats[id] ?? content.classFeatures[id];
+      for (const mod of rec?.modifiesGrant ?? []) {
+        // `from: 'deity'` modifies the character's own deity, which they have whenever one is chosen.
+        const has = mod.from === 'deity' ? !!build.deityId : ownedIds.has(mod.from);
+        if (has) grantMods.push({ by: id, byName: rec!.name, mod });
+      }
+    }
+  }
+  const deityDomains = splinterDomainsOf(build, content) ?? undefined;
+  /** spellId → uses/day to ADD, from a modification that names the record which granted it. */
+  const innateUsesBonus: Record<string, number> = {};
+  /** Action/condition marks a modification contributed, keyed like RECORD_MARKERS so they render by
+   *  the same route — but present only because the modified record is actually owned. */
+  let grantMarkers: Record<string, RecordMarker[]> | undefined;
+  for (const { by, mod } of grantMods) {
+    if (mod.actionRider) {
+      // Default to marking the record being modified: Kobold Breath IS the action, so `from` names
+      // both the grant and the row the rider belongs on.
+      const actionId = mod.actionRider.actionId ?? mod.from;
+      ((grantMarkers ??= {})[by] ??= []).push({
+        on: 'action',
+        id: actionId,
+        ...(mod.actionRider.value ? { value: mod.actionRider.value } : {}),
+        note: mod.actionRider.note,
+      });
+    }
+  }
 
   // "Add Illusory Disguise, Illusory Object, and Illusory Scene to your spell list." The picker
   // filtered strictly on the entry's tradition, so these feats offered nothing new to learn. They
@@ -3917,8 +3967,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // WHICH source granted each innate spell. The innate entry pools spells from the heritage, many
     // feats, and resolved choices, so the Spells page labels each one with where it came from.
     const innateSource: Record<string, string> = {};
-    const noteSrc = (spellId: string, name?: string) => {
+    // …and by which RECORD ID, which is what a grant modification names. The display map above is
+    // keyed by name (two records can share one), so it cannot answer "did Dracomancer grant this?".
+    const innateGrantedBy: Record<string, string> = {};
+    const noteSrc = (spellId: string, name?: string, recordId?: string) => {
       if (name && !innateSource[spellId]) innateSource[spellId] = name;
+      if (recordId && !innateGrantedBy[spellId]) innateGrantedBy[spellId] = recordId;
     };
     const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
     for (const g of heritage?.innateSpells ?? []) {
@@ -3946,12 +4000,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const f of feats)
       for (const g of content.feats[f.featId]?.innateSpells ?? []) {
         innateGrants.push(g);
-        noteSrc(g.spellId, content.feats[f.featId]?.name);
+        noteSrc(g.spellId, content.feats[f.featId]?.name, f.featId);
       }
     // Innate spells from a resolved effect-choice (e.g. Fey Influence's chosen 1/day spell).
     for (const g of chosenInnateGrants) {
       innateGrants.push(g);
-      noteSrc(g.spellId, chosenInnateSource[g.spellId]);
+      noteSrc(g.spellId, chosenInnateSource[g.spellId], chosenInnateRecord[g.spellId]);
     }
     // Pick-a-cantrip grants (Dragon Spit, Hag Magic, …): the player chose an innate spell from a list.
     for (const f of feats) {
@@ -3983,13 +4037,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const innateUses: Record<string, number> = {};
       // Non-daily cadences ("twice per week") — display text per spell.
       const innateCadence: Record<string, string> = {};
+      // A GRANT MODIFICATION may add uses to spells ANOTHER record granted — Draconic Paragon's
+      // "increase the number of times per day you can cast each of the granted 1st- and 2nd-rank
+      // innate spells by 1" applies to Dracomancer's two picks and to nothing else the character
+      // happens to cast innately, which is why it is keyed on the granting record's id.
+      for (const { mod } of grantMods) {
+        if (!mod.innateUsesPerDay) continue;
+        for (const [spellId, byId] of Object.entries(innateGrantedBy)) {
+          if (byId === mod.from) innateUsesBonus[spellId] = (innateUsesBonus[spellId] ?? 0) + mod.innateUsesPerDay;
+        }
+      }
       for (const g of innate) {
         const r = castRank(g);
         if (r > 0) {
           (innateRep[r] ??= []).push(g.spellId);
-          if (g.atWill) innateUses[g.spellId] = 0;
-          else if ((g.usesPerDay ?? 1) !== 1) innateUses[g.spellId] = g.usesPerDay as number;
-          if (g.usesPer && g.usesPer !== 'day' && !g.atWill) innateCadence[g.spellId] = `${g.usesPerDay ?? 1}/${g.usesPer}`;
+          const extra = innateUsesBonus[g.spellId] ?? 0;
+          if (g.atWill) innateUses[g.spellId] = 0; // already unlimited; adding a use means nothing
+          else if ((g.usesPerDay ?? 1) + extra !== 1) innateUses[g.spellId] = (g.usesPerDay ?? 1) + extra;
+          if (g.usesPer && g.usesPer !== 'day' && !g.atWill) innateCadence[g.spellId] = `${(g.usesPerDay ?? 1) + extra}/${g.usesPer}`;
         }
       }
       const tc: Record<string, number> = {};
@@ -4269,6 +4334,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(spellListAdditions ? { spellListAdditions } : {}),
     ...(spellListTraditions.length ? { spellListTraditions } : {}),
     ...(archSpellList ? { spellListReplacement: archSpellList } : {}),
+    ...(deityDomains ? { deityDomains } : {}),
+    ...(grantMarkers ? { grantMarkers } : {}),
     ...(grantedRituals.length ? { grantedRituals } : {}),
     ...(eidolonInnateSpells.length ? { eidolonInnateSpells } : {}),
     // Extra RESTRICTED reactions. Everyone has one unrestricted reaction; 15 feats grant a second

@@ -300,7 +300,11 @@ export function recordMarkersFor(
   on: 'action' | 'condition',
   id: string,
 ): { sourceId: string; value?: string; note: string }[] {
-  return markersFor(characterSituationalIds(c, db), on, id);
+  // `grantMarkers` is the GATED half — a mark that exists only because the character has the record
+  // being modified (Draconic Paragon's rider on Kobold Breath, which a kobold without Kobold Breath
+  // must never see). It arrives through the same `extra` channel the item editor uses, so there is
+  // one display path rather than two.
+  return markersFor(characterSituationalIds(c, db), on, id, c.grantMarkers);
 }
 
 /**

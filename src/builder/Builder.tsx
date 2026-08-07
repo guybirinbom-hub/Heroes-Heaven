@@ -33,7 +33,7 @@ import {
   skillIncreaseCap,
 } from '../rules/build';
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
-import { classFeatureIdsOwned, domainPoolFor } from '../rules/derive';
+import { classFeatureIdsOwned, domainPoolForChoice } from '../rules/derive';
 import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
@@ -269,7 +269,7 @@ export function Builder({
                               // generic in choiceOptionsFor would otherwise narrow away `label`.
                               const opts: { value: string; label: string; description?: string }[] =
                                 def.kind === 'domains'
-                                  ? domainPoolFor(build.deityId, content, def.domainPool).map((d) => ({
+                                  ? domainPoolForChoice(build, content, build.featPicks?.[key], def.domainPool).map((d) => ({
                                       value: d,
                                       label: cap(d),
                                     }))
@@ -379,7 +379,7 @@ export function Builder({
     if (!def) return null;
     const opts =
       def.kind === 'domains'
-        ? domainPoolFor(build.deityId, content, def.domainPool).map((d) => ({ value: d, label: cap(d) }))
+        ? domainPoolForChoice(build, content, grantedId, def.domainPool).map((d) => ({ value: d, label: cap(d) }))
         : def.kind === 'skills'
           ? SKILLS.map((s) => ({ value: s, label: cap(s) }))
           : (def.options ?? []);

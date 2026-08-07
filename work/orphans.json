@@ -1,0 +1,2966 @@
+[
+ {
+  "id": "initiate-benefit-wand",
+  "name": "Initiate Benefit (Wand)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [
+   "effectChoices",
+   "grantsActions"
+  ],
+  "description": "Your wand slowly collects ambient magic, which you can project at a foe in a barely controlled display of charged energy. When you gain this implement, choose whether your wand is attuned to cold, electricity, or fire. You gain the Fling Magic activity."
+ },
+ {
+  "id": "adept-benefit-wand",
+  "name": "Adept Benefit (Wand)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [
+   "choice"
+  ],
+  "description": "You gain versatility and additional benefits when you fire your wand. The range of Fling Magic increases to 120 feet. Choose a second damage type from the list; whenever you Fling Magic, you can select between either of the two damage types you have chosen. Fling Magic has an additional effect if the target fails its save and takes damage, depending on the type. - **Cold**: The target becomes chilled, taking a –10-foot status penalty to its Speeds for 1 round. - **Electricity**: The target is shocked, becoming off-guard until the end of your next turn. - **Fire**: The target catches flame, taking 1d10 (or 2d10 on a critical failure). If you have the wand paragon benefit, this increases to 2d10 (or 4d10 on a critical failure)."
+ },
+ {
+  "id": "bloody-guillotine",
+  "name": "Bloody Guillotine",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day --- Your squad performs a brutal combination attack that levels an enemy and attempts to put them down permanently. Choose and signal up to three squadmates within the aura of your commander's banner. Each squadmate can Stride up to half their Speed directly toward a single enemy you designate as a free action. Any who end their movement adjacent to the designated target can attempt to Trip or Strike it as a reaction. The first time a prone enemy is successfully dealt damage by a Strike from this tactic, they must immediately attempt a save against your class DC or die; this is a death and incapacitation effect. All enemies who witness a creature slain by Bloody Guillotine must succeed at a save against your class DC or become Sickened 1 for 1 round (Sickened 2 for 1 round on a critical failure); this is an emotion and mental effect."
+ },
+ {
+  "id": "clue-in",
+  "name": "Clue In",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "investigator"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per 10 minutes **Trigger** Another creature attempts a check that could help get you closer to answering the question at the heart of one of your active investigations. --- You share information with the triggering creature. They gain a circumstance bonus to their check equal to your investigation bonus from Pursue a Lead. The GM can add any relevant traits to this reaction depending on the situation, such as auditory and linguistic if you're conveying information verbally."
+ },
+ {
+  "id": "cry-havoc",
+  "name": "Cry Havoc!",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day --- Your squad rallies with a resounding clangor that drowns out all other sounds of war. Choose an enemy you are observing and signal all squadmates within the aura of your commander's banner. All squadmates can Stride up to twice their Speed directly toward the target as a reaction, yelling and trampling. When any squadmate enters a square adjacent to any enemy, that enemy must attempt a save against your class DC or take 2d6 bludgeoning damage and 2d6 sonic damage damage, plus an additional 2d6 bludgeoning and 2d6 sonic damage for every squadmate participating in Cry Havoc! (enemies who critically fail are deafened for 1 round). Regardless of the outcome, the enemy is then temporarily immune to any further damage from Cry Havoc! for 24 hours. Squadmates can use Cry Havoc! while Burrowing, Climbing, Flying, or Swimming instead of Striding if they have the corresponding movement type."
+ },
+ {
+  "id": "dense-plating",
+  "name": "Dense Plating",
+  "level": 7,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "You have encased your armor in robust plating. While wearing your armor, you gain resistance to slashing damage equal to half your level."
+ },
+ {
+  "id": "drain-bonded-item",
+  "name": "Drain Bonded Item",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "arcane",
+   "wizard"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day **Requirements** Your bonded item is on your person. --- You expend the magical power stored in your bonded item. During the current turn, you can cast one spell you prepared today and already cast, without spending a spell slot. You must still Cast the Spell and meet the spell's other requirements."
+ },
+ {
+  "id": "drink-from-the-chalice",
+  "name": "Drink from the Chalice",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "magical",
+   "manipulate",
+   "thaumaturge"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per round **Requirements** You are holding your chalice implement. --- You drink from the liquid that slowly collects in your chalice or administer it to an adjacent ally. The drinker chooses whether to take a small sip or to drain the contents. - **Sip** A sip grants the drinker an amount of temporary Hit Points equal to your level (minimum 3) that last until the end of your next turn. - **Drain** (healing, vitality) Drinking deep instead heals the drinker 3 Hit Points for each level you have. After the chalice is drained, it's left with only its slowly collecting dregs; the chalice can't be drained again, though it can still be sipped from. If 10 minutes pass without anyone drinking from the chalice, it refills itself and can be drained again. If the drinker has void healing, it can still heal in this way, and the effect has the void trait instead of healing and vitality."
+ },
+ {
+  "id": "energy-barrier",
+  "name": "Energy Barrier",
+  "level": 15,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "Your armor's defenses ablate any kind of energy coming your way. While wearing your armor, you gain resistance to all energy damage (acid, cold, electricity, fire, force, sonic, vitality, and void damage) equal to 2 + half your level. You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification."
+ },
+ {
+  "id": "executioners-volley",
+  "name": "Executioner's Volley",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day --- You command your squadmates to act as a lethal firing squad. You and each squadmate within the aura of your commander's banner can attempt a ranged Strike as a reaction against a single target you choose; combine the damage from all attacks for the purpose of resistances and weaknesses. If the designated target is a living creature, these attacks gain the death trait. If the designated target dies as a result of this tactic, all other enemies within the affected area of your commander's banner must succeed at a save against your class DC or be Frightened 2; this is an emotion, fear, and mental effect. --- **Special** If one of your squadmates knows or has prepared a cantrip with a range of 30 feet or more that deals damage and requires 2 or fewer actions to cast, they can cast it targeting the designated enemy instead of taking the other actions normally granted by this tactic, gaining all other listed benefits."
+ },
+ {
+  "id": "for-talmandor-for-freedom",
+  "name": "For Talmandor! For Freedom!",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day --- You raise your banner high with a reminder of what you and your allies truly fight for, granting them unshakable conviction. For yourself and each squadmate in your banner's aura when you use this tactic, you can attempt to counteract one effect affecting that creature. Your counteract modifier is your Warfare Lore modifier. The effect must have the mental trait or impose the clumsy, controlled, fleeing, frightened, grabbed, immobilized, paralyzed, restrained, slowed, or stunned condition."
+ },
+ {
+  "id": "glimpse-vulnerability",
+  "name": "Glimpse Vulnerability",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "esoterica",
+   "manipulate"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per round **Requirements** You are holding your implement --- **Effect** You glimpse a hidden vulnerability and then strengthen it to aid you. Select a creature you can see. Until you Glimpse Vulnerability again, that target gains weakness 2 against your unarmed and weapon Strikes."
+ },
+ {
+  "id": "harmonic-oscillator",
+  "name": "Harmonic Oscillator",
+  "level": 1,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "You designed your armor to inaudibly thrum at just the right frequency to create interference against force and sound waves. You gain resistance equal to 3 + half your level to force and sonic damage. When under the effects of Overdrive, the resistance increases by 2."
+ },
+ {
+  "id": "incredible-resistance",
+  "name": "Incredible Resistance",
+  "level": 15,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "choice"
+  ],
+  "description": "You've improved upon your breakthrough modification's ability to resist damage. Choose one of the following breakthrough modifications your innovation has: dense plating, layered mesh, or tensile absorption. Increase the resistance you gain from that modification to be equal to your level, instead of half your level."
+ },
+ {
+  "id": "initiate-benefit-bell",
+  "name": "Initiate Benefit (Bell)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [
+   "grantsActions"
+  ],
+  "description": "You can use your bell implement to create three different kinds of music, each of which weakens a foe in a different way. You gain the Ring Bell activity."
+ },
+ {
+  "id": "initiate-benefit-chalice",
+  "name": "Initiate Benefit (Chalice)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [
+   "grantsActions"
+  ],
+  "description": "While holding your chalice, you can drink from it or feed its liquid to an ally to improve their health. You gain the Drink from the Chalice action."
+ },
+ {
+  "id": "insta-ballista",
+  "name": "Insta-Ballista",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day --- Your squad quickly assembles a special impromptu ballista and fires it to lethal effect. Signal all squadmates you previously chose to participate in this tactic (see Special); these squadmates must be within the aura of your commander's banner. They can all Stride as a free action to assemble into a close formation; as long as all the chosen squadmates end their movement no more than 10 feet away from any of the other chosen squadmates. They quickly assemble an impromptu ballista and fire it at an enemy of your choice within 200 feet. This is a ranged Strike using your proficiency bonus with martial weapons and gets an item bonus to the attack roll you make with it equal to the number of assisting squadmates (maximum +4). It deals 10d12 damage. Once the attack is completed, the pieces of the impromptu ballista fall apart. --- **Special** You must choose all squadmates who will participate in this tactic at the time you prepare it. Those squadmates must carry the pieces of your impromptu ballista, which can be made out of easily scavenged materials; these pieces are 8 Bulk in total and can be divided in 1 Bulk increments among any number of the chosen squadmates."
+ },
+ {
+  "id": "layered-mesh",
+  "name": "Layered Mesh",
+  "level": 7,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "You've woven an incredibly powerful network of interlocking mesh around your armor, which catches piercing attacks and diffuses them. While wearing your armor, you gain resistance to piercing damage equal to half your level."
+ },
+ {
+  "id": "metallic-reactance",
+  "name": "Metallic Reactance",
+  "level": 1,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "The metals in your armor are carefully alloyed to ground electricity and protect from acidic chemical reactions. You gain resistance equal to 3 + half your level to acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2."
+ },
+ {
+  "id": "momentum-enhancer",
+  "name": "Momentum Enhancer",
+  "level": 15,
+  "otherTags": [
+   "melee",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "A special device lets your weapon move with uncanny speed. Your innovation gains the agile trait; if it had the reload ability, you can reload once per round as a free action."
+ },
+ {
+  "id": "mutagenic-flashback",
+  "name": "Mutagenic Flashback",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "alchemist",
+   "manipulate"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day --- You experience a brief resurgence of a mutagen. Choose one mutagen you've consumed since your last daily preparations. You gain the effects of that mutagen for 1 minute."
+ },
+ {
+  "id": "otherworldly-protection",
+  "name": "Otherworldly Protection",
+  "level": 1,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "Just because you prefer science doesn't mean you can't build your armor with materials and gizmos designed to protect against otherworldly attacks. You gain resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing (such as if you're a dhampir). You gain the same amount of resistance to spirit damage. If you are sanctified (such as by also being a champion or cleric dedicated to a deity who allows or enforces sanctification) this resistance applies to unholy damage (if you are sanctified holy) or holy damage (if you are sanctified unholy), regardless of what other traits the damage has."
+ },
+ {
+  "id": "paragon-benefit-chalice",
+  "name": "Paragon Benefit (Chalice)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "When you or an ally drain the chalice, the overwhelming vitality it's collected helps you overcome many ailments. Reduce the drinker's clumsy, enfeebled, frightened, stupefied, and stunned values by 1. (This reduces the stunned condition only if it has a condition value, not when it has a duration.) The drinker also reduces its drained value by 1, but it can reduce its drained condition by Drinking from the Chalice only once per day. In addition, the chalice attempts to counteract all poisons, diseases, and curses afflicting the drinker, using half your level rounded up as the counteract rank and your class DC - 10 as the counteract modifier. If the chalice fails to counteract a given affliction for a drinker, it can't attempt to counteract that affliction again until midnight."
+ },
+ {
+  "id": "patron-theme",
+  "name": "Patron Theme",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "witch"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "When your patron first makes contact, they usually reveal little more of themself than glimpses or specific manifestations—you might see eyes from the shadows of the forest or hear a wordless voice echoing across the frozen tundra before your familiar makes itself known. Your patron's true identity might be a powerful hag, a fey lord, a deity or demigod, an archdevil, or a similarly powerful entity, or perhaps multiple such figures working in tandem, but that identity is for you to attempt to discover as you learn more of your patron's lessons. Some patrons are multifaceted, appearing in different guises, and granting different powers to different witches. In some cases, the witch may know of their patron's identity, but have some other aspect shrouded in uncertainty; they might know their patron's name but not motive, or perhaps even if they know the patron's identity, they have been cursed to never reveal it to others. Your patron's theme determines the following. **Spell List** You use this magical tradition and spell list. **Patron Skill** You become trained in the skill associated with your patron's magical tradition. **Initial Lesson** This is the first lesson your patron teaches you and is unique to your patron. **Familiar Ability** One of your familiar's two bonus abilities is always the one listed here, a mark of your patron's indelible influence. The benefit can occur only once per round when you Cast or Sustain a hex, and you can choose whether it occurs before or after the effects of Casting or Sustaining the hex."
+ },
+ {
+  "id": "perfect-fortification",
+  "name": "Perfect Fortification",
+  "level": 15,
+  "otherTags": [
+   "armor-innovation-modification",
+   "power-suit-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "**Power Suit only** --- You've outfitted your armor with such heavy fortifications that deadly attacks often lose their edge. Each time you're critically hit while wearing the armor, attempt a . On a success, it becomes a normal hit. This isn't cumulative with *fortification* runes or other abilities that reduce critical hits with a flat check. Additionally, you gain resistance 2 + half your level against precision damage."
+ },
+ {
+  "id": "perpetual-infusions-chirurgeon",
+  "name": "Perpetual Infusions (Chirurgeon)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [
+   "choice"
+  ],
+  "description": "You have learned how to create perpetual alchemical infusions that can provide a near-infinite supply of certain simple items. You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents. The items you can select depend on your research field and must be in your formula book. Each time you gain a level, you can swap any number of your perpetual infusions with other eligible infusions. --- Choose two 1st-level elixirs with the healing trait. If a creature heals Hit Points from a perpetual infusion, that creature is temporarily immune to healing Hit Points from subsequent perpetual infusions for 10 minutes (but not immune to any other effects of those infusions)."
+ },
+ {
+  "id": "perpetual-infusions-mutagenist",
+  "name": "Perpetual Infusions (Mutagenist)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [
+   "choice"
+  ],
+  "description": "You have learned how to create perpetual alchemical infusions that can provide a near-infinite supply of certain simple items. You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents. The items you can select depend on your research field and must be in your formula book. Each time you gain a level, you can swap any number of your perpetual infusions with other eligible infusions. --- Choose two 1st-level mutagens."
+ },
+ {
+  "id": "perpetual-infusions-toxicologist",
+  "name": "Perpetual Infusions (Toxicologist)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [
+   "choice"
+  ],
+  "description": "You have learned how to create perpetual alchemical infusions that can provide a near-infinite supply of certain simple items. You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents. The items you can select depend on your research field and must be in your formula book. Each time you gain a level, you can swap any number of your perpetual infusions with other eligible infusions. --- Choose two common 1st-level alchemical poisons."
+ },
+ {
+  "id": "phlogistonic-regulator",
+  "name": "Phlogistonic Regulator",
+  "level": 1,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "A layer of insulation within your armor protects you from rapid temperature fluctuations. You gain resistance equal to half your level to cold and fire damage. When under the effects of Overdrive, the resistance increases by 2."
+ },
+ {
+  "id": "physical-protections",
+  "name": "Physical Protections",
+  "level": 15,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "Your armor has so many adjustments and precautions that it can guard against all physical damage. While wearing your armor, you gain resistance to all physical damage (bludgeoning, piercing, and slashing damage, as well as persistent bleed damage) equal to half your level. You must have the dense plating, layered mesh, or tensile absorption breakthrough modification to select this modification."
+ },
+ {
+  "id": "sanguine-revitalization",
+  "name": "Sanguine Revitalization",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day --- Your squad is rejuvenated by the arterial spray of your enemies. Choose a creature within the aura of your commander's banner and signal all squadmates within the aura who are wielding a piercing or slashing melee weapon, or who have a piercing or slashing melee unarmed attack. Those allies can Stride up to half their Speed as a free action. If they end this movement within reach of the designated target, they can Strike the target with the required weapon or unarmed attack as a reaction. Once all Strikes are completed, if the target took damage and is not immune to bleed damage, it must succeed at a saving throw against your class DC or take 10 points of persistent bleed damage. The target takes a circumstance penalty on their save equal to the number of successful Strikes made as part of this tactic (up to a maximum –4 circumstance penalty). Your squadmates are energized by the display of your enemy's imminent defeat; each squadmate in a is healed for 10d6 Hit Points."
+ },
+ {
+  "id": "school-of-thassilonian-rune-magic",
+  "name": "School of Thassilonian Rune Magic",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [
+   "effectChoices"
+  ],
+  "description": "This curriculum, taught at a few select academies in New Thassilon, can be learned only by wizards with the runelord class archetype. You have begun to study one of the seven runes of sin, granting you great power but at the cost of anathematic magic. All runelords gain the below curriculum and school spells. In addition, you must choose one of the seven sins to specialize in. You add your sin's spells and initial school spells to your curriculum. The addictive nature of sin magic prevents you from using magic in ways aligned with other sins, represented by that sin's anathema. Casting a sin spell never invokes the anathema of its school of sin. Unlike other wizards, some of your curriculum spells may be spells that don't typically appear on the arcane spell list (marked with an asterisk). You still cast these spells as arcane spells, the unifying knowledge of sin bridging the gap between disparate magics. **Curriculum** - **cantrips:** Detect Magic, Sigil - **1st:** Mystic Armor, Runic Body, Runic Weapon, Sure Strike - **2nd:** Darkvision, See the Unseen - **3rd:** , Veil of Privacy - **4th:** , Fly - **5th:** Mind Probe, Sending - **6th:** Scrying, Truesight - **7th:** Contingency, Spell Riposte - **8th:** Unrelenting Observation, Hidden Mind - **9th:** Foresight **Advanced School Spell** Personal Runewell --- - **Envy** - **Gluttony** - **Greed** - **Lust** - **Pride** - **Sloth** - **Wrath**"
+ },
+ {
+  "id": "tensile-absorption",
+  "name": "Tensile Absorption",
+  "level": 7,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [
+   "resistances"
+  ],
+  "description": "You've enhanced the tensile capabilities of your armor, enabling it to bend with bludgeoning attacks. While wearing your armor, you gain resistance to bludgeoning damage equal to half your level."
+ },
+ {
+  "id": "valkyries-charge",
+  "name": "Valkyrie's Charge",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [
+   "limitedUses"
+  ],
+  "description": "**Frequency** once per day --- You and your allies defy death and defeat to make a glorious final charge. You restore Hit Points to each squadmate within the aura of your commander's banner; this effect has the healing trait. If an affected ally was unconscious due to their Hit Points being reduced to 0, they can immediately Stand and pick up any dropped weapons as a free action. Then, each affected squadmate can, as a free action, Stride up to twice their Speed directly toward an enemy they are observing; if they end this movement with an enemy within their reach, they can attempt to Strike that enemy as a reaction. Squadmates can use Valkyrie's Charge while Burrowing, Climbing, Flying, or Swimming instead of Striding if they have the corresponding movement type."
+ },
+ {
+  "id": "ability-boosts",
+  "name": "Ability Boosts",
+  "level": 5,
+  "otherTags": [],
+  "traits": [
+   "summoner"
+  ],
+  "mechanicalFields": [],
+  "description": "At 5th level and every 5 levels thereafter, boost four different ability scores. You can use these boosts to increase ability scores above 18. Boosting an ability score increases it by 1 if it's already 18 or above, or by 2 if it starts out below 18. Your eidolon also gets four ability boosts at these levels. The eidolon's ability boosts follow the same rules as yours."
+ },
+ {
+  "id": "acrobats-calling",
+  "name": "Acrobat's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "You feel a need to dance amid dangerous heights and soar across empty divides with nothing but your skill and reflexes to protect you. When you Balance, Maneuver in Flight, Tumble Through, or attempt a Long Jump, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on an Acrobatics check while Balancing, Maneuvering in Flight, or Tumbling Through during combat, you regain a Mythic Point. --- **Edicts** leap without being sure you'll land unharmed, test your reflexes by maneuvering through the spaces of significantly more powerful enemies **Anathema** maneuver around an enemy when tumbling through their space is a viable option, use safety measures to attempt acrobatic stunts"
+ },
+ {
+  "id": "act-together",
+  "name": "Act Together",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "summoner",
+   "tandem"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per round You and your eidolon act as one. Either you or your eidolon takes an action or activity using the same number of actions as Act Together, and the other takes a single action. For example, if you spent 2 actions to Act Together, you could cast Breathe Fire (2 actions) and your eidolon could Strike (1 action), or your eidolon could use its Breath Weapon (2 actions) and you could Stride (1 action). This lets you each use separate exploration activities like Avoid Notice as you travel."
+ },
+ {
+  "id": "adept-benefit-amulet",
+  "name": "Adept Benefit (Amulet)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "Your amulet offers continued protection. When you use Amulet's Abeyance, you or your ally chooses one type of damage dealt by the triggering attack and gains resistance 5 against that damage type until the start of your next turn. At 15th level, this lingering resistance increases from 5 to 10."
+ },
+ {
+  "id": "adept-benefit-bell",
+  "name": "Adept Benefit (Bell)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "Your bell resonates powerfully, causing the effect to last longer. The conditions from Ring Bell last 3 rounds instead of 1 round."
+ },
+ {
+  "id": "adept-benefit-chalice",
+  "name": "Adept Benefit (Chalice)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "The life essence shed from blood empowers your chalice. If you or an ally within 30 feet takes piercing or slashing damage from a foe's critical hit or takes persistent bleed damage, Drinking from the Chalice before the end of your next turn grants that injured creature greater restoration to make up for its lost vitality. On a sip, the temporary Hit Points granted to the creature increase to twice your level. When drained, the chalice heals the creature 5 Hit Points for each level you have."
+ },
+ {
+  "id": "adept-benefit-lantern",
+  "name": "Adept Benefit (Lantern)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "In addition to the initiate benefits, when you hold your lantern, its light reveals the invisible and the ethereal. The lantern's aura of light increases to a . While you're holding your lantern, invisible and ethereal creatures within the aura become visible as rippling distortions, though they're still concealed. This doesn't give you any special ability to affect a creature on the Ethereal Plane, but it ensures you're aware of the creatures' presence."
+ },
+ {
+  "id": "adept-benefit-mirror",
+  "name": "Adept Benefit (Mirror)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "Your mirror self shatters into punishing shards when damaged. When an enemy adjacent to one of your spaces damages you while your Mirror's Reflection is in effect, you can, as a free action, cause that version of you to explode into mirror shards. This ends Mirror's Reflection (establishing the remaining version of you as the real one) and deals slashing damage to all creatures in a around where your mirror self was. The damage is equal to 2 + half your level or the damage of the triggering attack, whichever is lower. You're immune to this damage."
+ },
+ {
+  "id": "adept-benefit-regalia",
+  "name": "Adept Benefit (Regalia)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "Your regalia's power increases, and so do the abilities it grants. The circumstance bonus you gain to Deception, Diplomacy, and Intimidation increases to +2, as long as you have master proficiency in each skill. When others use Follow the Expert to follow you, you grant them a +2 circumstance bonus if you are trained, +3 if you have expert proficiency, or +4 if you have master or legendary proficiency. The courage your aura instills grows stronger. The +1 status bonus now applies to all saving throws against mental effects, rather than only against fear, and you and allies in your aura gain a +2 status bonus to damage rolls. At 11th level, this increases to a +3 status bonus to damage rolls, and at 17th level, this increases to a +4 status bonus to damage rolls."
+ },
+ {
+  "id": "adept-benefit-shield",
+  "name": "Adept Benefit (Shield)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "When you have your shield implement raised, you gain a status bonus to your saves against spells and other magic effects equal to your circumstance bonus to AC from your shield. In addition, damage you take as a result of a spell or magical effect while your Shield is Raised can trigger your Shield Block reaction, even if the damage isn't physical."
+ },
+ {
+  "id": "adept-benefit-tome",
+  "name": "Adept Benefit (Tome)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "In addition to the initiate benefits, your tome inscribes insights into creatures that you can use to strike them down. While holding your tome, at the start of your turn each round, attempt a check to Recall Knowledge about a creature of your choice that you're observing. If this check succeeds, you gain a +1 circumstance bonus to your next attack roll against that creature before the start of your next turn. When you gain temporary skill proficiencies during your daily preparations, one is at expert proficiency and the other at master proficiency. At 9th level, you have master proficiency in both."
+ },
+ {
+  "id": "adept-benefit-weapon",
+  "name": "Adept Benefit (Weapon)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "When your implement lashes out at your foe, even a close miss brings the weapon close enough to do harm. When you use Implement's Interruption and your Strike fails (but doesn't critically fail), you deal 1 damage of the weapon's normal type, possibly applying any bonus damage due to the target's weakness."
+ },
+ {
+  "id": "advanced-design",
+  "name": "Advanced Design",
+  "level": 1,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Your weapon innovation uses the statistics of a level 0 advanced weapon of your choice. It must be common or you must have access to it. You treat this as a martial weapon for the purposes of proficiency."
+ },
+ {
+  "id": "advanced-rangefinder",
+  "name": "Advanced Rangefinder",
+  "level": 7,
+  "otherTags": [
+   "ranged",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Ranged Only** --- A carefully tuned scope or targeting device makes your weapon especially good at hitting weak points. Your innovation gains the backstabber trait and increases its range increment by 20 feet."
+ },
+ {
+  "id": "aerodynamic-construction",
+  "name": "Aerodynamic Construction",
+  "level": 7,
+  "otherTags": [
+   "melee",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Melee Only** --- You carefully engineer the shape of your weapon to maintain its momentum in attacks against successive targets. Your innovation gains the sweep trait and the versatile S trait."
+ },
+ {
+  "id": "alchemical-alacrity",
+  "name": "Alchemical Alacrity",
+  "level": 15,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "Your comfort in concocting items is such that you can create three at a time. When using the Quick Alchemy action, you can spend up to three batches of infused reagents to make up to three alchemical items as described in that action. These items do not have to be the same."
+ },
+ {
+  "id": "alchemist-armor-expertise-level-13",
+  "name": "Alchemist Armor Expertise (Level 13)",
+  "level": 13,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You've learned how to dodge while wearing medium, light or no armor. Your proficiency ranks for medium armor, light armor and unarmored defense increase to expert."
+ },
+ {
+  "id": "alchemist-armor-mastery-level-19",
+  "name": "Alchemist Armor Mastery (Level 19)",
+  "level": 19,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "Your skill with light and medium armor improves, increasing your ability to dodge blows. Your proficiency ranks for medium armor, light armor and unarmored defense increase to master."
+ },
+ {
+  "id": "alley-oop",
+  "name": "Alley-Oop",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your team excels at sharing resources and delivering them exactly where they need to be. Signal a squadmate within the aura of your banner who is holding or wearing a consumable that can be activated as a single action. That squadmate can toss their consumable to any other squadmate within the aura of your banner as a free action, and the receiving squadmate can catch and activate the consumable as a reaction. If the receiving squadmate chooses not to catch the consumable or if they don't have a free hand to catch it with, it lands on the ground in their space. --- **Special** If the consumable is a piece of activated ammunition and the receiving squadmate is wielding a compatible weapon that takes 1 or fewer actions to reload, they can load the ammunition into their weapon as part of the reaction used to catch and activate it. The ammunition remains activated until the end of their next turn."
+ },
+ {
+  "id": "anathema-cleric",
+  "name": "Anathema (Cleric)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "cleric"
+  ],
+  "mechanicalFields": [],
+  "description": "Acts fundamentally opposed to your deity's alignment or ideals are anathema to your faith. Learning or casting spells, committing acts, and using items that are anathema to your deity remove you from your deity's good graces. Casting spells with the evil trait is almost always anathema to good deities, and casting good spells is likewise anathema to evil deities; similarly, casting chaotic spells is anathema to lawful deities, and casting lawful spells is anathema to chaotic deities. A neutral cleric who worships a neutral deity isn't limited this way, but their alignment might change over time if they frequently cast spells or use abilities with a certain alignment. Similarly, casting spells that are anathema to the tenets or goals of your faith could interfere with your connection to your deity. For example, casting a spell to create undead would be anathema to Pharasma, the goddess of death. For borderline cases, you and your GM determine which acts are anathema. If you perform enough acts that are anathema to your deity, or if your alignment changes to one not allowed by your deity, you lose the magical abilities that come from your connection to your deity. The class features that you lose are determined by the GM, but they likely include your divine font and all divine spellcasting. These abilities can be regained only if you demonstrate your repentance by conducting an Atone ritual."
+ },
+ {
+  "id": "antimagic-plating",
+  "name": "Antimagic Plating",
+  "level": 7,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Whether you used some clever adaptation of the magic-negating skymetal known as noqual or created magical protections of your own design, you've strengthened your armor against magic. While wearing the armor, you gain a +1 circumstance bonus to all saving throws against spells and to AC against spells. Against spells that target the armor directly, you instead gain a +4 circumstance bonus to all saving throws and to AC."
+ },
+ {
+  "id": "armor-of-fury",
+  "name": "Armor of Fury",
+  "level": 19,
+  "otherTags": [],
+  "traits": [
+   "barbarian"
+  ],
+  "mechanicalFields": [],
+  "description": "Your training and rage deepen your connection to your armor. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to master."
+ },
+ {
+  "id": "artisans-calling",
+  "name": "Artisan's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "You feel an urge that echoes throughout your being to create, and one day you know you shall craft an achievement surpassing anything the world has ever seen. When you Craft or Repair an object (including vehicles and structures), you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Repair an object, you regain a Mythic Point. --- **Edicts** be the first to test an item or weapon crafted with your own hands, seek out or innovate formulas for evermore complex creations **Anathema** destroy the creations of other artisans, refuse an earnest request to repair something that has been broken, use a weapon or item crafted by someone else, except for the purpose of learning its function so you can understand how to create it yourself"
+ },
+ {
+  "id": "attack-refiner",
+  "name": "Attack Refiner",
+  "level": 15,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Your weapon makes minute recalibrations after every missed attack to ensure the next lands with vicious efficacy. Your innovation gains the backswing and forceful traits."
+ },
+ {
+  "id": "automated-impediments",
+  "name": "Automated Impediments",
+  "level": 15,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Your armor uses electromagnetic fields, subharmonic distortions, or other techniques to make it difficult for those close to you to move unless you allow it. While wearing your armor, all spaces adjacent to you are difficult terrain for your enemies."
+ },
+ {
+  "id": "beasts-charge",
+  "name": "Beast's Charge",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon rushes forward, using its momentum to increase the power of its attack. Your eidolon Strides twice and then Strikes. If the eidolon moved at least 20 feet away from its starting position and moved entirely in a straight line, it gains a +1 circumstance bonus to this attack roll."
+ },
+ {
+  "id": "blight-soul-deviant-classification",
+  "name": "Blight Soul Deviant Classification",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "Whether through planar exploration or unintended catastrophe, you've come into close contact with Ayrzul's Blight and have been forever changed. As the Blight is a realm of invasive rot, pernicious decay, and deadly radiation, so too are you capable of wielding the powers of decay. ## Backlash Fungal Rot The same blood that lets one of the dragon-descended spit out a gout of flame is precisely what keeps the inside of their mouth from being singed in the furnace. Deviations, unfortunately, lack these safeguards, their powers coming from haphazard circumstance and interactions rather than intentional design. A character using their deviation always risks the chance of backlash. As you use your powers, radioactive molds and fungi consume your flesh, making you look (and feel) like a rotting, walking corpse. Whenever you attempt to use a deviation, roll a . On a success, you use your deviation and the DC for subsequent checks increases by 5, to a maximum of 20 ( ); on a failure, you use your deviation and then suffer a backlash effect, after which your flat check DC resets to 5. Backlash progresses from mild, to moderate, to severe. When you have already taken mild backlash in a given day, the next time you would take backlash, you take the moderate backlash instead, and if you have already taken moderate backlash, you take the severe backlash instead, and your deviation can't be used for the rest of the day—attempting to use it simply brings pain. When you make your daily preparations, your flat check DC returns to 5 and your next backlash returns to mild. Any effects from backlash can't be reduced, prevented, or otherwise bypassed. Conditions and damage you take from backlash can't be reduced or prevented by resistance or immunity, but still triggers any weakness you have to it. ## Blight Soul Deviant Feats Release Spores Rotten Slurry Irradiate Unleash the Blight ### Universal Deviant Feats Awakened Power Greater Awakened Power"
+ },
+ {
+  "id": "blunt-shot",
+  "name": "Blunt Shot",
+  "level": 1,
+  "otherTags": [
+   "ranged",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Ranged Only** --- Your weapon innovation can file the edges off your ammunition and adjust the blunt force of the shot to deliver an attack that can batter as much as pierce, or even knock an opponent right off their feet. Your innovation gains the concussive and ranged trip traits."
+ },
+ {
+  "id": "bookkeepers-calling",
+  "name": "Bookkeeper's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your passion and destiny are both tied to the preservation of knowledge and a deep-seated love of instruments designed to preserve and propagate knowledge, such as books and scrolls. When you attempt a check to Recall Knowledge or Earn Income using a Lore skill you're trained in, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Recall Knowledge while researching in a library or similar facility, you regain a Mythic Point. --- **Edicts** educate others, record new knowledge so that others can share in your discoveries **Anathema** destroy books, scrolls, or other instruments used to record information; refuse an opportunity to share your knowledge with an earnest knowledge-seeker"
+ },
+ {
+  "id": "brandish-the-gorgons-gaze",
+  "name": "Brandish the Gorgon's Gaze",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "earth",
+   "transcendence",
+   "visual"
+  ],
+  "mechanicalFields": [],
+  "description": "You Raise your Mirrored Aegis, though it seems to lose some of its usual luster in favor of the dull sheen of stone. If you Shield Block a melee attack with the mirrored aegis before the beginning of your next turn, the gorgon's eyes upon it flash at the triggering creature, who must attempt a save against your class DC. On a failure, they are Slowed 1 for 1 minute as their body partially petrifies. Regardless of the outcome, that creature is temporarily immune to this effect for 24 hours."
+ },
+ {
+  "id": "breath-weapon",
+  "name": "Breath Weapon",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "arcane",
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon exhales a blast of destructive energy. Your eidolon deals 1d6 damage to all creatures in the area, with a basic Reflex save against your spell DC. The area and damage type of the Breath Weapon are chosen when the eidolon gains this ability. Your eidolon then can't use their Breath Weapon again for the next 1d4 rounds. At 3rd level and every 2 levels thereafter, the damage increases by 1d6."
+ },
+ {
+  "id": "buckle-cut-blitz",
+  "name": "Buckle-Cut Blitz",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your squad dashes past enemies, slicing their boot laces and breaking their belt buckles. Signal up to two squadmates within the aura of your commander's banner; these squadmates can Stride up to their Speed as a reaction. Each enemy they are adjacent to at any point during this movement must attempt a save against your class DC or become Clumsy 1 for 1 round (Clumsy 2 on a critical failure)."
+ },
+ {
+  "id": "camouflage-pigmentation",
+  "name": "Camouflage Pigmentation",
+  "level": 7,
+  "otherTags": [
+   "armor-innovation-modification",
+   "subterfuge-suit-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've modified your armor's exterior to let you blend into your surroundings with ease, as long as you stay still. While wearing your armor, you can Hide even without cover or concealment, as the pigmentation shifts to match your surroundings."
+ },
+ {
+  "id": "caretakers-calling",
+  "name": "Caretaker's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "You have a deep-seated drive or divine directive to care for others, and your power might one day grow to allow you to heal an unimaginable wound. When you Treat Disease, Treat Poison, Treat Wounds, or use Battle Medicine, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Treat Wounds, you regain a Mythic Point. --- **Edicts** give aid to others, heal those who are wounded regardless of where they come from **Anathema** deny care to the disadvantaged, refuse to heal the wounds of an enemy who has surrendered"
+ },
+ {
+  "id": "cascade-bearers",
+  "name": "Cascade Bearers",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "Cascade Bearers spend considerable time studying the qualities of magic itself as they seek to advance magical theory. They prize imagination and often bring a sense of playful curiosity to what would otherwise be intense inquiries at the borders of known magic. Of all the branches, these students are most likely to become teachers and to continue their research after graduation. In fact, some Cascade Bearers never leave the Magaambya, whether or not they attain an official teaching or research post. Their coursework draws broadly across the uses of magic, including attacking, protecting, manipulating objects, and seeing through matter. **Additional Curriculum** - **cantrips:** Telekinetic Projectile - **1st:** Force Barrage, Mystic Armor - **2nd:** Telekinetic Maneuver - **3rd:** Levitate - **4th:** Flicker - **5th:** Telekinetic Haul - **6th:** Cursed Metamorphosis - **7th:** Contingency, Project Image - **8th:** Pinpoint - **9th:** Detonate Magic"
+ },
+ {
+  "id": "catharsis-emotion",
+  "name": "Catharsis Emotion",
+  "level": 2,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "**Catharsis Trigger** The event or conditions you must meet to take your Catharsis reaction. **Catharsis Activation** The benefit when you use Catharsis. **Emotional Fervor** **Benefits** you gain for 3 rounds after you use Catharsis. This entry also lists a spell you're able to cast while in your emotional fervor. You must expend a spell slot to cast it. This slot most be of at least the spell's rank, and the spell is automatically heightened to the rank of slot you expended. **Emotional Fallout** The effect you experience when your emotional fervor ends. **Focus Spell** The focus spell you gain if you select the Cathartic Focus Spell archetype feat."
+ },
+ {
+  "id": "champions-reaction",
+  "name": "Champion's Reaction",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "champion"
+  ],
+  "mechanicalFields": [],
+  "description": "Your cause gives you a special reaction. See specific causes for more information."
+ },
+ {
+  "id": "clear-a-path",
+  "name": "Clear a Path",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "gunslinger"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** You're wielding a two-handed firearm or two-handed crossbow. --- You push outward with your weapon to clear some space before quickly reloading a fresh round. You make an Athletics check to Shove an opponent within your reach using your weapon, then Interact to reload. For this Shove, you don't need a free hand, and you add the weapon's item bonus on attack rolls (if any) to the Athletics check. If your last action or activity this round included a ranged Strike with the weapon, use the same multiple attack penalty as the last Strike you attempted with the weapon for the Shove; the Shove still counts toward your multiple attack penalty on further attacks."
+ },
+ {
+  "id": "command-a-construct",
+  "name": "Command a Construct",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "auditory",
+   "concentrate"
+  ],
+  "mechanicalFields": [],
+  "description": "You instruct your construct companion to act as you instruct it, and according to its programming. Your construct companion gains 2 actions during this turn. See the minion trait for details."
+ },
+ {
+  "id": "complex-simplicity",
+  "name": "Complex Simplicity",
+  "level": 1,
+  "otherTags": [
+   "simple-weapon",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Increase your innovation's weapon damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). In addition, it gains two of the following traits of your choice: versatile B, versatile P, versatile S, or razing."
+ },
+ {
+  "id": "coordinating-maneuvers",
+  "name": "Coordinating Maneuvers",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your team works to slip enemies into a disadvantageous position. Signal one squadmate within the aura of your banner; that squadmate can immediately Step as a free action. If they end this movement next to an opponent, they can attempt to Reposition that target as a reaction."
+ },
+ {
+  "id": "corpse-crenellation",
+  "name": "Corpse Crenellation",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- With methodical, shocking efficiency, some Chelaxian and Hellknight squads can turn the corpses of their slain foes into temporary earthworks. Signal up to two squadmates within the aura of your commander's banner. These squadmates can Stride up to half their Speed and attempt a melee or ranged Strike against one enemy you designate as a reaction. If the enemy is reduced to 0 Hit Points by these Strikes, the enemy's body provides lesser cover to all squadmates in or adjacent to the enemy's space until the end of your next turn or until the enemy is no longer unconscious or dead. During this time, any squadmate who Takes Cover can also first Stride up to half their Speed, but they must end this movement in or adjacent to the fallen enemy's space. A squadmate who's at least two sizes smaller than the fallen enemy instead gains standard cover. --- **Special** If one of your squadmates knows or has prepared a cantrip that deals damage and requires 2 or fewer actions to cast, they can cast it targeting the designated enemy instead of taking the other actions normally granted by this tactic, gaining all other listed benefits."
+ },
+ {
+  "id": "covered-reload",
+  "name": "Covered Reload",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "gunslinger"
+  ],
+  "mechanicalFields": [],
+  "description": "You duck into a safe position or minimize your profile while reloading to make your next attack. Either Take Cover or attempt to Hide, then Interact to reload. As normal, you must meet the requirements to Take Cover or Hide; you must be prone, benefiting from cover, or near a feature that allows you to Take Cover, and you need to be benefiting from cover or concealed to a creature to Hide from that creature."
+ },
+ {
+  "id": "deadly-strike",
+  "name": "Deadly Strike",
+  "level": 15,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Through precise calculation, you've found the perfect way for your weapon to deal damage on a well-placed strike. Your innovation gains the deadly d8 trait. If your innovation was already deadly, increase the die by up to two die sizes (d6 to d10, d8 to d12), to a maximum of deadly d12."
+ },
+ {
+  "id": "defensive-retreat",
+  "name": "Defensive Retreat",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "You call for a careful retreat. Signal all squadmates within the aura of your banner; each can immediately Step up to three times as a free action. Each Step must take them farther away from at least one hostile creature they are observing and can only take them closer to a hostile creature if doing so is the only way for them to move toward safety (such as if they're surrounded)."
+ },
+ {
+  "id": "demagogues-calling",
+  "name": "Demagogue's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "Words flow freely from a font within your soul. When you attempt a check to Coerce or Make an Impression, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Coerce a creature who isn't your ally, Create a Diversion using your words, or Make an Impression on an indifferent or unfriendly audience, you regain a Mythic Point. --- **Edicts** tell stories to audiences who have never heard them before, use words rather than weapons to resolve conflicts **Anathema** interrupt someone telling a story, resort to violent action without trying to defuse the situation with your words"
+ },
+ {
+  "id": "demoralizing-charge",
+  "name": "Demoralizing Charge",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your team's coordinated assault strikes fear into your enemies' hearts. Signal up to two squadmates within the aura of your commander's banner; as a free action, those squadmates can immediately Stride toward an enemy they are observing. If they end this movement adjacent to an enemy, they can attempt to Strike that enemy as a reaction. For each of these Strikes that are successful, the target enemy must succeed at a save against your class DC or become Frightened 1 (Frightened 2 on a critical failure); this is an emotion, fear, and mental effect. If both Strikes target the same enemy, that enemy attempts the save only once after the final attack and takes a –1 circumstance penalty to their Will save to resist this effect (this penalty increases to –2 if both Strikes are successful or to –3 if both Strikes are successful and either is a critical hit.)"
+ },
+ {
+  "id": "doomsayers-calling",
+  "name": "Doomsayer's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "As long as people have dwelt in the world, there have been those who foresaw, feared, or worked toward that world's end. You know all things must end and have long felt that at some point in your life, you would stand on the precipice of Golarion's final fate—not to usher it along, but to deny the agents of this doomsday the satisfaction of seeing your world end. Until then, you'll do your best to keep the world and your allies in shape to face these ultimate threats. When you attempt a check to Repair, Administer First Aid, or Treat Wounds (but not when you use Battle Medicine), you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Repair or Administer First Aid, you regain a Mythic Point. --- **Edicts** help to prevent (or at least forestall) doomsday by keeping allies (and their gear) in good health (or repair), console those who are despondent **Anathema** knowingly aid in any plot to end the world, mock or deride those who predict the end of the world"
+ },
+ {
+  "id": "double-team",
+  "name": "Double Team",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your team works together to set an enemy up for a vicious attack. Signal one squadmate who has an opponent within their reach. That ally can Shove or Reposition an opponent as a free action. If their maneuver is successful and the target ends their movement adjacent to a different squadmate, the second squadmate can attempt a melee Strike against that target as a reaction."
+ },
+ {
+  "id": "draconic-frenzy",
+  "name": "Draconic Frenzy",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon makes one Strike with their primary unarmed attack and two Strikes with their secondary unarmed attack (in any order). If any of these attacks critically hits an enemy, your eidolon instantly recovers the use of their Breath Weapon."
+ },
+ {
+  "id": "drain-life",
+  "name": "Drain Life",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "divine",
+   "eidolon",
+   "void"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon attacks a living creature and drains some of the creature's life force to feed your shared link. Your eidolon Strikes a living enemy. If the Strike hits and deals damage, the target must attempt a Fortitude save, with the following effects. On a critical hit, the enemy uses the result one degree worse than it rolled. **Critical Success** No effect. **Success** Your eidolon drains a small amount of life force. The enemy takes additional void damage equal to half your level. **Failure** Your eidolon drains enough life force to satisfy itself. The enemy takes additional void damage equal to half your level and is Drained 1. Your eidolon gains temporary Hit Points equal to the enemy's level, which last for 1 minute. **Critical Failure** Your eidolon drains an incredible amount of life force and is thoroughly glutted with energy. As failure, but the enemy is Drained 2 and the temporary Hit Points are equal to double the enemy's level."
+ },
+ {
+  "id": "dreamers-calling",
+  "name": "Dreamer's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your dreams have always felt more real than reality itself, and upon learning of the Dimension of Dreams you weren't surprised—indeed, you've often found yourself entering these Dreamlands when you sleep. You've long felt that something in the Dreamlands has been calling to you, and that some great rescue or revelation awaits in a dream you've yet to experience. In the meantime, your dreams remain a potent source of inspiration and power, and the ability to draw from them to affect the waking world is something you've always been able to do. When you attempt an Arcana, Nature, Religion, or Occultism check to Recall Knowledge, or when you attempt a check to Craft any work of art, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed at a check to Craft or at a Recall Knowledge check about a subject associated with dreaming or the Dreamlands, you regain a Mythic Point. --- **Edicts** share your dreams with your friends and take interest if they share their dreams with you, take inspiration from your dreams when you create **Anathema** deny a creature (including yourself) the chance to sleep long enough to dream, deride those who have ambitions that they're unlikely to ever achieve"
+ },
+ {
+  "id": "druid-weapon-expertise",
+  "name": "Druid Weapon Expertise",
+  "level": 11,
+  "otherTags": [],
+  "traits": [
+   "druid"
+  ],
+  "mechanicalFields": [],
+  "description": "You have become thoroughly familiar with the weapons of your trade. Your proficiency ranks for all simple weapons and unarmed attacks increase to expert."
+ },
+ {
+  "id": "dutiful-retaliation",
+  "name": "Dutiful Retaliation",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon",
+   "occult"
+  ],
+  "mechanicalFields": [],
+  "description": "**Trigger** An enemy within 15 feet of you hits you with a Strike and deals damage to you. **Requirements** Your eidolon is within 15 feet of you. Your eidolon instinctively flashes with ectoplasmic energy, allowing them to strike back against an enemy who dares to harm you. Your eidolon makes a melee unarmed Strike against the triggering enemy, even if that enemy isn't within your eidolon's reach."
+ },
+ {
+  "id": "dynamic-weighting",
+  "name": "Dynamic Weighting",
+  "level": 1,
+  "otherTags": [
+   "melee",
+   "not-agile-trait",
+   "not-attached-trait",
+   "not-free-hand-trait",
+   "one-handed",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Your weapon is modified to be heavier and easier to manipulate or retrieve. Your innovation gains the two-hand trait, with a damage die one size higher than the weapon's normal weapon damage die size (for instance, a longsword would gain the two-hand d10 trait). Your innovation also gains the versatile B trait. If it was a thrown weapon, it gains the tethered trait."
+ },
+ {
+  "id": "echoes-of-the-scrolls",
+  "name": "Echoes of the Scrolls",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "The comprehension of Scrollmasters past flows through you. When you Decipher Writing, Gather Information, or Recall Knowledge, you can spend a Mythic Point to make the check at mythic proficiency. The first time each day that you critically succeed on any check while Deciphering Writing, Gathering Information, or Recalling Knowledge, you regain a Mythic Point."
+ },
+ {
+  "id": "echoes-of-the-spells",
+  "name": "Echoes of the Spells",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "The potency of Spellmasters past flows through you. When you Identify Magic, Recall Knowledge, or Trick Magic Item, you can spend a Mythic Point to make the check at mythic proficiency. The first time each day that you critically succeed on a check with a skill corresponding to any magical traditions you possess while Identifying Magic, Recalling Knowledge, or Tricking a Magic Item, you regain a Mythic Point."
+ },
+ {
+  "id": "echoes-of-the-swords",
+  "name": "Echoes of the Swords",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "The prowess of Swordmasters past flows through you. When you Climb, Force Open, High Jump, Long Jump, or Swim, you can spend a Mythic Point to make the check at mythic proficiency. The first time each day that you critically succeed on an Athletics check while Climbing, Forcing Open, High Jumping, Long Jumping, or Swimming, you regain a Mythic Point."
+ },
+ {
+  "id": "elemental-burst",
+  "name": "Elemental Burst",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- Your eidolon rips off a chunk of elemental matter from their own form and hurls it into a group of foes. Your eidolon loses a number of Hit Points equal to your level. All creatures in a within 60 feet take damage with a save against your spell DC. The damage increases by 1d6 for each level you have beyond 7th. The damage's type is either fire damage if your eidolon is a fire elemental, or the same physical damage type as your eidolon's primary unarmed attack if your eidolon isn't a fire elemental. Elemental Burst gains any traits that your eidolon's unarmed attacks gain from elemental core."
+ },
+ {
+  "id": "elemental-maelstrom",
+  "name": "Elemental Maelstrom",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon temporarily shifts its form into a swirling vortex of elemental matter and rampages through their foes. Your eidolon Strides. During their movement, they can attempt a Strike against each enemy that is within their reach. If an enemy comes within your eidolon's reach more than once, your eidolon makes only a single Strike against a given enemy. These attacks all count towards your eidolon's multiple attack penalty, but the penalty doesn't increase until after all the attacks. If your eidolon has the appropriate Speed, they can Climb, Fly, or Swim instead of Stride."
+ },
+ {
+  "id": "elemental-school",
+  "name": "Elemental School",
+  "level": 1,
+  "otherTags": [
+   "wizard-elemental-school"
+  ],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "If you choose an elemental school, your curriculum spells can be any spells that you have access to and that have your chosen element's trait. Your school spells are the elemental focus spells of your chosen element, with the 1st-rank spell as your initial school spell and the 3rd-rank spell as the advanced school spell."
+ },
+ {
+  "id": "emerald-boughs",
+  "name": "Emerald Boughs",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "Emerald Boughs value the societies and natural communities of the present day, seeking to understand the world as it is and how magic operates therein. Emphasizing camaraderie and sociality, these students tend to be the ones that most eagerly embrace the Magaambya's \"practical magic\" curriculum where they leave campus and work within communities. While some of these students have been accused of spying for the school, espionage is not an official part of their curriculum. Magic that can serve or sway others—as well as magic that reveals knowledge or allows access to it—is, instead, at the heart of this curriculum. **Additional Curriculum** - **cantrips:** Summon Instrument - **1st:** Charm, Disguise Magic - **2nd:** Revealing Light - **3rd:** Hypnotize - **4th:** Confusion - **5th:** Scouting Eye - **6th:** Scrying - **7th:** True Target - **8th:** - **9th:** Foresight"
+ },
+ {
+  "id": "end-it",
+  "name": "End It!",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "incapacitation",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** You and your allies currently outnumber enemies on the battlefield, and you or a squadmate have reduced an enemy to 0 Hit Points since the start of your last turn. --- At your proclamation that victory is already at hand, your allies march forward with an authoritative stomp, scattering your enemies in terror. Signal all squadmates within the aura of your banner; you and each ally can Step as a free action directly toward a hostile creature. Any hostile creatures within 10 feet of a squadmate after this movement must attempt a save against your class DC; on a failure they become fleeing for 1 round, and on a critical failure they become fleeing for 1 round and Frightened 2. This is an emotion, fear, and mental effect."
+ },
+ {
+  "id": "enhanced-damage",
+  "name": "Enhanced Damage",
+  "level": 15,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've made your innovation more powerful than other weapons of its kind. Increase your innovation's weapon damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). As normal, you can't increase your die by more than one size, so this modification isn't cumulative with complex simplicity."
+ },
+ {
+  "id": "enhanced-resistance",
+  "name": "Enhanced Resistance",
+  "level": 7,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've improved upon your initial modification's ability to resist damage. The resistance from your initial armor modification adds your full level, instead of half your level (for instance, phlogistonic regulator's resistance would increase to your level). If you have more than one initial modification that gives resistance, choose which one this applies to."
+ },
+ {
+  "id": "entangling-form",
+  "name": "Entangling Form",
+  "level": 1,
+  "otherTags": [
+   "melee",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've altered your weapon to including tangling wires or straps, or to have a flexible construction. Your innovation gains the disarm, grapple, and trip traits."
+ },
+ {
+  "id": "envy",
+  "name": "Envy",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "The Cutting Eye reveals weaknesses in yourself and others, creating those weaknesses when you need to humble those who dare surpass you. **Anathema** Use your magic to cause harm with the elements or void. **Sin Spells** - **cantrips:** Shield, Tangle Vine - **1st:** , Enfeeble - **2nd:** Dispel Magic, Stupefy - **3rd:** Earthbind, Thief of Fortune - **4th:** Containment, Outcast's Curse - **5th:** Banishment, Grisly Growths - **6th:** Cursed Metamorphosis, Spellwrack - **7th:** Duplicate Foe, Planar Seal - **8th:** Quandary - **9th:** Detonate Magic **Initial School Spell** Cutting Eye"
+ },
+ {
+  "id": "evasion",
+  "name": "Evasion",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "gunslinger"
+  ],
+  "mechanicalFields": [],
+  "description": "You've learned to move quickly to avoid explosions, dragon's breath, and worse. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "expeditious-inspection",
+  "name": "Expeditious Inspection",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "investigator"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- You observe and assess your surroundings with great speed. You Recall Knowledge, Seek, or Sense Motive."
+ },
+ {
+  "id": "extensible-weapon",
+  "name": "Extensible Weapon",
+  "level": 15,
+  "otherTags": [
+   "melee",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Melee only** --- You've found a way to construct your weapon so that it can extend while leaving its balance unchanged. Your innovation gains the reach trait. If the weapon already had the reach trait, it increases your reach by an additional 10 feet, instead of the usual additional 5 feet."
+ },
+ {
+  "id": "field-of-roots",
+  "name": "Field of Roots",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon extends its roots underground to entangle and possibly damage all foes nearby. All enemies within your eidolon's reach take damage of the same type and amount as your eidolon's most damaging Strike, depending on their Reflex saves against your spell DC. Any ongoing effects of the save last until the enemy either Escapes or leaves your eidolon's reach. After using Field of Roots, your eidolon is immobilized until it takes a single action, which has the manipulate trait, to detach from the ground; this also ends any remaining effects on enemies from Field of Roots. --- **Critical Success** The enemy is unaffected. **Success** The enemy takes no damage, but takes a -10 foot circumstance penalty to its Speeds. **Failure** The enemy takes half damage, takes a –10-foot circumstance penalty to its Speeds, and, at the end of each of its turns, takes half damage again. **Critical Failure** The enemy is immobilized, takes full damage, and, at the end of each of its turns, takes full damage again."
+ },
+ {
+  "id": "fire-in-the-hole",
+  "name": "Fire in the Hole",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "**Trigger** A creature moves into the hazard's space --- **Effect** The hazard explodes, dealing the bombs' damage and splash damage to the inanimate object. Combine this damage for the purpose of resistances and weaknesses, and this damage ignores an amount of the object's Hardness equal to your level. Any creatures adjacent to the hazard take the bombs' splash damage, similarly combined for the purpose of resistances and weaknesses. As a reminder, since you didn't throw the bombs, Calculated Splash and similar effects don't apply."
+ },
+ {
+  "id": "fling-magic",
+  "name": "Fling Magic",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "magical",
+   "manipulate",
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** You are holding your wand implement. --- You fling magical energy at a target within 60 feet, dealing damage, with a save against your class DC. The damage is of the type you selected when you gained your wand implement. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. You can expend more energy than usual to boost the effect of Fling Magic, dealing d6s of damage instead of d4s. After you do, the wand's extra energy is discharged; you can't boost the wand's damage again, but can continue to Fling Magic normally. The extra energy recharges at the end of your next turn. --- **Special** This activity has the trait corresponding to the damage type you selected."
+ },
+ {
+  "id": "focus-spells",
+  "name": "Focus Spells",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "Focus spells are a special type of spell attained directly from a branch of study, from a deity, or from another specific source. You can learn focus spells only through special class features or feats, rather than choosing them from a spell list. Furthermore, you cast focus spells using a special pool of Focus Points-you can't prepare a focus spell in a spell slot or use your spell slots to cast focus spells; similarly, you can't spend your Focus Points to cast spells that aren't focus spells. Even some classes that don't normally grant spellcasting, such as the Champion and Monk, can grant focus spells. Focus spells are automatically heightened to half your level rounded up, just like cantrips are. You can't cast a focus spell if its minimum level is greater than half your level rounded up, even if you somehow gain access to it. Casting any of your focus spells costs you 1 Focus Point. You automatically gain a focus pool of 1 Focus Point the first time you gain an ability that gives you a focus spell. You replenish all the Focus Points in your pool during your daily preparations. You can also use the Refocus activity to pray, study, meditate, or otherwise reattune yourself to the source of your focus magic and regain a Focus Point. Some abilities allow you to increase the Focus Points in your pool beyond 1. Typically, these are feats that give you a new focus spell and increase the number of points in your pool by 1. Your focus pool can't have a capacity beyond 3 Focus Points, even if feats that increase your pool would cause it to exceed this number. --- To regain focus points, see the Refocus action. --- # Spellcasters with Focus Spells Source**Core Rulebook pg. 302** If you are a spellcaster, your focus spells are the same tradition of spell as the class that gave you the focus spell. A Bard's are Occult, a Cleric's are Divine, a Druid's are Primal, a Wizard's are Arcane, and a Sorcerer's are determined by their bloodline. # Non-Spellcasters with Focus Spells Source **Core Rulebook pg. 302** If you get focus spells from a class or other source that doesn't grant spellcasting ability (for example, if you're a Monk with the Qi Spells feat), the ability that gives you focus spells also provides your proficiency rank for spell attack rolls and spell DCs, as well as the magical tradition of your focus spells. You gain the ability to Cast a Spell and use any spellcasting actions necessary to cast your focus spells (see below). However, you don't qualify for feats and other rules that require you to be a spellcaster."
+ },
+ {
+  "id": "fungal-rot",
+  "name": "Fungal Rot",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "As you use your powers, radioactive molds and fungi consume your flesh, making you look (and feel) like a rotting, walking corpse. **Mild Backlash** You take damage equal to your level as your body decays. **Moderate Backlash** You take damage equal to your level and become Sickened 2. **Severe Backlash** You take damage equal to twice your level and become Sickened 4. You can't reduce the value of your sickened condition below 1 for 1 hour."
+ },
+ {
+  "id": "furious-strike",
+  "name": "Furious Strike",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon channels its anger into a furious attack. It makes a melee Strike. This counts as two attacks when calculating your multiple attack penalty. If this Strike hits, your eidolon deals an extra die of weapon damage and gains a +1 circumstance bonus to the damage roll. If you're at least 10th level, increase this to two extra dice with a +2 circumstance bonus, and if you're at least 18th level, increase it to three extra dice with a +3 circumstance bonus."
+ },
+ {
+  "id": "gather-to-me",
+  "name": "Gather to Me!",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "You signal your team to move into position together. Signal all squadmates; each can immediately Stride as a reaction, though each must end their movement inside your banner's aura, or as close to your banner's aura as their movement Speed allows. Squadmates can use Gather to Me! while Burrowing, Climbing, Flying, or Swimming instead of Striding if they have the corresponding movement type."
+ },
+ {
+  "id": "gluttony",
+  "name": "Gluttony",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "The All-Encompassing invokes a deep emptiness in its users, encouraging them to consume and consume, with nothing ever feeling like enough. **Anathema** Use your magic to protect others or manipulate minds. **Sin Spells** - **cantrips:** Caustic Blast, Void Warp - **1st:** Grim Tendrils, Summon Undead - **2nd:** Create Food, Ghoulish Cravings - **3rd:** Rouse Skeletons, Vampiric Feast - **4th:** Seal Fate, Vampiric Maiden - **5th:** Corrosive Muck, Slither - **6th:** , Vampiric Exsanguination - **7th:** Devouring Void, Eclipse Burst - **8th:** Desiccate - **9th:** Massacre **Initial School Spell** All-Encompassing Hunger"
+ },
+ {
+  "id": "greater-resolve",
+  "name": "Greater Resolve",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "investigator"
+  ],
+  "mechanicalFields": [],
+  "description": "Your unbelievable training grants you mental resiliency. Your proficiency rank for Will saves increases to legendary. When you roll a success at a Will save, you get a critical success. When you roll a critical failure at a Will save, you get a failure instead. When you roll a failure on a Will save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "greed",
+  "name": "Greed",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "The Precious Gleam carries knowledge that the world's problems are far beyond one's current form and resources. But forms can change and resources can be hoarded with the help of this rune's magic. **Anathema** Use your magic to affect the mind or perception rather than physical reality. **Sin Spells** - **cantrips:** Live Wire, Read Aura - **1st:** Ant Haul, Leaden Steps - **2nd:** Enlarge, Phantasmal Treasure - **3rd:** One with Stone, Shrink Item - **4th:** Aerial Form, Shape Stone - **5th:** Elemental Form, Impaling Spike - **6th:** Dragon Form, Petrify - **7th:** Chrysopoetic Curse, Lifewood Cage - **8th:** Monstrosity Form - **9th:** **Initial School Spell** Precious Gleam"
+ },
+ {
+  "id": "guardians-calling",
+  "name": "Guardian's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your instinctive urge is always to protect others, pushing back aggressors and doing everything in your power to prevent them from harming your allies and charges. When you attempt to Disarm, Reposition, or Shove an opponent, you can spend a Mythic Point to make the check at mythic proficiency. You can attempt these maneuvers against a creature of any size when performing them at mythic proficiency. The first time each day that you critically succeed on a check to Disarm, Reposition, or Shove an opponent, you regain a Mythic Point. --- **Edicts** place yourself in harm's way to protect your allies or innocent creatures under threat **Anathema** retreat from a battle while your allies or innocent bystanders are in danger without taking every reasonable effort to rescue them first"
+ },
+ {
+  "id": "hampering-spikes",
+  "name": "Hampering Spikes",
+  "level": 1,
+  "otherTags": [
+   "melee",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've added long, snagging spikes to your weapon, which you can use to impede your foes' movement. Your innovation gains the hampering, trip, and versatile P traits."
+ },
+ {
+  "id": "handlers-calling",
+  "name": "Handler's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "You have an instinctive urge to care for wild creatures. When you attempt a check to Command an Animal, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Make an Impression on a wild animal or Command an Animal who isn't your pet or companion, you regain a Mythic Point. --- **Edicts** care for dangerous animals or beasts in need, respect the habitats of wild creatures **Anathema** initiate combat against an animal or beast encountered in its natural environment, kill an animal or beast when sparing it is a viable option"
+ },
+ {
+  "id": "haunting-visage",
+  "name": "Haunting Visage",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "eidolon",
+   "manipulate",
+   "visual"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** Your eidolon is condensed. --- Your eidolon suddenly shifts itself into a terrifying shape of its choosing, rather than a simple mound, by closely controlling the positioning of its component bodies. The eidolon attempts to demoralize a creature within 15 feet; this Demoralize attempt loses the auditory trait, gains the visual trait, and the eidolon doesn't take a –4 circumstance penalty to the check if they don't share a language with their target. On a success or critical success, the target is additionally off-guard for 1 round."
+ },
+ {
+  "id": "heavy-construction",
+  "name": "Heavy Construction",
+  "level": 7,
+  "otherTags": [
+   "armor-innovation-modification",
+   "power-suit-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Power Suit only** --- You've expanded your innovation into a heavy bulwark, and your groundbreaking design ensures you don't take any of the drawbacks for such heavy defenses. Your innovation becomes heavy armor, and your proficiency in your innovation armor (but no other heavy armor) advances to be equal to your proficiency in medium armor. If your Strength modifier is at least +3, you remove the Speed penalty entirely instead of reducing it to –5 feet. The armor's adjusted statistics are: *AC Bonus* +5; *Dex Cap* +1; *Check Penalty* –2; *Speed Penalty* –10 feet; *Strength* +3; *Bulk* 3; *Group* composite; *Armor Traits* bulwark, entrench melee and ranged."
+ },
+ {
+  "id": "hefty-composition",
+  "name": "Hefty Composition",
+  "level": 1,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Blunt surfaces and sturdy construction make your weapon hefty and mace-like. Your innovation gains the shove, razing, and versatile B traits."
+ },
+ {
+  "id": "heightened-senses",
+  "name": "Heightened Senses",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "barbarian"
+  ],
+  "mechanicalFields": [],
+  "description": "Your instinct heightens each of your senses further. Your proficiency rank for Perception increases to master."
+ },
+ {
+  "id": "hunters-calling",
+  "name": "Hunter's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "You're the hunter, and somewhere, a legendary predator awaits as your ultimate challenge. When you attempt a check to Seek or Track, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Seek or Track a hostile or unfriendly creature, you regain a Mythic Point. --- **Edicts** be first in a group to scout an unknown and potentially dangerous area, seek out creatures that are causing imbalances in the natural world and correct the imbalance **Anathema** leave an animal or beast you've wounded free to cause future harm, refuse a request to hunt a dangerous animal or beast"
+ },
+ {
+  "id": "hyper-boosters",
+  "name": "Hyper Boosters",
+  "level": 7,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've improved your speed boosters' power through a breakthrough that significantly increases the energy flow without risking exploding. You gain a +10-foot status bonus to your Speed, which increases to a +20-foot status bonus when you're in Overdrive. If you're legendary in Crafting, it instead increases to a +30-foot status bonus when you're in Overdrive. You must have the speed boosters modification to select this modification."
+ },
+ {
+  "id": "impossible-alloy",
+  "name": "Impossible Alloy",
+  "level": 15,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Other inventors claim it's not even technically possible, but you've managed to create several metal alloys that seem to work for only you. These alloys can damage opponents vulnerable to any one of the seven skymetals. Your innovation is treated as all seven skymetals (abysium, adamantine, djezet, inubrix, noqual, orichalcum, and siccatite). This means you deal more damage to a variety of creatures, though you don't apply any of the other special effects for weapons made of those skymetals."
+ },
+ {
+  "id": "improved-evasion",
+  "name": "Improved Evasion",
+  "level": 13,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "Your ability to elude danger is matchless. Your proficiency rank for Reflex saves increases to legendary. When you roll a critical failure on a Reflex save, you get a failure instead. When you roll a failure on a Reflex save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "inconspicuous-appearance",
+  "name": "Inconspicuous Appearance",
+  "level": 7,
+  "otherTags": [
+   "melee",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Melee Only** --- Your innovation is built for easy concealment and surprise attacks. It gains the backstabber and versatile P traits. If the weapon has light Bulk, it also gains the concealable trait."
+ },
+ {
+  "id": "infused-reagents",
+  "name": "Infused Reagents",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You infuse reagents with your own alchemical essence, allowing you to create alchemical items at no cost. Each day during your daily preparations, you gain a number of batches of infused reagents equal to your level + your Intelligence modifier. You can use these reagents for either advanced alchemy or Quick Alchemy, described below. Together, these infused reagents have light Bulk. As soon as you make your next daily preparations, your infused reagents from the previous day's preparations are instantly destroyed, and nonpermanent effects of your previous day's infused items immediately end. While infused reagents are physical objects, they can't be duplicated, preserved, or created in any way other than your daily preparations. Any such artificial reagents lack the infusion and are useless for advanced alchemy or Quick Alchemy."
+ },
+ {
+  "id": "initiate-benefit-lantern",
+  "name": "Initiate Benefit (Lantern)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "While you hold your lantern, its burning light leaves secrets no place to hide. You can light or extinguish your lantern with nothing but a thought, as a free action that has the concentrate trait. While lit, the lantern emits an aura of light in a 20-foot emanation; the aura has the light and magical traits. Everything in the aura is magically lit with bright light regardless of cover, and dim light extends beyond the aura an additional distance equal to the size of the aura. The aura's counteract rank against magical darkness is equal to half your level rounded up. The lantern's aura attempts to reveal the unseen. You and your allies in the lantern's aura gain a +1 status bonus to visual Perception checks to notice anything that is also within the aura and a +1 status bonus to checks to Recall Knowledge against creatures within the aura, as the light exposes their true natures. During exploration, even if you aren't Searching, the GM rolls a secret check for you to find traps, environmental hazards, haunts, and secrets (such as secret doors). The GM rolls each time a given hazard or secret comes within the lantern's aura. These effects have the magical and revelation traits."
+ },
+ {
+  "id": "initiate-benefit-mirror",
+  "name": "Initiate Benefit (Mirror)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "You learn how to use your mirror to project another version of yourself whose realness is a matter of perspective. You gain the Mirror's Reflection action."
+ },
+ {
+  "id": "initiate-benefit-regalia",
+  "name": "Initiate Benefit (Regalia)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "While you hold your regalia, you gain an air of authority and bolster the courage of allies who believe in you. Your regalia aids you when you attempt to convince others. You gain a +1 circumstance bonus to Deception, Diplomacy, and Intimidation checks. Allies who can see you can use Follow the Expert to follow you even if you're only trained in a skill and not an expert, due to the competence you clearly exude. When they do, the circumstance bonus they gain from Following the Expert is +1. You stoke courage even against impossible odds. While holding your regalia, you gain an inspiring aura affecting you and all allies in a 15-foot emanation who can see you, granting them a +1 status bonus to saving throws against fear. At the end of your turn, at the same time you would reduce your frightened value by 1, you reduce the frightened value of all allies within your inspiring aura by 1. Your aura has the emotion, mental, and visual traits."
+ },
+ {
+  "id": "initiate-benefit-shield",
+  "name": "Initiate Benefit (Shield)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "You gain the Shield Block general feat. If your shield implement would be reduced to 0 Hit Points, it's instead reduced to 1 Hit Point, its circumstance bonus to AC when you Raise a Shield is reduced by 1 (this can't reduce the bonus below 0), and you can't Shield Block with your shield implement until it loses the broken condition. You can still use your shield as an implement when it has the broken condition. At 5th level, whenever you Exploit Vulnerability, you can also Raise a Shield as a free action."
+ },
+ {
+  "id": "initiate-benefit-tome",
+  "name": "Initiate Benefit (Tome)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "While you hold your tome, lines of text appear on the open pages, revealing useful information. While you hold your tome, you gain a +1 circumstance bonus to all skill checks to Recall Knowledge. During your daily preparations, you can gain the trained proficiency rank in two skills of your choice until you prepare again. You retain the benefit as long as the tome is on your person, even if you aren't holding it. At 3rd level, you're an expert in one of the skills and trained in the other, and at 5th level, you're an expert in both skills. Since these proficiencies are temporary, you can't use them as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "initiate-benefit-weapon",
+  "name": "Initiate Benefit (Weapon)",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "Your weapon trembles slightly in your hand, seeking out your foe's weakness to it and interrupting their actions. You gain the Implement's Interruption reaction. At 5th level, when you gain thaumaturgic weapon expertise, your instinctive knowledge of your weapon implement also grants you the weapon's critical specialization effect."
+ },
+ {
+  "id": "inspired-stratagem",
+  "name": "Inspired Stratagem",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "fortune",
+   "linguistic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Trigger** An ally you reviewed stratagems with is about to attempt an attack roll or skill check --- **Effect** The ally rolls the triggering check twice and takes the better of the two results. That ally then becomes temporarily immune to your Inspired Stratagem until your next daily preparations."
+ },
+ {
+  "id": "integrated-gauntlet",
+  "name": "Integrated Gauntlet",
+  "level": 7,
+  "otherTags": [
+   "not-fatal-trait",
+   "not-two-handed-trait",
+   "one-handed",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Combining your weapon with a gauntlet, you make it so you can quickly switch between attacking with your weapon and tinkering using your hands. Your innovation gains the free-hand trait. This cannot be used with weapons that have the two-hand or fatal aim traits."
+ },
+ {
+  "id": "intercept-attack",
+  "name": "Intercept Attack",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "guardian"
+  ],
+  "mechanicalFields": [],
+  "description": "**Trigger** An ally within 10 feet of you takes physical damage. --- You fling yourself in the way of oncoming harm to protect an ally. You can Step, but you must end your movement adjacent to the triggering ally. You take the damage instead of the triggering ally. Apply your own immunities, weaknesses, and resistances to the damage, not the ally's. --- **Special** You can extend this ability to an ally within 15 feet of you if the damage comes from your taunted enemy. If this ally is farther than you can Step to reach, you can Stride instead of Stepping; you still must end the movement adjacent to your ally."
+ },
+ {
+  "id": "iron-will",
+  "name": "Iron Will",
+  "level": 3,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "**Alchemist** Your mental defenses are an iron fortress. Your proficiency rank for Will saves increases to expert. **Ranger** Your training has hardened your resolve. Your proficiency rank for Will saves increases to expert."
+ },
+ {
+  "id": "ki-spells",
+  "name": "Ki Spells",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "## Ki Spells By tapping into a supernatural inner reserve called ki, you can create magical effects. Certain feats grant you special spells called ki spells, which are a type of focus spell. It costs 1 Focus Point to cast a focus spell. When you gain your first ki spell, you also gain a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you regain 1 Focus Point by spending 10 minutes using the Refocus activity to meditate in order to reach inner peace. When you first gain a ki spell, decide whether your ki spells are divine spells or occult spells. You become trained in spell attacks and spell DCs of that tradition and your key spellcasting ability is Wisdom. Focus spells are automatically heightened to half your level rounded up. Taking feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 points."
+ },
+ {
+  "id": "life-draining",
+  "name": "Life-Draining",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "The flourishing plant life that covers your body is a part of you, but it draws nutrients from your blood, making you weaker the more the flowers grow. As the plants grow, you need to spend more and more time recuperating. Recuperating in the sunshine lowers this duration, as it feeds the flowers, speeding your recovery. **Mild Backlash** You become Drained 1 as the plants feed off your life force. This condition lasts until you spend 3 consecutive actions to rest and do nothing. **Moderate Backlash** You become Drained 2 and fatigued until you spend 20 minutes recuperating by resting and doing nothing. If you spend this time basking in sunshine, it instead takes 10 minutes. **Severe Backlash** You become Drained 3 until you spend 2 hours napping. While napping, you're unconscious and can't take actions or engage in exploration activities, but a creature can wake you with a single action with the manipulate trait. If you spend this time napping in natural sunlight, it instead takes 1 hour. You're fatigued until you can get a full night's rest."
+ },
+ {
+  "id": "lust",
+  "name": "Lust",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "The Heart's Hook drowns rationality in desires, twisting its targets' thoughts until they gladly serve the runelord's wishes. **Anathema** Use your magic to meddle with physical forms or invoke the void. **Sin Spells** - **cantrips:** Daze, Message - **1st:** Charm, Command - **2nd:** Charitable Urge, Stupefy - **3rd:** Dream Message, Enthrall - **4th:** Confusion, Suggestion - **5th:** Mind Probe, Subconscious Suggestion - **6th:** Dominate, Never Mind - **7th:** Love's Sacrifice, Warp Mind - **8th:** Uncontrollable Dance - **9th:** Telepathic Demand **Initial School Spell** Heart's Hook"
+ },
+ {
+  "id": "manifest-eidolon",
+  "name": "Manifest Eidolon",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "summoner",
+   "teleportation"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon appears in an open space adjacent to you, and can then take a single action. If your eidolon was already manifested, you unmanifest it instead. The conduit that allows your eidolon to manifest is also a tether between you. Your eidolon must remain within 100 feet of you at all times and can't willingly go beyond that limit. If forced beyond this distance, or if you are reduced to 0 Hit Points, your eidolon's physical form dissolves: your eidolon unmanifests, and you need to use Manifest Eidolon to manifest it again. --- **Special** This activity has the trait matching your eidolon's tradition (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "manifold-alloy",
+  "name": "Manifold Alloy",
+  "level": 7,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've devised several alloys that contain useful properties of various metals, and you replace a number of parts of your weapon or its ammunition with pieces from these alloys. Your weapon innovation is cold iron and silver. This means you deal more damage to a variety of supernatural creatures, such as demons, devils, and fey."
+ },
+ {
+  "id": "mirrored-wall",
+  "name": "Mirrored Wall",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic",
+   "visual"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes **Requirements** At least one of your squadmates is in bright light or has a focused light source available, such as a bull's-eye lantern. --- Your squadmates have polished their shields to a reflective sheen and now position them to reflect a blinding light into your enemy's eyes. All of your squadmates can Raise a Shield or cast Shield as a reaction. Then, signal a squadmate within the aura of your commander's banner who currently has a shield raised (including spellcasting allies with an active casting of the *shield* cantrip), and choose an enemy within 60 feet. The formation bounces light off the raised shield and into the enemy's eyes; the target must succeed at a saving throw against your class DC or become blinded for 1 round (on a critical failure, the creature remains dazzled for 3 rounds after the blindness ends). You can signal additional allies with raised shields to participate in this tactic; the target takes a circumstance penalty on this save equal to the number of additional participating squadmates (to a maximum –4 circumstance penalty to the target's save)."
+ },
+ {
+  "id": "modular-head",
+  "name": "Modular Head",
+  "level": 1,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've constructed a multi-purpose, adjustable striking surface for your weapon, or you've made special ammunition you can swiftly alter. Your innovation gains the modular trait for bludgeoning, piercing, and slashing. When you Interact to use the modular trait, you can also choose to give the weapon the nonlethal trait if it doesn't currently have it, or to remove that trait if it's currently nonlethal."
+ },
+ {
+  "id": "mountaineering-training",
+  "name": "Mountaineering Training",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your instructions make it easier for you and your allies to scale dangerous surfaces. Signal all squadmates; until the end of your next turn, you and each ally gain a climb Speed of 20 feet. --- **Special** If you have this tactic prepared, you can use Warfare Lore in place of Athletics for checks you make to Climb."
+ },
+ {
+  "id": "multisensory-mask",
+  "name": "Multisensory Mask",
+  "level": 15,
+  "otherTags": [
+   "armor-innovation-modification",
+   "subterfuge-suit-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Subterfuge Suit only** --- You've built a multisensory mask over your armor that protects you by distorting your figure from all senses, leaving behind only a hazy image, muffled sounds, and so forth. While wearing the armor, you gain concealment against all creatures, even if they are using a nonvisual precise sense, such as a bat's echolocation. As normal for effects that leave your location obvious, you can't use this concealment to Hide or Sneak. If you use a hostile action, the concealment ends until you restore the mask as a single action, which has the manipulate trait."
+ },
+ {
+  "id": "muscular-exoskeleton",
+  "name": "Muscular Exoskeleton",
+  "level": 1,
+  "otherTags": [
+   "armor-innovation-modification",
+   "power-suit-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Your armor supports your muscles with a carefully crafted exoskeleton. When you send your armor into overdrive, the exoskeleton supplements your feats of athletics as well. When under the effects of Overdrive, you gain a +1 circumstance bonus to Athletics checks; if you're a master in Crafting, this increases to a +2 circumstance bonus."
+ },
+ {
+  "id": "naval-training",
+  "name": "Naval Training",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your instructions make it easier for you and your allies to swim through dangerous waters. Signal all squadmates; until the end of your next turn, you and each ally gain a swim Speed of 20 feet. --- **Special** If you have this tactic prepared, you can use Warfare Lore in place of Athletics for checks you make to Swim."
+ },
+ {
+  "id": "nudging-whisper",
+  "name": "Nudging Whisper",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "curse",
+   "divine",
+   "emotion",
+   "mental"
+  ],
+  "mechanicalFields": [],
+  "description": "You lace your words with echoes of your ancestors' magic. If your next action is to Request, you gain the effects of the Shameless Request feat, and if your next action is to Lie, you gain the effects of the feat. If you critically fail at either check, the target and anyone who witnessed you fail becomes immune to your Nudging Whisper for one day, though this doesn't necessarily let them know that you attempted to charm them."
+ },
+ {
+  "id": "omnirange-stabilizers",
+  "name": "Omnirange Stabilizers",
+  "level": 15,
+  "otherTags": [
+   "ranged",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Ranged only** --- You've modified your innovation to be dangerous and effective at any range. If your innovation had the volley trait, remove the volley trait. Otherwise, increase your innovation's range increment by 50 feet or an amount equal to the weapon's base range increment, whichever is more"
+ },
+ {
+  "id": "pacification-tools",
+  "name": "Pacification Tools",
+  "level": 1,
+  "otherTags": [
+   "melee",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Softer materials make your weapon suited to knock out instead of kill, and special protrusions let you catch weapons and disarm your foes. Your innovation gains the disarm, hampering, and nonlethal traits. You can choose whether to apply the nonlethal trait on each attack with your innovation."
+ },
+ {
+  "id": "pacifying-infusion",
+  "name": "Pacifying Infusion",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "infusion"
+  ],
+  "mechanicalFields": [],
+  "description": "If your next action is an impulse, it gains the nonlethal trait. If it has an area, you can exclude creatures you've designated with Safe Elements from its effects."
+ },
+ {
+  "id": "paragon-benefit-amulet",
+  "name": "Paragon Benefit (Amulet)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "Your amulet provides sanctuary even against wide-scale attacks. When you use Amulet's Abeyance, you target yourself and all allies within 15 feet. Each target gains both the initial resistance against the triggering damage and the lingering resistance from your amulet's adept benefit; the allies gain the lingering resistance even if they would not have taken any of the initial triggering damage. If the foe's attack deals multiple damage types, each target can separately choose the damage type to gain lingering resistance against."
+ },
+ {
+  "id": "paragon-benefit-bell",
+  "name": "Paragon Benefit (Bell)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "With your mastery of your bell, you can affect many foes with ease. All the condition values from Ring Bell increase to 2 (or 3 on a critical failure). Ring Bell can trigger off the Strike or spell of any enemy, not just the target of your Exploit Vulnerability; however, in that case, the condition lasts only until the start of your next turn."
+ },
+ {
+  "id": "paragon-benefit-lantern",
+  "name": "Paragon Benefit (Lantern)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "In addition to the other benefits, your lantern reveals all things as they truly are. The lantern's aura of light increases to a . While you're holding your lantern, the GM rolls a secret counteract check against any illusion, morph, or polymorph effects that come within the lantern's aura, but only for the purpose of determining whether you and others can see through it (for instance, if the check succeeds against a polymorph spell, you can see the creature's true form, but you don't end the spell). Use half your level rounded up as the counteract rank and your class DC – 10 as the counteract modifier. On a failed counteract check, the lantern can't attempt to counteract that illusion, morph, or polymorph effect again until midnight. You can choose to leave any effect you discover intact instead of counteracting it."
+ },
+ {
+  "id": "paragon-benefit-mirror",
+  "name": "Paragon Benefit (Mirror)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "You've become so skilled at reflecting yourself that you can combine making a reflection with your other movements to act right away. When you use Mirror's Reflection, you can have one of your selves immediately Interact, Seek, or Strike."
+ },
+ {
+  "id": "paragon-benefit-regalia",
+  "name": "Paragon Benefit (Regalia)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "Your regalia grants you the true gravitas of rulership, tying together the hearts and minds of your allies and making it impossible for you to leave a bad impression. If you roll a critical failure on a check to Coerce, Make an Impression, or Request, you get a failure instead. When others use Follow the Expert to follow you, you grant them a +3 circumstance bonus if you are trained or +4 if you are an expert or above. Allies in your inspiring aura aren't off-guard from being flanked unless you too are flanked. If one of your allies in the aura is clumsy, enfeebled, frightened, sickened, or stupefied, the status penalty your ally takes from the condition is 1 lower than the condition's value as long as the ally remains in the aura, unless you too are affected by the same condition."
+ },
+ {
+  "id": "paragon-benefit-shield",
+  "name": "Paragon Benefit (Shield)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "When you have your shield implement raised, the circumstance bonuses from your shield (both to AC and to saves against spells and other magic effects) also apply to all your allies within 15 feet. You can use your Shield Block reaction in defense of yourself or any of your allies within 15 feet."
+ },
+ {
+  "id": "paragon-benefit-tome",
+  "name": "Paragon Benefit (Tome)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "In addition to the other benefits, your tome's information alerts you to ambushes and attacks from your foes. While holding your tome, you can always roll a skill check for initiative against creatures or haunts using Esoteric Lore. If you do, you gain a +3 circumstance bonus to your initiative roll. The initiate benefit's circumstance bonus to Recall Knowledge from holding your tome increases from +1 to +2. When you succeed at the Recall Knowledge check granted by the tome's adept benefit, the bonus applies to all attack rolls you make before the start of your next turn, not just your next one. Lastly, when you gain temporary skill proficiencies, both are legendary."
+ },
+ {
+  "id": "paragon-benefit-wand",
+  "name": "Paragon Benefit (Wand)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "Your mastery of your wand grants you increased versatility, range, and area. The range of Fling Magic increases to 180 feet. You gain the ability to choose between all three damage types (cold, electricity, and fire) each time you use Fling Magic. When you Fling Magic, you can choose to target a single creature or to affect all creatures in a ."
+ },
+ {
+  "id": "paragon-benefit-weapon",
+  "name": "Paragon Benefit (Weapon)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "The way your implement connects to your foe makes its interruptions incredibly disruptive. You now disrupt the triggering action on a hit with Implement's Interruption, rather than needing a critical hit."
+ },
+ {
+  "id": "passage-of-lines",
+  "name": "Passage of Lines",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "You command your allies to regroup, allowing endangered units to fall back while rested units press the advantage. Signal all squadmates within the aura of your commander's banner; each can swap positions with another willing ally adjacent to them. An ally can't swap into a space it can't fit into, and if one of the allies occupies more squares than the other, the smaller ally can move into any part of the larger ally's space as long as the two remain adjacent after the swap. --- *PFS Note:* This tactic can be used by prone PCs, but not PCs who are grabbed, immobilized, or otherwise unable to move of their own volition."
+ },
+ {
+  "id": "patrons-claim",
+  "name": "Patron's Claim",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per hour --- **Effect** Your familiar's mouth opens impossibly wide before your patron's grasping limb stretches forth from it at a creature within 30 feet, dealing 10d10 damage with a save against your spell DC. If the creature fails its save and takes damage, it is also Drained 2 (or Drained 4 on a critical failure) and you regain 1 Focus Point, up to your usual maximum, as your patron grants you additional magic in exchange for your gift of your opponent's spirit."
+ },
+ {
+  "id": "patrons-presence",
+  "name": "Patron's Presence",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "aura"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per hour --- **Effect** A palpable weight extends from your familiar in a . Enemies who enter or start their turn within the aura must succeed at a Will save against your spell DC or become Stupefied 2 as long as they remain within the aura, or Stupefied 3 on a critical failure. The aura lasts until the end of your next turn, but the familiar can Sustain it up to 1 minute."
+ },
+ {
+  "id": "perpetual-infusions",
+  "name": "Perpetual Infusions",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You have learned how to create perpetual alchemical infusions that can provide a near-infinite supply of certain simple items. You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents. The items you can select depend on your research field and must be in your formula book. Each time you gain a level, you can swap any number of your perpetual infusions with other eligible infusions."
+ },
+ {
+  "id": "perpetual-infusions-bomber",
+  "name": "Perpetual Infusions (Bomber)",
+  "level": 7,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You have learned how to create perpetual alchemical infusions that can provide a near-infinite supply of certain simple items. You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents. The items you can select depend on your research field and must be in your formula book. Each time you gain a level, you can swap any number of your perpetual infusions with other eligible infusions. --- Choose two 1st-level bombs."
+ },
+ {
+  "id": "perpetual-perfection",
+  "name": "Perpetual Perfection",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book."
+ },
+ {
+  "id": "perpetual-perfection-bomber",
+  "name": "Perpetual Perfection (Bomber)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two 11th-level or lower bombs."
+ },
+ {
+  "id": "perpetual-perfection-chirurgeon",
+  "name": "Perpetual Perfection (Chirurgeon)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two 11th-level or lower elixirs with the healing trait."
+ },
+ {
+  "id": "perpetual-perfection-mutagenist",
+  "name": "Perpetual Perfection (Mutagenist)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two 11th-level or lower mutagens."
+ },
+ {
+  "id": "perpetual-perfection-toxicologist",
+  "name": "Perpetual Perfection (Toxicologist)",
+  "level": 17,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two common 11th-level or lower alchemical poisons."
+ },
+ {
+  "id": "perpetual-potency",
+  "name": "Perpetual Potency",
+  "level": 11,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book."
+ },
+ {
+  "id": "perpetual-potency-bomber",
+  "name": "Perpetual Potency (Bomber)",
+  "level": 11,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 3rd-level or lower bombs."
+ },
+ {
+  "id": "perpetual-potency-chirurgeon",
+  "name": "Perpetual Potency (Chirurgeon)",
+  "level": 11,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 6th level or lower elixirs with the healing trait."
+ },
+ {
+  "id": "perpetual-potency-mutagenist",
+  "name": "Perpetual Potency (Mutagenist)",
+  "level": 11,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 3rd level or lower mutagens"
+ },
+ {
+  "id": "perpetual-potency-toxicologist",
+  "name": "Perpetual Potency (Toxicologist)",
+  "level": 11,
+  "otherTags": [],
+  "traits": [
+   "alchemist"
+  ],
+  "mechanicalFields": [],
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two common 5th-level or lower alchemical poisons."
+ },
+ {
+  "id": "pincer-attack",
+  "name": "Pincer Attack",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "You call for an aggressive formation designed for exploiting enemies' vulnerabilities. Signal all squadmates; each can Step as a reaction. If any of your allies ends this movement adjacent to an opponent, that opponent is off-guard to melee attacks from you and all other squadmates who responded to Pincer Attack until the start of your next turn."
+ },
+ {
+  "id": "piranha-assault",
+  "name": "Piranha Assault",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- You know that a thousand small bites can fell a large foe just as surely a single well-placed hit. Designate a creature within the aura of your commander's banner and signal all squadmates; for 1 minute, each time they attack that creature and deal damage to it of a type the creature resists, they ignore an amount of that creature's resistance equal to your level."
+ },
+ {
+  "id": "pointed-question",
+  "name": "Pointed Question",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "auditory",
+   "concentrate",
+   "investigator",
+   "linguistic",
+   "mental"
+  ],
+  "mechanicalFields": [],
+  "description": "You ask a question that charms or needles someone in just the right way. Ask a question of a non-allied creature that you can see. Attempt a Diplomacy check against the creature's Will DC. The creature is then temporarily immune for 1 hour. --- **Critical Success** The target must directly answer your question. It doesn't have to answer truthfully, but you gain a +4 circumstance bonus to your Perception DC if the creature attempts to Lie to you. Whether it answers truthfully or not, you glean something from its body language, and it is off-guard to the Strike you make using Devise a Stratagem against it before the end of your turn. **Success** As critical success, but the circumstance bonus to your Perception DC is +2. **Failure** The target can refuse to answer you as normal. **Critical Failure** The target can refuse to answer you as normal, and its attitude toward you decreases by one step due to your aggravating attention."
+ },
+ {
+  "id": "pop-drop-and-lock",
+  "name": "Pop, Drop, and Lock",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- You command your squadmates to perform a devastating coordinated takedown. Signal up to three squadmates within the aura of your commander's banner who all have the same enemy within their reach; the squadmates can attempt to Strike, Trip, or Grapple the opponent as a reaction. Each squadmate can only attempt one specific action granted by this tactic, the actions can be attempted in any order and a specific action can only be attempted once as part of this tactic."
+ },
+ {
+  "id": "pride",
+  "name": "Pride",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "The Crescent Scepter is endlessly convinced of its own superiority and the ascendance of its users. If someone's eyes show something else, clearly their eyes are mistaken. **Anathema** Use your magic to change or create physical things rather than their appearances. **Sin Spells** - **cantrips:** Bullhorn, Figment - **1st:** Dizzying Colors, Illusory Disguise - **2nd:** Illusory Creature, - **3rd:** Blindness, Levitate - **4th:** Mirage, Vision of Death - **5th:** Cloak of Colors - **6th:** Phantasmal Calamity - **7th:** Mask of Terror, Project Image - **8th:** Confusing Colors - **9th:** Overwhelming Presence **Initial School Spell** Crescent Scepter"
+ },
+ {
+  "id": "primal-howl",
+  "name": "Primal Howl",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "primal",
+   "sonic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per hour --- **Effect** Your animal companion screeches and howls, empowered with natural magic. All creatures in a take damage for every 2 levels your companion has, with a save against your spell DC. Creatures that fail become Frightened 1, and creatures that critically fail become Frightened 2. The fright is an emotion, fear, and mental effect."
+ },
+ {
+  "id": "primal-roar",
+  "name": "Primal Roar",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "auditory",
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon unleashes a primal roar or other such terrifying noise that fits your eidolon's form. Your eidolon attempts Intimidation checks to demoralize each enemy that can hear the roar; these Demoralize attempts don't take any penalty for not sharing a language."
+ },
+ {
+  "id": "protective-screen",
+  "name": "Protective Screen",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "You've trained your allies in a technique designed to protect war mages. Signal one squadmate; as a reaction, that squadmate Strides directly toward any other squadmate who is within the aura of your banner. If the first squadmate ends their movement adjacent to another squadmate, the second squadmate does not trigger reactions when casting spells or making ranged attacks until the end of their next turn or until they are no longer adjacent to the first squadmate, whichever comes first. If the first squadmate ends their movement adjacent to more than one other squadmate, the first squadmate must choose which of the adjacent squadmates gains this benefit."
+ },
+ {
+  "id": "psychic-weapon-expertise",
+  "name": "Psychic Weapon Expertise",
+  "level": 11,
+  "otherTags": [],
+  "traits": [
+   "psychic"
+  ],
+  "mechanicalFields": [],
+  "description": "Training and magic have improved your weapon technique. Your proficiency rank for simple weapons and unarmed attacks increases to expert."
+ },
+ {
+  "id": "pursue-a-lead",
+  "name": "Pursue a Lead",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "exploration",
+   "investigator"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- You name one detail you've identified that you think is part of a larger mystery, then spend 1 minute examining it. The detail is typically either obvious or something you've already discovered using Recall Knowledge, Sense Motive, Gather Information, or a similar action. After the minute passes, the GM either confirms there's a larger mystery or tells you there's nothing more to learn (the detail is inconsequential or you know all the information already). If there is in fact a larger mystery at play, you can't Pursue a Lead again for 10 minutes, but you can choose to open an investigation. To do so, define the question at the heart of the mystery, such as \"Where has the priceless work of art that was supposed to hang here been taken?\" or \"Who or what killed this priest?\" Work with your GM to refine the question if need be. You can also give your investigation a name to better keep track of it (such as \"The Case of the Cheated Goblin\" or \"The Skinsaw Murders\"). **Investigation Bonus** Whenever you attempt a Perception check or skill check to attempt to get closer to answering the question at the heart of an active investigation, you gain a +1 circumstance bonus to the check. The exact checks this applies to depend on the actions you use to investigate and are determined by the GM, but checks to investigate are typically Perception checks or skill checks that use Intelligence, Wisdom, or Charisma. **Active Investigations** You can maintain two active investigations at a time. If you Pursue another Lead after that, the case must be different from any of your current investigations (as far as you are aware), and you give up on a current investigation of your choice. Once you've given up pursuit of an investigation, you can't Pursue a Lead into it again until after the next time you make your daily preparations. **Solving an Investigation** If you answer the question at the heart of your investigation, the GM tells you that you've done so. You don't lose the bonus or other benefits until you choose to close the investigation by Pursuing a Lead again or voluntarily Dismissing it. If what you discover points to an even larger mystery, you can work with the GM to adapt the question and name of the investigation to the new information."
+ },
+ {
+  "id": "quick-tincture",
+  "name": "Quick Tincture",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "investigator",
+   "manipulate"
+  ],
+  "mechanicalFields": [],
+  "description": "**Cost** 1 versatile vial **Requirements** You know the formula for the alchemical item you're creating, you are holding or wearing alchemist's toolkit, and you have a free hand. --- You quickly brew up a short-lived tincture. You create a single alchemical elixir or tool of your level or lower without having to spend the normal monetary cost in alchemical reagents or needing to attempt a Crafting check. This item has the infused trait, but it remains potent only until the end of the current turn."
+ },
+ {
+  "id": "raconteurs-reload",
+  "name": "Raconteur's Reload",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "gunslinger"
+  ],
+  "mechanicalFields": [],
+  "description": "Your rapid or forceful words draw the enemy's attention away from your hands long enough to chamber another bullet. Interact to reload and then attempt a Deception check to Create a Diversion or an Intimidation check to demoralize."
+ },
+ {
+  "id": "rain-scribes",
+  "name": "Rain-Scribes",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "Rain-Scribes, who seek to explore the world and especially its unknown corners, draw the closest of all the branches to primal magic in their study of the arcane. They also embrace the \"practical magic\" schooling that takes them off of campus, often into the wilds of the Mwangi Expanse but sometimes beyond to other continents on Golarion or even onto distant planes. Their course of magical study includes connecting with and understanding nature, working with the elements, summoning animals, and providing for their own survival. **Additional Curriculum** - **cantrips:** Light - **1st:** Mending, Summon Animal - **2nd:** Shape Wood - **3rd:** Cozy Cabin - **4th:** Liminal Doorway, Unfettered Movement - **5th:** Magic Passage, Summon Dragon - **6th:** Chain Lightning - **7th:** Planar Palace - **8th:** Earthquake - **9th:**"
+ },
+ {
+  "id": "razor-prongs",
+  "name": "Razor Prongs",
+  "level": 1,
+  "otherTags": [
+   "melee",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You can knock down and slash your foes with sharp, curved blades. Your innovation gains the tearing, trip, and versatile S traits."
+ },
+ {
+  "id": "ready-aim-fire",
+  "name": "Ready, Aim, Fire!",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- You signal a volley of ranged attacks from your allies. Choose an enemy and signal up to three squadmates within the aura of your commander's banner; your squadmates can Interact to reload as a free action and attempt a ranged Strike against the enemy as a reaction --- **Special** If one of your squadmates knows or has prepared a cantrip with a range of 30 feet or more that deals damage and requires 2 or fewer actions to cast, they can cast it targeting the enemy instead of taking the other actions normally granted by this tactic."
+ },
+ {
+  "id": "redistribute",
+  "name": "Redistribute",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes **Trigger** An enemy's Strike against your eidolon is a critical hit. --- Your eidolon rearranges its component bodies in response to a powerful blow, mitigating the worst of the damage they would have taken. The triggering critical hit becomes a hit. Your eidolon immediately switches forms, from condensed to dispersed or from dispersed to condensed."
+ },
+ {
+  "id": "reload",
+  "name": "Reload!",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your drill instruction kicks in, and your allies rapidly reload their weapons to prepare for the next volley. Signal all squadmates; each can immediately Interact to reload as a reaction. --- **Special** When leading a siege weapon crew, you can use this tactic to command your squadmates to Load a siege weapon instead."
+ },
+ {
+  "id": "reloading-strike",
+  "name": "Reloading Strike",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "gunslinger"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** You're wielding a firearm or crossbow in one hand, and your other hand either wields a one-handed melee weapon or is empty. --- You make a melee attack and reload in one fluid movement. Strike an opponent within reach with your one-handed melee weapon (or, if your other hand is empty, with an unarmed attack), and then Interact to reload. You don't need a free hand to reload in this way and this reload does not trigger reactions."
+ },
+ {
+  "id": "ring-bell",
+  "name": "Ring Bell",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "auditory",
+   "magical",
+   "manipulate",
+   "sonic",
+   "thaumaturge"
+  ],
+  "mechanicalFields": [],
+  "description": "**Trigger** The target of your Exploit Vulnerability makes a Strike or Casts a Spell that would affect you or one of your allies. **Requirements** You are holding your bell implement, and the triggering creature is within 30 feet of you. --- Your implement sings out abruptly, disrupting your foe. The piece played depends on whether the trigger was a Strike or Spell, and it applies to the triggering Strike or Spell, except where noted otherwise. - **Distracting Cacophony** The trigger is a spell. You create a musical crash of sonic energy that assails the target and breaks its concentration. The target must succeed at a save against your class DC or become Stupefied 1 until the end of your next turn (Stupefied 2 on a critical failure). The target doesn't have to attempt a flat check to avoid losing the triggering spell, but the discordant ring does lower the spell attack modifier or spell DC of the triggering spell from stupefied. - **Disrupting Harmony** The trigger is a Strike. You create a strangely discordant harmony that sinks into your foe's body and throws its movements off. The target must succeed at a save against your class DC or become your choice of Enfeebled 1 or Clumsy 1 until the end of your next turn (Enfeebled 2 or Clumsy 2 on a critical failure)."
+ },
+ {
+  "id": "roaring-charge",
+  "name": "Roaring Charge",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- You and your squad surge forward with a mighty roar. Signal all squadmates within the aura of your commander's banner. As a reaction, these squadmates can Stride up to twice their Speed directly toward any enemy they are observing. Any creature within 10 feet of a squadmate once all movement from this tactic has been completed must attempt a save against your class DC with the following results. This is an emotion, fear, incapacitation, and mental effect. --- **Critical Success** No effect. **Success** The target is Frightened 1. **Failure** The target is Frightened 2. **Critical Failure** The target is Frightened 3 and fleeing for 1 round."
+ },
+ {
+  "id": "rope-shot",
+  "name": "Rope Shot",
+  "level": 7,
+  "otherTags": [
+   "ranged",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Ranged Only** --- Your weapon can shoot projectiles that split into simple ropes or nets around your foes' legs to trip your targets, and you can climb using the grappling hooks built into the weapon. Your weapon innovation gains the climbing and ranged trip traits, as well as the tethered trait if it is thrown."
+ },
+ {
+  "id": "rune-capacity",
+  "name": "Rune Capacity",
+  "level": 15,
+  "otherTags": [
+   "armor-innovation-modification",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Whether you've done some dabbling in orichalcum alloys or found another engineering solution, you've built your innovation in such a way that it can hold an additional property rune. Your innovation can have one more property rune than a normal item of its kind (to a maximum of four property runes with a +3 *potency* armor)."
+ },
+ {
+  "id": "runelords-calling",
+  "name": "Runelord's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "Even before Karzoug rose, you felt something tugging to you from beyond. Strange memories, sudden insights, vivid dreams, or wild hunches that lead to discoveries or unexpected successes have been the norm for you. Once knowledge of the legacies of Thassilon began to spread anew into the modern world after Karzoug rose from slumber, you've increasingly come to realize these visions and inspirations come to you from the past—maybe even one of your past lives—and that something from the time before Earthfall in ancient Thassilon is linked to your soul. When you attempt a check to Identify Magic, Learn a Spell, or cast a ritual, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed at an Arcana, Nature, Occultism, or Religion check to Identify Magic, you regain a Mythic Point. --- **Edicts** seek out rare magic spells and items from ancient Thassilon, learn knowledge about Thassilon that has been forgotten **Anathema** willingly destroy ancient texts or other forms of written knowledge without first preserving that lore in some way, treat another's convictions or beliefs as fantasy or delusion"
+ },
+ {
+  "id": "sagas-calling",
+  "name": "Saga's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "The Saga Lands do not come by that appellation lightly, for the storied legacies of this region predate Earthfall and have roots in worlds far beyond Golarion. Whether you were born in these lands or drawn there, those storied legacies have resonated with you on a supernatural level. It seems like each time you learn of some new legend or tale of this land passed down through the generations, there's something in it that directly applies to your life. You've taken to relying upon these legends—be they ancient or modern—as guideposts for your own life's course, knowing full well that they're calling to you and that you're destined to be the focus of one yourself. When you attempt a Performance check or a check to gather-information, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed at a check to Gather Information, you regain a Mythic Point. --- **Edicts** do what you can to protect the people of the Saga Lands, preserve legends and myths in writing or other forms of art for future generations to enjoy and learn from **Anathema** allow those in the Saga Lands who need aid to suffer if there's something you can do to help them, regard your own saga as more important than anyone else's, since your tale has yet to be fully told—and not even you know its ending"
+ },
+ {
+  "id": "sages-calling",
+  "name": "Sage's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "You're already an archive of knowledge, but you're driven to learn more with an unquenchable passion that might never be sated. When you attempt to Recall Knowledge, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a Recall Knowledge check against an enemy creature, you regain a Mythic Point. --- **Edicts** preserve your knowledge for future generations, seek out lost knowledge in dangerous or forgotten places **Anathema** destroy books or other repositories of knowledge, lie to hide knowledge from the world"
+ },
+ {
+  "id": "second-skin",
+  "name": "Second Skin",
+  "level": 19,
+  "otherTags": [],
+  "traits": [
+   "ranger"
+  ],
+  "mechanicalFields": [],
+  "description": "Your armor has become akin to a second skin for you. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to master. When wearing light or medium armor, you can rest normally, rather than receiving poor rest that leaves you fatigued."
+ },
+ {
+  "id": "seek-and-destroy",
+  "name": "Seek and Destroy",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- You direct your team to uncover hidden foes and exploit newly discovered weaknesses. Signal up to two squadmates within the aura of your commander's banner; they can immediately seek as a free action. Afterward, each can spend a reaction to either Point Out an enemy, Stride toward an enemy they're observing, or attempt to Strike an enemy they're observing. Each of the squadmates deals additional precision damage equal to half your level with their next successful Strike before the end of your next turn against a creature that has become observed by them from a successful Perception check to Seek."
+ },
+ {
+  "id": "seething-frenzy",
+  "name": "Seething Frenzy",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "eidolon",
+   "emotion",
+   "mental"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon's fury boils over into a reckless, out-of-control frenzy. While frenzied, your eidolon is affected by *boost eidolon* and gains temporary Hit Points equal to your level, but it takes a -2 penalty to AC. Your eidolon can't voluntarily end the frenzy or start another frenzy while in the frenzy. The frenzy lasts for 1 minute, after which it's fatigued for 1 minute and can't start another frenzy for 1 minute."
+ },
+ {
+  "id": "segmented-frame",
+  "name": "Segmented Frame",
+  "level": 1,
+  "otherTags": [
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "Hinges, clamps, and telescoping parts make your innovation collapsible and adjustable. It gains the modular trait for bludgeoning, piercing, and slashing. You can Interact to collapse the item down to light Bulk or to return it to your normal form. When it's collapsed to light Bulk, it has the concealable trait, which grants you a +2 circumstance bonus to Stealth checks and DCs to hide or conceal the weapon."
+ },
+ {
+  "id": "sever-conduit",
+  "name": "Sever Conduit",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate"
+  ],
+  "mechanicalFields": [],
+  "description": "**Trigger** Your eidolon takes damage that would bring you to 0 Hit Points and comes from an effect other than a death effect --- **Effect** You quickly shut the buffer in your link with your eidolon, causing your bonded ally to wink out of existence before you can be laid low. Your eidolon unmanifests, and you can't Manifest your Eidolon for 1 minute. In exchange, you don't take the triggering damage, though your eidolon still suffers any other adverse effects that accompanied the damage."
+ },
+ {
+  "id": "shadows-in-the-moonlight",
+  "name": "Shadows in the Moonlight",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your commands help your team evade notice. Signal all squadmates within your banner's aura; until the end of your next turn, you and each ally count as Following the Expert for any checks to hide or sneak and can ignore the noisy trait on any armor you wear. If you spend 2 actions to use this tactic, up to two squadmates within your banner's aura can also either Hide or Sneak as a free action. --- **Special** If you have this tactic prepared, you can use Warfare Lore in place of Stealth for checks you attempt to Hide and Sneak."
+ },
+ {
+  "id": "share-senses",
+  "name": "Share Senses",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "scrying",
+   "summoner"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** Your eidolon is manifested. You project your senses into your eidolon, allowing you to perceive through it. When you do, you lose all sensory information from your own body, but can sense through your eidolon's body for up to 1 minute. You can Dismiss this effect. --- **Special** This action has the trait matching your eidolon's tradition (arcane, divine, occult, or primal). Your eidolon can also use this ability. When it does, it projects its senses into your body."
+ },
+ {
+  "id": "shed-spirit",
+  "name": "Shed Spirit",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- **Effect** Your familiar's spirit exits its body, leaving its empty shell behind, before flying at an enemy within 20 feet and dealing damage, with a save against your spell DC. If the familiar dealt damage, it then flies to an ally within 30 feet of the enemy, restoring Hit Points equal to half the damage dealt. Your familiar then re-forms in its original square. At 9th level, and every 2 levels thereafter, the attack deals an additional 2d6 damage."
+ },
+ {
+  "id": "shields-up",
+  "name": "Shields Up!",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "You signal your allies to ready their defenses. Signal all squadmates within the aura of your commander's banner; each can immediately Raise a Shield as a reaction. Squadmates who are wielding a parry weapon can instead position that weapon defensively as a reaction. --- **Special** If one of your squadmates knows or has prepared the Shield cantrip, they can cast it as a reaction instead of taking the actions normally granted by this tactic."
+ },
+ {
+  "id": "sickening-assault",
+  "name": "Sickening Assault",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per minute **Requirements** Your eidolon is dispersed. --- Your eidolon focuses on inflicting the most damage possible on its foes. If your eidolon's next action is to use Swarming Assault, the number of damage dice of the Swarming Assault are doubled. Additionally, creatures that fail their Reflex save against that Swarming Assault are Sickened 2 (Sickened 4 on a critical failure)."
+ },
+ {
+  "id": "slip-and-sizzle",
+  "name": "Slip and Sizzle",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your team executes a brutal technique designed to knock down an opponent and blast them with magical devastation. Signal up to two squadmates within the aura of your commander's banner; one of these squadmates must be adjacent to an opponent and the other must be capable of casting a spell that deals damage. The first squadmate can attempt to Trip the adjacent opponent as a reaction. If this Trip is successful, the second squadmate can cast a ranged spell that deals damage and takes 2 or fewer actions to cast. This spell is cast as a reaction and must either target the tripped opponent or include the tripped opponent in the spell's area. If the second squadmate cast a spell using slots or Focus Points as part of this tactic, they are Slowed 1 until the end of their next turn and do not gain a reaction when they regain actions at the start of their next turn."
+ },
+ {
+  "id": "sloth",
+  "name": "Sloth",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "The Reclined spreads a sense of restful peace to its users, the feeling of rest after a hard day of work without the drudgery leading up to it. With its magic, runelords can cut away even the smallest drudgery. **Anathema** Use your magic to manipulate appearances or directly cause harm with the elements. **Sin Spells** - **cantrips:** Telekinetic Hand, Telekinetic Projectile - **1st:** Sleep, Enfeeble - **2nd:** Ghostly Carrier, Summon Elemental - **3rd:** Cozy Cabin, Slow - **4th:** Dull Ambition, Translocate - **5th:** Summon Dragon, Telekinetic Haul - **6th:** Collective Transposition - **7th:** Indolent Haze, Planar Palace - **8th:** Quandary - **9th:** Resplendent Mansion **Initial School Spell** Reclined Apport"
+ },
+ {
+  "id": "speed-boosters",
+  "name": "Speed Boosters",
+  "level": 1,
+  "otherTags": [
+   "armor-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You have boosters in your armor that increase your Speed. You gain a +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive."
+ },
+ {
+  "id": "stitching-strike",
+  "name": "Stitching Strike",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes --- **Effect** Your familiar unravels into magical fibers that encompass an enemy within 30 feet and deal damage, with a save against your spell DC. On a failure, the target is also immobilized for 1 round or until it Escapes against your spell DC. Your familiar then re-forms in its original square. At 9th level, and every 2 levels thereafter, the attack deals an additional 2d6 damage."
+ },
+ {
+  "id": "strike-hard",
+  "name": "Strike Hard!",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "You command an ally to attack. Signal a squadmate within the aura of your commander's banner. That ally immediately attempts a Strike as a reaction."
+ },
+ {
+  "id": "stupefying-raid",
+  "name": "Stupefying Raid",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your team dashes about in a series of maneuvers that leave the enemy befuddled. Signal up to two squadmates within the aura of your commander's banner; these squadmates can Stride up to their Speed as a reaction. Each enemy they are adjacent to at any point during this movement must attempt a save against your class DC or become Stupefied 1 for 1 round (Stupefied 2 on a critical failure); this is a mental effect."
+ },
+ {
+  "id": "subtle-dampeners",
+  "name": "Subtle Dampeners",
+  "level": 1,
+  "otherTags": [
+   "armor-innovation-modification",
+   "subterfuge-suit-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "You've designed your armor to help you blend in and dampen noise slightly. When you send your armor into overdrive, the dampeners increase their effect, improving your Stealth. When under the effects of Overdrive, you gain a +1 circumstance bonus to Stealth checks. If you're a master in Crafting, this increases to a +2 circumstance bonus."
+ },
+ {
+  "id": "swarming-assault",
+  "name": "Swarming Assault",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** Your eidolon is dispersed. --- Your eidolon swarms over each creature occupying its space, biting, pecking, clawing, or making similar attacks with its component bodies. It deals damage to each creature in the area, with a save against your spell DC. You choose each time your eidolon uses Swarming Assault whether it deals piercing or slashing damage. Your eidolon then can't use Swarming Assault again for the next 1d4 rounds. At 3rd level and every 2 levels thereafter, the damage increases by 1d6."
+ },
+ {
+  "id": "tactical-takedown",
+  "name": "Tactical Takedown",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "You direct a coordinated maneuver that sends an enemy tumbling down. Signal up to two squadmates within the aura of your commander's banner. Each of those allies can Stride up to half their Speed as a reaction. If they both end this movement adjacent to an enemy, that enemy must succeed at a save against your class DC or fall prone."
+ },
+ {
+  "id": "take-the-high-ground",
+  "name": "Take the High Ground",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your ally leaps to secure the high ground with a little help from the squad. Signal a squadmate within the aura of your commander's banner; as a free action, that squadmate can Stride directly toward any other squadmate you are both observing. If the first squadmate ends this movement adjacent to another squadmate, the first squadmate can immediately Leap up to 25 feet horizontally or 15 feet vertically as a reaction, boosted by the other squadmate. This distance increases to 40 feet horizontally or 25 feet vertically if you have legendary proficiency in Warfare Lore."
+ },
+ {
+  "id": "tangle-in-riddle",
+  "name": "Tangle in Riddle",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "auditory",
+   "mental",
+   "transcendence"
+  ],
+  "mechanicalFields": [],
+  "description": "You speak a bizarre koan that transcends language and is understood by only one creature within 30 feet. The target must attempt a save against your class DC. It's then immune to this ability for 1 hour. --- **Critical Success** The target is unaffected. **Success** The target is Stupefied 1 for 1 round. **Failure** The target is stupefied 1 for 1d4 rounds. **Critical Failure** The target is stupefied 1 and confused for 1d4 rounds."
+ },
+ {
+  "id": "tangle-line",
+  "name": "Tangle Line",
+  "level": 7,
+  "otherTags": [
+   "thrown",
+   "weapon-innovation-modification"
+  ],
+  "traits": [
+   "inventor"
+  ],
+  "mechanicalFields": [],
+  "description": "**Thrown Only** --- Your weapon has an extensible line that you can use to knock your enemies over, recall the weapon to your hand and even parry attacks. Your innovation gains the parry, ranged trip and tethered traits."
+ },
+ {
+  "id": "tempest-sun-mages",
+  "name": "Tempest-Sun Mages",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "Tempest-Sun Mages prize physical courage as well as intellectual bravery. They feel called to defend against threats of all kinds, from tyranny and invasion to intellectual subversion and bullying. Generally having a keen sense of justice, they stand up for the downtrodden and step up whenever danger presents itself. Their classes often feature heated debates that occasionally spill over into rivalries and duels outside of class. Seeing themselves as the direct heirs to the power that the Ten Magic Warriors used to transform the world, Tempest-Sun Mages tend to see magic as a fundamental power in the service of a larger purpose to extend justice and create a better world, focusing on magic that invokes the power of the sun and strengthens their own resolve. **Additional Curriculum** - **cantrips:** Ignition - **1st:** Breathe Fire, Fleet Step - **2nd:** Blazing Bolt - **3rd:** Fireball - **4th:** Fly - **5th:** Elemental Form - **6th:** Wall of Force - **7th:** Fiery Body - **8th:** Monstrosity Form - **9th:** Implosion"
+ },
+ {
+  "id": "tendril-strike",
+  "name": "Tendril Strike",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Stretching to extend its body to its limits, your eidolon attacks a foe that would normally be beyond its reach. Your eidolon makes a melee unarmed Strike, increasing its reach by 5 feet for that Strike. If the unarmed attack has the disarm, shove, or trip trait, the eidolon can use the corresponding action instead of a Strike."
+ },
+ {
+  "id": "the-bigger-they-are",
+  "name": "The Bigger They Are",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Regardless of your individual strengths, collectively your squad has the power to move mountains and topple giants. Signal a squadmate within the aura of your commander's banner. That squadmate can attempt to Reposition, Shove, or Trip a target within their reach. Each other squadmate who is adjacent to the original squadmate or the target can attempt to assist with the maneuver as a reaction For each squadmate who assists in this way, the original squadmate increases the maximum size of creature they can target (for example, if a total of two squadmates participated in this maneuver, the initial squadmate could target a creature up to two sizes larger than them.) The original squadmate gains a circumstance bonus on their check to Reposition, Shove, or Trip equal to the number of additional squadmates who assisted in the maneuver (maximum +4)."
+ },
+ {
+  "id": "thespians-calling",
+  "name": "Thespian's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "All the world is a stage, and you're no mere player, but a playwright whose story may change the course of history. When you use Performance to Perform or Earn Income, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Perform, you regain a Mythic Point. --- **Edicts** master new performances, seek opportunities to perform in front of new audiences, support other performers **Anathema** deny a call for an encore performance, refuse a request to perform in front of an audience, sabotage another performer"
+ },
+ {
+  "id": "thiefs-calling",
+  "name": "Thief's Calling",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "mechanicalFields": [],
+  "description": "Whether guildmaster or cutpurse, you covet something, or many things, that don't belong to you, and you're driven to ever greater heights of larceny. When you attempt to Pick a Lock or Steal an item, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Pick a Lock or Steal from a hostile creature, you regain a Mythic Point. --- **Edicts** seek opportunities to overcome evermore dangerous and complex locks and mechanical defenses, steal things from dangerous creatures or places **Anathema** leave unattended treasure where you found it, pass up opportunities for profit that challenge your skills"
+ },
+ {
+  "id": "thoughtful-reload",
+  "name": "Thoughtful Reload",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "gunslinger"
+  ],
+  "mechanicalFields": [],
+  "description": "As you sink deep into a state of analytical calm and focus on the foe before you, your hands reload a bullet instinctively. Attempt a Recall Knowledge check against an opponent you can see and then Interact to reload."
+ },
+ {
+  "id": "touch-and-go",
+  "name": "Touch and Go",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "gunslinger"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** You're wielding a combination weapon. --- Your body's shadows mask your hands' steel. You can Step toward an enemy, you can Interact to change your weapon between melee or ranged modes, and you then Interact to reload."
+ },
+ {
+  "id": "true-shapeshift",
+  "name": "True Shapeshift",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate"
+  ],
+  "mechanicalFields": [],
+  "description": "**Requirements** You're under the effects of Untamed Form --- **Effect** You change into any other shape on your *untamed form* list. If the duration of that shape is different from the one you were previously in, use the shorter duration to determine your duration remaining."
+ },
+ {
+  "id": "unravel-the-future",
+  "name": "Unravel the Future",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "fortune",
+   "transcendence"
+  ],
+  "mechanicalFields": [],
+  "description": "You pluck a single thread from your ikon, which ties itself in three loops about your wrist, where it remains for the next minute. If you fail an attack roll or skill check, and a +1 status bonus would change your failure into a success or your success into a critical success, you gain a +1 status bonus to this check retroactively, changing the outcome appropriately as the thread pulls you to the future you desire. The thread then falls from your wrist. You can have only one thread in existence at a time."
+ },
+ {
+  "id": "uzunjati",
+  "name": "Uzunjati",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "Uzunjati are perhaps the most iconic Magaambyans, and certainly the best known beyond the Mwangi Expanse, because they are the storytellers who roam across Golarion gathering knowledge embedded in oral traditions and folklore. While they often travel as widely as Rain-Scribes, their focus is substantially different, for their exploration is always in service to collecting and preserving the spoken knowledge of community and culture. In addition to the magic of their own stories, they emphasize magic that protects and that affects others' minds. **Additional Curriculum** - **cantrips:** Daze - **1st:** Mindlink, - **2nd:** Kgalaserke's Axes - **3rd:** Ibex's Harvest - **4th:** Telepathy - **5th:** Mind Probe, Truespeech - **6th:** Mislead - **7th:** - **8th:** Hidden Mind - **9th:**"
+ },
+ {
+  "id": "verdant-core-deviant-classification",
+  "name": "Verdant Core Deviant Classification",
+  "level": 1,
+  "otherTags": [],
+  "traits": [],
+  "mechanicalFields": [],
+  "description": "The Verdant Core deviation represents an abundance of vitality and plant life, likely caused by being implanted with supernatural seeds, contact with the Plane of Wood or the First World, or powerful primal rituals. Regardless of the source, you're a walking garden with grass, flowers, and other small plants sprouting from your flesh. You have powers over plants, wood, and growth. ## Backlash Life-Draining The flourishing plant life that covers your body is a part of you, but it draws nutrients from your blood, making you weaker the more the flowers grow. As the plants grow, you need to spend more and more time recuperating. Recuperating in the sunshine lowers this duration, as it feeds the flowers, speeding your recovery. The same blood that lets one of the dragon-descended spit out a gout of flame is precisely what keeps the inside of their mouth from being singed in the furnace. Deviations, unfortunately, lack these safeguards, their powers coming from haphazard circumstance and interactions rather than intentional design. A character using their deviation always risks the chance of backlash. Whenever you attempt to use a deviation, roll a . On a success, you use your deviation and the DC for subsequent checks increases by 5, to a maximum of 20 ( ); on a failure, you use your deviation and then suffer a backlash effect, after which your flat check DC resets to 5. Backlash progresses from mild, to moderate, to severe. When you have already taken mild backlash in a given day, the next time you would take backlash, you take the moderate backlash instead, and if you have already taken moderate backlash, you take the severe backlash instead, and your deviation can't be used for the rest of the day—attempting to use it simply brings pain. When you make your daily preparations, your flat check DC returns to 5 and your next backlash returns to mild. Any effects from backlash can't be reduced, prevented, or otherwise bypassed. Conditions and damage you take from backlash can't be reduced or prevented by resistance or immunity, but still triggers any weakness you have to it. ## Verdant Core Deviant Feats Sprout Fruit Vine Lash Defensive Growth Disperse Into Petals ### Universal Deviant Feats Awakened Power Greater Awakened Power"
+ },
+ {
+  "id": "verdant-rest",
+  "name": "Verdant Rest",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate"
+  ],
+  "mechanicalFields": [],
+  "description": "You turn into a tree or other non-creature plant. This has the effect of using One with Plants to turn into a plant, except that your AC is 30. You can Dismiss this effect to turn back. If you rest for 10 minutes in this form in natural sunlight, you recover half your maximum Hit Points. If you take your daily rest in this form, the rest restores you to maximum Hit Points and removes all non-permanent drained, enfeebled, clumsy, and stupefied conditions, as well as all poisons and diseases of 19th level or lower."
+ },
+ {
+  "id": "visions-of-sin",
+  "name": "Visions of Sin",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "divine",
+   "eidolon",
+   "emotion",
+   "mental"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per 10 minutes Your eidolon summons images of its sin into the mind of a target creature within 30 feet, tormenting and confusing the target. The target must attempt a Will save against your spell DC with the following effects. The effects last until the end of your next turn, but your eidolon can use a single action, which has the concentrate trait, to extend the effects until the end of your next turn (like Sustaining a Spell), to a maximum duration of 1 minute. If the target is evil, it takes a -2 circumstance penalty to its save. Regardless of whether it succeeds, the target becomes temporarily immune for 1 day. --- **Critical Success** The target is unaffected. **Success** The target can't use reactions. **Failure** The target is Slowed 1 and can't use reactions. **Critical Failure** As failure, and the target is also confused for 1 round. The confusion can't be extended, but the other effects can."
+ },
+ {
+  "id": "wait-for-it",
+  "name": "Wait For It...",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "mechanicalFields": [],
+  "description": "Your team intuitively keeps their guard up even while waiting for the ideal moment to act. Signal up to two squadmates within the aura of your commander's banner; while these squadmates Delay or Ready an action, they gain a +1 circumstance bonus to AC and saving throws. A squadmate's bonus lasts until the end of your next turn, until they stop Delaying, or until the end of the current creature's turn when the squadmate uses the designated action they Readied, whichever happens first. In addition, you can grant one of the squadmates an extra reaction from your drilled reactions class feature, but it can be used only to perform a designated action they Readied."
+ },
+ {
+  "id": "warden-spells",
+  "name": "Warden Spells",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "ranger"
+  ],
+  "mechanicalFields": [],
+  "description": "Your relationship with the world around you extends from the physical to the magical. Certain feats grant you warden spells, which are a type of focus spells. It costs 1 Focus Point (FP) to cast a focus spell. When you gain your first warden spell, you also gain a focus pool of 1 FP. You refill your focus pool during your daily preparations, and you regain 1 FP by spending 10 minutes using the Refocus activity to commune with nature. Your warden spells are primal spells. When you first gain a warden spell, you become trained in primal spell attacks and spell DCs. Your spellcasting ability is Wisdom. Focus spells are automatically heightened to half your level rounded up. Taking feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 FP. The full rules for focus spells appear here."
+ },
+ {
+  "id": "whirlwind-maul",
+  "name": "Whirlwind Maul",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "Your eidolon lashes out in all directions. It makes a melee unarmed Strike against up to four enemies within reach. It can choose different unarmed attacks for each enemy. Each attack counts toward your multiple attack penalty, but you don't increase your penalty until the eidolon has made all its attacks."
+ },
+ {
+  "id": "witch-lessons",
+  "name": "Witch Lessons",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "witch"
+  ],
+  "mechanicalFields": [],
+  "description": "A witch's knowledge from their patron comes in the form of lessons, which you can learn by selecting feats like Basic Lesson. Each lesson grants you a hex and teaches your familiar a new spell, adding it to the spells you can prepare using your witch spellcasting. You gain this spell even if it's not on your tradition's spell list. #### **BASIC LESSONS** You can select from these lessons when a feat or another effect grants you a basic lesson. **Lesson of Dreams** You gain the Veil of Dreams hex, and your familiar learns Sleep. **Lesson of the Elements** You gain the Elemental Betrayal hex. Your familiar learns your choice of Breathe Fire, Air Bubble, Hydraulic Push, or Pummeling Rubble. **Lesson of Life** You gain the Life Boost hex, and your familiar learns Spirit Link. **Lesson of Protection** You gain the Blood Ward hex; your familiar learns Mystic Armor. **Lesson of Vengeance** You gain the Needle of Vengeance hex, and your familiar learns Phantom Pain. - Uncommon **Lesson of Calamity:** You gain the Stumbling Curse hex, and your familiar learns Ill Omen. #### **GREATER LESSONS** You can select from these lessons when a feat or other effect grants you a greater lesson. **Lesson of Mischief** You gain the Deceiver's Cloak hex, and your familiar learns Mad Monkeys. **Lesson of Shadow** You gain the Malicious Shadow hex, and your familiar learns Chilling Darkness. **Lesson of Snow** You gain the Personal Blizzard hex, and your familiar learns Wall of Wind. **Lesson of Favors** You gain the Return the Favor hex, and your familiar learns Mind of Menace. **Lesson of Decay** All living things eventually decay, feeding fungus and insect. You gain the Mycological Malady hex, and your familiar learns Insect Form. **Lesson of the Flock** Power flows when many work as one. You gain the Sheltering Wings hex, and your familiar learns Levitate. **Lesson of the Shark** Learn the ways of this deadly oceanic predator. You gain the Blood in the Water hex, and your familiar learns Feet to Fins. #### **MAJOR LESSONS** You can select from these lessons when a feat or other effect grants you a major lesson. **Lesson of Bargains** You gain the Over the Coals hex, and your familiar learns Subconscious Suggestion. **Lesson of Death** You gain the Curse of Death hex, and your familiar learns Raise Dead. **Lesson of Renewal** You gain the Restorative Moment hex, and your familiar learns Field of Life. - Rare **Lesson of Frozen Queen** You gain the Glacial Heart hex and your familiar learns Wall of Ice."
+ },
+ {
+  "id": "wizard-weapon-expertise",
+  "name": "Wizard Weapon Expertise",
+  "level": 11,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "Through a combination of magic and training, you've learned how to wield wizard weapons more effectively. You gain expert proficiency in the club, crossbow, dagger, heavy crossbow, staff, and unarmed attacks."
+ },
+ {
+  "id": "wrath",
+  "name": "Wrath",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "wizard"
+  ],
+  "mechanicalFields": [],
+  "description": "The Vengeful Glare fills its users with a zealous rage and the restless need to solve problems, which generally takes the form of cutting to the most direct solution. **Anathema** Use your magic to protect or create. **Sin Spells** - **cantrips:** Frostbite, Ignition - **1st:** Force Barrage, - **2nd:** Blistering Invective, Floating Flame - **3rd:** Fireball, Lightning Bolt - **4th:** Ice Storm, Wall of Fire - **5th:** Howling Blizzard, Wall of Ice - **6th:** Blinding Fury, - **7th:** Eclipse Burst, Fiery Body - **8th:** Earthquake - **9th:** Falling Stars **Initial School Spell** Vengeful Glare"
+ },
+ {
+  "id": "wyrms-breath",
+  "name": "Wyrm's Breath",
+  "level": 1,
+  "otherTags": [],
+  "traits": [
+   "concentrate",
+   "eidolon"
+  ],
+  "mechanicalFields": [],
+  "description": "**Frequency** once per minute Your eidolon gathers the power of the mightiest wyrms to make its magical breath even more spectacular. If your eidolon's next action is to use Breath Weapon, both the number of damage dice and area of the Breath Weapon are doubled."
+ }
+]

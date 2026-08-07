@@ -795,12 +795,105 @@ export function domainPoolFor(
   deityId: string | null | undefined,
   db: ContentDatabase,
   pool: FeatChoiceDef['domainPool'] = 'deity',
+  /** The deity's domains as a record REPLACED them (Splinter Faith). Pass `character.deityDomains`,
+   *  or `splinterDomainsOf(build, db)` while the player is still in the builder, so every picker
+   *  offers the four they actually chose rather than the ones the deity prints. */
+  override?: { domains: string[]; alternateDomains: string[] } | null,
 ): string[] {
   const deity = deityId ? db.deities[deityId] : undefined;
   if (pool === 'all') return Object.keys(DOMAIN_SPELLS).sort();
-  const own = deity?.domains ?? [];
+  const own = override?.domains ?? deity?.domains ?? [];
   if (pool !== 'deity+alternate') return own;
-  return [...new Set([...own, ...(deity?.alternateDomains ?? [])])];
+  const alt = override?.alternateDomains ?? deity?.alternateDomains ?? [];
+  return [...new Set([...own, ...alt])];
+}
+
+/**
+ * The deity domains this character actually has — the printed ones, unless a record replaced them.
+ *
+ * "For the purpose of abilities that depend on your deity's domains, the four domains you chose ARE
+ * your deity's domains, and any of your deity's domains you didn't choose are now among your deity's
+ * alternate domains" (Splinter Faith). buildCharacter turns the recorded answers into these two
+ * lists; every reader goes through here, so the domain-spell picker, Domain Initiate and Advanced
+ * Domain cannot end up offering three different sets.
+ */
+export function deityDomainsOf(
+  c: Pick<Character, 'deityDomains' | 'details'>,
+  db: ContentDatabase,
+): { domains: string[]; alternateDomains: string[]; from?: string } {
+  if (c.deityDomains) return c.deityDomains;
+  const deity = c.details?.deityId ? db.deities[c.details.deityId] : undefined;
+  return { domains: deity?.domains ?? [], alternateDomains: deity?.alternateDomains ?? [] };
+}
+
+/**
+ * The domain replacement a BUILD's own answers imply.
+ *
+ * The builder needs this while the player is still answering — the four domain pickers re-render on
+ * every keystroke and cannot each re-run buildCharacter. Returns null when nothing the character has
+ * replaces its deity's domains.
+ */
+export function splinterDomainsOf(
+  build: {
+    featPicks?: Record<string, string | null>;
+    featChoices?: Record<string, string | null | undefined>;
+    deityId?: string | null;
+  },
+  db: ContentDatabase,
+): { domains: string[]; alternateDomains: string[]; from: string } | null {
+  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+    const feat = featId ? db.feats[featId] : undefined;
+    if (!feat?.modifiesGrant?.some((m) => m.from === 'deity' && m.deityDomainsFromChoice)) continue;
+    // Answers live under the feat's SLOT key, fanned out per pick — the same shape `choiceKeys` in
+    // build.ts produces. Expanded here rather than imported, because build.ts already imports this
+    // module and the cycle would be worse than two lines.
+    const n = Math.max(1, Math.floor(feat.choice?.picks ?? 1));
+    const keys = n === 1 ? [slotKey] : Array.from({ length: n }, (_, i) => `${slotKey}#${i}`);
+    const picked = keys.map((k) => build.featChoices?.[k]).filter((v): v is string => !!v);
+    if (!picked.length) continue;
+    return applySplinter(picked, build.deityId ? db.deities[build.deityId] : undefined, feat.name);
+  }
+  return null;
+}
+
+/**
+ * The domains a specific feat's `kind: 'domains'` choice should offer, in the BUILDER.
+ *
+ * Wraps domainPoolFor with the one rule the four call sites would otherwise each have to remember:
+ * the record that REPLACES the deity's domains must not be shown the replacement. Splinter Faith
+ * draws from the deity's printed and alternate lists — feeding it its own answers would leave it
+ * offering the four domains already chosen and nothing else.
+ */
+export function domainPoolForChoice(
+  build: {
+    featPicks?: Record<string, string | null>;
+    featChoices?: Record<string, string | null | undefined>;
+    deityId?: string | null;
+  },
+  db: ContentDatabase,
+  featId: string | null | undefined,
+  pool: FeatChoiceDef['domainPool'],
+): string[] {
+  const replacesItself = (featId ? db.feats[featId] : undefined)?.modifiesGrant?.some(
+    (m) => m.from === 'deity' && m.deityDomainsFromChoice,
+  );
+  return domainPoolFor(build.deityId, db, pool, replacesItself ? null : splinterDomainsOf(build, db));
+}
+
+/** The two lists Splinter Faith produces: the four chosen become the deity's, the displaced printed
+ *  ones join its alternates. Shared so build.ts and the builder cannot disagree. */
+export function applySplinter(
+  picked: string[],
+  deity: { domains?: string[]; alternateDomains?: string[] } | undefined,
+  from: string,
+): { domains: string[]; alternateDomains: string[]; from: string } {
+  const chosen = [...new Set(picked)];
+  const displaced = (deity?.domains ?? []).filter((d) => !chosen.includes(d));
+  return {
+    domains: chosen,
+    alternateDomains: [...new Set([...(deity?.alternateDomains ?? []), ...displaced])].filter((d) => !chosen.includes(d)),
+    from,
+  };
 }
 
 /**

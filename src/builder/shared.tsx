@@ -62,7 +62,7 @@ import {
   deriveSpeeds,
   blastTypesFor,
   deriveSpellcasting,
-  domainPoolFor,
+  domainPoolForChoice,
   formatMod,
 } from '../rules/derive';
 import { explainStat, statHasSituational, type StatRef } from '../rules/explain';
@@ -332,7 +332,6 @@ export function useBuilderActions(
         const font = b.divineFont && (!fonts.length || fonts.includes(b.divineFont)) ? b.divineFont : fonts[0] ?? b.divineFont;
         // Re-default any Domain-feat sub-choice (Domain Initiate, …) that points at a domain
         // the new deity doesn't have — otherwise it silently grants an off-deity focus spell.
-        const domains = (content.deities[id]?.domains ?? []) as string[];
         const featChoices = { ...b.featChoices };
         for (const [slotKey, val] of Object.entries(featChoices)) {
           const featId = b.featPicks[slotKey];
@@ -340,7 +339,7 @@ export function useBuilderActions(
           // A domain choice may draw from a WIDER pool than the deity's own list (Splinter Faith
           // adds the alternate domains), so validate against the pool that choice actually offers.
           if (def?.kind === 'domains') {
-            const pool = def.domainPool && def.domainPool !== 'deity' ? domainPoolFor(id || null, content, def.domainPool) : domains;
+            const pool = domainPoolForChoice({ ...b, deityId: id || null }, content, featId, def.domainPool);
             if (!pool.includes(val)) featChoices[slotKey] = pool[0] ?? val;
           }
         }
@@ -409,7 +408,7 @@ export function useBuilderActions(
           // Default the embedded choice so the feat is usable immediately.
           const def = content.feats[featId]?.choice;
           if (def?.kind === 'domains') {
-            const dom = domainPoolFor(b.deityId, content, def.domainPool)[0];
+            const dom = domainPoolForChoice(b, content, featId, def.domainPool)[0];
             if (dom) featChoices[slotKey] = dom;
           } else if (def?.kind === 'array' && def.options?.[0]) {
             featChoices[slotKey] = def.options[0].value;

@@ -101476,13 +101476,13 @@
     "category": "feats",
     "id": "draconic-paragon",
     "field": "note",
-    "value": "Benefactor’s Strike’s deadly d6 is applied to your jaws, claws and tail. The other two branches ride on the feat that granted them and are not computed here: Dracomancer adds one use per day to each 1st- and 2nd-rank innate spell it gave you, and Kobold Breath adds 3d4 persistent damage of its type on a critical failure."
+    "value": null
   },
   {
     "category": "feats",
     "id": "splinter-faith",
     "field": "note",
-    "value": "Your four chosen domains are recorded here, but the domain PICKERS (Domain Initiate and its kin) still offer your deity’s printed domains. Choose from your splinter list when you take one, and tell your GM — the swap is not enforced."
+    "value": null
   },
   {
     "category": "spells",
@@ -102118,5 +102118,34 @@
       "classId": "gunslinger",
       "note": "Way of the Spellshot: take that way as your gunslinger way. Your class DC uses Intelligence, your way skill is Arcana and your slinger’s reload is Thoughtful Reload."
     }
+  },
+  {
+    "category": "feats",
+    "id": "draconic-paragon",
+    "field": "modifiesGrant",
+    "value": [
+      {
+        "from": "dracomancer",
+        "innateUsesPerDay": 1
+      },
+      {
+        "from": "kobold-breath",
+        "actionRider": {
+          "value": "3d4 persistent",
+          "note": "Creatures that critically fail their save against your Kobold Breath take 3d4 persistent damage of the type dealt by your draconic benefactor."
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "splinter-faith",
+    "field": "modifiesGrant",
+    "value": [
+      {
+        "from": "deity",
+        "deityDomainsFromChoice": true
+      }
+    ]
   }
 ]

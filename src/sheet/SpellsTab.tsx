@@ -2,7 +2,7 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { cleanRun } from './RichText';
 import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
-import { deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
+import { deityDomainsOf, deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
 import { toggleKnownRitual,
   poolKey,
   removeInventoryItem,
@@ -924,7 +924,10 @@ export function SpellsTab({
       [...Object.keys(e.prepared ?? {}), ...Object.keys(e.repertoire ?? {}), ...Object.keys(e.slots ?? {})].map(Number),
     ),
   );
-  const deityDomains = (character.details?.deityId ? content.deities[character.details.deityId]?.domains : undefined) ?? [];
+  // Through the helper, not off the deity record: Splinter Faith replaces which four domains this
+  // character's deity has, and reading the printed list here would show a splinter-faith cleric the
+  // domains they gave up.
+  const deityDomains = deityDomainsOf(character, content).domains;
   // Signature spells (spontaneous casters) — the only spells you can freely re-rank when casting, so
   // they're the only ones that keep the "cast at" rank picker in the detail view.
   const signatureIds = useMemo(
