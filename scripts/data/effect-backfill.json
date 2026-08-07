@@ -74715,67 +74715,147 @@
    "options": [
     {
      "value": "acrobatics",
-     "label": "Acrobatics"
+     "label": "Acrobatics",
+     "grant": {
+      "skills": {
+       "acrobatics": "trained"
+      }
+     }
     },
     {
      "value": "arcana",
-     "label": "Arcana"
+     "label": "Arcana",
+     "grant": {
+      "skills": {
+       "arcana": "trained"
+      }
+     }
     },
     {
      "value": "athletics",
-     "label": "Athletics"
+     "label": "Athletics",
+     "grant": {
+      "skills": {
+       "athletics": "trained"
+      }
+     }
     },
     {
      "value": "crafting",
-     "label": "Crafting"
+     "label": "Crafting",
+     "grant": {
+      "skills": {
+       "crafting": "trained"
+      }
+     }
     },
     {
      "value": "deception",
-     "label": "Deception"
+     "label": "Deception",
+     "grant": {
+      "skills": {
+       "deception": "trained"
+      }
+     }
     },
     {
      "value": "diplomacy",
-     "label": "Diplomacy"
+     "label": "Diplomacy",
+     "grant": {
+      "skills": {
+       "diplomacy": "trained"
+      }
+     }
     },
     {
      "value": "intimidation",
-     "label": "Intimidation"
+     "label": "Intimidation",
+     "grant": {
+      "skills": {
+       "intimidation": "trained"
+      }
+     }
     },
     {
      "value": "medicine",
-     "label": "Medicine"
+     "label": "Medicine",
+     "grant": {
+      "skills": {
+       "medicine": "trained"
+      }
+     }
     },
     {
      "value": "nature",
-     "label": "Nature"
+     "label": "Nature",
+     "grant": {
+      "skills": {
+       "nature": "trained"
+      }
+     }
     },
     {
      "value": "occultism",
-     "label": "Occultism"
+     "label": "Occultism",
+     "grant": {
+      "skills": {
+       "occultism": "trained"
+      }
+     }
     },
     {
      "value": "performance",
-     "label": "Performance"
+     "label": "Performance",
+     "grant": {
+      "skills": {
+       "performance": "trained"
+      }
+     }
     },
     {
      "value": "religion",
-     "label": "Religion"
+     "label": "Religion",
+     "grant": {
+      "skills": {
+       "religion": "trained"
+      }
+     }
     },
     {
      "value": "society",
-     "label": "Society"
+     "label": "Society",
+     "grant": {
+      "skills": {
+       "society": "trained"
+      }
+     }
     },
     {
      "value": "stealth",
-     "label": "Stealth"
+     "label": "Stealth",
+     "grant": {
+      "skills": {
+       "stealth": "trained"
+      }
+     }
     },
     {
      "value": "survival",
-     "label": "Survival"
+     "label": "Survival",
+     "grant": {
+      "skills": {
+       "survival": "trained"
+      }
+     }
     },
     {
      "value": "thievery",
-     "label": "Thievery"
+     "label": "Thievery",
+     "grant": {
+      "skills": {
+       "thievery": "trained"
+      }
+     }
     }
    ]
   }
@@ -101375,5 +101455,17 @@
   "value": {
    "usableFor": "a copied creature's reaction"
   }
+ },
+ {
+  "category": "feats",
+  "id": "draconic-paragon",
+  "field": "note",
+  "value": "Benefactor’s Strike’s deadly d6 is applied to your jaws, claws and tail. The other two branches ride on the feat that granted them and are not computed here: Dracomancer adds one use per day to each 1st- and 2nd-rank innate spell it gave you, and Kobold Breath adds 3d4 persistent damage of its type on a critical failure."
+ },
+ {
+  "category": "feats",
+  "id": "splinter-faith",
+  "field": "note",
+  "value": "Your four chosen domains are recorded here, but the domain PICKERS (Domain Initiate and its kin) still offer your deity’s printed domains. Choose from your splinter list when you take one, and tell your GM — the swap is not enforced."
  }
 ]

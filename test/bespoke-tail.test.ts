@@ -162,3 +162,11 @@ describe('extra reactions', () => {
     for (const f of withField) expect(f.extraReaction!.usableFor.length, f.id).toBeGreaterThan(3);
   });
 });
+
+describe("the Avenger racket's divine skill", () => {
+  it('actually trains the skill the player picks', () => {
+    const ch = build('rogue', 3, { subclassId: 'avenger', deityId: 'ragathiel', featChoices: { 'feature:avenger': 'occultism' } });
+    // All 16 options carried `grant: null`, so the answer was recorded and trained nobody.
+    expect(ch.proficiencies.skills.occultism).toBe('trained');
+  });
+});
