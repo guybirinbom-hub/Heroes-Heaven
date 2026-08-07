@@ -103017,5 +103017,295 @@
     "id": "rattling-bolt-greater",
     "field": "level",
     "value": 16
+  },
+  {
+    "category": "items",
+    "id": "axe-musket-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "axe-musket-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d8",
+      "type": "slashing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "black-powder-knuckle-dusters-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "cane-pistol-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "dagger-pistol-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "dagger-pistol-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "gnome-amalgam-musket-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "gun-sword-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d10",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "gun-sword-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d8",
+      "type": "slashing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "mace-multipistol-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "piercing-wind-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "piercing-wind-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "slashing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "rapier-pistol-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "rapier-pistol-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "three-peaked-tree-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "three-peaked-tree-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d8",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "explosive-dogslicer-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "slashing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "explosive-dogslicer-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "slashing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "triggerbrand-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "triggerbrand-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "donchak",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d8",
+      "type": "slashing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "bow-staff-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "crescent-cross-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "crescent-cross-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d4",
+      "type": "slashing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "lancer-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d8",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "lancer-melee",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "mikazuki-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "dwarven-waraxe",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d8",
+      "type": "slashing"
+    }
+  },
+  {
+    "category": "items",
+    "id": "hammer-gun-ranged",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d6",
+      "type": "piercing"
+    }
   }
 ]
