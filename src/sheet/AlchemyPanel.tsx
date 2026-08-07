@@ -26,6 +26,7 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
   // which is why owning either feat changed nothing on this panel.
   const budget = character.advancedAlchemy?.max ?? 4 + intMod;
   const budgetSource = character.advancedAlchemy?.source;
+  const levelSource = character.advancedAlchemy?.levelSource;
   const vialDef = (CLASS_RESOURCES['alchemist'] ?? []).find((r) => r.id === 'versatile-vials');
   const abilityMods = Object.fromEntries(Object.entries(character.abilities).map(([k, v]) => [k, abilityMod(v as number)])) as Record<AbilityId, number>;
   const vialMax = vialDef ? resourceMaxFor(vialDef, character, abilityMods) : 2 + intMod;
@@ -33,9 +34,13 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
   const prep = character.alchemyPrep ?? {};
   const preparedCount = Object.values(prep).reduce((a, b) => a + b, 0);
 
+  // Which items Advanced Alchemy can make is capped by the ADVANCED ALCHEMY LEVEL, not the character
+  // level. They are the same for an alchemist and diverge for an archetype one: Master Alchemy sets
+  // it to 7 at 12th, so this list was showing an archetype alchemist items they cannot make.
+  const alchLevel = character.advancedAlchemy?.level ?? character.level;
   const eligible = useMemo(
-    () => Object.values(content.items).filter((it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= character.level),
-    [content.items, character.level],
+    () => Object.values(content.items).filter((it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= alchLevel),
+    [content.items, alchLevel],
   );
   const shown = useMemo(() => {
     const s = q.trim().toLowerCase();
@@ -66,6 +71,14 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
         <span className="alchemy-title">Alchemy</span>
         <span className="alchemy-meta" title={budgetSource ? `Daily maximum raised to ${budget} by ${budgetSource}` : undefined}>
           Versatile Vials {vialsCur}/{vialMax} · prepared {preparedCount}/{budget}
+          {/* The advanced alchemy LEVEL, which decides WHICH items you can make. Shown only when it
+              differs from your own level, i.e. when a feat set it. */}
+          {alchLevel !== character.level ? (
+            <span title={levelSource ? `Advanced alchemy level ${alchLevel} from ${levelSource}` : undefined}>
+              {' · alchemy level '}
+              {alchLevel}
+            </span>
+          ) : null}
         </span>
       </div>
       <div className="alchemy-actions">

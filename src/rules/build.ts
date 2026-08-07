@@ -3184,7 +3184,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const n = tier + (a.addInt ? intMod : 0);
       if (n > max) { max = n; source = content.feats[fc.featId]?.name ?? fc.featId; }
     }
-    if (max > 0) advancedAlchemy = { max, source };
+    /*
+     * The advanced alchemy LEVEL — which items you may make, not how many. An alchemist’s is their
+     * own level; Master Alchemy sets it to 7 and adds 1 per level beyond 12th, which is the entire
+     * content of that feat and had no field to land in.
+     */
+    let alchLevel = ownsClass('alchemist') ? level : 0;
+    let levelSource: string | undefined;
+    for (const fc of feats) {
+      const a = content.feats[fc.featId]?.advancedAlchemy;
+      if (a?.level == null) continue;
+      const n = a.level + (a.levelPerLevelFrom != null ? Math.max(0, level - a.levelPerLevelFrom) : 0);
+      if (n > alchLevel) { alchLevel = n; levelSource = content.feats[fc.featId]?.name ?? fc.featId; }
+    }
+    if (max > 0 || alchLevel > 0)
+      advancedAlchemy = { max, ...(source ? { source } : {}), ...(alchLevel > 0 ? { level: alchLevel } : {}), ...(levelSource ? { levelSource } : {}) };
   }
 
   // "You regain twice as many Hit Points from resting" (Fast Recovery), and Bolstered Recovery
@@ -4239,6 +4253,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(spellListTraditions.length ? { spellListTraditions } : {}),
     ...(grantedRituals.length ? { grantedRituals } : {}),
     ...(eidolonInnateSpells.length ? { eidolonInnateSpells } : {}),
+    // Extra RESTRICTED reactions. Everyone has one unrestricted reaction; 15 feats grant a second
+    // one that may be spent only on a named thing, and nothing in the app tracked reactions at all.
+    ...(() => {
+      const out: NonNullable<Character['extraReactions']> = [];
+      for (const fc of feats) {
+        const e = content.feats[fc.featId]?.extraReaction;
+        if (!e) continue;
+        out.push({ usableFor: e.usableFor, count: e.count ?? 1, from: content.feats[fc.featId]?.name ?? fc.featId });
+      }
+      for (const fid of ownedFeatureIds) {
+        const e = content.classFeatures[fid]?.extraReaction;
+        if (!e) continue;
+        out.push({ usableFor: e.usableFor, count: e.count ?? 1, from: content.classFeatures[fid]?.name ?? fid });
+      }
+      return out.length ? { extraReactions: out } : {};
+    })(),
     // Living Rune: the property rune on the character’s own flesh. Only carried when the feat that
     // allows it is actually taken, and only for a rune that exists and is an ARMOUR property rune —
     // the feat has no way to put a weapon rune on you.

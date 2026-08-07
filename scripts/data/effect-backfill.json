@@ -101186,5 +101186,194 @@
    "die": "d4",
    "type": "fire"
   }
+ },
+ {
+  "category": "feats",
+  "id": "forge-days-rest",
+  "field": "grantsFeats",
+  "value": [
+   "fast-recovery"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "improvisational-warrior",
+  "field": "critSpec",
+  "value": true
+ },
+ {
+  "category": "feats",
+  "id": "improvisational-warrior",
+  "field": "critSpecWeapons",
+  "value": {
+   "groups": [
+    "brawling"
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "viking-weapon-specialist",
+  "field": "critSpec",
+  "value": true
+ },
+ {
+  "category": "feats",
+  "id": "viking-weapon-specialist",
+  "field": "critSpecWeapons",
+  "value": {
+   "bases": [
+    "battle-axe",
+    "hatchet",
+    "longsword",
+    "shortsword"
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "catfolk-weapon-rake",
+  "field": "critSpec",
+  "value": true
+ },
+ {
+  "category": "feats",
+  "id": "catfolk-weapon-rake",
+  "field": "critSpecWeapons",
+  "value": {
+   "traits": [
+    "catfolk"
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "master-alchemy",
+  "field": "advancedAlchemy",
+  "value": {
+   "items": 0,
+   "level": 7,
+   "levelPerLevelFrom": 12
+  }
+ },
+ {
+  "category": "feats",
+  "id": "quick-shield-block",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "Shield Block"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "cenotaph-stance",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "Shield Block"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "tactical-reflexes",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "a Reactive Strike"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "instinctual-interception",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "a Reactive Strike"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "divine-reflexes",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "your champion's reaction"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "slingers-reflexes",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "a gunslinger reaction"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "reflexive-riposte",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "Attack of Opportunity or Dueling Riposte"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "improved-dueling-riposte",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "Dueling Riposte"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "improved-twin-riposte-fighter",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "Twin Riposte"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "improved-twin-riposte-ranger",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "Twin Riposte"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "spear-of-doom",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "a Reactive Strike against your marked opponent"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "preternatural-polish",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "a Reactive Strike"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "aldoris-retort",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "Aldori Riposte"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "esoteric-reflexes",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "an esoteric reaction"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "mimic-protections",
+  "field": "extraReaction",
+  "value": {
+   "usableFor": "a copied creature's reaction"
+  }
  }
 ]

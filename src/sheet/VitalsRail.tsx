@@ -700,6 +700,21 @@ export function VitalsRail({
             {hasTempSpeed && <i className="ti ti-bolt sh-temp-flag" aria-hidden="true" title="Temporary Speed active" />}
           </span>
         </div>
+        {/* Extra RESTRICTED reactions. Every character has one unrestricted reaction per round; 15
+            feats grant a second one usable only for a named thing, and nothing tracked reactions at
+            all, so all 15 were a sentence on the Feats tab and no number anywhere. */}
+        {!!character.extraReactions?.length && (
+          <div className="rail-kv">
+            <span className="kv-label">Reactions</span>
+            <span className="iwr-val">
+              {1 + character.extraReactions.reduce((n, r) => n + r.count, 0)} per round
+              <span className="sh-sub">
+                {' — '}
+                {character.extraReactions.map((r) => `${r.count > 1 ? r.count + ' × ' : ''}${r.usableFor} (${r.from})`).join('; ')}
+              </span>
+            </span>
+          </div>
+        )}
         <div className="rail-kv">
           <span className="kv-label">Senses</span>
           <span className="iwr-val senses-val">

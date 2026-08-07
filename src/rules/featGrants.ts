@@ -279,6 +279,11 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
   'unconventional-expertise': {
     weaponFamiliarity: { weapons: [], weaponFromChoiceFlag: 'unconventionalWeapon', mirrorBestCategory: true },
   },
+  /* "Your proficiency rank for light, medium, and heavy armor increases to expert for whichever of
+     those you already had the trained rank in." The armor lane only ever RAISES a rank, which IS the
+     "for whichever you already had" clause: a category the character is untrained in is left alone,
+     because minRank semantics never promote untrained past the grant. */
+  'armored-exercise': { armor: { light: 'expert', medium: 'expert', heavy: 'expert' } },
   'advanced-bow-training': { weaponFamiliarity: { weapons: ['daikyu', 'hongali-hornbow', 'phalanx-piercer'], mirrorCategory: 'martial' } },
   /* "You have familiarity with bombs and firearms; for the purposes of proficiency you treat bombs and
      martial firearms as simple weapons, and advanced firearms as martial weapons." Three clauses over

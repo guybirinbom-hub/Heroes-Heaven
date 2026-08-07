@@ -244,6 +244,20 @@ interface ContentBase {
    */
   grantsActions?: string[];
   /**
+   * "At the start of each of your turns, you gain an additional reaction that you can use only to
+   * Shield Block."
+   *
+   * PF2e gives every character ONE reaction per round, and 15 feats hand out a second, restricted
+   * one. Nothing in the app tracked reactions at all, so every one of those feats was a sentence and
+   * nothing else — and the number they change is one a player has to know mid-combat.
+   */
+  extraReaction?: {
+    /** What the extra reaction may be spent on ("Shield Block", "a Reactive Strike"). */
+    usableFor: string;
+    /** How many, when a record grants more than one. Defaults to 1. */
+    count?: number;
+  };
+  /**
    * Rituals this record teaches — "You learn the Commune ritual if you didn’t know it already".
    *
    * The Rituals section on the Spells tab listed only what the player added through Overrides, so
@@ -1384,7 +1398,20 @@ export interface Feat extends ContentBase, DefenseGrants {
    * figure that kicks in later (Advanced Efficient Alchemy: 8 + Int, or 10 + Int from 16th).
    * The best offer across everything owned wins, so taking both Efficient feats is not additive.
    */
-  advancedAlchemy?: { items: number; addInt?: boolean; atLevel?: { level: number; items: number } };
+  advancedAlchemy?: {
+    items: number;
+    addInt?: boolean;
+    atLevel?: { level: number; items: number };
+    /**
+     * The advanced alchemy LEVEL — which items you may make, as distinct from how many. Master
+     * Alchemy is entirely this ("your advanced alchemy level increases to 7; for every level you gain
+     * beyond 12th, it increases by 1") and the shape tracked only the count, so the feat had nothing
+     * to write and the number a player needs was never shown.
+     */
+    level?: number;
+    /** …and +1 per character level beyond this one. */
+    levelPerLevelFrom?: number;
+  };
   /**
    * "Each day during your daily preparations, you can create a single temporary scroll containing a
    * 1st-rank spell."
@@ -3341,7 +3368,10 @@ export interface Character {
   alchemyPrep?: Record<string, number>;
   /** How many items Advanced Alchemy makes during daily preparations, and what set it. The panel used
    *  to hardcode 4 + Int, so Efficient Alchemy and Advanced Efficient Alchemy did nothing at all. */
-  advancedAlchemy?: { max: number; source?: string };
+  advancedAlchemy?: { max: number; source?: string; level?: number; levelSource?: string };
+  /** Extra RESTRICTED reactions per round, each with what it may be spent on and which record grants
+   *  it. Every character has one unrestricted reaction; these are additional. */
+  extraReactions?: { usableFor: string; count: number; from: string }[];
   /** Minimum daily maximum for a class resource, set by a feat (Additional Servings → 5 versatile
    *  vials). Read through resourceMaxFor(), never resourceMax() directly, or the feat is inert. */
   resourceFloors?: Record<string, number>;

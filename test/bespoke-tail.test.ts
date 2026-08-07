@@ -111,3 +111,54 @@ describe('companion ranged weapons', () => {
     expect(bow!.range).toBe(60);
   });
 });
+
+describe('the last bare feats', () => {
+  it('Master Alchemy raises the advanced alchemy LEVEL, not the item count', () => {
+    const plain = build('fighter', 14, { featPicks: { '2:class:0': 'alchemist-dedication' } });
+    const withIt = build('fighter', 14, { featPicks: { '2:class:0': 'alchemist-dedication', '12:class:0': 'master-alchemy' } });
+    // "increases to 7. For every level you gain beyond 12th, it increases by 1." At 14th that is 9.
+    expect(withIt.advancedAlchemy?.level).toBe(9);
+    expect(plain.advancedAlchemy?.level ?? 0).toBeLessThan(9);
+  });
+
+  it('Armored Exercise raises armour ranks it finds at trained', () => {
+    const ch = build('rogue', 14, { featPicks: { '14:class:0': 'armored-exercise' } });
+    // The lane only ever RAISES, which is the feat's "for whichever of those you already had".
+    expect(ch.proficiencies.defenses.light).toBe('expert');
+  });
+
+  it("Forge Day's Rest hands over the feat it says it does", () => {
+    const ch = build('fighter', 3, { ancestryId: 'dwarf', featPicks: { '1:ancestry:0': 'forge-days-rest' } });
+    expect(ch.feats.map((f) => f.featId)).toContain('fast-recovery');
+  });
+
+  it('the three crit-spec feats each narrow to their own weapons', () => {
+    for (const [id, key] of [
+      ['improvisational-warrior', 'groups'],
+      ['viking-weapon-specialist', 'bases'],
+      ['catfolk-weapon-rake', 'traits'],
+    ] as const) {
+      const rec = content().feats[id];
+      expect(rec?.critSpec, id).toBe(true);
+      // Unnarrowed would light crit spec up on every Strike the character makes.
+      expect((rec?.critSpecWeapons as Record<string, unknown> | undefined)?.[key], id).toBeTruthy();
+    }
+  });
+});
+
+describe('extra reactions', () => {
+  it('counts the restricted second reaction a feat grants, and says what it is for', () => {
+    const ch = build('fighter', 10, { featPicks: { '8:class:0': 'quick-shield-block', '10:class:0': 'tactical-reflexes' } });
+    // Everyone has one unrestricted reaction; these are additional and each names its own use.
+    expect(ch.extraReactions?.map((r) => r.usableFor).sort()).toEqual(['Shield Block', 'a Reactive Strike']);
+    expect(ch.extraReactions?.every((r) => r.count === 1 && r.from)).toBe(true);
+  });
+  it('grants none without a feat that says so', () => {
+    expect(build('fighter', 10).extraReactions).toBeUndefined();
+  });
+  it('all 15 records carry the field', () => {
+    const withField = Object.values(content().feats).filter((f) => f.extraReaction);
+    expect(withField).toHaveLength(15);
+    for (const f of withField) expect(f.extraReaction!.usableFor.length, f.id).toBeGreaterThan(3);
+  });
+});
