@@ -103307,5 +103307,377 @@
       "die": "d6",
       "type": "piercing"
     }
+  },
+  {
+    "category": "items",
+    "id": "the-eye-of-the-slumberer",
+    "field": "bulk",
+    "value": 250
+  },
+  {
+    "category": "items",
+    "id": "shield-of-the-unified-legion",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "blade-of-the-rabbit-prince",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "cartographers-kit",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "forgotten-shell",
+    "field": "bulk",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "sky-piercing-bow",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "growth-gun",
+    "field": "bulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "petrification-cannon",
+    "field": "bulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "liars-gun",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "iris-of-the-sky",
+    "field": "bulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "pistol-of-wonder",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "wyrm-drinker",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "librarians-baton",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "spear-of-the-destroyers-flame",
+    "field": "bulk",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "demon-dust",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "succubus-kiss",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "armor-of-the-holy-warrior",
+    "field": "bulk",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "undead-compendium",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "containment-contraption",
+    "field": "bulk",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "shadow-manse",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "rod-of-razors",
+    "field": "bulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "palanquin-of-night",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "soulspark-candle",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "rime-foil",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "shattered-plan",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "stargazer",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "dezullon-fountain",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "dragontooth-leiomano",
+    "field": "bulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "scizore-of-the-crab",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "solar-shellflower",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "miraculous-paintbrush",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "confabulator",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "rappelling-kit",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "scarlet-queen",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "horn-of-rust",
+    "field": "bulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "adventurers-pack",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "saddlebags",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "tack",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "medusa-armor",
+    "field": "bulk",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "jian-of-lifes-duality",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "kotodama-whistle",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "bow-of-sun-slaying",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "final-scalecloak",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "freedoms-flame",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "bloodroot-shield",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "ashes-of-the-war-god",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "drumish-pearl-token",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "white-cleomes-eye",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "schematic-scanner",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "medics-shield",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "vambrace-of-gorum",
+    "field": "bulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "vanguards-shield",
+    "field": "bulk",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "vandals-banner",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "shield-of-snakes",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "worldscale-shield",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "senseis-parasol",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "ugly-cutes-gift",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "magnetic-bola",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "bountys-light",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "belt-of-good-health",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "backpack-ballista-bolts",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "blowgun-darts",
+    "field": "bulk",
+    "value": 0.1
   }
 ]
