@@ -103768,5 +103768,34 @@
       "metal",
       "sorrow"
     ]
+  },
+  {
+    "category": "spells",
+    "id": "mirecloak",
+    "field": "save",
+    "value": {
+      "type": "fortitude"
+    }
+  },
+  {
+    "category": "spells",
+    "id": "flame-barrier",
+    "field": "range",
+    "value": "60 feet"
+  },
+  {
+    "category": "spells",
+    "id": "thief-of-fortune",
+    "field": "range",
+    "value": "30 feet"
+  },
+  {
+    "category": "spells",
+    "id": "ymeris-mark",
+    "field": "save",
+    "value": {
+      "type": "fortitude",
+      "basic": true
+    }
   }
 ]

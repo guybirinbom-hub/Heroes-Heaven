@@ -1,0 +1,96 @@
+{
+ "badSave": [
+  {
+   "id": "split-the-tongue",
+   "have": "basic fortitude",
+   "want": "fortitude"
+  },
+  {
+   "id": "sages-curse",
+   "have": "basic will",
+   "want": "will"
+  },
+  {
+   "id": "stumbling-curse",
+   "have": "basic reflex",
+   "want": "reflex"
+  },
+  {
+   "id": "mirecloak",
+   "have": "will",
+   "want": "fortitude"
+  },
+  {
+   "id": "ymeris-mark",
+   "have": "basic reflex",
+   "want": "basic fortitude"
+  },
+  {
+   "id": "acid-grip",
+   "have": "basic reflex",
+   "want": "reflex"
+  },
+  {
+   "id": "blessed-boundary",
+   "have": "basic reflex",
+   "want": "reflex"
+  },
+  {
+   "id": "canticle-of-everlasting-grief",
+   "have": "basic will",
+   "want": "will"
+  },
+  {
+   "id": "divine-immolation",
+   "have": "basic reflex",
+   "want": "reflex"
+  },
+  {
+   "id": "blister",
+   "have": "fortitude",
+   "want": "basic fortitude"
+  },
+  {
+   "id": "curse-of-lost-time",
+   "have": "fortitude",
+   "want": "basic fortitude"
+  },
+  {
+   "id": "spirit-song",
+   "have": "basic fortitude",
+   "want": "fortitude"
+  },
+  {
+   "id": "seize-identity",
+   "have": "will",
+   "want": "basic will"
+  },
+  {
+   "id": "parch",
+   "have": "basic fortitude",
+   "want": "fortitude"
+  }
+ ],
+ "badRange": [
+  {
+   "id": "signal-skyrocket",
+   "have": "1,000 feet",
+   "want": "1000 feet"
+  },
+  {
+   "id": "cataclysm",
+   "have": "1,000 feet",
+   "want": "1000 feet"
+  },
+  {
+   "id": "flame-barrier",
+   "have": "30 feet",
+   "want": "60 feet"
+  },
+  {
+   "id": "thief-of-fortune",
+   "have": "60 feet",
+   "want": "30 feet"
+  }
+ ]
+}
