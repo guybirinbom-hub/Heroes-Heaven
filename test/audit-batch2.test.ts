@@ -11,14 +11,20 @@ describe('psychic is a limited caster — no 10th-rank spell slot', () => {
   });
 });
 
-describe('elemental runes: only the Flaming runes deal persistent crit damage', () => {
+describe('runes that deal persistent damage on a critical hit', () => {
   const db = JSON.parse(readFileSync(new URL('../public/core.json', import.meta.url), 'utf8'));
   const runes = Object.values(db.runes as Record<string, { name: string; damage?: { dice: number; die: string; type: string; critPersistent?: { dice: number; die: string } } }>);
 
-  it('both Flaming runes carry a persistent-fire crit rider (base 1d10, Greater 2d10) and no others do', () => {
+  it('is exactly the Flaming and Decaying runes, at their printed dice', () => {
     const withCrit = runes.filter((r) => r.damage?.critPersistent);
     // Per PF2e Remaster: base Flaming = 1d6 fire + 1d10 persistent fire on a crit; Greater = + 2d10.
-    expect(withCrit.map((r) => r.name).sort()).toEqual(['Flaming', 'Flaming (Greater)']);
+    // DECAYING joined them when the inert-rune pass gave it its payload: GM Core p.237 prints
+    // "add 1d4 void damage… on a critical hit, the target takes 2d4 persistent void damage", and the
+    // greater block "increase the persistent void damage dealt on a critical hit to 4d4". This test
+    // used to assert Flaming was the ONLY one, which was true only while Decaying was doing nothing.
+    expect(withCrit.map((r) => r.name).sort()).toEqual(['Decaying', 'Decaying (Greater)', 'Flaming', 'Flaming (Greater)']);
+    expect(runes.find((r) => r.name === 'Decaying')!.damage).toMatchObject({ type: 'void', dice: 1, die: 'd4', critPersistent: { dice: 2, die: 'd4' } });
+    expect(runes.find((r) => r.name === 'Decaying (Greater)')!.damage).toMatchObject({ type: 'void', dice: 1, die: 'd4', critPersistent: { dice: 4, die: 'd4' } });
     expect(runes.find((r) => r.name === 'Flaming')!.damage).toMatchObject({ type: 'fire', dice: 1, die: 'd6', critPersistent: { dice: 1, die: 'd10' } });
     expect(runes.find((r) => r.name === 'Flaming (Greater)')!.damage).toMatchObject({ type: 'fire', dice: 1, die: 'd6', critPersistent: { dice: 2, die: 'd10' } });
   });

@@ -11951,6 +11951,15 @@
     "prompt": "Choose the domain you claim — you learn its initial domain spell",
     "options": [
      {
+      "value": "abomination",
+      "label": "Abomination — Lift Nature's Caul",
+      "grant": {
+       "focusSpells": [
+        "lift-natures-caul"
+       ]
+      }
+     },
+     {
       "value": "air",
       "label": "Air — Pushing Gust",
       "grant": {
@@ -11965,6 +11974,15 @@
       "grant": {
        "focusSpells": [
         "ignite-ambition"
+       ]
+      }
+     },
+     {
+      "value": "change",
+      "label": "Change — Adapt Self",
+      "grant": {
+       "focusSpells": [
+        "adapt-self"
        ]
       }
      },
@@ -12023,11 +12041,38 @@
       }
      },
      {
+      "value": "decay",
+      "label": "Decay — Withering Grasp",
+      "grant": {
+       "focusSpells": [
+        "withering-grasp"
+       ]
+      }
+     },
+     {
+      "value": "delirium",
+      "label": "Delirium — Clouded Focus",
+      "grant": {
+       "focusSpells": [
+        "clouded-focus"
+       ]
+      }
+     },
+     {
       "value": "destruction",
       "label": "Destruction — Cry of Destruction",
       "grant": {
        "focusSpells": [
         "cry-of-destruction"
+       ]
+      }
+     },
+     {
+      "value": "disorientation",
+      "label": "Disorientation — Clouded Focus",
+      "grant": {
+       "focusSpells": [
+        "clouded-focus"
        ]
       }
      },
@@ -12046,6 +12091,24 @@
       "grant": {
        "focusSpells": [
         "sweet-dream"
+       ]
+      }
+     },
+     {
+      "value": "dust",
+      "label": "Dust — Parch",
+      "grant": {
+       "focusSpells": [
+        "parch"
+       ]
+      }
+     },
+     {
+      "value": "duty",
+      "label": "Duty — Swear Oath",
+      "grant": {
+       "focusSpells": [
+        "swear-oath"
        ]
       }
      },
@@ -12095,6 +12158,15 @@
       }
      },
      {
+      "value": "glyph",
+      "label": "Glyph — Redact",
+      "grant": {
+       "focusSpells": [
+        "redact"
+       ]
+      }
+     },
+     {
       "value": "healing",
       "label": "Healing — Healer's Blessing",
       "grant": {
@@ -12131,6 +12203,15 @@
       }
      },
      {
+      "value": "lightning",
+      "label": "Lightning — Charged Javelin",
+      "grant": {
+       "focusSpells": [
+        "charged-javelin"
+       ]
+      }
+     },
+     {
       "value": "luck",
       "label": "Luck — Bit of Luck",
       "grant": {
@@ -12145,6 +12226,15 @@
       "grant": {
        "focusSpells": [
         "magics-vessel"
+       ]
+      }
+     },
+     {
+      "value": "metal",
+      "label": "Metal — Serrate",
+      "grant": {
+       "focusSpells": [
+        "serrate"
        ]
       }
      },
@@ -12167,6 +12257,15 @@
       }
      },
      {
+      "value": "naga",
+      "label": "Naga — Chastising Retort",
+      "grant": {
+       "focusSpells": [
+        "chastising-retort"
+       ]
+      }
+     },
+     {
       "value": "nature",
       "label": "Nature — Vibrant Thorns",
       "grant": {
@@ -12181,6 +12280,15 @@
       "grant": {
        "focusSpells": [
         "waking-nightmare"
+       ]
+      }
+     },
+     {
+      "value": "nothingness",
+      "label": "Nothingness — Empty Inside",
+      "grant": {
+       "focusSpells": [
+        "empty-inside"
        ]
       }
      },
@@ -12230,11 +12338,29 @@
       }
      },
      {
-      "value": "secrecy",
-      "label": "Secrecy — Forced Quiet",
+      "value": "repose",
+      "label": "Repose — Share Burden",
       "grant": {
        "focusSpells": [
-        "forced-quiet"
+        "share-burden"
+       ]
+      }
+     },
+     {
+      "value": "secrecy",
+      "label": "Secrecy — Whispering Quiet",
+      "grant": {
+       "focusSpells": [
+        "whispering-quiet"
+       ]
+      }
+     },
+     {
+      "value": "sorrow",
+      "label": "Sorrow — Lament",
+      "grant": {
+       "focusSpells": [
+        "lament"
        ]
       }
      },
@@ -12271,6 +12397,24 @@
       "grant": {
        "focusSpells": [
         "swarmsense"
+       ]
+      }
+     },
+     {
+      "value": "time",
+      "label": "Time — Delay Consequence",
+      "grant": {
+       "focusSpells": [
+        "delay-consequence"
+       ]
+      }
+     },
+     {
+      "value": "toil",
+      "label": "Toil — Practice Makes Perfect",
+      "grant": {
+       "focusSpells": [
+        "practice-makes-perfect"
        ]
       }
      },
@@ -12320,6 +12464,24 @@
       }
      },
      {
+      "value": "vigil",
+      "label": "Vigil — Object Memory",
+      "grant": {
+       "focusSpells": [
+        "object-memory"
+       ]
+      }
+     },
+     {
+      "value": "void",
+      "label": "Void — Empty Inside",
+      "grant": {
+       "focusSpells": [
+        "empty-inside"
+       ]
+      }
+     },
+     {
       "value": "water",
       "label": "Water — Tidal Surge",
       "grant": {
@@ -12339,10 +12501,19 @@
      },
      {
       "value": "wood",
-      "label": "Wood — Arms of Nature",
+      "label": "Wood — Arms Of Nature",
       "grant": {
        "focusSpells": [
         "arms-of-nature"
+       ]
+      }
+     },
+     {
+      "value": "wyrmkin",
+      "label": "Wyrmkin — Draconic Barrage",
+      "grant": {
+       "focusSpells": [
+        "draconic-barrage"
        ]
       }
      },
@@ -21244,10 +21415,10 @@
      },
      {
       "value": "secrecy",
-      "label": "Secrecy — Forced Quiet",
+      "label": "Secrecy — Whispering Quiet",
       "grant": {
        "focusSpells": [
-        "forced-quiet"
+        "whispering-quiet"
        ]
       }
      },
@@ -34193,6 +34364,12 @@
    "suppressFeatures": [
     "shield-block"
    ],
+   "addFeatures": [
+    {
+     "level": 1,
+     "featureId": "warrior-of-legend"
+    }
+   ],
    "armorCap": {
     "heavy": "untrained"
    },
@@ -38716,15 +38893,16 @@
     "options": [
      {
       "value": "abomination",
-      "label": "Abomination",
+      "label": "Abomination — Lift Nature's Caul",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "lift-natures-caul"
+       ]
+      }
      },
      {
       "value": "air",
-      "label": "Air",
+      "label": "Air — Pushing Gust",
       "grant": {
        "focusSpells": [
         "pushing-gust"
@@ -38733,7 +38911,7 @@
      },
      {
       "value": "ambition",
-      "label": "Ambition",
+      "label": "Ambition — Ignite Ambition",
       "grant": {
        "focusSpells": [
         "ignite-ambition"
@@ -38742,15 +38920,16 @@
      },
      {
       "value": "change",
-      "label": "Change",
+      "label": "Change — Adapt Self",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "adapt-self"
+       ]
+      }
      },
      {
       "value": "cities",
-      "label": "Cities",
+      "label": "Cities — Face in the Crowd",
       "grant": {
        "focusSpells": [
         "face-in-the-crowd"
@@ -38759,7 +38938,7 @@
      },
      {
       "value": "cold",
-      "label": "Cold",
+      "label": "Cold — Winter Bolt",
       "grant": {
        "focusSpells": [
         "winter-bolt"
@@ -38768,7 +38947,7 @@
      },
      {
       "value": "confidence",
-      "label": "Confidence",
+      "label": "Confidence — Veil of Confidence",
       "grant": {
        "focusSpells": [
         "veil-of-confidence"
@@ -38777,7 +38956,7 @@
      },
      {
       "value": "creation",
-      "label": "Creation",
+      "label": "Creation — Creative Splash",
       "grant": {
        "focusSpells": [
         "creative-splash"
@@ -38786,15 +38965,16 @@
      },
      {
       "value": "darkness",
-      "label": "Darkness",
+      "label": "Darkness — Cloak of Shadow",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "cloak-of-shadow"
+       ]
+      }
      },
      {
       "value": "death",
-      "label": "Death",
+      "label": "Death — Death's Call",
       "grant": {
        "focusSpells": [
         "deaths-call"
@@ -38803,23 +38983,25 @@
      },
      {
       "value": "decay",
-      "label": "Decay",
+      "label": "Decay — Withering Grasp",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "withering-grasp"
+       ]
+      }
      },
      {
       "value": "delirium",
-      "label": "Delirium",
+      "label": "Delirium — Clouded Focus",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "clouded-focus"
+       ]
+      }
      },
      {
       "value": "destruction",
-      "label": "Destruction",
+      "label": "Destruction — Cry of Destruction",
       "grant": {
        "focusSpells": [
         "cry-of-destruction"
@@ -38828,15 +39010,16 @@
      },
      {
       "value": "disorientation",
-      "label": "Disorientation",
+      "label": "Disorientation — Clouded Focus",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "clouded-focus"
+       ]
+      }
      },
      {
       "value": "dragon",
-      "label": "Dragon",
+      "label": "Dragon — Draconic Barrage",
       "grant": {
        "focusSpells": [
         "draconic-barrage"
@@ -38845,7 +39028,7 @@
      },
      {
       "value": "dreams",
-      "label": "Dreams",
+      "label": "Dreams — Sweet Dream",
       "grant": {
        "focusSpells": [
         "sweet-dream"
@@ -38854,23 +39037,25 @@
      },
      {
       "value": "dust",
-      "label": "Dust",
+      "label": "Dust — Parch",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "parch"
+       ]
+      }
      },
      {
       "value": "duty",
-      "label": "Duty",
+      "label": "Duty — Swear Oath",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "swear-oath"
+       ]
+      }
      },
      {
       "value": "earth",
-      "label": "Earth",
+      "label": "Earth — Hurtling Stone",
       "grant": {
        "focusSpells": [
         "hurtling-stone"
@@ -38879,7 +39064,7 @@
      },
      {
       "value": "family",
-      "label": "Family",
+      "label": "Family — Soothing Words",
       "grant": {
        "focusSpells": [
         "soothing-words"
@@ -38888,7 +39073,7 @@
      },
      {
       "value": "fate",
-      "label": "Fate",
+      "label": "Fate — Read Fate",
       "grant": {
        "focusSpells": [
         "read-fate"
@@ -38897,7 +39082,7 @@
      },
      {
       "value": "fire",
-      "label": "Fire",
+      "label": "Fire — Fire Ray",
       "grant": {
        "focusSpells": [
         "fire-ray"
@@ -38906,7 +39091,7 @@
      },
      {
       "value": "freedom",
-      "label": "Freedom",
+      "label": "Freedom — Unimpeded Stride",
       "grant": {
        "focusSpells": [
         "unimpeded-stride"
@@ -38915,15 +39100,16 @@
      },
      {
       "value": "glyph",
-      "label": "Glyph",
+      "label": "Glyph — Redact",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "redact"
+       ]
+      }
      },
      {
       "value": "healing",
-      "label": "Healing",
+      "label": "Healing — Healer's Blessing",
       "grant": {
        "focusSpells": [
         "healers-blessing"
@@ -38932,7 +39118,7 @@
      },
      {
       "value": "indulgence",
-      "label": "Indulgence",
+      "label": "Indulgence — Overstuff",
       "grant": {
        "focusSpells": [
         "overstuff"
@@ -38941,7 +39127,7 @@
      },
      {
       "value": "introspection",
-      "label": "Introspection",
+      "label": "Introspection — Guided Introspection",
       "grant": {
        "focusSpells": [
         "guided-introspection"
@@ -38950,7 +39136,7 @@
      },
      {
       "value": "knowledge",
-      "label": "Knowledge",
+      "label": "Knowledge — Scholarly Recollection",
       "grant": {
        "focusSpells": [
         "scholarly-recollection"
@@ -38959,15 +39145,16 @@
      },
      {
       "value": "lightning",
-      "label": "Lightning",
+      "label": "Lightning — Charged Javelin",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "charged-javelin"
+       ]
+      }
      },
      {
       "value": "luck",
-      "label": "Luck",
+      "label": "Luck — Bit of Luck",
       "grant": {
        "focusSpells": [
         "bit-of-luck"
@@ -38976,7 +39163,7 @@
      },
      {
       "value": "magic",
-      "label": "Magic",
+      "label": "Magic — Magic's Vessel",
       "grant": {
        "focusSpells": [
         "magics-vessel"
@@ -38985,15 +39172,16 @@
      },
      {
       "value": "metal",
-      "label": "Metal",
+      "label": "Metal — Serrate",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "serrate"
+       ]
+      }
      },
      {
       "value": "might",
-      "label": "Might",
+      "label": "Might — Athletic Rush",
       "grant": {
        "focusSpells": [
         "athletic-rush"
@@ -39002,7 +39190,7 @@
      },
      {
       "value": "moon",
-      "label": "Moon",
+      "label": "Moon — Moonbeam",
       "grant": {
        "focusSpells": [
         "moonbeam"
@@ -39011,15 +39199,16 @@
      },
      {
       "value": "naga",
-      "label": "Naga",
+      "label": "Naga — Chastising Retort",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "chastising-retort"
+       ]
+      }
      },
      {
       "value": "nature",
-      "label": "Nature",
+      "label": "Nature — Vibrant Thorns",
       "grant": {
        "focusSpells": [
         "vibrant-thorns"
@@ -39028,7 +39217,7 @@
      },
      {
       "value": "nightmares",
-      "label": "Nightmares",
+      "label": "Nightmares — Waking Nightmare",
       "grant": {
        "focusSpells": [
         "waking-nightmare"
@@ -39037,15 +39226,16 @@
      },
      {
       "value": "nothingness",
-      "label": "Nothingness",
+      "label": "Nothingness — Empty Inside",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "empty-inside"
+       ]
+      }
      },
      {
       "value": "pain",
-      "label": "Pain",
+      "label": "Pain — Savor the Sting",
       "grant": {
        "focusSpells": [
         "savor-the-sting"
@@ -39054,7 +39244,7 @@
      },
      {
       "value": "passion",
-      "label": "Passion",
+      "label": "Passion — Charming Touch",
       "grant": {
        "focusSpells": [
         "charming-touch"
@@ -39063,7 +39253,7 @@
      },
      {
       "value": "perfection",
-      "label": "Perfection",
+      "label": "Perfection — Perfected Mind",
       "grant": {
        "focusSpells": [
         "perfected-mind"
@@ -39072,7 +39262,7 @@
      },
      {
       "value": "plague",
-      "label": "Plague",
+      "label": "Plague — Divine Plagues",
       "grant": {
        "focusSpells": [
         "divine-plagues"
@@ -39081,7 +39271,7 @@
      },
      {
       "value": "protection",
-      "label": "Protection",
+      "label": "Protection — Protector's Sacrifice",
       "grant": {
        "focusSpells": [
         "protectors-sacrifice"
@@ -39090,40 +39280,43 @@
      },
      {
       "value": "repose",
-      "label": "Repose",
+      "label": "Repose — Share Burden",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "share-burden"
+       ]
+      }
      },
      {
       "value": "secrecy",
-      "label": "Secrecy",
+      "label": "Secrecy — Whispering Quiet",
       "grant": {
        "focusSpells": [
-        "forced-quiet"
+        "whispering-quiet"
        ]
       }
      },
      {
       "value": "sorrow",
-      "label": "Sorrow",
+      "label": "Sorrow — Lament",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "lament"
+       ]
+      }
      },
      {
       "value": "soul",
-      "label": "Soul",
+      "label": "Soul — Eject Soul",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "eject-soul"
+       ]
+      }
      },
      {
       "value": "star",
-      "label": "Star",
+      "label": "Star — Zenith Star",
       "grant": {
        "focusSpells": [
         "zenith-star"
@@ -39132,7 +39325,7 @@
      },
      {
       "value": "sun",
-      "label": "Sun",
+      "label": "Sun — Dazzling Flash",
       "grant": {
        "focusSpells": [
         "dazzling-flash"
@@ -39141,7 +39334,7 @@
      },
      {
       "value": "swarm",
-      "label": "Swarm",
+      "label": "Swarm — Swarmsense",
       "grant": {
        "focusSpells": [
         "swarmsense"
@@ -39150,23 +39343,25 @@
      },
      {
       "value": "time",
-      "label": "Time",
+      "label": "Time — Delay Consequence",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "delay-consequence"
+       ]
+      }
      },
      {
       "value": "toil",
-      "label": "Toil",
+      "label": "Toil — Practice Makes Perfect",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "practice-makes-perfect"
+       ]
+      }
      },
      {
       "value": "travel",
-      "label": "Travel",
+      "label": "Travel — Agile Feet",
       "grant": {
        "focusSpells": [
         "agile-feet"
@@ -39175,7 +39370,7 @@
      },
      {
       "value": "trickery",
-      "label": "Trickery",
+      "label": "Trickery — Sudden Shift",
       "grant": {
        "focusSpells": [
         "sudden-shift"
@@ -39184,7 +39379,7 @@
      },
      {
       "value": "truth",
-      "label": "Truth",
+      "label": "Truth — Word of Truth",
       "grant": {
        "focusSpells": [
         "word-of-truth"
@@ -39193,7 +39388,7 @@
      },
      {
       "value": "tyranny",
-      "label": "Tyranny",
+      "label": "Tyranny — Touch of Obedience",
       "grant": {
        "focusSpells": [
         "touch-of-obedience"
@@ -39202,7 +39397,7 @@
      },
      {
       "value": "undeath",
-      "label": "Undeath",
+      "label": "Undeath — Touch of Undeath",
       "grant": {
        "focusSpells": [
         "touch-of-undeath"
@@ -39211,23 +39406,25 @@
      },
      {
       "value": "vigil",
-      "label": "Vigil",
+      "label": "Vigil — Object Memory",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "object-memory"
+       ]
+      }
      },
      {
       "value": "void",
-      "label": "Void",
+      "label": "Void — Empty Inside",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "empty-inside"
+       ]
+      }
      },
      {
       "value": "water",
-      "label": "Water",
+      "label": "Water — Tidal Surge",
       "grant": {
        "focusSpells": [
         "tidal-surge"
@@ -39236,7 +39433,7 @@
      },
      {
       "value": "wealth",
-      "label": "Wealth",
+      "label": "Wealth — Appearance of Wealth",
       "grant": {
        "focusSpells": [
         "appearance-of-wealth"
@@ -39245,23 +39442,25 @@
      },
      {
       "value": "wood",
-      "label": "Wood",
+      "label": "Wood — Arms Of Nature",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "arms-of-nature"
+       ]
+      }
      },
      {
       "value": "wyrmkin",
-      "label": "Wyrmkin",
+      "label": "Wyrmkin — Draconic Barrage",
       "grant": {
-       "focusPoolBonus": 1
-      },
-      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+       "focusSpells": [
+        "draconic-barrage"
+       ]
+      }
      },
      {
       "value": "zeal",
-      "label": "Zeal",
+      "label": "Zeal — Weapon Surge",
       "grant": {
        "focusSpells": [
         "weapon-surge"
@@ -42298,6 +42497,15 @@
     "prompt": "Choose the domain you took with Deity's Domain - you gain its advanced domain spell",
     "options": [
      {
+      "value": "abomination",
+      "label": "Abomination — Fearful Feast",
+      "grant": {
+       "focusSpells": [
+        "fearful-feast"
+       ]
+      }
+     },
+     {
       "value": "air",
       "label": "Air — Disperse into Air",
       "grant": {
@@ -42316,11 +42524,29 @@
       }
      },
      {
+      "value": "change",
+      "label": "Change — Adaptive Ablation",
+      "grant": {
+       "focusSpells": [
+        "adaptive-ablation"
+       ]
+      }
+     },
+     {
       "value": "cities",
       "label": "Cities — Pulse of Civilization",
       "grant": {
        "focusSpells": [
         "pulse-of-civilization"
+       ]
+      }
+     },
+     {
+      "value": "cold",
+      "label": "Cold — Diamond Dust",
+      "grant": {
+       "focusSpells": [
+        "diamond-dust"
        ]
       }
      },
@@ -42344,10 +42570,10 @@
      },
      {
       "value": "darkness",
-      "label": "Darkness — Darkened Eyes",
+      "label": "Darkness — Darkened Sight",
       "grant": {
        "focusSpells": [
-        "darkened-eyes"
+        "darkened-sight"
        ]
       }
      },
@@ -42361,6 +42587,24 @@
       }
      },
      {
+      "value": "decay",
+      "label": "Decay — Fallow Field",
+      "grant": {
+       "focusSpells": [
+        "fallow-field"
+       ]
+      }
+     },
+     {
+      "value": "delirium",
+      "label": "Delirium — Ephemeral Hazards",
+      "grant": {
+       "focusSpells": [
+        "ephemeral-hazards"
+       ]
+      }
+     },
+     {
       "value": "destruction",
       "label": "Destruction — Destructive Aura",
       "grant": {
@@ -42370,11 +42614,47 @@
       }
      },
      {
+      "value": "disorientation",
+      "label": "Disorientation — Ephemeral Hazards",
+      "grant": {
+       "focusSpells": [
+        "ephemeral-hazards"
+       ]
+      }
+     },
+     {
+      "value": "dragon",
+      "label": "Dragon — Roar of the Dragon",
+      "grant": {
+       "focusSpells": [
+        "roar-of-the-dragon"
+       ]
+      }
+     },
+     {
       "value": "dreams",
       "label": "Dreams — Dreamer's Call",
       "grant": {
        "focusSpells": [
         "dreamers-call"
+       ]
+      }
+     },
+     {
+      "value": "dust",
+      "label": "Dust — Dust Storm",
+      "grant": {
+       "focusSpells": [
+        "dust-storm"
+       ]
+      }
+     },
+     {
+      "value": "duty",
+      "label": "Duty — Dutiful Challenge",
+      "grant": {
+       "focusSpells": [
+        "dutiful-challenge"
        ]
       }
      },
@@ -42424,6 +42704,15 @@
       }
      },
      {
+      "value": "glyph",
+      "label": "Glyph — Ghostly Transcription",
+      "grant": {
+       "focusSpells": [
+        "ghostly-transcription"
+       ]
+      }
+     },
+     {
       "value": "healing",
       "label": "Healing — Rebuke Death",
       "grant": {
@@ -42442,11 +42731,29 @@
       }
      },
      {
+      "value": "introspection",
+      "label": "Introspection — Confront Selves",
+      "grant": {
+       "focusSpells": [
+        "confront-selves"
+       ]
+      }
+     },
+     {
       "value": "knowledge",
       "label": "Knowledge — Know the Enemy",
       "grant": {
        "focusSpells": [
         "know-the-enemy"
+       ]
+      }
+     },
+     {
+      "value": "lightning",
+      "label": "Lightning — Bottle the Storm",
+      "grant": {
+       "focusSpells": [
+        "bottle-the-storm"
        ]
       }
      },
@@ -42469,6 +42776,15 @@
       }
      },
      {
+      "value": "metal",
+      "label": "Metal — Repel Metal",
+      "grant": {
+       "focusSpells": [
+        "repel-metal"
+       ]
+      }
+     },
+     {
       "value": "might",
       "label": "Might — Enduring Might",
       "grant": {
@@ -42483,6 +42799,15 @@
       "grant": {
        "focusSpells": [
         "touch-of-the-moon"
+       ]
+      }
+     },
+     {
+      "value": "naga",
+      "label": "Naga — Show the Path",
+      "grant": {
+       "focusSpells": [
+        "show-the-path"
        ]
       }
      },
@@ -42505,6 +42830,15 @@
       }
      },
      {
+      "value": "nothingness",
+      "label": "Nothingness — Door to Beyond",
+      "grant": {
+       "focusSpells": [
+        "door-to-beyond"
+       ]
+      }
+     },
+     {
       "value": "pain",
       "label": "Pain — Retributive Pain",
       "grant": {
@@ -42523,6 +42857,24 @@
       }
      },
      {
+      "value": "perfection",
+      "label": "Perfection — Perfected Body",
+      "grant": {
+       "focusSpells": [
+        "perfected-body"
+       ]
+      }
+     },
+     {
+      "value": "plague",
+      "label": "Plague — Foul Miasma",
+      "grant": {
+       "focusSpells": [
+        "foul-miasma"
+       ]
+      }
+     },
+     {
       "value": "protection",
       "label": "Protection — Protector's Sphere",
       "grant": {
@@ -42532,11 +42884,83 @@
       }
      },
      {
+      "value": "repose",
+      "label": "Repose — Font of Serenity",
+      "grant": {
+       "focusSpells": [
+        "font-of-serenity"
+       ]
+      }
+     },
+     {
       "value": "secrecy",
       "label": "Secrecy — Safeguard Secret",
       "grant": {
        "focusSpells": [
         "safeguard-secret"
+       ]
+      }
+     },
+     {
+      "value": "sorrow",
+      "label": "Sorrow — Overflowing Sorrow",
+      "grant": {
+       "focusSpells": [
+        "overflowing-sorrow"
+       ]
+      }
+     },
+     {
+      "value": "soul",
+      "label": "Soul — Ectoplasmic Interstice",
+      "grant": {
+       "focusSpells": [
+        "ectoplasmic-interstice"
+       ]
+      }
+     },
+     {
+      "value": "star",
+      "label": "Star — Asterism",
+      "grant": {
+       "focusSpells": [
+        "asterism"
+       ]
+      }
+     },
+     {
+      "value": "sun",
+      "label": "Sun — Vital Luminance",
+      "grant": {
+       "focusSpells": [
+        "vital-luminance"
+       ]
+      }
+     },
+     {
+      "value": "swarm",
+      "label": "Swarm — Swarm Form",
+      "grant": {
+       "focusSpells": [
+        "swarm-form"
+       ]
+      }
+     },
+     {
+      "value": "time",
+      "label": "Time — Stasis",
+      "grant": {
+       "focusSpells": [
+        "stasis"
+       ]
+      }
+     },
+     {
+      "value": "toil",
+      "label": "Toil — Tireless Worker",
+      "grant": {
+       "focusSpells": [
+        "tireless-worker"
        ]
       }
      },
@@ -42586,6 +43010,24 @@
       }
      },
      {
+      "value": "vigil",
+      "label": "Vigil — Remember the Lost",
+      "grant": {
+       "focusSpells": [
+        "remember-the-lost"
+       ]
+      }
+     },
+     {
+      "value": "void",
+      "label": "Void — Door to Beyond",
+      "grant": {
+       "focusSpells": [
+        "door-to-beyond"
+       ]
+      }
+     },
+     {
       "value": "water",
       "label": "Water — Downpour",
       "grant": {
@@ -42600,6 +43042,24 @@
       "grant": {
        "focusSpells": [
         "precious-metals"
+       ]
+      }
+     },
+     {
+      "value": "wood",
+      "label": "Wood — Wood Walk",
+      "grant": {
+       "focusSpells": [
+        "wood-walk"
+       ]
+      }
+     },
+     {
+      "value": "wyrmkin",
+      "label": "Wyrmkin — Roar of the Dragon",
+      "grant": {
+       "focusSpells": [
+        "roar-of-the-dragon"
        ]
       }
      },
@@ -42626,6 +43086,15 @@
     "prompt": "Choose one of your domains - you gain its ADVANCED domain spell",
     "options": [
      {
+      "value": "abomination",
+      "label": "Abomination — Fearful Feast",
+      "grant": {
+       "focusSpells": [
+        "fearful-feast"
+       ]
+      }
+     },
+     {
       "value": "air",
       "label": "Air — Disperse into Air",
       "grant": {
@@ -42644,11 +43113,29 @@
       }
      },
      {
+      "value": "change",
+      "label": "Change — Adaptive Ablation",
+      "grant": {
+       "focusSpells": [
+        "adaptive-ablation"
+       ]
+      }
+     },
+     {
       "value": "cities",
       "label": "Cities — Pulse of Civilization",
       "grant": {
        "focusSpells": [
         "pulse-of-civilization"
+       ]
+      }
+     },
+     {
+      "value": "cold",
+      "label": "Cold — Diamond Dust",
+      "grant": {
+       "focusSpells": [
+        "diamond-dust"
        ]
       }
      },
@@ -42672,10 +43159,10 @@
      },
      {
       "value": "darkness",
-      "label": "Darkness — Darkened Eyes",
+      "label": "Darkness — Darkened Sight",
       "grant": {
        "focusSpells": [
-        "darkened-eyes"
+        "darkened-sight"
        ]
       }
      },
@@ -42689,6 +43176,24 @@
       }
      },
      {
+      "value": "decay",
+      "label": "Decay — Fallow Field",
+      "grant": {
+       "focusSpells": [
+        "fallow-field"
+       ]
+      }
+     },
+     {
+      "value": "delirium",
+      "label": "Delirium — Ephemeral Hazards",
+      "grant": {
+       "focusSpells": [
+        "ephemeral-hazards"
+       ]
+      }
+     },
+     {
       "value": "destruction",
       "label": "Destruction — Destructive Aura",
       "grant": {
@@ -42698,11 +43203,47 @@
       }
      },
      {
+      "value": "disorientation",
+      "label": "Disorientation — Ephemeral Hazards",
+      "grant": {
+       "focusSpells": [
+        "ephemeral-hazards"
+       ]
+      }
+     },
+     {
+      "value": "dragon",
+      "label": "Dragon — Roar of the Dragon",
+      "grant": {
+       "focusSpells": [
+        "roar-of-the-dragon"
+       ]
+      }
+     },
+     {
       "value": "dreams",
       "label": "Dreams — Dreamer's Call",
       "grant": {
        "focusSpells": [
         "dreamers-call"
+       ]
+      }
+     },
+     {
+      "value": "dust",
+      "label": "Dust — Dust Storm",
+      "grant": {
+       "focusSpells": [
+        "dust-storm"
+       ]
+      }
+     },
+     {
+      "value": "duty",
+      "label": "Duty — Dutiful Challenge",
+      "grant": {
+       "focusSpells": [
+        "dutiful-challenge"
        ]
       }
      },
@@ -42752,6 +43293,15 @@
       }
      },
      {
+      "value": "glyph",
+      "label": "Glyph — Ghostly Transcription",
+      "grant": {
+       "focusSpells": [
+        "ghostly-transcription"
+       ]
+      }
+     },
+     {
       "value": "healing",
       "label": "Healing — Rebuke Death",
       "grant": {
@@ -42770,11 +43320,29 @@
       }
      },
      {
+      "value": "introspection",
+      "label": "Introspection — Confront Selves",
+      "grant": {
+       "focusSpells": [
+        "confront-selves"
+       ]
+      }
+     },
+     {
       "value": "knowledge",
       "label": "Knowledge — Know the Enemy",
       "grant": {
        "focusSpells": [
         "know-the-enemy"
+       ]
+      }
+     },
+     {
+      "value": "lightning",
+      "label": "Lightning — Bottle the Storm",
+      "grant": {
+       "focusSpells": [
+        "bottle-the-storm"
        ]
       }
      },
@@ -42797,6 +43365,15 @@
       }
      },
      {
+      "value": "metal",
+      "label": "Metal — Repel Metal",
+      "grant": {
+       "focusSpells": [
+        "repel-metal"
+       ]
+      }
+     },
+     {
       "value": "might",
       "label": "Might — Enduring Might",
       "grant": {
@@ -42811,6 +43388,15 @@
       "grant": {
        "focusSpells": [
         "touch-of-the-moon"
+       ]
+      }
+     },
+     {
+      "value": "naga",
+      "label": "Naga — Show the Path",
+      "grant": {
+       "focusSpells": [
+        "show-the-path"
        ]
       }
      },
@@ -42833,6 +43419,15 @@
       }
      },
      {
+      "value": "nothingness",
+      "label": "Nothingness — Door to Beyond",
+      "grant": {
+       "focusSpells": [
+        "door-to-beyond"
+       ]
+      }
+     },
+     {
       "value": "pain",
       "label": "Pain — Retributive Pain",
       "grant": {
@@ -42851,6 +43446,24 @@
       }
      },
      {
+      "value": "perfection",
+      "label": "Perfection — Perfected Body",
+      "grant": {
+       "focusSpells": [
+        "perfected-body"
+       ]
+      }
+     },
+     {
+      "value": "plague",
+      "label": "Plague — Foul Miasma",
+      "grant": {
+       "focusSpells": [
+        "foul-miasma"
+       ]
+      }
+     },
+     {
       "value": "protection",
       "label": "Protection — Protector's Sphere",
       "grant": {
@@ -42860,11 +43473,83 @@
       }
      },
      {
+      "value": "repose",
+      "label": "Repose — Font of Serenity",
+      "grant": {
+       "focusSpells": [
+        "font-of-serenity"
+       ]
+      }
+     },
+     {
       "value": "secrecy",
       "label": "Secrecy — Safeguard Secret",
       "grant": {
        "focusSpells": [
         "safeguard-secret"
+       ]
+      }
+     },
+     {
+      "value": "sorrow",
+      "label": "Sorrow — Overflowing Sorrow",
+      "grant": {
+       "focusSpells": [
+        "overflowing-sorrow"
+       ]
+      }
+     },
+     {
+      "value": "soul",
+      "label": "Soul — Ectoplasmic Interstice",
+      "grant": {
+       "focusSpells": [
+        "ectoplasmic-interstice"
+       ]
+      }
+     },
+     {
+      "value": "star",
+      "label": "Star — Asterism",
+      "grant": {
+       "focusSpells": [
+        "asterism"
+       ]
+      }
+     },
+     {
+      "value": "sun",
+      "label": "Sun — Vital Luminance",
+      "grant": {
+       "focusSpells": [
+        "vital-luminance"
+       ]
+      }
+     },
+     {
+      "value": "swarm",
+      "label": "Swarm — Swarm Form",
+      "grant": {
+       "focusSpells": [
+        "swarm-form"
+       ]
+      }
+     },
+     {
+      "value": "time",
+      "label": "Time — Stasis",
+      "grant": {
+       "focusSpells": [
+        "stasis"
+       ]
+      }
+     },
+     {
+      "value": "toil",
+      "label": "Toil — Tireless Worker",
+      "grant": {
+       "focusSpells": [
+        "tireless-worker"
        ]
       }
      },
@@ -42914,6 +43599,24 @@
       }
      },
      {
+      "value": "vigil",
+      "label": "Vigil — Remember the Lost",
+      "grant": {
+       "focusSpells": [
+        "remember-the-lost"
+       ]
+      }
+     },
+     {
+      "value": "void",
+      "label": "Void — Door to Beyond",
+      "grant": {
+       "focusSpells": [
+        "door-to-beyond"
+       ]
+      }
+     },
+     {
       "value": "water",
       "label": "Water — Downpour",
       "grant": {
@@ -42928,6 +43631,24 @@
       "grant": {
        "focusSpells": [
         "precious-metals"
+       ]
+      }
+     },
+     {
+      "value": "wood",
+      "label": "Wood — Wood Walk",
+      "grant": {
+       "focusSpells": [
+        "wood-walk"
+       ]
+      }
+     },
+     {
+      "value": "wyrmkin",
+      "label": "Wyrmkin — Roar of the Dragon",
+      "grant": {
+       "focusSpells": [
+        "roar-of-the-dragon"
        ]
       }
      },
@@ -43000,10 +43721,10 @@
      },
      {
       "value": "darkness",
-      "label": "Darkness — Darkened Eyes",
+      "label": "Darkness — Darkened Sight",
       "grant": {
        "focusSpells": [
-        "darkened-eyes"
+        "darkened-sight"
        ]
       }
      },
@@ -43197,6 +43918,15 @@
       }
      },
      {
+      "value": "soul",
+      "label": "Soul — Ectoplasmic Interstice",
+      "grant": {
+       "focusSpells": [
+        "ectoplasmic-interstice"
+       ]
+      }
+     },
+     {
       "value": "travel",
       "label": "Travel — Traveler's Transit",
       "grant": {
@@ -43256,6 +43986,15 @@
       "grant": {
        "focusSpells": [
         "precious-metals"
+       ]
+      }
+     },
+     {
+      "value": "wood",
+      "label": "Wood — Wood Walk",
+      "grant": {
+       "focusSpells": [
+        "wood-walk"
        ]
       }
      },
@@ -65659,11 +66398,29 @@
       }
      },
      {
+      "value": "change",
+      "label": "Change — Adaptive Ablation",
+      "grant": {
+       "focusSpells": [
+        "adaptive-ablation"
+       ]
+      }
+     },
+     {
       "value": "cities",
       "label": "Cities — Pulse of Civilization",
       "grant": {
        "focusSpells": [
         "pulse-of-civilization"
+       ]
+      }
+     },
+     {
+      "value": "cold",
+      "label": "Cold — Diamond Dust",
+      "grant": {
+       "focusSpells": [
+        "diamond-dust"
        ]
       }
      },
@@ -65687,10 +66444,10 @@
      },
      {
       "value": "darkness",
-      "label": "Darkness — Darkened Eyes",
+      "label": "Darkness — Darkened Sight",
       "grant": {
        "focusSpells": [
-        "darkened-eyes"
+        "darkened-sight"
        ]
       }
      },
@@ -65704,6 +66461,15 @@
       }
      },
      {
+      "value": "decay",
+      "label": "Decay — Fallow Field",
+      "grant": {
+       "focusSpells": [
+        "fallow-field"
+       ]
+      }
+     },
+     {
       "value": "destruction",
       "label": "Destruction — Destructive Aura",
       "grant": {
@@ -65713,11 +66479,38 @@
       }
      },
      {
+      "value": "disorientation",
+      "label": "Disorientation — Ephemeral Hazards",
+      "grant": {
+       "focusSpells": [
+        "ephemeral-hazards"
+       ]
+      }
+     },
+     {
       "value": "dreams",
       "label": "Dreams — Dreamer's Call",
       "grant": {
        "focusSpells": [
         "dreamers-call"
+       ]
+      }
+     },
+     {
+      "value": "dust",
+      "label": "Dust — Dust Storm",
+      "grant": {
+       "focusSpells": [
+        "dust-storm"
+       ]
+      }
+     },
+     {
+      "value": "duty",
+      "label": "Duty — Dutiful Challenge",
+      "grant": {
+       "focusSpells": [
+        "dutiful-challenge"
        ]
       }
      },
@@ -65794,6 +66587,15 @@
       }
      },
      {
+      "value": "lightning",
+      "label": "Lightning — Bottle the Storm",
+      "grant": {
+       "focusSpells": [
+        "bottle-the-storm"
+       ]
+      }
+     },
+     {
       "value": "luck",
       "label": "Luck — Lucky Break",
       "grant": {
@@ -65848,6 +66650,15 @@
       }
      },
      {
+      "value": "nothingness",
+      "label": "Nothingness — Door to Beyond",
+      "grant": {
+       "focusSpells": [
+        "door-to-beyond"
+       ]
+      }
+     },
+     {
       "value": "pain",
       "label": "Pain — Retributive Pain",
       "grant": {
@@ -65866,6 +66677,15 @@
       }
      },
      {
+      "value": "plague",
+      "label": "Plague — Foul Miasma",
+      "grant": {
+       "focusSpells": [
+        "foul-miasma"
+       ]
+      }
+     },
+     {
       "value": "protection",
       "label": "Protection — Protector's Sphere",
       "grant": {
@@ -65880,6 +66700,42 @@
       "grant": {
        "focusSpells": [
         "safeguard-secret"
+       ]
+      }
+     },
+     {
+      "value": "soul",
+      "label": "Soul — Ectoplasmic Interstice",
+      "grant": {
+       "focusSpells": [
+        "ectoplasmic-interstice"
+       ]
+      }
+     },
+     {
+      "value": "star",
+      "label": "Star — Asterism",
+      "grant": {
+       "focusSpells": [
+        "asterism"
+       ]
+      }
+     },
+     {
+      "value": "sun",
+      "label": "Sun — Vital Luminance",
+      "grant": {
+       "focusSpells": [
+        "vital-luminance"
+       ]
+      }
+     },
+     {
+      "value": "time",
+      "label": "Time — Stasis",
+      "grant": {
+       "focusSpells": [
+        "stasis"
        ]
       }
      },
@@ -65925,6 +66781,15 @@
       "grant": {
        "focusSpells": [
         "malignant-sustenance"
+       ]
+      }
+     },
+     {
+      "value": "vigil",
+      "label": "Vigil — Remember the Lost",
+      "grant": {
+       "focusSpells": [
+        "remember-the-lost"
        ]
       }
      },
@@ -92235,7 +93100,9 @@
   "id": "eidolon",
   "field": "grantsActions",
   "value": [
-   "share-senses"
+   "share-senses",
+   "manifest-eidolon",
+   "act-together"
   ]
  },
  {
@@ -92781,6 +93648,12 @@
    ],
    "slotCap": 2,
    "cantripDelta": -2,
+   "addFeatures": [
+    {
+     "level": 1,
+     "featureId": "flexible-spell-preparation"
+    }
+   ],
    "note": "Flexible Spellcaster: you prepare a spell COLLECTION rather than filling each slot, and can cast any spell in it using any slot of an appropriate rank. In exchange your slots per rank never advance past 2, and you learn 2 fewer class cantrips. Restricted slots (a wizard curriculum slot, a cleric divine font) are unaffected and their spells do not count toward the collection."
   }
  },
@@ -98696,5 +99569,1622 @@
   "id": "gloves-of-carelessness",
   "field": "disguisedAs",
   "value": "retrieval-belt"
+ },
+ {
+  "category": "classFeatures",
+  "id": "bands-of-imprisonment",
+  "field": "grantsClassFeatures",
+  "value": [
+   "break-free"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "barrows-edge",
+  "field": "grantsClassFeatures",
+  "value": [
+   "drink-of-my-foes"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "eye-catching-spot",
+  "field": "grantsClassFeatures",
+  "value": [
+   "captivating-charm"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "fetching-bangles",
+  "field": "grantsClassFeatures",
+  "value": [
+   "embrace-of-destiny"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "gaze-sharp-as-steel",
+  "field": "grantsClassFeatures",
+  "value": [
+   "a-moment-unending"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "gleaming-blade",
+  "field": "grantsClassFeatures",
+  "value": [
+   "flowing-spirit-strike"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "hands-of-the-wildling",
+  "field": "grantsClassFeatures",
+  "value": [
+   "feral-swing"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "horn-of-plenty",
+  "field": "grantsClassFeatures",
+  "value": [
+   "feed-the-masses"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "mirrored-aegis",
+  "field": "grantsClassFeatures",
+  "value": [
+   "raise-the-walls"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "mortal-harvest",
+  "field": "grantsClassFeatures",
+  "value": [
+   "reap-the-field"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "noble-branch",
+  "field": "grantsClassFeatures",
+  "value": [
+   "strike-breathe-rend"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "pelt-of-the-beast",
+  "field": "grantsClassFeatures",
+  "value": [
+   "survive-the-wilds"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "scar-of-the-survivor",
+  "field": "grantsClassFeatures",
+  "value": [
+   "no-scar-but-this"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "shadow-sheath",
+  "field": "grantsClassFeatures",
+  "value": [
+   "liars-hidden-blade"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "skin-hard-as-horn",
+  "field": "grantsClassFeatures",
+  "value": [
+   "crash-against-me"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "skybearers-belt",
+  "field": "grantsClassFeatures",
+  "value": [
+   "bear-allies-burdens"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "starshot",
+  "field": "grantsClassFeatures",
+  "value": [
+   "giant-felling-comet"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "thousand-league-sandals",
+  "field": "grantsClassFeatures",
+  "value": [
+   "marathon-dash"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "titans-breaker",
+  "field": "grantsClassFeatures",
+  "value": [
+   "fracture-mountains"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "unfailing-bow",
+  "field": "grantsClassFeatures",
+  "value": [
+   "arrow-splits-arrow"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "victors-wreath",
+  "field": "grantsClassFeatures",
+  "value": [
+   "one-moment-till-glory"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "divine-spark-and-ikons",
+  "field": "grantsClassFeatures",
+  "value": [
+   "shift-immanence"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "mark-of-the-sage",
+  "field": "grantsClassFeatures",
+  "value": [
+   "a-challenge-for-heroes"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "through-the-needles-eye",
+  "field": "grantsClassFeatures",
+  "value": [
+   "blinding-of-the-needle"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sunwrecker",
+  "field": "grantsClassFeatures",
+  "value": [
+   "break-the-suns-legs"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "eternity-incinerating-blaze",
+  "field": "grantsClassFeatures",
+  "value": [
+   "burn-out-of-time"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "binding-serpents-celestial-arrow",
+  "field": "grantsClassFeatures",
+  "value": [
+   "coiling-serpents"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "seven-colored-cosmic-bridge",
+  "field": "grantsClassFeatures",
+  "value": [
+   "fleeting-arc-through-heaven-and-earth"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "infinite-blades-celestial-arrow",
+  "field": "grantsClassFeatures",
+  "value": [
+   "heaven-rains-an-ending"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "crown-of-rule",
+  "field": "grantsClassFeatures",
+  "value": [
+   "heavy-is-the-crown"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "breath-of-vital-ash",
+  "field": "grantsClassFeatures",
+  "value": [
+   "mark-the-center"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "destined-victory",
+  "field": "grantsClassFeatures",
+  "value": [
+   "only-you-and-i"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "branched-tree-of-pain",
+  "field": "grantsClassFeatures",
+  "value": [
+   "plant-thirty-barbs"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "journey-of-the-sky-chariot",
+  "field": "grantsClassFeatures",
+  "value": [
+   "race-the-skies"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "mated-birds-in-paired-flight",
+  "field": "grantsClassFeatures",
+  "value": [
+   "rejoin-in-flight"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "steel-on-steel",
+  "field": "grantsClassFeatures",
+  "value": [
+   "ringing-challenge"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "motionless-cutter",
+  "field": "grantsClassFeatures",
+  "value": [
+   "sever-four-dragonfly-wings"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "gift-of-the-immortal-herb",
+  "field": "grantsClassFeatures",
+  "value": [
+   "shed-the-mortal-skin"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "shroud-of-ghosts",
+  "field": "grantsClassFeatures",
+  "value": [
+   "skirt-the-underworld"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "warped-by-rage",
+  "field": "grantsClassFeatures",
+  "value": [
+   "spasm-of-the-berserker"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "compliant-gold",
+  "field": "grantsClassFeatures",
+  "value": [
+   "topple-the-pillar-of-heaven"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "exemplar-dedication",
+  "field": "grantsClassFeatures",
+  "value": [
+   "shift-immanence"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "seneschal-witch-dedication",
+  "field": "classArchetype",
+  "value": {
+   "classId": "witch",
+   "addFeatures": [
+    {
+     "level": 1,
+     "featureId": "seneschal"
+    }
+   ],
+   "note": "Seneschal (witch only): your patron has fallen silent. Instead of your patron's lesson you gain the manifest will hex cantrip, and your familiar learns one common 1st-rank spell of your choice from your spell list; you must take Seneschal Witch Dedication as your 2nd-level class feat."
+  }
+ },
+ {
+  "category": "actions",
+  "id": "bloody-guillotine",
+  "field": "tacticTier",
+  "value": "legendary"
+ },
+ {
+  "category": "actions",
+  "id": "the-bigger-they-are",
+  "field": "tacticTier",
+  "value": "master"
+ },
+ {
+  "category": "actions",
+  "id": "for-talmandor-for-freedom",
+  "field": "tacticTier",
+  "value": "legendary"
+ },
+ {
+  "category": "actions",
+  "id": "corpse-crenellation",
+  "field": "tacticTier",
+  "value": "master"
+ },
+ {
+  "category": "actions",
+  "id": "seek-and-destroy",
+  "field": "tacticTier",
+  "value": "expert"
+ },
+ {
+  "category": "actions",
+  "id": "wait-for-it",
+  "field": "tacticTier",
+  "value": "expert"
+ },
+ {
+  "category": "classes",
+  "id": "alchemist",
+  "field": "features",
+  "value": [
+   {
+    "level": 1,
+    "featureId": "alchemy"
+   },
+   {
+    "level": 11,
+    "featureId": "chemical-hardiness"
+   },
+   {
+    "level": 15,
+    "featureId": "alchemical-weapon-mastery"
+   },
+   {
+    "level": 9,
+    "featureId": "perception-expertise"
+   },
+   {
+    "level": 15,
+    "featureId": "explosion-dodger"
+   },
+   {
+    "level": 19,
+    "featureId": "medium-armor-mastery"
+   },
+   {
+    "level": 7,
+    "featureId": "will-expertise"
+   },
+   {
+    "level": 1,
+    "featureId": "research-field"
+   },
+   {
+    "level": 13,
+    "featureId": "medium-armor-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "weapon-specialization"
+   },
+   {
+    "level": 9,
+    "featureId": "double-brew"
+   },
+   {
+    "level": 7,
+    "featureId": "alchemical-weapon-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "greater-field-discovery"
+   },
+   {
+    "level": 9,
+    "featureId": "alchemical-expertise"
+   },
+   {
+    "level": 17,
+    "featureId": "abundant-vials"
+   },
+   {
+    "level": 11,
+    "featureId": "advanced-vials"
+   },
+   {
+    "level": 5,
+    "featureId": "field-discovery"
+   },
+   {
+    "level": 5,
+    "featureId": "powerful-alchemy"
+   },
+   {
+    "level": 17,
+    "featureId": "alchemical-mastery"
+   },
+   {
+    "level": 1,
+    "featureId": "formula-book"
+   },
+   {
+    "level": 1,
+    "featureId": "advanced-alchemy"
+   },
+   {
+    "level": 1,
+    "featureId": "versatile-vials"
+   },
+   {
+    "level": 1,
+    "featureId": "quick-alchemy"
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "on-the-case",
+  "field": "grantsActions",
+  "value": [
+   "clue-in"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "true-shapeshifter",
+  "field": "grantsActions",
+  "value": [
+   "true-shapeshift"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "inspired-stratagem",
+  "field": "grantsActions",
+  "value": [
+   "inspired-stratagem"
+  ]
+ },
+ {
+  "category": "classes",
+  "id": "gunslinger",
+  "field": "subclass",
+  "value": {
+   "name": "Way",
+   "options": [
+    {
+     "id": "way-of-the-drifter",
+     "name": "Way of the Drifter",
+     "description": "You're a wanderer traveling from land to land with your gun and a melee weapon as company. Maybe you learned to fight with blade and pistol as a Shackles pirate, mastered the hand cannon and katana in Minkai, or practiced with a hatchet and clan pistol in Dongun Hold. You win battles by relying on mobility and flexible use of your weapons.\n\n**Slinger's Reload** Reloading Strike\n\n**Deeds** *Initial* Into the Fray; *Advanced* Finish The Job; *Greater* Drifter's Wake\n\n**Way Skill** Acrobatics",
+     "descRefs": [
+      {
+       "label": "Reloading Strike",
+       "key": "actions"
+      },
+      {
+       "label": "Into the Fray",
+       "key": "actions"
+      },
+      {
+       "label": "Finish The Job",
+       "key": "actions"
+      },
+      {
+       "label": "Drifter's Wake",
+       "key": "actions"
+      }
+     ],
+     "grants": {
+      "skills": [
+       "acrobatics"
+      ]
+     },
+     "featureIds": [
+      {
+       "id": "into-the-fray",
+       "level": 1
+      },
+      {
+       "id": "finish-the-job",
+       "level": 9
+      },
+      {
+       "id": "drifters-wake",
+       "level": 15
+      }
+     ]
+    },
+    {
+     "id": "way-of-the-pistolero",
+     "name": "Way of the Pistolero",
+     "description": "Whether you're a professional duelist or a pistol-twirling entertainer, you have quick feet and quicker hands that never seem to let you down, and an equally sharp wit and tongue that jab your foes. You might leave a hand free or cultivate the ambidexterity for twin weapons. Either way, you stay close enough to your enemies to leverage your superior reflexes while leaving enough space to safely fire.\n\n**Slinger's Reload** Raconteur's Reload\n\n**Deeds** *Initial* Ten Paces; *Advanced* Pistolero's Retort; *Greater* Grim Swagger\n\n**Way Skill** choose Deception or Intimidation",
+     "descRefs": [
+      {
+       "label": "Raconteur's Reload",
+       "key": "actions"
+      },
+      {
+       "label": "Ten Paces",
+       "key": "actions"
+      },
+      {
+       "label": "Pistolero's Retort",
+       "key": "actions"
+      },
+      {
+       "label": "Grim Swagger",
+       "key": "actions"
+      }
+     ],
+     "skillChoice": [
+      "deception",
+      "intimidation"
+     ],
+     "featureIds": [
+      {
+       "id": "ten-paces",
+       "level": 1
+      },
+      {
+       "id": "pistoleros-retort",
+       "level": 9
+      },
+      {
+       "id": "grim-swagger",
+       "level": 15
+      }
+     ]
+    },
+    {
+     "id": "way-of-the-sniper",
+     "name": "Way of the Sniper",
+     "description": "You practice a style of shooting that relies on unerring accuracy and perfect placement of your first shot. You keep hidden or at a distance, staying out of the fray and bringing unseen death to your foes.\n\n**Slinger's Reload** Covered Reload\n\n**Deeds** *Initial* One Shot, One Kill; *Advanced* Vital Shot; *Greater* Ghost Shot\n\n**Way Skill** Stealth",
+     "descRefs": [
+      {
+       "label": "Covered Reload",
+       "key": "actions"
+      },
+      {
+       "label": "One Shot, One Kill",
+       "key": "actions"
+      },
+      {
+       "label": "Vital Shot",
+       "key": "actions"
+      },
+      {
+       "label": "Ghost Shot",
+       "key": "actions"
+      }
+     ],
+     "grants": {
+      "skills": [
+       "stealth"
+      ]
+     },
+     "featureIds": [
+      {
+       "id": "one-shot-one-kill",
+       "level": 1
+      },
+      {
+       "id": "vital-shot",
+       "level": 9
+      },
+      {
+       "id": "ghost-shot",
+       "level": 15
+      }
+     ]
+    },
+    {
+     "id": "way-of-the-spellshot",
+     "name": "Way of the Spellshot",
+     "description": "You've learned the intricacies of magic and technology, blending the two together with deadly results. You combine a knowledge of arcane theories with a strong connection to your chosen weapon that allows you to manifest unique effects, combining deadly skill with a firearm alongside an array of moderate spellcasting. You can imbue energy into your weapon and conjure bullets from thin air. As you progress, you eventually learn to phase bullets through walls or even to teleport yourself along the path of your bullets. You must select Spellshot Dedication as your 2nd-level class feat.\n\n**Prerequisites** You must be a gunslinger.\n\n**Spellshot Adjustments** Instead of choosing a way from the options listed in the gunslinger class, you have the way of the spellshot. It has the following way skill, slinger's reload, and deeds. You gain these abilities at the same levels as normal for the class. You use Intelligence for your class DC.\n\n**Way Skill** Arcana\n\n**Slinger's Reload** Thoughtful Reload\n\n**Deeds** *Initial* Energy Shot; *Advanced* Recall Ammunition; *Greater* Dispelling Bullet",
+     "descRefs": [
+      {
+       "label": "Spellshot Dedication",
+       "key": "feats"
+      },
+      {
+       "label": "Thoughtful Reload",
+       "key": "actions"
+      },
+      {
+       "label": "Energy Shot",
+       "key": "actions"
+      },
+      {
+       "label": "Recall Ammunition",
+       "key": "actions"
+      },
+      {
+       "label": "Dispelling Bullet",
+       "key": "actions"
+      }
+     ],
+     "keyAbility": "int",
+     "grants": {
+      "skills": [
+       "arcana"
+      ]
+     },
+     "featureIds": [
+      {
+       "id": "energy-shot",
+       "level": 1
+      },
+      {
+       "id": "recall-ammunition",
+       "level": 9
+      },
+      {
+       "id": "dispelling-bullet",
+       "level": 15
+      }
+     ]
+    },
+    {
+     "id": "way-of-the-triggerbrand",
+     "name": "Way of the Triggerbrand",
+     "description": "You prefer firearms that work well as weapons in both melee and ranged combat, particularly those that allow you to exercise a bit of style and flair. You might be a survivor who cobbled your weapon together from the City of Smog's street scrap or a noble wielder of a master smith's bespoke commission for duels among Alkenstar's elite. You gain access to combination weapons.\n\n**Slinger's Reload** Touch and Go\n\n**Deeds** *Initial Spring the Trap*; *Advanced Wind Them Up*; *Greater Break Them Down*\n\n**Way Skill** Thievery",
+     "descRefs": [
+      {
+       "label": "Touch and Go",
+       "key": "actions"
+      },
+      {
+       "label": "Spring the Trap",
+       "key": "actions"
+      },
+      {
+       "label": "Wind Them Up",
+       "key": "actions"
+      },
+      {
+       "label": "Break Them Down",
+       "key": "actions"
+      }
+     ],
+     "grants": {
+      "skills": [
+       "thievery"
+      ]
+     },
+     "featureIds": [
+      {
+       "id": "spring-the-trap",
+       "level": 1
+      },
+      {
+       "id": "wind-them-up",
+       "level": 9
+      },
+      {
+       "id": "break-them-down",
+       "level": 15
+      }
+     ]
+    },
+    {
+     "id": "way-of-the-vanguard",
+     "name": "Way of the Vanguard",
+     "description": "You practice a unique combat style originated by dwarven siege engineers, using heavy weapons with wide attack areas to blast holes through enemy lines, clear an opening for your allies, and defend the conquered territory.\n\n**Slinger's Reload** Clear a Path\n\n**Deeds** *Initial* Living Fortification; *Advanced* Spinning Crush; *Greater*\n\n**Way Skill** Athletics",
+     "descRefs": [
+      {
+       "label": "Clear a Path",
+       "key": "actions"
+      },
+      {
+       "label": "Living Fortification",
+       "key": "actions"
+      },
+      {
+       "label": "Spinning Crush",
+       "key": "actions"
+      }
+     ],
+     "grants": {
+      "skills": [
+       "athletics"
+      ]
+     },
+     "featureIds": [
+      {
+       "id": "living-fortification",
+       "level": 1
+      },
+      {
+       "id": "spinning-crush",
+       "level": 9
+      },
+      {
+       "id": "siegebreaker",
+       "level": 15
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "category": "classes",
+  "id": "inventor",
+  "field": "subclass",
+  "value": {
+   "name": "Innovation",
+   "options": [
+    {
+     "id": "armor-innovation",
+     "name": "Armor Innovation",
+     "description": "Your innovation is a cutting-edge suit of medium armor with a variety of attached gizmos and devices. Choose one of the sets of statistics on Innovation Armor Statistics table for your innovation armor (or choose another set of innovation armor statistics to which you have access). Your innovation armor can have fundamental and property runes added to it in the same way as ordinary armor. Because of the unique features of your innovation, everyone except you is untrained in it, even if they would normally be trained (or better) in medium armor. Choose one initial armor modification to apply to your innovation, either from the following or from other initial armor modifications to which you have access.\n\n- **Harmonic Oscillator:** You designed your armor to inaudibly thrum at just the right frequency to create interference against force and sound waves. You gain resistance equal to 3 + half your level to force and sonic damage. When under the effects of Overdrive, the resistance increases by 2.\n- **Metallic Reactance:** The metals in your armor are carefully alloyed to ground electricity and protect from acidic chemical reactions. You gain resistance equal to 3 + half your level to acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2.\n- **Muscular Exoskeleton (Power Suit only):** Your armor supports your muscles with a carefully crafted exoskeleton. When you send your armor into overdrive, the exoskeleton supplements your feats of athletics as well. When under the effects of Overdrive, you gain a +1 circumstance bonus to Athletics checks; if you're a master in Crafting, this increases to a +2 circumstance bonus.\n- **Otherworldly Protection:** Just because you prefer science doesn't mean you can't build your armor with materials and gizmos designed to protect against otherworldly attacks. You gain resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing (such as if you're a dhampir). You gain the same amount of resistance to spirit damage. If you are sanctified (such as by also being a champion or cleric dedicated to a deity who allows or enforces sanctification) this resistance applies to unholy damage (if you are sanctified holy) or holy damage (if you are sanctified unholy), regardless of what other traits the damage has.\n- **Phlogistonic Regulator:** A layer of insulation within your armor protects you from rapid temperature fluctuations. You gain resistance equal to half your level to cold and fire damage. When under the effects of Overdrive, the resistance increases by 2.\n- **Speed Boosters:** You have boosters in your armor that increase your Speed. You gain a +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive.\n- **Subtle Dampeners(Subterfuge Suit only)**: You've designed your armor to help you blend in and dampen noise slightly. When you send your armor into overdrive, the dampeners increase their effect, improving your Stealth. When under the effects of Overdrive, you gain a +1 circumstance bonus to Stealth checks. If you're a master in Crafting, this increases to a +2 circumstance bonus.",
+     "descRefs": [
+      {
+       "label": "Harmonic Oscillator",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Metallic Reactance",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Muscular Exoskeleton",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Otherworldly Protection",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Phlogistonic Regulator",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Speed Boosters",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Subtle Dampeners",
+       "key": "classFeatures"
+      }
+     ]
+    },
+    {
+     "id": "construct-innovation",
+     "name": "Construct Innovation",
+     "description": "Your innovation is a mechanical creature, such as a clockwork construct made of cogs and gears. It's a prototype construct companion, and you can adjust most of its base statistics by taking feats at higher levels, such as Advanced Companion. If you use the Overdrive action, your construct gains the same Overdrive benefits you do, and it also takes the same amount of fire damage on a critical failure.\n\nYou know how to spend additional time directing, controlling, or programming your construct innovation for a more complex plan of action. You can spend 2 actions to Command instead of 1 when commanding your construct companion; your construct companion can then use an additional action (normally 3 actions, rather than 2).\n\nChoose one initial construct modification to apply to your innovation, either from the following or from other initial construct modifications to which you have access. These modifications alter the construct's abilities or form.\n\n- **Accelerated Mobility** Actuated legs, efficient gears in the wheels or treads, or add-on boosters make your construct faster. Your innovation's Speed increases to 40 feet.\n- **Amphibious Construction** Increased buoyancy, rudders, and a means of propulsion like a fluked tail or powerful propeller make your construct able to travel in water. Your innovation gains a swim Speed of 25 feet.\n- **Increased Size** You built your construct innovation bigger than most. Your construct is Large. If you have this modification and your construct innovation becomes an advanced construct companion or otherwise gains the ability to become Large, you can immediately change increased size to a different initial construct modification.\n- **Manual Dexterity** Your construct innovation has articulated hands or similar appendages with significant manual dexterity. It can perform manipulate actions with up to two of its limbs. As normal for a companion, it still can't wield weapons or held items that don't have the companion trait, and it can't activate items.\n- **Projectile Launcher** Your construct has a mounted dart launcher, embedded cannon, or similar armament. Your innovation gains a ranged unarmed attack that deals 1d4 bludgeoning or piercing damage (you choose when you pick this modification). The attack has the propulsive trait and a range increment of 30 feet.\n- **Sensory Array** Additional sensory devices give your innovation low-light vision and darkvision, as well as imprecise tremorsense out to a range of 30 feet.\n- **Wonder Gears** You map specialized skills into your construct's crude intelligence. Your innovation becomes trained in Intimidation, Stealth, and Survival."
+    },
+    {
+     "id": "light-mortar-innovation",
+     "name": "Light Mortar Innovation",
+     "description": "Through years of experience and countless hours of experimentation, you've developed a siege weapon compact enough to operate by yourself while still packing a deadly punch.\n\n**Prerequisites:** You must be an inventor.\n\n**Munitions Master Adjustments:** Instead of choosing an innovation from the options listed in the inventor class, you have the light mortar innovation, as well as the following changes to the class features listed on the following pages. You gain these abilities at the same levels as normal for the class unless otherwise specified. You must select Munitions Master Dedication as your 2nd-level class feat.\n\n### Innovation\n\nYour innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk. Whether it propels its payload via an elaborate mechanism or explosive reagents, it's capable of dealing immense damage. Your light mortar requires an Interact action to deploy it before you can Aim, Load, or Launch it, and it includes its own wheeled platform that it is mounted on as part of the deployment. It can be packed back up for easy transport as a 2-action activity with the manipulate trait and either worn as a backpack or carried in one hand while packed. Because of the light mortar's smaller size, the Move Siege Engine activity takes only 1 action when it is deployed.\n\nYour light mortar begins as a 1st-level siege weapon with the statistics shown below. It deals an additional die of damage at 5th level and every 4 levels thereafter. When you Launch your light mortar, the Reflex save is equal to your class DC. Its AC is equal to your inventor class DC and it has Hardness 5. It has trained proficiency in Reflex and Fortitude saves, using your Intelligence modifier to calculate these bonuses. It has 10 Hit Points, plus a number of Hit Points equal to 2 plus your Intelligence modifier for each level you have. Its Broken Threshold is equal to half its total Hit Points (rounded down).\n\nAt 5th level, your light mortar's Hardness increases to 10. At 10th level it increases to 15 and its proficiency rank in Reflex and Fortitude saves increases to expert. At 15th level, its Hardness increases to 20, and its proficiency rank in Reflex and Fortitude saves increases to master.\n\nYour innovation fires small cannonballs called carry shot. A group of 10 carry shot, which weighs 1 Bulk, can be purchased for 5 sp from most shops that sell ammunition.\n\nChoose one initial light mortar modification to apply to your innovation, either from the following or from other initial light mortar modifications to which you have access. These modifications alter the abilities or form of your light mortar.\n\n- **Contained Shrapnel** You alter your light mortar's ammunition to prevent fragments of it from flying outward on impact. Your innovation gains the nonlethal trait. You can choose whether to apply the nonlethal trait on each Launch.\n- **Enhanced Shrapnel** You alter your light mortar's ammunition to change the way it shatters on impact, spraying nearby creatures with a hail of razor-sharp pieces. Your innovation gains the versatile P and versatile S traits. You can choose whether to apply one of these traits on each Launch with your innovation.\n- **Spring-Loaded** You've designed your innovation with springs to quickly unfold and extend components, optimizing it for quick deployment. You can deploy your light mortar as a free action.\n\n### Overdrive\n\nThe additional damage you deal from Overdrive applies to Launches made with your light mortar, as if they were Strikes.\n\n### Explode\n\nWhen you use this ability, the emanation is centered on your innovation, and you can choose to exclude the square you are in from the emanation.\n\n### Breakthrough Innovation (7th)\n\nWhen choosing a breakthrough innovation, choose from the following breakthrough light mortar modifications. As usual, you can choose an initial light mortar modification instead if you prefer.\n\n- **Blanching Chamber** You embed tiny metal filings into ammunition in the firing chamber of your light mortar. These filings remain embedded in the fragments of the ammunition after it shatters on impact. Your ammunition counts as cold iron and silver.\n- **Earthbreaker** Each time you Launch, you can choose to alter the ammunition to direct the brunt of the explosion downward, dealing half damage but creating difficult terrain in the blast area.\n- **Narrow Blast** You alter your ammunition so that the force of the impact is directed in a narrow band. Each time you Launch you can choose to have the explosion form a instead of a . This cone must originate at the point of impact and can be directed either directly away from you or 45 degrees to either side of that.\n\n### Inventive Expertise (7th)\n\nYou gain this class feature at 7th level instead of 9th.\n\n### Offensive Boost (9th)\n\nThe offensive boost you choose applies to Launches made with your light mortar, as if they were Strikes.\n\n### Inventive Mastery (15th)\n\nYou gain this class feature at 15th level instead of 17th.\n\n### Revolutionary Innovation (15th)\n\nWhen choosing a revolutionary innovation, choose from the following revolutionary light mortar modifications. As usual, you can choose an initial or breakthrough light mortar modification instead if you prefer.\n\n- **Enhanced Damage** As the revolutionary weapon modification of the same name.\n- **Impossible Alloy** As the revolutionary weapon modification of the same name, except that the alloy is embedded in your ammunition on launch.\n- **Precise Blast** You have such precise control over your light mortar that you can wrap the blast of impact around your allies without harming them. When you Launch, you can select a number of squares up to your Intelligence modifier to exclude from the blast area.",
+     "descRefs": [
+      {
+       "label": "Munitions Master Dedication",
+       "key": "feats"
+      },
+      {
+       "label": "Overdrive",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Explode",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Breakthrough Innovation",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Inventive Expertise",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Offensive Boost",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Inventive Mastery",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Revolutionary Innovation",
+       "key": "classFeatures"
+      }
+     ]
+    },
+    {
+     "id": "weapon-innovation",
+     "name": "Weapon Innovation",
+     "description": "Your innovation is a complex and impossible-looking weapon augmented by numerous mechanisms. It begins with the same statistics as a level 0 simple or martial weapon of your choice. The chosen weapon must be common or you must otherwise have access to it.\n\nAn innovation weapon can have fundamental and property runes added to it in the same way as an ordinary weapon. Because of the unique features of your innovation, everyone except you is untrained in it, even if they would normally be trained (or better) in simple or martial weapons.\n\nIf you use the Overdrive action, you can choose to change the additional damage from Overdrive to fire damage.\n\nChoose one initial weapon modification to apply to your innovation, either from the following or from other initial weapon modifications to which you have access. These modifications grant additional weapon traits, sometimes with extra abilities.\n\nA modification might give your weapon the versatile trait with a damage type that the weapon could already deal, either from its base damage type or from an existing versatile trait. In that case, if you select that modification, you can instead choose to give the weapon the versatile trait for a different damage type: bludgeoning, piercing, or slashing.\n\n- **Advanced Design:** Your weapon innovation uses the statistics of a level 0 advanced weapon of your choice. It must be common or you must have access to it. You treat this as a martial weapon for the purposes of proficiency.\n- **Blunt Shot (ranged only):** Your weapon innovation can file the edges off your ammunition and adjust the blunt force of the shot to deliver an attack that can batter as much as pierce, or even knock an opponent right off their feet. Your innovation gains the concussive and ranged trip traits.\n- **Complex Simplicity (simple weapon only):** Increase your innovation's weapon damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). In addition, it gains two of the following traits of your choice: versatile B, versatile P, versatile S, or razing.\n- **Dynamic Weighting (one-handed melee weapon only; can't have the agile, attached, or free-hand trait):** Your weapon is modified to be heavier and easier to manipulate or retrieve. Your innovation gains the two-hand trait, with a damage die one size higher than the weapon's normal weapon damage die size (for instance, a longsword would gain the two-hand d10 trait). Your innovation also gains the versatile B trait. If it was a thrown weapon, it gains the tethered trait.\n- **Entangling Form (melee only):** You've altered your weapon to including tangling wires or straps, or to have a flexible construction. Your innovation gains the disarm, grapple, and trip traits.\n- **Hampering Spikes (melee only):** You've added long, snagging spikes to your weapon, which you can use to impede your foes' movement. Your innovation gains the hampering, trip, and versatile P traits.\n- **Hefty Composition (melee only):** Blunt surfaces and sturdy construction make your weapon hefty and mace-like. Your innovation gains the shove, razing, and versatile B traits.\n- **Modular Head:** You've constructed a multi-purpose, adjustable striking surface for your weapon, or you've made special ammunition you can swiftly alter. Your innovation gains the modular trait for bludgeoning, piercing, and slashing. When you Interact to use the modular trait, you can also choose to give the weapon the nonlethal trait if it doesn't currently have it, or to remove that trait if it's currently nonlethal.\n- **Pacification Tools (melee only):** Softer materials make your weapon suited to knock out instead of kill, and special protrusions let you catch weapons and disarm your foes. Your innovation gains the disarm, hampering, and nonlethal traits. You can choose whether to apply the nonlethal trait on each attack with your innovation.\n- **Razor Prongs (melee only):** You can knock down and slash your foes with sharp, curved blades. Your innovation gains the tearing, trip, and versatile S traits.\n- **Segmented Frame:** Hinges, clamps, and telescoping parts make your innovation collapsible and adjustable. It gains the modular trait for bludgeoning, piercing, and slashing. You can Interact to collapse the item down to light Bulk or to return it to your normal form. When it's collapsed to light Bulk, it has the concealable trait, which grants you a +2 circumstance bonus to Stealth checks and DCs to hide or conceal the weapon.",
+     "descRefs": [
+      {
+       "label": "Advanced Design",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Blunt Shot",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Complex Simplicity",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Dynamic Weighting",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Entangling Form",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Hampering Spikes",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Hefty Composition",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Modular Head",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Pacification Tools",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Razor Prongs",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Segmented Frame",
+       "key": "classFeatures"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "prototype-companion",
+  "field": "grantsActions",
+  "value": [
+   "command-a-construct"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "wellspring-mage-dedication",
+  "field": "classArchetype",
+  "value": {
+   "classId": [
+    "bard",
+    "sorcerer",
+    "oracle",
+    "psychic",
+    "summoner"
+   ],
+   "cantripDelta": -1,
+   "addFeatures": [
+    {
+     "level": 1,
+     "featureId": "wellspring-magic"
+    }
+   ],
+   "note": "Wellspring Mage: reduce your spell slots of each rank by 1 and learn 1 fewer class cantrip. (The cantrip reduction is applied automatically; the per-rank slot loss has no engine field and must be tracked by hand.) When you roll initiative for a non-trivial encounter - and in other high-stress moments of the GM's choice - attempt a DC 6 flat check. Critical success temporarily recovers an expended slot of your choice for 1 minute; success recovers a randomly determined slot from among your top three ranks for 3 rounds; failure produces a wellspring surge. An unused temporary slot causes a surge when it expires, and you automatically fail the check while you already hold one. The archetype normally caps this at two temporary slots per day, but Wellspring Mage Dedication itself removes that cap. You must take Wellspring Mage Dedication as your 2nd-level class feat."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "blasting-beams",
+  "field": "grantsClassFeatures",
+  "value": [
+   "dragon-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "consume-energy",
+  "field": "grantsClassFeatures",
+  "value": [
+   "dragon-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "storming-breath",
+  "field": "grantsClassFeatures",
+  "value": [
+   "dragon-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "propulsive-leap",
+  "field": "grantsClassFeatures",
+  "value": [
+   "dragon-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sonic-dash",
+  "field": "grantsClassFeatures",
+  "value": [
+   "flicker-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "overclock-senses",
+  "field": "grantsClassFeatures",
+  "value": [
+   "flicker-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "unstable-gearshift",
+  "field": "grantsClassFeatures",
+  "value": [
+   "flicker-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "lightspeed-assault",
+  "field": "grantsClassFeatures",
+  "value": [
+   "flicker-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "draining-touch",
+  "field": "grantsClassFeatures",
+  "value": [
+   "leech-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "borrowed-ability",
+  "field": "grantsClassFeatures",
+  "value": [
+   "leech-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "kinetic-dampening",
+  "field": "grantsClassFeatures",
+  "value": [
+   "leech-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "feed-the-void",
+  "field": "grantsClassFeatures",
+  "value": [
+   "leech-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "bone-spikes",
+  "field": "grantsClassFeatures",
+  "value": [
+   "troll-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "titan-swing",
+  "field": "grantsClassFeatures",
+  "value": [
+   "troll-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "high-speed-regeneration",
+  "field": "grantsClassFeatures",
+  "value": [
+   "troll-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "tectonic-stomp",
+  "field": "grantsClassFeatures",
+  "value": [
+   "troll-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "eerie-flicker",
+  "field": "grantsClassFeatures",
+  "value": [
+   "wraith-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "ghostly-grasp-deviant",
+  "field": "grantsClassFeatures",
+  "value": [
+   "wraith-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "enervating-wail",
+  "field": "grantsClassFeatures",
+  "value": [
+   "wraith-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "distant-wandering",
+  "field": "grantsClassFeatures",
+  "value": [
+   "wraith-deviant-classification"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "dragon-deviant-classification",
+  "field": "grantsClassFeatures",
+  "value": [
+   "energetic-meltdown"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "flicker-deviant-classification",
+  "field": "grantsClassFeatures",
+  "value": [
+   "desynchronized-motions"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "leech-deviant-classification",
+  "field": "grantsClassFeatures",
+  "value": [
+   "all-consuming-hunger"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "troll-deviant-classification",
+  "field": "grantsClassFeatures",
+  "value": [
+   "strained-metabolism"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "wraith-deviant-classification",
+  "field": "grantsClassFeatures",
+  "value": [
+   "encroaching-presence"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "emotional-acceptance",
+  "field": "grantsClassFeatures",
+  "value": [
+   "restore-the-mind"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "gathered-lore",
+  "field": "grantsClassFeatures",
+  "value": [
+   "recall-the-teachings"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "precise-discipline",
+  "field": "grantsClassFeatures",
+  "value": [
+   "calculate-threats"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "wandering-reverie",
+  "field": "grantsClassFeatures",
+  "value": [
+   "fade-into-daydreams"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "initiate-benefit-amulet",
+  "field": "grantsClassFeatures",
+  "value": [
+   "amulets-abeyance"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "initiate-benefit-mirror",
+  "field": "grantsClassFeatures",
+  "value": [
+   "mirrors-reflection"
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "initiate-benefit-weapon",
+  "field": "grantsClassFeatures",
+  "value": [
+   "implements-interruption"
+  ]
+ },
+ {
+  "category": "classes",
+  "id": "cleric",
+  "field": "subclass",
+  "value": {
+   "name": "Doctrine",
+   "options": [
+    {
+     "id": "battle-creed",
+     "name": "Battle Creed",
+     "description": "You've undergone a special training to focus your body toward combat. While you still adhere to the teachings of your faith, you also know that you serve as an instrument of your church. More so than any warpriest, the physical rigors that come with battle are key to your training. You've dedicated yourself to the battle creed, a specific approach that puts combat prowess first, even at the expense of a cleric's typical spellcasting and restorative abilities. Defeating one's enemies is more important than healing an ally in the heat of battle; the time for healing comes after. As you abide by the battle creed, your physical and martial capabilities grow stronger. You must select Battle Harbinger Dedication as your 2nd- level class feat.\n\n**Prerequisites:**\n\n- You must be a cleric.\n- You don't gain the Resolute Faith class feature.\n- You don't gain the Miraculous Spell class feature.\n\n**Spellcasting Adjustment**: Your spellcasting capabilities are more restricted. At 1st level, you can prepare one 1st-rank spell and five cantrips. As you increase in level, your number of spell slots and the highest rank of spells you can cast from spell slots increases, shown in Battle Harbinger Spells per Day. Because of your focus on your physical training at the expense of magical aptitude, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank. For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks.\n\n| Your Level | Cantrips | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1 | 5 | 1 | - | - | - | - | - | - | - | - |\n| 2 | 5 | 2 | - | - | - | - | - | - | - | - |\n| 3 | 5 | 2 | 1 | - | - | - | - | - | - | - |\n| 4 | 5 | 2 | 2 | - | - | - | - | - | - | - |\n| 5 | 5 | - | 2 | 2 | - | - | - | - | - | - |\n| 6 | 5 | - | 2 | 2 | - | - | - | - | - | - |\n| 7 | 5 | - | - | 2 | 2 | - | - | - | - | - |\n| 8 | 5 | - | - | 2 | 2 | - | - | - | - | - |\n| 9 | 5 | - | - | - | 2 | 2 | - | - | - | - |\n| 10 | 5 | - | - | - | 2 | 2 | - | - | - | - |\n| 11 | 5 | - | - | - | - | 2 | 2 | - | - | - |\n| 12 | 5 | - | - | - | - | 2 | 2 | - | - | - |\n| 13 | 5 | - | - | - | - | - | 2 | 2 | - | - |\n| 14 | 5 | - | - | - | - | - | 2 | 2 | - | - |\n| 15 | 5 | - | - | - | - | - | - | 2 | 2 | - |\n| 16 | 5 | - | - | - | - | - | - | 2 | 2 | - |\n| 17 | 5 | - | - | - | - | - | - | - | 2 | 2 |\n| 18 | 5 | - | - | - | - | - | - | - | 2 | 2 |\n| 19 | 5 | - | - | - | - | - | - | - | 2 | 2 |\n| 20 | 5 | - | - | - | - | - | - | - | 2 | 2 |\n\n**Divine Font Adjustment:** Instead of preparing Heal or Harm spells with your divine font, you instead gain the battle font, which allows you to prepare battle aura spells. You gain 4 additional spell slots each day at your highest rank of cleric spell slots. You can prepare only Bane or Bless in these slots. Any feats and effects that refer to a battle aura refers to these spells, regardless of whether they were cast with your standard spell slots or your divine font spell slots. At 5th level, the number of additional slots increases to 5, and at 15th level, the total number of additional slots increases to 6. Your battle auras use your class DC instead of your spell DC.\n\n**Doctrine Adjustment:** Instead of choosing a doctrine, you follow the battle creed. At 1st level, you gain the benefits of the initial creed. You gain additional benefits from your creed at the listed levels.\n\nInitial Creed (1st): You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. You're trained in martial weapons. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level when you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor.\n\nLesser Creed (5th): You gain expert proficiency with your deity's favored weapon, martial weapons, simple weapons, and unarmed attacks. When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect. Your proficiency rank for your class DC increases to expert.\n\nModerate Creed (9th): You gain Reactive Strike as a cleric feat.\n\nGreater Creed (11th): Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert.\n\nMajor Creed (13th): You gain master proficiency with your deity's favored weapon. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead.\n\nTrue Creed (15th): Your proficiency rank for your class DC increases to master. Your proficiency rank for Will saves increases to master.\n\nFinal Creed (19th): Your proficiency ranks for light and medium armor, as well as for unarmed defense, increase to master. Your proficiency rank for your class DC increases to legendary.",
+     "descRefs": [
+      {
+       "label": "Battle Harbinger Dedication",
+       "key": "feats"
+      },
+      {
+       "label": "Resolute Faith",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Miraculous Spell",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Heal",
+       "key": "spells"
+      },
+      {
+       "label": "Harm",
+       "key": "spells"
+      },
+      {
+       "label": "Bane",
+       "key": "spells"
+      },
+      {
+       "label": "Bless",
+       "key": "spells"
+      },
+      {
+       "label": "Initial Creed",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Deadly Simplicity",
+       "key": "feats"
+      },
+      {
+       "label": "Divine Defense",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Lesser Creed",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Moderate Creed",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Reactive Strike",
+       "key": "feats"
+      },
+      {
+       "label": "Greater Creed",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Major Creed",
+       "key": "classFeatures"
+      },
+      {
+       "label": "True Creed",
+       "key": "classFeatures"
+      },
+      {
+       "label": "Final Creed",
+       "key": "classFeatures"
+      }
+     ],
+     "grantedFeats": [
+      "battle-harbinger-dedication",
+      "deadly-simplicity",
+      "reactive-strike"
+     ],
+     "slotProgression": "two-rank",
+     "suppressedFeatures": [
+      "resolute-faith",
+      "miraculous-spell",
+      "first-doctrine",
+      "second-doctrine",
+      "third-doctrine",
+      "fourth-doctrine",
+      "fifth-doctrine",
+      "final-doctrine"
+     ],
+     "featureIds": [
+      {
+       "id": "initial-creed",
+       "level": 1
+      },
+      {
+       "id": "lesser-creed",
+       "level": 5
+      },
+      {
+       "id": "moderate-creed",
+       "level": 9
+      },
+      {
+       "id": "greater-creed",
+       "level": 11
+      },
+      {
+       "id": "major-creed",
+       "level": 13
+      },
+      {
+       "id": "true-creed",
+       "level": 15
+      },
+      {
+       "id": "final-creed",
+       "level": 19
+      }
+     ]
+    },
+    {
+     "id": "cloistered-cleric",
+     "name": "Cloistered Cleric",
+     "description": "You are a cleric of the cloth, focusing on divine magic and your connection to your deity's domains.\n\n**First Doctrine (1st):** You gain the Domain Initiate cleric feat.\n\n**Second Doctrine (3rd):** Your proficiency rank for Fortitude saves increases to expert.\n\n**Third Doctrine (7th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert.\n\n**Fourth Doctrine (11th):** You gain expert proficiency with your deity's favored weapon, simple weapons, and unarmed attacks. When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect; you can use your spell DC in place of your class DC.\n\n**Fifth Doctrine (15th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to master.\n\n**Final Doctrine (19th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to legendary.",
+     "descRefs": [
+      {
+       "label": "Domain Initiate",
+       "key": "feats"
+      }
+     ],
+     "grantedFeats": [
+      "domain-initiate"
+     ]
+    },
+    {
+     "id": "warpriest",
+     "name": "Warpriest",
+     "description": "You have trained in the more militant doctrine of your church, focusing on both spells and battle.\n\n**First Doctrine (1st):** You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. You gain the Shield Block general feat, a reaction to reduce damage with a shield. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level, if you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor.\n\n**Second Doctrine (3rd):** You're trained in martial weapons.\n\n**Third Doctrine (7th):** You gain expert proficiency with your deity's favored weapon, martial weapons, simple weapons, and unarmed attacks. When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect; you can use your spell DC in place of your class DC.\n\n**Fourth Doctrine (11th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert.\n\n**Fifth Doctrine (15th):** Your proficiency rank for Fortitude saves increases to master. When you roll a success at a Fortitude save, you get a critical success instead.\n\n**Final Doctrine (19th):** You gain master proficiency with your deity's favored weapon, spell attack modifier, and spell DC.",
+     "descRefs": [
+      {
+       "label": "Shield Block",
+       "key": "feats"
+      },
+      {
+       "label": "Deadly Simplicity",
+       "key": "feats"
+      },
+      {
+       "label": "Divine Defense",
+       "key": "classFeatures"
+      }
+     ],
+     "grantedFeats": [
+      "shield-block",
+      "deadly-simplicity"
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "category": "classes",
+  "id": "kineticist",
+  "field": "features",
+  "value": [
+   {
+    "level": 7,
+    "featureId": "kinetic-durability"
+   },
+   {
+    "level": 19,
+    "featureId": "light-armor-mastery"
+   },
+   {
+    "level": 15,
+    "featureId": "kinetic-mastery"
+   },
+   {
+    "level": 11,
+    "featureId": "reflow-elements"
+   },
+   {
+    "level": 19,
+    "featureId": "kinetic-legend"
+   },
+   {
+    "level": 1,
+    "featureId": "kinetic-aura"
+   },
+   {
+    "level": 1,
+    "featureId": "kinetic-gate"
+   },
+   {
+    "level": 9,
+    "featureId": "second-gates-threshold"
+   },
+   {
+    "level": 17,
+    "featureId": "fourth-gates-threshold"
+   },
+   {
+    "level": 11,
+    "featureId": "kinetic-quickness"
+   },
+   {
+    "level": 1,
+    "featureId": "impulses"
+   },
+   {
+    "level": 17,
+    "featureId": "double-reflow"
+   },
+   {
+    "level": 11,
+    "featureId": "weapon-expertise"
+   },
+   {
+    "level": 5,
+    "featureId": "gates-threshold"
+   },
+   {
+    "level": 13,
+    "featureId": "light-armor-expertise"
+   },
+   {
+    "level": 3,
+    "featureId": "will-expertise"
+   },
+   {
+    "level": 9,
+    "featureId": "perception-expertise"
+   },
+   {
+    "level": 19,
+    "featureId": "final-gate"
+   },
+   {
+    "level": 13,
+    "featureId": "third-gates-threshold"
+   },
+   {
+    "level": 3,
+    "featureId": "extract-element"
+   },
+   {
+    "level": 7,
+    "featureId": "kinetic-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "weapon-specialization"
+   },
+   {
+    "level": 15,
+    "featureId": "greater-kinetic-durability"
+   },
+   {
+    "level": 1,
+    "featureId": "elemental-blast"
+   },
+   {
+    "level": 1,
+    "featureId": "base-kinesis"
+   },
+   {
+    "level": 1,
+    "featureId": "channel-elements"
+   },
+   {
+    "level": 5,
+    "featureId": "gate-junction"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "elementalist-dedication",
+  "field": "grantsClassFeatures",
+  "value": [
+   "elemental-magic"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "hellknight-dedication",
+  "field": "choice",
+  "value": {
+   "flag": "hellknightOrder",
+   "prompt": "Which Hellknight order are you an armiger of?",
+   "kind": "array",
+   "ownsFeature": true,
+   "options": [
+    {
+     "value": "order-of-the-chain",
+     "label": "Order of the Chain",
+     "description": "Favored weapons flail, spiked chain. Lesser order benefit: Shackles of Law. Greater order benefit: Sturdy Bindings."
+    },
+    {
+     "value": "order-of-the-gate",
+     "label": "Order of the Gate",
+     "description": "Favored weapon dagger. Lesser order benefit: Locate Lawbreakers. Greater order benefit: Devil Allies."
+    },
+    {
+     "value": "order-of-the-godclaw",
+     "label": "Order of the Godclaw",
+     "description": "Favored weapon morningstar. Lesser order benefit: Dedication to the Five. Greater order benefit: Blessing of the Five."
+    },
+    {
+     "value": "order-of-the-nail",
+     "label": "Order of the Nail",
+     "description": "Favored weapons halberd, lance. Lesser order benefit: Trailblazing Stride. Greater order benefit: Reveal Beasts."
+    },
+    {
+     "value": "order-of-the-pyre",
+     "label": "Order of the Pyre",
+     "description": "Favored weapon glaive. Lesser order benefit: Righteous Resistance. Greater order benefit: Spiritual Disruption."
+    },
+    {
+     "value": "order-of-the-rack",
+     "label": "Order of the Rack",
+     "description": "Favored weapons longsword, whip. Lesser order benefit: Disillusionment. Greater order benefit: Silence Heresy."
+    },
+    {
+     "value": "order-of-the-scourge",
+     "label": "Order of the Scourge",
+     "description": "Favored weapons mace, whip, scourge. Lesser order benefit: Fear No Law, Fear No One. Greater order benefit: Seek Injustice."
+    }
+   ]
+  }
+ },
+ {
+  "category": "runes",
+  "id": "nightmare",
+  "field": "damage",
+  "value": {
+   "dice": 1,
+   "die": "d6",
+   "type": "mental"
+  }
+ },
+ {
+  "category": "runes",
+  "id": "ashen",
+  "field": "damage",
+  "value": {
+   "dice": 1,
+   "die": "d4",
+   "type": "fire",
+   "persistent": true
+  }
+ },
+ {
+  "category": "runes",
+  "id": "ashen-greater",
+  "field": "damage",
+  "value": {
+   "dice": 1,
+   "die": "d8",
+   "type": "fire",
+   "persistent": true
+  }
+ },
+ {
+  "category": "runes",
+  "id": "decaying",
+  "field": "damage",
+  "value": {
+   "dice": 1,
+   "die": "d4",
+   "type": "void",
+   "critPersistent": {
+    "dice": 2,
+    "die": "d4"
+   }
+  }
+ },
+ {
+  "category": "runes",
+  "id": "decaying-greater",
+  "field": "damage",
+  "value": {
+   "dice": 1,
+   "die": "d4",
+   "type": "void",
+   "critPersistent": {
+    "dice": 4,
+    "die": "d4"
+   }
+  }
+ },
+ {
+  "category": "runes",
+  "id": "brilliant",
+  "field": "damage",
+  "value": {
+   "dice": 1,
+   "die": "d4",
+   "type": "fire"
+  }
+ },
+ {
+  "category": "runes",
+  "id": "brilliant-greater",
+  "field": "damage",
+  "value": {
+   "dice": 1,
+   "die": "d4",
+   "type": "fire"
+  }
  }
 ]
