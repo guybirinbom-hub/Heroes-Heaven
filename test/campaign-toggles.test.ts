@@ -23,8 +23,11 @@ describe('campaign content toggles + new content', () => {
 
   it('applied the content fixes', () => {
     expect(Object.values(c.items).find((i) => i.name === 'Adamantine Chunk')?.level).toBe(8);
-    // Uplifting Winds is a level-12 druid feat (a stale fixes.json override had mis-set it to 16).
-    expect(Object.values(c.feats).find((f) => f.name === 'Uplifting Winds')?.level).toBe(12);
+    // Uplifting Winds is a level-SIXTEEN druid feat. This line asserted 12 and blamed "a stale
+    // fixes.json override" for the 16 — it had the two the wrong way round. The AoN mirror carries
+    // exactly one record under the name, its heading reads `right="Feat 16"`, its level field agrees,
+    // and it cites Player Core pg. 135 with the storm-order prerequisite.
+    expect(Object.values(c.feats).find((f) => f.name === 'Uplifting Winds')?.level).toBe(16);
     expect(Object.values(c.languages).find((l) => l.name === 'Aklo')?.rarity).toBe('uncommon');
   });
 

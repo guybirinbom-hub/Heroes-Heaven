@@ -1,0 +1,182 @@
+[
+ {
+  "coll": "items",
+  "id": "cartographers-kit",
+  "have": 0,
+  "want": 3
+ },
+ {
+  "coll": "items",
+  "id": "travelers-chair",
+  "have": 0,
+  "want": 1
+ },
+ {
+  "coll": "items",
+  "id": "songbirds-brush",
+  "have": 14,
+  "want": 15
+ },
+ {
+  "coll": "items",
+  "id": "vernai-shell",
+  "have": 16,
+  "want": 15
+ },
+ {
+  "coll": "items",
+  "id": "blood-drinker",
+  "have": 18,
+  "want": 16
+ },
+ {
+  "coll": "items",
+  "id": "crimson-bluff",
+  "have": 15,
+  "want": 16
+ },
+ {
+  "coll": "items",
+  "id": "fleshrender",
+  "have": 18,
+  "want": 16
+ },
+ {
+  "coll": "items",
+  "id": "temperbrand",
+  "have": 20,
+  "want": 16
+ },
+ {
+  "coll": "items",
+  "id": "beekeepers-smoker",
+  "have": 1,
+  "want": 2
+ },
+ {
+  "coll": "items",
+  "id": "banner-of-the-restful",
+  "have": 4,
+  "want": 9
+ },
+ {
+  "coll": "items",
+  "id": "chimera-thread",
+  "have": 5,
+  "want": 4
+ },
+ {
+  "coll": "items",
+  "id": "harpys-talon",
+  "have": 1,
+  "want": 2
+ },
+ {
+  "coll": "items",
+  "id": "lifebloom",
+  "have": 6,
+  "want": 8
+ },
+ {
+  "coll": "items",
+  "id": "reapers-sigh",
+  "have": 7,
+  "want": 8
+ },
+ {
+  "coll": "feats",
+  "id": "draconic-scent",
+  "have": 5,
+  "want": 4
+ },
+ {
+  "coll": "feats",
+  "id": "breath-of-the-dragon",
+  "have": 1,
+  "want": 8
+ },
+ {
+  "coll": "feats",
+  "id": "know-it-all",
+  "have": 8,
+  "want": 10
+ },
+ {
+  "coll": "feats",
+  "id": "jellyfish-stance",
+  "have": 8,
+  "want": 6
+ },
+ {
+  "coll": "feats",
+  "id": "sixth-pillar-mastery",
+  "have": 14,
+  "want": 16
+ },
+ {
+  "coll": "feats",
+  "id": "touch-focus",
+  "have": 16,
+  "want": 14
+ },
+ {
+  "coll": "feats",
+  "id": "voice-of-the-elements",
+  "have": 5,
+  "want": 2
+ },
+ {
+  "coll": "feats",
+  "id": "uplifting-winds",
+  "have": 12,
+  "want": 16
+ },
+ {
+  "coll": "feats",
+  "id": "knowledge-is-power",
+  "have": 6,
+  "want": 8
+ },
+ {
+  "coll": "feats",
+  "id": "feathered-flechettes",
+  "have": 6,
+  "want": 8
+ },
+ {
+  "coll": "feats",
+  "id": "devoted-focus",
+  "have": 10,
+  "want": 12
+ },
+ {
+  "coll": "feats",
+  "id": "dual-weapon-reload",
+  "have": 1,
+  "want": 4
+ },
+ {
+  "coll": "feats",
+  "id": "death-from-above",
+  "have": 8,
+  "want": 16
+ },
+ {
+  "coll": "feats",
+  "id": "animal-soul-siblings",
+  "have": 5,
+  "want": 1
+ },
+ {
+  "coll": "feats",
+  "id": "blade-of-law",
+  "have": 12,
+  "want": 10
+ },
+ {
+  "coll": "spells",
+  "id": "glowing-trail",
+  "have": 0,
+  "want": 1
+ }
+]

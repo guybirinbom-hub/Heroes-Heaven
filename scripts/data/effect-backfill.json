@@ -102657,5 +102657,251 @@
     "value": {
       "gp": 200
     }
+  },
+  {
+    "category": "items",
+    "id": "wondrous-figurine-candy-constrictor",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "wondrous-figurine-rubber-bear",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-amber-sphere",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-black-disc",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-mottled-ellipsoid",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-rainbow-prism",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "sack-of-rotten-fruit",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "dezullon-fountain",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "execution-powder",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "concealment-coin",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "poison-ring",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "quick-change-outfit",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "rappelling-kit",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "putrid-sack-of-rotting-fruit",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "bloodknuckles",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "blade-of-fallen-stars",
+    "field": "rarity",
+    "value": "unique"
+  },
+  {
+    "category": "items",
+    "id": "adamantine-echo",
+    "field": "rarity",
+    "value": "unique"
+  },
+  {
+    "category": "items",
+    "id": "moritype",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "repeater-bandolier",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "items",
+    "id": "8-round-magazine",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "feats",
+    "id": "spellshot-dedication",
+    "field": "rarity",
+    "value": "uncommon"
+  },
+  {
+    "category": "feats",
+    "id": "jousting-mount",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "feats",
+    "id": "army-of-one",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "feats",
+    "id": "crossbow-infiltrator-dedication",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "spells",
+    "id": "wish",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "items",
+    "id": "cartographers-kit",
+    "field": "level",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "travelers-chair",
+    "field": "level",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "songbirds-brush",
+    "field": "level",
+    "value": 15
+  },
+  {
+    "category": "items",
+    "id": "vernai-shell",
+    "field": "level",
+    "value": 15
+  },
+  {
+    "category": "items",
+    "id": "blood-drinker",
+    "field": "level",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "crimson-bluff",
+    "field": "level",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "fleshrender",
+    "field": "level",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "temperbrand",
+    "field": "level",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "beekeepers-smoker",
+    "field": "level",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "chimera-thread",
+    "field": "level",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "harpys-talon",
+    "field": "level",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "lifebloom",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "reapers-sigh",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "feats",
+    "id": "uplifting-winds",
+    "field": "level",
+    "value": 16
+  },
+  {
+    "category": "feats",
+    "id": "feathered-flechettes",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "feats",
+    "id": "dual-weapon-reload",
+    "field": "level",
+    "value": 4
   }
 ]
