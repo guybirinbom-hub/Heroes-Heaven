@@ -12,7 +12,12 @@
  * On top of that it asserts the invariants that hold for EVERY character at EVERY level — HP
  * arithmetic, proficiency monotonicity, feat-slot fillability — across 27 classes x 20 levels.
  *
- * Run: node scripts/verify-characters.mjs [--quiet]
+ * Run: npx jiti scripts/verify-characters.mjs [--quiet]   (or `npm run verify`)
+ *
+ * jiti, NOT plain node: this file imports src/rules/build.ts, whose own imports are extensionless
+ * (`from './types'`). Node strips TypeScript types but will not resolve those, so `node
+ * scripts/verify-characters.mjs` died on the first import before a single check ran — which is what
+ * the header documented for months.
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';

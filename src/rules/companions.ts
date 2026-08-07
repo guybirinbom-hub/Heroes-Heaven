@@ -220,7 +220,7 @@ export interface AnimalCompanionBlock {
   perception: StatMod;
   speeds: { land?: number; fly?: number; swim?: number; climb?: number; burrow?: number };
   senses: string[];
-  attacks: { name: string; attack: number; damage: string; traits: string[] }[];
+  attacks: { name: string; attack: number; damage: string; traits: string[]; range?: number }[];
   skills: StatMod[];
   /** IWR display lines from companion-modifying feats ("weakness 10 unholy"). */
   iwr?: string[];
@@ -256,7 +256,11 @@ interface CompanionGear {
   dexCap: number | null;
   checkPenalty: number;
   speedPenalty: number;
-  strikes: { name: string; die: string; dice: number; damageType: string; traits: string[] }[];
+  /** `range` in FEET when the weapon is a ranged one. The stat block decided melee-vs-ranged by
+   *  looking at TRAITS alone, and 195 of the 199 ranged weapons carry no ranged/thrown trait at all
+   *  — a shortbow is `range: 60` with traits [deadly-d10] — so a companion wielding one was labelled
+   *  Melee. The range is right here on the item; it just was not carried through. */
+  strikes: { name: string; die: string; dice: number; damageType: string; traits: string[]; range?: number }[];
   carriedBulk: number;
   /** Flat land-Speed bonus from the companion's invested gear (Alacritous Horseshoes: +5 ft). */
   speedBonus: number;
@@ -290,7 +294,14 @@ function companionGear(cfg: CompanionConfig, content: ContentDatabase, strMod: n
       g.notes.push(`${def.name} (${bits.join(', ')})`);
     } else if (def.itemType === 'weapon' && it.equipped) {
       const dieSize = (def.damage.die.match(/d(\d+)/) || [])[1] ?? '6';
-      g.strikes.push({ name: def.name, die: `d${dieSize}`, dice: def.damage.dice, damageType: def.damage.type, traits: def.traits ?? [] });
+      g.strikes.push({
+        name: def.name,
+        die: `d${dieSize}`,
+        dice: def.damage.dice,
+        damageType: def.damage.type,
+        traits: def.traits ?? [],
+        ...(def.range != null ? { range: def.range } : {}),
+      });
     }
   }
   return g;
@@ -395,7 +406,7 @@ export function deriveAnimalCompanion(
     damageType: string,
     traits: string[],
     flatBonus: number,
-    opts: { plus?: string; noStrengthDamage?: boolean } = {},
+    opts: { plus?: string; noStrengthDamage?: boolean; range?: number } = {},
   ) => {
     const finesse = traits.includes('finesse');
     const atkAbility: AbilityId = finesse && (ab.dex ?? 0) > (ab.str ?? 0) ? 'dex' : 'str';
@@ -408,6 +419,9 @@ export function deriveAnimalCompanion(
       attack: (ab[atkAbility] ?? 0) + profBonus(m.ranks.attack, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
       damage: `${dice}d${dieSize}${dmgFlat} ${damageType}${opts.plus ? ` plus ${opts.plus}` : ''}`,
       traits,
+      // Carried so the stat block can say Ranged without having to infer it from traits, which 195 of
+      // the 199 ranged weapons do not carry.
+      ...(opts.range != null ? { range: opts.range } : {}),
     };
   };
   // Natural attacks scale dice with maturity; a wielded weapon uses its own dice (no maturity flat).
@@ -417,7 +431,13 @@ export function deriveAnimalCompanion(
       noStrengthDamage: atk.noStrengthDamage,
     }),
   );
-  const wielded = gear.strikes.map((w) => buildAttack(w.name, w.dice, w.die.replace(/^d/, ''), w.damageType, w.traits, 0));
+  const wielded = gear.strikes.map((w) =>
+    // A thrown weapon still adds Strength to damage; a projectile does not.
+    buildAttack(w.name, w.dice, w.die.replace(/^d/, ''), w.damageType, w.traits, 0, {
+      ...(w.range != null ? { range: w.range } : {}),
+      noStrengthDamage: w.range != null && !w.traits.some((t) => t === 'thrown' || t.startsWith('thrown-')),
+    }),
+  );
   // Strikes an OWNER's feat grants (Billowing Wings' gust). The printed dice stand — the feat says
   // 1d4, not "the companion's maturity die" — so no maturity flat damage rides on them either, and a
   // ranged one adds no Strength to damage.

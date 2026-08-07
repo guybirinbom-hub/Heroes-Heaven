@@ -18,6 +18,24 @@ import { dirname, join } from 'node:path';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const db = JSON.parse(read('public/core.json'));
+/*
+ * Descriptions live in a SECOND file now — 61% of the data, split out so the app becomes interactive
+ * after parsing 8 MB instead of 22.5. Every lane below tests a record BY ITS TEXT, so without this
+ * merge each one matched zero records and the whole report read "0 candidates, 0 TO DO" — a broken
+ * instrument that looked like a finished job. coverage-report.mjs merges them back for the same reason.
+ */
+{
+  const desc = JSON.parse(read('public/core-descriptions.json'));
+  for (const [bucket, records] of Object.entries(desc)) {
+    if (!db[bucket]) continue;
+    for (const [id, v] of Object.entries(records)) {
+      const rec = db[bucket][id];
+      if (!rec) continue;
+      if (v.d !== undefined) rec.description = v.d;
+      if (v.r !== undefined) rec.descRefs = v.r;
+    }
+  }
+}
 
 /* ---- what the app ALREADY models, so triage can mark a record done ------------------------- */
 

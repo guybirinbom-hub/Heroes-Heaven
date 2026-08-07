@@ -14,7 +14,10 @@
     "android": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android.ps1",
     "android:release": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android-release.ps1",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "verify": "jiti scripts/verify-characters.mjs",
+    "triage": "node scripts/triage-mechanics.mjs",
+    "coverage": "node scripts/coverage-report.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.1",

@@ -98488,5 +98488,159 @@
    "description": "A Gargantuan creature takes up at least a 20-foot square (sixteen squares) and normally has a 20-foot reach."
   },
   "create": true
+ },
+ {
+  "category": "items",
+  "id": "belt-of-good-health",
+  "field": "maxHpBonus",
+  "value": {
+   "flat": 4
+  }
+ },
+ {
+  "category": "feats",
+  "id": "monk-dedication",
+  "field": "grantsClassFeatures",
+  "value": [
+   "powerful-fist"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "armored-stealth",
+  "field": "checkPenaltyRelief",
+  "value": {
+   "skill": "stealth",
+   "byProficiency": {
+    "trained": 1,
+    "expert": 1,
+    "master": 2,
+    "legendary": 3
+   },
+   "ignoresNoisy": true
+  }
+ },
+ {
+  "category": "feats",
+  "id": "terrain-scout",
+  "field": "choice",
+  "value": {
+   "flag": "terrainScoutTerrains",
+   "prompt": "Terrain Stalker terrains (two, different)",
+   "kind": "array",
+   "options": [
+    {
+     "value": "rubble",
+     "label": "Rubble"
+    },
+    {
+     "value": "snow",
+     "label": "Snow"
+    },
+    {
+     "value": "underbrush",
+     "label": "Underbrush"
+    }
+   ],
+   "picks": 2,
+   "distinct": true,
+   "note": "Terrain Scout grants Terrain Stalker twice. Pick both terrains here; the granted Terrain Stalker row carries the first."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "strength-of-eight-legions",
+  "field": "strikeDamage",
+  "value": [
+   {
+    "type": "untyped",
+    "flat": 2,
+    "appliesTo": "all"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "ancient-memories",
+  "field": "choice",
+  "value": {
+   "flag": "ancientMemoriesSkill",
+   "prompt": "Skill remembered from a past life",
+   "kind": "skills",
+   "daily": true,
+   "note": "Trained in this skill until your next daily preparations. Temporary, so it cannot be a prerequisite for a skill increase or a feat."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "battle-harbinger-dedication",
+  "field": "note",
+  "value": "If you already had Toughness, take another general feat of your choice in its place — grant it through Setup → Overrides → Grant a feat."
+ },
+ {
+  "category": "feats",
+  "id": "growing-eel-friend",
+  "field": "note",
+  "value": "Your eel pet becomes Small and gains the Scent and Tough pet abilities, and can no longer be carried in a water-filled globe. Pets are tracked as descriptive companions here, so update its entry on the Companions tab yourself."
+ },
+ {
+  "category": "feats",
+  "id": "patron-reborn",
+  "field": "note",
+  "value": "The senses and the Wish ritual are on your sheet. The rest of this feat lands on OTHER witches who share your patron — they count as your Witch’s Charge and you can impart Wish to them — so nothing more changes here; it happens at the table."
+ },
+ {
+  "category": "feats",
+  "id": "assume-godhood",
+  "field": "note",
+  "value": "Everything this grants lands on your FOLLOWERS: you become the deity that clerics and other deity-feature classes draw from, and you choose the stat-block aspects you provide. Your own sheet is unchanged, so nothing is asked for here — settle the details with your GM."
+ },
+ {
+  "category": "feats",
+  "id": "marshall-fiendish-forces",
+  "field": "note",
+  "value": "The fiend you pick (a common fiend of level 11 or lower, chosen when you take this feat) is a creature your GM runs, not a companion on your sheet. Record your choice with them; nothing is tracked here."
+ },
+ {
+  "category": "feats",
+  "id": "hero-gods-bond",
+  "field": "note",
+  "value": "Your bonded partner is ANOTHER player’s character: you share doomed and dying values while on the same plane. Nothing on your own sheet changes, so nothing is asked for here — agree the partner at the table."
+ },
+ {
+  "category": "feats",
+  "id": "chosen-ward",
+  "field": "note",
+  "value": "Your ward is another creature, so this feat changes what happens to THEM. Its one clause that touches you — the Defend Our Union trigger — is a reaction condition your GM adjudicates; nothing is tracked here."
+ },
+ {
+  "category": "feats",
+  "id": "lesser-augmentation",
+  "field": "note",
+  "value": "Your answer is recorded on the sheet; this feat’s effect is one the app does not compute, so no number changes here."
+ },
+ {
+  "category": "feats",
+  "id": "greater-augmentation",
+  "field": "note",
+  "value": "Your answer is recorded on the sheet; this feat’s effect is one the app does not compute, so no number changes here."
+ },
+ {
+  "category": "feats",
+  "id": "favored-prey",
+  "field": "note",
+  "value": "Your answer is recorded on the sheet; this feat’s effect is one the app does not compute, so no number changes here."
+ },
+ {
+  "category": "feats",
+  "id": "crossblooded-evolution",
+  "field": "note",
+  "value": "Your answer is recorded on the sheet; this feat’s effect is one the app does not compute, so no number changes here."
+ },
+ {
+  "category": "feats",
+  "id": "order-cross-training",
+  "field": "note",
+  "value": "Your answer is recorded on the sheet; this feat’s effect is one the app does not compute, so no number changes here."
  }
 ]

@@ -2493,6 +2493,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     let poolMax: number;
     if (cls.id === 'animist') {
       poolMax = 1 + (level >= 7 ? 1 : 0) + (level >= 15 ? 1 : 0);
+      /*
+       * Circle of Spirits: "The number of Focus Points in your focus pool is equal to the number of
+       * focus spells you have or the number of apparitions you are attuned to, whichever is higher
+       * (maximum 3)." The animist's pool was pinned to the 1/7/15 apparition ladder, so an animist
+       * who had accumulated more focus spells than apparitions was short a point — the whole content
+       * of the feat's Special clause.
+       */
+      if (Object.values(build.featPicks ?? {}).includes('circle-of-spirits')) {
+        const spells =
+          (cls.focusSpells?.length ? 1 : 0) +
+          grantOptions.filter((o) => o.focusSpells?.length).length +
+          featFocusSpells.length;
+        poolMax = Math.max(poolMax, spells);
+      }
     } else {
       poolMax =
         (cls.focusSpells?.length ? 1 : 0) +

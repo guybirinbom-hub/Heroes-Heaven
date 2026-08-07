@@ -1454,6 +1454,15 @@ export function Builder({
                               </>
                             )}
                           </div>
+                          {/* The record-level NOTE — "this bonus lands on your hierophant, not you",
+                              "recorded only", "your GM decides which ally wears the relic". It renders on
+                              the Feats tab and was read NOWHERE in the builder, which is precisely where
+                              the player is deciding whether to spend the slot. 14 feats carry one. */}
+                          {picked && content.feats[picked]?.note && (
+                            <div className="lvl-note">
+                              <i className="ti ti-info-circle" aria-hidden="true" /> {content.feats[picked]!.note}
+                            </div>
+                          )}
                           {/* The feat's full description opens in a popup when the card is clicked
                               (setFeatDescPopup) — no inline expand. */}
                           {/* Armor Proficiency (and any derived-cascade feat) has no dropdown — show

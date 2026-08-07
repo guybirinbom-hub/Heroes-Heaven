@@ -10887,3 +10887,20 @@ button.strike-name:hover {
   opacity: 0.4;
   cursor: default;
 }
+
+/* A picked feat's record-level note, shown under its slot card in the builder. This is where a
+   player decides whether to spend the slot, so a clause the rules leave to the table (“which ally
+   wears your relic”) has to be readable BEFORE the pick, not only on the finished sheet. */
+.lvl-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 4px 0 0 4px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--app-text-dim);
+}
+.lvl-note .ti {
+  flex: none;
+  margin-top: 1px;
+}

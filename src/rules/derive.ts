@@ -463,11 +463,17 @@ export function deriveSpellcasting(c: Character, entry: SpellcastingEntry): Spel
   return { rank: entry.proficiency, attack, dc };
 }
 
-/** Total max-HP bonus from the character's selected feats (Toughness = +level, etc.). */
+/** Total max-HP bonus from the character's selected feats (Toughness = +level, etc.) AND from worn
+ *  or invested ITEMS — a Belt of Good Health is "+4 maximum and current Hit Points" and had no lane,
+ *  because this walked feats alone. */
 export function featHpBonus(c: Character, db: ContentDatabase): number {
   let total = 0;
   const takenFeats = c.feats.map((f) => db.feats[f.featId]).filter((f): f is NonNullable<typeof f> => !!f);
-  for (const f of takenFeats) {
+  const wornItems = (c.inventory ?? [])
+    .filter((inv) => inv.worn || inv.invested || inv.equipped)
+    .map((inv) => db.items[inv.itemId])
+    .filter((it): it is NonNullable<typeof it> => !!it);
+  for (const f of [...takenFeats, ...(wornItems as unknown as typeof takenFeats)]) {
     const b = f.maxHpBonus;
     if (!b) continue;
     total += (b.perLevel ?? 0) * c.level + (b.flat ?? 0);
@@ -649,7 +655,26 @@ export function deriveArmorCheckPenalty(c: Character, db: ContentDatabase, skill
   // Strength modifier." The one case where meeting Strength does NOT clear the penalty.
   const noisyStealth = traits.includes('noisy') && skill === 'stealth';
   if (!noisyStealth && meetsArmorStrength(c, worn.armor)) return { value: 0, source: null };
-  return { value: -Math.abs(worn.armor.checkPenalty), source: worn.armor.name };
+  /*
+   * A record may REDUCE the penalty for one skill rather than clear it — Armored Stealth reduces the
+   * Stealth penalty by 1, by 2 at master, by 3 at legendary, and cancels the noisy trait outright.
+   * There was no field for "less penalty, on this skill only", so the feat did nothing at all.
+   */
+  let penalty = Math.abs(worn.armor.checkPenalty);
+  let noisyIgnored = false;
+  for (const f of c.feats) {
+    const rel = db.feats[f.featId]?.checkPenaltyRelief;
+    if (!rel || (rel.skill && rel.skill !== skill)) continue;
+    const rank = rel.byProficiency && skill ? c.proficiencies.skills[skill] : undefined;
+    const amount = (rank && rel.byProficiency?.[rank as keyof typeof rel.byProficiency]) ?? rel.amount ?? 0;
+    penalty = Math.max(0, penalty - amount);
+    if (rel.ignoresNoisy) noisyIgnored = true;
+  }
+  // "If your armor has the noisy trait, instead of reducing the penalty you ignore the effect of that
+  // trait" — which is what lets meeting the Strength requirement clear it as usual.
+  if (noisyStealth && noisyIgnored && meetsArmorStrength(c, worn.armor)) return { value: 0, source: null };
+  if (penalty <= 0) return { value: 0, source: null };
+  return { value: -penalty, source: worn.armor.name };
 }
 
 export interface AcResult {

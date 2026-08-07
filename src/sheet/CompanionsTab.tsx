@@ -583,8 +583,11 @@ function attackRange(traits: string[]): string | null {
 }
 /** One companion attack line (animal companion + eidolon share this): Melee/Ranged label + 1-action
  *  Strike glyph + name, to-hit, traits, damage. */
-function AttackLine({ a }: { a: { name: string; attack: number; damage: string; traits: string[] } }) {
-  const range = attackRange(a.traits);
+function AttackLine({ a }: { a: { name: string; attack: number; damage: string; traits: string[]; range?: number } }) {
+  // The weapon’s own RANGE wins over the trait sniff. A shortbow is `range: 60` with traits
+  // [deadly-d10] and a crossbow has no traits at all, so reading traits alone called 195 of the 199
+  // ranged weapons Melee — and printed the companion’s Strength on their damage.
+  const range = a.range != null ? `${a.range} ft` : attackRange(a.traits);
   return (
     <div className="sb-line">
       <b>{range === null ? 'Melee' : 'Ranged'}</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name} {formatMod(a.attack)}

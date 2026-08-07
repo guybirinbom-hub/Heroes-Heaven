@@ -1496,6 +1496,24 @@ export interface Feat extends ContentBase, DefenseGrants {
    *  Ghostly Resistance = perLevel -1). The Resiliency feats grant `perArchetypeFeat` HP per feat of the
    *  named `archetype` (dedication counts) — resolved against the character's feats in featHpBonus. */
   maxHpBonus?: { perLevel?: number; flat?: number; perArchetypeFeat?: number; archetype?: string };
+  /**
+   * A record that REDUCES the worn armour’s check penalty for one skill rather than clearing it —
+   * Armored Stealth: "your penalty to Stealth checks is reduced by 1 (minimum 0); by 2 if you are a
+   * master in Stealth, by 3 if legendary. If your armor has the noisy trait, instead of reducing the
+   * penalty you ignore the effect of that trait."
+   *
+   * There was no field for "less penalty, on this skill only", so the feat did nothing.
+   */
+  checkPenaltyRelief?: {
+    /** Limit to one skill (Armored Stealth is Stealth-only). Absent = every skill the penalty hits. */
+    skill?: ProficiencyKey;
+    /** Flat reduction. */
+    amount?: number;
+    /** …or a reduction that scales with the character’s rank IN THAT SKILL. */
+    byProficiency?: Partial<Record<ProficiencyRank, number>>;
+    /** Cancels the `noisy` trait instead of reducing the number. */
+    ignoresNoisy?: boolean;
+  };
 }
 
 export interface ClassFeature extends ContentBase, DefenseGrants {
