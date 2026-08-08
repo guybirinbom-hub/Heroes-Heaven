@@ -1,0 +1,468 @@
+{
+ "measured": "2026-08-08",
+ "direction": "ONE-WAY. Foundry silence carries no information; 3,537 of our feats exist there with zero rule elements.",
+ "ourRecords": 7167,
+ "rows": [
+  {
+   "type": "AdjustDegreeOfSuccess",
+   "foundryUses": 176,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Web Walker",
+    "Emotionless",
+    "Alghollthu Bound",
+    "Pelagic Aptitude",
+    "Hydraulic Maneuvers",
+    "Well-Groomed"
+   ]
+  },
+  {
+   "type": "Aura",
+   "foundryUses": 39,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Convocation of Earth and Moon",
+    "Ascended Celestial Dedication",
+    "Commander Dedication",
+    "Aura of Confidence",
+    "Corpse Stench",
+    "Consecrated Aura"
+   ]
+  },
+  {
+   "type": "ActorTraits",
+   "foundryUses": 29,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Fey Influence",
+    "Home in the Deep",
+    "Immortal Ruin",
+    "Fiend Eternal",
+    "Celestial Rebirth",
+    "Ghost-path Epiphany"
+   ]
+  },
+  {
+   "type": "EphemeralEffect",
+   "foundryUses": 21,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Cringe",
+    "Callow May",
+    "Surprise Attack",
+    "We are One",
+    "Opportune Opening",
+    "Eagle Knight Dedication"
+   ]
+  },
+  {
+   "type": "SpecialStatistic",
+   "foundryUses": 9,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Kinetic Activation",
+    "Scroll Thaumaturgy",
+    "Blight Soul Deviant Classification",
+    "Dragon Deviant Classification",
+    "Flicker Deviant Classification",
+    "Impulses"
+   ]
+  },
+  {
+   "type": "RollTwice",
+   "foundryUses": 6,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Ascended Celestial Dedication",
+    "Discerning Gaze",
+    "Derring-do",
+    "Perfect Finisher",
+    "Felicitous Riposte",
+    "Incredible Luck (Swashbuckler)"
+   ]
+  },
+  {
+   "type": "FastHealing",
+   "foundryUses": 4,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Immortal Bear",
+    "Force of Nature",
+    "Grand Medic's Mask",
+    "Golden Body"
+   ]
+  },
+  {
+   "type": "MultipleAttackPenalty",
+   "foundryUses": 4,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Agile Grace",
+    "Combination Finisher",
+    "Flurry",
+    "Masterful Hunter (Flurry)"
+   ]
+  },
+  {
+   "type": "TempHP",
+   "foundryUses": 1,
+   "status": "NO LANE",
+   "covered": 0,
+   "examples": [
+    "Vessel's Form"
+   ]
+  },
+  {
+   "type": "GrantItem",
+   "foundryUses": 790,
+   "status": "has lane",
+   "lane": "grantsFeats | grantedFeatId | grantedFeatByChoice | grantsClassFeatures | grantsActions | grantsRituals | featureIds",
+   "covered": 560,
+   "bare": 230,
+   "examples": [
+    "Enlarged Chassis",
+    "Late Awakener",
+    "Ceremony of Growth",
+    "Ascended Dragonet Heritage",
+    "Brightness Seeker",
+    "Chosen of Lamashtu"
+   ]
+  },
+  {
+   "type": "Note",
+   "foundryUses": 250,
+   "status": "has lane",
+   "lane": "note | situational",
+   "covered": 90,
+   "bare": 160,
+   "examples": [
+    "Disorienting Venom",
+    "Rock Runner",
+    "Tomb-Watcher's Glare",
+    "Kneel for No God",
+    "Woodcraft",
+    "Lightless Litheness"
+   ]
+  },
+  {
+   "type": "ChoiceSet",
+   "foundryUses": 369,
+   "status": "has lane",
+   "lane": "choice | effectChoices",
+   "covered": 269,
+   "bare": 100,
+   "examples": [
+    "Dragonet Breath",
+    "Ascended Dragonet Heritage",
+    "Surki Weapon Familiarity",
+    "Instinct Ability",
+    "Tactical Excellence",
+    "Second Ikon"
+   ]
+  },
+  {
+   "type": "DamageDice",
+   "foundryUses": 122,
+   "status": "has lane",
+   "lane": "weaponTraits | strikeDamage | grantedStrikes",
+   "covered": 38,
+   "bare": 84,
+   "examples": [
+    "Aggravating Scratch",
+    "Steelhoof",
+    "Inhale, Exhale!",
+    "Demon Hunter",
+    "Thorned Seedpod",
+    "Pummeling Whirlpool"
+   ]
+  },
+  {
+   "type": "FlatModifier",
+   "foundryUses": 587,
+   "status": "has lane",
+   "lane": "passiveEffects | situational | focusPoolBonus | maxHpBonus | spellSlotBonus",
+   "covered": 520,
+   "bare": 67,
+   "examples": [
+    "Energy Beam",
+    "Arcane Locomotion",
+    "Enlarged Chassis",
+    "Core Cannon",
+    "Strong of Wing",
+    "Ceremony of Growth"
+   ]
+  },
+  {
+   "type": "MartialProficiency",
+   "foundryUses": 62,
+   "status": "has lane",
+   "lane": "proficiencies",
+   "covered": 19,
+   "bare": 43,
+   "examples": [
+    "Athamaru Weapon Familiarity",
+    "Catfolk Weapon Familiarity",
+    "Dwarven Weapon Familiarity",
+    "Explosive Savant",
+    "Elven Weapon Familiarity",
+    "Gnome Weapon Familiarity"
+   ]
+  },
+  {
+   "type": "DamageAlteration",
+   "foundryUses": 50,
+   "status": "has lane",
+   "lane": "weaponTraits | strikeDamage",
+   "covered": 9,
+   "bare": 41,
+   "examples": [
+    "Ceremony of Sun's Gift",
+    "Ceremony of Sunlight",
+    "Energy Blessed",
+    "Elemental Wrath",
+    "Dokkaebi Fire",
+    "Kobold Breath"
+   ]
+  },
+  {
+   "type": "AdjustStrike",
+   "foundryUses": 48,
+   "status": "has lane",
+   "lane": "weaponTraits | unarmedTraits",
+   "covered": 12,
+   "bare": 36,
+   "examples": [
+    "My Claws are Daggers",
+    "Seedpod",
+    "Spirit Coffin",
+    "Iruxi Spirit Strike",
+    "Elemental Spark",
+    "Slag May"
+   ]
+  },
+  {
+   "type": "AdjustModifier",
+   "foundryUses": 117,
+   "status": "has lane",
+   "lane": "situational | passiveEffects",
+   "covered": 83,
+   "bare": 34,
+   "examples": [
+    "Unburdened Iron",
+    "Animal Swiftness",
+    "Exultant Blood Magic",
+    "Rising Blood Magic",
+    "Lethargy Poisoner",
+    "Forced Entry"
+   ]
+  },
+  {
+   "type": "Resistance",
+   "foundryUses": 123,
+   "status": "has lane",
+   "lane": "resistances | passiveEffects.resistances",
+   "covered": 96,
+   "bare": 27,
+   "examples": [
+    "Planar Resilience",
+    "Planar Sidestep",
+    "Withstand the Storm",
+    "Archfiend Dedication",
+    "Reactive Resilience",
+    "Claws of the Dragon"
+   ]
+  },
+  {
+   "type": "BaseSpeed",
+   "foundryUses": 88,
+   "status": "has lane",
+   "lane": "speeds | landSpeedBonus | passiveEffects.speeds | passiveEffects.speedBonus",
+   "covered": 68,
+   "bare": 20,
+   "examples": [
+    "Strand Strider",
+    "Arcane Propulsion",
+    "Take Flight",
+    "Take Wing",
+    "Zip! Zoom!",
+    "Winglet Flight"
+   ]
+  },
+  {
+   "type": "CraftingAbility",
+   "foundryUses": 19,
+   "status": "has lane",
+   "lane": "advancedAlchemy",
+   "covered": 8,
+   "bare": 11,
+   "examples": [
+    "Snare Genius",
+    "Advanced Alchemy",
+    "Lethargy Poisoner",
+    "Talisman Dabbler Dedication",
+    "Munitions Machinist",
+    "Gadget Specialist"
+   ]
+  },
+  {
+   "type": "CreatureSize",
+   "foundryUses": 11,
+   "status": "has lane",
+   "lane": "size",
+   "covered": 2,
+   "bare": 9,
+   "examples": [
+    "Enlarged Chassis",
+    "Ceremony of Growth",
+    "Mighty Dragonet",
+    "Jotun's Heart",
+    "Scion Transformation",
+    "Dire Form"
+   ]
+  },
+  {
+   "type": "Sense",
+   "foundryUses": 22,
+   "status": "has lane",
+   "lane": "senses | vision | conditionalSenses | darkvisionIfAncestryLowLight",
+   "covered": 15,
+   "bare": 7,
+   "examples": [
+    "Briny Beverage",
+    "Heart of Earth",
+    "Close Formation",
+    "Senses of the Bear",
+    "Feral Senses",
+    "Nocturnal Senses"
+   ]
+  },
+  {
+   "type": "Strike",
+   "foundryUses": 61,
+   "status": "has lane",
+   "lane": "grantedStrikes | strikeDamage | unarmedTraits",
+   "covered": 56,
+   "bare": 5,
+   "examples": [
+    "Arcane Fists",
+    "Avenger",
+    "Deific Weapon",
+    "Deity (Cleric)",
+    "Powerful Fist"
+   ]
+  },
+  {
+   "type": "Immunity",
+   "foundryUses": 14,
+   "status": "has lane",
+   "lane": "immunities | passiveEffects.immunities",
+   "covered": 10,
+   "bare": 4,
+   "examples": [
+    "Fiend Eternal",
+    "You Can't Kill an Idea",
+    "Water Gate",
+    "Wood Gate"
+   ]
+  },
+  {
+   "type": "SubstituteRoll",
+   "foundryUses": 4,
+   "status": "has lane",
+   "lane": "skillSubstitutions",
+   "covered": 1,
+   "bare": 3,
+   "examples": [
+    "Eldritch Calm",
+    "Chronoskimmer Dedication",
+    "Assured Knowledge"
+   ]
+  },
+  {
+   "type": "CriticalSpecialization",
+   "foundryUses": 75,
+   "status": "has lane",
+   "lane": "critSpec | critSpecWeapons | critSpecLevel",
+   "covered": 74,
+   "bare": 1,
+   "examples": [
+    "Bestial Manifestation"
+   ]
+  },
+  {
+   "type": "DexterityModifierCap",
+   "foundryUses": 6,
+   "status": "has lane",
+   "lane": "dexCap",
+   "covered": 5,
+   "bare": 1,
+   "examples": [
+    "Mountain Quake"
+   ]
+  },
+  {
+   "type": "SpecialResource",
+   "foundryUses": 6,
+   "status": "has lane",
+   "lane": "limitedUses | counters | focusPool",
+   "covered": 5,
+   "bare": 1,
+   "examples": [
+    "Munitions Machinist"
+   ]
+  },
+  {
+   "type": "Weakness",
+   "foundryUses": 14,
+   "status": "has lane",
+   "lane": "passiveEffects.weaknesses",
+   "covered": 14,
+   "bare": 0,
+   "examples": []
+  },
+  {
+   "type": "ItemAlteration",
+   "foundryUses": 800,
+   "status": "plumbing — needs triage",
+   "covered": 176,
+   "bare": 624,
+   "note": "Foundry-internal; a minority maps to a real lane. Do not quote as a gap."
+  },
+  {
+   "type": "RollOption",
+   "foundryUses": 626,
+   "status": "plumbing — needs triage",
+   "covered": 227,
+   "bare": 399,
+   "note": "Foundry-internal; a minority maps to a real lane. Do not quote as a gap."
+  },
+  {
+   "type": "ActiveEffectLike",
+   "foundryUses": 694,
+   "status": "plumbing — needs triage",
+   "covered": 418,
+   "bare": 276,
+   "note": "Foundry-internal; a minority maps to a real lane. Do not quote as a gap."
+  },
+  {
+   "type": "TokenLight",
+   "foundryUses": 6,
+   "status": "not-applicable",
+   "note": "VTT map/token rendering — no character-sheet meaning"
+  },
+  {
+   "type": "TokenEffectIcon",
+   "foundryUses": 2,
+   "status": "not-applicable",
+   "note": "VTT map/token rendering — no character-sheet meaning"
+  }
+ ]
+}

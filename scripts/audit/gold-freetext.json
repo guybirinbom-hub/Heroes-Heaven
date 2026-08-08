@@ -1,0 +1,1100 @@
+[
+ {
+  "feat": "branched-tree-of-pain",
+  "clause": "**Usage** imbued into a weapon ikon that deals piercing or slashing damage",
+  "need": "The sheet must let this record be BOUND to one specific weapon the character owns (a weapon ikon dealing piercing or slashing damage), the way a rune is etched. Everything else this record does applies only to strikes made with that one bound weapon, so it cannot be stored as a global passive effect - it needs a feat-to-item attachment the strike breakdown can read.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "branched-tree-of-pain",
+  "clause": "When you Strike with the ikon, you critically succeed if you roll a 19 on the die as long as that result would",
+  "need": "The critical-success threshold for strikes with the bound weapon must move from 20 to 19 on the die, and only when the roll would already have been a success. This is not a bonus of any type (not circumstance, status, item, or untyped) and it changes no printed number - it changes which die faces count as a crit, for one weapon. Nothing in the vocabulary expresses a per-weapon crit-range change.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "branched-tree-of-pain",
+  "clause": "**Usage** imbued into a weapon ikon that deals piercing or slashing damage",
+  "need": "The player must designate WHICH owned weapon carries this ikon, filtered to weapons that deal piercing or slashing damage. Every later clause says 'the ikon', so that binding has to persist, be re-pointable, and be visible on the weapon itself. This is not a pick from a printed list of options — it is a pointer into the character's own inventory.",
+  "lens": "resources"
+ },
+ {
+  "feat": "branched-tree-of-pain",
+  "clause": "you critically succeed if you roll a 19 on the die as long as that result would be a success. This has no effe",
+  "need": "A widened critical threshold on Strikes with one specific weapon: a natural 19 that would already be a success becomes a critical success. This is not a bonus, not damage, not a trait — it edits the degree-of-success rule for one weapon's attack rolls, and only when the roll already succeeded. Nothing in the vocabulary expresses a result-step shift, and filing it under weaponRider or situational would hide that.",
+  "lens": "resources"
+ },
+ {
+  "feat": "branched-tree-of-pain",
+  "clause": "**Usage** imbued into a weapon ikon that deals piercing or slashing damage",
+  "need": "The record must be bound to one specific weapon the character owns, filtered to weapons that deal piercing or slashing damage, so that every later clause's phrase \"the ikon\" resolves to that item and its Strike. This is not a list-of-options pick — it is a pointer from the feat to an inventory item, and the filter is on the weapon's damage type.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "branched-tree-of-pain",
+  "clause": "you critically succeed if you roll a 19 on the die as long as that result would be a success. This has no effe",
+  "need": "A critical-success threshold change read off the raw d20 face for one specific weapon's Strikes: a natural 19 becomes a critical success, but only when the roll already succeeded. Nothing here is a bonus — the sheet needs a per-strike \"crits on 19+\" rule plus the qualifier that it never upgrades a failure into a crit, which also means the +10-over-DC path and the natural-19 path must be evaluated as two independent routes to a crit.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "If the next action you take is an Athletics check to Disarm, Shove, or Trip, that action has a range of 15 fee",
+  "need": "Three normally-adjacent skill actions (Disarm, Shove, Trip) must temporarily gain a 15-foot RANGE. No lane expresses a range on a skill-based maneuver; weaponRider covers a weapon's own range, not an Athletics action's reach.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "You don't receive any item bonuses to that check or any circumstance bonuses related to your physical body",
+  "need": "For that one check the sheet must SUPPRESS entire classes of bonus: all item bonuses, plus circumstance bonuses whose source is the character's own body. This is subtractive and type-aware - it needs bonuses tagged by type AND by source category so a category can be switched off, which no lane in the vocabulary provides (situational only ADDS a conditional bonus).",
+  "lens": "numbers"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "but if you roll a critical failure on that Athletics check, you get a failure instead",
+  "need": "A degree-of-success adjustment (critical failure upgraded to failure) scoped to one specific check. Not a bonus and not a number - the sheet must be able to record 'on this roll, shift the outcome tier by one step'.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "If the next action you take is an Athletics check to Disarm, Shove, or Trip, that action has a range of 15 fee",
+  "need": "A pending one-shot rider that attaches to the character's very NEXT action and only fires if that action is one of three named Athletics maneuvers. Two things are needed: a short-lived 'applies to your next action if it is X' state, and the ability to give a normally-adjacent maneuver a 15-foot range. No lane covers either — situational is for bonuses, and range on a skill action is not a weapon property.",
+  "lens": "resources"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "You don't receive any item bonuses to that check or any circumstance bonuses related to your physical body",
+  "need": "Bonus SUPPRESSION, not a bonus: item bonuses to that check are switched off wholesale, and circumstance bonuses are switched off selectively ('related to your physical body'). That requires bonuses to be tagged by source so a subset can be excluded for one roll. The vocabulary only adds bonuses; it has no way to withhold them.",
+  "lens": "resources"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "if you roll a critical failure on that Athletics check, you get a failure instead",
+  "need": "A degree-of-success adjustment (critical failure upgraded to failure) scoped to one check. It is not a bonus of any kind, so calling it situational would misfile it; there is no lane for shifting a result one step.",
+  "lens": "resources"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "If the next action you take is an Athletics check to Disarm, Shove, or Trip, that action has a range of 15 fee",
+  "need": "Needs a buff whose scope is \"the next action you take, if it is one of these three named skill actions\" — a one-shot pending modifier that expires on the following action, not a persistent state. Its content is also unusual: it converts three normally-melee Athletics actions into ranged ones at 15 feet, so the sheet needs a range value attached to a skill action rather than to a weapon.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "You don't receive any item bonuses to that check or any circumstance bonuses related to your physical body",
+  "need": "Suppression of bonus categories on a single check: all item bonuses are excluded, and a semantic SUBSET of circumstance bonuses — only those \"related to your physical body\" — is excluded while other circumstance bonuses still apply. Excluding a whole bonus type from one roll's breakdown has no lane, and tagging individual circumstance bonuses as bodily-vs-not is a classification the sheet has no vocabulary for at all.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "hydraulic-maneuvers",
+  "clause": "if you roll a critical failure on that Athletics check, you get a failure instead",
+  "need": "A degree-of-success remap (critical failure upgraded to failure) scoped to one specific check produced by this action. Not a bonus of any type — the roll's result step is rewritten after the fact.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "You gain the undead and zombie traits",
+  "need": "The character's own creature traits must change to include undead and zombie. Creature traits are not a bonus to anything but they gate what effects target the character (undead-only effects, vitality/void interactions, healing). Nothing in the vocabulary stores traits ON THE CHARACTER - only weapon and unarmed traits exist.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "and the basic undead benefits",
+  "need": "The rest of the same package is not expressible: healing-source INVERSION (void heals you, vitality damages you) and no need for air, food, drink, or sleep. An inversion of which damage type heals versus harms is neither a resistance, an immunity, nor a weakness - it re-routes healing itself.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "Unlike a typical zombie, you're not mindless.",
+  "need": "A negation of a trait/condition the package would otherwise imply - the sheet must be able to say this character does NOT have the mindless trait despite being a zombie. Only worth carrying as printed text if character traits are not modelled at all.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "Because it's a natural result of your body's functions, you can't remove the slowed condition from deteriorati",
+  "need": "This particular instance of Slowed 1 must be immune to normal condition removal - the sheet needs a condition instance flagged as unremovable except by its own named remedy, distinguishing it from an identical Slowed 1 from another source.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "You can use your jaws Strike only against a creature that's grabbed or restrained by you.",
+  "need": "The granted strike carries a target-legality restriction (only versus a creature you have grabbed or restrained). The sheet must be able to attach an availability condition to a specific strike, which is not a bonus, not a note about the whole feat, and not a mode.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "You gain the undead and zombie traits",
+  "need": "The character acquires creature traits (undead, zombie) that other records key off — what can target them, effects that only affect undead, vitality/void interactions, healing sources. This needs a stored list of creature traits on the character; it produces no number of its own and no lane holds it.",
+  "lens": "resources"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "Because it's a natural result of your body's functions, you can't remove the slowed condition from deteriorati",
+  "need": "A carve-out attached to one instance of a condition: this particular Slowed is immune to every other removal effect. It requires distinguishing a condition by its source from identically-named conditions, which no lane expresses.",
+  "lens": "resources"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "You gain the undead and zombie traits",
+  "need": "The character must carry creature traits (undead, zombie) as first-class data, because a great many other records key off them: effects that target or exclude undead, healing type, spells with creature-trait restrictions. There is no field for a character's own creature traits — this is a property of the character as a creature, not a modifier.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "and the basic undead benefits",
+  "need": "A named, reusable rules bundle must be applicable as a single grant: void healing (void damage heals you, vitality damage harms you, and normal healing does not work), plus immunity to death effects, disease, paralyzed, poison, sleep, and no need to breathe, eat, drink, or sleep. The healing inversion is the part with no home anywhere — it flips the sign of two damage types against this character rather than adding a resistance or immunity.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "Each day after your rest period, your body is due to natural decay. ... You can spend 10 minutes checking and ",
+  "need": "A recurring daily upkeep obligation that surfaces at rest/daily preparations, satisfied by a 10-minute repair activity. The sheet needs an upkeep item tied to the rest cycle that the player must clear, distinct from a choice made during preparations.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "zombie-dedication",
+  "clause": "You can use your jaws Strike only against a creature that's grabbed or restrained by you.",
+  "need": "A legality gate on a granted strike: the jaws Strike is only usable against a target that is grabbed or restrained by this character. Not a modifier — the strike's availability is conditional on the target's condition, so the sheet must at minimum print the restriction on the strike itself rather than offering it unconditionally.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "ascended-celestial-dedication",
+  "clause": "once per hour, you can roll twice and use the higher result on a Will saving throw",
+  "need": "The effect itself is a fortune-style reroll (roll twice, keep the higher) on Will saves. It changes no number on the sheet - no bonus type, no magnitude - so it cannot live in saves as a modifier; the vocabulary has no reroll/fortune lane at all.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "ascended-celestial-dedication",
+  "clause": "If you ever become confused, rather than attack wildly, you become stubbornly immobile, wasting all your actio",
+  "need": "A per-character REWRITE of a standard condition's rules text: for this character, confused behaves differently. The sheet needs a way to override the printed behaviour of a condition it already knows.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "ascended-celestial-dedication",
+  "clause": "you emanate a nimbus of light. You shed bright light in a 30-foot radius (and dim light to the next 30 feet)",
+  "need": "The character permanently emits light: bright to 30 feet, dim to 60. This is an emanation the character projects, not a sense the character has, so the senses/vision lane is the wrong shape; nothing expresses light emission.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "ascended-celestial-dedication",
+  "clause": "you can roll twice and use the higher result on a Will saving throw",
+  "need": "What the use buys is a fortune effect — roll twice, keep the higher — on a Will save. That is neither a bonus nor a proficiency change, and fortune/misfortune has no lane at all.",
+  "lens": "resources"
+ },
+ {
+  "feat": "ascended-celestial-dedication",
+  "clause": "If you ever become confused, rather than attack wildly, you become stubbornly immobile, wasting all your actio",
+  "need": "Rewrites what an existing condition does to this specific character: confused stops making them attack randomly and instead wastes their actions. This needs a per-character override of a condition's printed behaviour — not immunity, not a bonus.",
+  "lens": "resources"
+ },
+ {
+  "feat": "ascended-celestial-dedication",
+  "clause": "once per hour, you can roll twice and use the higher result on a Will saving throw",
+  "need": "A fortune effect on a save: roll twice and keep the higher result. The sheet needs a roll-twice-take-higher flag attachable to a Will save, which is not a bonus of any type and interacts with the fortune/misfortune stacking rule (only one such effect per roll).",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "ascended-celestial-dedication",
+  "clause": "If you ever become confused, rather than attack wildly, you become stubbornly immobile, wasting all your actio",
+  "need": "A per-character rewrite of an existing condition's rules text: confused stops meaning \"attack randomly\" and starts meaning \"immobile, all actions wasted\". Nothing on the sheet changes numerically — what changes is the behaviour of a condition the character might later gain, so the sheet needs the ability to override a condition's definition for one character.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "ascended-celestial-dedication",
+  "clause": "As long as your nimbus is active, all allies in the area of your nimbus gain a +1 status bonus to saves agains",
+  "need": "A bonus conferred on OTHER creatures — every ally within the 30-foot nimbus gets +1 status to saves against effects with the fear trait, while the character themself gets nothing from this clause. The sheet needs to express an aura whose beneficiaries are other party members' sheets, gated on this character's toggle being on and on the target's distance.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "adroit-manipulation",
+  "clause": "If you roll a success on a Thievery check to Pick a Lock, you get a critical success instead.",
+  "need": "A degree-of-success upgrade (success becomes critical success) scoped to one specific use of one skill - Thievery to Pick a Lock. Not a bonus of any type and not a flat skill modifier; the sheet needs outcome-tier shifting attached to a named skill ACTION rather than to the skill.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "adroit-manipulation",
+  "clause": "If you roll a success on a Thievery check to Pick a Lock, you get a critical success instead.",
+  "need": "A degree-of-success upgrade (success to critical success) scoped not to the skill but to ONE named action of that skill, Pick a Lock. Requires the result-step shift to be attachable to a specific skill action; no lane expresses either the shift or the action-level scope.",
+  "lens": "resources"
+ },
+ {
+  "feat": "adroit-manipulation",
+  "clause": "If you roll a success on a Thievery check to Pick a Lock, you get a critical success instead.",
+  "need": "A degree-of-success upgrade (success becomes critical success) scoped to one named skill ACTION rather than the whole skill — it applies to Pick a Lock only, not to other Thievery checks. The sheet has no way to attach a result-step remap to a specific skill action.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "adhyabhau",
+  "clause": "when you roll a success on a saving throw against such an effect, you get a critical success instead",
+  "need": "A degree-of-success upgrade (success becomes critical success) on saves against emotion effects. No magnitude, no bonus type - the sheet needs outcome-tier shifting keyed to an effect trait.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "adhyabhau",
+  "clause": "when you roll a success on a saving throw against such an effect, you get a critical success instead",
+  "need": "A degree-of-success upgrade (success to critical success) against emotion effects. Note the scope is deliberately wider than the clause above: 'a saving throw', not just a Will save, so the two clauses cannot share one filter. There is no lane for shifting a result step.",
+  "lens": "resources"
+ },
+ {
+  "feat": "adhyabhau",
+  "clause": "and when you roll a success on a saving throw against such an effect, you get a critical success instead",
+  "need": "A degree-of-success upgrade (success to critical success) on any save — not only Will — against effects with the emotion trait. Note the scope widens here from the first clause: the bonus is Will-only, the upgrade is all saves. Needs a result-step remap keyed to the incoming effect's trait.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "eternal-blessing",
+  "clause": "You're continuously surrounded by a Bless spell, with a spell rank equal to half your level (rounded up).",
+  "need": "A named spell must be permanently ACTIVE on the character - not castable, not once per day, just always running. innateSpell is the wrong shape (it grants a casting). Its rank must be computed as ceil(level/2) and recomputed on level-up, so the active effect needs a level-scaling rank rather than a fixed one.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "eternal-blessing",
+  "clause": "You're continuously surrounded by a Bless spell",
+  "need": "The consequence of being under bless must actually reach the numbers: a +1 STATUS bonus to attack rolls for the character and for allies inside the emanation. The vocabulary has no lane for a bonus to attack rolls at all (acBonus, saveBonus, perception, skills exist - attack does not), and the same value must be publishable to allies in the area.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "eternal-blessing",
+  "clause": "The radius is 15 feet, and you can't increase it.",
+  "need": "The emanation must be pinned at 15 feet and explicitly barred from the growth the spell normally allows each round - an aura with a fixed radius plus a suppression of the spell's own expansion rule.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "eternal-blessing",
+  "clause": "You're continuously surrounded by a Bless spell, with a spell rank equal to half your level (rounded up).",
+  "need": "A named spell is permanently in effect on the character with no casting, no slot, and no per-day use, at a rank COMPUTED from level (half, rounded up) that must recompute on every level-up. innateSpell is the nearest lane and it is wrong — that lane is about casting a spell a number of times per day. There is no way to say 'this spell is simply always on you, at a derived rank'.",
+  "lens": "resources"
+ },
+ {
+  "feat": "eternal-blessing",
+  "clause": "The radius is 15 feet, and you can't increase it.",
+  "need": "A per-instance override of the spell's own printed area (fixed 15-foot emanation) plus a prohibition on the spell's normal ability to grow its radius. Both an overridden parameter and a cap on an otherwise-legal upgrade.",
+  "lens": "resources"
+ },
+ {
+  "feat": "eternal-blessing",
+  "clause": "You're continuously surrounded by a Bless spell, with a spell rank equal to half your level (rounded up).",
+  "need": "An always-active instance of a named spell hosted on the character, with its rank derived from a formula on character level (half, rounded up) so it re-computes on every level-up. This is not a castable innate spell with uses — it is a persistent spell effect with no casting, no slot, and no duration, whose own content (Bless) is an emanation granting allies a status bonus to attack rolls, so the effect is largely ally-facing.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "eternal-blessing",
+  "clause": "The radius is 15 feet, and you can't increase it.",
+  "need": "An override of the hosted spell's own area rules for this instance only: the emanation is fixed at 15 feet, and Bless's normal Sustain-to-expand mechanic must be suppressed. The sheet needs per-instance overrides of a spell's printed area and the ability to disable one of that spell's sub-mechanics.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "twirling-throw",
+  "clause": "ignoring the penalty for making ranged attacks within the second and third range increment",
+  "need": "For this one attack the automatically-derived range-increment penalty (-2 in the second increment, -4 in the third) must be SUPPRESSED. It is a negation of a computed penalty, not a bonus - representing it as a conditional +2/+4 would be wrong because the offset differs by increment and must not apply beyond the third.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "twirling-throw",
+  "clause": "ignoring the penalty for making ranged attacks within the second and third range increment",
+  "need": "Inside the activity, the strike ignores the standard range-increment penalty out to the third increment. This is suppression of an ordinary attack penalty for one attack, so the granted action needs to be expressible as a variant of the normal strike with altered math, not merely as a named entry.",
+  "lens": "resources"
+ },
+ {
+  "feat": "twirling-throw",
+  "clause": "The weapon returns to your hand after the attack unless you critically failed on the attack roll.",
+  "need": "Whether the weapon is still held afterwards depends on the roll: a thrown weapon normally leaves your hands, here it comes back except on a critical failure. This requires held/wielded inventory state to change as a consequence of an action's OUTCOME — no lane touches hands or the location of a thrown item.",
+  "lens": "resources"
+ },
+ {
+  "feat": "twirling-throw",
+  "clause": "ignoring the penalty for making ranged attacks within the second and third range increment",
+  "need": "Suppression of an automatic rules-engine penalty for one specific Strike: the -2/-4 range-increment penalty is waived at increments two and three (but presumably not beyond). The sheet needs to be able to switch off a computed penalty for a single action, and to model range increments as bands with per-band penalties that a feat can override.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "twirling-throw",
+  "clause": "The weapon returns to your hand after the attack unless you critically failed on the attack roll.",
+  "need": "Post-attack inventory/hand-state automation: a thrown weapon normally leaves the character's hands, and this clause says it does not — except on a critical failure, when it does. The sheet needs held/wielded state that changes as a consequence of a roll's degree of success.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "natural-ambition",
+  "clause": "You must meet the prerequisites, but you can select the feat later in the character creation process in order ",
+  "need": "The prerequisite check for this pick must be evaluated against the FINISHED build, not against the character state at the moment the pick is offered - the selection can be deferred and re-validated later. That is a timing rule on the picker, and nothing expresses 'evaluate this record's prerequisites last'.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "natural-ambition",
+  "clause": "You must meet the prerequisites, but you can select the feat later in the character creation process in order ",
+  "need": "The granted pick may be left undecided, and its prerequisites are judged against the FINISHED character rather than the state at the moment this feat was taken. That is a deferred, order-independent validation of a granted choice — a build-time rule about when to evaluate, which no lane describes.",
+  "lens": "resources"
+ },
+ {
+  "feat": "natural-ambition",
+  "clause": "You must meet the prerequisites, but you can select the feat later in the character creation process in order ",
+  "need": "Deferred prerequisite evaluation: the pick's prerequisites are checked against the FINISHED build, not against the build state at the moment the feat is offered. The sheet must be able to leave this pick unresolved without treating it as an error, and validate it last — otherwise legal picks that depend on later choices are wrongly rejected.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "and to flat checks to recover from persistent poison damage",
+  "need": "The same +2 status bonus must also apply to a FLAT CHECK - a roll with no proficiency and no ability modifier against a fixed DC. The sheet needs flat checks as a modifiable roll target, specifically the recovery check for persistent poison damage.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "if you roll a success on a save against a disease or poison, you get a critical success instead. (Your allies ",
+  "need": "A degree-of-success upgrade (success becomes critical success) on the restricted saves, explicitly self-only - so the outcome-tier shift must NOT travel with the ally bonus above. Outcome-tier shifting with a scope of its own.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "If you have the Sacred Body class feature, when you roll a critical failure on a save against a disease or poi",
+  "need": "A second degree-of-success upgrade (critical failure becomes failure) that switches on only if the character possesses another named class feature. Requires both outcome-tier shifting and a condition that reads whether another specific record is owned.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "and to flat checks to recover from persistent poison damage",
+  "need": "The same +2 also applies to a FLAT CHECK — the recovery roll against persistent poison damage. Flat checks take no modifiers by default, so this needs a bonus target that save, skill, attack, and perception slots do not cover, and it must be tied to the damage type of the persistent damage.",
+  "lens": "resources"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "Allies in your champion's aura get this benefit, but their bonus is +1.",
+  "need": "The benefit extends to ALLIES at a DIFFERENT value (+1, not +2), inside a radius that this record does not define and must look up from a separate class feature (champion's aura, which itself changes size with level). Needs ally-scoped output, a distinct ally value, and a borrowed radius.",
+  "lens": "resources"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "if you roll a success on a save against a disease or poison, you get a critical success instead. (Your allies ",
+  "need": "A degree-of-success upgrade for the bearer only, explicitly NOT shared with the allies who do share the numeric bonus. So one feat's ally-shared part and self-only part must be separable, and there is no lane for the result-step shift itself.",
+  "lens": "resources"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "If you have the Sacred Body class feature, when you roll a critical failure on a save against a disease or poi",
+  "need": "A second degree-of-success adjustment (critical failure to failure) that switches on only when another named class feature is present — a clause conditional on the rest of the build, which must re-evaluate if that feature is gained later.",
+  "lens": "resources"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "and to flat checks to recover from persistent poison damage",
+  "need": "A modifier that applies to a FLAT CHECK — the DC 15 flat check to end persistent poison damage. A flat check is not a save, skill check, attack, or Perception roll and takes no ability modifier or proficiency, so the sheet needs a roll category it almost certainly has no field for, plus the notion that a bonus can attach to it.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "Allies in your champion's aura get this benefit, but their bonus is +1.",
+  "need": "An ally-facing version of the same benefit at a DIFFERENT value (+1 instead of +2), scoped to a named aura whose radius comes from another class feature and can be enlarged by other feats. The sheet must express a bonus conferred on other creatures, sized by a radius it does not own, at a value that differs from the character's own.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "if you roll a success on a save against a disease or poison, you get a critical success instead. (Your allies ",
+  "need": "A degree-of-success upgrade (success to critical success) on trait-filtered saves, explicitly self-only — so the sheet must be able to mark part of a feat's effect as excluded from the aura sharing while the rest of it is shared.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "divine-health",
+  "clause": "If you have the Sacred Body class feature, when you roll a critical failure on a save against a disease or poi",
+  "need": "A second, additional degree-of-success remap (critical failure to failure) that only exists if the character has a specific other class feature. Needs a result-step remap whose presence is conditional on another record being owned.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "clever-improviser",
+  "clause": "you can attempt skill actions that normally require you to be trained, even if you are untrained",
+  "need": "A blanket permission change: every skill action whose requirement line says 'trained' becomes available at untrained. It alters ACTION AVAILABILITY, not a proficiency rank and not a bonus - nothing in the vocabulary lifts a rank gate without granting the rank, and routing it through skillTrained would wrongly change the modifiers.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "clever-improviser",
+  "clause": "you can attempt skill actions that normally require you to be trained, even if you are untrained",
+  "need": "A permission change rather than a number: skill actions gated behind 'trained or better' become legal at untrained for this character. It requires the trained-requirement gate on skill actions to be switchable off, which no lane expresses — nothing here trains a skill or grants a bonus.",
+  "lens": "resources"
+ },
+ {
+  "feat": "clever-improviser",
+  "clause": "you can attempt skill actions that normally require you to be trained, even if you are untrained",
+  "need": "Removes a proficiency GATE rather than adding a bonus: every skill action whose printed requirement is \"trained\" becomes attemptable at untrained rank, across all skills. The sheet needs a character-wide permission flag that unlocks rank-gated actions, and must therefore also know which of its skill actions carry a trained requirement in the first place.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "cornered-fury",
+  "clause": "that foe is off-guard to you for 1 round",
+  "need": "The computable half needs a scope the sheet does not have: off-guard TO YOU means a +2 circumstance bonus on this character's attacks against ONE specific creature, for one round, and only while that creature is larger than the character. Expressing it requires per-target modifiers and a round timer, i.e. knowing about individual enemies from the character sheet.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "experienced-professional",
+  "clause": "When you use Lore to Earn Income, if you roll a critical failure, you instead get a failure.",
+  "need": "A degree-of-success upgrade (critical failure becomes failure) restricted to Earn Income checks made with a Lore skill. Outcome-tier shifting keyed to a specific activity plus a skill CATEGORY (any Lore, not one named skill).",
+  "lens": "numbers"
+ },
+ {
+  "feat": "experienced-professional",
+  "clause": "If you're an expert in Lore, you gain twice as much income from a failed check to Earn Income, unless it was o",
+  "need": "A payout MULTIPLIER (x2 income) that switches on only at expert rank in Lore, applies only on a failure result, and is excluded when that failure came from an upgraded critical failure. Needs three things the vocabulary lacks: a proficiency-rank-gated conditional, a multiplier on a downtime reward value, and awareness of whether the current result was produced by the clause above.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "experienced-professional",
+  "clause": "When you use Lore to Earn Income, if you roll a critical failure, you instead get a failure.",
+  "need": "A degree-of-success adjustment (critical failure to failure) scoped to one downtime activity performed with one named skill. Not a bonus, so situational is the wrong home; there is no lane for a result-step shift.",
+  "lens": "resources"
+ },
+ {
+  "feat": "experienced-professional",
+  "clause": "If you're an expert in Lore, you gain twice as much income from a failed check to Earn Income, unless it was o",
+  "need": "A payout multiplier on the Earn Income result, requiring three things nothing covers: a proficiency-RANK gate (expert or better in the Lore used), a doubling of a downtime income figure from the level-based table, and memory of whether the current 'failure' was originally a critical failure — i.e. this clause must know the first clause fired and refuse to stack on it.",
+  "lens": "resources"
+ },
+ {
+  "feat": "experienced-professional",
+  "clause": "When you use Lore to Earn Income, if you roll a critical failure, you instead get a failure.",
+  "need": "A degree-of-success remap (critical failure to failure) scoped to one downtime activity and only when the skill used is a Lore. The sheet needs a result-step override attached to an activity plus skill-category filter, not to a skill.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "experienced-professional",
+  "clause": "If you're an expert in Lore, you gain twice as much income from a failed check to Earn Income, unless it was o",
+  "need": "A multiplier on the OUTPUT of a downtime activity: the currency amount from the Earn Income table on a failure is doubled. Three things the sheet has no field for — a modifier that scales a table's monetary result rather than a roll, a gate on the character's proficiency rank in Lore being expert or better, and a memory of whether the failure was ORIGINALLY a critical failure (so the previous clause's upgrade must not launder a crit-fail into a doubled payout).",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "you or your companion can attempt to Gather Information about the target by spending 1 minute communing with t",
+  "need": "One specific check must be rolled at MYTHIC proficiency - a rank above legendary with its own proficiency bonus - regardless of the character's actual rank in the relevant skill. The sheet needs (a) a proficiency tier beyond legendary in its ladder and (b) a rank override applied to a single named check rather than to a skill. rankUpgrade covers neither.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "You attempt this check at mythic proficiency.",
+  "need": "The same check may be attempted by the COMPANION instead of the character, at that mythic rank - so the rank override has to be applicable to a companion's sheet, not only the character's.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "you can spend a Mythic Point",
+  "need": "The activity costs from a MYTHIC POINT pool - a second resource pool distinct from focus points, with its own size and its own refresh, plus an action that declares a cost against it. focusPool is the wrong pool; nothing expresses mythic points.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "you and your companion can become guardians of the area and consider it to be your guarded domain",
+  "need": "The player must record a free-form PLACE — a settlement, or a natural area with a 5-mile radius — as a named persistent designation shared with the companion. It is not a pick from a printed list of options and not a value derived from anything, so the choice lane does not fit; the sheet needs somewhere to hold a player-authored named location that later clauses refer back to.",
+  "lens": "resources"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "Your guarded domain remains under your protection until you spend more than 1 month outside of your domain, af",
+  "need": "The designation can LAPSE based on elapsed in-world time spent away from it, and is restored by a week of downtime. That means an attunement state with a calendar-driven expiry and a downtime cost to renew — a state that is neither on-by-default nor player-toggled but time-driven.",
+  "lens": "resources"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "You can only have one guarded domain at a time, and selecting a new guarded domain immediately ends your prote",
+  "need": "Single-slot exclusivity: recording a new domain silently invalidates the old one, so exactly one value is stored and switching must clear the previous designation and everything keyed to it. This is stance-like exclusivity applied to a downtime designation rather than to a combat state.",
+  "lens": "resources"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "You attempt this check at mythic proficiency.",
+  "need": "The check is rolled at MYTHIC proficiency, a rank above legendary, applied to this one check only and not to the underlying skill. The proficiency ladder must be able to hold a rank beyond legendary and apply it per-check, which no proficiency lane contemplates.",
+  "lens": "resources"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "you can spend a Mythic Point",
+  "need": "A SECOND resource is spent on the same use: a Mythic Point from a mythic pool that the sheet must display, decrement, and restore. It is not a focus point and not the daily use above — both are paid for one activation, so two independent costs must be tracked for a single action.",
+  "lens": "resources"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "If you spend 1 week of downtime within a settlement or natural area with a 5-mile radius, you and your compani",
+  "need": "A persistent, player-named attunement to a place, with three properties a simple on/off state cannot carry: it holds a name and a 5-mile radius the player writes in, it is exclusive (claiming a new one revokes the old), and it LAPSES on a real-time condition (more than a month spent outside) requiring a week of downtime to restore. The sheet needs a named, single-slot, expiring attunement record that later clauses reference.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "You attempt this check at mythic proficiency.",
+  "need": "A proficiency rank ABOVE legendary, applied to one specific check rather than to the skill. The sheet needs a mythic rank tier in its proficiency scale at all, and then the ability to substitute that rank into a single check's calculation while the underlying skill keeps its normal rank.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "guarded-domain",
+  "clause": "you can spend a Mythic Point",
+  "need": "The action's cost includes spending from a Mythic Point pool — a resource separate from focus points, spell slots, and per-day feat uses. The sheet needs that pool to exist, to be spendable by an action's cost line, and to block the action when empty.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "thermal-nimbus",
+  "clause": "You and allies in your kinetic aura gain resistance equal to your level to damage of that type.",
+  "need": "The same resistance must be conferred on ALLIES standing in the character's aura. This is a defence that emanates from this sheet onto other creatures' sheets — the value does not belong to the character alone, and nothing in the vocabulary expresses 'grant this number to everyone inside my aura'.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "thermal-nimbus",
+  "clause": "Elemental resistance from a gate junction is cumulative with resistance from Thermal Nimbus.",
+  "need": "A named exception to PF2e's take-the-highest rule for resistances: two resistances to the same damage type, from two identified sources, must ADD instead of one superseding the other. The sheet needs per-source stacking permission on resistances, which a flat resistance list cannot express.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "thermal-nimbus",
+  "clause": "Elemental resistance from a gate junction is cumulative with resistance from Thermal Nimbus.",
+  "need": "An explicit override of the normal rule that two resistances to the same damage type do not stack (highest wins). These two specific sources must be ADDED together and the sum shown with both sources named. Nothing in the vocabulary expresses 'these two resistance sources stack with each other'.",
+  "lens": "resources"
+ },
+ {
+  "feat": "thermal-nimbus",
+  "clause": "You and allies in your kinetic aura gain resistance equal to your level to damage of that type.",
+  "need": "the identical resistance must be projected onto OTHER CHARACTERS standing inside an emanation around me. This is not a modifier on my own sheet at all: it needs a radius-shaped grant that hands a defence to allies (and their sheets need somewhere to receive it). No lane covers 'my feat gives your sheet resistance'.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "thermal-nimbus",
+  "clause": "Any creature that starts its turn in your kinetic aura or moves into your aura during its turn takes damage.",
+  "need": "my own aura becomes a damage source with no attack roll and no save: a radius, a damage amount, a type, and two positional triggers (starts turn inside / enters during its turn). Even setting the enemy side aside, the character sheet has to own and display that aura statistic as a thing the character deals.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "thermal-nimbus",
+  "clause": "Elemental resistance from a gate junction is cumulative with resistance from Thermal Nimbus.",
+  "need": "an explicit exception to PF2e's same-type-resistance rule: two resistances to the same damage type, from two named different sources, must ADD instead of the highest winning. Needs a per-source stacking exception, which is a rules override rather than a value.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "elemental-evolution",
+  "clause": "Whenever you Rage, you can choose that type instead of the damage type you would normally gain.",
+  "need": "the pick is OPTIONAL and PER-ACTIVATION: each time the Rage state is turned on, the player decides which of two damage types applies for that instance. That is neither a build-time choice nor a daily-preparation choice — it is a choice re-made every time a mode is entered, and the answer must persist only as long as that activation.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "shame-the-sin",
+  "clause": "This increases to 2d6 mental damage at 13th level and to 3d6 mental damage at 17th level.",
+  "need": "The rider's dice count must scale with character level at named thresholds (1d6, then 2d6 at 13th, then 3d6 at 17th). The sheet needs a level-keyed damage expression on a feat, not a single stored damage value.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "shame-the-sin",
+  "clause": "If the demon has no special vulnerability, it instead takes an additional damage. This increases to 2d6 mental",
+  "need": "A level-banded damage value on the granted action (1d6 mental, becoming 2d6 at 13th and 3d6 at 17th) that must be recomputed and re-displayed as the character levels. A static printed note is simply wrong at 13th and 17th, and no lane covers 'a number inside an action's text that scales by level'. Note the printed text is also defective — the base die is missing ('takes an additional damage'), so the correct base value cannot be read off this text alone.",
+  "lens": "resources"
+ },
+ {
+  "feat": "shame-the-sin",
+  "clause": "If the demon has no special vulnerability, it instead takes an additional damage. This increases to 2d6 mental",
+  "need": "extra dice of a fixed damage type (mental) added to a Strike, gated on three things at once: the Strike was a CRITICAL HIT, the target has a specific creature trait (demon), and the target lacks a named property (a special vulnerability). The dice step by character level (1d6 → 2d6 at 13th → 3d6 at 17th). weaponRider expresses none of the conditions and situational expresses a bonus to a roll, not conditional damage dice keyed to a degree of success and a target trait.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "shame-the-sin",
+  "clause": "In addition to doing the normal damage for your critical hit, the demon also suffers the effects of its specia",
+  "need": "borderline, recorded because it is the feat's primary effect: the character's Strike must be able to invoke a property that lives on the TARGET's stat block. Nothing about this can sit on the character sheet beyond printing the sentence, so at minimum it must survive as readable text attached to the strike.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "lore-seeker",
+  "clause": "If you could already cast spells, these spells are of the same tradition. Otherwise, they are arcane spells",
+  "need": "The tradition of the granted innate spells is not a literal on the feat — it must be resolved from the character: inherit the tradition they already cast in, and fall back to arcane only if they have no spellcasting. A stored tradition string cannot express this.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "lore-seeker",
+  "clause": "you use Intelligence as your spellcasting ability",
+  "need": "For these innate spells the key attribute is forced to Intelligence, but only in the no-existing-spellcasting branch (otherwise the existing tradition's attribute applies). The sheet must be able to attach a per-grant spellcasting attribute that differs from any class spellcasting attribute.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "lore-seeker",
+  "clause": "If you could already cast spells, these spells are of the same tradition. Otherwise, they are arcane spells",
+  "need": "The tradition of the granted spells is not a fixed value: it must be read off whatever spellcasting the character already has at the time, and only falls back to arcane when there is none. A stored tradition on the grant cannot express this, and a character who later gains spellcasting would change the answer.",
+  "lens": "resources"
+ },
+ {
+  "feat": "lore-seeker",
+  "clause": "If you could already cast spells, these spells are of the same tradition.",
+  "need": "the tradition of the granted spells is not a constant — it must be resolved at runtime from whatever spellcasting the character already has (and is undefined if they have two traditions). So the spell's tradition has to be a computed reference to another feature rather than a stored string.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "lore-seeker",
+  "clause": "you use Intelligence as your spellcasting ability",
+  "need": "a key attribute assigned to a spellcasting entry by a feat, and only in one branch of a conditional. The sheet needs a spellcasting statistic that exists solely because of this feat, whose key attribute is Intelligence and whose proficiency is trained — created for a character who is otherwise not a caster.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "march-of-law",
+  "clause": "ignoring difficult terrain",
+  "need": "A movement-cost exemption for the duration of the movement. This is not a Speed number and not a bonus of any type; the sheet has to be able to say 'terrain cost is ignored while doing this'.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "march-of-law",
+  "clause": "You can use March of Law while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the co",
+  "need": "The activity's movement type is selected at use time from whichever of burrow/climb/fly/swim Speeds the character actually possesses. The action definition must read the sheet's speed list to know which variants are offered.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "march-of-law",
+  "clause": "You can use March of Law while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the co",
+  "need": "The action offers alternate movement types at use time, and each option is legal only if the character actually possesses that Speed — a choice whose option list must be filtered live against the sheet's own speeds. No lane expresses 'this action has variants gated on which speeds you have'.",
+  "lens": "resources"
+ },
+ {
+  "feat": "march-of-law",
+  "clause": "ignoring difficult terrain",
+  "need": "a terrain rule is suppressed for the duration of one movement. Nothing numeric to store; it is a rules-toggle scoped to a single action, and there is no lane for 'this movement ignores a movement rule'.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "march-of-law",
+  "clause": "You can use March of Law while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the co",
+  "need": "the activity's own movement type is variable and gated on the character's speed list: the action must read which Speeds exist on the sheet and offer exactly those variants. The action's definition therefore depends on other sheet data rather than being fixed text.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "divine-access",
+  "clause": "You can select from these spells when you add or swap spells in your spell repertoire.",
+  "need": "The added spells must become legal candidates in the repertoire add/swap picker, not merely castable entries. A spell-list addition that only affects casting, and does not feed spell SELECTION, would satisfy the words and miss the mechanic.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "divine-access",
+  "clause": "You can select this feat more than once. You can't choose the same spells more than once, but you can choose a",
+  "need": "The feat is repeatable, each taking stores its OWN deity and its own up-to-three spells, and each later instance must exclude every spell already chosen by an earlier instance while still allowing the same domain or deity to be reused. Needs per-instance choice storage plus a uniqueness constraint that reads sibling instances.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "divine-access",
+  "clause": "You can select from these spells when you add or swap spells in your spell repertoire.",
+  "need": "The added spells must become legal options inside the repertoire-selection flow later — including at level-up swaps — rather than merely being displayed as known. This is about widening a later picker's option set, which no lane names.",
+  "lens": "resources"
+ },
+ {
+  "feat": "divine-access",
+  "clause": "Special You can select this feat more than once. You can't choose the same spells more than once, but you can ",
+  "need": "A repeatable feat that must hold several independent choice sets side by side, with a cross-instance exclusion rule (no spell chosen twice across instances) while explicitly permitting the same deity again through a different domain. Nothing expresses 'validate this pick against picks made by other copies of the same feat'.",
+  "lens": "resources"
+ },
+ {
+  "feat": "divine-access",
+  "clause": "You can select from these spells when you add or swap spells in your spell repertoire.",
+  "need": "the added spells must become legal picks inside a LATER, separate process — repertoire selection and level-up spell swapping. Listing them somewhere is not enough; the addition has to feed the repertoire picker's eligibility rules.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "divine-access",
+  "clause": "You can select this feat more than once. You can't choose the same spells more than once, but you can choose a",
+  "need": "a repeatable feat where each taking carries its own independent choice set, AND the second taking's legal options must exclude the spells the first taking already chose. That is cross-instance exclusion between multiple copies of the same feat on the same sheet — the picker has to see the other copies' answers.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "guide-the-timeline",
+  "clause": "unless they succeed at a save against your chronoskimmer DC",
+  "need": "The sheet must expose a 'chronoskimmer DC' — a class-style DC belonging to an archetype rather than to a class or to spellcasting. It is a real derived number (proficiency + key attribute + level) that other creatures roll against, and the vocabulary has profSave/profSpell but nothing for a named per-archetype DC.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "guide-the-timeline",
+  "clause": "they must roll twice and take the lower result unless they succeed at a save against your chronoskimmer DC",
+  "need": "An archetype-specific DC — the 'chronoskimmer DC' — must exist as a computed, displayable statistic that the player can quote to the GM. This is an archetype introducing its own class-DC-like number rather than reusing class DC or spell DC, and the vocabulary has no lane for defining a new named DC statistic.",
+  "lens": "resources"
+ },
+ {
+  "feat": "guide-the-timeline",
+  "clause": "Regardless of your choice, the target becomes temporarily immune for 24 hours.",
+  "need": "A 24-hour per-target immunity the player has to remember for each creature it was used on. This lives on other creatures rather than on the character's own sheet, so at most it is a printed reminder — flagged because a use-tracking lens would otherwise expect a counter here and there is nothing on-sheet to count.",
+  "lens": "resources"
+ },
+ {
+  "feat": "guide-the-timeline",
+  "clause": "the next time within the next round that ally makes an attack roll or skill check, they roll it twice and take",
+  "need": "a fortune effect placed on a DIFFERENT character's next roll: roll twice keep higher, restricted to attack rolls and skill checks, expiring after one round or when consumed. This is neither a number on my sheet nor an enemy debuff — it is a roll-MODE change that belongs to somebody else's sheet, with a one-shot lifetime.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "guide-the-timeline",
+  "clause": "they must roll twice and take the lower result unless they succeed at a save against your chronoskimmer DC",
+  "need": "requires a named class-DC-like statistic supplied by an archetype — 'your chronoskimmer DC' — to exist, be computed from the archetype's own proficiency and key attribute, and be displayed. A whole new DC statistic that is not the class DC and not a spell DC.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "guide-the-timeline",
+  "clause": "Regardless of your choice, the target becomes temporarily immune for 24 hours.",
+  "need": "a usage restriction keyed to WHO was targeted rather than to a per-day pool: the sheet must remember which creatures are on a 24-hour immunity list for this specific effect",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "critter-shape",
+  "clause": "You can remain in critter shape for up to 10 minutes, after which you transform back into your hybrid shape an",
+  "need": "The state carries a 10-minute maximum duration and, on expiry, forces a transition to a specific other state (hybrid shape) and starts a 1-hour lockout. Needs duration, an auto-revert target, and a cooldown on the same toggle.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "critter-shape",
+  "clause": "You can remain in critter shape for up to 10 minutes, after which you transform back into your hybrid shape an",
+  "need": "Two distinct timers: a 10-minute duration on the active form, and a 1-hour lockout that begins when the form ENDS. A cooldown measured from when the effect ended is not the same thing as a per-hour use allowance, and there is no lane for a cooldown or for an auto-revert at duration's end.",
+  "lens": "resources"
+ },
+ {
+  "feat": "critter-shape",
+  "clause": "If your inherent animal has a fly Speed, you can turn into that animal (unlike normal for 1st-rank *pest form*",
+  "need": "A negative override: the form must NOT grant a fly Speed even though the animal it copies has one and the underlying spell's restriction is lifted. Suppressing a speed the borrowed effect would otherwise give has no representation — every speed lane only adds.",
+  "lens": "resources"
+ },
+ {
+  "feat": "critter-shape",
+  "clause": "You can remain in critter shape for up to 10 minutes, after which you transform back into your hybrid shape an",
+  "need": "the state carries a maximum duration (10 minutes), an automatic transition into a DIFFERENT named state when it lapses (hybrid shape), and a cooldown before it can be re-entered. A mode with a clock and a lockout, not just an on/off switch.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "critter-shape",
+  "clause": "If your inherent animal has a fly Speed, you can turn into that animal (unlike normal for 1st-rank pest form),",
+  "need": "an explicit override of the REFERENCED spell's own restriction, gated on a property of the character's inherent animal, plus an explicit DENIAL of a movement type the referenced effect would otherwise imply. Needs both 'ignore that rule of the thing I inherit from' and 'and do not grant this speed'.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "on-my-best-day",
+  "clause": "You can Sustain this effect for up to 1 minute.",
+  "need": "The temporary state's expiry can be pushed back by Sustaining, up to a 1-minute cap. Needs a duration that is both extendable by an action and hard-capped, rather than a fixed end-of-next-turn timestamp.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "on-my-best-day",
+  "clause": "You can Sustain this effect for up to 1 minute.",
+  "need": "A sustained effect: the buff persists only while re-spent each turn and is capped at 1 minute total, and this option exists only on the two better tiers. Nothing expresses 'this state is Sustainable, with a cap' or gives the player a per-turn sustain to track.",
+  "lens": "resources"
+ },
+ {
+  "feat": "on-my-best-day",
+  "clause": "**Critical Failure** You gain a +1 status bonus to AC against the next attack made against you until the end o",
+  "need": "A bonus scoped to a single incoming roll — consumed by the NEXT attack against you (or expiring at end of next turn, whichever comes first). That is narrower than any duration-based state: it needs a one-shot, consumed-on-use bonus.",
+  "lens": "resources"
+ },
+ {
+  "feat": "on-my-best-day",
+  "clause": "against a very hard DC of your level",
+  "need": "a DC derived by taking the level-based DC table at the CHARACTER's own level and applying the 'very hard' adjustment. A computed DC the character rolls against itself, so the sheet needs the DC-by-level table plus the difficulty adjustment as a first-class value.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "on-my-best-day",
+  "clause": "**Critical Success** … **Success** As critical success, but the status bonus is +2 and the resistance is equal",
+  "need": "one ability with FOUR different outcomes chosen by degree of success, each granting a materially different package (bonus size, whether resistance is included at all, whether the resistance is level or half level, and how long the bonus lasts). The sheet must be able to hold 'which effect I get depends on what I rolled', selecting among four alternative effect sets at use time.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "on-my-best-day",
+  "clause": "You can Sustain this effect for up to 1 minute.",
+  "need": "the temporary state's duration can be EXTENDED by the player spending a Sustain action, up to a 1-minute cap. A duration that grows through play rather than a fixed one, and a Sustain relationship between an action and a state.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "on-my-best-day",
+  "clause": "**Critical Failure** You gain a +1 status bonus to AC against the next attack made against you until the end o",
+  "need": "a bonus that is consumed by exactly ONE incoming attack (whichever comes first between that attack and the end-of-turn expiry). A single-use defensive bonus rather than a duration-based one — it needs a 'spent on first use' lifetime.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "minor-omen",
+  "clause": "Reroll the failed save and use the new result.",
+  "need": "a reroll of a roll that has ALREADY been made, restricted to one roll type (Reflex saves), and the new result must be used even if it is worse — explicitly not a fortune 'take the better' effect. Needs a reroll capability bound to a roll type, with a replace-not-compare rule.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "devout-blessing",
+  "clause": "or any other to which you have access",
+  "need": "the legal option list is open-ended: it is 'the printed list PLUS anything the character has access to'. The picker cannot be a closed enumeration — it must admit options unlocked elsewhere, which is a permission/access question rather than a list.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "constant-levitation",
+  "clause": "You're affected by a constant Fly spell",
+  "need": "A spell that is permanently in effect on the character with no casting, no daily use count and no duration — a standing spell effect with its own rank that could be counteracted or dispelled. This is a different shape from 'you can cast X once per day'.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "quick-recognition",
+  "clause": "you can Recognize a Spell using a skill in which you're a master as a free action",
+  "need": "Change the action cost of a separate, already-known activity (Recognize a Spell) to a free action. Nothing here changes a number on the sheet; what must be expressible is 'this other action costs less for you'. It is additionally gated on the proficiency rank of the specific skill being used for it — the reduction applies only when the skill (Arcana/Nature/Occultism/Religion, or any skill used to Recognize a Spell) is at master or better, so the sheet must evaluate the gate per-skill at the moment of use, not once at selection.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "quick-recognition",
+  "clause": "you can Recognize a Spell using a skill in which you're a master as a free action",
+  "need": "An action-cost override on an existing basic action: Recognize a Spell can be taken as a free action instead of its normal cost. Two parts have no lane — (a) rewriting the action cost of an action this record does not itself grant, and (b) gating that rewrite on the proficiency rank of whichever skill the player elects to use for the check (master or better), so availability is computed per-skill rather than fixed. Granting a new action is not right (the action already exists), and modifying another record's grant is a near miss because Recognize a Spell is a universal basic action, not something a specific record granted.",
+  "lens": "resources"
+ },
+ {
+  "feat": "quick-recognition",
+  "clause": "you can Recognize a Spell using a skill in which you're a master as a free action",
+  "need": "Rewriting the action cost of an activity the character already has by default (Recognize a Spell) to a free action. Nothing new is granted — an existing action's cost changes — and only when the skill being used is at master rank, so the qualifying skill list must be recomputed as proficiencies rise.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "quick-recognition",
+  "clause": "Once per round, you can Recognize a Spell using a skill in which you're a master as a free action",
+  "need": "A once-per-round usage cap. This is a per-round resource that resets every round, not a per-day or per-hour pool, so it needs a tracker with a round-based reset rather than a daily one.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "blood-and-spirit",
+  "clause": "Alternatively, you can deal 1d6 damage to yourself (which can't be resisted in any way) as part of that Intera",
+  "need": "Apply 1d6 damage to the character's own HP as a cost, explicitly bypassing every resistance, weakness-interaction and immunity the character has ('can't be resisted in any way'). Nothing in the vocabulary expresses a damage application that ignores the sheet's own defence stack — the resistance lanes only grant resistance, they do not model a source that is exempt from it.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "blood-and-spirit",
+  "clause": "Alternatively, you can deal 1d6 damage to yourself (which can't be resisted in any way) as part of that Intera",
+  "need": "An alternative activation cost paid in hit points: the player spends 1d6 self-damage to use the ability when the bleed requirement is not met, and that damage explicitly cannot be reduced by any resistance or immunity. Nothing expresses hit points as the price of an ability, an ability with two mutually exclusive usage requirements, or damage flagged as unresistable.",
+  "lens": "resources"
+ },
+ {
+  "feat": "blood-and-spirit",
+  "clause": "While you are taking persistent bleed damage, you can Interact to coat a piercing or slashing weapon you're wi",
+  "need": "Availability of an ability gated on a condition currently affecting YOU — specifically whether you are taking persistent bleed damage right now. The sheet must be able to know its own live condition state and let an ability depend on it.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "blood-and-spirit",
+  "clause": "you can deal 1d6 damage to yourself (which can't be resisted in any way) as part of that Interact action if yo",
+  "need": "Paying HP as the cost of an ability: 1d6 damage applied to your own Hit Points that explicitly bypasses your own resistances and immunities, offered as an alternate route when the bleed prerequisite is absent.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "precious-alloys",
+  "clause": "You can take this ancestry feat multiple times, choosing a different metal each time.",
+  "need": "The same feat record must be holdable more than once, each instance storing its own metal, with metals already chosen excluded from the later picks — and the resulting material tags must accumulate on the unarmed Strikes (a character with two instances counts as both metals). No lane expresses repeatable-with-distinct-choice.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "precious-alloys",
+  "clause": "Your melee unarmed attacks have the special properties of a weapon made of that metal.",
+  "need": "The character's melee unarmed attacks must carry a precious material (the chosen metal) so material-dependent rules fire: bypassing resistances that except that metal and triggering creature weaknesses to it. The material lane is item-only and an unarmed attack is not an inventory item, so there is no place to record a material on a strike; a weapon trait is a near miss because material is a distinct property from traits and is what resistance/weakness text keys off.",
+  "lens": "resources"
+ },
+ {
+  "feat": "precious-alloys",
+  "clause": "Your melee unarmed attacks have the special properties of a weapon made of that metal.",
+  "need": "A precious material attached to the character's melee unarmed attacks. The material is not on an item — there is no weapon record to hold it — yet it must still feed the material-versus-resistance/weakness and hardness-bypass rules the way an item's material would.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "precious-alloys",
+  "clause": "If you are at least 13th level, you can choose adamantine instead of just cold iron or silver.",
+  "need": "An option list whose membership depends on character level: adamantine only becomes selectable at 13th level, so the pick's legal values must be recomputed as the character advances (and a pick made earlier must still be re-openable).",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "precious-alloys",
+  "clause": "You can take this ancestry feat multiple times, choosing a different metal each time.",
+  "need": "The same feat held more than once, each copy carrying its own independent pick, with metals already chosen by other copies excluded from the remaining lists.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "domain-fluency",
+  "clause": "which you cast as a revelation spell",
+  "need": "The granted focus spell must be categorised as a REVELATION spell rather than a plain domain focus spell, because that category is what the oracle's curse/cursebound rules key on (casting a revelation spell escalates the curse). The sheet needs the spell's oracle sub-category recorded, not just its presence in the focus-spell list.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "domain-fluency",
+  "clause": "which you cast as a revelation spell",
+  "need": "Re-tagging a granted spell so it belongs to a different subsystem than its source: a domain spell that is cast as an oracle revelation spell, and therefore behaves like one (mystery/cursebound interactions, revelation-spell rules) rather than like a domain spell.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "hybrid-study-spell",
+  "clause": "You don't gain any of the hybrid study's other benefits.",
+  "need": "A negative/suppression clause: selecting a subclass-like option (a hybrid study) here must import exactly one of its grants (the conflux spell) and none of its other features, proficiencies or abilities. Nothing in the vocabulary expresses 'pick this option but take only part of it' — the choice lanes grant whole options.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "hybrid-study-spell",
+  "clause": "You don't gain any of the hybrid study's other benefits.",
+  "need": "The hybrid-study pick must be scoped: selecting it here confers the conflux spell and nothing else — none of the study's other class-feature benefits, actions, or proficiencies. Nothing expresses picking a class feature 'for one of its grants only', which is what keeps this from silently handing over a full subclass.",
+  "lens": "resources"
+ },
+ {
+  "feat": "hybrid-study-spell",
+  "clause": "You don't gain any of the hybrid study's other benefits.",
+  "need": "A negative clause: the chosen sub-record is referenced for exactly one of its pieces and all its other grants must be suppressed. Picking a study here must not apply that study's remaining features.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "energized-spark",
+  "clause": "You can choose for any spirit damage dealt by your exemplar abilities to instead gain the trait and deal the c",
+  "need": "A damage-type REPLACEMENT rule, not a bonus: every instance of spirit damage produced by any of the character's exemplar abilities (ikon strikes, immanence effects, feats, spells) can be rewritten to the chosen damage type plus the chosen trait. Three things make it hard to express — it is scoped by source ('your exemplar abilities') rather than by a named ability, it substitutes rather than adds, and it is elective per instance (the player may keep spirit damage). No lane covers a source-scoped damage-type swap.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "energized-spark",
+  "clause": "You can select this feat multiple times, choosing a different damage type each time.",
+  "need": "Repeatable with a distinct pick per instance, and the picks accumulate into a menu — a character with three instances chooses among three damage types each time spirit damage is dealt, so the substitution is a set of options rather than a single stored value. Options already taken must be excluded from later picks.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "energized-spark",
+  "clause": "You can choose for any spirit damage dealt by your exemplar abilities to instead gain the trait and deal the c",
+  "need": "At each use the player may elect to convert spirit damage dealt by ANY of their exemplar abilities into the chosen damage type and add the chosen trait. What must be expressible is a damage-type-and-trait REWRITE reaching into damage that other records define, elected per instance rather than switched on permanently. A toggled state can turn a flag on and off but cannot restate another ability's damage type, and there is no lane for substituting one damage type for another across a whole family of granted abilities.",
+  "lens": "resources"
+ },
+ {
+  "feat": "energized-spark",
+  "clause": "You can choose for any spirit damage dealt by your exemplar abilities to instead gain the trait and deal the c",
+  "need": "A blanket damage-type substitution that reaches into every OTHER record the character has: any spirit damage produced by any exemplar ability — strikes, spells, actions, ikon effects — is rewritten to the chosen trait and damage type. It is keyed on a damage type rather than on a named record, so it must apply to grants that know nothing about this feat.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "energized-spark",
+  "clause": "You can select this feat multiple times, choosing a different damage type each time.",
+  "need": "Repeatable feat with one independent pick per copy, later copies excluding damage types already chosen, and all copies' substitutions coexisting as selectable alternatives.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "fishblooded",
+  "clause": "When in an aquatic environment, you ignore difficult terrain.",
+  "need": "An exemption from difficult-terrain movement costs, gated on being in an aquatic environment. This is a movement-COST rule (movement no longer costs extra feet per square), not a Speed bonus and not a check bonus, so neither the speed lanes nor the situational-bonus lane expresses it. The sheet also needs 'aquatic environment' as a state it can be in.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "fishblooded",
+  "clause": "In addition, swimming up or down isn't difficult terrain for you.",
+  "need": "A second, narrower exemption: vertical swimming (which is normally treated as difficult terrain even outside difficult water) no longer counts as difficult terrain. It is separate from the clause above because it applies to the act of swimming up/down rather than to the terrain being in an aquatic environment. Same unmodelled shape — a movement-cost exemption.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "fishblooded",
+  "clause": "When in an aquatic environment, you ignore difficult terrain.",
+  "need": "Difficult terrain costs the character no extra movement while they are in an aquatic environment. This is a movement-cost rule conditioned on environment, not a bonus to any roll — the situational route only modifies rolls, and there is no lane for terrain or movement-cost exemptions. The most the sheet can currently do is print it as a note.",
+  "lens": "resources"
+ },
+ {
+  "feat": "fishblooded",
+  "clause": "In addition, swimming up or down isn't difficult terrain for you.",
+  "need": "A second, separate exemption: vertical swimming (moving up or down through water) stops counting as difficult terrain for this character. It stands apart from the first clause — it removes a specific rule's application to the character rather than ignoring terrain in a given environment — and likewise has no terrain/movement-cost expression.",
+  "lens": "resources"
+ },
+ {
+  "feat": "fishblooded",
+  "clause": "When in an aquatic environment, you ignore difficult terrain.",
+  "need": "Ignoring difficult terrain — a change to the movement COST of terrain, not a bonus to Speed and not a bonus to any check — gated on being in an aquatic environment, which is an environment state the sheet has to be able to represent.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "fishblooded",
+  "clause": "In addition, swimming up or down isn't difficult terrain for you.",
+  "need": "A second, narrower terrain-cost exception: vertical movement while swimming stops counting as difficult terrain. It is a distinct rule from the aquatic clause above (it removes the difficult-terrain status of a movement direction rather than ignoring existing difficult terrain).",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "robust-recovery",
+  "clause": "When you Treat a Disease or a Poison, or someone else uses one of these actions on you, increase the circumsta",
+  "need": "Overwrite a numeric OUTPUT of an activity the character performs: Treat a Disease / Treat a Poison normally confers a +2 circumstance bonus on a success, and this replaces that value with +4. It is a replacement, not a stacking +2, and the number lands on the patient's sheet rather than the character's — so what is needed is 'this feat changes the value my action gives to someone else'.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "robust-recovery",
+  "clause": "if the result of the patient's saving throw is a success, the patient gets a critical success",
+  "need": "Promote a degree of success: on the specific recovery saving throw against the treated disease or poison, a success becomes a critical success. No lane expresses degree-of-success promotion — every bonus lane changes the roll's total, and a +N cannot reproduce 'success counts as critical success'. It applies both when the character treats someone and when the character is the patient.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "robust-recovery",
+  "clause": "When you Treat a Disease or a Poison, or someone else uses one of these actions on you, increase the circumsta",
+  "need": "The circumstance bonus that Treat a Disease / Treat a Poison confers on a success becomes +4. The number changed is not a bonus to this character's own check — it is the bonus the action grants to its patient — and it must also apply when a DIFFERENT creature performs the action on this character, i.e. an inbound effect from an ally's roll. The situational route is a near miss: it modifies this character's own rolls, not the output of someone else's action.",
+  "lens": "resources"
+ },
+ {
+  "feat": "robust-recovery",
+  "clause": "if the result of the patient's saving throw is a success, the patient gets a critical success",
+  "need": "A degree-of-success promotion: a success on the patient's saving throw against the disease or poison counts as a critical success. Nothing expresses upgrading a degree of success, and the roll being upgraded may belong either to this character (when treated by someone else) or to whoever this character treated.",
+  "lens": "resources"
+ },
+ {
+  "feat": "robust-recovery",
+  "clause": "increase the circumstance bonus granted on a success to +4",
+  "need": "Overwriting the value an existing skill activity hands out: Treat a Disease / Treat a Poison must grant +4 instead of its printed bonus. It is a replacement of another action's output, not a bonus to any roll this character makes.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "robust-recovery",
+  "clause": "if the result of the patient's saving throw is a success, the patient gets a critical success",
+  "need": "A degree-of-success promotion — success becomes critical success — applied to a saving throw made by the patient (possibly a different creature) as a downstream consequence of the treatment. The sheet must be able to record 'this roll's degree of success steps up' for a roll that is not one of its own statistics.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "robust-recovery",
+  "clause": "or someone else uses one of these actions on you",
+  "need": "The feat's benefit must attach to the character as the TARGET of an action performed by another creature, not as the actor. The sheet needs a way to hold effects that modify what someone else's action does to you.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "inspire-imitation",
+  "clause": "Whenever you critically succeed at a skill check, you automatically qualify to use the Aid reaction when attem",
+  "need": "Waive a USAGE PREREQUISITE of an existing general reaction: Aid normally requires an action spent in advance to prepare, and this removes that step. Two things must be expressible — that the qualifying step of another action is suppressed, and that the suppression is keyed to a per-skill runtime fact (that the character critically succeeded at a check with that same skill), so it applies to Aid with Athletics but not Aid with Diplomacy. No lane covers changing an action's requirements; the extra-reaction lane is the wrong shape because no additional reaction is granted.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "inspire-imitation",
+  "clause": "Whenever you critically succeed at a skill check, you automatically qualify to use the Aid reaction when attem",
+  "need": "Two things must be expressible and neither has a lane: (a) a transient state remembering WHICH skill the character last critically succeeded at, created by the result of a roll rather than by an action or a toggle; and (b) the waiver of a prerequisite of an existing action — Aid normally requires having spent an action to prepare, and this removes that requirement for the matching skill only. No extra reaction is granted, so the extra-reaction route is wrong, and no new action is taught, so granting an action is wrong.",
+  "lens": "resources"
+ },
+ {
+  "feat": "inspire-imitation",
+  "clause": "Whenever you critically succeed at a skill check",
+  "need": "A transient state produced by the RESULT of a roll — 'you critically succeeded at a check with this specific skill' — that has to persist afterwards and be matched by skill so a later ability can key off it. Nothing here is a modifier; the outcome of a past roll is itself the trigger data.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "inspire-imitation",
+  "clause": "you automatically qualify to use the Aid reaction when attempting to help an ally using the same skill, even w",
+  "need": "Waiving the prerequisite step of a general action: Aid becomes usable without having spent the Prepare to Aid action beforehand, limited to the matching skill. No new action is granted and no number changes — an existing action's entry condition is removed.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "vantage-shot",
+  "clause": "your spotter can use a reaction to attempt a Stealth check against the foe's Perception DC",
+  "need": "This half of the feat puts a reaction on ANOTHER creature's sheet — the designated spotter gains a reaction that this character's feat created, triggered by this character's Strike with a crossbow or firearm. Expressing it needs (a) a persistent named ally relationship, 'your spotter', stored on the character and referenceable by feats, and (b) a grant that lands on that ally rather than on the holder. Neither the companion lane (the spotter is another player's character, not a companion) nor the grantsAction lane (which grants to the holder) covers it.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "vantage-shot",
+  "clause": "When you successfully Strike a foe using a crossbow or firearm, your spotter can use a reaction to attempt a S",
+  "need": "A persistent designation of a specific other character as 'your spotter'. Both halves of the feat read this relationship, so it is not flavour — the sheet must hold a named reference to another party member, chosen and stored by the player, with nothing in the vocabulary for a partner/duo link between two characters.",
+  "lens": "resources"
+ },
+ {
+  "feat": "vantage-shot",
+  "clause": "When you successfully Strike a foe using a crossbow or firearm, your spotter can use a reaction to attempt a S",
+  "need": "This feat gives a reaction to the designated spotter — an ability that appears on ANOTHER character's sheet, triggered by this character's successful crossbow or firearm Strike. A record on one character granting a usable action to a specific different character has no expression; ally-facing grants are not the same as effects on enemies and do belong on someone's sheet.",
+  "lens": "resources"
+ },
+ {
+  "feat": "vantage-shot",
+  "clause": "You and your spotter take advantage of each other's attacks to momentarily hide and throw your foes off-balanc",
+  "need": "A persistent, named relationship to another specific creature — your spotter — recorded on the sheet and referenced by both halves of this feat. The sheet needs a slot pointing at another character (usually another player's), not just a note.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "vantage-shot",
+  "clause": "your spotter can use a reaction to attempt a Stealth check against the foe's Perception DC",
+  "need": "An outward-facing grant: this character's feat gives a REACTION to a different creature (the spotter), triggered by this character's own Strike with a crossbow or firearm. The ability has to appear as something the ally can do, sourced from someone else's sheet.",
+  "lens": "unmodellable"
+ },
+ {
+  "feat": "energetic-resonance",
+  "clause": "Expend one of your spell slots of a rank equal to or higher than that of the triggering spell.",
+  "need": "A non-spell ability that spends a SPELL SLOT as its cost, with the rank chosen by the player at use time from the unexpended slots of rank >= the triggering spell's rank. The sheet must let an ability decrement the spell-slot pool (prepared slots are index-addressed; spontaneous slots are per-rank counts) and must know which slots are still unexpended in order to offer the choice. The spell-slot lanes only add slots; none models one being consumed by something that is not a spell.",
+  "lens": "numbers"
+ },
+ {
+  "feat": "energetic-resonance",
+  "clause": "Expend one of your spell slots of a rank equal to or higher than that of the triggering spell.",
+  "need": "A spell slot spent as the PRICE of an ability that is not casting a spell. The player must pick one unexpended slot of rank at least the triggering spell's rank, mark it spent, and the rank they picked then feeds the effect's magnitude — so the choice of which slot to burn is a real tactical decision the sheet must support. The spell-slot lane only covers gaining slots; nothing expresses consuming a slot as a non-casting cost, and for a prepared caster the slot is index-addressed rather than a pool, which makes 'expend any slot of rank N or higher' harder still.",
+  "lens": "resources"
+ },
+ {
+  "feat": "energetic-resonance",
+  "clause": "Expend one of your spell slots of a rank equal to or higher than that of the triggering spell.",
+  "need": "Spending a spell slot as the fuel for something that is not spellcasting: the player picks which slot at the moment of use, the choice is constrained to ranks at or above the incoming spell's rank, and the slot must be marked expended without any spell being cast. This is the spellcasting resource acting as a generic cost pool.",
+  "lens": "unmodellable"
+ }
+]

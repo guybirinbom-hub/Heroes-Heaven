@@ -1,0 +1,135 @@
+{
+ "note": "The 14 defects that survived adversarial refutation from a random 122-record sample (scripts/audit-sample.mjs, seed 20260807). Rate 11.5%. Open work items — NOT yet fixed.",
+ "measured": "2026-08-07",
+ "sampleSize": 122,
+ "claimed": 27,
+ "confirmed": 14,
+ "findings": [
+  {
+   "id": "devils-eye",
+   "collection": "feats",
+   "name": "Devil's Eye",
+   "promise": "You also become an expert in Legal Lore ... At 7th level you become a master of Legal Lore, and at 15th level you become legendary in Legal Lore.",
+   "missing": "The Legal Lore skill total. src/rules/featGrantsAuto.ts:107 carries only `'devils-eye': { skills: { 'lore:legal': 'expert' } }` with no `rankUpgrade`. A level-7+ character shows Legal Lore at expert (+4 prof) instead of master (+6); at level 15+ it shows +4 instead of legendary's +8. The lane exists and is used elsewhere in the same file (e.g. 'acrobat-dedication' has `rankUpgrade: { level: 15, rank: 'legendary' }`), and FeatGrant.rankUpgrade accepts an ARRAY of steps, so both rungs are expressible.",
+   "checkedFor": "Grepped src/ for 'devils-eye' (hits only featGrantsAuto.ts:107 and situationalBonuses.ts:778 for the +1 circumstance clause, which IS correctly carried) and for 'lore:legal'. Read src/rules/featGrants.ts upgradeSteps/upgradeRankAt and the RankUpgradeStep[] type. No level-gated Legal Lore handling anywhere.",
+   "severity": "medium"
+  },
+  {
+   "id": "adept-storyteller",
+   "collection": "feats",
+   "name": "Adept Storyteller",
+   "promise": "You gain two Performance skill feats of 7th level or lower that you meet the prerequisites for.",
+   "missing": "Two bonus feats missing from the character's feat list (and every downstream effect those feats would carry). The record's `fields` carry no `grantsFeats`, no `choice`, no `effectChoices`, and there is no entry in FEAT_PICK_GRANTS (src/rules/featPickGrants.ts) — the registry built for exactly this shape (see the sibling 'natural-performer' entry at line 71, which offers a Performance skill feat pool).",
+   "checkedFor": "Grepped src/ and scripts/ for 'adept-storyteller' — the only hits are the data itself (public/core.json) and scripts/audit/inventory.json; nothing in src/. Checked src/rules/featFeatGrants.ts (static grants), src/rules/featPickGrants.ts (pick-a-feat), src/rules/featGrantsAuto.ts (skills) and src/rules/build.ts featPicks/featChoices handling — absent from all four.",
+   "severity": "medium"
+  },
+  {
+   "id": "kholo-lore",
+   "collection": "feats",
+   "name": "Kholo Lore",
+   "promise": "If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice.",
+   "missing": "One trained skill. src/rules/featGrantsAuto.ts:187 has `'kholo-lore': { skills: { stealth: 'trained', survival: 'trained' } }` with no `redundantFallback: true`. build.ts:2940 only converts a redundant static grant into a replacement pick when that flag is set, so a kholo rogue (Stealth automatic from class) or kholo ranger (Survival automatic) silently loses the replacement skill — their trained-skill list is one short. The flag is the established convention: 72 entries in that same file carry it.",
+   "checkedFor": "Read the redundantFallback doc comment in src/rules/featGrants.ts:142-149 and its only consumer at src/rules/build.ts:2936-2945 (skillFallbacks + featSkillChoices `<featId>:fallback:<skill>`). Confirmed kholo-lore's featGrantsAuto entry lacks it and that no other src/ file special-cases the feat (the only other hit is featFeatGrants.ts:90, which correctly grants additional-lore).",
+   "severity": "low"
+  },
+  {
+   "id": "uncanny-bombs",
+   "collection": "feats",
+   "name": "Uncanny Bombs",
+   "promise": "When you throw an alchemical item with the bomb trait, its range increment increases to 60 feet",
+   "missing": "The Strike line for any bomb still shows range increment 20 ft. The engine has an explicit lane for exactly this — WeaponRider.range ({set?:number}, types.ts ~line 400, commented 'Set or extend the range increment in feet. There is no other range lane'), consumed at derive.ts:2569 in applyWeaponRiders — and a `weaponTraits: {match:{groups:['bomb']}, range:{set:60}}` would work, because all 172 bomb weapons in core.json carry group 'bomb' and range 20. The feat carries no weaponTraits at all. Note this is a partial miss: the feat's OTHER two clauses (cover bonus reduced by 1, auto-succeed the concealment flat check) ARE carried as situational star-notes; only the range clause was dropped, even from the note text.",
+   "checkedFor": "Read the full record in public/core.json (no weaponTraits/passiveEffects/situational). Grepped src for 'uncanny-bombs' — only hit is situationalBonuses.ts:2989, whose two entries cover cover and concealment and say nothing about range. Grepped for 'far-lobber' (the prerequisite, same clause at 30 ft) — only situationalBonuses.ts:2717, a note, so no shared range implementation exists elsewhere. Grepped derive.ts/build.ts for 'bomb' — only weapon-proficiency-group handling.",
+   "severity": "medium"
+  },
+  {
+   "id": "wand-of-toxic-blades-8th-rank",
+   "collection": "items",
+   "name": "Wand of Toxic Blades (8th-Rank)",
+   "promise": "\"**Effect** You cast 8th-rank Blessed Boundary.\"",
+   "missing": "`heldSpells` is keyed {\"6\": [\"blessed-boundary\"]} instead of {\"8\": [...]}. The wand's Cast-a-Spell entry on the Spells tab therefore offers Blessed Boundary at 6th rank on a level-19, 37,500 gp item — two ranks of heightening (area/damage/DC) short.",
+   "checkedFor": "ItemBase.heldSpells is the lane and it IS populated, so the VALUE is what is wrong. The parallel record `wand-of-toxic-blades-8th-rank-spell` (same name modulo ' Spell', same 37,500 gp, same level 19) correctly carries {\"8\": [...]}, and `-7th-rank-spell` carries {\"7\"}. The `-Nth-rank` family instead has 6/6/6 — the 7th- and 8th-rank ones both inherited rank 6 from the 6th-rank record. Neither id starts with 'aon-' and the names differ, so findDuplicateIds (src/data/index.ts:72) does not suppress it: this record is user-facing.",
+   "severity": "high"
+  },
+  {
+   "id": "winged-terror",
+   "collection": "items",
+   "name": "Winged Terror",
+   "promise": "\"Usage worn armor … Base Armor Studded Leather … This +2 greater resilient winged studded leather armor … The wearer gains resistance 5 to physical damage dealt by frightened creatures.\"",
+   "missing": "The record is stored as `itemType: \"equipment\"` with NO armour fields at all — no `acBonus`, `dexCap`, `checkPenalty`, `category`, `group`, `strength`. Wearing it gives AC item bonus 0 instead of +4 (studded leather's +2 base plus the +2 potency), no Dex cap of 3, no −1 check penalty, and it can never be the worn armour deriveAC reads. Separately, `resistances`/`passiveEffects.resistances` is absent, so the Defenses card shows no \"physical 5\" entry, and the greater resilient rune's +2 item bonus to saves is absent.",
+   "checkedFor": "Read fields (only traits/rarity/level/bulk/itemType/edition present) and confirmed the same in public/core.json. Grepped src/ for `winged-terror` — no hit outside nothing; not in situationalBonuses.ts, build.ts, derive.ts, cursedItems.ts or itemAliases.ts. Confirmed it is NOT hidden: reran findUmbrellaIds' logic (no price, but fewer than 2 `winged-terror-` kin) → umbrella=false, and it is not an `aon-` or grade-spelling duplicate, so it is offered in pickers.",
+   "severity": "high"
+  },
+  {
+   "id": "arboreals-revenge",
+   "collection": "items",
+   "name": "Arboreal's Revenge",
+   "promise": "\"You gain weakness 5 to fire\" (the curse, applied whenever the blunderbuss is fused to you); and the item is a \"+1 striking blunderbuss\".",
+   "missing": "No `passiveEffects.weaknesses` (nor top-level `weaknesses`), so the sheet's Weaknesses list is empty where it should read \"fire 5\" — types.ts line ~1127 states passiveEffects.weaknesses is \"the only home for it: a top-level `weaknesses` on an item record is read by nothing at all\". The item's built-in +1 potency / striking are also unstored: `damage` is `{dice:1, die:'d8'}` and the Strike's item bonus comes only from `inv.runes.potency` (derive.ts:2640), so the Strike reads +0 item and 1d8 instead of +1 and 2d8.",
+   "checkedFor": "Read fields — `situational` is NOT among them, but situationalBonuses.ts:1072 does carry the +4 circumstance Reflex-DC-vs-Disarm note, and `heldSpells` correctly carries oaken-resilience/cleanse-affliction, so the record was clearly worked on and the weakness was simply left out. Grepped src/ for `arboreals-revenge`: only situationalBonuses.ts:1072 and a featGrantsLane weapon-familiarity list. Checked ItemBase/ArmorItem/WeaponItem in types.ts — there is no record-level `runes` field, so built-in runes are unrepresentable.",
+   "severity": "high"
+  },
+  {
+   "id": "pathfinders-mentor",
+   "collection": "items",
+   "name": "Pathfinder's Mentor",
+   "promise": "\"**Activate** ⟨1⟩ (concentrate) **Effect** The wayfinder casts Know the Way on you.\" and \"**Activate** 1 minute … **Frequency** once per day … The wayfinder casts Wanderer's Guide on you.\"",
+   "missing": "No `heldSpells` (and no `innateSpells`). `heldSpells` is exactly the \"Activate: Cast a Spell\" lane — 723 items in core.json carry it, including arboreals-revenge two records earlier in this same batch — so neither Know the Way (rank 0, both exist in core.json spells) nor Wanderer's Guide (rank 3) ever appears in the character's Spells list. Should be `heldSpells: {0:['know-the-way'], 3:['wanderers-guide']}`.",
+   "checkedFor": "Read fields: activationCost and a 1/day `counters` entry are present, so only the spells themselves are missing, not the activation. Grepped src/ for `pathfinders-mentor` — no hit. Confirmed `know-the-way` and `wanderers-guide` both resolve in core.json spells. Not an umbrella (umbrella=false) and not a duplicate id.",
+   "severity": "medium"
+  },
+  {
+   "id": "unifying-emblem-shadde-quah",
+   "collection": "items",
+   "name": "Unifying Emblem (Shadde-Quah)",
+   "promise": "\"The tattoo allows you to understand and speak Shoanti.\" and \"**Activate** ⟨2⟩ **Frequency** once per day … **Effect** The tattoo casts Cleanse Cuisine.\"",
+   "missing": "Two lanes: (1) `passiveEffects.grantsLanguages` is absent, so \"Shoanti\" never joins the sheet's Languages list — build.ts:4400 reads exactly `content.items[inv.itemId]?.passiveEffects?.grantsLanguages`, and `shoanti` is a real language id in core.json. Only 3 items in the whole database use this lane (stole-of-civility, hellhusk-shroud, plate-armor-of-the-deep). (2) No `heldSpells`, so the 1/day Cleanse Cuisine (rank 1, present in core.json) is unreachable on the Spells page. All 8 unifying-emblem-* records are in the same state.",
+   "checkedFor": "The +1 item Diplomacy clause IS covered — situationalBonuses.ts:1436 carries it — so the record was hand-edited and these two were missed. Read fields: activationCost + a 1/day counter are present but no spell and no language. Verified via core.json that none of the 8 emblems carry passiveEffects or heldSpells. Grepped src/ for `unifying-emblem` — only the situationalBonuses entries.",
+   "severity": "medium"
+  },
+  {
+   "id": "gate-attenuator",
+   "collection": "items",
+   "name": "Gate Attenuator",
+   "promise": "\"**Activate - Elemental Spell** ⟨2⟩ … **Frequency** once per day **Effect** The gate attenuator casts a 1st-rank spell … **air** Gust of Wind **earth** Pummeling Rubble **fire** Dehydrate **metal** … **water** Snowball **wood** Flourishing Flora\"",
+   "missing": "`effectChoices` correctly records the element pick, but none of the six options carries a `grant` (EffectGrant supports `innateSpells`, types.ts:1005), and the record has no `heldSpells`. So whichever element the player attunes, the 1/day spell never reaches the Spells page — the sheet shows an activation with no spell behind it. All five named spells (gust-of-wind, pummeling-rubble, dehydrate, snowball, flourishing-flora) resolve in core.json.",
+   "checkedFor": "The +1 impulse-attack clause IS handled — situationalBonuses.ts:2471 (and 2472-2473 for the greater/major) — so the record is otherwise built. Read the effectChoices options: each is `{value,label}` only, no `grant`. Grepped src/ for `gate-attenuator`: only the three situationalBonuses lines. Confirmed EffectChoice options support `grant?: EffectGrant` and EffectGrant supports `innateSpells`, so the lane exists and is simply unused here.",
+   "severity": "medium"
+  },
+  {
+   "id": "piereta",
+   "collection": "items",
+   "name": "Piereta",
+   "promise": "\"*Piereta* is a *+3 major striking Holy rapier*\" — plus \"**Activate** ⟨2⟩ command, Interact **Frequency** once per day **Effect** *Piereta* casts a 9th-rank Field of Life.\"",
+   "missing": "The Strikes line for Piereta. It is stored as a plain rapier (damage {dice:1, die:'d6'}, no rune data at all), so its attack roll is missing the +3 potency, its damage rolls 1d6 instead of 4d6 (major striking = four dice), and the holy property rune contributes nothing. deriveStrike (derive.ts:2612-2690) takes potency/striking/property ONLY from `inv.runes` (player-etched), ABP, Monster Parts or `battleforged` — there is no item field for built-in runes, and the item carries no `note`/`dataWarning` telling the player to etch them. Separately the 1/day 9th-rank Field of Life activation is not in `innateSpells`, so it never reaches the Spells tab, even though the item's own `counters.freq2` (1/day) is there to track it.",
+   "checkedFor": "Item fields: no runes/potency/striking/heldSpells/innateSpells/strikeDamage/passiveEffects/situational/note/dataWarning. Searched all 1660+ items in public/core.json for any rune-ish field (runes/builtInRunes/potency/striking) — 0 items carry one. Read ItemBase + WeaponItem in src/rules/types.ts:1936-2091 (no lane exists). Grepped src for 'major striking'/'greater striking'/'potency' — only inv.runes, ABP (rules/abp.ts), attachments.ts, armorSpec.ts. Confirmed src/rules/derive.ts:2612-2690 (effectiveWeaponRunes/potencyBonus/striking dice). Confirmed the innateSpells lane IS the one used for exactly this pattern (nosoi-charm, cloak-of-elvenkind; 53 items carry it, 4 of them weapons).",
+   "severity": "high"
+  },
+  {
+   "id": "obsidian-edge-true",
+   "collection": "items",
+   "name": "Obsidian Edge (True)",
+   "promise": "\"This black obsidian blade is a *+3 greater striking greater flaming gun sword*.\" (and \"**Frequency** once per 10 minutes\" on Explosion of Shards)",
+   "missing": "Same lane as Piereta: the Strike shows no +3 potency on the attack roll, rolls 1d10 instead of 3d10 (greater striking = three dice), and adds none of greater flaming's +1d6 fire (or its 2d10 persistent fire on a crit). Nothing is stored — the item has no rune field, no strikeDamage, no passiveEffects. Secondary wrong value: the stored `frequency`/`counters` say {max:1, per:'minute'} while the printed frequency is once per 10 MINUTES, so the item's use pip recharges ten times too fast (ItemCounter supports the period but has no multiplier here).",
+   "checkedFor": "Item fields as listed (no runes/strikeDamage/passiveEffects/situational/note). Same src evidence as Piereta: src/rules/types.ts ItemBase/WeaponItem, src/rules/derive.ts:2612-2690, src/rules/attachments.ts. Verified across the whole item set: 321 weapon records whose printed description names a '+N (greater/major) striking' rune, exactly 1 has damage.dice > 1 and 0 carry a note or dataWarning — so this is a systemic lane gap, not a one-off authoring miss.",
+   "severity": "high"
+  },
+  {
+   "id": "phlogistonic-regulator",
+   "collection": "classFeatures",
+   "name": "Phlogistonic Regulator",
+   "promise": "\"When under the effects of Overdrive, the resistance increases by 2.\"",
+   "missing": "The cold and fire rows of the Defenses/IWR card while Overdrive is on: they stay at max(1,floor(level/2)) instead of that +2. The base half-level resistance IS stored correctly; only the Overdrive clause is carried nowhere — `whileActive` states are limited to rage/panache/hunt-prey/unleash-psyche (types.ts:615-631), the app's Overdrive modes (rules/modes.ts:163-165, 'cat-overdrive'/'cat-critical-overdrive') ship with `modifiers: []` and no `resistances`, and there is no situationalBonuses entry for this id — while its four sibling armor-innovation modifications with Overdrive clauses (hyper-boosters, muscular-exoskeleton, speed-boosters, subtle-dampeners) all have one.",
+   "checkedFor": "Record fields: resistances present and correct for the base clause; no whileActive/modes/situational/note. Grepped src for 'overdrive' (build.ts:2900, derive.ts:2027, featGrantsAuto.ts, modes.ts:163-165, situationalBonuses.ts:893-909) and for 'phlogistonic' (zero hits anywhere in src). Checked all 429 mode defs in public/core.json for an overdrive resistance — none.",
+   "severity": "low"
+  },
+  {
+   "id": "bedroll-of-deep-slumber",
+   "collection": "items",
+   "name": "Bedroll of Deep Slumber",
+   "promise": "\"If you fall asleep in the bedroll, you gain 5 temporary Hit Points that last while you sleep and for 1 minute after you wake up\"",
+   "missing": "The HP stat carries no star-note for the 5 temporary Hit Points. The SECOND half of the same sentence (the +1 status bonus to saves vs mental effects while asleep) IS authored in the situational registry (src/rules/situationalBonuses.ts:1989), so the record is half-built; the temp-HP clause is stored nowhere. The registry supports it directly — `targets: [{kind:'hp'}]` with temporary-HP text is used by aeon-stone-pink-rhomboid (\"15 temporary HP\") and gluttonous-spear (\"+1d8 temporary Hit Points for 1 minute\").",
+   "checkedFor": "Item fields: no passiveEffects/situational/effectChoices/note (the item's only mechanical data is level/price/bulk/traits/usage). Grepped src/rules/situationalBonuses.ts for this id (found: the save clause only, line 1989) and for hp-target precedents. Checked the 59 items that carry an inline `situational` field to confirm the kind:'hp' target is live.",
+   "severity": "low"
+  }
+ ]
+}

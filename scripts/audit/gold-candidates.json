@@ -1,0 +1,802 @@
+{
+ "seed": 20260808,
+ "drawn": "2026-08-08",
+ "purpose": "Candidates for the hand-adjudicated gold set. Answers are NOT filled in yet.",
+ "split": {
+  "exemplars": [
+   "minor-omen",
+   "wyrmling-flight",
+   "devout-blessing",
+   "advanced-targeting-system",
+   "guarded-domain",
+   "thermal-nimbus",
+   "fishblooded",
+   "pheromonal-message"
+  ],
+  "test": [
+   "branched-tree-of-pain",
+   "hydraulic-maneuvers",
+   "zombie-dedication",
+   "ascended-celestial-dedication",
+   "adroit-manipulation",
+   "adhyabhau",
+   "eternal-blessing",
+   "twirling-throw",
+   "natural-ambition",
+   "divine-health",
+   "juggler-dedication",
+   "clever-improviser",
+   "cornered-fury",
+   "experienced-professional",
+   "elemental-evolution",
+   "shame-the-sin",
+   "lore-seeker",
+   "march-of-law",
+   "divine-access",
+   "guide-the-timeline",
+   "critter-shape",
+   "on-my-best-day",
+   "unbowed-unbroken",
+   "constant-levitation",
+   "quick-recognition",
+   "swimming-poppet",
+   "blood-and-spirit",
+   "precious-alloys",
+   "domain-fluency",
+   "hybrid-study-spell",
+   "energized-spark",
+   "robust-recovery",
+   "inspire-imitation",
+   "vantage-shot",
+   "energetic-resonance"
+  ]
+ },
+ "candidates": [
+  {
+   "stratum": "missing-system",
+   "id": "branched-tree-of-pain",
+   "name": "Branched Tree Of Pain",
+   "level": 18,
+   "text": "**Usage** imbued into a weapon ikon that deals piercing or slashing damage --- The blade of your ikon takes one or more notches, capable of dealing mortal pain to your foes. **Immanence** When you Strike with the ikon, you critically succeed if you roll a 19 on the die as long as that result would be a success. This has no effect on a 19 if the result would be a failure. **Transcendence—Plant Thirty Barbs** ⟨1⟩ (death, transcendence)",
+   "clauses": 0,
+   "ourFields": [
+    "grantsClassFeatures"
+   ],
+   "foundryRules": [
+    "ChoiceSet",
+    "GrantItem",
+    "ItemAlteration",
+    "AdjustDegreeOfSuccess"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "missing-system",
+   "id": "hydraulic-maneuvers",
+   "name": "Hydraulic Maneuvers",
+   "level": 13,
+   "text": "You batter your foes with a torrent of water siphoned from your surroundings. If the next action you take is an Athletics check to Disarm, Shove, or Trip, that action has a range of 15 feet. You don't receive any item bonuses to that check or any circumstance bonuses related to your physical body, but if you roll a critical failure on that Athletics check, you get a failure instead.",
+   "clauses": 1,
+   "ourFields": [],
+   "foundryRules": [
+    "RollOption",
+    "Note",
+    "AdjustDegreeOfSuccess"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "missing-system",
+   "id": "zombie-dedication",
+   "name": "Zombie Dedication",
+   "level": 2,
+   "text": "Despite your death and subsequent reanimation as a rotting corpse, you retain most of your mind and identity. Yet, it's always there: the hunger for the flesh and organs of the living. You gain the undead and zombie traits, and the basic undead benefits. Unlike a typical zombie, you're not mindless. Reduce all your Speeds by 5 feet. Your fist loses the nonlethal trait. Because of its progressing state of decay, your body requires continual maintenance to remain at its best. Each day after your rest period, your body is due to natural decay. Additionally, some zombie abilities allow you to push for a greater effect in exchange for a chance of deteriorating your body. While your body is deteriorated, you're Slowed 1. You can spend 10 minutes checking and repairing your joints and other weak parts of your body to recover from deterioration. You can perform these repairs as part of your daily preparations. Because it's a natural result of your body's functions, you can't remove the slowed condition from deterioration through any other means. You crave the flesh of the living. You gain a jaws unarmed attack that deals 1d8 piercing damage. Your jaws are in the brawling group and have the unarmed trait. You can use your jaws Strike only against a creature that's grabbed or restrained by you.",
+   "clauses": 9,
+   "ourFields": [
+    "immunities",
+    "grantedStrikes"
+   ],
+   "foundryRules": [
+    "ActorTraits",
+    "Strike",
+    "ItemAlteration",
+    "Strike",
+    "FlatModifier",
+    "GrantItem"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "missing-system",
+   "id": "ascended-celestial-dedication",
+   "name": "Ascended Celestial Dedication",
+   "level": 12,
+   "text": "Your Calling has driven you to perform mortal deeds that will result in your ascension to the ranks of celestials. You're headstrong and determined and hardly waver in your resolve; once per hour, you can roll twice and use the higher result on a Will saving throw. If you ever become confused, rather than attack wildly, you become stubbornly immobile, wasting all your actions until the condition ends. Additionally, you emanate a nimbus of light. You shed bright light in a 30-foot radius (and dim light to the next 30 feet). You can suppress or reestablish this light as a single action that has the concentrate trait. As long as your nimbus is active, all allies in the area of your nimbus gain a +1 status bonus to saves against fear. You gain the Bless Ally action.",
+   "clauses": 5,
+   "ourFields": [
+    "limitedUses",
+    "grantsActions"
+   ],
+   "foundryRules": [
+    "GrantItem",
+    "RollOption",
+    "RollOption",
+    "ActiveEffectLike",
+    "Aura",
+    "TokenLight",
+    "RollTwice"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "missing-system",
+   "id": "adroit-manipulation",
+   "name": "Adroit Manipulation",
+   "level": 1,
+   "text": "**Access** Mihrini ethnicity --- You've fiddled with knots, locks, and blacksmith's puzzles since you were a child to give your hands something to do. You gain the trained proficiency rank in Thievery (or another skill of your choice, if you're already trained in Thievery). If you roll a success on a Thievery check to Pick a Lock, you get a critical success instead.",
+   "clauses": 2,
+   "ourFields": [
+    "choice"
+   ],
+   "foundryRules": [
+    "ActiveEffectLike",
+    "AdjustDegreeOfSuccess"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "missing-system",
+   "id": "adhyabhau",
+   "name": "Adhyabhau",
+   "level": 1,
+   "text": "You descend from the rare psychic vampires known as vetalaranas. Your forebear gained sustenance from the mental and emotional energy of living creatures, which manifests in you as powerful resistance to such effects. You gain a +1 circumstance bonus to Will saves against effects with the emotion trait, and when you roll a success on a saving throw against such an effect, you get a critical success instead.",
+   "clauses": 2,
+   "ourFields": [],
+   "foundryRules": [
+    "FlatModifier",
+    "Note",
+    "AdjustDegreeOfSuccess"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "two-source-clash",
+   "id": "eternal-blessing",
+   "name": "Eternal Blessing",
+   "level": 16,
+   "text": "Your deeds have brought your deity's grace to you for all of eternity. You're continuously surrounded by a Bless spell, with a spell rank equal to half your level (rounded up). The radius is 15 feet, and you can't increase it. You can Dismiss the spell; if you do, it returns automatically after 1 minute.",
+   "clauses": 3,
+   "ourFields": [],
+   "foundryRules": [
+    "RollOption",
+    "Aura"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "two-source-clash",
+   "id": "twirling-throw",
+   "name": "Twirling Throw",
+   "level": 4,
+   "text": "Your thrown weapons seem to defy physics as they soar through the air and spin back to you after a strike. Make a thrown weapon strike, ignoring the penalty for making ranged attacks within the second and third range increment. The weapon returns to your hand after the attack unless you critically failed on the attack roll.",
+   "clauses": 1,
+   "ourFields": [],
+   "foundryRules": [
+    "RollOption",
+    "RollOption",
+    "Note"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "two-source-clash",
+   "id": "natural-ambition",
+   "name": "Natural Ambition",
+   "level": 1,
+   "text": "You were raised to be ambitious and always reach for the stars, leading you to progress quickly in your chosen field. You gain a 1st-level class feat for your class. You must meet the prerequisites, but you can select the feat later in the character creation process in order to determine which prerequisites you meet.",
+   "clauses": 2,
+   "ourFields": [],
+   "foundryRules": [
+    "ChoiceSet",
+    "GrantItem"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "two-source-clash",
+   "id": "divine-health",
+   "name": "Divine Health",
+   "level": 2,
+   "text": "Your faith makes you resistant to disease, protecting you as you offer succor to the ill. You gain a +2 status bonus to saves against diseases and poisons and to flat checks to recover from persistent poison damage. Allies in your champion's aura get this benefit, but their bonus is +1. In addition, if you roll a success on a save against a disease or poison, you get a critical success instead. (Your allies don't share this benefit.) If you have the Sacred Body class feature, when you roll a critical failure on a save against a disease or poison, you get a failure instead.",
+   "clauses": 4,
+   "ourFields": [],
+   "foundryRules": [
+    "FlatModifier",
+    "AdjustDegreeOfSuccess",
+    "AdjustDegreeOfSuccess",
+    "Aura"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "two-source-clash",
+   "id": "juggler-dedication",
+   "name": "Juggler Dedication",
+   "level": 2,
+   "text": "You become trained in Performance; if you were already trained in Performance, you instead become trained in a skill of your choice. You also gain the Juggle skill feat, even if you don't meet its prerequisites. **Special** You cannot select another dedication feat until you have gained one other feat from the archetype.",
+   "clauses": 3,
+   "ourFields": [],
+   "foundryRules": [
+    "ActiveEffectLike",
+    "GrantItem"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "two-source-clash",
+   "id": "clever-improviser",
+   "name": "Clever Improviser",
+   "level": 5,
+   "text": "You've learned how to handle situations when you're out of your depth. You gain the Untrained Improvisation general feat. In addition, you can attempt skill actions that normally require you to be trained, even if you are untrained.",
+   "clauses": 3,
+   "ourFields": [],
+   "foundryRules": [
+    "GrantItem"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "two-source-clash",
+   "id": "cornered-fury",
+   "name": "Cornered Fury",
+   "level": 5,
+   "text": "If a foe of a larger size than you critically hits and damages you, that foe is off-guard to you for 1 round.",
+   "clauses": 0,
+   "ourFields": [],
+   "foundryRules": [
+    "Note"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "two-source-clash",
+   "id": "experienced-professional",
+   "name": "Experienced Professional",
+   "level": 1,
+   "text": "You carefully safeguard your professional endeavors to prevent disaster. When you use Lore to Earn Income, if you roll a critical failure, you instead get a failure. If you're an expert in Lore, you gain twice as much income from a failed check to Earn Income, unless it was originally a critical failure.",
+   "clauses": 2,
+   "ourFields": [],
+   "foundryRules": [
+    "Note",
+    "AdjustDegreeOfSuccess"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "guarded-domain",
+   "name": "Guarded Domain",
+   "level": 14,
+   "text": "You and your united companion have elected to become guardians of a particular location or domain. If you spend 1 week of downtime within a settlement or natural area with a 5-mile radius, you and your companion can become guardians of the area and consider it to be your guarded domain. Your guarded domain remains under your protection until you spend more than 1 month outside of your domain, after which you must spend another week of downtime to re-attune to your guarded domain. You can only have one guarded domain at a time, and selecting a new guarded domain immediately ends your protection over the previous guarded domain. If a creature has been in your guarded domain for at least 1 hour while you or your companion are also inside your domain, you or your companion can attempt to Gather Information about the target by spending 1 minute communing with the land or its residents. You attempt this check at mythic proficiency. In addition, once per day as a 3-action activity you can spend a Mythic Point to instantly teleport yourself and your united companion to a location you are aware of within your domain. This is a teleportation effect.",
+   "clauses": 4,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "thermal-nimbus",
+   "name": "Thermal Nimbus",
+   "level": 4,
+   "text": "You direct waves of warmth into or out of your kinetic gate to drastically shift the temperature around you. Choose cold or fire. You and allies in your kinetic aura gain resistance equal to your level to damage of that type. Any creature that starts its turn in your kinetic aura or moves into your aura during its turn takes damage. Elemental resistance from a gate junction is cumulative with resistance from Thermal Nimbus.",
+   "clauses": 3,
+   "ourFields": [
+    "effectChoices"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "elemental-evolution",
+   "name": "Elemental Evolution",
+   "level": 2,
+   "text": "The elemental power within you is more mutable and versatile than most. Choose a second damage type for your element. Whenever you Rage, you can choose that type instead of the damage type you would normally gain. The new damage type can be the one you did not choose when you selected the element initially if you had multiple options available for your element, or one of the following types: **air** cold **earth** poison **fire** cold **metal** electricity **water** acid **wood** poison.",
+   "clauses": 3,
+   "ourFields": [
+    "choice"
+   ],
+   "foundryRules": [
+    "ChoiceSet",
+    "RollOption",
+    "AdjustModifier"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "shame-the-sin",
+   "name": "Shame the Sin",
+   "level": 5,
+   "text": "**Frequency** once per hour **Trigger** You critically hit a demon with a Strike. --- Your conviction against the sins that all demons grow from is so strong that you can force a demon to suffer from its sins when you strike a sound blow against them. In addition to doing the normal damage for your critical hit, the demon also suffers the effects of its special vulnerability. If the demon has no special vulnerability, it instead takes an additional damage. This increases to 2d6 mental damage at 13th level and to 3d6 mental damage at 17th level.",
+   "clauses": 3,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "lore-seeker",
+   "name": "Lore Seeker",
+   "level": 8,
+   "text": "You see what others don't, and you've developed magical tricks to find hidden truth. You can cast Translate, Sound Body, and See the Unseen as innate spells, each once per day. If you could already cast spells, these spells are of the same tradition. Otherwise, they are arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells.",
+   "clauses": 3,
+   "ourFields": [
+    "innateSpells"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "march-of-law",
+   "name": "March of Law",
+   "level": 14,
+   "text": "**Frequency** once per round **Requirements** The target has attempted a hostile action against you since your previous turn. --- When faced with lawbreakers, you become almost unstoppable, and your purposeful steps instill terror. Stride toward the required target with a +10-foot status bonus to your Speeds and ignoring difficult terrain. If you end your movement adjacent to the required target, each enemy adjacent to you who saw your movement becomes Frightened 2. You can use March of Law while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type.",
+   "clauses": 4,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [
+    "ActiveEffectLike"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "divine-access",
+   "name": "Divine Access",
+   "level": 4,
+   "text": "Divine Access Source Advanced Player's Guide pg. 79 Your ability to tap into divine magic surpasses the spells traditionally available to you (the divine spell list). Choose one deity who grants one of your mystery's granted domains. Add up to three cleric spells of your choice granted by that deity to your spell list. You can select from these spells when you add or swap spells in your spell repertoire. Special You can select this feat more than once. You can't choose the same spells more than once, but you can choose a different domain or a different deity with the same domain you've previously selected with this feat.",
+   "clauses": 5,
+   "ourFields": [
+    "choice"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "guide-the-timeline",
+   "name": "Guide the Timeline",
+   "level": 6,
+   "text": "**Frequency** once per day --- You know the result you want and subtly nudge the timeline to your intended destination. Choose an ally or a foe. If you choose an ally, the next time within the next round that ally makes an attack roll or skill check, they roll it twice and take the higher result; this is a fortune effect. If you choose a foe, the next time within the next round that foe makes an attack roll or skill check, they must roll twice and take the lower result unless they succeed at a save against your chronoskimmer DC; this is a misfortune effect. Regardless of your choice, the target becomes temporarily immune for 24 hours.",
+   "clauses": 4,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "critter-shape",
+   "name": "Critter Shape",
+   "level": 1,
+   "text": "Once per hour, you can use Change Shape to enter a critter shape. While in critter shape, you gain the effect of a 1st-rank Pest Form, except you can only transform into an animal matching your inherent animal. You can remain in critter shape for up to 10 minutes, after which you transform back into your hybrid shape and can't enter your critter shape again for 1 hour. You can instead use Change Shape to return to your humanoid or hybrid shape at any time during the duration of Critter Shape. If your inherent animal is normally larger than Tiny, you transform into a smaller, younger version of the animal, such as a Tiny bear cub. If your inherent animal has a fly Speed, you can turn into that animal (unlike normal for 1st-rank *pest form*), but you still don't gain a fly Speed.",
+   "clauses": 5,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "on-my-best-day",
+   "name": "On My Best Day",
+   "level": 18,
+   "text": "**Frequency** once per hour --- Be they in your current life or your previous one, you've had many heroic moments that continue to inspire you. Even past failures or humiliations can become a source of inspiration—or at least, an opportunity to make up for a past error on this new day. Attempt an Incarnation Lore check against a very hard DC of your level. --- **Critical Success** You gain a +3 status bonus to AC and resistance to physical damage equal to your level until the end of your next turn. You can Sustain this effect for up to 1 minute. **Success** As critical success, but the status bonus is +2 and the resistance is equal to half your level. **Failure** You gain a +1 status bonus to AC until the end of your next turn. **Critical Failure** You gain a +1 status bonus to AC against the next attack made against you until the end of your next turn.",
+   "clauses": 6,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "explicit-single",
+   "id": "minor-omen",
+   "name": "Minor Omen",
+   "level": 8,
+   "text": "**Frequency** once per day **Trigger** You fail a Reflex save. **Requirements** You can see the night sky. --- The stars warn you of danger in the nick of time. Reroll the failed save and use the new result.",
+   "clauses": 1,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "explicit-single",
+   "id": "wyrmling-flight",
+   "name": "Wyrmling Flight",
+   "level": 17,
+   "text": "Your draconic wings have grown large and strong enough for flight. You gain a fly Speed equal to your Speed, using your wings to stay aloft.",
+   "clauses": 1,
+   "ourFields": [
+    "speeds"
+   ],
+   "foundryRules": [
+    "BaseSpeed"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "explicit-single",
+   "id": "devout-blessing",
+   "name": "Devout Blessing",
+   "level": 6,
+   "text": "You gain the blessing of the devoted class feature, choosing from the listed blessings or any other to which you have access.",
+   "clauses": 1,
+   "ourFields": [
+    "choice"
+   ],
+   "foundryRules": [
+    "ActiveEffectLike",
+    "ChoiceSet",
+    "GrantItem"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "explicit-single",
+   "id": "advanced-targeting-system",
+   "name": "Advanced Targeting System",
+   "level": 5,
+   "text": "Your ocular processors are augmented with advanced targeting systems, which allow you to more easily pinpoint your enemy and read their movements. You can cast Sure Strike once per day as a 1st-rank arcane innate spell.",
+   "clauses": 1,
+   "ourFields": [
+    "innateSpells"
+   ],
+   "foundryRules": [
+    "ItemAlteration",
+    "ItemAlteration"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "explicit-single",
+   "id": "unbowed-unbroken",
+   "name": "Unbowed, Unbroken",
+   "level": 1,
+   "text": "Your connection to elemental wood manifests as resilience—towering trees, rough bark, deep roots, and patient determination. You gain the Unwavering Resilience reaction.",
+   "clauses": 1,
+   "ourFields": [
+    "grantsActions"
+   ],
+   "foundryRules": [
+    "GrantItem"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "explicit-single",
+   "id": "constant-levitation",
+   "name": "Constant Levitation",
+   "level": 16,
+   "text": "Your power has unbound you from the earth below. You're affected by a constant Fly spell, and when your Psyche is Unleashed, you gain a +10-foot status bonus to your fly Speed.",
+   "clauses": 1,
+   "ourFields": [
+    "speeds"
+   ],
+   "foundryRules": [
+    "FlatModifier"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "explicit-single",
+   "id": "quick-recognition",
+   "name": "Quick Recognition",
+   "level": 7,
+   "text": "You Recognize Spells swiftly. Once per round, you can Recognize a Spell using a skill in which you're a master as a free action.",
+   "clauses": 1,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [
+    "ItemAlteration"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "explicit-single",
+   "id": "swimming-poppet",
+   "name": "Swimming Poppet",
+   "level": 5,
+   "text": "Your fins, flippers, or other accessories assist with steering you through water. You gain a swim Speed of 15 feet.",
+   "clauses": 1,
+   "ourFields": [
+    "speeds"
+   ],
+   "foundryRules": [
+    "BaseSpeed"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "choice",
+   "id": "blood-and-spirit",
+   "name": "Blood and Spirit",
+   "level": 5,
+   "text": "Your connection to the divine has sanctified your blood, but the power only manifests when you are shedding it. Choose holy or unholy. While you are taking persistent bleed damage, you can Interact to coat a piercing or slashing weapon you're wielding with your blood. Until the end of your turn, your Strikes with that weapon deal an additional 1d6 spirit damage with the chosen trait to creatures with the opposing trait. Alternatively, you can deal 1d6 damage to yourself (which can't be resisted in any way) as part of that Interact action if you aren't taking persistent bleed damage.",
+   "clauses": 4,
+   "ourFields": [
+    "choice"
+   ],
+   "foundryRules": [
+    "ChoiceSet"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "choice",
+   "id": "precious-alloys",
+   "name": "Precious Alloys",
+   "level": 5,
+   "text": "Choose cold iron or silver. Your melee unarmed attacks have the special properties of a weapon made of that metal. If you are at least 13th level, you can choose adamantine instead of just cold iron or silver. --- **Special** You can take this ancestry feat multiple times, choosing a different metal each time.",
+   "clauses": 3,
+   "ourFields": [
+    "choice"
+   ],
+   "foundryRules": [
+    "ChoiceSet",
+    "AdjustStrike"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "choice",
+   "id": "domain-fluency",
+   "name": "Domain Fluency",
+   "level": 12,
+   "text": "You command a deep understanding of the domains related to your mystery. Choose one of the domains associated with your mystery for which you have an initial domain spell. You gain an advanced domain spell from that domain, which you cast as a revelation spell.",
+   "clauses": 2,
+   "ourFields": [
+    "effectChoices"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "choice",
+   "id": "hybrid-study-spell",
+   "name": "Hybrid Study Spell",
+   "level": 4,
+   "text": "Gain the conflux spell from a hybrid study of your choice. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by studying your spellbook and performing a physical regimen. You don't gain any of the hybrid study's other benefits.",
+   "clauses": 3,
+   "ourFields": [
+    "effectChoices"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "choice",
+   "id": "energized-spark",
+   "name": "Energized Spark",
+   "level": 1,
+   "text": "The energy of your spirit manifests as crackling lightning, the chill of winter, or the power of an element. Choose one of the following traits: air (slashing), cold, earth (bludgeoning), electricity, fire, metal (slashing), poison, sonic, vitality, void, water (bludgeoning), or wood (piercing). You can choose for any spirit damage dealt by your exemplar abilities to instead gain the trait and deal the corresponding damage type. --- **Special** You can select this feat multiple times, choosing a different damage type each time.",
+   "clauses": 3,
+   "ourFields": [
+    "choice"
+   ],
+   "foundryRules": [
+    "ChoiceSet",
+    "RollOption",
+    "DamageAlteration"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": true,
+   "role": "test"
+  },
+  {
+   "stratum": "inert",
+   "id": "fishblooded",
+   "name": "Fishblooded",
+   "level": 5,
+   "text": "There's nothing beneath the waves that can slow you down. When in an aquatic environment, you ignore difficult terrain. In addition, swimming up or down isn't difficult terrain for you.",
+   "clauses": 0,
+   "ourFields": [],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "inert",
+   "id": "pheromonal-message",
+   "name": "Pheromonal Message",
+   "level": 1,
+   "text": "Your communicative pheromones are particularly well developed from years of living with other athamarus. You send a brief message to one ally within 60 feet, or 120 feet in water. No other creature can understand the message. The message must be short and simple, and can't convey ideas that would require complex or novel wording if spoken, such a creature's name or proper nouns.",
+   "clauses": 0,
+   "ourFields": [],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "inert",
+   "id": "robust-recovery",
+   "name": "Robust Recovery",
+   "level": 2,
+   "text": "You learned folk medicine to help recover from diseases and poison, and using it diligently has made you especially resilient. When you Treat a Disease or a Poison, or someone else uses one of these actions on you, increase the circumstance bonus granted on a success to +4, and if the result of the patient's saving throw is a success, the patient gets a critical success.",
+   "clauses": 1,
+   "ourFields": [],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "inert",
+   "id": "inspire-imitation",
+   "name": "Inspire Imitation",
+   "level": 5,
+   "text": "Your actions inspire your allies to great achievements. Whenever you critically succeed at a skill check, you automatically qualify to use the Aid reaction when attempting to help an ally using the same skill, even without spending an action to prepare to do so.",
+   "clauses": 0,
+   "ourFields": [],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "inert",
+   "id": "vantage-shot",
+   "name": "Vantage Shot",
+   "level": 8,
+   "text": "You and your spotter take advantage of each other's attacks to momentarily hide and throw your foes off-balance against your follow-up attack. When you successfully Strike a foe using a crossbow or firearm, your spotter can use a reaction to attempt a Stealth check against the foe's Perception DC. On a success, the foe is off-guard against the spotter's next attack before the end of your spotter's next turn. Similarly, when your spotter successfully makes a ranged Strike against a foe, you can use a reaction to attempt a Stealth check against the foe's Perception DC. On a success, the foe is off-guard against your next attack against them before the end of your next turn.",
+   "clauses": 1,
+   "ourFields": [],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "inert",
+   "id": "energetic-resonance",
+   "name": "Energetic Resonance",
+   "level": 6,
+   "text": "**Trigger** You would take acid, cold, electricity, fire, or sonic damage from a spell. **Requirements** You have an unexpended spell slot of a rank equal to or higher than the triggering spell. --- Your blood resonates with magical energy, mitigating the effects of harmful spells. Expend one of your spell slots of a rank equal to or higher than that of the triggering spell. You gain resistance to one of the triggering effect's damage types equal to twice the expended spell slot's rank.",
+   "clauses": 1,
+   "ourFields": [],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  }
+ ]
+}

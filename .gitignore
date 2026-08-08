@@ -49,6 +49,16 @@ public/core.foundry-backup.json
 scripts/audit/*
 !scripts/audit/ast-coverage.mjs
 !scripts/audit/ast-artifacts.mjs
+# Feat-audit INPUTS and RESULTS are durable and must survive. The frozen sample is only meaningful if
+# it never changes, and the extraction/verification outputs cost real tokens to reproduce. The large
+# derived files (feat-500-evidence.json, gold-text-only.json) stay ignored — both regenerate in minutes.
+!scripts/audit/feat-500.json
+!scripts/audit/feat-text-defects.json
+!scripts/audit/lane-gaps.json
+!scripts/audit/gold-candidates.json
+!scripts/audit/gold-freetext.json
+!scripts/audit/residual-findings.json
+!scripts/audit/bakeoff.js
 scripts/aon-verify/
 tmptest/
 
