@@ -59,6 +59,7 @@ scripts/audit/*
 !scripts/audit/gold-freetext.json
 !scripts/audit/residual-findings.json
 !scripts/audit/bakeoff.js
+!scripts/audit/system-candidates.json
 scripts/aon-verify/
 tmptest/
 
