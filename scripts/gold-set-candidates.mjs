@@ -67,6 +67,41 @@ const clauseCount = (t) => t.split(/(?<=[.!?])\s+/).filter((s) => MECH_VERB.test
 /* Rules-ambiguity markers — these belong in the hard-cases pile, not the measuring stick. */
 const AMBIGUOUS = /\bGM\b|at the GM's|as appropriate|reasonable|you might|could be|circumstances|the GM determines|if the GM/i;
 
+/**
+ * ⚠ TRUE-NEGATIVE CONTROLS — rebuilt 2026-08-11, the first version was selected BACKWARDS.
+ *
+ * It picked feats where our app carries nothing AND Foundry carries nothing, on the theory that
+ * meant "needs nothing". It does not: it correlates with UNBUILT. Robust Recovery increases a
+ * circumstance bonus, Energetic Resonance is a reaction that spends a spell slot for resistance,
+ * Pheromonal Message is an action. None was inert, so the gold set had no way to punish over-flagging
+ * — half of what a control is for.
+ *
+ * Inertness is a property of the TEXT, and after the owner's rulings it has a precise definition: a
+ * feat whose every mechanical clause lands on someone else's sheet. Ruling F settles it — "if its an
+ * effect the effects a teamate and not you then dont do anything" — as does the target-side ruling
+ * ("this dosent need to have an effect the player will tel the gm"). A correct reader returns ZERO
+ * requirements for these; anything it returns is over-flagging, which is exactly what we need to measure.
+ *
+ * HAND-PICKED, and deliberately not regex-selected. Two automated attempts both failed: the second
+ * offered Familiar's Resolve ("you OR an ally… gain +2"— includes you), Powder Punch Stance (a stance
+ * dealing your own extra damage) and Distracting Performance (a skill substitution on your sheet).
+ * The distinctions that matter — does the sentence include YOU, is the feat itself an action — are
+ * not reliably detectable by pattern, and a wrong control is worse than no control because it
+ * punishes a reader for being right.
+ *
+ * Each of these six was read in full. Every mechanical clause lands on an ally or an enemy, none has
+ * an action cost (an action would itself be a `grantsAction` requirement), and none contains a
+ * first-person mechanical gain. A correct reader returns ZERO requirements for all six.
+ */
+const INERT_CONTROLS = [
+  'resilient-touch',      // an ally who recovers HP from your Lay on Hands gains +1 status to saves
+  'amplifying-touch',     // that ally gains +1 to attack rolls and 1 extra spirit damage
+  'healing-sanctuary',    // an ally beginning their turn in your aura gains 10 temporary HP
+  'fortunate-blow',       // the next creature OTHER THAN YOU to attack the target benefits
+  'phalanx-formation',    // you don't provide lesser cover to enemies against your allies' attacks
+  'masterminds-eye',      // the identified creature is off-guard — a condition on the ENEMY
+];
+
 const rows = [];
 for (const [id, rec] of Object.entries(core.feats ?? {})) {
   if (!rec?.name || hidden.has(id) || id.startsWith('aon-') || rec.edition === 'superseded' || textDefects.has(id)) continue;
@@ -108,7 +143,7 @@ const strata = {
   'multi-clause': pick(usable.filter((r) => r.clauses >= 3 && r.ourFields.length), 10, used),
   'explicit-single': pick(usable.filter((r) => r.clauses === 1 && r.text.length < 220 && r.ourFields.length), 8, used),
   choice: pick(usable.filter((r) => r.ourFields.includes('choice') || r.ourFields.includes('effectChoices')), 5, used),
-  inert: pick(usable.filter((r) => !r.foundryRules.length && !r.ourFields.length && r.clauses <= 1), 6, used),
+  inert: INERT_CONTROLS.map((id) => { used.add(id); return rows.find((r) => r.id === id); }).filter(Boolean),
 };
 
 const total = Object.values(strata).flat().length;

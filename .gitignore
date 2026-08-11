@@ -60,6 +60,8 @@ scripts/audit/*
 !scripts/audit/residual-findings.json
 !scripts/audit/bakeoff.js
 !scripts/audit/system-candidates.json
+!scripts/audit/gold-extraction.json
+!scripts/audit/gold-answer-key.json
 scripts/aon-verify/
 tmptest/
 

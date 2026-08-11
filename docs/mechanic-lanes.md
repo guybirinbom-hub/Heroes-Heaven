@@ -148,11 +148,81 @@ are empty.
 
 ---
 
+## ⚠⚠ DECIDED SCOPE — the owner has already ruled on these
+
+**Read this before deciding anything is missing.** These are the project owner's own decisions, quoted
+from `work/rulings/DECISIONS.md` and `DECISIONS-round2.md`. They are settled policy, not gaps.
+
+This section exists because it was skipped once. Readers who had never seen the rulings produced 183
+"unexpressible" requirements; clustering them proposed 108 new systems, and adversarial pruning killed
+106 — **85 because an existing lane or a standing ruling already covered it.** Without this section
+roughly five in six audit findings are noise.
+
+### Ruling F + N — an effect landing on SOMEONE ELSE is not your sheet's problem
+> *"if its an effect the effects a teamate and not you then dont do anything"*
+
+A bonus that goes to a teammate → **nothing on your sheet.** No star, no modifier; the record's own
+description already tells the player what the ally gets. If it runs for a limited time, the character
+who activated it gets a **display-only mode** so they can see it running; it changes none of their
+numbers. Target-side numbers the app does not model — the target's AC, cover — get no surface either:
+*"this dosent need to have an effect the player will tel the gm"*.
+
+**So do not report "the ally's bonus never reaches them" as a defect.** That is the specified behaviour.
+
+### ★ Companions — a companion's bonus marks the COMPANION, not you
+> *"about items that effect the familer they need to be in the inventory of it… instead of your inventory"*
+
+"Familiar" means every companion type. A companion item's bonus belongs on the companion's stat block
+and the item in the companion's inventory. Absence from the character's sheet is correct.
+
+### Ruling M — an aura you might not be standing in
+Whether an emanation includes you depends on where you stand, **which the app can never know.** The
+owner chose a permanent star carrying the positional condition in its note — not a mode, not a pill,
+and emphatically not a positional model. **Auras are not a missing system.**
+
+### Ruling E — consumables, in three cases
+1. instantaneous only (a healing potion) → **no mode at all**
+2. ongoing and it changes sheet numbers → mode **with** real modifiers
+3. ongoing but changes no numbers (fast healing, persistent damage, "you are concealed") →
+   **display-only** mode
+
+**HP and damage never move sheet stats, even inside a mode.** Do not flag a healing effect for failing
+to change a stat.
+
+### Ruling D — a bonus with no stat row attaches to the THING IT MODIFIES
+Not a new generic stat surface, and not the nearest roll. The marker goes on the **action** or the
+**condition**, value inline in parentheses, `*` linking to the source — Magic Hands marks Treat Wounds,
+Black Powder Boost marks Leap, The Survivor marks the Dying condition.
+
+**DC-only:** a SAVE DC gets an entry in that save's breakdown, worded to say it hits the DC not the
+check, star beside the DC. A **skill DC gets no surface at all** — the player remembers.
+
+### Rulings A, B, C, G, H, I — how a situational bonus is shaped
+- **A** — umbrella/summary records get no entries and are hidden from pickers.
+- **B** — a flat bonus the rules restrict belongs in `situational` with the restriction in its `when`,
+  **not** in `passiveEffects`. A restricted bonus sitting outside the stat total is correct.
+- **C** — a bonus named after an ACTION stars **every skill that could perform it**, not just one.
+- **G** — the mark lives on the thing you are looking at when it matters; a set or upgrade **replaces**
+  the entry it upgrades rather than sitting beside it.
+- **H** — where the rules are open, **stay open**: star everything plausible, printed trigger in the
+  note. Narrowing it would put a ruling on the sheet dressed as the book's. Notes cap at about one
+  line with a click-through to the full text.
+- **I** — where the rules name no trigger, star **nothing**. The general answer to "the app can't
+  express this" is the item editor's **Advanced** section, where the player authors their own marker
+  targeting anything under any condition — rather than the app guessing a mapping.
+
+### ★ Stacking, as displayed
+Same bonus type and an identical `when` → show only the highest. Different `when` → show both. No
+attempt to reason about whether two differently-worded triggers overlap.
+
+---
+
 ## NOT lanes — do not classify these as mechanical
 
 The overwhelming majority of prose is one of these. Getting this list right is what keeps the
 candidate pile small enough to act on.
 
+- **Anything covered by the DECIDED SCOPE section above.**
 - Flavour, lore, history, appearance.
 - Anything the GM adjudicates: exploration outcomes, social consequences, narrative access,
   "the GM determines…".

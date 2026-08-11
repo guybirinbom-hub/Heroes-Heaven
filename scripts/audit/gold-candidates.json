@@ -8,10 +8,10 @@
    "wyrmling-flight",
    "devout-blessing",
    "advanced-targeting-system",
-   "guarded-domain",
-   "thermal-nimbus",
-   "fishblooded",
-   "pheromonal-message"
+   "guerrilla-dedication",
+   "the-truth-as-i-see-it",
+   "resilient-touch",
+   "amplifying-touch"
   ],
   "test": [
    "branched-tree-of-pain",
@@ -21,34 +21,34 @@
    "adroit-manipulation",
    "adhyabhau",
    "eternal-blessing",
-   "twirling-throw",
+   "twitchy",
    "natural-ambition",
    "divine-health",
-   "juggler-dedication",
+   "jotunborn-weapon-familiarity",
    "clever-improviser",
    "cornered-fury",
    "experienced-professional",
-   "elemental-evolution",
-   "shame-the-sin",
+   "elemental-eyes",
+   "shape-of-the-cloud-dragon",
    "lore-seeker",
-   "march-of-law",
+   "marshal-dedication",
    "divine-access",
-   "guide-the-timeline",
+   "gunslinger-dedication",
    "critter-shape",
-   "on-my-best-day",
+   "one-among-the-masses",
    "unbowed-unbroken",
    "constant-levitation",
    "quick-recognition",
    "swimming-poppet",
    "blood-and-spirit",
-   "precious-alloys",
+   "primal-dragonblood",
    "domain-fluency",
-   "hybrid-study-spell",
-   "energized-spark",
-   "robust-recovery",
-   "inspire-imitation",
-   "vantage-shot",
-   "energetic-resonance"
+   "improbable-elixirs",
+   "endless-memories",
+   "healing-sanctuary",
+   "fortunate-blow",
+   "phalanx-formation",
+   "masterminds-eye"
   ]
  },
  "candidates": [
@@ -196,16 +196,18 @@
   },
   {
    "stratum": "two-source-clash",
-   "id": "twirling-throw",
-   "name": "Twirling Throw",
-   "level": 4,
-   "text": "Your thrown weapons seem to defy physics as they soar through the air and spin back to you after a strike. Make a thrown weapon strike, ignoring the penalty for making ranged attacks within the second and third range increment. The weapon returns to your hand after the attack unless you critically failed on the attack roll.",
-   "clauses": 1,
+   "id": "twitchy",
+   "name": "Twitchy",
+   "level": 1,
+   "text": "You are naturally suspicious and wary of danger, especially when you suspect someone might be leading you into an ambush. You gain a +1 circumstance bonus to AC and saves against hazards, and to all of your initiative rolls. If at least one of your opponents is using Deception or Diplomacy to determine their initiative, your bonus to initiative from this feat increases to +4.",
+   "clauses": 3,
    "ourFields": [],
    "foundryRules": [
     "RollOption",
     "RollOption",
-    "Note"
+    "FlatModifier",
+    "AdjustModifier",
+    "FlatModifier"
    ],
    "ambiguous": false,
    "needsMissingSystem": false,
@@ -250,15 +252,15 @@
   },
   {
    "stratum": "two-source-clash",
-   "id": "juggler-dedication",
-   "name": "Juggler Dedication",
-   "level": 2,
-   "text": "You become trained in Performance; if you were already trained in Performance, you instead become trained in a skill of your choice. You also gain the Juggle skill feat, even if you don't meet its prerequisites. **Special** You cannot select another dedication feat until you have gained one other feat from the archetype.",
-   "clauses": 3,
+   "id": "jotunborn-weapon-familiarity",
+   "name": "Jotunborn Weapon Familiarity",
+   "level": 1,
+   "text": "You gain access to all uncommon weapons with the jotunborn trait. You have familiarity with weapons with the jotunborn trait plus the bola, greataxe, halberd, maul, longspear, and war flail—for the purpose of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons.",
+   "clauses": 1,
    "ourFields": [],
    "foundryRules": [
-    "ActiveEffectLike",
-    "GrantItem"
+    "MartialProficiency",
+    "MartialProficiency"
    ],
    "ambiguous": false,
    "needsMissingSystem": false,
@@ -316,65 +318,67 @@
   },
   {
    "stratum": "multi-clause",
-   "id": "guarded-domain",
-   "name": "Guarded Domain",
-   "level": 14,
-   "text": "You and your united companion have elected to become guardians of a particular location or domain. If you spend 1 week of downtime within a settlement or natural area with a 5-mile radius, you and your companion can become guardians of the area and consider it to be your guarded domain. Your guarded domain remains under your protection until you spend more than 1 month outside of your domain, after which you must spend another week of downtime to re-attune to your guarded domain. You can only have one guarded domain at a time, and selecting a new guarded domain immediately ends your protection over the previous guarded domain. If a creature has been in your guarded domain for at least 1 hour while you or your companion are also inside your domain, you or your companion can attempt to Gather Information about the target by spending 1 minute communing with the land or its residents. You attempt this check at mythic proficiency. In addition, once per day as a 3-action activity you can spend a Mythic Point to instantly teleport yourself and your united companion to a location you are aware of within your domain. This is a teleportation effect.",
-   "clauses": 4,
-   "ourFields": [
-    "limitedUses"
-   ],
-   "foundryRules": [],
-   "ambiguous": false,
-   "needsMissingSystem": false,
-   "realFoundryMechanic": false,
-   "role": "exemplar"
-  },
-  {
-   "stratum": "multi-clause",
-   "id": "thermal-nimbus",
-   "name": "Thermal Nimbus",
-   "level": 4,
-   "text": "You direct waves of warmth into or out of your kinetic gate to drastically shift the temperature around you. Choose cold or fire. You and allies in your kinetic aura gain resistance equal to your level to damage of that type. Any creature that starts its turn in your kinetic aura or moves into your aura during its turn takes damage. Elemental resistance from a gate junction is cumulative with resistance from Thermal Nimbus.",
-   "clauses": 3,
-   "ourFields": [
-    "effectChoices"
-   ],
-   "foundryRules": [],
-   "ambiguous": false,
-   "needsMissingSystem": false,
-   "realFoundryMechanic": false,
-   "role": "exemplar"
-  },
-  {
-   "stratum": "multi-clause",
-   "id": "elemental-evolution",
-   "name": "Elemental Evolution",
+   "id": "guerrilla-dedication",
+   "name": "Guerrilla Dedication",
    "level": 2,
-   "text": "The elemental power within you is more mutable and versatile than most. Choose a second damage type for your element. Whenever you Rage, you can choose that type instead of the damage type you would normally gain. The new damage type can be the one you did not choose when you selected the element initially if you had multiple options available for your element, or one of the following types: **air** cold **earth** poison **fire** cold **metal** electricity **water** acid **wood** poison.",
-   "clauses": 3,
+   "text": "You're skilled in subtle tactics and using the environment against your enemies. You become trained in your choice of Deception or Thievery; if you are already trained in both, you become an expert in one instead. When you take this dedication, choose a single, discrete urban or wilderness location, such as \"Mzali\" or \"the Verduran Forest\"; this becomes your favored location. When you are in this location and undetected by all enemies, you can Sneak without attempting a Stealth check as long as you move no more than half your Speed. During exploration, this also allows you to automatically approach within 15 feet of other creatures while Avoiding their Notice, as long as they aren't actively Searching or on guard. You can change your favored location by spending 1 week of downtime in the new location you would like to set as your favored location.",
+   "clauses": 5,
    "ourFields": [
     "choice"
    ],
    "foundryRules": [
     "ChoiceSet",
-    "RollOption",
-    "AdjustModifier"
+    "ActiveEffectLike",
+    "ActiveEffectLike",
+    "ActiveEffectLike",
+    "ActiveEffectLike"
    ],
    "ambiguous": false,
    "needsMissingSystem": false,
    "realFoundryMechanic": true,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "the-truth-as-i-see-it",
+   "name": "The Truth as I See it",
+   "level": 10,
+   "text": "Your knack for spinning a believable reality from threads of story is so practiced that sometimes even you begin to believe what you're saying. When you use Deception to Lie, you can carefully structure your deceits so that each individual statement you make is the truth, from a certain perspective. Once per day when using Deception to Lie, you can roll twice and take the better result. This is a fortune effect. You don't take a penalty to Deception checks while subject to the ring of truth spell or similar effects. Whenever you are subject to ring of truth or a similar effect, you can attempt a Deception check when you first begin speaking to counteract the spell's effects, with a counteract rank equal to half your level (rounded up); succeeding at this check doesn't end the spell or effect, but it does cause it to indicate that you are speaking the truth, even when you are actually lying.",
+   "clauses": 5,
+   "ourFields": [
+    "limitedUses"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "exemplar"
+  },
+  {
+   "stratum": "multi-clause",
+   "id": "elemental-eyes",
+   "name": "Elemental Eyes",
+   "level": 1,
+   "text": "You can see in the darkness as easily as an elemental. You gain darkvision. --- **Special** You can select this feat only at 1st level, and you can't retrain into or out of this feat.",
+   "clauses": 3,
+   "ourFields": [
+    "senses"
+   ],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
    "role": "test"
   },
   {
    "stratum": "multi-clause",
-   "id": "shame-the-sin",
-   "name": "Shame the Sin",
-   "level": 5,
-   "text": "**Frequency** once per hour **Trigger** You critically hit a demon with a Strike. --- Your conviction against the sins that all demons grow from is so strong that you can force a demon to suffer from its sins when you strike a sound blow against them. In addition to doing the normal damage for your critical hit, the demon also suffers the effects of its special vulnerability. If the demon has no special vulnerability, it instead takes an additional damage. This increases to 2d6 mental damage at 13th level and to 3d6 mental damage at 17th level.",
-   "clauses": 3,
+   "id": "shape-of-the-cloud-dragon",
+   "name": "Shape of the Cloud Dragon",
+   "level": 14,
+   "text": "You've discovered how to transform yourself into a cloud dragon. Once per day, you can cast 7th-rank Dragon Form as an innate arcane spell, transforming into a cloud dragon. The spell automatically heightens to 8th level if you're 16th level and 9th rank if you're 18th level. On a critical hit with an unarmed Strike gained from dragon form, you recharge the spell's breath weapon immediately. While in this form, you gain the following cloud dragon-specific abilities: - **Cloud** cloud walk (you can walk on clouds or fog); **Melee** 1 jaws, **Damage** 2d10 piercing plus 1d12 electricity; - **Melee** 1 claw (agile), **Damage** 3d10 slashing; - **Melee** 1 tail (reach 10 feet), **Damage** 3d10 bludgeoning; - **Melee** 1 horn (reach 10 feet), **Damage** 3d8 piercing; - Breath Weapon , 6d12 electricity. --- **Special** You can use this feat in place of Shape of the Dragon to fulfill feat requirements.",
+   "clauses": 4,
    "ourFields": [
-    "limitedUses"
+    "innateSpells"
    ],
    "foundryRules": [],
    "ambiguous": false,
@@ -400,20 +404,25 @@
   },
   {
    "stratum": "multi-clause",
-   "id": "march-of-law",
-   "name": "March of Law",
-   "level": 14,
-   "text": "**Frequency** once per round **Requirements** The target has attempted a hostile action against you since your previous turn. --- When faced with lawbreakers, you become almost unstoppable, and your purposeful steps instill terror. Stride toward the required target with a +10-foot status bonus to your Speeds and ignoring difficult terrain. If you end your movement adjacent to the required target, each enemy adjacent to you who saw your movement becomes Frightened 2. You can use March of Law while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have the corresponding movement type.",
-   "clauses": 4,
+   "id": "marshal-dedication",
+   "name": "Marshal Dedication",
+   "level": 2,
+   "text": "You've combined your social skills and combat training to become a talented combat leader. Choose Diplomacy or Intimidation. You become trained in that skill or become an expert if you were already trained in it. In addition, you're surrounded by a marshal's aura in a . Your aura has the emotion, mental, and visual traits and grants you and allies within the aura a +1 status bonus to saving throws against fear.",
+   "clauses": 5,
    "ourFields": [
-    "limitedUses"
+    "choice"
    ],
    "foundryRules": [
+    "Aura",
+    "ChoiceSet",
+    "ActiveEffectLike",
+    "ActiveEffectLike",
+    "ActiveEffectLike",
     "ActiveEffectLike"
    ],
    "ambiguous": false,
-   "needsMissingSystem": false,
-   "realFoundryMechanic": false,
+   "needsMissingSystem": true,
+   "realFoundryMechanic": true,
    "role": "test"
   },
   {
@@ -434,18 +443,22 @@
   },
   {
    "stratum": "multi-clause",
-   "id": "guide-the-timeline",
-   "name": "Guide the Timeline",
-   "level": 6,
-   "text": "**Frequency** once per day --- You know the result you want and subtly nudge the timeline to your intended destination. Choose an ally or a foe. If you choose an ally, the next time within the next round that ally makes an attack roll or skill check, they roll it twice and take the higher result; this is a fortune effect. If you choose a foe, the next time within the next round that foe makes an attack roll or skill check, they must roll twice and take the lower result unless they succeed at a save against your chronoskimmer DC; this is a misfortune effect. Regardless of your choice, the target becomes temporarily immune for 24 hours.",
-   "clauses": 4,
+   "id": "gunslinger-dedication",
+   "name": "Gunslinger Dedication",
+   "level": 2,
+   "text": "You excel in using specific types of ranged weapons. You have familiarity with martial crossbows and firearms, treating them as simple weapons for the purposes of proficiency. You gain access to uncommon martial and simple crossbows and firearms that do not have an ancestry trait. You become trained in gunslinger class DC. Choose a gunslinger way. You become trained in your way's associated skill; if you were already trained in this skill, you become trained in a skill of your choice. You don't gain any other abilities from your choice of way.",
+   "clauses": 5,
    "ourFields": [
-    "limitedUses"
+    "choice"
    ],
-   "foundryRules": [],
+   "foundryRules": [
+    "ChoiceSet",
+    "GrantItem",
+    "MartialProficiency"
+   ],
    "ambiguous": false,
    "needsMissingSystem": false,
-   "realFoundryMechanic": false,
+   "realFoundryMechanic": true,
    "role": "test"
   },
   {
@@ -466,18 +479,21 @@
   },
   {
    "stratum": "multi-clause",
-   "id": "on-my-best-day",
-   "name": "On My Best Day",
-   "level": 18,
-   "text": "**Frequency** once per hour --- Be they in your current life or your previous one, you've had many heroic moments that continue to inspire you. Even past failures or humiliations can become a source of inspiration—or at least, an opportunity to make up for a past error on this new day. Attempt an Incarnation Lore check against a very hard DC of your level. --- **Critical Success** You gain a +3 status bonus to AC and resistance to physical damage equal to your level until the end of your next turn. You can Sustain this effect for up to 1 minute. **Success** As critical success, but the status bonus is +2 and the resistance is equal to half your level. **Failure** You gain a +1 status bonus to AC until the end of your next turn. **Critical Failure** You gain a +1 status bonus to AC against the next attack made against you until the end of your next turn.",
-   "clauses": 6,
+   "id": "one-among-the-masses",
+   "name": "One Among The Masses",
+   "level": 14,
+   "text": "It will take more than a gathered mass of foes to take you down. You gain resistance equal to your level to damage dealt by swarms, troops, and creatures who occupy the same space as you. In addition, you can briefly menace large groups of enemies to step aside. You gain the Overawe Crowd activity.",
+   "clauses": 3,
    "ourFields": [
-    "limitedUses"
+    "grantsActions",
+    "resistances"
    ],
-   "foundryRules": [],
+   "foundryRules": [
+    "GrantItem"
+   ],
    "ambiguous": false,
    "needsMissingSystem": false,
-   "realFoundryMechanic": false,
+   "realFoundryMechanic": true,
    "role": "test"
   },
   {
@@ -645,21 +661,20 @@
   },
   {
    "stratum": "choice",
-   "id": "precious-alloys",
-   "name": "Precious Alloys",
-   "level": 5,
-   "text": "Choose cold iron or silver. Your melee unarmed attacks have the special properties of a weapon made of that metal. If you are at least 13th level, you can choose adamantine instead of just cold iron or silver. --- **Special** You can take this ancestry feat multiple times, choosing a different metal each time.",
-   "clauses": 3,
+   "id": "primal-dragonblood",
+   "name": "Primal Dragonblood",
+   "level": 1,
+   "text": "A dragon with a deep connection to the natural world, such as an adamantine dragon or a horned dragon, resides somewhere on your family tree. You tend to trust your instincts and might take on the role of a protector of the wilderness. You gain the trained proficiency rank in Nature. If you would automatically become trained in Nature (from your background or class, for example), you instead become trained in a skill of your choice. You can use Nature to Sense Direction and Subsist in the wilds. If you choose a draconic exemplar, you must choose a primal dragon.",
+   "clauses": 4,
    "ourFields": [
     "choice"
    ],
    "foundryRules": [
-    "ChoiceSet",
-    "AdjustStrike"
+    "ActiveEffectLike"
    ],
    "ambiguous": false,
    "needsMissingSystem": false,
-   "realFoundryMechanic": true,
+   "realFoundryMechanic": false,
    "role": "test"
   },
   {
@@ -680,13 +695,13 @@
   },
   {
    "stratum": "choice",
-   "id": "hybrid-study-spell",
-   "name": "Hybrid Study Spell",
-   "level": 4,
-   "text": "Gain the conflux spell from a hybrid study of your choice. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by studying your spellbook and performing a physical regimen. You don't gain any of the hybrid study's other benefits.",
+   "id": "improbable-elixirs",
+   "name": "Improbable Elixirs",
+   "level": 18,
+   "text": "Your mastery of alchemical secrets enables you to replicate effects most believe can be achieved only via magic. Select a number of potions equal to your Intelligence modifier (minimum 1); these potions must be of 9th level or lower. You gain formulas to create these potions as alchemical consumables with the elixir trait. When making these alchemical elixirs, you can substitute alchemical reagents for an equal value of magical components, and you can use an alchemist's toolkit (for Quick Alchemy) or an alchemist's lab (for the Craft activity) instead of any other required toolkits. Other than that, the formula doesn't change. Once you've chosen the potion formulas, they can't be changed.",
    "clauses": 3,
    "ourFields": [
-    "effectChoices"
+    "choice"
    ],
    "foundryRules": [],
    "ambiguous": false,
@@ -696,33 +711,34 @@
   },
   {
    "stratum": "choice",
-   "id": "energized-spark",
-   "name": "Energized Spark",
-   "level": 1,
-   "text": "The energy of your spirit manifests as crackling lightning, the chill of winter, or the power of an element. Choose one of the following traits: air (slashing), cold, earth (bludgeoning), electricity, fire, metal (slashing), poison, sonic, vitality, void, water (bludgeoning), or wood (piercing). You can choose for any spirit damage dealt by your exemplar abilities to instead gain the trait and deal the corresponding damage type. --- **Special** You can select this feat multiple times, choosing a different damage type each time.",
+   "id": "endless-memories",
+   "name": "Endless Memories",
+   "level": 9,
+   "text": "You've lived a thousand lives and done a hundred-thousand things. When you choose a skill in which to become trained with Ancient Memories, you can also choose a skill in which you're already trained and become an expert in that skill. This lasts until your Ancient Memories expires. When the effects of Ancient Memories and Endless Memories expire, you can retrain one of your skill increases. The skill increase you gain from this retraining must either make you trained in the skill you chose with Ancient Memories or make you an expert in the skill you chose with Endless Memories.",
    "clauses": 3,
    "ourFields": [
     "choice"
    ],
    "foundryRules": [
-    "ChoiceSet",
     "RollOption",
-    "DamageAlteration"
+    "ActiveEffectLike"
    ],
    "ambiguous": false,
    "needsMissingSystem": false,
-   "realFoundryMechanic": true,
+   "realFoundryMechanic": false,
    "role": "test"
   },
   {
    "stratum": "inert",
-   "id": "fishblooded",
-   "name": "Fishblooded",
-   "level": 5,
-   "text": "There's nothing beneath the waves that can slow you down. When in an aquatic environment, you ignore difficult terrain. In addition, swimming up or down isn't difficult terrain for you.",
-   "clauses": 0,
+   "id": "resilient-touch",
+   "name": "Resilient Touch",
+   "level": 10,
+   "text": "Your healing energies create an aura of protection that defends your allies against more than just blades and arrows. An ally that recovers Hit Points from your Lay on Hands gains a +1 status bonus to their saving throws until the end of their next turn.",
+   "clauses": 1,
    "ourFields": [],
-   "foundryRules": [],
+   "foundryRules": [
+    "ItemAlteration"
+   ],
    "ambiguous": false,
    "needsMissingSystem": false,
    "realFoundryMechanic": false,
@@ -730,13 +746,15 @@
   },
   {
    "stratum": "inert",
-   "id": "pheromonal-message",
-   "name": "Pheromonal Message",
-   "level": 1,
-   "text": "Your communicative pheromones are particularly well developed from years of living with other athamarus. You send a brief message to one ally within 60 feet, or 120 feet in water. No other creature can understand the message. The message must be short and simple, and can't convey ideas that would require complex or novel wording if spoken, such a creature's name or proper nouns.",
-   "clauses": 0,
+   "id": "amplifying-touch",
+   "name": "Amplifying Touch",
+   "level": 12,
+   "text": "Your healing energies empower attacks. An ally that recovers Hit Points from your Lay on Hands gains a +1 status bonus to their attack rolls and deals 1 additional spirit damage on all their Strikes until the end of their next turn. In addition, all their Strikes are holy until the end of their next turn.",
+   "clauses": 1,
    "ourFields": [],
-   "foundryRules": [],
+   "foundryRules": [
+    "ItemAlteration"
+   ],
    "ambiguous": false,
    "needsMissingSystem": false,
    "realFoundryMechanic": false,
@@ -744,24 +762,40 @@
   },
   {
    "stratum": "inert",
-   "id": "robust-recovery",
-   "name": "Robust Recovery",
+   "id": "healing-sanctuary",
+   "name": "Healing Sanctuary",
+   "level": 16,
+   "text": "When you call upon your deity's power, you also radiate a sense of safety that fortifies your allies. An ally who begins their turn in your Shield the Faithful aura gains 10 temporary Hit Points that last for 1 round.",
+   "clauses": 1,
+   "ourFields": [],
+   "foundryRules": [],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "inert",
+   "id": "fortunate-blow",
+   "name": "Fortunate Blow",
+   "level": 12,
+   "text": "You set an enemy up for a devastating follow-through from your allies. When you successfully damage an opponent with either Guiding Shot or Set-Up Strike, the next creature other than you to attack the same target before the start of your next turn rolls twice on their attack roll and takes the higher result.",
+   "clauses": 0,
+   "ourFields": [],
+   "foundryRules": [
+    "ItemAlteration"
+   ],
+   "ambiguous": false,
+   "needsMissingSystem": false,
+   "realFoundryMechanic": false,
+   "role": "test"
+  },
+  {
+   "stratum": "inert",
+   "id": "phalanx-formation",
+   "name": "Phalanx Formation",
    "level": 2,
-   "text": "You learned folk medicine to help recover from diseases and poison, and using it diligently has made you especially resilient. When you Treat a Disease or a Poison, or someone else uses one of these actions on you, increase the circumstance bonus granted on a success to +4, and if the result of the patient's saving throw is a success, the patient gets a critical success.",
-   "clauses": 1,
-   "ourFields": [],
-   "foundryRules": [],
-   "ambiguous": false,
-   "needsMissingSystem": false,
-   "realFoundryMechanic": false,
-   "role": "test"
-  },
-  {
-   "stratum": "inert",
-   "id": "inspire-imitation",
-   "name": "Inspire Imitation",
-   "level": 5,
-   "text": "Your actions inspire your allies to great achievements. Whenever you critically succeed at a skill check, you automatically qualify to use the Aid reaction when attempting to help an ally using the same skill, even without spending an action to prepare to do so.",
+   "text": "You know how to clear a line of fire for your allies. You don't provide lesser cover to enemies against your allies' attacks.",
    "clauses": 0,
    "ourFields": [],
    "foundryRules": [],
@@ -772,25 +806,11 @@
   },
   {
    "stratum": "inert",
-   "id": "vantage-shot",
-   "name": "Vantage Shot",
-   "level": 8,
-   "text": "You and your spotter take advantage of each other's attacks to momentarily hide and throw your foes off-balance against your follow-up attack. When you successfully Strike a foe using a crossbow or firearm, your spotter can use a reaction to attempt a Stealth check against the foe's Perception DC. On a success, the foe is off-guard against the spotter's next attack before the end of your spotter's next turn. Similarly, when your spotter successfully makes a ranged Strike against a foe, you can use a reaction to attempt a Stealth check against the foe's Perception DC. On a success, the foe is off-guard against your next attack against them before the end of your next turn.",
-   "clauses": 1,
-   "ourFields": [],
-   "foundryRules": [],
-   "ambiguous": false,
-   "needsMissingSystem": false,
-   "realFoundryMechanic": false,
-   "role": "test"
-  },
-  {
-   "stratum": "inert",
-   "id": "energetic-resonance",
-   "name": "Energetic Resonance",
+   "id": "masterminds-eye",
+   "name": "Mastermind's Eye",
    "level": 6,
-   "text": "**Trigger** You would take acid, cold, electricity, fire, or sonic damage from a spell. **Requirements** You have an unexpended spell slot of a rank equal to or higher than the triggering spell. --- Your blood resonates with magical energy, mitigating the effects of harmful spells. Expend one of your spell slots of a rank equal to or higher than that of the triggering spell. You gain resistance to one of the triggering effect's damage types equal to twice the expended spell slot's rank.",
-   "clauses": 1,
+   "text": "When you succeed at identifying a creature using Recall Knowledge, that creature is off-guard against your attacks until the start of your next turn; if you critically succeed, it's off-guard against your attacks for 1 minute. This feat serves as the rogue's Mastermind racket for the purpose of meeting prerequisites.",
+   "clauses": 0,
    "ourFields": [],
    "foundryRules": [],
    "ambiguous": false,

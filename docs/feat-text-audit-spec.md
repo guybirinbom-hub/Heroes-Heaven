@@ -63,7 +63,24 @@ evidenced, and stand.
 
 Cost of that run: 111 agents, 9.9M tokens, 69 minutes.
 
-### Next actions, in order
+### ✅ Stages 1–4 COMPLETE (2026-08-11) — awaiting the owner's review
+
+1. **Evidence packs regenerated** against post-migration core.json. 500/500 placed, 161 empty diff.
+2. **The rulings are now IN `docs/mechanic-lanes.md`** — a "DECIDED SCOPE" section carrying rulings
+   A–I, K–O, companions and stacking, quoted from `work/rulings/`. **Measured effect: free-text
+   requirements fell from 44% to 18.6%.** That is the single highest-value change made to this audit.
+3. **The inert stratum was rebuilt by hand.** Two regex attempts both failed (the second offered a
+   feat whose bonus includes YOU, a stance dealing your own damage, and a skill substitution). Six
+   controls were read in full instead — every clause lands on an ally or an enemy, none has an action
+   cost. **Five of six came back unanimous "nothing required"; the sixth caught a real over-flag.**
+4. **The answer key is built**: `docs/gold-set-review.md` (for the owner) and
+   `scripts/audit/gold-answer-key.json` (machine-readable). 43 feats, 176 proposed requirements —
+   53 agreed by all three readers, 89 by only one.
+
+**NEXT: the owner reviews `docs/gold-set-review.md`.** Then stage 6 (score model tiers against the
+key — Haiku/Sonnet/Opus, accuracy not agreement) and stage 7 (the full read of all 6,179 feats).
+
+### Earlier next-actions, now done
 
 0. **Fold the rulings into `docs/mechanic-lanes.md`** (see above). Highest value, cheapest, and every
    later step inherits the benefit.
