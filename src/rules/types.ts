@@ -272,6 +272,11 @@ interface ContentBase {
    * home either.
    */
   grantsRituals?: { spellId: string; note?: string }[];
+  /**
+   * Clauses this record writes onto the description of a spell — see SpellNote. Attributed to this
+   * record and set apart from the spell's own rules wherever the spell is read.
+   */
+  spellNotes?: SpellNote[];
   /** App-level link to the user Homebrew source that authored this entry (groups it in the Homebrew
    *  manager). Absent on imported/seed content. Ignored by the rules engine. */
   homebrewSourceId?: string;
@@ -294,6 +299,25 @@ interface ContentBase {
    */
   limitedUses?: LimitedUses;
   edition?: 'remaster' | 'remaster-era' | 'neutral' | 'legacy' | 'legacy-era' | 'superseded';
+}
+
+/**
+ * Text a record adds to a SPELL — owner principle N2: "on the spell you get from this feature write
+ * the additional description the feat grants. make sure that it's under that feat in the spell
+ * description so the user won't think it's a part of the spell usually".
+ *
+ * Realm Strider is the worked example. Its Translocate says nothing about every cast filling the
+ * adjacent spaces with your realm's damage type, so a player reading the spell in their granted-spell
+ * list meets none of it. The clause cannot live on the SPELL — it is true only for the character who
+ * has the feat — and leaving it on the feat alone puts it on a page nobody is looking at while
+ * casting. `grantsRituals[].note` solved the same problem for the eleven ritual-granting records; this
+ * is that answer generalised, because the owner expects more of them.
+ */
+export interface SpellNote {
+  /** The spell whose description carries it. */
+  spellId: string;
+  /** The clause, printed verbatim under the granting record's name. */
+  note: string;
 }
 
 /** A precise/imprecise/vague sense granted by a feat, heritage, or class feature. */
@@ -399,6 +423,53 @@ export interface WeaponRider {
   setDie?: string;
   /** Set or extend the range increment in feet. There is no other range lane. */
   range?: { set?: number; add?: number };
+}
+
+/**
+ * A reach, in feet, that a record gives a Strike — "your reach for that Strike is 30 feet" (Wukong
+ * Extension), "increasing your reach by 5 feet for that Strike" (Lunge).
+ *
+ * Reach is a VALUE written on the Strike row, never a note buried in a popup: several sources write
+ * several reaches, and two sources printing the SAME reach in different circumstances are BOTH
+ * written, because the player has to be able to tell which one the situation in front of them uses.
+ *
+ * `when` is what makes an entry conditional. With it the row stars the number and the star opens
+ * this record; without it the reach simply IS the Strike's reach and replaces the number.
+ */
+export interface ReachRider {
+  /** The reach the record states outright ("the attack gains an 80-foot reach"). Wins over `add`. */
+  feet?: number;
+  /** Feet ADDED to the reach the Strike would otherwise have ("increasing your reach by 5 feet"). */
+  add?: number;
+  /** The circumstance, in the record's own words. Absent = it always applies. */
+  when?: string;
+  /**
+   * Which Strikes it reaches. An unfiltered rider applies to EVERY melee Strike, which is the loudest
+   * over-grant here: Lunge without `unarmed: false` puts 10 feet on a fist the feat never mentions.
+   */
+  match?: {
+    /** true = unarmed attacks only, false = wielded weapons only, omitted = either. */
+    unarmed?: boolean;
+    groups?: string[];
+    /** Specific core.json weapon ids. */
+    items?: string[];
+    categories?: WeaponCategory[];
+    /** Applies when the weapon/attack carries ANY of these traits. */
+    anyTrait?: string[];
+    /** "This doesn't increase the reach of any weapon that already has the reach trait" (Giant's Lunge). */
+    excludeTraits?: string[];
+    /** Hands required — "a melee weapon that requires two hands". A weapon whose `hands` is '1+'
+     *  counts as one-handed, as in WeaponRider. Unarmed attacks have no hands and so match neither. */
+    hands?: 1 | 2;
+    /** Damage the Strike must deal — Sever Space needs "a weapon that deals slashing damage". */
+    damageTypes?: string[];
+    /** Only the item the player DESIGNATED as this (the inventor's weapon innovation). Matches
+     *  nothing when nothing is designated, for the reason WeaponRider.match.designated gives. */
+    designated?: ItemDesignation;
+    /** Strike names, matched case-insensitively as a substring. The only way to name an UNARMED
+     *  attack, which has no item id — "cobra fang", "skyward slash". */
+    names?: string[];
+  };
 }
 
 export interface DefenseGrants {
@@ -608,6 +679,9 @@ export interface DefenseGrants {
   /** Extra damage this feat/feature adds to Strikes (Spirit Striking: +2/3/4 spirit by weapon
    *  proficiency; Offensive Boost: +1d6 of a chosen type). Folded into each matching Strike's damage. */
   strikeDamage?: StrikeDamageRider[];
+  /** Reach this record gives a Strike, written as a value on the Strike row. See ReachRider — an
+   *  array because one feat can reach two different attacks by two different numbers. */
+  strikeReach?: ReachRider | ReachRider[];
   /** A multiclass dedication grants a trained class DC in the BORROWED class (Fighter/Ranger/Rogue/
    *  Alchemist Dedication). The key ability comes from that class; surfaced as a secondary class DC. */
   classDcGrant?: { classId: string };
@@ -2010,6 +2084,10 @@ interface ItemBase extends ContentBase {
    *  Hyldarf's Fang +2d6). On any other invested item it applies to the matching Strikes globally
    *  (Crimson Fulcrum Lens +2 melee). Same shape as a feat's strikeDamage. */
   strikeDamage?: StrikeDamageRider[];
+  /** Reach a worn/invested item gives the character's Strikes (a tasset of flexibility's Lunging
+   *  Attack). Same shape as a feat's strikeReach; read only off NON-weapon items, since a weapon's
+   *  own reach is the `reach` trait. */
+  strikeReach?: ReachRider | ReachRider[];
   /** An invested item that grants void ("negative") healing (Emerald Fulcrum Lens). Surfaced on the
    *  Defenses card while invested. */
   negativeHealing?: boolean;
@@ -2715,6 +2793,10 @@ export interface CompanionConfig {
   /** Set when this companion was materialized from a feat/feature grant (e.g. the Pet feat). Ties the
    *  real companion back to its granting feat so the synthetic auto-copy stops showing once persisted. */
   grantSlug?: string;
+  /** Set when the PLAYER added this creature from a record's offer (CREATURE_OFFERS — Out of Hand's
+   *  severed arm). Unlike `grantSlug` it never materializes anything on its own: it exists because the
+   *  player pressed Add, and it carries the offer's statistics and printed rules. */
+  offerSlug?: string;
   /** The companion's own gear (barding, packs, …), tracked separately from the character's. */
   inventory?: InventoryItem[];
   /** Companion portrait — the compressed (synced) data URL the player imported. */
@@ -3587,6 +3669,11 @@ export interface Character {
    *  and any clause it attaches (Read the Land shortens Commune to 1 hour and drops the secondary
    *  caster). Shown in the Rituals section alongside anything added through Overrides. */
   grantedRituals?: { spellId: string; from: string; note?: string }[];
+  /** Clauses this character's own records write onto a spell's description (SpellNote), keyed by spell
+   *  id and carrying the name of the record that wrote each one. Gated for the reason `grantMarkers`
+   *  is: the clause exists only because the character has that record, so anyone else reading the same
+   *  spell must not be shown it. */
+  spellNotes?: Record<string, { from: string; note: string }[]>;
   /** How many magic items this character may invest — 10 by RAW, 12 with Incredible Investiture. */
   investedLimit?: number;
   /** What a full night's rest gives back: the HP multiplier on `level × Con mod` and how far a

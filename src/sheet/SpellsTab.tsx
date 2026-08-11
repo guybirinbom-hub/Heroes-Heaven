@@ -17,6 +17,8 @@ import { toggleKnownRitual,
   setTradedCantrip,
   setRepertoireRank,
   setSignatureSpells,
+  learnSpell,
+  unlearnSpell,
   setSlotsUsed,
   toggleExpended,
   toggleInnateCast,
@@ -40,12 +42,14 @@ import { confirmDialog } from './confirm';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
 import { DescBody } from './DescBody';
+import { DescriptionModal } from './DescriptionModal';
+import type { DescNode } from './descref';
 import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
 import { useContent } from './ContentContext';
 import { useCustomization } from '../data/customization';
 import { traitDesc, traitLabel } from '../rules/glossary';
-import { spellSituationalFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
+import { spellNotesFor, spellSituationalFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
 import { heighteningApplies, splitHeightening, scaleDamage, scaleArea } from '../rules/heightening';
 
@@ -94,7 +98,20 @@ function castText(c?: ActionCost): string {
   return ''; // actions / reaction / free / variable are all shown by the action glyph
 }
 
-function SpellDetail({ spell, maxRank, signature, onClose }: { spell: Spell; maxRank?: number; signature?: boolean; onClose: () => void }) {
+function SpellDetail({
+  spell,
+  maxRank,
+  signature,
+  notes,
+  onClose,
+}: {
+  spell: Spell;
+  maxRank?: number;
+  signature?: boolean;
+  /** Principle N2 — clauses a record the character HAS writes onto this spell (see spellNotesFor). */
+  notes?: { from: string; note: string }[];
+  onClose: () => void;
+}) {
   const content = useContent();
   useEscapeClose(onClose);
   const { base, heightening } = splitHeightening(spell.description || '');
@@ -217,6 +234,18 @@ function SpellDetail({ spell, maxRank, signature, onClose }: { spell: Spell; max
               ))}
             </div>
           )}
+          {/* Last, boxed and headed by the record's name: everything above is the spell as printed,
+              everything here is what one of YOUR records adds to it. Principle N2 — "make sure that
+              it's under that feat in the spell description so the user won't think it's a part of the
+              spell usually". */}
+          {notes?.map((n, i) => (
+            <div className="sd-addnote" key={`${n.from}:${i}`}>
+              <div className="sd-addnote-h">
+                <i className="ti ti-plus" aria-hidden="true" /> {n.from}
+              </div>
+              <DescBody description={n.note} className="sd-desc sd-addnote-body" onExit={onClose} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -236,37 +265,18 @@ function groupBy<T>(items: T[], key: (t: T) => string): [string, T[]][] {
   return [...out];
 }
 
-/** In-play spell management. PREPARED casters: change what's prepared in each slot
- *  (from the wizard's spellbook or the whole tradition list). SPONTANEOUS casters:
- *  add/remove repertoire spells per rank and set a signature spell (one per rank). */
-function ManageSpellsModal({
-  entry,
-  character,
-  content,
-  onPlay,
-  onClose,
-}: {
-  entry: SpellcastingEntry;
-  character: Character;
-  content: ContentDatabase;
-  onPlay: PlayUpdater;
-  onClose: () => void;
-}) {
-  useEscapeClose(onClose);
-  const spontaneous = !!entry.repertoire;
-  const [picking, setPicking] = useState<{ rank: number; slot: number | null; cantripTrade?: boolean; restricted?: string } | null>(null);
-  const ranks = Object.keys((spontaneous ? entry.repertoire : entry.prepared) ?? {})
-    .map(Number)
-    .sort((a, b) => a - b);
-
-  const cls = character.classId ? content.classes[character.classId] : undefined;
-  const sigAvailable =
-    spontaneous && (cls?.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= character.level);
-
-  // Index this tradition's spells ONCE (not a full-map scan per modal re-render). `byRank` is the
-  // exact-rank list (cantrips, exact-rank fallbacks); `upTo[N]` is the CUMULATIVE rank-1..N list, so
-  // a slot of rank N can hold any spell of rank ≤ N (cast/prepared heightened to the slot's rank).
-  const traditionSpellsByRank = useMemo(() => {
+/**
+ * Every spell this entry may draw on, indexed by rank.
+ *
+ * `byRank` is the exact-rank list (cantrips, exact-rank fallbacks); `upTo[N]` is the CUMULATIVE
+ * rank-1..N list, so a slot of rank N can hold any spell of rank ≤ N (cast/prepared heightened to the
+ * slot's rank). Indexed once rather than scanning the full spell map on every render.
+ *
+ * Shared by the prepare/repertoire picker and Learn a Spell — both mean "what's on this caster's list",
+ * including everything a feat, an opened tradition, or a replaced list has done to it.
+ */
+function useTraditionSpells(character: Character, entry: SpellcastingEntry, content: ContentDatabase) {
+  return useMemo(() => {
     const byRank: Record<number, Spell[]> = {};
     const hideLegacy = character.hideLegacy;
     // "Add Illusory Disguise, Illusory Object, and Illusory Scene to your spell list" (Fey Caller;
@@ -317,6 +327,237 @@ function ManageSpellsModal({
     }
     return { byRank, upTo };
   }, [content, entry.tradition, entry.id, character.hideLegacy, character.spellListAdditions, character.spellListTraditions, character.spellListReplacement]);
+}
+
+/**
+ * Table 4-3: Learning a Spell — the materials Price and the typical DC, by the spell's rank. Shown on
+ * each row of the Learn a Spell picker so the cost of the activity is in front of you while you choose
+ * it. Cantrips share the 1st-rank line ("1st or cantrip").
+ */
+const LEARN_A_SPELL: Record<number, { price: string; dc: number }> = {
+  0: { price: '2 gp', dc: 15 },
+  1: { price: '2 gp', dc: 15 },
+  2: { price: '6 gp', dc: 18 },
+  3: { price: '16 gp', dc: 20 },
+  4: { price: '36 gp', dc: 23 },
+  5: { price: '70 gp', dc: 26 },
+  6: { price: '140 gp', dc: 28 },
+  7: { price: '300 gp', dc: 31 },
+  8: { price: '650 gp', dc: 34 },
+  9: { price: '1,500 gp', dc: 36 },
+  10: { price: '7,000 gp', dc: 41 },
+};
+
+/**
+ * Does Learn a Spell do anything for this caster?
+ *
+ * Only where the repository is finite: a spellbook to write the spell into, or a repertoire whose
+ * choices it widens. A cleric or druid "adds it to their spell list" — but their list is the whole
+ * tradition, which the prepare picker already offers in full, so the activity would be a button that
+ * changes nothing.
+ */
+export function canLearnSpells(entry: SpellcastingEntry): boolean {
+  return (entry.type === 'prepared' || entry.type === 'spontaneous') && (!!entry.spellbook || !!entry.repertoire);
+}
+
+/** The full rules page for the activity, opened from the Learn a Spell popup. */
+const LEARN_A_SPELL_NODE: DescNode = {
+  title: 'Learn a Spell',
+  key: 'actions',
+  slug: 'learn-a-spell',
+  description:
+    'Spend 1 hour per spell rank studying with someone who knows the spell or from magical writing you ' +
+    'have, expend materials of the listed Price, and attempt a check with the skill for your tradition. ' +
+    'On a success you learn the spell; on a failure you can try again after you gain a level.',
+};
+
+/**
+ * Learn a Spell — the exploration activity, which is how a caster's repository of spells grows between
+ * level-ups. Adds to the spellbook (where the daily preparation can reach it) or, for a repertoire
+ * caster, to a learned list the repertoire picker draws on; see `learnedSpells` in play.ts for why the
+ * two differ.
+ */
+function LearnSpellModal({
+  entry,
+  character,
+  content,
+  onPlay,
+  onClose,
+}: {
+  entry: SpellcastingEntry;
+  character: Character;
+  content: ContentDatabase;
+  onPlay: PlayUpdater;
+  onClose: () => void;
+}) {
+  useEscapeClose(onClose);
+  const [picking, setPicking] = useState(false);
+  const [rules, setRules] = useState(false);
+  const pool = useTraditionSpells(character, entry, content);
+
+  // "…and you can cast spells of that rank." The highest rank this caster has any way to cast — slots
+  // for a spontaneous caster, prepared slots for a prepared one.
+  const maxRank = Math.max(
+    0,
+    ...Object.keys(entry.slots ?? {}).map(Number),
+    ...Object.keys(entry.prepared ?? {}).map(Number),
+    ...Object.keys(entry.repertoire ?? {}).map(Number),
+  );
+
+  // Already in the repository (or already learned) — offering it again would just create a duplicate.
+  const known = new Set<string>([
+    ...entry.cantrips,
+    ...Object.values(entry.spellbook ?? {}).flat(),
+    ...Object.values(entry.repertoire ?? {}).flat(),
+    ...Object.values(entry.learned ?? {}).flat(),
+  ]);
+
+  const options = [
+    ...(pool.byRank[0] ?? []),
+    ...(maxRank >= 1 ? pool.upTo[maxRank] ?? [] : []),
+  ].filter((s) => !known.has(s.id));
+
+  const learnedRanks = Object.keys(entry.learned ?? {})
+    .map(Number)
+    .filter((r) => (entry.learned?.[r] ?? []).length > 0)
+    .sort((a, b) => a - b);
+
+  const learn = (s: Spell) => {
+    onPlay((p) => learnSpell(p, entry.id, s.rank, s.id));
+    setPicking(false);
+  };
+
+  return (
+    <>
+    <div className="picker-overlay" onClick={onClose}>
+      <div className="picker manage-spells" onClick={(e) => e.stopPropagation()}>
+        <div className="picker-head">
+          <span>Learn a spell — {cap(entry.tradition)}</span>
+          <button className="picker-close" style={{ marginLeft: 'auto' }} onClick={onClose} aria-label="Close">
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+
+        {picking ? (
+          <FilterableSelect
+            title="Learn a spell"
+            items={options}
+            spec={SPELL_SPEC_BUILDER}
+            rowKey={(s) => s.id}
+            onClose={() => setPicking(false)}
+            renderRow={(s, openDesc) => {
+              const node = descNodeOf(s, 'spells');
+              const cost = LEARN_A_SPELL[s.rank];
+              return (
+                <PickerRow
+                  lead={
+                    <span className="spell-cost">
+                      <ActionGlyph cost={s.cast} />
+                    </span>
+                  }
+                  name={s.name}
+                  meta={
+                    <div className="picker-traits">
+                      {s.rank === 0 ? 'Cantrip' : `${ord(s.rank)} rank`}
+                      {cost ? ` · ${cost.price} · DC ${cost.dc}` : ''}
+                    </div>
+                  }
+                  onOpenDesc={node ? () => openDesc(node) : undefined}
+                  selectLabel="Learn"
+                  onSelect={() => learn(s)}
+                />
+              );
+            }}
+          />
+        ) : (
+          <div className="ms-body">
+            <div className="ms-hint">
+              {entry.spellbook
+                ? 'A spell you learn goes into your spellbook, so you can prepare it from then on.'
+                : 'A learned spell isn’t added to your repertoire automatically — you know only so many spells — but you can pick it the next time you add or swap one.'}{' '}
+              <button type="button" className="ms-hint-link" onClick={() => setRules(true)}>
+                Read the rules
+              </button>
+            </div>
+            {learnedRanks.length === 0 ? (
+              <div className="ms-cap-note">Nothing learned yet.</div>
+            ) : (
+              learnedRanks.map((rank) => (
+                <div key={rank} className="ms-rank">
+                  <div className="ms-rank-hdr">{rank === 0 ? 'Cantrips' : `${ord(rank)} rank`}</div>
+                  {(entry.learned?.[rank] ?? []).map((id) => {
+                    const sp = content.spells[id];
+                    return (
+                      <div key={id} className="ms-slot">
+                        <span className="ms-slot-name">{sp?.name ?? id}</span>
+                        <button
+                          className="ms-remove"
+                          aria-label="Unlearn"
+                          title="Remove — you didn't learn this after all"
+                          onClick={async () => {
+                            if (
+                              await confirmDialog({
+                                title: `Unlearn ${sp?.name ?? id}?`,
+                                message: entry.spellbook
+                                  ? 'The spell is struck from your spellbook. Anything prepared from it keeps its slot until you re-prepare.'
+                                  : 'The spell is no longer one you’ve learned.',
+                                confirmLabel: 'Unlearn',
+                                danger: true,
+                              })
+                            )
+                              onPlay((p) => unlearnSpell(p, entry.id, rank, id));
+                          }}
+                        >
+                          <i className="ti ti-x" aria-hidden="true" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))
+            )}
+            <button className="ms-add" onClick={() => setPicking(true)} disabled={options.length === 0}>
+              <i className="ti ti-plus" aria-hidden="true" /> Learn a spell
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+    {/* A SIBLING of the overlay, not a child: inside it, every click in the rules popup would bubble to
+        the overlay's onClick and close the whole thing. */}
+    {rules && <DescriptionModal root={LEARN_A_SPELL_NODE} onClose={() => setRules(false)} backToSource />}
+    </>
+  );
+}
+
+/** In-play spell management. PREPARED casters: change what's prepared in each slot
+ *  (from the wizard's spellbook or the whole tradition list). SPONTANEOUS casters:
+ *  add/remove repertoire spells per rank and set a signature spell (one per rank). */
+function ManageSpellsModal({
+  entry,
+  character,
+  content,
+  onPlay,
+  onClose,
+}: {
+  entry: SpellcastingEntry;
+  character: Character;
+  content: ContentDatabase;
+  onPlay: PlayUpdater;
+  onClose: () => void;
+}) {
+  useEscapeClose(onClose);
+  const spontaneous = !!entry.repertoire;
+  const [picking, setPicking] = useState<{ rank: number; slot: number | null; cantripTrade?: boolean; restricted?: string } | null>(null);
+  const ranks = Object.keys((spontaneous ? entry.repertoire : entry.prepared) ?? {})
+    .map(Number)
+    .sort((a, b) => a - b);
+
+  const cls = character.classId ? content.classes[character.classId] : undefined;
+  const sigAvailable =
+    spontaneous && (cls?.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= character.level);
+
+  const traditionSpellsByRank = useTraditionSpells(character, entry, content);
 
   const listReplacement = (() => {
     const r = character.spellListReplacement;
@@ -446,7 +687,16 @@ function ManageSpellsModal({
                     </span>
                   }
                   name={s.name}
-                  meta={<div className="picker-traits">{s.rank === 0 ? 'Cantrip' : `${ord(s.rank)} rank`}</div>}
+                  meta={
+                    <div className="picker-traits">
+                      {s.rank === 0 ? 'Cantrip' : `${ord(s.rank)} rank`}
+                      {/* "you can select it when you add or swap spells" — this is that moment, so say
+                          which of the options you already paid an hour and materials to learn. Only for
+                          a repertoire: a spellbook caster's learned spells are IN the book, so every
+                          option would carry the tag and it would say nothing. */}
+                      {spontaneous && (entry.learned?.[s.rank] ?? []).includes(s.id) && ' · learned'}
+                    </div>
+                  }
                   onOpenDesc={node ? () => openDesc(node) : undefined}
                   selectLabel={spontaneous && !picking.restricted ? 'Add' : 'Prepare'}
                   onSelect={() => pick(s.id)}
@@ -865,12 +1115,15 @@ export function SpellsTab({
   // Mobile: which spell section tab is active (cantrips / a rank / focus / items / …); '' = first.
   const [spellTab, setSpellTab] = useState<string>('');
   const [manageId, setManageId] = useState<string | null>(null);
+  const [learnId, setLearnId] = useState<string | null>(null);
   const [blendId, setBlendId] = useState<string | null>(null);
   // An item-spell source opened from its Spells-page header → the item's full detail popup.
   const [itemView, setItemView] = useState<string | null>(null);
   // Collapsible spellcasting sections (in-component, like the Actions sub-tab).
   const [collapsedSecs, setCollapsedSecs] = useState<Set<string>>(new Set());
-  const secOpen = (id: string) => !collapsedSecs.has(id);
+  // Always open when there's no chevron to reopen it with — otherwise a section collapsed while there
+  // were several of them would be stuck shut if the page later came down to one.
+  const secOpen = (id: string) => collapsibleSections < 2 || !collapsedSecs.has(id);
   const toggleSec = (id: string) =>
     setCollapsedSecs((prev) => {
       const n = new Set(prev);
@@ -878,13 +1131,19 @@ export function SpellsTab({
       else n.add(id);
       return n;
     });
-  const SecChevron = ({ id }: { id: string }) => (
-    <button type="button" className="sc-collapse" aria-expanded={secOpen(id)} title={secOpen(id) ? 'Collapse' : 'Expand'} onClick={() => toggleSec(id)}>
-      <i className={'ti ' + (secOpen(id) ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
-    </button>
-  );
+  /* Collapsing is for getting one section out of the way of the others. With a single section on the
+   * page there is nothing to get out of the way of — the chevron would only ever hide the entire page's
+   * contents — so it isn't drawn. `collapsibleSections` is counted just before the render, once every
+   * section node exists. Only ever READ from JSX, so it's initialised long before this runs. */
+  const SecChevron = ({ id }: { id: string }) =>
+    collapsibleSections < 2 ? null : (
+      <button type="button" className="sc-collapse" aria-expanded={secOpen(id)} title={secOpen(id) ? 'Collapse' : 'Expand'} onClick={() => toggleSec(id)}>
+        <i className={'ti ' + (secOpen(id) ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
+      </button>
+    );
   const mains = character.spellcasting.filter((e) => e.type === 'prepared' || e.type === 'spontaneous');
   const manageEntry = manageId ? mains.find((m) => m.id === manageId) : null;
+  const learnEntry = learnId ? mains.find((m) => m.id === learnId) : null;
   const blendEntry = blendId ? mains.find((m) => m.id === blendId) : null;
   // The wizard's arcane thesis. It arrives as a classChoices row, which ownedFeatureIds folds in.
   const hasSpellBlending = useMemo(() => ownedFeatureIds(character, content).has('spell-blending'), [character, content]);
@@ -1284,6 +1543,29 @@ export function SpellsTab({
     }
   }
 
+  /* Spells learned by a caster with no spellbook. A spellbook caster's learned spells are merged into
+     the spellbook and show in the card above; a repertoire caster's have nowhere else to appear, and
+     they need to — they're what you may pick from the next time you swap a repertoire spell. */
+  const learnedMain = mains.find((m) => !m.spellbook && m.learned);
+  const learnedCards: ReactNode[] = [];
+  if (learnedMain?.learned) {
+    for (const rank of Object.keys(learnedMain.learned).map(Number).sort((a, b) => a - b)) {
+      for (const id of learnedMain.learned[rank]) {
+        const sp = content.spells[id];
+        if (!visible(sp)) continue;
+        learnedCards.push(
+          <SpellCard
+            key={'ln' + rank + id}
+            name={sp?.name ?? id} marks={marksFor(id)}
+            cost={sp?.cast}
+            meta={rank === 0 ? 'Cantrip' : ord(rank) + ' rank'}
+            onClick={sp ? () => setDetail(sp) : undefined}
+          />,
+        );
+      }
+    }
+  }
+
   // Focus spells auto-heighten to half your level rounded up — show that rank, not the base. Built per
   // focus entry so each source (dual-class / archetype) can render its own section with its own DC.
   const buildFocusCards = (entry: (typeof focusEntries)[number]): ReactNode[] => {
@@ -1312,6 +1594,26 @@ export function SpellsTab({
     return out;
   };
 
+  // Rituals matching the search — hoisted out of ritualsNode so the section count below can be taken
+  // without building the node.
+  const ritualsShown = query ? myRituals.filter((r) => r.spell.name.toLowerCase().includes(query)) : myRituals;
+
+  /* How many collapsible sections this page actually renders — one per spell pool, plus whichever of
+   * the focus / item / spellbook / learned / ritual cards exist. Drives whether a collapse chevron is
+   * drawn at all (see SecChevron).
+   *
+   * Counted from the CONDITIONS rather than from the node consts, and declared above them: the nodes
+   * call secOpen() eagerly in a style prop, so reading them here would put the count after its own
+   * first use and throw a temporal-dead-zone error the moment a character had a spellbook, an item
+   * spell source or a ritual. */
+  const collapsibleSections =
+    mains.length +
+    itemEntries.length +
+    (spellbookCards.length > 0 ? 1 : 0) +
+    (learnedCards.length > 0 ? 1 : 0) +
+    (focusEntries.length > 0 ? 1 : 0) +
+    (ritualsShown.length > 0 || onPlay ? 1 : 0);
+
   // ── Section nodes lifted out of the return so both the desktop stack AND the mobile
   // page-level tab row can render the SAME JSX. Each builder references in-scope locals
   // (secOpen, focusCards, onPlay, character, content, …) — unchanged from the inline version. ──
@@ -1326,6 +1628,19 @@ export function SpellsTab({
           <span className="ct-note">{spellbookCards.length} spell{spellbookCards.length === 1 ? '' : 's'}</span>
         </div>
         {secOpen('spellbook') && <div className="spell-grid">{spellbookCards}</div>}
+      </section>
+    ) : null;
+
+  const learnedNode: ReactNode =
+    learnedCards.length > 0 ? (
+      <section className="card">
+        <div className="ct" style={{ margin: secOpen('learned') ? '0 0 10px' : 0 }}>
+          <SecChevron id="learned" />
+          <i className="ti ti-book-2" aria-hidden="true" />
+          Learned spells
+          <span className="ct-note">available when you add or swap a repertoire spell</span>
+        </div>
+        {secOpen('learned') && <div className="spell-grid">{learnedCards}</div>}
       </section>
     ) : null;
 
@@ -1553,7 +1868,7 @@ export function SpellsTab({
 
   // Rituals the character has — granted by a record, or added via Overrides. Hidden when there are none.
   const ritualsNode: ReactNode = (() => {
-    const shown = query ? myRituals.filter((r) => r.spell.name.toLowerCase().includes(query)) : myRituals;
+    const shown = ritualsShown;
     // Shown whenever the character CAN learn one, not only once they have one — otherwise the picker
     // that learns your first ritual lives inside a section that only appears after you have a ritual.
     if (!shown.length && !onPlay) return null;
@@ -1604,6 +1919,7 @@ export function SpellsTab({
     });
   for (const it of itemNodes) spellTabs.push({ key: it.id, label: it.name, node: it.node });
   if (spellbookNode) spellTabs.push({ key: 'spellbook', label: 'Book', node: spellbookNode });
+  if (learnedNode) spellTabs.push({ key: 'learned', label: 'Learned', node: learnedNode });
   if (ritualsNode) spellTabs.push({ key: 'rituals', label: 'Rituals', node: ritualsNode });
   const spellTabActiveKey = spellTabs.some((t) => t.key === spellTab) ? spellTab : spellTabs[0]?.key;
 
@@ -1663,6 +1979,14 @@ export function SpellsTab({
                   {onPlay && (main.type === 'prepared' || main.type === 'spontaneous') && (
                     <button className="ms-btn" onClick={() => setManageId(main.id)} title="Manage spells for this session">
                       <i className="ti ti-pencil-plus" aria-hidden="true" /> {main.type === 'spontaneous' ? 'Repertoire' : 'Prepare'}
+                    </button>
+                  )}
+                  {/* Learn a Spell only means something for a caster whose repository is finite: a
+                      spellbook to write into, or a repertoire whose picks it widens. A cleric or druid
+                      prepares from the whole tradition list already, so there is nothing to learn. */}
+                  {onPlay && canLearnSpells(main) && (
+                    <button className="ms-btn" onClick={() => setLearnId(main.id)} title="Learn a Spell (exploration activity)">
+                      <i className="ti ti-book-2" aria-hidden="true" /> Learn a spell
                     </button>
                   )}
                   {/* Gated on the spellbook as well as the thesis: a dual-class wizard/cleric has a
@@ -1769,6 +2093,7 @@ export function SpellsTab({
       {!isMobile && (
         <>
           {spellbookNode}
+          {learnedNode}
           {focusNode}
           {itemNodes.map((it) => it.node)}
           {ritualsNode}
@@ -1806,7 +2131,14 @@ export function SpellsTab({
           );
         })()}
       {detail && (
-        <SpellDetail key={detail.id} spell={detail} maxRank={maxRank} signature={signatureIds.has(detail.id)} onClose={() => setDetail(null)} />
+        <SpellDetail
+          key={detail.id}
+          spell={detail}
+          maxRank={maxRank}
+          signature={signatureIds.has(detail.id)}
+          notes={spellNotesFor(character, detail.id)}
+          onClose={() => setDetail(null)}
+        />
       )}
       {/* Learn (or forget) a ritual. Rituals are tradition-less by rule, so no spell list carries
           them and the only previous route was Setup → Overrides — the panel for deliberately breaking
@@ -1857,6 +2189,15 @@ export function SpellsTab({
           content={content}
           onPlay={onPlay}
           onClose={() => setManageId(null)}
+        />
+      )}
+      {learnEntry && onPlay && (
+        <LearnSpellModal
+          entry={learnEntry}
+          character={character}
+          content={content}
+          onPlay={onPlay}
+          onClose={() => setLearnId(null)}
         />
       )}
       {blendEntry && onPlay && (

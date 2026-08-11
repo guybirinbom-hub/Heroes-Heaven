@@ -403,6 +403,18 @@ export function spellSituationalFor(
 }
 
 /**
+ * The clauses this character's own records write into a spell's DESCRIPTION — principle N2's read
+ * side, the twin of `recordMarkersFor`. Empty for anyone who does not have the record, which is the
+ * whole reason the set is built per character instead of shipped on the spell.
+ *
+ * Read through this rather than off `c.spellNotes`, so the one display path stays the one place that
+ * decides what a note looks like when more than one record writes onto the same spell.
+ */
+export function spellNotesFor(c: Character, spellId: string): { from: string; note: string }[] {
+  return c.spellNotes?.[spellId] ?? [];
+}
+
+/**
  * Marker classes for a stat: `has-mode` (dotted underline, pairs with the `*`) when something
  * situational applies, `mode-lit` (solid accent underline) when a live mode is moving the number
  * right now. They are separate on purpose — a `*` promises a note worth reading, which an

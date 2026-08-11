@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import type { DescRef } from '../rules/types';
 import { useContent } from './ContentContext';
 import { usePinDesc } from './PinContext';
@@ -43,8 +43,21 @@ export function DescriptionModal({
   const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = modalRef.current;
-    if (el) { el.style.width = ''; el.style.height = ''; }
+    if (el) { el.style.width = ''; el.style.height = ''; el.style.removeProperty('--ast-cap'); }
   }, [cur]);
+  // `.ast-modal` auto-sizes to its text up to a comfortable READING width (760px). That cap also clamped
+  // the inline width `resize: both` writes, so dragging the corner could never make the popup wider —
+  // it just sprang back. Grabbing the grip lifts the cap to the viewport for the rest of this popup's
+  // life; switching nodes (above) restores the reading width.
+  const liftCapOnGrip = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const el = modalRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const GRIP = 22;
+    if (e.clientX >= r.right - GRIP && e.clientY >= r.bottom - GRIP) {
+      el.style.setProperty('--ast-cap', 'calc(94vw / var(--zoom, 1))');
+    }
+  };
 
   // Open a linked term: from a markdown DescRef (fallback path) …
   const open = (ref: DescRef) => {
@@ -86,7 +99,7 @@ export function DescriptionModal({
   if (astNode) {
     return (
       <div className="picker-overlay" onClick={exit}>
-        <div ref={modalRef} className="ast-modal" onClick={(e) => e.stopPropagation()}>
+        <div ref={modalRef} className="ast-modal" onPointerDown={liftCapOnGrip} onClick={(e) => e.stopPropagation()}>
           <AstRenderer node={astNode} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} headerControls={controls} />
         </div>
       </div>
@@ -98,7 +111,7 @@ export function DescriptionModal({
   if (astLoading) {
     return (
       <div className="picker-overlay" onClick={exit}>
-        <div ref={modalRef} className="ast-modal" onClick={(e) => e.stopPropagation()}>
+        <div ref={modalRef} className="ast-modal" onPointerDown={liftCapOnGrip} onClick={(e) => e.stopPropagation()}>
           <div className="ast-pop">
             <div className="ast-bar" />
             <div className="ast-head">

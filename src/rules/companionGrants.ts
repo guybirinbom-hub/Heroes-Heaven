@@ -119,6 +119,63 @@ export function featGrantedCompanions(featIds: Set<string>): { id: string; grant
 }
 
 /**
+ * Records that OFFER a creature the PLAYER adds, rather than granting one outright.
+ *
+ * FEAT_COMPANION_GRANTS above materializes its companion the moment the record is owned, because that
+ * companion exists from then on. Out of Hand's severed arm does not: it exists only once the player
+ * has torn the limb off at the table, and it stops existing when they reattach it. The owner's ruling
+ * is that the app supplies the capability and the stat block and never the timing — "the occurrence is
+ * up to the player, not the app" — so an offer adds a row to the Add-companion picker and does
+ * nothing else. Taking the record changes no card until the player presses Add; removing the creature
+ * is the ordinary trash button.
+ *
+ * Deliberately not a one-off: the shape is "a record offers a creature", so a future record joins by
+ * adding a row here.
+ */
+export interface CreatureOffer {
+  /** Which companion shape the creature's statistics are derived and rendered as. */
+  kind: CompanionKind;
+  /** The creature's own name — the picker row, and the card until the player renames it. */
+  name: string;
+  /** The offering record's name, so the player can see which of their feats put the row there. */
+  from: string;
+  /** The printed rules the stat block cannot compute — what makes it inert, how far it may stray,
+   *  whose attack bonus its Strikes use. Shown on the card. */
+  note: string;
+  /** Familiar-shaped offers whose statistics are NOT a plain familiar's. */
+  familiar?: {
+    /** Land Speed in feet, when the offer overrides the familiar's 25. */
+    speed?: number;
+    /** "the statistics of a familiar without any familiar or master abilities" — the ability picker is
+     *  withheld rather than offering a choice the rules deny, and an owner feat's granted ability is
+     *  withheld with it. */
+    noAbilities?: boolean;
+  };
+}
+
+export const CREATURE_OFFERS: Record<string, CreatureOffer> = {
+  // "When an arm is severed from your body, it gains the minion trait. While severed, your limb has
+  // the statistics of a familiar … except its Speed is 5 feet …" — the arm's own Hit Points are
+  // load-bearing, because Lay Down Arms costs 10 minutes instead of 1 action "if the detached limb was
+  // at 0 Hit Points". The familiar shape already tracks HP per companion, which is why it is the one
+  // used here rather than a bespoke block.
+  'out-of-hand': {
+    kind: 'familiar',
+    name: 'Severed Arm',
+    from: 'Out of Hand',
+    familiar: { speed: 5, noAbilities: true },
+    note:
+      'While severed it is a minion with its own Hit Points, a Speed of 5 feet, and it can Interact with things. It can still make any unarmed Strike it could have made while attached (usually a fist Strike) — those Strikes use YOUR attack bonus and damage and share your multiple attack penalty, so roll them from your own Strikes. It can never be more than 100 feet from you; at 0 Hit Points, or beyond 100 feet, it is inert until reattached. Reattaching is Lay Down Arms — 1 action, or 10 minutes if it was at 0 Hit Points. The GM might allow you to detach another limb that has an unarmed attack (a tail, say) instead — rename it here if so.',
+  },
+};
+
+/** The creature offers open to a character, given the ids of the records it owns. Nothing is added:
+ *  the caller lists these in the Add-companion picker and the player decides when one is real. */
+export function offeredCreatures(recordIds: Set<string>): { offerSlug: string; offer: CreatureOffer }[] {
+  return [...recordIds].filter((id) => CREATURE_OFFERS[id]).map((id) => ({ offerSlug: id, offer: CREATURE_OFFERS[id] }));
+}
+
+/**
  * Feats that MODIFY an existing companion (rather than creating one) — the audit's companion-mod lane.
  * Applied by deriveCompanion when the character has the feat and the companion's kind matches. Senses
  * are display strings (matching the animal block); IWR values may be flat or "half your level".

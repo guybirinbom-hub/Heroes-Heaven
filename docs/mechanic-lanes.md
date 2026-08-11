@@ -73,6 +73,7 @@ carries → candidates. Two buckets matter:
 | `domain` | a deity's or a feat's domain access | `domains`, `alternateDomains` |
 | `curriculum` | a wizard school's spell list | `curriculum` |
 | `heldSpell` | an ITEM whose activation casts a spell | `heldSpells` (keyed by RANK — the rank must match the text) |
+| `spellNote` | the record grants a spell and then CHANGES it — "when you cast it this way…", "except the spell has…", "you can target only yourself" | `spellNotes`, printed in that spell's description under the granting record's name (owner principle N2) |
 
 ## F. Granting other records
 

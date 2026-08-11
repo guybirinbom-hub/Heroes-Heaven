@@ -2709,6 +2709,19 @@ button.strike-name:hover {
   border: var(--app-bw) solid var(--app-border);
   border-radius: 999px;
 }
+/* Reach reads as "Reach 10 ft / 15 ft*". The values live in one run so the slash binds to the pair
+   rather than being spaced by the meta row's flex gap, which would read as a separate item. */
+.strike-reach-val {
+  white-space: nowrap;
+}
+.strike-reach-sep {
+  margin: 0 3px;
+  opacity: 0.55;
+}
+/* The `*` is already the affordance; the InfoTerm underline under a superscript just smudges it. */
+.reach-star.info-term {
+  text-decoration: none;
+}
 .strike-crit {
   margin-top: 5px;
   font-size: 11px;
@@ -9111,6 +9124,28 @@ button.strike-name:hover {
   letter-spacing: 0.05em;
   color: var(--app-text-dim);
   margin-bottom: 5px;
+}
+/* What one of YOUR records adds to a spell (principle N2). Boxed, tinted and headed by the record's
+   name — the spell's own rules above it are flat prose, so the two can never read as one text. */
+.sd-addnote {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-accent) 45%, var(--app-border));
+  border-left: 3px solid var(--app-accent);
+  border-radius: 0 var(--app-radius-sm) var(--app-radius-sm) 0;
+  background: color-mix(in srgb, var(--app-accent) 8%, transparent);
+}
+.sd-addnote-h {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--app-accent);
+  margin-bottom: 4px;
+}
+.sd-addnote-body {
+  margin-bottom: 0;
 }
 .spell-top {
   display: flex;

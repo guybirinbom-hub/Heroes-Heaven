@@ -33,8 +33,10 @@ import type {
   SenseEntry,
   StanceStrike,
   SubclassOption,
+  ItemDesignation,
   ProficiencyKey,
   ProficiencyRank,
+  ReachRider,
   SaveId,
   SkillId,
   Speeds,
@@ -1920,6 +1922,21 @@ function deityFavorsUnarmed(c: Character, db: ContentDatabase): boolean {
   return (deity?.favoredWeapons ?? []).some((w) => !db.items[w]);
 }
 
+/**
+ * One reach a Strike has, in feet.
+ *
+ * `when` absent = the reach the Strike always has. `when` present = it applies only in that
+ * circumstance, so the row stars the number and the star opens `sourceId`. Two entries may carry the
+ * SAME `feet` from different sources — that is deliberate, and is why the source travels with each
+ * entry rather than being looked up from the value.
+ */
+export interface StrikeReach {
+  feet: number;
+  when?: string;
+  sourceId?: string;
+  sourceCollection?: 'feats' | 'classFeatures' | 'items';
+}
+
 export interface Strike {
   instanceId: string;
   name: string;
@@ -1933,6 +1950,10 @@ export interface Strike {
   ranged: boolean;
   /** Range increment in feet (ranged weapons). */
   range?: number;
+  /** Every reach this Strike has, in feet — a VALUE on the row, not an annotation. The first entry
+   *  is the reach it always has; the rest are circumstances, each carrying its own source. Absent on
+   *  a ranged Strike, which has a range increment instead. */
+  reaches?: StrikeReach[];
   /** Reload actions (ranged weapons; 0 = no reload needed). */
   reload?: number;
   /** Weapon group (sword, bow, …) — drives critical specialization. */
@@ -2599,6 +2620,98 @@ function mergeTraits(traits: readonly string[], add: readonly string[]): string[
 /** Apply `n` die steps, `n` being a count or a plain true for one. */
 const stepsOf = (v: boolean | number | undefined) => (v === true ? 1 : typeof v === 'number' ? v : 0);
 
+/** The character's natural reach in feet — 5 unless a record raised it (Jotun's Heart → 10).
+ *  Deliberately NOT derived from size: a Large PC's reach is whatever their ancestry and feats say,
+ *  which is why Jotun's Heart prints "You have a 10-foot reach" on top of becoming Huge. */
+const naturalReach = (c: Character) => c.reach ?? 5;
+
+/** What a reach rider is matched against — everything a `ReachRider.match` can name about a Strike. */
+interface ReachContext {
+  traits: readonly string[];
+  unarmed: boolean;
+  name: string;
+  damageType: string;
+  group?: string;
+  category?: WeaponItem['category'];
+  hands?: WeaponItem['hands'];
+  /** The weapon's core.json id; absent on an unarmed attack. */
+  baseId?: string;
+  designations?: ItemDesignation[];
+}
+
+/**
+ * Every reach a MELEE Strike has, in feet.
+ *
+ * Reach is a displayed value, so this returns a list rather than a number: the first entry is what
+ * the Strike always reaches, and each entry after it is a circumstance the player has to put
+ * themselves in, carrying the record whose text explains it. Two circumstances that happen to give
+ * the SAME number are both kept — the player's question is never "how far", it is "which of these am
+ * I in", and collapsing them answers the wrong one.
+ *
+ * A conditional entry equal to the unconditional reach is dropped: it changes nothing, and a `*`
+ * there would promise a difference that isn't in the text.
+ */
+function strikeReaches(c: Character, db: ContentDatabase, ctx: ReachContext): StrikeReach[] {
+  const sources: { rec: { strikeReach?: ReachRider | ReachRider[] }; id: string; collection: StrikeReach['sourceCollection'] }[] = [];
+  for (const f of c.feats) if (db.feats[f.featId]?.strikeReach) sources.push({ rec: db.feats[f.featId], id: f.featId, collection: 'feats' });
+  for (const fid of ownedFeatureIds(c, db)) if (db.classFeatures[fid]?.strikeReach) sources.push({ rec: db.classFeatures[fid], id: fid, collection: 'classFeatures' });
+  // A worn/held item's rider (a tasset of flexibility's Lunging Attack). Weapons are excluded because
+  // a weapon's own reach is the `reach` trait, which the base below already reads.
+  for (const inv of c.inventory) {
+    const it = db.items[inv.itemId];
+    if ((inv.worn || inv.invested || inv.equipped) && it?.strikeReach && it.itemType !== 'weapon') {
+      sources.push({ rec: it, id: inv.itemId, collection: 'items' });
+    }
+  }
+
+  // A reach weapon reaches 5 feet FURTHER than you do, rather than a flat 10 — which is what the
+  // trait actually says, and the difference every Large character would otherwise lose.
+  let base = naturalReach(c) + (hasTraitFamily(ctx.traits, 'reach') ? 5 : 0);
+  let floor = 0;
+  let add = 0;
+  // Collected rather than resolved in place: a conditional "+5 feet" is 5 feet on top of the reach
+  // the character actually has, so every unconditional rider must have landed before any of them.
+  const conditional: { r: ReachRider; id: string; collection: StrikeReach['sourceCollection'] }[] = [];
+
+  for (const src of sources) {
+    for (const r of asRiders(src.rec.strikeReach)) {
+      const m = r.match ?? {};
+      if (m.unarmed !== undefined && m.unarmed !== ctx.unarmed) continue;
+      if (m.names?.length && !m.names.some((n) => ctx.name.toLowerCase().includes(n.toLowerCase()))) continue;
+      if (m.groups?.length && !m.groups.includes(ctx.group ?? '')) continue;
+      if (m.items?.length && !m.items.includes(ctx.baseId ?? '')) continue;
+      if (m.categories?.length && !(ctx.category && m.categories.includes(ctx.category))) continue;
+      if (m.damageTypes?.length && !m.damageTypes.includes(ctx.damageType)) continue;
+      // Family-aware for the same reason applyWeaponRiders is: a filter naming "thrown" has to match
+      // the `thrown-20` a weapon actually carries.
+      if (m.anyTrait?.length && !m.anyTrait.some((t) => hasTraitFamily(ctx.traits, t))) continue;
+      if (m.excludeTraits?.length && m.excludeTraits.some((t) => hasTraitFamily(ctx.traits, t))) continue;
+      // '1+' counts as one-handed; an unarmed attack has no `hands` and so matches neither, which is
+      // what "a melee weapon that requires two hands" means.
+      if (m.hands != null && !String(ctx.hands ?? '').startsWith(String(m.hands))) continue;
+      if (m.designated && !(ctx.designations ?? []).includes(m.designated)) continue;
+
+      if (r.when) conditional.push({ r, id: src.id, collection: src.collection });
+      else {
+        // Unconditional riders reshape the number itself. A stated reach is a FLOOR (two of them
+        // cannot both be true, and the longer one is the one you use); an increment adds on top.
+        floor = Math.max(floor, r.feet ?? 0);
+        add += r.add ?? 0;
+      }
+    }
+  }
+  base = Math.max(base, floor) + add;
+  return [
+    { feet: base },
+    ...conditional
+      .map(({ r, id, collection }) => ({ feet: r.feet ?? base + (r.add ?? 0), when: r.when, sourceId: id, sourceCollection: collection }))
+      .filter((r) => r.feet !== base)
+      // Ascending, so two circumstances printing the same reach land next to each other and read as
+      // the pair they are. Array#sort is stable, so equal values keep their source order.
+      .sort((a, b) => a.feet - b.feet),
+  ];
+}
+
 /**
  * Changes a feat or class feature makes to a WIELDED weapon — traits, the damage die, the range
  * increment. "Melee weapons you wield gain versatile B" (Hilt Hammer), "simple weapons you wield
@@ -2823,6 +2936,20 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     thrown: w.traits.some((t) => t === 'thrown' || t.startsWith('thrown-')),
   });
   if (rageRider) conditionalDamage.push(rageRider);
+  // A `thrown-N` weapon carries a range and is still wielded in the hand — the app models its single
+  // Strike as the MELEE one (see the attack-ability note above), so it has a reach. A projectile or a
+  // bare-`thrown` javelin does not: those have a range increment instead.
+  const reaches = projectile || bareThrown ? undefined : strikeReaches(c, db, {
+    traits: w.traits,
+    unarmed: false,
+    name: w.name,
+    damageType: w.damage.type,
+    group: w.group,
+    category: w.category,
+    hands: w.hands,
+    baseId: w.id,
+    designations: inv.designations,
+  });
 
   return {
     instanceId: inv.instanceId,
@@ -2832,6 +2959,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     traits: w.traits,
     ranged,
     range: w.range,
+    reaches,
     reload: w.reload,
     group: w.group,
     base: w.id,
@@ -3077,6 +3205,7 @@ function deriveUnarmedStrike(
     ...(p.critSpec ? { critSpec: true } : {}),
     ranged: isRanged,
     range: p.range,
+    ...(isRanged ? {} : { reaches: strikeReaches(c, db, { traits: p.traits, unarmed: true, name: p.name, damageType: p.damageType, group: p.group }) }),
     group: p.group,
     base: p.instanceId,
     specDamage: specDamage || undefined,

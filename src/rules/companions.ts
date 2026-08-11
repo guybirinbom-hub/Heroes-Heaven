@@ -17,7 +17,7 @@ import { abpOn, abpAttack, abpStrikingDice } from './abp';
 import { conditionPenalty } from './conditions';
 import { modeNumberBonus } from './modes';
 import { specificFamiliar } from './specificFamiliars';
-import { COMPANION_MODS } from './companionGrants';
+import { COMPANION_MODS, CREATURE_OFFERS, type CreatureOffer } from './companionGrants';
 import type {
   AbilityId,
   ActionCost,
@@ -594,10 +594,14 @@ export interface FamiliarBlock extends Defenses {
     note?: string;
     source?: SourceInfo;
   };
+  /** The record OFFER the PLAYER added this creature from (Out of Hand's severed arm) — carried whole
+   *  so the card can print what offered it and the printed rules the numbers can't express. */
+  offer?: CreatureOffer;
 }
 
 /** A familiar is a Tiny minion: 5 HP per level, the master's AC/saves/Perception, plus its
- *  chosen abilities. A specific familiar adds its locked required abilities + special abilities. */
+ *  chosen abilities. A specific familiar adds its locked required abilities + special abilities.
+ *  A creature added from a record's OFFER borrows this shape with the offer's own overrides. */
 export function deriveFamiliar(
   cfg: CompanionConfig,
   character: Character,
@@ -605,18 +609,26 @@ export function deriveFamiliar(
   conditions: ActiveCondition[] = [],
   modes: ModeDef[] = [],
 ): FamiliarBlock {
+  // "the statistics of a familiar WITHOUT any familiar or master abilities" — an offer can withhold
+  // them, and that has to include the ones an owner feat grants unasked, or Lightning Rings would arm
+  // a severed limb.
+  const offer = cfg.offerSlug ? CREATURE_OFFERS[cfg.offerSlug] : undefined;
+  const noAbilities = !!offer?.familiar?.noAbilities;
+  const own = noAbilities ? [] : cfg.abilities ?? [];
   // Abilities an OWNER's feat grants ("Your familiar gains the Lightning Needles ability"). The
   // ability records already shipped and the roster already rendered them; nothing attached one, so
   // those feats left the familiar's block exactly as it was. They do NOT cost an ability slot.
   const ownerFeats = new Set((character.feats ?? []).map((f) => f.featId));
   const grantedAbilityIds = new Map<string, string>();
-  for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
-    if (!ownerFeats.has(slug) || !mod.kinds.includes('familiar')) continue;
-    for (const id of mod.familiarAbilities ?? []) if (!grantedAbilityIds.has(id)) grantedAbilityIds.set(id, slug);
+  if (!noAbilities) {
+    for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
+      if (!ownerFeats.has(slug) || !mod.kinds.includes('familiar')) continue;
+      for (const id of mod.familiarAbilities ?? []) if (!grantedAbilityIds.has(id)) grantedAbilityIds.set(id, slug);
+    }
   }
-  const chosen = new Set(cfg.abilities ?? []);
+  const chosen = new Set(own);
   const abilities = [
-    ...(cfg.abilities ?? []).map((id) => ({ id, from: undefined as string | undefined })),
+    ...own.map((id) => ({ id, from: undefined as string | undefined })),
     ...[...grantedAbilityIds].filter(([id]) => !chosen.has(id)).map(([id, from]) => ({ id, from })),
   ]
     .map(({ id, from }) => ({ a: content.familiarAbilities[id], from }))
@@ -634,7 +646,9 @@ export function deriveFamiliar(
   // Aquatic familiars (Elver Pet) gain the aquatic trait, breathe water, and swap land Speed for a
   // swim Speed of the same value.
   const aquatic = cfg.grantSlug === 'elver-pet';
-  const baseSpeed = has('fast-movement') ? 40 : 25;
+  // An offer's printed Speed REPLACES the familiar's ("except its Speed is 5 feet"), so it wins over
+  // Fast Movement rather than being maxed with it.
+  const baseSpeed = offer?.familiar?.speed ?? (has('fast-movement') ? 40 : 25);
   const land = aquatic ? 0 : baseSpeed;
   const extraSpeeds: string[] = [];
   if (aquatic) extraSpeeds.push(`swim ${baseSpeed} feet (aquatic — breathes water, not air)`);
@@ -642,7 +656,7 @@ export function deriveFamiliar(
   if (has('climber')) extraSpeeds.push('climb 25 feet');
   if (has('burrower')) extraSpeeds.push('burrow 5 feet');
   return {
-    name: cfg.name || sf?.name || 'Familiar',
+    name: cfg.name || offer?.name || sf?.name || 'Familiar',
     level: character.level,
     hp: (5 + (hasTough ? 2 : 0)) * character.level,
     speed: land,
@@ -664,6 +678,7 @@ export function deriveFamiliar(
           source: sf.source,
         }
       : undefined,
+    ...(offer ? { offer } : {}),
   };
 }
 

@@ -1,7 +1,7 @@
-import { Fragment, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Fragment, useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
 import { isMobileNow } from './useIsMobile';
 import { traitDesc, senseDesc } from '../rules/glossary';
-import type { ActionCost, ActiveCondition, Character, Coins, ContentDatabase, CompanionConfig, CompanionKind, DamageType, EidolonConfig, ModeDef, SimpleCompanion, VehicleStat, SiegeWeaponStat } from '../rules/types';
+import type { ActionCost, ActiveCondition, Character, Coins, ContentDatabase, CompanionConfig, CompanionKind, DamageType, EidolonConfig, Item, ModeDef, SimpleCompanion, VehicleStat, SiegeWeaponStat } from '../rules/types';
 import {
   deriveAnimalCompanion,
   deriveEidolon,
@@ -26,22 +26,21 @@ import {
   buyCompanion,
   buyCompanionItem,
   canAfford,
+  onCompanionInventory,
   removeCompanionCondition,
-  removeCompanionItem,
   removePlayCompanion,
-  setCompanionConditionValue,
+  stepCompanionConditionValue,
   setCompanionHp,
-  setCompanionItemQty,
   setCompanionTempHp,
-  toggleCompanionItemFlag,
   toggleCompanionMode,
   updatePlayCompanion,
   type PlayUpdater,
 } from '../rules/play';
 import { formatMod, ownedFeatureIds } from '../rules/derive';
+import { InventoryTab } from './InventoryTab';
 import { HpControl } from './HpControl';
 import { specificFamiliars } from '../rules/specificFamiliars';
-import { featGrantedCompanions, FEAT_COMPANION_GRANTS } from '../rules/companionGrants';
+import { featGrantedCompanions, offeredCreatures, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, type CreatureOffer } from '../rules/companionGrants';
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
@@ -79,6 +78,7 @@ const COMPANION_KIND_LABEL: Record<string, string> = {
   vehicle: 'Vehicle',
   siege: 'Siege weapon',
   construct: 'Construct',
+  offered: 'From your feats',
 };
 function companionKindLabel(token: string): string {
   return COMPANION_KIND_LABEL[token] ?? token.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
@@ -86,6 +86,11 @@ function companionKindLabel(token: string): string {
 
 /** Display label + icon for a companion (animals may be constructs; vehicles/siege weapons too). */
 function kindMeta(cfg: CompanionConfig, content: ContentDatabase): { label: string; icon: string } {
+  // A creature added from a record's OFFER is named by the offer, not by the shape it borrows its
+  // statistics from: a severed arm sitting beside a familiar must not give the switcher two pills
+  // both reading "Familiar".
+  const offer = cfg.offerSlug ? CREATURE_OFFERS[cfg.offerSlug] : undefined;
+  if (offer) return { label: offer.name, icon: KIND_ICON[cfg.kind] };
   if (cfg.kind === 'animal') {
     const t = cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
     if (t?.category === 'construct') return { label: 'Construct companion', icon: 'ti-robot' };
@@ -101,9 +106,12 @@ function kindMeta(cfg: CompanionConfig, content: ContentDatabase): { label: stri
 
 /* ============================ Add companion ============================ */
 
-type AddCat = 'all' | 'animal' | 'construct' | 'familiar' | 'eidolon' | 'follower' | 'pet' | 'vehicle' | 'siege';
+type AddCat = 'all' | 'offered' | 'animal' | 'construct' | 'familiar' | 'eidolon' | 'follower' | 'pet' | 'vehicle' | 'siege';
 const ADD_CATS: { id: AddCat; label: string }[] = [
   { id: 'all', label: 'All' },
+  // Only rendered when the character actually has an offer — an empty tab would advertise a capability
+  // this character does not have.
+  { id: 'offered', label: 'From your feats' },
   { id: 'animal', label: 'Animal' },
   { id: 'construct', label: 'Construct' },
   { id: 'familiar', label: 'Familiar' },
@@ -123,9 +131,12 @@ interface AddRow {
   /** Vehicles & siege weapons cost coin — their price string ("100 gp"); absent = free companion. */
   price?: string;
   note?: string;
+  /** Set on a row a RECORD offers (CREATURE_OFFERS): the offering record's id. Every statistic the
+   *  added creature has comes from the offer, so the row carries no type. */
+  offerSlug?: string;
 }
 
-function addRows(content: ContentDatabase, enabled?: Set<string>): AddRow[] {
+function addRows(content: ContentDatabase, enabled?: Set<string>, offers: { offerSlug: string; offer: CreatureOffer }[] = []): AddRow[] {
   /** Offered only if its book is enabled for this character. A record with NO source.book is always
    *  kept — those are the hand-authored ones (construct-companion, the generic familiar, the 38
    *  app-only familiar abilities), which belong to no book and so can't be gated. `enabled`
@@ -155,10 +166,24 @@ function addRows(content: ContentDatabase, enabled?: Set<string>): AddRow[] {
   const siege: AddRow[] = Object.values(content.siegeWeapons ?? {})
     .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
     .map((s) => ({ kind: 'siege', cat: 'siege', typeId: s.id, name: s.name, price: s.price, note: `Level ${s.level}` }));
-  return [...animals, ...constructs, ...familiars, ...eidolons, ...followers, ...pets, ...vehicles, ...siege];
+  // Offered creatures lead the list: they are the ones this particular character's records unlocked,
+  // and the player who took the feat is looking for exactly them. They are NOT source-gated — the
+  // record that offers one is already on the character.
+  const offered: AddRow[] = offers.map(({ offerSlug, offer }) => ({
+    kind: offer.kind,
+    cat: 'offered',
+    typeId: '',
+    name: offer.name,
+    note: offer.from,
+    offerSlug,
+  }));
+  return [...offered, ...animals, ...constructs, ...familiars, ...eidolons, ...followers, ...pets, ...vehicles, ...siege];
 }
 
 function rowToConfig(r: AddRow): Omit<CompanionConfig, 'id'> {
+  // An offered creature keeps only the link to its offer — that is where its whole stat block comes
+  // from, so there is no type, maturity or ability list to seed.
+  if (r.offerSlug) return { kind: r.kind, name: '', offerSlug: r.offerSlug };
   if (r.kind === 'animal') return { kind: 'animal', name: '', typeId: r.typeId, maturity: 'young' };
   if (r.kind === 'eidolon') return { kind: 'eidolon', name: '', typeId: r.typeId };
   if (r.kind === 'familiar') return { kind: 'familiar', name: '', abilities: [], specificFamiliarId: r.typeId || undefined };
@@ -166,13 +191,16 @@ function rowToConfig(r: AddRow): Omit<CompanionConfig, 'id'> {
 }
 
 /** Two-step picker: choose a type (category), then the specific companion. */
-function AddCompanionModal({ content, currency, enabledSources, onAdd, onClose }: { content: ContentDatabase; currency?: Coins; enabledSources?: string[]; onAdd: (r: AddRow, buy: boolean) => void; onClose: () => void }) {
+function AddCompanionModal({ content, currency, enabledSources, offers, onAdd, onClose }: { content: ContentDatabase; currency?: Coins; enabledSources?: string[]; /** Creatures this character's own records offer — see CREATURE_OFFERS. */ offers: { offerSlug: string; offer: CreatureOffer }[]; onAdd: (r: AddRow, buy: boolean) => void; onClose: () => void }) {
   const [cat, setCat] = useState<AddCat>('all');
   const [q, setQ] = useState('');
   const [descNode, setDescNode] = useState<DescNode | null>(null);
   const ql = q.trim().toLowerCase();
   // The content record behind a row (for its description popup), or undefined (generic familiar has none).
   const rowRecord = (r: AddRow): { name: string; description?: string; descRefs?: DescNode['descRefs'] } | undefined => {
+    // An offered row opens the OFFERING RECORD's page — the arm's rules are printed in Out of Hand,
+    // and that is what the player needs to read before deciding to add it.
+    if (r.offerSlug) return content.feats[r.offerSlug] ?? content.classFeatures[r.offerSlug];
     if (r.kind === 'animal') return content.animalCompanions[r.typeId];
     if (r.kind === 'vehicle') return content.vehicles?.[r.typeId];
     if (r.kind === 'siege') return content.siegeWeapons?.[r.typeId];
@@ -182,15 +210,49 @@ function AddCompanionModal({ content, currency, enabledSources, onAdd, onClose }
     if (r.kind === 'familiar') return r.typeId ? content.specificFamiliars?.[r.typeId] : undefined;
     return undefined;
   };
+  /**
+   * The ast bucket a row's full rules page lives in.
+   *
+   * Every row used to be handed the bucket name 'companion', which does not exist — so no rules page
+   * ever loaded and the popup fell back to the short blurb, or to nothing at all for the records that
+   * carry no `description`, which is why some rows didn't open anything when pressed. Followers and
+   * pets genuinely ship no ast page; they keep the blurb, which is all there is for them.
+   */
+  const rowBucket = (r: AddRow): string | undefined => {
+    if (r.offerSlug) return content.feats[r.offerSlug] ? 'feats' : 'classFeatures';
+    if (r.kind === 'animal') return 'animalCompanions';
+    if (r.kind === 'vehicle') return 'vehicles';
+    if (r.kind === 'siege') return 'siegeWeapons';
+    if (r.kind === 'eidolon') return 'classFeatures';
+    if (r.kind === 'familiar') return 'familiarAbilities';
+    return undefined;
+  };
+  /** A row's description node: the full ast page when one exists, else its blurb, else the bare name so
+   *  the row is still pressable and says what it is rather than silently doing nothing. */
+  const rowNode = (r: AddRow): DescNode => {
+    const rec = rowRecord(r);
+    const bucket = rowBucket(r);
+    return {
+      title: rec?.name ?? r.name,
+      description: rec?.description ?? '',
+      descRefs: rec?.descRefs,
+      ...(bucket ? { key: bucket, slug: r.offerSlug ?? r.typeId } : {}),
+    };
+  };
   // Companions now carry a real source.book (the AoN re-import), so the picker respects the
   // character's enabled books like every other picker. `enabledSources` absent = Core only.
   const enabledBooks = useMemo(() => enabledBookSet(enabledSources), [enabledSources]);
   const matches = (r: AddRow) => (cat === 'all' || r.cat === cat) && (!ql || r.name.toLowerCase().includes(ql));
-  const rows = useMemo(() => addRows(content, enabledBooks).filter(matches), [content, enabledBooks, cat, ql]);
+  // `offers` is recomputed by the caller on every render, so memoize against WHICH offers there are —
+  // depending on the array itself would rebuild the whole several-hundred-row catalogue each keystroke.
+  const offerKey = offers.map((o) => o.offerSlug).join(',');
+  const rows = useMemo(() => addRows(content, enabledBooks, offers).filter(matches), [content, enabledBooks, offerKey, cat, ql]);
   // Most companions come from non-Core books (19 from Howl of the Wild alone), so a Core-only
   // character sees a much shorter list than the data holds. Say so, rather than letting it look like
   // the app is missing content — this is the same trap the feat picker's hidden-matches note avoids.
-  const hiddenBySource = useMemo(() => addRows(content).filter(matches).length - rows.length, [content, rows.length, cat, ql]);
+  // Offers go into BOTH counts: they are never source-gated, so counting them on one side only would
+  // make the difference lie.
+  const hiddenBySource = useMemo(() => addRows(content, undefined, offers).filter(matches).length - rows.length, [content, offerKey, rows.length, cat, ql]);
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker cond-modal" onClick={(e) => e.stopPropagation()}>
@@ -202,7 +264,7 @@ function AddCompanionModal({ content, currency, enabledSources, onAdd, onClose }
         </div>
         <div className="picker-controls" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 8 }}>
           <div className="seg seg-wrap">
-            {ADD_CATS.map((c) => (
+            {ADD_CATS.filter((c) => c.id !== 'offered' || offers.length > 0).map((c) => (
               <button key={c.id} type="button" role="tab" aria-selected={cat === c.id} className={'seg-btn' + (cat === c.id ? ' on' : '')} onClick={() => setCat(c.id)}>
                 {c.label}
               </button>
@@ -224,8 +286,8 @@ function AddCompanionModal({ content, currency, enabledSources, onAdd, onClose }
             const priced = (r.kind === 'vehicle' || r.kind === 'siege') && !!r.price;
             const coins = priced ? parsePrice(r.price) : undefined;
             const affordable = !coins || canAfford(currency, coins);
-            const rec = rowRecord(r);
-            const node = rec ? descNodeOf(rec, 'companion') : null;
+            // Every row is pressable and opens the fullest page available for it — see rowNode.
+            const node = rowNode(r);
             // The row body opens the companion's stat block/description (never commits); a dedicated
             // Add (or Buy / Free for priced vehicles & siege) button is the only thing that adds it.
             const name = (
@@ -235,16 +297,18 @@ function AddCompanionModal({ content, currency, enabledSources, onAdd, onClose }
             if (priced) {
               return (
                 <div key={r.kind + ':' + r.cat + ':' + r.typeId} className="pick-row">
-                  <button type="button" className={'pick-body' + (node ? '' : ' pick-body-static')} onClick={node ? () => setDescNode(node) : undefined} title={node ? 'View description' : undefined}>
+                  <button type="button" className="pick-body" onClick={() => setDescNode(node)} title="View description">
                     {lead}
                     <div className="picker-text"><div className="picker-name">{name}</div><div className="cond-row-desc">{r.price}</div></div>
                   </button>
-                  <span className="cmp-add-buy">
-                    <button className="comp-manage-btn" disabled={!affordable} title={affordable ? `Buy for ${r.price}` : `You can't afford ${r.price}`} onClick={() => onAdd(r, true)}>
-                      <i className="ti ti-coins" aria-hidden="true" /> Buy
+                  {/* Same pair, same words, same styling as the inventory's Add-items catalogue
+                      (.ai-buy in AddItemsModal): buying anything in the app looks like this. */}
+                  <span className="ai-buy">
+                    <button disabled={!affordable} title={affordable ? `Buy for ${r.price}` : `You can't afford ${r.price}`} onClick={() => onAdd(r, true)}>
+                      Buy
                     </button>
-                    <button className="comp-manage-btn ghost" title="Add without paying" onClick={() => onAdd(r, false)}>
-                      Free
+                    <button className="give" title="Add for free" onClick={() => onAdd(r, false)}>
+                      Give
                     </button>
                   </span>
                 </div>
@@ -255,7 +319,7 @@ function AddCompanionModal({ content, currency, enabledSources, onAdd, onClose }
                 key={r.kind + ':' + r.cat + ':' + r.typeId}
                 lead={lead}
                 name={name}
-                onOpenDesc={node ? () => setDescNode(node) : undefined}
+                onOpenDesc={() => setDescNode(node)}
                 onSelect={() => onAdd(r, false)}
                 selectLabel={<><i className="ti ti-plus" aria-hidden="true" /> Add</>}
               />
@@ -304,7 +368,7 @@ function FamiliarAbilityPicker({ content, chosen, onToggle, onClose }: { content
                 key={a.id}
                 name={<>{a.name}{a.kind === 'master' && <span className="cond-valued-tag">master</span>}</>}
                 chosen={on}
-                onOpenDesc={node ? () => setDescNode(node) : undefined}
+                onOpenDesc={() => setDescNode(node)}
                 selectLabel={on ? 'Remove' : 'Add'}
                 onSelect={() => onToggle(a.id)}
               />
@@ -340,7 +404,7 @@ function SpecializationPicker({ content, chosen, onPick, onClose }: { content: C
                 key={s.id}
                 name={s.name}
                 chosen={on}
-                onOpenDesc={node ? () => setDescNode(node) : undefined}
+                onOpenDesc={() => setDescNode(node)}
                 selectLabel={on ? 'Chosen' : 'Select'}
                 onSelect={() => { onPick(on ? undefined : s.id); onClose(); }}
               />
@@ -382,9 +446,9 @@ function CompanionConditions({ compId, conditions, modes, content, onPlay, onOpe
             </InfoTerm>
             {def?.valued && onPlay ? (
               <span className="cond-pill-step">
-                <button aria-label="Decrease" onClick={() => onPlay((p) => setCompanionConditionValue(p, compId, c.id, (c.value ?? 1) - 1), `ccond:${compId}:${c.id}`)}>−</button>
+                <button aria-label="Decrease" onClick={() => onPlay((p) => stepCompanionConditionValue(p, compId, c.id, -1), `ccond:${compId}:${c.id}`)}>−</button>
                 {c.value ?? 1}
-                <button aria-label="Increase" onClick={() => onPlay((p) => setCompanionConditionValue(p, compId, c.id, (c.value ?? 1) + 1), `ccond:${compId}:${c.id}`)}>+</button>
+                <button aria-label="Increase" onClick={() => onPlay((p) => stepCompanionConditionValue(p, compId, c.id, 1), `ccond:${compId}:${c.id}`)}>+</button>
               </span>
             ) : (
               c.value ? ' ' + c.value : ''
@@ -711,11 +775,15 @@ function SaveLine({ ac, saves }: { ac: number; saves: { fortitude: number; refle
 
 function FamiliarBlockView({ b, cond, hp }: { b: FamiliarBlock; cond?: ReactNode; hp?: ReactNode }) {
   const sf = b.specific;
+  // A creature added from a record's offer borrows the familiar's statistics but is not one, so it is
+  // labelled by what it actually is — "Minion 8", not "Familiar 8".
+  const offer = b.offer;
   return (
-    <StatBlock name={b.name} kind={sf ? 'Specific familiar' : 'Familiar'} level={b.level} icon="ti-feather">
+    <StatBlock name={b.name} kind={offer ? 'Minion' : sf ? 'Specific familiar' : 'Familiar'} level={b.level} icon="ti-feather">
       <div className="sb-traits">
         <span className="sb-trait">Minion</span>
         <span className="sb-trait">Tiny</span>
+        {offer && <span className="sb-trait sb-trait-accent">{offer.from}</span>}
         {sf?.traits.map((t) => (
           <TraitChipTerm key={t} trait={t} label={cap(t)} />
         ))}
@@ -753,22 +821,38 @@ function FamiliarBlockView({ b, cond, hp }: { b: FamiliarBlock; cond?: ReactNode
           {sf.note && <div className="sb-line sb-muted">{sf.note}</div>}
         </>
       )}
-      <div className="sb-div" />
-      <div className="sb-line sb-muted">
-        Familiar abilities ({b.abilities.filter((a) => !a.fromFeat).length} chosen
-        {b.abilities.some((a) => a.fromFeat) ? `, ${b.abilities.filter((a) => a.fromFeat).length} from feats` : ''})
-      </div>
-      {b.abilities.length === 0 ? (
-        <div className="sb-line sb-muted">None chosen yet — add some in Edit, including this familiar's required abilities.</div>
+      {/* The offer's printed rules — the tether, what makes it inert, whose attack bonus its Strikes
+          use. None of it is computable, and all of it is what the player came to this card to read. */}
+      {offer && (
+        <>
+          <div className="sb-div" />
+          <div className="sb-line">{offer.note}</div>
+        </>
+      )}
+      {/* "the statistics of a familiar WITHOUT any familiar or master abilities" — say so, rather than
+          printing an empty list that reads as an unanswered choice. */}
+      {offer?.familiar?.noAbilities ? (
+        <div className="sb-line sb-muted">It has no familiar or master abilities.</div>
       ) : (
-        b.abilities.map((a) => (
-          <div className="sb-line" key={a.id}>
-            <b>{a.name}</b> {a.kind === 'master' && <span className="sb-trait sb-trait-accent">master</span>}{' '}
-            {/* Granted by one of your feats, so it cost no ability slot — the player needs to be able
-                to tell those from the ones they spent a slot on. */}
-            {a.fromFeat && <span className="sb-trait">from a feat</span>} {a.description}
+        <>
+          <div className="sb-div" />
+          <div className="sb-line sb-muted">
+            Familiar abilities ({b.abilities.filter((a) => !a.fromFeat).length} chosen
+            {b.abilities.some((a) => a.fromFeat) ? `, ${b.abilities.filter((a) => a.fromFeat).length} from feats` : ''})
           </div>
-        ))
+          {b.abilities.length === 0 ? (
+            <div className="sb-line sb-muted">None chosen yet — add some in Edit, including this familiar's required abilities.</div>
+          ) : (
+            b.abilities.map((a) => (
+              <div className="sb-line" key={a.id}>
+                <b>{a.name}</b> {a.kind === 'master' && <span className="sb-trait sb-trait-accent">master</span>}{' '}
+                {/* Granted by one of your feats, so it cost no ability slot — the player needs to be able
+                    to tell those from the ones they spent a slot on. */}
+                {a.fromFeat && <span className="sb-trait">from a feat</span>} {a.description}
+              </div>
+            ))
+          )}
+        </>
       )}
     </StatBlock>
   );
@@ -1015,65 +1099,78 @@ function VehicleBlock({
 
 /* ============================ Inventory (player-style, Bulk-managed) ============================ */
 
-function CompanionInventory({ cfg, content, onPlay, onAdd, bulkMax }: { cfg: CompanionConfig; content: ContentDatabase; onPlay: PlayUpdater; onAdd: () => void; bulkMax?: number }) {
-  const items = cfg.inventory ?? [];
-  const carried = Math.round(items.reduce((sum, inv) => sum + (content.items[inv.itemId]?.bulk || 0) * inv.quantity, 0) * 10) / 10;
-  const over = bulkMax != null && carried > bulkMax;
+/**
+ * What each kind of companion can actually DO with gear — which decides whether its pack offers Wear,
+ * Wield and Invest at all, rather than showing a control that quietly does nothing.
+ *
+ *  • An ANIMAL companion or MOUNT wears barding and can be given invested items (a collar, a saddle
+ *    with a rune), but it has no hands: it cannot wield a weapon. Its attacks are its own unarmed ones.
+ *  • A FAMILIAR is tiny and carries rather than uses: it can hold and wear, not wield.
+ *  • An EIDOLON is a full creature with hands — it does all three.
+ *  • A FOLLOWER or PET is a person or a small creature that can hold things: wear and wield.
+ *  • A VEHICLE or SIEGE WEAPON is cargo space. Nothing it holds is "worn" or "wielded" by it, and it
+ *    cannot invest — the pack is a hold.
+ */
+function companionGearAbility(cfg: CompanionConfig): { canWear: boolean; canWield: boolean; canInvest: boolean } {
+  switch (cfg.kind) {
+    case 'eidolon':
+      return { canWear: true, canWield: true, canInvest: true };
+    case 'follower':
+    case 'pet':
+      return { canWear: true, canWield: true, canInvest: false };
+    case 'animal':
+      return { canWear: true, canWield: false, canInvest: true };
+    case 'familiar':
+      return { canWear: true, canWield: false, canInvest: false };
+    case 'vehicle':
+    case 'siege':
+      return { canWear: false, canWield: false, canInvest: false };
+    default:
+      return { canWear: true, canWield: true, canInvest: true };
+  }
+}
+
+/**
+ * A companion’s gear — rendered by the SAME InventoryTab the player uses.
+ *
+ * It used to be a bespoke flat list: no containers, no item cards to open, no runes, no bulk beyond a
+ * single number, and a hand-rolled Wear/Wield button. Everything the player’s pack could do, the
+ * companion’s couldn’t, and the two drifted further apart with every change to one of them.
+ *
+ * Two adapters make the reuse work, and nothing else has to:
+ *  • a façade Character carrying the companion's inventory in place of the owner's, so every
+ *    derivation InventoryTab performs reads the right pack;
+ *  • a PlayUpdater that lends that pack to `play.inventory`, runs the real inventory action, and puts
+ *    the result back on the companion (see onCompanionInventory). Coins spent still come out of the
+ *    owner's purse, because that is where the action left them.
+ */
+function CompanionInventory({
+  cfg,
+  character,
+  content,
+  onPlay,
+  onCreateItem,
+  bulkMax,
+}: {
+  cfg: CompanionConfig;
+  character: Character;
+  content: ContentDatabase;
+  onPlay: PlayUpdater;
+  onCreateItem?: (item: Item) => void;
+  bulkMax?: number;
+}) {
+  const gear = useMemo(() => ({ ...character, inventory: cfg.inventory ?? [] }), [character, cfg.inventory]);
+  const gearPlay: PlayUpdater = useCallback(
+    (fn, tag) => onPlay((p) => onCompanionInventory(p, cfg.id, fn), tag),
+    [onPlay, cfg.id],
+  );
+  const scope = useMemo(() => ({ ownerName: cfg.name, bulkMax, ...companionGearAbility(cfg) }), [cfg, bulkMax]);
   return (
     <div className="comp-inv">
-      <div className="comp-inv-head">
-        <span className={'cmp-bulk' + (over ? ' over' : '')}>
-          <i className="ti ti-weight" aria-hidden="true" /> Bulk {carried}
-          {bulkMax != null ? ` / ${bulkMax}` : ''}
-          {over && ' — over capacity'}
-        </span>
-        <button className="comp-manage-btn" onClick={onAdd}>
-          <i className="ti ti-plus" aria-hidden="true" /> Add item
-        </button>
-      </div>
-      {items.length === 0 ? (
-        <div className="sb-line sb-muted">No gear yet. A companion can carry anything that fits its Bulk.</div>
-      ) : (
-        <ul className="comp-inv-list">
-          {items.map((inv) => {
-            const item = content.items[inv.itemId];
-            const flag: 'worn' | 'equipped' = item?.itemType === 'armor' ? 'worn' : 'equipped';
-            const equippable = item?.itemType === 'armor' || item?.itemType === 'weapon' || item?.itemType === 'shield';
-            const on = !!inv[flag];
-            const b = item?.bulk ?? 0;
-            return (
-              <li className="comp-inv-row" key={inv.instanceId}>
-                <span className="comp-inv-name">
-                  {item?.name ?? inv.itemId}
-                  {inv.quantity > 1 ? ` ×${inv.quantity}` : ''}
-                  <span className="comp-inv-bulk">{b === 0 ? '—' : b === 0.1 ? 'L' : b} Bulk</span>
-                </span>
-                {equippable && (
-                  <button className={'inv-act' + (on ? ' on' : '')} onClick={() => onPlay((p) => toggleCompanionItemFlag(p, cfg.id, inv.instanceId, flag))}>
-                    {flag === 'worn' ? (on ? 'Worn' : 'Wear') : on ? 'Wielded' : 'Wield'}
-                  </button>
-                )}
-                <span className="inv-qtystep">
-                  <button aria-label="Decrease quantity" disabled={inv.quantity <= 1} onClick={() => onPlay((p) => setCompanionItemQty(p, cfg.id, inv.instanceId, inv.quantity - 1), `cqty:${cfg.id}:${inv.instanceId}`)}>
-                    <i className="ti ti-minus" aria-hidden="true" />
-                  </button>
-                  <span>{inv.quantity}</span>
-                  <button aria-label="Increase quantity" onClick={() => onPlay((p) => setCompanionItemQty(p, cfg.id, inv.instanceId, inv.quantity + 1), `cqty:${cfg.id}:${inv.instanceId}`)}>
-                    <i className="ti ti-plus" aria-hidden="true" />
-                  </button>
-                </span>
-                <button className="comp-remove" aria-label="Remove item" onClick={() => onPlay((p) => removeCompanionItem(p, cfg.id, inv.instanceId))}>
-                  <i className="ti ti-trash" aria-hidden="true" />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      <InventoryTab character={gear} content={content} onPlay={gearPlay} onCreateItem={onCreateItem} scope={scope} />
     </div>
   );
 }
-
 /* ============================ Edit · choices panel ============================ */
 
 /** Labels for the maturity buttons. The LIST itself comes from the rules module (MATURITIES) — this
@@ -1110,6 +1207,9 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
             .sort((a, b) => a.name.localeCompare(b.name)),
     [content, eidTradition, eidCantripSlots],
   );
+  // A creature the player added from a record's offer has nothing to configure — every statistic is
+  // the offer's. Offering the familiar controls here would let a severed arm be turned into a Pipefox.
+  const offer = cfg.offerSlug ? CREATURE_OFFERS[cfg.offerSlug] : undefined;
   const type = cfg.kind === 'animal' && cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
   const isConstruct = type?.category === 'construct';
   const animalOpts = Object.values(content.animalCompanions).filter((t) => (t.category === 'construct') === isConstruct);
@@ -1175,7 +1275,14 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
         </>
       )}
 
-      {cfg.kind === 'familiar' && (
+      {offer && (
+        <div className="cmp-note">
+          Its statistics all come from {offer.from} — there is nothing to choose. Name it here, and remove it with the
+          trash button when it ends.
+        </div>
+      )}
+
+      {cfg.kind === 'familiar' && !offer && (
         <>
           <div className="cmp-crow">
             <span className="cmp-lbl">Familiar</span>
@@ -1326,7 +1433,7 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
 
 /* ============================ Main tab ============================ */
 
-export function CompanionsTab({ character, content, onPlay, onSaveMode, onDeleteMode, charKey }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater; onSaveMode?: (mode: ModeDef) => void; onDeleteMode?: (id: string) => void; charKey?: string }) {
+export function CompanionsTab({ character, content, onPlay, onSaveMode, onDeleteMode, onCreateItem, charKey }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater; onSaveMode?: (mode: ModeDef) => void; onDeleteMode?: (id: string) => void; /** Register a user-created item — threaded to the companion's inventory, which is the real one. */ onCreateItem?: (item: Item) => void; charKey?: string }) {
   const explicit = character.companions ?? [];
   const explicitIds = new Set(explicit.map((c) => c.id));
   const autoEidolon: CompanionConfig[] =
@@ -1348,6 +1455,9 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
   const autoGranted: CompanionConfig[] = featGrantedCompanions(grantSourceIds)
     .filter((g) => !explicit.some((c) => c.grantSlug === g.grantSlug))
     .map((g) => ({ id: g.id, kind: g.grant.kind, name: '', abilities: g.grant.lockedAbilities ?? [], grantSlug: g.grantSlug }));
+  // Creatures the character's records OFFER (Out of Hand's severed arm). Nothing is added here on
+  // purpose: an offer is a capability, and the player adds the creature when it happens at the table.
+  const offers = offeredCreatures(grantSourceIds);
   const companions = [...explicit, ...autoEidolon, ...autoGranted];
 
   const [selId, setSelId] = useState<string | null>(null);
@@ -1497,7 +1607,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           active={condsOf(condFor)}
           onAdd={(id, valued) => onPlay((p) => addCompanionCondition(p, condFor, id, valued ? 1 : undefined))}
           onRemove={(id) => onPlay((p) => removeCompanionCondition(p, condFor, id))}
-          onSetValue={(id, value) => onPlay((p) => setCompanionConditionValue(p, condFor, id, value), `ccond:${condFor}:${id}`)}
+          onStepValue={(id, delta) => onPlay((p) => stepCompanionConditionValue(p, condFor, id, delta), `ccond:${condFor}:${id}`)}
           onClose={() => setCondFor(null)}
           modesEnabled
           library={playerModeLibrary(Object.values(content.modes), charKey)}
@@ -1514,7 +1624,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           onDeleteMode={onDeleteMode}
         />
       )}
-      {addOpen && onPlay && <AddCompanionModal content={content} currency={character.currency} enabledSources={character.enabledSources} onAdd={addCompanion} onClose={() => setAddOpen(false)} />}
+      {addOpen && onPlay && <AddCompanionModal content={content} currency={character.currency} enabledSources={character.enabledSources} offers={offers} onAdd={addCompanion} onClose={() => setAddOpen(false)} />}
       {invAddFor && onPlay && (
         <AddItemsModal
           content={content}
@@ -1566,6 +1676,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
   const block = renderBlock(current);
   const canEdit = editable(current);
   const grant = current.grantSlug ? FEAT_COMPANION_GRANTS[current.grantSlug] : undefined;
+  const currentOffer = current.offerSlug ? CREATURE_OFFERS[current.offerSlug] : undefined;
 
   return (
     <div className="maincol">
@@ -1636,13 +1747,21 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
               <i className="ti ti-info-circle" aria-hidden="true" /> <span>Granted by a feat. {grant.note}</span>
             </div>
           )}
+          {/* Not "granted": the record only made this addable. The player put it here when it happened
+              in play and takes it away when it ends, which is the whole point of the offer lane. */}
+          {currentOffer && (
+            <div className="cmp-grantnote">
+              <i className="ti ti-info-circle" aria-hidden="true" />{' '}
+              <span>You added this from {currentOffer.from}. Remove it when it ends — the app never adds or removes it for you.</span>
+            </div>
+          )}
           {(!canEdit || mode === 'stats') && block.node}
           {(!canEdit || mode === 'stats') && <CompanionSituational cfg={current} content={content} />}
           {canEdit && mode === 'edit' && onPlay && (
             <EditChoices cfg={current} character={character} content={content} onPlay={onPlay} onAbilities={() => setAbilityFor(current.id)} onSpecialization={() => setSpecFor(current.id)} />
           )}
           {canEdit && mode === 'inv' && onPlay && (
-            <CompanionInventory cfg={current} content={content} onPlay={onPlay} onAdd={() => setInvAddFor(current.id)} bulkMax={block.bulkMax} />
+            <CompanionInventory cfg={current} character={character} content={content} onPlay={onPlay} onCreateItem={onCreateItem} bulkMax={block.bulkMax} />
           )}
         </div>
       </div>

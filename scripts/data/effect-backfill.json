@@ -104749,5 +104749,961 @@
   "value": [
    "amphibious"
   ]
+ },
+ {
+  "category": "feats",
+  "id": "wukong-extension",
+  "field": "strikeReach",
+  "value": {
+   "feet": 30,
+   "when": "for the melee Strike made with Wukong Extension",
+   "match": {
+    "unarmed": false,
+    "designated": "innovation"
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "lunge",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "for the Strike made with Lunge",
+   "match": {
+    "unarmed": false
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "sever-space",
+  "field": "strikeReach",
+  "value": {
+   "feet": 80,
+   "when": "for the Strike made with Sever Space",
+   "match": {
+    "damageTypes": [
+     "slashing"
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "cobra-envenom",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "for the cobra fang Strike made with Cobra Envenom (once per minute)",
+   "match": {
+    "unarmed": true,
+    "names": [
+     "cobra fang"
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "cross-the-final-horizon",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "for the three Strikes made with Cross the Final Horizon",
+   "match": {
+    "unarmed": true,
+    "names": [
+     "skyward slash"
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "well-armed",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "while wielding your detached arm, for a one-handed weapon held in that arm",
+   "match": {
+    "unarmed": false,
+    "hands": 1
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "giants-lunge",
+  "field": "strikeReach",
+  "value": {
+   "feet": 10,
+   "when": "until your rage ends, after using Giant's Lunge",
+   "match": {
+    "excludeTraits": [
+     "reach"
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "stretching-reach",
+  "field": "strikeReach",
+  "value": {
+   "feet": 10,
+   "when": "while in Stretching Reach, with a two-handed melee weapon",
+   "match": {
+    "unarmed": false,
+    "hands": 2,
+    "excludeTraits": [
+     "reach"
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "jotuns-battle-stance",
+  "field": "strikeReach",
+  "value": {
+   "feet": 10,
+   "when": "while in Jotun's Battle Stance, with a two-handed melee weapon",
+   "match": {
+    "unarmed": false,
+    "hands": 2,
+    "excludeTraits": [
+     "reach"
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "grasping-reach",
+  "field": "strikeReach",
+  "value": {
+   "feet": 10,
+   "when": "in your extended two-handed grasp, with a two-handed melee weapon that deals at least 1d6 damage (its damage die drops one step)",
+   "match": {
+    "unarmed": false,
+    "hands": 2,
+    "excludeTraits": [
+     "reach"
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "giants-stature",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "while Large from Giant's Stature (Clumsy 1 until you stop raging)"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "titans-stature",
+  "field": "strikeReach",
+  "value": {
+   "add": 10,
+   "when": "while Huge from Giant's Stature, if you were Medium or smaller"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "towering-presence",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "while Large from Towering Presence — 10 feet instead if you started out Tiny; no effect if you were already Large"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "assume-earths-mantle",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "while Assume Earth's Mantle is active, if you were smaller than Large — 10 feet instead if you started out Tiny"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "greater-transformation",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "while in your oni form"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "vessels-form",
+  "field": "strikeReach",
+  "value": {
+   "feet": 10,
+   "when": "for 1 minute after using Vessel's Form, if you were Medium or smaller"
+  }
+ },
+ {
+  "category": "items",
+  "id": "tasset-of-flexibility",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "for the Strike made with the tasset's Lunging Attack (once per day)",
+   "match": {
+    "unarmed": false
+   }
+  }
+ },
+ {
+  "category": "items",
+  "id": "instinct-crown-giant",
+  "field": "strikeReach",
+  "value": {
+   "add": 5,
+   "when": "while Large from the giant instinct crown's rage activation — 10 feet instead if you were Tiny"
+  }
+ },
+ {
+  "category": "items",
+  "id": "miniaturization-module",
+  "field": "strikeReach",
+  "value": {
+   "feet": 0,
+   "when": "while Tiny from Miniaturize Me! (10 minutes)"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "realm-strider",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "translocate",
+    "note": "When you cast Translocate from this feat, spaces adjacent to the one you leave from and the one you appear in are momentarily filled with a damaging energy common to your realm, dealing damage of your realm's damage type to creatures in the affected spaces (save against your class DC or spell DC, whichever is higher)."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "greater-magical-edification",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "secret-page",
+    "note": "When you cast Secret Page from this feat, it is automatically heightened to the same spell rank as your cantrips from Magical Edification."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "magic-finder",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "detect-magic",
+    "note": "When you cast Detect Magic from this feat on an item or creature under the effect of a magic aura spell, or interact with an item under the effect of an item facade spell, you gain a +2 circumstance bonus on your check to disbelieve the illusion."
+   },
+   {
+    "spellId": "read-aura",
+    "note": "When you cast Read Aura from this feat on an item or creature under the effect of a magic aura spell, or interact with an item under the effect of an item facade spell, you gain a +2 circumstance bonus on your check to disbelieve the illusion."
+   },
+   {
+    "spellId": "locate",
+    "note": "You can cast Locate from this feat only to locate magic items, not specific mundane objects or types of objects."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "azarketi-purification",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "cleanse-cuisine",
+    "note": "You can cast Cleanse Cuisine from this feat only on liquids, and only once every 10 minutes. You can also use it on a touched creature instead of a liquid to purify their blood, giving that creature a +2 status bonus for 1 minute on their ongoing saves against poisons already present in their body when you cast the spell."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "shadowy-disguise",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "illusory-disguise",
+    "note": "Cast from this feat, the spell gains the shadow trait."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "spew-tentacles",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "black-tentacles",
+    "note": "When you cast Black Tentacles from this feat, you spew the tentacles from your mouth out to the appropriate range, where they take root and begin Grappling creatures as usual. The tentacles recognize you as a part of them and don't attempt to Grapple you, even if you are in the area."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "skeletal-transformation",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "animal-form",
+    "note": "When you cast Animal Form from this feat, you choose the spell's rank: 3rd, 4th, or 5th. Your battle form looks like a skeletal version of the animal, and in this form you retain the benefits of any skeleton feats that do not require the use of hands or the ability to communicate."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "call-of-the-green-man",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "plant-form",
+    "note": "When you reach 17th level, you can heighten Plant Form from this feat to 6th rank when you cast it."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "avatars-audience",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "interplanar-teleport",
+    "note": "You can cast Interplanar Teleport from this feat only to travel to the realm of your deity. Cast this way, its casting time is 1 minute, your religious symbol is a sufficient planar key, and you appear exactly where you want to be. While you are in your deity's realm because of this spell, you can return to the point you left by spending a single action, which has the concentrate and divine traits."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "siphon-torment",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "claim-curse",
+    "note": "When you cast Claim Curse from this feat, the target creature gains temporary Hit Points equal to your level."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "breath-like-honey",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "enthrall",
+    "note": "Cast from this feat, Enthrall has a range of 30 feet and the olfactory trait instead of the auditory trait, and targets don't gain any circumstance bonus for disagreeing with you."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "fossil-rider",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "mask-of-terror",
+    "note": "You can cast Mask of Terror from this feat only on yourself. When you do, you appear as a skeletal lizardfolk ancestor, twisted in a way that inspires the deepest fears of those who observe you."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "rat-magic",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "animal-messenger",
+    "note": "When you cast Animal Messenger from this feat, the animal that responds is always a rat. If there are no rats within range, the spell is lost."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "form-of-the-dragon",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "dragon-form",
+    "note": "Cast from this feat, Dragon Form has the same tradition as your draconic exemplar, and you must transform into your draconic exemplar. If you have the Arcane, Divine, Occult, or Primal Dragonblood lineage feat, you can instead choose any dragon of that tradition."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "river-adaptation",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "feet-to-fins",
+    "note": "Cast from this feat, you can target only yourself with the spell, but you can Cast the Spell as a free action if you're within a body of water when you cast it."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "mooneater",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "eclipse-burst",
+    "note": "When you cast Eclipse Burst from this feat, the sun or moon appears to eclipse to all creatures within 500 feet of you, and for 1 round after Casting the Spell the area is reduced to dim light."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "awaken-the-obake",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "fear",
+    "note": "When you cast Fear from this feat, the terrifying magic originates from a single unattended object within 30 feet of you instead of from you, and you measure the spell's range from that object. A target that becomes fleeing flees from that object instead of from you."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "world-protectors-hospitality",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "create-food",
+    "note": "When you cast Create Food from this feat, you instantly restore Hit Points to the containers storing the magical comestibles as though you'd succeeded at a Repair action, using your proficiency in your spell DC in place of your Crafting proficiency."
+   },
+   {
+    "spellId": "cleanse-cuisine",
+    "note": "When you cast Cleanse Cuisine from this feat, you instantly restore Hit Points to the containers storing the magical comestibles as though you'd succeeded at a Repair action, using your proficiency in your spell DC in place of your Crafting proficiency."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "cultivator-dedication",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "adapt-self",
+    "note": "Cultivator focus spells are treated as qi spells for prerequisites, counting the number of qi spells you possess and their effects, such as a jiang-shi's Drain Qi."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "phoenixs-flight",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "monstrosity-form",
+    "note": "Cast from this feat, you can transform only into a phoenix, and your familiar must be adjacent to you before you Cast the Spell. When you Cast the Spell your familiar merges into your form, and while transformed you gain the Blazing Conflagration action."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "celestial-rebirth",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "raise-dead",
+    "note": "When you cast Raise Dead from this feat, the cost to cast it changes to \"spend 1 Mythic Point.\""
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "mortal-herald-dedication",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "heal",
+    "note": "You can cast Heal from this feat only on yourself, but you gain the benefits of the 2-action version when you spend 1 action to cast it, and it is automatically heightened to a rank equal to half your level. If you would be reduced to 0 Hit Points but not immediately killed, you can cast it as a free action before you become unconscious."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "vellumis-excision",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "field-of-life",
+    "note": "When you cast your halcyon Field of Life as a primal spell, any living creatures in the area when you Sustain the spell gain a +2 status bonus to saving throws against curses, diseases, and poisons for 1 round."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "lingering-echoes",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "talking-corpse",
+    "note": "When you cast Talking Corpse from this feat, you can ask a fourth question of the corpse, and the corpse attempts its save against your spell DC or your class DC, whichever is higher."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "songs-of-the-seas-wrath",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "repulsion",
+    "note": "When you cast Repulsion from this feat, you do so by performing a haunting song, and the spell gains the auditory trait."
+   },
+   {
+    "spellId": "spellwrack",
+    "note": "When you cast Spellwrack from this feat, you do so by performing a haunting song, and the spell gains the auditory trait."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "devil-allies",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "summon-fiend",
+    "note": "When you cast Summon Fiend from this feat, you can summon only creatures that have the devil trait. At 14th level and every 2 levels thereafter the spell is heightened by one rank, to a maximum of 10th rank at 20th level."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "nameless-anonymity",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "veil-of-privacy",
+    "note": "You cast Veil of Privacy from this feat on yourself, heightened to the highest rank of spell you can cast, and it is of the same tradition as your focus spells. The spell ends immediately if your mask is removed for even a moment."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "dragon-prince",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "dragon-breath",
+    "note": "Cast from this feat, you can use only the dragon breath associated with your heritage that matches the energy type of your Dragon Spit feat. At 12th level and every 3 levels thereafter the spell is heightened by an additional spell rank."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "elemental-wrath",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "acid-splash",
+    "note": "Cast from this feat, the spell has only verbal components and deals the damage type you chose instead of acid damage; it gains the trait appropriate to that damage instead of the acid trait."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "underwater-volcano",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "volcanic-eruption",
+    "note": "Cast from this feat, you can evoke the volcano only on the floor of a body of water, and the effects that normally happen to flying creatures happen to swimming creatures instead."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "gift-of-the-moon",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "moon-frenzy",
+    "note": "Cast from this feat, the spell uses your class DC or spell DC, whichever is higher. At 15th level you cast it at 6th rank; at 17th level that 6th-rank casting grants its standard effects except that the temporary Hit Points increase to 15 and the silver weakness increases to 15; at 20th level you cast it at 10th rank."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "entities-from-afar",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "summon-entity",
+    "note": "As soon as the aberration arrives, instead of giving it any other commands you can demand that it help you with a single question you pose to it. You must Sustain the Spell for 1 minute and must understand and be understood by the aberration; if you do, it gives you a cryptic clue as provided by the Read Omens spell, except even more enigmatic than normal, then immediately returns from whence it came without providing any other benefit."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "cunning-tinker",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "mending",
+    "note": "Even though you're alive and not an object, and you can't normally recover Hit Points from effects that repair objects, you can target yourself with this innate spell and use it to recover Hit Points."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "impossible-gossip",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "speak-with-stones",
+    "note": "Cast from this feat, instead of speaking with natural or worked stone you speak with toys, statues, or other three-dimensional inanimate objects crafted to mimic a creature’s appearance, regardless of their composition. The GM has discretion over which objects you can speak with and what they know."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "cloud-walk",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "air-walk",
+    "note": "You can cast Air Walk from this feat only on yourself, and only to walk on clouds or fog."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "storytellers-mask",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "foresight",
+    "note": "Cast from this feat, the duration is 10 minutes instead of 1 hour, and the spell is arcane if you have Wizard Dedication or primal if you have Druid Dedication."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "manipulative-charm",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "charm",
+    "note": "Cast from this feat, Charm uses your class DC or spell DC, whichever is higher, and casting it requires staring into the target's eyes, giving the spell the visual trait."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "nocturnal-kindred",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "animal-allies",
+    "note": "Cast from this feat, the spell uses your class DC or spell DC, whichever is higher, and the creatures it summons are bats, rats, and wolves."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "glass-skin",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "mountain-resilience",
+    "note": "You can cast Mountain Resilience from this feat only on yourself, and the spell covers you in a layer of glass instead of stone. While it lasts you gain the Shatter Glass reaction. At 18th level it is heightened to 6th rank instead of 4th."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "flower-magic",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "one-with-plants",
+    "note": "Cast from this feat, turning into a plant transforms you into a Large flowering plant such as a rosebush or lilac bush instead of a tree."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "breath-of-calamity",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "chain-lightning",
+    "note": "When you cast Chain Lightning from this feat, any creature that critically fails its save against the spell is blinded and deafened for 1 round."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "prismatic-scales",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "prismatic-armor",
+    "note": "Cast from this feat, the spell alters the coloration of your scales instead of causing you to be clad in armor. This difference is cosmetic, and the spell has all the same effects as normal."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "monkey-spirits",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "mad-monkeys",
+    "note": "If you choose flagrant burglary for a casting of Mad Monkeys from this feat, you can have the monkeys use your Thievery modifier instead of your spell DC – 10."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "call-ursine-ally",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "summon-animal",
+    "note": "You can cast Summon Animal from this feat only to summon a Black Bear. At 10th level it is heightened to 4th rank and you can summon a Grizzly Bear; at 12th level, 5th rank and a Polar Bear; at 14th level, 6th rank and a Cave Bear."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "into-the-labyrinth",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "quandary",
+    "note": "Cast from this feat, the spell takes the form of a labyrinth instead of a puzzle room. Targets cannot attempt to use Occultism to escape it as normal, but they can use Survival to find their way through the labyrinth’s corridors."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "nodal-regeneration",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "regenerate",
+    "note": "Cast from this feat, your regeneration from the spell is deactivated by cold instead of by acid or fire. You can target only yourself with the spell, but you can Cast the Spell as a reaction if you're reduced to 0 Hit Points by a non-cold effect."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "primal-proportions",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "enlarge",
+    "note": "You can cast Enlarge from this feat only on yourself."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "impaling-bone",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "impaling-spike",
+    "note": "Cast from this feat, the spike is made of bone instead of cold iron. The bone has the effects of the ghost touch property rune and can Immobilize incorporeal creatures as if they were corporeal."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "draconic-veil",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "humanoid-form",
+    "note": "Cast from this feat, the duration is increased to 1 hour and the spell's tradition matches your draconic exemplar's."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "dokkaebi-fire",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "ignition",
+    "note": "Cast from this feat, the flame is purely illusory: while it emits light, it deals mental damage instead of fire damage (so it can't light objects on fire or affect mindless creatures), and it has the illusion and mental traits instead of the fire trait."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "spiritual-headhunter",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "talking-corpse",
+    "note": "Cast from this feat, the spell targets the spiritual head trapped in your spirit coffin, not its physical corpse. A ghostly version of the head manifests from the coffin to answer the questions, taking a –2 status penalty to its Will save to resist the spell."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "flames-of-vision",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "clairvoyance",
+    "note": "Cast from this feat, you must be staring into a source of fire to see through the spell's eye. If you can cast Ignition, including from the Dokkaebi Fire feat, you can cast that spell as part of casting Clairvoyance: instead of the cantrip's normal effect you conjure flames in your hand, which persist for the duration of the Clairvoyance spell for you to gaze through."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "water-to-water",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "translocate",
+    "note": "Cast from this feat, the spell additionally gains the water trait. If you Cast the Spell while standing in a body of water of at least ankle depth, you don't need to perform any incantations or gestures (typically preventing reactions such as Reactive Strike), and the spell gains the subtle trait as you simply fall into the water without so much as a splash."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "dissolutions-sovereignty",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "duplicate-foe",
+    "note": "Cast from this feat, the duplicate is the target's shadow, which takes three-dimensional form and gains the shadow trait; for the duration the target loses their shadow. If the target is in an area of darkness when the spell is cast, the duplicate has 15 more Hit Points."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "desperate-wish",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "breath-of-life",
+    "note": "You can cast Breath of Life from this feat only while in sentinel form, and casting it reverts you from your sentinel form."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "soul-vessel-mount",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "seize-soul",
+    "note": "Cast from this feat, the spell gains a cost of 1 Mythic Point, but you can use your apocalypse mount as the item in which you store the soul, and your mount counts as an artifact for the purpose of the spell. While your apocalypse mount contains a soul you can Sustain the spell to let it consume the soul: it regains Hit Points equal to twice your level and, for the next minute, gains a +20-foot status bonus to its Speed and makes its unarmed attack Strikes at mythic proficiency."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "receive-prayers",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "breath-of-life",
+    "note": "You can cast Breath of Life from this feat only on your hierophant, and it has unlimited range."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "enter-divine-realm",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "interplanar-teleport",
+    "note": "Cast from this feat, the casting time is only 1 minute, you act as the planar key for the destination, and you can travel only to your deity's realm. You and the other targets always appear in the center of the realm, and you — but not necessarily your allies — are immune to all the realm's harmful conditions while there. You can return to your previous location by spending 1 minute picturing your destination, bringing up to 8 willing creatures back with you."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "linguistic-revival",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "truespeech",
+    "note": "You can cast Truespeech from this feat only on yourself. While the spell is active you gain a +2 circumstance bonus to Diplomacy checks while speaking to a creature in a language other than Common."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "borrow-memories",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "mind-probe",
+    "note": "Cast from this feat, Mind Probe uses your class DC or spell DC, whichever is higher. If you cast it on a target you're studying in order to Assume their Role and the target fails their save, you can delay the spell from taking effect until you Assume their Role; used this way you can Sustain it up to 10 times during its duration, asking a question each time, and it lasts until you ask all 10 questions or are no longer Assuming the Role. You don't need to Sustain the Spell to extend its duration — only to ask a question — nor to be in range or have line of effect."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "pact-of-fey-glamour",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "illusory-disguise",
+    "note": "Cast from this feat, the spell uses the higher of your class DC and your spell DC."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "accursed-magic",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "claim-curse",
+    "note": "You can cast Claim Curse from this feat only while within your curse maelstrom state."
+   },
+   {
+    "spellId": "seal-fate",
+    "note": "You can cast Seal Fate from this feat only while within your curse maelstrom state."
+   },
+   {
+    "spellId": "inevitable-disaster",
+    "note": "You can cast Inevitable Disaster from this feat only while within your curse maelstrom state."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "righteous-resistance",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "resist-energy",
+    "note": "You can cast Resist Energy from this feat only on yourself. If you grant yourself resistance to fire damage, the resistance is equal to either the spell’s normal value or your level, whichever is higher."
+   }
+  ]
+ },
+ {
+  "category": "backgrounds",
+  "id": "blight-survivor",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "cleanse-affliction",
+    "note": "Cast from this background, Cleanse Affliction automatically heightens to a rank equal to half your level, rounded up. If you're cleansing an affliction with the fungus trait, you gain a +4 status bonus to your counteract check."
+   }
+  ]
  }
 ]

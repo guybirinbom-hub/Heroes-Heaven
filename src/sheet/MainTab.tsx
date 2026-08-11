@@ -62,6 +62,25 @@ const COST_FILTERS: { id: string; label: string; cost: ActionCost }[] = [
 
 const STRIKE_COST: ActionCost = { type: 'actions', value: 1 };
 
+/** What kind of record a favourited description came from, for the tag on its Pinned row. The keys are
+ *  the content-map names PinStar / DescriptionModal stamp onto a pinned node. */
+const PINNED_SOURCE_LABEL: Record<string, string> = {
+  feats: 'feat',
+  classFeatures: 'feature',
+  items: 'item',
+  spells: 'spell',
+  conditions: 'condition',
+  actions: 'action',
+  trait: 'trait',
+  rules: 'rule',
+  ancestries: 'ancestry',
+  heritages: 'heritage',
+  backgrounds: 'background',
+  classes: 'class',
+  deities: 'deity',
+  archetype: 'archetype',
+};
+
 /** Map an action cost to its filter-chip id, or null if it can't be filtered (variable/duration). */
 function costId(c: ActionCost): string | null {
   if (c.type === 'actions') return String(c.value);
@@ -363,6 +382,42 @@ export function MainTab({
     );
   }
 
+  /**
+   * A Strike's reach, written as VALUES — "Reach 10 ft / 15 ft*" (owner principle L). Every reach the
+   * Strike has is printed; the conditional ones carry a `*` that OPENS the record granting them,
+   * because two sources can print the same number and the player's question is which of them applies.
+   */
+  function StrikeReachValue({ reaches }: { reaches: NonNullable<Strike['reaches']> }) {
+    return (
+      <span className="strike-reach">
+        Reach{' '}
+        {reaches.map((r, i) => {
+          const rec =
+            r.sourceId && r.sourceCollection
+              ? (content[r.sourceCollection] as Record<string, { name?: string; description?: string; descRefs?: DescRef[] } | undefined>)?.[r.sourceId]
+              : undefined;
+          return (
+            <span key={i} className="strike-reach-val" title={r.when}>
+              {i > 0 && <span className="strike-reach-sep">/</span>}
+              {r.feet} ft
+              {r.when && (
+                <InfoTerm
+                  className="reach-star"
+                  title={rec?.name ?? 'Reach'}
+                  description={rec?.description ?? r.when}
+                  descRefs={rec?.descRefs}
+                  descKey={r.sourceCollection}
+                >
+                  <sup className="sit-star">*</sup>
+                </InfoTerm>
+              )}
+            </span>
+          );
+        })}
+      </span>
+    );
+  }
+
   function StrikeRow({ s }: { s: (typeof strikes)[number] }) {
     return (
       <div className="strike">
@@ -409,9 +464,10 @@ export function MainTab({
             )}
           </span>
         </div>
-        {(s.group || (s.ranged && s.range != null)) && (
+        {(s.group || (s.ranged && s.range != null) || !!s.reaches?.length) && (
           <div className="strike-meta">
             {s.ranged && s.range != null && <span>Range {s.range} ft</span>}
+            {!!s.reaches?.length && <StrikeReachValue reaches={s.reaches} />}
             {s.reload != null && s.reload > 0 && <span>Reload {s.reload}</span>}
             {s.specDamage ? <span title="Weapon specialization (included in the damage above)">Spec +{s.specDamage}</span> : null}
             {s.group && <span className="strike-group">{s.group.charAt(0).toUpperCase() + s.group.slice(1)}</span>}
@@ -476,9 +532,13 @@ export function MainTab({
     prepared,
     onPrepare,
     prepareDisabled,
+    full = false,
   }: {
     a: Act;
     pinnable?: boolean;
+    /** Force the full-width row even when compact chips are on — the Pinned card uses it so a
+     *  favourited action sits at the same width as a favourited strike or description beside it. */
+    full?: boolean;
     /** When defined, renders a "prepared" toggle (Commander tactics); the value is its on/off state. */
     prepared?: boolean;
     onPrepare?: () => void;
@@ -509,7 +569,7 @@ export function MainTab({
           <SituationalStar />
         </span>
       );
-    if (compactActions) {
+    if (compactActions && !full) {
       return (
         <button type="button" className={'action-chip' + (onPrepare && !prepared ? ' unprepared' : '') + (gate ? ' gated' : '')} title={gate ? `Needs ${gateLabel(gate)} — ${a.name}` : `Show ${a.name}`} onClick={openDetail}>
           <span className="action-cost">
@@ -647,6 +707,9 @@ export function MainTab({
         <button className="pinned-desc-open" onClick={() => setOpenDesc(node)} title={`Open ${node.title}`}>
           <i className="ti ti-book-2" aria-hidden="true" />
           <span className="pinned-desc-title">{node.title}</span>
+          {/* Shield Block is both a class feature and a feat; two rows reading "Shield Block" with no
+              way to tell them apart is worse than no favourite at all. */}
+          {node.key && <span className="pinned-desc-from">{PINNED_SOURCE_LABEL[node.key] ?? node.key}</span>}
         </button>
         {onPlay && (
           <button
@@ -670,14 +733,15 @@ export function MainTab({
         <div className="ct">
           <i className="ti ti-rosette" aria-hidden="true" />
           Ability scores
-          <span className="ct-note">★ key ability</span>
         </div>
         <div className="abilities">
+          {/* No key-attribute marking: a player knows their own key attribute, and singling one box out
+              with an outline and a legend spent the row's only accent on something nobody needs told. */}
           {ABILITIES.map((ab) => {
             const partial = character.partialBoosts?.includes(ab) ?? false;
             return (
               <div
-                className={'ability' + (character.keyAbility === ab ? ' key' : '') + (partial ? ' partial' : '') + (onOpenStat ? ' openable' : '')}
+                className={'ability' + (partial ? ' partial' : '') + (onOpenStat ? ' openable' : '')}
                 key={ab}
                 onClick={onOpenStat ? () => onOpenStat({ kind: 'ability', ability: ab }) : undefined}
                 title={partial ? 'Includes a partial boost (+1, attribute was already 18+)' : onOpenStat ? 'How is this calculated?' : undefined}
@@ -753,7 +817,7 @@ export function MainTab({
             <StrikeRow key={s.instanceId} s={s} />
           ))}
           {pinnedActions.map((a) => (
-            <ActionRow key={a.name} a={a} />
+            <ActionRow key={a.name} a={a} full />
           ))}
           {pinnedDescs.map((n) => (
             <PinnedDescRow key={descId(n)} node={n} />

@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { DescRef } from '../rules/types';
 import { useContent } from './ContentContext';
 import { lookupRef, type DescNode } from './descref';
 import { RichText } from './RichText';
 import { DescriptionModal } from './DescriptionModal';
 import { sanitize } from './sanitizeHtml';
+import { htmlWithAutoDir } from './autoDir';
 import { AstRenderer } from './AstRenderer';
 import { useAstNode } from './useAst';
 
@@ -24,10 +25,14 @@ export function DescBody({
   onExit,
   astKey,
   astId,
+  dirAuto,
 }: {
   description?: string;
   descRefs?: DescRef[];
   className?: string;
+  /** Give each block its own reading direction (see autoDir.ts). For content the USER wrote, which can
+   *  be in a right-to-left language; imported game text is always English, so this is opt-in. */
+  dirAuto?: boolean;
   /** When this description lives inside a popup, pass that popup's close so a drilled-in description
    *  popup can offer "Back" (to here) and have its X / click-outside close the whole stack. */
   onExit?: () => void;
@@ -41,6 +46,19 @@ export function DescBody({
   const content = useContent();
   const [node, setNode] = useState<DescNode | null>(null);
   const { node: ast, bucket: astBucket, loading: astLoading } = useAstNode(astKey, astId);
+  // Sanitizing (and, for notes, direction-tagging) parses the whole string, so do it once per value
+  // rather than on every render — a long note re-renders on each keystroke of its title. Skipped
+  // entirely unless the rich-HTML branch below is the one that will run.
+  const useRich = !astId || (!ast && !astLoading);
+  const richHtml = useMemo(
+    () =>
+      useRich && description && HTML_TAG.test(description)
+        ? dirAuto
+          ? htmlWithAutoDir(sanitize(description))
+          : sanitize(description)
+        : '',
+    [useRich, description, dirAuto],
+  );
 
   // Ast path — the new-data description prose (meta hidden; links open the recursive ast popup).
   if (ast && astId) {
@@ -76,7 +94,7 @@ export function DescBody({
       <>
         <div
           className={className + ' rich-html'}
-          dangerouslySetInnerHTML={{ __html: sanitize(description) }}
+          dangerouslySetInnerHTML={{ __html: richHtml }}
           onClick={(ev) => {
             const a = (ev.target as HTMLElement).closest?.('.ref-link') as HTMLElement | null;
             if (a?.dataset.refKey && a.dataset.refId) {
