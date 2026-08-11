@@ -1,14 +1,15 @@
-import { forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
-import { applyPlayState, initialPlay, playForRebuild, type PlayState } from '../rules/play';
+import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, type PlayState } from '../rules/play';
 import { Builder } from '../builder/Builder';
 import { CharacterSheet } from './CharacterSheet';
 import { exportNative } from '../data/transfer';
 import { downloadText } from './download';
 import { pushGmEdit, fetchMemberSheet } from '../data/party';
 import { confirmDialog, chooseDialog } from './confirm';
+import { reconcileGmWork } from './gmSync';
 
 function fileSlug(name: string): string {
   return (name || 'character').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'character';
@@ -36,12 +37,16 @@ export interface GmEditHandle {
  */
 export const GmEditSheet = forwardRef<GmEditHandle, {
   initial: SavedChar;
+  /** The player's CURRENT published sheet, kept live by the viewer's Realtime subscription. Adopted
+   *  automatically while the GM has no unsaved edits; flagged rather than applied when they do. */
+  live?: SavedChar;
   content: ContentDatabase;
   campaignId: string;
   playerOwnerId: string;
   onExit: () => void;
 }>(function GmEditSheet({
   initial,
+  live,
   content: baseContent,
   campaignId,
   playerOwnerId,
@@ -57,6 +62,48 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   const baselineRef = useRef<SavedChar>(initial);
   // Local content copy so any items/modes the GM authors while editing resolve for this session.
   const [content, setContent] = useState<ContentDatabase>(baseContent);
+  /* The player published something newer while the GM has unsaved edits. Held, not applied: replacing
+   * the working copy would throw away whatever the GM is in the middle of. Shown as a banner with the
+   * choice to take their version. */
+  const [playerAhead, setPlayerAhead] = useState<SavedChar | null>(null);
+
+  /*
+   * Follow the player, live — but never at the cost of the GM's work.
+   *
+   * With NO unsaved edits the working copy is just a mirror of what's published, so adopting the
+   * player's new version is invisible and correct: HP they just lost, an item they just bought. That's
+   * the "seamless" half.
+   *
+   * With unsaved edits, silently swapping the sheet would delete them mid-sentence. So the newer
+   * version is parked and the GM told, which is also what makes the push safe: taking their version
+   * re-bases the working copy so the stale-edit guard below has nothing left to warn about.
+   */
+  useEffect(() => {
+    if (!live) return;
+    const verdict = reconcileGmWork({ live: JSON.stringify(live), work: JSON.stringify(work), dirty });
+    if (verdict === 'in-step') {
+      setPlayerAhead(null); // usually our own push echoing back
+      return;
+    }
+    if (verdict === 'hold') {
+      setPlayerAhead(live);
+      return;
+    }
+    setWork(live);
+    baselineRef.current = live;
+    setPlayerAhead(null);
+    // `work`/`dirty` are read, not tracked: this must run when the PLAYER's version changes, not on
+    // every local edit — reacting to `work` here would re-adopt and fight the GM's own typing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [live]);
+
+  const takePlayerVersion = () => {
+    if (!playerAhead) return;
+    setWork(playerAhead);
+    baselineRef.current = playerAhead;
+    setPlayerAhead(null);
+    setDirty(false);
+  };
 
   const character = useMemo(() => {
     try {
@@ -72,7 +119,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   );
 
   const updatePlay = (fn: (p: PlayState) => PlayState) => {
-    setWork((w) => ({ ...w, play: fn({ ...initialPlay(w.character, content), ...(w.play ?? {}) }) }));
+    setWork((w) => ({ ...w, play: fn(reconcileFormulaBook({ ...initialPlay(w.character, content), ...(w.play ?? {}) }, w.character, content)) }));
     setDirty(true);
   };
 
@@ -202,19 +249,38 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   }
 
   return (
-    <CharacterSheet
-      character={character}
-      content={sheetContent}
-      build={work.build}
-      charKey={work.id}
-      characters={[]}
-      onPlay={updatePlay}
-      onCreateItem={addCustomItem}
-      onSaveMode={saveModeDef}
-      onDeleteMode={removeModeDef}
-      onEdit={openBuilder}
-      gmEdit={{ onUpdate: () => void doUpdate(), onExport: doExport, busy }}
-      onBack={() => void doExit()}
-    />
+    <>
+      {/* Only ever shown when the GM has unsaved edits — otherwise the player's change was already
+          adopted silently and there is nothing to decide. */}
+      {playerAhead && (
+        <div className="gm-live-banner" role="status">
+          <i className="ti ti-refresh-alert" aria-hidden="true" />
+          <span>
+            <strong>{work.character.name}</strong> changed on the player&apos;s device while you were editing. Your
+            unsaved changes are still here — pushing them will overwrite the player&apos;s newer version.
+          </span>
+          <button className="btn" onClick={takePlayerVersion}>
+            Take their version
+          </button>
+          <button className="save-warning-x" onClick={() => setPlayerAhead(null)} aria-label="Keep editing mine">
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+      )}
+      <CharacterSheet
+        character={character}
+        content={sheetContent}
+        build={work.build}
+        charKey={work.id}
+        characters={[]}
+        onPlay={updatePlay}
+        onCreateItem={addCustomItem}
+        onSaveMode={saveModeDef}
+        onDeleteMode={removeModeDef}
+        onEdit={openBuilder}
+        gmEdit={{ onUpdate: () => void doUpdate(), onExport: doExport, busy }}
+        onBack={() => void doExit()}
+      />
+    </>
   );
 });

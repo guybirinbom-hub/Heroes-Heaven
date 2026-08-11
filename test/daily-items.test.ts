@@ -92,15 +92,28 @@ describe('Herbal Forager makes an ITEM, not a scroll', () => {
     expect(slot().fromKnownFormulas).toBe(true);
   });
 
-  it('every offered item actually carries both traits', () => {
+  /* "It must be an item whose formula you know" — a clause with nothing to filter against until the
+   * formula book existed. The pool is now the intersection of the two, so a character carrying a book
+   * is offered their own formulas and nobody else's. */
+  const withBook = (formulas: string[]) => {
     const c = withFeats('ranger', 6, ['herbal-forager']);
-    const opts = dailyItemOptions(slot(), c, db);
-    expect(opts.length, 'the pool must not be empty').toBeGreaterThan(10);
-    for (const o of opts.slice(0, 40)) {
+    return { ...c, inventory: [...c.inventory, { instanceId: 'book-1', itemId: 'formula-book-blank', quantity: 1, formulas }] };
+  };
+
+  it('offers the formulas the book holds, and only those carrying both traits', () => {
+    const opts = dailyItemOptions(slot(), withBook(['elixir-of-life-minor', 'antidote-lesser', 'merciful-balm']), db);
+    // Both elixirs are alchemical + healing; Merciful Balm is a magical oil, so a known formula still
+    // has to satisfy the record's own filter.
+    expect(opts.map((o) => o.id).sort()).toEqual(['antidote-lesser', 'elixir-of-life-minor']);
+    for (const o of opts) {
       const traits = db.items[o.id].traits ?? [];
       expect(traits, o.id).toContain('healing');
       expect(traits, o.id).toContain('alchemical');
     }
+  });
+
+  it('a character with no formula book is offered nothing, which the Rest sheet already says', () => {
+    expect(dailyItemOptions(slot(), withFeats('ranger', 6, ['herbal-forager']), db)).toEqual([]);
   });
 });
 

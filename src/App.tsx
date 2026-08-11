@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { TEST_CAMPAIGNS_WITHOUT_LOGIN, TRACKER_IN_CAMPAIGN } from './integration/enabled';
 import { wasOnCampaignsPage, setOnCampaignsPage, getRememberedCampaign } from './integration/lastCampaignView';
 import { combatOwnsUndo } from './integration/combatUndoClaim';
+import { undoIsClaimed } from './undoClaim';
 import { CharacterSheet } from './sheet/CharacterSheet';
 import { RosterScreen } from './sheet/RosterScreen';
 import { HomebrewPage } from './sheet/HomebrewPage';
@@ -23,11 +24,14 @@ import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, currentUserId, subscribeGmEdits } from './data/party';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
+import { getPrefs } from './data/prefs';
+import { playerWorkWasOverwritten } from './sheet/gmSync';
+import { useHeightVar } from './sheet/useHeightVar';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
 import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
 import { useUndoableState } from './useUndoableState';
-import { applyPlayState, initialPlay, playForRebuild, rest, type PlayState } from './rules/play';
+import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, rest, type PlayState } from './rules/play';
 import { abilityMod } from './rules/derive';
 import { ContentContext } from './sheet/ContentContext';
 import { PopupSizeController } from './sheet/PopupSizeController';
@@ -37,6 +41,20 @@ import { SettingsPage } from './sheet/SettingsPage';
 import { CustomizationContext, useGlobalCustomization, effectiveCustomization } from './data/customization';
 import { bumpZoom, resetZoom, ZOOM_STEP } from './theme/zoom';
 import type { Character, ContentDatabase, Item, ModeDef } from './rules/types';
+
+/** How often to look for a GM's edit when the Realtime stream is DOWN. Only ever runs in that case, so
+ *  it can be brisk: at the table a GM's change to your hit points has to land in about a second. */
+const GM_EDIT_POLL_MS = 2500;
+
+/**
+ * How long to wait after a change before republishing to the party.
+ *
+ * This is the delay a GM sees before a player's damage shows on their screen, so it wants to be short.
+ * It's still a debounce, not a throttle: a burst — dragging an HP stepper, typing a name — collapses
+ * into ONE publish once the player stops, so the cost is a single write per action either way. It used
+ * to be 1500ms, which at the table reads as the sync being slow.
+ */
+const PUBLISH_DEBOUNCE_MS = 400;
 
 function initialRoster(): SavedChar[] {
   // A fresh install starts with an EMPTY roster — no demo character is injected. The RosterScreen
@@ -92,6 +110,13 @@ export default function App() {
   const [saveFailed, setSaveFailed] = useState(false);
   // Proactive "storage almost full" heads-up (before the hard quota failure that sets saveFailed).
   const [storageWarn, setStorageWarn] = useState(false);
+  /** Characters whose unpublished local changes a GM's edit just replaced — named in a banner so the
+   *  loss is never silent. Cleared when dismissed. */
+  const [gmOverwrote, setGmOverwrote] = useState<string[] | null>(null);
+  /* How much banner is currently showing, published as --app-banner-h. The pinned screens are sized to
+   * the viewport MINUS this: banners are flow siblings above them, so without the subtraction a single
+   * update notice makes the document taller than the window, and scrolling it drags the top bar off. */
+  const bannersRef = useHeightVar<HTMLDivElement>('--app-banner-h', [saveFailed, storageWarn, gmOverwrote?.length ?? 0]);
   const storageDismissed = useRef(false);
   // Set by structural roster changes (create/delete/import/duplicate) so the NEXT persist writes
   // immediately instead of debouncing — a crash inside the debounce window must not drop a whole
@@ -121,7 +146,8 @@ export default function App() {
       // looking at a campaign, reopen there; otherwise auto-jump to the last-active sheet. Both only
       // fire if the user hasn't already started interacting with the roster (which cancels the jump),
       // and only from the roster boot screen — never yanking them off somewhere they navigated to.
-      if (autoOpenSheet.current) {
+      // Settings → Appearance → "Opens on" can turn the whole restore off and stay on Characters.
+      if (autoOpenSheet.current && getPrefs().startupScreen !== 'characters') {
         if (bootToCampaign) {
           setMode((m) => (m === 'roster' ? 'campaigns' : m));
         } else if (activeId) {
@@ -178,6 +204,9 @@ export default function App() {
   // Publish characters attached to a campaign so teammates see them in the party. Debounced on roster
   // change; unpublishes any (campaign, character) pair that's no longer attached (detach / delete).
   const publishedRef = useRef<Set<string>>(new Set());
+  /** What we last PUBLISHED for each character, by roster id. Lets an incoming GM edit tell whether it
+   *  is about to overwrite local work the player made but hadn't published yet — see the apply below. */
+  const publishedSheetRef = useRef<Map<string, string>>(new Map());
   useEffect(() => {
     if (auth.status !== 'signed-in' || !content) return;
     const readyContent = content;
@@ -192,6 +221,7 @@ export default function App() {
           // Publish the full SavedChar (character + build + play) so a GM can fully edit it; the party's
           // read-only view derives the live character from it.
           const published = { id: sc.id, character: sc.character, build: sc.build, play: sc.play };
+          publishedSheetRef.current.set(sc.id, JSON.stringify(published));
           for (const cid of ids) {
             desired.add(cid + '|' + sc.id);
             void publishCharacter(cid, sc.id, live.name, summary, published);
@@ -207,7 +237,7 @@ export default function App() {
         }
       }
       publishedRef.current = desired;
-    }, 1500);
+    }, PUBLISH_DEBOUNCE_MS);
     return () => clearTimeout(timer);
   }, [roster, auth.status, content]);
   // A live ref to the roster so the async GM-edit applier below reads the LATEST roster without having
@@ -272,12 +302,28 @@ export default function App() {
         const prev = newestByChar.get(e.charId);
         if (!prev || (e.updatedAt || '') > (prev.updatedAt || '')) newestByChar.set(e.charId, e);
       }
+      /*
+       * Last change wins — but say so when the loser was the player.
+       *
+       * A GM's edit replaces the whole sheet. If the player had changed something since their last
+       * publish (typed HP in the past second, or worked offline), the GM was editing a version that
+       * didn't include it, and applying silently would make that work vanish with no explanation. So
+       * compare what we last published against what's local right now: a difference means there WAS
+       * unpublished work, and the player gets told. It stays recoverable — the replacement is one step
+       * on the roster's undo timeline, so Ctrl+Z brings their version back.
+       */
+      const clobbered: string[] = [];
       setRoster((r) =>
         r.map((c) => {
           const edit = newestByChar.get(c.id);
-          return edit ? { ...edit.sheet, id: c.id, archived: c.archived ?? false } : c;
+          if (!edit) return c;
+          const lastPublished = publishedSheetRef.current.get(c.id);
+          const localNow = JSON.stringify({ id: c.id, character: c.character, build: c.build, play: c.play });
+          if (playerWorkWasOverwritten(lastPublished, localNow)) clobbered.push(c.character.name);
+          return { ...edit.sheet, id: c.id, archived: c.archived ?? false };
         }),
       );
+      if (clobbered.length) setGmOverwrote(clobbered);
       // Clear every edit we resolved on THIS device (the applied newest + superseded older). Edits for
       // characters not on this device are left for the device that owns them.
       for (const e of applicable) void deleteGmEdit(e.campaignId, e.charId);
@@ -293,15 +339,36 @@ export default function App() {
     // Realtime: apply the moment the GM pushes, without waiting for a focus/open. Subscribes once we
     // know this user's id; the subscription triggers the same pull-and-apply above (including on each
     // (re)connect, so nothing pushed during a socket drop is missed).
+    //
+    // …and a FALLBACK POLL for when that stream isn't up. Realtime needs the table in the
+    // supabase_realtime publication and a websocket that isn't blocked; when either is missing the
+    // only remaining trigger was focus/visibility, so a GM's change sat unapplied until the player
+    // touched their device. That is indistinguishable from "the sync is laggy". The poll runs ONLY
+    // while the stream is down, so a healthy setup makes no extra requests at all.
     let unsubscribe = () => {};
+    let poll: ReturnType<typeof setInterval> | undefined;
+    const stopPoll = () => {
+      if (poll) clearInterval(poll);
+      poll = undefined;
+    };
     void currentUserId().then((id) => {
-      if (!cancelled && id) unsubscribe = subscribeGmEdits(id, () => void apply());
+      if (cancelled || !id) return;
+      unsubscribe = subscribeGmEdits(
+        id,
+        () => void apply(),
+        (livestream) => {
+          if (cancelled) return;
+          if (livestream) stopPoll();
+          else if (!poll) poll = setInterval(() => void apply(), GM_EDIT_POLL_MS);
+        },
+      );
     });
     return () => {
       cancelled = true;
       window.removeEventListener('focus', onFocus);
       window.removeEventListener('online', onFocus);
       document.removeEventListener('visibilitychange', onVisible);
+      stopPoll();
       unsubscribe();
     };
   }, [auth.status, setRoster]);
@@ -385,6 +452,9 @@ export default function App() {
         // this one stands down or they'd both fire. (Removable integration — see
         // src/integration/combatUndoClaim.ts.)
         if (TRACKER_IN_CAMPAIGN && combatOwnsUndo()) return;
+        // …and so does any screen holding its own timeline (the builder). Without this both handlers
+        // fire and undo two different things at once. See src/undoClaim.ts.
+        if (undoIsClaimed()) return;
         const el = document.activeElement as HTMLElement | null;
         const editing = !!el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
         if (editing) return;
@@ -504,7 +574,12 @@ export default function App() {
         r.map((c) =>
           // Seed from initialPlay (derived from the character) then layer any persisted
           // state on top, so a play saved before newer fields existed gets them filled in.
-          c.id === id ? { ...c, play: fn({ ...initialPlay(c.character, content), ...(c.play ?? {}) }) } : c,
+          // reconcileFormulaBook runs here rather than at rebuild time so a character who never
+          // reopens the builder still receives the book and the picks their records grant; it is
+          // idempotent and marks each grant spent, so repeating it writes nothing twice.
+          c.id === id
+            ? { ...c, play: fn(reconcileFormulaBook({ ...initialPlay(c.character, content), ...(c.play ?? {}) }, c.character, content)) }
+            : c,
         ),
       coalesceTag ? { coalesce: true, tag: `play:${id}:${coalesceTag}` } : undefined,
     );
@@ -822,7 +897,9 @@ export default function App() {
           other screen — the roster (where you can delete a character), the builder, homebrew,
           campaigns, settings — was keyboard-only, even though the Ctrl+Z handler is registered
           app-wide with no mode gate. A mouse or tablet user had no way to undo on any of them. */}
-      {which !== 'sheet' && which !== 'loading' && (canUndo || canRedo) && (
+      {/* Not on the builder: it keeps its own build timeline and draws its own pair in its header,
+          so the floating one would be a second undo button that undoes something else. */}
+      {which !== 'sheet' && which !== 'loading' && which !== 'builder' && (canUndo || canRedo) && (
         <div className="app-undo" role="group" aria-label="Undo and redo">
           <button className="icon-btn" title="Undo (Ctrl+Z)" aria-label="Undo" disabled={!canUndo} onClick={() => canUndo && undo()}>
             <i className="ti ti-arrow-back-up" aria-hidden="true" />
@@ -832,10 +909,24 @@ export default function App() {
           </button>
         </div>
       )}
-      <div className="app-banners">
+      <div className="app-banners" ref={bannersRef}>
         {/* The manual "new version — download it" banner is for the INSTALLED apps only. The web build
             auto-updates through its service worker, so nudging web users to download a release is wrong. */}
         {isTauri && <UpdateNotice />}
+        {/* A GM's update replaced something the player had just changed. Only shown when there really
+            was unpublished local work — a GM edit landing on an in-sync sheet is silent, as it should be. */}
+        {gmOverwrote && gmOverwrote.length > 0 && (
+          <div className="save-warning gm-overwrote" role="status">
+            <i className="ti ti-cloud-download" aria-hidden="true" />
+            <span>
+              Your GM updated <strong>{gmOverwrote.join(', ')}</strong>, replacing a change you'd just made. Press{' '}
+              <strong>Ctrl+Z</strong> to get your version back.
+            </span>
+            <button className="save-warning-x" onClick={() => setGmOverwrote(null)} aria-label="Dismiss">
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          </div>
+        )}
         {saveFailed && (
           <div className="save-warning" role="alert">
             <i className="ti ti-alert-triangle" aria-hidden="true" />

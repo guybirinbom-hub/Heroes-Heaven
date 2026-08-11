@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable,
@@ -143,6 +143,7 @@ function ItemCard({
   onAttachDrop,
   attachPlanNow,
   runeCopy,
+  can,
 }: {
   inv: InventoryItem;
   item: Item;
@@ -179,12 +180,18 @@ function ItemCard({
   /** Plan the in-flight drag against THIS card as an attach host, read from the synchronous drag ref.
    *  null = the current drag isn't an attachment/rune, so the section handles it as a relocate. */
   attachPlanNow?: (hostItem: Item, hostInv: InventoryItem) => { ok: boolean; reason?: string } | null;
+  /** What the OWNER of this pack can physically do with gear (see InventoryScope). Absent = a player
+   *  character, who can do all three. */
+  can?: { wear: boolean; wield: boolean; invest: boolean };
 }) {
   const { consumableHighlight } = useCustomization();
   const badge = stateBadge(inv);
-  const equip = equipControl(item);
+  const rawEquip = equipControl(item);
+  // An animal companion has no hands: a Wield control on its pack does nothing but mislead. Same for
+  // Invest on a creature that cannot invest.
+  const equip = rawEquip && (rawEquip.flag === 'worn' ? can?.wear !== false : can?.wield !== false) ? rawEquip : null;
   const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
-  const investable = item.traits?.includes('invested');
+  const investable = item.traits?.includes('invested') && can?.invest !== false;
   const inlineQty = keepsInlineQuantity(item);
   // The delete button moved to the item detail popup, so only render the actions row when there's
   // still a control to show — otherwise plain items would keep an empty 7px-margin gap.
@@ -491,12 +498,33 @@ function VehicleSiegeSection({
   );
 }
 
+/**
+ * Whose gear this is, when it isn't the character's own.
+ *
+ * A companion's pack is the same thing as a player's — items, bulk, containers, equip states — so it
+ * gets the same component rather than a simplified copy that drifts. The caller hands over a façade
+ * Character carrying the companion's inventory and a `PlayUpdater` that writes the result back to the
+ * companion (see CompanionsTab), and this describes the differences that remain.
+ */
+export interface InventoryScope {
+  /** Shown in the empty state and the add-item copy, e.g. "Rex". */
+  ownerName: string;
+  /** The creature's own Bulk limit; the character's Strength-derived one doesn't apply to it. */
+  bulkMax?: number;
+  /** Whether this creature can wear armour, hold a weapon, and invest magic items. An animal has no
+   *  hands, so offering it "Wield" is offering a control that means nothing. */
+  canWear: boolean;
+  canWield: boolean;
+  canInvest: boolean;
+}
+
 export function InventoryTab({
   character,
   content,
   onPlay,
   onCreateItem,
   gmView = false,
+  scope,
 }: {
   character: Character;
   content: ContentDatabase;
@@ -504,6 +532,8 @@ export function InventoryTab({
   onCreateItem?: (item: Item) => void;
   /** The GM’s own view of a shared character. Only the GM may plant a cursed item disguised. */
   gmView?: boolean;
+  /** Present when this is a COMPANION's gear rather than the character's — see InventoryScope. */
+  scope?: InventoryScope;
 }) {
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
   const [detail, setDetail] = useState<{ inv: InventoryItem; item: Item } | null>(null);
@@ -543,7 +573,13 @@ export function InventoryTab({
     const t = setTimeout(() => setAttachMsg(null), 6000);
     return () => clearTimeout(t);
   }, [attachMsg]);
-  const bulk = deriveBulk(character, content);
+  const charBulk = deriveBulk(character, content);
+  // A companion carries to ITS limit, not its owner's. deriveBulk still supplies the carried total —
+  // that's just the sum of what's in the pack — so only the two caps are swapped.
+  const bulk =
+    scope?.bulkMax != null
+      ? { ...charBulk, max: scope.bulkMax, encumberedAt: scope.bulkMax }
+      : charBulk;
   const coins = character.currency;
   const loads = containerLoads(character, content);
 
@@ -948,7 +984,25 @@ export function InventoryTab({
     if (item) setDetail({ inv, item });
   }
 
-  function Group({
+  /*
+   * Called as a plain function — `renderGroup({...})` — and NOT rendered as `<Group …/>`.
+   *
+   * This is the whole reason drag-and-drop needed two attempts. `Group` is declared inside
+   * InventoryTab, so it is a NEW function identity on every render. React compares element types by
+   * identity, so `<Group/>` meant "a different component than last time": every re-render unmounted
+   * the entire section and mounted a fresh one, destroying and recreating every card's DOM node.
+   *
+   * `dragstart` calls startDrag → setDragId → re-render → the card the drag started on is removed from
+   * the document, and Chromium cancels a drag whose source element disappears. The first drag died
+   * before a single `dragover` ever fired, which is why the two earlier fixes here — the synchronous
+   * dragIdRef and attachPlanNow — changed nothing: they fix handlers that were never reached.
+   *
+   * Calling it inlines its elements into this tree, where the types are ordinary divs and stay stable
+   * across renders, so the nodes are updated in place and the drag survives. Safe because it holds no
+   * hooks and no state of its own. If it ever needs either, hoist it to module scope with props
+   * instead — do not turn it back into a nested `<Group/>`.
+   */
+  function renderGroup({
     id,
     title,
     items,
@@ -1070,6 +1124,7 @@ export function InventoryTab({
                   inv={inv}
                   item={item}
                   content={content}
+                  can={scope && { wear: scope.canWear, wield: scope.canWield, invest: scope.canInvest }}
                   runeCopy={runeCopy}
                   nameSuffix={dupSuffix.get(inv.instanceId) ?? ''}
                   onOpen={() => open(inv)}
@@ -1226,15 +1281,16 @@ export function InventoryTab({
               </span>
             ) : undefined;
           return (
-            <Group
-              key={c.instanceId}
-              id={c.instanceId}
-              title={item ? `In ${item.name}` : 'In container'}
-              items={contents}
-              dropKind={c.instanceId}
-              right={right}
-              emptyHint="Drag items here to store them"
-            />
+            <Fragment key={c.instanceId}>
+              {renderGroup({
+                id: c.instanceId,
+                title: item ? `In ${item.name}` : 'In container',
+                items: contents,
+                dropKind: c.instanceId,
+                right,
+                emptyHint: 'Drag items here to store them',
+              })}
+            </Fragment>
           );
         };
 
@@ -1261,8 +1317,8 @@ export function InventoryTab({
                 })}
               </div>
             )}
-            <Group id="equipped" title="Equipped" items={equipped} dropKind="equipped" />
-            <Group id="carried" title="Carried" items={carried} dropKind="carried" />
+            {renderGroup({ id: 'equipped', title: 'Equipped', items: equipped, dropKind: 'equipped' })}
+            {renderGroup({ id: 'carried', title: 'Carried', items: carried, dropKind: 'carried' })}
             {containers.map(containerGroup)}
             <VehicleSiegeSection character={character} content={content} onPlay={onPlay} />
           </>
@@ -1283,6 +1339,7 @@ export function InventoryTab({
           charLevel={character.level}
           activeModes={character.activeModes}
           designationKinds={designationKinds}
+          character={character}
           onEdit={onCreateItem ? (it, iv) => setEditTarget({ item: it, inv: iv }) : undefined}
         />
       )}

@@ -6,7 +6,11 @@ import { DetailsTab } from '../src/sheet/DetailsTab';
 import { MainTab } from '../src/sheet/MainTab';
 import { FeatsTab } from '../src/sheet/FeatsTab';
 import { CompanionsTab } from '../src/sheet/CompanionsTab';
+import { ItemDetail } from '../src/sheet/ItemDetail';
+import { FormulaBookCard, type BuilderActions } from '../src/builder/shared';
+import { emptyBuild, type BuildState } from '../src/rules/build';
 import { applyPlayState, initialPlay } from '../src/rules/play';
+import { FORMULA_BOOK_ITEM_ID, formulaSlotKey } from '../src/rules/formulaBook';
 import type { Character } from '../src/rules/types';
 
 /**
@@ -84,5 +88,42 @@ describe('a companion shows what it actually is', () => {
     expect(text).toContain('Fang');
     // …and the type it derives every one of its numbers from.
     expect(text).toContain(c().animalCompanions[typeId].name);
+  });
+});
+
+describe('a formula book prints what it holds', () => {
+  it('lists each formula by name, counts them against the 100 limit, and shows the unspent slots', () => {
+    const key = formulaSlotKey('formula-book', 0, 0);
+    const ch = live(build('alchemist', 1, { formulaPicks: { [key]: 'elixir-of-life-minor' } }));
+    const book = ch.inventory.find((i) => i.itemId === FORMULA_BOOK_ITEM_ID)!;
+    const text = renderText(
+      <ItemDetail
+        inv={book}
+        item={c().items[book.itemId]}
+        content={c()}
+        inventory={ch.inventory}
+        character={ch}
+        onPlay={noop}
+        onClose={noop}
+      />,
+    );
+    expect(text).toContain(`${c().items['elixir-of-life-minor'].name} formula`);
+    expect(text).toContain('1 / 100');
+    // The slots the character has not answered yet — pressing one opens that record's own options.
+    expect(text).toContain('Common 1st-level alchemical item');
+    expect(text).toContain('Add formula');
+  });
+});
+
+describe('the builder asks the formula-book question', () => {
+  it('shows one picker per slot, grouped under the record that grants it', () => {
+    const b: BuildState = { ...emptyBuild(), name: 't', level: 1, classId: 'alchemist', ancestryId: 'human', backgroundId: 'acolyte', keyAbility: 'int' };
+    const ch = build('alchemist', 1);
+    const actions = { patch: () => undefined } as unknown as BuilderActions;
+    const text = renderText(<FormulaBookCard build={b} actions={actions} content={c()} character={ch} />);
+    expect(text).toContain('Formula book');
+    expect(text).toContain(c().classFeatures['formula-book'].name);
+    expect(text).toContain(c().feats['alchemical-crafting'].name);
+    expect(text).toContain('Common 1st-level alchemical item');
   });
 });

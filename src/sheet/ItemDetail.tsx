@@ -4,6 +4,7 @@ import { removeInventoryItem, setItemCounter, setItemDesignation, setItemQuantit
 import { containerOptionsFor } from '../rules/derive';
 import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
+import { useIsMobile } from './useIsMobile';
 import { confirmDialog } from './confirm';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { traitDesc, traitLabel } from '../rules/glossary';
@@ -18,6 +19,8 @@ import { MpProse } from './MpProse';
 import { MpPathTerm, MpPropertyTerm } from './MpTermLinks';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
+import { isFormulaBook } from '../rules/formulaBook';
+import { FormulaBookPanel } from './FormulaBookPanel';
 
 const ordinalRank = (n: number): string => (n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
 
@@ -151,6 +154,7 @@ export function ItemDetail({
   feats = [],
   gmView = false,
   onEdit,
+  character,
 }: {
   inv: InventoryItem;
   item: Item;
@@ -175,8 +179,12 @@ export function ItemDetail({
   designationKinds?: readonly { kind: ItemDesignation; label: string }[];
   /** Opens the item editor for this item + instance (runes/attachments live there). */
   onEdit?: (item: Item, inv: InventoryItem) => void;
+  /** The owner — the ONE control here that needs the whole character rather than a slice of it: a
+   *  formula book's empty slots come from every feat and class feature the character owns. */
+  character?: Character;
 }) {
   useEscapeClose(onClose);
+  const isMobile = useIsMobile();
   const [pickingSpell, setPickingSpell] = useState(false);
   const runes = runeLines(inv);
   // The mode this item carries, if any. A consumable switches its own on when used; anything else
@@ -229,16 +237,15 @@ export function ItemDetail({
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
         <div className="picker-head">
-          {item.name}
-          <span style={{ marginLeft: 'auto', display: 'inline-flex', gap: 10, alignItems: 'center' }}>
+          <span className="sd-head-name">{item.name}</span>
+          <span className="sd-head-actions">
             <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items' }} />
             {editable && (
               <i className="ti ti-pencil" style={{ cursor: 'pointer' }} title="Edit item" onClick={() => onEdit!(item, inv)} aria-label="Edit item" />
             )}
-            {/* Delete lives in the ALWAYS-VISIBLE header as well as at the foot of the body. The
-             * footer button sits below the item's full, untruncated description inside a scrolling
-             * panel — on a phone that's a long scroll past, so it read as "there's no way to delete
-             * an item". Same confirm dialog either way. */}
+            {/* Delete lives in the ALWAYS-VISIBLE header. On a phone it is joined by the pinned
+             * Remove bar below the body (a tap target beats a 15px icon in a crowded header); on
+             * desktop this icon is the only one. Same confirm dialog either way. */}
             {onPlay && (
               <button className="picker-close sd-head-remove" onClick={removeItem} aria-label={`Remove ${item.name}`} title="Remove item">
                 <i className="ti ti-trash" aria-hidden="true" />
@@ -313,6 +320,10 @@ export function ItemDetail({
             <div className="sd-attach">
               <span className="sd-rune-hint">Affixed to {hostName ?? 'an item'}.</span>
             </div>
+          )}
+          {/* A formula book IS its contents, so they sit above the item's own controls. */}
+          {character && isFormulaBook(item) && (
+            <FormulaBookPanel character={character} inv={inv} content={content} onPlay={onPlay} />
           )}
           {/* An item that says "choose one of N". The engine has always been ready to use the answer
               (buildCharacter resolves it for build gear, applyPlayState for gear bought in play), but
@@ -633,14 +644,19 @@ export function ItemDetail({
             </div>
           )}
           <DescBody description={item.description} descRefs={item.descRefs} onExit={onClose} astKey="items" astId={item.id} />
-          {onPlay && (
-            <div className="sd-remove">
-              <button className="sd-remove-btn" aria-label="Remove item" onClick={removeItem}>
-                <i className="ti ti-trash" aria-hidden="true" /> Remove item
-              </button>
-            </div>
-          )}
         </div>
+        {/* Remove: a PHONE-only bar, and deliberately a sibling of .sd-body rather than the last thing
+         * inside it. As part of the scrolling panel it sat below the item's full description — a long
+         * scroll past on a phone, which read as "there is no way to delete this". Here it is always on
+         * screen. Desktop doesn't render it at all: the header's trash icon is already always visible,
+         * and two controls for one destructive action is one too many. */}
+        {onPlay && isMobile && (
+          <div className="sd-remove">
+            <button className="sd-remove-btn" aria-label={`Remove ${item.name}`} onClick={removeItem}>
+              <i className="ti ti-trash" aria-hidden="true" /> Remove item
+            </button>
+          </div>
+        )}
       </div>
     </div>
     {pickingSpell && item.spellSlot && onPlay && (

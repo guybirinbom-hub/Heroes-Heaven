@@ -3,6 +3,7 @@ import type { AbilityId, Character, ContentDatabase } from '../rules/types';
 import { abilityMod } from '../rules/derive';
 import { CLASS_RESOURCES, resourceMaxFor } from '../rules/classResources';
 import { setAlchemyItem, quickAlchemy, type PlayUpdater } from '../rules/play';
+import { craftableFormulas } from '../rules/formulaBook';
 import { PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
 import type { DescNode } from './descref';
@@ -12,8 +13,8 @@ import type { DescNode } from './descref';
  * - Advanced Alchemy: prepare up to 4 + Int alchemical items (≤ your level) — a usable list with qty
  *   steppers + Use. No coin/vial cost (they're your daily infused items).
  * - Quick Alchemy: spend one Versatile Vial to make an item on the fly (beyond the daily budget).
- * Formulas aren't tracked, so the picker offers every alchemical item you're eligible for — you pick
- * the ones you actually know.
+ * The picker offers every alchemical item you're eligible for — you pick the ones you actually know —
+ * plus anything a formula book grants you "as alchemical consumables" (ruling Q19).
  */
 export function AlchemyPanel({ character, content, onPlay }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater }) {
   const [picker, setPicker] = useState<null | 'advanced' | 'quick'>(null);
@@ -38,10 +39,18 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
   // level. They are the same for an alchemist and diverge for an archetype one: Master Alchemy sets
   // it to 7 at 12th, so this list was showing an archetype alchemist items they cannot make.
   const alchLevel = character.advancedAlchemy?.level ?? character.level;
-  const eligible = useMemo(
-    () => Object.values(content.items).filter((it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= alchLevel),
-    [content.items, alchLevel],
-  );
+  const eligible = useMemo(() => {
+    const out = Object.values(content.items).filter((it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= alchLevel);
+    // Ruling Q19: a formula the book holds "as alchemical consumables" is makeable even though the
+    // item is not itself alchemical — Improbable Elixirs' potions are the case. Pool membership only:
+    // the formula never becomes an inventory copy, and losing the book empties this again.
+    const have = new Set(out.map((it) => it.id));
+    for (const id of craftableFormulas(character, content)) {
+      const it = content.items[id];
+      if (it && !have.has(id) && (it.level ?? 0) <= alchLevel) out.push(it);
+    }
+    return out;
+  }, [content, character, alchLevel]);
   const shown = useMemo(() => {
     const s = q.trim().toLowerCase();
     return eligible

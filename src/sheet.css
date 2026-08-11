@@ -6155,6 +6155,102 @@ button.strike-name:hover {
   padding: 4px 6px;
 }
 
+/* ───────────────── Formula book: what the book holds, inside its own item card ───────────────── */
+.sd-formulas {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fb-count {
+  font-weight: 500;
+  color: var(--app-text-dim);
+}
+/* An unanswered grant. Dashed, because it is a hole in the book rather than a thing in it. */
+.fb-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.fb-slot {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  width: 100%;
+  text-align: left;
+  padding: 6px 9px;
+  font-size: 12.5px;
+  cursor: pointer;
+  color: var(--app-accent);
+  background: color-mix(in srgb, var(--app-accent) 7%, transparent);
+  border: var(--app-bw) dashed color-mix(in srgb, var(--app-accent) 55%, transparent);
+  border-radius: var(--app-radius-sm);
+}
+.fb-slot:hover {
+  background: color-mix(in srgb, var(--app-accent) 16%, transparent);
+}
+.fb-slot-label {
+  flex: 1;
+  font-weight: 600;
+}
+.fb-slot-src {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.fb-search {
+  width: 100%;
+}
+.fb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fb-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+}
+.fb-name {
+  flex: 1;
+  text-align: left;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--app-text);
+  font: inherit;
+  cursor: pointer;
+}
+.fb-name:hover {
+  color: var(--app-accent);
+}
+.fb-name-static {
+  flex: 1;
+}
+.fb-lvl {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.fb-remove {
+  display: inline-flex;
+  padding: 2px 4px;
+  background: none;
+  border: none;
+  color: var(--app-text-dim);
+  cursor: pointer;
+}
+.fb-remove:hover {
+  color: var(--app-danger, #d05a5a);
+}
+/* A printed restriction the picker cannot enforce, shown in the picker's header. */
+.fsel-note {
+  font-size: 11.5px;
+  color: var(--app-text-dim);
+  max-width: 32ch;
+}
+
 /* ───────────────── Monster Parts (variant rule): per-item editor + banked-parts tracker ───────────────── */
 .mp-panel {
   display: flex;

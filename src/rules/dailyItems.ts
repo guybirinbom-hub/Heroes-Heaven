@@ -11,6 +11,7 @@
  */
 import { PROFICIENCY_RANKS, type Character, type ContentDatabase, type Feat, type ProficiencyRank } from './types';
 import { resolveFormula } from './derive';
+import { knownFormulas } from './formulaBook';
 
 type Def = NonNullable<Feat['dailyTemporaryItems']>[number];
 
@@ -136,8 +137,12 @@ export function dailyItemOptions(
       .map((s) => ({ id: s.id, name: s.name }));
   }
   const wantTraits = slot.traits ?? [];
+  // "It must be an item whose formula you know" — a clause with nothing to filter against until the
+  // formula book existed. An empty book now yields an empty list, which the Rest sheet already says.
+  const knownIds = slot.fromKnownFormulas ? new Set(knownFormulas(c.inventory, db)) : null;
   return Object.values(db.items)
     .filter((i) => {
+      if (knownIds && !knownIds.has(i.id)) return false;
       if (slot.maxLevel != null && (i.level ?? 0) > slot.maxLevel) return false;
       const traits = new Set(i.traits ?? []);
       return wantTraits.every((t) => traits.has(t));

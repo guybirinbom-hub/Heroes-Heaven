@@ -3113,6 +3113,14 @@ export interface InventoryItem {
    *  a cantrip and a 1st-rank spell chosen from the wizard's own spellbook, so they belong to the
    *  instance rather than to the shared item. */
   heldSpellsOverride?: Record<number, string[]>;
+  /**
+   * Formula book: the ids of the items whose formulas this book holds (up to 100). A REFERENCE list
+   * — a formula never puts the item itself in the inventory.
+   *
+   * It lives on the INSTANCE because the book owns its formulas outright: lose the book and the
+   * record that granted them does not hand them back. See src/rules/formulaBook.ts.
+   */
+  formulas?: string[];
 }
 
 export type SpellcastingType = 'prepared' | 'spontaneous' | 'focus' | 'innate' | 'ritual' | 'items';
@@ -3524,6 +3532,10 @@ export interface Character {
   /** How many items Advanced Alchemy makes during daily preparations, and what set it. The panel used
    *  to hardcode 4 + Int, so Efficient Alchemy and Advanced Efficient Alchemy did nothing at all. */
   advancedAlchemy?: { max: number; source?: string; level?: number; levelSource?: string };
+  /** Formula-book grant slots the character has already spent, `slotKey` → the item id written into
+   *  the book. The SPENT LEDGER, not the book's contents: it is kept apart from the book precisely so
+   *  that losing the book cannot make a grant offer itself again. See src/rules/formulaBook.ts. */
+  formulaPicks?: Record<string, string>;
   /** Extra RESTRICTED reactions per round, each with what it may be spent on and which record grants
    *  it. Every character has one unrestricted reaction; these are additional. */
   extraReactions?: { usableFor: string; count: number; from: string }[];

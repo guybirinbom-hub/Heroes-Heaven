@@ -94,29 +94,6 @@ describe('SpellSlotBonus.restriction — display-only, and not yet displayed', (
   });
 });
 
-describe('dailyTemporaryItems filter.fromKnownFormulas — recorded, not enforced', () => {
-  it('a record carries it', () => {
-    const carriers = Object.values(db.feats).filter((f) =>
-      (f.dailyTemporaryItems ?? []).some((d) => d.filter.fromKnownFormulas),
-    );
-    expect(carriers.length).toBeGreaterThan(0);
-  });
-
-  it('the pool is not filtered by it — deliberately', () => {
-    // Herbal Forager makes "one temporary alchemical item YOU KNOW THE FORMULA FOR". The app does not
-    // model a formula book, so the restriction is shown on the picker as a note the player honours.
-    // Narrowing the pool to a formula list the app does not have would offer them nothing at all.
-    const src = FILES.find(([p]) => p === 'src/rules/dailyItems.ts')![1];
-    const consulted = /slot\.fromKnownFormulas/.test(src);
-    expect(
-      consulted,
-      [
-        '',
-        'dailyItemOptions now filters on fromKnownFormulas.',
-        'Make sure a character with NO recorded formulas still gets a usable pool —',
-        'the app has no formula book, so filtering on one can only ever offer nothing.',
-        'If you added a formula book, this is right: delete this test.',
-      ].join('\n'),
-    ).toBe(false);
-  });
-});
+/* `dailyTemporaryItems filter.fromKnownFormulas` was parked here until the app had a formula book to
+ * filter against. It has one now (src/rules/formulaBook.ts), the field is read, and the tripwire has
+ * done its job — what it guarded is covered by test/daily-items.test.ts. */

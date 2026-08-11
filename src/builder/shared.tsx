@@ -1,7 +1,6 @@
 import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
-import { INITIATIVE_SKILLS } from '../rules/initiative';
-import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
+import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
@@ -20,8 +19,7 @@ import {
   buildCharacter,
   buildNeedsDeity,
   championDevotionOptions,
-  championDevotionSpell,
-  classChoosesDeity,
+  extraPickCount,
   commanderFolioMax,
   commanderTacticOptions,
   GATE_THRESHOLD_LEVELS,
@@ -49,6 +47,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
 import { activeCasterArchetype } from '../rules/casterArchetypes';
 import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY } from '../rules/snareFormulas';
+import { formulaOptions, formulaSlots, type FormulaSlot } from '../rules/formulaBook';
 import { snareAllowanceFor } from '../rules/counterMods';
 import {
   bodyRuneExcluded,
@@ -73,12 +72,24 @@ import { DefensesPills } from '../sheet/DefensesPills';
 import { DescriptionModal } from '../sheet/DescriptionModal';
 import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
+import { useEscapeClose } from '../sheet/useEscapeClose';
+import { isMobileNow } from '../sheet/useIsMobile';
 import type { DescNode } from '../sheet/descref';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 
-/** Renders a chosen option's "what you gain" grants summary, with its flavor description tucked
- *  behind a "Details" toggle that expands it inline. Shared by every origin/class card, the picked
- *  feats/subclass/extra-choices, and the per-level feature gains. */
+/** The "what you gain" summary chips under a CHOICE (HP/size/speed for an ancestry, trained skills for
+ *  a class …). No Details button: for anything the player picked, the picker itself is how you read it —
+ *  pressing the chosen value opens its full description, and a Replace button re-opens the list (see
+ *  SearchSelect / PopupSelect). A second, differently-shaped route to the same popup was just noise. */
+export function ChoiceGrants({ grants }: { grants?: ReactNode }) {
+  return grants ? <>{grants}</> : null;
+}
+
+/** Grants summary + a "Details" button that opens the record's description.
+ *
+ *  For things the character is GRANTED, not things they chose — the class features under "You gain
+ *  automatically" and the feats a background hands out. Those have no picker to press, so this button
+ *  is their only way in. Choices use ChoiceGrants above. */
 export function ChoiceDetails({
   name,
   flavor,
@@ -183,19 +194,23 @@ export interface BuilderActions {
   setCompanion: (id: string, patch: Partial<CompanionConfig>) => void;
 }
 
-/** Cumulative number of options the player may pick in a choice group at this level. */
-export function extraPickCount(g: ChoiceGroup, level: number): number {
-  let n = 0;
-  for (const [lvl, count] of Object.entries(g.pickByLevel)) if (Number(lvl) <= level && count > n) n = count;
-  return n;
-}
+/** Cumulative number of options the player may pick in a choice group at this level.
+ *  Lives in rules/build so the picker and the "what is still unchosen" count share one rule;
+ *  re-exported here because the builder's other modules import it from this file. */
+export { extraPickCount };
 
-/** Default selections for a class's extra choices (single-pick groups default to the first option). */
-function defaultExtraChoices(c: ClassDef | undefined): Record<string, string[]> {
+/**
+ * Empty selections for a class's extra choices (element, apparition, epithet, …).
+ *
+ * These used to default a single-pick group to its FIRST option, which meant a fresh kineticist was
+ * silently an air kineticist and a fresh animist was attuned to whichever apparition happened to sort
+ * first. A pre-answered question doesn't look like a question: the card showed a filled picker, no
+ * pending marker appeared, and the player could finish the build never knowing they'd been assigned
+ * something. Every one of these is the player's to make, so they all start empty.
+ */
+function emptyExtraChoices(c: ClassDef | undefined): Record<string, string[]> {
   const out: Record<string, string[]> = {};
-  for (const g of c?.extraChoices ?? []) {
-    out[g.id] = extraPickCount(g, 1) === 1 && g.options[0] ? [g.options[0].id] : [];
-  }
+  for (const g of c?.extraChoices ?? []) out[g.id] = [];
   return out;
 }
 
@@ -216,7 +231,6 @@ export function useBuilderActions(
     changeAncestry(id) {
       const a = content.ancestries[id];
       const slots = a ? boostSlots(a.abilityBoosts) : [];
-      const her = Object.values(content.heritages).find((h) => h.ancestryId === id || h.ancestryId === null);
       setBuild((b) => {
         // Drop ancestry-category feat picks (slotKey = "level:category:idx") — the old
         // ancestry's feats are illegal for the new one. Keep class/skill/general picks.
@@ -226,7 +240,10 @@ export function useBuilderActions(
         return {
           ...b,
           ancestryId: id,
-          heritageId: her?.id ?? null,
+          // Heritage is the player's pick, so it starts EMPTY. Handing them the ancestry's first
+          // heritage (alphabetically, whatever that happened to be) both made the choice for them and
+          // hid it — setupMissing lists "Heritage" only while it is unset.
+          heritageId: null,
           ancestryBoosts: slots.map(() => null),
           heritageSkill: null,
           heritageFeatId: null,
@@ -263,15 +280,20 @@ export function useBuilderActions(
     },
     changeClass(id) {
       const c = content.classes[id];
-      const needsDeity = classChoosesDeity(c?.features);
-      const needsFont = (c?.features ?? []).some((f) => f.featureId === 'divine-font');
       // Feat-slot levels are class-specific, so picks from the old class no longer
       // map cleanly — clear them. Skill increases / boosts are level-driven, keep them.
+      //
+      // Nothing here is pre-answered on the player's behalf any more. A class used to arrive with its
+      // FIRST subclass selected, its extra-choice groups filled in, and — for a cleric or champion —
+      // whichever deity came first out of the database, plus that deity's first divine font. All four
+      // are the player's to make, and being pre-filled meant the builder never marked them pending, so
+      // a character could be finished carrying choices nobody made.
       setBuild((b) => ({
         ...b,
         classId: id,
-        subclassId: c?.subclass?.options[0]?.id ?? null,
-        extraChoices: defaultExtraChoices(c),
+        subclassId: null,
+        extraChoices: emptyExtraChoices(c),
+        // Not a choice when the class names exactly one key attribute — that IS the class's answer.
         keyAbility: c && c.keyAbility.length === 1 ? c.keyAbility[0] : null,
         classSkills: [],
         featPicks: {},
@@ -279,13 +301,11 @@ export function useBuilderActions(
         cantrips: [],
         spells: {},
         signatures: {},
-        // give deity-using classes a default deity; keep any prior choice
-        deityId: needsDeity ? b.deityId ?? Object.keys(content.deities)[0] ?? null : b.deityId,
-        // default a divine font from the (defaulted) deity's allowed options
-        divineFont: needsFont
-          ? content.deities[(needsDeity ? b.deityId ?? Object.keys(content.deities)[0] : b.deityId) ?? '']?.divineFont?.[0] ??
-            'heal'
-          : b.divineFont,
+        // Keep a deity the player already chose; never invent one. setupMissing reports "Deity" for a
+        // class that needs one until they pick.
+        deityId: b.deityId,
+        // The font belongs to the deity, so it can only be settled once there IS one (see changeDeity).
+        divineFont: b.deityId ? b.divineFont : null,
       }));
     },
     changeSubclass(id) {
@@ -293,8 +313,10 @@ export function useBuilderActions(
         const cls = b.classId ? content.classes[b.classId] : undefined;
         const oldOpt = cls?.subclass?.options.find((o) => o.id === b.subclassId);
         const newOpt = cls?.subclass?.options.find((o) => o.id === id);
-        // A racket that requires a deity (rogue Avenger) defaults one so its mechanics apply.
-        const deityId = newOpt?.requiresDeity && !b.deityId ? Object.keys(content.deities)[0] ?? null : b.deityId;
+        // A racket that requires a deity (rogue Avenger) used to have one picked for it — the first
+        // entry in the database — so the player never saw the question. It stays unset; setupMissing
+        // reports "Deity" (buildNeedsDeity covers subclass-driven requirements) until they answer it.
+        const deityId = b.deityId;
         // Cleric Battle Creed REQUIRES Battle Harbinger Dedication as the L2 class feat — pre-fill it
         // (and clear it when leaving battle creed if it was the auto-filled value).
         let featPicks = b.featPicks;
@@ -327,11 +349,19 @@ export function useBuilderActions(
     },
     changeDeity(id) {
       setBuild((b) => {
-        // keep the current font if the new deity allows it, else switch to its first option
+        // Keep the current font if the new deity allows it. Otherwise: a deity offering exactly one
+        // font isn't asking a question, so settle it; a deity offering both leaves it EMPTY for the
+        // player rather than silently picking whichever is listed first.
         const fonts = (content.deities[id]?.divineFont ?? []) as ('heal' | 'harm')[];
-        const font = b.divineFont && (!fonts.length || fonts.includes(b.divineFont)) ? b.divineFont : fonts[0] ?? b.divineFont;
-        // Re-default any Domain-feat sub-choice (Domain Initiate, …) that points at a domain
-        // the new deity doesn't have — otherwise it silently grants an off-deity focus spell.
+        const font = b.divineFont && (!fonts.length || fonts.includes(b.divineFont))
+          ? b.divineFont
+          : fonts.length === 1
+            ? fonts[0]
+            : null;
+        // A Domain-feat sub-choice (Domain Initiate, …) that points at a domain the new deity doesn't
+        // have has to go — otherwise it silently grants an off-deity focus spell. CLEAR it rather than
+        // swapping in the new deity's first domain, which was answering the question on the player's
+        // behalf while looking like their own pick.
         const featChoices = { ...b.featChoices };
         for (const [slotKey, val] of Object.entries(featChoices)) {
           const featId = b.featPicks[slotKey];
@@ -340,7 +370,7 @@ export function useBuilderActions(
           // adds the alternate domains), so validate against the pool that choice actually offers.
           if (def?.kind === 'domains') {
             const pool = domainPoolForChoice({ ...b, deityId: id || null }, content, featId, def.domainPool);
-            if (!pool.includes(val)) featChoices[slotKey] = pool[0] ?? val;
+            if (!pool.includes(val)) delete featChoices[slotKey];
           }
         }
         return { ...b, deityId: id || null, divineFont: font, featChoices };
@@ -366,11 +396,10 @@ export function useBuilderActions(
       setBuild((b) => ({ ...b, archetypeSpells: { ...(b.archetypeSpells ?? { cantrips: [], spells: {} }), keyAbility: a } }));
     },
     setSecondClass(id) {
-      // Default the second class's subclass to its first option + seed its extra-choice defaults
-      // (kineticist element, animist apparition, …) so the dual-class build stays legal/configurable.
+      // The second class's subclass and extra-choice groups (kineticist element, animist apparition, …)
+      // start empty, like the first class's — see changeClass.
       const c2 = id ? content.classes[id] : undefined;
-      const sub = c2?.subclass?.options[0]?.id ?? null;
-      setBuild((b) => ({ ...b, classId2: id, subclassId2: sub, extraChoices: { ...b.extraChoices, ...defaultExtraChoices(c2) } }));
+      setBuild((b) => ({ ...b, classId2: id, subclassId2: null, extraChoices: { ...b.extraChoices, ...emptyExtraChoices(c2) } }));
     },
     setAbpSkill(skill, rank) {
       setBuild((b) => {
@@ -405,14 +434,10 @@ export function useBuilderActions(
         delete featChoices[slotKey]; // a new feat invalidates the old slot's sub-choice
         if (featId) {
           featPicks[slotKey] = featId;
-          // Default the embedded choice so the feat is usable immediately.
-          const def = content.feats[featId]?.choice;
-          if (def?.kind === 'domains') {
-            const dom = domainPoolForChoice(b, content, featId, def.domainPool)[0];
-            if (dom) featChoices[slotKey] = dom;
-          } else if (def?.kind === 'array' && def.options?.[0]) {
-            featChoices[slotKey] = def.options[0].value;
-          }
+          // The feat's embedded choice ("choose a domain", "choose an energy type") is left UNSET.
+          // It used to be pre-filled with the first option so the feat was usable immediately, but a
+          // filled picker doesn't read as a question — Domain Initiate arrived with a domain the player
+          // never chose, and the focus spell that came with it was a surprise.
         } else {
           delete featPicks[slotKey];
         }
@@ -629,6 +654,8 @@ export function SearchSelect({
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
+  // Escape / Android Back closes the picker instead of leaving the builder. See PopupSelect.
+  useEscapeClose(open ? () => setOpen(false) : undefined);
   // When options carry descriptions (or a descBucket), the picker rows and the filled control become
   // read-first: pressing a row (or the filled value) opens its description card; a dedicated Select /
   // Replace button does the committing — so "press an option" never silently chooses it.
@@ -694,7 +721,9 @@ export function SearchSelect({
                 style={{ width: '100%', margin: 0 }}
                 placeholder={`Search ${label.toLowerCase()}…`}
                 value={q}
-                autoFocus
+                // Not on a phone: focusing the field opens the soft keyboard over the very list the
+                // player came to read. Matches ConditionsModal and CompanionsTab.
+                autoFocus={!isMobileNow()}
                 onChange={(e) => setQ(e.target.value)}
               />
             </div>
@@ -805,6 +834,11 @@ export function PopupSelect({
   const [q, setQ] = useState('');
   const [customMode, setCustomMode] = useState(false);
   const [customText, setCustomText] = useState('');
+  // Escape, and on Android the hardware Back button. Without this, Back over an open builder picker
+  // fell through to the app's exit — with an unsaved character in the builder behind it. Passing
+  // `undefined` while shut is the hook's own idiom for an inert slot (see topHandler), so the dozens of
+  // closed PopupSelects on a level-0 page cost one skipped array read each and swallow nothing.
+  useEscapeClose(open ? () => close() : undefined);
   // When any option carries a description, the popup shows read-first rows (press to read, a Select
   // button to choose) instead of click-to-select — matching the feat/spell picker.
   const [descNode, setDescNode] = useState<DescNode | null>(null);
@@ -902,6 +936,8 @@ export function PopupSelect({
                   style={{ width: '100%', margin: 0 }}
                   placeholder={addCustom.placeholder}
                   value={customText}
+                  // Kept on every platform: this field IS the task (type your own Lore), so the
+                  // keyboard appearing is what you want, unlike the search field above.
                   autoFocus
                   onChange={(e) => setCustomText(e.target.value)}
                   onKeyDown={(e) => {
@@ -1193,8 +1229,6 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
   const mythic = !!build.mythicEnabled;
   if (!dualClass && !abp && !mythic) return null;
   const cls2 = build.classId2 ? content.classes[build.classId2] : undefined;
-  const calling = build.mythicCalling ? content.classFeatures[build.mythicCalling] : undefined;
-  const destiny = build.mythicDestiny ? destinyDedications(content).find((f) => f.archetype === build.mythicDestiny) : undefined;
   return (
     <>
       {dualClass && (
@@ -1209,7 +1243,6 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((cl) => ({ value: cl.id, label: cl.name, description: cl.description, descRefs: cl.descRefs }))}
           />
-          {cls2?.description && <ChoiceDetails name={cls2.name} flavor={cls2.description} descRefs={cls2.descRefs} />}
           {cls2?.subclass && (
             <PopupSelect
               title={cls2.subclass.name}
@@ -1243,7 +1276,6 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs }))}
           />
-          {calling?.description && <ChoiceDetails name={calling.name} flavor={calling.description} descRefs={calling.descRefs} />}
           <p className="setup-hint">
             You gain a mythic feat slot at every even level (2&ndash;20). At 12th level that slot must buy a mythic{' '}
             <strong>destiny</strong>, and you can only ever have one. Mythic points power rerolls (Rewrite Fate) and
@@ -1268,7 +1300,6 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
               descRefs: f.descRefs,
             }))}
           />
-          {destiny && <ChoiceDetails name={destiny.name.replace(/ Dedication$/i, '')} flavor={destiny.description} descRefs={destiny.descRefs} />}
           <p className="setup-hint">
             Chosen once, at 12th level, and you can only ever have one. Your 12th-level mythic slot offers destiny
             dedications and nothing else; every mythic slot after it offers general mythic feats plus the feats of{' '}
@@ -1281,10 +1312,18 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
   );
 }
 
-/** A small "i" info affordance that opens a pinnable description popup for a Setup rule/toggle.
- *  Sits next to a toggle chip; reuses the app's DescriptionModal (so the popup gets the pin star). */
-export function RuleInfo({ title, description }: { title: string; description: string }) {
+/**
+ * A small "i" info affordance that opens a pinnable description popup for a Setup rule/toggle.
+ *
+ * `rule` is a `"<astBucket>:<slug>"` pointer at the PUBLISHED Pathfinder rules page for the option —
+ * the real thing, with its tables and sub-headings, rather than the one-line gloss we wrote. The gloss
+ * stays as `description` and is what shows for the options that have no printed rule to point at (the
+ * dice roller, ration tracking, Overrides — app conveniences, not variant rules), and as the fallback
+ * if a bucket ever fails to load.
+ */
+export function RuleInfo({ title, description, rule }: { title: string; description: string; rule?: string }) {
   const [open, setOpen] = useState(false);
+  const [bucket, slug] = rule ? rule.split(':') : [];
   return (
     <>
       <button
@@ -1296,7 +1335,14 @@ export function RuleInfo({ title, description }: { title: string; description: s
       >
         <i className="ti ti-info-circle" aria-hidden="true" />
       </button>
-      {open && <DescriptionModal root={{ title, description, key: 'setupRules' }} onClose={() => setOpen(false)} />}
+      {open && (
+        <DescriptionModal
+          // 'setupRules' is a bucket that deliberately doesn't exist: it resolves to no ast, so a
+          // rule-less option renders our own summary instead of guessing at a page by title.
+          root={{ title, description, key: bucket ?? 'setupRules', slug }}
+          onClose={() => setOpen(false)}
+        />
+      )}
     </>
   );
 }
@@ -1305,6 +1351,7 @@ export function RuleInfo({ title, description }: { title: string; description: s
 function ToggleWithInfo({
   label,
   description,
+  rule,
   on,
   onToggle,
   className,
@@ -1312,6 +1359,8 @@ function ToggleWithInfo({
 }: {
   label: string;
   description: string;
+  /** `"<astBucket>:<slug>"` of the option's published rules page — see RuleInfo. */
+  rule?: string;
   on: boolean;
   onToggle: () => void;
   className?: string;
@@ -1322,7 +1371,7 @@ function ToggleWithInfo({
       <button type="button" className={'inv-toggle' + (className ? ' ' + className : '') + (on ? ' on' : '')} onClick={onToggle}>
         {children ?? label}
       </button>
-      <RuleInfo title={label} description={description} />
+      <RuleInfo title={label} description={description} rule={rule} />
     </span>
   );
 }
@@ -1334,22 +1383,26 @@ export function VariantRulesCard({ build, actions }: EditorProps) {
   return (
     <SetupCard icon="ti-adjustments-alt" label="Variant rules">
       <div className="spr-chips">
+        {/* [flag, label, our one-line summary, the published rules page to open instead (see RuleInfo)] */}
         {(
           [
-            ['ancestryParagon', 'Ancestry Paragon', 'Extra ancestry feats: two at level 1, then one more at every odd level (3, 5, 7 … 19) — 11 total.'],
-            ['freeArchetype', 'Free Archetype', 'A bonus class feat at every even level (2–20) that may only be spent on archetype feats.'],
-            ['gradualBoosts', 'Gradual Attribute Boosts', 'The attribute boosts at 5/10/15/20 instead arrive one at a time at levels 2-5, 7-10, 12-15, 17-20.'],
-            ['proficiencyWithoutLevel', 'Proficiency w/o Level', 'Remove your level from proficiency: untrained −2, trained +2, expert +4, master +6, legendary +8.'],
-            ['abp', 'Automatic Bonus Progression', 'Gain item-equivalent attack/AC/save/Perception/skill bonuses automatically by level (replaces fundamental runes).'],
-            ['dualClass', 'Dual Class', 'Gain the proficiencies, Hit Points, class features and class feats of a second class.'],
-            ['pervasiveMagic', 'Pervasive Magic', 'Secrets of Magic variant: magic is common enough that any character can pick up minor spellcasting. Adds the Cantrip Casting / Basic / Expert / Master Spellcasting feat ladder to class feat slots.'],
-            ['monsterParts', 'Monster Parts', 'Harvest parts from defeated monsters to refine (fundamental-rune-equivalent bonuses) and imbue (special properties) your weapons, armor, shields, and Perception/skill items in place of runes and precious materials. An item uses either Monster Parts or normal runes — never both.'],
+            ['ancestryParagon', 'Ancestry Paragon', 'Extra ancestry feats: two at level 1, then one more at every odd level (3, 5, 7 … 19) — 11 total.', 'rules:ancestry-paragon'],
+            ['freeArchetype', 'Free Archetype', 'A bonus class feat at every even level (2–20) that may only be spent on archetype feats.', 'rules:free-archetype'],
+            ['gradualBoosts', 'Gradual Attribute Boosts', 'The attribute boosts at 5/10/15/20 instead arrive one at a time at levels 2-5, 7-10, 12-15, 17-20.', 'rules:gradual-ability-boosts'],
+            ['proficiencyWithoutLevel', 'Proficiency w/o Level', 'Remove your level from proficiency: untrained −2, trained +2, expert +4, master +6, legendary +8.', 'rules:proficiency-without-level'],
+            ['abp', 'Automatic Bonus Progression', 'Gain item-equivalent attack/AC/save/Perception/skill bonuses automatically by level (replaces fundamental runes).', 'rules:automatic-bonus-progression'],
+            ['dualClass', 'Dual Class', 'Gain the proficiencies, Hit Points, class features and class feats of a second class.', 'rules:dual-class-pcs'],
+            ['pervasiveMagic', 'Pervasive Magic', 'Secrets of Magic variant: magic is common enough that any character can pick up minor spellcasting. Adds the Cantrip Casting / Basic / Expert / Master Spellcasting feat ladder to class feat slots.', 'rules:pervasive-magic'],
+            // Monster Parts is a Treasure Vault subsystem with no rules page in the shipped set — our
+            // summary is the only description available for it.
+            ['monsterParts', 'Monster Parts', 'Harvest parts from defeated monsters to refine (fundamental-rune-equivalent bonuses) and imbue (special properties) your weapons, armor, shields, and Perception/skill items in place of runes and precious materials. An item uses either Monster Parts or normal runes — never both.', undefined],
           ] as const
-        ).map(([flag, label, desc]) => (
+        ).map(([flag, label, desc, rule]) => (
           <ToggleWithInfo
             key={flag}
             label={label}
             description={desc}
+            rule={rule}
             on={!!build.variantRules?.[flag]}
             onToggle={() => actions.patch({ variantRules: { ...build.variantRules, [flag]: !build.variantRules?.[flag] } })}
           />
@@ -1548,15 +1601,18 @@ export function CampaignOptionsCard({ build, actions }: EditorProps) {
       <div className="spr-chips">
         {(
           [
-            ['mythicEnabled', 'Mythic', 'War of Immortals mythic rules: gain a mythic calling + destiny, mythic feats, and mythic points. Off hides all mythic-trait content.'],
-            ['kingmakerEnabled', 'Kingmaker', 'Kingmaker Adventure Path player content: its backgrounds, feats, spells, items, and the camping activities (plus kingdom/army rules content).'],
-            ['deviantEnabled', 'Deviant abilities', 'Dark Archive deviant abilities — unstable powers a GM grants. On, a class feat can buy one of the 30 deviant feats; off, they are hidden. The rules put them entirely at the GM’s discretion, which is why they are a table opt-in rather than an ordinary feat.'],
+            ['mythicEnabled', 'Mythic', 'War of Immortals mythic rules: gain a mythic calling + destiny, mythic feats, and mythic points. Off hides all mythic-trait content.', 'rules:mythic-rules'],
+            // Kingmaker is a source book's worth of content rather than a rule, so there is no single
+            // page to open — the summary stays.
+            ['kingmakerEnabled', 'Kingmaker', 'Kingmaker Adventure Path player content: its backgrounds, feats, spells, items, and the camping activities (plus kingdom/army rules content).', undefined],
+            ['deviantEnabled', 'Deviant abilities', 'Dark Archive deviant abilities — unstable powers a GM grants. On, a class feat can buy one of the 30 deviant feats; off, they are hidden. The rules put them entirely at the GM’s discretion, which is why they are a table opt-in rather than an ordinary feat.', 'rules:deviant-abilities'],
           ] as const
-        ).map(([flag, label, desc]) => (
+        ).map(([flag, label, desc, rule]) => (
           <ToggleWithInfo
             key={flag}
             label={label}
             description={desc}
+            rule={rule}
             on={!!build[flag]}
             onToggle={() => actions.patch({ [flag]: !build[flag] })}
           />
@@ -1896,6 +1952,72 @@ export function SnareFormulasCard({ build, actions, content, character }: Editor
   );
 }
 
+/**
+ * Formula-book grants: the formulas a feat or class feature lets the player write into their book.
+ *
+ * Each picker offers ONLY what its own record allows (ruling Q9), and answering one is FINAL — the
+ * formula is copied into the book and belongs to it from then on, so the control disappears rather
+ * than staying editable. Render only when the character has a grant (gated at the call site).
+ */
+export function FormulaBookCard({ build, actions, content, character }: EditorProps & { character: Character }) {
+  const picks = build.formulaPicks ?? {};
+  const slots = formulaSlots(character, content);
+  // Pools are shared by every slot in a run, so they are resolved once per run rather than per slot —
+  // an alchemist's book has forty slots and the alchemical-item pool is a thousand items long.
+  const pools = new Map<string, { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[] }[]>();
+  const optionsFor = (slot: FormulaSlot) => {
+    const key = `${slot.sourceId}#${slot.partIndex}`;
+    let pool = pools.get(key);
+    if (!pool) {
+      pool = formulaOptions(slot, character, content).map((it) => ({
+        id: it.id,
+        name: it.name,
+        note: `Lvl ${it.level ?? 0}`,
+        description: it.description,
+        descRefs: it.descRefs,
+      }));
+      pools.set(key, pool);
+    }
+    return pool;
+  };
+  // Grouped by RUN rather than by record: an alchemist has forty slots and they all say the same
+  // thing, so one heading per run keeps the card readable instead of forty repeated labels.
+  const runs = [...new Set(slots.map((s) => `${s.sourceId}#${s.partIndex}`))];
+  return (
+    <SetupCard icon="ti-book" label="Formula book" count={`${slots.filter((s) => picks[s.key]).length}/${slots.length}`}>
+      <p className="setup-hint">
+        Formulas you write into your formula book. Once written a formula belongs to the book — losing the book loses
+        the formula, and the feat won't give it back. You can also fill these in from the book itself, on the sheet's
+        Inventory tab.
+      </p>
+      {runs.map((run) => {
+        const mine = slots.filter((s) => `${s.sourceId}#${s.partIndex}` === run);
+        return (
+          <SubCard
+            key={run}
+            icon="ti-bulb"
+            label={`${mine[0].sourceName} · ${mine[0].label}`}
+            count={`${mine.filter((s) => picks[s.key]).length}/${mine.length}`}
+          >
+            {mine[0].note && <p className="setup-hint">{mine[0].note}</p>}
+            {mine.map((slot) => (
+              <SearchSelect
+                key={slot.key}
+                bare
+                label={slot.label}
+                placeholder="Choose a formula…"
+                value={picks[slot.key] ?? null}
+                onChange={(id) => actions.patch({ formulaPicks: { ...picks, [slot.key]: id } })}
+                options={optionsFor(slot)}
+              />
+            ))}
+          </SubCard>
+        );
+      })}
+    </SetupCard>
+  );
+}
+
 export function OverridesCard({ build, actions, content, character }: EditorProps & { character: Character }) {
   const ov = build.overrides ?? {};
   const featName = (id: string) => content.feats[id]?.name ?? id;
@@ -2189,18 +2311,23 @@ export function OptionsCard({ build, actions }: EditorProps) {
         <ToggleWithInfo
           label="Alternate Ancestry Boosts"
           description="Replace your ancestry's listed attribute boosts AND flaws with two free attribute boosts (of your choice). A GM Core option for players who want their ancestry to impose no attribute penalty and full flexibility."
+          rule="sidebar:alternate-ancestry-boosts"
           on={!!opts.alternateAncestryBoosts}
           onToggle={() => set({ alternateAncestryBoosts: !opts.alternateAncestryBoosts })}
         />
         <ToggleWithInfo
           label="Ignore Bulk Limit"
           description="Disable the negative effects of carrying too much Bulk — no encumbered or over-limit warnings. A convenience option for tables that don't track encumbrance."
+          // The option is ours; the rule it switches off is the published one, which is what someone
+          // clicking "About" actually wants to read.
+          rule="rules:bulk-limits"
           on={!!opts.ignoreBulk}
           onToggle={() => set({ ignoreBulk: !opts.ignoreBulk })}
         />
         <ToggleWithInfo
           label="Voluntary Flaw"
           description="Take an additional attribute flaw beyond your ancestry's (regardless of your ancestry) to gain no mechanical benefit but reflect your character's weakness. You pick which attribute takes the extra flaw at level 0."
+          rule="sidebar:optional-voluntary-flaws"
           on={!!opts.voluntaryFlaw}
           onToggle={() => set({ voluntaryFlaw: !opts.voluntaryFlaw })}
         />
@@ -2368,10 +2495,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           options={Object.values(content.ancestries).map((a) => ({ id: a.id, name: a.name, note: note(a.rarity), description: a.description, descRefs: a.descRefs }))}
         />
         {ancestry && (
-          <ChoiceDetails
-            name={ancestry.name}
-            flavor={ancestry.description}
-            descRefs={ancestry.descRefs}
+          <ChoiceGrants
             grants={
               <div className="cc-grants">
                 <span className="cc-g"><i className="ti ti-heart" aria-hidden="true" /> HP {ancestry.hp}</span>
@@ -2429,13 +2553,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           descBucket="heritages"
           options={heritageOpts.map((h) => ({ id: h.id, name: h.name, note: note(h.rarity), description: h.description, descRefs: h.descRefs }))}
         />
-        {build.heritageId && content.heritages[build.heritageId] && (
-          <ChoiceDetails
-            name={content.heritages[build.heritageId].name}
-            flavor={content.heritages[build.heritageId].description}
-            descRefs={content.heritages[build.heritageId].descRefs}
-          />
-        )}
       </SetupCard>
       {/* Heritages that grant a "skill of your choice" (Skilled human) need a picker, or
           the granted trained skill is silently lost. Expert@5 is applied by buildCharacter. */}
@@ -2463,10 +2580,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             onChange={(id) => actions.patch({ heritageFeatId: id })}
             options={heritageFeatOpts}
           />
-          {(() => {
-            const f = build.heritageFeatId ? content.feats[build.heritageFeatId] : undefined;
-            return f?.description ? <ChoiceDetails name={f.name} flavor={f.description} descRefs={f.descRefs} /> : null;
-          })()}
         </SubCard>
       )}
       {/* A "choose N Lores" heritage (Half Moon Sarangay: 2; Born of Item: 1) — free-text Lore subjects. */}
@@ -2596,10 +2709,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           ]}
         />
         {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && (
-          <ChoiceDetails
-            name={background.name}
-            flavor={background.description}
-            descRefs={background.descRefs}
+          <ChoiceGrants
             grants={
               <div className="cc-grants">
                 {(background.trainedSkill || background.trainedSkillChoice?.length || background.trainedLore) && (
@@ -2753,10 +2863,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           options={Object.values(content.classes).map((c) => ({ id: c.id, name: c.name, note: note(c.rarity), description: c.description, descRefs: c.descRefs }))}
         />
         {cls && (
-          <ChoiceDetails
-            name={cls.name}
-            flavor={cls.description}
-            descRefs={cls.descRefs}
+          <ChoiceGrants
             grants={
               <div className="cc-grants">
                 <span className="cc-g"><i className="ti ti-rosette" aria-hidden="true" /> Key: {cls.keyAbility.map((a) => ABILITY_LABEL[a]).join('/')}</span>
@@ -2791,10 +2898,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             onChange={(v) => actions.changeSubclass(v)}
             options={cls.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
           />
-          {(() => {
-            const sub = cls.subclass.options.find((o) => o.id === build.subclassId);
-            return sub?.description ? <ChoiceDetails name={sub.name} flavor={sub.description} descRefs={sub.descRefs} /> : null;
-          })()}
         </SetupCard>
       )}
       {(() => {
@@ -2803,7 +2906,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         const subOpt = cls?.subclass?.options.find((o) => o.id === build.subclassId);
         const choice = subOpt?.skillChoice?.length ? subOpt.skillChoice : cls?.trainedSkills.choice;
         if (!choice?.length) return null;
-        const current = choice.includes(build.subclassSkill as SkillId) ? (build.subclassSkill as SkillId) : choice[0];
+        // Empty until picked. buildCharacter still falls back to the first option so a half-built
+        // character is legal, but the builder must not SHOW a skill the player never chose — that is
+        // how a choice gets skipped. setupMissing lists it instead.
+        const current = choice.includes(build.subclassSkill as SkillId) ? (build.subclassSkill as SkillId) : '';
         return (
           <SubCard icon="ti-school" label="Trained skill">
             <PopupSelect
@@ -2819,7 +2925,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         // Sorcerer Draconic: pick the dragon exemplar (sets spell tradition + second bloodline skill).
         const subOpt = cls?.subclass?.options.find((o) => o.id === build.subclassId);
         if (!subOpt?.dragonChoice?.length) return null;
-        const cur = subOpt.dragonChoice.find((d) => d.slug === build.dragonExemplar)?.slug ?? subOpt.dragonChoice[0].slug;
+        // Empty until picked — the dragon sets your spell tradition, so silently showing the first one
+        // decides the most important thing about the character on the player's behalf.
+        const cur = subOpt.dragonChoice.find((d) => d.slug === build.dragonExemplar)?.slug ?? '';
         return (
           <SubCard icon="ti-flame" label="Dragon">
             <PopupSelect
@@ -2862,9 +2970,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   const feat = content.feats[gcf.featId];
                   const key = `grant:${selId}:${gcf.featId}`;
                   const allowed = gcf.restrictTo!;
+                  // Empty until picked: showing allowed[0] made an unanswered choice look answered.
                   const cur = allowed.includes(build.grantedChoiceFeatTraits?.[key] ?? '')
                     ? build.grantedChoiceFeatTraits![key]
-                    : allowed[0];
+                    : '';
                   const lbl = (t: string) => {
                     const raw = feat?.choice?.options?.find((x) => x.value === t)?.label;
                     return raw ? featChoiceLabel(raw) : t.charAt(0).toUpperCase() + t.slice(1);
@@ -2898,9 +3007,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           const firstTwo = imps.slice(0, 2);
           if (build.level < 7 || firstTwo.length < 2) return null;
           const label = (id: string) => content.classFeatures[id]?.name ?? id;
-          const adept7 = firstTwo.includes(build.implementAdept ?? '') ? build.implementAdept! : firstTwo[0];
-          const adeptSet = build.level >= 11 ? firstTwo : [adept7];
-          const paragon = adeptSet.includes(build.implementParagon ?? '') ? build.implementParagon! : adeptSet[0];
+          const adept7 = firstTwo.includes(build.implementAdept ?? '') ? build.implementAdept! : '';
+          // Paragon may only name an implement you already have adept in. Below 11th that is the single
+          // Adept pick, so until THAT is made there is genuinely nothing to choose from — an empty set,
+          // not a defaulted one.
+          const adeptSet = build.level >= 11 ? firstTwo : adept7 ? [adept7] : [];
+          const paragon = adeptSet.includes(build.implementParagon ?? '') ? build.implementParagon! : '';
           return (
             <>
               <SubCard icon="ti-star" label="Implement Adept">
@@ -2914,7 +3026,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                     description: content.classFeatures[`adept-benefit-${id}`]?.description,
                   }))}
                 />
-                {build.level >= 11 && (
+                {/* Gated on the pick as well as the level: with no Adept chosen, "the other one" is
+                    whichever happened to be first in the list, which is not a fact yet. */}
+                {build.level >= 11 && adept7 && (
                   <div className="setup-note">
                     Second Adept (11th) gives you the adept benefit of {label(firstTwo.find((x) => x !== adept7) ?? '')} as well.
                   </div>
@@ -2922,16 +3036,20 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               </SubCard>
               {build.level >= 17 && (
                 <SubCard icon="ti-crown" label="Implement Paragon">
-                  <PopupSelect
-                    title="Implement Paragon"
-                    value={paragon}
-                    onChange={(v) => actions.patch({ implementParagon: v })}
-                    options={adeptSet.map((id) => ({
-                      value: id,
-                      label: label(id),
-                      description: content.classFeatures[`paragon-benefit-${id}`]?.description,
-                    }))}
-                  />
+                  {adeptSet.length === 0 ? (
+                    <span className="fixed-val">Choose your Implement Adept first — Paragon must name an implement you already have the adept benefit for.</span>
+                  ) : (
+                    <PopupSelect
+                      title="Implement Paragon"
+                      value={paragon}
+                      onChange={(v) => actions.patch({ implementParagon: v })}
+                      options={adeptSet.map((id) => ({
+                        value: id,
+                        label: label(id),
+                        description: content.classFeatures[`paragon-benefit-${id}`]?.description,
+                      }))}
+                    />
+                  )}
                   {/* The rules restrict paragon to an implement that ALREADY has the adept benefit,
                       which is why a third implement (gained at 15) never appears here. */}
                 </SubCard>
@@ -2976,7 +3094,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 <span className="fixed-val">Construct modifications are described in the innovation text.</span>
               </SubCard>
             );
-          const armorStats = type === 'armor' ? build.inventorArmorStats ?? 'power-suit' : undefined;
+          // Undefined until picked. That also does the right thing downstream: with no suit chosen,
+          // inventorModificationOptions filters out BOTH suits' exclusive modifications and offers only
+          // the ones any armour innovation can take.
+          const armorStats = type === 'armor' ? build.inventorArmorStats ?? undefined : undefined;
           const tiers = [
             { key: 'initial', label: 'Initial modification' },
             { key: 'breakthrough', label: 'Breakthrough modification' },
@@ -2988,7 +3109,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 <SubCard icon="ti-shirt" label="Armor base">
                   <PopupSelect
                     title="Armor base statistics"
-                    value={armorStats!}
+                    value={armorStats ?? ''}
                     onChange={(v) => actions.patch({ inventorArmorStats: v as 'power-suit' | 'subterfuge-suit' })}
                     options={[
                       { value: 'power-suit', label: 'Power Suit' },
@@ -3013,10 +3134,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                       }
                       options={opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
                     />
-                    {(() => {
-                      const o = opts.find((x) => x.id === cur);
-                      return o?.description ? <ChoiceDetails name={o.name} flavor={o.description} descRefs={o.descRefs} /> : null;
-                    })()}
                   </SubCard>
                 );
               })}
@@ -3040,7 +3157,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 <PopupSelect
                   key={el}
                   title={`${cap(el)} blast`}
-                  value={build.blastTypes?.[el] ?? types[0]}
+                  // Empty until picked. These rows only exist when the element offers MORE than one
+                  // damage type, so showing the first would be answering the very question the row asks.
+                  value={build.blastTypes?.[el] ?? ''}
                   onChange={(v) => actions.patch({ blastTypes: { ...(build.blastTypes ?? {}), [el]: v } })}
                   options={types.map((t) => ({ value: t, label: `${cap(el)} — ${cap(t)}` }))}
                 />
@@ -3076,10 +3195,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                     ...opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs })),
                   ]}
                 />
-                {(() => {
-                  const o = opts.find((x) => x.id === cur);
-                  return o?.description ? <ChoiceDetails name={o.name} flavor={o.description} descRefs={o.descRefs} /> : null;
-                })()}
                 {cur === '' &&
                   (() => {
                     // Expand the Portal grants a bonus impulse feat of your level for one of your elements.
@@ -3123,8 +3238,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             .map((id) => group.options.find((o) => o.id === id))
             .filter(Boolean)
             .map((o) => ({ value: o!.id, label: o!.name, description: o!.description, descRefs: o!.descRefs }));
-          const current = attuned.includes(build.primaryApparition ?? '') ? build.primaryApparition! : attuned[0];
-          const curOpt = group.options.find((o) => o.id === current);
+          // Empty until picked. Showing the first attuned apparition made an unmade choice look made;
+          // buildCharacter falls back to that same first one, so the character still works meanwhile.
+          const current = attuned.includes(build.primaryApparition ?? '') ? build.primaryApparition! : '';
           return (
             <SubCard icon="ti-star" label="Primary apparition">
               <PopupSelect
@@ -3133,7 +3249,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 onChange={(v) => actions.patch({ primaryApparition: v })}
                 options={opts}
               />
-              {curOpt?.description ? <ChoiceDetails name={curOpt.name} flavor={curOpt.description} descRefs={curOpt.descRefs} /> : null}
             </SubCard>
           );
         })()}
@@ -3162,10 +3277,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             actions={actions}
             content={content}
           />
-          {(() => {
-            const d = build.deityId ? content.deities[build.deityId] : undefined;
-            return d?.description ? <ChoiceDetails name={d.name} flavor={d.description} descRefs={d.descRefs} /> : null;
-          })()}
         </SetupCard>
       )}
       {/* Living Rune: "Your body can hold a single property rune." A rune with no item to sit on —
@@ -3216,10 +3327,6 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 onChange={(v) => actions.patch({ archetypeEidolonType: v })}
                 options={opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
               />
-              {(() => {
-                const o = opts.find((x) => x.id === cur);
-                return o?.description ? <ChoiceDetails name={o.name} flavor={o.description} descRefs={o.descRefs} /> : null;
-              })()}
             </SetupCard>
           );
         })()}
@@ -3296,9 +3403,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         })()}
       {(cls?.features ?? []).some((f) => f.featureId === 'devotion-spells') && (
         <SetupCard icon="ti-sparkles" label="Devotion spell">
+          {/* Empty until picked. championDevotionSpell's fallback is a font-based DEFAULT, not a
+              derived fact, so showing it made the choice look as though it had already been answered. */}
           <PopupSelect
             title="Devotion spell"
-            value={build.devotionSpell ?? championDevotionSpell(cls, build, content) ?? ''}
+            value={build.devotionSpell ?? ''}
             onChange={(v) => actions.patch({ devotionSpell: v || null })}
             options={championDevotionOptions(build, content).map((id) => ({
               value: id,
@@ -3307,28 +3416,21 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               descRefs: content.spells[id]?.descRefs,
             }))}
           />
-          {(() => {
-            const id = build.devotionSpell ?? championDevotionSpell(cls, build, content);
-            const sp = id ? content.spells[id] : undefined;
-            return sp?.description ? <ChoiceDetails name={sp.name} flavor={sp.description} descRefs={sp.descRefs} /> : null;
-          })()}
         </SetupCard>
       )}
       {(cls?.features ?? []).some((f) => f.featureId === 'voice-of-nature') && (
         <SetupCard icon="ti-leaf" label="Voice of Nature">
+          {/* Empty until picked — Animal and Plant Empathy are a real choice, not a default with an
+              alternative. */}
           <PopupSelect
             title="Voice of Nature"
-            value={build.voiceOfNature ?? 'animal-empathy'}
+            value={build.voiceOfNature ?? ''}
             onChange={(v) => actions.patch({ voiceOfNature: v || null })}
             options={[
               { value: 'animal-empathy', label: content.feats['animal-empathy']?.name ?? 'Animal Empathy', description: content.feats['animal-empathy']?.description, descRefs: content.feats['animal-empathy']?.descRefs },
               { value: 'plant-empathy', label: content.feats['plant-empathy']?.name ?? 'Plant Empathy', description: content.feats['plant-empathy']?.description, descRefs: content.feats['plant-empathy']?.descRefs },
             ]}
           />
-          {(() => {
-            const f = content.feats[build.voiceOfNature ?? 'animal-empathy'];
-            return f?.description ? <ChoiceDetails name={f.name} flavor={f.description} descRefs={f.descRefs} /> : null;
-          })()}
         </SetupCard>
       )}
       {(build.classId === 'fighter' || (build.variantRules?.dualClass && build.classId2 === 'fighter')) && build.level >= 5 && (
@@ -3864,22 +3966,17 @@ export function EffectChoicesPicker({
  * on — at the call site as well as inside it — so an Initiative card placed there rendered for nobody
  * playing without Dual Class, ABP or Mythic, which is almost everybody.
  */
-export function InitiativeCard({ build, actions }: EditorProps) {
-  return (
-      <SetupCard icon="ti-bolt" label="Initiative">
-        <PopupSelect
-          title="Roll initiative with"
-          value={build.initiativeSkill ?? ''}
-          onChange={(v) => actions.patch({ initiativeSkill: (v || null) as never })}
-          clearLabel="Perception (default)"
-          options={INITIATIVE_SKILLS.map((k) => ({ value: k, label: k.charAt(0).toUpperCase() + k.slice(1) }))}
-        />
-        <p className="setup-hint">
-          You normally roll Perception. The GM can call for something else to suit what you were doing &mdash;
-          Stealth while Avoiding Notice, Deception after Creating a Diversion &mdash; and several feats say so
-          outright. Bonuses that apply to <em>whatever</em> you roll follow this choice; ones that name Perception
-          apply only while it is set to Perception.
-        </p>
-      </SetupCard>
-  );
-}
+/*
+ * There is deliberately no Initiative picker in the builder.
+ *
+ * It used to render one, and it was wrong about the rules: "when you roll for initiative, you
+ * typically roll a Perception check … sometimes the GM might call for a different type of check."
+ * That is a decision made per encounter, by the GM, out of what the character was doing at the time —
+ * not a property of the character you settle once while building them. Presenting it as a build slot
+ * made it look like every character has to pick one, and left an empty "Choose…" sitting on the origin
+ * page for a question with a correct default.
+ *
+ * The DATA is untouched: `initiativeSkill` still exists, deriveInitiative still reads it, the ~45
+ * initiative bonuses still resolve, and a character that already had one keeps it. Only the build-time
+ * question is gone. If it should be settable at all, its home is the sheet, per encounter.
+ */

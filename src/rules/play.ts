@@ -12,9 +12,10 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterAppearance, CharacterDetails, CharacterImage, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
 import { resolveRestrictedSlots } from './restrictedSlots';
-import { deriveMaxHp, deriveBulk, dailyChoiceGrants } from './derive';
+import { deriveMaxHp, deriveBulk, dailyChoiceGrants, ownedFeatureIds } from './derive';
+import { FORMULA_BOOK_ITEM_ID, formulaBooks, grantsFormulaBook, withFormula } from './formulaBook';
 import { adjustModes } from './modes';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
@@ -34,9 +35,9 @@ export interface PlayState {
   /** Temporary land-Speed override in feet; when set, the sheet shows + highlights this
    *  in place of the derived Speed until it's reset to the default. */
   tempSpeed?: number;
-  /** In-play appearance overrides (portrait + accent color), merged over the build's. `portrait` is the
-   *  compressed (synced) copy; `portraitRef` keys the on-device sharp copy (installed app; never synced). */
-  appearance?: { portrait?: string; accentColor?: string; portraitRef?: string };
+  /** In-play appearance overrides (portrait, avatar crop, gallery, accent), merged over the build's.
+   *  See CharacterAppearance. */
+  appearance?: CharacterAppearance;
   /** Hero points currently held, 0..MAX_HERO_POINTS. */
   heroPoints: number;
   /** Mythic points currently held, 0..MAX_MYTHIC_POINTS (only meaningful when the character is mythic). */
@@ -91,6 +92,18 @@ export interface PlayState {
    *  148 of the 151 are on no spell list and had no route onto the sheet except Setup → Overrides —
    *  the rule-BREAKING panel — for an ordinary thing a character does. */
   knownRituals?: string[];
+  /**
+   * Formula-book grant slots already spent, `slotKey` → the item id written into the book.
+   *
+   * The SPENT LEDGER, and the reason it is here rather than on the book: a formula grant is a
+   * ONE-TIME WRITE. Once a slot appears here it never offers itself again, so destroying the book —
+   * which destroys `InventoryItem.formulas` with it — loses the formulas permanently instead of
+   * letting the granting record hand them over a second time.
+   */
+  formulaPicks?: Record<string, string>;
+  /** Set once the character has been handed the formula book their records grant, so deleting that
+   *  book is a decision the app respects rather than one it undoes on the next mutation. */
+  formulaBookGranted?: boolean;
   /* An item's "choose one of N" answer lives on the INVENTORY INSTANCE (InventoryItem.effectChoices),
    * not here, so two copies of the same item can differ. */
   /** Notes pages; when set, overrides the build's notes (so the sheet can edit them). */
@@ -117,6 +130,9 @@ export interface PlayState {
   repertoireSpells?: Record<string, Record<number, string[]>>;
   /** In-play signature-spell override for spontaneous casters: entryId → spell ids. */
   signatureSpells?: Record<string, string[]>;
+  /** Spells added by the Learn a Spell activity: entryId → rank → spell ids. Permanent knowledge
+   *  rather than a daily choice, so this survives both a night's rest and a rebuild. */
+  learnedSpells?: Record<string, Record<number, string[]>>;
   /** Commander tactics prepared today (subset of the folio, up to preparedMax); reset on rest. */
   preparedTactics?: string[];
   /**
@@ -208,6 +224,9 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
     resources: { ...(ch.classResources ?? {}) },
     notes: (ch.notes ?? []).map((p) => ({ ...p })),
     companions: (ch.companions ?? []).map((c) => ({ ...c })),
+    // The build's formula picks are already inside the book this copied, so they seed as SPENT —
+    // reconcileFormulaBook must not write them a second time.
+    ...(ch.formulaPicks ? { formulaPicks: { ...ch.formulaPicks } } : {}),
   };
 }
 
@@ -330,6 +349,28 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
         }
       }
       out = { ...out, repertoire, signature: play.signatureSpells?.[e.id] ?? e.signature };
+    }
+    /*
+     * Learn a Spell. "A spell you learn is added to your repository of spells, such as a spellbook for
+     * a wizard… If you have a spell repertoire, such as a bard, it's not automatically added since you
+     * can only know a limited number of spells. Instead, you can select it when you add or swap spells."
+     *
+     * So a spellbook caster's learned spells are merged into the spellbook — that IS the repository, and
+     * merging is what makes them preparable — while a repertoire caster's stay in `learned`, offered to
+     * the repertoire picker rather than silently pushed past the known-spells cap.
+     */
+    const learned = play.learnedSpells?.[e.id];
+    if (learned && Object.values(learned).some((ids) => ids.length > 0)) {
+      out = { ...out, learned };
+      if (out.spellbook) {
+        const spellbook: Record<number, string[]> = { ...out.spellbook };
+        for (const [rankStr, ids] of Object.entries(learned)) {
+          const rank = Number(rankStr);
+          const have = spellbook[rank] ?? [];
+          spellbook[rank] = [...have, ...ids.filter((id) => !have.includes(id))];
+        }
+        out = { ...out, spellbook };
+      }
     }
     if (e.font) {
       out = {
@@ -500,6 +541,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     dailyChoices: play.dailyChoices ?? ch.dailyChoices,
     dailyItems: play.dailyItems ?? ch.dailyItems,
     featUses: play.featUses ?? ch.featUses,
+    formulaPicks: play.formulaPicks ?? ch.formulaPicks,
     ...(play.knownRituals?.length ? { knownRituals: play.knownRituals } : {}),
     notes: play.notes ?? ch.notes,
     companionConditions: play.companionConditions ?? ch.companionConditions ?? {},
@@ -848,6 +890,34 @@ export function setSignatureSpells(play: PlayState, entryId: string, ids: string
   return { ...play, signatureSpells: { ...(play.signatureSpells ?? {}), [entryId]: ids } };
 }
 
+/** Record a spell learned with the Learn a Spell activity. Idempotent — learning it twice is a no-op. */
+export function learnSpell(play: PlayState, entryId: string, rank: number, spellId: string): PlayState {
+  const cur = play.learnedSpells?.[entryId]?.[rank] ?? [];
+  if (cur.includes(spellId)) return play;
+  return {
+    ...play,
+    learnedSpells: {
+      ...(play.learnedSpells ?? {}),
+      [entryId]: { ...(play.learnedSpells?.[entryId] ?? {}), [rank]: [...cur, spellId] },
+    },
+  };
+}
+
+/** Undo a Learn a Spell (a mis-click, or the GM ruling the check failed after all). Empty ranks and
+ *  empty entries are pruned so the saved play state doesn't accumulate `{}`s. */
+export function unlearnSpell(play: PlayState, entryId: string, rank: number, spellId: string): PlayState {
+  const cur = play.learnedSpells?.[entryId]?.[rank] ?? [];
+  if (!cur.includes(spellId)) return play;
+  const forEntry: Record<number, string[]> = { ...(play.learnedSpells?.[entryId] ?? {}) };
+  const next = cur.filter((id) => id !== spellId);
+  if (next.length) forEntry[rank] = next;
+  else delete forEntry[rank];
+  const all = { ...(play.learnedSpells ?? {}) };
+  if (Object.keys(forEntry).length) all[entryId] = forEntry;
+  else delete all[entryId];
+  return { ...play, learnedSpells: all };
+}
+
 /** Revert in-play repertoire + signature changes for one entry to the build's defaults. */
 export function resetRepertoire(play: PlayState, entryId: string): PlayState {
   const repertoireSpells = { ...(play.repertoireSpells ?? {}) };
@@ -890,6 +960,25 @@ function recoverFromDying(list: ActiveCondition[]): ActiveCondition[] {
 function condSet(list: ActiveCondition[], id: string, value: number): ActiveCondition[] {
   if (value <= 0) return condRemove(list, id);
   return list.map((c) => (c.id === id ? { ...c, value: Math.round(value) } : c));
+}
+
+/**
+ * Nudge a valued condition by `delta`, reading the CURRENT value out of the state being updated.
+ *
+ * The stepper used to compute the new number from the value its last render saw and pass it as an
+ * absolute — so two taps landing in the same frame both computed "3 + 1" and the second wrote the 4 the
+ * first had already written. Frightened would sit still while you jabbed at it. Resolving the delta in
+ * here means every tap counts however fast they arrive.
+ */
+export function stepConditionValue(play: PlayState, id: string, delta: number): PlayState {
+  const cur = play.conditions.find((c) => c.id === id)?.value ?? 1;
+  return setConditionValue(play, id, cur + delta);
+}
+
+/** The companion-scoped {@link stepConditionValue}. */
+export function stepCompanionConditionValue(play: PlayState, compId: string, id: string, delta: number): PlayState {
+  const cur = (play.companionConditions?.[compId] ?? []).find((c) => c.id === id)?.value ?? 1;
+  return withCompanionConditions(play, compId, (l) => condSet(l, id, cur + delta));
 }
 
 /** Gain a condition (no-op if already present). `value` is 1+ for valued ones. */
@@ -1054,6 +1143,30 @@ export function toggleCompanionItemFlag(play: PlayState, compId: string, instanc
   return patchCompanionInventory(play, compId, (inv) => inv.map((i) => (i.instanceId === instanceId ? { ...i, [flag]: !i[flag] } : i)));
 }
 
+/** Replace a companion's whole gear list. */
+export function setCompanionInventory(play: PlayState, compId: string, inventory: InventoryItem[]): PlayState {
+  return patchCompanionInventory(play, compId, () => inventory);
+}
+
+/**
+ * Run a CHARACTER inventory action against a COMPANION's pack.
+ *
+ * Every inventory mutator in this file — add, remove, requantify, equip, attach a rune, move into a
+ * container — is written against `play.inventory`. Rather than maintain a second, thinner set of them
+ * for companions (which is how the companion's gear ended up a flat list that couldn't do containers or
+ * runes), this lends the companion's pack to `play.inventory` for the duration of one action and puts
+ * the result back on the companion afterwards.
+ *
+ * Anything else the action touched stays where it landed: buying gear for a companion is supposed to
+ * come out of the OWNER's purse, and `out.currency` does exactly that.
+ */
+export function onCompanionInventory(play: PlayState, compId: string, fn: (p: PlayState) => PlayState): PlayState {
+  const comp = (play.companions ?? []).find((c) => c.id === compId);
+  if (!comp) return play;
+  const out = fn({ ...play, inventory: comp.inventory ?? [] });
+  return setCompanionInventory({ ...out, inventory: play.inventory }, compId, out.inventory ?? []);
+}
+
 /** Set one bio/details field in play (merged over the build's details by applyPlayState).
  *  An empty string clears the field. */
 export function setDetail(play: PlayState, key: keyof CharacterDetails, value: string): PlayState {
@@ -1063,19 +1176,94 @@ export function setDetail(play: PlayState, key: keyof CharacterDetails, value: s
   return { ...play, details };
 }
 
-/** Set (or clear, with null) the character's portrait. `dataUrl` is the compressed (synced) copy; `ref`
- *  keys the matching on-device sharp copy (installed app) — pass it so display can find the sharp copy,
- *  or omit/undefined for the compressed-only case. Stored in the in-play appearance overlay. */
-export function setPortrait(play: PlayState, dataUrl: string | null, ref?: string): PlayState {
+/** Set (or clear, with null) the character's profile image. `dataUrl` is the compressed (synced) copy;
+ *  `ref` keys the matching on-device sharp copy (installed app) — pass it so display can find the sharp
+ *  copy, or omit/undefined for the compressed-only case. `avatar` is the square crop the player framed
+ *  for small displays; omitting it clears any previous crop, since it belonged to the old image.
+ *  Stored in the in-play appearance overlay. */
+export function setPortrait(play: PlayState, dataUrl: string | null, ref?: string, avatar?: string): PlayState {
   const appearance = { ...(play.appearance ?? {}) };
   if (dataUrl === null) {
     delete appearance.portrait;
     delete appearance.portraitRef;
+    delete appearance.avatar;
   } else {
     appearance.portrait = dataUrl;
     if (ref) appearance.portraitRef = ref;
     else delete appearance.portraitRef;
+    if (avatar) appearance.avatar = avatar;
+    else delete appearance.avatar;
   }
+  return { ...play, appearance };
+}
+
+/** Re-frame the profile image's square avatar without touching the image itself (the "Reframe" action
+ *  on the Details page). null restores the plain centre crop. */
+export function setAvatar(play: PlayState, avatar: string | null): PlayState {
+  const appearance = { ...(play.appearance ?? {}) };
+  if (avatar) appearance.avatar = avatar;
+  else delete appearance.avatar;
+  return { ...play, appearance };
+}
+
+/** A gallery id that won't collide with the ones already in use. */
+export function nextImageId(gallery: CharacterImage[] | undefined): string {
+  const max = (gallery ?? []).reduce((m, g) => Math.max(m, Number(/(\d+)$/.exec(g.id)?.[1] ?? -1)), -1);
+  return `img-${max + 1}`;
+}
+
+/** Add a picture to the gallery (the character's images OTHER than the profile one). */
+export function addGalleryImage(play: PlayState, img: string, ref?: string): PlayState {
+  const appearance = { ...(play.appearance ?? {}) };
+  const gallery = [...(appearance.gallery ?? [])];
+  gallery.push({ id: nextImageId(gallery), img, ...(ref ? { portraitRef: ref } : {}) });
+  appearance.gallery = gallery;
+  return { ...play, appearance };
+}
+
+/** Drop a gallery picture. The sharp on-device copy is left alone — an eager delete would break undo;
+ *  the startup GC reclaims it once no character references its ref (see data/portraitStore). */
+export function removeGalleryImage(play: PlayState, id: string): PlayState {
+  const appearance = { ...(play.appearance ?? {}) };
+  const gallery = (appearance.gallery ?? []).filter((g) => g.id !== id);
+  if (gallery.length) appearance.gallery = gallery;
+  else delete appearance.gallery;
+  return { ...play, appearance };
+}
+
+/** Label a gallery picture (empty string clears the caption). */
+export function setGalleryCaption(play: PlayState, id: string, caption: string): PlayState {
+  const appearance = { ...(play.appearance ?? {}) };
+  appearance.gallery = (appearance.gallery ?? []).map((g) =>
+    g.id === id ? (caption.trim() ? { ...g, caption } : (({ caption: _drop, ...rest }) => rest)(g)) : g,
+  );
+  return { ...play, appearance };
+}
+
+/**
+ * Promote a gallery picture to be the profile image; the outgoing profile image takes its place in the
+ * gallery, so nothing is lost and the total number of images doesn't change.
+ *
+ * The avatar crop is dropped: it framed a region of the OLD image and means nothing on the new one.
+ * The caller re-frames (or accepts the centre crop) afterwards.
+ */
+export function makeProfileImage(play: PlayState, id: string): PlayState {
+  const appearance = { ...(play.appearance ?? {}) };
+  const gallery = [...(appearance.gallery ?? [])];
+  const i = gallery.findIndex((g) => g.id === id);
+  if (i < 0) return play;
+  const incoming = gallery[i];
+  const outgoing = appearance.portrait
+    ? { id: incoming.id, img: appearance.portrait, ...(appearance.portraitRef ? { portraitRef: appearance.portraitRef } : {}) }
+    : undefined;
+  if (outgoing) gallery[i] = outgoing;
+  else gallery.splice(i, 1);
+  appearance.portrait = incoming.img;
+  if (incoming.portraitRef) appearance.portraitRef = incoming.portraitRef;
+  else delete appearance.portraitRef;
+  delete appearance.avatar;
+  if (gallery.length) appearance.gallery = gallery;
+  else delete appearance.gallery;
   return { ...play, appearance };
 }
 
@@ -1256,6 +1444,67 @@ export function updateInventoryItem(play: PlayState, instanceId: string, patch: 
     ...play,
     inventory: (play.inventory ?? []).map((i) => (i.instanceId === instanceId ? { ...i, ...patch } : i)),
   };
+}
+
+// ───────────────────────── Formula book ─────────────────────────
+
+/** Write a formula into a book. A no-op when the book already holds it or is at its 100 limit. */
+export function addFormula(play: PlayState, bookInstanceId: string, itemId: string): PlayState {
+  const book = (play.inventory ?? []).find((i) => i.instanceId === bookInstanceId);
+  const next = book && withFormula(book.formulas, itemId);
+  return next ? updateInventoryItem(play, bookInstanceId, { formulas: next }) : play;
+}
+
+/** Tear a formula out of a book. It is a reference, so nothing else changes. */
+export function removeFormula(play: PlayState, bookInstanceId: string, itemId: string): PlayState {
+  const book = (play.inventory ?? []).find((i) => i.instanceId === bookInstanceId);
+  if (!book?.formulas?.includes(itemId)) return play;
+  return updateInventoryItem(play, bookInstanceId, { formulas: book.formulas.filter((id) => id !== itemId) });
+}
+
+/**
+ * Answer a grant's empty slot: the formula goes into the book AND the slot is marked spent.
+ *
+ * The two halves are deliberately in different places — see PlayState.formulaPicks. Marking happens
+ * even when the write does not (a full book, a formula already known), because the player made the
+ * choice, and a slot that survived being answered would let the same grant be spent twice.
+ */
+export function pickFormula(play: PlayState, bookInstanceId: string, slotKey: string, itemId: string): PlayState {
+  return { ...addFormula(play, bookInstanceId, itemId), formulaPicks: { ...(play.formulaPicks ?? {}), [slotKey]: itemId } };
+}
+
+/**
+ * Fold what the BUILDER decided into the book the character is carrying — once, and only once.
+ *
+ * The builder cannot reach play state, so its picks and the formula book it grants arrive here as
+ * plain build output. Every entry it has not seen before is copied into the live book and then
+ * recorded as spent; every entry it has seen is skipped. That is what makes the grant a one-time
+ * write: after this has run, losing the book leaves nothing to copy back, and the record that
+ * granted the formulas has already been marked as having done so.
+ *
+ * Idempotent, so it can sit on the play-state seeding path and run on every mutation.
+ */
+export function reconcileFormulaBook(play: PlayState, ch: Character, content: ContentDatabase): PlayState {
+  let out = play;
+  // The book itself. Granted only while the character has never been given one — a player who threw
+  // their formula book away is not handed a fresh one on the next tap.
+  if (!out.formulaBookGranted) {
+    const grants = grantsFormulaBook([
+      ...(ch.feats ?? []).map((f) => f.featId),
+      ...ownedFeatureIds(ch, content),
+    ]);
+    if (grants) {
+      if (!formulaBooks(out.inventory, content).length && content.items[FORMULA_BOOK_ITEM_ID]) {
+        out = addInventoryItem(out, FORMULA_BOOK_ITEM_ID);
+      }
+      out = { ...out, formulaBookGranted: true };
+    }
+  }
+  const unseen = Object.entries(ch.formulaPicks ?? {}).filter(([key]) => !(key in (out.formulaPicks ?? {})));
+  if (!unseen.length) return out;
+  const book = formulaBooks(out.inventory, content)[0];
+  for (const [, itemId] of unseen) if (book) out = addFormula(out, book.instanceId, itemId);
+  return { ...out, formulaPicks: { ...(out.formulaPicks ?? {}), ...Object.fromEntries(unseen) } };
 }
 
 // ───────────────────────── Monster Parts (variant rule) ─────────────────────────
@@ -1510,6 +1759,13 @@ export function playForRebuild(play: PlayState): PlayState {
     // prep / repertoire / signature and class resources ARE re-derived from the new build, so omitted.
     inventory: play.inventory,
     currency: play.currency,
+    // Learning a spell costs an hour per rank and real gold; it is knowledge the character now has,
+    // not a preparation, so it outlives a rebuild the same way bought gear does.
+    learnedSpells: play.learnedSpells,
+    // A formula grant is spent once. Dropping this ledger on a rebuild would re-open every slot the
+    // character had already answered, which is exactly the re-granting point 9 forbids.
+    formulaPicks: play.formulaPicks,
+    formulaBookGranted: play.formulaBookGranted,
     expendedSlots: {},
     slotsUsed: {},
     focusUsed: 0,

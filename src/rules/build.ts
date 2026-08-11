@@ -58,6 +58,7 @@ import { FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
 import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED } from './featFeatGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from './featPickGrants';
 import { FEAT_CANTRIP_GRANTS } from './featCantripGrants';
+import { FORMULA_BOOK_ITEM_ID, formulaBookSource, formulaGrantsOwned, grantsFormulaBook, isFormulaBook, withFormula } from './formulaBook';
 import { grantForSpellPick } from './spellChoice';
 import { DOMAIN_SPELLS } from './domains';
 import { mpImbuedSpellIds } from './monsterParts';
@@ -119,6 +120,10 @@ export interface BuildState {
   abpApex?: AbilityId | null;
   /** Selections for extra class choice groups (subconscious mind, apparitions, ikons, …), by group id. */
   extraChoices: Record<string, string[]>;
+  /** Formula-book grants answered in the builder: slot key → the item id written into the book.
+   *  A receipt, not a derivation — reconcileFormulaBook copies each new entry into the book once and
+   *  never again, so losing the book loses the formulas for good. See src/rules/formulaBook.ts. */
+  formulaPicks?: Record<string, string>;
   /** Chosen deity id (clerics and other deity-using classes). */
   deityId: string | null;
   /** Cleric divine font choice (heal/harm), constrained by the deity. */
@@ -287,6 +292,9 @@ export interface BuildState {
     /** Spells THIS instance holds, overriding the item record — a Staff Nexus makeshift staff
      *  carries a cantrip and a 1st-rank spell chosen from the wizard's own spellbook. */
     heldSpellsOverride?: Record<number, string[]>;
+    /** Formula book: the formulas THIS book holds. Carried so a book edited in play keeps its list
+     *  across a reopen-for-editing round trip. */
+    formulas?: string[];
     /**
      * Innovation / weapon implement / bonded item / ikon / rune source.
      *
@@ -595,7 +603,127 @@ function resolveOptionKeyAbility(o: SubclassOption, picked: AbilityId | null): A
  * builder's level-0 pending marker ("N choices left") and the Create/Save confirmation list.
  * Empty array = the setup is fully chosen. Never blocks — defaults keep the build legal.
  */
+/** Cumulative number of options the player may pick in a choice group at this level. */
+export function extraPickCount(g: { pickByLevel: Record<string, number> }, level: number): number {
+  let n = 0;
+  for (const [lvl, count] of Object.entries(g.pickByLevel)) if (Number(lvl) <= level && count > n) n = count;
+  return n;
+}
+
+/** One choice the player has not made yet, and which builder page it is waiting on. */
+export interface MissingChoice {
+  /** Where to find it: 0 is the origin page, a number ≥ 1 is that level's page. */
+  page: number;
+  /** How to name it in a list. Level pages prefix themselves ("Level 4 — class feat"). */
+  label: string;
+  /** False for choices that are genuinely optional, so an amber marker keeps one meaning. */
+  required: boolean;
+}
+
+/**
+ * Every choice the player still has to make, across every page of the builder.
+ *
+ * There used to be two functions that disagreed. `setupMissing` checked thirteen origin fields;
+ * `pendingCount` in Builder.tsx checked four per-level ones (feat slots, skill increase, attribute
+ * boosts, subclass) — and only `setupMissing` reached the Create/Save confirmation, so a level-12
+ * character with nine empty feat slots saved in complete silence while a green "all set" badge sat on
+ * a kineticist with no element chosen. This is the one list all three readers now use: the chip
+ * markers, the page header tag, and the save confirmation.
+ *
+ * NOT yet covered, deliberately: chosen spells and bonus languages. Both budgets are computed inside
+ * buildCharacter / Builder.tsx rather than as reusable functions, and lifting them out is its own
+ * change — a number that is wrong in a new way would be worse than the gap. Everything else a class
+ * asks for now flows through the generic `extraChoices` branch below (kineticist elements, animist
+ * apparitions, thaumaturge implements, commander tactics, exemplar epithets, …).
+ */
+export function levelChoices(build: BuildState, content: ContentDatabase): MissingChoice[] {
+  const out: MissingChoice[] = [];
+  for (const label of originMissing(build, content)) out.push({ page: 0, label, required: true });
+
+  const cls = build.classId ? content.classes[build.classId] : undefined;
+  const cls2 = build.classId2 ? content.classes[build.classId2] : undefined;
+  // Class subsystems: one generic loop rather than a branch per class. A group is outstanding when
+  // fewer options are picked than the level entitles you to.
+  for (const g of [...(cls?.extraChoices ?? []), ...(cls2?.extraChoices ?? [])]) {
+    const max = extraPickCount(g, build.level);
+    if (max === 0) continue; // not unlocked at this level yet
+    const picked = (build.extraChoices?.[g.id] ?? []).filter(Boolean).length;
+    if (picked < max) out.push({ page: 0, label: max - picked === 1 ? g.name : `${g.name} (${max - picked})`, required: true });
+  }
+
+  const picks = Object.values(build.featPicks ?? {}).filter(Boolean) as string[];
+  for (let lvl = 1; lvl <= build.level; lvl++) {
+    const g = levelGrants(
+      lvl, build.classId, content, build.subclassId, build.variantRules,
+      build.classId2, build.subclassId2, build.mythicEnabled, picks,
+    );
+    const at = (label: string) => out.push({ page: lvl, label: `Level ${lvl} — ${label}`, required: true });
+    for (const [i, cat] of g.featSlots.entries()) {
+      if (!build.featPicks[`${lvl}:${cat}:${i}`]) at(`${cat} feat`);
+    }
+    if (g.skillIncrease && !build.skillIncreases[lvl]) at('skill increase');
+    if (g.attributeBoosts) {
+      const done = new Set((build.attributeBoosts[lvl] ?? []).filter(Boolean)).size;
+      const want = attributeBoostCount(build.variantRules);
+      if (done < want) at(want - done === 1 ? 'attribute boost' : `attribute boosts (${want - done})`);
+    }
+    if (subclassAnchorLevel(build, content) === lvl && !build.subclassId) at(cls?.subclass?.name ?? 'subclass');
+  }
+
+  // A feat you picked can ask a follow-up ("Assurance — in which skill?"). The feat arrived; the
+  // answer never did, and nothing counted it.
+  for (const [key, featId] of Object.entries(build.featPicks ?? {})) {
+    if (!featId) continue;
+    const feat = content.feats[featId];
+    if (!feat?.choice) continue;
+    if (build.grantedFeatChoices?.[featId]) continue;
+    const lvl = Number(key.split(':')[0]);
+    out.push({
+      page: Number.isFinite(lvl) && lvl >= 1 ? lvl : 0,
+      label: `${feat.name} — choose`,
+      required: true,
+    });
+  }
+  return out;
+}
+
+/**
+ * The class feature at `lvl` that IS the subclass choice (Doctrine / Bloodline / Instinct / …), or
+ * null if this level doesn't grant it. Matched by name — exactly first, then by containment, because
+ * a class calls its subclass "Bloodline" while the feature is granted as "Bloodline (Draconic)".
+ *
+ * Shared so the card that RENDERS the picker and the count that says it is unanswered can never
+ * disagree about which level owns it.
+ */
+export function subclassAnchorAt(build: BuildState, content: ContentDatabase, lvl: number): string | null {
+  const cls = build.classId ? content.classes[build.classId] : undefined;
+  if (!cls?.subclass) return null;
+  const g = levelGrants(
+    lvl, build.classId, content, build.subclassId, build.variantRules,
+    build.classId2, build.subclassId2, build.mythicEnabled,
+    Object.values(build.featPicks ?? {}).filter(Boolean) as string[],
+  );
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+  const sn = norm(cls.subclass.name);
+  const exact = g.features.find((f) => norm(f.name) === sn);
+  if (exact) return exact.id;
+  return g.features.find((f) => { const fn = norm(f.name); return fn.includes(sn) || sn.includes(fn); })?.id ?? null;
+}
+
+/** The level at which the class's subclass is chosen, or null. */
+export function subclassAnchorLevel(build: BuildState, content: ContentDatabase): number | null {
+  for (let lvl = 1; lvl <= Math.max(1, build.level); lvl++) {
+    if (subclassAnchorAt(build, content, lvl)) return lvl;
+  }
+  return null;
+}
+
+/** The origin-page (level 0) choices still unmade. The label list drives Setup completeness. */
 export function setupMissing(build: BuildState, content: ContentDatabase): string[] {
+  return originMissing(build, content);
+}
+
+function originMissing(build: BuildState, content: ContentDatabase): string[] {
   const out: string[] = [];
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
   const background = resolveBackground(build, content);
@@ -643,6 +771,35 @@ export function setupMissing(build: BuildState, content: ContentDatabase): strin
     if (n) out.push(n === 1 ? 'Free attribute boost' : `Free attribute boosts (${n})`);
   }
   if (build.options?.voluntaryFlaw && !build.options.voluntaryFlawAbility) out.push('Voluntary flaw attribute');
+  /*
+   * Choices that used to fill themselves in.
+   *
+   * Each of these pickers showed the first legal option when the player had chosen nothing, so the
+   * choice looked answered and got skipped — and buildCharacter substituted the same value, which is
+   * why nothing ever complained. The pickers now sit empty (see shared.tsx), so they have to be
+   * reported here or the empty slot says nothing at all. buildCharacter keeps its fallback, so a
+   * character with one of these outstanding is still legal to save; it is just no longer silent.
+   */
+  if (cls) {
+    const sub = cls.subclass?.options.find((o) => o.id === build.subclassId);
+    const skillChoice = sub?.skillChoice?.length ? sub.skillChoice : cls.trainedSkills.choice;
+    if (skillChoice?.length && !(build.subclassSkill && skillChoice.includes(build.subclassSkill)))
+      out.push('Class trained skill');
+    if (sub?.dragonChoice?.length && !sub.dragonChoice.some((d) => d.slug === build.dragonExemplar))
+      out.push('Dragon exemplar');
+    if ((cls.features ?? []).some((f) => f.featureId === 'devotion-spells')) {
+      const opts = championDevotionOptions(build, content);
+      if (opts.length > 1 && !(build.devotionSpell && opts.includes(build.devotionSpell))) out.push('Devotion spell');
+    }
+    if ((cls.features ?? []).some((f) => f.featureId === 'voice-of-nature') && !build.voiceOfNature)
+      out.push('Voice of Nature');
+    if (innovationType(build.subclassId) === 'armor' && !build.inventorArmorStats) out.push('Armor base');
+    // Implement Adept is a 7th-level choice, and Paragon a 17th — both picked from the implements you
+    // took, so they are only outstanding once you have two implements and the level to use them.
+    const imps = (build.extraChoices?.['implement'] ?? []).slice(0, 2);
+    if (imps.length === 2 && build.level >= 7 && !(build.implementAdept && imps.includes(build.implementAdept)))
+      out.push('Implement Adept');
+  }
   return out;
 }
 
@@ -3892,6 +4049,47 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       grantedItems.push({ ...g, source: content.classFeatures[fid].name });
     }
   }
+  // A record that writes formulas needs a book to write them into, so taking one makes sure the
+  // character has a formula book — and only if they have none, since a second book would split the
+  // list in two. Driven off the FORMULA_GRANTS registry rather than `grantsItems` so it cannot be
+  // erased by a data regeneration.
+  const formulaGrantIds = formulaGrantsOwned(
+    feats.map((f) => f.featId),
+    [...ownedFeatureIds, ...grantOptions.map((o) => o.id)],
+  );
+  if (
+    grantsFormulaBook(formulaGrantIds) &&
+    !build.inventory.some((it) => isFormulaBook(content.items[it.itemId])) &&
+    !grantedItems.some((g) => isFormulaBook(content.items[g.itemId]))
+  ) {
+    const source = formulaBookSource(formulaGrantIds, content);
+    if (content.items[FORMULA_BOOK_ITEM_ID] && source) grantedItems.push({ itemId: FORMULA_BOOK_ITEM_ID, source });
+  }
+  // Which emitted instance IS the book, so the picks below land on it. Computed from the same two
+  // lists, in the same order, that the inventory emission walks — a bought book wins over a granted
+  // one, exactly as the granted-item filter does.
+  const formulaBookInstanceId = (() => {
+    const bought = build.inventory.findIndex((it) => isFormulaBook(content.items[it.itemId]));
+    if (bought >= 0) return `inv-${bought}`;
+    const granted = grantedItems
+      .filter((g) => !build.inventory.some((it) => it.itemId === g.itemId))
+      .findIndex((g) => isFormulaBook(content.items[g.itemId]));
+    return granted >= 0 ? `granted-${granted}` : null;
+  })();
+  // The formulas the builder's pickers wrote. Every answer is copied in, not only the ones whose slot
+  // still exists: a formula belongs to the book once written, so dropping the feat that granted it
+  // must not erase it. Play state re-does this write ONCE for a book bought or granted later; see
+  // reconcileFormulaBook.
+  const builtFormulas = Object.values(build.formulaPicks ?? {}).reduce<string[]>(
+    (acc, itemId) => (content.items[itemId] ? withFormula(acc, itemId) ?? acc : acc),
+    [],
+  );
+  /** One instance's formula list: what the book already holds, plus the builder's picks if it IS the book. */
+  const formulasFor = (instanceId: string, own?: string[]): string[] | undefined => {
+    let out = [...(own ?? [])];
+    if (instanceId === formulaBookInstanceId) for (const id of builtFormulas) out = withFormula(out, id) ?? out;
+    return out.length ? out : undefined;
+  };
   // Magic-item spell sources: each carried staff / wand exposes its held spells as a read-only
   // 'items' spellcasting entry (cast using the wielder's spell DC; charges tracked on the item).
   {
@@ -4434,6 +4632,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       return { ...(size !== 'medium' || size !== ancSize ? { size } : {}), ...(reach !== 5 ? { reach } : {}) };
     })(),
     ...(commanderTactics ? { commanderTactics } : {}),
+    ...(Object.keys(build.formulaPicks ?? {}).length ? { formulaPicks: build.formulaPicks } : {}),
     ...(inventor ? { inventor } : {}),
     ...(kineticist?.elements.length ? { kineticist } : {}),
     // Deterministic instanceIds (index-based) so buildCharacter stays pure across renders.
@@ -4450,6 +4649,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         ...(it.charges ? { charges: it.charges } : {}),
         ...(it.heldSpell ? { heldSpell: it.heldSpell } : {}),
         ...(it.designations?.length ? { designations: it.designations } : {}),
+        ...(() => {
+          const f = formulasFor(`inv-${i}`, it.formulas);
+          return f ? { formulas: f } : {};
+        })(),
       })),
       // Items a record HANDS you ("You gain a Razmiri mask"). Nothing put an item in the inventory,
       // so a feat whose benefit IS an item delivered nothing. Skipped when the player already
@@ -4469,6 +4672,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           ...(() => {
             const held = staffSpellsFor(g.itemId);
             return held ? { heldSpellsOverride: held } : {};
+          })(),
+          ...(() => {
+            const f = formulasFor(`granted-${i}`);
+            return f ? { formulas: f } : {};
           })(),
         })),
     ],
@@ -4620,7 +4827,9 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     ...(it.charges ? { charges: it.charges } : {}),
     ...(it.heldSpell ? { heldSpell: it.heldSpell } : {}),
     ...(it.designations?.length ? { designations: it.designations } : {}),
+    ...(it.formulas?.length ? { formulas: it.formulas } : {}),
   }));
+  if (c.formulaPicks && Object.keys(c.formulaPicks).length) b.formulaPicks = { ...c.formulaPicks };
   // Native/lossless path: the character carries its own skillIncreases — trust them verbatim so a
   // native round-trip stays exact. When they're absent or under-count the final ranks (imported /
   // hand-authored characters that only recorded final ranks), the Skills block below SYNTHESIZES the

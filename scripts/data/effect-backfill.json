@@ -38366,18 +38366,6 @@
  },
  {
   "category": "feats",
-  "id": "improbable-elixirs",
-  "field": "choice",
-  "value": {
-   "flag": "improbableElixirs",
-   "prompt": "Potion formulas (one per Intelligence modifier, minimum 1; 9th level or lower)",
-   "kind": "text",
-   "inert": "Recorded for reference — outside the Snare Crafting formula book the app tracks no crafting formulas, so these potions don't appear anywhere else.",
-   "note": "Type all of them in this one field; the choice is permanent once made."
-  }
- },
- {
-  "category": "feats",
   "id": "greater-crossblooded-evolution",
   "field": "choice",
   "value": {

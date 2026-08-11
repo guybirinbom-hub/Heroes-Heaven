@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { listValues } from '../data';
 import './builder.css';
 import {
@@ -18,7 +18,8 @@ import {
   featChoicePrompt,
   trainedSkillOptions,
   levelGrants,
-  setupMissing,
+  levelChoices,
+  subclassAnchorAt,
   backgroundGrantedFeats,
   choiceKeys,
   choiceOptionsFor,
@@ -43,8 +44,9 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, InitiativeCard, SnareFormulasCard, SourcesCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
+import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { DescriptionModal } from '../sheet/DescriptionModal';
 import type { DescNode } from '../sheet/descref';
@@ -52,6 +54,9 @@ import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
 import { useIsMobile } from '../sheet/useIsMobile';
 import { PinContext, type PinDescApi } from '../sheet/PinContext';
+import { WindowControls } from '../sheet/WindowControls';
+import { useUndoableState } from '../useUndoableState';
+import { claimUndo } from '../undoClaim';
 import { descId } from '../rules/play';
 
 const FEAT_LABEL: Record<FeatCategory, string> = {
@@ -120,7 +125,22 @@ export function Builder({
   /** Player leaves a campaign entirely (roster-wide) — threaded to the Campaigns setup card. */
   onLeaveCampaign?: (campaignId: string) => void;
 }) {
-  const [build, setBuild] = useState<BuildState>(() => initial ?? emptyBuild());
+  /*
+   * The build has its own undo timeline.
+   *
+   * It used to be a plain useState, so Ctrl+Z in the builder fell through to App's global handler and
+   * rewound the ROSTER behind the builder — reverting some earlier character edit while leaving the
+   * half-built character exactly as it was. `useUndoableState`'s `set` has the same shape as a
+   * setState dispatch, so useBuilderActions and all ~60 of its call sites are unchanged.
+   */
+  const {
+    state: build,
+    set: setBuild,
+    undo: undoBuild,
+    redo: redoBuild,
+    canUndo: canUndoBuild,
+    canRedo: canRedoBuild,
+  } = useUndoableState<BuildState>(() => initial ?? emptyBuild());
   // Effective content = the shared DB with this build's Overrides content-edits overlaid (text/field
   // edits to feats/features). Returns the same ref when there are no edits, so pickers/memos are stable.
   // `ovContent` is the FULL (override-applied) DB used for the live character + grants; `content` is
@@ -150,6 +170,33 @@ export function Builder({
   // The full item catalog, sorted once, for the equipment picker's filter panel.
   // Class-feat picker: reveal archetype feats (multiclass/archetypes). Off by default.
   const [showArch, setShowArch] = useState(false);
+  /* The level strip scrolls sideways once there are more chips than fit — at level 20 that is most of
+   * them, and on a phone barely half. Keep the selected one in view so the page you are ON is never
+   * the one you have to go looking for. `block: 'nearest'` so this never scrolls the page itself. */
+  const stripRef = useRef<HTMLDivElement>(null);
+  const selChipRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    selChipRef.current?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+  }, [sel]);
+  /*
+   * Keep the page you are looking at and the character's level in step.
+   *
+   * `setSel` used to be called from exactly one place — the chip click — so the +/− stepper changed
+   * the character without changing the page: "+" left you on the old level while a new chip appeared
+   * silently at the far right, and "−" stranded you on a page that had just left the strip (which is
+   * built from `build.level`), greyed out with nothing selected.
+   *
+   * An effect rather than a button handler because THREE things change the level: the stepper, the
+   * "lower the level" confirmation, and the "Advance to level N" link. Layout, not passive, so the
+   * clamp lands before paint and there is never a frame showing a level the character does not have.
+   */
+  const prevLevel = useRef(build.level);
+  useLayoutEffect(() => {
+    const prev = prevLevel.current;
+    prevLevel.current = build.level;
+    if (build.level > prev) setSel(build.level); // levelling up: the new choices are on the new page
+    else if (build.level < prev) setSel((cur) => (typeof cur === 'number' && cur > build.level ? build.level : cur));
+  }, [build.level]);
   const isMobile = useIsMobile();
   // Mobile: the live "Character" stat preview collapses behind a chevron to reclaim builder space.
   const [statsOpen, setStatsOpen] = useState(false);
@@ -157,6 +204,30 @@ export function Builder({
   // Holds the level we'd lower TO (= current level − 1), or null when no prompt is open.
   const [confirmLowerTo, setConfirmLowerTo] = useState<number | null>(null);
   useEffect(() => setShowArch(false), [picker]);
+
+  /*
+   * Take Ctrl+Z while the builder is open, and answer it ourselves. Both halves matter: without the
+   * claim App's global handler also fires and undoes a roster change at the same time; without the
+   * handler the shortcut simply stops working here.
+   *
+   * A focused text field keeps the browser's native text undo — same rule App uses — so editing the
+   * character's name character-by-character still behaves like a text box.
+   */
+  useEffect(() => claimUndo(), []);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      const k = e.key.toLowerCase();
+      if (k !== 'z' && k !== 'y') return;
+      const el = document.activeElement as HTMLElement | null;
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return;
+      e.preventDefault();
+      if (k === 'y' || (k === 'z' && e.shiftKey)) redoBuild();
+      else undoBuild();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [undoBuild, redoBuild]);
 
   // Lets description popups in the builder (e.g. the Setup rule "i" icons) offer the "favorite" star.
   // Pins live on the build's pinnedDescs and are carried onto the built Character, surfacing in the
@@ -851,53 +922,41 @@ export function Builder({
 
   // The class feature at `lvl` that anchors the subclass choice (Doctrine / Bloodline / …),
   // if the subclass is granted at this level — shared by the pending count and the render.
-  const subclassAnchorId = (lvl: number): string | null => {
-    const cls = build.classId ? content.classes[build.classId] : undefined;
-    if (!cls?.subclass) return null;
-    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
-    const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
-    const sn = norm(cls.subclass.name);
-    const exact = g.features.find((f) => norm(f.name) === sn);
-    if (exact) return exact.id;
-    const part = g.features.find((f) => {
-      const fn = norm(f.name);
-      return fn.includes(sn) || sn.includes(fn);
-    });
-    return part?.id ?? null;
-  };
+  // Shared with levelChoices, so the level that RENDERS the subclass picker is always the level
+  // counted as owing it.
+  const subclassAnchorId = (lvl: number): string | null => subclassAnchorAt(build, content, lvl);
 
-  // How many required choices at this level are still unfilled (feat slots, subclass,
-  // skill increase, attribute boosts). 0 = the level is fully set.
-  const pendingCount = (lvl: number) => {
-    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
-    let n = g.featSlots.filter((c, i) => !build.featPicks[slotKey(lvl, c, i)]).length;
-    if (g.skillIncrease && !build.skillIncreases[lvl]) n++;
-    if (g.attributeBoosts && new Set((build.attributeBoosts[lvl] ?? []).filter(Boolean)).size < attributeBoostCount(build.variantRules)) n++;
-    if (subclassAnchorId(lvl) && !build.subclassId) n++;
-    return n;
-  };
-
-  // Has a required choice at this level been left unfilled? (Only matters at or
-  // below the target level — higher levels aren't part of the character yet.)
+  /*
+   * Everything still unchosen, anywhere in the build — the single list the chip markers, the page
+   * header tag and the Create/Save confirmation all read from. They used to run off two different
+   * partial functions that disagreed with each other.
+   */
+  const missing = useMemo(() => levelChoices(build, content), [build, content]);
+  const pendingCount = (lvl: number) => missing.filter((m) => m.page === lvl).length;
   const requiredUnmet = (lvl: number) => pendingCount(lvl) > 0;
-
-  // The level-0/Setup required choices still unmade (ancestry/background/class, boosts, key
-  // attribute, …) — drives the level-0 chip marker and the Create/Save confirmation.
-  const setupMissingList = useMemo(() => setupMissing(build, content), [build, content]);
+  const setupMissingList = useMemo(() => missing.filter((m) => m.page === 0).map((m) => m.label), [missing]);
 
   const submit = async () => {
-    // Under-built characters are allowed (never hard-block), but confirm what's missing first.
-    if (setupMissingList.length > 0) {
+    // Under-built characters are allowed (never hard-block), but confirm what's missing first — and
+    // list EVERY page, not just the origin one. This dialog used to read `setupMissingList` alone, so
+    // a level-12 character with nine empty feat slots saved without a word.
+    if (missing.length > 0) {
+      const shown = missing.slice(0, 12);
       const ok = await confirmDialog({
         title: initial ? 'Save with choices left?' : 'Create with choices left?',
         message: (
           <>
-            <p>These character-creation choices haven&apos;t been made yet:</p>
+            <p>
+              {missing.length === 1 ? 'One choice has' : `${missing.length} choices have`} not been made yet:
+            </p>
             <ul style={{ margin: '6px 0 0', paddingLeft: 20 }}>
-              {setupMissingList.map((m) => (
-                <li key={m}>{m}</li>
+              {shown.map((m) => (
+                <li key={`${m.page}:${m.label}`}>{m.label}</li>
               ))}
             </ul>
+            {missing.length > shown.length && (
+              <p style={{ marginTop: 6 }}>…and {missing.length - shown.length} more.</p>
+            )}
           </>
         ),
         confirmLabel: initial ? 'Save anyway' : 'Create anyway',
@@ -920,7 +979,10 @@ export function Builder({
   return (
     <PinContext.Provider value={pinApi}>
     <div className="builder">
-      <header className="builder-head">
+      {/* The builder is the one full screen with no `.chrome` bar, so on the desktop app — which draws
+          its own title bar — it was the one screen you could neither drag, minimise, maximise nor close
+          from. Its own header takes that job. */}
+      <header className="builder-head" data-tauri-drag-region>
         <div className="builder-title">
           <i className="ti ti-layout-grid" aria-hidden="true" />
           {initial ? 'Edit character' : 'Create character'}
@@ -952,24 +1014,52 @@ export function Builder({
             +
           </button>
         </div>
+        {/* In the bar rather than the floating app-wide pill: that one is fixed to a screen corner,
+            and this header already has both corners spoken for (the window buttons on the desktop
+            app, Save changes beside them). Before Cancel, so the two commit buttons stay together. */}
+        <div className="b-undo" role="group" aria-label="Undo and redo">
+          <button
+            type="button"
+            className="icon-btn"
+            title="Undo (Ctrl+Z)"
+            aria-label="Undo"
+            disabled={!canUndoBuild}
+            onClick={undoBuild}
+          >
+            <i className="ti ti-arrow-back-up" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="icon-btn"
+            title="Redo (Ctrl+Shift+Z)"
+            aria-label="Redo"
+            disabled={!canRedoBuild}
+            onClick={redoBuild}
+          >
+            <i className="ti ti-arrow-forward-up" aria-hidden="true" />
+          </button>
+        </div>
         <button className="b-cancel" onClick={onCancel}>
           Cancel
         </button>
         <button className="b-create" onClick={() => void submit()}>
           {initial ? 'Save changes' : 'Create'}
         </button>
+        <WindowControls />
       </header>
 
-      <div className="lstrip">
+      <div className="lstrip" ref={stripRef}>
         {strip.map((s) => {
-          const future = typeof s === 'number' && s > build.level;
           const pending =
             (typeof s === 'number' && s >= 1 && s <= build.level && requiredUnmet(s)) ||
             (s === 0 && setupMissingList.length > 0);
+          const on = s === sel;
           return (
             <button
               key={String(s)}
-              className={'lchip' + (s === sel ? ' on' : '') + (future ? ' future' : '') + (pending ? ' pending' : '')}
+              ref={on ? selChipRef : undefined}
+              className={'lchip' + (on ? ' on' : '') + (pending ? ' pending' : '')}
+              aria-current={on ? 'page' : undefined}
               onClick={() => setSel(s)}
             >
               {s === 'setup' ? 'Setup' : s}
@@ -996,6 +1086,9 @@ export function Builder({
                 {hasSnareCrafting(featPrereqChar.feats.map((f) => f.featId)) && (
                   <SnareFormulasCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
                 )}
+                {formulaSlots(featPrereqChar, ovContent).length > 0 && (
+                  <FormulaBookCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
+                )}
               </div>
             </div>
           )}
@@ -1006,8 +1099,11 @@ export function Builder({
                 <div className="lvl-page-head">
                   <span className="bsec-title">Level 0</span>
                   <span className="lvl-sub-tag">character creation</span>
+                  {/* Just the count — identical markup to the level pages', so the two headers are the
+                      same height and the same shape. WHICH choices are missing is answered by the
+                      Create/Save confirmation, which lists every one of them across every page. */}
                   {setupMissingList.length > 0 ? (
-                    <span className="lvl-pending-tag" title={setupMissingList.join(', ')}>
+                    <span className="lvl-pending-tag">
                       <i className="ti ti-alert-circle" aria-hidden="true" /> {setupMissingList.length}{' '}
                       {setupMissingList.length === 1 ? 'choice' : 'choices'} left
                     </span>
@@ -1040,7 +1136,6 @@ export function Builder({
                   <div className="lvl-cards">
                     <SkillEditor build={build} actions={actions} content={content} />
                     <LanguageEditor build={build} actions={actions} content={content} />
-                    <InitiativeCard build={build} actions={actions} content={content} />
                   </div>
                 </div>
                 {/* Per-character selections unlocked by a Setup toggle (Dual Class second class, ABP
@@ -1140,7 +1235,9 @@ export function Builder({
             (() => {
               const lvl = sel;
               if (baseSkills == null) return null; // unreachable (sel is a valid level here) — narrows the memo
-              const future = lvl > build.level;
+              // No `future` state any more: the strip only lists levels 1..build.level, and the clamp
+              // above keeps `sel` inside that range, so a page above the character's level cannot be
+              // open. The greyed-out "future level" page and its "Advance to level N" link went with it.
               const pending = pendingCount(lvl);
               const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
               const bg = resolveBackground(build, content);
@@ -1162,14 +1259,34 @@ export function Builder({
               const cls = build.classId ? content.classes[build.classId] : undefined;
               const subAnchorId = subclassAnchorId(lvl);
 
+              /*
+               * Which granted features ask the player a question.
+               *
+               * A class feature can carry a `choice` ("choose a damage type"), `effectChoices`, or a
+               * FEAT_PICK_GRANTS bonus feat; a granted background feat can carry its own sub-choice
+               * (Abadar's Avenger: "Assurance with Religion"). All four used to render INSIDE the
+               * "You gain automatically" zone — the one heading that means "nothing to do here" sat
+               * directly on top of things the player had to answer, which is also exactly the
+               * auto-versus-chosen split the "Details button only on automatic grants" rule leans on.
+               *
+               * Tested against the DATA, not against the rendered node: a picker component can
+               * legitimately render nothing, and a feature that asks nothing must not get a heading.
+               */
+              const featureAsks = (fid: string): boolean => {
+                const rec = content.classFeatures[fid];
+                return !!(rec?.choice && !rec.choice.daily) || !!rec?.effectChoices?.length || !!FEAT_PICK_GRANTS[fid];
+              };
+              const askingFeatures = g.features.filter((f) => f.id !== subAnchorId && featureAsks(f.id));
+              const askingGrantedFeats = bgFeatAtThisLevel
+                ? backgroundGrantedFeats(bg, build.backgroundSkillChoice).filter((gid) => !!content.feats[gid]?.choice)
+                : [];
+
               return (
                 <>
                 <div className="card-sec lvl-page">
                   <div className="lvl-page-head">
                     <span className="bsec-title">Level {lvl}</span>
-                    {future ? (
-                      <span className="lvl-future-tag">future level</span>
-                    ) : pending > 0 ? (
+                    {pending > 0 ? (
                       <span className="lvl-pending-tag">
                         <i className="ti ti-alert-circle" aria-hidden="true" /> {pending} {pending === 1 ? 'choice' : 'choices'} left
                       </span>
@@ -1179,15 +1296,6 @@ export function Builder({
                       </span>
                     ) : null}
                   </div>
-
-                  {future && (
-                    <div className="setup-note" style={{ marginBottom: 10 }}>
-                      Your character is level {build.level}. These choices unlock at level {lvl}.{' '}
-                      <button className="link-btn" onClick={() => actions.setLevel(lvl)}>
-                        Advance to level {lvl}
-                      </button>
-                    </div>
-                  )}
 
                   {(g.features.some((f) => f.id !== subAnchorId) || bgFeatAtThisLevel) && (
                     <div className="lvl-zone">
@@ -1209,42 +1317,9 @@ export function Builder({
                                 flavor={classFeatureDescription(content.classFeatures[f.id]?.description, build.classId, content)}
                                 descRefs={content.classFeatures[f.id]?.descRefs}
                               />
-                              {/* A class feature can ask for a pick too ("choose a damage type", "choose a
-                                  Thassilonian school"). Only feats ever rendered one, so class-feature
-                                  choices were stored in the data, shown in no picker and answered by
-                                  nobody. Daily ones are excluded — those belong to the Rest sheet. */}
-                              {(() => {
-                                const def = content.classFeatures[f.id]?.choice;
-                                return def && !def.daily ? renderChoice(def, `feature:${f.id}`) : null;
-                              })()}
-                              {/* A class feature can ALSO carry effectChoices. build.ts resolves those
-                                  (resolvePick, ~2571) but only feats and heritages ever drew them, so
-                                  15 features asked a question with no screen to answer it on. */}
-                              <EffectChoicesPicker
-                                recordId={f.id}
-                                choices={content.classFeatures[f.id]?.effectChoices}
-                                build={build}
-                                actions={actions}
-                                content={content}
-                              />
-                              {/* …and a class feature can offer a FEAT pick: Fury instinct's "bonus
-                                  1st-level barbarian feat", the summoner's evolution feat. Same lane,
-                                  resolved by buildCharacter, so it needs a screen to answer it on. */}
-                              {FEAT_PICK_GRANTS[f.id] && (() => {
-                                const spec = FEAT_PICK_GRANTS[f.id];
-                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
-                                return (
-                                  <SubCard icon="ti-medal" label={spec.prompt}>
-                                    <PopupSelect
-                                      title={spec.prompt}
-                                      placeholder={`${spec.prompt}…`}
-                                      value={build.pickFeatChoices?.[f.id] ?? ''}
-                                      onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [f.id]: v } })}
-                                      options={opts}
-                                    />
-                                  </SubCard>
-                                );
-                              })()}
+                              {/* The question it asks lives in the choice zone below — see
+                                  `askingFeatures`. This says where it went. */}
+                              {featureAsks(f.id) && <div className="lvl-gain-asks">Asks you to choose — see below</div>}
                             </div>
                           ))}
                         {/* Level-gated proficiency upgrades from feats taken EARLIER (Brilliant Crafter:
@@ -1274,12 +1349,9 @@ export function Builder({
                                   <span className="lvl-gain-tag">skill feat · granted</span>
                                 </div>
                                 <ChoiceDetails name={nm} flavor={ft?.description} descRefs={ft?.descRefs} />
-                                {/* The granted feat's OWN sub-choice. Abadar's Avenger grants "Assurance
-                                    with Religion" — the feat arrived, its subject never did, so the sheet
-                                    showed a bare "Assurance" that could not say which skill. This is the
-                                    same grantedFeatChoices control a slot-picked feat already gets; it was
-                                    simply never reached from a background, which never becomes `picked`. */}
-                                {grantedChoicePicker(gid)}
+                                {/* Its own sub-choice (Abadar's Avenger grants "Assurance with Religion")
+                                    is asked in the choice zone below, not here. */}
+                                {!!ft?.choice && <div className="lvl-gain-asks">Asks you to choose — see below</div>}
                               </div>
                             );
                           })}
@@ -1287,7 +1359,55 @@ export function Builder({
                     </div>
                   )}
 
-                  <fieldset className="lvl-choice-zone" disabled={future} style={future ? { opacity: 0.55 } : undefined}>
+                  <fieldset className="lvl-choice-zone">
+                    {/* The questions asked by what you were GRANTED. They sit here, in the zone the
+                        player scans for things to answer, rather than under "You gain automatically" —
+                        each one labelled with the feature that asked it, so it is still obvious where
+                        it came from. */}
+                    {(askingFeatures.length > 0 || askingGrantedFeats.length > 0) && (
+                      <div className="lvl-group">
+                        <div className="lvl-group-h">
+                          <i className="ti ti-help-circle" aria-hidden="true" /> Choices from what you gained
+                        </div>
+                        <div className="lvl-cards">
+                          {askingFeatures.map((f) => (
+                            <SubCard icon="ti-award" label={f.name} key={`ask-${f.id}`}>
+                              {(() => {
+                                const def = content.classFeatures[f.id]?.choice;
+                                return def && !def.daily ? renderChoice(def, `feature:${f.id}`) : null;
+                              })()}
+                              <EffectChoicesPicker
+                                recordId={f.id}
+                                choices={content.classFeatures[f.id]?.effectChoices}
+                                build={build}
+                                actions={actions}
+                                content={content}
+                              />
+                              {/* Fury instinct's "bonus 1st-level barbarian feat", the summoner's
+                                  evolution feat — a granted feature that hands you a feat to pick. */}
+                              {FEAT_PICK_GRANTS[f.id] && (() => {
+                                const spec = FEAT_PICK_GRANTS[f.id];
+                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
+                                return (
+                                  <PopupSelect
+                                    title={spec.prompt}
+                                    placeholder={`${spec.prompt}…`}
+                                    value={build.pickFeatChoices?.[f.id] ?? ''}
+                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [f.id]: v } })}
+                                    options={opts}
+                                  />
+                                );
+                              })()}
+                            </SubCard>
+                          ))}
+                          {askingGrantedFeats.map((gid) => (
+                            <SubCard icon="ti-star" label={content.feats[gid]?.name ?? gid} key={`askf-${gid}`}>
+                              {grantedChoicePicker(gid)}
+                            </SubCard>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     {(!!(cls?.subclass && subAnchorId) || g.featSlots.length > 0) && (
                       <div className="lvl-group">
                         <div className="lvl-group-h">
@@ -1313,13 +1433,8 @@ export function Builder({
                               {!build.subclassId && <span className="lvl-pending">!</span>}
                             </div>
                           )}
-                          {cls?.subclass &&
-                            subAnchorId &&
-                            build.subclassId &&
-                            (() => {
-                              const opt = cls.subclass!.options.find((o) => o.id === build.subclassId);
-                              return opt ? <ChoiceDetails name={opt.name} flavor={opt.description} descRefs={opt.descRefs} /> : null;
-                            })()}
+                          {/* (No Details button for the picked subclass — pressing the value in the
+                              picker above opens its description; see PopupSelect's filled state.) */}
                           {/* The CHOSEN subclass can ask a follow-up of its own — the barbarian's
                               Dragon Instinct asks which dragon, Giant Instinct which energy. Those
                               records ship as a classFeature under the same slug and their choice
@@ -1534,7 +1649,9 @@ export function Builder({
                                   <PopupSelect
                                     title="Trained skill"
                                     placeholder="Choose a skill…"
-                                    value={build.featSkillChoices?.[skKey] ?? opts[0]}
+                                    // Empty until picked — falling back to opts[0] displayed a skill the
+                                    // player never chose as though they had.
+                                    value={build.featSkillChoices?.[skKey] ?? ''}
                                     onChange={(v) =>
                                       actions.patch({
                                         featSkillChoices: { ...(build.featSkillChoices ?? {}), [skKey]: v as (typeof SKILLS)[number] },
@@ -1841,7 +1958,7 @@ export function Builder({
                     {!anyContent && <div className="setup-note">No choices at this level.</div>}
                   </fieldset>
                 </div>
-                {!future && renderSpellsForLevel(lvl)}
+                {renderSpellsForLevel(lvl)}
                 </>
               );
             })()}
@@ -2011,17 +2128,19 @@ export function Builder({
               const node = descNodeOf(f, 'feats');
               return (
                 <PickerRow
-                  lead={
+                  lead={<span className="picker-lvl">{f.level}</span>}
+                  // The cost belongs to the feat, so it reads beside the feat's NAME. Sitting in the
+                  // lead it landed left of the level badge, where it looked like part of the level.
+                  name={
                     <>
+                      {f.name}
                       {isActionCost(f.actionCost) && (
-                        <span className="action-cost">
+                        <span className="picker-name-cost">
                           <ActionGlyph cost={f.actionCost} />
                         </span>
                       )}
-                      <span className="picker-lvl">{f.level}</span>
                     </>
                   }
-                  name={f.name}
                   meta={
                     <>
                       {f.traits.length > 0 && <div className="picker-traits">{f.traits.join(' · ')}</div>}
