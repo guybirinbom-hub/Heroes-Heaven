@@ -63,6 +63,8 @@ scripts/audit/*
 !scripts/audit/gold-extraction.json
 !scripts/audit/gold-answer-key.json
 !scripts/audit/gold-adjudication.json
+!scripts/audit/gold-final.json
+!scripts/audit/gold-set.json
 scripts/aon-verify/
 tmptest/
 

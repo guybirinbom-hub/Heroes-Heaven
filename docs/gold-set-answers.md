@@ -41,6 +41,52 @@ applied to ally-facing effects, and it means five of the six controls were NOT t
 
 ---
 
+## Round 2 — the 14 decisions (2026-08-11)
+
+| Q | decision | settles |
+|---|---|---|
+| **Q1** | **Effects lasting 1 round are not implemented — indication only.** A longer duration gets a **mode**. Shield the Faithful is a mode: it runs 1 minute and includes YOU (+1 item AC, resistance 10 spirit), so its mode carries real numbers for your half and text for the ally half. Healing Sanctuary's per-round ally temp HP is text inside that mode. | ~100 feats |
+| **Q2** | **Both** — star the skill AND the action. When it applies to saves generally, **star all three saves**. | 75 here, 176 by Foundry's count |
+| **Q3** | A battle form gets a mode that **really overrides** the stats it names — **and must make plain that a mode is active and what changed**. | 44 feats |
+| **Q4** | An enemy-condition reaction: **the reaction entry is the whole surface**. | — |
+| **Q6** | **Record acquired creature traits on the sheet** (the Details tab already carries tags). | 16 feats |
+| **Q7** | The `*` is for a **conditional** movement type — Wyrmling Flight's fly Speed depends on your Speed, so the player needs to see when flight is available. **Most granted speeds are permanent and need no star.** | — |
+| **Q8** | **Yes** — Ruling D's shape applies: mark the action the feat modifies. | — |
+| **Q9** | **The builder shows only what the player may legally pick**, unless they toggle "show options not meeting prerequisites". So Domain Fluency must filter to the mystery's domains. | — |
+| **Q11** | **Check the rules**: if the effect can be shut down, it is a **mode**; if it cannot, it is a **passive bonus**. | — |
+| **Q12** | Whichever spelling **leaves the player least confused**. | — |
+| **Q13** | Show **only darkvision** when it supersedes low-light. | 9 feats |
+
+| **Q5** | **No requirement. The inventory stays open** — item rarity does not gate the shop. Q9's "only what you may pick" governs the BUILDER's choices, not the item list. So an "access to uncommon X" clause needs nothing. | 80 feats |
+| **Q10** | **Only apply the remap when it makes the player better.** The app's existing `betterRank` chain (`derive.ts:2635`) is therefore already correct; RAW's strict replacement is rejected because it could lower a rank. | 9 feats |
+| **Q14** | Improbable Elixirs' picks **must reach a formula book** — and the formula book itself needs building. Full spec below. | — |
+
+### Q14 — the formula book, as specified
+
+The book is an **item**, and its popup is where formulas live.
+
+1. **Add formula** button — the player picks any item; the book lists it as *"<item name> formula"*.
+2. **It does not store the item.** A formula is a reference, never a copy in inventory.
+3. **Remove** — the player can delete a formula.
+4. **Search** inside the formula-book popup.
+5. **Capacity 100 formulas.**
+6. **Taking a feat that grants a formula book ensures the character has one** — if they have none, add it.
+7. **A feat that grants formulas gets a picker in the builder**, offering **only the options that feat
+   allows** — not the whole item list.
+8. **Unpicked grants show as empty slots** in the item's inventory popup; pressing one opens the
+   selection of that feature's relevant options.
+9. ⚠ **After the first pick, the grant is severed from the book.** The chosen formulas are written INTO
+   the book and belong to it. *"if he loses the book he dosent get the formulas back from the feature
+   because it dosent work like that."* So the grant is a **one-time write**, not a live derivation.
+
+**Point 9, confirmed by the owner 2026-08-11:** the builder picker exists so the player remembers to
+choose while building; once chosen, the book owns those formulas outright. Deleting the book loses them
+permanently, and the feature will not re-grant them. **The grant is a one-time write, never a live
+derivation** — so whatever implements it must copy into the book's own state rather than deriving the
+book's contents from the owned feature, which is the shape every other grant in this app uses.
+
+---
+
 ## The answers as given
 
 **1. Resilient Touch** · **2. Amplifying Touch**
