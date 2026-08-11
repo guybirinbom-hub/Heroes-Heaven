@@ -750,6 +750,21 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
     }
     case 'ac': {
       const ac = deriveAc(c, db);
+      // A BATTLE FORM SETS the AC, so the usual parts — Dex, proficiency, armour — no longer sum to it.
+      // Printing them anyway would show a breakdown that contradicts the number above it, so this
+      // returns the one honest part instead, the same shape `maxOverride` uses for a replaced maximum.
+      if (ac.fromBattleForm) {
+        const form = (c.activeModes ?? []).find((m) => m.battleForm);
+        return {
+          title: 'Armor Class',
+          totalText: String(ac.value),
+          rank: ac.rank,
+          parts: [{ label: form ? `${form.name} (battle form)` : 'Battle form', value: ac.value }],
+          timeline: [],
+          description:
+            'A battle form states its AC outright — your Dexterity, armor and proficiency do not apply while it lasts.',
+        };
+      }
       const dex = abilityMod(c.abilities.dex);
       const dexContribution = ac.dexCap != null ? Math.min(dex, ac.dexCap) : dex;
       const worn = c.inventory.map((i) => ({ i, it: db.items[i.itemId] })).find((x) => x.i.worn && x.it?.itemType === 'armor');

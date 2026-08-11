@@ -2508,6 +2508,21 @@ export interface ModeDef {
   feats?: string[];
   /** Short note describing effects that aren't captured as numeric modifiers (shown in the list). */
   note?: string;
+  /**
+   * A BATTLE FORM — pest form, dragon form, Critter Shape. Owner ruling Q3: "a mode that really
+   * overrides the stats it names (but mark it in a way the user is aware that he is in a mode and
+   * what changed)".
+   *
+   * ⚠ Every other lane in this file ADDS. A battle form REPLACES, and that difference is the whole
+   * reason it needs its own field: pest form does not give you +N AC, it says your AC IS 15. Routing
+   * it through `modifiers` would have added 15 to a champion's 30. The same trap applies to Speed —
+   * `deriveSpeeds`' grant lane does `land +=`, so "Speed 20 feet" would have made a 25-foot ancestry
+   * walk 45.
+   *
+   * Only the fields present are overridden; anything absent keeps the character's own value, because
+   * a form that says nothing about your Will save leaves it alone.
+   */
+  battleForm?: BattleForm;
 
   /* ---- grants, not just numbers -------------------------------------------------------------- */
   /**
@@ -2576,6 +2591,36 @@ export interface ModeDef {
    * is meant to end it.
    */
   survivesRest?: boolean;
+}
+
+/**
+ * A BATTLE FORM's printed statistics — the ones that REPLACE yours while the form runs.
+ *
+ * Owner ruling Q3. Everything here is a SET, never an add, and only what is present is overridden:
+ * pest form states an AC and an attack modifier and says nothing about your saves, so your saves stay
+ * yours. That is why every field is optional rather than the shape being a full stat block.
+ */
+export interface BattleForm {
+  /** Your AC IS this while the form runs — not a bonus to it. Dex, armour and proficiency drop out. */
+  ac?: number;
+  /** The attack modifier for the form's Strikes. The three-tier MAP array is still derived from it. */
+  attackMod?: number;
+  /**
+   * The form's Strikes, which REPLACE your own — RAW you cannot wield your weapons in a battle form.
+   * Their damage is printed and fixed: no handwraps, no striking runes, no ability modifier, because a
+   * bat's fangs do not care how strong you are.
+   */
+  strikes?: { name: string; damage: string; traits?: string[]; ranged?: boolean }[];
+  /** Replaces the Speed block outright. A form that grants only a fly Speed removes your land Speed
+   *  unless it states one, which is exactly what the printed forms do. */
+  speeds?: SpeedGrants;
+  /** Replaces your senses. Absent leaves yours alone; present is the whole list, so a form CAN take
+   *  darkvision away — the one thing `addSense`'s best-of merge can never do. */
+  senses?: SenseEntry[];
+  /** The size you become, shown so the player knows their reach and space changed. */
+  size?: string;
+  /** Temporary Hit Points the form grants. Displayed, never folded into max HP. */
+  tempHp?: number;
 }
 
 /** An unarmed Strike a stance grants while active (e.g. Tiger Stance's claw). */

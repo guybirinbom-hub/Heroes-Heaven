@@ -9,6 +9,7 @@
  * your level), otherwise rank value (T2/E4/M6/L8) + level.
  */
 import type {
+  BattleForm,
   AbilityId,
   ArmorCategory,
   ItemPassiveEffects,
@@ -694,6 +695,9 @@ export interface AcResult {
   value: number;
   rank: ProficiencyRank;
   dexCap: number | null;
+  /** The value was SET by a battle form, so the usual parts do not sum to it — the breakdown must say
+   *  so rather than printing a Dex and proficiency line that adds up to something else. */
+  fromBattleForm?: boolean;
 }
 
 /** The active stance's entry REGARDLESS of whether its requirements are met. Only the UI should use
@@ -1161,7 +1165,23 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
     ...conditionTypedMods(c.conditions, 'dex', 'ac'),
     ...modeTypedMods(shieldSwappedModes(c, db), { kind: 'ac' }),
   ]);
+  // A BATTLE FORM states an AC outright, so nothing above it counts: not Dex, not armour, not
+  // proficiency. Returning here rather than adding is the whole point of the lane — pest form says
+  // "AC 15", and folding that in as a bonus would have given a champion 45.
+  const form = activeBattleForm(c);
+  if (form?.ac != null) return { value: form.ac, rank, dexCap: effDexCap, fromBattleForm: true };
   return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + armorBase + pooled, rank, dexCap: effDexCap };
+}
+
+/**
+ * The battle form currently running, if any.
+ *
+ * Exclusive by construction: battle forms are authored into an `exclusiveGroup`, so two cannot be on
+ * at once, and the first is taken if data ever breaks that rule rather than silently merging two
+ * forms' statistics into a creature that exists in no book.
+ */
+export function activeBattleForm(c: Character): BattleForm | undefined {
+  return (c.activeModes ?? []).find((m) => m.battleForm)?.battleForm;
 }
 
 /** The active modes with Raise a Shield's placeholder AC value swapped for the HELD shield's real
@@ -1733,6 +1753,17 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       for (const cs of src.conditionalSenses ?? []) addSense(has(cs.ifPresent) ? cs.upgraded : cs.base);
     }
   }
+  // A BATTLE FORM's senses REPLACE yours, so this clears the map rather than merging into it. `addSense`
+  // keeps the best acuity and range, which means it can only ever improve a sense and never remove one
+  // — and a form must be able to: a bat has echolocation and no darkvision, whatever the character's
+  // ancestry gave them. Runs after every other sense source for that reason.
+  {
+    const formSenses = activeBattleForm(c)?.senses;
+    if (formSenses) {
+      senses.clear();
+      for (const s of formSenses) addSense(s);
+    }
+  }
   // Choice-resistance heritage (Deep Fetchling: cold/void; Elementheart Kobold: an element's type): the
   // player's chosen damage type, resistance = half level (min 1). Same-type resistances don't stack.
   if (heritage?.choiceResistance && c.heritageResistanceChoice) {
@@ -1922,6 +1953,9 @@ export interface Strike {
   dmgAbMod: number;
   /** Item/ABP attack potency folded into `attack`. */
   potencyBonus: number;
+  /** This Strike belongs to a BATTLE FORM: its numbers are printed and complete, so the breakdown must
+   *  not add proficiency, ability or runes to them. */
+  fromBattleForm?: boolean;
   /** True when this weapon's attack/striking bonus comes from a Monster-Parts refinement (so the
    *  breakdown labels it "Monster Parts refinement" rather than a potency rune). */
   mpRefined?: boolean;
@@ -3115,6 +3149,38 @@ function applyUnarmedRiders(c: Character, db: ContentDatabase, p: UnarmedProfile
 }
 
 export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
+  // A BATTLE FORM replaces your Strikes outright — RAW you cannot wield your weapons in one — so this
+  // returns before the assembler rather than filtering after it. Post-filtering would have left the
+  // equipped weapons, the natural attacks, the kineticist blasts and the always-present Fist behind,
+  // which is precisely the bug the ruling is aimed at. Damage is printed and fixed: no handwraps, no
+  // striking runes, no ability modifier, because a bat's fangs do not care how strong you are.
+  const form = activeBattleForm(c);
+  if (form?.strikes?.length) {
+    const step = 5; // Form strikes are agile only if the form says so, via their own traits.
+    return form.strikes.map((s, i) => {
+      const atk = form.attackMod ?? 0;
+      const mapStep = (s.traits ?? []).includes('agile') ? 4 : step;
+      return {
+        instanceId: `form:${i}`,
+        name: s.name,
+        attack: [atk, atk - mapStep, atk - mapStep * 2],
+        damage: s.damage,
+        traits: s.traits ?? [],
+        ranged: !!s.ranged,
+        rank: 'trained' as ProficiencyRank,
+        atkAbility: 'str' as AbilityId,
+        // Null so the breakdown prints no ability part: a form's damage is the printed number and
+        // nothing of the character's is added to it.
+        dmgAbility: null,
+        dmgAbMod: 0,
+        potencyBonus: 0,
+        dmgBonus: 0,
+        strikingDice: 1,
+        mapStep,
+        fromBattleForm: true,
+      } satisfies Strike;
+    });
+  }
   // Handwraps never appear as their own Strike (under any carry flag) — their runes buff every unarmed attack.
   const weapons = c.inventory
     .filter((inv) => inv.equipped && !isHandwraps(db.items[inv.itemId]))
@@ -3194,7 +3260,18 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
 
 export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   const ancestry = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
-  const speeds: Speeds = { ...(ancestry?.speeds ?? {}) };
+  // A BATTLE FORM states its Speed block outright and it REPLACES yours, so it seeds the object here
+  // instead of joining the grant loops below. Those do `land +=` and `max()` for the rest, which would
+  // have made a pest-form dwarf walk at 45 and kept a fly Speed the bat form never had.
+  const form = activeBattleForm(c);
+  const formSpeeds = form?.speeds;
+  const speeds: Speeds = formSpeeds
+    ? Object.fromEntries(
+        Object.entries(formSpeeds)
+          .map(([k, v]) => [k, typeof v === 'number' ? v : resolveFormula(v as string, { level: c.level, abilities: c.abilities, speeds: { ...(ancestry?.speeds ?? {}) } })])
+          .filter(([, v]) => typeof v === 'number'),
+      )
+    : { ...(ancestry?.speeds ?? {}) };
 
   // Non-land speeds granted (unconditionally) by the heritage, selected feats, or a worn/invested
   // item's passive effects (the generic magic-item lane).
