@@ -61,6 +61,16 @@ applied to ally-facing effects, and it means five of the six controls were NOT t
 | **Q10** | **Only apply the remap when it makes the player better.** The app's existing `betterRank` chain (`derive.ts:2635`) is therefore already correct; RAW's strict replacement is rejected because it could lower a rank. | 9 feats |
 | **Q14** | Improbable Elixirs' picks **must reach a formula book** — and the formula book itself needs building. Full spec below. | — |
 
+## Round 3 — rulings on the five challenged entries (2026-08-11)
+
+| Q | ruling |
+|---|---|
+| **Q15** | **An effect that fires on a critical success needs no implementation unless the effect is COMPLICATED.** A complicated one gets a mode the player applies; temporary Hit Points alone are not complicated. This **overrules the challenge pass on #11**, which argued from Q1 that a one-minute duration earns a display-only mode. **Q1 governs duration; Q15 governs the crit-trigger shape, and Q15 comes first.** |
+| **Q16** | #12 fix accepted — restore the `*` on Constant Levitation's fly Speed. ⚠ It also exposed a real bug: `core.json` hardcodes `speeds:{fly:40}`, wrong for any character whose Speed is not 40. Must resolve `max(@actor.speed.land, 20)`. |
+| **Q17** | #27 fix accepted — `negativeHealing: true` on Zombie Dedication. ⚠ **No feat carries this field today**, only the dhampir heritage and four items, so any feat granting it is silent. |
+| **Q18** | #29 fix accepted — the "⚠ VERIFIED GAP" was **false**. Both the Thievery grant and its redundancy fallback are already built at `featGrantsAuto.ts:23`. |
+| **Q19** | #42 fix accepted — the formulas this feat writes into the book **are craftable**: *"You gain formulas to create these potions as alchemical consumables and you can craft alchemical consumables."* So they join the Advanced Alchemy prepare list and the Quick Alchemy picker — pool membership, never an inventory copy. |
+
 ### Q14 — the formula book, as specified
 
 The book is an **item**, and its popup is where formulas live.

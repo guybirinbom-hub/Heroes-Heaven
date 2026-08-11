@@ -1,6 +1,6 @@
 {
  "built": "2026-08-11",
- "status": "COMPLETE — the answer key. 10 owner-answered, 33 derived from the owner's 14 decisions, 5 corrected by adversarial challenge.",
+ "status": "COMPLETE — owner-signed. 10 answered directly, 33 derived from 14 decisions, 5 challenged and ruled on (4 fixes accepted, 1 challenge rejected).",
  "requirements": 165,
  "noLaneCount": 19,
  "rows": [
@@ -435,13 +435,15 @@
      "clause": "You gain a +1 circumstance bonus on the triggering save."
     },
     {
-     "what": "The critical-success rider moves no sheet stat. Temporary Hit Points equal to your level, lasting one minute, are HP — and Ruling E is explicit that \"HP and damage never move sheet stats, even inside a mode\", so this earns no modifier, no star and no mode despite its one-minute duration. Q1's \"longer duration gets a mode\" is not engaged, because a mode exists to carry numbers and text about a state you are in, and the only content here is temporary HP the player applies to the HP bar directly. The full clause stays readable in the action's own popup.",
+     "what": "No surface at all — no mode, no star, no modifier. OWNER RULING (round 3): an effect that fires on a critical success needs no implementation unless the effect is COMPLICATED; a complicated one gets a mode the player applies. Temporary Hit Points alone are not complicated. This overrides the challenge pass, which argued from Q1 that one minute earns a display-only mode — Q1 governs DURATION, and this ruling governs the crit-trigger shape, which comes first.",
      "lane": "",
-     "clause": "you gain a number of temporary Hit Point equal to your level. These temporary Hit Points last for one minute."
+     "clause": "you gain a number of temporary Hit Point equal to your level. These temporary Hit Points last for one minute.",
+     "ownerCorrection": "CHALLENGE REJECTED by the owner"
     }
    ],
-   "defect": "Requirement 4 rules the critical-success clause \"[no lane] — no modifier, no star and no mode\", explicitly dismissing Q1 with \"Q1's 'longer duration gets a mode' is not engaged\". That contradicts an owner answer and the shipped convention for this exact shape.\n\n(1) Owner answer Q1, verbatim: \"Effects lasting 1 round are not implemented — indication only. **A longer duration gets a mode.**\" The clause runs one minute, not one round, so Q1 is engaged on its face.\n\n(2) Ruling E does not say what the entry uses it for. Its case 3 is \"ongoing but changes no numbers (fast healing, persistent damage, 'you are concealed') → **display-only mode**\" — temporary HP for a minute is precisely that. And the sentence the entry quotes, \"HP and damage never move sheet stats, **even inside a mode**\", presupposes the mode and only forbids modifiers inside it. The entry read a rule about a mode carrying no numbers as a rule against the mode existing.\n\n(3) The shipped convention refutes it directly. `public/core.json` → `modes` carries 429 modes, of which **178 are display-only (`modifiers: []`)** and **97 are keyed to feats** (`feats: [...]`, e.g. `form-a-flock`, `immortal-techniques`). Three of them are the same clause, almost word for word:\n- `item-champions-laurels-amateur/professional/renowned` — item text: \"you gain a +N status bonus to the triggering check. If you critically succeed at the check, you gain N temporary Hit Points that last for 1 minute.\" Shipped as `duration: \"1 minute\"`, `modifiers: []`, note: \"…On a critical success: N temporary Hit Points for 1 minute.\" That is a triggered single-roll bonus PLUS crit-success temp HP for a minute — structurally identical to Unwavering Resilience.\n- `item-valorous-coin` — note: \"That grants temporary Hit Points **equal to your level** for 1 minute (not a modifier)\". Same value, same duration, and it still got a mode.\n- `immortal-techniques` and `item-pyrefeather-token` even carry the house wording for this case: \"Enter them in the temporary HP box yourself.\"\n\nSo the entry's own method — \"shipped convention agrees exactly\", which it uses to justify requirement 3 — points the other way on requirement 4, and it was not consulted there. This is defect category 1 (a mechanical clause producing no requirement when it should) and category 3 (Q1 contradicted).",
-   "fix": "Requirements 1, 2 and 3 stand unchanged. Requirement 4 changes from [no lane] to [mode]:\n\n- [mode] A display-only mode for the critical-success rider, keyed to the feat (`feats: ['unbowed-unbroken']`), `duration: \"1 minute\"`, `modifiers: []`, with the clause in its `note`: \"On a critical success on the triggering save you gain temporary Hit Points equal to your level for 1 minute — enter them in the temporary HP box yourself.\" Q1 puts it there: one minute is a longer duration, so it gets a mode. Ruling E keeps it numberless — \"HP and damage never move sheet stats, even inside a mode\" governs the mode's CONTENTS, and Ruling E case 3 (ongoing, changes no numbers) is what a display-only mode is for; 178 of the app's 429 modes ship exactly this way. The three `item-champions-laurels-*` modes are the same clause — a triggered single-roll bonus plus crit-success temp HP for 1 minute — and `item-valorous-coin` is the same value and duration (\"temporary Hit Points equal to your level for 1 minute\"). No modifier and no star: the +1 is already carried by requirement 3's situational entry, and the temp HP number goes in the HP control, not a stat row."
+   "defect": null,
+   "fix": null,
+   "challengeRejected": "Owner ruled the challenge wrong: a crit-triggered rider needs no surface unless the effect is complicated."
   },
   {
    "id": "constant-levitation",
@@ -493,9 +495,10 @@
    "basis": "Q11 settles the first clause and it was the whole difficulty: \"if the effect can be shut down it is a mode; if it cannot, it is a passive bonus\". A constant Fly is not something the player switches off, so it is a passive — a plain, permanent fly Speed, not an always-on castable spell entry. Q7 then settles the star question and REVERSES the earlier reading of Principle F: \"most granted speeds are permanent and need no star\", and Wyrmling Flight earned its star only because its fly Speed was conditional. Q1 settles the +10 — Unleash Psyche runs 2 rounds, longer than the one-round no-implementation case, so it is a mode, and \"a mode carries real numbers for whatever lands on YOU\", which makes the +10 a number rather than Healing Sanctuary-style text (that carve-out is for what lands on ALLIES). Principle C and #3 require this feat to be reflected in that mode; Q3's second half and Principle B fix the display.",
    "requirements": [
     {
-     "what": "A fly Speed present permanently on the sheet — always on, no toggle to remember, and NO `*` on it. Q11 makes this a passive rather than a mode (the player cannot shut a constant spell down; counteraction is a GM event, which DECIDED SCOPE puts outside the lanes), and Q7 removes the star that Principle F would otherwise have implied, because this movement type is permanent rather than conditional. The VALUE is the Fly spell's own — \"a fly Speed equal to its Speed or 20 feet, whichever is greater\" — so it must be a formula tracking the character's current Speed, max(land, 20), not a fixed number. The record currently hardcodes speeds: {fly: 40}, which is wrong for every psychic whose Speed is not 40; a Speed-25 psychic flies at 25, not 40. This is a live defect under any reading. deriveSpeeds already resolves formula speed grants via resolveFormula (derive.ts:3240-3247), so it is expressible today with no new capability.",
+     "what": "A fly Speed present permanently on the sheet, WITH a `*` carrying the feat details. Q7 stars a movement type whose VALUE is a formula off your own Speed rather than a printed number, and Fly grants \"equal to its Speed or 20 feet, whichever is greater\" — the same shape as Wyrmling Flight's \"equal to your Speed\". ⚠ VERIFIED BUG: core.json hardcodes speeds:{fly:40}, wrong for every character whose Speed is not 40. It must resolve max(@actor.speed.land, 20), which resolveFormula (derive.ts:3217) already supports.",
      "lane": "speed",
-     "clause": "You're affected by a constant Fly spell"
+     "clause": "You're affected by a constant Fly spell",
+     "ownerCorrection": "fix accepted"
     },
     {
      "what": "The Unleashed state's existing mode must reflect this feat — the #3 shape, Principle C, and Q1's rule that an effect running longer than a round gets a mode. CORRECTION TO THE EARLIER ENTRY, which drove its cost estimate: the base state is NOT unbuilt. cat-unleash-psyche ships today in src/rules/modes.ts:258 with modifiers: [] and a note, and the state is additionally first-class elsewhere — classResources.ts:86 as an encounter toggle, VitalsRail.tsx:237/895 rendering \"Unleashed\"/\"Not unleashed\", actionGates.ts:31 gating psyche-trait actions, and types.ts:444/617 carrying 'unleash-psyche' in the whileState and DefenseGrants.whileActive unions. The earlier \"0 of 429 modes reference it\" count was taken against core.json, which holds no modes at all — the project's own recorded failure mode of a predicate that knows one storage location. So nothing new is created here: this feat adds its rider to a mode that already exists.",
@@ -2063,9 +2066,10 @@
      "clause": "the basic undead benefits → 'You don't take negative damage'"
     },
     {
-     "what": "From that package, the half with no lane: the healing polarity is inverted — void effects that heal undead restore your Hit Points, while vitality (positive) damage harms you and vitality healing does not help you. Ruling E fixes the ceiling (HP and damage never move sheet stats, so this moves no total), Ruling D as reaffirmed by Q8 fixes the placement (the marker goes on the thing it modifies — the HP/healing control the player uses when it matters), and principle G keeps the full sentence readable on the Basic Undead Benefits entry. No new polarity engine is required.",
-     "lane": "",
-     "clause": "the basic undead benefits → 'Negative Healing: You are damaged by positive damage and aren't healed by positive healing effects. … are healed by negative effects that heal undead.'"
+     "what": "The polarity half of Negative Healing — void effects that heal undead restore your Hit Points, vitality damage harms you, vitality healing does not help you. THE LANE ALREADY EXISTS: set negativeHealing:true on the record; derive.ts:1771 reads it from feats and it renders as \"Void healing — healed by void, harmed by vitality\" on the Defenses card (VitalsRail.tsx:746) and in DefensesPills. ⚠ No feat carries this field today — only the dhampir heritage and four items — so any feat granting it is currently silent.",
+     "lane": "negativeHealing",
+     "clause": "the basic undead benefits → 'Negative Healing: You are damaged by positive damage and aren't healed by positive healing effects. … are healed by negative effects that heal undead.'",
+     "ownerCorrection": "fix accepted"
     },
     {
      "what": "From that package: Negative Survival marks the Dying condition — at 0 Hit Points you are knocked out and begin dying rather than being destroyed; effects that normally rescue a dying creature (stabilize and the like) do not benefit you; and when you would die you are destroyed rather than dead. This is Ruling D's own worked example, The Survivor marking the Dying condition, reaffirmed by Q8. ANCHOR VERIFIED: conditions/dying exists in core.json.",
@@ -2267,14 +2271,16 @@
    "basis": "Q2 answers this feat's open question in both its parts, and it was the only genuinely contested clause. On scope: 'Both — star the skill AND the action' authorises the Thievery star and the Pick a Lock marker together, which is exactly what the earlier pass was demoted for asserting without a ruling behind it. On existence: the owner's answer to a degree-of-success upgrade is a star, i.e. a printed marker, which ratifies prose-in-a-star as the requirement rather than leaving it as today's workaround — and that reading covers the 176 live records sharing the clause. The training grant and its already-trained redirect are the plain skillTrained and redundantFallback lanes; principle K keeps the replacement-skill pick in the builder with no sheet control, and Q9 keeps Thievery out of that picker.",
    "requirements": [
     {
-     "what": "Trained proficiency rank in Thievery, folded into the Thievery modifier on the sheet. ⚠ VERIFIED GAP: the record carries a `choice` (flag 'adroitSkill', kind 'skills') but no trainedSkill, so the base grant is currently unexpressed — only the replacement pick exists.",
+     "what": "Trained proficiency rank in Thievery, folded into the Thievery modifier. ALREADY BUILT — featGrantsAuto.ts:23 carries skills:{thievery:'trained'}, applied through featGrants.ts:320 → build.ts:3081. The earlier \"⚠ VERIFIED GAP\" annotation was false and is struck; nothing to build.",
      "lane": "skillTrained",
-     "clause": "You gain the trained proficiency rank in Thievery"
+     "clause": "You gain the trained proficiency rank in Thievery",
+     "ownerCorrection": "fix accepted — a FALSE gap removed"
     },
     {
-     "what": "When the character is already trained in Thievery the grant must not be wasted: it becomes trained in another skill of the player's choice instead. The redirect is conditional on the existing Thievery rank.",
+     "what": "When already trained in Thievery the grant must not be wasted: trained in another skill of the player's choice instead. ALREADY BUILT — redundantFallback:true on the same featGrantsAuto.ts:23 entry; build.ts:3089 records the fallback and applies the pick.",
      "lane": "redundantFallback",
-     "clause": "(or another skill of your choice, if you're already trained in Thievery)"
+     "clause": "(or another skill of your choice, if you're already trained in Thievery)",
+     "ownerCorrection": "fix accepted — a FALSE gap removed"
     },
     {
      "what": "The sheet records WHICH replacement skill was taken. It is chosen once when the feat is taken and re-chosen only in the builder, so under principle K it needs no in-play control — only the resulting trained rank shows on the sheet. Q9 constrains the picker: the builder offers only what the player may legally pick, so the replacement list must exclude Thievery itself (the clause exists precisely because they already have it).",
@@ -3319,9 +3325,10 @@
      "clause": "Once you've chosen the potion formulas, they can't be changed."
     },
     {
-     "what": "No computed surface, deliberately. The chosen destination is a formula book that stores REFERENCES rather than items, so there is no per-character item copy to re-type as an alchemical elixir; the 'alchemical consumables with the elixir trait' wording and the substitution allowances stay as printed text on the feat and beside the book's entries. The reagent-for-components substitution and the alchemist's toolkit/lab permission are crafting requirements, which the lane manual's NOT-lanes list excludes by name. Nothing here reaches the Advanced Alchemy prepare list or the Quick Alchemy picker: the decision named the book, not the alchemy panel.",
-     "lane": "",
-     "clause": "as alchemical consumables with the elixir trait ... you can substitute alchemical reagents for an equal value of magical components, and you can use an alchemist's toolkit (for Quick Alchemy) or an alchemist's lab (for the Craft activity) instead of any other required toolkits"
+     "what": "Each formula this feat writes into the book is, for this character, an ALCHEMICAL CONSUMABLE WITH THE ELIXIR TRAIT — and therefore CRAFTABLE. OWNER RULING (round 3): \"yes, because You gain formulas to create these potions as alchemical consumables and you can craft alchemical consumables.\" So the chosen potions join the Advanced Alchemy prepare list and the Quick Alchemy picker. This is pool membership, not an inventory copy: the formula book stores references, never items.",
+     "lane": "dailyChoice",
+     "clause": "as alchemical consumables with the elixir trait ... you can substitute alchemical reagents for an equal value of magical components, and you can use an alchemist's toolkit (for Quick Alchemy) or an alchemist's lab (for the Craft activity) instead of any other required toolkits",
+     "ownerCorrection": "fix accepted, and the owner confirmed the reasoning"
     }
    ],
    "defect": "Requirement 4 drops a mechanical clause that has a live destination in this app. The text's \"You gain formulas to create these potions **as alchemical consumables with the elixir trait**\" does not merely say the formulas exist — it re-types the products. Improbable Elixirs is an 18th-level **alchemist** class feat (core.json: traits [\"alchemist\"], category \"class\"), so every character who can take it already has Advanced Alchemy and Quick Alchemy, and the app's pool for both is built at C:/trying ai 2/pf2e codex/src/sheet/AlchemyPanel.tsx:42 as `Object.values(content.items).filter((it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= alchLevel)`. A chosen potion is not alchemical, so it can never appear there — which is precisely what this clause is for. The feat's own next sentence names that surface explicitly: \"you can use an alchemist's toolkit (**for Quick Alchemy**) or an alchemist's lab (for the Craft activity)\". Requirement 4 nevertheless rules it out flatly (\"Nothing here reaches the Advanced Alchemy prepare list or the Quick Alchemy picker\"), and its stated ground does not hold: it argues there is \"no per-character item copy to re-type\" under a reference-only book, but the trait filter above keys on the item's traits at pick time, not on an inventory copy — no copy was ever needed. Nor is the exclusion owner-mandated: Q14 answers where the formulas *live* (a formula book) and is silent on what they *count as*; nine points about the book's shape are not a ruling that the grant reaches nothing else. The lane manual's NOT-lane for \"crafting requirements\" legitimately covers the reagent-for-components and toolkit/lab substitutions, but the re-typing is an identity change, not a crafting requirement, and the manual's own guidance says a clearly-mechanical clause with no lane is the most valuable thing to emit, not to dismiss. Level poses no obstacle either: the picks are capped at 9th level and the advanced-alchemy level here is 18. Secondary, and downstream of the same error: requirement 2 is tagged [dailyChoice] — a lane the manual defines as \"chosen during daily preparations / on rest\", satisfied by `dailyChoices`/`advancedAlchemy`/`dailyItems` — while requirements 3 and 4 correctly state the book write is a one-time build-time write that never touches the alchemy panel. The tag is on the wrong requirement.",
@@ -3462,5 +3469,6 @@
    "defect": null,
    "fix": null
   }
- ]
+ ],
+ "correctionsApplied": 6
 }

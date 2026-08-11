@@ -1,34 +1,47 @@
-# The gold set — finished
+# The gold set — signed
 
-43 feats, every one settled. **This is the answer key.** Model runs are scored against it, so
-a wrong entry here propagates into all 6,206 feats.
+43 feats, every one settled and every challenge ruled on. **This is the answer key.** Model runs
+are scored against it, so a wrong entry propagates into all 6,206 feats.
 
-- **10 feats carry your answers directly** — quoted, not re-derived.
-- **33 were settled against your fourteen decisions.** Each names which one decides it.
-- **5 were corrected by an adversarial pass** that had to name a concrete defect. Those are
-  marked ⚠ and are the entries most worth a second look.
+- **10 feats carry the owner's answers directly** — quoted, not re-derived.
+- **33 settled** against the fourteen decisions those answers produced.
+- **5 challenged**, and the owner ruled on each: four fixes accepted, **one challenge rejected**.
 
-**165 requirements.** 19 (12%) still need a lane this app does not have —
-down from 44% before your rulings were written into the vocabulary.
+**165 requirements.** 17 carry no lane — and note that in this key an empty lane usually
+means *nothing is required*, which is a decision, not a gap. The genuinely missing capabilities are
+listed separately in `scripts/audit/lane-gaps.json`.
+
+## Owner corrections applied
+
+| ref | ruling |
+|---|---|
+| **11.4** Unbowed, Unbroken | CHALLENGE REJECTED by the owner |
+| **12.1** Constant Levitation | fix accepted |
+| **27.15** Zombie Dedication | fix accepted |
+| **29.1** Adroit Manipulation | fix accepted — a FALSE gap removed |
+| **29.2** Adroit Manipulation | fix accepted — a FALSE gap removed |
+| **42.4** Improbable Elixirs | fix accepted, and the owner confirmed the reasoning |
+
+## Index
 
 | # | feat | source | reqs |
 |---|---|---|---|
-| 1 | Resilient Touch | **you** | 1 |
-| 2 | Amplifying Touch | **you** | 1 |
-| 3 | Healing Sanctuary | **you** | 2 |
+| 1 | Resilient Touch | **owner** | 1 |
+| 2 | Amplifying Touch | **owner** | 1 |
+| 3 | Healing Sanctuary | **owner** | 2 |
 | 4 | Fortunate Blow | derived | 3 |
 | 5 | Phalanx Formation | derived | 1 |
-| 6 | Mastermind's Eye | **you** | 1 |
-| 7 | Minor Omen | **you** | 1 |
-| 8 | Wyrmling Flight | **you** | 1 |
-| 9 | Devout Blessing | **you** | 2 |
+| 6 | Mastermind's Eye | **owner** | 1 |
+| 7 | Minor Omen | **owner** | 1 |
+| 8 | Wyrmling Flight | **owner** | 1 |
+| 9 | Devout Blessing | **owner** | 2 |
 | 10 | Advanced Targeting System | derived | 3 |
-| 11 | Unbowed, Unbroken | ⚠ corrected | 4 |
-| 12 | Constant Levitation | ⚠ corrected | 4 |
-| 13 | Quick Recognition | **you** | 1 |
+| 11 | Unbowed, Unbroken | corrected | 4 |
+| 12 | Constant Levitation | corrected | 4 |
+| 13 | Quick Recognition | **owner** | 1 |
 | 14 | Swimming Poppet | derived | 1 |
-| 15 | Guerrilla Dedication | **you** | 5 |
-| 16 | The Truth as I See it | **you** | 1 |
+| 15 | Guerrilla Dedication | **owner** | 5 |
+| 16 | The Truth as I See it | **owner** | 1 |
 | 17 | Elemental Eyes | derived | 3 |
 | 18 | Shape of the Cloud Dragon | derived | 11 |
 | 19 | Lore Seeker | derived | 3 |
@@ -39,9 +52,9 @@ down from 44% before your rulings were written into the vocabulary.
 | 24 | One Among The Masses | derived | 3 |
 | 25 | Branched Tree Of Pain | derived | 4 |
 | 26 | Hydraulic Maneuvers | derived | 5 |
-| 27 | Zombie Dedication | ⚠ corrected | 16 |
+| 27 | Zombie Dedication | corrected | 16 |
 | 28 | Ascended Celestial Dedication | derived | 6 |
-| 29 | Adroit Manipulation | ⚠ corrected | 5 |
+| 29 | Adroit Manipulation | corrected | 5 |
 | 30 | Adhyabhau | derived | 3 |
 | 31 | Eternal Blessing | derived | 5 |
 | 32 | Twitchy | derived | 4 |
@@ -54,13 +67,15 @@ down from 44% before your rulings were written into the vocabulary.
 | 39 | Blood and Spirit | derived | 3 |
 | 40 | Primal Dragonblood | derived | 4 |
 | 41 | Domain Fluency | derived | 4 |
-| 42 | Improbable Elixirs | ⚠ corrected | 4 |
+| 42 | Improbable Elixirs | corrected | 4 |
 | 43 | Endless Memories | derived | 6 |
 
 ---
 
 ### 1. Resilient Touch  `resilient-touch`  · level 10
 *Basis: owner answer #1*
+
+*Your healing energies create an aura of protection that defends your allies against more than just blades and arrows. An ally that recovers Hit Points from your Lay on Hands gains a +1 status bonus to their saving throws until the end of their next turn.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -71,6 +86,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 2. Amplifying Touch  `amplifying-touch`  · level 12
 *Basis: owner answer #2*
 
+*Your healing energies empower attacks. An ally that recovers Hit Points from your Lay on Hands gains a +1 status bonus to their attack rolls and deals 1 additional spirit damage on all their Strikes until the end of their next turn. In addition, all their Strikes are holy until the end of their next turn.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 2.1 | `note` | A marker on the Lay on Hands spell showing this feat modifies it. |
@@ -79,6 +96,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 3. Healing Sanctuary  `healing-sanctuary`  · level 16
 *Basis: owner answer #3*
+
+*When you call upon your deity's power, you also radiate a sense of safety that fortifies your allies. An ally who begins their turn in your Shield the Faithful aura gains 10 temporary Hit Points that last for 1 round.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -90,25 +109,31 @@ down from 44% before your rulings were written into the vocabulary.
 ### 4. Fortunate Blow  `fortunate-blow`  · level 12
 *Basis: Q8 ("Yes — Ruling D's shape applies: mark the action the feat modifies") decides that markers are owed and where they go. Q1 decides that nothing further is owed: the window is "before the start of your next turn" — one round — and "effects lasting 1 round are NOT implemented — indication only", so no mode, in contrast to Shield the Faithful's 1 minute. Principle A supplies the shape (an indication on the record it modifies, display deferred as in #1/#2), Principle C supplies the obligation (a feat that modifies another record's thing must be reflected in that thing), Ruling F/N plus the "effects on enemies" NOT-a-lane bucket remove the number, and Q12 settles the wording and the name mismatch. This also resolves the old arithmetic worry: with Q8 answered, Fortunate Blow is one of the five controls that is NOT a true negative.*
 
+*You set an enemy up for a devastating follow-through from your allies. When you successfully damage an opponent with either Guiding Shot or Set-Up Strike, the next creature other than you to attack the same target before the start of your next turn rolls twice on their attack roll and takes the higher result.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 4.1 | `modifiesGrant` | Guiding Shot's own entry must carry a visible marker that Fortunate Blow modifies it, with the feat's own trigger and effect readable in the marker's popup: when you successfully DAMAGE an opponent with Guiding Shot, the next creature other than you to attack that target before the start of your next turn rolls twice on their attack roll and takes the higher result. Q8 makes this mandatory rather than optional, and Ruling D fixes the anchor as the action itself, not a general stat. Reachability is verified: feats/guiding-shot is a 1-action commander flourish, so MainTab.tsx:257 surfaces it as an action row and line 525 resolves markers by actionId(a.name). The marker must carry its OWN trigger text rather than a generic "this is modified": Fortunate Blow fires on "successfully damage", which is strictly narrower than Guiding Shot's own "If the Strike hits" — a hit reduced to 0 damage fires Guiding Shot's native +1/+2 rider but not this one. Display shape stays deferred exactly as the owner deferred it in #1/#2 ("later we can decide how its displayed"). |
 | 4.2 | `modifiesGrant` | The same marker, independently, on Set-up Strike. Two anchors and not one: the feat's stored prerequisite is "Guiding Shot or Set-up Strike", so a character may legally own only one of them and the marker must appear on whichever they have. Anchor verified as feats/set-up-strike, a 1-action commander flourish. Two wording points, both governed by Q12 ("whichever spelling leaves the player least confused"). First, the app names the record "Set-up Strike" while the printed feat text and this feat's own ref-link spell it "Set-Up Strike" — pick one spelling for what the player reads and make any name-keyed lookup survive the case difference, or the marker silently fails to attach. Second, this anchor's own rider is worded "one of your allies" while Fortunate Blow's is "the next creature other than you"; the marker must state Fortunate Blow's clause, not inherit the anchor's narrower one. Again the trigger is "successfully damage", narrower than Set-up Strike's "If the Strike is successful". |
-| 4.3 | **no lane** | The benefit itself produces no number, no star, no stat and NO MODE anywhere on your sheet. No mode is settled by Q1: the effect expires at the start of your next turn, which is the one-round case the owner ruled is not implemented — indication only. This is the boundary against Shield the Faithful, which earned a mode because it runs a minute, and it means Ruling F/N's "if it runs for a limited time… a display-only mode" clause is not triggered here. The doubled attack roll belongs to another creature, so no modifier lands on you. One wording correction that must not be lost, because the markers' popups are the only place a player reads this: the printed text is "the next CREATURE OTHER THAN YOU", not "the next ally" — an enemy who attacks the target first also rolls twice and takes the higher. Under Q12 the marker must use the book's own words; calling it ally-facing would be a false statement on the sheet. It also means the no-number outcome arrives by two routes, Ruling F/N for the ally branch and the "effects on enemies" NOT-a-lane bucket for the enemy branch. The full text stays readable in the feat's own entry and in both markers' popups. |
+| 4.3 | **none** | The benefit itself produces no number, no star, no stat and NO MODE anywhere on your sheet. No mode is settled by Q1: the effect expires at the start of your next turn, which is the one-round case the owner ruled is not implemented — indication only. This is the boundary against Shield the Faithful, which earned a mode because it runs a minute, and it means Ruling F/N's "if it runs for a limited time… a display-only mode" clause is not triggered here. The doubled attack roll belongs to another creature, so no modifier lands on you. One wording correction that must not be lost, because the markers' popups are the only place a player reads this: the printed text is "the next CREATURE OTHER THAN YOU", not "the next ally" — an enemy who attacks the target first also rolls twice and takes the higher. Under Q12 the marker must use the book's own words; calling it ally-facing would be a false statement on the sheet. It also means the no-number outcome arrives by two routes, Ruling F/N for the ally branch and the "effects on enemies" NOT-a-lane bucket for the enemy branch. The full text stays readable in the feat's own entry and in both markers' popups. |
 
 ---
 
 ### 5. Phalanx Formation  `phalanx-formation`  · level 2
 *Basis: DECIDED SCOPE, Ruling F/N, which names this exact quantity: "the target's AC, cover — get no surface either… this dosent need to have an effect the player will tel the gm". Q8 is the confirming test and it comes back empty — Q8 obliges you to mark the action a feat modifies, and this feat modifies no action, spell, class feature, skill or stat of the character's; Principle A likewise has no record to attach an indication to. Q11's test also returns nothing: the effect cannot be shut down, so it would be a passive bonus if it landed on any stat of yours, and it lands on none. Verified in code: the app models no cover you provide to anyone — a grep of src/ for cover provision finds only a flavour string in situationalBonuses.ts:2707. With Q8 settling #4 in favour of two markers, this is the one surviving true negative among the six controls, which matches the answers doc's count of five.*
 
+*You know how to clear a line of fire for your allies. You don't provide lesser cover to enemies against your allies' attacks.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
-| 5.1 | **no lane** | The feat appears in the feats list with its full text readable, and that is the entire surface. No star on any stat, no situational entry, no modifier, no mode, and no marker on any other record. Explicitly rejected alternatives, so a later reader does not re-open this: a marker on the app's Cover rules pages is wrong because those are rules pages rather than the player's sheet and Principle J puts stars on the specific skills or actions affected; a marker on the Take Cover action is wrong-facing and would actively mislead, since this feat concerns cover you PROVIDE to enemies, not cover you take. This is the reference case for a large class — an ally-facing feat with no anchor record of your own — and the correct handling of that class is nothing beyond the feat entry. |
+| 5.1 | **none** | The feat appears in the feats list with its full text readable, and that is the entire surface. No star on any stat, no situational entry, no modifier, no mode, and no marker on any other record. Explicitly rejected alternatives, so a later reader does not re-open this: a marker on the app's Cover rules pages is wrong because those are rules pages rather than the player's sheet and Principle J puts stars on the specific skills or actions affected; a marker on the Take Cover action is wrong-facing and would actively mislead, since this feat concerns cover you PROVIDE to enemies, not cover you take. This is the reference case for a large class — an ally-facing feat with no anchor record of your own — and the correct handling of that class is nothing beyond the feat entry. |
 
 ---
 
 ### 6. Mastermind's Eye  `masterminds-eye`  · level 6
 *Basis: owner answer #6*
+
+*When you succeed at identifying a creature using Recall Knowledge, that creature is off-guard against your attacks until the start of your next turn; if you critically succeed, it's off-guard against your attacks for 1 minute. This feat serves as the rogue's Mastermind racket for the purpose of meeting prerequisites.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -119,6 +144,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 7. Minor Omen  `minor-omen`  · level 8
 *Basis: owner answer #7*
 
+***Frequency** once per day **Trigger** You fail a Reflex save. **Requirements** You can see the night sky. --- The stars warn you of danger in the nick of time. Reroll the failed save and use the new result.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 7.1 | `grantsAction` | A reaction in the reactions list, with its trigger (you fail a Reflex save) and its requirement (you can see the night sky) shown in the popup. Nothing else — explicitly not a degree-of-success surface. |
@@ -127,6 +154,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 8. Wyrmling Flight  `wyrmling-flight`  · level 17
 *Basis: owner answer #8*
+
+*Your draconic wings have grown large and strong enough for flight. You gain a fly Speed equal to your Speed, using your wings to stay aloft.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -137,6 +166,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 9. Devout Blessing  `devout-blessing`  · level 6
 *Basis: owner answer #9*
 
+*You gain the blessing of the devoted class feature, choosing from the listed blessings or any other to which you have access.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 9.1 | `grantsClassFeature` | Grant the Blessing of the Devoted class feature and surface its details. |
@@ -146,6 +177,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 10. Advanced Targeting System  `advanced-targeting-system`  · level 5
 *Basis: The storage half of the old open question is answered by the frame of the owner's document rather than by any one decision: all eleven principles and all fourteen decisions state what the SHEET must express and what the player must SEE — none states a JSON authoring convention. Principle G and answers #8/#9 (a thing granted to you is surfaced with its details) therefore fix the requirement as a displayed surface, and that surface is already correct, so no field edit is owed. Verified: build.ts:4205 writes innateUses only when the total is not 1, SpellsTab.tsx:1771 renders `rank ${rank} · ${uses ?? 1}/day · from …`, lines 1785-1786 render a spendable pip, and play.ts:1784 clears innateUsed on rest — so the bare {spellId, tradition} record already prints "rank 1 · 1/day · from Advanced Targeting System" with a refilling pip. types.ts:1196 documents `rank` as "Cast-at rank when it differs from the spell's base rank" and sure-strike's base rank is 1, so writing rank: 1 would store a value the field is documented not to hold. Q12 ("whichever leaves the player least confused") decides the one genuine defect, the tradition display.*
+
+*Your ocular processors are augmented with advanced targeting systems, which allow you to more easily pinpoint your enemy and read their movements. You can cast Sure Strike once per day as a 1st-rank arcane innate spell.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -158,25 +191,27 @@ down from 44% before your rulings were written into the vocabulary.
 ### 11. Unbowed, Unbroken  `unbowed-unbroken`  · level 1
 *Basis: Principle E (owner on #7 Minor Omen) settles the reaction listing. It does NOT settle the bonus: Principle E says a reaction listing is "often the whole requirement", and Minor Omen is a fortune REROLL declared after you fail, which produces no number — whereas Unwavering Resilience is declared before you roll and produces a +1 circumstance bonus on a stat row the player looks up. That bonus is settled by Ruling B (a flat bonus the rules restrict belongs in `situational` with the restriction in its `when`, not in passiveEffects) with Ruling H fixing its breadth and Q2 confirming the owner's disposition that save-affecting effects are shown on the saves. Shipped convention agrees exactly: situationalBonuses.ts:141 and :179 star all saves for Charmed Life and Divine Grace, the same reaction, pre-roll, circumstance-bonus shape. Ruling E disposes of the temporary Hit Points, and Q12 disposes of the double row.*
 
-> ⚠ **Corrected by the challenge pass.** Requirement 4 rules the critical-success clause "[no lane] — no modifier, no star and no mode", explicitly dismissing Q1 with "Q1's 'longer duration gets a mode' is not engaged". That contradicts an owner answer and the shipped convention for this exact shape. (1) Owner answer Q1, verbatim: "Effects lasting 1 round are not implemented — indication only. **A longer duration gets a mode.**" The clau
+> ✋ **Challenge rejected.** Owner ruled the challenge wrong: a crit-triggered rider needs no surface unless the effect is complicated.
+
+*Your connection to elemental wood manifests as resilience—towering trees, rough bark, deep roots, and patient determination. You gain the Unwavering Resilience reaction.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 11.1 | `grantsAction` | The named activity Unwavering Resilience is granted by this feat and appears in the character's actions under the REACTION cost, with its Trigger in the popup: "You attempt a saving throw against a poison, disease, or mental effect, but you haven't rolled yet." The action prints no Requirements line, so there is nothing further to show there. Only the action's existence is this feat's business; the internal effect belongs to actions/unwavering-resilience. Both halves already exist — the feat carries grantsActions: ['unwavering-resilience'] and the action record carries actionCost: reaction. |
-| 11.2 | **no lane** | Exactly ONE reaction row, not two. The feat record itself also carries actionCost: reaction, and MainTab.tsx:257 dedups the action list by NAME, so "Unbowed, Unbroken" and "Unwavering Resilience" both render today — the first with no trigger text at all. Q12 decides which survives: the named action, because it is the one carrying the Trigger the player needs. The feat's own reaction cost is an AoN import artifact of the parent/child section split (the action's aonParentId is this feat's feat-7613) and must not produce a second, trigger-less reaction row. Principle E's wording is singular — "a reaction needs to appear in the reactions list" — not twice under two names. |
+| 11.2 | **none** | Exactly ONE reaction row, not two. The feat record itself also carries actionCost: reaction, and MainTab.tsx:257 dedups the action list by NAME, so "Unbowed, Unbroken" and "Unwavering Resilience" both render today — the first with no trigger text at all. Q12 decides which survives: the named action, because it is the one carrying the Trigger the player needs. The feat's own reaction cost is an AoN import artifact of the parent/child section split (the action's aonParentId is this feat's feat-7613) and must not produce a second, trigger-less reaction row. Principle E's wording is singular — "a reaction needs to appear in the reactions list" — not twice under two names. |
 | 11.3 | `situational` | A situational star on the SAVES carrying "+1 circumstance, declared before you roll (reaction), on a save against a poison, disease, or mental effect". This is where Principle E's "often the whole requirement" stops: the owner's #7 answer governs a post-failure reroll that produces no number, while this is a computable pre-roll modifier to a roll YOU make, which is precisely Ruling B's restricted flat bonus — it belongs in `situational` with the restriction in its `when`, sitting outside the stat total. Breadth is fixed by Ruling H: the printed trigger names effect TYPES, not save types, so narrowing it to Fortitude and Will would put my ruling on the sheet dressed as the book's; star all three saves with the printed trigger in the note, which is also the shape the app already ships for the two nearest precedents (targets: [{kind:'save', detail:'all'}]). Reading Principle E the other way would condemn the ~109 existing reaction and free-action entries in situationalBonuses.ts, which the owner has never asked for. |
-| 11.4 | **no lane** | The critical-success rider moves no sheet stat. Temporary Hit Points equal to your level, lasting one minute, are HP — and Ruling E is explicit that "HP and damage never move sheet stats, even inside a mode", so this earns no modifier, no star and no mode despite its one-minute duration. Q1's "longer duration gets a mode" is not engaged, because a mode exists to carry numbers and text about a state you are in, and the only content here is temporary HP the player applies to the HP bar directly. The full clause stays readable in the action's own popup. |
+| 11.4 ✅ | **none** | No surface at all — no mode, no star, no modifier. OWNER RULING (round 3): an effect that fires on a critical success needs no implementation unless the effect is COMPLICATED; a complicated one gets a mode the player applies. Temporary Hit Points alone are not complicated. This overrides the challenge pass, which argued from Q1 that one minute earns a display-only mode — Q1 governs DURATION, and this ruling governs the crit-trigger shape, which comes first. |
 
 ---
 
 ### 12. Constant Levitation  `constant-levitation`  · level 16
 *Basis: Q11 settles the first clause and it was the whole difficulty: "if the effect can be shut down it is a mode; if it cannot, it is a passive bonus". A constant Fly is not something the player switches off, so it is a passive — a plain, permanent fly Speed, not an always-on castable spell entry. Q7 then settles the star question and REVERSES the earlier reading of Principle F: "most granted speeds are permanent and need no star", and Wyrmling Flight earned its star only because its fly Speed was conditional. Q1 settles the +10 — Unleash Psyche runs 2 rounds, longer than the one-round no-implementation case, so it is a mode, and "a mode carries real numbers for whatever lands on YOU", which makes the +10 a number rather than Healing Sanctuary-style text (that carve-out is for what lands on ALLIES). Principle C and #3 require this feat to be reflected in that mode; Q3's second half and Principle B fix the display.*
 
-> ⚠ **Corrected by the challenge pass.** Owner answer contradicted — the entry uses Q7 to DELETE the `*` on the fly Speed, inverting what Q7 decided. Q7 answered a two-way question recorded verbatim at docs/gold-set-open-questions.md:81-83: "You asked for a `*` on Wyrmling Flight's fly Speed. Was that because **every** granted speed should carry its source, or because *'equal to your Speed'* is a formula a bare number can't convey?" The 
+*Your power has unbound you from the earth below. You're affected by a constant Fly spell, and when your Psyche is Unleashed, you gain a +10-foot status bonus to your fly Speed.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
-| 12.1 | `speed` | A fly Speed present permanently on the sheet — always on, no toggle to remember, and NO `*` on it. Q11 makes this a passive rather than a mode (the player cannot shut a constant spell down; counteraction is a GM event, which DECIDED SCOPE puts outside the lanes), and Q7 removes the star that Principle F would otherwise have implied, because this movement type is permanent rather than conditional. The VALUE is the Fly spell's own — "a fly Speed equal to its Speed or 20 feet, whichever is greater" — so it must be a formula tracking the character's current Speed, max(land, 20), not a fixed number. The record currently hardcodes speeds: {fly: 40}, which is wrong for every psychic whose Speed is not 40; a Speed-25 psychic flies at 25, not 40. This is a live defect under any reading. deriveSpeeds already resolves formula speed grants via resolveFormula (derive.ts:3240-3247), so it is expressible today with no new capability. |
+| 12.1 ✅ | `speed` | A fly Speed present permanently on the sheet, WITH a `*` carrying the feat details. Q7 stars a movement type whose VALUE is a formula off your own Speed rather than a printed number, and Fly grants "equal to its Speed or 20 feet, whichever is greater" — the same shape as Wyrmling Flight's "equal to your Speed". ⚠ VERIFIED BUG: core.json hardcodes speeds:{fly:40}, wrong for every character whose Speed is not 40. It must resolve max(@actor.speed.land, 20), which resolveFormula (derive.ts:3217) already supports. |
 | 12.2 | `mode` | The Unleashed state's existing mode must reflect this feat — the #3 shape, Principle C, and Q1's rule that an effect running longer than a round gets a mode. CORRECTION TO THE EARLIER ENTRY, which drove its cost estimate: the base state is NOT unbuilt. cat-unleash-psyche ships today in src/rules/modes.ts:258 with modifiers: [] and a note, and the state is additionally first-class elsewhere — classResources.ts:86 as an encounter toggle, VitalsRail.tsx:237/895 rendering "Unleashed"/"Not unleashed", actionGates.ts:31 gating psyche-trait actions, and types.ts:444/617 carrying 'unleash-psyche' in the whileState and DefenseGrants.whileActive unions. The earlier "0 of 429 modes reference it" count was taken against core.json, which holds no modes at all — the project's own recorded failure mode of a predicate that knows one storage location. So nothing new is created here: this feat adds its rider to a mode that already exists. |
 | 12.3 | `speedBonus` | +10 feet, STATUS type, aimed at the FLY Speed only — not the land Speed, not all speeds — present as a real number while the Unleashed mode is on and absent when it is off. Q1 decides that this is a number rather than text: the mode carries real numbers for whatever lands on YOU, and a +10 to your own fly Speed lands on you. The Healing Sanctuary text-only outcome does not transfer — that carve-out covers what lands on ALLIES and an amount that accrues per untracked round, whereas this is one flat figure that holds for the mode's whole duration. Implementation note, since this is the only part with a real capability gap: a mode's `speeds` grant resolves as max(existing, granted) for non-land types (derive.ts:3255-3264) and modes carry no `speedAdjust`, so the correct total is reachable today only by restating the whole formula (max(@actor.speed.land,20)+10) or via DefenseGrants.whileActive, which already lists 'unleash-psyche' and carries `speeds`. What is genuinely missing is additive, typed aiming at a single non-land movement type from an active mode — the honest scope of the gap, narrower than "the sheet cannot do this". |
 | 12.4 | `note` | While the mode is on, the sheet must make plain that a mode is active and what it changed — Q3's second half, which is the general display rule for a mode that really overrides a stat, plus Principle B (a mode carries the full text of what it does). Concretely: with Unleash Psyche toggled on, the fly Speed row shows the changed number and names Unleash Psyche as the source in its breakdown, so the player is never looking at a Speed they cannot account for. When it is off, the mode's own entry is where the +10 text lives; because the fly Speed itself is permanent, Q7 means no `*` is owed on the Speed row to advertise the rider. This replaces the earlier requirement for a `*` on the fly Speed carrying the feat's details, which Q7 has since removed. |
@@ -185,6 +220,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 13. Quick Recognition  `quick-recognition`  · level 7
 *Basis: owner answer #13*
+
+*You Recognize Spells swiftly. Once per round, you can Recognize a Spell using a skill in which you're a master as a free action.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -195,6 +232,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 14. Swimming Poppet  `swimming-poppet`  · level 5
 *Basis: Q7 decides it outright — and decides it against the earlier draft. The owner: "The `*` is for a CONDITIONAL movement type — Wyrmling Flight's fly Speed depends on your Speed, so the player needs to see when flight is available. Most granted speeds are permanent and need no star." The earlier adjudication's openQuestion asked exactly this ("does a movement grant with a fixed number and nothing to explain still get a `*`?") and Q7 answers no, so its requirement 14.2 (a `*` carrying the feat's details) is DELETED. Principle F, as Q7 now reads it, reaches derived or otherwise unshowable movement grants and does not reach a flat, unconditional 15 feet. The same answer disposes of the ~10 heritages granting the identical "swim Speed of 15 feet" and of the other 126 records in core.json that grant a movement type: speed row only, no star. Requirement 14.1 was never in doubt — 3/3 readers named it, Foundry corroborates with BaseSpeed, and the record already carries `speeds.swim = 15`. Printed text verified at aon-2e-archive feat-3350.json (Grand Bazaar p.65): two sentences, no prerequisite, no Special clause, nothing dropped.*
 
+*Your fins, flippers, or other accessories assist with steering you through water. You gain a swim Speed of 15 feet.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 14.1 | `speed` | A swim Speed of 15 feet stands on the movement row as its own Speed type alongside land Speed — permanent, unconditional, no activation, no daily use, and no star. The feat's first sentence ("fins, flippers, or other accessories") is flavour and the record has no other clause, so this is the whole surface. |
@@ -204,18 +243,22 @@ down from 44% before your rulings were written into the vocabulary.
 ### 15. Guerrilla Dedication  `guerrilla-dedication`  · level 2
 *Basis: owner answer #15*
 
+*You're skilled in subtle tactics and using the environment against your enemies. You become trained in your choice of Deception or Thievery; if you are already trained in both, you become an expert in one instead. When you take this dedication, choose a single, discrete urban or wilderness location, such as "Mzali" or "the Verduran Forest"; this becomes your favored location. When you are in this location and undetec…*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 15.1 | `choice` | A FREE-TEXT field for the favoured location. |
 | 15.2 | `situational` | A `*` on Sneak carrying the no-check clause. |
 | 15.3 | `situational` | A `*` on Avoid Notice carrying the 15-foot approach clause. |
 | 15.4 | `skillChoice` | ⚠ ADDED BY ME, not by the owner: the first sentence also grants trained in Deception or Thievery, or expert in one if already trained in both — a skill choice with a redundancy fallback. |
-| 15.5 | **no lane** | Changing the favoured location is a builder action and needs no sheet surface. |
+| 15.5 | **none** | Changing the favoured location is a builder action and needs no sheet surface. |
 
 ---
 
 ### 16. The Truth as I See it  `the-truth-as-i-see-it`  · level 10
 *Basis: owner answer #16*
+
+*Your knack for spinning a believable reality from threads of story is so practiced that sometimes even you begin to believe what you're saying. When you use Deception to Lie, you can carefully structure your deceits so that each individual statement you make is the truth, from a certain perspective. Once per day when using Deception to Lie, you can roll twice and take the better result. This is a fortune effect. You …*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -226,16 +269,20 @@ down from 44% before your rulings were written into the vocabulary.
 ### 17. Elemental Eyes  `elemental-eyes`  · level 1
 *Basis: Three answers between them cover every clause. (1) The grant itself is the plainest `sense` lane there is (mechanic-lanes D, satisfied by `senses`) and nothing in DECIDED SCOPE touches a permanent capability on the player's own sheet. (2) Q13 settles the display question the earlier openQuestion raised: "Show ONLY darkvision when it supersedes low-light" — so requirement 17.2 survives, but on the owner's authority rather than on the earlier draft's misapplication of Ruling G (the challenger was right that Ruling G was about a relic set/piece marker, not sense subsumption; it is simply no longer needed). This is a change to shipped behaviour: derive.ts adds senses keyed by NAME (see derive.ts:1601-1603 and 1715-1720, the `darkvisionIfAncestryLowLight` upgrade) so today both entries survive and both render — Q13 says show only the superseding one, which mechanically is a display suppression of the `modifiesGrant` shape. The natural extension one rung up the ladder (greater darkvision superseding darkvision) follows from the same sentence, but is not this feat's business. (3) Q7 KILLS requirement 17.3, the source `*` on the sense: the star is for the conditional, and darkvision here is permanent and unconditional — so the senses row needs no source marker. (4) Q9 settles the Special clause the earlier round left contested: the builder shows only what the player may legally pick, and a feat selectable only at 1st level and barred from retraining is not legally pickable elsewhere. Printed text verified at feat-2545.json (Ancestry Guide p.99): prerequisite is low-light vision, Special is exactly as stored, nothing dropped.*
 
+*You can see in the darkness as easily as an elemental. You gain darkvision. --- **Special** You can select this feat only at 1st level, and you can't retrain into or out of this feat.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 17.1 | `sense` | Darkvision appears on the senses row as a permanent precise sense the character now has. |
 | 17.2 | `sense` | The senses row shows ONLY darkvision — the low-light vision entry it supersedes is not listed beside it. The suppression is DISPLAY ONLY: the character still counts as having low-light vision wherever the rules consult it, which matters here because this feat's own printed prerequisite is low-light vision, so the builder's legality check (Q9) must keep seeing it even though the sheet stops printing it. |
-| 17.3 | **no lane** | Builder-side only, no sheet surface: the feat is offered at 1st level and nowhere else, and is excluded from retraining in either direction — filtered out of the picker by the same rule that filters unmet prerequisites, and revealable only through the "show options not meeting prerequisites" toggle. |
+| 17.3 | **none** | Builder-side only, no sheet surface: the feat is offered at 1st level and nowhere else, and is excluded from retraining in either direction — filtered out of the picker by the same rule that filters unmet prerequisites, and revealable only through the "show options not meeting prerequisites" toggle. |
 
 ---
 
 ### 18. Shape of the Cloud Dragon  `shape-of-the-cloud-dragon`  · level 14
 *Basis: Q3 answers the openQuestion directly and picks option (b): "A battle form gets a mode that REALLY overrides the stats it names — and must make plain that a mode is active and what changed." That converts every shape-neutral requirement in the earlier round into live numbers scoped to the mode, and adds the visibility requirement as its own item (the owner's second clause, which no reader had proposed). The remaining clauses fall to: Q6 for the acquired dragon trait ("record acquired creature traits on the sheet"); Principle C for the Dragon Form record having to show it was rewritten to the cloud variant; Principle B for cloud walk (a mode carries the full text including parts the app cannot compute); Q8 plus Q1 for the crit-recharge rider (mark the action the feat modifies; rounds are not tracked, so the 1d4-round timer contributes no number and the rider is text on the Breath Weapon entry); and Q9 for the "in place of Shape of the Dragon" equivalence — the builder must offer what the player may legally pick, and without it Mighty Dragon Shape becomes unreachable for a character who took this feat instead. Two printed values recovered from the archive that the STORED text has lost, both load-bearing: feat-3407.json (Pathfinder #171 p.79) reads "breath weapon 30-FOOT CONE, 6d12 electricity" — the shape is fixed, which also removes the base spell's cone-or-line choice; and the rank-8 heightening of Dragon Form (spell-1502.json) replaces AC, temp HP, attack, damage, Athletics, size, fly Speed, reach AND breath damage, which is why the rank derivation is a requirement about the mode's numbers and not bookkeeping.*
+
+*You've discovered how to transform yourself into a cloud dragon. Once per day, you can cast 7th-rank Dragon Form as an innate arcane spell, transforming into a cloud dragon. The spell automatically heightens to 8th level if you're 16th level and 9th rank if you're 18th level. On a critical hit with an unarmed Strike gained from dragon form, you recharge the spell's breath weapon immediately. While in this form, you g…*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -249,12 +296,14 @@ down from 44% before your rulings were written into the vocabulary.
 | 18.8 | `mode` | The dragon creature trait is recorded on the sheet while the mode is active — it changes what spells and effects target the character. |
 | 18.9 | `note` | Cloud walk — the character can walk on clouds or fog. A movement PERMISSION, not a Speed: no number, no new movement type, and therefore no star (Q7 is about granted movement types). It is text the mode carries, readable wherever the form is presented, even though the app computes nothing from it. |
 | 18.10 | `note` | A rider printed on the form's Breath Weapon entry — the action this feat modifies: a critical hit with one of the form's unarmed Strikes recharges the breath weapon immediately, short-circuiting its 1d4-round wait. Nothing numeric, because rounds are not tracked; the requirement is that the Breath Weapon entry can carry the rider so the player reads it where they use it. |
-| 18.11 | **no lane** | Builder-side only, no sheet surface: this feat must satisfy prerequisites written against Shape of the Dragon, so that a character who took it can still legally pick Mighty Dragon Shape and anything else keyed to Shape of the Dragon. |
+| 18.11 | **none** | Builder-side only, no sheet surface: this feat must satisfy prerequisites written against Shape of the Dragon, so that a character who took it can still legally pick Mighty Dragon Shape and anything else keyed to Shape of the Dragon. |
 
 ---
 
 ### 19. Lore Seeker  `lore-seeker`  · level 8
 *Basis: The earlier round demoted this on one blocker — the tradition tie-break — plus a challenge that turns out to be wrong on the rules. Both are now resolved. (1) The BLOCKER is settled by Q9: the builder shows only what the player may legally pick. The legal set for these three spells is "the tradition(s) the character already casts in", so where that set has one member the sheet derives it and where it has several (cleric/wizard multiclass, a caster dedication, Dual Class) the builder offers a pick filtered to exactly those — the same shape as Domain Fluency filtering to the mystery's domains. Principle K then keeps the pick itself off the sheet; its surface is the tradition shown on the three spells. (2) The challenger's "unsatisfiable as written" objection is REFUTED by RAW, not by a decision: Player Core p.298 (archive rules-2232.json) — "The ability that gives you an innate spell tells you how often you can cast it… and its magical tradition." The granting ability sets an innate spell's tradition; the spell's own tradition list does not constrain it. So an arcane Sound Body is legal even though Sound Body is Divine/Occult/Primal (verified spell-1679.json), and a primal Translate is legal for a druid. Nothing further is needed. (3) The challenger's lane correction is ADOPTED: the "Otherwise" branch is one existing `spellcastingGrant {tradition, keyAbility, proficiency}` (types.ts:725, 827), not a `profSpell` requirement plus a phantom missing lane — `Proficiencies` has no spell attack or spell DC row at all. The Intelligence clause is the "unless noted otherwise" override of innate spellcasting's default Charisma (rules-2232.json), which is exactly what `keyAbility` is for. (4) Q12 settles the last small thing — rank and per-day use are spelled out rather than left to derivation, because Determined Lore Seeker reheightens two of the three by different rules and a player who cannot see the rank cannot tell which. All three spells are rank 2 (verified spell-1723 / spell-1679 / spell-1663).*
+
+*You see what others don't, and you've developed magical tricks to find hidden truth. You can cast Translate, Sound Body, and See the Unseen as innate spells, each once per day. If you could already cast spells, these spells are of the same tradition. Otherwise, they are arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -266,6 +315,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 20. Marshal Dedication  `marshal-dedication`  · level 2
 *Basis: The mode-vs-star question that demoted this is settled by Q11, which is the direct test: "if the effect can be shut down it is a MODE; if it cannot, it is a PASSIVE bonus." The marshal's aura has no action to start it, no action to stop it, no frequency and no duration — it is on whenever you are conscious — so it cannot be shut down and is a passive bonus, not a mode. (Being knocked out is not the player turning something off, and mechanic-lanes defines a mode as "a state you turn on and off", which a permanent aura cannot be.) Q11's own exemplar, Eternal Blessing running Bless on you forever, is the close analogue here; Q1's exemplar, Shield the Faithful, is a 1-action once-per-hour 1-minute activation, which this is not. THE TWO ANSWERS RECONCILE CLEANLY rather than conflicting: Q1 listed feat 20 because of the marshal STANCES, and those are modes — Dread, Inspiring and Strategist Marshal Stance are 1-action stances you can drop, so under Q11 they are modes, and under Q1 each carries real numbers for your half and text for the ally half while its edits reflect into the aura. That is precisely the Shield the Faithful / Healing Sanctuary shape of answer #3, with the base aura passive and the modes writing into it. Ruling B then keeps the fear bonus in `situational` with the restriction in its `when` rather than in the flat save totals; Q2's sub-answer ("when it applies to saves generally, star all three saves") plus Ruling H settle all-three-saves over Will-only. Principle C and Q8 make the aura the addressable thing the nine dependent marshal feats attach to. TWO PRINTED VALUES RECOVERED — the stored text is corrupted ("you're surrounded by a marshal's aura in a .") and has lost both. Verified at aon-2e-archive feat-6351.json, Player Core 2 p.204, which is the edition this record carries: "while you're CONSCIOUS, you're surrounded by a marshal's aura in a 15-FOOT emanation." 10 feet is the legacy APG text (feat-2005.json) and would be wrong on the sheet. LANE CORRECTION ADOPTED from the challenger: the conditional rank step is `skillChoices[].conditionalRank {base:'trained', upgraded:'expert'}` (featGrants.ts:140, consumed at build.ts:3130-3133), NOT `rankUpgrade` (which is strictly level-gated) and NOT `redundantFallback` (which redirects to a different skill). Live defects worth passing on: the stored `choice` carries four options with the typo `imtimidation-trained` and two both labelled "Diplomacy", and featGrantsAuto.ts:210 builds a flat trained grant with the conditional expert step missing entirely.*
+
+*You've combined your social skills and combat training to become a talented combat leader. Choose Diplomacy or Intimidation. You become trained in that skill or become an expert if you were already trained in it. In addition, you're surrounded by a marshal's aura in a . Your aura has the emotion, mental, and visual traits and grants you and allies within the aura a +1 status bonus to saving throws against fear.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -280,6 +331,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 21. Divine Access  `divine-access`  · level 4
 *Basis: Q9 settles both pickers and the repeat exclusion — and does so by direct analogy, since Q9's own worked example ("Domain Fluency must filter to the mystery's domains") is the same mystery→domain filter this feat needs. Principle K settles that the picks are builder controls with no sheet control of their own; principle A's correction plus Ruling D settle that the CONSEQUENCE is still visible where the player picks spells, which is the distinction the earlier pass collapsed. The list widening is the manual's existing spellListAdd lane. Scope note: the row's printed text pins this to the APG level-4 legacy feat (`feats.divine-access`), which is the one carrying the repeatable Special clause. The remaster twin `classFeatures.divine-access` (Player Core 2, level 11, not repeatable) adds "and to your spell repertoire as soon as you can cast spells of the appropriate rank" — a repertoire grant the engine already implements as `SpellAccessGrant.as:'repertoire'` → `grantedRepertoireAdds` — so that half needs no adjudication and requirement 4 must not be demanded of it.*
 
+*Divine Access Source Advanced Player's Guide pg. 79 Your ability to tap into divine magic surpasses the spells traditionally available to you (the divine spell list). Choose one deity who grants one of your mystery's granted domains. Add up to three cleric spells of your choice granted by that deity to your spell list. You can select from these spells when you add or swap spells in your spell repertoire. Special You …*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 21.1 | `choice` | A recorded pick made when the feat is taken, and it is a PAIR — a domain and a deity — not a deity alone: the Special clause distinguishes "a different domain or a different deity with the same domain", so both halves must be stored. Q9 governs the option lists: the domain list is filtered to the domains the character's mystery grants, and the deity list to deities that grant that domain. The deity half is already computable (485 deities in public/core.json carry `domains`); the mystery half is not — none of the 11 options under classes.oracle.subclass.options carries a `domains` field, so that mapping has to be authored. That is the same data debt Q9 already accepted when it ruled "Domain Fluency must filter to the mystery's domains", and it is a build-time control only — principle K, no sheet surface for the pick itself. |
@@ -292,10 +345,12 @@ down from 44% before your rulings were written into the vocabulary.
 ### 22. Gunslinger Dedication  `gunslinger-dedication`  · level 2
 *Basis: Q10 settles the weapon remap (apply only when it makes the player better — the existing betterRank chain is correct). Q5 settles the clause the earlier pass could not close: "You gain access to uncommon martial and simple crossbows and firearms" produces NO requirement at all — the inventory stays open, rarity does not gate the shop, and Q9's "only what you may legally pick" governs the builder's choices, not the item list. So that clause is deliberately absent from the requirement list above. Principle K plus Q9 settle the way pick (a place to select it, the pick recorded, no sheet control), sharpened by the feat's own withholding sentence. The way's skill and its redundancy branch are the manual's effectGrant and redundantFallback lanes. The class DC needed no ruling — it is a plain number on the character's own sheet, and the secondary Dex-keyed reading is confirmed by the class data rather than assumed.*
 
+*You excel in using specific types of ranged weapons. You have familiarity with martial crossbows and firearms, treating them as simple weapons for the purposes of proficiency. You gain access to uncommon martial and simple crossbows and firearms that do not have an ancestry trait. You become trained in gunslinger class DC. Choose a gunslinger way. You become trained in your way's associated skill; if you were already…*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 22.1 | `profWeapon` | Attack proficiency for every martial crossbow and firearm is computed from the character's SIMPLE-weapon rank — a category remap scoped to a named weapon subset, not a rank increase — and it must reach those weapons' Strike entries because it changes a number the player rolls. Q10 fixes the direction: apply the remap only when it makes the player better, so the effective rank is the better of their simple and martial ranks. The app's existing `betterRank` chain (src/rules/derive.ts:2635) is therefore already the correct behaviour and RAW's strict replacement is rejected. |
-| 22.2 | **no lane** | A trained gunslinger class DC on a character who has no gunslinger class, shown as a secondary class DC alongside their own and keyed to the BORROWED class's key attribute — Dexterity, confirmed from classes.gunslinger.keyAbility = ['dex'] — not to the character's own class attribute. The lane manual names no class-DC row, but that is a manual gap rather than a missing capability: the app already carries multiclass-dedication class DCs (src/rules/types.ts:611-612) and this record already declares `classDcGrant: { classId: 'gunslinger' }`. |
+| 22.2 | **none** | A trained gunslinger class DC on a character who has no gunslinger class, shown as a secondary class DC alongside their own and keyed to the BORROWED class's key attribute — Dexterity, confirmed from classes.gunslinger.keyAbility = ['dex'] — not to the character's own class attribute. The lane manual names no class-DC row, but that is a manual gap rather than a missing capability: the app already carries multiclass-dedication class DCs (src/rules/types.ts:611-612) and this record already declares `classDcGrant: { classId: 'gunslinger' }`. |
 | 22.3 | `choice` | A recorded pick of one gunslinger way, taken when the feat is taken because the next clause reads it, with no sheet control of its own. It must be a BARE label: the pick must not pull in anything else the way normally grants — no deed, no slinger's reload, no way-specific critical specialization — because the feat's last sentence withholds them explicitly. The record already stores this as `choice.flag: 'gunslingerWay'` over the six ways. |
 | 22.4 | `effectGrant` | Trained rank in the skill tied to whichever way was picked — the skill is not named on the feat, so the grant is looked up from the chosen option (Drifter→Acrobatics, Sniper→Stealth, Spellshot→Arcana, Triggerbrand→Thievery, Vanguard→Athletics). One option is itself a nested choice: Way of the Pistolero reads "Deception or Intimidation", so that branch needs its own recorded pick rather than a single fixed skill. |
 | 22.5 | `redundantFallback` | If the way's skill is already trained from another source the grant redirects to a free pick of any other skill, and which skill the player took must be recorded so the rank actually lands. This is the manual's redundantFallback lane; Q9 scopes the fallback picker to skills the player is not already trained in. |
@@ -305,13 +360,15 @@ down from 44% before your rulings were written into the vocabulary.
 ### 23. Critter Shape  `critter-shape`  · level 1
 *Basis: Q3 settles the question the earlier pass called the highest-leverage one in the batch: a battle form gets a mode that really overrides the stats it names, and must make plain that a mode is active and what changed. That closes the (a)-versus-(b) split — it is Ruling E case 2, real modifiers, not a display-only state — and it governs every polymorph record, #18 Shape of the Cloud Dragon included. Q1 confirms the duration handling: 10 minutes is well past the 1-round indication-only threshold, so a mode is right, and the untracked clock leaves the cap and lockout as text (principle B). Q6 settles the acquired animal trait, Q13 settles the low-light/darkvision display, and principle C plus Q8 settle the marker on Change Shape. The per-hour counter is the manual's limitedUses lane.*
 
+*Once per hour, you can use Change Shape to enter a critter shape. While in critter shape, you gain the effect of a 1st-rank Pest Form, except you can only transform into an animal matching your inherent animal. You can remain in critter shape for up to 10 minutes, after which you transform back into your hybrid shape and can't enter your critter shape again for 1 hour. You can instead use Change Shape to return to yo…*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 23.1 | `modifiesGrant` | The Change Shape action the character already has from the beastkin heritage must show that it can now be used to enter critter shape — a new form option on that existing action, not a separate standalone activity. The clause letting you Change Shape back to humanoid or hybrid at any time during the duration rides on the same marker. |
 | 23.2 | `mode` | A toggleable critter-shape mode that REALLY OVERRIDES the statistics 1st-rank pest form names, per Q3 — not a display-only state. From the spell record those are: AC = 15 + your level (ignoring your armour's check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, Acrobatics and Stealth modifiers set to +10 unless your own is higher (Ruling G: a set/upgrade REPLACES the entry it upgrades rather than sitting beside it), Athletics -4, and no Strikes — which suppresses the character's own Strikes including the beastkin heritage's granted Jaws. Q3's second half is a requirement in its own right: while it runs the sheet must make plain that a mode is active and what changed. The 10-minute cap contributes no number because no clock is tracked, but principle B requires its text to be readable inside the mode. |
 | 23.3 | `size` | While the mode is on the character's size is Tiny — including when their inherent animal is normally far larger, which the text handles by shrinking it to a younger version rather than by scaling the form. Part of the Q3 override, and the one piece a plain existing lane already covers. |
 | 23.4 | `sense` | The form's senses while the mode is on: low-light vision and imprecise scent 30 feet, from pest form's stat block. Q13 governs the display: if the character already has darkvision, show only darkvision — the form's low-light entry must not appear beside it or displace it. |
-| 23.5 | **no lane** | The animal trait pest form confers while the form runs must be recorded on the sheet as an acquired creature trait (Q6 — the Details tab already carries tags). It is not decoration: creature traits are what other records key off. |
+| 23.5 | **none** | The animal trait pest form confers while the form runs must be recorded on the sheet as an acquired creature trait (Q6 — the Details tab already carries tags). It is not decoration: creature traits are what other records key off. |
 | 23.6 | `limitedUses` | A spendable per-HOUR use — an hourly period, not the usual per-day one — that the player can mark spent and see come back; the record already declares `limitedUses: { max: 1, per: 'hour' }`. The 1-hour lockout runs from when the form ENDS, not from when it was entered; with no clock tracked, that timing rides as text beside the counter. |
 | 23.7 | `note` | Two restrictions printed with the form. First, the only animal available is the character's own inherent animal, which this record has to READ from the beastkin heritage's stored pick (`heritages.beastkin.choice.flag = 'inherentAnimal'`, a free-text field — principle I's sanctioned choice type). Second, no fly Speed is gained even when that animal flies; the denial is explicit, so the mode must not add one. Q7 does not apply here — it stars a granted movement type that is conditional, and this text grants no movement type at all. |
 
@@ -319,6 +376,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 24. One Among The Masses  `one-among-the-masses`  · level 14
 *Basis: Q8 settles the third requirement the earlier pass suppressed: mark the action a feat modifies, in Ruling D's shape — reinforced by principle D/J (the star goes on the specific skill affected, where the player looks the number up), Ruling C, and the app's own 23-instance mythic-proficiency convention. Principle E settles the popup's contents, requirements included, exactly as the owner demanded for Minor Omen. Ruling M settles the positional qualifier — a permanent note carrying the condition, no positional model — which is the ruling the earlier pass never cited. The resistance itself needs no ruling beyond the standing one that a rules-restricted value carries its restriction with it rather than being folded into an unqualified total; the value scaling with level is a plain own-sheet number.*
+
+*It will take more than a gathered mass of foes to take you down. You gain resistance equal to your level to damage dealt by swarms, troops, and creatures who occupy the same space as you. In addition, you can briefly menace large groups of enemies to step aside. You gain the Overawe Crowd activity.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -331,6 +390,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 25. Branched Tree Of Pain  `branched-tree-of-pain`  · level 18
 *Basis: The two questions the earlier pass left open are both answered, and they answer each other. Q11 settles mode-versus-permanent-star: the rules let this be shut down — Shift Immanence moves or withdraws the spark, and transcending ejects it — so it is a mode, and Ruling M does not apply because the gating state is player-controlled rather than app-unknowable. Q2 settles the altered critical threshold: star the skill and the action, which for an attack means the bound weapon's Strike entry plus the Strike action, with the rule printed where the player rolls it and no roller change demanded. Q9 plus principle K settle the weapon binding (a place to select it, filtered to legal weapons, recorded), and principle E settles the granted transcendence action — listed, with its requirement in the popup, and no further sheet impact.*
 
+***Usage** imbued into a weapon ikon that deals piercing or slashing damage --- The blade of your ikon takes one or more notches, capable of dealing mortal pain to your foes. **Immanence** When you Strike with the ikon, you critically succeed if you roll a 19 on the die as long as that result would be a success. This has no effect on a 19 if the result would be a failure. **Transcendence—Plant Thirty Barbs** ⟨1⟩ (deat…*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 25.1 | `choice` | A recorded binding of this ikon to ONE owned weapon, with the option list restricted to weapons that deal piercing or slashing damage (Q9 — the builder offers only what may legally be picked). Every clause below says "the ikon", so without the stored binding nothing beneath it can be resolved or aimed at the right Strike. The mechanism exists: `ItemDesignation` already includes 'ikon' (src/rules/types.ts:2940) and src/rules/play.ts:1386 marks an item as the character's ikon. |
@@ -342,6 +403,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 26. Hydraulic Maneuvers  `hydraulic-maneuvers`  · level 13
 *Basis: Q8 settles the contested placement (Ruling D's shape — mark the action the feat modifies — governs, so the Black Powder Boost/Leap precedent wins over the Minor Omen 'popup is enough' reading). Q2 settles the crit-failure rider: a degree-of-success upgrade on your own roll stars both the skill and the action, which is also why the Athletics star and the Disarm/Shove/Trip markers coexist rather than one replacing the other. Q1 settles the bonus suppression as indication-only, the window being a single following action. Principle E generalised puts the ⟨1⟩ activity in the actions list, and Ruling C / principle D picks Athletics as the starred skill.*
+
+*You batter your foes with a torrent of water siphoned from your surroundings. If the next action you take is an Athletics check to Disarm, Shove, or Trip, that action has a range of 15 feet. You don't receive any item bonuses to that check or any circumstance bonuses related to your physical body, but if you roll a critical failure on that Athletics check, you get a failure instead.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -356,11 +419,11 @@ down from 44% before your rulings were written into the vocabulary.
 ### 27. Zombie Dedication  `zombie-dedication`  · level 2
 *Basis: Both halves of the earlier open question are now answered. Q6 settles the creature traits: record them on the sheet, in the Details tab's tags. The undead body rules are settled by combining answers already given — Ruling E caps them (HP and damage never move sheet stats), Ruling D as reaffirmed by Q8 places them on the thing modified, which for Negative Survival is the Dying condition, Ruling D's own The Survivor example, and for the healing polarity is the HP/healing control; principle G plus answer #9 requires the referenced Basic Undead Benefits package to be surfaced as its own readable entry, which is what makes the remaining text reachable. The deteriorated state is a mode by Q11 (it can be shut down) carrying a real Slowed 1 by Q1 (it lands on you and outlasts a round), and principle C makes it addressable by the other zombie records that inflict it. Q13 settles the vision display. The rest sit on plain lanes: speedPenalty, weaponRider, grantsStrike, immunity, language, dailyChoice, with Ruling B for the restricted +1 and Ruling D/G for the jaws usage note.*
 
-> ⚠ **Corrected by the challenge pass.** Requirement 15 — the Negative Healing polarity — is filed as "[no lane] ... the half with no lane", but the app already has a built, live lane for exactly that clause: `negativeHealing`. It is declared on feats and read from feats: `C:/trying ai 2/pf2e codex/src/rules/derive.ts:1771` aggregates `c.feats.some((f) => db.feats[f.featId]?.negativeHealing)` into `charDefenses.negativeHealing` (alongsid
+*Despite your death and subsequent reanimation as a rotting corpse, you retain most of your mind and identity. Yet, it's always there: the hunger for the flesh and organs of the living. You gain the undead and zombie traits, and the basic undead benefits. Unlike a typical zombie, you're not mindless. Reduce all your Speeds by 5 feet. Your fist loses the nonlethal trait. Because of its progressing state of decay, your …*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
-| 27.1 | **no lane** | The character's acquired creature traits — undead and zombie — are recorded on the sheet, as data other records can read rather than as prose inside this feat. Q6 settles the first half of the earlier open question outright: 'Record acquired creature traits on the sheet (the Details tab already carries tags).' No existing lane grants a creature trait, so this needs a field the Details tab reads; that is a genuine build item, not an unanswered question. |
+| 27.1 | **none** | The character's acquired creature traits — undead and zombie — are recorded on the sheet, as data other records can read rather than as prose inside this feat. Q6 settles the first half of the earlier open question outright: 'Record acquired creature traits on the sheet (the Details tab already carries tags).' No existing lane grants a creature trait, so this needs a field the Details tab reads; that is a genuine build item, not an unanswered question. |
 | 27.2 | `speedPenalty` | Every Speed the character has drops by 5 feet — the land Speed and any fly/swim/climb/burrow Speed gained from any other source, now or later. It is a rule applied to all movement types, not a fixed number written into the land Speed. VERIFIED: the record carries no speedPenalty today. |
 | 27.3 | `weaponRider` | The fist unarmed Strike the character already has must lose the nonlethal trait — an edit to an existing strike's trait list, not a new strike. |
 | 27.4 | `grantsStrike` | A jaws unarmed Strike on the strikes list: 1d8 piercing, brawling weapon group, unarmed trait, rolled with the character's own attack bonus and damage modifiers. VERIFIED: the record already carries this under grantedStrikes. |
@@ -368,19 +431,21 @@ down from 44% before your rulings were written into the vocabulary.
 | 27.6 | `mode` | A 'deteriorated' state the player can switch on and off, applying a REAL Slowed 1 while it is on and carrying its full printed text. Q11 confirms it is a mode rather than a passive: the state can be shut down (the 10-minute repair). Q1 confirms the mode carries real numbers, because Slowed 1 lands on YOU and the state persists far longer than a round. |
 | 27.7 | `modifiesGrant` | The deteriorated mode must be addressable by OTHER zombie records — the feat says other zombie abilities push for a greater effect at the risk of deteriorating you, so those feats set this same state rather than describing their own. Principle C: a feat that modifies another record's granted thing must be reflected in that thing. |
 | 27.8 | `dailyChoice` | A control the player can reach at daily preparations (and in play) to spend the 10 minutes and clear the deteriorated state, plus the printed exclusivity — nothing else can remove that slowed condition. The state re-arms after each rest period. The choice-lane decision that rest equals daily preparation puts this on the sheet rather than in the builder. |
-| 27.9 | **no lane** | The referenced package must reach the sheet as an owned, readable entry in its own right with its details surfaced, the way a granted feature's are (principle G, and answer #9 on Devout Blessing). ⚠ VERIFIED DEFECT: core.json's rules/basic-undead-benefits is a stub — id, name, edition and aonId only, with no text at all — so there is currently nothing to surface. The full text is in the archive at rules-1694 and names seven benefits; the six mechanical ones are itemised below, and the seventh (Undead Hunger — you do not eat, drink or sleep, and enter 4 hours of quiescence a day to recover) is flavour that rides along as surfaced text with no lane of its own. |
+| 27.9 | **none** | The referenced package must reach the sheet as an owned, readable entry in its own right with its details surfaced, the way a granted feature's are (principle G, and answer #9 on Devout Blessing). ⚠ VERIFIED DEFECT: core.json's rules/basic-undead-benefits is a stub — id, name, edition and aonId only, with no text at all — so there is currently nothing to surface. The full text is in the archive at rules-1694 and names seven benefits; the six mechanical ones are itemised below, and the seventh (Undead Hunger — you do not eat, drink or sleep, and enter 4 hours of quiescence a day to recover) is flavour that rides along as surfaced text with no lane of its own. |
 | 27.10 | `immunity` | From that package: immunity to death effects — and ONLY that. ⚠ VERIFIED DEFECT against rules-1694: our record's immunities currently lists death effects, disease, paralyzed, poison and sleep; the package's printed text grants immunity to death effects alone, with disease and poison handled by the +1 circumstance bonus below. The four extra immunities should be removed. |
 | 27.11 | `situational` | From that package: a +1 circumstance bonus to saving throws (or any other defence) against disease and poison. Ruling B — a flat bonus the rules restrict leaves the stat total and becomes a starred conditional entry with 'against disease and poison' as its when. |
 | 27.12 | `sense` | From that package: undead vision — low-light vision, upgraded to darkvision if the character's ancestry already has low-light vision (the darkvisionIfAncestryLowLight shape). Q13 settles the display: show only darkvision when it supersedes low-light, rather than printing both. |
 | 27.13 | `language` | From that package: the character knows Necril. |
 | 27.14 | `immunity` | From that package, the half of Negative Healing that has a lane: you do not take void (negative) damage. That is an immunity and belongs in the defences panel with the death-effect immunity. |
-| 27.15 | **no lane** | From that package, the half with no lane: the healing polarity is inverted — void effects that heal undead restore your Hit Points, while vitality (positive) damage harms you and vitality healing does not help you. Ruling E fixes the ceiling (HP and damage never move sheet stats, so this moves no total), Ruling D as reaffirmed by Q8 fixes the placement (the marker goes on the thing it modifies — the HP/healing control the player uses when it matters), and principle G keeps the full sentence readable on the Basic Undead Benefits entry. No new polarity engine is required. |
+| 27.15 ✅ | `negativeHealing` | The polarity half of Negative Healing — void effects that heal undead restore your Hit Points, vitality damage harms you, vitality healing does not help you. THE LANE ALREADY EXISTS: set negativeHealing:true on the record; derive.ts:1771 reads it from feats and it renders as "Void healing — healed by void, harmed by vitality" on the Defenses card (VitalsRail.tsx:746) and in DefensesPills. ⚠ No feat carries this field today — only the dhampir heritage and four items — so any feat granting it is currently silent. |
 | 27.16 | `note` | From that package: Negative Survival marks the Dying condition — at 0 Hit Points you are knocked out and begin dying rather than being destroyed; effects that normally rescue a dying creature (stabilize and the like) do not benefit you; and when you would die you are destroyed rather than dead. This is Ruling D's own worked example, The Survivor marking the Dying condition, reaffirmed by Q8. ANCHOR VERIFIED: conditions/dying exists in core.json. |
 
 ---
 
 ### 28. Ascended Celestial Dedication  `ascended-celestial-dedication`  · level 12
 *Basis: Q11 decides the nimbus, which was the whole of the earlier open question: 'if the effect can be shut down it is a mode; if it cannot, it is a passive bonus' — the nimbus is suppressed and reestablished by a single concentrate action, so it is a mode. Q1 then fixes its contents (real numbers for what lands on you, text for what lands on allies — here everything is ally-facing, so the mode is display-only text) and Q3 fixes its visibility (a mode must make plain that it is active and what changed). Together these also decide the roughly forty other suppressible-aura records the earlier pass flagged as riding on this answer. The Will fortune star is answer #16's shape with Q2's second half confirming that a named save is starred alone; the Confused rewrite is Ruling D reaffirmed by Q8; Bless Ally and the per-hour pool sit on the plain grantsAction and limitedUses lanes and are already built.*
+
+*Your Calling has driven you to perform mortal deeds that will result in your ascension to the ranks of celestials. You're headstrong and determined and hardly waver in your resolve; once per hour, you can roll twice and use the higher result on a Will saving throw. If you ever become confused, rather than attack wildly, you become stubbornly immobile, wasting all your actions until the condition ends. Additionally, y…*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -396,12 +461,12 @@ down from 44% before your rulings were written into the vocabulary.
 ### 29. Adroit Manipulation  `adroit-manipulation`  · level 1
 *Basis: Q2 answers this feat's open question in both its parts, and it was the only genuinely contested clause. On scope: 'Both — star the skill AND the action' authorises the Thievery star and the Pick a Lock marker together, which is exactly what the earlier pass was demoted for asserting without a ruling behind it. On existence: the owner's answer to a degree-of-success upgrade is a star, i.e. a printed marker, which ratifies prose-in-a-star as the requirement rather than leaving it as today's workaround — and that reading covers the 176 live records sharing the clause. The training grant and its already-trained redirect are the plain skillTrained and redundantFallback lanes; principle K keeps the replacement-skill pick in the builder with no sheet control, and Q9 keeps Thievery out of that picker.*
 
-> ⚠ **Corrected by the challenge pass.** Requirement 29.1's "⚠ VERIFIED GAP" annotation is factually false, and it drags 29.2 with it. It claims that because the record has no `trainedSkill`, "the base grant is currently unexpressed — only the replacement pick exists." Both halves are wrong. mechanic-lanes.md line 23 lists three satisfiers for `skillTrained` — `trainedSkill`, `passiveEffects.skills`, and `featGrantsAuto.skills` — and the
+***Access** Mihrini ethnicity --- You've fiddled with knots, locks, and blacksmith's puzzles since you were a child to give your hands something to do. You gain the trained proficiency rank in Thievery (or another skill of your choice, if you're already trained in Thievery). If you roll a success on a Thievery check to Pick a Lock, you get a critical success instead.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
-| 29.1 | `skillTrained` | Trained proficiency rank in Thievery, folded into the Thievery modifier on the sheet. ⚠ VERIFIED GAP: the record carries a `choice` (flag 'adroitSkill', kind 'skills') but no trainedSkill, so the base grant is currently unexpressed — only the replacement pick exists. |
-| 29.2 | `redundantFallback` | When the character is already trained in Thievery the grant must not be wasted: it becomes trained in another skill of the player's choice instead. The redirect is conditional on the existing Thievery rank. |
+| 29.1 ✅ | `skillTrained` | Trained proficiency rank in Thievery, folded into the Thievery modifier. ALREADY BUILT — featGrantsAuto.ts:23 carries skills:{thievery:'trained'}, applied through featGrants.ts:320 → build.ts:3081. The earlier "⚠ VERIFIED GAP" annotation was false and is struck; nothing to build. |
+| 29.2 ✅ | `redundantFallback` | When already trained in Thievery the grant must not be wasted: trained in another skill of the player's choice instead. ALREADY BUILT — redundantFallback:true on the same featGrantsAuto.ts:23 entry; build.ts:3089 records the fallback and applies the pick. |
 | 29.3 | `choice` | The sheet records WHICH replacement skill was taken. It is chosen once when the feat is taken and re-chosen only in the builder, so under principle K it needs no in-play control — only the resulting trained rank shows on the sheet. Q9 constrains the picker: the builder offers only what the player may legally pick, so the replacement list must exclude Thievery itself (the clause exists precisely because they already have it). |
 | 29.4 | `situational` | A `*` on Thievery carrying the upgrade in words: a success on a Thievery check to Pick a Lock is a critical success instead. Q2 settles the deeper half of the earlier open question — the answer is to star it, so the printed sentence on the marker is the requirement and no computed degree-of-success engine is called for. The feat's own text names the skill ('a Thievery check to Pick a Lock'), so Thievery alone is starred; that is the text narrowing the trigger, not the reader. House style for the skill-side shape already exists at situationalBonuses.ts:2698 (brine-may: a skill target with bonus 'a success is a critical success instead'). |
 | 29.5 | `note` | The same upgrade marks the Pick a Lock action itself, with a `*` linking back to this feat. Q2 settles the one-mark-or-two question the earlier pass raised and demoted on: 'Both — star the skill AND the action.' Q8 supplies the same placement independently. ANCHOR VERIFIED: actions/pick-a-lock exists in core.json as a 2-action record. |
@@ -410,6 +475,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 30. Adhyabhau  `adhyabhau`  · level 1
 *Basis: Q2 is directly on point and settles the whole of the earlier open question: 'a degree-of-success upgrade on your own roll stars BOTH the skill and the action. If it applies to saves generally, star all three saves.' That answers the existence question (the upgrade does earn its own starred entry, so the Minor Omen gloss does not govern — that was a reroll on a reaction which already had a listing to carry it) and the scope question (the clause says 'a saving throw' with no save named, so all three are starred, which is also where Ruling H would have landed). Ruling B decides the +1's placement outside the flat total. The house style Q2 mandates is already shipped on four sibling records with the identical trigger — irrepressible, -ganzi, -halfling, -nephilim — so Adhyabhau's missing second line is an inconsistency with the app's own precedent rather than a change to it.*
+
+*You descend from the rare psychic vampires known as vetalaranas. Your forebear gained sustenance from the mental and emotional energy of living creatures, which manifests in you as powerful resistance to such effects. You gain a +1 circumstance bonus to Will saves against effects with the emotion trait, and when you roll a success on a saving throw against such an effect, you get a critical success instead.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -421,6 +488,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 31. Eternal Blessing  `eternal-blessing`  · level 16
 *Basis: Q11 decides the blocker outright. The old open question offered three shapes for your own +1 (flat bonus / permanent star per Ruling M / mode); Q11 says check the rules — if the effect can be shut down it is a MODE, if it cannot it is a passive bonus. This feat says in terms "You can Dismiss the spell", so it is a mode. Ruling M is not in play: it answered "am I standing inside this emanation?", a question that cannot arise when the emanation is centred on you. Q1 then decides what the mode carries — real numbers for whatever lands on YOU, text for whatever lands on allies — which also answers the copy-or-point half: the mode carries the effect, Bless's ally +1 is text. Principle B keeps the full text (including the parts the app cannot compute) inside the mode; Q3's "must make plain that a mode is active and what changed" governs its presentation; Ruling F keeps the ally number off your sheet. The display shape of the printed parts is deferred, per answer #1's "later we can decide how its displayed".*
+
+*Your deeds have brought your deity's grace to you for all of eternity. You're continuously surrounded by a Bless spell, with a spell rank equal to half your level (rounded up). The radius is 15 feet, and you can't increase it. You can Dismiss the spell; if you do, it returns automatically after 1 minute.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -435,6 +504,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 32. Twitchy  `twitchy`  · level 1
 *Basis: Both halves of the open question are answered. The +1/+4 shape: Ruling G — a set or upgrade REPLACES the entry it upgrades rather than sitting beside it — so one initiative entry whose value becomes +4 under the stated condition, not two lines and not a stack; the general stacking display rule (different `when` → show both) yields to Ruling G's more specific case. The one-restriction-two-rows half: Q2's "when it applies to saves generally, star all three saves" plus Principle J (situational stars go on the specific stats affected) — the star must be visible on AC and on each of the three saves, however it is stored. Ruling B keeps all of these in `situational` outside the totals with the restriction as the `when`. Ruling D/G puts the initiative bonus on the initiative roll itself. Ruling H prints the enemy-side trigger and lets the player apply it; the DECIDED-SCOPE line about target-side numbers does not reach it, because what the opponent does is only the trigger and the number that moves is the player's own.*
 
+*You are naturally suspicious and wary of danger, especially when you suspect someone might be leading you into an ambush. You gain a +1 circumstance bonus to AC and saves against hazards, and to all of your initiative rolls. If at least one of your opponents is using Deception or Diplomacy to determine their initiative, your bonus to initiative from this feat increases to +4.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 32.1 | `situational` | A +1 circumstance bonus to AC restricted to hazards. Restricted, so per Ruling B it sits outside the AC total with "against hazards" as its stated condition, visible as a star on AC. |
@@ -447,19 +518,23 @@ down from 44% before your rulings were written into the vocabulary.
 ### 33. Natural Ambition  `natural-ambition`  · level 1
 *Basis: Q9 settles the picker: the builder shows only what the player may legally pick, unless they toggle "show options not meeting prerequisites" — so prerequisites ARE checked (against the finished build, per this feat's own second sentence), with the toggle as the escape hatch, and the 12-name hand-maintained hide list is retired because a feat a subclass already granted is not a legal pick. Q14 point 8 ("unpicked grants show as empty slots; pressing one opens the selection of that feature's relevant options") plus Principle G (a grant's details surfaced AND its choice offered) settle the sheet-surface half: an unfilled slot is visible and pressable. Principle K plus Ruling K dispose of the prerequisite-timing sentence — a choice made once during building lives in the builder and gets no sheet control. The standing choice-lane ruling "Never show a pick that silently does nothing" settles the stale pick: warn, never drop it silently.*
 
+*You were raised to be ambitious and always reach for the stars, leading you to progress quickly in your chosen field. You gain a 1st-level class feat for your class. You must meet the prerequisites, but you can select the feat later in the character creation process in order to determine which prerequisites you meet.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 33.1 | `grantsFeatChoice` | An extra class-feat pick — one class feat of 1st level drawn from your own class's feat list — held in a slot of its own beside your normal class feats, so taking it consumes none of them. |
 | 33.2 | `grantsFeatChoice` | Whatever is picked must become a genuinely OWNED feat: its mechanics reach the sheet exactly as if it had been chosen in a normal class-feat slot. This feat has no content of its own, so a pick that is recorded but not owned makes the whole feat inert (a granted record the ownership set cannot reach is invisible). |
 | 33.3 | `grantsFeatChoice` | Per Q9 the picker offers only 1st-level class feats of your own class that the player may LEGALLY pick — prerequisites evaluated, and feats a subclass already granted excluded because they are not legal picks — with the standard "show options not meeting prerequisites" toggle as the only escape. The current behaviour (no prerequisite check at all, plus a hand-written list of 12 hidden feats) is superseded. |
 | 33.4 | `choice` | While the pick is unmade it shows as an empty slot on the feat's own entry, and pressing it opens the picker for this grant's options — Q14 point 8's shape, and Principle G's "details surfaced and choice offered". Once made, changing it is a builder action needing no sheet control (Principle K). |
-| 33.5 | **no lane** | No sheet surface. Prerequisites for this pick are judged against the FINISHED character, and the character must not be reported illegal while the slot sits unfilled — that is builder validation timing end to end (Principle K; Ruling K classes a once-during-building choice as a builder pick). |
+| 33.5 | **none** | No sheet surface. Prerequisites for this pick are judged against the FINISHED character, and the character must not be reported illegal while the slot sits unfilled — that is builder validation timing end to end (Principle K; Ruling K classes a once-during-building choice as a builder pick). |
 | 33.6 | `grantsFeatChoice` | If a later change to the character makes an already-stored pick illegal, the app must tell the player rather than dropping the feat silently — today its mechanics vanish from the sheet with no notice, which is exactly what the standing choice-lane ruling "Never show a pick that silently does nothing" forbids. |
 
 ---
 
 ### 34. Divine Health  `divine-health`  · level 2
 *Basis: Q2 settles what blocked this: a degree-of-success upgrade on your own roll DOES get a surface — star the skill and the action, and where it applies to saves generally, star all three saves. So both outcome clauses ride on the same disease/poison save stars, and the six existing feats that drop the clause are the wrong set. Ruling B puts the +2 in `situational` outside the save totals with the restriction as its `when`; Ruling H keeps it on all three saves because the text says "saves" and narrowing it to Fortitude would put a ruling on the sheet dressed as the book's. Ruling D puts the flat-check bonus on the thing it modifies, value inline — the same shape already used for the Dying condition. Principle A + Principle C + Q8 put the ally clause on the record the feat modifies, the Champion's Aura, and Q1/Ruling F make it text with no number of yours. Q13's shape (show only what actually applies rather than the superseded alternative), reinforced by Q12 (leave the player least confused), gates the Sacred Body clause on actually owning that feature — it is a hard checkable dependency, not one of Ruling H's open triggers. Display shape of the printed parts is deferred per answer #1.*
+
+*Your faith makes you resistant to disease, protecting you as you offer succor to the ill. You gain a +2 status bonus to saves against diseases and poisons and to flat checks to recover from persistent poison damage. Allies in your champion's aura get this benefit, but their bonus is +1. In addition, if you roll a success on a save against a disease or poison, you get a critical success instead. (Your allies don't sha…*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -474,23 +549,27 @@ down from 44% before your rulings were written into the vocabulary.
 ### 35. Jotunborn Weapon Familiarity  `jotunborn-weapon-familiarity`  · level 1
 *Basis: Q10 settles the replace-or-floor blocker: apply the remap ONLY when it makes the player better, so the app's existing `betterRank` chain (src/rules/derive.ts:2632-2635) is already correct and RAW's strict replacement is rejected because it could lower a rank. Q7 settles the star blocker: the `*` is for a CONDITIONAL grant — most permanent grants need no star — and this remap is permanent and unconditional, so no star is required; the source is visible where the number is built, in the strike's proficiency line. Q5 settles the access sentence outright: no requirement, the inventory stays open and rarity does not gate the shop (the lane manual's NOT-lanes list says the same). Worth stating plainly because it is easy to get wrong: this is a category REMAP, not a rank grant — reading it as "you become trained in these weapons" would under-serve a fighter and over-serve a wizard.*
 
+*You gain access to all uncommon weapons with the jotunborn trait. You have familiarity with weapons with the jotunborn trait plus the bola, greataxe, halberd, maul, longspear, and war flail—for the purpose of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 35.1 | `profWeapon` | For every weapon in the affected set the attack bonus is computed from the character's proficiency rank one category down — a martial weapon reads the simple-weapon rank, an advanced weapon reads the martial rank — but only where that is BETTER than the weapon's own category rank (Q10). It grants no rank of its own, so the result tracks those ranks as they improve rather than freezing at a value. |
 | 35.2 | `profWeapon` | The affected set must be expressible two ways at once: dynamically by trait (any weapon carrying the jotunborn trait, including ones printed later) unioned with the explicit six-name list — bola, greataxe, halberd, maul, longspear, war flail. A name list alone cannot express the trait half. |
 | 35.3 | `profWeapon` | The downgrade is scoped "for the purpose of proficiency" only. Those weapons stay martial or advanced for every other purpose — feats and class features keyed to a category, critical specialization by group, anything else reading the weapon's real category — so the remap lives at proficiency lookup, not on the weapon record. |
-| 35.4 | **no lane** | No `*` on the affected weapon's strike or proficiency row. Per Q7 the star marks a CONDITIONAL grant, and this remap is permanent and unconditional; the changed number's source shows in the strike's proficiency breakdown and on the Proficiencies page, which is where the player looks it up. |
-| 35.5 | **no lane** | No requirement at all. Per Q5 an "access to uncommon X" clause needs nothing: the inventory stays open and rarity does not gate the shop. Q9's "only what you may legally pick" governs the builder's choices, not the item list. |
+| 35.4 | **none** | No `*` on the affected weapon's strike or proficiency row. Per Q7 the star marks a CONDITIONAL grant, and this remap is permanent and unconditional; the changed number's source shows in the strike's proficiency breakdown and on the Proficiencies page, which is where the player looks it up. |
+| 35.5 | **none** | No requirement at all. Per Q5 an "access to uncommon X" clause needs nothing: the inventory stays open and rarity does not gate the shop. Q9's "only what you may legally pick" governs the builder's choices, not the item list. |
 
 ---
 
 ### 36. Clever Improviser  `clever-improviser`  · level 5
 *Basis: Principle G / owner answer #9 (Devout Blessing) settles the grant — a granted record needs its details surfaced, not just its name. Q5 + Q9 together settle the gate: Q9 makes legality the thing a list reflects ('the builder shows only what the player may legally pick'), and Q5 rules that a list outside the builder is not gated at all ('the inventory stays open'); on either reading, hiding an action this feat makes legal is wrong, so the trained-only actions must stay reachable. Q8 (+ Ruling D and Principle A / the ⚠ correction) settles the marker: mark the thing the feat modifies so the player SEES the modification. Principle J puts that star on the specific ACTIONS affected rather than on a general stat.*
 
+*You've learned how to handle situations when you're out of your depth. You gain the Untrained Improvisation general feat. In addition, you can attempt skill actions that normally require you to be trained, even if you are untrained.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 36.1 | `grantsFeat` | The Untrained Improvisation general feat is added for free and arrives LIVE — its own mechanics applying and its details readable from Clever Improviser, not merely a name in the feat list. Already carried: src/rules/featFeatGrants.ts:42 maps 'clever-improviser' -> ['untrained-improvisation']. |
-| 36.2 | **no lane** | A character-level waiver of the trained-proficiency gate on skill actions: for a character with this feat, actions carrying minRank 'trained' stay listed and attemptable in every skill they are untrained in. This is a live gate, not a hypothetical one — src/rules/skillActions.ts:1007-1015 skillActionsFor() filters on rankAtLeast(rank, a.minRank) with no waiver hook, and StatDetailModal.tsx:58 is its only caller, so today those actions are simply invisible. The waiver must reach that filter (a per-character predicate skillActionsFor can consult), not a note printed elsewhere. |
+| 36.2 | **none** | A character-level waiver of the trained-proficiency gate on skill actions: for a character with this feat, actions carrying minRank 'trained' stay listed and attemptable in every skill they are untrained in. This is a live gate, not a hypothetical one — src/rules/skillActions.ts:1007-1015 skillActionsFor() filters on rankAtLeast(rank, a.minRank) with no waiver hook, and StatDetailModal.tsx:58 is its only caller, so today those actions are simply invisible. The waiver must reach that filter (a per-character predicate skillActionsFor can consult), not a note printed elsewhere. |
 | 36.3 | `situational` | Every action that is reachable only because of this feat carries a `*` naming Clever Improviser, in Ruling D's shape (the mark on the action, source behind the star), so the player sees why a trained-only action is offered at untrained and can read the permission. The star rides the action rows inside each untrained skill's list, so it is visible from the skill without a second marker on the skill itself. |
 
 ---
@@ -498,14 +577,18 @@ down from 44% before your rulings were written into the vocabulary.
 ### 37. Cornered Fury  `cornered-fury`  · level 5
 *Basis: Q4 was asked about this exact feat (docs/gold-set-open-questions.md names feat 37) and the owner chose (a): the entry is the whole surface. Q1 caps it further — the effect runs 1 round, and effects lasting 1 round are not implemented, indication only. gold-set-answers.md's reading of answer #6 is explicit that an off-guard clause landing on the enemy 'adds nothing', and Ruling F/N plus the DECIDED-SCOPE NOT-lane ('effects on enemies or on the battlefield rather than on your own sheet') say the same. The Mastermind's Eye star was owed to the Recall Knowledge check YOU roll — here the triggering roll is the enemy's, so there is no skill or action row of yours to mark.*
 
+*If a foe of a larger size than you critically hits and damages you, that foe is off-guard to you for 1 round.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
-| 37.1 | **no lane** | The feat's own entry is the entire surface: Cornered Fury appears among the character's feats/triggered abilities with its trigger (a foe of a larger size critically hits and damages you) and its result (that foe is off-guard to you for 1 round) readable in its popup. Explicitly nothing else — no star on AC, on the saves, or on the HP / damage-taken (IWR) surface; no mode (1 round); no number anywhere. Foundry's Note on damage-received is not to be mirrored. |
+| 37.1 | **none** | The feat's own entry is the entire surface: Cornered Fury appears among the character's feats/triggered abilities with its trigger (a foe of a larger size critically hits and damages you) and its result (that foe is off-guard to you for 1 round) readable in its popup. Explicitly nothing else — no star on AC, on the saves, or on the HP / damage-taken (IWR) surface; no mode (1 round); no number anywhere. Foundry's Note on damage-received is not to be mirrored. |
 
 ---
 
 ### 38. Experienced Professional  `experienced-professional`  · level 1
 *Basis: Q2 was asked about this exact feat (docs/gold-set-open-questions.md names feat 38) and the owner answered BOTH — a degree-of-success upgrade on your own roll stars the skill AND the action. That decides the fork outright and is a FAMILY answer: student-of-the-canon (situationalBonuses.ts:3244), sturdy-bindings (:3245) and sure-feet (:3248) cite this feat as precedent and gain their skill stars the same way. Ruling D/G put the action mark on Earn Income; the skill half targets Lore. Ruling B settles the expert gate (a restricted clause lives in `situational` with the restriction in its `when`), Principle B settles that the text is carried even though nothing computes downtime income, and Q12 (whichever spelling leaves the player least confused) plus Ruling H (printed trigger in the note) settle the wording that keeps the action mark from reading as if it applied to Crafting's and Performance's Earn Income.*
+
+*You carefully safeguard your professional endeavors to prevent disaster. When you use Lore to Earn Income, if you roll a critical failure, you instead get a failure. If you're an expert in Lore, you gain twice as much income from a failed check to Earn Income, unless it was originally a critical failure.*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -518,6 +601,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 39. Blood and Spirit  `blood-and-spirit`  · level 5
 *Basis: Q1 decides the shape and kills the reviewer's (a)/(b)/(c) fork: 'effects lasting 1 round are NOT implemented — indication only. Longer duration -> a MODE.' This effect lasts until the end of your turn, i.e. under a round, so it gets NO mode — and with no mode, the question of whether an activated mode may name an inventory weapon never arises. Ruling D / Q8 then place the indication on the thing it modifies (your Strike damage), Ruling B keeps a restricted value in `situational` with its restriction in the `when` and outside every total, and Principle B requires the full printed text be carried even where nothing computes. Q11 is consistent and not in tension: nothing here runs permanently, so the passive-bonus branch does not apply. The holy/unholy pick is the built `choice` lane (the record already carries `choice`), with Q9 governing the builder offering exactly the two legal options.*
 
+*Your connection to the divine has sanctified your blood, but the power only manifests when you are shedding it. Choose holy or unholy. While you are taking persistent bleed damage, you can Interact to coat a piercing or slashing weapon you're wielding with your blood. Until the end of your turn, your Strikes with that weapon deal an additional 1d6 spirit damage with the chosen trait to creatures with the opposing tra…*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 39.1 | `choice` | A two-option pick, holy or unholy, recorded on the character and load-bearing rather than cosmetic: every surface below reads the chosen trait and its opposite, so the marker prints e.g. 'holy spirit damage ... to unholy creatures' rather than 'holy or unholy'. |
@@ -528,6 +613,8 @@ down from 44% before your rulings were written into the vocabulary.
 
 ### 40. Primal Dragonblood  `primal-dragonblood`  · level 1
 *Basis: Requirements 1-3 rest on built, documented lanes — skillTrained, redundantFallback, skillSubstitution — with Principle D putting Nature onto the two named action rows where the player looks the number up, Principle K keeping the fallback pick in the builder with no sheet surface, and Q10's principle (apply a rank change only when it makes the player better) confirming the Nature grant may never lower an existing rank. Requirement 4 is settled by Q9, which was asked about this exact feat (docs/gold-set-open-questions.md names feat 40) and answered: the builder shows only what the player may legally pick, unless they toggle 'show options not meeting prerequisites' — so the picker filters, exactly as Domain Fluency must filter to the mystery's domains. That also settles the whole 'if you ever pick X it must be a Y' class of clause: filter the picker, builder-side.*
+
+*A dragon with a deep connection to the natural world, such as an adamantine dragon or a horned dragon, resides somewhere on your family tree. You tend to trust your instincts and might take on the role of a protector of the wilderness. You gain the trained proficiency rank in Nature. If you would automatically become trained in Nature (from your background or class, for example), you instead become trained in a skill…*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -541,6 +628,8 @@ down from 44% before your rulings were written into the vocabulary.
 ### 41. Domain Fluency  `domain-fluency`  · level 12
 *Basis: Q9 decides the filtering and names this feat outright — 'the builder shows only what the player may legally pick, unless they toggle show options not meeting prerequisites. So Domain Fluency must filter to the mystery's domains'; principle K adds that re-picking is a builder act with no sheet surface. Principle G ('a granted class feature needs its details surfaced AND its choice offered', from answer #9 Devout Blessing) decides the granted spell — the same shape, a grant plus its choice. The focus point follows from the Remaster focus-pool rule, not from an owner call. Q12 ('whichever spelling leaves the player least confused') decides the revelation label: name it as the rules do and cast it off the oracle statistic; the earlier 'is revelation a real category' worry is moot on measurement, since no grantable advanced domain spell is cursebound and the curse is tracked by hand.*
 
+*You command a deep understanding of the domains related to your mystery. Choose one of the domains associated with your mystery for which you have an initial domain spell. You gain an advanced domain spell from that domain, which you cast as a revelation spell.*
+
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 41.1 | `choice` | A one-of domain pick offered in the BUILDER, with its option list genuinely filtered twice: to the domains associated with the character's mystery, and among those only the ones for which they already hold the initial domain spell (in practice the domain taken with the prerequisite Domain Acumen, whose answer is stored under the `domainAcumen` flag). The record today offers all 49 domains; that is now a defect, not a permitted simplification. The only escape hatch is the builder's standing 'show options not meeting prerequisites' toggle. Cost, not a question: mystery records carry only id/name/edition/aonId (public/core.json `mystery`), so the mystery-to-domain association has to be authored, and the menu has to be able to read another feat's earlier answer. Changing the pick later is a builder act with no sheet surface. |
@@ -553,19 +642,21 @@ down from 44% before your rulings were written into the vocabulary.
 ### 42. Improbable Elixirs  `improbable-elixirs`  · level 18
 *Basis: Q14 was raised for this feat and answered it in full, with a nine-point spec: the picks must reach a formula book and the book itself needs building. Points 1-5 fix the book's shape (add/list/reference-only/remove/search/capacity 100), point 6 ensures the character has one, point 7 gives the feat a builder picker offering only what the feat allows (Int-mod slots, potions of 9th level or lower — Q9's 'only what you may legally pick' points the same way), point 8 makes unpicked grants empty slots that open the option list, and point 9 makes the grant a one-time write severed from the book afterwards, which the feat's own 'they can't be changed' corroborates. The substitution clause is excluded by the lane manual's NOT-lanes ('prerequisites, access clauses, crafting requirements'), and the elixir re-typing has no destination under a reference-only book.*
 
-> ⚠ **Corrected by the challenge pass.** Requirement 4 drops a mechanical clause that has a live destination in this app. The text's "You gain formulas to create these potions **as alchemical consumables with the elixir trait**" does not merely say the formulas exist — it re-types the products. Improbable Elixirs is an 18th-level **alchemist** class feat (core.json: traits ["alchemist"], category "class"), so every character who can take
+*Your mastery of alchemical secrets enables you to replicate effects most believe can be achieved only via magic. Select a number of potions equal to your Intelligence modifier (minimum 1); these potions must be of 9th level or lower. You gain formulas to create these potions as alchemical consumables with the elixir trait. When making these alchemical elixirs, you can substitute alchemical reagents for an equal value…*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
 | 42.1 | `choice` | A real multi-pick in the builder replaces the present single free-text field. The number of slots is the Intelligence modifier with a floor of 1, and the option list is filtered to potions of 9th level or lower — offering only what this feat allows, never the whole item list. Unpicked slots appear as empty slots in the formula book's inventory popup, and pressing one opens this feat's option list. If Intelligence later rises, a further empty slot appears; formulas already written stay as they are. |
 | 42.2 | `dailyChoice` | Each pick is written INTO the character's formula book, which is an item whose popup is where formulas live: each entry listed as '<item name> formula', searchable inside the popup, individually removable, capacity 100. A formula is a reference only — the potion is never copied into inventory. Taking this feat ensures the character has a formula book; if they have none, one is added. This is the destination the owner chose over the present inert free-text field, whose note ('outside the Snare Crafting formula book the app tracks no crafting formulas, so these potions don't appear anywhere else') is now a defect statement rather than a design. |
 | 42.3 | `choice` | The grant is a ONE-TIME WRITE, severed from the feat after the first pick. The chosen formulas belong to the book: if the book is lost the feature does not re-grant them, and the answers are not re-openable the way an ordinary builder choice is — which is also exactly what the feat's own last sentence says. Never a live derivation from the feat record. |
-| 42.4 | **no lane** | No computed surface, deliberately. The chosen destination is a formula book that stores REFERENCES rather than items, so there is no per-character item copy to re-type as an alchemical elixir; the 'alchemical consumables with the elixir trait' wording and the substitution allowances stay as printed text on the feat and beside the book's entries. The reagent-for-components substitution and the alchemist's toolkit/lab permission are crafting requirements, which the lane manual's NOT-lanes list excludes by name. Nothing here reaches the Advanced Alchemy prepare list or the Quick Alchemy picker: the decision named the book, not the alchemy panel. |
+| 42.4 ✅ | `dailyChoice` | Each formula this feat writes into the book is, for this character, an ALCHEMICAL CONSUMABLE WITH THE ELIXIR TRAIT — and therefore CRAFTABLE. OWNER RULING (round 3): "yes, because You gain formulas to create these potions as alchemical consumables and you can craft alchemical consumables." So the chosen potions join the Advanced Alchemy prepare list and the Quick Alchemy picker. This is pool membership, not an inventory copy: the formula book stores references, never items. |
 
 ---
 
 ### 43. Endless Memories  `endless-memories`  · level 9
 *Basis: Principle C plus the answers document's own correction ('an indication on the record it modifies — the spell, the action, the class feature') and Q8 ('yes, mark the action a feat modifies') decide the Ancient Memories surface; the correction's wording reaches records that are not actions, which is what was previously doubted. Q11 decides the expert rank's shape — 'if the effect can be shut down it is a mode; if it cannot, it is a passive bonus' — and this cannot be shut down, so it is a real day-long rank on the daily choice's grant, not a mode; the two reader suggestions calling it a mode fall away. Q9 decides the menu ('the builder shows only what the player may legally pick'), which is also what gates the rider on the antecedent pick having been made; Ancient Memories' own no-prerequisite wording settles whether this morning's grant counts as 'already trained'. Principle K decides the retrain clause outright — a builder re-pick gets no sheet surface, so it gets a printed clause and nothing else, and no note lane is claimed for it. Principle B ('a mode carries the full text of what it does, including parts the app cannot compute') keeps the temporary-rank restriction printed beside the pick.*
+
+*You've lived a thousand lives and done a hundred-thousand things. When you choose a skill in which to become trained with Ancient Memories, you can also choose a skill in which you're already trained and become an expert in that skill. This lasts until your Ancient Memories expires. When the effects of Ancient Memories and Endless Memories expire, you can retrain one of your skill increases. The skill increase you ga…*
 
 | # | lane | what the sheet must be able to express |
 |---|---|---|
@@ -574,4 +665,4 @@ down from 44% before your rulings were written into the vocabulary.
 | 43.3 | `dailyChoice` | The pick must really move the number: the chosen skill goes trained to expert for the day, its modifier and everything reading that rank move with it, and all of it reverts at the next daily preparation. It is NOT a mode — the effect cannot be shut down at will, so it is a genuine (day-long) rank carried by the daily choice's grant. The mechanism is the daily choice's effectGrant (a grant mapping the skill to a rank, read when the skill modifier is computed), not the level-keyed featGrantsAuto.rankUpgrade shape the manual reserves for 'at Nth level you become master in X'. Live defect: none of the record's 16 options carries a grant, so today the pick is recorded and the rank never moves. |
 | 43.4 | `modifiesGrant` | Ancient Memories itself has to show that it now offers two picks. The indication lives on the record this feat modifies — here a passive ancestry feat, so it belongs on that feat's own surface (its description and its daily-preparations row), not on the action/condition marker route. Two adjacent named rows at rest are the visible half, but the modification must be legible from Ancient Memories rather than only from this feat. |
 | 43.5 | `note` | The restriction rides with the pick in print: this temporary expert rank cannot be used as a prerequisite for a skill increase or a permanent character option, so a raised number is never mistaken for a real rank. Nothing computes; the text is the requirement. The record already carries this note. |
-| 43.6 | **no lane** | No surface owed. The permission to retrain one skill increase once both effects lapse, and the restriction on what the new increase may target, are performed in the builder, and a builder re-pick needs no sheet surface — the clause stays in the feat's printed description and nothing computes, prompts, or enforces. No retrain reminder, and no builder gate checking the new increase against the two skills that were picked. |
+| 43.6 | **none** | No surface owed. The permission to retrain one skill increase once both effects lapse, and the restriction on what the new increase may target, are performed in the builder, and a builder re-pick needs no sheet surface — the clause stays in the feat's printed description and nothing computes, prompts, or enforces. No retrain reminder, and no builder gate checking the new increase against the two skills that were picked. |
