@@ -152,3 +152,27 @@ instead"* — a skill choice with a redundancy fallback. Flagged rather than ass
 > *"( heaving a * on deception )"*
 
 Requirement: a `*` on **Deception**, carrying the once-per-day reroll and the ring-of-truth clause.
+
+---
+
+## Round 4 — the audit-500 uncertain pile, answers 1–7 (2026-08-11)
+
+| # | feat | ruling |
+|---|---|---|
+| **1** | Wukong Extension | **Reach is a VALUE on the Strike, not a note.** If the feat always changes reach, write the new reach. If several sources give several reaches, write them all. A reach that applies only in certain circumstances gets a `*`. Two sources giving the SAME reach under different circumstances are written `reach/reach` with a `*` on **both**, each opening its own source. |
+| **2** | Out of Hand | Taking the feat adds the ability to put **the severed arm in the Companions tab as a minion**, following the feat's own stat block. **The player adds it when it happens in play** — the app provides the capability, never the trigger. |
+| **3** | Realm Strider | The feat's extra text is written **onto the granted spell's description, under that feat's name**, so the player cannot mistake it for part of the spell as normally printed. ⚠ *"adding notes to spells from features will come up more in the future"* — build this as a general lane, not a one-off. |
+| **4** | Communal Sustain | **A once-per-round frequency needs no counter.** No use pip. |
+| **5** | Posse | No special implementation, and **no `*`** — the bonus only arrives after the player deliberately spends a minute doing something, so there is nothing to warn them about on a stat row. |
+| **6** | Greater Vital Evolution | No implementation needed. |
+| **7** | Eidetic Memorization | No implementation needed. |
+
+### The principles these establish
+
+| # | principle | from |
+|---|---|---|
+| **L** | **Reach is displayed, not annotated.** Multiple reaches are shown together; conditional ones are starred; identical reaches from different circumstances are shown twice with a star each, because the player must be able to tell which one a given situation uses. | 1 |
+| **M2** | A feat that creates a **temporary creature** gets a Companions-tab entry the **player** adds. The app supplies the capability and the stat block; the timing is the player's, never the app's. | 2 |
+| **N2** | A feat that **modifies a spell it grants** writes its text into that spell's description **attributed to the feat and visually separated** from the spell's own rules. A recurring shape — build it as a lane. | 3 |
+| **O2** | **Per-round frequencies get no use pip.** A counter is for a resource that runs out across a scene, not one that resets every round. | 4 |
+| **P** | A benefit gated behind a **deliberate out-of-combat action** needs no star. The player already knows they did the thing. | 5 |

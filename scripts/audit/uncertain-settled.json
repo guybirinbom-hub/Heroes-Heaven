@@ -1,0 +1,201 @@
+{
+ "returned": 15,
+ "settled": [
+  {
+   "n": 8,
+   "featId": "snap-out-of-it-pathfinder-agent",
+   "basis": "Principle D + Ruling D/G — \"star/surface every skill that could perform the named action, so the player sees it where they look up the number\" and \"the mark lives on the thing you are looking at when it matters\". Archetype-vs-general is nowhere a display axis in the rulings; it is a builder/prerequisite fact. Ruling H's inclusive default (\"where the rules are open, stay open\") breaks the tie toward inclusion, and Q4/Principle E confines the ally-side arithmetic to the popup rather than excluding the feat from the skill panel.",
+   "requirements": [
+    "DELIVERED — the 2-action activity reaches the actions list (sheetDiff actions[2]), with all four degrees of success and the \"The DC is the DC for the effect that caused the condition\" line in the popup the record's text renders.",
+    "NEW — the feat joins the Medicine skill-detail panel's feat-gated action list: a SKILL_ACTIONS.medicine entry (C:/trying ai 2/pf2e codex/src/rules/skillActions.ts) with feat:true, featName:\"Snap Out of It! (Pathfinder Agent)\", minRank \"master\", costText \"2 actions\". No new gating machinery is needed — StatDetailModal.tsx:57-58 already filters those entries by ownership via featNames.has(n), so it appears only for characters who took it.",
+    "FAMILY-WIDE, not a one-off — membership in a skill's feat-gated action list keys off \"this feat rolls this skill\", never off feat category. Every archetype skill feat that rolls a named skill joins that skill's panel. All 42 current feat:true entries are general skill feats, so this is a backfill across the archetype skill feats, exactly as the question anticipated.",
+    "NOTHING ELSE MOVES — the feat grants no bonus, so no number joins the Medicine total; the ally-side condition-value arithmetic stays off this sheet (Ruling F / DECIDED SCOPE); and the four-degree table is popup text, not a degree-of-success surface (Principle E, Minor Omen — Q2's star-the-skill-and-the-action applies to a degree-of-success SHIFT, which this is not).",
+    "BOUNDARY — whether a capability-only skill feat should ALSO carry a `*` on the skill row is Q14's question (Legendary Medic), and is not decided here. This requirement is list membership only."
+   ]
+  },
+  {
+   "n": 9,
+   "featId": "disrupting-strikes",
+   "basis": "Q1 decides the mode question — \"effects lasting 1 round are not implemented; indication only. A longer duration gets a mode\" — and \"until the start of your next turn\" is exactly the 1-round case. Principle P plus Principle E decide the star question: a benefit gated behind a deliberate action the player just performed needs no warning on a stat row, and the feat's own entry is the whole surface.",
+   "requirements": [
+    "DELIVERED and SUFFICIENT — the 1-action activity in the actions list (sheetDiff actions[0]) is the whole surface. No registry entry exists today and none is needed (grep for \"disrupting\" across src/ returns nothing, confirming the current state is deliberate absence, not a silent write).",
+    "The popup carries the printed text in full, INCLUDING BOTH TIERS — disrupting below 14th and greater disrupting from 14th. Ruling G's replace-don't-duplicate governs entries the app AUTHORS (a set or upgrade replaces what it upgrades); the popup prints the book's own text, so both clauses stay as printed.",
+    "NO MODE. Q1 excludes the 1-round duration explicitly; the standing app mechanism for a self-activated temporary effect is a mode, and Q1 is what removes it here.",
+    "NO `*` on the weapon or unarmed Strike rows, and no rune effect written onto Strikes. A permanent star would be false in nearly every round of play, and the player spent the action deliberately this turn — Principle P a fortiori: if a benefit bought with a deliberate minute-long out-of-combat activity needs no stat-row warning, one bought with a 1-action activity in the same turn needs none either.",
+    "NOTHING ENEMY-SIDE — the rune's save and its effect land on the undead target; DECIDED SCOPE's NOT-lanes list rules out effects on enemies rather than on your own sheet.",
+    "DEPENDENCY, NOT AN OPENING — whether the popup RESOLVES \"your class DC or spell DC, whichever is higher\" into a number is the same decision as Q17 (does an action entry resolve printed values to the reading character), and takes whatever answer Q17 gets. It is not a separate decision for this feat, and it does not affect the answer above: with no star, the popup is the only place a number could ever go."
+   ]
+  },
+  {
+   "n": 10,
+   "featId": "growth-spell",
+   "basis": "DECIDED SCOPE's NOT-lanes clause — \"the internal steps of an activity… the app lists the action, the player performs it; only the action's EXISTENCE is a lane (grantsAction)\" — with Principle E (the entry is the whole surface). N2 explicitly does not reach it: N2 is scoped to a feat that modifies a spell IT GRANTS, and Growth Spell grants no spell and permanently modifies no record, so Principle A/C's \"indication on the record it modifies\" has no record to mark.",
+   "requirements": [
+    "DELIVERED — the 1-action spellshape activity reaches the actions list (sheetDiff actions[0]) with its stored 1-action cost and its archetype/spellshape traits.",
+    "DELIVERED — the popup carries the whole rule: non-cantrip Spell that affects an area, cast as the next action this turn, burst +5 ft / cone +10 ft / line +15 ft, and the spell gains the wood trait.",
+    "REJECTED — no marker on the spells it could modify. No SPELL_MARKERS entries for eligible spells, and no trait+area selector is added to SPELL_MARKERS. The reader's ADDED requirement is refused: the app does not enumerate or pre-validate which spells qualify; the eligibility test (non-cantrip, has an area, shape is burst/cone/line) is an internal step of the activity the player performs.",
+    "FAMILY-WIDE — this is the answer for spellshape/metamagic feats whose target is an open CLASS of spells: Widen Spell, Reach Spell, Conceal Spell and Growth Spell are correct as shipped, action-entry-only. The distinguishing line for future cases: a feat whose effect makes ONE named record's own rules permanently different (Lay on Hands under Resilient Touch / Amplifying Touch) needs the indication on that record per Principle A/C — and per N2 if the feat also grants it; a feat that is a separate optional action applying to an open class needs nothing beyond its own entry.",
+    "NO `*` ANYWHERE — the expanded area is a battlefield value, not one of your own numbers, so no stat row is touched (DECIDED SCOPE). And the player deliberately spends the action immediately before casting, so there is nothing to warn them about (Principle P's reasoning)."
+   ]
+  },
+  {
+   "n": 11,
+   "featId": "goloma-lore",
+   "basis": "Q10 (a remap is applied only when it leaves the player better off) decides the count; Q9 (the builder offers only what the player may legally pick) decides the picker's contents; Ruling K (re-chosen in the builder) decides that none of it needs a sheet surface.",
+   "requirements": [
+    "Stealth trained, Survival trained, Goloma Lore trained — delivered (featGrantsAuto.ts:154 `{skills:{survival,stealth,'lore:goloma'}, redundantFallback:true}`; sheetDiff confirms all three, stealth 0->22 and survival 1->23 at level 20).",
+    "A DOUBLE collision yields TWO replacement picks — one per redundant grant. The current per-skill keying is correct and must not be collapsed to one: build.ts:3098 pushes a `skillFallbacks` entry per redundant skill and build.ts:3099 reads `featSkillChoices['<featId>:fallback:<skill>']`. Basis Q10 — the ancestry promises two trainings, so a reading that hands back only one pick silently costs the player a grant, which is exactly the direction Q10 rejects.",
+    "The Lore grant never participates in the collision — build.ts:3097's `!key.startsWith('lore:')` guard is correct as shipped; Goloma Lore is a new skill, not a redundant one.",
+    "NOT YET BUILT — each replacement picker must offer only skills the character is not already trained in, and on a double collision the second picker must exclude the first picker's pick. Builder.tsx:1685 currently offers the full `SKILLS` list, and build.ts:3100 applies the pick with `maxRank(..., 'trained')`, so choosing an already-trained skill (or the same skill twice) is a silent no-op that burns the grant. Basis Q9.",
+    "No sheet surface for the replacement beyond the trained skill row it produces; changing the pick is a builder action (Ruling K).",
+    "This is the lane-wide answer for all ~60 `redundantFallback` feats, not a Goloma Lore fix: one pick per redundant grant, picker filtered to legal skills."
+   ]
+  },
+  {
+   "n": 12,
+   "featId": "healing-transformation",
+   "basis": "Principle P (a benefit gated behind a deliberate act the player initiates needs no star — they already know they did the thing), with Q4 / Principle E (the feat's own entry is the whole surface). N2 is scoped out: it governs a feat that modifies a spell IT GRANTS, and this feat grants no spell.",
+   "requirements": [
+    "The spellshape activity reaches the actions list at 1 action with the druid/spellshape traits — delivered (sheetDiff actions[0] = 'Healing Transformation').",
+    "The full printed text sits in its popup: non-cantrip, polymorph, targets only one creature, 1d6 Hit Points per spell rank, 'this is a healing effect'. That popup is the whole surface.",
+    "NO marker on eligible spell cards, and NO trait+target-count selector added to SPELL_MARKERS (which stays keyed by spell id, situationalBonuses.ts:3371). Basis P — the healing only arrives after the player deliberately spends the action, so there is nothing to warn them about on a spell row. N2 does not extend here: N2's shape is an automatic rider firing on every cast of a spell the feat itself granted (Realm Strider's Translocate), where the player could not otherwise know the spell had been altered. Healing Transformation alters no spell's rules, grants no spell, and is opt-in per cast.",
+    "The 1d6/rank healing moves no sheet number (Ruling E — HP never moves sheet stats) and the target-side number gets nothing on this sheet (Ruling F).",
+    "Family-wide answer: Widen Spell, Reach Spell, Conceal Spell and Growth Spell are correct as shipped, action-entry-only. Every spellshape/metamagic feat is settled the same way — no per-spell markers for the family."
+   ]
+  },
+  {
+   "n": 13,
+   "featId": "wounded-party",
+   "basis": "Principle E, reinforced by Q4 — a reaction's entry, with its trigger in the popup, is the whole surface and needs no further sheet impact. Principle H (Q8 / #13 Quick Recognition) is distinguished, not applied.",
+   "requirements": [
+    "The feat appears in the reactions list with the reaction glyph — delivered (storedFields `actionCost:{type:'reaction'}`, sheetDiff actions[2] = 'Wounded Party').",
+    "The Trigger verbatim in the popup, BOTH halves — 'You or your designated ally takes damage, and you're capable of entering a Rage' — plus the descRef link through to Rage. Delivered; per Principle E this is the whole requirement.",
+    "NO RECORD_MARKERS back-pointer on the Rage action row. Principle H governs an action whose OWN cost changes conditionally — Quick Recognition makes Recognize a Spell itself a free action and is passive, so it has no row of its own and the both-costs listing on Recognize a Spell is its only possible surface. Wounded Party leaves Rage's cost untouched (Rage is still 1 action), is a separately named reaction, and already occupies its own row — which is where the player looks when damage lands. The mark is therefore already on the thing the player is looking at when it matters (Ruling D/G), and duplicating it onto Rage would add a second surface for the same capability.",
+    "The 'your designated ally' half is ally-facing and correctly produces nothing (Ruling F/N, DECIDED SCOPE).",
+    "Nothing further: no star, no mode, no use pip — the feat prints no frequency, and its effect is entirely 'You Rage', whose own rules already live on the Rage record."
+   ]
+  },
+  {
+   "n": 14,
+   "featId": "legendary-medic",
+   "basis": "Principle P (round-4 #5 Posse) — a benefit gated behind a deliberate out-of-combat action needs no star. Principle D / Ruling C do NOT engage: they star every skill that could perform an action the feat gives a BONUS to, and Legendary Medic changes no number. #5 Posse's 'no special implementation' also answers the activity-list half. O2's reasoning ('a counter is for a resource that runs out') keeps the per-target frequency out of the pip lane.",
+   "requirements": [
+    "The feat's own Feats-tab entry with the full text in its popup — 1 hour of treatment, the Medicine check, disease plus blinded/deafened/doomed/drained, 'use the DC of the disease or of the spell or effect that created the condition', the +10 for artifacts or above-20th sources. That is the WHOLE surface. Shipped and correct.",
+    "NO `*` on Medicine. Principle P: the benefit only arrives after the player deliberately spends an hour treating someone, so there is nothing to warn them about when they read their Medicine number. The star lane needs a bonus to attach to and there is none — a capability-only feat adds a use, not a modifier.",
+    "NO `limitedUses` / use pip. The frequency is once per day PER TARGET, not a character-wide resource; a single daily pip would lock the player out of uses they still have. Confirmed absent in storedFields — correct as shipped.",
+    "NO action-list row. `actionCost: {type:'passive'}` is right; an hour-long out-of-combat use gets no activity entry, per #5 Posse's 'no special implementation' — which answered exactly the 'should a non-encounter activity appear in an activity list at all' half of that question.",
+    "NO family-wide backfill of Medicine stars. The capability-only members (Legendary Medic, Advanced First Aid) carry nothing in `src` today and that is the intended state, not a gap. Legendary Medic is correct as shipped; empty sheetDiff is the right answer.",
+    "⚠ Ward Medic is a DIFFERENT shape and must not be swept into this answer. 'You can treat up to two patients at once' MODIFIES the existing Treat Wounds action, so Ruling D governs it — a marker on Treat Wounds (the Magic Hands precedent named in DECIDED SCOPE), still no star on Medicine. That is a separate one-record fix, not the family backfill the question proposed."
+   ]
+  },
+  {
+   "n": 15,
+   "featId": "explosive-expert",
+   "basis": "Settled by EVIDENCE, not preference: AoN wins. Both AoN printings of the same page agree against a single uncurated Foundry entry, and the project already treats AoN as the reference it verifies itself against (scripts/aon-verify/, and core.json was rebuilt from the AoN export). Q5 covers the access clause; Q7's 'most granted speeds are permanent and need no star' gives the shape for the permanent proficiency.",
+   "requirements": [
+    "THE APP'S TEXT IS WRONG — replace it. AoN `feat-3290` (Guns & Gears Remastered p. 201) and its legacy twin `feat-8795` (Guns & Gears p. 201, 2021) carry IDENTICAL bodies: 'You have continued training in volatile weapons and gained a deeper understanding. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for simple and martial bombs and firearms.' The splash-immunity sentence comes from C:/trying ai 2/pf2e codex/.import-src/pf2e/packs/pf2e/feats/ancestry/dwarf/level-13/explosive-expert.json, matches NEITHER printing, and duplicates a clause AoN attaches to a different feat (feat-3160 Defensive Armaments: 'While parrying with your weapon, you are immune to splash damage'). Keep the Access line and the Explosive Savant prerequisite — AoN confirms both.",
+    "DELETE `immunities: ['splash damage from your own Strikes with bombs and firearms']` from storedFields, and with it `defenses.immunities[0]` and its `defenses.sources.immunity:…` attribution. Note the field's SHAPE was exemplary — fully qualified scope string plus source attribution — so this is a wrong-TEXT defect, not a lane defect; the immunity lane itself needs no change.",
+    "The text replacement and the field deletion must SURVIVE `npm run data`. The Foundry body is what the importer produces, so an unrecorded hand-edit is overwritten at the next regen.",
+    "BUILD THE ESCALATION ON THE EXISTING LANE — no new lane is required. `src/rules/featGrants.ts` already carries `weaponFamiliarity` with `mirrorBestCategory` (the whole ancestry weapon-expertise family, featGrantsAuto.ts:44-53), and already carries the group+category selector form for this very chain at featGrants.ts:293-299 (`explosive-savant`: `{ weapons: [], groups: ['bomb'|'firearm'], category, mirrorCategory }`). Explosive Expert is those same selectors — bombs and firearms of simple and martial category — with `mirrorBestCategory: true`.",
+    "⚠ GET THE SAVANT INTERACTION RIGHT. The remastered Explosive Savant (AoN feat-3283, which the app's lane already matches correctly) no longer grants a rank — it remaps categories DOWNWARD (bombs and martial firearms count as simple). Explosive Expert must mirror the character's best weapon-category rank onto those weapons regardless of that remap, or the chain's whole point — a fighter's weapon mastery carrying through to bombs and firearms — is lost. featGrants.ts:155-157's note that weaponOverrides 'only ever helps weapons the category doesn't already cover' is the assumption to re-check here.",
+    "NO star and no note on the Strikes list. A permanent, unconditional proficiency surfaces as the resolved attack number itself (deriveStrike maxes weaponOverrides against the weapon's own category rank) — same reasoning as Q7's 'most granted speeds are permanent and need no star'.",
+    "The Access clause (Dongun Hold or Alkenstar) needs nothing — Q5.",
+    "THE WIDER QUESTION IS A MEASUREMENT, NOT A DECISION — the instrument already exists. Re-run scripts/aon-verify/ over Foundry-sourced feat bodies to find other records whose text AoN contradicts. This is NOT a systematic Foundry-vs-AoN split: Foundry's Explosive SAVANT matches AoN's remaster text exactly, and the Expert file is a single uncurated entry (empty `rules: []`, placeholder red-exclamation icon)."
+   ]
+  },
+  {
+   "n": 16,
+   "featId": "wood-ward",
+   "basis": "Ruling M (a benefit whose availability is POSITIONAL gets a permanent star carrying the condition in its note — 'not a mode, not a pill, and emphatically not a positional model') + Principle E (the reaction entry is the surface) + DECIDED SCOPE's battlefield exclusion. These are shape-specific and therefore beat Q1's duration rule and Q11's can-be-shut-down rule, by the precedence the owner set in Round 3: 'Q1 governs duration; Q15 governs the crit-trigger shape, and Q15 comes first.' The secondary point is decided by Ruling H (stay open; do not narrow the book).",
+   "requirements": [
+    "The reaction in the actions list with its full popup — Trigger ('A creature targets you with an attack'), Frequency once per hour, the standard cover, the +2 applying to the triggering attack, the 30-point reduction and immediate destruction, the 3-round persistence on a miss, the difficult terrain. Shipped and correct.",
+    "`limitedUses {max:1, per:'hour'}` with a use pip refilled on the encounter reset (SUB_DAILY). Shipped and correct — and untouched by O2, which excludes per-ROUND frequencies only. Once per hour is exactly the 'resource that runs out across a scene' O2 says a counter IS for.",
+    "A `*` on AC carrying '+2 circumstance (standard cover)', sitting OUTSIDE the AC total (Ruling B) with the condition in its `when` (Ruling M). Shipped at situationalBonuses.ts:477.",
+    "NO display-only mode — and this is the POLICY ANSWER for the class, not just this feat: a reaction that creates a persisting battlefield OBJECT gets the reaction entry plus the star, never a mode. Whether the lattice stands between you and a given attacker is positional, which Ruling M says the app can never know and answers with a star; the ward itself is a battlefield object, and battlefield effects are on the NOT-lanes list. The data set's own precedent (one reaction with a mode in the entire corpus) is the same answer.",
+    "SECONDARY — YES, widen the star's `when`. It currently reads 'against the triggering attack when you react with Wood Ward…' (situationalBonuses.ts:477), which NARROWS the book: on a miss the ward stands 3 more rounds and standard cover keeps applying to attacks it blocks. Ruling H forbids exactly that — 'narrowing it would put a ruling on the sheet dressed as the book's'. Extend to one line naming the persistence; the file's own house style already puts duration in the `when` (lava-leap 'until the start of your next turn…', metallic-skin 'for 1 minute after you activate…', return-to-the-sea 'for 10 minutes after…'), and the trailing '…' is the established click-through to the full text.",
+    "NOTHING for the difficult terrain or for creatures crossing the ward — battlefield/enemy-facing, no sheet surface (DECIDED SCOPE, NOT-lanes).",
+    "NOTHING for the 30-point damage reduction beyond popup text — HP and damage never move sheet stats, even inside a mode (Ruling E)."
+   ]
+  },
+  {
+   "n": 17,
+   "featId": "rouse-the-forests-fury",
+   "basis": "Principle L (a scaling value is WRITTEN and resolved, never left as a note the player applies) + mechanic-lanes Ruling G (a set or upgrade REPLACES the entry it upgrades rather than sitting beside it). The missing-die half is settled by Principle B + display hygiene; the trees by M2.",
+   "requirements": [
+    "DELIVERED: the 3-action impulse reaches the actions list (sheetDiff actions[7]) and its full description renders untruncated in the popup. The stored actionCost {actions:3} matches the printed 'Three Actions'.",
+    "RESOLVE THE LEVEL BLOCK. The trailing '**Level (Nth)**' block must resolve against the reading character's level, exactly as the Spells page resolves heightened values inline: a 20th-level kineticist sees '+32 attack, 5d10+9 damage' IN PLACE OF the base '+30', not beside it. Below 20th the base line stands alone with no footnote. Principle L is decisive — the owner's instinct on reach was that a changed value is written on the row, not annotated; and Ruling G says an upgrade replaces the entry it upgrades. Today the app shows +30 to a character whose real number is +32, which is the same value-defect class as a wand keyed to the wrong rank.",
+    "BUILD IT AS A LANE, NOT A ONE-OFF. The same rule governs all 85 impulse-style feats carrying a 'Level (Nth)' block. Mirrors N2's instruction to build the recurring shape as a lane.",
+    "KEEP THE BOOK'S TEXT READABLE. The full printed description, including the unresolved Level (Nth) line, stays in the popup beneath the resolved figures, so the player can see what the app computed from (Principle B: the surface carries the full text, including parts the app cannot compute).",
+    "DO NOT FLAG THE MISSING DAMAGE DIE. The base clause prints 'deals damage' with no die, so below 20th there is no figure to surface. Leave it exactly as the book prints it — no fabricated die, and no synthetic 'no damage printed' marker in the entry. Display hygiene forbids synthetic markers in game-data fields, and Ruling H forbids putting the app's ruling on the sheet dressed as the book's.",
+    "THE THREE TREES ARE A TEMPORARY CREATURE — M2. Each tree has AC 40, Fort +33, Ref +24, Will +30 and 200 HP, can be attacked and destroyed, and makes Strikes. That is the Out of Hand shape: the feat supplies the capability and the stat block (reach-10 branch Strike, grabbed at escape DC 40, ranged Strike with a 60-foot increment, no Speed, can flank), and the PLAYER adds the entries to the Companions tab when the impulse fires. The app never adds or removes them. (Note: the audit question did not raise the trees; this requirement is M2 applied to evidence the question overlooked.)",
+    "NOTHING ELSE. The trees' Strikes, the grabbed condition and the escape DC land on enemies and the battlefield (DECIDED SCOPE), and Sustain is a general rule the app already implements everywhere — the impulse's own text is the whole surface for both."
+   ]
+  },
+  {
+   "n": 18,
+   "featId": "additional-follower",
+   "basis": "Principle L (two sources granting the same thing are written TWICE, each opening its own source — the owner explicitly refused to collapse identical grants into one entry), plus M2's own boundary: its player-adds shape exists because a temporary creature's TIMING is a play event, and a build-time follower has no timing question.",
+   "requirements": [
+    "COUNT INSTANCES, NOT OWNERSHIP. Three takings of this maxTakable-3 feat must produce three follower cards. The grant cannot see repeats by construction — featGrantedCompanions (companionGrants.ts:112) maps over a Set of feat ids, so the second and third takings change nothing on the sheet at all. A repeatable feat whose repeats produce zero sheet effect fails the 'every feat affects the player' mandate.",
+    "EACH CARD SEPARATELY LABELLED AND SEPARATELY EDITABLE, so the player can tell which taking produced which follower. This is Principle L's shape transposed: when two sources give the same thing, the owner wants both written with each pointing at its own source, not one entry standing for both.",
+    "EACH CARD CARRIES THE NOVICE-FOLLOWER STAT BLOCK AND THE MINION TRAIT, as the single card does today.",
+    "DELETE THE MANUAL-FALLBACK SENTENCE from the note at companionGrants.ts:105 — 'Repeatable up to four followers in total — add the further ones by hand in the Companions tab.' It is an app instruction sitting in a game-data field (display hygiene), and it becomes false once instances count. The four-total cap needs no note: maxTakable:3 over Captain Dedication's base follower already enforces it, and prerequisites need nothing (Q5).",
+    "NOTHING ON THE CHARACTER'S OWN SHEET. A follower's numbers belong to the follower (DECIDED SCOPE, Companions: a companion's bonus marks the companion, not you).",
+    "M2 DOES NOT LICENSE THE MANUAL FALLBACK. M2 hands the player the timing because a severed arm or a summoned tree exists only after a play event the app cannot know. A follower granted by a build-time feat has no timing — the count is fully determined by the build — so the app supplies it. This is the line that keeps repeatable permanent grants from being read as another Out of Hand."
+   ]
+  },
+  {
+   "n": 19,
+   "featId": "proximity-alert",
+   "basis": "Principle D (star it where the player looks up the number) + mechanic-lanes Ruling D/G (the mark lives on the thing you are looking at when it matters) + Q2 (star BOTH surfaces, not one), with Q12 breaking the Posse/Proximity Alert display split in favour of whichever leaves the player least confused.",
+   "requirements": [
+    "DELIVERED AND CORRECT: +2 circumstance filed under Perception with when 'on Perception checks for initiative', held outside the Perception total (Ruling B), Perception row starred, and the line reaching the Initiative breakdown through explainStat's delegation (explain.ts:701-716).",
+    "STAR THE INITIATIVE ROW TOO. statHasSituational's handling of {kind:'initiative'} must delegate to the statistic initiative is actually rolled with — Perception, or the skill a class feature substitutes — exactly as explainStat's 'initiative' case already delegates for the breakdown. When the player rolls initiative, the Initiative row is where they look up the number, so Principle D puts a star there; Q2's answer to the same either/or shape was 'both'.",
+    "HOLD THE INVARIANT GENERALLY: a row's `*` and its own popup's situational list must agree. explainStat spreads `...inner.situational` into the Initiative breakdown, so today the popup can show content the row never advertised — the player has no cue to open it. Delegating the cue the same way the content is delegated closes it for every feat filed this way, not just this one.",
+    "FIX THE CUE, NOT THE DATA. Do not re-file the bonus onto a {kind:'initiative'} target to make the star appear. Perception is the CORRECT filing here: the text says 'Perception checks made as initiative rolls', so a character rolling initiative with Stealth (Avoid Notice) must not get it — which the Perception filing gets right and an 'initiative' filing would get wrong. Posse's 'initiative' filing is equally correct for Posse, whose +1 applies whichever statistic is rolled. Delegation is what lets both filings display identically while continuing to apply differently.",
+    "THE STAR MUST NOT OVERPROMISE. Because delegation follows deriveInitiative().stat, the Initiative row stays bare when initiative is rolled with a statistic the bonus does not reach — the same discipline explain.ts:342-346 already applies to DC-only entries, which are kept off the save's name so a `*` never promises a bonus the roll does not get.",
+    "NOTHING ELSE. The feat is passive, grants no action, and has no other surface."
+   ]
+  },
+  {
+   "n": 20,
+   "featId": "extend-elixir",
+   "basis": "Q16 (a computed value that is wrong for some states is a bug to resolve from the character's real state, not a note) + Ruling M's boundary (a note/star is the fallback for what the app CANNOT know) + principle L (the app writes the value it knows rather than annotating it). Ruling H's 'stay open' does not apply — the rules here are not open: the feat names the infused trait explicitly.",
+   "requirements": [
+    "Gate the doubling on the tracked infused list. `modeAdjust.match` gains an infused predicate (alongside `traits:['elixir']` / `minDurationMinutes:1`), and `adjustModes` (src/rules/modes.ts:441, applied at src/rules/play.ts:555) doubles only when the elixir being activated came from `alchemyPrep` (src/rules/play.ts:69 — Advanced Alchemy daily prep + Quick Alchemy), never from an elixir bought and carried in ordinary inventory.",
+    "A purchased elixir's mode shows its PRINTED duration; an infused one shows the doubled figure. The running-mode pill (src/sheet/VitalsRail.tsx:1078) and its click-through to the mode are the surface where the wrong number would otherwise be printed, so both must reflect the gate.",
+    "Keep the note, but reword it: it now explains WHY this elixir was or was not doubled, instead of asking the player to apply the infused restriction themselves. Over-application is not acceptable — a doubled duration on a bought elixir is the app's own laxness printed as if it were the book's rule.",
+    "Quick Alchemy's 10-minute ceiling: `alchemyPrep` stores itemId → quantity only, so origin is not recorded, but AlchemyPanel.tsx already distinguishes the two flows at creation time (`picker === 'quick'`, line 126). Record the origin on the prep entry so the cap can be enforced on the doubled duration; until that field exists the cap — and only the cap — legitimately stays in the note, because it is the one clause the app currently cannot know.",
+    "No star and no new stat-row surface. The mode is the whole surface for a duration (Ruling E case 2/3, Q1); Extend Elixir changes no number the player looks up on a stat row."
+   ]
+  },
+  {
+   "n": 21,
+   "featId": "shadow-reservoir",
+   "basis": "Q9 (the builder shows only what the player may legally pick) + Q14 point 7 (a feat that grants picks gets a builder picker offering only what that feat allows) settle 'build it' and 'filter it'; Ruling K (what the player re-chooses in the builder needs no sheet surface) settles 'picked once, permanent'; N2 settles the reservoir's riders on the granted spells; DECIDED SCOPE Ruling F/N settles the target-side clauses. The inert 'note it down yourself' hint is exactly the note-instead-of-computation that principle L and Ruling M's boundary reject when a lane exists.",
+   "requirements": [
+    "Build the reservoir for real on the restricted-slot lane (src/rules/restrictedSlots.ts) and retire the choice's `inert` string. The lane already carries the two neighbouring shapes (Master Summoner, Sin Reservoir); an untracked note stands in for something the engine can compute.",
+    "Shape: one reservoir entry per spell rank at or below (highest castable rank − 2). Neither existing field says this — `perRankFrom` (types.ts:952) is a FLOOR, and `rankChoice.belowHighest` (types.ts:960) is a ceiling that only applies to choose-rank slots. The per-rank form needs a ceiling. As the character levels and a new rank qualifies, it appears as an EMPTY entry the player fills (Q14 point 8's shape).",
+    "The spells are picked ONCE in the builder and are permanent. The feat names no daily preparation and says the spells 'don't need to be prepared and aren't in your repertoire', so this is build state, not `dailyChoices`/play-state, and NOT Sin Reservoir's daily rank move. Changing a pick is a builder action with no sheet surface (Ruling K).",
+    "The picker offers only legal spells (Q9): the chosen source's list/tradition, rank ≤ highest − 2, and 'requires a spell attack roll or a saving throw'. That last predicate is expressible against today's data — a spell qualifies when `defense === 'ac'` (spell attack) or it carries a `save` / a save-typed `defense` (types.ts:1927-1929). Add it to RestrictedSlotGrant beside `traits`. The standing 'show options not meeting prerequisites' toggle stays the escape hatch.",
+    "Casting from the reservoir is spontaneous even for a prepared caster ('Regardless of the way in which you cast spells'). restrictedSlots.ts:89 derives `spontaneous` from `entry.type` — the grant must be able to force it, and a prepared caster loses what was prepared in the slot it spends.",
+    "Cost model: a reservoir cast spends one ordinary slot of the same rank AT CAST TIME. `costsSlot` as built is a standing conversion — play.ts:415-424 subtracts it from the pool's `max` up front (Master Summoner: 'designate one of your spell slots to become two'). Reusing it unchanged would silently remove one slot per rank the player may never spend. The reservoir needs pay-per-cast deduction, not a prep-time conversion.",
+    "Per N2, the reservoir's riders are written into each reservoir spell's description under the feat's name and visually separated from the spell's own rules: it gains the shadow trait and may be disbelieved; an attack uses the higher of the target's AC or Will DC; a save uses the higher of Will or the spell's normal save. These are target-side numbers the app does not model (DECIDED SCOPE Ruling F/N — 'the player will tell the GM'), so they are TEXT on the entry, never mechanics. The shadowstuff tattoo is flavour and gets nothing.",
+    "Keep the `reservoirSource` choice (free text is a legitimate choice type, Ruling I) but make it load-bearing: it decides which spell list the picker in requirement 4 filters against. Where the character has more than one slot-casting source the app already knows them, so Q9 points at a picker over the character's own spellcasting entries rather than free text."
+   ]
+  },
+  {
+   "n": 22,
+   "featId": "scoundrels-surprise",
+   "basis": "Principle P (a benefit gated behind a deliberate action needs no star — the player already knows they did the thing) + Ruling D/G's boundary (the mark goes on the thing a feat MODIFIES; Q8 says 'mark the action the feat modifies', and this feat does not alter Impersonate's outcome) + DECIDED SCOPE (effects landing on enemies get no surface) + Q1 (a sub-round window is indication only).",
+   "requirements": [
+    "The feat's own action entry is the whole surface, and it is already delivered: sheetDiff actions[3], 1-action cost, the full condition in the popup (after Impersonating with a disguise kit, before the end of your turn), with ref-links from the description to Impersonate and to off-guard so the player can jump between them.",
+    "NO marker on Impersonate's action row, and none on Deception. Scoundrel's Surprise does not change how Impersonate works or what it rolls; per Q8/Ruling D a marker is for the action a feat MODIFIES, and per P the player has deliberately Impersonated with a disguise kit, so there is nothing to warn them about.",
+    "The off-guard clause lands on the enemy and adds nothing to your sheet — the same finding as #6 Mastermind's Eye, where 'the off-guard clause itself lands on the enemy and adds nothing'.",
+    "'Before the end of your turn' is under a round: indication only per Q1 — no mode, no timer, no pip.",
+    "The class rule this settles, as the owner asked: a feat of the shape 'after you do X, you can do Y' puts NOTHING on X. X's row gets a marker only when the feat alters X's own outcome (its DC, its degree of success, its cost, what it grants). The follow-up is discoverable from the feat's own entry, and the ref-link from the feat to X is the connection — not a mark travelling the other way."
+   ]
+  }
+ ],
+ "stillOpen": []
+}

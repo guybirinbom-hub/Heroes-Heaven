@@ -67,6 +67,7 @@ scripts/audit/*
 !scripts/audit/gold-set.json
 !scripts/audit/audit-500-result.json
 !scripts/audit/tier-result.json
+!scripts/audit/uncertain-settled.json
 scripts/aon-verify/
 tmptest/
 
