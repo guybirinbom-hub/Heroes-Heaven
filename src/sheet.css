@@ -51,8 +51,74 @@ body {
 /* Homebrew is a full screen: the chrome header sits on top, the sources/content body fills the rest
    and scrolls internally (clamp the page to the viewport so the pane scrolls, not the whole page). */
 .hb-page {
-  height: calc(100vh / var(--zoom, 1));
+  height: calc(100vh / var(--zoom, 1) - var(--app-banner-h, 0px));
   overflow: hidden;
+}
+
+/* ---- Desktop: pin the shell, scroll only the body ----
+   Every screen used to be `min-height: 100vh` with the DOCUMENT scrolling, so scrolling a long sheet
+   or roster carried the window title bar (min / maximise / close) and the sheet's identity + tab strip
+   off the top of the screen with it. Clamp each screen to the viewport and hand the scroll to its body
+   instead — which is exactly what .hb-page above and the phone shell (.ws-app in the max-width:720px
+   block) have always done. A pinned shell is also what gives the notes editor a real scroll container
+   to scroll inside; before this it just grew and the wheel had nothing to move. */
+@media (min-width: 721px) {
+  .ws-app,
+  .roster-screen,
+  .builder {
+    /* Minus the banners. They are flow siblings ABOVE the screen, so a full-viewport screen made the
+       DOCUMENT taller than the window by exactly the banner's height — and scrolling the document is
+       what carried the pinned bar off the top again. One update notice was enough to do it, which is
+       why this looked like "the builder header still scrolls". `--app-banner-h` is measured in
+       App.tsx; it is 0px whenever no banner is showing. */
+    height: calc(100vh / var(--zoom, 1) - var(--app-banner-h, 0px));
+    /* Screens declare their own `min-height: 100vh` (see .builder); left standing it wins over the
+       height above and puts the overflow straight back. */
+    min-height: 0;
+    overflow: hidden;
+  }
+  .ws-app > .body,
+  .roster-screen > .roster-body,
+  .builder > .builder-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  /*
+   * …and everything ELSE in a pinned shell must not shrink.
+   *
+   * Flex items default to `flex-shrink: 1`, so when the body's content was taller than the window,
+   * flexbox took the difference out of every sibling in proportion — including the bars that are
+   * supposed to be fixed. The builder's level strip measured 44px on a short level page and 34px on a
+   * long one, so the gap under the level chips visibly changed as you moved between pages, and the
+   * chips themselves sat closer to the header on the busy ones. Only the body may flex.
+   */
+  .ws-app > :not(.body),
+  .roster-screen > :not(.roster-body),
+  .builder > :not(.builder-body) {
+    flex: none;
+  }
+  /* The sheet's body is a two-column grid; `align-items: start` let it size to content, which is
+     wrong once it IS the scroll viewport — the rail and the tab content must be able to fill it. */
+  .ws-app > .body {
+    align-content: start;
+  }
+  /* Notes take the whole body and never scroll it — the page list and the editor scroll themselves,
+     so the toolbar and the page header stay put however long the note gets. */
+  .ws-app > .body.body-notes {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    align-content: stretch;
+    overflow: hidden;
+  }
+  .ws-app > .body.body-notes > .content {
+    display: flex;
+    min-height: 0;
+  }
+  .body-notes .notes-wrap {
+    min-height: 0;
+    flex: 1 1 auto;
+  }
 }
 .hb-page .settings-body {
   flex: 1;
@@ -980,7 +1046,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 14px;
+  /* As custom properties so the window-control group can cancel them and reach the real corner. */
+  --chrome-pad-y: 8px;
+  --chrome-pad-x: 14px;
+  padding: var(--chrome-pad-y) var(--chrome-pad-x);
   background: var(--app-surface-2);
   border-bottom: var(--app-bw) solid var(--app-border);
 }
@@ -1007,18 +1076,28 @@ body {
   color: var(--app-accent);
   flex: none;
 }
+/* Window controls sit in the WINDOW's corner, not inside the bar's padding — the app draws its own
+   title bar (decorations: false), so these are the real minimise/maximise/close and should be where
+   every other Windows app puts them: flush to the top-right, full bar height, square, no gaps. The
+   negative margins cancel the host bar's padding; the 8px start keeps them off whatever precedes. */
 .chrome-btns {
   display: flex;
-  gap: 2px;
+  gap: 0;
+  flex: none;
+  align-self: stretch;
+  margin-block: calc(-1 * var(--chrome-pad-y, 8px));
+  margin-inline: 8px calc(-1 * var(--chrome-pad-x, 14px));
 }
 .chrome-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 24px;
+  /* 46px is the Windows title-bar button width; stretching to the bar's full height is what makes the
+     hover fill (and the red close) reach the corner instead of floating in it. */
+  width: 46px;
+  align-self: stretch;
   border: none;
-  border-radius: var(--app-radius-sm);
+  border-radius: 0;
   background: none;
   color: var(--app-text-dim);
   font-size: 14px;
@@ -1510,7 +1589,7 @@ body {
 .src-losing {
   margin: 8px 0;
   padding-left: 18px;
-  max-height: 40vh;
+  max-height: calc(40vh / var(--zoom, 1));
   overflow-y: auto;
   line-height: 1.5;
 }
@@ -2057,6 +2136,13 @@ body {
   border: 1px solid var(--app-border);
   color: var(--app-text-dim);
 }
+/* A creature trait a RECORD granted, as opposed to one the ancestry carries. "Undead" sits beside
+   "human" on a Zombie Dedication character and the player must tell them apart at a glance — the
+   accent border says acquired, and the popup names the record that did it. */
+.lang-pill.granted-trait {
+  border-color: var(--app-accent);
+  color: var(--app-text);
+}
 /* The "Rules" shortcut on the Mythic card — a lang-pill rendered as a clickable accent button. */
 .mythic-rules-pill {
   display: inline-flex;
@@ -2095,10 +2181,7 @@ body {
   padding: 7px 2px;
   text-align: center;
 }
-.ability.key {
-  outline: 1.5px solid var(--app-accent);
-  outline-offset: -1.5px;
-}
+/* (No `.ability.key` rule: the key attribute is deliberately not singled out — see MainTab.) */
 .ab-name {
   font-size: 11px;
   color: var(--app-text-dim);
@@ -2438,7 +2521,7 @@ body {
 }
 .alchemy-picker {
   max-width: 460px;
-  width: 92vw;
+  width: calc(92vw / var(--zoom, 1));
 }
 .alchemy-cap-note {
   font-size: 12px;
@@ -2447,7 +2530,7 @@ body {
 }
 .alchemy-pick-list {
   margin-top: 8px;
-  max-height: 50vh;
+  max-height: calc(50vh / var(--zoom, 1));
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -2742,10 +2825,37 @@ button.strike-name:hover {
   opacity: 0.62;
 }
 /* A favorited description in the Pinned section — click the title to re-open it. */
+/* Favourites are separate things, so they have to LOOK separate: without a gap two starred rows sat
+   edge to edge and read as one box. Each entry also gets the panel border, so a pinned action (now a
+   full-width row, not a chip) matches the strike and description rows beside it. */
+.pinned-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pinned-card > .ct {
+  margin-bottom: 0;
+}
+.pinned-card > .strike,
+.pinned-card > .action,
+.pinned-card > .pinned-desc {
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  padding: 8px 10px;
+}
 .pinned-desc {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+/* Which record a favourite came from — two things can share a name (Shield Block is both a class
+   feature and a feat), and two identical rows in the list are indistinguishable without it. */
+.pinned-desc-from {
+  flex: none;
+  font-size: 10.5px;
+  color: var(--app-text-dim);
+  text-transform: lowercase;
 }
 .pinned-desc-open {
   display: inline-flex;
@@ -3146,6 +3256,293 @@ button.strike-name:hover {
 }
 .portrait-file {
   display: none;
+}
+
+/* ---- Character images (CharacterImages, on the Details page) ----
+   Sized so one picture is just a picture: the strip, the per-image actions and the captions all only
+   exist once there is a second image to manage. */
+.cimg-main {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  cursor: zoom-in;
+  overflow: hidden;
+}
+.cimg-main img {
+  display: block;
+  width: 100%;
+  /* `contain`, not `cover`: this is the one place the WHOLE picture is meant to be visible — the
+     cropping happens to the avatar, not here. */
+  max-height: 300px;
+  object-fit: contain;
+}
+.cimg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.cimg-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 11px;
+  font-size: 12.5px;
+}
+.cimg-remove {
+  margin-left: auto;
+  color: var(--app-bad);
+}
+.cimg-note {
+  margin: 8px 0 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--app-text-dim);
+}
+.cimg-empty {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 2px;
+}
+.cimg-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.cimg-thumb {
+  width: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cimg-thumb-btn {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  padding: 0;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.cimg-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cimg-thumb-acts {
+  display: flex;
+  gap: 4px;
+}
+.cimg-thumb-acts button {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 0;
+  font-size: 13px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  cursor: pointer;
+}
+.cimg-thumb-acts button:hover {
+  color: var(--app-text);
+  border-color: var(--app-accent);
+}
+.cimg-thumb-acts button:last-child:hover {
+  color: var(--app-bad);
+  border-color: var(--app-bad);
+}
+.cimg-caption,
+.cimg-caption-read {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--app-text-dim);
+}
+.cimg-caption {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  padding: 1px 0;
+  font-family: inherit;
+}
+.cimg-caption:focus {
+  outline: none;
+  border-bottom-color: var(--app-border);
+  color: var(--app-text);
+}
+/* "Add another" sits at the end of the strip, the same size as a thumbnail. */
+.cimg-add {
+  width: 96px;
+  height: 96px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  border: 1.5px dashed var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: none;
+  color: var(--app-text-dim);
+  cursor: pointer;
+}
+.cimg-add:hover {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+}
+
+/* ---- Mode editor: the searchable target picker ---- */
+.me-target {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 150px;
+  padding: 5px 8px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  text-align: start;
+}
+.me-target:hover {
+  border-color: var(--app-accent);
+}
+.me-target-val {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.me-target-picker {
+  width: 520px;
+  height: 560px;
+}
+/* Targets tile rather than stack: the list is ~40 short labels, and a single column would be a
+   needlessly long scroll for something you're meant to scan. */
+.me-target-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 6px;
+}
+.me-target-opt {
+  padding: 7px 10px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  color: var(--app-text);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  text-align: start;
+}
+.me-target-opt:hover {
+  border-color: var(--app-accent);
+}
+.me-target-opt.on {
+  border-color: var(--app-accent);
+  background: color-mix(in srgb, var(--app-accent) 16%, transparent);
+}
+
+/* ---- Avatar crop dialog (AvatarCropModal) ----
+   A fixed square frame with the picture moving underneath it: what's bright is what gets saved. */
+.crop-modal {
+  width: auto;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  resize: none;
+}
+.crop-modal::after {
+  display: none;
+}
+.crop-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 4px;
+}
+.crop-hint {
+  margin: 0;
+  max-width: 320px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--app-text-dim);
+  text-align: center;
+}
+.crop-stage {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.crop-stage:active {
+  cursor: grabbing;
+}
+/* The dimmed full picture sits behind, centred on the same origin as the bright copy. */
+.crop-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50%;
+  margin-top: 0;
+  translate: 0 -50%;
+  max-width: none;
+  pointer-events: none;
+}
+.crop-img-ghost {
+  opacity: 0.28;
+  filter: grayscale(0.4);
+}
+/* The bright copy is clipped to the frame — the frame IS the avatar. */
+.crop-window {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2px var(--app-accent);
+  border-radius: var(--app-radius-sm);
+}
+.crop-zoom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+  color: var(--app-text-dim);
+  font-size: 15px;
+}
+.crop-zoom input {
+  flex: 1;
+  accent-color: var(--app-accent);
+}
+.crop-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.crop-foot-spacer {
+  flex: 1;
 }
 
 /* ---- Temporary-Speed editor (inside the Speed breakdown panel) ---- */
@@ -4051,7 +4448,14 @@ button.strike-name:hover {
 .save-warning.storage-warning {
   background: var(--app-warn, #b45309);
 }
-.save-warning .ti-alert-triangle {
+/* "Your GM updated this" — informational, not a failure, so it takes the accent rather than the alarm
+   colours the other two banners use. */
+.save-warning.gm-overwrote {
+  background: var(--app-accent, #6366f1);
+  color: var(--app-accent-text, #fff);
+}
+.save-warning .ti-alert-triangle,
+.save-warning .ti-cloud-download {
   font-size: 16px;
   flex: none;
 }
@@ -4090,6 +4494,38 @@ button.strike-name:hover {
   font-weight: 600;
   text-decoration: underline;
   white-space: nowrap;
+}
+/* "The player changed this while you were editing" — a GM-side banner, shown only when adopting their
+   version automatically would have destroyed unsaved work. */
+.gm-live-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: color-mix(in srgb, var(--app-warn, #e0a63a) 22%, var(--app-surface));
+  border-bottom: var(--app-bw) solid color-mix(in srgb, var(--app-warn, #e0a63a) 55%, transparent);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.gm-live-banner > .ti {
+  font-size: 16px;
+  flex: none;
+  color: var(--app-warn, #e0a63a);
+}
+.gm-live-banner span {
+  flex: 1;
+}
+.gm-live-banner .btn {
+  flex: none;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* The secondary "release notes" link — present but clearly not the button you're meant to press. */
+.update-banner a.update-banner-alt {
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 0.8;
 }
 
 /* ---- Details: traits & size ---- */
@@ -4149,8 +4585,10 @@ button.strike-name:hover {
 /* ---- Notes ---- */
 .notes-wrap {
   display: grid;
-  grid-template-columns: 152px 1fr;
-  gap: 11px;
+  /* list | drag handle | editor. The list width is a CSS variable so the handle can set it live
+     (NotesTab persists it as customization.notesListWidth). */
+  grid-template-columns: var(--notes-list-w, 152px) 7px 1fr;
+  gap: 0;
   /* Fill the available height so the editor is tall enough to write in (the rest of the
      sheet sizes to content; the notes editor should grow). */
   min-height: calc(100vh / var(--zoom, 1) - 132px);
@@ -4159,6 +4597,36 @@ button.strike-name:hover {
 .notes-list-card {
   padding: 9px;
   min-width: 0;
+  /* The card is a fixed-height column whose LIST scrolls; without min-height:0 a long list would
+     stretch the grid row instead and take the scroll with it. */
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+/* Drag the divider to widen/narrow the page list. A 7px column with a 1px rule drawn down its middle
+   — thin to look at, comfortable to grab. */
+.notes-split {
+  cursor: col-resize;
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  touch-action: none;
+}
+.notes-split::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 3px;
+  width: 1px;
+  background: var(--app-border);
+}
+.notes-split:hover::after,
+.notes-split.dragging::after {
+  background: var(--app-accent);
+  left: 2.5px;
+  width: 2px;
 }
 .notes-search-row {
   display: flex;
@@ -4185,6 +4653,9 @@ button.strike-name:hover {
 .notes-list {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 .note-item {
   display: flex;
@@ -4241,17 +4712,41 @@ button.strike-name:hover {
 .editor-icon.editable:hover {
   outline: 1.5px solid var(--app-accent);
 }
-/* Icon picker (note types) — a small grid popup. */
+/* Icon picker (note types) — a searchable, grouped grid popup. */
 .icon-picker {
-  width: 340px;
+  width: 460px;
+  height: 520px;
+}
+.icon-search-row {
+  padding: 10px 12px 0;
+  flex: none;
+}
+.icon-search-row .search {
+  min-width: 0;
+  width: 100%;
 }
 .icon-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   padding: 12px;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+.icon-group-h {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--app-text-dim);
+  margin-bottom: 7px;
+}
+.icon-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 7px;
 }
 .icon-opt {
   display: flex;
@@ -4328,7 +4823,9 @@ button.strike-name:hover {
 .editor-body ul,
 .editor-body ol {
   margin: 0 0 10px;
-  padding-left: 22px;
+  /* Logical, not `padding-left`: a right-to-left list (see autoDir.ts) puts its markers on the right,
+     and a physical left padding would leave the indent stranded on the empty side. */
+  padding-inline-start: 22px;
 }
 .toolbar {
   display: flex;
@@ -4420,9 +4917,20 @@ button.strike-name:hover {
   min-height: 200px;
   flex: 1;
   overflow-y: auto;
-  overscroll-behavior: contain;
   font-size: 14px;
   line-height: 1.65;
+  /* Deliberately NO `overscroll-behavior: contain` here. An `overflow: auto` box is a scroll container
+     even when it has nothing to scroll, and Chromium honours `contain` on one — so whenever this box
+     was shorter than its parent (a short note, or the Notes tab with the vitals rail switched back on)
+     the wheel died over the text and the page underneath refused to move. Containment is applied where
+     the box really is the scroller (.body-notes below) and, for the item editor's embedded copy, by the
+     enclosing .picker / .picker-overlay. */
+}
+/* Notes, filling the shell: here the editor genuinely owns the scroll, so reaching its end must not
+   carry on into whatever is behind it. */
+.body-notes .editor-body,
+.body-notes .notes-list {
+  overscroll-behavior: contain;
 }
 .editor-body p {
   margin: 0 0 10px;
@@ -4434,10 +4942,116 @@ button.strike-name:hover {
 }
 .editor-body blockquote {
   margin: 0;
-  padding: 6px 0 6px 12px;
-  border-left: 3px solid var(--app-border);
+  padding-block: 6px;
+  padding-inline: 12px 0;
+  /* Logical, so a right-to-left quote keeps its rule on the side the text starts from. */
+  border-inline-start: 3px solid var(--app-border);
   color: var(--app-text-dim);
   font-style: italic;
+}
+
+/* ---- Notes page: the reading surface ----
+   Scoped to `.editor-card` so the small rich-text boxes inside the item editor (.ie-rich) keep their
+   own compact look. Notes are prose the player writes and re-reads at the table, and prose set edge to
+   edge at 14px in a 900px column reads like a form field. What follows is the usual typographic kit for
+   long-form text: one comfortable measure, a real heading scale with space earned above each level,
+   and quiet marks (rules, quotes, markers) that don't compete with the words. */
+.editor-card .editor-body {
+  font-size: 15px;
+  line-height: 1.72;
+  padding: 20px 28px 44px;
+  color: var(--app-text);
+  /* ~68 characters is the long-standing comfortable line; the column centres in a wide editor rather
+     than running the full width of the sheet. */
+  --notes-measure: 68ch;
+  /* Break lines so the last one isn't a lonely short word (progressive — ignored where unsupported). */
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+  /* Loose text typed straight into the editor, before it lands in a <p>, still gets its own direction
+     per paragraph. Everything inside a block is handled by dir="auto" (see autoDir.ts). */
+  unicode-bidi: plaintext;
+}
+.editor-card .editor-body > * {
+  max-width: var(--notes-measure);
+  margin-inline: auto;
+}
+.editor-card .editor-body p {
+  margin: 0 0 0.85em;
+}
+/* Headings: a clear step down in size, a step up in weight, and much more air ABOVE than below so each
+   one visibly belongs to the text it introduces. :first-child loses the top space (nothing to separate). */
+.editor-card .editor-body h2,
+.editor-card .editor-body h3 {
+  line-height: 1.3;
+  letter-spacing: -0.011em;
+  font-weight: 650;
+  color: var(--app-text);
+}
+.editor-card .editor-body h2 {
+  font-size: 1.42em;
+  margin: 1.5em 0 0.45em;
+}
+.editor-card .editor-body h3 {
+  font-size: 1.12em;
+  margin: 1.3em 0 0.35em;
+}
+.editor-card .editor-body h2:first-child,
+.editor-card .editor-body h3:first-child {
+  margin-top: 0;
+}
+.editor-card .editor-body ul,
+.editor-card .editor-body ol {
+  margin: 0 0 0.9em;
+  padding-inline-start: 1.35em;
+}
+.editor-card .editor-body li {
+  margin-bottom: 0.28em;
+  padding-inline-start: 0.15em;
+}
+.editor-card .editor-body li::marker {
+  color: var(--app-accent);
+}
+.editor-card .editor-body ol > li::marker {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+/* A pulled-out quote, not italicised grey mush: an accent rule, roomy padding, normal weight. */
+.editor-card .editor-body blockquote {
+  margin: 1.1em 0;
+  padding-block: 0.15em;
+  padding-inline: 1.05em 0;
+  border-inline-start: 2px solid var(--app-accent);
+  color: var(--app-text);
+  font-style: normal;
+  opacity: 0.88;
+}
+.editor-card .editor-body hr {
+  margin: 1.7em auto;
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--app-border) 18%, var(--app-border) 82%, transparent);
+}
+.editor-card .editor-body strong {
+  font-weight: 650;
+}
+.editor-card .editor-body a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.editor-card .editor-body > *:last-child {
+  margin-bottom: 0;
+}
+/* The placeholder inherits the measure, so it starts on the same left edge the first line will. */
+.editor-card .editor-body[contenteditable]:empty::before {
+  display: block;
+  max-width: var(--notes-measure);
+  margin-inline: auto;
+  font-style: italic;
+}
+@media (max-width: 720px) {
+  .editor-card .editor-body {
+    padding: 16px 16px calc(28px + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* ---- Rich editor embedded in the item editor (description / craft requirements) ---- */
@@ -5001,23 +5615,20 @@ button.strike-name:hover {
 .inv-card.invested {
   border-color: var(--app-accent);
 }
-/* Consumables (potions, scrolls, elixirs, ammunition, …) get a left accent bar + faint tint in the
-   theme's recommended consumable colour (or the user's override), so expendables read at a glance and
-   stay distinct from the accent used for invested/equipped highlights. --app-consumable is set by the
-   theme manager (per-theme default, or prefs.consumableColor override). */
+/* Consumables (potions, scrolls, elixirs, ammunition, …) are marked with a plain OUTLINE in the theme's
+   recommended consumable colour (or the user's override), so expendables read at a glance and stay
+   distinct from the accent used for invested/equipped. --app-consumable is set by the theme manager
+   (per-theme default, or prefs.consumableColor override).
+
+   An outline, not a tint: a wash of colour behind a third of a grid of cards made the inventory look
+   like it was reporting a problem, and the cards it marked no longer matched the ones next to them. */
 .inv-card.consumable {
-  border-left: 3px solid var(--app-consumable);
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--app-consumable) 10%, var(--app-surface)),
-    var(--app-surface) 46%
-  );
+  border-color: var(--app-consumable);
 }
-/* Keep the consumable bar even when the card is also an invested item (accent border on the other 3
-   sides), and when hovered (hover repaints border-color to the accent — restore the left bar). */
+/* Invested + hover both repaint border-color to the accent; a consumable keeps its own colour. */
 .inv-card.consumable.invested,
 .inv-card.consumable.clickable:hover {
-  border-left-color: var(--app-consumable);
+  border-color: var(--app-consumable);
 }
 .inv-card.unknown {
   border-style: dashed;
@@ -5190,24 +5801,29 @@ button.strike-name:hover {
   padding-top: 10px;
   border-top: var(--app-bw) solid var(--app-border);
 }
-/* "Remove item" — relocated here from the inventory card; right-aligned danger button. */
+/* "Remove item" — a PINNED bar below the item-detail popup's scrolling body, phone only (desktop uses
+   the header's trash icon). Sits outside .sd-body so it never scrolls out of reach. */
 .sd-remove {
   display: flex;
-  margin-top: 14px;
-  padding-top: 12px;
+  flex: none;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
   border-top: var(--app-bw) solid var(--app-border);
+  background: var(--app-surface);
 }
 .sd-remove-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  margin-left: auto;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
   background: transparent;
-  border: 1.5px solid var(--app-border);
+  border: 1.5px solid color-mix(in srgb, var(--app-bad) 45%, transparent);
   border-radius: var(--app-radius-sm);
   color: var(--app-bad);
-  font-size: 12.5px;
-  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 9px 12px;
   cursor: pointer;
 }
 .sd-remove-btn:hover {
@@ -5273,7 +5889,22 @@ button.strike-name:hover {
   border: var(--app-bw) solid var(--app-border);
   border-radius: var(--app-radius-sm);
 }
-/* Trash icon in the item-detail header (mirrors the footer Remove button, always reachable). */
+/* Item-detail header. The name gets the slack and ellipses; the controls never shrink — a long item
+   name ("Magic Wand (2nd-rank Spell)") used to squeeze the trash and close icons on a narrow window. */
+.sd-head-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sd-head-actions {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+/* Trash icon in the item-detail header — always reachable, never inside the scrolling body. */
 .sd-head-remove:hover {
   color: var(--app-danger, #e5484d);
 }
@@ -6660,7 +7291,7 @@ button.strike-name:hover {
 }
 .cust-drawer {
   position: relative;
-  width: min(430px, 94vw);
+  width: min(430px, calc(94vw / var(--zoom, 1)));
   height: 100%;
   background: var(--app-surface-2);
   border-left: var(--app-bw) solid var(--app-border);
@@ -6775,7 +7406,7 @@ button.strike-name:hover {
   border-radius: var(--app-radius-sm);
 }
 
-/* Save DC label in the rail saves rows (Content & behaviour → Show save DCs) */
+/* DC label in the rail saves + Perception rows (Content & behaviour → Show DCs) */
 .stat-dc {
   margin-left: auto;
   font-size: 11px;
@@ -7022,6 +7653,15 @@ button.strike-name:hover {
   font-size: 13px;
   font-weight: 500;
 }
+/* Action-cost glyph shown beside a picker row's name (not in the lead, where it read as part of the
+   level badge). Sized to the glyph, so it hugs the name instead of reserving a 28px column. */
+.picker-name-cost {
+  color: var(--app-accent);
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: 6px;
+  vertical-align: baseline;
+}
 .picker-traits {
   font-size: 11px;
   color: var(--app-text-dim);
@@ -7149,10 +7789,17 @@ button.strike-name:hover {
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
+  /* `safe center` centres a popup that fits but anchors a too-tall one to the TOP instead of pushing
+     its header off the screen — which is what a zoomed-in window did to any long popup. */
+  align-items: safe center;
   justify-content: center;
   z-index: 60;
   padding: 20px;
+  /* The overlay is itself a scroll container so that (a) a popup that somehow still overflows can be
+     reached rather than clipped, and (b) `overscroll-behavior: contain` stops a wheel over the overlay
+     — or one that ran off the end of the popup's own scroll — from scrolling the page behind it. */
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 /* confirmDialog/chooseDialog: always the topmost layer — above the dice drawer + ref-search (70). */
 .picker-overlay.confirm-overlay {
@@ -7165,7 +7812,9 @@ button.strike-name:hover {
   border-radius: var(--app-radius);
   width: 420px;
   max-width: calc(95vw / var(--zoom, 1));
-  max-height: calc(92vh / var(--zoom, 1));
+  /* The -40px is the overlay's own 20px padding, so a full-height popup fits INSIDE it instead of
+     overflowing past the top and bottom of the window (visible once the app is zoomed in). */
+  max-height: calc(92vh / var(--zoom, 1) - 40px);
   min-width: 280px;
   min-height: 120px;
   display: flex;
@@ -7174,37 +7823,53 @@ button.strike-name:hover {
   /* Drag the bottom-right corner to resize (grip icon below). The body already flex-scrolls. */
   resize: both;
   overflow: hidden;
+  /* Don't let a scroll that runs off the end of anything inside carry on into the page behind. */
+  overscroll-behavior: contain;
 }
-/* Hide the browser's default corner grip; draw our own diagonal grip-lines on top. */
+/* Hide the browser's default corner grip; draw our own diagonal grip-lines instead.
+ *
+ * The grip is LINES ONLY — no filled backdrop behind it. It used to sit on an 18px opaque square (to
+ * stop a scrolling body's scrollbar running under it), but that square painted over whatever was in
+ * the corner: a popup with a footer button, like the item editor's Save, got a notch bitten out of it.
+ * Three thin strokes over a scrollbar is a far smaller cost than a clipped control.
+ *
+ * The grip lives in a gutter of its own along the bottom of the popup (--picker-gutter below), so
+ * nothing — footer button or scrollbar — shares the corner with it. */
+/* The grip gets a gutter of its own along the bottom of the popup, rather than sharing the corner with
+   whatever is there. Everything inside — a footer's buttons, and crucially a scrolling list's SCROLLBAR,
+   which runs the full height of its box and can't be padded away from the corner — now stops above it. */
+.picker {
+  padding-bottom: var(--picker-gutter, 15px);
+}
 .picker::-webkit-resizer {
   display: none;
 }
-/* Opaque corner so a scrolling body's scrollbar ends cleanly ABOVE the grip instead of running
-   under it (like a textarea's resizer). pointer-events:none lets the native corner-resize through. */
-.picker::before {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 18px;
-  height: 18px;
-  pointer-events: none;
-  background: var(--app-surface);
-  border-bottom-right-radius: var(--app-radius);
-  z-index: 2;
+/*
+ * …but only Chromium can hide its native grip. Firefox has no ::-webkit-resizer and no way to style
+ * or remove the one `resize: both` draws, so there our grip below would be a SECOND grip sitting next
+ * to the browser's. One is enough: where the native one can't be hidden, don't draw ours.
+ *
+ * The gutter stays either way — the native grip needs the same clearance from a footer button and a
+ * scrolling list's scrollbar that ours did.
+ */
+@supports not selector(::-webkit-resizer) {
+  .picker::after {
+    display: none;
+  }
 }
 .picker::after {
   content: '';
   position: absolute;
-  right: 3px;
-  bottom: 3px;
-  width: 14px;
-  height: 14px;
+  right: 4px;
+  bottom: 2px;
+  width: 11px;
+  height: 11px;
   pointer-events: none;
   z-index: 3;
+  opacity: 0.65;
   background-color: var(--app-text-dim);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cg fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round'%3E%3Cline x1='13' y1='5' x2='5' y2='13'/%3E%3Cline x1='13' y1='9' x2='9' y2='13'/%3E%3Cline x1='13' y1='12.5' x2='12.5' y2='13'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cg fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round'%3E%3Cline x1='13' y1='5' x2='5' y2='13'/%3E%3Cline x1='13' y1='9' x2='9' y2='13'/%3E%3Cline x1='13' y1='12.5' x2='12.5' y2='13'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cg fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round'%3E%3Cline x1='11' y1='4' x2='4' y2='11'/%3E%3Cline x1='11' y1='8' x2='8' y2='11'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cg fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round'%3E%3Cline x1='11' y1='4' x2='4' y2='11'/%3E%3Cline x1='11' y1='8' x2='8' y2='11'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
 }
 .picker-head {
   display: flex;
@@ -7241,7 +7906,10 @@ button.strike-name:hover {
   height: auto;
   resize: none;
 }
-.confirm-modal::before,
+/* No grip (resize:none), so no gutter to reserve for it either. */
+.confirm-modal {
+  --picker-gutter: 0px;
+}
 .confirm-modal::after {
   display: none;
 }
@@ -7445,35 +8113,39 @@ button.strike-name:hover {
   flex-direction: column;
   gap: 7px;
 }
+/* A row you press to read the action, not an accordion you unfold in place. */
 .sd-action {
-  background: var(--app-surface-2);
-  border: var(--app-bw) solid var(--app-border);
-  border-radius: var(--app-radius-sm);
-}
-.sd-action > summary {
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
   padding: 9px 11px;
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: inherit;
+  font: inherit;
+  text-align: start;
   cursor: pointer;
-  list-style: none;
 }
-.sd-action > summary::-webkit-details-marker {
-  display: none;
+.sd-action:hover {
+  border-color: var(--app-accent);
 }
-.sd-act-chev {
-  color: var(--app-text-dim);
-  display: inline-flex;
-  transition: transform 0.15s;
-}
-.sd-action[open] .sd-act-chev {
-  transform: rotate(90deg);
+.sd-action:hover .sd-act-name {
+  color: var(--app-accent);
 }
 .sd-act-name {
   font-size: 13px;
   font-weight: 500;
 }
+/* The action glyph is its own notation, so it gets no box. Only the WORD costs ("varies",
+   "1 minute") keep a chip — a bare word beside the name would read as part of the name. */
 .sd-act-cost {
+  display: inline-flex;
+  align-items: center;
+  color: var(--app-accent);
+}
+.sd-act-cost-text {
   font-size: 10.5px;
   color: var(--app-text-dim);
   border: var(--app-bw) solid var(--app-border);
@@ -7481,29 +8153,16 @@ button.strike-name:hover {
   padding: 1px 5px;
 }
 .sd-act-feat {
-  margin-left: auto;
   font-size: 10.5px;
   color: var(--app-accent);
 }
-.sd-act-body {
-  padding: 0 11px 11px 29px;
-  font-size: 12px;
-  line-height: 1.55;
-  color: var(--app-text);
-}
-.sd-act-body p {
-  margin: 0;
-}
-.sd-tiers {
-  margin: 7px 0 0;
-  padding-left: 16px;
+/* Pushed hard right, so it is the row’s end marker however many chips precede it. */
+.sd-act-go {
+  margin-left: auto;
   color: var(--app-text-dim);
-  font-size: 11.5px;
+  font-size: 15px;
 }
-.sd-tiers strong {
-  color: var(--app-accent);
-  font-weight: 500;
-}
+/* (.sd-act-body / .sd-tiers retired with the accordion — a skill action now opens its own page.) */
 
 /* ---- Manage Spells (in-play preparation) ---- */
 .ms-btn {
@@ -7537,6 +8196,17 @@ button.strike-name:hover {
   font-size: 11.5px;
   color: var(--app-text-dim);
   margin-bottom: 2px;
+}
+/* An inline "read the actual rule" link inside a hint line (Learn a Spell). */
+.ms-hint-link {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--app-accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 .ms-rank-hdr {
   font-size: 11px;
@@ -8148,44 +8818,30 @@ button.strike-name:hover {
 /* Inside the Conditions & Modes popup the modes panel is one of two swappable bodies — let it fill the
    modal height instead of stopping at its own 60vh cap (which left a blank band below on tall/full-screen). */
 .cond-modal .modes-panel { max-height: none; flex: 1 1 auto; min-height: 0; }
+/* A condition row IS a mode row (.mode-row supplies the box, the circle and the layout); these are
+   the few differences: it aligns to the top because its blurb runs to two lines, and its body is a real
+   button that opens the condition's rules page. */
 .cond-row {
-  display: flex;
   align-items: flex-start;
-  gap: 9px;
-  padding: 8px 9px;
-  border-radius: var(--app-radius-sm);
+}
+.cond-row-open {
+  display: block;
+  width: 100%;
+  text-align: start;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
   cursor: pointer;
 }
-.cond-row:hover {
-  background: var(--app-surface-2);
+.cond-row-open:hover .mode-name {
+  color: var(--app-accent);
 }
-.cond-row.on {
-  background: var(--app-surface-2);
-}
-.cond-row-check {
-  width: 16px;
-  height: 16px;
-  flex: none;
+.cond-row .mode-toggle {
   margin-top: 1px;
-  border-radius: 4px;
-  border: 1.5px solid var(--app-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
 }
-.cond-row.on .cond-row-check {
-  background: var(--app-accent);
-  border-color: var(--app-accent);
-  color: var(--app-accent-text);
-}
-.cond-row-text {
-  flex: 1;
-  min-width: 0;
-}
-.cond-row-name {
-  font-size: 13px;
-  font-weight: 500;
+.cond-row .mode-name {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -8199,11 +8855,14 @@ button.strike-name:hover {
   border-radius: 999px;
   padding: 0 6px;
 }
+/* Two whole lines, then an ellipsis. The clamp height is derived from the line-height rather than
+   left to the box's own size, which is what used to slice the second line through the middle. */
 .cond-row-desc {
   font-size: 11.5px;
   color: var(--app-text-dim);
   line-height: 1.45;
   margin-top: 2px;
+  max-height: calc(11.5px * 1.45 * 2);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -9186,11 +9845,8 @@ button.strike-name:hover {
   color: var(--app-text-dim);
   margin-left: 6px;
 }
-.cmp-add-buy {
-  display: inline-flex;
-  gap: 6px;
-  flex: none;
-}
+/* (The companion catalogue's priced rows now use the shared .ai-buy Buy/Give pair — see
+   AddItemsModal — so this bespoke wrapper is gone.) */
 .picker-add-hint {
   margin-left: auto;
   display: inline-flex;
@@ -9529,7 +10185,9 @@ button.strike-name:hover {
   max-height: 900px;
   display: flex;
   flex-direction: column;
-  padding: 0;
+  /* `padding: 0` would also wipe the grip's bottom gutter and let the results list's scrollbar run
+     into the corner behind it — keep the gutter, drop the rest. */
+  padding: 0 0 var(--picker-gutter, 15px);
 }
 .fsel-head {
   display: flex;
@@ -10028,6 +10686,22 @@ button.strike-name:hover {
   .is-mobile .chrome { padding-top: calc(env(safe-area-inset-top, 0px) / var(--zoom, 1)); }
   .is-mobile .builder-body,
   .is-mobile .roster-body { padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
+  /* Pin the builder shell on the phone too — same construction as .ws-app below. Without this the
+     desktop-only pin (min-width:721px, top of this file) left Android scrolling the header, the name
+     field, the level stepper, Cancel and Save off the top of every long level page: to save you had to
+     scroll back up and find them. Affordable now that builder.css folds the header into two rows.
+     `inset: 0` deliberately paints over .app-banners, which is why that floats at z-index 2000 here. */
+  .builder {
+    position: fixed;
+    inset: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .builder > .builder-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
 
   /* ----- Mobile character-sheet shell: top identity bar, one scrolling body, bottom tab bar ----- */
   /* Drop the desktop title bar + top tab strip; the identity row IS the top bar (the avatar opens the
@@ -10064,6 +10738,21 @@ button.strike-name:hover {
   .ws-app > .body > .rail,
   .ws-app > .body > .content { width: auto; max-width: none; }
   .ws-app > .body > .rail { margin-bottom: 12px; }
+  /* Notes: the body stops scrolling and the page list / editor fill it and scroll themselves. Dragging
+     a finger over the note text used to move nothing at all — .editor-body is an overscroll-contained
+     scroll container, so it swallowed the gesture while having no scrollable overflow of its own. */
+  .ws-app > .body.body-notes {
+    display: flex;
+    /* The base .body rule is a grid with `align-items: start`, which carries into this flex context and
+       would leave .content at its content height instead of filling the shell. */
+    align-items: stretch;
+    overflow: hidden;
+  }
+  .ws-app > .body.body-notes > .content { display: flex; flex: 1 1 auto; min-height: 0; }
+  .body-notes .notes-wrap { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+  .body-notes .notes-list-card,
+  .body-notes .editor-card { flex: 1 1 auto; min-height: 0; }
+  .notes-split { display: none; }
   /* Vitals stat tiles flow into rows instead of a single narrow column. */
   .rail .defs { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 6px; }
   .rail .defs .shield-block { grid-column: 1 / -1; }
@@ -10266,7 +10955,9 @@ button.strike-name:hover {
        list would run under the gesture/home bar — pad it clear. */
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
-  .picker::before, .picker::after { display: none !important; }
+  /* No corner grip on a phone (resize:none above), so nothing to draw and no gutter to reserve. */
+  .picker { --picker-gutter: 0px; }
+  .picker::after { display: none !important; }
 
   /* Search-based pickers (FilterableSelect feat/spell/item browser, ref-search) go FULL-SCREEN on a
      phone — they have lots of results, so a short bottom sheet is cramped. */
@@ -10547,9 +11238,14 @@ button.strike-name:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   }
 }
-/* Desktop: .app-banners is a plain flow container (banners stack above the app as before). */
+/* Desktop: banners stack above the app as before — but as a real box, not `display: contents`, so its
+   height can be measured (see --app-banner-h in App.tsx). A contents box has no border box of its own,
+   so a ResizeObserver on it never fires and the pinned screens below couldn't subtract it. */
 @media (min-width: 721px) {
-  .app-banners { display: contents; }
+  .app-banners {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* ---- RangeSlider (dual-handle, quantized) ---- */
@@ -10869,12 +11565,17 @@ button.strike-name:hover {
 }
 
 /* App-level undo/redo, shown on every screen that is NOT the character sheet (the sheet has its own
-   pair in its header). Sits with the banners at the top-right, above the fixed shell. */
+   pair in its header).
+   BOTTOM-right, not top-right. Every one of those screens draws its own title bar, and on the desktop
+   app that bar ends in the real window minimise / maximise / close group — so a pill floating at
+   top:6px right:10px sat on top of Close and made it unclickable. It also landed on Save changes in
+   the builder, whose header has no room to spare. The bottom corner is free on all of them. */
 .app-undo {
   position: fixed;
-  top: calc(6px + env(safe-area-inset-top, 0px));
-  right: calc(10px + env(safe-area-inset-right, 0px));
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  right: calc(14px + env(safe-area-inset-right, 0px));
   z-index: 60;
+  box-shadow: var(--app-shadow);
   display: flex;
   gap: 4px;
   padding: 3px;

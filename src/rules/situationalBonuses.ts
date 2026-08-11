@@ -3103,6 +3103,46 @@ function targetMatches(t: SituationalTarget, ref: RefLike): boolean {
  */
 export type ExtraSituational = Readonly<Record<string, readonly SituationalBonus[] | undefined>>;
 
+/**
+ * A DEGREE-OF-SUCCESS shift — "if you roll a success on a Thievery check to Pick a Lock, you get a
+ * critical success instead". No number moves, so no numeric lane can carry it.
+ *
+ * Owner ruling Q2: it stars **both** the skill and the action it names, and all three saves when it
+ * applies to saves generally. That is why this is ONE field rather than two registry entries. Before
+ * it existed the halves had to be hand-authored into separate registries with nothing keeping them in
+ * step, and no shipped record actually satisfied the ruling: `steadying-stone` starred Acrobatics and
+ * left the Balance action bare, while `sure-feet` marked the Balance and Climb actions and left
+ * Acrobatics bare. One entry now fans out to every surface it names, so they cannot disagree.
+ */
+export interface DegreeShift {
+  /** Which way the result moves. `oneBetter` shifts every degree up one step. */
+  shift: 'successToCrit' | 'critFailToFail' | 'oneBetter' | 'failToSuccess';
+  /** The trigger, printed verbatim in the note — "on a check to Pick a Lock". */
+  when: string;
+  /** Skill keys to star, or `['all']`. */
+  skills?: string[];
+  /** Save ids to star, or `['all']` — Q2: a general save clause stars all three. */
+  saves?: string[];
+  /** Action ids to mark. Matched against the SLUGIFIED action name, as `RecordMarker.id` is. */
+  actions?: string[];
+}
+
+/** The player-facing phrase for a shift. One source, so the skill star and the action mark agree. */
+export const DEGREE_SHIFT_TEXT: Record<DegreeShift['shift'], string> = {
+  successToCrit: 'a success is a critical success instead',
+  critFailToFail: 'a critical failure is a failure instead',
+  failToSuccess: 'a failure is a success instead',
+  oneBetter: 'your degree of success is one step better',
+};
+
+/** The compact form for an action row's inline `( )` slot, where space is tight. */
+export const DEGREE_SHIFT_SHORT: Record<DegreeShift['shift'], string> = {
+  successToCrit: 'success → crit success',
+  critFailToFail: 'crit fail → fail',
+  failToSuccess: 'fail → success',
+  oneBetter: 'one degree better',
+};
+
 const entriesFor = (id: string, extra?: ExtraSituational): readonly SituationalBonus[] => {
   const shipped = FEAT_SITUATIONAL[id];
   const authored = extra?.[id];

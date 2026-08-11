@@ -157,14 +157,25 @@ export interface StatLine {
   substitutedFrom?: { skill: SkillId; source: string };
 }
 
+/**
+ * An attribute's modifier INCLUDING any active mode that targets it.
+ *
+ * A mode aimed at an attribute has to move everything the attribute feeds — a +2 to Strength is meant
+ * to reach Athletics, melee attack and damage, and Bulk, not just the number on the Ability scores
+ * card. So every derivation reads the modifier through here rather than off `c.abilities` directly.
+ */
+export function abilityModOf(c: Character, ab: AbilityId): number {
+  return abilityMod(c.abilities[ab]) + modeNumberBonus(c.activeModes, { kind: 'ability', detail: ab });
+}
+
 export function abilityModifiers(c: Character): Record<AbilityId, number> {
   return {
-    str: abilityMod(c.abilities.str),
-    dex: abilityMod(c.abilities.dex),
-    con: abilityMod(c.abilities.con),
-    int: abilityMod(c.abilities.int),
-    wis: abilityMod(c.abilities.wis),
-    cha: abilityMod(c.abilities.cha),
+    str: abilityModOf(c, 'str'),
+    dex: abilityModOf(c, 'dex'),
+    con: abilityModOf(c, 'con'),
+    int: abilityModOf(c, 'int'),
+    wis: abilityModOf(c, 'wis'),
+    cha: abilityModOf(c, 'cha'),
   };
 }
 
@@ -189,7 +200,7 @@ export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): St
   // The active stance/form may grant a save bonus (Cobra Stance: +1 Fortitude), typed so it pools.
   const stanceSave = db ? activeStanceDef(c, db)?.saves?.[save] : undefined;
   const modifier =
-    abilityMod(c.abilities[ability]) +
+    abilityModOf(c, ability) +
     profBonus(rank, c.level, pwl(c)) +
     // All typed modifiers (item / condition penalties / modes / stance) pool by type across sources.
     poolTypedMods([
@@ -302,7 +313,7 @@ export function derivePerception(c: Character, db?: ContentDatabase): StatLine {
   // Perception item (Clarity Goggles) — all item bonuses, which don't stack.
   const itemBonus = Math.max(abpOn(c) ? abpPerception(c.level) : 0, mpSenseSkillItemBonus(c, 'perception'), passiveItemBonus(c, db, 'perception'));
   const modifier =
-    abilityMod(c.abilities.wis) +
+    abilityModOf(c, 'wis') +
     profBonus(rank, c.level, pwl(c)) +
     poolTypedMods([
       { type: 'item', value: itemBonus },
@@ -410,7 +421,7 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
   const untrained = rank === 'untrained' ? untrainedSkillBonus(c, db) : null;
   const prof = untrained != null ? Math.max(profBonus(rank, c.level, pwl(c)), untrained) : profBonus(rank, c.level, pwl(c));
   let modifier =
-    abilityMod(c.abilities[ability]) +
+    abilityModOf(c, ability) +
     prof +
     poolTypedMods([
       { type: 'item', value: itemBonus },
@@ -439,7 +450,7 @@ export function deriveClassDc(c: Character): StatLine & { dc: number } {
   const rank = c.proficiencies.classDc;
   const key = c.keyAbility ?? 'str';
   const modifier =
-    abilityMod(c.abilities[key]) +
+    abilityModOf(c, key) +
     profBonus(rank, c.level, pwl(c)) +
     poolTypedMods([...conditionTypedMods(c.conditions, key, 'class-dc'), ...modeTypedMods(c.activeModes, { kind: 'class-dc' })]);
   return { rank, modifier, dc: 10 + modifier };
@@ -452,7 +463,7 @@ export interface SpellStats {
 }
 
 export function deriveSpellcasting(c: Character, entry: SpellcastingEntry): SpellStats {
-  const base = abilityMod(c.abilities[entry.keyAbility]) + profBonus(entry.proficiency, c.level, pwl(c));
+  const base = abilityModOf(c, entry.keyAbility) + profBonus(entry.proficiency, c.level, pwl(c));
   const attack =
     base +
     poolTypedMods([...conditionTypedMods(c.conditions, entry.keyAbility, 'spell-attack'), ...modeTypedMods(c.activeModes, { kind: 'spell-attack' })]);
@@ -492,8 +503,10 @@ export function deriveMaxHp(c: Character, db: ContentDatabase): number {
   // Dual Class: Hit Points use the higher per-level value of the two classes.
   const cls2 = c.variantRules?.dualClass && c.classId2 ? db.classes[c.classId2] : undefined;
   const base = ancestry?.hp ?? 0;
-  const perLevel = Math.max(cls?.hpPerLevel ?? 0, cls2?.hpPerLevel ?? 0) + abilityMod(c.abilities.con);
-  return Math.max(0, base + perLevel * c.level + featHpBonus(c, db) - drainedHpLoss(c));
+  const perLevel = Math.max(cls?.hpPerLevel ?? 0, cls2?.hpPerLevel ?? 0) + abilityModOf(c, 'con');
+  // A mode targeting maximum HP is a flat shift of the total, not a per-level one.
+  const modeHp = modeNumberBonus(c.activeModes, { kind: 'max-hp' });
+  return Math.max(0, base + perLevel * c.level + featHpBonus(c, db) + modeHp - drainedHpLoss(c));
 }
 
 export interface WornArmor {
@@ -602,7 +615,7 @@ export function applyArmorRiders(c: Character, db: ContentDatabase, inv: Invento
     // "If your Strength modifier is at least +3, you remove the Speed penalty entirely instead of
     // reducing it to -5 feet." Zeroing it here lets the ordinary threshold rule below run unchanged:
     // max(0, 0 - 5) is still 0. Below the threshold the full restatted penalty stands.
-    if (r.removeSpeedPenaltyAtStr != null && abilityMod(c.abilities.str) >= r.removeSpeedPenaltyAtStr) {
+    if (r.removeSpeedPenaltyAtStr != null && abilityModOf(c, 'str') >= r.removeSpeedPenaltyAtStr) {
       out = { ...out, speedPenalty: 0 };
     }
   }
@@ -630,7 +643,7 @@ export function wornArmorOf(c: Character, db: ContentDatabase): WornArmor | null
  *  that value; armor with no entry is always met. Meeting it removes the check penalty
  *  and reduces the speed penalty by 5 feet. */
 function meetsArmorStrength(c: Character, armor: ArmorItem): boolean {
-  return armor.strength == null || abilityMod(c.abilities.str) >= armor.strength;
+  return armor.strength == null || abilityModOf(c, 'str') >= armor.strength;
 }
 
 export interface ArmorCheckPenalty {
@@ -1133,7 +1146,7 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   // A character can wear an item whose category isn't one of the four PC defense tracks (e.g. animal
   // "light-barding"/"heavy-barding"); fall back to the unarmored rank so AC never computes to NaN.
   const rank = c.proficiencies.defenses[category] ?? c.proficiencies.defenses.unarmored;
-  const dex = abilityMod(c.abilities.dex);
+  const dex = abilityModOf(c, 'dex');
   // An active stance may add an AC bonus (e.g. Mountain +4) and/or cap Dex-to-AC (Mountain +0); take the
   // lower of the armor cap and the stance cap.
   const stance = activeStanceDef(c, db);
@@ -1766,6 +1779,48 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       [...ownedFeatureIds(c, db)].some((id) => db.classFeatures[id]?.breathesWater) ||
       c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.breathesWater),
   };
+}
+
+/**
+ * Every CREATURE TRAIT the character has — the ancestry's own, plus any a record granted.
+ *
+ * A creature trait decides what can target you: an effect that only affects humanoids stops working
+ * once you gain the undead trait, and one that targets undead starts. Owner ruling Q6 says record them
+ * on the sheet, and this is the single reader every consumer goes through, so they cannot disagree.
+ *
+ * The ANCESTRY supplies the baseline (human → human, humanoid). Granted traits are added on top and
+ * marked as such, because the player needs to know which are theirs by birth and which they acquired —
+ * a Zombie Dedication character is still a human, and also undead.
+ *
+ * Deliberately NOT folded into `deriveDefenses`: this is an identity property, not a defence, and the
+ * Details tab is where it belongs.
+ */
+export function creatureTraitsOf(
+  c: Character,
+  db: ContentDatabase,
+): { trait: string; from: 'ancestry' | 'granted'; source?: string }[] {
+  const out: { trait: string; from: 'ancestry' | 'granted'; source?: string }[] = [];
+  const seen = new Set<string>();
+  const add = (trait: string, from: 'ancestry' | 'granted', source?: string) => {
+    const key = String(trait ?? '').toLowerCase();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    out.push({ trait, from, source });
+  };
+
+  for (const t of (c.ancestryId ? db.ancestries[c.ancestryId]?.traits : undefined) ?? []) add(t, 'ancestry');
+
+  const grantors: ({ name?: string; grantsCreatureTraits?: string[] } | undefined)[] = [
+    ...heritageRecords(c, db),
+    ...c.feats.map((f) => db.feats[f.featId]),
+    ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
+    // Invested-only, the same rule the other item-borne capabilities beside this one use.
+    ...c.inventory.filter((inv) => inv.invested).map((inv) => db.items[inv.itemId]),
+  ];
+  for (const rec of grantors) {
+    for (const t of rec?.grantsCreatureTraits ?? []) add(t, 'granted', rec?.name);
+  }
+  return out;
 }
 
 const DAMAGE_ABBR: Record<string, string> = {
@@ -2590,8 +2645,8 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // damage object; guard so a stray equip can't crash the entire Strikes computation + Main tab.
   if (!w.damage) return null;
 
-  const strMod = abilityMod(c.abilities.str);
-  const dexMod = abilityMod(c.abilities.dex);
+  const strMod = abilityModOf(c, 'str');
+  const dexMod = abilityModOf(c, 'dex');
   const finesse = w.traits.includes('finesse');
   // A PURE thrown weapon (bare `thrown` trait: javelin/dart/chakram/shuriken/bola) makes a RANGED attack,
   // so its attack roll uses Dexterity (like any ranged attack) while still adding Strength to DAMAGE. A
@@ -2802,7 +2857,7 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
   const _db = db;
   const elements = c.kineticist?.elements ?? [];
   if (!elements.length) return [];
-  const conMod = abilityMod(c.abilities.con);
+  const conMod = abilityModOf(c, 'con');
   const base =
     conMod +
     profBonus(c.proficiencies.classDc, c.level, pwl(c)) +
@@ -2901,8 +2956,8 @@ function deriveUnarmedStrike(
   // Deadly Simplicity: if the deity's favored weapon is this unarmed attack and its die is smaller
   // than d6, raise it to d6 (Player Core). dsUnarmed is set by the caller for the qualifying attack.
   const die = deadlySimplicityDie(p.die, dsUnarmed, true);
-  const strMod = abilityMod(c.abilities.str);
-  const dexMod = abilityMod(c.abilities.dex);
+  const strMod = abilityModOf(c, 'str');
+  const dexMod = abilityModOf(c, 'dex');
   // A RANGED natural attack (spine) is a ranged attack → Dexterity to the attack roll and no ability to damage.
   const isRanged = p.range != null;
   const usesDex = isRanged || (p.traits.includes('finesse') && dexMod > strMod);
@@ -3303,6 +3358,11 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       if (v != null && v > 5) speeds[k] = Math.max(5, v - 5);
     }
   }
+  // A mode targeting Speed (the mode editor's plain "+10 to Speed", as opposed to the `speeds` grant
+  // handled above, which SETS a movement type). It means the land Speed you walk at, so it lands there
+  // and nowhere else — and last, so it isn't eaten by the armour and encumbrance penalties.
+  const speedMode = modeNumberBonus(c.activeModes, { kind: 'speed' });
+  if (speedMode) speeds.land = Math.max(0, (speeds.land ?? 0) + speedMode);
   return speeds;
 }
 
@@ -3354,7 +3414,7 @@ export function effectiveItemBulk(c: Character, db: ContentDatabase, instanceId:
 }
 
 export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
-  const strMod = abilityMod(c.abilities.str);
+  const strMod = abilityModOf(c, 'str');
   // "Increase your maximum and encumbered Bulk limits by 4" (Beast of Burden) and "treat heavy armor
   // as 1 Bulk lighter" (Armor Regiment Training). Both thresholds were computed from Strength alone,
   // so these feats moved no number on the sheet at all.

@@ -1,16 +1,18 @@
-import { useRef } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import type { Character, ContentDatabase, ProficiencyRank, SenseEntry, CharacterDetails } from '../rules/types';
 import { RankPill } from './widgets';
 import { RANK_LABEL } from '../rules/explain';
 import { InfoTerm } from './InfoTerm';
-import { deriveDefenses } from '../rules/derive';
-import { setDetail, setPortrait, type PlayUpdater } from '../rules/play';
+import { deriveDefenses, creatureTraitsOf } from '../rules/derive';
+import { setAvatar, setDetail, setPortrait, type PlayUpdater } from '../rules/play';
 import { proficiencyDesc, rankDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
-import { processPortrait } from './imageUtil';
-import { usePortrait } from './usePortrait';
-import { newPortraitRef, setSharpPortrait } from '../data/portraitStore';
+import { useAvatar } from './usePortrait';
+import { uploadImage } from './portraitUpload';
+import { getSharpPortrait } from '../data/portraitStore';
 import { useIsMobile } from './useIsMobile';
 import { DefensesPills } from './DefensesPills';
+import { AvatarCropModal } from './AvatarCropModal';
+import { CharacterImages } from './CharacterImages';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -69,29 +71,28 @@ export function DetailsTab({
   const d = character.details;
   const deity = d.deityId ? content.deities[d.deityId] : undefined;
   const senses = deriveDefenses(character, content).senses;
+  const creatureTraits = creatureTraitsOf(character, content);
 
   const bgName = background?.name ?? character.customBackground?.name;
   const bgDesc = background?.description ?? character.customBackground?.description;
 
-  // Portrait import: clicking the slot opens a file picker; the chosen image is read as a
-  // data URL and stored in the in-play appearance overlay (persists with the character).
+  // Portrait import: clicking the slot opens a file picker, then the frame-the-avatar step. The image
+  // is stored BEFORE the crop dialog, so cancelling the dialog keeps the upload (with a centre crop)
+  // rather than throwing it away.
   const fileInputRef = useRef<HTMLInputElement>(null);
   const portrait = character.appearance?.portrait;
-  // Show the on-device sharp copy (installed app) when present, else the compressed/synced one.
-  const shownPortrait = usePortrait(character.appearance?.portraitRef, portrait);
+  // The slot is a small rectangle, so it shows the square the player framed (see useAvatar).
+  const shownPortrait = useAvatar(character.appearance);
+  const [cropSrc, setCropSrc] = useState<string | null>(null);
   const importPortrait = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files?.[0];
     e.currentTarget.value = ''; // allow re-selecting the same file later
     if (!file || !onPlay) return;
     // Compressed copy → synced character data; sharp copy (installed app) → on-device store.
-    processPortrait(file)
-      .then(async ({ compressed, sharp }) => {
-        let ref: string | undefined;
-        if (sharp) {
-          ref = newPortraitRef();
-          await setSharpPortrait(ref, sharp);
-        }
+    uploadImage(file)
+      .then(({ compressed, ref }) => {
         onPlay((p) => setPortrait(p, compressed, ref));
+        setCropSrc((ref && getSharpPortrait(ref)) || compressed);
         // The replaced sharp copy (oldRef) is NOT deleted here — an eager delete would break undo (Ctrl+Z
         // reverts to oldRef but the sharp image would be gone). Orphaned sharp copies are reclaimed by the
         // startup GC (gcSharpPortraits) once no character references them.
@@ -217,46 +218,36 @@ export function DetailsTab({
               ))}
             </div>
           ) : (
+            /* Two rows of two rather than a pair and then a column: Ancestry over Class on the left,
+               Heritage over Background on the right. */
             <div className="origin-list">
-              <div className="orow pair">
-                <div className="ocell">
-                  <i className="ti ti-user olead" aria-hidden="true" />
-                  <div className="ocell-text">
-                    <div className="olabel">Ancestry</div>
-                    <InfoTerm className="oval" title={ancestry?.name ?? 'Ancestry'} description={ancestry?.description} descRefs={ancestry?.descRefs}>
-                      {ancestry?.name ?? '—'}
-                    </InfoTerm>
-                  </div>
+              {[
+                [
+                  { icon: 'ti-user', label: 'Ancestry', name: ancestry?.name, desc: ancestry?.description, refs: ancestry?.descRefs },
+                  { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, desc: heritage?.description, refs: heritage?.descRefs },
+                ],
+                [
+                  { icon: 'ti-shield-half', label: 'Class', name: cls?.name, desc: cls?.description, refs: cls?.descRefs },
+                  { icon: 'ti-book-2', label: 'Background', name: bgName, desc: bgDesc, refs: background?.descRefs },
+                ],
+              ].map((row, i) => (
+                <div className="orow pair" key={i}>
+                  {row.map((o, j) => (
+                    <Fragment key={o.label}>
+                      {j > 0 && <div className="odiv" />}
+                      <div className="ocell">
+                        <i className={'ti ' + o.icon + ' olead'} aria-hidden="true" />
+                        <div className="ocell-text">
+                          <div className="olabel">{o.label}</div>
+                          <InfoTerm className="oval" title={o.name ?? o.label} description={o.desc} descRefs={o.refs}>
+                            {o.name ?? '—'}
+                          </InfoTerm>
+                        </div>
+                      </div>
+                    </Fragment>
+                  ))}
                 </div>
-                <div className="odiv" />
-                <div className="ocell">
-                  <i className="ti ti-sparkles olead" aria-hidden="true" />
-                  <div className="ocell-text">
-                    <div className="olabel">Heritage</div>
-                    <InfoTerm className="oval" title={heritage?.name ?? 'Heritage'} description={heritage?.description} descRefs={heritage?.descRefs}>
-                      {heritage?.name ?? '—'}
-                    </InfoTerm>
-                  </div>
-                </div>
-              </div>
-              <div className="orow">
-                <i className="ti ti-book-2 olead" aria-hidden="true" />
-                <div className="ocell-text">
-                  <div className="olabel">Background</div>
-                  <InfoTerm className="oval" title={bgName ?? 'Background'} description={bgDesc} descRefs={background?.descRefs}>
-                    {bgName ?? '—'}
-                  </InfoTerm>
-                </div>
-              </div>
-              <div className="orow">
-                <i className="ti ti-shield-half olead" aria-hidden="true" />
-                <div className="ocell-text">
-                  <div className="olabel">Class</div>
-                  <InfoTerm className="oval" title={cls?.name ?? 'Class'} description={cls?.description} descRefs={cls?.descRefs}>
-                    {cls?.name ?? '—'}
-                  </InfoTerm>
-                </div>
-              </div>
+              ))}
             </div>
           )}
         </div>
@@ -407,9 +398,17 @@ export function DetailsTab({
         <div className="id-row">
           <span className="idl">Traits</span>
           <div className="idpills">
-            {(ancestry?.traits ?? []).map((t) => (
-              <InfoTerm className="lang-pill" key={t} title={cap(t)} description={traitDesc(t, content)}>
-                {cap(t)}
+            {/* The ancestry's own traits AND any a record granted — one row, because they answer the
+                same question: what can target me. A granted trait is accent-bordered and names its
+                source in the popup, so "undead" reads as acquired next to a born "human". */}
+            {creatureTraits.map((t) => (
+              <InfoTerm
+                className={`lang-pill${t.from === 'granted' ? ' granted-trait' : ''}`}
+                key={t.trait}
+                title={cap(t.trait)}
+                description={[traitDesc(t.trait, content), t.source ? `Granted by ${t.source}.` : null].filter(Boolean).join(' ')}
+              >
+                {cap(t.trait)}
               </InfoTerm>
             ))}
           </div>
@@ -472,6 +471,22 @@ export function DetailsTab({
           </div>
         ))}
       </section>
+
+      {/* The character's pictures: the profile one shown whole, plus any others. Renders nothing for a
+          read-only sheet with no images, and stays a single picture + a button row for the common case. */}
+      <CharacterImages character={character} onPlay={onPlay} />
+
+      {/* Framing the avatar after an upload from the Origin slot above. */}
+      {cropSrc && onPlay && (
+        <AvatarCropModal
+          src={cropSrc}
+          onCancel={() => setCropSrc(null)}
+          onDone={(avatar) => {
+            onPlay((p) => setAvatar(p, avatar));
+            setCropSrc(null);
+          }}
+        />
+      )}
     </div>
   );
 }

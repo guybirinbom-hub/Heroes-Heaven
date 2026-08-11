@@ -58,9 +58,14 @@ import {
   poolSituationalLines,
   spellMarkersFor,
   supersededIds,
+  DEGREE_SHIFT_SHORT,
+  DEGREE_SHIFT_TEXT,
+  type DegreeShift,
   type ExtraSituational,
+  type RecordMarker,
   type SituationalBonus,
   type SituationalLine,
+  type SituationalTarget,
 } from './situationalBonuses';
 
 export type StatRef =
@@ -235,6 +240,55 @@ function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
  * Only items carry these today (the item editor's Advanced section is what writes them), and only
  * while the item is actually in use, matching `characterSituationalIds` above.
  */
+/**
+ * Every record the character has that carries a degree-of-success shift, with its id.
+ *
+ * Keyed by the RECORD's id because both consumers below look entries up by the ids the character
+ * actually owns — an entry filed under a synthetic key is never read.
+ */
+function degreeShiftRecords(c: Character, db?: ContentDatabase): [string, DegreeShift[]][] {
+  if (!db) return [];
+  const out: [string, DegreeShift[]][] = [];
+  // Read structurally rather than by declared type: the field lives on ContentBase and ItemBase, but
+  // this walk also passes ancestries and backgrounds, which are separate shapes that simply never
+  // carry one. A structural read keeps every source in the one collector instead of splitting it.
+  const push = (id: string | null | undefined, rec?: unknown) => {
+    const shifts = (rec as { degreeShifts?: DegreeShift[] } | undefined)?.degreeShifts;
+    if (id && shifts?.length) out.push([id, shifts]);
+  };
+  for (const f of c.feats) push(f.featId, db.feats[f.featId]);
+  push(c.heritageId, c.heritageId ? db.heritages[c.heritageId] : undefined);
+  push(c.ancestryId, c.ancestryId ? db.ancestries[c.ancestryId] : undefined);
+  push(c.backgroundId, c.backgroundId ? db.backgrounds[c.backgroundId] : undefined);
+  for (const id of ownedFeatureIds(c, db)) push(id, db.classFeatures[id]);
+  // Items only while actually in use, matching `characterSituationalIds`.
+  for (const inv of c.inventory ?? []) {
+    if (inv.equipped || inv.worn || inv.invested) push(inv.itemId, db.items[inv.itemId]);
+  }
+  return out;
+}
+
+/**
+ * The ACTION half of ruling Q2 — the same `degreeShifts` field, rendered as a RecordMarker so the
+ * shift appears on the action row the player performs, not only on the skill they look up.
+ */
+function degreeShiftMarkers(c: Character, db?: ContentDatabase): Record<string, RecordMarker[]> | undefined {
+  let out: Record<string, RecordMarker[]> | undefined;
+  for (const [id, shifts] of degreeShiftRecords(c, db)) {
+    for (const sh of shifts) {
+      for (const action of sh.actions ?? []) {
+        ((out ??= {})[id] ??= []).push({
+          on: 'action',
+          id: action,
+          value: DEGREE_SHIFT_SHORT[sh.shift] ?? sh.shift,
+          note: `${DEGREE_SHIFT_TEXT[sh.shift] ?? sh.shift} ${sh.when}`.trim(),
+        });
+      }
+    }
+  }
+  return out;
+}
+
 function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituational | undefined {
   if (!db) return undefined;
   let out: Record<string, SituationalBonus[]> | undefined;
@@ -243,6 +297,22 @@ function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituation
     const authored = db.items[inv.itemId]?.situational;
     if (!authored?.length) continue;
     (out ??= {})[inv.itemId] = authored;
+  }
+  // DEGREE-OF-SUCCESS shifts fan out here into the SKILL and SAVE halves of ruling Q2. The ACTION half
+  // comes from `degreeShiftMarkers` off the SAME field, so one authored entry reaches every surface it
+  // names and the halves cannot drift apart — which is exactly what went wrong when they were two
+  // separate registries.
+  for (const [id, shifts] of degreeShiftRecords(c, db)) {
+    for (const sh of shifts) {
+      const targets: SituationalTarget[] = [
+        ...(sh.skills ?? []).map((detail) => ({ kind: 'skill', detail }) as SituationalTarget),
+        // Q2: a general save clause stars all three. `detail: 'all'` is already what targetMatches
+        // reads as all three, so no per-save fan-out is needed here.
+        ...(sh.saves ?? []).map((detail) => ({ kind: 'save', detail }) as SituationalTarget),
+      ];
+      if (!targets.length) continue; // an actions-only shift is carried entirely by its markers
+      ((out ??= {})[id] ??= []).push({ targets, when: sh.when, bonus: DEGREE_SHIFT_TEXT[sh.shift] ?? sh.shift });
+    }
   }
   // A CONDITIONAL skill substitution ("use Nature instead of Medicine to Treat Wounds") is exactly a
   // situational note: it does NOT move the skill's number — Natural Medicine's own text says it
@@ -304,7 +374,16 @@ export function recordMarkersFor(
   // being modified (Draconic Paragon's rider on Kobold Breath, which a kobold without Kobold Breath
   // must never see). It arrives through the same `extra` channel the item editor uses, so there is
   // one display path rather than two.
-  return markersFor(characterSituationalIds(c, db), on, id, c.grantMarkers);
+  // Degree-of-success shifts arrive through the same `extra` channel, so the ACTION half of ruling Q2
+  // renders by the one display path rather than a second one. Merged with `grantMarkers` per id: a
+  // record can both modify a grant and shift a degree, and neither may silently drop the other.
+  const shifts = degreeShiftMarkers(c, db);
+  let extra = c.grantMarkers as Record<string, RecordMarker[]> | undefined;
+  if (shifts) {
+    extra = { ...(extra ?? {}) };
+    for (const [id, marks] of Object.entries(shifts)) extra[id] = [...(extra[id] ?? []), ...marks];
+  }
+  return markersFor(characterSituationalIds(c, db), on, id, extra);
 }
 
 /**

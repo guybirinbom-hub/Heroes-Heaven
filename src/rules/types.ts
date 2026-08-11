@@ -22,8 +22,8 @@
 
 // The conditional-bonus shape is defined next to the shipped registry that uses it. Re-exported here
 // so a player-authored entry is the SAME type as a shipped one — one display path, not two.
-import type { RecordMarker, SituationalBonus } from './situationalBonuses';
-export type { RecordMarker, SituationalBonus, SituationalTarget } from './situationalBonuses';
+import type { RecordMarker, SituationalBonus, DegreeShift } from './situationalBonuses';
+export type { RecordMarker, SituationalBonus, SituationalTarget, DegreeShift } from './situationalBonuses';
 
 /* =========================================================================
  * 1. Canonical vocabularies + primitive types
@@ -656,6 +656,27 @@ export interface DefenseGrants {
   /** "You can breathe underwater." A permanent capability with no number — it is not a sense, not
    *  a speed, and not a resistance, so it had no home and the records saying it did nothing. */
   breathesWater?: boolean;
+  /**
+   * CREATURE TRAITS the record adds to the character — "You gain the undead and zombie traits"
+   * (Zombie Dedication), the animal trait a battle form confers.
+   *
+   * Not cosmetic. A creature trait changes what can target you: an effect that only affects humanoids
+   * stops working on you, one that targets undead starts. Your ancestry's own traits are the baseline;
+   * these are ACQUIRED on top, and the sheet shows both so the player can answer "does this affect me".
+   *
+   * Owner ruling Q6 — record them on the sheet. Read through `creatureTraitsOf`, never off a record
+   * directly, so every consumer sees the same set.
+   */
+  grantsCreatureTraits?: string[];
+  /**
+   * DEGREE-OF-SUCCESS shifts this record grants — "a success on a Thievery check to Pick a Lock is a
+   * critical success instead". No number moves, so it fits no numeric lane.
+   *
+   * Owner ruling Q2 is that it stars BOTH the skill and the action, and all three saves when general.
+   * One entry here fans out to every surface it names (see `DegreeShift`), which is the whole point:
+   * the two halves used to be authored into separate registries and drifted apart.
+   */
+  degreeShifts?: DegreeShift[];
   /**
    * "In your hands, a shield gains the minor Reinforcing rune… the reinforcing rune of your level."
    *
@@ -2039,6 +2060,12 @@ interface ItemBase extends ContentBase {
    * or anything their table rules differently — without waiting for the app to model it.
    */
   situational?: SituationalBonus[];
+  /**
+   * DEGREE-OF-SUCCESS shifts the item grants while in use — the Cloak of Repute's "a success becomes a
+   * critical success; a critical failure becomes a failure". Same field and same fan-out as a feat's,
+   * so an item's shift stars the skill AND the action exactly as ruling Q2 requires.
+   */
+  degreeShifts?: DegreeShift[];
   /** Extra prepared/spontaneous spell slots the item grants while invested (Endless Grimoire,
    *  Sin Reservoir). Same shape + application as a feat's spellSlotBonus. */
   spellSlotBonus?: SpellSlotBonus;
@@ -2441,13 +2468,20 @@ export type ModeTargetKind =
   | 'damage'
   | 'spell-attack'
   | 'spell-dc'
-  | 'class-dc';
+  | 'class-dc'
+  // Numbers on the sheet that aren't checks or DCs. `ability` shifts the attribute MODIFIER, so it
+  // carries through everything derived from that attribute rather than only showing on its own card.
+  | 'speed'
+  | 'max-hp'
+  | 'initiative'
+  | 'ability';
 
 export interface ModeModifier {
   value: number;
   type: ModifierType;
   target: ModeTargetKind;
-  /** For target 'save' → save id; 'skill' → skill key (e.g. 'stealth' / 'lore:warfare'). */
+  /** For target 'save' → save id; 'skill' → skill key (e.g. 'stealth' / 'lore:warfare');
+   *  'ability' → attribute id ('str' … 'cha'). */
   detail?: string;
   /** Free-text "applies when …". When present the modifier is CONDITIONAL: it doesn't change
    *  the number (the player applies it situationally), but underlines the stat + shows here. */
@@ -3102,6 +3136,15 @@ export interface SpellcastingEntry {
   signature?: string[];
   /** Wizard: learned spells per rank (the daily preparation is drawn from this). */
   spellbook?: Record<number, string[]>;
+  /**
+   * Spells added in play by the Learn a Spell activity, per rank.
+   *
+   * Where they LAND depends on the caster, exactly as the activity says: a spellbook caster's are
+   * merged into `spellbook` (so the next preparation can use them), while a repertoire caster's stay
+   * here — "it's not automatically added since you can only know a limited number of spells. Instead,
+   * you can select it when you add or swap spells."
+   */
+  learned?: Record<number, string[]>;
   /** Cleric Divine Font: a second prepared list of `slots` heal/harm-only slots (1 + Cha) at the given
    *  rank. The Battle Creed doctrine instead grants a 'battle' font: 4/5/6 Bane-or-Bless slots cast with
    *  the CLASS DC (`useClassDc`). `allowed` restricts which spells may fill the slots; `expended` (per
@@ -3533,13 +3576,52 @@ export interface Character {
   notes: NotePage[];
   /** Animal companions, familiars, and eidolons (rendered as stat blocks). */
   companions?: CompanionConfig[];
-  /** Per-character cosmetics (portrait + accent), mirrors the theme system. `portrait` is the compressed
-   *  (synced) copy; `portraitRef` keys the on-device sharp copy (installed app only; never synced). */
-  appearance?: { portrait?: string; accentColor?: string; portraitRef?: string };
+  /** Per-character cosmetics (portrait + accent), mirrors the theme system. See CharacterAppearance. */
+  appearance?: CharacterAppearance;
   /** Per-character sheet customization OVERRIDES. Only the fields the user changed for this character
    *  are present; everything absent falls back to the device-global default (see data/customization.ts,
    *  effectiveCustomization). Absent/empty = this character follows the global default entirely. */
   customization?: Customization;
+}
+
+/**
+ * One picture in a character's gallery — the images BESIDES the profile one.
+ *
+ * The profile image stays in `CharacterAppearance.portrait`, so a character with a single picture
+ * (almost everyone) carries no gallery field at all. Making a gallery image the profile swaps the two.
+ */
+export interface CharacterImage {
+  id: string;
+  /** The compressed (synced) copy — same tier as a portrait. */
+  img: string;
+  /** Keys the on-device sharp copy. Deliberately named `portraitRef`: the startup GC walks the whole
+   *  character for that exact key to decide which sharp images are still referenced (see
+   *  data/portraitStore collectPortraitRefs), and a differently-named field would be collected. */
+  portraitRef?: string;
+  /** Optional label the player types under the picture. */
+  caption?: string;
+}
+
+/**
+ * Per-character cosmetics.
+ *
+ * Three separate images, on purpose:
+ *  - `portrait` is the profile picture, WHOLE and uncropped, shown large on the Details page;
+ *  - `avatar` is a square crop of it the player framed themselves, used everywhere the picture appears
+ *    small (the sheet's top bar, roster cards, the party list) — a centre crop of a full-body portrait
+ *    reliably cuts the head off, which is what this exists to fix. Absent = fall back to `portrait`;
+ *  - `gallery` is every other picture of the character.
+ */
+export interface CharacterAppearance {
+  /** The profile image, compressed for sync. */
+  portrait?: string;
+  /** Keys the on-device sharp copy of `portrait` (installed app only; never synced). */
+  portraitRef?: string;
+  /** Square avatar crop of `portrait`, small enough to sit in the synced data beside it. */
+  avatar?: string;
+  /** The character's other pictures. */
+  gallery?: CharacterImage[];
+  accentColor?: string;
 }
 
 /** Reorderable / hideable vitals-rail cards (see VitalsRail). */
@@ -3581,13 +3663,18 @@ export interface Customization {
   hiddenTabs?: string[];
   /** Tab the sheet opens on for this character; absent = remember the last-used tab. */
   defaultTab?: string;
+  /** Show the vitals rail (HP, saves, conditions …) while the NOTES tab is open. Notes are a writing
+   *  surface, not a play surface, and the rail costs them a fifth of the width — so this defaults to
+   *  FALSE (rail hidden on Notes) while every other tab keeps it. */
+  notesShowRail?: boolean;
   // --- C · density ---
   /** Spacing density; absent = follow the app-wide Style. */
   density?: SheetDensity;
   // --- D · content & behaviour ---
   /** Show a leading "+" on positive modifiers (default true). */
   plusOnMods?: boolean;
-  /** Show the DC beside each saving throw (default false). */
+  /** Show the DC beside each saving throw and Perception (default false). Named for saves because that
+   *  is all it used to cover; the stored key is left alone so existing characters keep their setting. */
   showSaveDCs?: boolean;
   /** Hide tabs that have no content for this character (default false). */
   autoHideEmpty?: boolean;
