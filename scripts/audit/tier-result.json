@@ -1,0 +1,156 @@
+{
+ "goldRequirements": 150,
+ "sonnet": {
+  "feats": 33,
+  "matched": 119,
+  "missed": 30,
+  "invented": 1,
+  "recall": 79.9,
+  "precision": 99.2,
+  "worstMisses": [
+   {
+    "num": 27,
+    "missed": 6,
+    "what": [
+     "'basic undead benefits' surfaced as its own owned, readable entry",
+     "+1 circumstance bonus vs disease and poison (candidate listed these as immunities instead)",
+     "undead vision — low-light, upgraded to darkvision if ancestry has low-light",
+     "Necril language",
+     "immunity to void (negative) damage",
+     "Negative Survival note on the Dying condition (knocked out not destroyed; stabilize doesn't help)"
+    ]
+   },
+   {
+    "num": 33,
+    "missed": 3,
+    "what": [
+     "picked feat must become genuinely OWNED so its mechanics reach the sheet",
+     "empty slot on the feat's own entry that opens the picker while unmade",
+     "warn the player when a later change makes the stored pick illegal instead of dropping it silently"
+    ]
+   },
+   {
+    "num": 11,
+    "missed": 2,
+    "what": [
+     "Exactly ONE reaction row: the feat's own actionCost reaction must not render a second, trigger-less row beside the granted Unwavering Resilience action",
+     "Situational +1 circumstance star on all three saves, declared before you roll, vs poison/disease/mental effects - candidate's blanket 'no further sheet impact' denies it"
+    ]
+   },
+   {
+    "num": 18,
+    "missed": 2,
+    "what": [
+     "modifiesGrant: the Dragon Form record reached from this feat must show it is the CLOUD dragon and that this feat rewrote the generic spell (jaws 2d10+1d12 electricity, 30-ft cone 6d12, an extra horn attack, cloud walk)",
+     "the dragon creature trait is recorded on the sheet while the mode is active, changing what can target you"
+    ]
+   },
+   {
+    "num": 20,
+    "missed": 2,
+    "what": [
+     "the fear star must sit on ALL THREE saves (Fortitude, Reflex, Will) - candidate hedges to 'the relevant save(s)' and never commits",
+     "modifiesGrant: the marshal's aura must be a named, addressable surface that later marshal feats/stances (Dread/Inspiring/Strategist, To Battle!, Cadence Call) attach to and rewrite"
+    ]
+   },
+   {
+    "num": 23,
+    "missed": 2,
+    "what": [
+     "form's senses: low-light vision + imprecise scent 30 ft (and the darkvision display rule)",
+     "the animal creature trait recorded on the sheet while the form runs"
+    ]
+   },
+   {
+    "num": 41,
+    "missed": 2,
+    "what": [
+     "focus pool maximum rises by 1 (capped at 3)",
+     "granted spell rolls against the oracle's spellcasting entry (Cha / oracle DC), not the cleric's, and sits with revelation spells"
+    ]
+   },
+   {
+    "num": 12,
+    "missed": 1,
+    "what": [
+     "Mode-on display: with Unleash Psyche active the fly Speed row must show the changed number and name Unleash Psyche as the source in its breakdown; the +10 text lives in the mode entry when off"
+    ]
+   }
+  ]
+ },
+ "opus": {
+  "feats": 33,
+  "matched": 133,
+  "missed": 16,
+  "invented": 0,
+  "recall": 89.3,
+  "precision": 100,
+  "worstMisses": [
+   {
+    "num": 11,
+    "missed": 2,
+    "what": [
+     "Exactly ONE reaction row — feat's own actionCost:reaction renders a second, trigger-less 'Unbowed, Unbroken' row that must be deduped away",
+     "Situational +1 circumstance star on all three saves (pre-roll, restriction in the note) — candidate explicitly refuses it"
+    ]
+   },
+   {
+    "num": 18,
+    "missed": 2,
+    "what": [
+     "modifiesGrant: the Dragon Form record reached from the feat must show it is the CLOUD variant rewritten by this feat (jaws 2d10+1d12 vs base 2d12+2d6, 30-ft cone 6d12 vs 10d6, a horn the base spell lacks, cloud walk) — candidate only asks that the spell be 'reachable', never that it read as changed",
+     "The dragon creature trait recorded on the sheet while the form is active (changes what can target the character)"
+    ]
+   },
+   {
+    "num": 23,
+    "missed": 2,
+    "what": [
+     "Form senses: low-light vision + imprecise scent 30 ft (with the darkvision display rule)",
+     "The animal creature trait acquired while the form runs, recorded as a sheet tag"
+    ]
+   },
+   {
+    "num": 27,
+    "missed": 2,
+    "what": [
+     "modifiesGrant: the deteriorated state must be settable by other zombie records, not just described in prose",
+     "the 'basic undead benefits' package itself surfaced as an owned readable entry (incl. no-lane Undead Hunger text)"
+    ]
+   },
+   {
+    "num": 35,
+    "missed": 2,
+    "what": [
+     "remap scoped to proficiency lookup only — weapons keep their real martial/advanced category for category-keyed feats, crit spec, etc.",
+     "no star on the strike/proficiency row (permanent unconditional grant); source shows in the proficiency breakdown instead"
+    ]
+   },
+   {
+    "num": 12,
+    "missed": 1,
+    "what": [
+     "Mode-active display: with Unleash Psyche on, the fly Speed row must show the changed number and name the mode as source in its breakdown"
+    ]
+   },
+   {
+    "num": 20,
+    "missed": 1,
+    "what": [
+     "modifiesGrant: the marshal's aura must be a named, addressable surface that later marshal feats/stances (Dread/Inspiring/Strategist Marshal Stance, To Battle!, Cadence Call, Steel Yourself!, Snap Out of It!) attach to, so their changes show up IN the aura"
+    ]
+   },
+   {
+    "num": 24,
+    "missed": 1,
+    "what": [
+     "Situational star on Intimidation: 1 Mythic Point, roll at mythic proficiency vs the swarm's/troop's Will DC"
+    ]
+   }
+  ]
+ },
+ "verdict": {
+  "recallGap": 9.4,
+  "note": "Opus adjudicated the key, so it holds home-field advantage; a narrow Sonnet loss is partly artifact."
+ }
+}
