@@ -85,6 +85,9 @@ md.push('43 feats. For each: its printed text, and what three independent reader
 md.push('must be able to express. **Your corrections make this the answer key** that every later model run');
 md.push('is scored against — so a wrong entry here propagates into all 6,206 feats.');
 md.push('');
+md.push('**Referencing.** Feats are numbered 1–43; each requirement carries a number like `14.2`. Say');
+md.push('"14.2 is wrong, it should be a status bonus" or "delete 27.3" and I can apply it exactly.');
+md.push('');
 md.push('**How to read a row.** `3/3` means all three readers independently named that requirement —');
 md.push('strong. `1/3` means only one did, and those are where your eye is most worth spending. The Foundry');
 md.push('column is a second opinion from an unrelated implementation; it is corroboration, never a source.');
@@ -98,12 +101,28 @@ const nothing = rows.filter((r) => r.unanimousNothing).length;
 md.push(`**Summary:** ${rows.length} feats · ${rows.reduce((n, r) => n + r.proposed.length, 0)} proposed requirements · ` +
   `${nothing} feats where all readers agreed nothing is required · ${violated} control(s) violated.`);
 md.push('');
-for (const stratum of ['inert', 'explicit-single', 'multi-clause', 'missing-system', 'two-source-clash', 'choice']) {
-  const group = rows.filter((r) => r.stratum === stratum);
+/* Stable numbering so the owner can say "14.2 is wrong" and mean exactly one requirement. Assigned in
+ * document order and written into the JSON key too, so a correction can be applied without ambiguity. */
+const ORDER = ['inert', 'explicit-single', 'multi-clause', 'missing-system', 'two-source-clash', 'choice'];
+const ordered = ORDER.flatMap((s) => rows.filter((r) => r.stratum === s));
+ordered.forEach((r, i) => {
+  r.num = i + 1;
+  r.proposed.forEach((q, j) => { q.ref = `${i + 1}.${j + 1}`; });
+});
+
+md.push('\n## Index\n');
+md.push('| # | feat | stratum | reqs |');
+md.push('|---|---|---|---|');
+for (const r of ordered) {
+  md.push(`| ${r.num} | ${r.name} | ${r.stratum} | ${r.proposed.length || '—'}${r.controlViolated ? ' ⚠' : ''} |`);
+}
+
+for (const stratum of ORDER) {
+  const group = ordered.filter((r) => r.stratum === stratum);
   if (!group.length) continue;
-  md.push(`\n---\n\n## ${stratum} (${group.length})\n`);
+  md.push(`\n---\n\n## ${stratum} (${group.length}) — #${group[0].num}–${group[group.length - 1].num}\n`);
   for (const r of group) {
-    md.push(`### ${r.name}  \`${r.id}\`  · level ${r.level ?? '—'} · ${r.role}`);
+    md.push(`### ${r.num}. ${r.name}  \`${r.id}\`  · level ${r.level ?? '—'} · ${r.role}`);
     if (r.controlViolated) md.push('> ⚠ **CONTROL VIOLATED** — this should have produced no requirements.');
     if (r.unanimousNothing) md.push('> ✅ all three readers agreed: **nothing required**');
     if (r.splitOnNothing) md.push('> ⚠ readers SPLIT on whether anything is required');
@@ -112,11 +131,11 @@ for (const stratum of ['inert', 'explicit-single', 'multi-clause', 'missing-syst
     md.push('');
     if (!r.proposed.length) md.push('_No requirements proposed._');
     else {
-      md.push('| agreed | lane | what the sheet must express | from the clause |');
-      md.push('|---|---|---|---|');
+      md.push('| # | agreed | lane | what the sheet must express | from the clause |');
+      md.push('|---|---|---|---|---|');
       for (const q of r.proposed) {
         const what = (q.freeText || '—').replace(/\|/g, '\\|').slice(0, 180);
-        md.push(`| ${q.agreedBy}/3 | ${q.lane ? `\`${q.lane}\`` : '**none fits**'} | ${what} | ${String(q.clause).replace(/\|/g, '\\|').slice(0, 90)}… |`);
+        md.push(`| **${q.ref}** | ${q.agreedBy}/3 | ${q.lane ? `\`${q.lane}\`` : '**none fits**'} | ${what} | ${String(q.clause).replace(/\|/g, '\\|').slice(0, 90)}… |`);
       }
     }
     md.push('');
@@ -125,6 +144,12 @@ for (const stratum of ['inert', 'explicit-single', 'multi-clause', 'missing-syst
   }
 }
 writeFileSync(join(root, 'docs/gold-set-review.md'), md.join('\n'));
+/* Re-written now that numbering exists, so a correction like "14.2" resolves in the JSON too. */
+writeFileSync(join(root, 'scripts/audit/gold-answer-key.json'), JSON.stringify({
+  built: '2026-08-11',
+  note: "PROPOSED answers, pending the owner's review. `num` addresses a feat, `ref` (e.g. 14.2) addresses one requirement. Confidence = how many of three independent lenses named it. Foundry columns are corroboration only, never a source of values.",
+  rows: ordered,
+}, null, 1));
 
 console.log(`feats                     ${rows.length}`);
 console.log(`proposed requirements     ${rows.reduce((n, r) => n + r.proposed.length, 0)}`);
