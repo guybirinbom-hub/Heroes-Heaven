@@ -62,6 +62,7 @@ scripts/audit/*
 !scripts/audit/system-candidates.json
 !scripts/audit/gold-extraction.json
 !scripts/audit/gold-answer-key.json
+!scripts/audit/gold-adjudication.json
 scripts/aon-verify/
 tmptest/
 
