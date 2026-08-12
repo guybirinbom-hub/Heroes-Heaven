@@ -535,7 +535,7 @@ export function Builder({
         <SubCard
           key={`gfc-${grantedId}`}
           icon="ti-adjustments"
-          label={`${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt)}`}
+          label={`${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt, def.flag)}`}
         >
           <div className="choice-inert">
             <i className="ti ti-info-circle" aria-hidden="true" />
@@ -557,15 +557,15 @@ export function Builder({
             // widening is addressed by record id, and a granted feat has the same id either way.
             effectiveChoiceOptions(grantedId, def, featPrereqChar, content);
     if (!opts.length) return null;
-    const label = `${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt)}`;
+    const label = `${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt, def.flag)}`;
     const answer = build.grantedFeatChoices?.[grantedId] ?? '';
     const setAnswer = (v: string) =>
       actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [grantedId]: v } });
     return (
       <SubCard key={`gfc-${grantedId}`} icon="ti-adjustments" label={label}>
         <PopupSelect
-          title={featChoicePrompt(def.prompt)}
-          placeholder={`${featChoicePrompt(def.prompt)}…`}
+          title={featChoicePrompt(def.prompt, def.flag)}
+          placeholder={`${featChoicePrompt(def.prompt, def.flag)}…`}
           value={answer}
           onChange={setAnswer}
           // Trailblazer's "one terrain you've explored (such as forest or underground)" arrives on this
