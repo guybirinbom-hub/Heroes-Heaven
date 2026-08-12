@@ -352,3 +352,23 @@ Applied: the general default is **removed**; only the 14 records printing the Sp
 ⚠ Two tests asserted the old default and were rewritten, each keeping a comment on what it used to
 claim — `test/polish.test.ts` and `test/dedication-gate.test.ts`. They would otherwise have vouched for
 behaviour the owner rejected.
+
+---
+
+## Round 9 — the six remaining lane gaps (2026-08-11)
+
+| gap | records | ruling |
+|---|---|---|
+| **Aura** | 39 | **A mode.** Fits Q11 (it can be shut down) and Q1 (it outlasts a round). Ruling F still governs the numbers: an ally's bonus lands on no sheet of yours, but the mode shows it is running and carries the full text (Principle B). It also gives later feats that rewrite an aura something to attach to (Principle C). |
+| **Special statistic** | 9 | **Very important — build it.** A named statistic with its own DC that is not a save, a skill or the class DC. Gunslinger Dedication needs a *secondary* class DC for a class the character does not have. |
+| **Multiple attack penalty** | 4 | **Very important — build it.** Flurry and Agile Grace change the MAP progression itself (−3/−6 rather than −5/−10). `mapStep` is currently fixed. |
+| Ephemeral effect | 21 | **No implementation.** |
+| Roll twice | 6 | **No implementation.** |
+| Fast healing | 4 | **No implementation** — rounds are not tracked. |
+
+### ⚠ Two lanes are built but EMPTY
+
+`degreeShifts` and `battleForm` exist in the engine with **zero records authored**. Until an authoring
+pass runs, the 176 degree-of-success feats and 44 battle-form feats still report as broken and the lanes
+look pointless. Both are mechanical passes — no model, no design decisions, specs already settled by
+Q2 and Q3.
