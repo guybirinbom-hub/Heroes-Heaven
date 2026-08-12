@@ -281,3 +281,33 @@ grant something we haven't built — then it's a missing lane."**
 So the default reading for a picker whose answer reaches nothing is **not** "it must be flavour". Each
 of the five is a candidate missing grant, and the branch pick is one. Do not close these by deciding
 they are decorative; find what the text says the branch gives and build it.
+
+---
+
+## Round 8 — unpickable must LOOK unpickable (2026-08-11)
+
+**Q27, from a bug the owner hit in play:**
+
+> *"when I can choose a skill to be trained in it shows me options I'm already trained in. It doesn't
+> let me pick them like it should, but there isn't any point in showing them — the user is just
+> annoyed. Instead I want them greyed out. If there are more places where a user can't pick something
+> but there isn't a visual indication he can't, it's just bad design."*
+
+### The rule
+
+**An option that cannot be picked must LOOK unpickable.** Greyed out, and ideally saying why. Never
+rendered identically to a live option and silently inert — that reads as a broken app, not a rule.
+
+This is a **display** rule and does not contradict **Q9** (*the builder shows only what the player may
+legally pick*), which is a **filtering** rule. They divide like this:
+
+| case | treatment |
+|---|---|
+| you fail its **prerequisites** | filtered out (Q9), revealed by the "show options not meeting prerequisites" toggle |
+| the option is **shown but cannot be taken** — already trained, already owned, budget spent | **shown, greyed, and it says why** |
+| the grant would be **wasted across your whole career** | filtered (Q21) |
+| the grant looks wasted now but a **later level makes it worthwhile** | kept and live (Q21 — Canny Acumen) |
+
+**Scope: every picker in the app, not only the skill one.** The owner's last sentence makes this a
+sweep, not a one-line fix. Anywhere a control is inert without looking inert is in scope — pickers,
+option lists, buttons, slots.
