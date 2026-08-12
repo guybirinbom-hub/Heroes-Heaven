@@ -10,6 +10,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const DRY = process.argv.includes('--dry');
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -40,5 +41,5 @@ for (let i = overlay.length - 1; i >= 0; i--) {
 console.log(`reverted ${reverted} descriptions and removed their overlay patches`);
 if (DRY) { console.log('--dry: nothing written'); process.exit(0); }
 writeFileSync(path.join(ROOT, 'public/core.json'), JSON.stringify(core));
-writeFileSync(OVERLAY, JSON.stringify(overlay, null, 2) + '\n');
+writeFileSync(OVERLAY, formatBackfill(overlay));
 console.log('written: public/core.json, scripts/data/effect-backfill.json');

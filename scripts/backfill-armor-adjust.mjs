@@ -11,6 +11,7 @@
  * Str 18). Two points of score is one point of modifier.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -125,7 +126,7 @@ const put = (id, value) => {
 put('armored-skirt', ARMORED_SKIRT);
 put('plated-duster', PLATED_DUSTER);
 
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log(`armored-skirt: 2 modes (${MODE_A.length} + ${MODE_B.length} hosts)`);
 console.log(`plated-duster: 1 mode, covering ${covered.length} light cloth/leather/chain armours`);
 console.log(`effect-backfill now holds ${rows.length} rows`);

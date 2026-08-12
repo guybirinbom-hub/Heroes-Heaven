@@ -8,6 +8,7 @@
  * Wording quoted above each entry, from the AoN mirror (remastered printing where two ship).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -149,7 +150,7 @@ const backfill = JSON.parse(readFileSync(BACKFILL, 'utf8'));
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const seen = new Set(entries.map(key));
 const next = [...backfill.filter((e) => !seen.has(key(e))), ...entries];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`\nwrote ${entries.length} records (backfill ${backfill.length} → ${next.length})`);
 console.log(
   '\nNOT written: horn-of-plenty. The plan listed it as a daily temporary-item source, but it is an\n' +

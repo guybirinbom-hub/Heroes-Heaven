@@ -6,6 +6,7 @@
  * Every number is read out of the records' own text and checked before anything is written.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -30,6 +31,25 @@ if (!/additionally deals 1d4 acid splash damage/i.test(potent)) fail('potent-nec
 if (!/This choice is permanent and can.t be changed/i.test(potent)) fail('potent-nectar: the permanence clause not found');
 
 const GRANTS = [
+  {
+    /*
+     * The PHANTOM question. Potent Nectar shipped TWO pickers for its one "select one of the
+     * following benefits": this bare `choice` (prompt "Benefit", options Splash/Persistent) and the
+     * `effectChoices` group below, which is the one that actually writes damage onto the Nectar
+     * Strike. The bare one has no consumer — answering it moves nothing.
+     *
+     * Round 5, on Exemplar Dedication: a phantom question is DELETED, not answered. `value: null`
+     * is how the applier spells removal.
+     *
+     * ⚠ It must be removed HERE rather than out of public/core.json. The field comes from
+     * public/core.foundry-backup.json, the pristine reference import-core-v2.mjs transcribes
+     * mechanics from on every run, so a direct edit to core.json is undone by the next
+     * `npm run data`. The overlay is applied last and is the only durable removal.
+     */
+    id: 'potent-nectar',
+    field: 'choice',
+    value: null,
+  },
   {
     id: 'caustic-nectar',
     field: 'grantedStrikes',
@@ -102,5 +122,5 @@ for (const id of ['caustic-nectar', 'potent-nectar']) {
     replaced++;
   }
 }
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log(`effect-backfill: +${added} added, ${replaced} replaced/removed`);

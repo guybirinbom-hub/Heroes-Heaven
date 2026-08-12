@@ -11,6 +11,7 @@
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import path from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const DRY = process.argv.includes('--dry');
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -143,7 +144,7 @@ for (const w of fieldWrites) {
     ovAdd++;
   }
 }
-writeFileSync(OVERLAY, JSON.stringify(overlay, null, 2) + '\n');
+writeFileSync(OVERLAY, formatBackfill(overlay));
 
 if (modes.size) {
   const SRC = p('scripts/data/toggle-modes.json');

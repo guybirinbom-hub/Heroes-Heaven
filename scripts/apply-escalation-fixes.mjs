@@ -9,6 +9,7 @@
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import path from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const DRY = process.argv.includes('--dry');
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -192,7 +193,7 @@ for (const w of fieldWrites) {
   const value = w.underPassive ? core[w.coll][w.id].passiveEffects : w.value;
   if (!overlay.some((x) => x.category === w.coll && x.id === w.id && x.field === field)) { overlay.push({ category: w.coll, id: w.id, field, value }); ovAdd++; }
 }
-writeFileSync(OVERLAY, JSON.stringify(overlay, null, 2) + '\n');
+writeFileSync(OVERLAY, formatBackfill(overlay));
 writeFileSync(path.join(DIR, 'not-applied.json'), JSON.stringify({ skipped }, null, 1));
 console.log(`\noverlay: ${ovAdd} added`);
 console.log('written: src/rules/situationalBonuses.ts, public/core.json, scripts/data/effect-backfill.json');

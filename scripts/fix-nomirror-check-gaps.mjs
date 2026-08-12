@@ -12,6 +12,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const DRY = process.argv.includes('--dry');
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -71,6 +72,6 @@ for (const a of applied) {
   if (hits.length) { for (const h of hits) h.value = value; updated++; }
   else { overlay.push({ category: bucket, id, field: 'description', value }); added++; }
 }
-writeFileSync(OVERLAY, JSON.stringify(overlay, null, 2) + '\n');
+writeFileSync(OVERLAY, formatBackfill(overlay));
 console.log(`\noverlay: ${added} added, ${updated} updated`);
 console.log('written: public/core.json, scripts/data/effect-backfill.json');

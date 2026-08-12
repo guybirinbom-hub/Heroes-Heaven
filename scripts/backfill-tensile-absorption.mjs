@@ -6,6 +6,7 @@
  * 7, a real `resistances` entry) and could never be selected by anybody. Its 21 siblings carry it.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -41,5 +42,5 @@ const entry = { category: 'classFeatures', id: ID, field: 'otherTags', value };
 const backfill = JSON.parse(readFileSync(BACKFILL, 'utf8'));
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const next = [...backfill.filter((e) => key(e) !== key(entry)), entry];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`tagged ${ID} (${siblings.length} siblings carry "${TAG}"); backfill ${backfill.length} -> ${next.length}`);

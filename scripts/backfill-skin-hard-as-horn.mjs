@@ -16,6 +16,7 @@
  * would be wrong, or omitted, which is what happened before.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -61,5 +62,5 @@ const backfill = JSON.parse(readFileSync(BACKFILL, 'utf8'));
 const entry = { category: 'classFeatures', id: ID, field: 'choice', value: CHOICE };
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const next = [...backfill.filter((e) => key(e) !== key(entry)), entry];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`wrote the daily attunement choice on ${ID} (backfill ${backfill.length} → ${next.length})`);

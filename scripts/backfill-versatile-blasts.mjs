@@ -10,6 +10,7 @@
  * the wording surfaces here instead of leaving a stale hardcoded map behind.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -58,6 +59,6 @@ const backfill = JSON.parse(readFileSync(BACKFILL, 'utf8'));
 const entry = { category: 'feats', id: ID, field: 'blastTypeAdditions', value: additions };
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const next = [...backfill.filter((e) => key(e) !== key(entry)), entry];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`read from the feat's own text: ${JSON.stringify(additions)}`);
 console.log(`(backfill ${backfill.length} → ${next.length})`);

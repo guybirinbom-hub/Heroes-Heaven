@@ -8,6 +8,7 @@
  * already surfaces on the sheet, and gets to apply the missing half themselves.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -50,5 +51,5 @@ const rows = [
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const seen = new Set(rows.map(key));
 const next = [...backfill.filter((e) => !seen.has(key(e))), ...rows];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`  ${ID}: warning + streetwise grant (backfill ${backfill.length} → ${next.length})`);

@@ -6,6 +6,7 @@
  * a plausible guess.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -155,7 +156,7 @@ for (const g of GRANTS) {
     added++;
   }
 }
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 
 // The consumable-modes source is an ARRAY at ONE-space indent — matching it exactly keeps the diff
 // to the rows actually added.

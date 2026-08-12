@@ -12,6 +12,7 @@
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const MIRROR = 'C:/wonderers guide/aon-2e-archive/data/by-category/apparition';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -79,5 +80,5 @@ const key = (f) => `${f.category}/${f.id}/${(f.path ?? []).join('/')}/${f.field}
 const seen = new Set(fixes.map(key));
 const kept = backfill.filter((f) => !seen.has(key(f)));
 const next = [...kept, ...fixes];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`[apparitions] ${fixes.length} grants written (backfill ${backfill.length} → ${next.length})`);

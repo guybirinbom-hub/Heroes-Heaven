@@ -14,6 +14,7 @@
  * Each removal is checked against the record's current mechanics before it is written.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -84,5 +85,5 @@ if (!removed) {
   console.log('nothing to remove');
   process.exit(0);
 }
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log(`\n${removed} stale warning(s) cleared; effect-backfill now holds ${rows.length} rows`);

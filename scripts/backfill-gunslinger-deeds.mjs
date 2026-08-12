@@ -14,6 +14,7 @@
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -139,7 +140,7 @@ const backfill = JSON.parse(readFileSync(BACKFILL, 'utf8'));
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const seen = new Set(entries.map(key));
 const next = [...backfill.filter((e) => !seen.has(key(e))), ...entries];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 const wayEntries = entries.filter((e) => e.path);
 console.log(`wrote deeds for ${wayEntries.length} of ${options.length} ways (backfill ${backfill.length} → ${next.length})`);
 for (const e of wayEntries) console.log(`  ${e.path[2]}: ${e.value.map((v) => (typeof v === 'string' ? v : `${v.id}@${v.level}`)).join(', ')}`);

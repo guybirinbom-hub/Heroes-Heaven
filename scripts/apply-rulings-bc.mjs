@@ -17,6 +17,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const DRY = process.argv.includes('--dry');
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -239,6 +240,6 @@ if (problems.length) {
 }
 if (DRY) { console.log('\n--dry: nothing written'); process.exit(0); }
 writeFileSync(REGISTRY, src);
-writeFileSync(OVERLAY, JSON.stringify(overlay, null, 2) + '\n');
+writeFileSync(OVERLAY, formatBackfill(overlay));
 writeFileSync(p('public/core.json'), JSON.stringify(core)); // MINIFIED — pretty-printing costs 4 MB
 console.log('\nwritten  : src/rules/situationalBonuses.ts, scripts/data/effect-backfill.json, public/core.json');

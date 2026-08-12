@@ -10,6 +10,7 @@
  * Every number below is parsed from the feat's own sentence.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -73,5 +74,5 @@ const backfill = JSON.parse(readFileSync(BACKFILL, 'utf8'));
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const seen = new Set(entries.map(key));
 const next = [...backfill.filter((e) => !seen.has(key(e))), ...entries];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`wired ${entries.length} precision overrides (backfill ${backfill.length} → ${next.length})`);

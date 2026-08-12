@@ -12,6 +12,7 @@
  * sees each skill exactly once, under whichever branch legally applies to it.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -81,5 +82,5 @@ put('choice', {
 });
 put('dataWarning', null);
 
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log(`haunting-memories: ${options.length} gated options written (${SKILLS.length} skills × 2 branches)`);

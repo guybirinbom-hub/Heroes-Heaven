@@ -11,6 +11,7 @@
  * only read AFTER the sub-heading — otherwise flavour becomes curriculum.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -176,7 +177,7 @@ put('runelord', 'choice', {
   options: Object.keys(sins).map((n) => ({ value: slug(n), label: n })),
 });
 
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 const count = (m) => Object.values(m).reduce((n, r) => n + Object.values(r).reduce((k, a) => k + a.length, 0), 0);
 console.log(`Rooted Wisdom: ${Object.keys(branches).length} branches, ${count(branches)} spells — ${Object.keys(branches).join(', ')}`);
 console.log(`Thassilonian:  ${Object.keys(sins).length} sins, ${count(sins)} spells — ${Object.keys(sins).join(', ')}`);

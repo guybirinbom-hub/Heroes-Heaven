@@ -13,6 +13,7 @@
  * usage: node scripts/harvest-lost-fields.mjs <known-good-core.json>
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const readCore = (p) => {
@@ -62,7 +63,7 @@ for (const bucket of BUCKETS) {
   }
 }
 
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log(`harvested ${fields} dropped fields and ${records} whole records into effect-backfill.json`);
 console.log(`effect-backfill now holds ${rows.length} rows\n`);
 for (const [k, n] of [...perField].sort((a, b) => b[1] - a[1]).slice(0, 25)) console.log(`  ${String(n).padStart(5)}  ${k}`);

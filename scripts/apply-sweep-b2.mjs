@@ -25,6 +25,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const DRY = process.argv.includes('--dry');
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -343,7 +344,7 @@ for (const w of fieldWrites) {
   if (hits.length) { for (const h of hits) h.value = value; ovUpd++; }
   else { overlay.push({ category: w.coll, id: w.id, field, value }); ovAdd++; }
 }
-writeFileSync(OVERLAY, JSON.stringify(overlay, null, 2) + '\n');
+writeFileSync(OVERLAY, formatBackfill(overlay));
 writeFileSync(p('work/sweep/b2/toggles-deferred.json'), JSON.stringify(deferredToggles, null, 1));
 
 console.log(`\noverlay: ${ovAdd} added, ${ovUpd} updated`);

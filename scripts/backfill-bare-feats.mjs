@@ -7,6 +7,7 @@
  * Every value is re-checked here against the record's own text before it is written.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -97,6 +98,6 @@ for (const [id, field, value, mustSay] of WRITES) {
   written++;
 }
 
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log(`bare feats: ${written} written`);
 if (skipped.length) console.log(`skipped (reported, not written):\n  ${skipped.join('\n  ')}`);

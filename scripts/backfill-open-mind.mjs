@@ -10,6 +10,7 @@
  * Removed rather than read. `null` is how the overlay expresses "this field should not be here".
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -36,5 +37,5 @@ const entry = { category: 'feats', id: 'open-mind', field: 'passiveEffects', val
 const backfill = JSON.parse(readFileSync(BACKFILL, 'utf8'));
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const next = [...backfill.filter((e) => key(e) !== key(entry)), entry];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`removed open-mind.passiveEffects (backfill ${backfill.length} -> ${next.length})`);

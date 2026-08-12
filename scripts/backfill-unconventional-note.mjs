@@ -9,6 +9,7 @@
  * Leaving the old wording would be worse than having none: it tells the player a working rule is dead.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -46,5 +47,5 @@ if (typeof whole.value !== 'object' || whole.value === null) fail(`${ID}'s overl
 whole.value.inert = value;
 // Any stray partial patch of the same field is now redundant and would only drift.
 const next = backfill.filter((e) => !(e.category === 'feats' && e.id === ID && e.path?.[0] === 'choice' && e.field === 'inert'));
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`  ${ID}: inert note narrowed inside the existing choice row (backfill ${backfill.length} → ${next.length})`);

@@ -9,6 +9,7 @@
  * so a bloodrager wizard would have had the bonus land on their wizard slots instead.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -41,5 +42,5 @@ const backfill = JSON.parse(readFileSync(BACKFILL, 'utf8'));
 const row = { category: 'feats', id: ID, field: 'spellSlotBonus', value };
 const key = (e) => `${e.category}/${e.id}/${(e.path ?? []).join('/')}/${e.field}`;
 const next = [...backfill.filter((e) => key(e) !== key(row)), row];
-writeFileSync(BACKFILL, JSON.stringify(next, null, 2) + '\n');
+writeFileSync(BACKFILL, formatBackfill(next));
 console.log(`  ${ID} → +${value.perRank} slot per rank on ${ENTRY} (backfill ${backfill.length} → ${next.length})`);

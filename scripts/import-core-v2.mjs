@@ -18,6 +18,7 @@ import { readFileSync, writeFileSync, readdirSync, copyFileSync, existsSync, mkd
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
+import { aonFacets } from './lib/aon-facets.mjs';
 
 const DATA = 'C:/trying ai 2/hh-data-export/without-images/data';
 const OUT = 'public/core.json';
@@ -119,15 +120,175 @@ function normTraits(traits) {
 // renderer in Step 1; traits/level/mechanics + the fuller new-only corpus arrive in Step 2 (diff-gated).
 // This keeps the gate honest — only complete, verified records ship — while the importer, edition
 // prune/dedup, and idMap (which covers EVERY new record) are proven end-to-end.
-function overlayContent(rec) {
-  // Only the new canonical NAME is sourced here. The diff harness (scripts/migrate-diff.mjs) showed the
-  // classification facets (level/rarity/traits) are 99%+ identical to the old Foundry data, and the ~1% of
-  // diffs are AMBIGUOUS: sometimes the new AoN value is a genuine remaster change, sometimes it's an AoN
-  // error the old Foundry value gets right (e.g. Uplifting Winds: Foundry=12, AoN=16, no fixes.json arbiter,
-  // HH's tests assert 12). There is no automated way to pick the winner, so the vetted OLD facets are kept.
-  // The migration's player-visible payoff is the DESCRIPTIONS (new ast, done) + the fuller new-only corpus
-  // (added with facet-derived fields later in Step 2) — not re-flipping already-correct facets.
-  return { name: rec.name };
+// Declared BEFORE overlayContent, not after: the function is hoisted but these are not, and a `const`
+// read before its initialiser throws. (Same trap that bit the Spells tab earlier in this project.)
+const facetStats = {};
+const facetNotes = [];
+// Where a granted activity's cost came from, and which pages the Archives left untagged.
+const actionNotes = [];
+
+/*
+ * base-item name -> archive doc, for the magic-weapon trait union in aonFacets().
+ * Filled during the load loop below. Weapons/armour/shields first: a base_item named "Starknife"
+ * must resolve to weapon-44, not to some equipment page that happens to share the name.
+ */
+/*
+ * THE VERIFIED JOIN. scripts/migration/out/map.json pairs each Heroes Heaven record with its archive
+ * document id, built and checked across the whole migration (93.9% by id, the rest hand-confirmed).
+ *
+ * It is needed because the per-slug dedup below is NOT safe once facets are adopted. Two genuinely
+ * different feats can share a name: `Death from Above` is BOTH feat-7380 (level 16, Mythic, Eternal
+ * Legend) and feat-7610 (level 8, Archetype, Verduran Shadow). They slugify identically, so
+ * bestByBucket keeps only the higher edition rank — harmless while overlayContent copied just the
+ * name, but it put a Mythic trait and level 16 onto the Verduran Shadow feat as soon as facets came
+ * across, which dragged an ordinary level-2 archetype into the mythic destiny list.
+ *
+ * Optional: if the file is absent the importer still runs, on slug dedup alone, and says so.
+ */
+const SHELF_RANK = { Rulebooks: 0, 'Lost Omens': 1, Adventures: 2, 'Adventure Paths': 3, Society: 4, Comics: 5, 'Blog Posts': 6, 'April Fools': 7 };
+const shelfOf = new Map();
+function indexShelf(rec) {
+  if (rec?.category === 'source' && rec.name) shelfOf.set(String(rec.name).trim(), rec.data?.primary_source_category);
+}
+function bestBook(rec) {
+  const list = Array.isArray(rec?.data?.source) ? rec.data.source.map((s) => String(s).trim()).filter(Boolean) : [];
+  if (list.length < 2) return rec?.book;
+  let best = list[0];
+  let bestRank = SHELF_RANK[shelfOf.get(best)] ?? 99;
+  for (const s of list.slice(1)) {
+    const r = SHELF_RANK[shelfOf.get(s)] ?? 99;
+    if (r < bestRank) { best = s; bestRank = r; }
+  }
+  return best;
+}
+
+const docById = new Map();
+/*
+ * bucket -> slug -> the archive doc id this record was ACTUALLY built from.
+ *
+ * The migration map records where a record SHOULD come from; this records where it DID. They differ
+ * whenever preferBase() re-binds a family summary to its base page, or the exclude_from_search guard
+ * keeps a visible doc over a hidden one. Stamping `aonId` from the map alone would therefore assert a
+ * provenance that is not where the values came from. build-map.mjs reads this file first.
+ */
+const usedDocs = {};
+let mapDocFor = () => null;
+try {
+  const mig = JSON.parse(readFileSync('scripts/migration/out/map.json', 'utf8')).map ?? {};
+  mapDocFor = (bucket, s) => {
+    const m = mig[bucket]?.[s];
+    return m && (m.status === 'doc' || m.status === 'scraped') ? m.docId : null;
+  };
+  console.log(`migration map loaded: ${Object.keys(mig).length} buckets`);
+} catch {
+  console.warn('WARNING: scripts/migration/out/map.json not found — falling back to slug dedup, which');
+  console.warn('         picks the wrong twin when two different records share a name.');
+}
+
+const baseItemIndex = new Map();
+const BASE_CATS = ['weapon', 'armor', 'shield'];
+function indexBaseItem(rec) {
+  if (!rec?.name) return;
+  const k = String(rec.name).toLowerCase();
+  const prev = baseItemIndex.get(k);
+  const better = BASE_CATS.includes(rec.category) && !(prev && BASE_CATS.includes(prev.category));
+  if (!prev || better) baseItemIndex.set(k, rec);
+}
+/*
+ * url -> docs, for the id-based base-item hop. `data.base_item` is NAMES only; only
+ * `data.base_item_markdown` carries the URL, and 1,086 URLs are claimed by more than one doc.
+ * Combination weapons are the reason: /Weapons.aspx?ID=218 is BOTH `weapon-218` (Gun Sword (Ranged))
+ * and `weapon-218--melee`, and the export lists the --melee twin FIRST, so first-wins picks wrong.
+ * Heroes Heaven mirrors the ranged half, so the non---melee doc wins.
+ */
+const byUrl = new Map();
+const PAGE2CAT = { weapons: 'weapon', shields: 'shield', armor: 'armor', equipment: 'equipment', spells: 'spell', feats: 'feat' };
+function indexUrl(id, rec) {
+  if (!rec?.url) return;
+  const k = String(rec.url).toLowerCase();
+  (byUrl.get(k) ?? byUrl.set(k, []).get(k)).push(id);
+}
+function docByUrl(url) {
+  const k = String(url).toLowerCase();
+  const cat = PAGE2CAT[k.split('.aspx')[0].replace(/^\//, '')];
+  const ids = (byUrl.get(k) ?? []).filter((id) => !cat || docById.get(id)?.category === cat);
+  const pick = ids.find((id) => !id.endsWith('--melee')) ?? ids[0];
+  return pick ? docById.get(pick) : null;
+}
+
+const resolveBaseItem = (arg, want) => {
+  // 'stats' mode: the doc that actually carries combat statistics for this record.
+  /*
+   * A spell link on an item page, resolved to the HH slug of the spell we actually SHIP.
+   *
+   * The link usually points at the LEGACY printing: a Staff of Sieges links
+   * /Spells.aspx?ID=280, which is `spell-280` "Shield", superseded by the remaster `spell-1671`.
+   * Superseded docs are pruned before `idMap` is written, so a bare idMap lookup returns nothing and
+   * the staff loses almost every spell it holds. Follow `superseded_by` first, then fall back to the
+   * doc's own slug if it is a spell we ship.
+   */
+  if (want === 'featSlug') {
+    const d = docByUrl(arg);
+    if (!d) return null;
+    if (idMap[d.id]?.bucket === 'feats') return idMap[d.id].slug;
+    const s = slug(d.name);
+    return bestByBucket.feats?.[s] ? s : null;
+  }
+  if (want === 'spellSlug') {
+    let d = docByUrl(arg);
+    for (let hops = 0; d?.superseded_by && hops < 4; hops++) d = docById.get(d.superseded_by) ?? d;
+    if (!d) return null;
+    if (idMap[d.id]?.bucket === 'spells') return idMap[d.id].slug;
+    const s = slug(d.name);
+    return bestByBucket.spells?.[s] ? s : null;
+  }
+  if (want === 'stats') {
+    const md = arg?.data?.base_item_markdown;
+    if (typeof md === 'string') {
+      for (const m of md.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
+        const d = docByUrl(m[1]);
+        if (d?.data && (d.data.damage != null || d.data.ac != null || d.data.hardness != null)) return d;
+      }
+    }
+    return null;
+  }
+  return baseItemIndex.get(String(arg).toLowerCase()) ?? null;
+};
+
+function overlayContent(rec, old = {}, bucket = null) {
+  /*
+   * The NAME plus every facet the Archives can state — level, rarity, traits, price, bulk.
+   *
+   * This used to return only { name }, which meant an overlaid record kept its Foundry facets and
+   * 76.9% of every value in core.json was byte-identical to core.foundry-backup.json. The user's rule
+   * is that no value may originate in Foundry, so the Archives now win wherever they have an answer.
+   *
+   * The old comment justified keeping Foundry's facets with "Uplifting Winds: Foundry=12, AoN=16 …
+   * HH's tests assert 12". That is no longer true and may never have been: there is ONE doc,
+   * feat-4761, its page heading reads "Feat 16", live core.json already ships 16, and
+   * test/campaign-toggles.test.ts:30 asserts 16. The stated reason for the exception had already
+   * dissolved.
+   *
+   * Where the Archives say nothing, aonFacets() returns no key at all, so `...old` survives for that
+   * field. Those leftovers are real and are counted in facetStats below — not papered over.
+   */
+  const { facets, notes } = aonFacets(rec, old, resolveBaseItem, bucket, (id, want) => (want === 'slug' ? (idMap[id]?.bucket === 'actions' ? idMap[id].slug : null) : docById.get(id) ?? null), (r) => actionNotes.push(r));
+
+  /*
+   * The BOOK comes from the Archives, canonicalised through the HH-owned table above. The LICENCE does
+   * not: 0 of 43,686 archive docs contain "OGL", "ORC" or "Open Game License" anywhere, and it is not
+   * derivable from edition (ORC x legacy-era 243, OGL x remaster-era 95) nor from the book (37 of 221
+   * books carry mixed licences). Asked under hard rule 2, the user chose to keep the existing values —
+   * a recorded exception, documented in MIGRATION.md, not an oversight.
+   */
+  const book = mapBook(bestBook(rec));
+  if (book) {
+    facets.source = { book };
+    if (old?.source?.license) facets.source.license = old.source.license;
+  }
+  for (const n of notes) facetNotes.push({ slug: slug(rec.name), name: rec.name, ...n });
+  for (const k of Object.keys(facets)) facetStats[k] = (facetStats[k] ?? 0) + 1;
+  return { name: rec.name, ...facets };
 }
 
 // ------------------------------------------------------------------ load reference (pristine Foundry core)
@@ -149,6 +310,7 @@ for (const m of ['ancestries', 'heritages', 'backgrounds', 'classes', 'feats', '
 
 // ------------------------------------------------------------------ load + dedup new data
 const bestByBucket = {}; // bucket -> slug -> {rec, rank}
+const allByBucket = {};  // bucket -> slug -> [rec, …]  — every candidate, for pickByArchetype
 const idMap = {};        // numericId -> {bucket, slug}
 const supersededRecs = []; // {bucket, slug, by} for each pruned legacy record (for orphan rename-dedup)
 let total = 0, pruned = 0;
@@ -166,6 +328,10 @@ for (const f of readdirSync(DATA).filter((x) => x.endsWith('.json'))) {
   for (const numericId in (raw.docs || {})) {
     const rec = raw.docs[numericId];
     total++;
+    indexBaseItem(rec);
+    indexShelf(rec);
+    docById.set(numericId, rec);
+    indexUrl(numericId, rec);
     if (rec.superseded_by) { pruned++; supersededRecs.push({ id: numericId, bucket, slug: slug(rec.name), by: rec.superseded_by }); continue; }
     const s = slug(rec.name);
     // A record AoN flags `exclude_from_search` is a hidden/older printing, and deriveFresh /
@@ -174,12 +340,16 @@ for (const f of readdirSync(DATA).filter((x) => x.endsWith('.json'))) {
     // entries went missing: each book ships a hidden earlier printing at the SAME edition rank, and
     // it happened to be seen first. Rank hidden records strictly below every visible one.
     const rk = (EDITION_RANK[rec.edition] ?? 5) + (rec.exclude_from_search === 1 ? 10 : 0);
+    // Keep EVERY candidate too, not just the winner: two different feats can share a name, and the
+    // archetype is what tells them apart. See pickByArchetype below.
+    ((allByBucket[bucket] ||= {})[s] ||= []).push(rec);
     (bestByBucket[bucket] ||= {});
     const prev = bestByBucket[bucket][s];
     if (!prev || rk < prev.rank) bestByBucket[bucket][s] = { rec, rank: rk, numericId };
     idMap[numericId] = { bucket, slug: s };
   }
 }
+
 
 // ------------------------------------------------------------------ fresh-record derivation (new-only corpus)
 // New-only records (no old baseline) that Foundry never had. Added with facet-derived fields so they're
@@ -246,12 +416,41 @@ function featCategory(traits) {
 // stays visible by default) and turns every non-Core book into a properly gated source — without a
 // source.book, applySources always kept a fresh record (bug: e.g. Friend of the Sea from High Seas
 // showing on a Core-only character).
+/*
+ * The Archives book name -> Heroes Heaven's canonical display string.
+ *
+ * This used to read `core.foundry-backup.json` (via foundryBookByNorm) and was the last Foundry
+ * dependency in the importer. The mapping now lives in scripts/data/book-names.json, which
+ * `scripts/migration/gen-book-names.mjs` produced once and is HH-owned from here on.
+ *
+ * The Archives supply the book IDENTITY — every doc carries a /Sources.aspx?ID=N link — but NOT a long
+ * title: their doc for "Pathfinder Player Core" is named just "Player Core". That prefix is HH's own
+ * display convention, and `source.book` is the PRIMARY KEY of the source filter (`CORE_BOOKS`,
+ * src/rules/sources.ts:9), so the exact strings must be preserved or every default character's builder
+ * empties out.
+ */
+const BOOK_NAMES = (() => {
+  try { return JSON.parse(readFileSync('scripts/data/book-names.json', 'utf8')); } catch { return {}; }
+})();
+const bookByNorm = {};
+for (const [aon, hh] of Object.entries(BOOK_NAMES)) bookByNorm[normBook(aon)] = hh;
+
+/*
+ * A doc can be printed in SEVERAL books, and `rec.book` is just `data.source[0]` — array order carries
+ * no meaning. `weapon-365` Spear lists ["Tian Xia Character Guide", "Player Core"], so taking the first
+ * moved a basic Player Core weapon onto a setting book. `source.book` is the key the source filter
+ * runs on, so that removes the Spear from the builder for anyone using the default Core-only setup.
+ *
+ * The Archives rank the books themselves: each source doc carries `primary_source_category`
+ * (Rulebooks / Lost Omens / Adventures / Adventure Paths / Society / Blog Posts / …). Prefer the
+ * highest shelf. Ties keep the printed order.
+ */
 function mapBook(book) {
   const b = String(book || '').trim();
   if (!b) return undefined;
-  const canon = foundryBookByNorm[normBook(b)]; // align to the Foundry name when the book is already known
+  const canon = bookByNorm[normBook(b)];
   if (canon) return canon;
-  return /^Pathfinder /i.test(b) ? b : 'Pathfinder ' + b; // fallback: new-only book AoN has but Foundry lacked
+  return /^Pathfinder /i.test(b) ? b : `Pathfinder ${b}`; // a book the table has not seen yet
 }
 function deriveFresh(bucket, s, rec) {
   // skip AoN's hidden/test entries (exclude_from_search) + anything with no usable name/slug
@@ -301,14 +500,76 @@ for (const bucket of AON_BUCKETS) {
   const newMap = bestByBucket[bucket] || {};
   const out = {};
   const supers = supersededMap[bucket] || {};
-  let overlaid = 0, deferred = 0, orphanKept = 0, added = 0, superseded = 0;
+  let overlaid = 0, deferred = 0, orphanKept = 0, added = 0, superseded = 0, mapCorrected = 0;
 
   // 1. every new record that MATCHES an old slug: adopt the new name, keep old content+mechanics.
   //    New-only records are DEFERRED to Step 2 (they need real mechanics before they can ship).
+  /*
+   * A FAMILY SUMMARY must bind to the family's own page, not to one of its variants.
+   *
+   * The Archives give a variant family a base doc plus one doc per variant: equipment-2948
+   * "Potion of Flying" (no price — it is the summary) and equipment-2948-2817 / -2818 (the lesser and
+   * greater, priced). Heroes Heaven mirrors that with `potion-of-flying` plus `potion-of-flying-greater`.
+   * The join bound the SUMMARY to the lesser variant, so adopting facets put a 100 gp price on a record
+   * that is supposed to have none — which is exactly what the umbrella-item detection keys off.
+   *
+   * A record is a summary when two or more of its siblings' keys extend it, which is the same test
+   * findUmbrellaIds uses (src/data/index.ts:217).
+   */
+  // Both key sets: `potion-of-flying` exists only in the AoN corpus (it is a FRESH record, absent from
+  // the Foundry reference), so counting kin over oldMap alone missed exactly the records this protects.
+  const allKeysSorted = [...new Set([...Object.keys(oldMap), ...Object.keys(newMap)])].sort();
+  const kinCount = (s) => {
+    let n = 0;
+    for (let i = allKeysSorted.indexOf(s) + 1; i > 0 && i < allKeysSorted.length && allKeysSorted[i].startsWith(`${s}-`); i++) n++;
+    return n;
+  };
+  const preferBase = (docId, s) => {
+    const m = /^(.*)-(\d+)-\d+$/.exec(docId ?? '');
+    if (!m) return docId;
+    const base = docById.get(`${m[1]}-${m[2]}`);
+    const variant = docById.get(docId);
+    if (!base || !variant || base.name !== variant.name) return docId;
+    return kinCount(s) >= 2 ? `${m[1]}-${m[2]}` : docId;
+  };
+
   for (const s in newMap) {
-    const rec = newMap[s].rec;
+    /*
+     * The migration map's doc wins over the slug-dedup winner — see mapDocFor above — EXCEPT when it
+     * would swap a visible doc for a hidden one. `exclude_from_search` marks an older/hidden printing;
+     * the ranking above puts those strictly below every visible doc, and deriveFresh/deriveReference
+     * drop them outright, so forcing one deletes the record. `Knockdown` is action-21 (visible) and
+     * action-130 (hidden); idmap names the hidden one, and honouring that lost the record entirely.
+     * This is the same trap the ranking comment above describes for Jalmeri Heavenseeker.
+     */
+    /*
+     * TWO DIFFERENT FEATS CAN SHARE A NAME, and the archetype is what separates them. There are two
+     * "Stone Blood" feats, both level 6: feat-890 (Living Monolith, prereq Ka Stone Ritual) and
+     * feat-4380 (Stonebound, prereq Stonebound Dedication). They slugify identically, so whichever the
+     * dedup or the idmap happens to name wins — and Heroes Heaven's Living Monolith feat was getting
+     * the Stonebound one's prerequisites. Same shape as the Death from Above bug.
+     *
+     * Heroes Heaven records the archetype; so do the Archives, in `data.archetype`. When they agree,
+     * that beats every other selection rule.
+     */
+    const pickByArchetype = () => {
+      const want = oldMap[s]?.archetype;
+      if (!want) return null;
+      const cands = allByBucket[bucket]?.[s] ?? [];
+      if (cands.length < 2) return null;
+      return cands.find((d) => (d?.data?.archetype ?? []).some((a) => slug(a) === want)) ?? null;
+    };
+
+    const fallback = pickByArchetype() ?? newMap[s].rec;
+    const mappedDoc = pickByArchetype() ?? docById.get(preferBase(mapDocFor(bucket, s), s));
+    const mapped = mappedDoc && !(mappedDoc.exclude_from_search === 1 && fallback.exclude_from_search !== 1)
+      ? mappedDoc
+      : null;
+    const rec = mapped ?? fallback;
+    if (mapped && mapped !== fallback) mapCorrected++;
+    if (rec?.id) (usedDocs[bucket] ??= {})[s] = rec.id;
     const old = oldMap[s];
-    if (old) { out[s] = { ...old, ...overlayContent(rec), id: s, edition: rec.edition }; overlaid++; }
+    if (old) { out[s] = { ...old, ...overlayContent(rec, old, bucket), id: s, edition: rec.edition }; overlaid++; }
     else if (REFERENCE_BUCKETS.has(bucket)) { const fr = deriveReference(s, rec); if (fr) { out[s] = fr; added++; } else deferred++; }
     else if (FRESH_BUCKETS.has(bucket)) { const fr = deriveFresh(bucket, s, rec); if (fr) { fr.edition = rec.edition; out[s] = fr; added++; } else deferred++; }
     else deferred++;
@@ -320,10 +581,18 @@ for (const bucket of AON_BUCKETS) {
     if (s in out) continue;
     const replacement = supers[s];
     if (replacement && replacement in out) { out[s] = { ...oldMap[s], edition: 'superseded' }; superseded++; }
+    /*
+     * A KEPT ORPHAN is left exactly as it is. Overlaying Archives facets onto orphans was tried and
+     * REVERTED: it brought 1,897 more records under Archives sourcing but broke four tests, because an
+     * orphan is usually an orphan on purpose — a curated near-duplicate, an `aon-` scrape twin, or a
+     * deliberate rename that the app hides or reshapes. `test/aon-dedupe.test.ts`,
+     * `test/grade-spelling-duplicates.test.ts` and `test/granted-actions.test.ts` all encode that
+     * curation. If this is revisited, it needs to respect those, not bulldoze them.
+     */
     else { out[s] = oldMap[s]; orphanKept++; }
   }
   db[bucket] = out;
-  stats[bucket] = { total: Object.keys(out).length, overlaid, added, deferred, orphanKept, superseded };
+  stats[bucket] = { total: Object.keys(out).length, overlaid, added, deferred, orphanKept, superseded, mapCorrected };
 }
 
 // carry the hand-authored buckets over unchanged
@@ -490,8 +759,58 @@ writeFileSync('public/ast-index.json', JSON.stringify(astIndex));
 
 // ------------------------------------------------------------------ write + report
 if (!existsSync(BACKUP)) copyFileSync(OUT, BACKUP); // preserve the pristine reference exactly once
+/*
+ * `grantsActions` must name a record that IS an action — the encounter list is built from action
+ * records, and a link to a passive one contributes nothing (test/granted-actions.test.ts asserts it).
+ * The Archives' `<document level="2" id="action-N" />` embeds are factual, but three of them point at
+ * pages Heroes Heaven models as passive records (`call-companion`, `influence-rumor`,
+ * `call-follower`). Filtered here, at the end, because the actions bucket does not exist yet while the
+ * feats bucket is being built.
+ */
+{
+  const REAL = new Set(['actions', 'reaction', 'free', 'variable']);
+  let dropped = 0;
+  for (const bucket of ['feats', 'classFeatures', 'heritages', 'backgrounds']) {
+    for (const rec of Object.values(db[bucket] ?? {})) {
+      if (!Array.isArray(rec.grantsActions)) continue;
+      const keep = rec.grantsActions.filter((s) => REAL.has(db.actions?.[s]?.actionCost?.type));
+      dropped += rec.grantsActions.length - keep.length;
+      if (keep.length) rec.grantsActions = keep;
+      else delete rec.grantsActions;
+    }
+  }
+  if (dropped) console.log(`grantsActions: dropped ${dropped} link(s) whose target is not an action record`);
+}
+
+/*
+ * A WAND IS NOT A CONSUMABLE — applied here, at the end, because most of the mistyped records are KEPT
+ * ORPHANS (`Arboreal Wand (Rank 2)` and friends are HH's own per-rank variants with no AoN slug of
+ * their own), so overlayContent never runs for them. The migration map still knows their doc.
+ * Evidence and consequence are documented in aon-facets.mjs.
+ */
+{
+  let fixed = 0;
+  for (const [s, rec] of Object.entries(db.items ?? {})) {
+    if (rec?.itemType !== 'consumable') continue;
+    const doc = docById.get(mapDocFor('items', s));
+    const cat = doc?.data?.item_category ?? doc?.item_category;
+    if (cat === 'Wands') { rec.itemType = 'equipment'; fixed++; }
+  }
+  if (fixed) console.log(`itemType: ${fixed} wand(s) re-typed consumable -> equipment (a consumable is destroyed on use; a wand is not)`);
+}
+
 writeFileSync(OUT, JSON.stringify(db));
 writeFileSync(IDMAP_OUT, JSON.stringify(idMap));
+// Provenance for the migration: the doc each record was ACTUALLY built from. Not shipped to the app.
+try {
+  mkdirSync('scripts/migration/out', { recursive: true });
+  writeFileSync('scripts/migration/out/used-docs.json', JSON.stringify(usedDocs, null, 1));
+  writeFileSync('scripts/migration/out/action-cost-notes.json', JSON.stringify(actionNotes, null, 1));
+  const n = Object.values(usedDocs).reduce((a, o) => a + Object.keys(o).length, 0);
+  console.log(`recorded the source doc for ${n} records -> scripts/migration/out/used-docs.json`);
+} catch (e) {
+  console.warn('could not write used-docs.json:', e.message);
+}
 
 const sz = (existsSync(OUT) ? (readFileSync(OUT).length / 1e6).toFixed(1) : '?') + ' MB';
 console.log('new data: ' + total + ' docs | pruned superseded: ' + pruned + ' | idMap entries: ' + Object.keys(idMap).length);

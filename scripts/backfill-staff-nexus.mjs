@@ -10,6 +10,7 @@
  *     rather than the shared item record (`heldSpellsOverride`).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -86,5 +87,5 @@ put('classFeatures', 'staff-nexus', 'effectChoices', [
 ]);
 put('classFeatures', 'staff-nexus', 'dataWarning', null);
 
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log(`staff-nexus: item ${ci >= 0 ? 'replaced' : 'created'}, grant + two spell picks written`);

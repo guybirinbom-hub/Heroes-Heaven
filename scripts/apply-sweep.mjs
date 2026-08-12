@@ -18,6 +18,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const batch = process.argv[2];
 if (!batch || batch.startsWith('--')) { console.error('usage: node scripts/apply-sweep.mjs <batch> [--dry]'); process.exit(2); }
@@ -374,7 +375,7 @@ for (const w of fieldWrites) {
   if (hits.length) { for (const h of hits) h.value = value; ovUpd++; }
   else { overlay.push({ category: w.coll, id: w.id, field, value }); ovAdd++; }
 }
-writeFileSync(OVERLAY, JSON.stringify(overlay, null, 2) + '\n');
+writeFileSync(OVERLAY, formatBackfill(overlay));
 writeFileSync(p(`work/sweep/${batch}/not-applied.json`), JSON.stringify({ skipped, deferredToggles, engineWork }, null, 1));
 
 console.log(`\noverlay: ${ovAdd} added, ${ovUpd} updated`);

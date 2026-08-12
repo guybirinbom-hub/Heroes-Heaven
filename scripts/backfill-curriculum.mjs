@@ -10,6 +10,7 @@
  * extra curriculum slot (and Sin Reservoir) can offer exactly the legal list rather than a sentence.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -136,6 +137,6 @@ if (entries < 200) {
   process.exit(1);
 }
 
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log(`curricula written for ${done} of ${schools.length} schools — ${entries} spells, ${unresolved} unresolved`);
 if (skipped.length) console.log(`no curriculum (expected for School of Unified Magical Theory, which prints none):\n  ${skipped.join('\n  ')}`);

@@ -11,6 +11,7 @@
  * two would invite an illegal answer.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));
@@ -81,5 +82,5 @@ put(
     'attributes, an explicit exception to the one-apex-item limit.',
 );
 
-writeFileSync(BF, JSON.stringify(rows, null, 2) + '\n');
+writeFileSync(BF, formatBackfill(rows));
 console.log('sanctified-relic: 2 recorded picks + the apex note written');

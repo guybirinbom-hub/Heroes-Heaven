@@ -14,6 +14,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { formatBackfill } from './lib/write-backfill.mjs';
 
 const WRITE = process.argv.includes('--write');
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -66,5 +67,5 @@ for (const f of live) {
   }
 }
 writeFileSync(p('public/core.json'), JSON.stringify(core));
-writeFileSync(OVERLAY, JSON.stringify(overlay, null, 2) + '\n');
+writeFileSync(OVERLAY, formatBackfill(overlay));
 console.log(`\nwrote ${live.length} records; ${added} new overlay entries`);
