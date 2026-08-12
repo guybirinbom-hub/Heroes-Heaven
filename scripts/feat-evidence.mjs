@@ -84,7 +84,10 @@ const hostFor = (feat) => {
     backgroundId: DEFAULT_BG,
     classId,
     subclassId: cls?.subclass?.options?.[0]?.id ?? null,
-    keyAbility: cls?.keyAbility?.options?.[0] ?? 'str',
+    // ⚠ `keyAbility` is an ARRAY (wizard: ["int"]), not { options: [...] }. Reading `.options[0]` gave
+    // undefined, so EVERY host silently built as a Strength character — a wizard with Str as its key
+    // attribute. Found by the builder harness, which hit the identical bug in its own first draft.
+    keyAbility: (Array.isArray(cls?.keyAbility) ? cls.keyAbility[0] : cls?.keyAbility?.options?.[0]) ?? 'str',
     deityId: Object.keys(db.deities ?? {})[0] ?? null,
   };
 };
