@@ -50,13 +50,13 @@ import { seedContent } from '../src/rules/seed';
 import { findDuplicateIds } from '../src/data';
 import {
   buildCharacter, emptyBuild, levelGrants, checkPrerequisites,
-  choiceKeys, choiceOptionsFor, trainedSkillOptions, featChoicePrompt, featChoiceLabel,
+  choiceKeys, choiceOptionsFor, buildChoiceOptions, featChoicePrompt, featChoiceLabel,
   bonusLanguageSlots,
 } from '../src/rules/build';
 import {
   deriveSave, derivePerception, deriveSkill, deriveClassDc, deriveMaxHp,
   deriveAc, deriveDefenses, deriveStrikes, deriveSpeeds, deriveShield,
-  ownedFeatureIds, domainPoolForChoice,
+  ownedFeatureIds, domainPoolForChoice, effectiveChoiceOptions,
 } from '../src/rules/derive';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';
 import { openChoiceOptions } from '../src/rules/openChoice';
@@ -245,10 +245,10 @@ const optOf = (o) => ({ value: o.value, label: o.label });
  * Records elsewhere in content that WIDEN this record's choice ("add the astral and brilliant
  * property runes to the list of effects you can choose from").
  *
- * `derive.ts:1003 effectiveChoiceOptions` exists to honour them, but its only caller is
- * `dailyChoices.ts` — the builder's `renderChoice` reads `def.options` raw. So a build-time choice
- * with a widening source offers a list that is short by design, and no count on its own would show
- * it. Reported rather than judged: it is a fact about the app, not a verdict about the feat.
+ * `derive.ts effectiveChoiceOptions` honours them and the builder now goes through it (via
+ * `buildChoiceOptions`), so the count below already includes the widened entries. This names WHICH
+ * records did the widening — reported rather than judged: it is a fact about the option list, not a
+ * verdict about the feat.
  */
 let _widening = null;
 function wideningSourcesFor(recordId, def, db) {
@@ -294,12 +294,10 @@ function renderChoicePickers(def, key, build, db, char, featId, laneMeta) {
       optionCount: all.length, options: all.map((o) => ({ value: o.id, label: o.name })),
     }));
   }
-  const opts =
-    def.kind === 'domains'
-      ? domainPoolForChoice(build, db, build.featPicks?.[key], def.domainPool).map((d) => ({ value: d, label: d }))
-      : def.kind === 'skills'
-        ? trainedSkillOptions(char, def.minRank ?? 'trained')
-        : (def.options ?? []);
+  // The app's OWN resolver, not a copy of it. Every mirrored branch here is a place this harness can
+  // drift out of step with Builder.tsx, and four measuring scripts in this project have produced
+  // confident wrong answers that way — so where the builder calls a shared function, so does this.
+  const opts = buildChoiceOptions(featId, def, build, db, char, key);
   const answers = keys.map((k) => build.featChoices?.[k]);
   return keys.map((k, i) => {
     const shown = choiceOptionsFor(opts, def, answers, i);
@@ -394,7 +392,7 @@ export function pickersFor(build, slotKey, featId, db, char) {
         ? domainPoolForChoice(build, db, gid, def.domainPool).map((d) => ({ value: d, label: d }))
         : def.kind === 'skills'
           ? SKILLS.map((s) => ({ value: s, label: s }))
-          : (def.options ?? []);
+          : effectiveChoiceOptions(gid, def, char, db);
     if (!opts.length) continue; // grantedChoicePicker returns null — no picker renders
     out.push({
       lane: 'grantedFeatChoice', declaredBy: `granted.${gid}.choice`, control: 'select',

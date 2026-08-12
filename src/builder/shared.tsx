@@ -807,7 +807,10 @@ export function PopupSelect({
   clearLabel,
 }: {
   value: string | null | undefined;
-  options: { value: string; label: string; note?: string; disabled?: boolean; description?: string; descRefs?: DescRef[] }[];
+  /** `disabled` greys the option out; `disabledReason` is the short sentence saying WHY, printed in
+   *  the row and repeated as its tooltip. Q27: an option that cannot be picked must look unpickable
+   *  and, where the reason is knowable, say so — never render identically and be silently inert. */
+  options: { value: string; label: string; note?: string; disabled?: boolean; disabledReason?: string; description?: string; descRefs?: DescRef[] }[];
   onChange: (value: string) => void;
   placeholder?: string;
   title?: string;
@@ -986,6 +989,7 @@ export function PopupSelect({
                             onOpenDesc={node ? () => setDescNode(node) : undefined}
                             selectLabel="Select"
                             selectDisabled={o.disabled}
+                            disabledReason={o.disabledReason}
                             onSelect={() => {
                               onChange(o.value);
                               close();
@@ -999,6 +1003,8 @@ export function PopupSelect({
                           key={o.value || '__none'}
                           className={'picker-item' + (o.value === value ? ' chosen' : '') + (o.disabled ? ' prereq-unmet' : '')}
                           disabled={o.disabled}
+                          title={o.disabled ? o.disabledReason : undefined}
+                          aria-label={o.disabled && o.disabledReason ? `${o.label} — ${o.disabledReason}` : undefined}
                           onClick={() => {
                             onChange(o.value);
                             close();
@@ -1008,6 +1014,9 @@ export function PopupSelect({
                           <div className="picker-text">
                             <div className="picker-name">{o.label}</div>
                             {o.note && <div className="picker-traits">{o.note}</div>}
+                            {/* The shared "why you can't take this" line — same class, same wording
+                                shape, in every picker. See .picker-why in sheet.css. */}
+                            {o.disabled && o.disabledReason && <div className="picker-why">{o.disabledReason}</div>}
                           </div>
                         </button>
                       ))}
@@ -3571,26 +3580,35 @@ function SlotCard({ icon, label, value, onClear }: { icon: string; label: string
   );
 }
 
-export function SkillEditor({ build, actions, content }: EditorProps) {
-  const cls = build.classId ? content.classes[build.classId] : undefined;
-  const background = build.backgroundId ? content.backgrounds[build.backgroundId] : undefined;
-  const subOption = cls?.subclass?.options.find((o) => o.id === build.subclassId);
+/**
+ * The class's free "trained skills" picks.
+ *
+ * ⚠ The granted-skill set comes from the ENGINE (`Character.grantedSkills`), not from a copy made
+ * here. The copy this used to keep knew four sources — class-fixed, background, subclass grants,
+ * heritage — while `buildCharacter` locks nine, so a thaumaturge's esoteric skill, a second class's
+ * skills, a background's own sub-choice, a draconic sorcerer's dragon skill and a cleric's deity
+ * skill were all offered in this picker, accepted by `toggleSkill`, counted against the budget, and
+ * then silently dropped by the build. That is exactly the Q27 bug, in its worst form: the pick
+ * looked spent and bought nothing.
+ *
+ * They are now SHOWN and GREYED with the source named, rather than hidden — the owner's wording is
+ * "instead I want them greyed out", and a player who can see "Nature — already trained (your
+ * background)" learns something a missing row cannot tell them.
+ */
+export function SkillEditor({ build, actions, content, character }: EditorProps & { character?: Character }) {
+  const preview = useMemo(() => character ?? buildCharacter(build, content), [character, build, content]);
   const addlCount = additionalClassSkills(build, content);
-  const locked = new Set<string>();
-  if (cls) cls.trainedSkills.fixed.forEach((s) => locked.add(s));
-  const bgSkill = backgroundTrainedSkill(build, background);
-  if (bgSkill) locked.add(bgSkill);
-  subOption?.grants?.skills?.forEach((s) => locked.add(s));
-  // A heritage-granted skill (Skilled human) is locked too — chosen via its own picker,
-  // not consumable as a class pick (matches toggleSkill's locked set).
-  if (build.heritageSkill) locked.add(build.heritageSkill);
+  const grantedFrom = preview.grantedSkills ?? {};
+  const locked = new Set<string>(Object.keys(grantedFrom));
 
   // Count only picks NOT already granted (a class skill that a later subclass/background
   // also grants shouldn't consume a pick or double-count toward the cap).
   const chosen = build.classSkills.filter((s) => !locked.has(s));
   const chosenSkills = chosen.filter((k) => !k.startsWith('lore:'));
   const chosenLores = chosen.filter((k) => k.startsWith('lore:'));
-  const available = SKILLS.filter((s) => !locked.has(s) && !build.classSkills.includes(s));
+  // Every skill that isn't already filling one of the slots above. The granted ones stay in the list
+  // and are greyed below — they are the whole point of Q27.
+  const available = SKILLS.filter((s) => !chosen.includes(s));
 
   const addLore = (text: string) => {
     const key = loreKey(text);
@@ -3619,7 +3637,12 @@ export function SkillEditor({ build, actions, content }: EditorProps) {
               onChange={(v) => {
                 if (v) actions.toggleSkill(v as ProficiencyKey);
               }}
-              options={available.map((s) => ({ value: s, label: cap(s) }))}
+              options={available.map((s) => ({
+                value: s,
+                label: cap(s),
+                disabled: locked.has(s),
+                disabledReason: locked.has(s) ? `Already trained — from ${grantedFrom[s]}.` : undefined,
+              }))}
               addCustom={{ label: 'Learn a new lore', placeholder: 'Lore subject (e.g. Warfare)…', onAdd: addLore }}
             />
           </div>

@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { build, content } from './_content';
 import { blastTypesFor, deriveStrikes, domainPoolFor, ELEMENT_BLAST } from '../src/rules/derive';
 import { dailyChoicesFor } from '../src/rules/dailyChoices';
+import { buildCharacter, buildChoiceOptions, emptyBuild, type BuildState } from '../src/rules/build';
 
 /**
  * Records whose entire content is "add these to the menu that other record already gives you".
@@ -61,6 +63,84 @@ describe('a feat can widen another record’s daily menu', () => {
     expect(new Set(opts).size, 'no rune listed twice').toBe(opts.length);
     expect(opts).toContain('flaming');
     expect(opts).toContain('fearsome'); // the original five survive
+  });
+});
+
+/**
+ * The same widening, on the menus the player answers WHILE BUILDING.
+ *
+ * `effectiveChoiceOptions` had exactly one caller — dailyChoices.ts — so half the lane was dark: the
+ * builder's own picker read `def.options` straight off the record. Greater Armament names eight runes
+ * it adds to Harbinger's Armament and the dropdown in the builder stayed at the printed five, which
+ * is the very defect the widening lane was written to end.
+ */
+describe('a feat can widen another record’s BUILD-TIME menu', () => {
+  /** A fighter carrying both feats, as the builder holds them: the BuildState and its character. */
+  const harbinger = (featPicks: Record<string, string>) => {
+    const bs: BuildState = {
+      ...emptyBuild(),
+      name: 't',
+      level: 18,
+      classId: 'fighter',
+      ancestryId: Object.keys(db.ancestries)[0],
+      backgroundId: Object.keys(db.backgrounds)[0],
+      keyAbility: 'str',
+      subclassId: (db.classes.fighter?.subclass?.options[0]?.id as string) ?? null,
+      featPicks,
+    } as BuildState;
+    return { bs, char: buildCharacter(bs, db) };
+  };
+  const menu = (featPicks: Record<string, string>) => {
+    const { bs, char } = harbinger(featPicks);
+    return buildChoiceOptions('harbingers-armament', db.feats['harbingers-armament'].choice!, bs, db, char, '8:class:0').map(
+      (o) => o.value,
+    );
+  };
+
+  it('the builder no longer shows the raw option list', () => {
+    // Stated as the defect rather than the fix: `def.options` is what renderChoice used to render,
+    // and it is provably NOT what the picker offers a character who took the widening feat.
+    const raw = (db.feats['harbingers-armament'].choice?.options ?? []).map((o) => o.value);
+    expect(raw).not.toContain('flaming');
+    const opts = menu({ '8:class:0': 'harbingers-armament', '16:class:0': 'greater-armament' });
+    expect(opts).not.toEqual(raw);
+    expect(opts).toContain('flaming');
+    expect(opts).toContain('brilliant');
+  });
+
+  it('all eight arrive, the printed five survive, and nothing is listed twice', () => {
+    const opts = menu({ '8:class:0': 'harbingers-armament', '16:class:0': 'greater-armament' });
+    for (const r of ['brilliant', 'corrosive', 'flaming', 'frost', 'holy', 'shock', 'thundering', 'unholy']) {
+      expect(opts, `${r} is named by Greater Armament`).toContain(r);
+    }
+    expect(opts).toContain('fearsome');
+    expect(new Set(opts).size, 'brilliant is named by both records').toBe(opts.length);
+  });
+
+  it('without the widening feat the build-time menu is exactly the printed five', () => {
+    expect(menu({ '8:class:0': 'harbingers-armament' })).toEqual(
+      (db.feats['harbingers-armament'].choice?.options ?? []).map((o) => o.value),
+    );
+  });
+
+  it('a choice resolved from the BUILD is untouched — widening only applies to listed options', () => {
+    // 'domains' and 'skills' have no `def.options` to add to: their lists come from the deity and
+    // from what the character is trained in. Routing them through the same helper must not change
+    // either, or Ruling Q9's "only what you may legally pick" quietly breaks.
+    const { bs, char } = harbinger({ '8:class:0': 'harbingers-armament' });
+    const skills = buildChoiceOptions('assurance', db.feats['assurance'].choice!, bs, db, char, '2:skill:0');
+    const trained = Object.entries(char.proficiencies.skills).filter(([, r]) => r !== 'untrained');
+    expect(skills.length).toBe(trained.length);
+    expect(skills.length).toBeGreaterThan(0);
+  });
+
+  it('the builder reaches the menu through that helper, not past it', () => {
+    // A source check because the seam is what the lane depends on: renderChoice reading `def.options`
+    // again would put the dropdown back to the printed five with every behavioural test still green.
+    const src = readFileSync('src/builder/Builder.tsx', 'utf8');
+    expect(src).toMatch(/buildChoiceOptions\(recordId, def, build, content, featPrereqChar, key\)/);
+    // …and the granted-feat picker (a feat handed over by a background or class feature) too.
+    expect(src).toMatch(/effectiveChoiceOptions\(grantedId, def, featPrereqChar, content\)/);
   });
 });
 

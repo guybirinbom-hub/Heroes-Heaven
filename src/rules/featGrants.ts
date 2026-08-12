@@ -42,6 +42,46 @@ export function upgradeRankAt(g: FeatGrant, level: number): ProficiencyRank | un
   return reached.length ? reached[reached.length - 1].rank : undefined;
 }
 
+/**
+ * A dotted Foundry path reduced to the token a picker would emit: `system.saves.will.rank` → `will`,
+ * `system.perception.rank` → `perception`. A value with no dots is returned lowercased, unchanged.
+ */
+function choiceKeyToken(k: string): string {
+  const parts = k.toLowerCase().split('.').filter((p) => p && p !== 'system' && p !== 'rank' && p !== 'value');
+  return parts.length ? parts[parts.length - 1] : k.toLowerCase();
+}
+
+/**
+ * The grant the player's answer selects — the ONLY way to read `choiceGrants`.
+ *
+ * The table was authored against the raw Foundry paths still sitting in core.json at the time
+ * (`system.saves.will.rank`); the picker emits the plain value (`will`). The two never met, so
+ * Canny Acumen recorded an answer and granted nothing, and its test only passed because it fed
+ * buildCharacter a value no picker can produce.
+ *
+ * Both spellings are accepted rather than migrated: a saved character's `featChoices` still holds
+ * whichever string its builder emitted, and those stores live in localStorage, in Supabase and in
+ * exported `.codex` files — a migration that missed one would silently drop that character's grant.
+ * Matching is symmetric, so a legacy answer finds a plain key and a plain answer finds a legacy key.
+ *
+ * A normalized match is used only when exactly ONE key reduces to the token. Two keys colliding
+ * means the answer is genuinely ambiguous, and granting the wrong proficiency is worse than granting
+ * none.
+ */
+export function choiceGrantFor(g: FeatGrant | undefined, value: string | null | undefined): FeatGrant | undefined {
+  const map = g?.choiceGrants;
+  if (!map || !value) return undefined;
+  if (map[value]) return map[value];
+  const want = choiceKeyToken(value);
+  let hit: FeatGrant | undefined;
+  for (const [k, v] of Object.entries(map)) {
+    if (choiceKeyToken(k) !== want) continue;
+    if (hit) return undefined;
+    hit = v;
+  }
+  return hit;
+}
+
 /** Upgrades that trigger EXACTLY at `level`, for the builder's "you gain automatically" list — so the
  *  player sees the step land on the level card instead of a silently-changed number. */
 export function featUpgradesAtLevel(featIds: Iterable<string>, level: number): { featId: string; rank: ProficiencyRank }[] {
@@ -165,10 +205,14 @@ export interface FeatGrant {
   bonusSkillFeat?: boolean;
   /**
    * Grants selected by the player's pick in the feat's own `choice` dropdown ("expert in your choice
-   * of Fortitude, Reflex, Will, or Perception"), keyed by the choice VALUE exactly as core.json
-   * stores it. The importer leaves some of those values as raw Foundry paths
-   * (`system.saves.will.rank`), so the keys here are matched verbatim rather than prettified — see
-   * CANNY_ACUMEN_TRACKS below.
+   * of Fortitude, Reflex, Will, or Perception"), keyed by the choice VALUE the picker emits
+   * (`fortitude`, `longsword`).
+   *
+   * ⚠ Look it up with `choiceGrantFor`, never `choiceGrants[value]` directly. These keys were once
+   * authored against the raw Foundry paths the importer left in core.json (`system.saves.will.rank`)
+   * and characters saved then still carry that string as their answer; `choiceGrantFor` resolves both
+   * spellings. A bare index misses every one of them, which is the shape of the bug that made Canny
+   * Acumen a no-op.
    *
    * The matching entry is applied like a static grant (RAISES only). Nested choiceGrants are ignored.
    */
@@ -217,8 +261,12 @@ export interface FeatGrant {
  * - Medic Dedication: "You become an expert in Medicine."
  * - Canny Acumen: "Choose Fortitude saves, Reflex saves, Will saves, or Perception. You become an
  *   expert in your choice. At 17th level, you become a master in your choice." Modeled in full via
- *   choiceGrants + rankUpgrade. The choice VALUES below are the raw Foundry paths the importer left
- *   in core.json — they must match verbatim.
+ *   choiceGrants (expert) + rankUpgrade (master at 17, applied to whichever track was chosen).
+ *   ⚠ Its four options are deliberately NOT narrowed to tracks the character is still below expert
+ *   in. Ruling Q9 shows only what the player may legally pick, but "already an expert" is not
+ *   illegal here — the 17th-level upgrade to master is the real prize, so choosing the track you
+ *   have already mastered the first half of is a sound build. An option is filtered only when the
+ *   grant would be genuinely wasted; a later level-scaling step means it is not.
  * - Armor Proficiency (Player Core p.252): "You become trained in light armor. If you already were
  *   trained in light armor, you gain training in medium armor. If you were trained in both, you
  *   become trained in heavy armor. If you are at least 13th level, you become an expert in this armor
@@ -243,10 +291,10 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
   'canny-acumen': {
     rankUpgrade: { level: 17, rank: 'master' },
     choiceGrants: {
-      'system.saves.fortitude.rank': { save: { fortitude: 'expert' } },
-      'system.saves.reflex.rank': { save: { reflex: 'expert' } },
-      'system.saves.will.rank': { save: { will: 'expert' } },
-      'system.perception.rank': { perception: 'expert' },
+      fortitude: { save: { fortitude: 'expert' } },
+      reflex: { save: { reflex: 'expert' } },
+      will: { save: { will: 'expert' } },
+      perception: { perception: 'expert' },
     },
   },
   'armor-proficiency': { armorCascade: true, rankUpgrade: { level: 13, rank: 'expert' } },

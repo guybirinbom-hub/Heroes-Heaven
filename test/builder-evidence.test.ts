@@ -173,17 +173,22 @@ describe('builder-evidence — the two checks', () => {
     expect(a.movedPaths.length).toBeGreaterThan(0);
   });
 
-  it('Canny Acumen\'s answer moves NOTHING — the app reads a value the picker cannot emit', () => {
+  it("Canny Acumen's answer MOVES a save — the defect this check was written to catch is gone", () => {
     /*
-     * A verified defect, kept as a test because it is the harness's strongest self-check: the picker
-     * emits 'fortitude'|'reflex'|'will'|'perception', while FEAT_GRANTS.choiceGrants is keyed by the
-     * old Foundry paths ('system.saves.fortitude.rank'). `feat-grants.test.ts` passes because it feeds
-     * the OLD values straight to buildCharacter, which the builder can no longer produce. If the keys
-     * are ever realigned this test fails, and that failure is the fix landing.
+     * This was the harness's strongest self-check while it was failing: the picker emits
+     * 'fortitude'|'reflex'|'will'|'perception' and FEAT_GRANTS.choiceGrants was keyed by the old
+     * Foundry paths ('system.saves.fortitude.rank'), so the answer reached nothing.
+     * `feat-grants.test.ts` was green only because it fed buildCharacter the OLD values — input no
+     * picker can produce.
+     *
+     * Kept pointing the other way now, because that is what proves the harness measures OUTCOMES: it
+     * called this feat a defect from the same evidence a player would have, and says so no longer.
+     * The path it moves must be a real proficiency, not the recorded answer echoing back.
      */
-    const pack = evidenceFor('canny-acumen', db, hosts);
-    expect(pack.answerIsRead[0].moved).toBe(false);
-    expect(['not-read', 'echo-only']).toContain(pack.answerIsRead[0].verdict);
+    const a = evidenceFor('canny-acumen', db, hosts).answerIsRead[0];
+    expect(a.verdict).toBe('read');
+    expect(a.moved).toBe(true);
+    expect(a.movedPaths.some((p: string) => /saves|perception/.test(p)), a.movedPaths.join(', ')).toBe(true);
   });
 
   it('an empty option list caused by the HOST owning nothing is not counted as a defect', () => {

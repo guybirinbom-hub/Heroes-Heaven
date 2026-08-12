@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { content, build, prof } from './_content';
-import { deityFavorsSimpleOrUnarmed } from '../src/rules/build';
+import { buildChoiceOptions, deityFavorsSimpleOrUnarmed } from '../src/rules/build';
 import { emptyBuild, type BuildState } from '../src/rules/build';
-import { maxTakes, FEAT_GRANTS } from '../src/rules/featGrants';
+import { choiceGrantFor, maxTakes, FEAT_GRANTS } from '../src/rules/featGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../src/rules/featPickGrants';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';
 
@@ -211,42 +211,115 @@ describe('pick-a-cantrip grants', () => {
 
 /*
  * Canny Acumen grants a proficiency chosen in the feat's own dropdown, so it needs both the
- * choiceGrants lookup and the level-17 rankUpgrade. It regressed to a no-op for a long time: the
- * pick was recorded but nothing ever read it, so taking the feat changed nothing on the sheet.
+ * choiceGrants lookup and the level-17 rankUpgrade.
+ *
+ * ⚠ EVERY case here drives the value the PICKER emits, read off the record itself. This block was
+ * green for a long time while the feat was a no-op on every real character, because it fed
+ * buildCharacter the raw Foundry paths ('system.saves.fortitude.rank') the grant table was keyed by
+ * — input the builder cannot produce. A test that passes only on impossible input is worse than
+ * none: it is a guard reporting that the door is locked while standing in the wrong corridor.
+ *
  * A wizard is only trained in Fortitude, which makes the grant visible.
  */
 describe('Canny Acumen grants the CHOSEN proficiency (choiceGrants + rankUpgrade)', () => {
-  const canny = (level: number, choice?: string) =>
-    build('wizard', level, {
+  const c = content();
+  /** The four answers the builder can actually store, straight from the record's own option list. */
+  const emitted = (c.feats['canny-acumen'].choice?.options ?? []).map((o) => o.value);
+  const cannyOn = (classId: string, level: number, choice?: string) =>
+    build(classId, level, {
       featPicks: { '1:general:0': 'canny-acumen' },
       ...(choice ? { featChoices: { '1:general:0': choice } } : {}),
     });
+  const canny = (level: number, choice?: string) => cannyOn('wizard', level, choice);
+  const track = (ch: ReturnType<typeof build>, value: string) =>
+    value === 'perception' ? ch.proficiencies.perception : ch.proficiencies.saves[value as 'fortitude'];
+
+  it('offers exactly the four tracks the feat names', () => {
+    expect(emitted).toEqual(['fortitude', 'reflex', 'will', 'perception']);
+  });
+
+  it('EVERY answer the picker can emit moves a proficiency — none is inert', () => {
+    // The whole defect, stated as one assertion: the pick was recorded and read by nothing.
+    // No single class sits below expert in all four tracks, so each answer is checked against
+    // several host/level pairs and has to raise at least one. Before the fix it raised none.
+    const hosts: [string, number][] = [['wizard', 3], ['wizard', 17], ['fighter', 3], ['fighter', 17]];
+    for (const value of emitted) {
+      const moved = hosts.filter(([cls, lvl]) => track(cannyOn(cls, lvl, value), value) !== track(build(cls, lvl), value));
+      expect(moved.length, `answering "${value}" changes no character's sheet`).toBeGreaterThan(0);
+    }
+  });
 
   it('choosing Fortitude makes a L3 wizard an EXPERT in Fortitude', () => {
     expect(build('wizard', 3).proficiencies.saves.fortitude).toBe('trained');
-    expect(canny(3, 'system.saves.fortitude.rank').proficiencies.saves.fortitude).toBe('expert');
+    expect(canny(3, 'fortitude').proficiencies.saves.fortitude).toBe('expert');
   });
 
   it('choosing Perception raises Perception', () => {
-    expect(canny(3, 'system.perception.rank').proficiencies.perception).toBe('expert');
+    expect(canny(3, 'perception').proficiencies.perception).toBe('expert');
   });
 
   it('only the CHOSEN track is raised — the other saves are untouched', () => {
-    const ch = canny(3, 'system.saves.fortitude.rank');
+    const ch = canny(3, 'fortitude');
     expect(ch.proficiencies.saves.reflex).toBe(build('wizard', 3).proficiencies.saves.reflex);
     expect(ch.proficiencies.saves.will).toBe(build('wizard', 3).proficiencies.saves.will);
   });
 
-  it('at 17th level the choice becomes MASTER', () => {
-    expect(canny(17, 'system.saves.fortitude.rank').proficiencies.saves.fortitude).toBe('master');
-    // …and below 17 it stays expert.
-    expect(canny(16, 'system.saves.fortitude.rank').proficiencies.saves.fortitude).toBe('expert');
+  it('at 17th level the SAME pick becomes MASTER — no second question is asked', () => {
+    // The upgrade rides on the answer already given; there is one choice, not one per step.
+    expect(canny(17, 'fortitude').proficiencies.saves.fortitude).toBe('master');
+    expect(canny(17, 'perception').proficiencies.perception).toBe('master');
+    // …and it lands on the chosen track only.
+    expect(canny(17, 'fortitude').proficiencies.saves.reflex).toBe(build('wizard', 17).proficiencies.saves.reflex);
+    // Below 17 it stays expert.
+    expect(canny(16, 'fortitude').proficiencies.saves.fortitude).toBe('expert');
+  });
+
+  it('a track the character is ALREADY expert in stays on the menu, and still upgrades at 17', () => {
+    /*
+     * Owner's ruling: "usually it shouldn't allow a player to choose something he is already an
+     * expert in, but because at 17th level he becomes a master, in this case allow it." Ruling Q9
+     * filters a choice to what the player may legally pick; an already-expert track is legal AND
+     * worth taking, because the level-17 step is the real prize. An option is filtered only when the
+     * grant would be genuinely WASTED — a later level-scaling upgrade means it is not.
+     */
+    const wizardWill = build('wizard', 3).proficiencies.saves.will;
+    expect(wizardWill, 'the fixture must already be expert for this to test anything').toBe('expert');
+    // The picker offers it: no branch narrows the list by what the character already has.
+    const offered = buildChoiceOptions(
+      'canny-acumen',
+      c.feats['canny-acumen'].choice!,
+      { ...emptyBuild(), featPicks: { '1:general:0': 'canny-acumen' } } as BuildState,
+      c,
+      build('wizard', 3),
+    ).map((o) => o.value);
+    expect(offered).toContain('will');
+    expect(offered).toEqual(emitted);
+    // And taking it is not wasted: expert now, master at 17.
+    expect(canny(3, 'will').proficiencies.saves.will).toBe('expert');
+    expect(canny(17, 'will').proficiencies.saves.will).toBe('master');
   });
 
   it('never LOWERS a rank the class already grants, and an unmade choice is inert', () => {
-    // Wizard Will is already expert at L3; picking Will must not downgrade or crash.
-    expect(canny(3, 'system.saves.will.rank').proficiencies.saves.will).toBe('expert');
+    expect(canny(3, 'will').proficiencies.saves.will).toBe('expert');
     expect(canny(3).proficiencies.saves.fortitude).toBe('trained');
+  });
+
+  it('an answer stored under the OLD Foundry path still grants — saved characters keep their pick', () => {
+    /*
+     * The keys were realigned to what the picker emits; the lookup accepts both spellings rather
+     * than migrating, because those answers live in localStorage, in Supabase and in exported
+     * .codex files, and a migration that missed one store would silently drop that character's
+     * proficiency with nothing on screen to say so.
+     */
+    expect(canny(3, 'system.saves.fortitude.rank').proficiencies.saves.fortitude).toBe('expert');
+    expect(canny(3, 'system.perception.rank').proficiencies.perception).toBe('expert');
+    expect(canny(17, 'system.saves.fortitude.rank').proficiencies.saves.fortitude).toBe('master');
+  });
+
+  it('an answer that names no track grants nothing rather than guessing', () => {
+    expect(canny(3, 'system.saves.nonsense.rank').proficiencies.saves.fortitude).toBe('trained');
+    expect(choiceGrantFor(FEAT_GRANTS['canny-acumen'], undefined)).toBeUndefined();
+    expect(choiceGrantFor(FEAT_GRANTS['medic-dedication'], 'fortitude'), 'no choiceGrants at all').toBeUndefined();
   });
 });
 

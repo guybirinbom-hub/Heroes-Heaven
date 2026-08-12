@@ -16,7 +16,7 @@ import {
   emptyBuild,
   featChoiceLabel,
   featChoicePrompt,
-  trainedSkillOptions,
+  buildChoiceOptions,
   levelGrants,
   levelChoices,
   subclassAnchorAt,
@@ -34,7 +34,7 @@ import {
   skillIncreaseCap,
 } from '../rules/build';
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
-import { classFeatureIdsOwned, domainPoolForChoice } from '../rules/derive';
+import { classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions } from '../rules/derive';
 import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
@@ -97,6 +97,34 @@ type Picker =
   | { kind: 'familiar-ability'; companionId: string };
 
 const skillLabel = (key: ProficiencyKey) => (key.startsWith('lore:') ? loreLabel(key) : cap(key));
+
+const atLeast = (have: ProficiencyRank, want: ProficiencyRank) =>
+  PROFICIENCY_RANKS.indexOf(have) >= PROFICIENCY_RANKS.indexOf(want);
+
+/**
+ * What a feat's skill-training slot would actually GRANT for one option, given where the character
+ * already stands — and `null` when the answer is "nothing at all".
+ *
+ * `buildCharacter` applies these with `maxRank`, so choosing a skill you already have at the granted
+ * rank writes the same value back and the pick buys nothing. The picker offered those options
+ * looking exactly like the live ones, which is the Q27 bug this reads for.
+ *
+ * ⚠ A `conditionalRank` slot ("trained in your choice of Deception or Stealth; expert if you are
+ * already trained") is the deliberate opposite: being already trained is what UPGRADES it, so those
+ * options must stay live. That is the same shape as Canny Acumen under Q21 — an option is only dead
+ * when nothing, now or later in this grant, redeems it.
+ */
+function skillSlotGrant(
+  slot: { rank: ProficiencyRank; conditionalRank?: { base: ProficiencyRank; upgraded: ProficiencyRank } },
+  current: ProficiencyRank,
+): ProficiencyRank | null {
+  const grant = slot.conditionalRank
+    ? atLeast(current, slot.conditionalRank.base)
+      ? slot.conditionalRank.upgraded
+      : slot.conditionalRank.base
+    : slot.rank;
+  return atLeast(current, grant) ? null : grant;
+}
 
 /** Whether the player has made any level-specific choice at this level — a feat pick, the
  *  skill increase, or any attribute boost. Used to decide whether lowering past it needs a
@@ -334,23 +362,16 @@ export function Builder({
    *
    * `key` is the storage slot in build.featChoices: a feat uses its level slot, a feature uses
    * `feature:<id>`, a heritage `heritage:<id>`. Multi-pick fans out from it via choiceKeys().
+   *
+   * `recordId` is the record the choice BELONGS to, which the storage key does not always name (a
+   * feat's key is `12:class:0`). Another record may widen this menu, and the widening is addressed
+   * by record id — see buildChoiceOptions.
    */
-  const renderChoice = (def: FeatChoiceDef, key: string) => {
-                              // Annotated because the three branches below are structurally different and the
-                              // generic in choiceOptionsFor would otherwise narrow away `label`.
+  const renderChoice = (def: FeatChoiceDef, key: string, recordId: string) => {
+                              // Annotated because the branches inside buildChoiceOptions are structurally
+                              // different and the generic in choiceOptionsFor would otherwise narrow away `label`.
                               const opts: { value: string; label: string; description?: string }[] =
-                                def.kind === 'domains'
-                                  ? domainPoolForChoice(build, content, build.featPicks?.[key], def.domainPool).map((d) => ({
-                                      value: d,
-                                      label: cap(d),
-                                    }))
-                                  : def.kind === 'skills'
-                                    ? // "Choose a skill you're trained in" (Assurance and friends). The eligible set
-                                      // depends on the BUILD and grows with it, so it can't be enumerated on the
-                                      // record — resolve it from the character being built. Lores are included
-                                      // because they are skills the rules let you choose.
-                                      trainedSkillOptions(featPrereqChar, def.minRank ?? 'trained')
-                                    : def.options ?? [];
+                                buildChoiceOptions(recordId, def, build, content, featPrereqChar, key);
                               return (
                                 <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt, def.flag)}>
                                   {def.kind === 'text' ? (
@@ -453,7 +474,9 @@ export function Builder({
         ? domainPoolForChoice(build, content, grantedId, def.domainPool).map((d) => ({ value: d, label: cap(d) }))
         : def.kind === 'skills'
           ? SKILLS.map((s) => ({ value: s, label: cap(s) }))
-          : (def.options ?? []);
+          : // A granted feat's menu can be widened by another record just like a picked one's — the
+            // widening is addressed by record id, and a granted feat has the same id either way.
+            effectiveChoiceOptions(grantedId, def, featPrereqChar, content);
     if (!opts.length) return null;
     const label = `${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt)}`;
     return (
@@ -1134,7 +1157,7 @@ export function Builder({
                     <i className="ti ti-bulb" aria-hidden="true" /> Skills &amp; languages
                   </div>
                   <div className="lvl-cards">
-                    <SkillEditor build={build} actions={actions} content={content} />
+                    <SkillEditor build={build} actions={actions} content={content} character={featPrereqChar} />
                     <LanguageEditor build={build} actions={actions} content={content} />
                   </div>
                 </div>
@@ -1374,7 +1397,7 @@ export function Builder({
                             <SubCard icon="ti-award" label={f.name} key={`ask-${f.id}`}>
                               {(() => {
                                 const def = content.classFeatures[f.id]?.choice;
-                                return def && !def.daily ? renderChoice(def, `feature:${f.id}`) : null;
+                                return def && !def.daily ? renderChoice(def, `feature:${f.id}`, f.id) : null;
                               })()}
                               <EffectChoicesPicker
                                 recordId={f.id}
@@ -1446,7 +1469,7 @@ export function Builder({
                             build.subclassId &&
                             (() => {
                               const def = content.classFeatures[build.subclassId!]?.choice;
-                              return def && !def.daily ? renderChoice(def, `feature:${build.subclassId}`) : null;
+                              return def && !def.daily ? renderChoice(def, `feature:${build.subclassId}`, build.subclassId!) : null;
                             })()}
                           {/* …and its effectChoices, for the same reason. build.ts resolves these
                               (resolvePick over grantOptions) and the picker was mounted only for
@@ -1635,7 +1658,7 @@ export function Builder({
                             // pick-a-feat picker below — don't also render the inert proficiency-choice dropdown.
                             !(content.feats[picked]!.choice!.flag === 'feat' && FEAT_PICK_GRANTS[picked]) &&
                             (() => {
-                              return renderChoice(content.feats[picked]!.choice!, key);
+                              return renderChoice(content.feats[picked]!.choice!, key, picked);
                             })()}
                           {/* Dedication skill-training CHOICES ("trained in Acrobatics or Athletics") and
                               the bonus skill feat (Rogue Dedication) — surfaced from FEAT_GRANTS below
@@ -1644,6 +1667,10 @@ export function Builder({
                             (FEAT_GRANTS[picked]?.skillChoices ?? []).map((slot, si) => {
                               const opts = slot.options === 'any' ? SKILLS : slot.options;
                               const skKey = `${picked}:${si}`;
+                              // The option this slot is CURRENTLY granting — the player's answer, or the
+                              // engine's default when unanswered. Its rank on the built character already
+                              // includes this grant, so it can never be judged redundant against itself.
+                              const effective = build.featSkillChoices?.[skKey] ?? opts[0];
                               return (
                                 <SubCard key={skKey} icon="ti-bulb" label="Trained skill">
                                   <PopupSelect
