@@ -59,6 +59,23 @@ marker on the record it changes. Getting this backwards invalidated six control 
   both commits had to be undone.
 - Commit messages: explain WHY, and say what was measured rather than what was attempted.
 
+## ▶ IN FLIGHT — pick this up first
+
+**The builder-side harness.** Spec: `docs/builder-harness-spec.md`. Target: `scripts/builder-evidence.mjs`.
+
+The owner's mandate has two halves — a record must be right if it is **choosing the things that are
+supposed to be chosen** *or* influencing the sheet correctly. `scripts/feat-evidence.mjs` measures the
+second. **Nothing measures the first**, so the 500-feat audit's numbers describe the sheet only and must
+never be quoted as covering the builder.
+
+If `scripts/builder-evidence.mjs` does not exist or does not run clean, build it from the spec. The two
+checks to run first need no model: a record declaring a choice the builder renders **no picker** for,
+and a choice whose answer is stored but **moves no derived value**.
+
+⚠ Verify the harness against feats you already know present choices BEFORE trusting a single number.
+Four measuring scripts in this project have produced confident wrong answers by reading fields instead
+of observing outcomes.
+
 ## State of the feat audit
 
 Four lanes built and tested: creature traits, degree-of-success, battle forms, the formula book.
