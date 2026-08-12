@@ -3,6 +3,29 @@
 This file loads automatically. It exists because sessions kept starting work without the context that
 decides whether the work is right, and then had to be undone.
 
+## ⏸ PAUSED HERE (2026-08-13) — the owner will say when to continue
+
+**Do not restart this without being asked.** The tree is coherent: `tsc` clean, **3,311 tests pass**,
+last commit `d2fb9da`.
+
+**What is half-done:** correcting 76 verified defects in data authored on 2026-08-12. The full list,
+with the printed clause each value contradicts, is `scripts/audit/authored-verification.json`. Some
+landed (Aiuvarin, Dromaar) and some did not (Elemental Apotheosis still misses "the trait of your
+chosen element").
+
+**To resume:** re-invoke the fix workflow with `resumeFromRunId: wf_e0a64439-226` — completed agents
+replay from cache, so only the unfinished groups re-run. Script:
+`…/workflows/scripts/fix-authored-defects-wf_e0a64439-226.js`.
+
+⚠ **Why this pass matters more than it looks.** An independent read of 505 authored records found a
+**15% error rate**, and *none of it was catchable by the test suite* — a degree shift filed with the
+wrong trigger, or missing the second half of a two-sided clause, passes every test and is simply wrong
+on the sheet. Had the feat audit run first, each would have been reported as an APP defect and someone
+would have hunted for a bug in working code.
+
+**The full 6,206-feat audit has NOT started** and must not be started without the owner's word. Only the
+frozen 500 has ever run, its 342 findings are unverified, and it predates two days of lane work.
+
 ## ⛔ BEFORE touching feats, items, or anything the sheet displays
 
 **Read `docs/gold-set-answers.md` first, in full.** It holds the owner's own rulings — 19 numbered
