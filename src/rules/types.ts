@@ -3548,6 +3548,16 @@ export interface Character {
    *  feat whose static skill grant was redundant + which skill. The builder offers a replacement picker
    *  per entry (stored in BuildState.featSkillChoices `<featId>:fallback:<skill>`). */
   skillFallbacks?: { featId: string; skill: ProficiencyKey }[];
+  /**
+   * Skills already trained by something OTHER than the class's free picks — keyed by skill, valued
+   * with WHERE it came from ("your background", "your deity", …), in words a picker can print.
+   *
+   * `buildCharacter` DROPS a free class-skill pick that lands on one of these, so the builder's
+   * picker has to know them: an option it cannot honour must be greyed and say why (Q27), never
+   * rendered identically to a live one. The builder used to derive its own, smaller version of this
+   * set, and so kept offering the other sources' skills as though they were free.
+   */
+  grantedSkills?: Record<string, string>;
   /** Resolved always-on effect-choice grants (feat/heritage/feature "choose one of N"): senses / IWR /
    *  speeds the sheet applies. deriveDefenses + deriveSpeeds include these as sources. */
   chosenEffects?: DefenseGrants;

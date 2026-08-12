@@ -6198,8 +6198,13 @@ button.strike-name:hover {
   border: var(--app-bw) dashed color-mix(in srgb, var(--app-accent) 55%, transparent);
   border-radius: var(--app-radius-sm);
 }
-.fb-slot:hover {
+.fb-slot:hover:not(:disabled) {
   background: color-mix(in srgb, var(--app-accent) 16%, transparent);
+}
+/* Same greyed treatment every other unpickable control uses (see .picker-item:disabled). */
+.fb-slot:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 .fb-slot-label {
   flex: 1;
@@ -7778,6 +7783,16 @@ button.strike-name:hover {
 .picker-prereq {
   font-size: 11px;
   color: var(--app-warn);
+  margin-top: 2px;
+}
+/* WHY an option can't be taken — "Already trained (from your background)", "Cantrips are full".
+   The one shared reason line for every greyed-out option in the app (PickerRow rows and
+   PopupSelect items alike), so "unpickable" always looks and reads the same wherever the player
+   meets it. Dim rather than warn: this is a statement of fact, not an error. */
+.picker-why {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  font-style: italic;
   margin-top: 2px;
 }
 .picker-count {

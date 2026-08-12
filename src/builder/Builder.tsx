@@ -780,7 +780,15 @@ export function Builder({
                   </button>
                 </span>
               ))}
-              <button className="spr-add" type="button" onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripCap })}>
+              {/* Disabled at the cap, like every other "+ add" on this rail. Without it the button
+                  opened a picker in which nothing could be added — `toggleCantrip` bails at the cap. */}
+              <button
+                className="spr-add"
+                type="button"
+                disabled={build.cantrips.length >= cantripCap}
+                title={build.cantrips.length >= cantripCap ? `All ${cantripCap} cantrip slots are filled — remove one first.` : undefined}
+                onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripCap })}
+              >
                 + add
               </button>
             </div>
@@ -812,7 +820,7 @@ export function Builder({
                           </button>
                         </span>
                       ))}
-                      <button className="spr-add" type="button" disabled={learnedTotal >= bookAt(lvl)} onClick={() => setPicker({ kind: 'spell', rank, cap: bookAt(lvl) })}>
+                      <button className="spr-add" type="button" disabled={learnedTotal >= bookAt(lvl)} title={learnedTotal >= bookAt(lvl) ? `Your spellbook holds all ${bookAt(lvl)} spells it can at this level.` : undefined} onClick={() => setPicker({ kind: 'spell', rank, cap: bookAt(lvl) })}>
                         + add
                       </button>
                     </div>
@@ -852,7 +860,7 @@ export function Builder({
                       </button>
                     </span>
                   ))}
-                  <button className="spr-add" type="button" disabled={chosen.length >= capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR })}>
+                  <button className="spr-add" type="button" disabled={chosen.length >= capR} title={chosen.length >= capR ? `All ${capR} spells at this rank are chosen — remove one first.` : undefined} onClick={() => setPicker({ kind: 'spell', rank, cap: capR })}>
                     + add
                   </button>
                 </div>
@@ -931,7 +939,7 @@ export function Builder({
                     </button>
                   </span>
                 ))}
-                <button className="spr-add" type="button" disabled={have >= capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR, caster: 2 })}>
+                <button className="spr-add" type="button" disabled={have >= capR} title={have >= capR ? `All ${capR} spells at this rank are chosen — remove one first.` : undefined} onClick={() => setPicker({ kind: 'spell', rank, cap: capR, caster: 2 })}>
                   + add
                 </button>
               </div>
@@ -1686,7 +1694,16 @@ export function Builder({
                                     }
                                     // skillLabel, not cap: a Lore option would otherwise read
                                     // "Lore:spirit" instead of "Spirit Lore".
-                                    options={opts.map((s) => ({ value: s, label: skillLabel(s) }))}
+                                    options={opts.map((s) => {
+                                      const cur = featPrereqChar.proficiencies.skills[s] ?? 'untrained';
+                                      const dead = s !== effective && skillSlotGrant(slot, cur) === null;
+                                      return {
+                                        value: s,
+                                        label: skillLabel(s),
+                                        disabled: dead,
+                                        disabledReason: dead ? `Already ${cur} — this grant would change nothing.` : undefined,
+                                      };
+                                    })}
                                   />
                                 </SubCard>
                               );
@@ -1709,7 +1726,20 @@ export function Builder({
                                           featSkillChoices: { ...(build.featSkillChoices ?? {}), [fbKey]: v as (typeof SKILLS)[number] },
                                         })
                                       }
-                                      options={SKILLS.map((s) => ({ value: s, label: cap(s) }))}
+                                      // The replacement grants "trained", through maxRank — so every
+                                      // skill the character already has is a second dead end, and this
+                                      // picker (offered precisely BECAUSE one grant was redundant) used
+                                      // to list all sixteen of them as live.
+                                      options={SKILLS.map((s) => {
+                                        const cur = featPrereqChar.proficiencies.skills[s] ?? 'untrained';
+                                        const dead = s !== build.featSkillChoices?.[fbKey] && cur !== 'untrained';
+                                        return {
+                                          value: s,
+                                          label: cap(s),
+                                          disabled: dead,
+                                          disabledReason: dead ? `Already ${cur} — pick a skill you are untrained in.` : undefined,
+                                        };
+                                      })}
                                     />
                                   </SubCard>
                                 );
@@ -1868,6 +1898,12 @@ export function Builder({
                                         value: k,
                                         label: `${skillLabel(k)} (${atAbsoluteMax ? `${RANK_ABBR[cur]} — max` : `${RANK_ABBR[cur]} → ${RANK_ABBR[next]}`})`,
                                         disabled: atAbsoluteMax || !allowedByLevel,
+                                        // The greying was already right; only the reason was missing.
+                                        disabledReason: atAbsoluteMax
+                                          ? 'Already legendary — nothing left to increase.'
+                                          : !allowedByLevel
+                                            ? `This level's increases cap at ${skillIncreaseCap(lvl)}.`
+                                            : undefined,
                                       };
                                     }),
                                   ]}
@@ -2171,7 +2207,12 @@ export function Builder({
                   meta={
                     <>
                       {f.traits.length > 0 && <div className="picker-traits">{f.traits.join(' · ')}</div>}
-                      {dedBlocked && <div className="picker-prereq">Take two feats from your current archetype first.</div>}
+                      {/* Only when the row is still takeable (Overrides on). Once the action is
+                          disabled, PickerRow prints this same sentence as the shared reason line, and
+                          two copies of it read as a rendering bug rather than emphasis. */}
+                      {dedBlocked && !(unmet && !allowed && !canOverride) && (
+                        <div className="picker-prereq">Take two feats from your current archetype first.</div>
+                      )}
                       {f.prerequisites && f.prerequisites.length > 0 && (
                         <div className="picker-prereq">
                           {pre.met ? 'Requires: ' : 'Requires (unmet): '}
@@ -2201,7 +2242,11 @@ export function Builder({
                     unmet && !allowed && !canOverride
                       ? dedBlocked
                         ? 'Take two feats from your current archetype first.'
-                        : 'Prerequisites not met.'
+                        : // The "Requires (unmet): …" line above already names them; repeat the
+                          // generic sentence only when there is no such line to explain the greying.
+                          f.prerequisites?.length
+                          ? undefined
+                          : 'Prerequisites not met.'
                       : undefined
                   }
                   onSelect={async () => {
@@ -2293,6 +2338,15 @@ export function Builder({
                   chosen={!preparedMode && chosen}
                   selectLabel={preparedMode ? 'Add' : chosen ? 'Added' : 'Add'}
                   selectDisabled={disabled}
+                  // The counter in the header said "4 / 4"; the rows still read as live options and
+                  // the toggle action bailed without a word. Now each says so where the press lands.
+                  disabledReason={
+                    disabled
+                      ? isCantrip
+                        ? `All ${cap_} cantrip slots are filled — remove one first.`
+                        : `All ${cap_} spells at this rank are chosen — remove one first.`
+                      : undefined
+                  }
                   onSelect={() =>
                     c2
                       ? isCantrip

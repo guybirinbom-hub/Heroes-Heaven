@@ -53,7 +53,13 @@ export function PickerRow({
   onSelect?: () => void;
   selectLabel?: ReactNode;
   selectDisabled?: boolean;
-  /** Why the action is disabled — surfaced as a tooltip + accessible label on the button. */
+  /**
+   * Why the action is disabled.
+   *
+   * Printed INSIDE the row (not only as a tooltip) whenever the action is actually disabled: Q27 —
+   * an option that cannot be picked must look unpickable "and ideally say why", and a tooltip is
+   * invisible on a touch screen, which is where the bug was reported from.
+   */
   disabledReason?: string;
   /** Already chosen — highlights the row and shows a check on the button. */
   chosen?: boolean;
@@ -66,11 +72,14 @@ export function PickerRow({
       <div className="picker-text">
         <div className="picker-name">{name}</div>
         {meta}
+        {selectDisabled && disabledReason && <div className="picker-why">{disabledReason}</div>}
       </div>
     </>
   );
   return (
-    <div className={'pick-row' + (chosen ? ' chosen' : '') + (dim ? ' dim' : '')}>
+    // A row whose action is disabled is ALWAYS dimmed, whether or not the call site remembered to
+    // ask for it: "unpickable must look unpickable" is a property of the row, not of each caller.
+    <div className={'pick-row' + (chosen ? ' chosen' : '') + (dim || selectDisabled ? ' dim' : '')}>
       {onOpenDesc ? (
         <button type="button" className="pick-body" onClick={onOpenDesc} title="View description">
           {body}

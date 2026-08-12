@@ -133,8 +133,13 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
             )}
             <input className="hb-input" autoFocus placeholder="Search alchemical items…" value={q} onChange={(e) => setQ(e.target.value)} />
             <div className="alchemy-pick-list">
+              {/* Both routes bail in silence — `pick` returns the state untouched past the daily
+                  budget, and `quickAlchemy` does the same with no vial left. The picker stays open
+                  after each make, so the vial case is reached just by pressing Make one time too
+                  many, and every row still read as live. Q27: it has to look spent. */}
               {shown.map((it) => {
                 const node = descNodeOf({ name: it.name, description: it.description, descRefs: it.descRefs }, 'items');
+                const spent = picker === 'quick' ? vialsCur < 1 : preparedCount >= budget;
                 return (
                   <PickerRow
                     key={it.id}
@@ -143,6 +148,14 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
                     chosen={(prep[it.id] ?? 0) > 0}
                     onOpenDesc={node ? () => setDescNode(node) : undefined}
                     selectLabel={picker === 'quick' ? 'Make' : 'Prepare'}
+                    selectDisabled={spent}
+                    disabledReason={
+                      spent
+                        ? picker === 'quick'
+                          ? 'No Versatile Vial left — Quick Alchemy costs one.'
+                          : `You have prepared your daily maximum (${budget}). Remove one first.`
+                        : undefined
+                    }
                     onSelect={() => pick(it.id)}
                   />
                 );

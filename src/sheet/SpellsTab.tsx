@@ -679,6 +679,14 @@ function ManageSpellsModal({
             }
             renderRow={(s, openDesc) => {
               const node = descNodeOf(s, 'spells');
+              // A repertoire add that `pick` would refuse — already known at this rank, or the rank
+              // full. Both bail without touching state, so the row has to say so rather than look live.
+              const addingToRepertoire = spontaneous && !picking.restricted;
+              const cur = addingToRepertoire ? entry.repertoire?.[picking.rank] ?? [] : [];
+              const grantedHere = addingToRepertoire ? entry.grantedRepertoire?.[picking.rank] ?? [] : [];
+              const alreadyKnown = addingToRepertoire && cur.includes(s.id);
+              const rankFull = addingToRepertoire && cur.filter((id) => !grantedHere.includes(id)).length >= repCap(picking.rank);
+              const cantAdd = alreadyKnown || rankFull;
               return (
                 <PickerRow
                   lead={
@@ -698,7 +706,15 @@ function ManageSpellsModal({
                     </div>
                   }
                   onOpenDesc={node ? () => openDesc(node) : undefined}
-                  selectLabel={spontaneous && !picking.restricted ? 'Add' : 'Prepare'}
+                  selectLabel={addingToRepertoire ? 'Add' : 'Prepare'}
+                  selectDisabled={cantAdd}
+                  disabledReason={
+                    alreadyKnown
+                      ? 'Already in your repertoire at this rank.'
+                      : rankFull
+                        ? `Your ${ord(picking.rank)}-rank repertoire is full (${repCap(picking.rank)} known).`
+                        : undefined
+                  }
                   onSelect={() => pick(s.id)}
                 />
               );

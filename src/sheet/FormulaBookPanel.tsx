@@ -62,8 +62,18 @@ export function FormulaBookPanel({
       </span>
       {onPlay && openSlots.length > 0 && (
         <div className="fb-slots">
+          {/* Disabled once the book is full. `pickFormula` records the slot as spent whether or not
+              `withFormula` accepted the write, so pressing one of these at capacity burned the grant
+              and wrote nothing — inert AND destructive, with no sign of either. */}
           {openSlots.map((s) => (
-            <button key={s.key} type="button" className="fb-slot" onClick={() => setSlot(s)} title={s.note}>
+            <button
+              key={s.key}
+              type="button"
+              className="fb-slot"
+              disabled={full}
+              title={full ? `This book already holds ${FORMULA_BOOK_CAPACITY} formulas — remove one before using this slot.` : s.note}
+              onClick={() => setSlot(s)}
+            >
               <i className="ti ti-plus" aria-hidden="true" />
               <span className="fb-slot-label">{s.label}</span>
               <span className="fb-slot-src">from {s.sourceName}</span>

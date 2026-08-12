@@ -625,7 +625,17 @@ export function AbilitySelect({
       value={value ?? ''}
       onChange={(v) => onChange((v || null) as AbilityId | null)}
       clearLabel="Clear"
-      options={options.map((o) => ({ value: o, label: ABILITY_LABEL[o], disabled: o !== value && !!exclude?.includes(o) }))}
+      options={options.map((o) => {
+        const taken = o !== value && !!exclude?.includes(o);
+        return {
+          value: o,
+          label: ABILITY_LABEL[o],
+          disabled: taken,
+          // The greying was here already; the sentence was not, and "why is Strength grey?" is a
+          // real question when four boost pills sit side by side.
+          disabledReason: taken ? 'Already boosted by another pick in this group.' : undefined,
+        };
+      })}
     />
   );
 }
@@ -1201,6 +1211,13 @@ function AbpPotencyEditor({ build, actions }: { build: BuildState; actions: Buil
                   key={r}
                   type="button"
                   disabled={!rankAllowed(key, r)}
+                  title={
+                    rankAllowed(key, r)
+                      ? undefined
+                      : r === 3 && budget.rank3 === 0
+                        ? '+3 skill potency begins at level 17.'
+                        : `You have already spent every +${r} skill potency your level allows.`
+                  }
                   className={'inv-toggle' + (rank === r ? ' on' : '')}
                   onClick={() => actions.setAbpSkill(key, r)}
                 >
