@@ -32,8 +32,10 @@ const ALLOWED_TAGS = [
 // click handler reads dataset.refKey/refId). `href` on <a> is scheme-filtered below. `style`/`color`
 // carry the Notes/RichEditor text + highlight colors (styleWithCSS emits inline style spans); the
 // style value itself is sanitized by DOMPurify's CSS filter, and target/rel harden external links.
+// `dir` is how a note written right-to-left keeps its list bullets on the right (see autoDir.ts);
+// stripping it here would undo that on every save/reload round-trip.
 const ALLOWED_ATTR = [
-  'class', 'href', 'title', 'target', 'rel', 'style', 'color',
+  'class', 'href', 'title', 'target', 'rel', 'style', 'color', 'dir',
   'data-ref-key', 'data-ref-id',
   'colspan', 'rowspan',
 ];

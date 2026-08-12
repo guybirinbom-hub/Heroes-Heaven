@@ -143,12 +143,27 @@ describe('the scope: terrain, and not choices in general', () => {
     //    your feats", so an answer off the list would drive nothing.
     //  · Mottle-Coat Centaur / Camouflage Tripkee — six and three of the nine; the record narrowed
     //    the list, and reopening it by the back door would undo that.
-    //  · Isgeri Reclaimer — "either rubble or underbrush", two of Terrain Stalker's three.
     expect(c().feats['shooters-camouflage']!.choice!.allowCustom).toBeUndefined();
     expect(c().feats['mummy-dedication']!.choice!.allowCustom).toBeUndefined();
     expect(c().classFeatures['vindicator']!.choice!.allowCustom).toBeUndefined();
     expect(c().heritages['mottle-coat-centaur']!.choice!.allowCustom).toBeUndefined();
-    expect(c().backgrounds['isgeri-reclaimer']!.choice!.allowCustom).toBeUndefined();
+  });
+
+  /*
+   * Isgeri Reclaimer used to be in that list, as a background whose OWN choice held the two terrains.
+   * Ruling Q9 moved it: the narrowing now lives on `choiceOptionLimits` against Terrain Stalker, and
+   * the duplicate question was deleted. Terrain Stalker itself keeps `allowCustom` — correctly, since
+   * a player who takes the feat normally may name a tenth terrain — so the "closed list" property has
+   * to be asserted where it now lives, or the guarantee quietly moves out from under this file.
+   */
+  it('Isgeri Reclaimer’s narrowing closes Terrain Stalker’s list instead', () => {
+    const bg = c().backgrounds['isgeri-reclaimer']!;
+    expect(bg.choice, 'the duplicate question is gone').toBeUndefined();
+    const limit = bg.choiceOptionLimits![0];
+    expect(limit.target).toBe('terrain-stalker');
+    expect(limit.allow.map((a) => a.value)).toEqual(['rubble', 'underbrush']);
+    // The feat stays open for everyone else — a narrowing belongs to the record that imposes it.
+    expect(c().feats['terrain-stalker']!.choice!.allowCustom).toBeDefined();
   });
 });
 

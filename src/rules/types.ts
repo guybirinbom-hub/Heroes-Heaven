@@ -316,8 +316,23 @@ interface ContentBase {
 export interface SpellNote {
   /** The spell whose description carries it. */
   spellId: string;
-  /** The clause, printed verbatim under the granting record's name. */
+  /** The clause, printed verbatim under the granting record's name. `{choice}` is replaced by the
+   *  granting FEAT's own answer — see `fromChoice`. */
   note: string;
+  /**
+   * The clause is only true once the player has ANSWERED the feat's `choice`, and says what they
+   * answered. Eidolon's Wrath is the case: *"You determine the damage type when you gain the feat"*,
+   * and the spell as printed names no type at all, so the note IS the answer.
+   *
+   * Withheld entirely while the choice is unanswered, rather than printed with a placeholder: a note
+   * reading "deals {choice} damage" is worse than no note, and inventing a default would put a damage
+   * type the player never picked into a spell's rules text.
+   *
+   * FEATS only. The other record types in `ownedRecords` carry no `choice`, so a clause set here on
+   * one of them would be silently dropped — which is why this is documented rather than typed: the
+   * field lives on `ContentBase`, shared by all six.
+   */
+  fromChoice?: boolean;
 }
 
 /** A precise/imprecise/vague sense granted by a feat, heritage, or class feature. */
@@ -649,6 +664,26 @@ export interface DefenseGrants {
      *  rune if you are holy and the unholy rune if you are unholy, never both. */
     addIfSanctified?: { sanctification: 'holy' | 'unholy'; value: string; label: string }[];
   }[];
+  /**
+   * The MIRROR of `choiceOptionAdditions`: this record NARROWS another record's choice.
+   *
+   * Ruling Q9 — *"the builder shows only what the player may legally pick"*. Three backgrounds hand
+   * over a feat and then cut its menu down instead of naming a single answer: Toymaker grants
+   * Specialty Crafting *"choosing Artistry, Blacksmithing, Glassmaking, Leatherworking, Tailoring, or
+   * Woodworking"* (6 of the feat's 12), Isgeri Reclaimer grants Terrain Stalker *"in either rubble or
+   * underbrush"* (2 of 3). `BACKGROUND_GRANT_BOUND_CHOICE` could not express them — a binding holds
+   * ONE answer — so all three shipped with the granted feat's full list.
+   *
+   * A limit is declared on the record that IMPOSES it, never on the record that carries the choice:
+   * Terrain Stalker's own three terrains are correct for everyone who picks the feat normally, and
+   * only the background's sentence takes two of them away.
+   *
+   * Several limits from several records INTERSECT (each is an independent restriction the character
+   * is under). An `allow` entry may carry its own condition, which is what Reputation Seeker needs —
+   * *"underground if you have Darklands Lore, desert if you have Desert Lore, or forest if you have
+   * Jungle Lore"* is not a fixed subset but a per-terrain test against the Lore you actually hold.
+   */
+  choiceOptionLimits?: ChoiceOptionLimit[];
   /** Feats this heritage/feat grants outright (Cataphract Fleshwarp → Armor Proficiency,
    *  Battle-Trained Human → Diehard). Added as bonus feats with their own effects. */
   grantsFeats?: string[];
@@ -1358,6 +1393,14 @@ export interface Background extends ContentBase {
    * under `featChoices['background:<id>']`, the same convention as a class feature's `feature:<id>`.
    */
   choice?: FeatChoiceDef;
+  /**
+   * Ruling Q9: this background NARROWS the choice on a feat it grants, instead of naming one answer.
+   *
+   * Declared here rather than in `DefenseGrants` because `Background` does not extend it, and because
+   * all three records that need it are backgrounds. `effectiveChoiceLimits` reads both this and the
+   * `DefenseGrants` field, so a feat or class feature that narrows one day needs no new plumbing.
+   */
+  choiceOptionLimits?: ChoiceOptionLimit[];
   /** An authored note about something in this record the app cannot model. Collected for feats,
    *  heritages, class features and items but not backgrounds, so the one background carrying one
    *  warned nobody. */
@@ -1407,6 +1450,41 @@ export type FeatCategory =
   | 'archetype'
   | 'bonus'
   | 'mythic';
+
+/**
+ * A rank window on one skill or Lore. Named because three places now express the same test: an
+ * option's own `requiresSkillRank`, a `ChoiceOptionLimit` entry's condition, and `qualifiesForOption`.
+ */
+export interface SkillRankGate {
+  skill: ProficiencyKey;
+  min?: ProficiencyRank;
+  max?: ProficiencyRank;
+}
+
+/**
+ * One record's restriction on another record's choice list. See `DefenseGrants.choiceOptionLimits`.
+ *
+ * `allow` is a WHITELIST, not a subtraction: anything the target offers and this does not name is
+ * gone. Written that way because every printed narrowing reads as a list of what you may take
+ * ("choosing Artistry, Blacksmithing, …"), and a subtraction would have to be recomputed by hand
+ * every time the target record gains an option.
+ */
+export interface ChoiceOptionLimit {
+  /** The record whose choice narrows — normally the feat this record grants. */
+  target: string;
+  /** Which choice, when the target has more than one. Omitted = the target's only choice. */
+  flag?: string;
+  allow: {
+    value: string;
+    /** The value survives only while the character meets this. Reputation Seeker's three terrains
+     *  each hang on a different Lore; without a per-entry condition the whole limit would have to be
+     *  one of three alternative subsets and nothing could choose between them. */
+    requiresSkillRank?: SkillRankGate;
+  }[];
+  /** Why the list is short, in the player's words. Q27: a narrowed menu that says nothing reads as
+   *  missing content. Printed under the picker. */
+  reason: string;
+}
 
 /** An embedded sub-choice a feat prompts when taken (a Foundry ChoiceSet). */
 export interface FeatChoiceDef {
@@ -1480,7 +1558,21 @@ export interface FeatChoiceDef {
     label: string;
     description?: string;
     grant?: EffectGrant;
-    requiresSkillRank?: { skill: ProficiencyKey; min?: ProficiencyRank; max?: ProficiencyRank };
+    requiresSkillRank?: SkillRankGate;
+    /**
+     * The option is legal only while the character OWNS one of these records — a class feature, a
+     * subclass option (both are classFeature ids, which is what `ownedFeatureIds` returns), or a feat.
+     *
+     * Manifold Modifications is the case ruling Q9 names: *"your innovation gains an additional
+     * initial modification from the list for innovations of its type"*, and the record offered all 17
+     * armour AND weapon modifications to every inventor. Each option carries the innovation it
+     * belongs to, so the list narrows to the one the character actually has.
+     *
+     * ⚠ An option naming a record NOBODY can own would be permanently invisible, which is a worse
+     * failure than an over-wide list — nothing warns you, the option simply is not there. Only name
+     * ids that exist in `classFeatures` or `feats`; `test/choice-filtering.test.ts` asserts it.
+     */
+    requiresAnyFeature?: string[];
     /**
      * Picking this answer grants a named ELIGIBILITY TOKEN, so a later feat's prerequisite can require
      * the ANSWER rather than a feat. Magaambyan Attendant's branch is the case: nine feats print
@@ -1540,6 +1632,20 @@ export interface FeatChoiceDef {
    * build-time answer would wrongly survive a rest. The Rest sheet collects them.
    */
   daily?: boolean;
+  /**
+   * An option naming a record the character ALREADY OWNS is shown GREYED with the reason, rather than
+   * offered as though it were live. Ruling Q27: *"if there are more places where a user can't pick
+   * something but there isn't a visual indication he can't, it's just bad design."*
+   *
+   * ⚠ Greyed, NOT filtered. Q27 puts "already owned" in the shown-and-explained row and reserves
+   * removal for options that are illegal or wasted across the whole career (Q21). Manifold
+   * Modifications says *"an ADDITIONAL initial modification"*, so the one you already took is the
+   * option a player is most likely to hunt for — hiding it looks like missing data.
+   *
+   * ⚠ OPT-IN, for the same reason `ownsFeature` is: a choice value that merely COLLIDES with a
+   * classFeature id the character happens to own ("shield", "time") would be greyed for no reason.
+   */
+  disableIfOwned?: boolean;
 }
 
 export interface Feat extends ContentBase, DefenseGrants {
@@ -1550,6 +1656,34 @@ export interface Feat extends ContentBase, DefenseGrants {
   eidolonCantrips?: number;
   category: FeatCategory;
   prerequisites?: string[];
+  /**
+   * Ruling Q25 — THIS dedication's own "Special" clause about taking a second dedication.
+   *
+   * The general archetype rule already gates every dedication (Player Core, *Archetypes*: *"once you
+   * select a dedication feat for an archetype, you must satisfy its requirements before you can gain
+   * another dedication feat. Typically, you satisfy an archetype dedication feat by gaining a certain
+   * number of feats from the archetype's list."*) and `dedicationBlock` applies that default — two
+   * feats from the same archetype — to all 224 dedications that carry an `archetype`.
+   *
+   * This field is for the 13 records whose printed clause DIFFERS from that default, and it exists
+   * because the owner's ruling is explicit that the clause is per-record: *"the gate must be driven
+   * by the feat's own text, read per record, and each clause names its own exception and its own
+   * archetype."* Juggler asks for ONE feat; Magaambyan Attendant counts halcyon speaker feats too and
+   * exempts Halcyon Speaker Dedication; Spellshot exempts Beast Gunner Dedication.
+   *
+   * ⚠ Authored ONLY from the record's own sentence — `scripts/backfill-dedication-gates.mjs` quotes
+   * the clause it was read from beside every entry. Widening `archetypes` or adding an `except`
+   * nobody printed hands out a dedication the rules withhold.
+   */
+  dedicationGate?: {
+    /** Archetype slugs whose feats count toward the requirement — this one, plus any sibling the
+     *  clause names ("two other feats from the spellshot or beast gunner archetypes"). */
+    archetypes: string[];
+    /** How many other feats are needed. 2 unless the clause says otherwise (Juggler prints one). */
+    count: number;
+    /** Dedication feat ids this clause explicitly lets you take anyway. */
+    except?: string[];
+  };
   actionCost?: ActionCost;
   /** The printed Frequency line, free text ("once per day"). Display only — kept because the homebrew
    *  editor round-trips it. The TRACKABLE limit is `limitedUses` below. */

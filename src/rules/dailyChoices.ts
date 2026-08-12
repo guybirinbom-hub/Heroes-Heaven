@@ -11,7 +11,7 @@
  * new feat is a data edit, not a code edit.
  */
 import type { Character, ContentDatabase } from './types';
-import { askedAtDailyPrep, dailyChoiceKey, effectiveChoiceOptions, ownedDailyChoiceRecords as ownedRecords, qualifiesForOption } from './derive';
+import { askedAtDailyPrep, dailyChoiceKey, effectiveChoiceOptions, narrowChoiceOptions, ownedDailyChoiceRecords as ownedRecords } from './derive';
 import { openChoiceOptions } from './openChoice';
 
 export { askedAtDailyPrep, dailyChoiceKey, qualifiesForOption } from './derive';
@@ -49,7 +49,13 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
           // …then narrowed to what the character actually qualifies for. Haunting Memories offers a
           // given skill under exactly ONE of its two branches depending on where that skill stands,
           // so an untrained skill cannot be taken straight to master.
-          effectiveChoiceOptions(rec.id, def, c, db).filter((o) => qualifiesForOption(c, o.requiresSkillRank))
+          //
+          // Through the SAME funnel the builder uses (ruling Q9), so a narrowing authored on a record
+          // works whichever of the two paths asks the question. `narrowChoiceOptions` subsumes the
+          // `qualifiesForOption` filter this line used to spell out; the greyed "already owned" state
+          // it can also produce has no daily case today, and a morning row is a chip rather than a
+          // list with room for a reason, so those are dropped rather than rendered inert.
+          narrowChoiceOptions(rec.id, def, effectiveChoiceOptions(rec.id, def, c, db), c, db).filter((o) => !o.disabled)
         : def.kind === 'open'
           ? openChoiceOptions(def.from, db, { character: c }).map((o) => ({ value: o.id, label: o.name, description: o.description }))
           : [];

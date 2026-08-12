@@ -16,6 +16,7 @@
  * and a character who rolls it with a skill gets that skill's own line instead.
  */
 import { derivePerception, deriveSkill, type StatLine } from './derive';
+import { modeNumberBonus } from './modes';
 import type { Character, ContentDatabase, ProficiencyKey } from './types';
 
 /** What initiative is rolled with. `null`/absent = Perception, which is the default in the rules. */
@@ -36,12 +37,21 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
  */
 export function deriveInitiative(c: Character, db?: ContentDatabase, override?: InitiativeStat): InitiativeLine {
   const stat = override !== undefined ? override : c.initiativeSkill;
+  // A mode aimed at INITIATIVE specifically, on top of whatever the underlying stat already collected.
+  // The underlying Perception/skill mode bonuses are already inside the line this builds on, so a
+  // Perception mode still moves initiative the way it always did — this only adds the extra lane.
+  const initMode = modeNumberBonus(c.activeModes, { kind: 'initiative' });
   if (!stat) {
     const p = derivePerception(c, db);
-    return { ...p, stat: 'perception', label: 'Perception' };
+    return { ...p, modifier: p.modifier + initMode, stat: 'perception', label: 'Perception' };
   }
   const s = deriveSkill(c, stat, db);
-  return { ...s, stat, label: stat.startsWith('lore:') ? `${cap(stat.slice(5))} Lore` : cap(stat) };
+  return {
+    ...s,
+    modifier: s.modifier + initMode,
+    stat,
+    label: stat.startsWith('lore:') ? `${cap(stat.slice(5))} Lore` : cap(stat),
+  };
 }
 
 /**

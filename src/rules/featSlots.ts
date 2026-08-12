@@ -10,8 +10,9 @@
  * class-slot Archetypes toggle / behind a campaign toggle / simply not valid for this slot).
  */
 import type { BuildState } from './build';
-import { backgroundGrantedFeats, kineticistElements, resolveBackground } from './build';
+import { backgroundGrantedFeats, resolveBackground } from './build';
 import { maxTakes } from './featGrants';
+import { elementTraitsOf, impulseAllowedFor } from './kineticElements';
 import { mythicSlotAllows } from './mythic';
 import type { ContentDatabase, Feat, FeatCategory } from './types';
 
@@ -119,15 +120,13 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     )
       return false;
     // Kineticist impulses are gated to the elements of your kinetic gate (incl. elements gained via
-    // Fork the Path): an impulse feat is only available if it carries one of your elements.
-    if ((build.classId === 'kineticist' || (build.variantRules?.dualClass && build.classId2 === 'kineticist')) && f.traits.includes('impulse')) {
-      const elements = kineticistElements(build, build.level).map((id) => id.replace(/-gate$/, ''));
-      // Gate only impulses that carry an ELEMENT trait to a matching element. Elementless impulses
-      // (Command Elemental, Counter Element, …) work with any of your elements, so never hide them.
-      const KINETIC_ELEMENTS = ['air', 'earth', 'fire', 'metal', 'water', 'wood'];
-      const featElements = f.traits.filter((t) => KINETIC_ELEMENTS.includes(t));
-      if (elements.length && featElements.length && !featElements.some((t) => elements.includes(t))) return false;
-    }
+    // Fork the Path, and the ones an ARCHETYPE kineticist named on their dedication).
+    //
+    // No class check: `elementTraitsOf` is empty for anyone with no elements, and `impulseAllowedFor`
+    // then admits everything, so the guard the class check used to provide is the element list itself.
+    // Keeping the check would have re-created the bug it was written beside — an archetype kineticist
+    // has elements and was skipped by it.
+    if (f.traits.includes('impulse') && !impulseAllowedFor(f.traits, elementTraitsOf(build, build.level))) return false;
     return true;
   });
 }

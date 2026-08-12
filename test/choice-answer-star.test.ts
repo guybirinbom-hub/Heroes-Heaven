@@ -5,7 +5,7 @@ import { FEAT_FEAT_GRANTS, FEAT_GRANT_BOUND_CHOICE, isBoundGrant } from '../src/
 import { FEAT_GRANTS } from '../src/rules/featGrants';
 import { CHOICE_SITUATIONAL } from '../src/rules/situationalBonuses';
 import { explainStat, statHasSituational } from '../src/rules/explain';
-import type { ProficiencyKey } from '../src/rules/types';
+import { SKILLS, type ProficiencyKey } from '../src/rules/types';
 
 const db = content();
 
@@ -114,12 +114,28 @@ describe('the other records whose choice names a skill they then act on', () => 
     expect(statHasSituational(ch, { kind: 'perception' }, db)).toBe(true);
   });
 
-  it('every entry names a real record that really asks for a skill', () => {
+  /**
+   * Two shapes, and each has its own way of being wrong.
+   *
+   * Without `skill` the ANSWER is the target, so it has to be a skill key — a `kind: 'array'` record
+   * here would aim a star at "natural" and hit nothing. With `skill` the target is fixed and the answer
+   * is only quoted, so any choice kind is fine; what must hold instead is that the record HAS a choice
+   * (an entry on a choice-less feat can never fire) and that the fixed skill is real.
+   */
+  it('every entry names a real record whose answer it can actually use', () => {
     const bad: string[] = [];
-    for (const id of Object.keys(CHOICE_SITUATIONAL)) {
+    for (const [id, entries] of Object.entries(CHOICE_SITUATIONAL)) {
       const rec = db.feats[id];
-      if (!rec) bad.push(`${id}: no such feat`);
-      else if (rec.choice?.kind !== 'skills') bad.push(`${id}: choice kind is ${rec.choice?.kind ?? 'none'}`);
+      if (!rec) {
+        bad.push(`${id}: no such feat`);
+        continue;
+      }
+      if (!rec.choice) bad.push(`${id}: the record asks no question, so nothing can answer it`);
+      for (const e of entries) {
+        if (!e.skill && rec.choice?.kind !== 'skills') bad.push(`${id}: answer-targeted, but choice kind is ${rec.choice?.kind ?? 'none'}`);
+        if (e.skill && !SKILLS.includes(e.skill)) bad.push(`${id}: "${e.skill}" is not a skill`);
+        if (e.when.includes('{answer}') && !e.skill) bad.push(`${id}: quotes the answer into a star aimed AT the answer`);
+      }
     }
     expect(bad).toEqual([]);
   });

@@ -297,6 +297,32 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
       perception: { perception: 'expert' },
     },
   },
+  /*
+   * Battle Harbinger Dedication: *"You become trained in your choice of Athletics or Acrobatics."*
+   *
+   * Rulings Q20 + Q9. The record shipped TWO pickers for that one sentence: its own `choice` (the right
+   * two options, read by nothing) and this grant's auto-extracted `skillChoices: [{ options: 'any' }]`
+   * (all sixteen skills — and the one that actually trained). So the player answered the correct
+   * question and got nothing for it, then answered a wrong one that let them train Occultism.
+   *
+   * `choiceGrants` is what makes the record's OWN answer the one that grants, which is why the echo is
+   * kept rather than deleted: `battle-creed` lists this feat in its `grantedFeats`, and buildCharacter
+   * skips a granted feat that HAS a choice precisely so the player picks it in a slot and answers it
+   * there. Deleting the field auto-granted the dedication at level 1 — free of the 2nd-level class feat
+   * slot the subclass says it must occupy, and with the Toughness it grants, +1 HP per level.
+   *
+   * ⚠ NOT `redundantFallback`. That clause only fires for a STATIC `skills` grant (see its guard in
+   * buildCharacter), never through `choiceGrants` — so *"if you are already trained in both skills, you
+   * instead become trained in another skill of your choice"* stays stated on the record's `note` rather
+   * than claimed here. Offering all sixteen to everyone in order to serve that one case is the defect
+   * the ruling names, not the fix for it.
+   */
+  'battle-harbinger-dedication': {
+    choiceGrants: {
+      acrobatics: { skills: { acrobatics: 'trained' } },
+      athletics: { skills: { athletics: 'trained' } },
+    },
+  },
   'armor-proficiency': { armorCascade: true, rankUpgrade: { level: 13, rank: 'expert' } },
   'weapon-proficiency': { weapon: { martial: 'trained' }, rankUpgrade: { level: 11, rank: 'expert' } },
   // "Trained in your choice of the battle axe or longsword" — the feat's own weapon-choice dropdown

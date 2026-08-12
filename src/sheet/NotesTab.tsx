@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import type { Character } from '../rules/types';
 import { addNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayUpdater } from '../rules/play';
 import { RefSearchModal, refLinkHtml, type RefTarget } from './RichEditor';
@@ -8,6 +8,8 @@ import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
 import { decodeEntities } from './RichText';
 import { sanitize } from './sanitizeHtml';
+import { applyAutoDir } from './autoDir';
+import { setPref, usePrefs } from '../data/prefs';
 
 /** Toolbar formatting commands (document.execCommand on the focused contentEditable). */
 const TOOLS: { cmd: string; arg?: string; icon?: string; text?: string; title: string }[] = [
@@ -25,6 +27,12 @@ const TOOLS: { cmd: string; arg?: string; icon?: string; text?: string; title: s
 
 /** Swatch palette for the notes text/highlight color pickers. */
 const NOTE_COLORS = ['#e5484d', '#f59e0b', '#10b981', '#0ea5e9', '#6366f1', '#a855f7', '#ec4899', '#64748b'];
+
+/** Bounds for the draggable page-list column (px). Narrower than the min and the titles are unreadable;
+ *  wider than the max and the editor stops being the point of the page. */
+const NOTES_LIST_MIN = 110;
+const NOTES_LIST_MAX = 460;
+const NOTES_LIST_DEFAULT = 152;
 
 /**
  * An uncontrolled rich-text editor. The contentEditable is filled from `initialHtml`
@@ -59,7 +67,10 @@ function NoteEditor({
   useEffect(() => {
     // Sanitize before injecting (see RichEditor): innerHTML executes inline handlers, and note HTML can
     // carry pasted/imported markup. The display path (DescBody) already sanitizes.
-    if (ref.current) ref.current.innerHTML = sanitize(initialHtml);
+    if (ref.current) {
+      ref.current.innerHTML = sanitize(initialHtml);
+      applyAutoDir(ref.current);
+    }
     // mount-only: never re-apply from props, or it would reset the caret mid-edit.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -78,6 +89,10 @@ function NoteEditor({
 
   const save = () => {
     if (!ref.current) return;
+    // Re-tag block directions BEFORE reading the HTML: typing Hebrew into a fresh line has to flip that
+    // line (and its bullet) immediately, and the dir attributes then travel with the saved content, so
+    // the read-only view of the page matches. Setting an attribute never disturbs the caret.
+    applyAutoDir(ref.current);
     latest.current = ref.current.innerHTML;
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => onSaveRef.current(pageId, latest.current), 400);
@@ -215,23 +230,179 @@ function NoteEditor({
   );
 }
 
-/** Note "types" — each is just an icon + label the player picks when creating/editing a page. */
-const NOTE_ICONS: { icon: string; label: string }[] = [
-  { icon: 'ti-note', label: 'Note' },
-  { icon: 'ti-book-2', label: 'Session' },
-  { icon: 'ti-feather', label: 'Journal' },
-  { icon: 'ti-user', label: 'NPC' },
-  { icon: 'ti-map-pin', label: 'Location' },
-  { icon: 'ti-flag', label: 'Quest' },
-  { icon: 'ti-sword', label: 'Combat' },
-  { icon: 'ti-coin', label: 'Loot' },
-  { icon: 'ti-bulb', label: 'Idea' },
-  { icon: 'ti-quote', label: 'Lore' },
-  { icon: 'ti-sparkles', label: 'Magic' },
-  { icon: 'ti-skull', label: 'Threat' },
-  { icon: 'ti-list-check', label: 'Checklist' },
-  { icon: 'ti-star', label: 'Important' },
+/**
+ * The icons a page can wear. Grouped so the grid reads as a small library rather than a wall, and
+ * searchable (the picker matches the printed label, the raw icon name, and the aliases below — so
+ * "fire" finds the flame, "gold" finds the coin).
+ *
+ * Every name here is verified against the shipped @tabler/icons-webfont set; a typo renders an empty
+ * box, so add to these lists only after checking the icon exists.
+ */
+const NOTE_ICON_GROUPS: { group: string; icons: string[] }[] = [
+  {
+    group: 'Pages & writing',
+    icons: [
+      'ti-note', 'ti-notebook', 'ti-writing', 'ti-pencil', 'ti-file-text', 'ti-file-description', 'ti-article',
+      'ti-news', 'ti-quote', 'ti-typography', 'ti-bookmark', 'ti-clipboard-text', 'ti-list-check', 'ti-checklist',
+      'ti-book-2', 'ti-books', 'ti-library', 'ti-feather', 'ti-certificate', 'ti-license', 'ti-school',
+    ],
+  },
+  {
+    group: 'People',
+    icons: [
+      'ti-user', 'ti-user-circle', 'ti-users', 'ti-user-star', 'ti-user-question', 'ti-friends', 'ti-crown',
+      'ti-mask', 'ti-spy', 'ti-ghost', 'ti-ghost-2', 'ti-robot', 'ti-mood-smile', 'ti-mood-neutral', 'ti-mood-sad',
+      'ti-military-rank', 'ti-military-award',
+    ],
+  },
+  {
+    group: 'Places',
+    icons: [
+      'ti-map-pin', 'ti-map', 'ti-map-2', 'ti-route', 'ti-compass', 'ti-world', 'ti-building', 'ti-building-castle',
+      'ti-building-church', 'ti-building-store', 'ti-building-bank', 'ti-building-monument', 'ti-building-arch',
+      'ti-home', 'ti-tent', 'ti-campfire', 'ti-door', 'ti-key', 'ti-lock', 'ti-lock-open', 'ti-trekking',
+    ],
+  },
+  {
+    group: 'Quests & time',
+    icons: [
+      'ti-flag', 'ti-flag-2', 'ti-flag-3', 'ti-flag-star', 'ti-pennant', 'ti-target', 'ti-crosshair', 'ti-trophy',
+      'ti-medal', 'ti-award', 'ti-timeline', 'ti-history', 'ti-calendar', 'ti-clock', 'ti-alarm', 'ti-hourglass',
+      'ti-bell', 'ti-bell-ringing',
+    ],
+  },
+  {
+    group: 'Combat',
+    icons: [
+      'ti-sword', 'ti-swords', 'ti-axe', 'ti-bow', 'ti-archery-arrow', 'ti-shield', 'ti-shield-checkered',
+      'ti-shield-bolt', 'ti-helmet', 'ti-bomb', 'ti-skull', 'ti-bone', 'ti-grave', 'ti-heart', 'ti-heart-broken',
+      'ti-heartbeat', 'ti-activity', 'ti-first-aid-kit',
+    ],
+  },
+  {
+    group: 'Magic',
+    icons: [
+      'ti-sparkles', 'ti-wand', 'ti-flame', 'ti-droplet', 'ti-snowflake', 'ti-bolt', 'ti-wind', 'ti-cloud',
+      'ti-mist', 'ti-sun', 'ti-moon', 'ti-moon-stars', 'ti-stars', 'ti-planet', 'ti-atom', 'ti-flare', 'ti-spiral',
+      'ti-ripple', 'ti-infinity', 'ti-eye', 'ti-eye-off', 'ti-brain', 'ti-magnet', 'ti-crystal-ball',
+      'ti-alphabet-runes', 'ti-yin-yang', 'ti-cross', 'ti-ankh', 'ti-pray',
+    ],
+  },
+  {
+    group: 'Treasure',
+    icons: [
+      'ti-coin', 'ti-coins', 'ti-diamond', 'ti-wallet', 'ti-package', 'ti-box', 'ti-backpack', 'ti-basket',
+      'ti-shopping-bag', 'ti-scale', 'ti-gavel', 'ti-receipt',
+    ],
+  },
+  {
+    group: 'Gear & craft',
+    icons: [
+      'ti-bottle', 'ti-flask', 'ti-flask-2', 'ti-pill', 'ti-tools', 'ti-tool', 'ti-hammer', 'ti-pick', 'ti-shovel',
+      'ti-needle-thread', 'ti-anchor', 'ti-ship', 'ti-sailboat', 'ti-car', 'ti-tir',
+    ],
+  },
+  {
+    group: 'Food & drink',
+    icons: ['ti-beer', 'ti-cup', 'ti-glass-full', 'ti-soup', 'ti-bread', 'ti-meat', 'ti-cheese', 'ti-apple', 'ti-carrot', 'ti-salt', 'ti-egg'],
+  },
+  {
+    group: 'Nature & beasts',
+    icons: [
+      'ti-mountain', 'ti-tree', 'ti-trees', 'ti-plant', 'ti-leaf', 'ti-flower', 'ti-cactus', 'ti-mushroom',
+      'ti-seeding', 'ti-clover', 'ti-horse', 'ti-horseshoe', 'ti-paw', 'ti-dog', 'ti-cat', 'ti-fish', 'ti-bug',
+      'ti-spider', 'ti-butterfly', 'ti-bat', 'ti-deer', 'ti-acorn', 'ti-wood',
+    ],
+  },
+  {
+    group: 'Play & performance',
+    icons: [
+      'ti-dice', 'ti-dice-5', 'ti-cards', 'ti-puzzle', 'ti-chess', 'ti-music', 'ti-microphone', 'ti-theater',
+      'ti-masks-theater', 'ti-balloon', 'ti-confetti', 'ti-bulb', 'ti-lamp', 'ti-candle', 'ti-olympic-torch',
+    ],
+  },
+  {
+    group: 'Marks',
+    icons: [
+      'ti-star', 'ti-star-half', 'ti-alert-triangle', 'ti-alert-circle', 'ti-info-circle', 'ti-help',
+      'ti-question-mark', 'ti-exclamation-mark', 'ti-check', 'ti-circle-check', 'ti-x', 'ti-circle-x',
+      'ti-forbid', 'ti-hand-stop',
+    ],
+  },
 ];
+
+/** Extra search words for icons whose NAME doesn't say what a player would call it. */
+const ICON_ALIASES: Record<string, string> = {
+  'ti-note': 'note page blank',
+  'ti-book-2': 'session recap chapter',
+  'ti-feather': 'journal diary quill write',
+  'ti-user': 'npc person character',
+  'ti-users': 'party faction group',
+  'ti-user-star': 'patron ally important npc',
+  'ti-user-question': 'mystery stranger unknown npc',
+  'ti-map-pin': 'location place where',
+  'ti-flag': 'quest objective mission',
+  'ti-sword': 'combat fight battle encounter',
+  'ti-coin': 'loot treasure gold money reward',
+  'ti-coins': 'loot treasure gold money hoard',
+  'ti-diamond': 'gem jewel treasure valuable',
+  'ti-bulb': 'idea theory plan hunch',
+  'ti-quote': 'lore legend story saying',
+  'ti-sparkles': 'magic spell arcane enchantment',
+  'ti-skull': 'threat danger death villain undead',
+  'ti-list-check': 'checklist todo tasks',
+  'ti-star': 'important favourite favorite key',
+  'ti-flame': 'fire burn torch heat',
+  'ti-droplet': 'water rain sea acid',
+  'ti-snowflake': 'ice cold frost winter',
+  'ti-bolt': 'lightning electricity storm shock',
+  'ti-grave': 'graveyard tomb dead cemetery',
+  'ti-crystal-ball': 'divination prophecy fortune seer',
+  'ti-alphabet-runes': 'runes glyphs inscription cipher',
+  'ti-pray': 'religion deity temple faith worship',
+  'ti-cross': 'religion cleric temple faith',
+  'ti-ankh': 'religion life afterlife',
+  'ti-gavel': 'law trial judge court',
+  'ti-scale': 'balance justice trade weight',
+  'ti-flask': 'potion alchemy brew elixir',
+  'ti-flask-2': 'potion alchemy brew elixir',
+  'ti-bottle': 'potion drink vial',
+  'ti-pill': 'poison drug remedy',
+  'ti-beer': 'tavern inn drink ale pub',
+  'ti-cup': 'tavern drink inn',
+  'ti-building-castle': 'castle keep fortress stronghold',
+  'ti-building-church': 'temple shrine cathedral church',
+  'ti-building-store': 'shop merchant market vendor',
+  'ti-building-bank': 'bank vault guild treasury',
+  'ti-tent': 'camp rest wilderness',
+  'ti-campfire': 'camp rest downtime night',
+  'ti-tir': 'wagon cart caravan travel',
+  'ti-masks-theater': 'performance disguise bard drama',
+  'ti-theater': 'performance stage bard drama',
+  'ti-dice': 'roll random chance dice',
+  'ti-dice-5': 'roll random chance dice',
+  'ti-paw': 'beast animal companion creature',
+  'ti-horse': 'mount steed travel',
+  'ti-mist': 'fog weather haze',
+  'ti-ripple': 'water wave sea',
+  'ti-tools': 'crafting workshop repair',
+  'ti-package': 'supplies cargo delivery',
+  'ti-backpack': 'inventory gear carry',
+  'ti-timeline': 'timeline chronology events',
+  'ti-history': 'past backstory chronology',
+  'ti-hourglass': 'deadline countdown time pressure',
+  'ti-military-rank': 'army rank soldier military',
+  'ti-military-award': 'honour honor commendation army',
+  'ti-trekking': 'travel journey hike overland',
+  'ti-forbid': 'banned forbidden rule off-limits',
+  'ti-hand-stop': 'stop warning halt',
+};
+
+/** "ti-map-pin" → "Map pin". The printed label under each icon (and part of what search matches). */
+const iconLabel = (icon: string) => {
+  const words = icon.replace(/^ti-/, '').replace(/-/g, ' ');
+  return words.charAt(0).toUpperCase() + words.slice(1);
+};
 
 /** A small popup for choosing a note's icon/type — opened when adding a page or tapping the icon.
  *  In edit mode it also offers a per-page color (onPickColor), which tints the page icon + header. */
@@ -250,6 +421,19 @@ function IconPickerModal({
   onPickColor?: (color: string | undefined) => void;
   onClose: () => void;
 }) {
+  const [query, setQuery] = useState('');
+  const q = query.trim().toLowerCase();
+  // Every word must match somewhere ("map pin" and "pin map" both find it).
+  const terms = q ? q.split(/\s+/) : [];
+  const matches = (icon: string) => {
+    if (!terms.length) return true;
+    const hay = `${icon.replace(/^ti-/, '').replace(/-/g, ' ')} ${ICON_ALIASES[icon] ?? ''}`.toLowerCase();
+    return terms.every((t) => hay.includes(t));
+  };
+  const groups = NOTE_ICON_GROUPS.map((g) => ({ group: g.group, icons: g.icons.filter(matches) })).filter(
+    (g) => g.icons.length > 0,
+  );
+
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker icon-picker" onClick={(e) => e.stopPropagation()}>
@@ -261,18 +445,40 @@ function IconPickerModal({
             <i className="ti ti-x" aria-hidden="true" />
           </button>
         </div>
+        <div className="icon-search-row">
+          <div className="search">
+            <i className="ti ti-search" aria-hidden="true" />
+            <input
+              autoFocus
+              placeholder="Search icons — try “fire”, “tavern”, “quest”"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="Search icons"
+            />
+          </div>
+        </div>
         <div className="icon-grid">
-          {NOTE_ICONS.map((o) => (
-            <button
-              key={o.icon}
-              className={'icon-opt' + (current === o.icon ? ' on' : '')}
-              title={o.label}
-              onClick={() => onPick(o.icon)}
-            >
-              <i className={'ti ' + o.icon} aria-hidden="true" />
-              <span>{o.label}</span>
-            </button>
+          {groups.map((g) => (
+            <div className="icon-group" key={g.group}>
+              {/* With a search running the groups are just the surviving buckets — still worth naming,
+                  so a result set of six icons says which kind of thing each one is. */}
+              <div className="icon-group-h">{g.group}</div>
+              <div className="icon-group-grid">
+                {g.icons.map((icon) => (
+                  <button
+                    key={icon}
+                    className={'icon-opt' + (current === icon ? ' on' : '')}
+                    title={iconLabel(icon)}
+                    onClick={() => onPick(icon)}
+                  >
+                    <i className={'ti ' + icon} aria-hidden="true" />
+                    <span>{iconLabel(icon)}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           ))}
+          {groups.length === 0 && <div className="ff-empty">No icon matches “{query}”.</div>}
         </div>
         {onPickColor && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--app-border)' }}>
@@ -317,6 +523,40 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
   // Android Back / Escape: from the full-screen editor, step back to the page list (don't exit the app).
   useBackHandler(isMobile && mobileOpen, () => setMobileOpen(false));
 
+  // Drag the divider between the page list and the editor. The live width is written straight to the
+  // grid's CSS variable (no re-render per pointer move) and saved once, on release.
+  const { notesListWidth } = usePrefs();
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [dragging, setDragging] = useState(false);
+  const startResize = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const wrap = wrapRef.current;
+    const list = wrap?.querySelector<HTMLElement>('.notes-list-card');
+    if (!wrap || !list) return;
+    e.preventDefault();
+    const startW = list.offsetWidth;
+    const startX = e.clientX;
+    // Pointer coordinates are in the VISUAL viewport, which html{zoom} has already scaled; offsetWidth
+    // is in the element's own CSS pixels. Divide the travel by the zoom or the divider outruns the mouse.
+    const zoom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--zoom')) || 1;
+    setDragging(true);
+    const move = (ev: PointerEvent) => {
+      const w = Math.round(Math.min(NOTES_LIST_MAX, Math.max(NOTES_LIST_MIN, startW + (ev.clientX - startX) / zoom)));
+      wrap.style.setProperty('--notes-list-w', `${w}px`);
+    };
+    const end = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', end);
+      window.removeEventListener('pointercancel', end);
+      setDragging(false);
+      const w = parseInt(wrap.style.getPropertyValue('--notes-list-w'), 10);
+      if (Number.isFinite(w)) setPref('notesListWidth', w);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', end);
+    window.addEventListener('pointercancel', end);
+  };
+  const listWidth = Math.min(NOTES_LIST_MAX, Math.max(NOTES_LIST_MIN, notesListWidth ?? NOTES_LIST_DEFAULT));
+
   const pickIcon = (icon: string) => {
     if (!onPlay || !iconPicker) return;
     if (iconPicker.mode === 'new') {
@@ -353,7 +593,7 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
   const showEditor = !isMobile || mobileOpen;
 
   return (
-    <div className="notes-wrap">
+    <div className="notes-wrap" ref={wrapRef} style={{ ['--notes-list-w' as string]: `${listWidth}px` }}>
       {showList && (
       <div className="card notes-list-card">
         <div className="notes-search-row">
@@ -382,13 +622,14 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
                 style={{ color: p.color ?? 'var(--app-text-dim)', fontSize: isMobile ? 17 : 15, flex: 'none' }}
                 aria-hidden="true"
               />
+              {/* dir="auto" so a Hebrew/Arabic page title reads from the right in the list too. */}
               {isMobile ? (
                 <div className="ni-text">
-                  <span className="ni-name">{p.title}</span>
-                  {preview(p.content) && <span className="ni-preview">{preview(p.content)}</span>}
+                  <span className="ni-name" dir="auto">{p.title}</span>
+                  {preview(p.content) && <span className="ni-preview" dir="auto">{preview(p.content)}</span>}
                 </div>
               ) : (
-                <span className="ni-name">{p.title}</span>
+                <span className="ni-name" dir="auto">{p.title}</span>
               )}
               {p.private && <i className="ti ti-lock" style={{ fontSize: 12, opacity: 0.65, flex: 'none' }} aria-hidden="true" />}
               {isMobile && <i className="ti ti-chevron-right ni-chev" aria-hidden="true" />}
@@ -397,6 +638,19 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
           {shown.length === 0 && <div className="ff-empty">No pages match.</div>}
         </div>
       </div>
+      )}
+
+      {/* Desktop only — on a phone the list and the editor are separate full-screen steps. */}
+      {!isMobile && (
+        <div
+          className={'notes-split' + (dragging ? ' dragging' : '')}
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize the page list"
+          onPointerDown={startResize}
+          onDoubleClick={() => setPref('notesListWidth', NOTES_LIST_DEFAULT)}
+          title="Drag to resize · double-click to reset"
+        />
       )}
 
       {showEditor && (
@@ -425,11 +679,12 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
               <input
                 className="editor-title-input"
                 value={active.title}
+                dir="auto"
                 // Writes per keystroke — coalesce so typing a title is one undo step, not one per key.
                 onChange={(e) => onPlay((pl) => updateNotePage(pl, active.id, { title: e.target.value }), `note-title:${active.id}`)}
               />
             ) : (
-              <div className="editor-title">{active.title}</div>
+              <div className="editor-title" dir="auto">{active.title}</div>
             )}
             <div className="editor-meta">
               <i className="ti ti-check" style={{ fontSize: 12 }} aria-hidden="true" /> Saved · page {activeIndex + 1} of {pages.length}
@@ -475,7 +730,8 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
             onSave={(id, html) => onPlay((pl) => updateNotePage(pl, id, { content: html }))}
           />
         ) : (
-          <DescBody description={active.content} className="editor-body" />
+          // dirAuto: pages written before the editor started tagging block direction still need it.
+          <DescBody description={active.content} className="editor-body" dirAuto />
         )}
       </div>
       )}

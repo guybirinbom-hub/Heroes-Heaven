@@ -1,0 +1,1582 @@
+[
+ {
+  "name": "Lini's Leafstick",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Drazmorg's Staff of All-Sight",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Beast Staff (Major)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Boreal Staff",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Hell Staff",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Spy Staff (Greater)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Spy Staff (Major)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Seer's Flute (Major)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Trickster's Mandolin (Greater)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Trickster's Mandolin (Major)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Staff of Phantasms (Greater)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Staff of Phantasms (Major)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Verdant Staff (Greater)",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Fiendbreaker",
+  "via": "heldSpells would SHRINK — kept",
+  "cost": null
+ },
+ {
+  "name": "Wayfinder Resonance Tinkerer",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Ka Stone Ritual",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Brightness Seeker",
+  "via": "passive, grants action-320",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Mature Trained Companion",
+  "via": "passive, grants action-380",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Iron Lung",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Demolition Charge",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Waxed Feathers",
+  "via": "prose",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Smokesoul",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Brinesoul",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Mistsoul",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Reach Beyond",
+  "via": "prose",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Heart of the Kaiju",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Spellstriker",
+  "via": "passive, grants action-755",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Summoner Dedication",
+  "via": "passive, grants action-757",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Cathartic Mage Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Soulforger Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Folklorist Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Reinforced Chassis",
+  "via": "passive, grants action-904",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Arcane Safeguards",
+  "via": "passive, grants action-905",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Beast Gunner Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Bullet Dancer Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Demolitionist Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Firework Technician Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Coughing Dragon Display",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Jumping Jenny Display",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Goblin Jubilee Display",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Banshee Cry Display",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Call Gun",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Unexpected Sharpshooter Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Shape of the Cloud Dragon",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Bound in Ice",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Protective Spirit Mask",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Exorcist Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Expand Spiral",
+  "via": "prose",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Undead Slayer Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "free"
+  }
+ },
+ {
+  "name": "Ghoul Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Vampire Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Out of Hand",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Powder Punch Stance",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Glass Skin",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Harrower Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Stalwart Defender Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Safe Elements",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Moldersoul",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Quicksoul",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Worm Caller Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Stone Brawler Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Grasping Reach",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Anchoring Roots",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Primal Howl",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Verdant Metamorphosis",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "True Shapeshifter",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Companion's Cry",
+  "via": "prose",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Inspired Stratagem",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Spirit Familiar (Witch)",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Stitched Familiar",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Patron’s Presence",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Patron’s Claim",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Reactive Striker",
+  "via": "passive, grants action-2256",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Stubborn Defiance",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Ferocious Charge",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Running Kick",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Sinking Jaws",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Sweeping Tail",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Vicious Rend",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Clawdancer Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Ostilli Host Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Soothing Pulse",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Cloaking Pulse",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Deflecting Pulse",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Spell Swallow",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Swarmkeeper Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Buzzing Death Cicadas",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Werecreature Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Tengu Feather Fan",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Plummeting Roll",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Barbarian Dedication",
+  "via": "passive, grants action-2802",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Finishing Precision",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Assassin Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Celebrity Dedication",
+  "via": "passive, grants action-2979",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Eldritch Archer Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Magic Ammunition",
+  "via": "inline glyph",
+  "cost": {
+   "type": "free"
+  }
+ },
+ {
+  "name": "Pirate Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Poison Coat",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Water to Water",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Inherit the Dreaming Heirloom",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Rouse the Dreaming Relic",
+  "via": "inline glyph",
+  "cost": {
+   "type": "free"
+  }
+ },
+ {
+  "name": "Sever the Dreaming Shadow",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Morphic Strike",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Signature Weapon",
+  "via": "prose",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Five-breath Vanguard Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Spirit Warrior Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Intercepting Hand",
+  "via": "passive, grants action-2944",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Starlit Sentinel Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Fulu Familiar",
+  "via": "passive, grants action-2945",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Tempest Cloud's Speed",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Lightning Rings' Intervention",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Lightning Rings' Overcharge",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Phoenix's Flight",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Only the Worthy",
+  "via": "prose",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Steel on Steel",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Through the Needle's Eye",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Binding Serpents Celestial Arrow",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Motionless Cutter",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Breath of Vital Ash",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Journey Of the Sky Chariot",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Mated Birds in Paired Flight",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Compliant Gold",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Warped by Rage",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Destined Victory",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Infinite Blades Celestial Arrow",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Crown of Rule",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Gift of the Immortal Herb",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Mark of The Sage",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Shroud of Ghosts",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Branched Tree Of Pain",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Eternity-Incinerating Blaze",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Seven-Colored Cosmic Bridge",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Sunwrecker",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Faultspawn",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Bloodrager Dedication",
+  "via": "passive, grants action-3065",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "One Among The Masses",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Archfiend Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Manipulate Realm",
+  "via": "inline glyph",
+  "cost": {
+   "type": "free"
+  }
+ },
+ {
+  "name": "Ascended Celestial Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Ascend",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Broken Chain Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Assume Godhood",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Spell-Woven Shot",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Campfire Chronicler Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Ouroboric Pact",
+  "via": "inline glyph",
+  "cost": {
+   "type": "free"
+  }
+ },
+ {
+  "name": "Pact of the Fey Paths",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Pact of the Living Pact",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Palatine Detective Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Mask of The 12th Step",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Mask of The 15th Step",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Living God",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Rivethun Invoker Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Venture-Gossip Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "A Little Bird Told Me...",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Unbowed, Unbroken",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Born to the Trees",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "The Thousand Lashes of the Weeping Willow",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 3
+  }
+ },
+ {
+  "name": "Perfect Pitch",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Virtuosic Dancer",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Fight Choreography",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Headless Haunt",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Ulfen Guard Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Faith in the Fallen",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Mercenary Reversal",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Crossbow Infiltrator Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Crescent Cross Training",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Guerrilla Weaponry",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Munitions Master Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Necrologist Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Death Rattle",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Tactical Guidance",
+  "via": "prose",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Riddle the Sphinx",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Shield of Stone",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Heroic Weakness",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Stages of Fate",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Take Wing",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Bond Companion",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Draconic Acolyte Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Winged Leap",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Spiritual Aid",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Avenging Runelord Dedication",
+  "via": "passive, grants action-3526",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Willing Runes",
+  "via": "passive, grants action-3527",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Writhing Runelord Weapon",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Autonomous Arms",
+  "via": "passive, grants action-3528",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Heroic Scion Dedication",
+  "via": "passive, grants action-3529",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Let Death Be My Weapon",
+  "via": "passive, grants action-3530",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Timewracked Dedication",
+  "via": "passive, grants action-3531",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Bolstered Recovery",
+  "via": "passive, grants action-3532",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Warshard Warrior Dedication",
+  "via": "passive, grants action-3534",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Lightless Sight",
+  "via": "passive, grants action-3535",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "I Am the Weapon",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Thaumaturge's Demesne",
+  "via": "prose",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Thaumaturge Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Devil's Eye",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Echo of the Fallen",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Elysium's Cadence",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Dormant Eruption",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Clone-Risen",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Mirror-Risen",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Living Vessel Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Pactbinder Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Pact of Draconic Fury",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Curse Maelstrom Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Sleepwalker Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Hellknight-Errant",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Steel Falcon Dedication",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Talon's Mark",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Cayden's Freedom",
+  "via": "passive, grants action-3759",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Cruel Piercing",
+  "via": "passive, grants action-3758",
+  "cost": {
+   "type": "passive"
+  }
+ },
+ {
+  "name": "Aristocratic Arms",
+  "via": "inline glyph",
+  "cost": {
+   "type": "free"
+  }
+ }
+]

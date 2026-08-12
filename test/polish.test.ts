@@ -4,7 +4,7 @@ import {
   additionalClassSkills,
   bonusLanguageSlots,
   buildCharacter,
-  canTakeNewDedication,
+  dedicationBlock,
   computeAbilities,
   emptyBuild,
   checkPrerequisites,
@@ -133,11 +133,21 @@ describe('archetypes / multiclass (Phase 1)', () => {
     expect(c.feats['basic-maneuver'].archetype).toBe('fighter');
   });
 
-  it('canTakeNewDedication enforces "two feats before a new dedication"', () => {
-    expect(canTakeNewDedication([], c)).toBe(true); // no archetypes started
-    expect(canTakeNewDedication(['fighter-dedication'], c)).toBe(false); // started, 0 feats
-    expect(canTakeNewDedication(['fighter-dedication', 'basic-maneuver'], c)).toBe(false); // only 1
-    expect(canTakeNewDedication(['fighter-dedication', 'basic-maneuver', 'reactive-striker'], c)).toBe(true); // 2 ✓
+  // ⚠ REWRITTEN 2026-08-11. This asserted a GENERAL two-feat gate — `can(['fighter-dedication'])` was
+  // false — which is what the app used to do, and what Player Core's Archetypes chapter states. Owner
+  // ruling Q28 overrides it: "not every dedication keeps the general two-feat gate, only feats that say
+  // it." Only the 14 records printing the Special clause gate now, so pinning the old default here
+  // would vouch for behaviour the owner rejected. The rest of the lane is in dedication-gate.test.ts.
+  it('only a dedication that PRINTS the clause blocks another one', () => {
+    const can = (taken: string[], candidate = 'wizard-dedication') =>
+      dedicationBlock(taken, c.feats[candidate], c) === null;
+    expect(can([])).toBe(true);
+    // Fighter Dedication prints no Special clause, so it gates nothing.
+    expect(can(['fighter-dedication'])).toBe(true);
+    expect(c.feats['fighter-dedication'].dedicationGate).toBeUndefined();
+    // Juggler Dedication does print one, so it gates until its own requirement is met.
+    expect(can(['juggler-dedication'])).toBe(false);
+    expect(c.feats['juggler-dedication'].dedicationGate).toBeTruthy();
   });
 });
 

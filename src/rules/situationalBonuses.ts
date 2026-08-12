@@ -11,6 +11,7 @@
  * skill/save/perception/AC selector) plus each feat's printed text. It is DISPLAY-ONLY: nothing here
  * changes a computed number. Keyed by the feat's core.json id.
  */
+import type { ProficiencyKey } from './types';
 
 export interface SituationalTarget {
   /**
@@ -3188,15 +3189,28 @@ export function featSituationalFor(
  * Only the PROSE lives here, because the prose is the same for every taking; the target arrives from
  * the character (see `choiceSituationalFor`).
  *
- * The answer is read as a SKILL key (`athletics`, `lore:games`) — every record listed asks a
- * `kind: 'skills'` choice. A record whose answer named something else would need a kind field, and
- * adding one now would be a field with no reader.
+ * Two shapes, and which one applies is decided by `skill`:
+ *   - ABSENT — the answer IS the target. It is read as a skill key (`athletics`, `lore:games`), so
+ *     the record must ask a `kind: 'skills'` choice. Assurance's shape.
+ *   - PRESENT — the target is fixed and the ANSWER is what the line has to say. Shooter's Camouflage
+ *     asks for a terrain and then changes what Stealth does there; the terrain is no skill, so a
+ *     record like this could not exist here until the field did.
  */
 export interface ChoiceSituational {
-  /** Short, player-facing trigger — as in `SituationalBonus`. */
+  /** Short, player-facing trigger — as in `SituationalBonus`. `{answer}` is replaced by the player's
+   *  own answer, so one entry serves every possible pick without restating the prose per option. */
   when: string;
   /** What it gives. Prose, not a modifier: none of these move a number. */
   bonus: string;
+  /**
+   * The skill the star lands on, when the answer is NOT itself a skill.
+   *
+   * Ruling Q20's second test question is "does the choice name a specific STAT?" — and it is asked of
+   * the FEAT, not of the answer's vocabulary. Shooter's Camouflage names Hide and Sneak, both Stealth
+   * actions, so Stealth is where the player looks the number up and where the mark belongs (ruling J:
+   * *"situational stars go on the specific skills or actions affected"*).
+   */
+  skill?: ProficiencyKey;
 }
 export const CHOICE_SITUATIONAL: Record<string, ChoiceSituational[]> = {
   // Ruling Q20, verbatim: "remember Assurance needs to have a `*` on the skill that it affects."
@@ -3210,19 +3224,34 @@ export const CHOICE_SITUATIONAL: Record<string, ChoiceSituational[]> = {
   // field names its skills on the record, and this one's is the player's answer.
   "masterful-obfuscation": [{ when: "when you Lie about facts related to this skill's subject", bonus: "roll this skill instead of Deception" }],
   "heroic-scion-dedication": [{ when: "on an action using this skill, if you spend a Mythic Point", bonus: "attempt the check at mythic proficiency" }],
+  // Ruling Q20 on an echo-only picker: the terrain answer moved nothing and appeared nowhere but the
+  // feat's own row, yet the feat plainly names two Stealth actions. No number changes — you still roll
+  // Stealth at the same modifier — so the star is the whole surface, and the ANSWER is the half of the
+  // sentence that decides whether it applies at all. `{answer}` carries it.
+  "shooters-camouflage": [{ skill: 'stealth', when: "in {answer}", bonus: "Hide and Sneak even without cover and without being concealed" }],
 };
 
 /**
  * The entries a record contributes once its choice is answered — the static prose above, aimed at
- * the skill the player named.
+ * the skill the player named (or, where `skill` is set, at that skill, with the answer spelled into
+ * the trigger).
  *
  * Returns the ordinary `SituationalBonus` shape so the synthesised entry travels the same display
  * path as a shipped one and there is no second renderer to keep in step.
+ *
+ * `answerLabel` is the human wording of the same answer ("Natural terrain" for `natural`). Passed
+ * separately rather than derived here, because deriving it would need the content database and this
+ * function is deliberately reachable with nothing but the character.
  */
-export function choiceSituationalFor(recordId: string, answer: string): SituationalBonus[] {
+export function choiceSituationalFor(recordId: string, answer: string, answerLabel = answer): SituationalBonus[] {
   const list = CHOICE_SITUATIONAL[recordId];
   if (!list?.length || !answer) return [];
-  return list.map((e) => ({ targets: [{ kind: 'skill', detail: answer }], when: e.when, bonus: e.bonus }));
+  return list.map((e) => ({
+    targets: [{ kind: 'skill', detail: e.skill ?? answer }],
+    // Lower-cased because the label is a picker option ("Natural terrain") being pasted mid-sentence.
+    when: e.when.replace('{answer}', answerLabel.charAt(0).toLowerCase() + answerLabel.slice(1)),
+    bonus: e.bonus,
+  }));
 }
 
 /** One line of the star list, before it is worded: who grants it, when it applies, and what it gives. */

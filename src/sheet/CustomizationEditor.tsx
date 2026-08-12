@@ -37,7 +37,8 @@ type BoolKey =
   | 'compactActions'
   | 'showSlotBadges'
   | 'consumableHighlight'
-  | 'scrollbarAccent';
+  | 'scrollbarAccent'
+  | 'notesShowRail';
 
 /** Normalize a saved rail order to the full set (known ids first in saved order, then any missing). */
 function normalizeRailOrder(order?: string[]): string[] {
@@ -186,21 +187,27 @@ export function CustomizationEditor({
         ))}
       </div>
 
-      <div className="menu-label">Zoom</div>
-      <div className="menu-row zoom-row">
-        {perChar && (
-          <button className={'chip' + (value.zoom == null ? ' active' : '')} onClick={() => onChange('zoom', undefined)}>
-            Match device
-          </button>
-        )}
-        <button className="chip" aria-label="Zoom out" onClick={() => bumpZoomTo(-0.1)} disabled={curZoom <= ZOOM_MIN}>
-          <i className="ti ti-minus" aria-hidden="true" />
-        </button>
-        <span className="zoom-val">{Math.round(curZoom * 100)}%</span>
-        <button className="chip" aria-label="Zoom in" onClick={() => bumpZoomTo(0.1)} disabled={curZoom >= zMax}>
-          <i className="ti ti-plus" aria-hidden="true" />
-        </button>
-      </div>
+      {/* Phones only. On a desktop keyboard Ctrl +/−/0 and Ctrl+wheel already zoom, and that level is
+          persisted across restarts — a second way to set it just competed with the one people use. */}
+      {isMobile && (
+        <>
+          <div className="menu-label">Zoom</div>
+          <div className="menu-row zoom-row">
+            {perChar && (
+              <button className={'chip' + (value.zoom == null ? ' active' : '')} onClick={() => onChange('zoom', undefined)}>
+                Match device
+              </button>
+            )}
+            <button className="chip" aria-label="Zoom out" onClick={() => bumpZoomTo(-0.1)} disabled={curZoom <= ZOOM_MIN}>
+              <i className="ti ti-minus" aria-hidden="true" />
+            </button>
+            <span className="zoom-val">{Math.round(curZoom * 100)}%</span>
+            <button className="chip" aria-label="Zoom in" onClick={() => bumpZoomTo(0.1)} disabled={curZoom >= zMax}>
+              <i className="ti ti-plus" aria-hidden="true" />
+            </button>
+          </div>
+        </>
+      )}
 
       {/* Per-character look */}
       <div className="menu-label">Portrait shape</div>
@@ -267,11 +274,18 @@ export function CustomizationEditor({
         </label>
       </div>
 
+      <div className="menu-label">Notes</div>
+      <div className="menu-row">{boolChip('notesShowRail', 'Vitals rail on the Notes tab')}</div>
+      <p className="settings-desc" style={{ marginTop: 0 }}>
+        Off by default: notes are for writing, and the rail costs them a fifth of the width. Turn it on to keep
+        HP, saves and conditions beside the page.
+      </p>
+
       {/* Content & behaviour */}
       <div className="menu-label">Numbers</div>
       <div className="menu-row">
         {boolChip('plusOnMods', 'Show + on modifiers')}
-        {boolChip('showSaveDCs', 'Show save DCs')}
+        {boolChip('showSaveDCs', 'Show DCs')}
       </div>
 
       <div className="menu-label">Sections</div>

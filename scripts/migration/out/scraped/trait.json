@@ -1,0 +1,55 @@
+[
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "trait-961",
+  "_score": 35.014893,
+  "_source": {
+   "category": "trait",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "trait-961",
+   "markdown": "<title level=\"1\" right=\"Trait\">[Nightmare](/Traits.aspx?ID=961)</title>\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78\n\nIn addition, there is a type of hazard possibly unique to Leng: nightmare hazards. In many ways, nightmare hazards resemble a haunt, and the dire truth might not reveal itself to potential victims until they discover that attempts to disable it through exorcism are ineffective. As a result, these hazards tend to be some of the deadliest and most difficult to navigate in Leng. It's not unheard of for a haunt to exist in proximity to a nightmare hazard as the remnant of some past victim or victims who fell prey to its dangers, nor is it for nightmare hazards to manifest on Golarion in areas where the boundary between the waking world and Leng have worn thin.",
+   "name": "Nightmare",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 78",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78\n</additional-info>\n\n---\n\n<summary>\nIn addition, there is a type of hazard possibly unique to Leng: nightmare hazards. In many ways, nightmare hazards resemble a haunt, and the dire …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 78"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78",
+   "speed": {},
+   "summary": "In addition, there is a type of hazard possibly unique to Leng: nightmare hazards. In many ways, nightmare hazards resemble a haunt, and the dire …",
+   "summary_markdown": "In addition, there is a type of hazard possibly unique to Leng: nightmare hazards. In many ways, nightmare hazards resemble a haunt, and the dire …",
+   "text": " Nightmare Source Pathfinder #220: Crypt of Runes pg. 78 In addition, there is a type of hazard possibly unique to Leng: nightmare hazards. In many ways, nightmare hazards resemble a haunt, and the dire truth might not reveal itself to potential victims until they discover that attempts to disable it through exorcism are ineffective. As a result, these hazards tend to be some of the deadliest and most difficult to navigate in Leng. It's not unheard of for a haunt to exist in proximity to a nightmare hazard as the remnant of some past victim or victims who fell prey to its dangers, nor is it for nightmare hazards to manifest on Golarion in areas where the boundary between the waking world and Leng have worn thin.",
+   "trait": [
+    "Nightmare"
+   ],
+   "trait_group": [
+    "Creature Type"
+   ],
+   "trait_markdown": "Nightmare",
+   "trait_raw": [
+    "Nightmare"
+   ],
+   "type": "Trait",
+   "url": "/Traits.aspx?ID=961",
+   "weakness": {}
+  }
+ }
+]

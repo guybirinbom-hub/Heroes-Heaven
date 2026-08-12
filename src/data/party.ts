@@ -161,8 +161,11 @@ export async function deleteGmEdit(campaignId: string, charId: string): Promise<
  *  DELETE is intentionally not watched, so the player's own post-apply delete doesn't re-trigger.
  *  Returns an unsubscribe fn; no-op when signed out / cloud not configured. The open/focus pull in the
  *  app stays as the fallback for when the app was closed while the GM edited. */
-export function subscribeGmEdits(playerId: string, onEdit: () => void): () => void {
-  if (!supabase || !playerId) return () => {};
+export function subscribeGmEdits(playerId: string, onEdit: () => void, onLive?: (live: boolean) => void): () => void {
+  if (!supabase || !playerId) {
+    onLive?.(false);
+    return () => {};
+  }
   const client = supabase;
   const filter = `owner_id=eq.${playerId}`;
   const channel = client
@@ -174,6 +177,42 @@ export function subscribeGmEdits(playerId: string, onEdit: () => void): () => vo
       // a pull on every successful (re)subscribe — the initial connect AND each auto-rejoin after a drop —
       // so nothing is silently missed while the app stays open and focused. apply() is idempotent.
       if (status === 'SUBSCRIBED') onEdit();
+      // Whether the live stream is actually up. A project whose `gm_character_edits` never made it into
+      // the supabase_realtime publication (an older setup script, a restored database) fails here — and
+      // the only symptom used to be that a GM's change appeared when the player next focused the app,
+      // which reads as "the sync lags". The caller polls while this is false; see App.
+      onLive?.(status === 'SUBSCRIBED');
+    });
+  return () => {
+    void client.removeChannel(channel);
+  };
+}
+
+/**
+ * Subscribe to ONE published character — the one whose sheet is currently open.
+ *
+ * `subscribeParty` watches the whole campaign and drives the CARDS; this watches a single row so an
+ * open sheet can follow the player's edits live. Without it, the sheet a GM opens is a snapshot from
+ * the moment they tapped the card: the player could take twenty damage and the GM would keep reading
+ * their old hit points for the rest of the session.
+ *
+ * No-op when signed out / cloud not configured; returns an unsubscribe fn.
+ */
+export function subscribeMemberSheet(campaignId: string, charId: string, onChange: () => void): () => void {
+  if (!supabase || !campaignId || !charId) return () => {};
+  const client = supabase;
+  const channel = client
+    .channel(`member:${campaignId}:${charId}`)
+    // Postgres-changes filters take a single equality, so this narrows to the character and the
+    // campaign is re-checked by the caller's fetch (a char_id is unique per campaign in practice).
+    .on(
+      'postgres_changes',
+      { event: 'UPDATE', schema: 'public', table: 'campaign_characters', filter: `char_id=eq.${charId}` },
+      () => onChange(),
+    )
+    .subscribe((status) => {
+      // Realtime replays nothing missed while disconnected, so re-pull on every successful (re)join.
+      if (status === 'SUBSCRIBED') onChange();
     });
   return () => {
     void client.removeChannel(channel);

@@ -11,6 +11,7 @@
  * approximated: the picker is at worst slightly permissive, never blocking a legal pick.
  */
 import type { BuildState } from './build';
+import { elementTraitsOf, impulseAllowedFor } from './kineticElements';
 import type { ContentDatabase, Feat, FeatCategory } from './types';
 
 export interface FeatPickSpec {
@@ -209,9 +210,16 @@ export function pickableFeats(spec: FeatPickSpec, build: BuildState, content: Co
     spec.maxLevel === 'self' ? build.level : spec.maxLevel === 'half' ? Math.floor(build.level / 2) : spec.maxLevel;
   const clsTrait = build.classId;
   const ancTrait = build.ancestryId;
+  // An impulse you have no gate for is not a legal pick (Q9 — the builder shows only what the player
+  // may legally pick). This file's header called the kineticist gate "approximated… at worst slightly
+  // permissive"; for the two specs that actually offer impulses — Advanced Element Control and
+  // Elemental Overlap — "slightly permissive" meant every element, which made Kineticist Dedication's
+  // element answer decide nothing at all. Same rule as the feat-slot picker, from the same function.
+  const elements = elementTraitsOf(build, build.level);
   return Object.values(content.feats)
     .filter((f) => {
       if (f.level > maxL) return false;
+      if (f.traits.includes('impulse') && !impulseAllowedFor(f.traits, elements)) return false;
       if (spec.category && f.category !== spec.category && !(spec.category === 'general' && f.category === 'skill')) return false;
       const tr = new Set(f.traits);
       if (spec.traits && !spec.traits.every((t) => tr.has(t))) return false;

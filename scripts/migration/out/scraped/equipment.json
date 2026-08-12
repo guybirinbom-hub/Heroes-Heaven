@@ -1,0 +1,937 @@
+[
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-5205",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0.1,
+   "bulk_raw": "L  (when not activated)",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-5205",
+   "item_category": "Structures",
+   "level": 17,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 17\"\n    pfs=\"\"\n>\n[Dream Hunter's Lodge](/Equipment.aspx?ID=5205)\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Dream\" url=\"/Traits.aspx?ID=582\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Structure\" url=\"/Traits.aspx?ID=704\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 13,500 gp\n\n<row gap=\"medium\">\n\n**Bulk** L  (when not activated)\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis miniature hunter’s lodge fits comfortably into the palm of one’s hand. \n\n**Activate—Expand Lodge** <actions string=\"Two Actions\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;   **Effect** You set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a sturdy stone foundation, thick timber walls, and a peaked roof shingled with scraps of bark. The lodge’s ground floor contains a dining hall on one end and a sitting area with a hearth surrounded by comfortable chairs on the other. A staircase connects the hall to the lodge’s second floor, which consists of four simply furnished bedrooms. The lodge is decorated throughout with taxidermic beasts native to the Dimension of Dreams. If a creature inside the lodge spends 10 minutes studying these trophies, they gain a +3 item bonus to the next skill check they make in the next 24 hours to Recall Knowledge about any creature with the dream trait. Furnishings or decorations removed from the lodge disappear but return to their original locations inside the lodge with the next activation. You can [Dismiss](/Actions.aspx?ID=2311) the dream hunter’s lodge to return it to its miniature form. \n\n**Activate—Oneiric Expedition** <actions string=\"\" /> 10 minutes ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;  **Requirements** The _dream hunter’s lodge_ has been expanded and you are inside; **Effect** Spend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the lodge reappears in the Dimension of Dreams (or in the Universe, if the lodge was already in the Dimension of Dreams), as if transported there by an _interplanar teleport_ spell. Upon arrival, creatures inside the lodge awaken, fully rested (but this effect does not increase the number of times per day you can do your daily preparations).\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Dream Hunter's Lodge",
+   "price": 1350000,
+   "price_raw": "13,500 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Dream\" url=\"/Traits.aspx?ID=582\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Structure\" url=\"/Traits.aspx?ID=704\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 13,500 gp\n\n<row gap=\"medium\">\n \n\n \n\n**Bulk** L  (when not activated)\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThis miniature hunter’s lodge fits comfortably into the palm of one’s hand.    \n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "spoilers": "Revenge of the Runelords",
+   "stage_markdown": "",
+   "summary": "This miniature hunter’s lodge fits comfortably into the palm of one’s hand.    ",
+   "summary_markdown": "This miniature hunter’s lodge fits comfortably into the palm of one’s hand.    ",
+   "text": "<title level=\"1\" right=\"Item 17\" pfs=\"\"\n>\nDream Hunter's Lodge May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 82 Price 13,500 gp Bulk L (when not activated) --- This miniature hunter’s lodge fits comfortably into the palm of one’s hand. Activate—Expand Lodge Two Actions (concentrate) Frequency once per day; Effect You set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a sturdy stone foundation, thick timber walls, and a peaked roof shingled with scraps of bark. The lodge’s ground floor contains a dining hall on one end and a sitting area with a hearth surrounded by comfortable chairs on the other. A staircase connects the hall to the lodge’s second floor, which consists of four simply furnished bedrooms. The lodge is decorated throughout with taxidermic beasts native to the Dimension of Dreams. If a creature inside the lodge spends 10 minutes studying these trophies, they gain a +3 item bonus to the next skill check they make in the next 24 hours to Recall Knowledge about any creature with the dream trait. Furnishings or decorations removed from the lodge disappear but return to their original locations inside the lodge with the next activation. You can Dismiss the dream hunter’s lodge to return it to its miniature form. Activate—Oneiric Expedition 10 minutes (concentrate) Frequency once per day; Requirements The dream hunter’s lodge has been expanded and you are inside; Effect Spend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the lodge reappears in the Dimension of Dreams (or in the Universe, if the lodge was already in the Dimension of Dreams), as if transported there by an interplanar teleport spell. Upon arrival, creatures inside the lodge awaken, fully rested (but this effect does not increase the number of times per day you can do your daily preparations).\n",
+   "trait": [
+    "Dream",
+    "Magical",
+    "Mythic",
+    "Rare",
+    "Structure"
+   ],
+   "trait_group": [
+    "Creature Type",
+    "Mechanics",
+    "Mythic",
+    "Rarity",
+    "Equipment"
+   ],
+   "trait_markdown": "[Dream](/Traits.aspx?ID=582), [Magical](/Traits.aspx?ID=644), [Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683), [Structure](/Traits.aspx?ID=704)",
+   "trait_raw": [
+    "Dream",
+    "Magical",
+    "Mythic",
+    "Rare",
+    "Structure"
+   ],
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=5205",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-5206",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "bulk_raw": "  (when not activated)",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-5206",
+   "item_category": "Structures",
+   "level": 14,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 14\"\n    pfs=\"\"\n>\n[Effortless Garden](/Equipment.aspx?ID=5206)\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Consumable\" url=\"/Traits.aspx?ID=564\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Structure\" url=\"/Traits.aspx?ID=704\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 900 gp\n\n<row gap=\"medium\">\n\n**Bulk**   (when not activated)\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nAzeradni, third runelord of sloth, is said to have used solid-gold seeds to sow her legendary, self-sustaining gardens. \n\n**Activate—Sow Garden** <actions string=\"\" /> 1 minute ([concentrate](/Traits.aspx?ID=561), [manipulate](/Traits.aspx?ID=645))    **Effect** You place the seed on the ground in an adjacent space. Over the next minute, the seed’s magic creates an elegant garden in a 40-foot-square area that includes the space where you placed the seed. As the garden grows, you choose to fill each 10-foot-square space with lawns (normal terrain), flower beds ([difficult terrain](/Rules.aspx?ID=2366)), or hedgerows. Hedgerows are filled with 10-foot-tall hedges that grant standard cover and are greater difficult terrain. The garden withers after 24 hours. If you place the seed on natural earth and spend 1 Mythic Point during the activation, the garden establishes itself in the area and grows indefinitely, so long as the plants receive adequate sunlight and rain. While it remains, the garden remains free of weeds and pests, with the plants never growing beyond their bounds, as if tended by a master gardener.\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Effortless Garden",
+   "price": 90000,
+   "price_raw": "900 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Consumable\" url=\"/Traits.aspx?ID=564\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Structure\" url=\"/Traits.aspx?ID=704\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 900 gp\n\n<row gap=\"medium\">\n \n\n \n\n**Bulk**   (when not activated)\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nAzeradni, third runelord of sloth, is said to have used solid-gold seeds to sow her legendary, self-sustaining gardens.  \n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "spell_markdown": "",
+   "spoilers": "Revenge of the Runelords",
+   "stage_markdown": "",
+   "summary": "Azeradni, third runelord of sloth, is said to have used solid-gold seeds to sow her legendary, self-sustaining gardens.  ",
+   "summary_markdown": "Azeradni, third runelord of sloth, is said to have used solid-gold seeds to sow her legendary, self-sustaining gardens.  ",
+   "text": "<title level=\"1\" right=\"Item 14\" pfs=\"\"\n>\nEffortless Garden May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 83 Price 900 gp Bulk (when not activated) --- Azeradni, third runelord of sloth, is said to have used solid-gold seeds to sow her legendary, self-sustaining gardens. Activate—Sow Garden 1 minute (concentrate, manipulate) Effect You place the seed on the ground in an adjacent space. Over the next minute, the seed’s magic creates an elegant garden in a 40-foot-square area that includes the space where you placed the seed. As the garden grows, you choose to fill each 10-foot-square space with lawns (normal terrain), flower beds (difficult terrain), or hedgerows. Hedgerows are filled with 10-foot-tall hedges that grant standard cover and are greater difficult terrain. The garden withers after 24 hours. If you place the seed on natural earth and spend 1 Mythic Point during the activation, the garden establishes itself in the area and grows indefinitely, so long as the plants receive adequate sunlight and rain. While it remains, the garden remains free of weeds and pests, with the plants never growing beyond their bounds, as if tended by a master gardener.\n",
+   "trait": [
+    "Consumable",
+    "Magical",
+    "Mythic",
+    "Rare",
+    "Structure"
+   ],
+   "trait_group": [
+    "Equipment",
+    "Mechanics",
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Consumable](/Traits.aspx?ID=564), [Magical](/Traits.aspx?ID=644), [Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683), [Structure](/Traits.aspx?ID=704)",
+   "trait_raw": [
+    "Consumable",
+    "Magical",
+    "Mythic",
+    "Rare",
+    "Structure"
+   ],
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=5206",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-5207",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-5207",
+   "item_category": "Worn Items",
+   "item_subcategory": "Other Worn Items",
+   "level": 18,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 18\"\n    pfs=\"\"\n>\n[Fate Tempter's Ring](/Equipment.aspx?ID=5207)\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Invested\" url=\"/Traits.aspx?ID=637\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 22,000 gp\n\n<row gap=\"medium\">\n\n**Usage** worn\n\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nWhen you invest this silver ring, choose a skill; you gain an item bonus to that skill equal to your [doomed](/Conditions.aspx?ID=67) value. \n\n**Activate—Tempt Fate** <actions string=\"Free Action\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day; **Trigger** Your doomed value would decrease; **Requirements** You currently have fewer than 3 Mythic Points; **Effect** Your [doomed](/Conditions.aspx?ID=67) value doesn’t decrease. You gain 1 Mythic Point.\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Fate Tempter's Ring",
+   "price": 2200000,
+   "price_raw": "22,000 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Invested\" url=\"/Traits.aspx?ID=637\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 22,000 gp\n\n<row gap=\"medium\">\n \n\n**Usage** worn\n\n \n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nWhen you invest this silver ring, choose a skill; you gain an item bonus to that skill equal to your  doomed  value.  \n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "spell_markdown": "",
+   "spoilers": "Revenge of the Runelords",
+   "stage_markdown": "",
+   "summary": "When you invest this silver ring, choose a skill; you gain an item bonus to that skill equal to your  doomed  value.  ",
+   "summary_markdown": "When you invest this silver ring, choose a skill; you gain an item bonus to that skill equal to your  doomed  value.  ",
+   "text": "<title level=\"1\" right=\"Item 18\" pfs=\"\"\n>\nFate Tempter's Ring May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 83 Price 22,000 gp Usage worn --- When you invest this silver ring, choose a skill; you gain an item bonus to that skill equal to your doomed value. Activate—Tempt Fate Free Action (concentrate) Frequency once per day; Trigger Your doomed value would decrease; Requirements You currently have fewer than 3 Mythic Points; Effect Your doomed value doesn’t decrease. You gain 1 Mythic Point.\n",
+   "trait": [
+    "Invested",
+    "Magical",
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Equipment",
+    "Mechanics",
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Invested](/Traits.aspx?ID=637), [Magical](/Traits.aspx?ID=644), [Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Invested",
+    "Magical",
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=5207",
+   "usage": "worn",
+   "usage_markdown": "worn",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-5208",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-5208",
+   "item_category": "Worn Items",
+   "item_subcategory": "Other Worn Items",
+   "level": 15,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 15\"\n    pfs=\"\"\n>\n[Runic Skullcap](/Equipment.aspx?ID=5208)\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Divine\" url=\"/Traits.aspx?ID=579\" />\n<trait label=\"Focused\" url=\"/Traits.aspx?ID=609\" />\n<trait label=\"Invested\" url=\"/Traits.aspx?ID=637\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 6,000 gp\n\n<row gap=\"medium\">\n\n**Usage** worn headwear\n\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to [Arcana](/Skills.aspx?ID=35) and [Religion](/Skills.aspx?ID=46) checks. If a check is attempted to Recall Knowledge about rune magic or Lissala, the wearer treats the results of a failure or critical failure as one degree of success better. \n\n**Activate—Rewards of Service** <actions string=\"Free Action\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;   **Effect** Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, fate, and knowledge. If you don’t spend this point by the end of this turn, it is lost. \n\n**Activate—Rewards of Rule** <actions string=\"\" /> 1 minute ([concentrate](/Traits.aspx?ID=561))   **Requirements** You have master or legendary proficiency in [Arcana](/Skills.aspx?ID=35); **Effect** Spend 1 Mythic Point when you invest the _runic skullcap_. Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school.\n\n<ul><li>**Envy:** _[_cutting eye_](/Spells.aspx?ID=2320)_ </li><li>**Greed:** _[_precious gleam_](/Spells.aspx?ID=2322)_ </li><li>**Sloth:** _[_reclined apport_](/Spells.aspx?ID=2323)_ </li><li>**Gluttony:** _[_all-encompassing hunger_](/Spells.aspx?ID=2318)_ </li><li>**Lust:** _[_heart's hook_](/Spells.aspx?ID=2321)_ </li><li>**Pride:** _[_crescent scepter_](/Spells.aspx?ID=2319)_ </li><li>**Wrath:** _[_vengeful glare_](/Spells.aspx?ID=2324)_</li></ul>\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Runic Skullcap",
+   "price": 600000,
+   "price_raw": "6,000 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Divine\" url=\"/Traits.aspx?ID=579\" />\n<trait label=\"Focused\" url=\"/Traits.aspx?ID=609\" />\n<trait label=\"Invested\" url=\"/Traits.aspx?ID=637\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 6,000 gp\n\n<row gap=\"medium\">\n \n\n**Usage** worn headwear\n\n \n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThis silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …\n</summary>",
+   "skill": [
+    "Arcana",
+    "Religion"
+   ],
+   "skill_markdown": "[Arcana](/Skills.aspx?ID=35), [Religion](/Skills.aspx?ID=46)",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "spell_markdown": "",
+   "spoilers": "Revenge of the Runelords",
+   "stage_markdown": "",
+   "summary": "This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …",
+   "summary_markdown": "This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …",
+   "text": "<title level=\"1\" right=\"Item 15\" pfs=\"\"\n>\nRunic Skullcap May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 83 Price 6,000 gp Usage worn headwear --- This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to Arcana and Religion checks. If a check is attempted to Recall Knowledge about rune magic or Lissala, the wearer treats the results of a failure or critical failure as one degree of success better. Activate—Rewards of Service Free Action (concentrate) Frequency once per day; Effect Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, fate, and knowledge. If you don’t spend this point by the end of this turn, it is lost. Activate—Rewards of Rule 1 minute (concentrate) Requirements You have master or legendary proficiency in Arcana; Effect Spend 1 Mythic Point when you invest the runic skullcap . Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school. Envy: cutting eye Greed: precious gleam Sloth: reclined apport Gluttony: all-encompassing hunger Lust: heart's hook Pride: crescent scepter Wrath: vengeful glare ",
+   "trait": [
+    "Divine",
+    "Focused",
+    "Invested",
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Equipment",
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Divine](/Traits.aspx?ID=579), [Focused](/Traits.aspx?ID=609), [Invested](/Traits.aspx?ID=637), [Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Divine",
+    "Focused",
+    "Invested",
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=5208",
+   "usage": "worn headwear",
+   "usage_markdown": "worn headwear",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-5209",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 1,
+   "bulk_raw": "1",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-5209",
+   "item_category": "Held Items",
+   "level": 17,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 17\"\n    pfs=\"\"\n>\n[Spindle Key](/Equipment.aspx?ID=5209)\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Occult\" url=\"/Traits.aspx?ID=662\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 14,000 gp\n\n<row gap=\"medium\">\n\n**Usage** held in 2 hands\n\n**Bulk** 1\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis foot-long, spindle-shaped puzzle box is made of otherworldly metal inlaid with a finely traced labyrinth pattern. By manipulating the key’s length, the wider spindle can be caused to open, unfold, and move up and down along the shaft, often in ways that defy geometry. Every _spindle key_ is attuned to one of the prison-spires that float above the Oubliette Plains in the Dreamlands. As a 10-minute activity, a creature can solve a _spindle key_ by attempting a DC 37 [Occultism](/Skills.aspx?ID=44) check. On a success, that PC can thereafter use both of the _spindle key’s_ activations. On a critical failure, the key’s magic plays havoc with the creature’s spatial awareness. The creature becomes [clumsy](/Conditions.aspx?ID=61) 1 for 24 hours (which can’t be reduced by any means) and can’t attempt to solve the _spindle key_ again until the effect ends. \n\n**Activate—Align Spindle** <actions string=\"Two Actions\" /> ([concentrate](/Traits.aspx?ID=561), [manipulate](/Traits.aspx?ID=645), [occult](/Traits.aspx?ID=662))    **Effect** You rotate the sections of the _spindle key_ into an arrangement of your liking. As you do, the corresponding steel separators between floors of Liralarue’s Oubliette spin to match that arrangement. If a creature is within the ten-foot-space between floors at this time, they take 10d6 bludgeoning damage (DC 37 [basic](/Rules.aspx?ID=2297) Reflex save) from being crushed and are then pushed into one of the adjoining rooms at random as the rotation seals it up. \n\n**Activate—Breach** <actions string=\"Two Actions\" /> ([concentrate](/Traits.aspx?ID=561), [manipulate](/Traits.aspx?ID=645), [occult](/Traits.aspx?ID=662)) **Frequency** once per hour;   **Effect** You harness the key’s occult geometry to bypass a lock within 30 feet. You attempt to [Pick the Lock](/Actions.aspx?ID=2412), using [Occultism](/Skills.aspx?ID=44) instead of [Thievery](/Skills.aspx?ID=50) for the check. You can spend a Mythic Point to attempt the check at mythic proficiency.\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Spindle Key",
+   "price": 1400000,
+   "price_raw": "14,000 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Occult\" url=\"/Traits.aspx?ID=662\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 14,000 gp\n\n<row gap=\"medium\">\n \n\n**Usage** held in 2 hands\n\n**Bulk** 1\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThis foot-long, spindle-shaped puzzle box is made of otherworldly metal inlaid with a finely traced labyrinth pattern. By manipulating the key’s …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "spell_markdown": "",
+   "spoilers": "Revenge of the Runelords",
+   "stage_markdown": "",
+   "summary": "This foot-long, spindle-shaped puzzle box is made of otherworldly metal inlaid with a finely traced labyrinth pattern. By manipulating the key’s …",
+   "summary_markdown": "This foot-long, spindle-shaped puzzle box is made of otherworldly metal inlaid with a finely traced labyrinth pattern. By manipulating the key’s …",
+   "text": "<title level=\"1\" right=\"Item 17\" pfs=\"\"\n>\nSpindle Key May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 83 Price 14,000 gp Usage held in 2 hands Bulk 1 --- This foot-long, spindle-shaped puzzle box is made of otherworldly metal inlaid with a finely traced labyrinth pattern. By manipulating the key’s length, the wider spindle can be caused to open, unfold, and move up and down along the shaft, often in ways that defy geometry. Every spindle key is attuned to one of the prison-spires that float above the Oubliette Plains in the Dreamlands. As a 10-minute activity, a creature can solve a spindle key by attempting a DC 37 Occultism check. On a success, that PC can thereafter use both of the spindle key’s activations. On a critical failure, the key’s magic plays havoc with the creature’s spatial awareness. The creature becomes clumsy 1 for 24 hours (which can’t be reduced by any means) and can’t attempt to solve the spindle key again until the effect ends. Activate—Align Spindle Two Actions (concentrate, manipulate, occult) Effect You rotate the sections of the spindle key into an arrangement of your liking. As you do, the corresponding steel separators between floors of Liralarue’s Oubliette spin to match that arrangement. If a creature is within the ten-foot-space between floors at this time, they take 10d6 bludgeoning damage (DC 37 basic Reflex save) from being crushed and are then pushed into one of the adjoining rooms at random as the rotation seals it up. Activate—Breach Two Actions (concentrate, manipulate, occult) Frequency once per hour; Effect You harness the key’s occult geometry to bypass a lock within 30 feet. You attempt to Pick the Lock, using Occultism instead of Thievery for the check. You can spend a Mythic Point to attempt the check at mythic proficiency.\n",
+   "trait": [
+    "Mythic",
+    "Occult",
+    "Rare"
+   ],
+   "trait_group": [
+    "Mythic",
+    "Tradition",
+    "Monster",
+    "Rarity"
+   ],
+   "trait_markdown": "[Mythic](/Traits.aspx?ID=835), [Occult](/Traits.aspx?ID=662), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Mythic",
+    "Occult",
+    "Rare"
+   ],
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=5209",
+   "usage": "held in 2 hands",
+   "usage_markdown": "held in 2 hands",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4050",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 48,
+   "bulk_raw": "48",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4050",
+   "item_category": "Artifacts",
+   "level": 20,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 20\"\n    pfs=\"\"\n>\n[Doomsday Door](/Equipment.aspx?ID=4050)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81\n\n<row gap=\"medium\">\n\n**Bulk** 48\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nEach _Doomsday Door_ varies in appearance, yet all are gargantuan wooden portals affixed into a solid anchored arch. All _Doomsday Doors_ have two methods of activation; both of these are downtime activities, and you can’t pursue other downtime or exploration activities while using either activation. \n\n**Activate—Attune Door** <actions string=\"\" /> 1 week ([concentrate](/Traits.aspx?ID=561), [downtime](/Traits.aspx?ID=580))    **Effect** You attune the _Doomsday Door_ to a location associated with destruction, such as the heart of an active volcano. You must know the location exists. If it is on a different plane, a planar key must be present.\n\nEach day you spend Attuning, you must spend 1 [Mythic Point](/Rules.aspx?ID=3323) or your [doomed](/Conditions.aspx?ID=67) condition’s value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM.\n\nAfter seven days, the _Doomsday Door_ attunes to your chosen location, then shuts. Until then, this activity can reattune to the door to a different location.\n\nYou can also use this activation to negate a _Doomsday Door_’s current attunement. \n\n**Activate—Open Door** <actions string=\"\" /> 1 week ([concentrate](/Traits.aspx?ID=561), [downtime](/Traits.aspx?ID=580))   **Requirements** The _Doomsday Door_ is attuned;; **Effect** You perform an extended rite to open the _Doomsday Door_. Each day you spend performing the rite, you must spend 1 [Mythic Point](/Rules.aspx?ID=3323) or your [doomed](/Conditions.aspx?ID=67) condition’s value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM.\n\nAfter 7 days, the _Doomsday Door_ opens, releasing an apocalypse related to the location to which the door is attuned. The consequences are determined by the GM but are always regional and far-reaching. A Doomsday Door attuned to the Void, for example, might release a burst of energy that causes the dead in a radius of hundreds of miles to rise from their graves.\n\n**Destruction** A _Doomsday Door_ can be destroyed by using the Attune Door activation to attune it to a specific location of great creative potential, and then Opening the Door to let this antithesis of doom flow through the portal.\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Doomsday Door",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 81",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81\n\n \n\n<row gap=\"medium\">\n \n\n \n\n**Bulk** 48\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nEach  Doomsday Door  varies in appearance, yet all are gargantuan wooden portals affixed into a solid anchored arch. All  Doomsday Doors  have two …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 81"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81",
+   "speed": {},
+   "spell_markdown": "",
+   "stage_markdown": "",
+   "summary": "Each  Doomsday Door  varies in appearance, yet all are gargantuan wooden portals affixed into a solid anchored arch. All  Doomsday Doors  have two …",
+   "summary_markdown": "Each  Doomsday Door  varies in appearance, yet all are gargantuan wooden portals affixed into a solid anchored arch. All  Doomsday Doors  have two …",
+   "text": "<title level=\"1\" right=\"Item 20\" pfs=\"\"\n>\nDoomsday Door Source Pathfinder #220: Crypt of Runes pg. 81 Bulk 48 --- Each Doomsday Door varies in appearance, yet all are gargantuan wooden portals affixed into a solid anchored arch. All Doomsday Doors have two methods of activation; both of these are downtime activities, and you can’t pursue other downtime or exploration activities while using either activation. Activate—Attune Door 1 week (concentrate, downtime) Effect You attune the Doomsday Door to a location associated with destruction, such as the heart of an active volcano. You must know the location exists. If it is on a different plane, a planar key must be present. Each day you spend Attuning, you must spend 1 Mythic Point or your doomed condition’s value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM. After seven days, the Doomsday Door attunes to your chosen location, then shuts. Until then, this activity can reattune to the door to a different location. You can also use this activation to negate a Doomsday Door ’s current attunement. Activate—Open Door 1 week (concentrate, downtime) Requirements The Doomsday Door is attuned;; Effect You perform an extended rite to open the Doomsday Door . Each day you spend performing the rite, you must spend 1 Mythic Point or your doomed condition’s value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM. After 7 days, the Doomsday Door opens, releasing an apocalypse related to the location to which the door is attuned. The consequences are determined by the GM but are always regional and far-reaching. A Doomsday Door attuned to the Void, for example, might release a burst of energy that causes the dead in a radius of hundreds of miles to rise from their graves. Destruction A Doomsday Door can be destroyed by using the Attune Door activation to attune it to a specific location of great creative potential, and then Opening the Door to let this antithesis of doom flow through the portal.\n",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4050",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4051",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 1,
+   "bulk_raw": "1",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4051",
+   "item_category": "Artifacts",
+   "level": 16,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 16\"\n    pfs=\"\"\n>\n[The Kardosian Fragments](/Equipment.aspx?ID=4051)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81\n\n<row gap=\"medium\">\n\n**Usage** held in 1 hand;\n\n**Bulk** 1\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nIn preparation for Earthfall, Runelord Zutha bound his soul to the _Gluttonous Tome_—an expansive work that contained the entirety of the runelord’s knowledge.\n\nTo ensure the tome survived the oncoming apocalypse, Zutha divided the book into three parts: the _Kardosian Codex_, the _Black Book_, and the _Bone Grimoire_. Heroes used the _Bone Grimoire_ on the risen isle of Xin 7 years ago to finally defeat Zutha, and in doing so, triggered the destruction of the three parts of the _Gluttonous Tome_.\n\nOver the centuries, copies of portions of each book have been made, but these copies lacked any of the original artifacts’ powers. One such copy, though, now lies under lock and key in Korvosa’s Acadamae: the _Kardosian Fragments_. Originally an incomplete copy of the _Kardosian Codex_, some time after Zutha’s defeat, fragments of the destroyed original ended up the property of the Acadamae, and industrious wizardly professors painstakingly restored what they could, pasting these fragments into their incomplete copy of the book. The result is the _Kardosian Fragments_, a potent item that, while only a shadow of the power of the original, remains as dangerous as it is useful. \n\nThe _Kardosian Fragments_ isn’t a spellbook, but it does contain extensive notes on several spells that can be referenced to [Learn a Spell](/Actions.aspx?ID=2366). When used in this way, the cost of learning the spell is ignored, as the fragments themselves fulfill this need through remnants of arcane magic that still linger within. The spells that can be learned include [_false vitality_](/Spells.aspx?ID=1523), [_invoke spirits_](/Spells.aspx?ID=1578), [_summon undead_](/Spells.aspx?ID=1706), [_vampiric exsanguination_](/Spells.aspx?ID=1735), and [_vampiric feast_](/Spells.aspx?ID=1736).\n\nIf the _Kardosian Fragments_ are referenced as part of any attempt to [Recall Knowledge](/Actions.aspx?ID=2367) on subjects associated with its contents, it grants a +3 item bonus to the skill check. \n\n**Activate—Embrace the Void** <actions string=\"Single Action\" /> ([manipulate](/Traits.aspx?ID=645)) **Frequency** once per hour;;  **Requirements** You are not currently drained;; **Effect** If your next action this round is to [Cast a Spell](/Actions.aspx?ID=2734) that has the [void](/Traits.aspx?ID=510) trait and you’re holding the _Kardosian Fragments_, you gain a number of [temporary Hit Points](/Rules.aspx?ID=2321) equal to your level × 3. These temporary Hit Points last for 1 hour. When the temporary Hit Points are gone, you become [drained](/Conditions.aspx?ID=68) 1 if you aren’t [undead](/Traits.aspx?ID=722).\n\n**Destruction** The text in the _Kardosian Fragments_ fades away and the book itself becomes a nonmagical tome if an arcane spellcaster of at least 17th level and who follows the envy or lust schools of Thassilonian rune magic spends a year painstakingly refuting, redacting, and revising the contents of this book.\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "The Kardosian Fragments",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 81",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81\n\n \n\n<row gap=\"medium\">\n \n\n**Usage** held in 1 hand;\n\n**Bulk** 1\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nIn preparation for Earthfall, Runelord Zutha bound his soul to the  Gluttonous Tome —an expansive work that contained the entirety of the runelord’s …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 81"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81",
+   "speed": {},
+   "spell_markdown": "",
+   "stage_markdown": "",
+   "summary": "In preparation for Earthfall, Runelord Zutha bound his soul to the  Gluttonous Tome —an expansive work that contained the entirety of the runelord’s …",
+   "summary_markdown": "In preparation for Earthfall, Runelord Zutha bound his soul to the  Gluttonous Tome —an expansive work that contained the entirety of the runelord’s …",
+   "text": "<title level=\"1\" right=\"Item 16\" pfs=\"\"\n>\nThe Kardosian Fragments Source Pathfinder #220: Crypt of Runes pg. 81 Usage held in 1 hand; Bulk 1 --- In preparation for Earthfall, Runelord Zutha bound his soul to the Gluttonous Tome —an expansive work that contained the entirety of the runelord’s knowledge. To ensure the tome survived the oncoming apocalypse, Zutha divided the book into three parts: the Kardosian Codex , the Black Book , and the Bone Grimoire . Heroes used the Bone Grimoire on the risen isle of Xin 7 years ago to finally defeat Zutha, and in doing so, triggered the destruction of the three parts of the Gluttonous Tome . Over the centuries, copies of portions of each book have been made, but these copies lacked any of the original artifacts’ powers. One such copy, though, now lies under lock and key in Korvosa’s Acadamae: the Kardosian Fragments . Originally an incomplete copy of the Kardosian Codex , some time after Zutha’s defeat, fragments of the destroyed original ended up the property of the Acadamae, and industrious wizardly professors painstakingly restored what they could, pasting these fragments into their incomplete copy of the book. The result is the Kardosian Fragments , a potent item that, while only a shadow of the power of the original, remains as dangerous as it is useful. The Kardosian Fragments isn’t a spellbook, but it does contain extensive notes on several spells that can be referenced to Learn a Spell. When used in this way, the cost of learning the spell is ignored, as the fragments themselves fulfill this need through remnants of arcane magic that still linger within. The spells that can be learned include false vitality , invoke spirits , summon undead , vampiric exsanguination , and vampiric feast . If the Kardosian Fragments are referenced as part of any attempt to Recall Knowledge on subjects associated with its contents, it grants a +3 item bonus to the skill check. Activate—Embrace the Void Single Action (manipulate) Frequency once per hour;; Requirements You are not currently drained;; Effect If your next action this round is to Cast a Spell that has the void trait and you’re holding the Kardosian Fragments , you gain a number of temporary Hit Points equal to your level × 3. These temporary Hit Points last for 1 hour. When the temporary Hit Points are gone, you become drained 1 if you aren’t undead. Destruction The text in the Kardosian Fragments fades away and the book itself becomes a nonmagical tome if an arcane spellcaster of at least 17th level and who follows the envy or lust schools of Thassilonian rune magic spends a year painstakingly refuting, redacting, and revising the contents of this book.\n",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4051",
+   "usage": "held in 1 hand;",
+   "usage_markdown": "held in 1 hand;",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4052",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4052",
+   "item_category": "Worn Items",
+   "item_subcategory": "Other Worn Items",
+   "level": 16,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 16\"\n    pfs=\"\"\n>\n[Beloved's Bracelets](/Equipment.aspx?ID=4052)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 1,000 gp\n\n<row gap=\"medium\">\n\n**Usage** worn\n\n</row>\n\n<row gap=\"medium\">\n<row gap=\"tiny\"><row>**Activate**</row><row>1 minute</row></row>\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThe mightiest wizards of Eurythnia, the realm of lust, would sometimes share one of these pairs of bracelets—the silver, most often—with their closest confidantes and most trusted apprentices, while keeping the golden one for themselves. \n\n**Activate—Grant Mythic Power** <actions string=\"\" /> 1 minute ([concentrate](/Traits.aspx?ID=561))   **Requirements** Both bracelets are invested and the silver bracelet is not already imbued with mythic power;; **Effect** The wearer of the golden bracelet imbues the silver bracelet with a portion of their mythic power by spending 1 [Mythic Point](/Rules.aspx?ID=3323). Until the silver bracelet is no longer imbued with mythic power, the maximum number of Mythic Points the wearer of the golden bracelet can have is reduced by 1. Whenever the wearer of the silver bracelet would attempt a skill check, they can choose to make the check at mythic proficiency. If they do, the silver bracelet loses its mythic power and the wearer of the golden bracelet is immediately aware of this, regardless of the distance between the two bracelets, even if they are on different planes of existence. If the creature who had invested in the silver bracelet dies before expending the mythic power in it, the silver bracelet immediately teleports into the possession of the wearer of the golden bracelet regardless of the distance between them, even if they are on different planes of existence.\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Beloved's Bracelets",
+   "price": 100000,
+   "price_raw": "1,000 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 1,000 gp\n\n<row gap=\"medium\">\n \n\n**Usage** worn\n\n \n</row>\n\n<row gap=\"medium\">\n<row gap=\"tiny\"><row>**Activate**</row><row>1 minute</row></row>\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThe mightiest wizards of Eurythnia, the realm of lust, would sometimes share one of these pairs of bracelets—the silver, most often—with their …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "stage_markdown": "",
+   "summary": "The mightiest wizards of Eurythnia, the realm of lust, would sometimes share one of these pairs of bracelets—the silver, most often—with their …",
+   "summary_markdown": "The mightiest wizards of Eurythnia, the realm of lust, would sometimes share one of these pairs of bracelets—the silver, most often—with their …",
+   "text": "<title level=\"1\" right=\"Item 16\" pfs=\"\"\n>\nBeloved's Bracelets Source Pathfinder #220: Crypt of Runes pg. 82 Price 1,000 gp Usage worn Activate 1 minute --- The mightiest wizards of Eurythnia, the realm of lust, would sometimes share one of these pairs of bracelets—the silver, most often—with their closest confidantes and most trusted apprentices, while keeping the golden one for themselves. Activate—Grant Mythic Power 1 minute (concentrate) Requirements Both bracelets are invested and the silver bracelet is not already imbued with mythic power;; Effect The wearer of the golden bracelet imbues the silver bracelet with a portion of their mythic power by spending 1 Mythic Point. Until the silver bracelet is no longer imbued with mythic power, the maximum number of Mythic Points the wearer of the golden bracelet can have is reduced by 1. Whenever the wearer of the silver bracelet would attempt a skill check, they can choose to make the check at mythic proficiency. If they do, the silver bracelet loses its mythic power and the wearer of the golden bracelet is immediately aware of this, regardless of the distance between the two bracelets, even if they are on different planes of existence. If the creature who had invested in the silver bracelet dies before expending the mythic power in it, the silver bracelet immediately teleports into the possession of the wearer of the golden bracelet regardless of the distance between them, even if they are on different planes of existence.\n",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4052",
+   "usage": "worn",
+   "usage_markdown": "worn",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4053",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4053",
+   "item_category": "Worn Items",
+   "item_child_id": [
+    "equipment-4053-3737",
+    "equipment-4053-3738"
+   ],
+   "item_subcategory": "Other Worn Items",
+   "level": 16,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 16+\"\n    pfs=\"\"\n>\n[Chromatic Robe](/Equipment.aspx?ID=4053)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n<row gap=\"medium\">\n\n**Usage** worn\n\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThe fabric of this robe is infused with ever-shifting magical energy. The robe grants [resistance](/Rules.aspx?ID=2318) 5 to acid, cold, electricity, and fire damage. \n\n**Activate—Align Energy** <actions string=\"Single Action\" /> ([concentrate](/Traits.aspx?ID=561))    **Effect** Spend 1 [Mythic Point](/Rules.aspx?ID=3323). You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose [acid](/Traits.aspx?ID=524), [cold](/Traits.aspx?ID=555), [electricity](/Traits.aspx?ID=586), or [fire](/Traits.aspx?ID=604). The robe grants [resistance](/Rules.aspx?ID=2318) 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again.\n\n<column gap=\"tiny\">\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 16\"\npfs=\"Standard\"\n>\nChromatic Robe\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 950 gp\n\n<row gap=\"medium\">\n\n</row>\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 20\"\npfs=\"Standard\"\n>\nGreater Chromatic Robe\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6,500 gp\n\n<row gap=\"medium\">\n\n</row>\n\n</column>\n\n---\n\nThe acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the resistance to one of these damage types to 20, at the expense of the all the others.",
+   "name": "Chromatic Robe",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n \n\n<row gap=\"medium\">\n \n\n**Usage** worn\n\n \n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThe fabric of this robe is infused with ever-shifting magical energy. The robe grants  resistance  5 to acid, cold, electricity, and fire damage.  \n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "stage_markdown": "",
+   "summary": "The fabric of this robe is infused with ever-shifting magical energy. The robe grants  resistance  5 to acid, cold, electricity, and fire damage.  ",
+   "summary_markdown": "The fabric of this robe is infused with ever-shifting magical energy. The robe grants  resistance  5 to acid, cold, electricity, and fire damage.  ",
+   "text": "<title level=\"1\" right=\"Item 16+\" pfs=\"\"\n>\nChromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Usage worn --- The fabric of this robe is infused with ever-shifting magical energy. The robe grants resistance 5 to acid, cold, electricity, and fire damage. Activate—Align Energy Single Action (concentrate) Effect Spend 1 Mythic Point. You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose acid, cold, electricity, or fire. The robe grants resistance 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again. <title\nlevel=\"2\"\nright=\"Item 16\"\npfs=\"Standard\"\n>\nChromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Price 950 gp <title\nlevel=\"2\"\nright=\"Item 20\"\npfs=\"Standard\"\n>\nGreater Chromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Price 6,500 gp --- The acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the resistance to one of these damage types to 20, at the expense of the all the others.",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4053",
+   "usage": "worn",
+   "usage_markdown": "worn",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4053-3737",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4053-3737",
+   "item_category": "Worn Items",
+   "item_parent_id": "equipment-4053",
+   "item_subcategory": "Other Worn Items",
+   "level": 16,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 16+\"\n    pfs=\"\"\n>\n[Chromatic Robe](/Equipment.aspx?ID=4053)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n<row gap=\"medium\">\n\n**Usage** worn\n\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThe fabric of this robe is infused with ever-shifting magical energy. The robe grants [resistance](/Rules.aspx?ID=2318) 5 to acid, cold, electricity, and fire damage. \n\n**Activate—Align Energy** <actions string=\"Single Action\" /> ([concentrate](/Traits.aspx?ID=561))    **Effect** Spend 1 [Mythic Point](/Rules.aspx?ID=3323). You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose [acid](/Traits.aspx?ID=524), [cold](/Traits.aspx?ID=555), [electricity](/Traits.aspx?ID=586), or [fire](/Traits.aspx?ID=604). The robe grants [resistance](/Rules.aspx?ID=2318) 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again.\n\n<column gap=\"tiny\">\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 16\"\npfs=\"Standard\"\n>\nChromatic Robe\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 950 gp\n\n<row gap=\"medium\">\n\n</row>\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 20\"\npfs=\"Standard\"\n>\nGreater Chromatic Robe\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6,500 gp\n\n<row gap=\"medium\">\n\n</row>\n\n</column>\n\n---\n\nThe acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the resistance to one of these damage types to 20, at the expense of the all the others.",
+   "name": "Chromatic Robe",
+   "pfs": "Standard",
+   "price": 95000,
+   "price_raw": "950 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 950 gp\n\n<row gap=\"medium\">\n \n\n**Usage** worn\n\n \n</row>\n\n<row gap=\"medium\">\n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThe fabric of this robe is infused with ever-shifting magical energy. The robe grants  resistance  5 to acid, cold, electricity, and fire damage.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "summary": "The fabric of this robe is infused with ever-shifting magical energy. The robe grants  resistance  5 to acid, cold, electricity, and fire damage.",
+   "summary_markdown": "The fabric of this robe is infused with ever-shifting magical energy. The robe grants  resistance  5 to acid, cold, electricity, and fire damage.",
+   "text": "<title level=\"1\" right=\"Item 16+\" pfs=\"\"\n>\nChromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Usage worn --- The fabric of this robe is infused with ever-shifting magical energy. The robe grants resistance 5 to acid, cold, electricity, and fire damage. Activate—Align Energy Single Action (concentrate) Effect Spend 1 Mythic Point. You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose acid, cold, electricity, or fire. The robe grants resistance 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again. <title\nlevel=\"2\"\nright=\"Item 16\"\npfs=\"Standard\"\n>\nChromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Price 950 gp <title\nlevel=\"2\"\nright=\"Item 20\"\npfs=\"Standard\"\n>\nGreater Chromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Price 6,500 gp --- The acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the resistance to one of these damage types to 20, at the expense of the all the others.",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4053",
+   "usage": "worn",
+   "usage_markdown": "worn",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4053-3738",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4053-3738",
+   "item_category": "Worn Items",
+   "item_parent_id": "equipment-4053",
+   "item_subcategory": "Other Worn Items",
+   "level": 20,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 16+\"\n    pfs=\"\"\n>\n[Chromatic Robe](/Equipment.aspx?ID=4053)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n<row gap=\"medium\">\n\n**Usage** worn\n\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThe fabric of this robe is infused with ever-shifting magical energy. The robe grants [resistance](/Rules.aspx?ID=2318) 5 to acid, cold, electricity, and fire damage. \n\n**Activate—Align Energy** <actions string=\"Single Action\" /> ([concentrate](/Traits.aspx?ID=561))    **Effect** Spend 1 [Mythic Point](/Rules.aspx?ID=3323). You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose [acid](/Traits.aspx?ID=524), [cold](/Traits.aspx?ID=555), [electricity](/Traits.aspx?ID=586), or [fire](/Traits.aspx?ID=604). The robe grants [resistance](/Rules.aspx?ID=2318) 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again.\n\n<column gap=\"tiny\">\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 16\"\npfs=\"Standard\"\n>\nChromatic Robe\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 950 gp\n\n<row gap=\"medium\">\n\n</row>\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 20\"\npfs=\"Standard\"\n>\nGreater Chromatic Robe\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6,500 gp\n\n<row gap=\"medium\">\n\n</row>\n\n</column>\n\n---\n\nThe acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the resistance to one of these damage types to 20, at the expense of the all the others.",
+   "name": "Greater Chromatic Robe",
+   "pfs": "Standard",
+   "price": 650000,
+   "price_raw": "6,500 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6,500 gp\n\n<row gap=\"medium\">\n \n\n**Usage** worn\n\n \n</row>\n\n<row gap=\"medium\">\n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThe acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "summary": "The acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the …",
+   "summary_markdown": "The acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the …",
+   "text": "<title level=\"1\" right=\"Item 16+\" pfs=\"\"\n>\nChromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Usage worn --- The fabric of this robe is infused with ever-shifting magical energy. The robe grants resistance 5 to acid, cold, electricity, and fire damage. Activate—Align Energy Single Action (concentrate) Effect Spend 1 Mythic Point. You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose acid, cold, electricity, or fire. The robe grants resistance 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again. <title\nlevel=\"2\"\nright=\"Item 16\"\npfs=\"Standard\"\n>\nChromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Price 950 gp <title\nlevel=\"2\"\nright=\"Item 20\"\npfs=\"Standard\"\n>\nGreater Chromatic Robe Source Pathfinder #220: Crypt of Runes pg. 82 Price 6,500 gp --- The acid, cold, electricity, and fire resistance granted by the robe increases to 10. You can use the Align Energy activation to increase the resistance to one of these damage types to 20, at the expense of the all the others.",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4053",
+   "usage": "worn",
+   "usage_markdown": "worn",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4054",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0.1,
+   "bulk_raw": "L",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4054",
+   "item_category": "Consumables",
+   "item_child_id": [
+    "equipment-4054-3739",
+    "equipment-4054-3740",
+    "equipment-4054-3741"
+   ],
+   "item_subcategory": "Other Consumables",
+   "level": 7,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 7+\"\n    pfs=\"\"\n>\n[Day's Breath](/Equipment.aspx?ID=4054)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n<row gap=\"medium\">\n\n**Usage** held in 1 hand\n\n**Bulk** L\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 [Mythic Point](/Rules.aspx?ID=3323) when you activate the _day’s breath_, you inhale so deeply that you increase the effect’s duration.\n\n<column gap=\"tiny\">\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 7\"\npfs=\"Standard\"\n>\nOne Day's Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 7 days.\n\n<title\nlevel=\"2\"\nright=\"Item 11\"\npfs=\"Standard\"\n>\nThree Days' Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 25 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 30 days.\n\n<title\nlevel=\"2\"\nright=\"Item 15\"\npfs=\"Standard\"\n>\nTen Days' Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 100 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 1 year.",
+   "name": "Day's Breath",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n \n\n<row gap=\"medium\">\n \n\n**Usage** held in 1 hand\n\n**Bulk** L\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThis glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "stage_markdown": "",
+   "summary": "This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so …",
+   "summary_markdown": "This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so …",
+   "text": "<title level=\"1\" right=\"Item 7+\" pfs=\"\"\n>\nDay's Breath Source Pathfinder #220: Crypt of Runes pg. 82 Usage held in 1 hand Bulk L --- This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 Mythic Point when you activate the day’s breath , you inhale so deeply that you increase the effect’s duration. <title\nlevel=\"2\"\nright=\"Item 7\"\npfs=\"Standard\"\n>\nOne Day's Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 6 gp Bulk L --- You don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 7 days. <title\nlevel=\"2\"\nright=\"Item 11\"\npfs=\"Standard\"\n>\nThree Days' Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 25 gp Bulk L --- You don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 30 days. <title\nlevel=\"2\"\nright=\"Item 15\"\npfs=\"Standard\"\n>\nTen Days' Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 100 gp Bulk L --- You don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 1 year.",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4054",
+   "usage": "held in 1 hand",
+   "usage_markdown": "held in 1 hand",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4054-3739",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0.1,
+   "bulk_raw": "L",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4054-3739",
+   "item_category": "Consumables",
+   "item_parent_id": "equipment-4054",
+   "item_subcategory": "Other Consumables",
+   "level": 7,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 7+\"\n    pfs=\"\"\n>\n[Day's Breath](/Equipment.aspx?ID=4054)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n<row gap=\"medium\">\n\n**Usage** held in 1 hand\n\n**Bulk** L\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 [Mythic Point](/Rules.aspx?ID=3323) when you activate the _day’s breath_, you inhale so deeply that you increase the effect’s duration.\n\n<column gap=\"tiny\">\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 7\"\npfs=\"Standard\"\n>\nOne Day's Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 7 days.\n\n<title\nlevel=\"2\"\nright=\"Item 11\"\npfs=\"Standard\"\n>\nThree Days' Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 25 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 30 days.\n\n<title\nlevel=\"2\"\nright=\"Item 15\"\npfs=\"Standard\"\n>\nTen Days' Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 100 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 1 year.",
+   "name": "One Day's Breath",
+   "pfs": "Standard",
+   "price": 600,
+   "price_raw": "6 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6 gp\n\n<row gap=\"medium\">\n \n\n**Usage** held in 1 hand\n\n**Bulk** L\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nYou don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "summary": "You don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic …",
+   "summary_markdown": "You don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic …",
+   "text": "<title level=\"1\" right=\"Item 7+\" pfs=\"\"\n>\nDay's Breath Source Pathfinder #220: Crypt of Runes pg. 82 Usage held in 1 hand Bulk L --- This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 Mythic Point when you activate the day’s breath , you inhale so deeply that you increase the effect’s duration. <title\nlevel=\"2\"\nright=\"Item 7\"\npfs=\"Standard\"\n>\nOne Day's Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 6 gp Bulk L --- You don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 7 days. <title\nlevel=\"2\"\nright=\"Item 11\"\npfs=\"Standard\"\n>\nThree Days' Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 25 gp Bulk L --- You don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 30 days. <title\nlevel=\"2\"\nright=\"Item 15\"\npfs=\"Standard\"\n>\nTen Days' Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 100 gp Bulk L --- You don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 1 year.",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4054",
+   "usage": "held in 1 hand",
+   "usage_markdown": "held in 1 hand",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4054-3740",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0.1,
+   "bulk_raw": "L",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4054-3740",
+   "item_category": "Consumables",
+   "item_parent_id": "equipment-4054",
+   "item_subcategory": "Other Consumables",
+   "level": 11,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 7+\"\n    pfs=\"\"\n>\n[Day's Breath](/Equipment.aspx?ID=4054)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n<row gap=\"medium\">\n\n**Usage** held in 1 hand\n\n**Bulk** L\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 [Mythic Point](/Rules.aspx?ID=3323) when you activate the _day’s breath_, you inhale so deeply that you increase the effect’s duration.\n\n<column gap=\"tiny\">\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 7\"\npfs=\"Standard\"\n>\nOne Day's Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 7 days.\n\n<title\nlevel=\"2\"\nright=\"Item 11\"\npfs=\"Standard\"\n>\nThree Days' Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 25 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 30 days.\n\n<title\nlevel=\"2\"\nright=\"Item 15\"\npfs=\"Standard\"\n>\nTen Days' Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 100 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 1 year.",
+   "name": "Three Days' Breath",
+   "pfs": "Standard",
+   "price": 2500,
+   "price_raw": "25 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 25 gp\n\n<row gap=\"medium\">\n \n\n**Usage** held in 1 hand\n\n**Bulk** L\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nYou don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "summary": "You don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to …",
+   "summary_markdown": "You don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to …",
+   "text": "<title level=\"1\" right=\"Item 7+\" pfs=\"\"\n>\nDay's Breath Source Pathfinder #220: Crypt of Runes pg. 82 Usage held in 1 hand Bulk L --- This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 Mythic Point when you activate the day’s breath , you inhale so deeply that you increase the effect’s duration. <title\nlevel=\"2\"\nright=\"Item 7\"\npfs=\"Standard\"\n>\nOne Day's Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 6 gp Bulk L --- You don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 7 days. <title\nlevel=\"2\"\nright=\"Item 11\"\npfs=\"Standard\"\n>\nThree Days' Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 25 gp Bulk L --- You don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 30 days. <title\nlevel=\"2\"\nright=\"Item 15\"\npfs=\"Standard\"\n>\nTen Days' Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 100 gp Bulk L --- You don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 1 year.",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4054",
+   "usage": "held in 1 hand",
+   "usage_markdown": "held in 1 hand",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-4054-3741",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0.1,
+   "bulk_raw": "L",
+   "category": "equipment",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-4054-3741",
+   "item_category": "Consumables",
+   "item_parent_id": "equipment-4054",
+   "item_subcategory": "Other Consumables",
+   "level": 15,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 7+\"\n    pfs=\"\"\n>\n[Day's Breath](/Equipment.aspx?ID=4054)\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n<row gap=\"medium\">\n\n**Usage** held in 1 hand\n\n**Bulk** L\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 [Mythic Point](/Rules.aspx?ID=3323) when you activate the _day’s breath_, you inhale so deeply that you increase the effect’s duration.\n\n<column gap=\"tiny\">\n\n</column>\n\n<title\nlevel=\"2\"\nright=\"Item 7\"\npfs=\"Standard\"\n>\nOne Day's Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 6 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 7 days.\n\n<title\nlevel=\"2\"\nright=\"Item 11\"\npfs=\"Standard\"\n>\nThree Days' Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 25 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 30 days.\n\n<title\nlevel=\"2\"\nright=\"Item 15\"\npfs=\"Standard\"\n>\nTen Days' Breath\n</title>\n\n<traits>\n\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 100 gp\n\n<row gap=\"medium\">\n\n**Bulk** L\n\n</row>\n\n</column>\n\n---\n\nYou don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 1 year.",
+   "name": "Ten Days' Breath",
+   "pfs": "Standard",
+   "price": 10000,
+   "price_raw": "100 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 100 gp\n\n<row gap=\"medium\">\n \n\n**Usage** held in 1 hand\n\n**Bulk** L\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nYou don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "summary": "You don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need …",
+   "summary_markdown": "You don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need …",
+   "text": "<title level=\"1\" right=\"Item 7+\" pfs=\"\"\n>\nDay's Breath Source Pathfinder #220: Crypt of Runes pg. 82 Usage held in 1 hand Bulk L --- This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle’s contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 Mythic Point when you activate the day’s breath , you inhale so deeply that you increase the effect’s duration. <title\nlevel=\"2\"\nright=\"Item 7\"\npfs=\"Standard\"\n>\nOne Day's Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 6 gp Bulk L --- You don’t need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 7 days. <title\nlevel=\"2\"\nright=\"Item 11\"\npfs=\"Standard\"\n>\nThree Days' Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 25 gp Bulk L --- You don’t need to breathe for 3 days, and you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 30 days. <title\nlevel=\"2\"\nright=\"Item 15\"\npfs=\"Standard\"\n>\nTen Days' Breath Source Pathfinder #220: Crypt of Runes pg. 82 Price 100 gp Bulk L --- You don’t need to breathe for 10 days, and you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don’t need to breathe for 1 year.",
+   "trait_markdown": "",
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=4054",
+   "usage": "held in 1 hand",
+   "usage_markdown": "held in 1 hand",
+   "weakness": {}
+  }
+ }
+]

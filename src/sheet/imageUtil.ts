@@ -22,6 +22,21 @@ const SHARP_QUALITY = 0.9;
 const PORTRAIT_MAX_DIM = COMPRESSED_MAX;
 const PORTRAIT_QUALITY = COMPRESSED_QUALITY;
 
+/* The square avatar cut out of a portrait for every small display (sheet top bar, roster card, party
+ * list). 256px covers a 2× retina 128px slot; the largest it is ever drawn is the 96px Details slot. */
+const AVATAR_SIZE = 256;
+const AVATAR_QUALITY = 0.85;
+
+/** A square region of an image, as fractions of its width/height — resolution-independent, so the same
+ *  numbers crop the compressed copy and the sharp one identically. */
+export interface CropRect {
+  x: number;
+  y: number;
+  /** Side length as a fraction of the image's SHORTER edge is ambiguous, so this is the side in source
+   *  pixels; the crop UI works in source pixels and hands them straight over. */
+  size: number;
+}
+
 export interface PortraitTiers {
   /** Small copy stored in the (synced) character data + shown on the web. */
   compressed: string;
@@ -115,6 +130,38 @@ export async function processPortraitDataUrl(url: string): Promise<PortraitTiers
   } catch {
     return { compressed };
   }
+}
+
+/**
+ * Cut a square out of an image and re-encode it at avatar size.
+ *
+ * `crop` is in the SOURCE image's pixels, which is what the crop dialog measures in. The output is
+ * always AVATAR_SIZE² (or smaller, when the crop itself is), so a full-body portrait and a headshot
+ * cost the same handful of kilobytes in the synced data.
+ */
+export async function cropToAvatar(src: string, crop: CropRect): Promise<string> {
+  const img = await loadImage(src);
+  const size = Math.max(1, Math.round(Math.min(crop.size, img.width, img.height)));
+  // Clamp so a frame dragged to the edge can't sample outside the image (which paints transparent).
+  const sx = Math.max(0, Math.min(Math.round(crop.x), img.width - size));
+  const sy = Math.max(0, Math.min(Math.round(crop.y), img.height - size));
+  const out = Math.min(AVATAR_SIZE, size);
+  const canvas = document.createElement('canvas');
+  canvas.width = out;
+  canvas.height = out;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('canvas unavailable');
+  ctx.drawImage(img, sx, sy, size, size, 0, 0, out, out);
+  // JPEG even for a PNG source: an avatar is opaque by construction (it's a crop of a photo), and the
+  // JPEG is a fraction of the size in data that has to sync.
+  return canvas.toDataURL('image/jpeg', AVATAR_QUALITY);
+}
+
+/** The natural pixel size of an image behind a data URL — the crop dialog needs it to map the frame it
+ *  draws on screen back onto source pixels. */
+export async function imageSize(src: string): Promise<{ w: number; h: number }> {
+  const img = await loadImage(src);
+  return { w: img.width, h: img.height };
 }
 
 /** The largest imported portrait we'll keep WITHOUT re-encoding (pass-through formats, or images the

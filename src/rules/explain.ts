@@ -312,7 +312,11 @@ function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituation
   for (const f of c.feats ?? []) {
     const answer = f.choice?.value;
     if (!answer) continue;
-    for (const b of choiceSituationalFor(f.featId, answer)) ((out ??= {})[f.featId] ??= []).push(b);
+    // The LABEL travels alongside the value: an entry whose star is fixed to a stat (Shooter's
+    // Camouflage → Stealth) prints the answer inside its own trigger, and "natural" is not the wording
+    // the player picked. The value stays the TARGET for the Assurance shape, where the answer is itself
+    // a skill key.
+    for (const b of choiceSituationalFor(f.featId, answer, f.choice?.label ?? answer)) ((out ??= {})[f.featId] ??= []).push(b);
   }
   if (!db) return out;
   for (const inv of c.inventory ?? []) {

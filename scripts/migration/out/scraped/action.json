@@ -1,0 +1,970 @@
+[
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-3578",
+  "_score": 35.014893,
+  "_source": {
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "id": "action-3578",
+   "markdown": "**Activate—Attune Door** <actions string=\"\" /> 1 week ([concentrate](/Traits.aspx?ID=561), [downtime](/Traits.aspx?ID=580))    **Effect** You attune the _Doomsday Door_ to a location associated with destruction, such as the heart of an active volcano. You must know the location exists. If it is on a different plane, a planar key must be present.\n\nEach day you spend Attuning, you must spend 1 [Mythic Point](/Rules.aspx?ID=3323) or your [doomed](/Conditions.aspx?ID=67) condition’s value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM.\n\nAfter seven days, the _Doomsday Door_ attunes to your chosen location, then shuts. Until then, this activity can reattune to the door to a different location.\n\nYou can also use this activation to negate a _Doomsday Door_’s current attunement.",
+   "name": "1 week (concentrate, downtime)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 81",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81\n\n</additional-info>\n\n---\n\n<summary>\nYou attune the  Doomsday Door  to a location associated with destruction, such as the heart of an active volcano. You must know the location exists. …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 81"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81",
+   "speed": {},
+   "summary": "You attune the  Doomsday Door  to a location associated with destruction, such as the heart of an active volcano. You must know the location exists. …",
+   "summary_markdown": "You attune the  Doomsday Door  to a location associated with destruction, such as the heart of an active volcano. You must know the location exists. …",
+   "text": " Activate—Attune Door 1 week (concentrate, downtime) Effect You attune the Doomsday Door to a location associated with destruction, such as the heart of an active volcano. You must know the location exists. If it is on a different plane, a planar key must be present. Each day you spend Attuning, you must spend 1 Mythic Point or your doomed condition’s value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM. After seven days, the Doomsday Door attunes to your chosen location, then shuts. Until then, this activity can reattune to the door to a different location. You can also use this activation to negate a Doomsday Door ’s current attunement.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=3578",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-3579",
+  "_score": 35.014893,
+  "_source": {
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "id": "action-3579",
+   "markdown": "**Activate—Open Door** <actions string=\"\" /> 1 week ([concentrate](/Traits.aspx?ID=561), [downtime](/Traits.aspx?ID=580))   **Requirements** The _Doomsday Door_ is attuned;; **Effect** You perform an extended rite to open the _Doomsday Door_. Each day you spend performing the rite, you must spend 1 [Mythic Point](/Rules.aspx?ID=3323) or your [doomed](/Conditions.aspx?ID=67) condition’s value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM.\n\nAfter 7 days, the _Doomsday Door_ opens, releasing an apocalypse related to the location to which the door is attuned. The consequences are determined by the GM but are always regional and far-reaching. A Doomsday Door attuned to the Void, for example, might release a burst of energy that causes the dead in a radius of hundreds of miles to rise from their graves.",
+   "name": "1 week (concentrate, downtime)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 81",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "requirement": "The  Doomsday Door  is attuned;",
+   "requirement_markdown": "The _Doomsday Door_ is attuned;",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81\n\n**Requirement**\nThe _Doomsday Door_ is attuned;\n</additional-info>\n\n---\n\n<summary>\nYou perform an extended rite to open the  Doomsday Door . Each day you spend performing the rite, you must spend 1  Mythic Point  or your  doomed  …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 81"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81",
+   "speed": {},
+   "summary": "You perform an extended rite to open the  Doomsday Door . Each day you spend performing the rite, you must spend 1  Mythic Point  or your  doomed  …",
+   "summary_markdown": "You perform an extended rite to open the  Doomsday Door . Each day you spend performing the rite, you must spend 1  Mythic Point  or your  doomed  …",
+   "text": " Activate—Open Door 1 week (concentrate, downtime) Requirements The Doomsday Door is attuned;; Effect You perform an extended rite to open the Doomsday Door . Each day you spend performing the rite, you must spend 1 Mythic Point or your doomed condition’s value increases by 1. A creature assisting you with the rite can spend a Mythic Point instead, and you can avoid spending a Mythic Point by making an appropriate sacrifice, as determined by the GM. After 7 days, the Doomsday Door opens, releasing an apocalypse related to the location to which the door is attuned. The consequences are determined by the GM but are always regional and far-reaching. A Doomsday Door attuned to the Void, for example, might release a burst of energy that causes the dead in a radius of hundreds of miles to rise from their graves.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=3579",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-3580",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Single Action",
+   "actions_number": 2,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per hour;",
+   "id": "action-3580",
+   "markdown": "**Activate—Embrace the Void** <actions string=\"Single Action\" /> ([manipulate](/Traits.aspx?ID=645)) **Frequency** once per hour;;  **Requirements** You are not currently drained;; **Effect** If your next action this round is to [Cast a Spell](/Actions.aspx?ID=2734) that has the [void](/Traits.aspx?ID=510) trait and you’re holding the _Kardosian Fragments_, you gain a number of [temporary Hit Points](/Rules.aspx?ID=2321) equal to your level × 3. These temporary Hit Points last for 1 hour. When the temporary Hit Points are gone, you become [drained](/Conditions.aspx?ID=68) 1 if you aren’t [undead](/Traits.aspx?ID=722).",
+   "name": "(manipulate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 81",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "requirement": "You are not currently drained;",
+   "requirement_markdown": "You are not currently drained;",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81\n\n**Frequency**\nonce per hour;\n\n**Requirement**\nYou are not currently drained;\n</additional-info>\n\n---\n\n<summary>\nIf your next action this round is to  Cast a Spell  that has the  void  trait and you’re holding the  Kardosian Fragments , you gain a number of  …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 81"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 81",
+   "speed": {},
+   "summary": "If your next action this round is to  Cast a Spell  that has the  void  trait and you’re holding the  Kardosian Fragments , you gain a number of  …",
+   "summary_markdown": "If your next action this round is to  Cast a Spell  that has the  void  trait and you’re holding the  Kardosian Fragments , you gain a number of  …",
+   "text": " Activate—Embrace the Void Single Action (manipulate) Frequency once per hour;; Requirements You are not currently drained;; Effect If your next action this round is to Cast a Spell that has the void trait and you’re holding the Kardosian Fragments , you gain a number of temporary Hit Points equal to your level × 3. These temporary Hit Points last for 1 hour. When the temporary Hit Points are gone, you become drained 1 if you aren’t undead.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=3580",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-3581",
+  "_score": 35.014893,
+  "_source": {
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "id": "action-3581",
+   "markdown": "**Activate—Grant Mythic Power** <actions string=\"\" /> 1 minute ([concentrate](/Traits.aspx?ID=561))   **Requirements** Both bracelets are invested and the silver bracelet is not already imbued with mythic power;; **Effect** The wearer of the golden bracelet imbues the silver bracelet with a portion of their mythic power by spending 1 [Mythic Point](/Rules.aspx?ID=3323). Until the silver bracelet is no longer imbued with mythic power, the maximum number of Mythic Points the wearer of the golden bracelet can have is reduced by 1. Whenever the wearer of the silver bracelet would attempt a skill check, they can choose to make the check at mythic proficiency. If they do, the silver bracelet loses its mythic power and the wearer of the golden bracelet is immediately aware of this, regardless of the distance between the two bracelets, even if they are on different planes of existence. If the creature who had invested in the silver bracelet dies before expending the mythic power in it, the silver bracelet immediately teleports into the possession of the wearer of the golden bracelet regardless of the distance between them, even if they are on different planes of existence.",
+   "name": "1 minute (concentrate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "requirement": "Both bracelets are invested and the silver bracelet is not already imbued with mythic power;",
+   "requirement_markdown": "Both bracelets are invested and the silver bracelet is not already imbued with mythic power;",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Requirement**\nBoth bracelets are invested and the silver bracelet is not already imbued with mythic power;\n</additional-info>\n\n---\n\n<summary>\nThe wearer of the golden bracelet imbues the silver bracelet with a portion of their mythic power by spending 1  Mythic Point . Until the silver …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "summary": "The wearer of the golden bracelet imbues the silver bracelet with a portion of their mythic power by spending 1  Mythic Point . Until the silver …",
+   "summary_markdown": "The wearer of the golden bracelet imbues the silver bracelet with a portion of their mythic power by spending 1  Mythic Point . Until the silver …",
+   "text": " Activate—Grant Mythic Power 1 minute (concentrate) Requirements Both bracelets are invested and the silver bracelet is not already imbued with mythic power;; Effect The wearer of the golden bracelet imbues the silver bracelet with a portion of their mythic power by spending 1 Mythic Point. Until the silver bracelet is no longer imbued with mythic power, the maximum number of Mythic Points the wearer of the golden bracelet can have is reduced by 1. Whenever the wearer of the silver bracelet would attempt a skill check, they can choose to make the check at mythic proficiency. If they do, the silver bracelet loses its mythic power and the wearer of the golden bracelet is immediately aware of this, regardless of the distance between the two bracelets, even if they are on different planes of existence. If the creature who had invested in the silver bracelet dies before expending the mythic power in it, the silver bracelet immediately teleports into the possession of the wearer of the golden bracelet regardless of the distance between them, even if they are on different planes of existence.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=3581",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-3582",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Single Action",
+   "actions_number": 2,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "id": "action-3582",
+   "markdown": "**Activate—Align Energy** <actions string=\"Single Action\" /> ([concentrate](/Traits.aspx?ID=561))    **Effect** Spend 1 [Mythic Point](/Rules.aspx?ID=3323). You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose [acid](/Traits.aspx?ID=524), [cold](/Traits.aspx?ID=555), [electricity](/Traits.aspx?ID=586), or [fire](/Traits.aspx?ID=604). The robe grants [resistance](/Rules.aspx?ID=2318) 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again.",
+   "name": "(concentrate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n</additional-info>\n\n---\n\n<summary>\nSpend 1  Mythic Point . You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "summary": "Spend 1  Mythic Point . You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all …",
+   "summary_markdown": "Spend 1  Mythic Point . You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all …",
+   "text": " Activate—Align Energy Single Action (concentrate) Effect Spend 1 Mythic Point. You align the robe’s magical energies to provide heightened protection against a specific damage type, at the expense of all the others. Choose acid, cold, electricity, or fire. The robe grants resistance 15 to the chosen damage type but no resistance to the remaining three types. The effect lasts until the next time you make your daily preparations (at which point the robe returns to normal) or until you use this activation again.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=3582",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4467",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Two Actions",
+   "actions_number": 4,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4467",
+   "markdown": "**Activate—Aegis of Envy** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. The spirits of eight runelords of envy (Naaft, Tannaris, Ivamura, Jurah, Chalsardra, Esedrea, Zarve, Desamelia, and Phirandi) swirl about you for 1 minute. While at least one of the spirits remains, whenever you take damage, you can use a reaction that has the [concentrate](/Traits.aspx?ID=561) trait to gain resistance 10 to that damage, or resistance 20 if the damage was dealt by Xanderghul, the runelord of pride. Each time you use this feat to gain resistance, one of the spirits disappears.",
+   "name": "",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 84",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Concentrate\" url=\"/Traits.aspx?ID=561\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n**Frequency**\nonce per day\n\n</additional-info>\n\n---\n\n<summary>\nSpend 1 Mythic Point. The spirits of eight runelords of envy (Naaft, Tannaris, Ivamura, Jurah, Chalsardra, Esedrea, Zarve, Desamelia, and Phirandi) …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 84"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84",
+   "speed": {},
+   "summary": "Spend 1 Mythic Point. The spirits of eight runelords of envy (Naaft, Tannaris, Ivamura, Jurah, Chalsardra, Esedrea, Zarve, Desamelia, and Phirandi) …",
+   "summary_markdown": "Spend 1 Mythic Point. The spirits of eight runelords of envy (Naaft, Tannaris, Ivamura, Jurah, Chalsardra, Esedrea, Zarve, Desamelia, and Phirandi) …",
+   "text": " Activate—Aegis of Envy Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. The spirits of eight runelords of envy (Naaft, Tannaris, Ivamura, Jurah, Chalsardra, Esedrea, Zarve, Desamelia, and Phirandi) swirl about you for 1 minute. While at least one of the spirits remains, whenever you take damage, you can use a reaction that has the concentrate trait to gain resistance 10 to that damage, or resistance 20 if the damage was dealt by Xanderghul, the runelord of pride. Each time you use this feat to gain resistance, one of the spirits disappears.",
+   "trait": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Mechanics"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561)",
+   "trait_raw": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4467",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4468",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Two Actions",
+   "actions_number": 4,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4468",
+   "markdown": "**Activate—Gluttonous Feast** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. The spirits of four runelords of gluttony (Kaliphesta, Atharend, Aethusa, and Goparlis) briefly appear in spaces within 60 feet of you. Each living creature adjacent to at least one of the spirits takes 4d6 void damage per adjacent spirit, to a maximum of 16d6 void damage if they are adjacent to all four spirits. Each target receives a basic Fortitude save against the damage, against the higher of your class DC or spell DC, but Xanderghul, the Runelord of Pride, treats the result of his saving throw as one degree of success worse.\n\n You gain temporary Hit Points equal to half the damage a single creature takes from this effect; calculate these temporary Hit Points using the creature that took the most damage. These temporary Hit Points last 1 minute.",
+   "name": "",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 84",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Concentrate\" url=\"/Traits.aspx?ID=561\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n**Frequency**\nonce per day\n\n</additional-info>\n\n---\n\n<summary>\nSpend 1 Mythic Point. The spirits of four runelords of gluttony (Kaliphesta, Atharend, Aethusa, and Goparlis) briefly appear in spaces within 60 feet …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 84"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84",
+   "speed": {},
+   "summary": "Spend 1 Mythic Point. The spirits of four runelords of gluttony (Kaliphesta, Atharend, Aethusa, and Goparlis) briefly appear in spaces within 60 feet …",
+   "summary_markdown": "Spend 1 Mythic Point. The spirits of four runelords of gluttony (Kaliphesta, Atharend, Aethusa, and Goparlis) briefly appear in spaces within 60 feet …",
+   "text": " Activate—Gluttonous Feast Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. The spirits of four runelords of gluttony (Kaliphesta, Atharend, Aethusa, and Goparlis) briefly appear in spaces within 60 feet of you. Each living creature adjacent to at least one of the spirits takes 4d6 void damage per adjacent spirit, to a maximum of 16d6 void damage if they are adjacent to all four spirits. Each target receives a basic Fortitude save against the damage, against the higher of your class DC or spell DC, but Xanderghul, the Runelord of Pride, treats the result of his saving throw as one degree of success worse. You gain temporary Hit Points equal to half the damage a single creature takes from this effect; calculate these temporary Hit Points using the creature that took the most damage. These temporary Hit Points last 1 minute.",
+   "trait": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Mechanics"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561)",
+   "trait_raw": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4468",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4469",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Two Actions",
+   "actions_number": 4,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4469",
+   "markdown": "**Activate—Convocation of Greed** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. The spirits of the eight runelords of greed (Kaladurnae, Fethryr, Gimmel, Ligniya, Mazmiranna, Aethusa, Haphrama, and Karzoug) appear and bolster the armaments of you and your companions. For each of the spirits, one creature of your choice within 60 feet gains a +2 item bonus to AC, attack rolls, or saving throws (chosen by the creature) for 1 minute. These bonuses increase to +4 while the creature is within 100 feet of Xanderghul, the Runelord of Pride. A creature can receive bonuses from multiple runelords at once (gaining bonuses to both AC and attack rolls, for example), but the bonuses aren't cumulative.",
+   "name": "",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 84",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Concentrate\" url=\"/Traits.aspx?ID=561\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n**Frequency**\nonce per day\n\n</additional-info>\n\n---\n\n<summary>\nSpend 1 Mythic Point. The spirits of the eight runelords of greed (Kaladurnae, Fethryr, Gimmel, Ligniya, Mazmiranna, Aethusa, Haphrama, and Karzoug) …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 84"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84",
+   "speed": {},
+   "summary": "Spend 1 Mythic Point. The spirits of the eight runelords of greed (Kaladurnae, Fethryr, Gimmel, Ligniya, Mazmiranna, Aethusa, Haphrama, and Karzoug) …",
+   "summary_markdown": "Spend 1 Mythic Point. The spirits of the eight runelords of greed (Kaladurnae, Fethryr, Gimmel, Ligniya, Mazmiranna, Aethusa, Haphrama, and Karzoug) …",
+   "text": " Activate—Convocation of Greed Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. The spirits of the eight runelords of greed (Kaladurnae, Fethryr, Gimmel, Ligniya, Mazmiranna, Aethusa, Haphrama, and Karzoug) appear and bolster the armaments of you and your companions. For each of the spirits, one creature of your choice within 60 feet gains a +2 item bonus to AC, attack rolls, or saving throws (chosen by the creature) for 1 minute. These bonuses increase to +4 while the creature is within 100 feet of Xanderghul, the Runelord of Pride. A creature can receive bonuses from multiple runelords at once (gaining bonuses to both AC and attack rolls, for example), but the bonuses aren't cumulative.",
+   "trait": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Mechanics"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561)",
+   "trait_raw": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4469",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4470",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Reaction",
+   "actions_number": 1,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4470",
+   "markdown": "**Activate—Sorshen's Devotion** <actions string=\"Reaction\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561), [Healing](/Traits.aspx?ID=623));  **Frequency** once per day;   **Effect** You or an ally within 60 feet uses [Rewrite Fate](/Actions.aspx?ID=2983) to reroll a saving throw; Effect Spend 1 Mythic Point. The triggering creature regains 7d10+28 Hit Points. The amount of healing increases to 10d10+40 Hit Points if Xanderghul, the Runel",
+   "name": "",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 85",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Concentrate\" url=\"/Traits.aspx?ID=561\" />\n<trait label=\"Healing\" url=\"/Traits.aspx?ID=623\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n**Frequency**\nonce per day\n\n</additional-info>\n\n---\n\n<summary>\nYou or an ally within 60 feet uses  Rewrite Fate  to reroll a saving throw; Effect Spend 1 Mythic Point. The triggering creature regains 7d10+28 Hit …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 85"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85",
+   "speed": {},
+   "summary": "You or an ally within 60 feet uses  Rewrite Fate  to reroll a saving throw; Effect Spend 1 Mythic Point. The triggering creature regains 7d10+28 Hit …",
+   "summary_markdown": "You or an ally within 60 feet uses  Rewrite Fate  to reroll a saving throw; Effect Spend 1 Mythic Point. The triggering creature regains 7d10+28 Hit …",
+   "text": " Activate—Sorshen's Devotion Reaction (Arcane, Concentrate, Healing); Frequency once per day; Effect You or an ally within 60 feet uses Rewrite Fate to reroll a saving throw; Effect Spend 1 Mythic Point. The triggering creature regains 7d10+28 Hit Points. The amount of healing increases to 10d10+40 Hit Points if Xanderghul, the Runel",
+   "trait": [
+    "Arcane",
+    "Concentrate",
+    "Healing"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Mechanics"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561), [Healing](/Traits.aspx?ID=623)",
+   "trait_raw": [
+    "Arcane",
+    "Concentrate",
+    "Healing"
+   ],
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4470",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4471",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Two Actions",
+   "actions_number": 4,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4471",
+   "markdown": "**Activate—Summon Sloth** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. You summon the spirit of one of the seven runelords of sloth (Xirie, Ilthyrius, Azeradni, Zalelet, Krenlith, Ivarinna, or Krune) into an unoccupied space within 30 feet. Allies can move through a space occupied by one of these spirits, but a spirit's space is [greater difficult terrain](/Rules.aspx?ID=2366) for your enemies.\n\n For the next minute, you can use a two-action activity with the [concentrate](/Traits.aspx?ID=561) trait to summon another runelord spirit in a different space within 30 feet, to a maximum of seven spirits. While you are within 120 feet of Xanderghul, the Runelord of Pride, you can summon an additional spirit as a single action (instead of as a two-action activity). At the end of the each of your turns, each spirit fires arcane energy at a different enemy of your choice within 120 feet of it (or does nothing if no enemy is within range), dealing 2d4+2 force damage. After 1 minute, all spirits disappear.",
+   "name": "",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 85",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Concentrate\" url=\"/Traits.aspx?ID=561\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n**Frequency**\nonce per day\n\n</additional-info>\n\n---\n\n<summary>\nSpend 1 Mythic Point. You summon the spirit of one of the seven runelords of sloth (Xirie, Ilthyrius, Azeradni, Zalelet, Krenlith, Ivarinna, or …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 85"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85",
+   "speed": {},
+   "summary": "Spend 1 Mythic Point. You summon the spirit of one of the seven runelords of sloth (Xirie, Ilthyrius, Azeradni, Zalelet, Krenlith, Ivarinna, or …",
+   "summary_markdown": "Spend 1 Mythic Point. You summon the spirit of one of the seven runelords of sloth (Xirie, Ilthyrius, Azeradni, Zalelet, Krenlith, Ivarinna, or …",
+   "text": " Activate—Summon Sloth Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. You summon the spirit of one of the seven runelords of sloth (Xirie, Ilthyrius, Azeradni, Zalelet, Krenlith, Ivarinna, or Krune) into an unoccupied space within 30 feet. Allies can move through a space occupied by one of these spirits, but a spirit's space is greater difficult terrain for your enemies. For the next minute, you can use a two-action activity with the concentrate trait to summon another runelord spirit in a different space within 30 feet, to a maximum of seven spirits. While you are within 120 feet of Xanderghul, the Runelord of Pride, you can summon an additional spirit as a single action (instead of as a two-action activity). At the end of the each of your turns, each spirit fires arcane energy at a different enemy of your choice within 120 feet of it (or does nothing if no enemy is within range), dealing 2d4+2 force damage. After 1 minute, all spirits disappear.",
+   "trait": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Mechanics"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561)",
+   "trait_raw": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4471",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4472",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Two Actions",
+   "actions_number": 4,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4472",
+   "markdown": "**Activate—Host of Wrath** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. The spirits of four runelords of wrath (Angothane, Xiren, Thybidos, and Alaznist) swirl around you for 1 minute. While the spirits remain, whenever you hit or critically hit with a Reactive Strike, the target takes an additional 5 spirit damage, or 10 spirit damage if the target of your Reactive Strike is Xanderghul, the Runelord of Pride.",
+   "name": "",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 85",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Concentrate\" url=\"/Traits.aspx?ID=561\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n**Frequency**\nonce per day\n\n</additional-info>\n\n---\n\n<summary>\nSpend 1 Mythic Point. The spirits of four runelords of wrath (Angothane, Xiren, Thybidos, and Alaznist) swirl around you for 1 minute. While the …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 85"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85",
+   "speed": {},
+   "summary": "Spend 1 Mythic Point. The spirits of four runelords of wrath (Angothane, Xiren, Thybidos, and Alaznist) swirl around you for 1 minute. While the …",
+   "summary_markdown": "Spend 1 Mythic Point. The spirits of four runelords of wrath (Angothane, Xiren, Thybidos, and Alaznist) swirl around you for 1 minute. While the …",
+   "text": " Activate—Host of Wrath Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. The spirits of four runelords of wrath (Angothane, Xiren, Thybidos, and Alaznist) swirl around you for 1 minute. While the spirits remain, whenever you hit or critically hit with a Reactive Strike, the target takes an additional 5 spirit damage, or 10 spirit damage if the target of your Reactive Strike is Xanderghul, the Runelord of Pride.",
+   "trait": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Mechanics"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561)",
+   "trait_raw": [
+    "Arcane",
+    "Concentrate"
+   ],
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4472",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4473",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Two Actions",
+   "actions_number": 4,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4473",
+   "markdown": "**Activate—Expand Lodge** <actions string=\"Two Actions\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;   **Effect** You set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a sturdy stone foundation, thick timber walls, and a peaked roof shingled with scraps of bark. The lodge’s ground floor contains a dining hall on one end and a sitting area with a hearth surrounded by comfortable chairs on the other. A staircase connects the hall to the lodge’s second floor, which consists of four simply furnished bedrooms. The lodge is decorated throughout with taxidermic beasts native to the Dimension of Dreams. If a creature inside the lodge spends 10 minutes studying these trophies, they gain a +3 item bonus to the next skill check they make in the next 24 hours to Recall Knowledge about any creature with the dream trait. Furnishings or decorations removed from the lodge disappear but return to their original locations inside the lodge with the next activation. You can [Dismiss](/Actions.aspx?ID=2311) the dream hunter’s lodge to return it to its miniature form.",
+   "name": "(concentrate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Frequency**\nonce per day\n\n</additional-info>\n\n---\n\n<summary>\nYou set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "summary": "You set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a …",
+   "summary_markdown": "You set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a …",
+   "text": " Activate—Expand Lodge Two Actions (concentrate) Frequency once per day; Effect You set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a sturdy stone foundation, thick timber walls, and a peaked roof shingled with scraps of bark. The lodge’s ground floor contains a dining hall on one end and a sitting area with a hearth surrounded by comfortable chairs on the other. A staircase connects the hall to the lodge’s second floor, which consists of four simply furnished bedrooms. The lodge is decorated throughout with taxidermic beasts native to the Dimension of Dreams. If a creature inside the lodge spends 10 minutes studying these trophies, they gain a +3 item bonus to the next skill check they make in the next 24 hours to Recall Knowledge about any creature with the dream trait. Furnishings or decorations removed from the lodge disappear but return to their original locations inside the lodge with the next activation. You can Dismiss the dream hunter’s lodge to return it to its miniature form.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4473",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4474",
+  "_score": 35.014893,
+  "_source": {
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4474",
+   "markdown": "**Activate—Oneiric Expedition** <actions string=\"\" /> 10 minutes ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;  **Requirements** The _dream hunter’s lodge_ has been expanded and you are inside; **Effect** Spend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the lodge reappears in the Dimension of Dreams (or in the Universe, if the lodge was already in the Dimension of Dreams), as if transported there by an _interplanar teleport_ spell. Upon arrival, creatures inside the lodge awaken, fully rested (but this effect does not increase the number of times per day you can do your daily preparations).",
+   "name": "10 minutes (concentrate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "requirement": "The  dream hunter’s lodge  has been expanded and you are inside",
+   "requirement_markdown": "The _dream hunter’s lodge_ has been expanded and you are inside",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Frequency**\nonce per day\n\n**Requirement**\nThe _dream hunter’s lodge_ has been expanded and you are inside\n</additional-info>\n\n---\n\n<summary>\nSpend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "summary": "Spend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the …",
+   "summary_markdown": "Spend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the …",
+   "text": " Activate—Oneiric Expedition 10 minutes (concentrate) Frequency once per day; Requirements The dream hunter’s lodge has been expanded and you are inside; Effect Spend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the lodge reappears in the Dimension of Dreams (or in the Universe, if the lodge was already in the Dimension of Dreams), as if transported there by an interplanar teleport spell. Upon arrival, creatures inside the lodge awaken, fully rested (but this effect does not increase the number of times per day you can do your daily preparations).",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4474",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4475",
+  "_score": 35.014893,
+  "_source": {
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "id": "action-4475",
+   "markdown": "**Activate—Sow Garden** <actions string=\"\" /> 1 minute ([concentrate](/Traits.aspx?ID=561), [manipulate](/Traits.aspx?ID=645))    **Effect** You place the seed on the ground in an adjacent space. Over the next minute, the seed’s magic creates an elegant garden in a 40-foot-square area that includes the space where you placed the seed. As the garden grows, you choose to fill each 10-foot-square space with lawns (normal terrain), flower beds ([difficult terrain](/Rules.aspx?ID=2366)), or hedgerows. Hedgerows are filled with 10-foot-tall hedges that grant standard cover and are greater difficult terrain. The garden withers after 24 hours. If you place the seed on natural earth and spend 1 Mythic Point during the activation, the garden establishes itself in the area and grows indefinitely, so long as the plants receive adequate sunlight and rain. While it remains, the garden remains free of weeds and pests, with the plants never growing beyond their bounds, as if tended by a master gardener.",
+   "name": "1 minute (concentrate, manipulate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n</additional-info>\n\n---\n\n<summary>\nYou place the seed on the ground in an adjacent space. Over the next minute, the seed’s magic creates an elegant garden in a 40-foot-square area that …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "summary": "You place the seed on the ground in an adjacent space. Over the next minute, the seed’s magic creates an elegant garden in a 40-foot-square area that …",
+   "summary_markdown": "You place the seed on the ground in an adjacent space. Over the next minute, the seed’s magic creates an elegant garden in a 40-foot-square area that …",
+   "text": " Activate—Sow Garden 1 minute (concentrate, manipulate) Effect You place the seed on the ground in an adjacent space. Over the next minute, the seed’s magic creates an elegant garden in a 40-foot-square area that includes the space where you placed the seed. As the garden grows, you choose to fill each 10-foot-square space with lawns (normal terrain), flower beds (difficult terrain), or hedgerows. Hedgerows are filled with 10-foot-tall hedges that grant standard cover and are greater difficult terrain. The garden withers after 24 hours. If you place the seed on natural earth and spend 1 Mythic Point during the activation, the garden establishes itself in the area and grows indefinitely, so long as the plants receive adequate sunlight and rain. While it remains, the garden remains free of weeds and pests, with the plants never growing beyond their bounds, as if tended by a master gardener.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4475",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4476",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Free Action",
+   "actions_number": 0,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4476",
+   "markdown": "**Activate—Tempt Fate** <actions string=\"Free Action\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day; **Trigger** Your doomed value would decrease; **Requirements** You currently have fewer than 3 Mythic Points; **Effect** Your [doomed](/Conditions.aspx?ID=67) value doesn’t decrease. You gain 1 Mythic Point.",
+   "name": "(concentrate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "requirement": "You currently have fewer than 3 Mythic Points",
+   "requirement_markdown": "You currently have fewer than 3 Mythic Points",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Frequency**\nonce per day\n\n**Trigger**\nYour doomed value would decrease\n\n**Requirement**\nYou currently have fewer than 3 Mythic Points\n</additional-info>\n\n---\n\n<summary>\nYour  doomed  value doesn’t decrease. You gain 1 Mythic Point.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "summary": "Your  doomed  value doesn’t decrease. You gain 1 Mythic Point.",
+   "summary_markdown": "Your  doomed  value doesn’t decrease. You gain 1 Mythic Point.",
+   "text": " Activate—Tempt Fate Free Action (concentrate) Frequency once per day; Trigger Your doomed value would decrease; Requirements You currently have fewer than 3 Mythic Points; Effect Your doomed value doesn’t decrease. You gain 1 Mythic Point.",
+   "trait_markdown": "",
+   "trigger": "Your doomed value would decrease",
+   "trigger_markdown": "Your doomed value would decrease",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4476",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4477",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Free Action",
+   "actions_number": 0,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per day",
+   "id": "action-4477",
+   "markdown": "**Activate—Rewards of Service** <actions string=\"Free Action\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;   **Effect** Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, fate, and knowledge. If you don’t spend this point by the end of this turn, it is lost.",
+   "name": "(concentrate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Frequency**\nonce per day\n\n</additional-info>\n\n---\n\n<summary>\nGain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "summary": "Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, …",
+   "summary_markdown": "Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, …",
+   "text": " Activate—Rewards of Service Free Action (concentrate) Frequency once per day; Effect Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, fate, and knowledge. If you don’t spend this point by the end of this turn, it is lost.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4477",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4478",
+  "_score": 35.014893,
+  "_source": {
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "id": "action-4478",
+   "markdown": "**Activate—Rewards of Rule** <actions string=\"\" /> 1 minute ([concentrate](/Traits.aspx?ID=561))   **Requirements** You have master or legendary proficiency in [Arcana](/Skills.aspx?ID=35); **Effect** Spend 1 Mythic Point when you invest the _runic skullcap_. Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school.\n\n<ul><li>**Envy:** _[_cutting eye_](/Spells.aspx?ID=2320)_ </li><li>**Greed:** _[_precious gleam_](/Spells.aspx?ID=2322)_ </li><li>**Sloth:** _[_reclined apport_](/Spells.aspx?ID=2323)_ </li><li>**Gluttony:** _[_all-encompassing hunger_](/Spells.aspx?ID=2318)_ </li><li>**Lust:** _[_heart's hook_](/Spells.aspx?ID=2321)_ </li><li>**Pride:** _[_crescent scepter_](/Spells.aspx?ID=2319)_ </li><li>**Wrath:** _[_vengeful glare_](/Spells.aspx?ID=2324)_</li></ul>",
+   "name": "1 minute (concentrate)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "requirement": "You have master or legendary proficiency in  Arcana ",
+   "requirement_markdown": "You have master or legendary proficiency in [Arcana](/Skills.aspx?ID=35)",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Requirement**\nYou have master or legendary proficiency in [Arcana](/Skills.aspx?ID=35)\n</additional-info>\n\n---\n\n<summary>\nSpend 1 Mythic Point when you invest the  runic skullcap . Until the next time you invest the skullcap, you can also use the Focus Point granted by …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "summary": "Spend 1 Mythic Point when you invest the  runic skullcap . Until the next time you invest the skullcap, you can also use the Focus Point granted by …",
+   "summary_markdown": "Spend 1 Mythic Point when you invest the  runic skullcap . Until the next time you invest the skullcap, you can also use the Focus Point granted by …",
+   "text": " Activate—Rewards of Rule 1 minute (concentrate) Requirements You have master or legendary proficiency in Arcana; Effect Spend 1 Mythic Point when you invest the runic skullcap . Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school. Envy: cutting eye Greed: precious gleam Sloth: reclined apport Gluttony: all-encompassing hunger Lust: heart's hook Pride: crescent scepter Wrath: vengeful glare ",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4478",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4479",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Two Actions",
+   "actions_number": 4,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "id": "action-4479",
+   "markdown": "**Activate—Align Spindle** <actions string=\"Two Actions\" /> ([concentrate](/Traits.aspx?ID=561), [manipulate](/Traits.aspx?ID=645), [occult](/Traits.aspx?ID=662))    **Effect** You rotate the sections of the _spindle key_ into an arrangement of your liking. As you do, the corresponding steel separators between floors of Liralarue’s Oubliette spin to match that arrangement. If a creature is within the ten-foot-space between floors at this time, they take 10d6 bludgeoning damage (DC 37 [basic](/Rules.aspx?ID=2297) Reflex save) from being crushed and are then pushed into one of the adjoining rooms at random as the rotation seals it up.",
+   "name": "(concentrate, manipulate, occult)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 84",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n</additional-info>\n\n---\n\n<summary>\nYou rotate the sections of the  spindle key  into an arrangement of your liking. As you do, the corresponding steel separators between floors of …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 84"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84",
+   "speed": {},
+   "summary": "You rotate the sections of the  spindle key  into an arrangement of your liking. As you do, the corresponding steel separators between floors of …",
+   "summary_markdown": "You rotate the sections of the  spindle key  into an arrangement of your liking. As you do, the corresponding steel separators between floors of …",
+   "text": " Activate—Align Spindle Two Actions (concentrate, manipulate, occult) Effect You rotate the sections of the spindle key into an arrangement of your liking. As you do, the corresponding steel separators between floors of Liralarue’s Oubliette spin to match that arrangement. If a creature is within the ten-foot-space between floors at this time, they take 10d6 bludgeoning damage (DC 37 basic Reflex save) from being crushed and are then pushed into one of the adjoining rooms at random as the rotation seals it up.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4479",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "action-4480",
+  "_score": 35.014893,
+  "_source": {
+   "actions": "Two Actions",
+   "actions_number": 4,
+   "category": "action",
+   "exclude_from_search": true,
+   "is_standard_ancestry_feat": false,
+   "frequency": "once per hour",
+   "id": "action-4480",
+   "markdown": "**Activate—Breach** <actions string=\"Two Actions\" /> ([concentrate](/Traits.aspx?ID=561), [manipulate](/Traits.aspx?ID=645), [occult](/Traits.aspx?ID=662)) **Frequency** once per hour;   **Effect** You harness the key’s occult geometry to bypass a lock within 30 feet. You attempt to [Pick the Lock](/Actions.aspx?ID=2412), using [Occultism](/Skills.aspx?ID=44) instead of [Thievery](/Skills.aspx?ID=50) for the check. You can spend a Mythic Point to attempt the check at mythic proficiency.",
+   "name": "(concentrate, manipulate, occult)",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 84",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n**Frequency**\nonce per hour\n\n</additional-info>\n\n---\n\n<summary>\nYou harness the key’s occult geometry to bypass a lock within 30 feet. You attempt to  Pick the Lock , using  Occultism  instead of  Thievery  for …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 84"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84",
+   "speed": {},
+   "summary": "You harness the key’s occult geometry to bypass a lock within 30 feet. You attempt to  Pick the Lock , using  Occultism  instead of  Thievery  for …",
+   "summary_markdown": "You harness the key’s occult geometry to bypass a lock within 30 feet. You attempt to  Pick the Lock , using  Occultism  instead of  Thievery  for …",
+   "text": " Activate—Breach Two Actions (concentrate, manipulate, occult) Frequency once per hour; Effect You harness the key’s occult geometry to bypass a lock within 30 feet. You attempt to Pick the Lock, using Occultism instead of Thievery for the check. You can spend a Mythic Point to attempt the check at mythic proficiency.",
+   "trait_markdown": "",
+   "type": "Action",
+   "url": "/Actions.aspx?ID=4480",
+   "weakness": {}
+  }
+ }
+]

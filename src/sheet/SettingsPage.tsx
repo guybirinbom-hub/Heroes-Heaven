@@ -109,6 +109,29 @@ function AppearanceSection() {
 
       <CustomizationEditor value={value} base={DEFAULT_CUSTOMIZATION} scope="global" onChange={onChange} />
 
+      <div className="menu-label">When the app opens</div>
+      <div className="menu-row">
+        {(
+          [
+            ['last', 'Where I left off'],
+            ['characters', 'The Characters page'],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            key={id}
+            className={'chip' + ((prefs.startupScreen ?? 'last') === id ? ' active' : '')}
+            onClick={() => setPref('startupScreen', id)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <p className="settings-desc">
+        <strong>Where I left off</strong> reopens whatever was on screen when you last closed the app — the character
+        sheet you were playing, or the campaign you were running. <strong>The Characters page</strong> always starts on
+        your roster instead.
+      </p>
+
       <div className="menu-label">Sources</div>
       <div className="menu-row">
         <button className={'chip' + (prefs.showNicheSources ? ' active' : '')} onClick={() => setPref('showNicheSources', !prefs.showNicheSources)}>

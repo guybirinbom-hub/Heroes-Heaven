@@ -665,14 +665,24 @@ export function InventoryTab({
    */
   const designationKinds = useMemo(() => {
     const owned = new Set([character.classId, character.classId2].filter(Boolean) as string[]);
+    // An ikon is not the exemplar CLASS's alone — Exemplar Dedication grants one, and an ikon is a
+    // thing you wear or wield, so a class-only gate left an archetype exemplar holding an ikon with no
+    // item to name as it. Read off the ANSWER (an ikon choice value is a classFeature with the ikon
+    // trait) rather than off the dedication's id, so another route to an ikon needs no second branch.
+    const hasIkon =
+      owned.has('exemplar') ||
+      (character.feats ?? []).some((f) => {
+        const v = f.choice?.value;
+        return !!v && !!content.classFeatures[v]?.traits?.includes('ikon');
+      });
     const out: { kind: ItemDesignation; label: string }[] = [];
     if (owned.has('inventor')) out.push({ kind: 'innovation', label: 'Innovation' });
     if (owned.has('thaumaturge')) out.push({ kind: 'weapon-implement', label: 'Weapon implement' });
     if (owned.has('wizard')) out.push({ kind: 'bonded', label: 'Bonded item' });
-    if (owned.has('exemplar')) out.push({ kind: 'ikon', label: 'Ikon' });
+    if (hasIkon) out.push({ kind: 'ikon', label: 'Ikon' });
     out.push({ kind: 'rune-source', label: 'Rune source' });
     return out;
-  }, [character.classId, character.classId2]);
+  }, [character.classId, character.classId2, character.feats, content]);
   // When the character holds more than one instance of the same item, number them (" 1", " 2", …)
   // in inventory order so otherwise-identical copies (e.g. two Longswords, one refined) are
   // distinguishable. Computed across the whole inventory; recomputes (renumbers) when one is removed.

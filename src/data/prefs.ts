@@ -23,10 +23,19 @@ export interface Prefs {
   pinnedModes: string[];
   /** Release tag (e.g. "v0.1.5") whose update banner the user dismissed — that version never re-nags. */
   dismissedUpdate?: string;
+  /** Width in px of the Notes tab's page list, set by dragging the divider. Absent = the 152px default.
+   *  Device-global rather than per-character: it's how wide YOUR window wants that column, not a trait
+   *  of any one character. */
+  notesListWidth?: number;
+  /** Which screen a launch lands on once the content database is ready:
+   *   'last'       — reopen whatever was open when the app closed (a character sheet, or a campaign);
+   *   'characters' — stay on the Characters list, the boot screen, and go no further.
+   *  'last' is the long-standing behaviour and stays the default. */
+  startupScreen: 'last' | 'characters';
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';
-const DEFAULTS: Prefs = { popupSizeSync: false, showNicheSources: false, pinnedModes: [] };
+const DEFAULTS: Prefs = { popupSizeSync: false, showNicheSources: false, pinnedModes: [], startupScreen: 'last' };
 
 let prefs: Prefs = { ...DEFAULTS };
 const listeners = new Set<(p: Prefs) => void>();

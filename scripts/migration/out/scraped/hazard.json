@@ -1,0 +1,1081 @@
+[
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-772",
+  "_score": 35.014893,
+  "_source": {
+   "ac": 45,
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 45  Occultism  (legendary) or  Religion  (legendary) to exorcise Zutha’s spirit, or DC 48  Intimidation  (master) or  Performance  (master) to recite the details of Zutha’s defeat; six total successes are required to disable the haunt.",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "fortitude_save": 36,
+   "hardness": 30,
+   "hardness_raw": "30; <b>Scythe Hardness</b> 30 Mask Hardness",
+   "hazard_type": "Haunt",
+   "hp": 120,
+   "hp_raw": "120 (BT 60); <b>Scythe HP</b> 120 (BT 60)",
+   "id": "hazard-772",
+   "immunity": [
+    "critical hits",
+    "object immunities",
+    "precision damage"
+   ],
+   "immunity_markdown": "[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage",
+   "level": 18,
+   "markdown": "<title level=\"1\" right=\"Hazard 18\" pfs=\"\">[Zutha's Legacy](/Hazards.aspx?ID=772)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Haunt\" url=\"/Traits.aspx?ID=622\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 15\n\n**Complexity** Complex\n\n</column>\n\nThe scowling visage of Runelord Zutha appears above the altar. Meanwhile, mask-like versions of Zutha’s face manifest on nearby rubble and vomit swarms of maggots. Once the masks are destroyed, the air fills with spectral duplicates of Zutha’s life-draining bone scythe.\n\n---\n\n**Stealth**\n+48 (expert) to sense Zutha’s hungry spirit before it manifests\n\n**Disable**\nDC 45 [Occultism](/Skills.aspx?ID=44) (legendary) or [Religion](/Skills.aspx?ID=46) (legendary) to exorcise Zutha’s spirit, or DC 48 [Intimidation](/Skills.aspx?ID=40) (master) or [Performance](/Skills.aspx?ID=45) (master) to recite the details of Zutha’s defeat; six total successes are required to disable the haunt.\n\n<column gap=\"tiny\">\n\n**AC** 45, **Fort** +36, **Ref** +27, **Will** +33\n\n**Mask Hardness**\n30\n\n**Mask HP**\n120 (BT 60); **Scythe HP** 120 (BT 60)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n**Weaknesses**\nbludgeoning 20\n\n**Resistances**\nall damage 5 (except force, _ghost touch_, spirit, or vitality; double resistance vs. non-magical)\n\n</column>\n\n**Howl of Rage** <actions string=\"Reaction\" /> (emotion, fear, mental) **Trigger** A living creature attempts to descend the stairwell at area **A1a** into the islet’s interior; **Effect** A ghostly version of Zutha’s face appears above the island. Meanwhile, the rubble on the islet warps into smaller versions of Zutha’s face. The faces howl in rage as one. All creatures on the islet must succeed at a DC 42 Will save or become [frightened](/Conditions.aspx?ID=76) 1 (or frightened 3 on a critical failure). The haunt then rolls initiative.\n\n---\n**Routine**\n(4 actions) The haunt uses Vomit Maggot three times, then Poisonous Belch once. For each success at Disabling the haunt, the haunt loses one Vomit Maggot action. Destroying a mask also removes one of the haunt’s Vomit Maggot actions. Once the haunt can no longer use Vomit Maggot, it immediately regains three actions and replaces Vomit Maggot with Spectral Scythe. Destroying a scythe also removes one of the haunt’s Spectral Scythe actions. Once the haunt loses all three of its Spectral Scythe actions, the haunt is destroyed.<br/>**Vomit Maggot** <span class=\"action\" title=\"Single Action\" role=\"img\" aria-label=\"Single Action\">[one-action]</span> One of Zutha’s rubble-masks vomits a swarm of maggots. (The masks appear everywhere on the islet, and destroyed masks reform moments later, making nowhere on the islet safe.) The maggots burrow into the flesh of a creature of the GM’s choice. The creature takes 2d12 [persistent piercing damage](/Conditions.aspx?ID=86) (DC 42 [basic](/Rules.aspx?ID=2297) Fortitude save) and is [slowed](/Conditions.aspx?ID=92) 1 for as long as they continue taking this damage. When the persistent damage ends, the maggots dissolve into foul-smelling oil.<br/>**Spectral Scythe** [one-action] (void) One of Zutha’s scythes swipes at a creature of the GM’s choice. The creature must attempt a DC 42 Reflex save with the following results. \n\n**Critical Success** The creature is unaffected.<br />\n**Success** The creature takes 3d10+10 void damage.<br />\n**Failure** The creature takes 6d10+10 void damage and is [drained](/Conditions.aspx?ID=68) 1.<br />\n**Critical Failure** The creature takes 12d10+10 void damage and is drained 2.<br/>**Poisonous Belch** [one-action] (poison) The ghostly image of Zutha’s face belches a toxic cloud that reeks of decaying flesh. The cloud fills a 10-foot burst centered anywhere on the island and lasts until the haunt’s next turn. Any creature that enters the area or that starts its turn in the area must attempt a DC 44 Fortitude save with the following results. \n\n**Critical Success** The creature is unaffected.<br />\n**Success** The creature takes 5d8 poison damage.<br />\n**Failure** The creature takes 10d8 poison damage and is [sickened](/Conditions.aspx?ID=91) 1.<br />\n**Critical Failure** The creature takes 20d8 poison damage, is sickened 2, and is [slowed](/Conditions.aspx?ID=92) 1 for as long as it remains sickened.\n\n---\n**Reset**\nThe haunt deactivates once no living creatures remain nearby. The haunt resets 1 hour later.",
+   "name": "Zutha's Legacy",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 15",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "reflex_save": 27,
+   "release_date": "2025-11-05",
+   "reset": "The haunt deactivates once no living creatures remain nearby. The haunt resets 1 hour later.",
+   "resistance": {
+    "acid": 5,
+    "all": 5,
+    "area": 5,
+    "bleed": 5,
+    "bludgeoning": 5,
+    "chaotic": 5,
+    "cold": 5,
+    "cold_iron": 5,
+    "electricity": 5,
+    "evil": 5,
+    "fire": 5,
+    "good": 5,
+    "holy": 5,
+    "lawful": 5,
+    "mental": 5,
+    "orichalcum": 5,
+    "physical": 5,
+    "piercing": 5,
+    "poison": 5,
+    "precision": 5,
+    "silver": 5,
+    "slashing": 5,
+    "sonic": 5,
+    "splash": 5,
+    "unholy": 5,
+    "void": 5
+   },
+   "resistance_markdown": "all damage 5 (except force, _ghost touch_, spirit, or vitality; double resistance vs. non-magical)",
+   "resistance_raw": "all damage 5 (except force,  ghost touch , spirit, or vitality; double resistance vs. non-magical)",
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Haunt\" url=\"/Traits.aspx?ID=622\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 15\n</additional-info>\n\n---\n\n<summary>\nThe scowling visage of Runelord Zutha appears above the altar. Meanwhile, mask-like versions of Zutha’s face manifest on nearby rubble and vomit …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 15"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 15",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+48 (expert) to sense Zutha’s hungry spirit before it manifests",
+   "summary": "The scowling visage of Runelord Zutha appears above the altar. Meanwhile, mask-like versions of Zutha’s face manifest on nearby rubble and vomit …",
+   "summary_markdown": "The scowling visage of Runelord Zutha appears above the altar. Meanwhile, mask-like versions of Zutha’s face manifest on nearby rubble and vomit …",
+   "text": " Zutha's Legacy Source Pathfinder #220: Crypt of Runes pg. 15 Complexity Complex The scowling visage of Runelord Zutha appears above the altar. Meanwhile, mask-like versions of Zutha’s face manifest on nearby rubble and vomit swarms of maggots. Once the masks are destroyed, the air fills with spectral duplicates of Zutha’s life-draining bone scythe. --- Stealth +48 (expert) to sense Zutha’s hungry spirit before it manifests Disable DC 45 Occultism (legendary) or Religion (legendary) to exorcise Zutha’s spirit, or DC 48 Intimidation (master) or Performance (master) to recite the details of Zutha’s defeat; six total successes are required to disable the haunt. AC 45, Fort +36, Ref +27, Will +33 Mask Hardness 30 Mask HP 120 (BT 60); Scythe HP 120 (BT 60) Immunities critical hits, object immunities, precision damage Weaknesses bludgeoning 20 Resistances all damage 5 (except force, ghost touch , spirit, or vitality; double resistance vs. non-magical) Howl of Rage Reaction (emotion, fear, mental) Trigger A living creature attempts to descend the stairwell at area A1a into the islet’s interior; Effect A ghostly version of Zutha’s face appears above the island. Meanwhile, the rubble on the islet warps into smaller versions of Zutha’s face. The faces howl in rage as one. All creatures on the islet must succeed at a DC 42 Will save or become frightened 1 (or frightened 3 on a critical failure). The haunt then rolls initiative. --- Routine (4 actions) The haunt uses Vomit Maggot three times, then Poisonous Belch once. For each success at Disabling the haunt, the haunt loses one Vomit Maggot action. Destroying a mask also removes one of the haunt’s Vomit Maggot actions. Once the haunt can no longer use Vomit Maggot, it immediately regains three actions and replaces Vomit Maggot with Spectral Scythe. Destroying a scythe also removes one of the haunt’s Spectral Scythe actions. Once the haunt loses all three of its Spectral Scythe actions, the haunt is destroyed. Vomit Maggot one-action] One of Zutha’s rubble-masks vomits a swarm of maggots. (The masks appear everywhere on the islet, and destroyed masks reform moments later, making nowhere on the islet safe.) The maggots burrow into the flesh of a creature of the GM’s choice. The creature takes 2d12 [persistent piercing damage (DC 42 basic Fortitude save) and is slowed 1 for as long as they continue taking this damage. When the persistent damage ends, the maggots dissolve into foul-smelling oil. Spectral Scythe [one-action] (void) One of Zutha’s scythes swipes at a creature of the GM’s choice. The creature must attempt a DC 42 Reflex save with the following results. Critical Success The creature is unaffected. Success The creature takes 3d10+10 void damage. Failure The creature takes 6d10+10 void damage and is drained 1. Critical Failure The creature takes 12d10+10 void damage and is drained 2. Poisonous Belch [one-action] (poison) The ghostly image of Zutha’s face belches a toxic cloud that reeks of decaying flesh. The cloud fills a 10-foot burst centered anywhere on the island and lasts until the haunt’s next turn. Any creature that enters the area or that starts its turn in the area must attempt a DC 44 Fortitude save with the following results. Critical Success The creature is unaffected. Success The creature takes 5d8 poison damage. Failure The creature takes 10d8 poison damage and is sickened 1. Critical Failure The creature takes 20d8 poison damage, is sickened 2, and is slowed 1 for as long as it remains sickened. --- Reset The haunt deactivates once no living creatures remain nearby. The haunt resets 1 hour later.",
+   "trait": [
+    "Complex",
+    "Haunt",
+    "Mythic",
+    "Unique"
+   ],
+   "trait_group": [
+    "Hazard",
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Complex](/Traits.aspx?ID=30), [Haunt](/Traits.aspx?ID=622), [Mythic](/Traits.aspx?ID=835), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Complex",
+    "Haunt",
+    "Mythic",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=772",
+   "weakness": {
+    "bludgeoning": 20
+   },
+   "weakness_markdown": "bludgeoning 20",
+   "weakness_raw": "bludgeoning 20",
+   "will_save": 33
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-773",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 45  Crafting  (master) to release alchemical reagents to neutralize the ink in the water, DC 42  Nature  (legendary) to manipulate the primal magic in the region and negate the ink’s effects, or   dispel magic   (8th rank;  counteract  DC 34) to counteract the magical ink in the water; four success are required to disable it (spells that purify or manipulate water, such as  cleanse cuisine  or  control water , can affect this hazard as if the caster were using an equal rank  dispel magic )",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "hazard_type": "Environmental",
+   "id": "hazard-773",
+   "level": 16,
+   "markdown": "<title level=\"1\" right=\"Hazard 16\" pfs=\"\">[Flawed Memories](/Hazards.aspx?ID=773)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Environmental\" url=\"/Traits.aspx?ID=591\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Occult\" url=\"/Traits.aspx?ID=662\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 20\n\n**Complexity** Complex\n\n</column>\n\nThe murky waters that fill the chamber grant false visions of the past.\n\n---\n\n**Stealth**\nDC +35 (master)\n\n**Disable**\nDC 45 [Crafting](/Skills.aspx?ID=37) (master) to release alchemical reagents to neutralize the ink in the water, DC 42 [Nature](/Skills.aspx?ID=43) (legendary) to manipulate the primal magic in the region and negate the ink’s effects, or [_dispel magic_](/Spells.aspx?ID=1493) (8th rank; [counteract](/Rules.aspx?ID=3280) DC 34) to counteract the magical ink in the water; four success are required to disable it (spells that purify or manipulate water, such as _cleanse cuisine_ or _control water_, can affect this hazard as if the caster were using an equal rank _dispel magic_)\n\n<column gap=\"tiny\">\n\n</column>\n\n**Mindwarp Ink** <actions string=\"Reaction\" /> (mental, poison, primal) **Trigger** A creature moves into the ink-fouled water; **Effect** The creature must attempt a DC 37 Will save to avoid becoming [stupefied](/Conditions.aspx?ID=94) 1 for 24 hours (stupefied 2 for 24 hours on a critical failure). The hazard then rolls initiative.\n\n---\n**Routine**\n(2 actions) On the trap’s first action, it attempts a water jet ranged Strike on all creatures outside of the water in this room or on the stairs leading up to area<br/>**A5**. On its second action, the primal magic infusing the waters attempts to seep into the minds of those within it, forcing each creature in the water to attempt a DC 39 Will save against the following effects. \n\n**Critical Success** The creature is unaffected<br />\n**Success** The creature takes 4d6 mental damage.<br />\n**Failure** The creature takes 8d6 mental damage and is [stupefied](/Conditions.aspx?ID=94) 2 for 24 hours. While the creature is stupefied, it takes an additional –2 status penalty to checks made to Recall Knowledge.<br />\n**Critical Failure** As failure, but 16d6 mental damage, stupefied 3, and the stupefied condition has an unlimited duration.<br/>**Ranged** <span class=\"action\" title=\"Single Action\" role=\"img\" aria-label=\"Single Action\">[one-action]</span> water jet +38 (poison); **Damage** 3d10+18 bludgeoning plus mindwarp ink; no multiple attack penalty\n\n---\n**Reset**\nThe hazard remains disabled until Baolen refills the area with ink (typically once every 4 hours).",
+   "name": "Flawed Memories",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 20",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "release_date": "2025-11-05",
+   "reset": "The hazard remains disabled until Baolen refills the area with ink (typically once every 4 hours).",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Environmental\" url=\"/Traits.aspx?ID=591\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Occult\" url=\"/Traits.aspx?ID=662\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 20\n</additional-info>\n\n---\n\n<summary>\nThe murky waters that fill the chamber grant false visions of the past.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 20"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 20",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "DC +35 (master)",
+   "summary": "The murky waters that fill the chamber grant false visions of the past.",
+   "summary_markdown": "The murky waters that fill the chamber grant false visions of the past.",
+   "text": " Flawed Memories Source Pathfinder #220: Crypt of Runes pg. 20 Complexity Complex The murky waters that fill the chamber grant false visions of the past. --- Stealth DC +35 (master) Disable DC 45 Crafting (master) to release alchemical reagents to neutralize the ink in the water, DC 42 Nature (legendary) to manipulate the primal magic in the region and negate the ink’s effects, or dispel magic (8th rank; counteract DC 34) to counteract the magical ink in the water; four success are required to disable it (spells that purify or manipulate water, such as cleanse cuisine or control water , can affect this hazard as if the caster were using an equal rank dispel magic ) Mindwarp Ink Reaction (mental, poison, primal) Trigger A creature moves into the ink-fouled water; Effect The creature must attempt a DC 37 Will save to avoid becoming stupefied 1 for 24 hours (stupefied 2 for 24 hours on a critical failure). The hazard then rolls initiative. --- Routine (2 actions) On the trap’s first action, it attempts a water jet ranged Strike on all creatures outside of the water in this room or on the stairs leading up to area A5 . On its second action, the primal magic infusing the waters attempts to seep into the minds of those within it, forcing each creature in the water to attempt a DC 39 Will save against the following effects. Critical Success The creature is unaffected Success The creature takes 4d6 mental damage. Failure The creature takes 8d6 mental damage and is stupefied 2 for 24 hours. While the creature is stupefied, it takes an additional –2 status penalty to checks made to Recall Knowledge. Critical Failure As failure, but 16d6 mental damage, stupefied 3, and the stupefied condition has an unlimited duration. Ranged [one-action] water jet +38 (poison); Damage 3d10+18 bludgeoning plus mindwarp ink; no multiple attack penalty --- Reset The hazard remains disabled until Baolen refills the area with ink (typically once every 4 hours).",
+   "trait": [
+    "Complex",
+    "Environmental",
+    "Mythic",
+    "Occult",
+    "Unique"
+   ],
+   "trait_group": [
+    "Hazard",
+    "Mythic",
+    "Tradition",
+    "Monster",
+    "Rarity"
+   ],
+   "trait_markdown": "[Complex](/Traits.aspx?ID=30), [Environmental](/Traits.aspx?ID=591), [Mythic](/Traits.aspx?ID=835), [Occult](/Traits.aspx?ID=662), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Complex",
+    "Environmental",
+    "Mythic",
+    "Occult",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=773",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-774",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "ac": 43,
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 45  Arcana  (legendary) to turn the lightning back against the sentry, causing the head to plummet, or   dispel magic   (9th rank;  counteract  DC 36) to counteract the magic that empowers the sentry, causing it to plummet. Each sentry must be counteracted or destroyed separately.",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "fortitude_save": 26,
+   "hardness": 28,
+   "hardness_raw": "28 Sentry Hardness",
+   "hp": 110,
+   "hp_raw": "110 (BT 55)",
+   "id": "hazard-774",
+   "immunity": [
+    "critical hits",
+    "object immunities",
+    "precision damage"
+   ],
+   "immunity_markdown": "[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage",
+   "level": 17,
+   "markdown": "<title level=\"1\" right=\"Hazard 17\" pfs=\"\">[Rune Sentries](/Hazards.aspx?ID=774)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 28\n\n**Complexity** Complex\n\n</column>\n\nArcs of lightning arc flash from the eyes of the floating sentries.\n\n---\n\n**Stealth**\n+46 (expert)\n\n**Disable**\nDC 45 [Arcana](/Skills.aspx?ID=35) (legendary) to turn the lightning back against the sentry, causing the head to plummet, or [_dispel magic_](/Spells.aspx?ID=1493) (9th rank; [counteract](/Rules.aspx?ID=3280) DC 36) to counteract the magic that empowers the sentry, causing it to plummet. Each sentry must be counteracted or destroyed separately.\n\n<column gap=\"tiny\">\n\n**AC** 43, **Fort** +26, **Ref** +32, **Will** +35\n\n**Sentry Hardness**\n28\n\n**HP**\n110 (BT 55)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Entry Denied** <actions string=\"Reaction\" /> (electricity) **Trigger** The PCs fail the Trial of Runes; **Effect** Each sentry whose question the PCs answered correctly crashes to the ground. A creature directly below a head when it falls takes 6d12+37 bludgeoning damage (DC 42 [basic](/Rules.aspx?ID=2297) Reflex save). The 10-foot area beneath the head becomes [difficult terrain](/Rules.aspx?ID=2366). The hazard then rolls initiative.\n\n---\n**Routine**\n(6 actions) Each Rune Sentry grants the hazard 1 action; a Rune Sentry that’s plummeted or been disabled or destroyed reduces the hazard’s available actions by 1. On the hazard’s turn, all active Rune Sentries spend their action to use Lightning Arc.<br/>**Lightning Arc** <span class=\"action\" title=\"Single Action\" role=\"img\" aria-label=\"Single Action\">[one-action]</span> (electricity) One creature (other than the peacock phoenix) within 60 feet of the sentry takes 3d12+19 electricity damage (DC 42 basic Reflex save). A target wearing metal armor or made of metal takes a –1 circumstance penalty to its save; if damaged, they are [clumsy](/Conditions.aspx?ID=61) 1 for 1 round. A creature may only be targeted once by a lightning arc each round—any lightning arcs that go unused as a result of there not being enough targets instead restore 20 HP each to the peacock phoenix.",
+   "name": "Rune Sentries",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 28",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "reflex_save": 32,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 28\n</additional-info>\n\n---\n\n<summary>\nArcs of lightning arc flash from the eyes of the floating sentries.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 28"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 28",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+46 (expert)",
+   "summary": "Arcs of lightning arc flash from the eyes of the floating sentries.",
+   "summary_markdown": "Arcs of lightning arc flash from the eyes of the floating sentries.",
+   "text": " Rune Sentries Source Pathfinder #220: Crypt of Runes pg. 28 Complexity Complex Arcs of lightning arc flash from the eyes of the floating sentries. --- Stealth +46 (expert) Disable DC 45 Arcana (legendary) to turn the lightning back against the sentry, causing the head to plummet, or dispel magic (9th rank; counteract DC 36) to counteract the magic that empowers the sentry, causing it to plummet. Each sentry must be counteracted or destroyed separately. AC 43, Fort +26, Ref +32, Will +35 Sentry Hardness 28 HP 110 (BT 55) Immunities critical hits, object immunities, precision damage Entry Denied Reaction (electricity) Trigger The PCs fail the Trial of Runes; Effect Each sentry whose question the PCs answered correctly crashes to the ground. A creature directly below a head when it falls takes 6d12+37 bludgeoning damage (DC 42 basic Reflex save). The 10-foot area beneath the head becomes difficult terrain. The hazard then rolls initiative. --- Routine (6 actions) Each Rune Sentry grants the hazard 1 action; a Rune Sentry that’s plummeted or been disabled or destroyed reduces the hazard’s available actions by 1. On the hazard’s turn, all active Rune Sentries spend their action to use Lightning Arc. Lightning Arc one-action] (electricity) One creature (other than the peacock phoenix) within 60 feet of the sentry takes 3d12+19 electricity damage (DC 42 basic Reflex save). A target wearing metal armor or made of metal takes a –1 circumstance penalty to its save; if damaged, they are [clumsy 1 for 1 round. A creature may only be targeted once by a lightning arc each round—any lightning arcs that go unused as a result of there not being enough targets instead restore 20 HP each to the peacock phoenix.",
+   "trait": [
+    "Arcane",
+    "Complex",
+    "Unique"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Hazard",
+    "Rarity"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Complex](/Traits.aspx?ID=30), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Arcane",
+    "Complex",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=774",
+   "weakness": {},
+   "will_save": 35
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-775",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "ac": 39,
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 45  Arcana  (master) to unweave the magic surrounding a statue, DC 48  Athletics  (expert) to wrest a statue’s implement from its hands, DC 48  Thievery  (expert) to slip an implement free, or   dispel magic   (9th rank;  counteract  DC 36) to counteract the magic that empowers the statue. Increase the DCs to disable the Belimarius statue by 2. Each statue must be disabled or counteracted separately, and disabling the Belimarius statue or all nine other statues permanently disables the hazard.  Belimarius Statue AC  42;  Fort  +34,  Ref  +28,  Will  +37   Belimarius Statue Hardness  31;  HP  120 (BT 60);  Immunities   critical hits ,  object immunities , precision damage",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "fortitude_save": 34,
+   "hardness": 29,
+   "hardness_raw": "29; <b>Belimarius Statue Hardness</b> 31 Runelord Statue Hardness",
+   "hp": 100,
+   "hp_raw": "100 (BT 50); <b>HP</b> 120 (BT 60)",
+   "id": "hazard-775",
+   "immunity": [
+    "critical hits",
+    "object immunities",
+    "precision damage"
+   ],
+   "immunity_markdown": "[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage",
+   "level": 18,
+   "markdown": "<title level=\"1\" right=\"Hazard 18\" pfs=\"\">[Covetous Corridor](/Hazards.aspx?ID=775)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 32\n\n**Complexity** Complex\n\n</column>\n\nStatues depicting the runelords of envy steal magic from intruders.\n\n---\n\n**Stealth**\n+35 (master)\n\n**Disable**\nDC 45 [Arcana](/Skills.aspx?ID=35) (master) to unweave the magic surrounding a statue, DC 48 [Athletics](/Skills.aspx?ID=36) (expert) to wrest a statue’s implement from its hands, DC 48 [Thievery](/Skills.aspx?ID=50) (expert) to slip an implement free, or [_dispel magic_](/Spells.aspx?ID=1493) (9th rank; [counteract](/Rules.aspx?ID=3280) DC 36) to counteract the magic that empowers the statue. Increase the DCs to disable the Belimarius statue by 2. Each statue must be disabled or counteracted separately, and disabling the Belimarius statue or all nine other statues permanently disables the hazard.<br />**Belimarius Statue AC** 42; **Fort** +34, **Ref** +28, **Will** +37<br /> **Belimarius Statue Hardness** 31; **HP** 120 (BT 60); **Immunities** [critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n<column gap=\"tiny\">\n\n**AC** 39, **Fort** +34, **Ref** +28, **Will** +37\n\n**Runelord Statue Hardness**\n29\n\n**HP**\n100 (BT 50); **HP** 120 (BT 60)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Covet Magic** <actions string=\"Reaction\" /> **Trigger** A magic item or active spell effect enters the corridor; **Effect** A randomly determined statue uses the hazard’s [Steal](/Actions.aspx?ID=2410) Magic action. The hazard then rolls initiative.\n\n---\n**Routine**\n(4 actions) The hazard uses Steal Magic twice. Once the implements of at least three runelord statues are charged, the hazard uses its next available action to Transfer Magic. If the hazard starts its turn with the Belimarius statue charged, the hazard uses its reaction to Empower Barrier. A disabled runelord statue can’t use Steal Magic. If the Belimarius statue is disabled, the hazard can’t use Transfer Magic or Empower Barrier.<br/>**Steal Magic** <span class=\"action\" title=\"Two Actions\" role=\"img\" aria-label=\"Two Actions\">[two-actions]</span> Roll a d10 to determine which statue activates, rerolling a result of 10 or any result that would indicate a disabled statue or a statue that is already charged. The indicated statue casts _detonate magic_ with a +32 bonus to its counteract check. The spell targets the closest magic item within 120 feet, prioritizing the highest-ranking magic item and targeting spell effects only if no magic item is within range. On a success or critical success, the statue gathers the dispersed energy into its implement, charging it. While the statue’s implement remains charged, any creature who is at least an expert in Arcana, [Nature](/Skills.aspx?ID=43), [Occultism](/Skills.aspx?ID=44), or [Religion](/Skills.aspx?ID=46) can use a 2-action activity with the [concentrate](/Traits.aspx?ID=561) trait to attempt a DC 44 check using that skill. On a success or critical success, they return the magic to its original source, causing it to reactivate. Removing an implement from its statue prevents the statue from using Transfer Magic but doesn’t prevent a creature from restoring the charge to its source.<br/>**Transfer Magic** <span class=\"action\" title=\"Single Action\" role=\"img\" aria-label=\"Single Action\">[one-action]</span> **Requirements** The implements of at least three runelord statues are charged; **Effect** Three statues with charged implements transfer their charges to the Belimarius statue. While the Belimarius statue holds at least one charge, a creature can transfer charges from its implement as described in Steal Magic, except the DC of the skill check increases to DC 46; success returns the stolen magic to the appropriate items.<br/>**Empower Barrier** <span class=\"action\" title=\"Reaction\" role=\"img\" aria-label=\"Reaction\">[reaction]</span> **Requirements** The hazard starts its turn, and the Belimarius statue holds at least one charge;<br/>**Effect** The Belimarius statue transfers all charges from its implement into the force barrier separating the corridor from area **B3**. For every charge the statue transfers, the force barrier gains 10 temporary Hit Points that last for 1 hour. (If the force barrier has been destroyed, the statue instead expends the first charge to cast a 6th-rank _wall of force_, with any remaining charges granting the barrier temporary Hit Points.) Charges transferred to the force barrier are lost forever and can’t be returned to items they were stolen from.\n\n---\n**Reset**\nThe hazard resets automatically if not disabled.",
+   "name": "Covetous Corridor",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 32",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "reflex_save": 28,
+   "release_date": "2025-11-05",
+   "reset": "The hazard resets automatically if not disabled.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 32\n</additional-info>\n\n---\n\n<summary>\nStatues depicting the runelords of envy steal magic from intruders.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 32"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 32",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+35 (master)",
+   "summary": "Statues depicting the runelords of envy steal magic from intruders.",
+   "summary_markdown": "Statues depicting the runelords of envy steal magic from intruders.",
+   "text": " Covetous Corridor Source Pathfinder #220: Crypt of Runes pg. 32 Complexity Complex Statues depicting the runelords of envy steal magic from intruders. --- Stealth +35 (master) Disable DC 45 Arcana (master) to unweave the magic surrounding a statue, DC 48 Athletics (expert) to wrest a statue’s implement from its hands, DC 48 Thievery (expert) to slip an implement free, or dispel magic (9th rank; counteract DC 36) to counteract the magic that empowers the statue. Increase the DCs to disable the Belimarius statue by 2. Each statue must be disabled or counteracted separately, and disabling the Belimarius statue or all nine other statues permanently disables the hazard. Belimarius Statue AC 42; Fort +34, Ref +28, Will +37 Belimarius Statue Hardness 31; HP 120 (BT 60); Immunities critical hits, object immunities, precision damage AC 39, Fort +34, Ref +28, Will +37 Runelord Statue Hardness 29 HP 100 (BT 50); HP 120 (BT 60) Immunities critical hits, object immunities, precision damage Covet Magic Reaction Trigger A magic item or active spell effect enters the corridor; Effect A randomly determined statue uses the hazard’s Steal Magic action. The hazard then rolls initiative. --- Routine (4 actions) The hazard uses Steal Magic twice. Once the implements of at least three runelord statues are charged, the hazard uses its next available action to Transfer Magic. If the hazard starts its turn with the Belimarius statue charged, the hazard uses its reaction to Empower Barrier. A disabled runelord statue can’t use Steal Magic. If the Belimarius statue is disabled, the hazard can’t use Transfer Magic or Empower Barrier. Steal Magic two-actions] Roll a d10 to determine which statue activates, rerolling a result of 10 or any result that would indicate a disabled statue or a statue that is already charged. The indicated statue casts detonate magic with a +32 bonus to its counteract check. The spell targets the closest magic item within 120 feet, prioritizing the highest-ranking magic item and targeting spell effects only if no magic item is within range. On a success or critical success, the statue gathers the dispersed energy into its implement, charging it. While the statue’s implement remains charged, any creature who is at least an expert in Arcana, [Nature, Occultism, or Religion can use a 2-action activity with the concentrate trait to attempt a DC 44 check using that skill. On a success or critical success, they return the magic to its original source, causing it to reactivate. Removing an implement from its statue prevents the statue from using Transfer Magic but doesn’t prevent a creature from restoring the charge to its source. Transfer Magic [one-action] Requirements The implements of at least three runelord statues are charged; Effect Three statues with charged implements transfer their charges to the Belimarius statue. While the Belimarius statue holds at least one charge, a creature can transfer charges from its implement as described in Steal Magic, except the DC of the skill check increases to DC 46; success returns the stolen magic to the appropriate items. Empower Barrier [reaction] Requirements The hazard starts its turn, and the Belimarius statue holds at least one charge; Effect The Belimarius statue transfers all charges from its implement into the force barrier separating the corridor from area B3 . For every charge the statue transfers, the force barrier gains 10 temporary Hit Points that last for 1 hour. (If the force barrier has been destroyed, the statue instead expends the first charge to cast a 6th-rank wall of force , with any remaining charges granting the barrier temporary Hit Points.) Charges transferred to the force barrier are lost forever and can’t be returned to items they were stolen from. --- Reset The hazard resets automatically if not disabled.",
+   "trait": [
+    "Complex",
+    "Magical",
+    "Unique"
+   ],
+   "trait_group": [
+    "Hazard",
+    "Mechanics",
+    "Rarity"
+   ],
+   "trait_markdown": "[Complex](/Traits.aspx?ID=30), [Magical](/Traits.aspx?ID=644), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Complex",
+    "Magical",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=775",
+   "weakness": {},
+   "will_save": 37
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-776",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "category": "hazard",
+   "complexity": "Simple",
+   "disable": "DC 43  Thievery  (expert) to jam the hallway so it can’t tilt; a character who succeeds at a DC 46  Acrobatics  or  Athletics  check can balance or sprint the length of the hallway before it has a chance to tilt. Flying creatures and Tiny creatures don’t trigger the trap. Creative solutions (such as loading the hallway’s western half with an appropriate counterweight) might also disable the trap.",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "hazard_type": "Trap",
+   "id": "hazard-776",
+   "level": 17,
+   "markdown": "<title level=\"1\" right=\"Hazard 17\" pfs=\"\">[The Gullet](/Hazards.aspx?ID=776)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=646\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=715\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 34\n\n**Complexity** Simple\n\n</column>\n\nImages of excessive feasts decorate the walls of the hallway.\n\n---\n\n**Stealth**\nDC 43 (master) to notice the hallway is constructed to tilt on a hinge point halfway down its length\n\n**Disable**\nDC 43 [Thievery](/Skills.aspx?ID=50) (expert) to jam the hallway so it can’t tilt; a character who succeeds at a DC 46 [Acrobatics](/Skills.aspx?ID=34) or [Athletics](/Skills.aspx?ID=36) check can balance or sprint the length of the hallway before it has a chance to tilt. Flying creatures and Tiny creatures don’t trigger the trap. Creative solutions (such as loading the hallway’s western half with an appropriate counterweight) might also disable the trap.\n\n<column gap=\"tiny\">\n\n</column>\n\n**See-saw** <actions string=\"Reaction\" /> **Trigger** The number of PCs in the eastern half of the hallway equals or exceeds the number in the western half; **Effect** The eastern side of the hallway floor tilts at a 45-degree angle, its end descending. Any",
+   "name": "The Gullet",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 34",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=646\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=715\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 34\n</additional-info>\n\n---\n\n<summary>\nImages of excessive feasts decorate the walls of the hallway.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 34"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 34",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "DC 43 (master) to notice the hallway is constructed to tilt on a hinge point halfway down its length",
+   "summary": "Images of excessive feasts decorate the walls of the hallway.",
+   "summary_markdown": "Images of excessive feasts decorate the walls of the hallway.",
+   "text": " The Gullet Source Pathfinder #220: Crypt of Runes pg. 34 Complexity Simple Images of excessive feasts decorate the walls of the hallway. --- Stealth DC 43 (master) to notice the hallway is constructed to tilt on a hinge point halfway down its length Disable DC 43 Thievery (expert) to jam the hallway so it can’t tilt; a character who succeeds at a DC 46 Acrobatics or Athletics check can balance or sprint the length of the hallway before it has a chance to tilt. Flying creatures and Tiny creatures don’t trigger the trap. Creative solutions (such as loading the hallway’s western half with an appropriate counterweight) might also disable the trap. See-saw Reaction Trigger The number of PCs in the eastern half of the hallway equals or exceeds the number in the western half; Effect The eastern side of the hallway floor tilts at a 45-degree angle, its end descending. Any",
+   "trait": [
+    "Mechanical",
+    "Trap",
+    "Unique"
+   ],
+   "trait_group": [
+    "Equipment",
+    "Hazard",
+    "Rarity"
+   ],
+   "trait_markdown": "[Mechanical](/Traits.aspx?ID=646), [Trap](/Traits.aspx?ID=715), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Mechanical",
+    "Trap",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=776",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-777",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 45  Athletics  (legendary) to wedge crumbling stones into cracks to jam the collapsing stairs, DC 48  Thievery  (master) to deface the  hidden  magical runes that power the trap; or   dispel magic   (9th rank,  counteract  DC 36) to counteract a rune; three total successes are required to disable the trap",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "hazard_type": "Trap",
+   "id": "hazard-777",
+   "level": 18,
+   "markdown": "<title level=\"1\" right=\"Hazard 18\" pfs=\"\">[Slothful Stairs](/Hazards.aspx?ID=777)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=715\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 39\n\n**Complexity** Complex\n\n</column>\n\nA supernatural exhaustion fills creatures who climb the stairs.\n\n---\n\n**Stealth**\n+35 (master)\n\n**Disable**\nDC 45 [Athletics](/Skills.aspx?ID=36) (legendary) to wedge crumbling stones into cracks to jam the collapsing stairs, DC 48 [Thievery](/Skills.aspx?ID=50) (master) to deface the [hidden](/Conditions.aspx?ID=79) magical runes that power the trap; or [_dispel magic_](/Spells.aspx?ID=1493) (9th rank, [counteract](/Rules.aspx?ID=3280) DC 36) to counteract a rune; three total successes are required to disable the trap\n\n<column gap=\"tiny\">\n\n</column>\n\n**Collapse** <actions string=\"Reaction\" /> (arcane) **Trigger** A creature inspects the wall at the top of the stairs or begins to descend the stairs after reaching the top; **Effect** The floor at the bottom of the stairwell disappears, revealing a seemingly bottomless pit. Meanwhile, the stairwell begins to collapse, starting from the top and working its way down. Any PC standing on the lower few steps falls into the pit unless they Grab the Edge with a successful DC 40 Reflex save. The trap then rolls initiative.\n\n---\n**Routine**\n(2 actions) The haunt uses Leaden Limbs once, then Crumbling Stairs once.<br/>**Leaden Limbs** <span class=\"action\" title=\"Single Action\" role=\"img\" aria-label=\"Single Action\">[one-action]</span> (arcane) The trap drains vigor from creatures in the stairwell, making their limbs feel as heavy as lead. Each creature in the area must attempt a DC 40 Fortitude saving throw with the following results. \n\n**Critical Success** The creature is unaffected.<br />\n**Success** The creature is [slowed](/Conditions.aspx?ID=92) 1 until the end of their next turn.<br />\n**Failure** The creature’s [clumsy](/Conditions.aspx?ID=61) condition value increases by 1, to a maximum of clumsy 4. The creature is slowed 1 as long as they remain clumsy. The clumsy condition ends as soon as the creature exits the stairwell.<br />\n**Critical Failure** As failure, but the value increases by 2, and the creature is slowed 2.<br/>**Crumbling Stairs** [one-action] A stretch of stairs crumbles, dropping into the void at the bottom of the stairwell. The first time the trap takes this action, the upper third of the stairwell collapses. The second time, the middle third collapses. The third time, the entire stairwell collapses. A creature on a collapsing section of stairs can try to [Grab an Edge](/Actions.aspx?ID=2313) with a DC 40 Reflex save to avoid falling into the void. Flying creatures avoid the fall automatically but might tumble into the void anyway if their [slowed](/Conditions.aspx?ID=92) condition prevents them from taking the Fly action on their turn. Though it appears to stretch forever, the void at the bottom of the stairwell functions as a portal to the Crypt of Sloth. Creatures who plummet into the void experience a fall that seems to take hours, but are eventually deposited in the middle of area **B10**, taking 80 bludgeoning damage from the fall.\n\n---\n**Reset**\nThe trap continues taking Leaden Limbs actions (and the void at the bottom of the stairwell remains open) for as long as creatures remain in the area. Once no creatures remain, the stairwell rebuilds itself, the void closes, and the trap resets.",
+   "name": "Slothful Stairs",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 39",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "release_date": "2025-11-05",
+   "reset": "The trap continues taking Leaden Limbs actions (and the void at the bottom of the stairwell remains open) for as long as creatures remain in the area. Once no creatures remain, the stairwell rebuilds itself, the void closes, and the trap resets.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=715\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 39\n</additional-info>\n\n---\n\n<summary>\nA supernatural exhaustion fills creatures who climb the stairs.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 39"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 39",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+35 (master)",
+   "summary": "A supernatural exhaustion fills creatures who climb the stairs.",
+   "summary_markdown": "A supernatural exhaustion fills creatures who climb the stairs.",
+   "text": " Slothful Stairs Source Pathfinder #220: Crypt of Runes pg. 39 Complexity Complex A supernatural exhaustion fills creatures who climb the stairs. --- Stealth +35 (master) Disable DC 45 Athletics (legendary) to wedge crumbling stones into cracks to jam the collapsing stairs, DC 48 Thievery (master) to deface the hidden magical runes that power the trap; or dispel magic (9th rank, counteract DC 36) to counteract a rune; three total successes are required to disable the trap Collapse Reaction (arcane) Trigger A creature inspects the wall at the top of the stairs or begins to descend the stairs after reaching the top; Effect The floor at the bottom of the stairwell disappears, revealing a seemingly bottomless pit. Meanwhile, the stairwell begins to collapse, starting from the top and working its way down. Any PC standing on the lower few steps falls into the pit unless they Grab the Edge with a successful DC 40 Reflex save. The trap then rolls initiative. --- Routine (2 actions) The haunt uses Leaden Limbs once, then Crumbling Stairs once. Leaden Limbs [one-action] (arcane) The trap drains vigor from creatures in the stairwell, making their limbs feel as heavy as lead. Each creature in the area must attempt a DC 40 Fortitude saving throw with the following results. Critical Success The creature is unaffected. Success The creature is slowed 1 until the end of their next turn. Failure The creature’s clumsy condition value increases by 1, to a maximum of clumsy 4. The creature is slowed 1 as long as they remain clumsy. The clumsy condition ends as soon as the creature exits the stairwell. Critical Failure As failure, but the value increases by 2, and the creature is slowed 2. Crumbling Stairs one-action] A stretch of stairs crumbles, dropping into the void at the bottom of the stairwell. The first time the trap takes this action, the upper third of the stairwell collapses. The second time, the middle third collapses. The third time, the entire stairwell collapses. A creature on a collapsing section of stairs can try to [Grab an Edge with a DC 40 Reflex save to avoid falling into the void. Flying creatures avoid the fall automatically but might tumble into the void anyway if their slowed condition prevents them from taking the Fly action on their turn. Though it appears to stretch forever, the void at the bottom of the stairwell functions as a portal to the Crypt of Sloth. Creatures who plummet into the void experience a fall that seems to take hours, but are eventually deposited in the middle of area B10 , taking 80 bludgeoning damage from the fall. --- Reset The trap continues taking Leaden Limbs actions (and the void at the bottom of the stairwell remains open) for as long as creatures remain in the area. Once no creatures remain, the stairwell rebuilds itself, the void closes, and the trap resets.",
+   "trait": [
+    "Complex",
+    "Magical",
+    "Trap",
+    "Unique"
+   ],
+   "trait_group": [
+    "Hazard",
+    "Mechanics",
+    "Equipment",
+    "Rarity"
+   ],
+   "trait_markdown": "[Complex](/Traits.aspx?ID=30), [Magical](/Traits.aspx?ID=644), [Trap](/Traits.aspx?ID=715), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Complex",
+    "Magical",
+    "Trap",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=777",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-778",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "ac": 39,
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 42  Nature  (legendary) or DC 45  Crafting  (master) to remove an immunity the prison currently has to one of the following damage types: acid, cold, electricity, or fire (this effect lasts until the prison uses its Energy Immunity reaction to regain that immunity); DC 42  Arcana  (master) to fortify the pedestal’s containment runes, preventing the prison from using its Chromatic Eruption action for 1 round and causing it to suffer feedback that inflicts 20 damage (this damage bypasses the prison’s hardness and immunities); DC 42  Thievery  (master) or   dispel magic   (8th rank;  counteract  DC 34) to suppress the pedestal’s containment runes for 1 round, preventing the prison from using its Self-Repair action and causing it to suffer feedback that inflicts 20 damage (this damage bypasses the prison’s hardness and immunities). Unlike most hazards, Aethusa’s prison can’t be disabled, but it can be destroyed by reducing it to 0 Hit Points.",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "fortitude_save": 33,
+   "hardness": 25,
+   "hardness_raw": "25 Hardness",
+   "hazard_type": "Environmental",
+   "hp": 106,
+   "hp_raw": "106 (BT 53)",
+   "id": "hazard-778",
+   "immunity": [
+    "all damage except for acid",
+    "cold",
+    "electricity",
+    "and fire"
+   ],
+   "immunity_markdown": "all damage except for acid, [cold](/Traits.aspx?ID=555), [electricity](/Traits.aspx?ID=586), and fire",
+   "level": 16,
+   "markdown": "<title level=\"1\" right=\"Hazard 16\" pfs=\"\">[Aethusa's Prison](/Hazards.aspx?ID=778)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Environmental\" url=\"/Traits.aspx?ID=591\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 52\n\n**Complexity** Complex\n\n</column>\n\nA roiling sphere of chromatic energy floats above a pedestal marked with arcane symbols.\n\n---\n\n**Stealth**\n+32 (master)\n\n**Disable**\nDC 42 [Nature](/Skills.aspx?ID=43) (legendary) or DC 45 [Crafting](/Skills.aspx?ID=37) (master) to remove an immunity the prison currently has to one of the following damage types: acid, cold, electricity, or fire (this effect lasts until the prison uses its Energy Immunity reaction to regain that immunity); DC 42 [Arcana](/Skills.aspx?ID=35) (master) to fortify the pedestal’s containment runes, preventing the prison from using its Chromatic Eruption action for 1 round and causing it to suffer feedback that inflicts 20 damage (this damage bypasses the prison’s hardness and immunities); DC 42 [Thievery](/Skills.aspx?ID=50) (master) or [_dispel magic_](/Spells.aspx?ID=1493) (8th rank; [counteract](/Rules.aspx?ID=3280) DC 34) to suppress the pedestal’s containment runes for 1 round, preventing the prison from using its Self-Repair action and causing it to suffer feedback that inflicts 20 damage (this damage bypasses the prison’s hardness and immunities). Unlike most hazards, Aethusa’s prison can’t be disabled, but it can be destroyed by reducing it to 0 Hit Points.\n\n<column gap=\"tiny\">\n\n**AC** 39, **Fort** +33, **Ref** +25\n\n**Hardness**\n25\n\n**HP**\n106 (BT 53)\n\n**Immunities**\nall damage except for acid, [cold](/Traits.aspx?ID=555), [electricity](/Traits.aspx?ID=586), and fire\n\n</column>\n\n**Lockdown Protocol** <actions string=\"Reaction\" /> (arcane) **Trigger** The prison takes any damage; **Effect** The prison uses its Chromatic Eruption action as part of this reaction, then gains immunity to the triggering damage type until the hazard resets. The hazard then rolls initiative.\n\n---\n**Routine**\n(2 actions) The prison uses its first action to Self-Repair. If the hazard has less than its maximum Hit Points, it then uses its Chromatic Eruption action.<br/>**Self-Repair** <span class=\"action\" title=\"Single Action\" role=\"img\" aria-label=\"Single Action\">[one-action]</span> (arcane) The prison regains 30 Hit Points. Then, if the prison is at maximum Hit Points, the hazard deactivates and immediately resets.<br/>**Chromatic Eruption** [one-action] (arcane) **Requirement** The prison has less than its maximum Hit Points; **Effect** Tendrils of uncontained magical energy lash at creatures in a 20-foot emanation, dealing 10d6 damage (DC 37 [basic](/Rules.aspx?ID=2297) Reflex save) of a randomly determined type. Roll 1d4: 1–acid, 2–cold, 3–electricity, 4–fire.<br/>**Energy Immunity** <span class=\"action\" title=\"Reaction\" role=\"img\" aria-label=\"Reaction\">[reaction]</span> (arcane) **Trigger** The prison takes acid, cold, electricity, or fire damage; **Effect** The prison takes the damage but then gains immunity to the triggering damage type until the hazard resets.\n\n---\n**Reset**\nThe trap deactivates and then resets automatically when it repairs to its maximum Hit Points.",
+   "name": "Aethusa's Prison",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 52",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "reflex_save": 25,
+   "release_date": "2025-11-05",
+   "reset": "The trap deactivates and then resets automatically when it repairs to its maximum Hit Points.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Environmental\" url=\"/Traits.aspx?ID=591\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 52\n</additional-info>\n\n---\n\n<summary>\nA roiling sphere of chromatic energy floats above a pedestal marked with arcane symbols.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 52"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 52",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+32 (master)",
+   "summary": "A roiling sphere of chromatic energy floats above a pedestal marked with arcane symbols.",
+   "summary_markdown": "A roiling sphere of chromatic energy floats above a pedestal marked with arcane symbols.",
+   "text": " Aethusa's Prison Source Pathfinder #220: Crypt of Runes pg. 52 Complexity Complex A roiling sphere of chromatic energy floats above a pedestal marked with arcane symbols. --- Stealth +32 (master) Disable DC 42 Nature (legendary) or DC 45 Crafting (master) to remove an immunity the prison currently has to one of the following damage types: acid, cold, electricity, or fire (this effect lasts until the prison uses its Energy Immunity reaction to regain that immunity); DC 42 Arcana (master) to fortify the pedestal’s containment runes, preventing the prison from using its Chromatic Eruption action for 1 round and causing it to suffer feedback that inflicts 20 damage (this damage bypasses the prison’s hardness and immunities); DC 42 Thievery (master) or dispel magic (8th rank; counteract DC 34) to suppress the pedestal’s containment runes for 1 round, preventing the prison from using its Self-Repair action and causing it to suffer feedback that inflicts 20 damage (this damage bypasses the prison’s hardness and immunities). Unlike most hazards, Aethusa’s prison can’t be disabled, but it can be destroyed by reducing it to 0 Hit Points. AC 39, Fort +33, Ref +25 Hardness 25 HP 106 (BT 53) Immunities all damage except for acid, cold, electricity, and fire Lockdown Protocol Reaction (arcane) Trigger The prison takes any damage; Effect The prison uses its Chromatic Eruption action as part of this reaction, then gains immunity to the triggering damage type until the hazard resets. The hazard then rolls initiative. --- Routine (2 actions) The prison uses its first action to Self-Repair. If the hazard has less than its maximum Hit Points, it then uses its Chromatic Eruption action. Self-Repair one-action] (arcane) The prison regains 30 Hit Points. Then, if the prison is at maximum Hit Points, the hazard deactivates and immediately resets. Chromatic Eruption [one-action] (arcane) Requirement The prison has less than its maximum Hit Points; Effect Tendrils of uncontained magical energy lash at creatures in a 20-foot emanation, dealing 10d6 damage (DC 37 [basic Reflex save) of a randomly determined type. Roll 1d4: 1–acid, 2–cold, 3–electricity, 4–fire. Energy Immunity [reaction] (arcane) Trigger The prison takes acid, cold, electricity, or fire damage; Effect The prison takes the damage but then gains immunity to the triggering damage type until the hazard resets. --- Reset The trap deactivates and then resets automatically when it repairs to its maximum Hit Points.",
+   "trait": [
+    "Arcane",
+    "Complex",
+    "Environmental",
+    "Unique"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Hazard",
+    "Rarity"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Complex](/Traits.aspx?ID=30), [Environmental](/Traits.aspx?ID=591), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Arcane",
+    "Complex",
+    "Environmental",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=778",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-779",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "ac": 42,
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 48  Athletics  (legendary) to grab one of the comet’s tails and rip it free; DC 45  Occultism  or  Religion  (master) to exorcise the divine energy of the red tail (which is infused with Gorum’s legacy) or the black tail (infused with the nihilism of Abaddon’s Eclipse); DC 45  Arcana  (master) to unweave the magic of the rainbow tail (Xanderghul’s mythic power); or   dispel magic   (9th rank;  counteract  DC 36) to counteract one of the tails. Each tail must be disabled separately to disable the hazard.",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "fortitude_save": 33,
+   "hardness": 30,
+   "hardness_raw": "30 Hardness",
+   "hp": 120,
+   "hp_raw": "120 (BT 60)",
+   "id": "hazard-779",
+   "immunity": [
+    "critical hits",
+    "object immunities",
+    "precision damage"
+   ],
+   "immunity_markdown": "[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage",
+   "level": 18,
+   "markdown": "<title level=\"1\" right=\"Hazard 18\" pfs=\"\">[Trinity Star](/Hazards.aspx?ID=779)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 60\n\n**Complexity** Complex\n\n</column>\n\nA blazing comet with three tails—one red, one black, and one with rainbow hues—careens throughout the area.\n\n---\n\n**Stealth**\n+35 (master)\n\n**Disable**\nDC 48 [Athletics](/Skills.aspx?ID=36) (legendary) to grab one of the comet’s tails and rip it free; DC 45 [Occultism](/Skills.aspx?ID=44) or [Religion](/Skills.aspx?ID=46) (master) to exorcise the divine energy of the red tail (which is infused with Gorum’s legacy) or the black tail (infused with the nihilism of Abaddon’s Eclipse); DC 45 [Arcana](/Skills.aspx?ID=35) (master) to unweave the magic of the rainbow tail (Xanderghul’s mythic power); or [_dispel magic_](/Spells.aspx?ID=1493) (9th rank; [counteract](/Rules.aspx?ID=3280) DC 36) to counteract one of the tails. Each tail must be disabled separately to disable the hazard.\n\n<column gap=\"tiny\">\n\n**AC** 42, **Fort** +33, **Ref** +36\n\n**Hardness**\n30\n\n**HP**\n120 (BT 60)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Starform** <actions string=\"Reaction\" /> (arcane, light) **Trigger** Dream Aethusa has been dead for 10 minutes; **Effect** Dream Aethusa’s body is consumed with mythic energy, transforming into a comet with three blazing tails. All creatures within 120 feet must succeed at a DC 40 Fortitude save to resist becoming [dazzled](/Conditions.aspx?ID=65) for 1 minute (or [blinded](/Conditions.aspx?ID=59) permanently on a critical failure). The hazard then rolls initiative.\n\n---\n**Routine**\n(1 action) The Trinity Star flies at a speed of 60 feet, moving through the spaces of as many creatures as possible. Each creature the Trinity Star moves through must make a DC 42 Reflex save with the following results. \n\n**Critical Success** The creature is unaffected.<br />\n**Success** The creature takes 6d6 force damage.<br />\n**Failure** The creature takes 11d6 force damage and is knocked [prone](/Conditions.aspx?ID=88).<br />\n**Critical Failure** The creature takes 22d6 force damage, is knocked prone, and if the creature is mythic, they lose 1 Mythic Point. If the Trinity Star has lost any of its tails, it regrows one of them (chosen at random if it’s lost two tails).",
+   "name": "Trinity Star",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 60",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "reflex_save": 36,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Arcane\" url=\"/Traits.aspx?ID=534\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 60\n</additional-info>\n\n---\n\n<summary>\nA blazing comet with three tails—one red, one black, and one with rainbow hues—careens throughout the area.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 60"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 60",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+35 (master)",
+   "summary": "A blazing comet with three tails—one red, one black, and one with rainbow hues—careens throughout the area.",
+   "summary_markdown": "A blazing comet with three tails—one red, one black, and one with rainbow hues—careens throughout the area.",
+   "text": " Trinity Star Source Pathfinder #220: Crypt of Runes pg. 60 Complexity Complex A blazing comet with three tails—one red, one black, and one with rainbow hues—careens throughout the area. --- Stealth +35 (master) Disable DC 48 Athletics (legendary) to grab one of the comet’s tails and rip it free; DC 45 Occultism or Religion (master) to exorcise the divine energy of the red tail (which is infused with Gorum’s legacy) or the black tail (infused with the nihilism of Abaddon’s Eclipse); DC 45 Arcana (master) to unweave the magic of the rainbow tail (Xanderghul’s mythic power); or dispel magic (9th rank; counteract DC 36) to counteract one of the tails. Each tail must be disabled separately to disable the hazard. AC 42, Fort +33, Ref +36 Hardness 30 HP 120 (BT 60) Immunities critical hits, object immunities, precision damage Starform Reaction (arcane, light) Trigger Dream Aethusa has been dead for 10 minutes; Effect Dream Aethusa’s body is consumed with mythic energy, transforming into a comet with three blazing tails. All creatures within 120 feet must succeed at a DC 40 Fortitude save to resist becoming dazzled for 1 minute (or blinded permanently on a critical failure). The hazard then rolls initiative. --- Routine (1 action) The Trinity Star flies at a speed of 60 feet, moving through the spaces of as many creatures as possible. Each creature the Trinity Star moves through must make a DC 42 Reflex save with the following results. Critical Success The creature is unaffected. Success The creature takes 6d6 force damage. Failure The creature takes 11d6 force damage and is knocked prone. Critical Failure The creature takes 22d6 force damage, is knocked prone, and if the creature is mythic, they lose 1 Mythic Point. If the Trinity Star has lost any of its tails, it regrows one of them (chosen at random if it’s lost two tails).",
+   "trait": [
+    "Arcane",
+    "Complex",
+    "Mythic",
+    "Unique"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Hazard",
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Arcane](/Traits.aspx?ID=534), [Complex](/Traits.aspx?ID=30), [Mythic](/Traits.aspx?ID=835), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Arcane",
+    "Complex",
+    "Mythic",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=779",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-780",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "ac": 42,
+   "category": "hazard",
+   "complexity": "Simple",
+   "disable": "DC 45  Thievery  (expert) twice to find the  hidden  latches, DC 48  Athletics  (master) to wrench the mask open quickly enough to prevent it from triggering before it’s destroyed,   dispel magic   (9th-rank;  counteract  DC 35), or automatic with Spleen’s key",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "fortitude_save": 36,
+   "hardness": 30,
+   "hardness_raw": "30 Hardness",
+   "hazard_type": "Trap",
+   "hp": 120,
+   "hp_raw": "120 (BT 60)",
+   "id": "hazard-780",
+   "immunity": [
+    "critical hits",
+    "object immunities",
+    "precision damage;  Special  whenever the mask takes damage",
+    "Javownir takes the same damage (DC 44  basic  Reflex save)"
+   ],
+   "immunity_markdown": "[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage; **Special** whenever the mask takes damage, Javownir takes the same damage (DC 44 [basic](/Rules.aspx?ID=2297) Reflex save)",
+   "level": 18,
+   "markdown": "<title level=\"1\" right=\"Hazard 18\" pfs=\"\">[Bittersweet Mask](/Hazards.aspx?ID=780)</title>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=715\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 67\n\n**Complexity** Simple\n\n</column>\n\nThe many iron bars of this iron mask fits tightly around Javownir’s head and snout, looking almost as if it was built in place to conform specifically to the shape of his skull with no apparent latch or hinge for it to be removed.\n\n---\n\n**Stealth**\nDC 45 (master)\n\n**Disable**\nDC 45 [Thievery](/Skills.aspx?ID=50) (expert) twice to find the [hidden](/Conditions.aspx?ID=79) latches, DC 48 [Athletics](/Skills.aspx?ID=36) (master) to wrench the mask open quickly enough to prevent it from triggering before it’s destroyed, [_dispel magic_](/Spells.aspx?ID=1493) (9th-rank; [counteract](/Rules.aspx?ID=3280) DC 35), or automatic with Spleen’s key\n\n<column gap=\"tiny\">\n\n**AC** 42, **Fort** +36, **Ref** +27\n\n**Hardness**\n30\n\n**HP**\n120 (BT 60)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2314), [object immunities](/Rules.aspx?ID=2161), precision damage; **Special** whenever the mask takes damage, Javownir takes the same damage (DC 44 [basic](/Rules.aspx?ID=2297) Reflex save)\n\n</column>\n\n**Toxic Off-gassing** <actions string=\"Reaction\" /> **Trigger** The mask takes damage, or an Athletics check to wrench it free fails or critically fails; **Effect** The mask creates a cloud of poison gas in a 20-foot emanation around Javownir. Creatures in the area take 6d12+41 poison damage (DC 44 basic Fortitude save; Javownir treats the result of this save as one degree of success worse than the rolled result).\n\n---\n**Reset**\nThe mask resets automatically at the start of the round after it is triggered.",
+   "name": "Bittersweet Mask",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 67",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "reflex_save": 27,
+   "release_date": "2025-11-05",
+   "reset": "The mask resets automatically at the start of the round after it is triggered.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=715\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 67\n</additional-info>\n\n---\n\n<summary>\nThe many iron bars of this iron mask fits tightly around Javownir’s head and snout, looking almost as if it was built in place to conform …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 67"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 67",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "DC 45 (master)",
+   "summary": "The many iron bars of this iron mask fits tightly around Javownir’s head and snout, looking almost as if it was built in place to conform …",
+   "summary_markdown": "The many iron bars of this iron mask fits tightly around Javownir’s head and snout, looking almost as if it was built in place to conform …",
+   "text": " Bittersweet Mask Source Pathfinder #220: Crypt of Runes pg. 67 Complexity Simple The many iron bars of this iron mask fits tightly around Javownir’s head and snout, looking almost as if it was built in place to conform specifically to the shape of his skull with no apparent latch or hinge for it to be removed. --- Stealth DC 45 (master) Disable DC 45 Thievery (expert) twice to find the hidden latches, DC 48 Athletics (master) to wrench the mask open quickly enough to prevent it from triggering before it’s destroyed, dispel magic (9th-rank; counteract DC 35), or automatic with Spleen’s key AC 42, Fort +36, Ref +27 Hardness 30 HP 120 (BT 60) Immunities critical hits, object immunities, precision damage; Special whenever the mask takes damage, Javownir takes the same damage (DC 44 basic Reflex save) Toxic Off-gassing Reaction Trigger The mask takes damage, or an Athletics check to wrench it free fails or critically fails; Effect The mask creates a cloud of poison gas in a 20-foot emanation around Javownir. Creatures in the area take 6d12+41 poison damage (DC 44 basic Fortitude save; Javownir treats the result of this save as one degree of success worse than the rolled result). --- Reset The mask resets automatically at the start of the round after it is triggered.",
+   "trait": [
+    "Magical",
+    "Rare",
+    "Trap"
+   ],
+   "trait_group": [
+    "Mechanics",
+    "Rarity",
+    "Equipment",
+    "Hazard"
+   ],
+   "trait_markdown": "[Magical](/Traits.aspx?ID=644), [Rare](/Traits.aspx?ID=683), [Trap](/Traits.aspx?ID=715)",
+   "trait_raw": [
+    "Magical",
+    "Rare",
+    "Trap"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=780",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-781",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 47  Acrobatics  to Fly through the space without becoming stuck in the webs, DC 50  Athletics  to Climb the webs and make progress forward through the infinite, DC 47  Nature  or  Occultism  or DC 50  Arcana  or  Religion  (legendary) to collapse the extradimensional space, or DC 52 Perception to peer through the visions of Golarion to notice discrepancies that help keep the overwhelming despair from setting in; six successes disables the hazard, causing it to vanish forever and shunting all creatures to Liralarue’s Prison.",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "hazard-781",
+   "level": 19,
+   "markdown": "<title level=\"1\" right=\"Hazard 19\" pfs=\"\">[Apocalypse Stormfront](/Hazards.aspx?ID=781)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 70\n\n**Complexity** Complex\n\n</column>\n\nAn endless void stretches in all directions. Visions of Golarion’s destruction roll like storm clouds across the space.\n\n---\n\n**Stealth**\n+37 (legendary)\n\n**Disable**\nDC 47 [Acrobatics](/Skills.aspx?ID=34) to Fly through the space without becoming stuck in the webs, DC 50 [Athletics](/Skills.aspx?ID=36) to Climb the webs and make progress forward through the infinite, DC 47 [Nature](/Skills.aspx?ID=43) or [Occultism](/Skills.aspx?ID=44) or DC 50 [Arcana](/Skills.aspx?ID=35) or [Religion](/Skills.aspx?ID=46) (legendary) to collapse the extradimensional space, or DC 52 Perception to peer through the visions of Golarion to notice discrepancies that help keep the overwhelming despair from setting in; six successes disables the hazard, causing it to vanish forever and shunting all creatures to Liralarue’s Prison.\n\n<column gap=\"tiny\">\n\n</column>\n\n**Brewing Storm** <actions string=\"Reaction\" /> (occult) **Trigger** A creature enters the shaft leading to area **C8**; **Effect** Storm clouds roiling with gouts of fire, bolts of lightning, and the wails of uncountable souls form in the distance. The hazard then rolls initiative.\n\n---\n**Routine**\n(1 action) (arcane, emotion, illusion, mental) A stormfront filled with illusory scenes of Golarion’s destruction rolls through the extradimensional space. Each creature in the hazard’s area takes 6d12 mental damage (DC 42 [basic](/Rules.aspx?ID=2297) Will save). On a failed save, a creature is also [doomed](/Conditions.aspx?ID=67) 1 (doomed 2 on a critical failure). A PC reduced to 0 Hit Points by this damage is shunted back into area **C7**. A creature that takes damage while Climbing the webs must succeed at a DC 40 Fortitude save or fall. A creature can try to [Grab an Edge](/Actions.aspx?ID=2313) (Reflex DC 40). On a success, they lose one success they’ve earned to escape the hazard but otherwise arrest their fall. On a failure, they plummet into the void, losing all Athletics successes they’ve earned to escape the hazard. Each round on their turn, the character can try to Grab an Edge again, but each time they fail to do so, the party must earn an additional success to escape the hazard. Characters who fall [unconscious](/Conditions.aspx?ID=95) or repeatedly fail to Grab an Edge might effectively become lost in the void, though once the nightmare hazard is disabled, they appear along with the rest of the PCs in Liralarue’s Prison.\n\n---\n**Reset**\nThe hazard resets automatically once no creatures are in the area.",
+   "name": "Apocalypse Stormfront",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 70",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "unique",
+   "rarity_id": 4,
+   "release_date": "2025-11-05",
+   "reset": "The hazard resets automatically once no creatures are in the area.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 70\n</additional-info>\n\n---\n\n<summary>\nAn endless void stretches in all directions. Visions of Golarion’s destruction roll like storm clouds across the space.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 70"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 70",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+37 (legendary)",
+   "summary": "An endless void stretches in all directions. Visions of Golarion’s destruction roll like storm clouds across the space.",
+   "summary_markdown": "An endless void stretches in all directions. Visions of Golarion’s destruction roll like storm clouds across the space.",
+   "text": " Apocalypse Stormfront Source Pathfinder #220: Crypt of Runes pg. 70 Complexity Complex An endless void stretches in all directions. Visions of Golarion’s destruction roll like storm clouds across the space. --- Stealth +37 (legendary) Disable DC 47 Acrobatics to Fly through the space without becoming stuck in the webs, DC 50 Athletics to Climb the webs and make progress forward through the infinite, DC 47 Nature or Occultism or DC 50 Arcana or Religion (legendary) to collapse the extradimensional space, or DC 52 Perception to peer through the visions of Golarion to notice discrepancies that help keep the overwhelming despair from setting in; six successes disables the hazard, causing it to vanish forever and shunting all creatures to Liralarue’s Prison. Brewing Storm Reaction (occult) Trigger A creature enters the shaft leading to area C8 ; Effect Storm clouds roiling with gouts of fire, bolts of lightning, and the wails of uncountable souls form in the distance. The hazard then rolls initiative. --- Routine (1 action) (arcane, emotion, illusion, mental) A stormfront filled with illusory scenes of Golarion’s destruction rolls through the extradimensional space. Each creature in the hazard’s area takes 6d12 mental damage (DC 42 basic Will save). On a failed save, a creature is also doomed 1 (doomed 2 on a critical failure). A PC reduced to 0 Hit Points by this damage is shunted back into area C7 . A creature that takes damage while Climbing the webs must succeed at a DC 40 Fortitude save or fall. A creature can try to Grab an Edge (Reflex DC 40). On a success, they lose one success they’ve earned to escape the hazard but otherwise arrest their fall. On a failure, they plummet into the void, losing all Athletics successes they’ve earned to escape the hazard. Each round on their turn, the character can try to Grab an Edge again, but each time they fail to do so, the party must earn an additional success to escape the hazard. Characters who fall unconscious or repeatedly fail to Grab an Edge might effectively become lost in the void, though once the nightmare hazard is disabled, they appear along with the rest of the PCs in Liralarue’s Prison. --- Reset The hazard resets automatically once no creatures are in the area.",
+   "trait": [
+    "Complex",
+    "Mythic",
+    "Nightmare",
+    "Unique"
+   ],
+   "trait_group": [
+    "Hazard",
+    "Mythic",
+    "Creature Type",
+    "Rarity"
+   ],
+   "trait_markdown": "[Complex](/Traits.aspx?ID=30), [Mythic](/Traits.aspx?ID=835), [Nightmare](/Traits.aspx?ID=961), [Unique](/Traits.aspx?ID=723)",
+   "trait_raw": [
+    "Complex",
+    "Mythic",
+    "Nightmare",
+    "Unique"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=781",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-782",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 48  Diplomacy  (master) to talk the affected individual out of the killing fugue, DC 45  Occultism  (legendary) to recognize the spiritual attack taking place and help the victim to resist its effects; four successes are required to disable the nightmare",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "hazard-782",
+   "level": 18,
+   "markdown": "<title level=\"1\" right=\"Hazard 18\" pfs=\"\">[Killing Fugue](/Hazards.aspx?ID=782)</title>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78\n\n**Complexity** Complex\n\n</column>\n\nA vision of a terrifying presence (the King in Yellow, the Crawling Chaos, or some other horror beyond imagining) overwhelms an unfortunate explorer, putting them into waking stupor that quickly turns into a homicidal fugue.\n\n---\n\n**Stealth**\n+26 (expert)\n\n**Disable**\nDC 48 [Diplomacy](/Skills.aspx?ID=39) (master) to talk the affected individual out of the killing fugue, DC 45 [Occultism](/Skills.aspx?ID=44) (legendary) to recognize the spiritual attack taking place and help the victim to resist its effects; four successes are required to disable the nightmare\n\n<column gap=\"tiny\">\n\n</column>\n\n**Deathly Vision** <actions string=\"Reaction\" /> (incapacitation, mental) **Trigger** A living creature approaches within 10 feet of a site associated with the terrifying presence (such as a cairn, an altar, a cave, a strange skeleton, a waterfall, a pit, a statue, etc.); **Effect** The creature must attempt a DC 40 Will save, with the following effects. The hazard then rolls initiative.\n\n**Critical Success** The creature is unaffected.<br />\n**Success** The creature is [stupefied](/Conditions.aspx?ID=94) 1 as long as the Killing Fugue remains active.<br />\n**Failure** The creature is [paralyzed](/Conditions.aspx?ID=85) for 1 round and is stupefied 1 but is capable of whispering to anyone nearby that if anyone touches them, they will die.<br />\n**Critical Failure** As failure but stupefied 2.\n\n---\n**Routine**\n(3 actions; curse) The killing fugue attempts to force a creature under the stupefying effects of deathly vision into taking violent actions against their allies. The affected creature can still take its normal turn of actions on its own turn, but on the killing fugue’s turn they perform actions as decided upon by the GM. The killing fugue then spends the appropriate amount of actions to perform those actions and activities. The affected creature can attempt a DC 40 Will save each time the killing fugue attempts to force them to take actions in this way with the following results. \n\n**Critical Success** The character throws off the killing fugue’s influence, ending the nightmare.<br />\n**Success** The character prevents the killing fugue from taking the attempted action or activity.<br />\n**Failure** The character is forced to take the action or activity chosen by the killing fugue.<br />\n**Critical Failure** As failure, but the character can no longer attempt Will saves to resist the killing fugue.\n\n---\n**Reset**\nAs long as a creature remains under the effects of the nightmare, it cannot reset. Once a creature has either recovered from the effects or died, the nightmare resets in 1d4 rounds.",
+   "name": "Killing Fugue",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 78",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "reset": "As long as a creature remains under the effects of the nightmare, it cannot reset. Once a creature has either recovered from the effects or died, the nightmare resets in 1d4 rounds.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78\n</additional-info>\n\n---\n\n<summary>\nA vision of a terrifying presence (the King in Yellow, the Crawling Chaos, or some other horror beyond imagining) overwhelms an unfortunate explorer, …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 78"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+26 (expert)",
+   "summary": "A vision of a terrifying presence (the King in Yellow, the Crawling Chaos, or some other horror beyond imagining) overwhelms an unfortunate explorer, …",
+   "summary_markdown": "A vision of a terrifying presence (the King in Yellow, the Crawling Chaos, or some other horror beyond imagining) overwhelms an unfortunate explorer, …",
+   "text": " Killing Fugue Source Pathfinder #220: Crypt of Runes pg. 78 Complexity Complex A vision of a terrifying presence (the King in Yellow, the Crawling Chaos, or some other horror beyond imagining) overwhelms an unfortunate explorer, putting them into waking stupor that quickly turns into a homicidal fugue. --- Stealth +26 (expert) Disable DC 48 Diplomacy (master) to talk the affected individual out of the killing fugue, DC 45 Occultism (legendary) to recognize the spiritual attack taking place and help the victim to resist its effects; four successes are required to disable the nightmare Deathly Vision Reaction (incapacitation, mental) Trigger A living creature approaches within 10 feet of a site associated with the terrifying presence (such as a cairn, an altar, a cave, a strange skeleton, a waterfall, a pit, a statue, etc.); Effect The creature must attempt a DC 40 Will save, with the following effects. The hazard then rolls initiative. Critical Success The creature is unaffected. Success The creature is stupefied 1 as long as the Killing Fugue remains active. Failure The creature is paralyzed for 1 round and is stupefied 1 but is capable of whispering to anyone nearby that if anyone touches them, they will die. Critical Failure As failure but stupefied 2. --- Routine (3 actions; curse) The killing fugue attempts to force a creature under the stupefying effects of deathly vision into taking violent actions against their allies. The affected creature can still take its normal turn of actions on its own turn, but on the killing fugue’s turn they perform actions as decided upon by the GM. The killing fugue then spends the appropriate amount of actions to perform those actions and activities. The affected creature can attempt a DC 40 Will save each time the killing fugue attempts to force them to take actions in this way with the following results. Critical Success The character throws off the killing fugue’s influence, ending the nightmare. Success The character prevents the killing fugue from taking the attempted action or activity. Failure The character is forced to take the action or activity chosen by the killing fugue. Critical Failure As failure, but the character can no longer attempt Will saves to resist the killing fugue. --- Reset As long as a creature remains under the effects of the nightmare, it cannot reset. Once a creature has either recovered from the effects or died, the nightmare resets in 1d4 rounds.",
+   "trait": [
+    "Complex",
+    "Nightmare",
+    "Rare"
+   ],
+   "trait_group": [
+    "Hazard",
+    "Creature Type",
+    "Rarity"
+   ],
+   "trait_markdown": "[Complex](/Traits.aspx?ID=30), [Nightmare](/Traits.aspx?ID=961), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Complex",
+    "Nightmare",
+    "Rare"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=782",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-783",
+  "_score": 35.014893,
+  "_ignored": [
+   "disable.keyword"
+  ],
+  "_source": {
+   "category": "hazard",
+   "complexity": "Complex",
+   "disable": "DC 43  Society  (master) to fight these destructive urges by focusing your thoughts on traditions not so steeped in cruelty, or DC 40  Intimidation  (legendary) to overwhelm the nightmare’s influence with the strength of your own personality; three successes are required to disable the nightmare",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "hazard-783",
+   "level": 15,
+   "markdown": "<title level=\"1\" right=\"Hazard 15\" pfs=\"\">[Nightmare Feast](/Hazards.aspx?ID=783)</title>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78\n\n**Complexity** Complex\n\n</column>\n\nThe consumption of sentient, and even sapient creatures is widespread in Leng. Those who suffer such fates are as much the genesis of this nightmare as those who partake, and as such, this nightmare tends to manifest in places where meals were taken, from banquet halls to campsites.\n\n---\n\n**Stealth**\n+30 (master)\n\n**Disable**\nDC 43 [Society](/Skills.aspx?ID=47) (master) to fight these destructive urges by focusing your thoughts on traditions not so steeped in cruelty, or DC 40 [Intimidation](/Skills.aspx?ID=40) (legendary) to overwhelm the nightmare’s influence with the strength of your own personality; three successes are required to disable the nightmare\n\n<column gap=\"tiny\">\n\n</column>\n\n**Invisible Feasters** <actions string=\"Reaction\" /> (mental) **Trigger** A living creature approaches within 10 feet of the remains of a previous feast; **Effect** [Invisible](/Conditions.aspx?ID=83) attackers begin to bite and gnaw at the triggering creature and any other creatures within 30 feet. The creatures take 10d6 slashing damage from the biting (DC 36 [basic](/Rules.aspx?ID=2297) Reflex save), and then the nightmare rolls initiative.\n\n---\n**Routine**\n(1 action) The nightmare transitions from directly chewing on the creatures in the area to compelling them to feed for themselves. Each round on the nightmare’s turn, all creatures within 30 feet of the nightmare’s epicenter must attempt a DC 36 Will save with the following results. \n\n**Critical Success** The creature is unaffected.<br />\n**Success** The nightmare causes a momentary change to the creature’s appearance, causing its jaws to take on a frightening, fanged appearance and filling the creature’s mind with distracting, unsettling hunger that cause them to become [off-guard](/Conditions.aspx?ID=58) until the start of the nightmare feast’s next turn.<br />\n**Failure** The creature becomes [confused](/Conditions.aspx?ID=63) until the start of the nightmare feast’s next turn and gains a +30 bite (magical) that deals 3d12+10 slashing damage plus 2d6 [persistent bleed damage](/Conditions.aspx?ID=86) on a hit. The creature favors this bite Strike when the confusion drives them to attack.<br />\n**Critical Failure** As failure, but the creature also becomes [quickened](/Conditions.aspx?ID=89) and can use the extra action to make bite Strikes.\n\n---\n**Reset**\nThe nightmare deactivates as soon as a round begins with no creatures in its area, and resets in 1d6 rounds.",
+   "name": "Nightmare Feast",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 78",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "reset": "The nightmare deactivates as soon as a round begins with no creatures in its area, and resets in 1d6 rounds.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78\n</additional-info>\n\n---\n\n<summary>\nThe consumption of sentient, and even sapient creatures is widespread in Leng. Those who suffer such fates are as much the genesis of this nightmare …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 78"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 78",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "+30 (master)",
+   "summary": "The consumption of sentient, and even sapient creatures is widespread in Leng. Those who suffer such fates are as much the genesis of this nightmare …",
+   "summary_markdown": "The consumption of sentient, and even sapient creatures is widespread in Leng. Those who suffer such fates are as much the genesis of this nightmare …",
+   "text": " Nightmare Feast Source Pathfinder #220: Crypt of Runes pg. 78 Complexity Complex The consumption of sentient, and even sapient creatures is widespread in Leng. Those who suffer such fates are as much the genesis of this nightmare as those who partake, and as such, this nightmare tends to manifest in places where meals were taken, from banquet halls to campsites. --- Stealth +30 (master) Disable DC 43 Society (master) to fight these destructive urges by focusing your thoughts on traditions not so steeped in cruelty, or DC 40 Intimidation (legendary) to overwhelm the nightmare’s influence with the strength of your own personality; three successes are required to disable the nightmare Invisible Feasters Reaction (mental) Trigger A living creature approaches within 10 feet of the remains of a previous feast; Effect Invisible attackers begin to bite and gnaw at the triggering creature and any other creatures within 30 feet. The creatures take 10d6 slashing damage from the biting (DC 36 basic Reflex save), and then the nightmare rolls initiative. --- Routine (1 action) The nightmare transitions from directly chewing on the creatures in the area to compelling them to feed for themselves. Each round on the nightmare’s turn, all creatures within 30 feet of the nightmare’s epicenter must attempt a DC 36 Will save with the following results. Critical Success The creature is unaffected. Success The nightmare causes a momentary change to the creature’s appearance, causing its jaws to take on a frightening, fanged appearance and filling the creature’s mind with distracting, unsettling hunger that cause them to become off-guard until the start of the nightmare feast’s next turn. Failure The creature becomes confused until the start of the nightmare feast’s next turn and gains a +30 bite (magical) that deals 3d12+10 slashing damage plus 2d6 persistent bleed damage on a hit. The creature favors this bite Strike when the confusion drives them to attack. Critical Failure As failure, but the creature also becomes quickened and can use the extra action to make bite Strikes. --- Reset The nightmare deactivates as soon as a round begins with no creatures in its area, and resets in 1d6 rounds.",
+   "trait": [
+    "Complex",
+    "Nightmare",
+    "Rare"
+   ],
+   "trait_group": [
+    "Hazard",
+    "Creature Type",
+    "Rarity"
+   ],
+   "trait_markdown": "[Complex](/Traits.aspx?ID=30), [Nightmare](/Traits.aspx?ID=961), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Complex",
+    "Nightmare",
+    "Rare"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=783",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-784",
+  "_score": 35.014893,
+  "_source": {
+   "category": "hazard",
+   "complexity": "Simple",
+   "disable": "DC 46  Deception  (master) to distract those (including yourself) compelled to follow footprints, or DC 43  Survival  (legendary) to quickly obscure the trail",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "hazard-784",
+   "level": 17,
+   "markdown": "<title level=\"1\" right=\"Hazard 17\" pfs=\"\">[Unspeakable Impressions](/Hazards.aspx?ID=784)</title>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 79\n\n**Complexity** Simple\n\n</column>\n\nA trail of over-sized footprints crosses the path, markings of the apparently recent passage of a dangerous and mind-shattering entity whose stride is enough to be mistaken for depressions in the natural terrain, and promising destruction to those compelled to follow the tracks.\n\n---\n\n**Stealth**\nDC 46 (master)\n\n**Disable**\nDC 46 [Deception](/Skills.aspx?ID=38) (master) to distract those (including yourself) compelled to follow footprints, or DC 43 [Survival](/Skills.aspx?ID=49) (legendary) to quickly obscure the trail\n\n<column gap=\"tiny\">\n\n</column>\n\n**Beckoning Trail** <actions string=\"Free Action\" /> (mental); **Trigger** A creature crosses over the footprints’ trail; **Effect** The triggering creature suddenly realizes the nature of the immense trail they just stepped into and feels a compulsion to follow the trail to their destination; the triggering creature must attempt a DC 35 Will save with the following results.\n\n**Critical Success** The creature Strides once down the trail before coming to their senses—this movement does not put the creature in any peril or danger.<br />\n**Success** The creature takes its three actions to Stride down the trail. While this movement doesn’t put the creature in any direct peril, when they end the movement, they’re overwhelmed with the knowledge that had they gone further, something horrible would have happened; the creature becomes [stupefied](/Conditions.aspx?ID=94) 1 for 1 hour by the close call.<br />\n**Failure** As success, but the creature becomes [doomed](/Conditions.aspx?ID=67) 1 and also stupefied 1 for 24 hours.<br />\n**Critical Failure** As failure, but doomed 2 and stupefied 2. In addition, at the end of the three Strides, the creature vanishes from view, instantly teleporting to some dangerous area or [hidden](/Conditions.aspx?ID=79) prison. This might be a nearby location that the creature’s allies can discover and rescue them from, or it may be somewhere further away that will require more effort to reach before the victim can be rescued.\n\n---\n**Reset**\nThe unspeakable impressions fade once they are triggered, but reform somewhere else in the vicinity 24 hours later unless they are successfully disabled.",
+   "name": "Unspeakable Impressions",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 79",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "reset": "The unspeakable impressions fade once they are triggered, but reform somewhere else in the vicinity 24 hours later unless they are successfully disabled.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 79\n</additional-info>\n\n---\n\n<summary>\nA trail of over-sized footprints crosses the path, markings of the apparently recent passage of a dangerous and mind-shattering entity whose stride …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 79"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 79",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "DC 46 (master)",
+   "summary": "A trail of over-sized footprints crosses the path, markings of the apparently recent passage of a dangerous and mind-shattering entity whose stride …",
+   "summary_markdown": "A trail of over-sized footprints crosses the path, markings of the apparently recent passage of a dangerous and mind-shattering entity whose stride …",
+   "text": " Unspeakable Impressions Source Pathfinder #220: Crypt of Runes pg. 79 Complexity Simple A trail of over-sized footprints crosses the path, markings of the apparently recent passage of a dangerous and mind-shattering entity whose stride is enough to be mistaken for depressions in the natural terrain, and promising destruction to those compelled to follow the tracks. --- Stealth DC 46 (master) Disable DC 46 Deception (master) to distract those (including yourself) compelled to follow footprints, or DC 43 Survival (legendary) to quickly obscure the trail Beckoning Trail Free Action (mental); Trigger A creature crosses over the footprints’ trail; Effect The triggering creature suddenly realizes the nature of the immense trail they just stepped into and feels a compulsion to follow the trail to their destination; the triggering creature must attempt a DC 35 Will save with the following results. Critical Success The creature Strides once down the trail before coming to their senses—this movement does not put the creature in any peril or danger. Success The creature takes its three actions to Stride down the trail. While this movement doesn’t put the creature in any direct peril, when they end the movement, they’re overwhelmed with the knowledge that had they gone further, something horrible would have happened; the creature becomes stupefied 1 for 1 hour by the close call. Failure As success, but the creature becomes doomed 1 and also stupefied 1 for 24 hours. Critical Failure As failure, but doomed 2 and stupefied 2. In addition, at the end of the three Strides, the creature vanishes from view, instantly teleporting to some dangerous area or hidden prison. This might be a nearby location that the creature’s allies can discover and rescue them from, or it may be somewhere further away that will require more effort to reach before the victim can be rescued. --- Reset The unspeakable impressions fade once they are triggered, but reform somewhere else in the vicinity 24 hours later unless they are successfully disabled.",
+   "trait": [
+    "Nightmare",
+    "Rare"
+   ],
+   "trait_group": [
+    "Creature Type",
+    "Rarity"
+   ],
+   "trait_markdown": "[Nightmare](/Traits.aspx?ID=961), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Nightmare",
+    "Rare"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=784",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "hazard-785",
+  "_score": 35.014893,
+  "_source": {
+   "category": "hazard",
+   "complexity": "Simple",
+   "disable": "DC 51  Stealth  (master) to avoid the initial notice of the gigantic form, or DC 48  Occultism  (legendary) to know the proper posture and hand sign to make to turn away the watcher’s attention",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "hazard-785",
+   "level": 20,
+   "markdown": "<title level=\"1\" right=\"Hazard 20\" pfs=\"\">[Watcher In The Wastes](/Hazards.aspx?ID=785)</title>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 79\n\n**Complexity** Simple\n\n</column>\n\nA massive sculpture of a wolflike form as tall as a mountain guards passage to the Cold Wastes at the northern end of Leng and seems almost ready to come to life at the approach of any creatures.\n\n---\n\n**Stealth**\nDC 48 (master) to realize the mountain is dangerous (DC 0 to see the towering statue in the first place)\n\n**Disable**\nDC 51 [Stealth](/Skills.aspx?ID=48) (master) to avoid the initial notice of the gigantic form, or DC 48 [Occultism](/Skills.aspx?ID=44) (legendary) to know the proper posture and hand sign to make to turn away the watcher’s attention\n\n<column gap=\"tiny\">\n\n</column>\n\n**Dreadful Notice** <actions string=\"Reaction\" /> (incapacitation, mental, occult, visual); **Trigger** A creature comes within a mile of the mountain-sized statue’s base; **Effect** While the Watcher does not actually animate, it fills the triggering creature’s mind with the dread conviction that it might do so at any moment. The triggering creature must attempt a DC 42 Will save, after which they are temporarily immune to that particular Watcher’s Dreadful Notice for 24 hours.\n\n**Critical Success** The creature is unaffected.<br />\n**Success** The creature is [stupefied](/Conditions.aspx?ID=94) 1 for 24 hours.<br />\n**Failure** The creature is stupefied 3 (unlimited duration).<br />\n**Critical Failure** The creature is [paralyzed](/Conditions.aspx?ID=85) with fear with an unlimited duration; as long as the creature remains paralyzed, they need not drink or eat. If they are brought to a location where they no longer have line of sight to the watcher, the paralyzed creature can attempt a new Will save every day to recover from the paralysis, but during this time they are subject to thirst and starvation as normal.\n\n---\n**Reset**\nThe nightmare resets immediately.",
+   "name": "Watcher In The Wastes",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 79",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "reset": "The nightmare resets immediately.",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Nightmare\" url=\"/Traits.aspx?ID=961\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 79\n</additional-info>\n\n---\n\n<summary>\nA massive sculpture of a wolflike form as tall as a mountain guards passage to the Cold Wastes at the northern end of Leng and seems almost ready to …\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 79"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 79",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "stealth": "DC 48 (master) to realize the mountain is dangerous (DC 0 to see the towering statue in the first place)",
+   "summary": "A massive sculpture of a wolflike form as tall as a mountain guards passage to the Cold Wastes at the northern end of Leng and seems almost ready to …",
+   "summary_markdown": "A massive sculpture of a wolflike form as tall as a mountain guards passage to the Cold Wastes at the northern end of Leng and seems almost ready to …",
+   "text": " Watcher In The Wastes Source Pathfinder #220: Crypt of Runes pg. 79 Complexity Simple A massive sculpture of a wolflike form as tall as a mountain guards passage to the Cold Wastes at the northern end of Leng and seems almost ready to come to life at the approach of any creatures. --- Stealth DC 48 (master) to realize the mountain is dangerous (DC 0 to see the towering statue in the first place) Disable DC 51 Stealth (master) to avoid the initial notice of the gigantic form, or DC 48 Occultism (legendary) to know the proper posture and hand sign to make to turn away the watcher’s attention Dreadful Notice Reaction (incapacitation, mental, occult, visual); Trigger A creature comes within a mile of the mountain-sized statue’s base; Effect While the Watcher does not actually animate, it fills the triggering creature’s mind with the dread conviction that it might do so at any moment. The triggering creature must attempt a DC 42 Will save, after which they are temporarily immune to that particular Watcher’s Dreadful Notice for 24 hours. Critical Success The creature is unaffected. Success The creature is stupefied 1 for 24 hours. Failure The creature is stupefied 3 (unlimited duration). Critical Failure The creature is paralyzed with fear with an unlimited duration; as long as the creature remains paralyzed, they need not drink or eat. If they are brought to a location where they no longer have line of sight to the watcher, the paralyzed creature can attempt a new Will save every day to recover from the paralysis, but during this time they are subject to thirst and starvation as normal. --- Reset The nightmare resets immediately.",
+   "trait": [
+    "Nightmare",
+    "Rare"
+   ],
+   "trait_group": [
+    "Creature Type",
+    "Rarity"
+   ],
+   "trait_markdown": "[Nightmare](/Traits.aspx?ID=961), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Nightmare",
+    "Rare"
+   ],
+   "type": "Hazard",
+   "url": "/Hazards.aspx?ID=785",
+   "weakness": {}
+  }
+ }
+]

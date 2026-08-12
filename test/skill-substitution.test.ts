@@ -130,9 +130,20 @@ describe('a record can grant a class feature', () => {
     expect(ownedFeatureIds(build('fighter', 6, { featPicks: { '2:class': 'sneak-attacker' } }), db).has('sneak-attack')).toBe(true);
   });
 
-  it('a CLASS FEATURE can grant one too — the warpriest doctrine grants Divine Defense', () => {
-    expect(ownedFeatureIds(build('cleric', 3, { subclassId: 'warpriest' }), db).has('divine-defense')).toBe(true);
-    expect(ownedFeatureIds(build('cleric', 3, { subclassId: 'cloistered-cleric' }), db).has('divine-defense')).toBe(false);
+  /*
+   * ⚠ This used to assert that a 3rd-level WARPRIEST owns Divine Defense, and that was pinning a
+   * defect. Divine Defense is a 13th-level cleric class feature the class table already grants every
+   * cleric; the warpriest doctrine only riders on it — *"At 13th level, if you gain the Divine
+   * Defense class feature, you also gain expert proficiency in light and medium armor."* Four cleric
+   * records had read that sentence as a grant, so a 1st-level warpriest's sheet listed a 13th-level
+   * feature. The grants are gone; the level gate is asserted in `answered-pickers.test.ts`.
+   *
+   * The lane itself is real and still covered — by a record that genuinely does hand one over.
+   */
+  it('a CLASS FEATURE can grant one too — the exemplar’s Divine Spark grants Shift Immanence', () => {
+    expect(ownedFeatureIds(build('exemplar', 3, {}), db).has('divine-spark-and-ikons')).toBe(true);
+    expect(ownedFeatureIds(build('exemplar', 3, {}), db).has('shift-immanence')).toBe(true);
+    expect(ownedFeatureIds(build('fighter', 3, {}), db).has('shift-immanence')).toBe(false);
   });
 
   it('every id named is a real class feature', () => {

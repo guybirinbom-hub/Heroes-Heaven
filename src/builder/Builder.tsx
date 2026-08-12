@@ -11,7 +11,7 @@ import {
   applyContentToggles,
   applyEditionFilter,
   collectChosenIds,
-  canTakeNewDedication,
+  dedicationBlock,
   checkPrerequisites,
   emptyBuild,
   featChoiceLabel,
@@ -37,7 +37,15 @@ import {
   skillIncreaseCap,
 } from '../rules/build';
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
-import { askedAtDailyPrep, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions } from '../rules/derive';
+import {
+  askedAtDailyPrep,
+  classFeatureIdsOwned,
+  domainPoolForChoice,
+  effectiveChoiceLimits,
+  effectiveChoiceOptions,
+  narrowChoiceOptions,
+  type NarrowedOption,
+} from '../rules/derive';
 import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
@@ -62,6 +70,21 @@ import { WindowControls } from '../sheet/WindowControls';
 import { useUndoableState } from '../useUndoableState';
 import { claimUndo } from '../undoClaim';
 import { descId } from '../rules/play';
+
+/**
+ * A narrowed option as `PopupSelect` wants it.
+ *
+ * `NarrowedOption.disabled` is the REASON string (an option greyed without one is the half-fix Q27
+ * was written against); the picker wants a boolean plus the sentence, so the translation lives in one
+ * place rather than being re-spelled at each of the two call sites.
+ */
+const pickerOption = (o: NarrowedOption) => ({
+  value: o.value,
+  label: featChoiceLabel(o.label),
+  description: o.description,
+  disabled: !!o.disabled,
+  disabledReason: o.disabled,
+});
 
 const FEAT_LABEL: Record<FeatCategory, string> = {
   ancestry: 'Ancestry feat',
@@ -374,8 +397,10 @@ export function Builder({
   const renderChoice = (def: FeatChoiceDef, key: string, recordId: string) => {
                               // Annotated because the branches inside buildChoiceOptions are structurally
                               // different and the generic in choiceOptionsFor would otherwise narrow away `label`.
-                              const opts: { value: string; label: string; description?: string }[] =
+                              const opts: NarrowedOption[] =
                                 buildChoiceOptions(recordId, def, build, content, featPrereqChar, key);
+                              // See the granted-feat picker: a narrowed menu has to say who narrowed it.
+                              const limitReasons = effectiveChoiceLimits(recordId, def, featPrereqChar, content).map((l) => l.reason);
                               return (
                                 <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt, def.flag)}>
                                   {def.kind === 'text' ? (
@@ -434,19 +459,16 @@ export function Builder({
                                           // show it — applied per PICK, after `distinct` has removed the other
                                           // picks' answers, so pick 2 never re-offers what pick 1 typed.
                                           options={withCustomAnswer(
-                                            choiceOptionsFor(opts, def, answers, i).map((o) => ({
-                                              value: o.value,
-                                              label: featChoiceLabel(o.label),
-                                              description: (o as { description?: string }).description,
-                                            })),
+                                            choiceOptionsFor(opts, def, answers, i).map(pickerOption),
                                             def,
                                             answers[i],
                                           )}
                                           addCustom={
-                                            def.allowCustom && {
-                                              ...def.allowCustom,
-                                              onAdd: (text) => actions.setFeatChoice(k, text),
-                                            }
+                                            // Suppressed while a narrowing is in force — see the
+                                            // granted-feat picker for why.
+                                            !limitReasons.length && def.allowCustom
+                                              ? { ...def.allowCustom, onAdd: (text) => actions.setFeatChoice(k, text) }
+                                              : undefined
                                           }
                                         />
                                       ));
@@ -468,6 +490,12 @@ export function Builder({
                                       <span>{def.inert}</span>
                                     </div>
                                   )}
+                                  {limitReasons.map((r) => (
+                                    <div className="choice-inert" key={r}>
+                                      <i className="ti ti-filter" aria-hidden="true" />
+                                      <span>{r}</span>
+                                    </div>
+                                  ))}
                                 </SubCard>
                               );
   };
@@ -548,19 +576,25 @@ export function Builder({
         </SubCard>
       );
     }
-    const opts =
+    const opts: NarrowedOption[] =
       def.kind === 'domains'
         ? domainPoolForChoice(build, content, grantedId, def.domainPool).map((d) => ({ value: d, label: cap(d) }))
         : def.kind === 'skills'
           ? SKILLS.map((s) => ({ value: s, label: cap(s) }))
           : // A granted feat's menu can be widened by another record just like a picked one's — the
             // widening is addressed by record id, and a granted feat has the same id either way.
-            effectiveChoiceOptions(grantedId, def, featPrereqChar, content);
+            // …and NARROWED the same way (ruling Q9). This is where the three narrowing backgrounds
+            // land: Toymaker, Isgeri Reclaimer and Reputation Seeker all restrict a feat they GRANT,
+            // so a limit applied only on the picked-feat path would never have reached them.
+            narrowChoiceOptions(grantedId, def, effectiveChoiceOptions(grantedId, def, featPrereqChar, content), featPrereqChar, content);
     if (!opts.length) return null;
     const label = `${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt, def.flag)}`;
     const answer = build.grantedFeatChoices?.[grantedId] ?? '';
     const setAnswer = (v: string) =>
       actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [grantedId]: v } });
+    // Why the list is short, in the narrowing record's own words. A menu silently cut from 12 entries
+    // to 6 reads as missing content, which is the failure Q27 names from the other direction.
+    const limitReasons = effectiveChoiceLimits(grantedId, def, featPrereqChar, content).map((l) => l.reason);
     return (
       <SubCard key={`gfc-${grantedId}`} icon="ti-adjustments" label={label}>
         <PopupSelect
@@ -570,9 +604,20 @@ export function Builder({
           onChange={setAnswer}
           // Trailblazer's "one terrain you've explored (such as forest or underground)" arrives on this
           // lane, not the slot one — a granted feat's question is as open as a picked one's.
-          options={withCustomAnswer(opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label) })), def, answer)}
-          addCustom={def.allowCustom && { ...def.allowCustom, onAdd: setAnswer }}
+          options={withCustomAnswer(opts.map(pickerOption), def, answer)}
+          // A narrowed list with a "type your own" row is not narrowed. Terrain Stalker carries
+          // `allowCustom` because the book lets a GM name a tenth terrain — but Isgeri Reclaimer says
+          // "either rubble or underbrush", so while its limit is in force the typing row goes away.
+          // `withCustomAnswer` above still shows an answer typed BEFORE the limit existed, rather than
+          // deleting a player's pick behind their back.
+          addCustom={!limitReasons.length && def.allowCustom ? { ...def.allowCustom, onAdd: setAnswer } : undefined}
         />
+        {limitReasons.map((r) => (
+          <div className="choice-inert" key={r}>
+            <i className="ti ti-filter" aria-hidden="true" />
+            <span>{r}</span>
+          </div>
+        ))}
       </SubCard>
     );
   };
@@ -2150,12 +2195,14 @@ export function Builder({
 
       {picker && picker.kind === 'feat' && (() => {
         const isClassSlot = picker.category === 'class';
-        // The "two feats before a new dedication" rule — taken feats excluding this slot.
+        // The archetype dedication rule — taken feats excluding this slot. Evaluated PER CANDIDATE
+        // (ruling Q25): the requirement, its count and its exceptions all come off whichever
+        // dedication the character already has, so there is no slot-wide yes/no to compute here.
         const pickerKey = slotKey(picker.level, picker.category, picker.idx);
         const takenForRule = Object.entries(build.featPicks)
           .filter(([k, v]) => v && k !== pickerKey)
           .map(([, v]) => v);
-        const dedicationOK = canTakeNewDedication(takenForRule, content);
+        const dedBlockedWhy = (f: Feat) => dedicationBlock(takenForRule, f, content);
         const archHidden = isClassSlot && !showArch;
         const feats = eligibleFor(picker)
           // Class slots: hide archetype feats unless the Archetypes toggle is on.
@@ -2169,7 +2216,7 @@ export function Builder({
         // "Hide ineligible" filter predicate — mirrors the row's unmet/allowed logic below.
         const featIneligible = (f: Feat) => {
           if (build.overrides?.allowedFeats?.includes(f.id)) return false;
-          if (f.traits.includes('dedication') && !dedicationOK) return true;
+          if (dedBlockedWhy(f)) return true;
           return !checkPrerequisites(f, featPrereqChar, content).met;
         };
         // "Why is my feat missing?" — everything needed to diff a search against the FULL content
@@ -2279,8 +2326,12 @@ export function Builder({
             }
             renderRow={(f, openDesc) => {
               const pre = checkPrerequisites(f, featPrereqChar, content);
-              // A new dedication is blocked until current archetypes have 2 feats each.
-              const dedBlocked = f.traits.includes('dedication') && !dedicationOK;
+              // A new dedication is blocked until the archetype already started is satisfied. The
+              // SENTENCE is the value, not a boolean: each clause names its own count, its own
+              // archetypes and its own exceptions (ruling Q25), so one fixed "two feats" line was
+              // wrong for Juggler (which asks for one) and for every clause counting a sibling too.
+              const dedBlockedWhyRow = dedBlockedWhy(f);
+              const dedBlocked = !!dedBlockedWhyRow;
               const unmet = !pre.met || dedBlocked;
               // Overrides (creative editing): a feat you don't qualify for isn't dead-greyed — you can
               // "Take anyway", which records this one feat as a deliberate override (no global switch).
@@ -2311,7 +2362,7 @@ export function Builder({
                           disabled, PickerRow prints this same sentence as the shared reason line, and
                           two copies of it read as a rendering bug rather than emphasis. */}
                       {dedBlocked && !(unmet && !allowed && !canOverride) && (
-                        <div className="picker-prereq">Take two feats from your current archetype first.</div>
+                        <div className="picker-prereq">{dedBlockedWhyRow}</div>
                       )}
                       {f.prerequisites && f.prerequisites.length > 0 && (
                         <div className="picker-prereq">
@@ -2356,8 +2407,8 @@ export function Builder({
                   selectDisabled={unmet && !allowed && !canOverride}
                   disabledReason={
                     unmet && !allowed && !canOverride
-                      ? dedBlocked
-                        ? 'Take two feats from your current archetype first.'
+                      ? dedBlockedWhyRow
+                        ? dedBlockedWhyRow
                         : // The "Requires (unmet): …" line above already names them; repeat the
                           // generic sentence only when there is no such line to explain the greying.
                           f.prerequisites?.length
@@ -2370,8 +2421,8 @@ export function Builder({
                       if (!canOverride) return;
                       // Taking a feat you don't qualify for is a deliberate rule-break — confirm it,
                       // and say exactly which prerequisite is being ignored.
-                      const why = dedBlocked
-                        ? 'You need two feats from your current archetype before taking another dedication.'
+                      const why = dedBlockedWhyRow
+                        ? dedBlockedWhyRow
                         : pre.unmet.length
                           ? `Unmet: ${pre.unmet.join('; ')}`
                           : "You don't meet this feat's prerequisites.";

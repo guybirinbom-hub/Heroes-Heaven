@@ -311,3 +311,44 @@ legally pick*), which is a **filtering** rule. They divide like this:
 **Scope: every picker in the app, not only the skill one.** The owner's last sentence makes this a
 sweep, not a one-line fix. Anywhere a control is inert without looking inert is in scope — pickers,
 option lists, buttons, slots.
+
+---
+
+## ⚠ Q25 CORRECTION — my "nothing enforces this" was FALSE
+
+I recorded: *"Nothing in `src/` enforces this — no dedication gate exists anywhere."* **That was wrong,
+and verifiable in one grep.** `canTakeNewDedication` shipped at `src/rules/build.ts:576`, was applied at
+two sites in `Builder.tsx`, and had a test. It blocked every dedication until each started archetype had
+two other feats.
+
+That is the same false-gap error this whole project exists to catch — a claim that something is missing,
+sending someone to build what already works. I made it while warning about it.
+
+**And the underlying rule IS general.** Player Core's Archetypes chapter (AoN rules-1431 / rules-167,
+read from the local archive): *"once you select a dedication feat for an archetype, you must satisfy its
+requirements before you can gain another dedication feat."* The Remaster lifted that boilerplate out of
+each feat into the chapter — **which is exactly why only 13 records still print a clause: they are the
+ones whose requirement DIFFERS.**
+
+So the owner's *"not every archetype has this rule"* is **right about the printed clause and wrong about
+the rule**, and my "228 legal picks would be wrongly blocked" followed only from believing no gate existed.
+
+**What was built, conservatively:** the general two-feat default is KEPT, with the 13 printed clauses
+layered on top as per-record overrides (`Feat.dedicationGate {archetypes, count, except}`), each quoted
+from the archive. Every difference the owner actually named — per-feat archetypes, per-feat exceptions —
+is now driven by the record's own text rather than assumed.
+
+**❓ OPEN FOR THE OWNER:** if you do want no default gate, it is one constant plus deleting a fallback —
+but it would un-gate 213 dedications, so it needs saying explicitly rather than inferring it from my
+wrong note.
+
+**Q28 (owner, 2026-08-11), superseding the correction above:** *"not every dedication keeps the general
+two-feat gate — only feats that say it. When we audit the feats it needs to be one of the systems that
+the audit marks."*
+
+Applied: the general default is **removed**; only the 14 records printing the Special clause gate.
+`dedicationGate` is now a lane in `docs/mechanic-lanes.md`, so the feat audit checks it like any other.
+
+⚠ Two tests asserted the old default and were rewritten, each keeping a comment on what it used to
+claim — `test/polish.test.ts` and `test/dedication-gate.test.ts`. They would otherwise have vouched for
+behaviour the owner rejected.

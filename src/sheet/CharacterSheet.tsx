@@ -30,7 +30,7 @@ import { CustomizeModal } from './CustomizeModal';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { useIsMobile } from './useIsMobile';
-import { usePortrait } from './usePortrait';
+import { useAvatar, usePortrait } from './usePortrait';
 import { PartyPage } from './PartyPage';
 import { loadCampaigns } from '../data/storage';
 import { useBackHandler } from './useEscapeClose';
@@ -183,6 +183,9 @@ export function CharacterSheet({
   const bodyRef = useRef<HTMLDivElement>(null);
   const [partyOpen, setPartyOpen] = useState(false);
   const isMobile = useIsMobile();
+  // Notes fill the sheet: no vitals rail, and the body stops scrolling so the page list and the editor
+  // own their own scroll (a note is as long as you make it — the whole sheet shouldn't grow with it).
+  const notesFull = tab === 'Notes' && custom.notesShowRail !== true;
   // Desktop tab strip: when there are more tabs than fit, show ◂ / ▸ buttons to scroll the row.
   const tabsRef = useRef<HTMLElement>(null);
   const [tabScroll, setTabScroll] = useState({ left: false, right: false });
@@ -310,20 +313,24 @@ export function CharacterSheet({
       consumable: custom.consumableColor ?? null,
     });
     document.documentElement.classList.toggle('sb-accent', !!custom.scrollbarAccent);
-    if (custom.zoom != null) applyZoomOverlay(custom.zoom);
+    // A per-character zoom is a phone setting now: on desktop the zoom control is gone (Ctrl +/− owns
+    // it), and honouring a stored override there would silently fight every Ctrl+wheel the moment this
+    // effect re-ran. The stored value is left alone so a phone still uses it.
+    if (isMobile && custom.zoom != null) applyZoomOverlay(custom.zoom);
     else applyGlobalZoom();
     return () => {
       applyGlobalCustomizationDom();
       applyGlobalZoom();
     };
-  }, [primarySheet, custom.themeId, custom.styleId, custom.density, custom.fontId, custom.accentColor, custom.consumableColor, custom.scrollbarAccent, custom.zoom]);
+  }, [primarySheet, isMobile, custom.themeId, custom.styleId, custom.density, custom.fontId, custom.accentColor, custom.consumableColor, custom.scrollbarAccent, custom.zoom]);
   // Reset the positive-modifier "+" display flag to its default when leaving the sheet (primary only).
   useEffect(() => {
     if (!primarySheet) return;
     return () => setPlusOnMods(true);
   }, [primarySheet]);
-  // Start each tab at the top. Desktop scrolls the window; on mobile the shell is position:fixed and
-  // the inner .body element is the scroller — reset both so the switch always lands at the top.
+  // Start each tab at the top. The shell is clamped to the viewport on both desktop and mobile now, so
+  // the inner .body element is the scroller — the window reset is kept for any layout that still scrolls
+  // the document (and costs nothing when it doesn't).
   useEffect(() => {
     window.scrollTo(0, 0);
     if (bodyRef.current) bodyRef.current.scrollTop = 0;
@@ -375,8 +382,10 @@ export function CharacterSheet({
   const cls = character.classId ? content.classes[character.classId] : undefined;
   const initials = character.name.slice(0, 2).toUpperCase();
   const portrait = character.appearance?.portrait;
-  // On-device sharp copy (installed app) when present, else the compressed/synced one.
+  // On-device sharp copy (installed app) when present, else the compressed/synced one. Used for the
+  // full-size lightbox; the little round avatar beside the name uses the player's own square crop.
   const shownPortrait = usePortrait(character.appearance?.portraitRef, portrait);
+  const avatar = useAvatar(character.appearance);
 
   // Lets description popups anywhere in the sheet offer a "favorite" star (only in play mode).
   const pinApi: PinDescApi | null = useMemo(() => {
@@ -448,7 +457,7 @@ export function CharacterSheet({
             aria-label="View portrait full size"
             onClick={() => setPortraitOpen(true)}
           >
-            <img src={shownPortrait} alt="" className="portrait-img" />
+            <img src={avatar} alt="" className="portrait-img" />
           </button>
         ) : (
           <div className="portrait" data-shape={custom.portraitShape ?? 'circle'}>{initials}</div>
@@ -640,8 +649,10 @@ export function CharacterSheet({
         )}
       </div>
 
-      <div className="body" ref={bodyRef}>
-        {(!isMobile || tab === 'Main') && (
+      {/* Notes get the whole width and own their scrolling: the rail is a play surface and this is a
+          writing one (Customize → "Vitals rail on Notes" brings it back). */}
+      <div className={'body' + (notesFull ? ' body-notes' : '')} ref={bodyRef}>
+        {(!isMobile || tab === 'Main') && !notesFull && (
           <VitalsRail character={character} content={content} charKey={charKey} onPlay={onPlay} onOpenStat={setStatRef} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} />
         )}
         <main className="content">
@@ -660,7 +671,7 @@ export function CharacterSheet({
           ) : tab === 'Notes' ? (
             <NotesTab character={character} onPlay={onPlay} hidePrivate={readOnly} />
           ) : tab === 'Companions' ? (
-            <CompanionsTab character={character} content={content} onPlay={onPlay} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} charKey={charKey} />
+            <CompanionsTab character={character} content={content} onPlay={onPlay} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} charKey={charKey} />
           ) : (
             // Every tab in TABS has a branch above; this is just a safe neutral fallback.
             <MainTab character={character} content={content} onPlay={onPlay} onRoll={rollCheckFn} onOpenStat={setStatRef} />

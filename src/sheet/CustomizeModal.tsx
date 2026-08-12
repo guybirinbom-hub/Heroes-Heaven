@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import type { Character, Customization } from '../rules/types';
 import { effectiveCustomization, isCustomizationEmpty, withCustomizationField, setGlobalCustomization, densityStyleId } from '../data/customization';
 import { getAppearance, setTheme, setStyle, setFont, setAccent } from '../theme/theme-manager';
@@ -23,6 +24,12 @@ export function CustomizeModal({
   onCustomize: (fn: (c: Character) => Character) => void;
   onClose: () => void;
 }) {
+  // Only the drawer's own scrollbar should be drawn while it's open — see :root.cust-open in tokens.css.
+  useEffect(() => {
+    document.documentElement.classList.add('cust-open');
+    return () => document.documentElement.classList.remove('cust-open');
+  }, []);
+
   const override = character.customization;
   const customized = !isCustomizationEmpty(override);
   const app = getAppearance();
@@ -98,7 +105,6 @@ export function CustomizeModal({
             <i className="ti ti-rotate" aria-hidden="true" /> Reset
           </button>
         </div>
-        {!customized && <p className="settings-desc cust-drawer-note">This character follows the global default.</p>}
         <div className="cust-drawer-body">
           <CustomizationEditor value={override ?? {}} base={base} onChange={onChangeOverride} scope="character" />
         </div>

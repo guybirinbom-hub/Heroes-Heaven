@@ -1,0 +1,545 @@
+[
+ {
+  "bucket": "spells",
+  "key": "create-mycoguardian",
+  "name": "Create Mycoguardian",
+  "parentDocId": "creature-family-340",
+  "parentName": "Sporeborn",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "amulet-of-the-slumberer",
+  "name": "Amulet of the Slumberer",
+  "parentDocId": "action-4227",
+  "parentName": "(occult, water)",
+  "tried": 3,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "basic-ingredient",
+  "name": "Basic Ingredient",
+  "parentDocId": "action-1476",
+  "parentName": "Hunt and Gather",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "cutlery",
+  "name": "Cutlery",
+  "parentDocId": "creature-912",
+  "parentName": "Servant",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "cytillesh-toolkit",
+  "name": "Cytillesh Toolkit",
+  "parentDocId": "creature-2903",
+  "parentName": "Dero Strangler",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "fingerprint-kit",
+  "name": "Fingerprint Kit",
+  "parentDocId": "equipment-797",
+  "parentName": "Fingerprinting Kit",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "fireworks-display",
+  "name": "Fireworks Display",
+  "parentDocId": "feat-3247",
+  "parentName": "Expert Fireworks Crafter",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "gamtu-hat",
+  "name": "Gamtu Hat",
+  "parentDocId": "feat-6828",
+  "parentName": "Glorious Gamtu",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "ka-stone",
+  "name": "Ka Stone",
+  "parentDocId": "feat-889",
+  "parentName": "Ka Stone Ritual",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "light-barding",
+  "name": "Light Barding",
+  "parentDocId": "equipment-4010",
+  "parentName": "Anti-Dragon Barding",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "rounds-flintlock-pistol",
+  "name": "Rounds (Flintlock Pistol)",
+  "parentDocId": "creature-2054",
+  "parentName": "Rust Hag",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "rounds-hand-cannon",
+  "name": "Rounds (Hand Cannon)",
+  "parentDocId": "weapon-523",
+  "parentName": "Hand Cannon",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "rounds-jezail",
+  "name": "Rounds (Jezail)",
+  "parentDocId": "weapon-582",
+  "parentName": "Jezail",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "signifers-mask",
+  "name": "Signifer's Mask",
+  "parentDocId": "feat-1085",
+  "parentName": "Signifer's Sight",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "smoky-hag-eye",
+  "name": "Smoky Hag Eye",
+  "parentDocId": "equipment-935",
+  "parentName": "Hag Eye",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "spare-wax-cylinder",
+  "name": "Spare Wax Cylinder",
+  "parentDocId": "equipment-764",
+  "parentName": "Clockwork Recorder",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "special-ingredient",
+  "name": "Special Ingredient",
+  "parentDocId": "rules-1893",
+  "parentName": "Ingredients",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "splendid-skull-mask",
+  "name": "Splendid Skull Mask",
+  "parentDocId": "feat-2424",
+  "parentName": "Skull Creeper",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "starless-scope-lens",
+  "name": "Starless Scope Lens",
+  "parentDocId": "equipment-954",
+  "parentName": "Starless Scope",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "stony-hag-eye",
+  "name": "Stony Hag Eye",
+  "parentDocId": "equipment-935",
+  "parentName": "Hag Eye",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "submersible-helmet",
+  "name": "Submersible Helmet",
+  "parentDocId": "equipment-2337",
+  "parentName": "Submersible Helm",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "versatile-vial",
+  "name": "Versatile Vial",
+  "parentDocId": "feat-5767",
+  "parentName": "Improvise Admixture",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "items",
+  "key": "makeshift-staff",
+  "name": "Makeshift Staff",
+  "parentDocId": "arcane-thesis-5",
+  "parentName": "Staff Nexus",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "catharsis-emotion",
+  "name": "Catharsis Emotion",
+  "parentDocId": "feat-2963",
+  "parentName": "Cathartic Mage Dedication",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "curse-of-the-living-death",
+  "name": "Curse of the Living Death",
+  "parentDocId": "mystery-3",
+  "parentName": "Bones",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "earth-gate",
+  "name": "Earth Gate",
+  "parentDocId": "creature-2788",
+  "parentName": "Shrine Maiden",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "echoes-of-the-spells",
+  "name": "Echoes of the Spells",
+  "parentDocId": "class-feature-442",
+  "parentName": "Double Spellstrike ",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "elemental-magic",
+  "name": "Elemental Magic",
+  "parentDocId": "feat-4345",
+  "parentName": "Expanded Elemental Magic",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "elemental-school",
+  "name": "Elemental School",
+  "parentDocId": "archetype-207",
+  "parentName": "Elementalist",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "first-doctrine",
+  "name": "First Doctrine",
+  "parentDocId": "category-page-103",
+  "parentName": "Doctrines",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "life-draining",
+  "name": "Life-Draining",
+  "parentDocId": "spell-1403",
+  "parentName": "Life-Draining Roots",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "metal-gate",
+  "name": "Metal Gate",
+  "parentDocId": "hazard-313",
+  "parentName": "Electrified Gate",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "witch-lessons",
+  "name": "Witch Lessons",
+  "parentDocId": "class-feature-397",
+  "parentName": "Hexes",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "coiling-serpents",
+  "name": "Coiling Serpents",
+  "parentDocId": "feat-7164",
+  "parentName": "Binding Serpents Celestial Arrow",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "heavy-is-the-crown",
+  "name": "Heavy is the Crown",
+  "parentDocId": "source-210",
+  "parentName": "Pathfinder #195: Heavy is the Crown",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "mark-the-center",
+  "name": "Mark the Center",
+  "parentDocId": "feat-7171",
+  "parentName": "Breath of Vital Ash",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "classFeatures",
+  "key": "plant-thirty-barbs",
+  "name": "Plant Thirty Barbs",
+  "parentDocId": "feat-7188",
+  "parentName": "Branched Tree Of Pain",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "feats",
+  "key": "remember-their-names",
+  "name": "Remember Their Names",
+  "parentDocId": "action-847",
+  "parentName": "envision",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "feats",
+  "key": "innate-magical-intuition",
+  "name": "Innate Magical Intuition",
+  "parentDocId": "feat-2233",
+  "parentName": "Innate Magic Intuition",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "feats",
+  "key": "master-summoning-spellcasting",
+  "name": "Master Summoning Spellcasting",
+  "parentDocId": "feat-2961",
+  "parentName": "Master Summoner Spellcasting",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "feats",
+  "key": "armored-regiment-training",
+  "name": "Armored Regiment Training",
+  "parentDocId": "feat-7792",
+  "parentName": "Armor Regiment Training",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "heritages",
+  "key": "ambitious-human",
+  "name": "Ambitious Human",
+  "parentDocId": "category-page-6",
+  "parentName": "Ancestries",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "backgrounds",
+  "key": "wish-for-riches",
+  "name": "Wish for Riches",
+  "parentDocId": "background-580",
+  "parentName": "Wishes for Riches",
+  "tried": 2,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "manifest-realm",
+  "name": "Manifest Realm",
+  "parentDocId": "feat-7323",
+  "parentName": "Manipulate Realm",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "swirl-crimson-shroud",
+  "name": "Swirl Crimson Shroud",
+  "parentDocId": "feat-6521",
+  "parentName": "Crimson Shroud",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "bond-with-spirit",
+  "name": "Bond with Spirit",
+  "parentDocId": "feat-7571",
+  "parentName": "Rivethun Emissary Dedication",
+  "tried": 3,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "conjure-bullet",
+  "name": "Conjure Bullet",
+  "parentDocId": "way-11",
+  "parentName": "Way of the Spellshot",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "aegis-of-envy",
+  "name": "Aegis of Envy",
+  "parentDocId": "feat-9411",
+  "tried": 1,
+  "why": "parent doc not in the export"
+ },
+ {
+  "bucket": "actions",
+  "key": "convocation-of-greed",
+  "name": "Convocation of Greed",
+  "parentDocId": "feat-9413",
+  "tried": 1,
+  "why": "parent doc not in the export"
+ },
+ {
+  "bucket": "actions",
+  "key": "gluttonous-feast",
+  "name": "Gluttonous Feast",
+  "parentDocId": "feat-9412",
+  "tried": 1,
+  "why": "parent doc not in the export"
+ },
+ {
+  "bucket": "actions",
+  "key": "host-of-wrath",
+  "name": "Host of Wrath",
+  "parentDocId": "feat-9416",
+  "tried": 1,
+  "why": "parent doc not in the export"
+ },
+ {
+  "bucket": "actions",
+  "key": "sorshens-devotion",
+  "name": "Sorshen's Devotion",
+  "parentDocId": "feat-9414",
+  "tried": 1,
+  "why": "parent doc not in the export"
+ },
+ {
+  "bucket": "actions",
+  "key": "summon-sloth",
+  "name": "Summon Sloth",
+  "parentDocId": "feat-9415",
+  "tried": 1,
+  "why": "parent doc not in the export"
+ },
+ {
+  "bucket": "actions",
+  "key": "hunt-runelord",
+  "name": "Hunt Runelord",
+  "parentDocId": "background-565",
+  "parentName": "Runelord Survivor",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "coiling-serpents",
+  "name": "Coiling Serpents",
+  "parentDocId": "feat-7164",
+  "parentName": "Binding Serpents Celestial Arrow",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "heavy-is-the-crown",
+  "name": "Heavy is the Crown",
+  "parentDocId": "source-210",
+  "parentName": "Pathfinder #195: Heavy is the Crown",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "mark-the-center",
+  "name": "Mark the Center",
+  "parentDocId": "feat-7171",
+  "parentName": "Breath of Vital Ash",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "actions",
+  "key": "plant-thirty-barbs",
+  "name": "Plant Thirty Barbs",
+  "parentDocId": "feat-7188",
+  "parentName": "Branched Tree Of Pain",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "animalCompanions",
+  "key": "construct-companion",
+  "name": "Construct Companion",
+  "parentDocId": "feat-8567",
+  "parentName": "Incredible Construct Companion",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "vehicles",
+  "key": "warship",
+  "name": "Warship",
+  "parentDocId": "rules-3119",
+  "parentName": "Movement and Heading",
+  "tried": 4,
+  "why": "no matching section in any candidate parent"
+ },
+ {
+  "bucket": "vehicles",
+  "key": "second-kiss",
+  "name": "Second Kiss",
+  "parentDocId": "hazard-172",
+  "parentName": "Second Kiss Engine",
+  "tried": 1,
+  "why": "no matching section in any candidate parent"
+ }
+]

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import type { ContentDatabase, Item, ModeDef } from '../rules/types';
+import type { CharacterAppearance, ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { deriveMaxHp } from '../rules/derive';
@@ -7,7 +7,7 @@ import { exportWg, exportNative, importCharacter, type ImportReport } from '../d
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { sanitizeImportedPortrait } from './imageUtil';
-import { usePortrait } from './usePortrait';
+import { useAvatar } from './usePortrait';
 import { confirmDialog, chooseDialog } from './confirm';
 import { HeroesHeavenLogo } from './Logo';
 import { downloadText } from './download';
@@ -16,9 +16,10 @@ type Filter = 'all' | 'active' | 'archived';
 
 /** A roster card's portrait — shows the on-device sharp copy when present, else the compressed one,
  *  else the initials. Its own component so it can use the portrait hook inside the roster's map(). */
-function RosterCardPortrait({ portrait, portraitRef, initials }: { portrait?: string; portraitRef?: string; initials: string }) {
-  const shown = usePortrait(portraitRef, portrait);
-  return portrait ? <img src={shown} alt="" /> : <>{initials}</>;
+function RosterCardPortrait({ appearance, initials }: { appearance?: CharacterAppearance; initials: string }) {
+  // A card's portrait is a small square, so it wants the player's own avatar crop (see useAvatar).
+  const shown = useAvatar(appearance);
+  return shown ? <img src={shown} alt="" /> : <>{initials}</>;
 }
 
 function fileSlug(name: string): string {
@@ -236,7 +237,7 @@ export function RosterScreen({
               <div className={'rcard' + (c.id === activeId ? ' active' : '')} key={c.id}>
                 <button className="rcard-open" onClick={() => onOpen(c.id)} title="Open character sheet">
                   <span className="rcard-portrait">
-                    <RosterCardPortrait portrait={ch.appearance?.portrait} portraitRef={ch.appearance?.portraitRef} initials={initials} />
+                    <RosterCardPortrait appearance={ch.appearance} initials={initials} />
                   </span>
                   <div className="rcard-info">
                     <div className="rcard-name">

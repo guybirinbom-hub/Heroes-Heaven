@@ -57,6 +57,8 @@ export function computeSummary(c: Character, content: ContentDatabase): PartySum
       value: cond.value,
     })),
     modes: (c.activeModes ?? []).map((m) => m.name).filter(Boolean),
-    portrait: c.appearance?.portrait,
+    // The party list draws this in a small round slot, so send the player's own square crop when they
+    // made one — a centre crop of a full-body portrait shows a torso to the rest of the table.
+    portrait: c.appearance?.avatar ?? c.appearance?.portrait,
   };
 }

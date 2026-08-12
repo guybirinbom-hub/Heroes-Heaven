@@ -1,0 +1,43 @@
+[
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "source-284",
+  "_score": 35.014893,
+  "_source": {
+   "category": "source",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "source-284",
+   "markdown": "<title level=\"1\" right=\"Source\">[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284)</title>\n\n<column gap=\"tiny\">\n\n**Product Page** [paizo.com](https://store.paizo.com/pathfinder-adventure-path-220-crypt-of-runes-revenge-of-the-runelords-2-of-3-pdf/)\n\n<row>\n**Release Date** <date value=\"2025-11-05\" />\n</row>\n\n**Product Line** Adventure Paths\n\n**Source Group** Revenge of the Runelords\n\n</column>",
+   "name": "Pathfinder #220: Crypt of Runes",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "common",
+   "rarity_id": 1,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<additional-info>\n**Product Page** [paizo.com](https://store.paizo.com/pathfinder-adventure-path-220-crypt-of-runes-revenge-of-the-runelords-2-of-3-pdf/)\n\n<row>\n**Release Date** <date value=\"2025-11-05\" />\n</row>\n\n**Product Line** Adventure Paths\n\n**Source Group** Revenge of the Runelords\n</additional-info>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284)",
+   "speed": {},
+   "text": " Pathfinder #220: Crypt of Runes Product Page paizo.com Release Date Product Line Adventure Paths Source Group Revenge of the Runelords\n",
+   "type": "Source",
+   "url": "/Sources.aspx?ID=284",
+   "weakness": {}
+  }
+ }
+]

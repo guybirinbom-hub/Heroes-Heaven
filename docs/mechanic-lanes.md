@@ -246,3 +246,17 @@ random sampling were exactly this shape — a wand keyed to rank 6 when its text
 
 So this is a complement to the nine field-comparison checks in `npm run verify`, not a replacement.
 The two instruments are blind to opposite things.
+
+### `dedicationGate` — a Special clause restricting further dedications
+
+| lane | the text says | satisfied by |
+|---|---|---|
+| `dedicationGate` | *"**Special** You cannot select another dedication feat other than X until you have gained two other feats from the Y archetype."* | `Feat.dedicationGate {archetypes, count, except}` |
+
+⚠ **Owner ruling Q28: only a feat that PRINTS the clause gates.** 14 of 240 live dedications do.
+Player Core's Archetypes chapter states the rule generally and the Remaster lifted the boilerplate out
+of the individual feats — which is why so few still print one — but the owner has ruled that here the
+printed clause is the whole rule. Do not restore a default gate; it would silently block 213 dedications.
+
+Each clause names its own archetype(s), its own count and its own exception, so the gate is read from
+the record's text and never inferred. Sibling archetypes count into ONE pool.

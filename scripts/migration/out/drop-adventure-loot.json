@@ -1,0 +1,708 @@
+{
+ "decision": "USER DECISION 2026-08-10: drop. One-off adventure loot, not character-building content, and present only because Foundry ships every item in an adventure module.",
+ "count": 117,
+ "records": [
+  {
+   "key": "abrogail-i-script",
+   "name": "Abrogail I Script",
+   "book": "Pathfinder Adventure Path: Hellbreakers",
+   "bookInArchive": 0
+  },
+  {
+   "key": "advanced-book-of-translation-tien",
+   "name": "Advanced Book of Translation (Tien)",
+   "book": "Pathfinder Lost Omens Pathfinder Society Guide",
+   "bookInArchive": 0
+  },
+  {
+   "key": "astrolabe-of-the-falling-stars",
+   "name": "Astrolabe of the Falling Stars",
+   "book": "Pathfinder Adventure Path: Gatewalkers",
+   "bookInArchive": 0
+  },
+  {
+   "key": "bakuwa-lizardfolk-bony-plates",
+   "name": "Bakuwa Lizardfolk Bony Plates",
+   "book": "Pathfinder Lost Omens Tian Xia Character Guide",
+   "bookInArchive": 570
+  },
+  {
+   "key": "blightburn-necklace",
+   "name": "Blightburn Necklace",
+   "book": "Pathfinder #155: Lord of the Black Sands",
+   "bookInArchive": 54
+  },
+  {
+   "key": "cinnamon-nostalgia-bun",
+   "name": "Cinnamon Nostalgia Bun",
+   "book": "Pathfinder Adventures: Troubles in Grayce",
+   "bookInArchive": 0
+  },
+  {
+   "key": "conductors-instrument",
+   "name": "Conductor's Instrument",
+   "book": "Pathfinder Beginner Box: Secrets of the Unlit Star",
+   "bookInArchive": 0
+  },
+  {
+   "key": "cordelias-greater-construct-key",
+   "name": "Cordelia's Greater Construct Key",
+   "book": "Pathfinder Lost Omens Pathfinder Society Guide",
+   "bookInArchive": 0
+  },
+  {
+   "key": "duskwood-violin-by-a-legend",
+   "name": "Duskwood violin by a legend",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "energy-robe-of-acid",
+   "name": "Energy Robe of Acid",
+   "book": "Pathfinder Lost Omens The Grand Bazaar",
+   "bookInArchive": 0
+  },
+  {
+   "key": "energy-robe-of-cold",
+   "name": "Energy Robe of Cold",
+   "book": "Pathfinder Lost Omens The Grand Bazaar",
+   "bookInArchive": 0
+  },
+  {
+   "key": "energy-robe-of-electricity",
+   "name": "Energy Robe of Electricity",
+   "book": "Pathfinder Lost Omens The Grand Bazaar",
+   "bookInArchive": 0
+  },
+  {
+   "key": "energy-robe-of-fire",
+   "name": "Energy Robe of Fire",
+   "book": "Pathfinder Lost Omens The Grand Bazaar",
+   "bookInArchive": 0
+  },
+  {
+   "key": "formulated-sunlight",
+   "name": "Formulated Sunlight",
+   "book": "Pathfinder Lost Omens Character Guide",
+   "bookInArchive": 374
+  },
+  {
+   "key": "grannys-hedge-trimmer",
+   "name": "Granny's Hedge Trimmer",
+   "book": "Pathfinder Adventure: Little Trouble in Big Absalom",
+   "bookInArchive": 0
+  },
+  {
+   "key": "hagbane-biscuit",
+   "name": "Hagbane Biscuit",
+   "book": "Pathfinder Adventures: Troubles in Grayce",
+   "bookInArchive": 0
+  },
+  {
+   "key": "hallajin-key",
+   "name": "Hallajin Key",
+   "book": "Pathfinder Society Scenario #4-11: Prisoners of the Electric Castle",
+   "bookInArchive": 0
+  },
+  {
+   "key": "hardshell-surki-carapace",
+   "name": "Hardshell Surki Carapace",
+   "book": "Pathfinder Howl of the Wild",
+   "bookInArchive": 720
+  },
+  {
+   "key": "heavy-barding-large",
+   "name": "Heavy Barding (Large)",
+   "book": "Pathfinder Player Core",
+   "bookInArchive": 3124
+  },
+  {
+   "key": "heavy-barding-small-or-medium",
+   "name": "Heavy Barding (Small or Medium)",
+   "book": "Pathfinder Player Core",
+   "bookInArchive": 3124
+  },
+  {
+   "key": "holy-steam-ball-refill",
+   "name": "Holy Steam Ball Refill",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "hongbao-of-many-things",
+   "name": "Hongbao of Many Things",
+   "book": "Pathfinder Blog",
+   "bookInArchive": 0
+  },
+  {
+   "key": "incense-bundle-of-annual-blessings",
+   "name": "Incense Bundle of Annual Blessings",
+   "book": "Pathfinder Blog",
+   "bookInArchive": 0
+  },
+  {
+   "key": "inflammation-flask-greater",
+   "name": "Inflammation Flask (Greater)",
+   "book": "Pathfinder #203: Shepherd of Decay",
+   "bookInArchive": 74
+  },
+  {
+   "key": "inflammation-flask-lesser",
+   "name": "Inflammation Flask (Lesser)",
+   "book": "Pathfinder #203: Shepherd of Decay",
+   "bookInArchive": 74
+  },
+  {
+   "key": "inflammation-flask-major",
+   "name": "Inflammation Flask (Major)",
+   "book": "Pathfinder #203: Shepherd of Decay",
+   "bookInArchive": 74
+  },
+  {
+   "key": "inflammation-flask-moderate",
+   "name": "Inflammation Flask (Moderate)",
+   "book": "Pathfinder #203: Shepherd of Decay",
+   "bookInArchive": 74
+  },
+  {
+   "key": "jeweled-dawnsilver-crown",
+   "name": "Jeweled dawnsilver crown",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "light-writer-plates",
+   "name": "Light Writer Plates",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "magazine-with-6-pellets",
+   "name": "Magazine with 6 Pellets",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "magazine-with-8-pellets",
+   "name": "Magazine with 8 Pellets",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "magical-medal-gorillas-might",
+   "name": "Magical Medal (Gorilla's Might)",
+   "book": "Pathfinder Battlecry!",
+   "bookInArchive": 1074
+  },
+  {
+   "key": "magical-medal-griffons-heart",
+   "name": "Magical Medal (Griffon's Heart)",
+   "book": "Pathfinder Battlecry!",
+   "bookInArchive": 1074
+  },
+  {
+   "key": "magical-medal-phoenixs-fire",
+   "name": "Magical Medal (Phoenix's Fire)",
+   "book": "Pathfinder Battlecry!",
+   "bookInArchive": 1074
+  },
+  {
+   "key": "magical-medal-unicorns-purity",
+   "name": "Magical Medal (Unicorn's Purity)",
+   "book": "Pathfinder Battlecry!",
+   "bookInArchive": 1074
+  },
+  {
+   "key": "mindmurk-oil",
+   "name": "Mindmurk Oil",
+   "book": "Pathfinder Society Scenario #1-23: The Star-Crossed Court",
+   "bookInArchive": 0
+  },
+  {
+   "key": "poison-sedum",
+   "name": "Poison Sedum",
+   "book": "Pathfinder #178: Punks in a Powder Keg",
+   "bookInArchive": 48
+  },
+  {
+   "key": "potion-of-acid-resistance-greater",
+   "name": "Potion of Acid Resistance (Greater)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-acid-resistance-lesser",
+   "name": "Potion of Acid Resistance (Lesser)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-acid-resistance-moderate",
+   "name": "Potion of Acid Resistance (Moderate)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-acid-retaliation-greater",
+   "name": "Potion of Acid Retaliation (Greater)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-acid-retaliation-lesser",
+   "name": "Potion of Acid Retaliation (Lesser)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-acid-retaliation-major",
+   "name": "Potion of Acid Retaliation (Major)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-acid-retaliation-minor",
+   "name": "Potion of Acid Retaliation (Minor)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-acid-retaliation-moderate",
+   "name": "Potion of Acid Retaliation (Moderate)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-cold-resistance-greater",
+   "name": "Potion of Cold Resistance (Greater)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-cold-resistance-lesser",
+   "name": "Potion of Cold Resistance (Lesser)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-cold-resistance-moderate",
+   "name": "Potion of Cold Resistance (Moderate)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-cold-retaliation-greater",
+   "name": "Potion of Cold Retaliation (Greater)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-cold-retaliation-lesser",
+   "name": "Potion of Cold Retaliation (Lesser)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-cold-retaliation-major",
+   "name": "Potion of Cold Retaliation (Major)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-cold-retaliation-minor",
+   "name": "Potion of Cold Retaliation (Minor)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-cold-retaliation-moderate",
+   "name": "Potion of Cold Retaliation (Moderate)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-electricity-resistance-greater",
+   "name": "Potion of Electricity Resistance (Greater)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-electricity-resistance-lesser",
+   "name": "Potion of Electricity Resistance (Lesser)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-electricity-resistance-moderate",
+   "name": "Potion of Electricity Resistance (Moderate)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-electricity-retaliation-greater",
+   "name": "Potion of Electricity Retaliation (Greater)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-electricity-retaliation-lesser",
+   "name": "Potion of Electricity Retaliation (Lesser)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-electricity-retaliation-major",
+   "name": "Potion of Electricity Retaliation (Major)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-electricity-retaliation-minor",
+   "name": "Potion of Electricity Retaliation (Minor)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-electricity-retaliation-moderate",
+   "name": "Potion of Electricity Retaliation (Moderate)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-fire-resistance-greater",
+   "name": "Potion of Fire Resistance (Greater)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-fire-resistance-lesser",
+   "name": "Potion of Fire Resistance (Lesser)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-fire-resistance-moderate",
+   "name": "Potion of Fire Resistance (Moderate)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419
+  },
+  {
+   "key": "potion-of-fire-retaliation-greater",
+   "name": "Potion of Fire Retaliation (Greater)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-fire-retaliation-lesser",
+   "name": "Potion of Fire Retaliation (Lesser)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-fire-retaliation-major",
+   "name": "Potion of Fire Retaliation (Major)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-fire-retaliation-minor",
+   "name": "Potion of Fire Retaliation (Minor)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-fire-retaliation-moderate",
+   "name": "Potion of Fire Retaliation (Moderate)",
+   "book": "Pathfinder Player Core 2",
+   "bookInArchive": 2236
+  },
+  {
+   "key": "potion-of-sonic-resistance-greater",
+   "name": "Potion of Sonic Resistance (Greater)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-sonic-resistance-lesser",
+   "name": "Potion of Sonic Resistance (Lesser)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "potion-of-sonic-resistance-moderate",
+   "name": "Potion of Sonic Resistance (Moderate)",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "rite-of-reinforcement-exoskeleton",
+   "name": "Rite of Reinforcement Exoskeleton",
+   "book": "Pathfinder Lost Omens The Mwangi Expanse",
+   "bookInArchive": 189
+  },
+  {
+   "key": "robe-of-feathers-fall",
+   "name": "Robe of Feathers Fall",
+   "book": "Pathfinder Blog: April Fools",
+   "bookInArchive": 0
+  },
+  {
+   "key": "rounds-axe-musket",
+   "name": "Rounds (Axe Musket)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-black-powder-knuckle-dusters",
+   "name": "Rounds (Black Powder Knuckle Dusters)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-cane-pistol",
+   "name": "Rounds (Cane Pistol)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-dagger-pistol",
+   "name": "Rounds (Dagger Pistol)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-explosive-dogslicer",
+   "name": "Rounds (Explosive Dogslicer)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-gnome-amalgam-musket",
+   "name": "Rounds (Gnome Amalgam Musket)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-gun-sword",
+   "name": "Rounds (Gun Sword)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-hammer-gun",
+   "name": "Rounds (Hammer Gun)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-mace-multipistol",
+   "name": "Rounds (Mace Multipistol)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-piercing-wind",
+   "name": "Rounds (Piercing Wind)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-rapier-pistol",
+   "name": "Rounds (Rapier Pistol)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "rounds-three-peaked-tree",
+   "name": "Rounds (Three-peaked Tree)",
+   "book": "Pathfinder Guns & Gears",
+   "bookInArchive": 1972
+  },
+  {
+   "key": "sakuras-sprig",
+   "name": "Sakura's Sprig",
+   "book": "Pathfinder Society Scenario #6-05: Silver Bark, Golden Blades",
+   "bookInArchive": 0
+  },
+  {
+   "key": "scroll-of-10th-rank-spell",
+   "name": "Scroll of 10th-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-1st-rank-spell",
+   "name": "Scroll of 1st-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-2nd-rank-spell",
+   "name": "Scroll of 2nd-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-3rd-rank-spell",
+   "name": "Scroll of 3rd-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-4th-rank-spell",
+   "name": "Scroll of 4th-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-5th-rank-spell",
+   "name": "Scroll of 5th-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-6th-rank-spell",
+   "name": "Scroll of 6th-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-7th-rank-spell",
+   "name": "Scroll of 7th-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-8th-rank-spell",
+   "name": "Scroll of 8th-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "scroll-of-9th-rank-spell",
+   "name": "Scroll of 9th-rank Spell",
+   "book": "Pathfinder GM Core",
+   "bookInArchive": 2312
+  },
+  {
+   "key": "seven-color-raw-fish-salad",
+   "name": "Seven-Color Raw Fish Salad",
+   "book": "Pathfinder Blog",
+   "bookInArchive": 0
+  },
+  {
+   "key": "shrine-inarizushi",
+   "name": "Shrine Inarizushi",
+   "book": "Pathfinder Blog",
+   "bookInArchive": 0
+  },
+  {
+   "key": "sling-darts",
+   "name": "Sling Darts",
+   "book": "Pathfinder War of Immortals",
+   "bookInArchive": 635
+  },
+  {
+   "key": "spider-mold",
+   "name": "Spider Mold",
+   "book": "Pathfinder One-Shot #2: Dinner at Lionlodge",
+   "bookInArchive": 0
+  },
+  {
+   "key": "splendid-pyschopomp-mask",
+   "name": "Splendid Pyschopomp Mask",
+   "book": "Pathfinder #169: Kindled Magic",
+   "bookInArchive": 77
+  },
+  {
+   "key": "st-alkitarems-eye",
+   "name": "St. Alkitarem's Eye",
+   "book": "Pathfinder #152: Legacy of the Lost God",
+   "bookInArchive": 85
+  },
+  {
+   "key": "standard-book-of-translation-tien",
+   "name": "Standard Book of Translation (Tien)",
+   "book": "Pathfinder Lost Omens Pathfinder Society Guide",
+   "bookInArchive": 0
+  },
+  {
+   "key": "suit-of-armoire",
+   "name": "Suit of Armoire",
+   "book": "Pathfinder Blog: April Fools",
+   "bookInArchive": 0
+  },
+  {
+   "key": "taljjaes-mask-the-beast",
+   "name": "Taljjae's Mask (The Beast)",
+   "book": "Pathfinder Lost Omens Monsters of Myth",
+   "bookInArchive": 96
+  },
+  {
+   "key": "taljjaes-mask-the-general",
+   "name": "Taljjae's Mask (The General)",
+   "book": "Pathfinder Lost Omens Monsters of Myth",
+   "bookInArchive": 96
+  },
+  {
+   "key": "taljjaes-mask-the-grandmother",
+   "name": "Taljjae's Mask (The Grandmother)",
+   "book": "Pathfinder Lost Omens Monsters of Myth",
+   "bookInArchive": 96
+  },
+  {
+   "key": "taljjaes-mask-the-hermit",
+   "name": "Taljjae's Mask (The Hermit)",
+   "book": "Pathfinder Lost Omens Monsters of Myth",
+   "bookInArchive": 96
+  },
+  {
+   "key": "taljjaes-mask-the-hero",
+   "name": "Taljjae's Mask (The Hero)",
+   "book": "Pathfinder Lost Omens Monsters of Myth",
+   "bookInArchive": 96
+  },
+  {
+   "key": "taljjaes-mask-the-nobleman",
+   "name": "Taljjae's Mask (The Nobleman)",
+   "book": "Pathfinder Lost Omens Monsters of Myth",
+   "bookInArchive": 96
+  },
+  {
+   "key": "taljjaes-mask-the-wanderer",
+   "name": "Taljjae's Mask (The Wanderer)",
+   "book": "Pathfinder Lost Omens Monsters of Myth",
+   "bookInArchive": 96
+  },
+  {
+   "key": "titan-nagaji-scales",
+   "name": "Titan Nagaji Scales",
+   "book": "Pathfinder Lost Omens Impossible Lands",
+   "bookInArchive": 334
+  },
+  {
+   "key": "tteokguk-of-time-advancement",
+   "name": "Tteokguk of Time Advancement",
+   "book": "Pathfinder Blog",
+   "bookInArchive": 0
+  },
+  {
+   "key": "wasul-reed-mask",
+   "name": "Wasul Reed Mask",
+   "book": "Pathfinder Abomination Vaults Hardcover Compilation",
+   "bookInArchive": 0
+  },
+  {
+   "key": "wayfinderfinder",
+   "name": "Wayfinderfinder",
+   "book": "Pathfinder Blog: April Fools",
+   "bookInArchive": 0
+  },
+  {
+   "key": "yellow-musk-poison",
+   "name": "Yellow Musk Poison",
+   "book": "Pathfinder Bestiary 2",
+   "bookInArchive": 421
+  }
+ ]
+}

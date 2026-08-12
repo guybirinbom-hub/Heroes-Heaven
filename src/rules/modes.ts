@@ -5,6 +5,7 @@
  * number — it underlines the stat and is shown (with its "applies when") in the breakdown.
  */
 import type { ContentDatabase, DefenseGrants, Item, ModeDef, ModeModifier, ModeTargetKind } from './types';
+import { ABILITIES, SAVES, SKILLS } from './types';
 
 /** A stat being computed, matched against a modifier's target. */
 export interface ModeTarget {
@@ -14,7 +15,7 @@ export interface ModeTarget {
 }
 
 /** The selectable targets in the mode editor. */
-export const MODE_TARGETS: { kind: ModeTargetKind; label: string; needsDetail?: 'save' | 'skill' }[] = [
+export const MODE_TARGETS: { kind: ModeTargetKind; label: string; needsDetail?: 'save' | 'skill' | 'ability' }[] = [
   { kind: 'all-checks', label: 'All checks (attacks, saves, skills, Perception)' },
   { kind: 'ac', label: 'Armor class' },
   { kind: 'save', label: 'Saving throw', needsDetail: 'save' },
@@ -25,7 +26,83 @@ export const MODE_TARGETS: { kind: ModeTargetKind; label: string; needsDetail?: 
   { kind: 'spell-attack', label: 'Spell attack' },
   { kind: 'spell-dc', label: 'Spell DC' },
   { kind: 'class-dc', label: 'Class DC' },
+  { kind: 'speed', label: 'Speed' },
+  { kind: 'max-hp', label: 'Maximum HP' },
+  { kind: 'initiative', label: 'Initiative' },
+  { kind: 'ability', label: 'Attribute modifier', needsDetail: 'ability' },
 ];
+
+/**
+ * Every target as ONE flat, searchable entry — "Reflex save" and "Stealth" and "Strength" each in their
+ * own right, rather than "Saving throw" plus a second dropdown to say which.
+ *
+ * `value` is the stable key the picker round-trips (`kind` or `kind:detail`); build it with targetKey
+ * and read it back with parseTargetKey. Lores are deliberately absent: the set is per-character, so the
+ * editor appends the ones this character actually has.
+ */
+export interface ModeTargetOption {
+  value: string;
+  label: string;
+  /** A coarse heading for the picker, purely presentational. */
+  group: string;
+  kind: ModeTargetKind;
+  detail?: string;
+  /** Extra words the search matches on top of the label. */
+  alias?: string;
+}
+
+export const targetKey = (kind: ModeTargetKind, detail?: string): string => (detail ? `${kind}:${detail}` : kind);
+
+export function parseTargetKey(key: string): { kind: ModeTargetKind; detail?: string } {
+  const i = key.indexOf(':');
+  if (i < 0) return { kind: key as ModeTargetKind };
+  // A lore skill's own key contains a colon ('lore:warfare'), so only the FIRST one separates.
+  return { kind: key.slice(0, i) as ModeTargetKind, detail: key.slice(i + 1) };
+}
+
+const ABILITY_NAME: Record<string, string> = {
+  str: 'Strength',
+  dex: 'Dexterity',
+  con: 'Constitution',
+  int: 'Intelligence',
+  wis: 'Wisdom',
+  cha: 'Charisma',
+};
+const titleCase = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** The flat target list. `lores` are this character's own Lore keys ('lore:warfare'), appended so a
+ *  mode can point at one; pass none for a generic (character-less) editor such as Settings → Modes. */
+export function modeTargetOptions(lores: string[] = []): ModeTargetOption[] {
+  const out: ModeTargetOption[] = [
+    { value: 'all-checks', label: 'All checks', group: 'Broad', kind: 'all-checks', alias: 'everything attacks saves skills perception' },
+    { value: 'ac', label: 'Armor class', group: 'Defence', kind: 'ac', alias: 'ac defence defense' },
+    { value: 'max-hp', label: 'Maximum HP', group: 'Defence', kind: 'max-hp', alias: 'hit points health' },
+    { value: 'perception', label: 'Perception', group: 'Checks', kind: 'perception', alias: 'notice senses' },
+    { value: 'initiative', label: 'Initiative', group: 'Checks', kind: 'initiative', alias: 'turn order' },
+    { value: 'attack', label: 'Attack rolls', group: 'Offence', kind: 'attack', alias: 'to hit strike' },
+    { value: 'damage', label: 'Damage rolls', group: 'Offence', kind: 'damage' },
+    { value: 'spell-attack', label: 'Spell attack', group: 'Offence', kind: 'spell-attack', alias: 'casting' },
+    { value: 'spell-dc', label: 'Spell DC', group: 'Offence', kind: 'spell-dc', alias: 'casting difficulty' },
+    { value: 'class-dc', label: 'Class DC', group: 'Offence', kind: 'class-dc' },
+    { value: 'speed', label: 'Speed', group: 'Movement', kind: 'speed', alias: 'walk land movement feet' },
+    // Each save on its own, rather than "Saving throw" plus a second control to say which.
+    { value: 'save', label: 'All saving throws', group: 'Saves', kind: 'save', alias: 'saves' },
+    ...SAVES.map((s) => ({ value: targetKey('save', s), label: `${titleCase(s)} save`, group: 'Saves', kind: 'save' as const, detail: s })),
+    { value: 'skill', label: 'All skills', group: 'Skills', kind: 'skill' },
+    ...SKILLS.map((s) => ({ value: targetKey('skill', s), label: titleCase(s), group: 'Skills', kind: 'skill' as const, detail: s })),
+    ...lores.map((k) => ({ value: targetKey('skill', k), label: `${titleCase(k.slice(5))} Lore`, group: 'Skills', kind: 'skill' as const, detail: k, alias: 'lore' })),
+    // An attribute modifier carries into everything derived from it (see abilityModOf in derive).
+    ...ABILITIES.map((a) => ({
+      value: targetKey('ability', a),
+      label: `${ABILITY_NAME[a]} modifier`,
+      group: 'Attributes',
+      kind: 'ability' as const,
+      detail: a,
+      alias: `${a} attribute ability score`,
+    })),
+  ];
+  return out;
+}
 
 export const MODIFIER_TYPES: ModeModifier['type'][] = ['status', 'circumstance', 'item', 'untyped'];
 
@@ -39,7 +116,10 @@ const ALL_CHECK_KINDS: ModeTarget['kind'][] = ['attack', 'spell-attack', 'save',
 function modeMatches(mod: ModeModifier, target: ModeTarget): boolean {
   if (mod.target === 'all-checks') return ALL_CHECK_KINDS.includes(target.kind);
   if (mod.target !== target.kind) return false;
+  // Detail-bearing kinds: an empty detail means "all of this kind" (all saves / all skills), a set one
+  // must match. `ability` always names one attribute — a blanket +1 to every attribute isn't a thing.
   if (mod.target === 'save' || mod.target === 'skill') return !mod.detail || mod.detail === target.detail;
+  if (mod.target === 'ability') return mod.detail === target.detail;
   return true;
 }
 
@@ -253,6 +333,8 @@ export function activeModesTouch(modes: ModeDef[] | undefined, target: ModeTarge
 
 /** Human label for a mode modifier's target, for the mode detail popup ("Reflex", "Stealth", "AC"). */
 export function modeTargetLabel(mod: ModeModifier): string {
+  // 'str' reads as a stat code, not a word — spell the attribute out.
+  if (mod.target === 'ability' && mod.detail) return `${ABILITY_NAME[mod.detail] ?? mod.detail} modifier`;
   if (mod.detail) {
     const d = mod.detail.startsWith('lore:') ? `${mod.detail.slice(5)} Lore` : mod.detail;
     return d.charAt(0).toUpperCase() + d.slice(1);
@@ -263,6 +345,8 @@ export function modeTargetLabel(mod: ModeModifier): string {
     attack: 'attack rolls',
     damage: 'damage',
     speed: 'Speed',
+    'max-hp': 'maximum HP',
+    initiative: 'initiative',
     'class-dc': 'Class DC',
     'spell-dc': 'Spell DC',
     'spell-attack': 'spell attack rolls',

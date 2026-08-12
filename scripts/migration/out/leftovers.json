@@ -1,0 +1,757 @@
+{
+ "found": [
+  {
+   "bucket": "deities",
+   "name": "Alocer",
+   "key": "alocer",
+   "book": "Pathfinder One-Shot #2: Dinner at Lionlodge",
+   "insideDocs": [
+    {
+     "id": "creature-1776",
+     "category": "creature",
+     "name": "Megaloceros"
+    },
+    {
+     "id": "creature-2202",
+     "category": "creature",
+     "name": "Megaloceros"
+    },
+    {
+     "id": "creature-family-301",
+     "category": "creature-family",
+     "name": "Elk"
+    }
+   ]
+  },
+  {
+   "bucket": "vehicles",
+   "name": "Flying Broom",
+   "key": "magic-broom",
+   "book": "",
+   "insideDocs": [
+    {
+     "id": "feat-5014",
+     "category": "feat",
+     "name": "Witch\u2019s Broom"
+    },
+    {
+     "id": "equipment-251",
+     "category": "equipment",
+     "name": "Broom of Flying"
+    },
+    {
+     "id": "equipment-3023",
+     "category": "equipment",
+     "name": "Flying Broomstick"
+    },
+    {
+     "id": "rules-2926",
+     "category": "rules",
+     "name": "Comparison"
+    }
+   ]
+  }
+ ],
+ "nothing": [
+  {
+   "bucket": "spells",
+   "name": "Anima Invocation (Modified)",
+   "key": "anima-invocation-modified",
+   "book": "Pathfinder #150: Broken Promises",
+   "insideDocs": []
+  },
+  {
+   "bucket": "spells",
+   "name": "Aspirational State",
+   "key": "aspirational-state",
+   "book": "Pathfinder Society Scenario #2-22: Breaking the Storm: Excising Ruination",
+   "insideDocs": []
+  },
+  {
+   "bucket": "spells",
+   "name": "Destroy Mindscape",
+   "key": "destroy-mindscape",
+   "book": "Pathfinder Season of Ghosts Hardcover Compilation",
+   "insideDocs": []
+  },
+  {
+   "bucket": "spells",
+   "name": "Rite of Cleansing Flame",
+   "key": "rite-of-cleansing-flame",
+   "book": "Pathfinder #216: The Acropolis Pyre",
+   "insideDocs": []
+  },
+  {
+   "bucket": "spells",
+   "name": "Unfettered Mark",
+   "key": "unfettered-mark",
+   "book": "Pathfinder #161: Belly of the Black Whale",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Apocalypse Seed",
+   "key": "apocalypse-seed",
+   "book": "Pathfinder #221: Into the Apocalypse Archive",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Belimarius's Invidious Halberd",
+   "key": "belimariuss-invidious-halberd",
+   "book": "Pathfinder #221: Into the Apocalypse Archive",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Beloved's Bracelets",
+   "key": "beloveds-bracelets",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Black Dragon's Breath Potion (Adult)",
+   "key": "black-dragons-breath-potion-adult",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Black Dragon's Breath Potion (Wyrm)",
+   "key": "black-dragons-breath-potion-wyrm",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Black Dragon's Breath Potion (Young)",
+   "key": "black-dragons-breath-potion-young",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Bloodhound Olfactory Stimulators",
+   "key": "bloodhound-olfactory-stimulators",
+   "book": "Pathfinder Treasure Vault (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Brass Dragon's Breath Potion (Adult)",
+   "key": "brass-dragons-breath-potion-adult",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Brass Dragon's Breath Potion (Wyrm)",
+   "key": "brass-dragons-breath-potion-wyrm",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Brass Dragon's Breath Potion (Young)",
+   "key": "brass-dragons-breath-potion-young",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Bronze Dragon's Breath Potion (Adult)",
+   "key": "bronze-dragons-breath-potion-adult",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Bronze Dragon's Breath Potion (Wyrm)",
+   "key": "bronze-dragons-breath-potion-wyrm",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Bronze Dragon's Breath Potion (Young)",
+   "key": "bronze-dragons-breath-potion-young",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Chromatic Robe (Greater)",
+   "key": "chromatic-robe-greater",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Chromatic Robe",
+   "key": "chromatic-robe",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Doomsday Door",
+   "key": "doomsday-door",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Dream Hunter's Lodge",
+   "key": "dream-hunters-lodge",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Effortless Garden",
+   "key": "effortless-garden",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Fate Tempter's Ring",
+   "key": "fate-tempters-ring",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Green Dragon's Breath Potion (Adult)",
+   "key": "green-dragons-breath-potion-adult",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Green Dragon's Breath Potion (Wyrm)",
+   "key": "green-dragons-breath-potion-wyrm",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Green Dragon's Breath Potion (Young)",
+   "key": "green-dragons-breath-potion-young",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "One Day's Breath",
+   "key": "one-days-breath",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Red Dragon's Breath Potion (Adult)",
+   "key": "red-dragons-breath-potion-adult",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Red Dragon's Breath Potion (Wyrm)",
+   "key": "red-dragons-breath-potion-wyrm",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Red Dragon's Breath Potion (Young)",
+   "key": "red-dragons-breath-potion-young",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Robes of Xin-Edasseril",
+   "key": "robes-of-xin-edasseril",
+   "book": "Pathfinder #221: Into the Apocalypse Archive",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Runewell of Lust",
+   "key": "runewell-of-lust",
+   "book": "Pathfinder #221: Into the Apocalypse Archive",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Runic Skullcap",
+   "key": "runic-skullcap",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Silver Dragon's Breath Potion (Adult)",
+   "key": "silver-dragons-breath-potion-adult",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Silver Dragon's Breath Potion (Wyrm)",
+   "key": "silver-dragons-breath-potion-wyrm",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Silver Dragon's Breath Potion (Young)",
+   "key": "silver-dragons-breath-potion-young",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Sorshen's Scintillating Garment",
+   "key": "sorshens-scintillating-garment",
+   "book": "Pathfinder #221: Into the Apocalypse Archive",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Sorshen's Sinuous Guisarme",
+   "key": "sorshens-sinuous-guisarme",
+   "book": "Pathfinder #221: Into the Apocalypse Archive",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Spindle Key",
+   "key": "spindle-key",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Ten Day's Breath",
+   "key": "ten-days-breath",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "The Kardosian Fragments",
+   "key": "the-kardosian-fragments",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Three Day's Breath",
+   "key": "three-days-breath",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "items",
+   "name": "Timeflaying Blade",
+   "key": "timeflaying-blade",
+   "book": "Pathfinder #221: Into the Apocalypse Archive",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Air Gate",
+   "key": "air-gate",
+   "book": "Pathfinder Rage of Elements",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Alchemist Armor Expertise (Level 13)",
+   "key": "alchemist-armor-expertise-level-13",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Alchemist Armor Mastery (Level 19)",
+   "key": "alchemist-armor-mastery-level-19",
+   "book": "Pathfinder Core Rulebook",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Anger Phantom Eidolon",
+   "key": "anger-phantom-eidolon",
+   "book": "Pathfinder Secrets of Magic",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Anvil's Hardness",
+   "key": "anvils-hardness",
+   "book": "Pathfinder Guns & Gears",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Blight Soul Deviant Classification",
+   "key": "blight-soul-deviant-classification",
+   "book": "Pathfinder #202: Severed at the Root",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Churning Mind",
+   "key": "churning-mind",
+   "book": "Pathfinder Guns & Gears",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Curse of the Living Death",
+   "key": "curse-of-the-living-death",
+   "book": "Pathfinder Player Core 2",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Decay Instinct",
+   "key": "decay-instinct",
+   "book": "Pathfinder #202: Severed at the Root",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Devotion Phantom Eidolon",
+   "key": "devotion-phantom-eidolon",
+   "book": "Pathfinder Secrets of Magic",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Dragon Deviant Classification",
+   "key": "dragon-deviant-classification",
+   "book": "Pathfinder Dark Archive (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Echoes of the Scrolls",
+   "key": "echoes-of-the-scrolls",
+   "book": "Pathfinder Society Scenario #6-09: The Power of Legends",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Echoes of the Swords",
+   "key": "echoes-of-the-swords",
+   "book": "Pathfinder Society Scenario #6-09: The Power of Legends",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Fire Gate",
+   "key": "fire-gate",
+   "book": "Pathfinder Rage of Elements",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Flicker Deviant Classification",
+   "key": "flicker-deviant-classification",
+   "book": "Gatewalkers Player's Guide (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Fourth Gate's Threshold",
+   "key": "fourth-gates-threshold",
+   "book": "Pathfinder Rage of Elements",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Leech Deviant Classification",
+   "key": "leech-deviant-classification",
+   "book": "Gatewalkers Player's Guide (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Lesson of Elements",
+   "key": "lesson-of-elements",
+   "book": "Pathfinder Player Core",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Ligneous Instinct",
+   "key": "ligneous-instinct",
+   "book": "Pathfinder #202: Severed at the Root",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Premonition Reflexes",
+   "key": "premonition-reflexes",
+   "book": "Pathfinder Player Core 2",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Psychic Weapon Expertise",
+   "key": "psychic-weapon-expertise",
+   "book": "Pathfinder Dark Archive",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Psychic Weapon Specialization",
+   "key": "psychic-weapon-specialization",
+   "book": "Pathfinder Dark Archive (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Second Gate's Threshold",
+   "key": "second-gates-threshold",
+   "book": "Pathfinder Rage of Elements",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Third Gate's Threshold",
+   "key": "third-gates-threshold",
+   "book": "Pathfinder Rage of Elements",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Troll Deviant Classification",
+   "key": "troll-deviant-classification",
+   "book": "Pathfinder Dark Archive (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Verdant Core Deviant Classification",
+   "key": "verdant-core-deviant-classification",
+   "book": "Pathfinder #202: Severed at the Root",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Water Gate",
+   "key": "water-gate",
+   "book": "Pathfinder Rage of Elements",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Wood Gate",
+   "key": "wood-gate",
+   "book": "Pathfinder Rage of Elements",
+   "insideDocs": []
+  },
+  {
+   "bucket": "classFeatures",
+   "name": "Wraith Deviant Classification",
+   "key": "wraith-deviant-classification",
+   "book": "Pathfinder Dark Archive (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Lotus Above the Wind",
+   "key": "lotus-above-the-wind",
+   "book": "Pathfinder Lost Omens Tian Xia Character Guide",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Harsh Judgement",
+   "key": "harsh-judgement",
+   "book": "Pathfinder Adventure: Night of the Gray Death",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Knight Vigilant Dedication",
+   "key": "knight-vigilant-dedication",
+   "book": "Pathfinder Lost Omens Character Guide",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Construct Dynamo",
+   "key": "construct-dynamo",
+   "book": "Pathfinder Guns & Gears",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Empathic Envoy",
+   "key": "empathic-envoy",
+   "book": "Pathfinder Adventure Path: Gatewalkers",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Autonomic Psychic Action",
+   "key": "autonomic-psychic-action",
+   "book": "Pathfinder Dark Archive (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Avenger of Envy",
+   "key": "avenger-of-envy",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Avenger of Gluttony",
+   "key": "avenger-of-gluttony",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Avenger of Greed",
+   "key": "avenger-of-greed",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Avenger of Lust",
+   "key": "avenger-of-lust",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Avenger of Sloth",
+   "key": "avenger-of-sloth",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "feats",
+   "name": "Avenger of Wrath",
+   "key": "avenger-of-wrath",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "heritages",
+   "name": "Battle-Trained Human (BB)",
+   "key": "battle-trained-human-bb",
+   "book": "Pathfinder Beginner Box: Secrets of the Unlit Star",
+   "insideDocs": []
+  },
+  {
+   "bucket": "heritages",
+   "name": "Warden Human (BB)",
+   "key": "warden-human-bb",
+   "book": "Pathfinder Beginner Box",
+   "insideDocs": []
+  },
+  {
+   "bucket": "deities",
+   "name": "The Curtain Call",
+   "key": "the-curtain-call",
+   "book": "Pathfinder Curtain Call Player's Guide",
+   "insideDocs": []
+  },
+  {
+   "bucket": "deities",
+   "name": "Atheists and Free Agents",
+   "key": "atheists-and-free-agents",
+   "book": "Pathfinder Lost Omens Divine Mysteries",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Mirror-Trickery",
+   "key": "mirror-trickery",
+   "book": "Pathfinder Dark Archive (Remastered)",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Swirl Crimson Shroud",
+   "key": "swirl-crimson-shroud",
+   "book": "Pathfinder Adventure: Prey for Death",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Aegis of Envy",
+   "key": "aegis-of-envy",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Convocation of Greed",
+   "key": "convocation-of-greed",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Gluttonous Feast",
+   "key": "gluttonous-feast",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Host of Wrath",
+   "key": "host-of-wrath",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Sorshen's Devotion",
+   "key": "sorshens-devotion",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Summon Sloth",
+   "key": "summon-sloth",
+   "book": "Pathfinder #220: Crypt of Runes",
+   "insideDocs": []
+  },
+  {
+   "bucket": "actions",
+   "name": "Activate Resonant Reflection",
+   "key": "activate-resonant-reflection",
+   "book": "Pathfinder #153: Life's Long Shadows",
+   "insideDocs": []
+  },
+  {
+   "bucket": "vehicles",
+   "name": "Magic Carpet",
+   "key": "flying-carpet",
+   "book": "",
+   "insideDocs": []
+  },
+  {
+   "bucket": "vehicles",
+   "name": "Sandsailer",
+   "key": "sandsailer",
+   "book": "",
+   "insideDocs": []
+  }
+ ]
+}

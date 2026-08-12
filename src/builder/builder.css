@@ -11,9 +11,30 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px;
+  /* Named so the window-control group can cancel them and sit flush in the corner (see .chrome-btns). */
+  --chrome-pad-y: 10px;
+  --chrome-pad-x: 14px;
+  padding: var(--chrome-pad-y) var(--chrome-pad-x);
   background: var(--app-surface-2);
   border-bottom: var(--app-bw) solid var(--app-border);
+}
+/* The header's `gap` would otherwise add a 10px seam between Save changes and the corner group, which
+   already carries its own 8px lead-in. */
+.builder-head .chrome-btns {
+  margin-inline-start: -2px;
+}
+/* The build's own undo/redo, sat between the level stepper and Cancel. */
+.b-undo {
+  display: flex;
+  gap: 2px;
+  flex: none;
+}
+/* On a granted feature that also asks a question: a pointer to where the question now lives. Quiet —
+   the row itself is not the thing to act on. */
+.lvl-gain-asks {
+  font-size: 11.5px;
+  color: var(--app-warn);
+  margin-top: 4px;
 }
 .builder-title {
   display: flex;
@@ -45,6 +66,32 @@
   border-bottom: var(--app-bw) solid var(--app-border);
   overflow-x: auto;
   scrollbar-width: none;
+  /* The bar hides its scrollbar, so at level 20 there was nothing at all to say the chips continue
+     past the edge — they simply stopped. A fade at each end is the only cue; it is a mask, so it
+     works on every palette without picking a background colour. `scroll-padding` keeps the chip that
+     scrollIntoView lands on from stopping underneath the fade. */
+  scroll-padding-inline: 26px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+}
+/* …but only when it actually overflows: with six chips the mask would fade the first and last for
+   no reason. `animation-timeline: scroll()` is the pure-CSS overflow test — unsupported browsers
+   just keep the fade, which is the harmless direction. */
+@supports (animation-timeline: scroll()) {
+  .lstrip {
+    animation: lstrip-fade linear;
+    animation-timeline: scroll(self inline);
+  }
+  @keyframes lstrip-fade {
+    from {
+      -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 20px), transparent 100%);
+      mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 20px), transparent 100%);
+    }
+    to {
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 100%);
+      mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 100%);
+    }
+  }
 }
 .lstrip::-webkit-scrollbar {
   display: none;
@@ -124,7 +171,12 @@
 
 .builder-body {
   display: grid;
-  grid-template-columns: 244px 1fr;
+  /* The choice column is CAPPED. `1fr` let it take the whole window, so on a 2560px monitor a feat
+     card ran to about 2,300px — a line of rules text three times longer than anything is comfortable
+     to read, and a row whose label and value ended up a screen apart. minmax(0, …) rather than a bare
+     max-width so a long word inside can still shrink the track instead of overflowing it. */
+  grid-template-columns: 244px minmax(0, 860px);
+  justify-content: center;
   gap: 14px;
   padding: 14px;
   align-items: start;
@@ -1869,12 +1921,35 @@
   .lstrip { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
   .lstrip::-webkit-scrollbar { display: none; }
   .lstrip .lchip { flex: 0 0 auto; }
-  .builder-head .builder-title { flex: 1 1 100%; }
+  /* Two rows, not three: title + name share the first, level + Cancel + Save the second. The title
+     used to take a whole row to itself (flex: 1 1 100%), and once the header is PINNED (see sheet.css)
+     every row it costs is screen the player never gets back. */
+  .builder-head .builder-title { flex: 0 0 auto; }
+  .builder-head .name-input { flex: 1 1 120px; }
   .builder-head .lvl-ctl { margin-right: auto; }
   .builder-head .b-cancel, .builder-head .b-create { flex: 1 1 auto; min-height: 40px; }
+  /* 22px is under any touch-target guidance, and this is the control that adds a level. */
+  .lvl-step { width: 34px; height: 34px; font-size: 17px; }
+  .lvl-ctl { padding: 3px 6px; }
 
   /* Popup-select — THE builder choice control (subclass, boosts, skills, feats, deity) — to a 40px
      touch target; the compact pill variant (ability-boost rows) to ~38px. */
   .popsel { min-height: 40px; font-size: 14px; padding: 9px 12px; }
   .popsel.pill { min-height: 38px; padding: 8px 14px; }
+
+  /* The rest of the controls, which were all still at desktop sizes. Measured on a 375px screen:
+     the level chips were 26px, the Setup toggles 23px, and the "i" rules buttons 19px square —
+     small enough to miss, and the chips are the builder's main navigation. The "i" keeps its 15px
+     glyph and gains padding, so only the hit area grows. */
+  .lchip { min-width: 32px; height: 32px; font-size: 12px; }
+  .inv-toggle { min-height: 32px; }
+  .rule-info { padding: 7px; font-size: 15px; }
+  /* Sources card: the per-book on/off box, its Select-all / none actions, and the book search — the
+     search field was 22px tall, and a 16px font also stops iOS zooming the page when you focus it. */
+  .src-check { width: 32px; height: 32px; }
+  .src-act { min-height: 32px; }
+  .src-search input { min-height: 34px; font-size: 16px; }
+  /* The chevron that reveals the live Character stats. It was 18x16 — the smallest control on the
+     page, guarding the one panel that tells you what your choices did. */
+  .brail-toggle { padding: 8px; font-size: 16px; }
 }

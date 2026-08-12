@@ -1,0 +1,1010 @@
+[
+ {
+  "field": "id",
+  "n": 17772,
+  "buckets": [
+   "spells",
+   "items",
+   "classes",
+   "classFeatures",
+   "feats",
+   "ancestries",
+   "heritages",
+   "backgrounds",
+   "deities",
+   "languages",
+   "actions",
+   "conditions",
+   "animalCompanions",
+   "companionSpecializations",
+   "familiarAbilities",
+   "vehicles",
+   "siegeWeapons",
+   "stances",
+   "runes",
+   "services",
+   "followers",
+   "pets"
+  ]
+ },
+ {
+  "field": "name",
+  "n": 17450,
+  "buckets": [
+   "spells",
+   "items",
+   "classes",
+   "classFeatures",
+   "feats",
+   "ancestries",
+   "heritages",
+   "backgrounds",
+   "deities",
+   "languages",
+   "actions",
+   "conditions",
+   "animalCompanions",
+   "companionSpecializations",
+   "familiarAbilities",
+   "vehicles",
+   "siegeWeapons",
+   "stances",
+   "runes",
+   "services",
+   "followers",
+   "pets"
+  ]
+ },
+ {
+  "field": "rarity",
+  "n": 17042,
+  "buckets": [
+   "spells",
+   "items",
+   "classes",
+   "classFeatures",
+   "feats",
+   "ancestries",
+   "heritages",
+   "backgrounds",
+   "deities",
+   "languages",
+   "actions"
+  ]
+ },
+ {
+  "field": "source",
+  "n": 16653,
+  "buckets": [
+   "spells",
+   "items",
+   "classes",
+   "classFeatures",
+   "feats",
+   "ancestries",
+   "heritages",
+   "backgrounds",
+   "deities",
+   "actions",
+   "conditions"
+  ]
+ },
+ {
+  "field": "traits",
+  "n": 14809,
+  "buckets": [
+   "spells",
+   "items",
+   "classes",
+   "classFeatures",
+   "feats",
+   "ancestries",
+   "heritages",
+   "backgrounds",
+   "deities",
+   "actions",
+   "vehicles",
+   "services",
+   "followers",
+   "pets"
+  ]
+ },
+ {
+  "field": "level",
+  "n": 13365,
+  "buckets": [
+   "items",
+   "classFeatures",
+   "feats",
+   "vehicles",
+   "siegeWeapons",
+   "runes",
+   "services"
+  ]
+ },
+ {
+  "field": "actionCost",
+  "n": 7482,
+  "buckets": [
+   "classFeatures",
+   "feats",
+   "actions"
+  ]
+ },
+ {
+  "field": "category",
+  "n": 7259,
+  "buckets": [
+   "items",
+   "feats",
+   "animalCompanions"
+  ]
+ },
+ {
+  "field": "price",
+  "n": 6172,
+  "buckets": [
+   "items",
+   "vehicles",
+   "runes",
+   "services"
+  ]
+ },
+ {
+  "field": "itemType",
+  "n": 5933,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "bulk",
+  "n": 5787,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "prerequisites",
+  "n": 5565,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "usage",
+  "n": 4845,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "activationCost",
+  "n": 3197,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "archetype",
+  "n": 2232,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "counters",
+  "n": 1877,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "rank",
+  "n": 1810,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "traditions",
+  "n": 1801,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "cast",
+  "n": 1797,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "consumableType",
+  "n": 1714,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "uses",
+  "n": 1714,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "frequency",
+  "n": 1646,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "range",
+  "n": 1642,
+  "buckets": [
+   "spells",
+   "items"
+  ]
+ },
+ {
+  "field": "group",
+  "n": 1233,
+  "buckets": [
+   "items",
+   "conditions"
+  ]
+ },
+ {
+  "field": "duration",
+  "n": 1178,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "damage",
+  "n": 1009,
+  "buckets": [
+   "items",
+   "runes"
+  ]
+ },
+ {
+  "field": "hands",
+  "n": 943,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "targets",
+  "n": 905,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "save",
+  "n": 661,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "heldSpells",
+  "n": 589,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "abilityBoosts",
+  "n": 556,
+  "buckets": [
+   "ancestries",
+   "backgrounds",
+   "companionSpecializations"
+  ]
+ },
+ {
+  "field": "heightening",
+  "n": 506,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "favoredWeapons",
+  "n": 484,
+  "buckets": [
+   "deities"
+  ]
+ },
+ {
+  "field": "domains",
+  "n": 483,
+  "buckets": [
+   "deities"
+  ]
+ },
+ {
+  "field": "skill",
+  "n": 478,
+  "buckets": [
+   "deities"
+  ]
+ },
+ {
+  "field": "divineFont",
+  "n": 476,
+  "buckets": [
+   "deities"
+  ]
+ },
+ {
+  "field": "baseDamage",
+  "n": 449,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "damageKind",
+  "n": 449,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "trainedSkill",
+  "n": 421,
+  "buckets": [
+   "backgrounds"
+  ]
+ },
+ {
+  "field": "reload",
+  "n": 407,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "area",
+  "n": 405,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "baseArea",
+  "n": 405,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "trainedLore",
+  "n": 404,
+  "buckets": [
+   "backgrounds"
+  ]
+ },
+ {
+  "field": "hp",
+  "n": 398,
+  "buckets": [
+   "items",
+   "ancestries",
+   "animalCompanions",
+   "vehicles",
+   "siegeWeapons"
+  ]
+ },
+ {
+  "field": "grantedFeatId",
+  "n": 387,
+  "buckets": [
+   "backgrounds"
+  ]
+ },
+ {
+  "field": "acBonus",
+  "n": 372,
+  "buckets": [
+   "items",
+   "stances"
+  ]
+ },
+ {
+  "field": "ancestryId",
+  "n": 330,
+  "buckets": [
+   "heritages"
+  ]
+ },
+ {
+  "field": "versatile",
+  "n": 330,
+  "buckets": [
+   "heritages"
+  ]
+ },
+ {
+  "field": "speedPenalty",
+  "n": 322,
+  "buckets": [
+   "items",
+   "stances"
+  ]
+ },
+ {
+  "field": "otherTags",
+  "n": 310,
+  "buckets": [
+   "classFeatures"
+  ]
+ },
+ {
+  "field": "speeds",
+  "n": 299,
+  "buckets": [
+   "feats",
+   "ancestries",
+   "heritages",
+   "animalCompanions",
+   "vehicles"
+  ]
+ },
+ {
+  "field": "kind",
+  "n": 277,
+  "buckets": [
+   "familiarAbilities",
+   "runes",
+   "followers",
+   "pets"
+  ]
+ },
+ {
+  "field": "description",
+  "n": 261,
+  "buckets": [
+   "spells",
+   "items",
+   "conditions"
+  ]
+ },
+ {
+  "field": "hardness",
+  "n": 255,
+  "buckets": [
+   "items",
+   "vehicles",
+   "siegeWeapons"
+  ]
+ },
+ {
+  "field": "size",
+  "n": 254,
+  "buckets": [
+   "ancestries",
+   "animalCompanions",
+   "vehicles",
+   "siegeWeapons"
+  ]
+ },
+ {
+  "field": "brokenThreshold",
+  "n": 251,
+  "buckets": [
+   "items",
+   "vehicles"
+  ]
+ },
+ {
+  "field": "value",
+  "n": 213,
+  "buckets": [
+   "items",
+   "runes"
+  ]
+ },
+ {
+  "field": "dexCap",
+  "n": 204,
+  "buckets": [
+   "items",
+   "stances"
+  ]
+ },
+ {
+  "field": "checkPenalty",
+  "n": 203,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "strength",
+  "n": 183,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "slot",
+  "n": 159,
+  "buckets": [
+   "runes"
+  ]
+ },
+ {
+  "field": "ritual",
+  "n": 151,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "ritualPrimary",
+  "n": 151,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "maxTakable",
+  "n": 139,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "senses",
+  "n": 128,
+  "buckets": [
+   "feats",
+   "heritages",
+   "animalCompanions"
+  ]
+ },
+ {
+  "field": "attacks",
+  "n": 120,
+  "buckets": [
+   "classes",
+   "animalCompanions"
+  ]
+ },
+ {
+  "field": "ac",
+  "n": 111,
+  "buckets": [
+   "vehicles",
+   "siegeWeapons"
+  ]
+ },
+ {
+  "field": "fort",
+  "n": 111,
+  "buckets": [
+   "vehicles",
+   "siegeWeapons"
+  ]
+ },
+ {
+  "field": "space",
+  "n": 107,
+  "buckets": [
+   "vehicles"
+  ]
+ },
+ {
+  "field": "crew",
+  "n": 107,
+  "buckets": [
+   "vehicles"
+  ]
+ },
+ {
+  "field": "pilotingDC",
+  "n": 107,
+  "buckets": [
+   "vehicles"
+  ]
+ },
+ {
+  "field": "note",
+  "n": 105,
+  "buckets": [
+   "companionSpecializations",
+   "stances"
+  ]
+ },
+ {
+  "field": "skills",
+  "n": 99,
+  "buckets": [
+   "animalCompanions",
+   "companionSpecializations"
+  ]
+ },
+ {
+  "field": "spellSlot",
+  "n": 98,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "choice",
+  "n": 97,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "abilities",
+  "n": 93,
+  "buckets": [
+   "animalCompanions"
+  ]
+ },
+ {
+  "field": "support",
+  "n": 93,
+  "buckets": [
+   "animalCompanions"
+  ]
+ },
+ {
+  "field": "maneuver",
+  "n": 93,
+  "buckets": [
+   "animalCompanions"
+  ]
+ },
+ {
+  "field": "innateSpells",
+  "n": 83,
+  "buckets": [
+   "feats",
+   "heritages"
+  ]
+ },
+ {
+  "field": "focusSpells",
+  "n": 72,
+  "buckets": [
+   "classes",
+   "feats"
+  ]
+ },
+ {
+  "field": "critSpec",
+  "n": 70,
+  "buckets": [
+   "classFeatures",
+   "feats"
+  ]
+ },
+ {
+  "field": "material",
+  "n": 69,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "grantedStrikes",
+  "n": 69,
+  "buckets": [
+   "classFeatures",
+   "feats",
+   "ancestries",
+   "heritages"
+  ]
+ },
+ {
+  "field": "collision",
+  "n": 64,
+  "buckets": [
+   "vehicles"
+  ]
+ },
+ {
+  "field": "apexAttribute",
+  "n": 59,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "resistances",
+  "n": 58,
+  "buckets": [
+   "classFeatures",
+   "feats",
+   "heritages"
+  ]
+ },
+ {
+  "field": "valued",
+  "n": 57,
+  "buckets": [
+   "conditions"
+  ]
+ },
+ {
+  "field": "focusPoolBonus",
+  "n": 54,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "abilityFlaws",
+  "n": 50,
+  "buckets": [
+   "ancestries"
+  ]
+ },
+ {
+  "field": "vision",
+  "n": 50,
+  "buckets": [
+   "ancestries"
+  ]
+ },
+ {
+  "field": "languages",
+  "n": 50,
+  "buckets": [
+   "ancestries"
+  ]
+ },
+ {
+  "field": "heritages",
+  "n": 50,
+  "buckets": [
+   "ancestries"
+  ]
+ },
+ {
+  "field": "capacity",
+  "n": 46,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "ignoredBulk",
+  "n": 46,
+  "buckets": [
+   "items"
+  ]
+ },
+ {
+  "field": "critSpecWeapons",
+  "n": 44,
+  "buckets": [
+   "classFeatures",
+   "feats"
+  ]
+ },
+ {
+  "field": "trainedSkillChoice",
+  "n": 42,
+  "buckets": [
+   "backgrounds"
+  ]
+ },
+ {
+  "field": "passengers",
+  "n": 42,
+  "buckets": [
+   "vehicles"
+  ]
+ },
+ {
+  "field": "tacticTier",
+  "n": 31,
+  "buckets": [
+   "actions"
+  ]
+ },
+ {
+  "field": "keyAbility",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "hpPerLevel",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "perception",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "saves",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "defenses",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "classDc",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "trainedSkills",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "featProgression",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "skillIncreaseLevels",
+  "n": 27,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "critSpecLevel",
+  "n": 26,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "strikes",
+  "n": 25,
+  "buckets": [
+   "stances"
+  ]
+ },
+ {
+  "field": "features",
+  "n": 24,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "maxHpBonus",
+  "n": 17,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "subclass",
+  "n": 15,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "spellcasting",
+  "n": 11,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "defense",
+  "n": 8,
+  "buckets": [
+   "spells"
+  ]
+ },
+ {
+  "field": "darkvisionIfAncestryLowLight",
+  "n": 8,
+  "buckets": [
+   "heritages"
+  ]
+ },
+ {
+  "field": "notes",
+  "n": 7,
+  "buckets": [
+   "followers",
+   "pets"
+  ]
+ },
+ {
+  "field": "extraChoices",
+  "n": 5,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "weaknesses",
+  "n": 5,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "immunities",
+  "n": 3,
+  "buckets": [
+   "feats"
+  ]
+ },
+ {
+  "field": "attackGroups",
+  "n": 2,
+  "buckets": [
+   "classes"
+  ]
+ },
+ {
+  "field": "choiceResistance",
+  "n": 2,
+  "buckets": [
+   "heritages"
+  ]
+ },
+ {
+  "field": "acRank",
+  "n": 2,
+  "buckets": [
+   "companionSpecializations"
+  ]
+ },
+ {
+  "field": "grantsGeneralFeat",
+  "n": 1,
+  "buckets": [
+   "heritages"
+  ]
+ },
+ {
+  "field": "negativeHealing",
+  "n": 1,
+  "buckets": [
+   "heritages"
+  ]
+ },
+ {
+  "field": "speedBonus",
+  "n": 1,
+  "buckets": [
+   "companionSpecializations"
+  ]
+ }
+]

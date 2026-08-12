@@ -1,0 +1,157 @@
+{
+ "count": 19,
+ "records": [
+  {
+   "key": "black-dragons-breath-potion-adult",
+   "name": "Black Dragon's Breath Potion (Adult)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Adult)",
+   "docId": "equipment-185-226"
+  },
+  {
+   "key": "black-dragons-breath-potion-wyrm",
+   "name": "Black Dragon's Breath Potion (Wyrm)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Wyrm)",
+   "docId": "equipment-185-227"
+  },
+  {
+   "key": "black-dragons-breath-potion-young",
+   "name": "Black Dragon's Breath Potion (Young)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Young)",
+   "docId": "equipment-185-225"
+  },
+  {
+   "key": "bloodhound-olfactory-stimulators",
+   "name": "Bloodhound Olfactory Stimulators",
+   "book": "Pathfinder Treasure Vault (Remastered)",
+   "bookInArchive": 4228,
+   "base": "Olfactory Stimulators",
+   "docId": "equipment-2150"
+  },
+  {
+   "key": "brass-dragons-breath-potion-adult",
+   "name": "Brass Dragon's Breath Potion (Adult)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Adult)",
+   "docId": "equipment-185-226"
+  },
+  {
+   "key": "brass-dragons-breath-potion-wyrm",
+   "name": "Brass Dragon's Breath Potion (Wyrm)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Wyrm)",
+   "docId": "equipment-185-227"
+  },
+  {
+   "key": "brass-dragons-breath-potion-young",
+   "name": "Brass Dragon's Breath Potion (Young)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Young)",
+   "docId": "equipment-185-225"
+  },
+  {
+   "key": "bronze-dragons-breath-potion-adult",
+   "name": "Bronze Dragon's Breath Potion (Adult)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Adult)",
+   "docId": "equipment-185-226"
+  },
+  {
+   "key": "bronze-dragons-breath-potion-wyrm",
+   "name": "Bronze Dragon's Breath Potion (Wyrm)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Wyrm)",
+   "docId": "equipment-185-227"
+  },
+  {
+   "key": "bronze-dragons-breath-potion-young",
+   "name": "Bronze Dragon's Breath Potion (Young)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Young)",
+   "docId": "equipment-185-225"
+  },
+  {
+   "key": "green-dragons-breath-potion-adult",
+   "name": "Green Dragon's Breath Potion (Adult)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Adult)",
+   "docId": "equipment-185-226"
+  },
+  {
+   "key": "green-dragons-breath-potion-wyrm",
+   "name": "Green Dragon's Breath Potion (Wyrm)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Wyrm)",
+   "docId": "equipment-185-227"
+  },
+  {
+   "key": "green-dragons-breath-potion-young",
+   "name": "Green Dragon's Breath Potion (Young)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Young)",
+   "docId": "equipment-185-225"
+  },
+  {
+   "key": "red-dragons-breath-potion-adult",
+   "name": "Red Dragon's Breath Potion (Adult)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Adult)",
+   "docId": "equipment-185-226"
+  },
+  {
+   "key": "red-dragons-breath-potion-wyrm",
+   "name": "Red Dragon's Breath Potion (Wyrm)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Wyrm)",
+   "docId": "equipment-185-227"
+  },
+  {
+   "key": "red-dragons-breath-potion-young",
+   "name": "Red Dragon's Breath Potion (Young)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Young)",
+   "docId": "equipment-185-225"
+  },
+  {
+   "key": "silver-dragons-breath-potion-adult",
+   "name": "Silver Dragon's Breath Potion (Adult)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Adult)",
+   "docId": "equipment-185-226"
+  },
+  {
+   "key": "silver-dragons-breath-potion-wyrm",
+   "name": "Silver Dragon's Breath Potion (Wyrm)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Wyrm)",
+   "docId": "equipment-185-227"
+  },
+  {
+   "key": "silver-dragons-breath-potion-young",
+   "name": "Silver Dragon's Breath Potion (Young)",
+   "book": "Pathfinder Core Rulebook",
+   "bookInArchive": 4419,
+   "base": "Dragon's Breath Potion (Young)",
+   "docId": "equipment-185-225"
+  }
+ ]
+}

@@ -1,0 +1,1006 @@
+# Records with no archive doc
+
+After joining by id, by slug across all 93 categories, by slug minus a trailing `(…)`, and by
+word-order-insensitive token match. These are the ones to resolve WITH THE USER — never by falling
+back to Foundry.
+
+**Total 963**
+
+## spells — 8
+
+- Discomfiting Whispers
+- Vindicator's Judgment
+- Anima Invocation (Modified)
+- Aspirational State
+- Create Mycoguardian
+- Destroy Mindscape
+- Rite of Cleansing Flame
+- Unfettered Mark
+
+## items — 402
+
+- Abrogail I Script
+- Advanced Book of Translation (Tien)
+- Agate
+- Aged Arbor Wine
+- Alabaster and obsidian game set
+- Alabaster idol
+- Alabaster
+- Amber
+- Amethyst
+- Amphora with lavish scenes
+- Amulet Implement
+- Amulet of the Slumberer
+- Ancient dragon skull etched with mystic sigils
+- Apocalypse Seed
+- Aquamarine
+- Astrolabe of the Falling Stars
+- Awakened Adamantine Shot
+- Awakened Cold Iron Shot
+- Awakened Silver Shot
+- Azurite
+- Bakuwa Lizardfolk Bony Plates
+- Basic Ingredient
+- Belimarius's Invidious Halberd
+- Bell Implement
+- Beloved's Bracelets
+- Black Dragon's Breath Potion (Adult)
+- Black Dragon's Breath Potion (Wyrm)
+- Black Dragon's Breath Potion (Young)
+- Blightburn Necklace
+- Bloodhound Olfactory Stimulators
+- Bloodstone
+- Brass anklet
+- Brass Dragon's Breath Potion (Adult)
+- Brass Dragon's Breath Potion (Wyrm)
+- Brass Dragon's Breath Potion (Young)
+- Brass scepter with amethyst head
+- Brass statuette of a bull
+- Bronze bowl with wave imagery
+- Bronze brazier with Asmodean artwork
+- Bronze chalice with bloodstones
+- Bronze Dragon's Breath Potion (Adult)
+- Bronze Dragon's Breath Potion (Wyrm)
+- Bronze Dragon's Breath Potion (Young)
+- Busine of Divine Reinforcements
+- Carnelian
+- Carved wooden game set
+- Cavalry Commander's Lance
+- Ceremonial dagger with onyx hilt
+- Ceremonial shortsword with spinels
+- Chalice Implement
+- Chandelier crafted from dreams
+- Chromatic Robe (Greater)
+- Chromatic Robe
+- Chrysoberyl symbol of an evil eye
+- Chrysoberyl
+- Chrysoprase
+- Cinnamon Nostalgia Bun
+- Cipher of Elemental Planes
+- Citrine
+- Colorful pastoral tapestry
+- Colorful velvet half mask
+- Commandant's Scabbard
+- Conductor's Instrument
+- Copper and spinel puzzle box
+- Copper Pieces
+- Copper statuette of a salamander
+- Coral idol of an elemental lord
+- Cordelia's Greater Construct Key
+- Crystal dinner set, fine silverware
+- Crystallized dragon heart
+- Cutlery
+- Cytillesh Toolkit
+- Darkening Poison
+- Diamond, large
+- Diamond ring with platinum band
+- Diamond, small
+- Divine art piece created by Shelyn
+- Doomsday Door
+- Dream Hunter's Lodge
+- Duskwood violin by a legend
+- Effortless Garden
+- Elegant cloth doll
+- Emerald, brilliant green
+- Emerald
+- Energy Robe of Acid
+- Energy Robe of Cold
+- Energy Robe of Electricity
+- Energy Robe of Fire
+- Engraved copper ring
+- Enhanced Hearing Aids
+- Enormous chryselephantine sculpture by a legend
+- Enormous tapestry of a major battle
+- Etched copper ewer
+- Extendable Pincer
+- Eye of the Moonwarden
+- Famous portrait by a master
+- Fate Tempter's Ring
+- Feather of Unfounded Bravado
+- Fine gold spyglass
+- Fingerprint Kit
+- Fireworks Display
+- Formulated Sunlight
+- Fox Marble
+- Frightful Hag Eye
+- Fulu of Concealment
+- Gamtu Hat
+- Garnet
+- Gilded ceremonial armor
+- Gilded scepter with sapphire
+- Gold and aquamarine diadem
+- Gold and garnet ring
+- Gold and opal bracelet
+- Gold chalice with black pearls
+- Gold dragon statuette
+- Gold mask of a high priest
+- Gold necklace with peridots
+- Gold Pieces
+- Gold rapier with amethysts
+- Gold urn with scenes of judgment
+- Granny's Hedge Trimmer
+- Green Dragon's Breath Potion (Adult)
+- Green Dragon's Breath Potion (Wyrm)
+- Green Dragon's Breath Potion (Young)
+- Greengut
+- Hagbane Biscuit
+- Hallajin Key
+- Hand mirror with decorated frame
+- Hardshell Surki Carapace
+- Head Gem
+- Heavy Barding (Large)
+- Heavy Barding (Small or Medium)
+- Hell's Judgment
+- Hematite
+- Holy Steam Ball Refill
+- Hongbao of Many Things
+- Illuminated manuscript
+- Illustrated book
+- Incense Bundle of Annual Blessings
+- Inflammation Flask (Greater)
+- Inflammation Flask (Lesser)
+- Inflammation Flask (Major)
+- Inflammation Flask (Moderate)
+- Inscribed crocodile skull
+- Intricate silver and gold music box
+- Iron and rock crystal brazier
+- Iron cauldron with gargoyle faces
+- Ivory
+- Jade
+- Jasper
+- Jet and white gold game set
+- Jewel‑encrusted gold altar
+- Jeweled dawnsilver crown
+- Jeweled gold puzzle box
+- Jeweled orrery of the planes
+- Ka Stone
+- Land-delver's Chair
+- Lantern Implement
+- Lapis lazuli pendant
+- Lapis lazuli
+- Leather flagon with Caydenite symbol
+- Life‑size sculpture by an expert
+- Light Barding
+- Light Writer Plates
+- Living flame shaped into a phoenix
+- Lucky Copper
+- Lucky Gold
+- Lucky Silver
+- Magazine with 6 Pellets
+- Magazine with 8 Pellets
+- Magical Medal (Gorilla's Might)
+- Magical Medal (Griffon's Heart)
+- Magical Medal (Phoenix's Fire)
+- Magical Medal (Unicorn's Purity)
+- Magical Medal (Wolf Pack)
+- Major Painting by a Legend
+- Malachite
+- Marble altar
+- Mindmurk Oil
+- Mirror Implement
+- Moonstone and onyx game set
+- Moonstone
+- Musket Staff of Void
+- Mythic Resilient
+- Nap Gas Dispenser
+- Obsidian
+- One Day's Breath
+- Onyx
+- Opal
+- Oracular Hag Eye
+- Original manuscript from a world‑famous author
+- Parade armor with flourishes
+- Pearl, black
+- Pearl, irregular freshwater
+- Pearl, saltwater
+- Peridot
+- Peshpine Grenade (Greater)
+- Peshpine Grenade (Lesser)
+- Peshpine Grenade (Major)
+- Peshpine Grenade (Moderate)
+- Phasing ether silk tapestry
+- Plain brass censer
+- Platinum dragon statuette
+- Platinum‑framed monocle
+- Platinum image of a fey noble with a bit of orichalcum
+- Platinum Pieces
+- Poison Sedum
+- Porcelain doll with amber eyes
+- Porcelain vase inlaid with gold
+- Potion of Acid Resistance (Greater)
+- Potion of Acid Resistance (Lesser)
+- Potion of Acid Resistance (Moderate)
+- Potion of Acid Retaliation (Greater)
+- Potion of Acid Retaliation (Lesser)
+- Potion of Acid Retaliation (Major)
+- Potion of Acid Retaliation (Minor)
+- Potion of Acid Retaliation (Moderate)
+- Potion of Cold Resistance (Greater)
+- Potion of Cold Resistance (Lesser)
+- Potion of Cold Resistance (Moderate)
+- Potion of Cold Retaliation (Greater)
+- Potion of Cold Retaliation (Lesser)
+- Potion of Cold Retaliation (Major)
+- Potion of Cold Retaliation (Minor)
+- Potion of Cold Retaliation (Moderate)
+- Potion of Electricity Resistance (Greater)
+- Potion of Electricity Resistance (Lesser)
+- Potion of Electricity Resistance (Moderate)
+- Potion of Electricity Retaliation (Greater)
+- Potion of Electricity Retaliation (Lesser)
+- Potion of Electricity Retaliation (Major)
+- Potion of Electricity Retaliation (Minor)
+- Potion of Electricity Retaliation (Moderate)
+- Potion of Fire Resistance (Greater)
+- Potion of Fire Resistance (Lesser)
+- Potion of Fire Resistance (Moderate)
+- Potion of Fire Retaliation (Greater)
+- Potion of Fire Retaliation (Lesser)
+- Potion of Fire Retaliation (Major)
+- Potion of Fire Retaliation (Minor)
+- Potion of Fire Retaliation (Moderate)
+- Potion of Sonic Resistance (Greater)
+- Potion of Sonic Resistance (Lesser)
+- Potion of Sonic Resistance (Moderate)
+- Power Suit
+- Practice Target
+- Previously lost volume from a legendary author
+- Pyrite
+- Quality painting by an unknown
+- Quality sculpture by an unknown
+- Quartz, milky, rose, or smoky
+- Quartz, rock crystal
+- Red Dragon's Breath Potion (Adult)
+- Red Dragon's Breath Potion (Wyrm)
+- Red Dragon's Breath Potion (Young)
+- Regalia Implement
+- Rhodochrosite
+- Rite of Reinforcement Exoskeleton
+- Robe of Feathers Fall
+- Robes of Xin-Edasseril
+- Rounds (Arquebus)
+- Rounds (Axe Musket)
+- Rounds (Black Powder Knuckle Dusters)
+- Rounds (Blunderbuss)
+- Rounds (Cane Pistol)
+- Rounds (Clan Pistol)
+- Rounds (Coat Pistol)
+- Rounds (Dagger Pistol)
+- Rounds (Dawnsilver Tree)
+- Rounds (Double-Barreled Musket)
+- Rounds (Double-Barreled Pistol)
+- Rounds (Dragon Mouth Pistol)
+- Rounds (Dueling Pistol)
+- Rounds (Dwarven Scattergun)
+- Rounds (Explosive Dogslicer)
+- Rounds (Fire Lance)
+- Rounds (Flingflenser)
+- Rounds (Flintlock Musket)
+- Rounds (Flintlock Pistol)
+- Rounds (Gnome Amalgam Musket)
+- Rounds (Gun Sword)
+- Rounds (Hammer Gun)
+- Rounds (Hand Cannon)
+- Rounds (Harmona Gun)
+- Rounds (Jezail)
+- Rounds (Mace Multipistol)
+- Rounds (Pepperbox)
+- Rounds (Piercing Wind)
+- Rounds (Rapier Pistol)
+- Rounds (Shield Pistol)
+- Rounds (Shobhad Longrifle)
+- Rounds (Slide Pistol)
+- Rounds (Spike Launcher)
+- Rounds (Three-peaked Tree)
+- Ruby, large
+- Ruby, small
+- Runewell of Lust
+- Runic Skullcap
+- Sack of Hydra's Teeth
+- Saint's bone with lost scriptures
+- Sakura's Sprig
+- Sapphire
+- Sardonyx
+- Scrimshaw whale bone
+- Scroll of 10th-rank Spell
+- Scroll of 1st-rank Spell
+- Scroll of 2nd-rank Spell
+- Scroll of 3rd-rank Spell
+- Scroll of 4th-rank Spell
+- Scroll of 5th-rank Spell
+- Scroll of 6th-rank Spell
+- Scroll of 7th-rank Spell
+- Scroll of 8th-rank Spell
+- Scroll of 9th-rank Spell
+- Set of decorated ceramic plates
+- Set of decorated porcelain plates
+- Set of six ivory dice
+- Seven-Color Raw Fish Salad
+- Shell
+- Shrine Inarizushi
+- Signifer's Mask
+- Silk ceremonial armor
+- Silk fan decorated with turquoise
+- Silk mask decorated with citrines
+- Silver and jade censer
+- Silver coronet with peridots
+- Silver Dragon's Breath Potion (Adult)
+- Silver Dragon's Breath Potion (Wyrm)
+- Silver Dragon's Breath Potion (Young)
+- Silver flagon inscribed with fields
+- Silver mirror with gilded frame
+- Silver Pieces
+- Silver statuette of a raven
+- Simple painting
+- Simple sculpture
+- Simple silver circlet
+- Sling Darts
+- Small cold iron cauldron with onyx
+- Smoky Hag Eye
+- Solidified Moment of Time
+- Sorshen's Scintillating Garment
+- Sorshen's Sinuous Guisarme
+- Spare Wax Cylinder
+- Special Ingredient
+- Spider Mold
+- Spindle Key
+- Spinel, deep blue
+- Spinel, red or green
+- Splendid lyre of world‑famous lyrist
+- Splendid Pyschopomp Mask
+- Splendid Skull Mask
+- Spore Shephard's Staff (Greater)
+- Spore Shephard's Staff (Major)
+- Spore Shephard's Staff
+- Spray Pellets
+- St. Alkitarem's Eye
+- Standard Book of Translation (Tien)
+- Star sapphire necklace
+- Star sapphire
+- Starless Scope Lens
+- Stony Hag Eye
+- Submersible Helmet (Greater)
+- Submersible Helmet
+- Subterfuge Suit
+- Suit of Armoire
+- Supramarine Chair
+- Taljjae's Mask (The Beast)
+- Taljjae's Mask (The General)
+- Taljjae's Mask (The Grandmother)
+- Taljjae's Mask (The Hermit)
+- Taljjae's Mask (The Hero)
+- Taljjae's Mask (The Nobleman)
+- Taljjae's Mask (The Wanderer)
+- Tankard owned by Cayden Cailean
+- Ten Day's Breath
+- The Kardosian Fragments
+- Thought Lens of Astral Essence
+- Three Day's Breath
+- Tiger's‑eye
+- Timeflaying Blade
+- Titan Nagaji Scales
+- Tome Implement
+- Topaz
+- Tourmaline
+- Towering sculpture by a master
+- Treat (Standard)
+- Treat (Unique)
+- Tteokguk of Time Advancement
+- Turquoise
+- Tyrant's Writs
+- Versatile Vial
+- Virtuoso silver flute
+- Wand Implement
+- Wasul Reed Mask
+- Wayfinderfinder
+- Wide landscape by an expert
+- Windlass Bola
+- Witch Token
+- Worldforge
+- Yellow Musk Poison
+- Zetogeki Hide Armor
+- Zircon
+- Makeshift Staff
+
+## classFeatures — 263
+
+- Adept Benefit (Amulet)
+- Adept Benefit (Bell)
+- Adept Benefit (Chalice)
+- Adept Benefit (Lantern)
+- Adept Benefit (Mirror)
+- Adept Benefit (Regalia)
+- Adept Benefit (Shield)
+- Adept Benefit (Tome)
+- Adept Benefit (Wand)
+- Adept Benefit (Weapon)
+- Advanced Design
+- Advanced Rangefinder
+- Aerodynamic Construction
+- Air Gate
+- Alchemical Sciences Methodology
+- Alchemist Armor Expertise (Level 13)
+- Alchemist Armor Mastery (Level 19)
+- All-Consuming Hunger
+- Angel Eidolon
+- Anger Phantom Eidolon
+- Animal Instinct
+- Animal Order
+- Antimagic Plating
+- Anvil's Hardness
+- Armor Innovation
+- Ashes
+- Attack Refiner
+- Automated Impediments
+- Blessed Armament
+- Blessed Shield
+- Blessed Swiftness
+- Blight Soul Deviant Classification
+- Bloodline: Aberrant
+- Bloodline: Aesir
+- Bloodline: Angelic
+- Bloodline: Demonic
+- Bloodline: Diabolic
+- Bloodline: Draconic
+- Bloodline: Elemental
+- Bloodline: Fey
+- Bloodline: Genie
+- Bloodline: Hag
+- Bloodline: Harrow
+- Bloodline: Imperial
+- Bloodline: Nymph
+- Bloodline: Phoenix
+- Bloodline: Psychopomp
+- Bloodline: Shadow
+- Bloodline Spells
+- Bloodline: Undead
+- Bloodline: Wyrmblessed
+- Blunt Shot
+- Camouflage Pigmentation
+- Cascade Bearers
+- Catharsis Emotion
+- Champion's Aura
+- Churning Mind
+- Complex Simplicity
+- Construct Eidolon
+- Construct Innovation
+- Cultivation Order
+- Curse of Ancestral Meddling
+- Curse of Creeping Ashes
+- Curse of Engulfing Flames
+- Curse of Inclement Headwinds
+- Curse of Inevitable Rot
+- Curse of Outpouring Life
+- Curse of the Living Death
+- Curse of the Mortal Warrior
+- Curse of the Sky's Call
+- Curse of Torrential Knowledge
+- Curse of Turbulent Moments
+- Deadly Strike
+- Decay Instinct
+- Demon Eidolon
+- Dense Plating
+- Desynchronized Motions
+- Devotion Phantom Eidolon
+- Dragon Deviant Classification
+- Dragon Eidolon
+- Dragon Instinct
+- Dynamic Weighting
+- Earth Gate
+- Echoes of the Scrolls
+- Echoes of the Spells
+- Echoes of the Swords
+- Elemental Eidolon
+- Elemental Instinct
+- Elemental Magic
+- Elemental School
+- Emerald Boughs
+- Empiricism Methodology
+- Encroaching Presence
+- Energetic Meltdown
+- Energy Barrier
+- Enhanced Damage
+- Enhanced Resistance
+- Entangling Form
+- Envy
+- Extensible Weapon
+- Fey Eidolon
+- Fifth Doctrine (Cloistered Cleric)
+- Fifth Doctrine (Warpriest)
+- Fifth Doctrine
+- Final Creed
+- Final Doctrine (Cloistered Cleric)
+- Final Doctrine (Warpriest)
+- Final Doctrine
+- Fire Gate
+- First Doctrine (Cloistered Cleric)
+- First Doctrine (Warpriest)
+- First Doctrine
+- Flame Order
+- Flexible Spell Preparation
+- Flicker Deviant Classification
+- Forensic Medicine Methodology
+- Fourth Doctrine (Cloistered Cleric)
+- Fourth Doctrine (Warpriest)
+- Fourth Doctrine
+- Fourth Gate's Threshold
+- Fury Instinct
+- Gate Junction
+- Giant Instinct
+- Gluttony
+- Greater Creed
+- Greed
+- Hampering Spikes
+- Harmonic Oscillator
+- Heavy Construction
+- Hefty Composition
+- Hyper Boosters
+- Impossible Alloy
+- Inconspicuous Appearance
+- Incredible Resistance
+- Infused Reagents
+- Initial Creed
+- Initiate Benefit (Amulet)
+- Initiate Benefit (Bell)
+- Initiate Benefit (Chalice)
+- Initiate Benefit (Lantern)
+- Initiate Benefit (Mirror)
+- Initiate Benefit (Regalia)
+- Initiate Benefit (Shield)
+- Initiate Benefit (Tome)
+- Initiate Benefit (Wand)
+- Initiate Benefit (Weapon)
+- Integrated Gauntlet
+- Interrogation Methodology
+- Ki Spells
+- Layered Mesh
+- Leaf Order
+- Leech Deviant Classification
+- Lesser Creed
+- Lesson of Elements
+- Life-Draining
+- Light Mortar Innovation
+- Ligneous Instinct
+- Lust
+- Major Creed
+- Manifold Alloy
+- Metal Gate
+- Metallic Reactance
+- Moderate Creed
+- Modular Head
+- Momentum Enhancer
+- Multisensory Mask
+- Muscular Exoskeleton
+- Omnirange Stabilizers
+- Oracular Curse
+- Otherworldly Protection
+- Pacification Tools
+- Paragon Benefit (Amulet)
+- Paragon Benefit (Bell)
+- Paragon Benefit (Chalice)
+- Paragon Benefit (Lantern)
+- Paragon Benefit (Mirror)
+- Paragon Benefit (Regalia)
+- Paragon Benefit (Shield)
+- Paragon Benefit (Tome)
+- Paragon Benefit (Wand)
+- Paragon Benefit (Weapon)
+- Patron Theme
+- Perfect Fortification
+- Phlogistonic Regulator
+- Physical Protections
+- Plant Eidolon
+- Premonition Reflexes
+- Pride
+- Psychic Weapon Expertise
+- Psychic Weapon Specialization
+- Psychopomp Eidolon
+- Rain-Scribes
+- Razor Prongs
+- Restless as the Tide
+- Revelation Spells
+- Rope Shot
+- Rune Capacity
+- Second Doctrine (Cloistered Cleric)
+- Second Doctrine (Warpriest)
+- Second Doctrine
+- Second Gate's Threshold
+- Segmented Frame
+- Speed Boosters
+- Spirit Instinct
+- Spore Order
+- Stone Order
+- Storm Order
+- Strained Metabolism
+- Subtle Dampeners
+- Superstition Instinct
+- Swarm Eidolon
+- Tangle Line
+- Tempest-Sun Mages
+- Tensile Absorption
+- Third Doctrine (Cloistered Cleric)
+- Third Doctrine (Warpriest)
+- Third Doctrine
+- Third Gate's Threshold
+- Troll Deviant Classification
+- True Creed
+- Undead Eidolon
+- Untamed Order
+- Uzunjati
+- Verdant Core Deviant Classification
+- Versatile Vials
+- War Magic
+- Water Gate
+- Wave Order
+- Weapon Innovation
+- Witch Lessons
+- Wood Gate
+- Wraith Deviant Classification
+- Wrath
+- True Shapeshift
+- Verdant Rest
+- A Challenge for Heroes
+- Blinding of the Needle
+- Brandish the Gorgon's Gaze
+- Break the Sun's Legs
+- Burn out of Time
+- Coiling Serpents
+- Fleeting Arc through Heaven and Earth
+- Heaven Rains an Ending
+- Heavy is the Crown
+- Mark the Center
+- Only You and I
+- Plant Thirty Barbs
+- Race the Skies
+- Rejoin in Flight
+- Ringing Challenge
+- Sever Four Dragonfly Wings
+- Shed the Mortal Skin
+- Skirt the Underworld
+- Spasm of the Berserker
+- Tangle in Riddle
+- Topple the Pillar of Heaven
+- Unravel the Future
+- Pacifying Infusion
+- Nudging Whisper
+- Sever Conduit
+- Glimpse Vulnerability
+- Shed Spirit
+- Stitching Strike
+
+## feats — 56
+
+- Camouflage Coat
+- Ceremony of Strengthened Hand
+- Luring Chomp
+- Deep Vision
+- No Hands, No Problem
+- Heat Wave
+- Remember Their Names
+- Lotus Above the Wind
+- Faultless Defense
+- Exemplar Resiliency
+- Orator's Filibuster
+- Pass Vengeful Judgment
+- Harsh Judgement
+- Opportune Trickster
+- Shackles of Law
+- Sturdy Bindings
+- Devil Allies
+- Locate Lawbreakers
+- Blessing of the Five
+- Dedication to the Five
+- Reveal Beasts
+- Trailblazing Stride
+- Righteous Resistance
+- Spiritual Disruption
+- Disillusionment
+- Silence Heresy
+- Fear No Law, Fear No One
+- Seek Injustice
+- Knight Vigilant Dedication
+- Repulse the Wicked
+- Judgement of the Monolith
+- Flash of Omnipotence
+- Decree of Banishment
+- Emboldened with Glorious Purpose
+- Innate Magical Intuition
+- Vengeful Remnant
+- Construct Dynamo
+- Master Summoning Spellcasting
+- Fracture Timeflow
+- Recycled Cogwheels
+- Empathic Envoy
+- Vindicator's Judgment
+- Festering Wounds
+- Whispers of Warning
+- Armored Regiment Training
+- Certain Stratagem
+- Flashforge
+- Voice of Elements
+- Vermillion Threads
+- Autonomic Psychic Action
+- Avenger of Envy
+- Avenger of Gluttony
+- Avenger of Greed
+- Avenger of Lust
+- Avenger of Sloth
+- Avenger of Wrath
+
+## heritages — 3
+
+- Ambitious Human
+- Battle-Trained Human (BB)
+- Warden Human (BB)
+
+## backgrounds — 4
+
+- Post Guard of All Trades
+- Wish for Riches
+- Historical Reenactor
+- Reclaimer Investigator
+
+## deities — 4
+
+- Alocer
+- Norns
+- The Curtain Call
+- Atheists and Free Agents
+
+## actions — 186
+
+- Accept Echo
+- Objection
+- Set Free
+- Thermal Eruption
+- Water Transfer
+- Dazzle Seeker
+- I Defy You!
+- Acrid Barrage
+- Bounce Away
+- Fortify Focus
+- Anchor
+- Shielding Wave
+- Raise Slabs
+- Empty Vessel
+- Mirror-Trickery
+- Tap the Past
+- Dampening Harmonics
+- Lantern Beam
+- Lantern Strobe
+- Stridulating Song
+- Trench Digging
+- Tactical Retreat
+- Inscribe Shadow Pamor
+- Dancing Dodge
+- Assume a Role
+- Overawe Crowd
+- Drain Realm
+- Enter Seat Of Power
+- Manifest Realm
+- Spread Realm
+- Unleash Realm
+- Bless Ally
+- Enter Runewell
+- Spellsling
+- Amassed Assault
+- Ultimatum of Liberation
+- Bullet Dancer Stance
+- Catharsis
+- Settle Emotions
+- For My House!
+- Claw Stance
+- Talon Stance
+- Crescent Spray
+- Infiltrator's Draw
+- Reactive Falsehood
+- Set Explosives
+- Channel Draconic Essence
+- Draconic Salvation
+- Speed of Arms
+- Spirit's Mercy
+- Spread Propaganda
+- Banshee Cry
+- Coughing Dragon
+- Goblin Jubilee
+- Jumping Jenny
+- Launch Fireworks
+- Spin Tale
+- Remove Head
+- Consume Flesh
+- Intercession Spell
+- Guerrilla Assault
+- Avoid Dire Fate
+- Hellbreaker Strike
+- Warding Shift
+- Entity's Resurgence
+- Spirit Sanctification
+- Engineer's Efficiency
+- Mobbing Assault
+- Raise the Horde
+- Administer Ambient Magic
+- Devour Ambient Magic
+- Drape Ambient Magic
+- Repel Ambient Magic
+- Spit Ambient Magic
+- Turn Aside Ambient Magic
+- Binding Vow
+- Blizzard Evasion
+- Mystic Aegis
+- Boarding Assault
+- Royal Grace
+- Swirl Crimson Shroud
+- Bond with Spirit
+- Enter Spirit Trance
+- Cobble Together
+- Impromptu Investment
+- Pitch-Perfect Projection
+- Swift Choreography
+- Daydream Trance
+- Makes Me Stronger
+- Manifest Soulforged Armament
+- Conjure Bullet
+- Overwhelming Combination
+- Tenacious Stance
+- Starlit Transformation
+- Size Up
+- Stonestrike Stance
+- Bite and Sting
+- Death Drone
+- Swarm Forth
+- Basic Finisher
+- Adopt Persona
+- Twist Design
+- Designate Ally
+- Slayer's Identification
+- Accidental Shot
+- Drink Blood
+- Aegis of Envy
+- Convocation of Greed
+- Gluttonous Feast
+- Host of Wrath
+- Sorshen's Devotion
+- Summon Sloth
+- Tell Me More
+- Lay Down Arms
+- A Quick Glimpse Beyond
+- Bend Time
+- Bestial Clarity
+- Chaotic Destiny
+- Fated Not to Die
+- Fey's Fortune
+- Final Spite
+- Harrow the Fiend
+- Host Spirit
+- Hunt Runelord
+- Indomitable Act
+- My Legend Must Be Told
+- Mythic Echo
+- Prophecy's Pawn
+- Recall Under Pressure
+- Reclaim Destiny
+- Stellar Misfortune
+- Warding Sign
+- Wish for Luck
+- Activate Resonant Reflection
+- Relentless Assault
+- Scrappy Defiance
+- True Shapeshift
+- Verdant Rest
+- A Challenge for Heroes
+- Blinding of the Needle
+- Brandish the Gorgon's Gaze
+- Break the Sun's Legs
+- Burn out of Time
+- Coiling Serpents
+- Fleeting Arc through Heaven and Earth
+- Heaven Rains an Ending
+- Heavy is the Crown
+- Mark the Center
+- Only You and I
+- Plant Thirty Barbs
+- Race the Skies
+- Rejoin in Flight
+- Ringing Challenge
+- Sever Four Dragonfly Wings
+- Shed the Mortal Skin
+- Skirt the Underworld
+- Spasm of the Berserker
+- Tangle in Riddle
+- Topple the Pillar of Heaven
+- Unravel the Future
+- Pacifying Infusion
+- Nudging Whisper
+- Sever Conduit
+- Glimpse Vulnerability
+- Shed Spirit
+- Stitching Strike
+- Divert Lightning
+- Shatter Glass
+- Timely Dodge
+- Transform Ammunition
+- Decompose
+- Unwavering Resilience
+- Find Fault
+- Smoke Blending
+- Toxic Touch
+- Mist Blending
+- Salt Wound
+- Psychometric Assessment
+- Armor Up!
+- Defend Life
+- Dragon's Protection
+- Fight with Fear
+- Life Block
+- Overload Vision
+- That's My Number
+- Thundering Roar
+
+## animalCompanions — 1
+
+- Construct Companion
+
+## familiarAbilities — 26
+
+- Erudite
+- Familiar of Balanced Luck
+- Familiar of Bolstering Aid
+- Familiar of Enticing Negotiation
+- Familiar of Flowing Script
+- Familiar of Freezing Rime
+- Familiar of Insightful Observation
+- Familiar of Keen Senses
+- Familiar of Nimble Flight
+- Familiar of Obscuring Snowfall
+- Familiar of Ongoing Misery
+- Familiar of Overwhelming Tides
+- Familiar of Paired Perplexity
+- Familiar of Parasitic Might
+- Familiar of Restored Spirit
+- Familiar of Stalking Night
+- Familiar of Swarm's Heart
+- Grasping Tendrils
+- Luminous
+- Mask Freeze
+- Purify Air
+- Radiant
+- Soul Sight
+- Spirit Touch
+- Synchronize Spirit
+- Verdant Burst
+
+## vehicles — 5
+
+- Flying Broom
+- Magic Carpet
+- Warship
+- Second Kiss
+- Sandsailer
+
+## trait — 5
+
+- Tiny
+- Small
+- Large
+- Huge
+- Gargantuan

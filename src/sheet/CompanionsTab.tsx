@@ -40,7 +40,7 @@ import { formatMod, ownedFeatureIds } from '../rules/derive';
 import { InventoryTab } from './InventoryTab';
 import { HpControl } from './HpControl';
 import { specificFamiliars } from '../rules/specificFamiliars';
-import { featGrantedCompanions, offeredCreatures, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, type CreatureOffer } from '../rules/companionGrants';
+import { companionModKeys, featGrantedCompanions, offeredCreatures, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, type CreatureOffer } from '../rules/companionGrants';
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
@@ -1580,7 +1580,9 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
     if (cfg.kind === 'animal') {
       const type = cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
       if (!type) return { node: <StatBlock name={cfg.name || 'Animal companion'} kind="Animal companion" icon="ti-paw"><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
-      const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel, modesOf(cfg.id), new Set(character.feats.map((f) => f.featId)));
+      // `companionModKeys`, not a bare set of feat ids: a feat whose CHOICE decides which modification
+      // it gives (Creature of Myth's five) is keyed `<featId>:<answer>` and is invisible without it.
+      const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel, modesOf(cfg.id), companionModKeys(character.feats));
       return { node: <AnimalBlock b={b} cond={cond} hp={hpTrackerFor(cfg.id, b.hp)} />, bulkMax: b.bulk.max };
     }
     if (cfg.kind === 'familiar') {

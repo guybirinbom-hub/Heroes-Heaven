@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { isMobileNow } from './useIsMobile';
 import type { ActiveCondition, Condition, ModeDef } from '../rules/types';
 import { ModesPanel } from './ModesPanel';
-import { DescBody } from './DescBody';
+import { DescriptionModal } from './DescriptionModal';
+import { toPlainText } from './RichText';
 import { useEscapeClose } from './useEscapeClose';
 
 /**
@@ -14,7 +15,7 @@ export function ConditionsModal({
   active,
   onAdd,
   onRemove,
-  onSetValue,
+  onStepValue,
   onClose,
   modesEnabled,
   library = [],
@@ -25,6 +26,7 @@ export function ConditionsModal({
   featIds,
   charKey,
   charName,
+  lores,
   activeModeIds = [],
   onToggleMode,
   onSaveMode,
@@ -34,7 +36,8 @@ export function ConditionsModal({
   active: ActiveCondition[];
   onAdd: (id: string, valued: boolean) => void;
   onRemove: (id: string) => void;
-  onSetValue: (id: string, value: number) => void;
+  /** Nudge a valued condition by ±1. A DELTA, not a target value — see stepConditionValue. */
+  onStepValue: (id: string, delta: number) => void;
   onClose: () => void;
   /** Show the Modes tab (character sheet only — not companions). */
   modesEnabled?: boolean;
@@ -47,6 +50,8 @@ export function ConditionsModal({
   featIds?: ReadonlySet<string>;
   charKey?: string;
   charName?: string;
+  /** This character's Lore keys, so a custom mode can target one. */
+  lores?: string[];
   activeModeIds?: string[];
   onToggleMode?: (id: string) => void;
   onSaveMode?: (mode: ModeDef) => void;
@@ -55,6 +60,8 @@ export function ConditionsModal({
   useEscapeClose(onClose);
   const [q, setQ] = useState('');
   const [tab, setTab] = useState<'conditions' | 'modes'>('conditions');
+  // The condition whose full rules page is open on top of this list.
+  const [reading, setReading] = useState<Condition | null>(null);
   const activeIds = new Set(active.map((c) => c.id));
   const list = Object.values(conditions)
     .filter((c) => c.name.toLowerCase().includes(q.trim().toLowerCase()))
@@ -89,6 +96,7 @@ export function ConditionsModal({
             featIds={featIds}
             charKey={charKey}
             charName={charName}
+            lores={lores}
             activeIds={activeModeIds}
             onToggle={(id) => onToggleMode?.(id)}
             onSave={(m) => onSaveMode?.(m)}
@@ -103,41 +111,57 @@ export function ConditionsModal({
           </div>
           <span className="ss-count">{list.length}</span>
         </div>
-        <div className="cond-list">
+        {/* Laid out exactly like the Modes list next door: a circle on the left that is the ONLY
+            toggle, the name and a clamped blurb in the middle, and the row itself opening the full
+            rules page. Two lists that do the same job now look like they do. */}
+        <div className="modes-list cond-list">
           {list.map((c) => {
             const on = activeIds.has(c.id);
             const val = active.find((a) => a.id === c.id)?.value;
-            // The body is display-only (name + the condition's full description, whose own links stay
-            // clickable — no longer wrapped in a button); the Apply/Remove button is the only toggle.
             return (
-              <div key={c.id} className={'cond-row' + (on ? ' on' : '')}>
-                <div className="cond-row-text">
-                  <div className="cond-row-name">
-                    <span className="cond-row-check">{on && <i className="ti ti-check" aria-hidden="true" />}</span>
+              <div key={c.id} className={'mode-row cond-row' + (on ? ' on' : '')}>
+                <button
+                  className={'mode-toggle' + (on ? ' on' : '')}
+                  aria-label={on ? `Remove ${c.name}` : `Apply ${c.name}`}
+                  aria-pressed={on}
+                  title={on ? 'Remove' : 'Apply'}
+                  onClick={() => (on ? onRemove(c.id) : onAdd(c.id, c.valued))}
+                >
+                  <i className={'ti ' + (on ? 'ti-circle-check' : 'ti-circle')} aria-hidden="true" />
+                </button>
+                <button type="button" className="mode-info cond-row-open" title={`Read ${c.name}`} onClick={() => setReading(c)}>
+                  <div className="mode-name">
                     {c.name}
                     {c.valued && <span className="cond-valued-tag">valued</span>}
                   </div>
-                  {c.description && <DescBody description={c.description} descRefs={c.descRefs} className="cond-row-desc" as="div" astKey="conditions" astId={c.id} />}
-                </div>
+                  {/* Plain text, line-clamped. The rich renderer put links and block elements in here,
+                      which is what made the clamp slice through the middle of a line. */}
+                  {c.description && <div className="cond-row-desc">{toPlainText(c.description)}</div>}
+                </button>
                 {on && c.valued && (
                   <span className="cond-stepper">
-                    <button aria-label="Decrease" onClick={() => onSetValue(c.id, (val ?? 1) - 1)}>
+                    {/* Deltas, not absolutes: see stepConditionValue — computing "val + 1" out here made
+                        two fast taps write the same number twice. */}
+                    <button aria-label={`Decrease ${c.name}`} onClick={() => onStepValue(c.id, -1)}>
                       <i className="ti ti-minus" aria-hidden="true" />
                     </button>
                     <span className="cond-val">{val ?? 1}</span>
-                    <button aria-label="Increase" onClick={() => onSetValue(c.id, (val ?? 1) + 1)}>
+                    <button aria-label={`Increase ${c.name}`} onClick={() => onStepValue(c.id, 1)}>
                       <i className="ti ti-plus" aria-hidden="true" />
                     </button>
                   </span>
                 )}
-                <button type="button" className={'pick-add' + (on ? ' chosen' : '')} onClick={() => (on ? onRemove(c.id) : onAdd(c.id, c.valued))}>
-                  {on ? 'Remove' : 'Apply'}
-                </button>
               </div>
             );
           })}
             </div>
           </>
+        )}
+        {reading && (
+          <DescriptionModal
+            root={{ title: reading.name, description: reading.description ?? '', descRefs: reading.descRefs, key: 'conditions', slug: reading.id }}
+            onClose={() => setReading(null)}
+          />
         )}
       </div>
     </div>

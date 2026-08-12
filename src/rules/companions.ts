@@ -17,7 +17,7 @@ import { abpOn, abpAttack, abpStrikingDice } from './abp';
 import { conditionPenalty } from './conditions';
 import { modeNumberBonus } from './modes';
 import { specificFamiliar } from './specificFamiliars';
-import { COMPANION_MODS, CREATURE_OFFERS, type CreatureOffer } from './companionGrants';
+import { companionModKeys, COMPANION_MODS, CREATURE_OFFERS, type CreatureOffer } from './companionGrants';
 import type {
   AbilityId,
   ActionCost,
@@ -692,8 +692,10 @@ export interface EidolonBlock extends Defenses {
   speed: number;
   /** The eidolon's own ability modifiers (from its array + boosts). */
   abilities: Record<AbilityId, number>;
-  /** Primary + secondary unarmed Strikes (the summoner's proficiency, the eidolon's Str/Dex). */
-  attacks: { name: string; attack: number; damage: string; traits: string[] }[];
+  /** Primary + secondary unarmed Strikes (the summoner's proficiency, the eidolon's Str/Dex), plus any
+   *  a feat grants. `range` in feet marks a RANGED one — AttackLine labels the row off it, and reading
+   *  the traits alone is what once called 195 of 199 ranged weapons Melee. */
+  attacks: { name: string; attack: number; damage: string; traits: string[]; range?: number }[];
   /** Senses from the eidolon type + evolution feats (Expanded Senses). */
   senses?: string[];
   /** Non-land speeds from evolution feats ("swim 25 feet (amphibious)"). */
@@ -817,18 +819,43 @@ export function deriveEidolon(
   const runeCritPersistent = runeDamage
     .filter((d) => d.critPersistent)
     .map((d) => `${d.critPersistent!.dice}${d.critPersistent!.die} persistent ${d.type}`);
-  const strike = (rawName: string | undefined, fallback: string, die: number, traits: string[], dmgType?: DamageType) => {
+  const strike = (
+    rawName: string | undefined,
+    fallback: string,
+    die: number,
+    traits: string[],
+    dmgType?: DamageType,
+    /** `range` in feet makes this a RANGED Strike; `typeLabel` overrides the printed damage type with
+     *  a placeholder while the player's damage-type answer is still missing; `baseDice` is the printed
+     *  die COUNT for a granted Strike (the two natural attacks are always one die before striking). */
+    opts?: { range?: number; typeLabel?: string; baseDice?: number },
+  ) => {
     const finesse = traits.includes('finesse');
-    const atkAbility: AbilityId = finesse && ab.dex > ab.str ? 'dex' : 'str';
-    const flat = ab.str + specDamage + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
+    // A RANGED Strike rolls Dexterity and adds no Strength to damage — unless it is PROPULSIVE, which
+    // adds half Strength rounded down, or all of it when negative. Same rule deriveUnarmedStrike
+    // applies to the summoner's own propulsive weapons (derive.ts) rather than a second reading of it.
+    const ranged = opts?.range != null;
+    const atkAbility: AbilityId = ranged ? 'dex' : finesse && ab.dex > ab.str ? 'dex' : 'str';
+    const dmgAbility = ranged
+      ? traits.includes('propulsive')
+        ? ab.str > 0
+          ? Math.floor(ab.str / 2)
+          : ab.str
+        : 0
+      : ab.str;
+    const flat = dmgAbility + specDamage + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
     const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
-    const dice = 1 + strikingDice;
+    // Striking on the shared handwraps adds dice to EVERY unarmed Strike the eidolon has, granted ones
+    // included — rune-sharing is written per Strike, not per natural weapon. (The animal-companion path
+    // deliberately withholds its MATURITY die from granted strikes; that is a companion-progression
+    // ladder, not a rune, so the two are not the same question.)
+    const dice = (opts?.baseDice ?? 1) + strikingDice;
     // Monster-Parts imbued damage on the shared handwraps folds into each Strike as per-hit "plus"
     // terms (like the PC's unarmed Strike), resolved against this Strike's own damage type.
     const mpDmg = mpHw ? mpImbuedDamageTerms(mpHw, dmgType ?? 'slashing', level).map(mpTerm) : [];
     const plusTerms = [...runeDmg, ...mpDmg];
     const damage =
-      `${dice}d${die}${dmgFlat} ${dmgType ?? 'slashing'}` +
+      `${dice}d${die}${dmgFlat} ${opts?.typeLabel ?? dmgType ?? 'slashing'}` +
       (plusTerms.length ? ` plus ${plusTerms.join(' plus ')}` : '') +
       (runeCritPersistent.length ? ` (plus ${runeCritPersistent.join(', ')} on a crit)` : '');
     return {
@@ -836,6 +863,7 @@ export function deriveEidolon(
       attack: ab[atkAbility] + profBonus(attackRank, level, withoutLevel) + potencyBonus + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
       damage,
       traits: [...traits, 'unarmed'],
+      ...(ranged ? { range: opts!.range } : {}),
     };
   };
   const primaryOpt = EIDOLON_PRIMARY_OPTIONS.find((o) => o.id === ec.primary?.option) ?? EIDOLON_PRIMARY_OPTIONS[5]; // 1d6 forceful, sweep
@@ -861,7 +889,11 @@ export function deriveEidolon(
     evoIwr.push(...(pkg.iwr ?? []));
     evoNotes.push(...(pkg.notes ?? []));
   }
-  const featIdSet = new Set(character.feats.map((f) => f.featId));
+  // `companionModKeys` adds `<featId>:<answer>` beside every plain feat id, so an eidolon mod chosen by
+  // the owner's own answer can be found here too. A superset of the old set: the composite keys carry a
+  // colon, which no feat id does, so the `featIdSet.has('expanded-senses')` style lookups below are
+  // unaffected.
+  const featIdSet = companionModKeys(character.feats);
   // Eidolon-kind entries in COMPANION_MODS (Vibration Sense, …). Without this pass they'd be inert:
   // the table is otherwise only read by deriveAnimalCompanion.
   for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
@@ -870,6 +902,27 @@ export function deriveEidolon(
     evoIwr.push(...(mod.iwr ?? []));
     for (const line of speedLines(mod.speeds, 25)) if (!extraSpeeds.includes(line)) extraSpeeds.push(line);
     if (mod.note) evoNotes.push(mod.note);
+    // Strikes an owner feat GIVES the eidolon (Ranged Combatant's 30-foot propulsive attack). The loop
+    // read four fields and not this one, so an eidolon-kind entry carrying a granted Strike was inert —
+    // and Ranged Combatant, whose entire content is that attack, showed nothing at all.
+    for (const s of mod.grantedStrikes ?? []) {
+      // The damage type is the player's own answer on the granting feat; the printed `damageType` is
+      // the stand-in shown until they give one, so the row never claims a type the player did not pick.
+      const answered = s.damageTypeFromChoice
+        ? character.feats.find((f) => f.featId === slug)?.choice?.value || undefined
+        : s.damageType;
+      attacks.push(
+        // 'unarmed' is appended by `strike` itself; the table lists it so the ANIMAL path (which does
+        // not) prints it, and passing it through here would duplicate the trait.
+        // No fallback on the die size: the table is hand-authored and type-checked, and a malformed
+        // entry printing "1dNaN" is a defect somebody notices — a quiet default to d4 is one nobody does.
+        strike(s.name, s.name, Number(s.die.replace(/^d/, '')), s.traits.filter((t) => t !== 'unarmed'), answered, {
+          range: s.range,
+          baseDice: s.dice,
+          typeLabel: answered ?? s.damageType,
+        }),
+      );
+    }
   }
   if (featIdSet.has('expanded-senses')) {
     for (const s of ['low-light vision', 'darkvision', 'scent (imprecise 30 ft)']) if (!evoSenses.includes(s)) evoSenses.push(s);
@@ -883,11 +936,54 @@ export function deriveEidolon(
     evoIwr.push(`resistance ${Math.max(1, Math.floor(level / 2))} ${chosen ?? 'chosen energy type'}`);
     evoNotes.push('Dual Energy Heart: its energy Strike gains versatile (chosen type).');
   }
+  /*
+   * Pushing Attack — ruling Q20. *"Choose one of the eidolon's unarmed attacks with the shove trait.
+   * It gains the Push action for that attack."* The record's primary/secondary answer reached nothing
+   * whatever, so the feat read as its own label and the player had no record of which attack they
+   * picked (the pick is permanent, and the two attacks are configured separately).
+   *
+   * The note NAMES the chosen attack rather than merely repeating the rule, because naming it is the
+   * only part the answer decides. Push itself is an ACTION, and companion actions are not modelled —
+   * the conservative reading is to surface the pick where the eidolon's attacks are read, not to
+   * invent a trait on the Strike row that the rules do not give it.
+   */
+  if (featIdSet.has('pushing-attack')) {
+    const which = character.feats.find((f) => f.featId === 'pushing-attack')?.choice?.value;
+    // attacks[0]/[1] are built as Primary/Secondary immediately above, in that order.
+    const named = which === 'secondary' ? attacks[1] : which === 'primary' ? attacks[0] : undefined;
+    evoNotes.push(
+      named
+        ? `Pushing Attack: its ${named.name} unarmed attack gains the Push action (the attack must have the shove trait).`
+        : 'Pushing Attack: choose the primary or secondary unarmed attack in the builder — that attack gains the Push action (it must have the shove trait).',
+    );
+  }
+
+  /*
+   * Dual Studies — ruling Q20. *"Your eidolon becomes trained in one of those skills and you become
+   * trained in the other."* The eidolon half was recorded in `effectChoices` and displayed nowhere, so
+   * the answer existed only inside the builder card that asked for it.
+   *
+   * Read from `effectPicks`, which buildCharacter fills for every resolved pick INCLUDING options that
+   * carry no grant — this one carries none, because eidolon skill proficiencies are not tracked as
+   * numbers. The rank is stated because the feat raises it at 7th and nothing else would say so.
+   */
+  const eidolonSkills: string[] = [...(opt?.grants?.skills ?? [])];
+  for (const p of character.effectPicks ?? []) {
+    if (p.recordId !== 'dual-studies' || p.choiceId !== 'eidolon-skill') continue;
+    // The option's LABEL, not its value: the block's skills are display strings rendered through
+    // `cap`, and the label is already the printed skill name.
+    if (!eidolonSkills.some((s) => s.toLowerCase() === p.label.toLowerCase())) eidolonSkills.push(p.label);
+    // The rank goes in a note rather than beside the name: the row is headed "Trained skills", and
+    // writing "expert" inside it would contradict its own heading at 7th level and above.
+    evoNotes.push(
+      `Dual Studies: your eidolon is trained in ${p.label}${level >= 7 ? ', and expert from 7th level' : ' (expert at 7th level)'}. These skill proficiencies are not shared between you and your eidolon.`,
+    );
+  }
 
   return {
     name: cfg.name || opt?.name || 'Eidolon',
     tradition: opt?.tradition,
-    skills: opt?.grants?.skills ?? [],
+    skills: eidolonSkills,
     description: opt?.description ?? '',
     hp: deriveMaxHp(character, content),
     speed: 25,

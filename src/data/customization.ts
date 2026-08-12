@@ -31,6 +31,7 @@ export const DEFAULT_CUSTOMIZATION: Customization = {
   showSlotBadges: true,
   consumableHighlight: true,
   scrollbarAccent: false,
+  notesShowRail: false,
 };
 
 /** The natural (unconfigured) order of the vitals-rail cards. */

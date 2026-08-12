@@ -1,0 +1,248 @@
+[
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-5205-bonus-1713",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0.1,
+   "bulk_raw": "L  (when not activated)",
+   "category": "item-bonus",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-5205-bonus-1713",
+   "item_bonus_action": "Recall Knowledge",
+   "item_bonus_consumable": false,
+   "item_bonus_note": "the next skill check they make in the next 24 hours to Recall Knowledge about any creature with the dream trait.",
+   "item_bonus_value": 3,
+   "item_category": "Structures",
+   "level": 17,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 17\"\n    pfs=\"\"\n>\n[Dream Hunter's Lodge](/Equipment.aspx?ID=5205)\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Dream\" url=\"/Traits.aspx?ID=582\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Structure\" url=\"/Traits.aspx?ID=704\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 13,500 gp\n\n<row gap=\"medium\">\n\n**Bulk** L  (when not activated)\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis miniature hunter’s lodge fits comfortably into the palm of one’s hand. \n\n**Activate—Expand Lodge** <actions string=\"Two Actions\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;   **Effect** You set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a sturdy stone foundation, thick timber walls, and a peaked roof shingled with scraps of bark. The lodge’s ground floor contains a dining hall on one end and a sitting area with a hearth surrounded by comfortable chairs on the other. A staircase connects the hall to the lodge’s second floor, which consists of four simply furnished bedrooms. The lodge is decorated throughout with taxidermic beasts native to the Dimension of Dreams. If a creature inside the lodge spends 10 minutes studying these trophies, they gain a +3 item bonus to the next skill check they make in the next 24 hours to Recall Knowledge about any creature with the dream trait. Furnishings or decorations removed from the lodge disappear but return to their original locations inside the lodge with the next activation. You can [Dismiss](/Actions.aspx?ID=2311) the dream hunter’s lodge to return it to its miniature form. \n\n**Activate—Oneiric Expedition** <actions string=\"\" /> 10 minutes ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;  **Requirements** The _dream hunter’s lodge_ has been expanded and you are inside; **Effect** Spend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the lodge reappears in the Dimension of Dreams (or in the Universe, if the lodge was already in the Dimension of Dreams), as if transported there by an _interplanar teleport_ spell. Upon arrival, creatures inside the lodge awaken, fully rested (but this effect does not increase the number of times per day you can do your daily preparations).\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Dream Hunter's Lodge",
+   "price": 1350000,
+   "price_raw": "13,500 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 82",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Dream\" url=\"/Traits.aspx?ID=582\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=644\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n<trait label=\"Structure\" url=\"/Traits.aspx?ID=704\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82\n\n**Price** 13,500 gp\n\n<row gap=\"medium\">\n \n\n \n\n**Bulk** L  (when not activated)\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThis miniature hunter’s lodge fits comfortably into the palm of one’s hand.    \n</summary>",
+   "skill_markdown": "",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 82"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 82",
+   "speed": {},
+   "spell_markdown": "",
+   "spoilers": "Revenge of the Runelords",
+   "stage_markdown": "",
+   "summary": "This miniature hunter’s lodge fits comfortably into the palm of one’s hand.    ",
+   "summary_markdown": "This miniature hunter’s lodge fits comfortably into the palm of one’s hand.    ",
+   "text": "<title level=\"1\" right=\"Item 17\" pfs=\"\"\n>\nDream Hunter's Lodge May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 82 Price 13,500 gp Bulk L (when not activated) --- This miniature hunter’s lodge fits comfortably into the palm of one’s hand. Activate—Expand Lodge Two Actions (concentrate) Frequency once per day; Effect You set the lodge on the ground, where it expands into a structure 40 feet long, 20 feet wide, and 20 feet high. The lodge is well-built, with a sturdy stone foundation, thick timber walls, and a peaked roof shingled with scraps of bark. The lodge’s ground floor contains a dining hall on one end and a sitting area with a hearth surrounded by comfortable chairs on the other. A staircase connects the hall to the lodge’s second floor, which consists of four simply furnished bedrooms. The lodge is decorated throughout with taxidermic beasts native to the Dimension of Dreams. If a creature inside the lodge spends 10 minutes studying these trophies, they gain a +3 item bonus to the next skill check they make in the next 24 hours to Recall Knowledge about any creature with the dream trait. Furnishings or decorations removed from the lodge disappear but return to their original locations inside the lodge with the next activation. You can Dismiss the dream hunter’s lodge to return it to its miniature form. Activate—Oneiric Expedition 10 minutes (concentrate) Frequency once per day; Requirements The dream hunter’s lodge has been expanded and you are inside; Effect Spend 1 Mythic Point. You and all creatures inside the lodge fall into a magical slumber, and the lodge disappears from existence. After 8 hours, the lodge reappears in the Dimension of Dreams (or in the Universe, if the lodge was already in the Dimension of Dreams), as if transported there by an interplanar teleport spell. Upon arrival, creatures inside the lodge awaken, fully rested (but this effect does not increase the number of times per day you can do your daily preparations).\n",
+   "trait": [
+    "Dream",
+    "Magical",
+    "Mythic",
+    "Rare",
+    "Structure"
+   ],
+   "trait_group": [
+    "Creature Type",
+    "Mechanics",
+    "Mythic",
+    "Rarity",
+    "Equipment"
+   ],
+   "trait_markdown": "[Dream](/Traits.aspx?ID=582), [Magical](/Traits.aspx?ID=644), [Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683), [Structure](/Traits.aspx?ID=704)",
+   "trait_raw": [
+    "Dream",
+    "Magical",
+    "Mythic",
+    "Rare",
+    "Structure"
+   ],
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=5205",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-5208-bonus-1714",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "category": "item-bonus",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-5208-bonus-1714",
+   "item_bonus_consumable": false,
+   "item_bonus_value": 2,
+   "item_category": "Worn Items",
+   "item_subcategory": "Other Worn Items",
+   "level": 15,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 15\"\n    pfs=\"\"\n>\n[Runic Skullcap](/Equipment.aspx?ID=5208)\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Divine\" url=\"/Traits.aspx?ID=579\" />\n<trait label=\"Focused\" url=\"/Traits.aspx?ID=609\" />\n<trait label=\"Invested\" url=\"/Traits.aspx?ID=637\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 6,000 gp\n\n<row gap=\"medium\">\n\n**Usage** worn headwear\n\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to [Arcana](/Skills.aspx?ID=35) and [Religion](/Skills.aspx?ID=46) checks. If a check is attempted to Recall Knowledge about rune magic or Lissala, the wearer treats the results of a failure or critical failure as one degree of success better. \n\n**Activate—Rewards of Service** <actions string=\"Free Action\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;   **Effect** Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, fate, and knowledge. If you don’t spend this point by the end of this turn, it is lost. \n\n**Activate—Rewards of Rule** <actions string=\"\" /> 1 minute ([concentrate](/Traits.aspx?ID=561))   **Requirements** You have master or legendary proficiency in [Arcana](/Skills.aspx?ID=35); **Effect** Spend 1 Mythic Point when you invest the _runic skullcap_. Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school.\n\n<ul><li>**Envy:** _[_cutting eye_](/Spells.aspx?ID=2320)_ </li><li>**Greed:** _[_precious gleam_](/Spells.aspx?ID=2322)_ </li><li>**Sloth:** _[_reclined apport_](/Spells.aspx?ID=2323)_ </li><li>**Gluttony:** _[_all-encompassing hunger_](/Spells.aspx?ID=2318)_ </li><li>**Lust:** _[_heart's hook_](/Spells.aspx?ID=2321)_ </li><li>**Pride:** _[_crescent scepter_](/Spells.aspx?ID=2319)_ </li><li>**Wrath:** _[_vengeful glare_](/Spells.aspx?ID=2324)_</li></ul>\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Runic Skullcap",
+   "price": 600000,
+   "price_raw": "6,000 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Divine\" url=\"/Traits.aspx?ID=579\" />\n<trait label=\"Focused\" url=\"/Traits.aspx?ID=609\" />\n<trait label=\"Invested\" url=\"/Traits.aspx?ID=637\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 6,000 gp\n\n<row gap=\"medium\">\n \n\n**Usage** worn headwear\n\n \n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThis silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …\n</summary>",
+   "skill": [
+    "Arcana"
+   ],
+   "skill_markdown": "[Arcana](/Skills.aspx?ID=35)",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "spell_markdown": "",
+   "spoilers": "Revenge of the Runelords",
+   "stage_markdown": "",
+   "summary": "This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …",
+   "summary_markdown": "This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …",
+   "text": "<title level=\"1\" right=\"Item 15\" pfs=\"\"\n>\nRunic Skullcap May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 83 Price 6,000 gp Usage worn headwear --- This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to Arcana and Religion checks. If a check is attempted to Recall Knowledge about rune magic or Lissala, the wearer treats the results of a failure or critical failure as one degree of success better. Activate—Rewards of Service Free Action (concentrate) Frequency once per day; Effect Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, fate, and knowledge. If you don’t spend this point by the end of this turn, it is lost. Activate—Rewards of Rule 1 minute (concentrate) Requirements You have master or legendary proficiency in Arcana; Effect Spend 1 Mythic Point when you invest the runic skullcap . Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school. Envy: cutting eye Greed: precious gleam Sloth: reclined apport Gluttony: all-encompassing hunger Lust: heart's hook Pride: crescent scepter Wrath: vengeful glare ",
+   "trait": [
+    "Divine",
+    "Focused",
+    "Invested",
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Equipment",
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Divine](/Traits.aspx?ID=579), [Focused](/Traits.aspx?ID=609), [Invested](/Traits.aspx?ID=637), [Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Divine",
+    "Focused",
+    "Invested",
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=5208",
+   "usage": "worn headwear",
+   "usage_markdown": "worn headwear",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "equipment-5208-bonus-1715",
+  "_score": 35.014893,
+  "_source": {
+   "base_item_markdown": "",
+   "bulk": 0,
+   "category": "item-bonus",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "id": "equipment-5208-bonus-1715",
+   "item_bonus_consumable": false,
+   "item_bonus_value": 2,
+   "item_category": "Worn Items",
+   "item_subcategory": "Other Worn Items",
+   "level": 15,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Item 15\"\n    pfs=\"\"\n>\n[Runic Skullcap](/Equipment.aspx?ID=5208)\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Divine\" url=\"/Traits.aspx?ID=579\" />\n<trait label=\"Focused\" url=\"/Traits.aspx?ID=609\" />\n<trait label=\"Invested\" url=\"/Traits.aspx?ID=637\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 6,000 gp\n\n<row gap=\"medium\">\n\n**Usage** worn headwear\n\n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n\n</column>\n\n---\n\nThis silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to [Arcana](/Skills.aspx?ID=35) and [Religion](/Skills.aspx?ID=46) checks. If a check is attempted to Recall Knowledge about rune magic or Lissala, the wearer treats the results of a failure or critical failure as one degree of success better. \n\n**Activate—Rewards of Service** <actions string=\"Free Action\" /> ([concentrate](/Traits.aspx?ID=561)) **Frequency** once per day;   **Effect** Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, fate, and knowledge. If you don’t spend this point by the end of this turn, it is lost. \n\n**Activate—Rewards of Rule** <actions string=\"\" /> 1 minute ([concentrate](/Traits.aspx?ID=561))   **Requirements** You have master or legendary proficiency in [Arcana](/Skills.aspx?ID=35); **Effect** Spend 1 Mythic Point when you invest the _runic skullcap_. Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school.\n\n<ul><li>**Envy:** _[_cutting eye_](/Spells.aspx?ID=2320)_ </li><li>**Greed:** _[_precious gleam_](/Spells.aspx?ID=2322)_ </li><li>**Sloth:** _[_reclined apport_](/Spells.aspx?ID=2323)_ </li><li>**Gluttony:** _[_all-encompassing hunger_](/Spells.aspx?ID=2318)_ </li><li>**Lust:** _[_heart's hook_](/Spells.aspx?ID=2321)_ </li><li>**Pride:** _[_crescent scepter_](/Spells.aspx?ID=2319)_ </li><li>**Wrath:** _[_vengeful glare_](/Spells.aspx?ID=2324)_</li></ul>\n\n<column gap=\"tiny\">\n\n</column>",
+   "name": "Runic Skullcap",
+   "price": 600000,
+   "price_raw": "6,000 gp",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 83",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Divine\" url=\"/Traits.aspx?ID=579\" />\n<trait label=\"Focused\" url=\"/Traits.aspx?ID=609\" />\n<trait label=\"Invested\" url=\"/Traits.aspx?ID=637\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83\n\n**Price** 6,000 gp\n\n<row gap=\"medium\">\n \n\n**Usage** worn headwear\n\n \n</row>\n\n<row gap=\"medium\">\n\n \n\n \n\n \n</row>\n</additional-info>\n\n---\n\n<summary>\nThis silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …\n</summary>",
+   "skill": [
+    "Religion"
+   ],
+   "skill_markdown": "[Religion](/Skills.aspx?ID=46)",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 83"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 83",
+   "speed": {},
+   "spell_markdown": "",
+   "spoilers": "Revenge of the Runelords",
+   "stage_markdown": "",
+   "summary": "This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …",
+   "summary_markdown": "This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to  Arcana  and  Religion  checks. …",
+   "text": "<title level=\"1\" right=\"Item 15\" pfs=\"\"\n>\nRunic Skullcap May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 83 Price 6,000 gp Usage worn headwear --- This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to Arcana and Religion checks. If a check is attempted to Recall Knowledge about rune magic or Lissala, the wearer treats the results of a failure or critical failure as one degree of success better. Activate—Rewards of Service Free Action (concentrate) Frequency once per day; Effect Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala’s domains are ambition, duty, fate, and knowledge. If you don’t spend this point by the end of this turn, it is lost. Activate—Rewards of Rule 1 minute (concentrate) Requirements You have master or legendary proficiency in Arcana; Effect Spend 1 Mythic Point when you invest the runic skullcap . Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school. Envy: cutting eye Greed: precious gleam Sloth: reclined apport Gluttony: all-encompassing hunger Lust: heart's hook Pride: crescent scepter Wrath: vengeful glare ",
+   "trait": [
+    "Divine",
+    "Focused",
+    "Invested",
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Tradition",
+    "Monster",
+    "Equipment",
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Divine](/Traits.aspx?ID=579), [Focused](/Traits.aspx?ID=609), [Invested](/Traits.aspx?ID=637), [Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Divine",
+    "Focused",
+    "Invested",
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Item",
+   "url": "/Equipment.aspx?ID=5208",
+   "usage": "worn headwear",
+   "usage_markdown": "worn headwear",
+   "weakness": {}
+  }
+ }
+]

@@ -1,0 +1,37 @@
+{
+ "books": [
+  "Pathfinder #220: Crypt of Runes",
+  "Pathfinder #221: Into the Apocalypse Archive"
+ ],
+ "fetched": 79,
+ "categories": {
+  "equipment": 15,
+  "item-bonus": 3,
+  "creature": 20,
+  "action": 19,
+  "feat": 6,
+  "hazard": 14,
+  "source": 1,
+  "trait": 1
+ },
+ "wanted": 32,
+ "found": 16,
+ "missing": [
+  "Apocalypse Seed",
+  "Belimarius's Invidious Halberd",
+  "Chromatic Robe (Greater)",
+  "Robes of Xin-Edasseril",
+  "Runewell of Lust",
+  "Sorshen's Scintillating Garment",
+  "Sorshen's Sinuous Guisarme",
+  "Ten Day's Breath",
+  "Three Day's Breath",
+  "Timeflaying Blade",
+  "Aegis of Envy",
+  "Convocation of Greed",
+  "Gluttonous Feast",
+  "Host of Wrath",
+  "Sorshen's Devotion",
+  "Summon Sloth"
+ ]
+}

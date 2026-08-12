@@ -176,9 +176,34 @@ export function offeredCreatures(recordIds: Set<string>): { offerSlug: string; o
 }
 
 /**
+ * The keys `COMPANION_MODS` is looked up by, for one character.
+ *
+ * Every feat id, plus `<featId>:<answer>` for a feat whose own CHOICE decides WHICH modification it
+ * gives. Creature of Myth is the case ruling Q20 names: *"It gains one of the following effects"*,
+ * five of them, each a different set of companion mechanics — a table keyed by feat id alone can only
+ * say "the character has Creature of Myth", never which of the five they took, so the answer reached
+ * nothing and the feat was its own label.
+ *
+ * A composite key rather than a `byChoice` sub-map because COMPANION_MODS is read from seven places in
+ * companions.ts; widening the VALUE would have meant seven merge sites that must not drift, and
+ * widening the KEY means none. An option value containing a colon (`feature:dynamo:manual-power`) is
+ * harmless — no feat id contains one, so the two namespaces cannot collide.
+ */
+export function companionModKeys(feats: readonly { featId: string; choice?: { value: string } }[]): Set<string> {
+  const out = new Set<string>();
+  for (const f of feats) {
+    out.add(f.featId);
+    if (f.choice?.value) out.add(`${f.featId}:${f.choice.value}`);
+  }
+  return out;
+}
+
+/**
  * Feats that MODIFY an existing companion (rather than creating one) — the audit's companion-mod lane.
  * Applied by deriveCompanion when the character has the feat and the companion's kind matches. Senses
  * are display strings (matching the animal block); IWR values may be flat or "half your level".
+ *
+ * Keyed by the owner's feat/feature id, or by `<featId>:<answer>` — see `companionModKeys`.
  */
 export interface CompanionMod {
   kinds: CompanionKind[];
@@ -215,8 +240,22 @@ export interface CompanionMod {
    *
    * `dice`/`die` are the printed values and do NOT scale with maturity: the feat prints 1d4, not the
    * companion's usual maturity die.
+   *
+   * `damageTypeFromChoice` means the type is the OWNER's answer to this same feat's own `choice`, not
+   * the printed `damageType` — Ranged Combatant's whole picker is "choose a damage type", and a static
+   * table keyed by record id cannot express a value the player supplies. `damageType` stays as the
+   * label shown while the question is unanswered, the shape Dual Energy Heart already uses.
    */
-  grantedStrikes?: { name: string; dice: number; die: string; damageType: string; range?: number; traits: string[]; note?: string }[];
+  grantedStrikes?: {
+    name: string;
+    dice: number;
+    die: string;
+    damageType: string;
+    damageTypeFromChoice?: boolean;
+    range?: number;
+    traits: string[];
+    note?: string;
+  }[];
   /**
    * Familiar ability ids the owner's feat grants. The ability RECORDS already ship and the roster
    * already renders them; nothing attached one, so "your familiar gains the Lightning Needles
@@ -296,6 +335,71 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
       { name: 'Gust', dice: 1, die: 'd4', damageType: 'bludgeoning', range: 30, traits: ['air', 'propulsive', 'range-increment-30', 'unarmed'] },
     ],
     note: 'Billowing Wings: a companion WITH WINGS gains the Gust ranged unarmed attack (1d4 bludgeoning, 30 feet, air and propulsive). On a critical hit the target is pushed back 5 feet — forced movement. Remove it by hand if this companion has no wings.',
+  },
+  // "It gains a ranged unarmed attack with a range increment of 30 feet that deals 1d4 damage and has
+  //  the magical and propulsive traits. When you select this feat, choose a damage type…"
+  // The record shipped carrying the damage-type picker and NOTHING else, so the answer reached nothing
+  // and the attack the feat is entirely about was absent from the eidolon's block. Owner's wording
+  // (gold set, round 5): "the eidolon stat block needs to get a ranged unarmed attack … and that
+  // damage type is the damage for that attack."
+  //
+  // The attack is NAMED after the feat because the book gives it no name of its own ("spines, flame
+  // jets, and holy blasts are just some of the ways"): borrowing one of those examples would invent
+  // flavour the player did not choose, and the row already prints the word "Ranged" as its category —
+  // calling the attack "Ranged" too read "Ranged … Ranged +13".
+  //
+  // No `range-increment-30` trait: that pseudo-trait exists so `attackRange` can sniff a range off a
+  // companion Strike that has no `range` field. This one has one, and the printed traits are exactly
+  // "magical and propulsive" — listing both would put the range in the row twice.
+  'ranged-combatant': {
+    kinds: ['eidolon'],
+    grantedStrikes: [
+      {
+        name: 'Ranged Combatant',
+        dice: 1,
+        die: 'd4',
+        damageType: 'chosen damage type',
+        damageTypeFromChoice: true,
+        range: 30,
+        traits: ['magical', 'propulsive', 'unarmed'],
+      },
+    ],
+  },
+  /* ---- Creature of Myth — one entry per answer (ruling Q20) ---------------------------------
+   * "Your specialized united companion … gains ONE of the following effects." The united companion is
+   * an animal companion the character already has (Beast Lord Dedication records WHICH one), so these
+   * are animal-kind mods keyed by the answer.
+   *
+   * Every one of the five also carries a Mythic-Point activity. Those are ACTIONS, and companion
+   * actions are not modelled, so each note carries the activity's text — ruling B: a surface says the
+   * whole of what it does, including the parts the app cannot compute.
+   *
+   * Three of the five ask a SECOND question the record does not model (which energy type, which
+   * material). Those stay in the note rather than becoming a number: writing one of them in would
+   * state a choice the player never made, which is worse than saying it is theirs to make.
+   */
+  'creature-of-myth:baleful-body': {
+    kinds: ['animal'],
+    note: "Creature of Myth (Baleful Body): choose acid, fire, or poison. When your united companion takes damage from a melee attack it deals half YOUR level in damage of that type to the attacker. Spending a Mythic Point when you Command it lets it spew that power as a 2-action activity: 14d6 of the chosen type in a 15-foot cone or 30-foot line, basic Reflex against your class DC or spell DC, whichever is higher.",
+  },
+  'creature-of-myth:chimeric-heads': {
+    kinds: ['animal'],
+    senses: ['all-around vision'],
+    note: "Creature of Myth (Chimeric Heads): requires a head and at least one unarmed attack using its mouth or head (beak, jaws, mandible). Spending a Mythic Point when you Command it lets it make two Strikes with its unarmed attacks as a single action, each at its current multiple attack penalty and against the same target; if both hit, combine their damage and then add other effects. The pair counts as one attack for its multiple attack penalty.",
+  },
+  'creature-of-myth:energy-aegis': {
+    kinds: ['animal'],
+    note: "Creature of Myth (Energy Aegis): your united companion becomes IMMUNE to your choice of acid, cold, electricity, or fire, and gains a +1 status bonus to AC and to saves against creatures, effects and spells with that trait. Add the immunity by hand once you have chosen the type. Spending a Mythic Point when you Command it lets it take a single concentrate action to extend the same benefits to every adjacent creature until the start of your next turn.",
+  },
+  'creature-of-myth:magnificent-flight': {
+    kinds: ['animal'],
+    speeds: { fly: 'land' },
+    note: "Creature of Myth (Magnificent Flight): a fly Speed equal to its Speed, and the mount special ability. If it ALREADY had the mount ability or that fly Speed, it instead gains +10 feet to its Speed — apply that by hand, since the block cannot tell which. Spending a Mythic Point when you Command it lets it Fly up to twice its Speed as a 2-action activity and make one unarmed melee Strike at any point along the way.",
+  },
+  'creature-of-myth:protective-skin': {
+    kinds: ['animal'],
+    maxHpBonus: 30,
+    note: "Creature of Myth (Protective Skin): +30 maximum Hit Points, and a weakness 10 to EITHER cold iron or silver — your choice, added by hand. Spending a Mythic Point when you Command it gives it fast healing equal to your level for 1 minute.",
   },
   // "Your familiar gains the <X> ability." The ability records already ship; nothing attached one.
   'lightning-rings-intervention': { kinds: ['familiar'], familiarAbilities: ['lightning-needles'] },

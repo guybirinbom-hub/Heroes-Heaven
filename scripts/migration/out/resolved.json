@@ -1,0 +1,2080 @@
+{
+ "resolved": {
+  "items": [
+   {
+    "key": "cipher-of-elemental-planes",
+    "name": "Cipher of Elemental Planes",
+    "how": "typo(d=3)",
+    "docId": "equipment-2652",
+    "category": "equipment",
+    "archiveName": "Cipher of the Elemental Planes"
+   },
+   {
+    "key": "feather-of-unfounded-bravado",
+    "name": "Feather of Unfounded Bravado",
+    "how": "typo(d=3)",
+    "docId": "equipment-3935",
+    "category": "equipment",
+    "archiveName": "Feather of the Unfounded Bravado"
+   },
+   {
+    "key": "hells-judgment",
+    "name": "Hell's Judgment",
+    "how": "typo(d=1)",
+    "docId": "equipment-3847",
+    "category": "equipment",
+    "archiveName": "Hell's Judgement"
+   },
+   {
+    "key": "magical-medal-wolf-pack",
+    "name": "Magical Medal (Wolf Pack)",
+    "how": "paren-only",
+    "docId": "creature-3943",
+    "category": "creature",
+    "archiveName": "Wolf Pack"
+   },
+   {
+    "key": "musket-staff-of-void",
+    "name": "Musket Staff of Void",
+    "how": "typo(d=3)",
+    "docId": "equipment-3588",
+    "category": "equipment",
+    "archiveName": "Musket Staff of the Void"
+   },
+   {
+    "key": "peshpine-grenade-greater",
+    "name": "Peshpine Grenade (Greater)",
+    "how": "typo(d=1)",
+    "docId": "equipment-549-615",
+    "category": "equipment",
+    "archiveName": "Peshspine Grenade (Greater)"
+   },
+   {
+    "key": "peshpine-grenade-lesser",
+    "name": "Peshpine Grenade (Lesser)",
+    "how": "typo(d=1)",
+    "docId": "equipment-549-613",
+    "category": "equipment",
+    "archiveName": "Peshspine Grenade (Lesser)"
+   },
+   {
+    "key": "peshpine-grenade-major",
+    "name": "Peshpine Grenade (Major)",
+    "how": "typo(d=1)",
+    "docId": "equipment-549-616",
+    "category": "equipment",
+    "archiveName": "Peshspine Grenade (Major)"
+   },
+   {
+    "key": "peshpine-grenade-moderate",
+    "name": "Peshpine Grenade (Moderate)",
+    "how": "typo(d=1)",
+    "docId": "equipment-549-614",
+    "category": "equipment",
+    "archiveName": "Peshspine Grenade (Moderate)"
+   },
+   {
+    "key": "rounds-arquebus",
+    "name": "Rounds (Arquebus)",
+    "how": "paren-only",
+    "docId": "weapon-195",
+    "category": "weapon",
+    "archiveName": "Arquebus"
+   },
+   {
+    "key": "rounds-blunderbuss",
+    "name": "Rounds (Blunderbuss)",
+    "how": "paren-only",
+    "docId": "weapon-196",
+    "category": "weapon",
+    "archiveName": "Blunderbuss"
+   },
+   {
+    "key": "rounds-clan-pistol",
+    "name": "Rounds (Clan Pistol)",
+    "how": "paren-only",
+    "docId": "feat-3281",
+    "category": "feat",
+    "archiveName": "Clan Pistol"
+   },
+   {
+    "key": "rounds-coat-pistol",
+    "name": "Rounds (Coat Pistol)",
+    "how": "paren-only",
+    "docId": "weapon-189",
+    "category": "weapon",
+    "archiveName": "Coat Pistol"
+   },
+   {
+    "key": "rounds-dawnsilver-tree",
+    "name": "Rounds (Dawnsilver Tree)",
+    "how": "paren-only",
+    "docId": "weapon-204",
+    "category": "weapon",
+    "archiveName": "Dawnsilver Tree"
+   },
+   {
+    "key": "rounds-double-barreled-musket",
+    "name": "Rounds (Double-Barreled Musket)",
+    "how": "paren-only",
+    "docId": "weapon-198",
+    "category": "weapon",
+    "archiveName": "Double-barreled Musket"
+   },
+   {
+    "key": "rounds-double-barreled-pistol",
+    "name": "Rounds (Double-Barreled Pistol)",
+    "how": "paren-only",
+    "docId": "weapon-199",
+    "category": "weapon",
+    "archiveName": "Double-Barreled Pistol"
+   },
+   {
+    "key": "rounds-dragon-mouth-pistol",
+    "name": "Rounds (Dragon Mouth Pistol)",
+    "how": "paren-only",
+    "docId": "weapon-200",
+    "category": "weapon",
+    "archiveName": "Dragon-Mouth Pistol"
+   },
+   {
+    "key": "rounds-dueling-pistol",
+    "name": "Rounds (Dueling Pistol)",
+    "how": "paren-only",
+    "docId": "weapon-201",
+    "category": "weapon",
+    "archiveName": "Dueling Pistol"
+   },
+   {
+    "key": "rounds-dwarven-scattergun",
+    "name": "Rounds (Dwarven Scattergun)",
+    "how": "paren-only",
+    "docId": "weapon-207",
+    "category": "weapon",
+    "archiveName": "Dwarven Scattergun"
+   },
+   {
+    "key": "rounds-fire-lance",
+    "name": "Rounds (Fire Lance)",
+    "how": "paren-only",
+    "docId": "weapon-190",
+    "category": "weapon",
+    "archiveName": "Fire Lance"
+   },
+   {
+    "key": "rounds-flingflenser",
+    "name": "Rounds (Flingflenser)",
+    "how": "paren-only",
+    "docId": "weapon-208",
+    "category": "weapon",
+    "archiveName": "Flingflenser"
+   },
+   {
+    "key": "rounds-flintlock-musket",
+    "name": "Rounds (Flintlock Musket)",
+    "how": "paren-only",
+    "docId": "weapon-191",
+    "category": "weapon",
+    "archiveName": "Flintlock Musket"
+   },
+   {
+    "key": "rounds-harmona-gun",
+    "name": "Rounds (Harmona Gun)",
+    "how": "paren-only",
+    "docId": "weapon-202",
+    "category": "weapon",
+    "archiveName": "Harmona Gun"
+   },
+   {
+    "key": "rounds-pepperbox",
+    "name": "Rounds (Pepperbox)",
+    "how": "paren-only",
+    "docId": "weapon-205",
+    "category": "weapon",
+    "archiveName": "Pepperbox"
+   },
+   {
+    "key": "rounds-shield-pistol",
+    "name": "Rounds (Shield Pistol)",
+    "how": "paren-only",
+    "docId": "weapon-354",
+    "category": "weapon",
+    "archiveName": "Shield Pistol"
+   },
+   {
+    "key": "rounds-shobhad-longrifle",
+    "name": "Rounds (Shobhad Longrifle)",
+    "how": "paren-only",
+    "docId": "weapon-251",
+    "category": "weapon",
+    "archiveName": "Shobhad Longrifle"
+   },
+   {
+    "key": "rounds-slide-pistol",
+    "name": "Rounds (Slide Pistol)",
+    "how": "paren-only",
+    "docId": "weapon-206",
+    "category": "weapon",
+    "archiveName": "Slide Pistol"
+   },
+   {
+    "key": "rounds-spike-launcher",
+    "name": "Rounds (Spike Launcher)",
+    "how": "paren-only",
+    "docId": "equipment-1171",
+    "category": "equipment",
+    "archiveName": "Spike Launcher"
+   },
+   {
+    "key": "sack-of-hydras-teeth",
+    "name": "Sack of Hydra's Teeth",
+    "how": "typo(d=1)",
+    "docId": "equipment-3943",
+    "category": "equipment",
+    "archiveName": "Sack of Hyrdra's Teeth"
+   },
+   {
+    "key": "spore-shephards-staff-greater",
+    "name": "Spore Shephard's Staff (Greater)",
+    "how": "typo(d=1)",
+    "docId": "equipment-2665-2453",
+    "category": "equipment",
+    "archiveName": "Spore Shepherd's Staff (Greater)"
+   },
+   {
+    "key": "spore-shephards-staff-major",
+    "name": "Spore Shephard's Staff (Major)",
+    "how": "typo(d=1)",
+    "docId": "equipment-2665-2454",
+    "category": "equipment",
+    "archiveName": "Spore Shepherd's Staff (Major)"
+   },
+   {
+    "key": "spore-shephards-staff",
+    "name": "Spore Shephard's Staff",
+    "how": "typo(d=1)",
+    "docId": "equipment-2665",
+    "category": "equipment",
+    "archiveName": "Spore Shepherd's Staff"
+   },
+   {
+    "key": "submersible-helmet-greater",
+    "name": "Submersible Helmet (Greater)",
+    "how": "typo(d=2)",
+    "docId": "equipment-2337-2188",
+    "category": "equipment",
+    "archiveName": "Submersible Helm (Greater)"
+   },
+   {
+    "key": "zetogeki-hide-armor",
+    "name": "Zetogeki Hide Armor",
+    "how": "exact",
+    "docId": "equipment-3667",
+    "category": "equipment",
+    "archiveName": "Zeto Geki Hide Armor"
+   }
+  ],
+  "classFeatures": [
+   {
+    "key": "adept-benefit-amulet",
+    "name": "Adept Benefit (Amulet)",
+    "how": "paren-only",
+    "docId": "implement-1",
+    "category": "implement",
+    "archiveName": "Amulet"
+   },
+   {
+    "key": "adept-benefit-bell",
+    "name": "Adept Benefit (Bell)",
+    "how": "paren-only",
+    "docId": "implement-2",
+    "category": "implement",
+    "archiveName": "Bell"
+   },
+   {
+    "key": "adept-benefit-chalice",
+    "name": "Adept Benefit (Chalice)",
+    "how": "paren-only",
+    "docId": "implement-3",
+    "category": "implement",
+    "archiveName": "Chalice"
+   },
+   {
+    "key": "adept-benefit-lantern",
+    "name": "Adept Benefit (Lantern)",
+    "how": "paren-only",
+    "docId": "implement-4",
+    "category": "implement",
+    "archiveName": "Lantern"
+   },
+   {
+    "key": "adept-benefit-mirror",
+    "name": "Adept Benefit (Mirror)",
+    "how": "paren-only",
+    "docId": "implement-5",
+    "category": "implement",
+    "archiveName": "Mirror"
+   },
+   {
+    "key": "adept-benefit-regalia",
+    "name": "Adept Benefit (Regalia)",
+    "how": "paren-only",
+    "docId": "implement-6",
+    "category": "implement",
+    "archiveName": "Regalia"
+   },
+   {
+    "key": "adept-benefit-shield",
+    "name": "Adept Benefit (Shield)",
+    "how": "paren-only",
+    "docId": "implement-11",
+    "category": "implement",
+    "archiveName": "Shield"
+   },
+   {
+    "key": "adept-benefit-tome",
+    "name": "Adept Benefit (Tome)",
+    "how": "paren-only",
+    "docId": "implement-7",
+    "category": "implement",
+    "archiveName": "Tome"
+   },
+   {
+    "key": "adept-benefit-wand",
+    "name": "Adept Benefit (Wand)",
+    "how": "paren-only",
+    "docId": "implement-8",
+    "category": "implement",
+    "archiveName": "Wand"
+   },
+   {
+    "key": "adept-benefit-weapon",
+    "name": "Adept Benefit (Weapon)",
+    "how": "paren-only",
+    "docId": "implement-9",
+    "category": "implement",
+    "archiveName": "Weapon"
+   },
+   {
+    "key": "fifth-doctrine-cloistered-cleric",
+    "name": "Fifth Doctrine (Cloistered Cleric)",
+    "how": "paren-only",
+    "docId": "doctrine-4",
+    "category": "doctrine",
+    "archiveName": "Cloistered Cleric"
+   },
+   {
+    "key": "fifth-doctrine-warpriest",
+    "name": "Fifth Doctrine (Warpriest)",
+    "how": "paren-only",
+    "docId": "doctrine-5",
+    "category": "doctrine",
+    "archiveName": "Warpriest"
+   },
+   {
+    "key": "final-doctrine-cloistered-cleric",
+    "name": "Final Doctrine (Cloistered Cleric)",
+    "how": "paren-only",
+    "docId": "doctrine-4",
+    "category": "doctrine",
+    "archiveName": "Cloistered Cleric"
+   },
+   {
+    "key": "final-doctrine-warpriest",
+    "name": "Final Doctrine (Warpriest)",
+    "how": "paren-only",
+    "docId": "doctrine-5",
+    "category": "doctrine",
+    "archiveName": "Warpriest"
+   },
+   {
+    "key": "first-doctrine-cloistered-cleric",
+    "name": "First Doctrine (Cloistered Cleric)",
+    "how": "paren-only",
+    "docId": "doctrine-4",
+    "category": "doctrine",
+    "archiveName": "Cloistered Cleric"
+   },
+   {
+    "key": "first-doctrine-warpriest",
+    "name": "First Doctrine (Warpriest)",
+    "how": "paren-only",
+    "docId": "doctrine-5",
+    "category": "doctrine",
+    "archiveName": "Warpriest"
+   },
+   {
+    "key": "fourth-doctrine-cloistered-cleric",
+    "name": "Fourth Doctrine (Cloistered Cleric)",
+    "how": "paren-only",
+    "docId": "doctrine-4",
+    "category": "doctrine",
+    "archiveName": "Cloistered Cleric"
+   },
+   {
+    "key": "fourth-doctrine-warpriest",
+    "name": "Fourth Doctrine (Warpriest)",
+    "how": "paren-only",
+    "docId": "doctrine-5",
+    "category": "doctrine",
+    "archiveName": "Warpriest"
+   },
+   {
+    "key": "initiate-benefit-amulet",
+    "name": "Initiate Benefit (Amulet)",
+    "how": "paren-only",
+    "docId": "implement-1",
+    "category": "implement",
+    "archiveName": "Amulet"
+   },
+   {
+    "key": "initiate-benefit-bell",
+    "name": "Initiate Benefit (Bell)",
+    "how": "paren-only",
+    "docId": "implement-2",
+    "category": "implement",
+    "archiveName": "Bell"
+   },
+   {
+    "key": "initiate-benefit-chalice",
+    "name": "Initiate Benefit (Chalice)",
+    "how": "paren-only",
+    "docId": "implement-3",
+    "category": "implement",
+    "archiveName": "Chalice"
+   },
+   {
+    "key": "initiate-benefit-lantern",
+    "name": "Initiate Benefit (Lantern)",
+    "how": "paren-only",
+    "docId": "implement-4",
+    "category": "implement",
+    "archiveName": "Lantern"
+   },
+   {
+    "key": "initiate-benefit-mirror",
+    "name": "Initiate Benefit (Mirror)",
+    "how": "paren-only",
+    "docId": "implement-5",
+    "category": "implement",
+    "archiveName": "Mirror"
+   },
+   {
+    "key": "initiate-benefit-regalia",
+    "name": "Initiate Benefit (Regalia)",
+    "how": "paren-only",
+    "docId": "implement-6",
+    "category": "implement",
+    "archiveName": "Regalia"
+   },
+   {
+    "key": "initiate-benefit-shield",
+    "name": "Initiate Benefit (Shield)",
+    "how": "paren-only",
+    "docId": "implement-11",
+    "category": "implement",
+    "archiveName": "Shield"
+   },
+   {
+    "key": "initiate-benefit-tome",
+    "name": "Initiate Benefit (Tome)",
+    "how": "paren-only",
+    "docId": "implement-7",
+    "category": "implement",
+    "archiveName": "Tome"
+   },
+   {
+    "key": "initiate-benefit-wand",
+    "name": "Initiate Benefit (Wand)",
+    "how": "paren-only",
+    "docId": "implement-8",
+    "category": "implement",
+    "archiveName": "Wand"
+   },
+   {
+    "key": "initiate-benefit-weapon",
+    "name": "Initiate Benefit (Weapon)",
+    "how": "paren-only",
+    "docId": "implement-9",
+    "category": "implement",
+    "archiveName": "Weapon"
+   },
+   {
+    "key": "paragon-benefit-amulet",
+    "name": "Paragon Benefit (Amulet)",
+    "how": "paren-only",
+    "docId": "implement-1",
+    "category": "implement",
+    "archiveName": "Amulet"
+   },
+   {
+    "key": "paragon-benefit-bell",
+    "name": "Paragon Benefit (Bell)",
+    "how": "paren-only",
+    "docId": "implement-2",
+    "category": "implement",
+    "archiveName": "Bell"
+   },
+   {
+    "key": "paragon-benefit-chalice",
+    "name": "Paragon Benefit (Chalice)",
+    "how": "paren-only",
+    "docId": "implement-3",
+    "category": "implement",
+    "archiveName": "Chalice"
+   },
+   {
+    "key": "paragon-benefit-lantern",
+    "name": "Paragon Benefit (Lantern)",
+    "how": "paren-only",
+    "docId": "implement-4",
+    "category": "implement",
+    "archiveName": "Lantern"
+   },
+   {
+    "key": "paragon-benefit-mirror",
+    "name": "Paragon Benefit (Mirror)",
+    "how": "paren-only",
+    "docId": "implement-5",
+    "category": "implement",
+    "archiveName": "Mirror"
+   },
+   {
+    "key": "paragon-benefit-regalia",
+    "name": "Paragon Benefit (Regalia)",
+    "how": "paren-only",
+    "docId": "implement-6",
+    "category": "implement",
+    "archiveName": "Regalia"
+   },
+   {
+    "key": "paragon-benefit-shield",
+    "name": "Paragon Benefit (Shield)",
+    "how": "paren-only",
+    "docId": "implement-11",
+    "category": "implement",
+    "archiveName": "Shield"
+   },
+   {
+    "key": "paragon-benefit-tome",
+    "name": "Paragon Benefit (Tome)",
+    "how": "paren-only",
+    "docId": "implement-7",
+    "category": "implement",
+    "archiveName": "Tome"
+   },
+   {
+    "key": "paragon-benefit-wand",
+    "name": "Paragon Benefit (Wand)",
+    "how": "paren-only",
+    "docId": "implement-8",
+    "category": "implement",
+    "archiveName": "Wand"
+   },
+   {
+    "key": "paragon-benefit-weapon",
+    "name": "Paragon Benefit (Weapon)",
+    "how": "paren-only",
+    "docId": "implement-9",
+    "category": "implement",
+    "archiveName": "Weapon"
+   },
+   {
+    "key": "second-doctrine-cloistered-cleric",
+    "name": "Second Doctrine (Cloistered Cleric)",
+    "how": "paren-only",
+    "docId": "doctrine-4",
+    "category": "doctrine",
+    "archiveName": "Cloistered Cleric"
+   },
+   {
+    "key": "second-doctrine-warpriest",
+    "name": "Second Doctrine (Warpriest)",
+    "how": "paren-only",
+    "docId": "doctrine-5",
+    "category": "doctrine",
+    "archiveName": "Warpriest"
+   },
+   {
+    "key": "third-doctrine-cloistered-cleric",
+    "name": "Third Doctrine (Cloistered Cleric)",
+    "how": "paren-only",
+    "docId": "doctrine-4",
+    "category": "doctrine",
+    "archiveName": "Cloistered Cleric"
+   },
+   {
+    "key": "third-doctrine-warpriest",
+    "name": "Third Doctrine (Warpriest)",
+    "how": "paren-only",
+    "docId": "doctrine-5",
+    "category": "doctrine",
+    "archiveName": "Warpriest"
+   }
+  ],
+  "feats": [
+   {
+    "key": "camouflage-coat",
+    "name": "Camouflage Coat",
+    "how": "typo(d=1)",
+    "docId": "feat-5337",
+    "category": "feat",
+    "archiveName": "Camoflage Coat"
+   },
+   {
+    "key": "ceremony-of-strengthened-hand",
+    "name": "Ceremony of Strengthened Hand",
+    "how": "typo(d=3)",
+    "docId": "feat-2786",
+    "category": "feat",
+    "archiveName": "Ceremony of the Strengthened Hand"
+   },
+   {
+    "key": "luring-chomp",
+    "name": "Luring Chomp",
+    "how": "typo(d=2)",
+    "docId": "feat-8061",
+    "category": "feat",
+    "archiveName": "Lurching Chomp"
+   },
+   {
+    "key": "deep-vision",
+    "name": "Deep Vision",
+    "how": "exact",
+    "docId": "feat-2517",
+    "category": "feat",
+    "archiveName": "Deepvision"
+   },
+   {
+    "key": "faultless-defense",
+    "name": "Faultless Defense",
+    "how": "typo(d=1)",
+    "docId": "feat-7377",
+    "category": "feat",
+    "archiveName": "Fautless Defense"
+   },
+   {
+    "key": "exemplar-resiliency",
+    "name": "Exemplar Resiliency",
+    "how": "typo(d=1)",
+    "docId": "feat-7228",
+    "category": "feat",
+    "archiveName": "Exemplar Resilency"
+   },
+   {
+    "key": "orators-filibuster",
+    "name": "Orator's Filibuster",
+    "how": "typo(d=1)",
+    "docId": "feat-7927",
+    "category": "feat",
+    "archiveName": "Orator's Fillibuster"
+   },
+   {
+    "key": "repulse-the-wicked",
+    "name": "Repulse the Wicked",
+    "how": "typo(d=1)",
+    "docId": "feat-3603",
+    "category": "feat",
+    "archiveName": "Repulse the Wicken"
+   },
+   {
+    "key": "judgement-of-the-monolith",
+    "name": "Judgement of the Monolith",
+    "how": "typo(d=1)",
+    "docId": "feat-893",
+    "category": "feat",
+    "archiveName": "Judgment of the Monolith"
+   },
+   {
+    "key": "flash-of-omnipotence",
+    "name": "Flash of Omnipotence",
+    "how": "typo(d=1)",
+    "docId": "feat-7553",
+    "category": "feat",
+    "archiveName": "Flash of Omipotence"
+   },
+   {
+    "key": "emboldened-with-glorious-purpose",
+    "name": "Emboldened with Glorious Purpose",
+    "how": "typo(d=2)",
+    "docId": "feat-7580",
+    "category": "feat",
+    "archiveName": "Embolded With Glorious Purpose"
+   },
+   {
+    "key": "certain-stratagem",
+    "name": "Certain Stratagem",
+    "how": "typo(d=1)",
+    "docId": "feat-5941",
+    "category": "feat",
+    "archiveName": "Certain Strategem"
+   },
+   {
+    "key": "flashforge",
+    "name": "Flashforge",
+    "how": "exact",
+    "docId": "feat-4251",
+    "category": "feat",
+    "archiveName": "Flash Forge"
+   },
+   {
+    "key": "voice-of-elements",
+    "name": "Voice of Elements",
+    "how": "typo(d=3)",
+    "docId": "feat-4188",
+    "category": "feat",
+    "archiveName": "Voice of the Elements"
+   },
+   {
+    "key": "vermillion-threads",
+    "name": "Vermillion Threads",
+    "how": "typo(d=1)",
+    "docId": "feat-7083",
+    "category": "feat",
+    "archiveName": "Vermilion Threads"
+   }
+  ],
+  "backgrounds": [
+   {
+    "key": "historical-reenactor",
+    "name": "Historical Reenactor",
+    "how": "typo(d=1)",
+    "docId": "background-392",
+    "category": "background",
+    "archiveName": "Historical Reeanactor"
+   }
+  ]
+ },
+ "unresolved": {
+  "spells": [
+   {
+    "key": "anima-invocation-modified",
+    "name": "Anima Invocation (Modified)",
+    "book": "Pathfinder #150: Broken Promises",
+    "bookInArchive": 51
+   },
+   {
+    "key": "aspirational-state",
+    "name": "Aspirational State",
+    "book": "Pathfinder Society Scenario #2-22: Breaking the Storm: Excising Ruination",
+    "bookInArchive": 0
+   },
+   {
+    "key": "destroy-mindscape",
+    "name": "Destroy Mindscape",
+    "book": "Pathfinder Season of Ghosts Hardcover Compilation",
+    "bookInArchive": 0
+   },
+   {
+    "key": "rite-of-cleansing-flame",
+    "name": "Rite of Cleansing Flame",
+    "book": "Pathfinder #216: The Acropolis Pyre",
+    "bookInArchive": 38
+   },
+   {
+    "key": "unfettered-mark",
+    "name": "Unfettered Mark",
+    "book": "Pathfinder #161: Belly of the Black Whale",
+    "bookInArchive": 35
+   }
+  ],
+  "items": [
+   {
+    "key": "abrogail-i-script",
+    "name": "Abrogail I Script",
+    "book": "Pathfinder Adventure Path: Hellbreakers",
+    "bookInArchive": 0
+   },
+   {
+    "key": "advanced-book-of-translation-tien",
+    "name": "Advanced Book of Translation (Tien)",
+    "book": "Pathfinder Lost Omens Pathfinder Society Guide",
+    "bookInArchive": 0
+   },
+   {
+    "key": "apocalypse-seed",
+    "name": "Apocalypse Seed",
+    "book": "Pathfinder #221: Into the Apocalypse Archive",
+    "bookInArchive": 0
+   },
+   {
+    "key": "astrolabe-of-the-falling-stars",
+    "name": "Astrolabe of the Falling Stars",
+    "book": "Pathfinder Adventure Path: Gatewalkers",
+    "bookInArchive": 0
+   },
+   {
+    "key": "bakuwa-lizardfolk-bony-plates",
+    "name": "Bakuwa Lizardfolk Bony Plates",
+    "book": "Pathfinder Lost Omens Tian Xia Character Guide",
+    "bookInArchive": 570
+   },
+   {
+    "key": "belimariuss-invidious-halberd",
+    "name": "Belimarius's Invidious Halberd",
+    "book": "Pathfinder #221: Into the Apocalypse Archive",
+    "bookInArchive": 0
+   },
+   {
+    "key": "beloveds-bracelets",
+    "name": "Beloved's Bracelets",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "black-dragons-breath-potion-adult",
+    "name": "Black Dragon's Breath Potion (Adult)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "black-dragons-breath-potion-wyrm",
+    "name": "Black Dragon's Breath Potion (Wyrm)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "black-dragons-breath-potion-young",
+    "name": "Black Dragon's Breath Potion (Young)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "blightburn-necklace",
+    "name": "Blightburn Necklace",
+    "book": "Pathfinder #155: Lord of the Black Sands",
+    "bookInArchive": 54
+   },
+   {
+    "key": "bloodhound-olfactory-stimulators",
+    "name": "Bloodhound Olfactory Stimulators",
+    "book": "Pathfinder Treasure Vault (Remastered)",
+    "bookInArchive": 4228
+   },
+   {
+    "key": "brass-dragons-breath-potion-adult",
+    "name": "Brass Dragon's Breath Potion (Adult)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "brass-dragons-breath-potion-wyrm",
+    "name": "Brass Dragon's Breath Potion (Wyrm)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "brass-dragons-breath-potion-young",
+    "name": "Brass Dragon's Breath Potion (Young)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "bronze-dragons-breath-potion-adult",
+    "name": "Bronze Dragon's Breath Potion (Adult)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "bronze-dragons-breath-potion-wyrm",
+    "name": "Bronze Dragon's Breath Potion (Wyrm)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "bronze-dragons-breath-potion-young",
+    "name": "Bronze Dragon's Breath Potion (Young)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "chromatic-robe-greater",
+    "name": "Chromatic Robe (Greater)",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "chromatic-robe",
+    "name": "Chromatic Robe",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "cinnamon-nostalgia-bun",
+    "name": "Cinnamon Nostalgia Bun",
+    "book": "Pathfinder Adventures: Troubles in Grayce",
+    "bookInArchive": 0
+   },
+   {
+    "key": "conductors-instrument",
+    "name": "Conductor's Instrument",
+    "book": "Pathfinder Beginner Box: Secrets of the Unlit Star",
+    "bookInArchive": 0
+   },
+   {
+    "key": "cordelias-greater-construct-key",
+    "name": "Cordelia's Greater Construct Key",
+    "book": "Pathfinder Lost Omens Pathfinder Society Guide",
+    "bookInArchive": 0
+   },
+   {
+    "key": "doomsday-door",
+    "name": "Doomsday Door",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "dream-hunters-lodge",
+    "name": "Dream Hunter's Lodge",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "duskwood-violin-by-a-legend",
+    "name": "Duskwood violin by a legend",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "effortless-garden",
+    "name": "Effortless Garden",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "energy-robe-of-acid",
+    "name": "Energy Robe of Acid",
+    "book": "Pathfinder Lost Omens The Grand Bazaar",
+    "bookInArchive": 0
+   },
+   {
+    "key": "energy-robe-of-cold",
+    "name": "Energy Robe of Cold",
+    "book": "Pathfinder Lost Omens The Grand Bazaar",
+    "bookInArchive": 0
+   },
+   {
+    "key": "energy-robe-of-electricity",
+    "name": "Energy Robe of Electricity",
+    "book": "Pathfinder Lost Omens The Grand Bazaar",
+    "bookInArchive": 0
+   },
+   {
+    "key": "energy-robe-of-fire",
+    "name": "Energy Robe of Fire",
+    "book": "Pathfinder Lost Omens The Grand Bazaar",
+    "bookInArchive": 0
+   },
+   {
+    "key": "fate-tempters-ring",
+    "name": "Fate Tempter's Ring",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "formulated-sunlight",
+    "name": "Formulated Sunlight",
+    "book": "Pathfinder Lost Omens Character Guide",
+    "bookInArchive": 374
+   },
+   {
+    "key": "grannys-hedge-trimmer",
+    "name": "Granny's Hedge Trimmer",
+    "book": "Pathfinder Adventure: Little Trouble in Big Absalom",
+    "bookInArchive": 0
+   },
+   {
+    "key": "green-dragons-breath-potion-adult",
+    "name": "Green Dragon's Breath Potion (Adult)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "green-dragons-breath-potion-wyrm",
+    "name": "Green Dragon's Breath Potion (Wyrm)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "green-dragons-breath-potion-young",
+    "name": "Green Dragon's Breath Potion (Young)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "hagbane-biscuit",
+    "name": "Hagbane Biscuit",
+    "book": "Pathfinder Adventures: Troubles in Grayce",
+    "bookInArchive": 0
+   },
+   {
+    "key": "hallajin-key",
+    "name": "Hallajin Key",
+    "book": "Pathfinder Society Scenario #4-11: Prisoners of the Electric Castle",
+    "bookInArchive": 0
+   },
+   {
+    "key": "hardshell-surki-carapace",
+    "name": "Hardshell Surki Carapace",
+    "book": "Pathfinder Howl of the Wild",
+    "bookInArchive": 720
+   },
+   {
+    "key": "heavy-barding-large",
+    "name": "Heavy Barding (Large)",
+    "book": "Pathfinder Player Core",
+    "bookInArchive": 3124
+   },
+   {
+    "key": "heavy-barding-small-or-medium",
+    "name": "Heavy Barding (Small or Medium)",
+    "book": "Pathfinder Player Core",
+    "bookInArchive": 3124
+   },
+   {
+    "key": "holy-steam-ball-refill",
+    "name": "Holy Steam Ball Refill",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "hongbao-of-many-things",
+    "name": "Hongbao of Many Things",
+    "book": "Pathfinder Blog",
+    "bookInArchive": 0
+   },
+   {
+    "key": "incense-bundle-of-annual-blessings",
+    "name": "Incense Bundle of Annual Blessings",
+    "book": "Pathfinder Blog",
+    "bookInArchive": 0
+   },
+   {
+    "key": "inflammation-flask-greater",
+    "name": "Inflammation Flask (Greater)",
+    "book": "Pathfinder #203: Shepherd of Decay",
+    "bookInArchive": 74
+   },
+   {
+    "key": "inflammation-flask-lesser",
+    "name": "Inflammation Flask (Lesser)",
+    "book": "Pathfinder #203: Shepherd of Decay",
+    "bookInArchive": 74
+   },
+   {
+    "key": "inflammation-flask-major",
+    "name": "Inflammation Flask (Major)",
+    "book": "Pathfinder #203: Shepherd of Decay",
+    "bookInArchive": 74
+   },
+   {
+    "key": "inflammation-flask-moderate",
+    "name": "Inflammation Flask (Moderate)",
+    "book": "Pathfinder #203: Shepherd of Decay",
+    "bookInArchive": 74
+   },
+   {
+    "key": "jeweled-dawnsilver-crown",
+    "name": "Jeweled dawnsilver crown",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "light-writer-plates",
+    "name": "Light Writer Plates",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "magazine-with-6-pellets",
+    "name": "Magazine with 6 Pellets",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "magazine-with-8-pellets",
+    "name": "Magazine with 8 Pellets",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "magical-medal-gorillas-might",
+    "name": "Magical Medal (Gorilla's Might)",
+    "book": "Pathfinder Battlecry!",
+    "bookInArchive": 1074
+   },
+   {
+    "key": "magical-medal-griffons-heart",
+    "name": "Magical Medal (Griffon's Heart)",
+    "book": "Pathfinder Battlecry!",
+    "bookInArchive": 1074
+   },
+   {
+    "key": "magical-medal-phoenixs-fire",
+    "name": "Magical Medal (Phoenix's Fire)",
+    "book": "Pathfinder Battlecry!",
+    "bookInArchive": 1074
+   },
+   {
+    "key": "magical-medal-unicorns-purity",
+    "name": "Magical Medal (Unicorn's Purity)",
+    "book": "Pathfinder Battlecry!",
+    "bookInArchive": 1074
+   },
+   {
+    "key": "mindmurk-oil",
+    "name": "Mindmurk Oil",
+    "book": "Pathfinder Society Scenario #1-23: The Star-Crossed Court",
+    "bookInArchive": 0
+   },
+   {
+    "key": "one-days-breath",
+    "name": "One Day's Breath",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "poison-sedum",
+    "name": "Poison Sedum",
+    "book": "Pathfinder #178: Punks in a Powder Keg",
+    "bookInArchive": 48
+   },
+   {
+    "key": "potion-of-acid-resistance-greater",
+    "name": "Potion of Acid Resistance (Greater)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-acid-resistance-lesser",
+    "name": "Potion of Acid Resistance (Lesser)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-acid-resistance-moderate",
+    "name": "Potion of Acid Resistance (Moderate)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-acid-retaliation-greater",
+    "name": "Potion of Acid Retaliation (Greater)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-acid-retaliation-lesser",
+    "name": "Potion of Acid Retaliation (Lesser)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-acid-retaliation-major",
+    "name": "Potion of Acid Retaliation (Major)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-acid-retaliation-minor",
+    "name": "Potion of Acid Retaliation (Minor)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-acid-retaliation-moderate",
+    "name": "Potion of Acid Retaliation (Moderate)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-cold-resistance-greater",
+    "name": "Potion of Cold Resistance (Greater)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-cold-resistance-lesser",
+    "name": "Potion of Cold Resistance (Lesser)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-cold-resistance-moderate",
+    "name": "Potion of Cold Resistance (Moderate)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-cold-retaliation-greater",
+    "name": "Potion of Cold Retaliation (Greater)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-cold-retaliation-lesser",
+    "name": "Potion of Cold Retaliation (Lesser)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-cold-retaliation-major",
+    "name": "Potion of Cold Retaliation (Major)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-cold-retaliation-minor",
+    "name": "Potion of Cold Retaliation (Minor)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-cold-retaliation-moderate",
+    "name": "Potion of Cold Retaliation (Moderate)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-electricity-resistance-greater",
+    "name": "Potion of Electricity Resistance (Greater)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-electricity-resistance-lesser",
+    "name": "Potion of Electricity Resistance (Lesser)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-electricity-resistance-moderate",
+    "name": "Potion of Electricity Resistance (Moderate)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-electricity-retaliation-greater",
+    "name": "Potion of Electricity Retaliation (Greater)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-electricity-retaliation-lesser",
+    "name": "Potion of Electricity Retaliation (Lesser)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-electricity-retaliation-major",
+    "name": "Potion of Electricity Retaliation (Major)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-electricity-retaliation-minor",
+    "name": "Potion of Electricity Retaliation (Minor)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-electricity-retaliation-moderate",
+    "name": "Potion of Electricity Retaliation (Moderate)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-fire-resistance-greater",
+    "name": "Potion of Fire Resistance (Greater)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-fire-resistance-lesser",
+    "name": "Potion of Fire Resistance (Lesser)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-fire-resistance-moderate",
+    "name": "Potion of Fire Resistance (Moderate)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "potion-of-fire-retaliation-greater",
+    "name": "Potion of Fire Retaliation (Greater)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-fire-retaliation-lesser",
+    "name": "Potion of Fire Retaliation (Lesser)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-fire-retaliation-major",
+    "name": "Potion of Fire Retaliation (Major)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-fire-retaliation-minor",
+    "name": "Potion of Fire Retaliation (Minor)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-fire-retaliation-moderate",
+    "name": "Potion of Fire Retaliation (Moderate)",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "potion-of-sonic-resistance-greater",
+    "name": "Potion of Sonic Resistance (Greater)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-sonic-resistance-lesser",
+    "name": "Potion of Sonic Resistance (Lesser)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "potion-of-sonic-resistance-moderate",
+    "name": "Potion of Sonic Resistance (Moderate)",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "red-dragons-breath-potion-adult",
+    "name": "Red Dragon's Breath Potion (Adult)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "red-dragons-breath-potion-wyrm",
+    "name": "Red Dragon's Breath Potion (Wyrm)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "red-dragons-breath-potion-young",
+    "name": "Red Dragon's Breath Potion (Young)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "rite-of-reinforcement-exoskeleton",
+    "name": "Rite of Reinforcement Exoskeleton",
+    "book": "Pathfinder Lost Omens The Mwangi Expanse",
+    "bookInArchive": 189
+   },
+   {
+    "key": "robe-of-feathers-fall",
+    "name": "Robe of Feathers Fall",
+    "book": "Pathfinder Blog: April Fools",
+    "bookInArchive": 0
+   },
+   {
+    "key": "robes-of-xin-edasseril",
+    "name": "Robes of Xin-Edasseril",
+    "book": "Pathfinder #221: Into the Apocalypse Archive",
+    "bookInArchive": 0
+   },
+   {
+    "key": "rounds-axe-musket",
+    "name": "Rounds (Axe Musket)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-black-powder-knuckle-dusters",
+    "name": "Rounds (Black Powder Knuckle Dusters)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-cane-pistol",
+    "name": "Rounds (Cane Pistol)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-dagger-pistol",
+    "name": "Rounds (Dagger Pistol)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-explosive-dogslicer",
+    "name": "Rounds (Explosive Dogslicer)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-gnome-amalgam-musket",
+    "name": "Rounds (Gnome Amalgam Musket)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-gun-sword",
+    "name": "Rounds (Gun Sword)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-hammer-gun",
+    "name": "Rounds (Hammer Gun)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-mace-multipistol",
+    "name": "Rounds (Mace Multipistol)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-piercing-wind",
+    "name": "Rounds (Piercing Wind)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-rapier-pistol",
+    "name": "Rounds (Rapier Pistol)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "rounds-three-peaked-tree",
+    "name": "Rounds (Three-peaked Tree)",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "runewell-of-lust",
+    "name": "Runewell of Lust",
+    "book": "Pathfinder #221: Into the Apocalypse Archive",
+    "bookInArchive": 0
+   },
+   {
+    "key": "runic-skullcap",
+    "name": "Runic Skullcap",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "sakuras-sprig",
+    "name": "Sakura's Sprig",
+    "book": "Pathfinder Society Scenario #6-05: Silver Bark, Golden Blades",
+    "bookInArchive": 0
+   },
+   {
+    "key": "scroll-of-10th-rank-spell",
+    "name": "Scroll of 10th-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-1st-rank-spell",
+    "name": "Scroll of 1st-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-2nd-rank-spell",
+    "name": "Scroll of 2nd-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-3rd-rank-spell",
+    "name": "Scroll of 3rd-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-4th-rank-spell",
+    "name": "Scroll of 4th-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-5th-rank-spell",
+    "name": "Scroll of 5th-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-6th-rank-spell",
+    "name": "Scroll of 6th-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-7th-rank-spell",
+    "name": "Scroll of 7th-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-8th-rank-spell",
+    "name": "Scroll of 8th-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "scroll-of-9th-rank-spell",
+    "name": "Scroll of 9th-rank Spell",
+    "book": "Pathfinder GM Core",
+    "bookInArchive": 2312
+   },
+   {
+    "key": "seven-color-raw-fish-salad",
+    "name": "Seven-Color Raw Fish Salad",
+    "book": "Pathfinder Blog",
+    "bookInArchive": 0
+   },
+   {
+    "key": "shrine-inarizushi",
+    "name": "Shrine Inarizushi",
+    "book": "Pathfinder Blog",
+    "bookInArchive": 0
+   },
+   {
+    "key": "silver-dragons-breath-potion-adult",
+    "name": "Silver Dragon's Breath Potion (Adult)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "silver-dragons-breath-potion-wyrm",
+    "name": "Silver Dragon's Breath Potion (Wyrm)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "silver-dragons-breath-potion-young",
+    "name": "Silver Dragon's Breath Potion (Young)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "sling-darts",
+    "name": "Sling Darts",
+    "book": "Pathfinder War of Immortals",
+    "bookInArchive": 635
+   },
+   {
+    "key": "sorshens-scintillating-garment",
+    "name": "Sorshen's Scintillating Garment",
+    "book": "Pathfinder #221: Into the Apocalypse Archive",
+    "bookInArchive": 0
+   },
+   {
+    "key": "sorshens-sinuous-guisarme",
+    "name": "Sorshen's Sinuous Guisarme",
+    "book": "Pathfinder #221: Into the Apocalypse Archive",
+    "bookInArchive": 0
+   },
+   {
+    "key": "spider-mold",
+    "name": "Spider Mold",
+    "book": "Pathfinder One-Shot #2: Dinner at Lionlodge",
+    "bookInArchive": 0
+   },
+   {
+    "key": "spindle-key",
+    "name": "Spindle Key",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "splendid-pyschopomp-mask",
+    "name": "Splendid Pyschopomp Mask",
+    "book": "Pathfinder #169: Kindled Magic",
+    "bookInArchive": 77
+   },
+   {
+    "key": "st-alkitarems-eye",
+    "name": "St. Alkitarem's Eye",
+    "book": "Pathfinder #152: Legacy of the Lost God",
+    "bookInArchive": 85
+   },
+   {
+    "key": "standard-book-of-translation-tien",
+    "name": "Standard Book of Translation (Tien)",
+    "book": "Pathfinder Lost Omens Pathfinder Society Guide",
+    "bookInArchive": 0
+   },
+   {
+    "key": "suit-of-armoire",
+    "name": "Suit of Armoire",
+    "book": "Pathfinder Blog: April Fools",
+    "bookInArchive": 0
+   },
+   {
+    "key": "taljjaes-mask-the-beast",
+    "name": "Taljjae's Mask (The Beast)",
+    "book": "Pathfinder Lost Omens Monsters of Myth",
+    "bookInArchive": 96
+   },
+   {
+    "key": "taljjaes-mask-the-general",
+    "name": "Taljjae's Mask (The General)",
+    "book": "Pathfinder Lost Omens Monsters of Myth",
+    "bookInArchive": 96
+   },
+   {
+    "key": "taljjaes-mask-the-grandmother",
+    "name": "Taljjae's Mask (The Grandmother)",
+    "book": "Pathfinder Lost Omens Monsters of Myth",
+    "bookInArchive": 96
+   },
+   {
+    "key": "taljjaes-mask-the-hermit",
+    "name": "Taljjae's Mask (The Hermit)",
+    "book": "Pathfinder Lost Omens Monsters of Myth",
+    "bookInArchive": 96
+   },
+   {
+    "key": "taljjaes-mask-the-hero",
+    "name": "Taljjae's Mask (The Hero)",
+    "book": "Pathfinder Lost Omens Monsters of Myth",
+    "bookInArchive": 96
+   },
+   {
+    "key": "taljjaes-mask-the-nobleman",
+    "name": "Taljjae's Mask (The Nobleman)",
+    "book": "Pathfinder Lost Omens Monsters of Myth",
+    "bookInArchive": 96
+   },
+   {
+    "key": "taljjaes-mask-the-wanderer",
+    "name": "Taljjae's Mask (The Wanderer)",
+    "book": "Pathfinder Lost Omens Monsters of Myth",
+    "bookInArchive": 96
+   },
+   {
+    "key": "ten-days-breath",
+    "name": "Ten Day's Breath",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "the-kardosian-fragments",
+    "name": "The Kardosian Fragments",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "three-days-breath",
+    "name": "Three Day's Breath",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "timeflaying-blade",
+    "name": "Timeflaying Blade",
+    "book": "Pathfinder #221: Into the Apocalypse Archive",
+    "bookInArchive": 0
+   },
+   {
+    "key": "titan-nagaji-scales",
+    "name": "Titan Nagaji Scales",
+    "book": "Pathfinder Lost Omens Impossible Lands",
+    "bookInArchive": 334
+   },
+   {
+    "key": "tteokguk-of-time-advancement",
+    "name": "Tteokguk of Time Advancement",
+    "book": "Pathfinder Blog",
+    "bookInArchive": 0
+   },
+   {
+    "key": "wasul-reed-mask",
+    "name": "Wasul Reed Mask",
+    "book": "Pathfinder Abomination Vaults Hardcover Compilation",
+    "bookInArchive": 0
+   },
+   {
+    "key": "wayfinderfinder",
+    "name": "Wayfinderfinder",
+    "book": "Pathfinder Blog: April Fools",
+    "bookInArchive": 0
+   },
+   {
+    "key": "yellow-musk-poison",
+    "name": "Yellow Musk Poison",
+    "book": "Pathfinder Bestiary 2",
+    "bookInArchive": 421
+   }
+  ],
+  "classFeatures": [
+   {
+    "key": "air-gate",
+    "name": "Air Gate",
+    "book": "Pathfinder Rage of Elements",
+    "bookInArchive": 826
+   },
+   {
+    "key": "alchemist-armor-expertise-level-13",
+    "name": "Alchemist Armor Expertise (Level 13)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "alchemist-armor-mastery-level-19",
+    "name": "Alchemist Armor Mastery (Level 19)",
+    "book": "Pathfinder Core Rulebook",
+    "bookInArchive": 4419
+   },
+   {
+    "key": "anger-phantom-eidolon",
+    "name": "Anger Phantom Eidolon",
+    "book": "Pathfinder Secrets of Magic",
+    "bookInArchive": 1057
+   },
+   {
+    "key": "anvils-hardness",
+    "name": "Anvil's Hardness",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "blight-soul-deviant-classification",
+    "name": "Blight Soul Deviant Classification",
+    "book": "Pathfinder #202: Severed at the Root",
+    "bookInArchive": 147
+   },
+   {
+    "key": "churning-mind",
+    "name": "Churning Mind",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "curse-of-the-living-death",
+    "name": "Curse of the Living Death",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "decay-instinct",
+    "name": "Decay Instinct",
+    "book": "Pathfinder #202: Severed at the Root",
+    "bookInArchive": 147
+   },
+   {
+    "key": "devotion-phantom-eidolon",
+    "name": "Devotion Phantom Eidolon",
+    "book": "Pathfinder Secrets of Magic",
+    "bookInArchive": 1057
+   },
+   {
+    "key": "dragon-deviant-classification",
+    "name": "Dragon Deviant Classification",
+    "book": "Pathfinder Dark Archive (Remastered)",
+    "bookInArchive": 601
+   },
+   {
+    "key": "echoes-of-the-scrolls",
+    "name": "Echoes of the Scrolls",
+    "book": "Pathfinder Society Scenario #6-09: The Power of Legends",
+    "bookInArchive": 0
+   },
+   {
+    "key": "echoes-of-the-swords",
+    "name": "Echoes of the Swords",
+    "book": "Pathfinder Society Scenario #6-09: The Power of Legends",
+    "bookInArchive": 0
+   },
+   {
+    "key": "fire-gate",
+    "name": "Fire Gate",
+    "book": "Pathfinder Rage of Elements",
+    "bookInArchive": 826
+   },
+   {
+    "key": "flicker-deviant-classification",
+    "name": "Flicker Deviant Classification",
+    "book": "Gatewalkers Player's Guide (Remastered)",
+    "bookInArchive": 55
+   },
+   {
+    "key": "fourth-gates-threshold",
+    "name": "Fourth Gate's Threshold",
+    "book": "Pathfinder Rage of Elements",
+    "bookInArchive": 826
+   },
+   {
+    "key": "leech-deviant-classification",
+    "name": "Leech Deviant Classification",
+    "book": "Gatewalkers Player's Guide (Remastered)",
+    "bookInArchive": 55
+   },
+   {
+    "key": "lesson-of-elements",
+    "name": "Lesson of Elements",
+    "book": "Pathfinder Player Core",
+    "bookInArchive": 3124
+   },
+   {
+    "key": "ligneous-instinct",
+    "name": "Ligneous Instinct",
+    "book": "Pathfinder #202: Severed at the Root",
+    "bookInArchive": 147
+   },
+   {
+    "key": "premonition-reflexes",
+    "name": "Premonition Reflexes",
+    "book": "Pathfinder Player Core 2",
+    "bookInArchive": 2236
+   },
+   {
+    "key": "psychic-weapon-expertise",
+    "name": "Psychic Weapon Expertise",
+    "book": "Pathfinder Dark Archive",
+    "bookInArchive": 601
+   },
+   {
+    "key": "psychic-weapon-specialization",
+    "name": "Psychic Weapon Specialization",
+    "book": "Pathfinder Dark Archive (Remastered)",
+    "bookInArchive": 601
+   },
+   {
+    "key": "second-gates-threshold",
+    "name": "Second Gate's Threshold",
+    "book": "Pathfinder Rage of Elements",
+    "bookInArchive": 826
+   },
+   {
+    "key": "third-gates-threshold",
+    "name": "Third Gate's Threshold",
+    "book": "Pathfinder Rage of Elements",
+    "bookInArchive": 826
+   },
+   {
+    "key": "troll-deviant-classification",
+    "name": "Troll Deviant Classification",
+    "book": "Pathfinder Dark Archive (Remastered)",
+    "bookInArchive": 601
+   },
+   {
+    "key": "verdant-core-deviant-classification",
+    "name": "Verdant Core Deviant Classification",
+    "book": "Pathfinder #202: Severed at the Root",
+    "bookInArchive": 147
+   },
+   {
+    "key": "water-gate",
+    "name": "Water Gate",
+    "book": "Pathfinder Rage of Elements",
+    "bookInArchive": 826
+   },
+   {
+    "key": "wood-gate",
+    "name": "Wood Gate",
+    "book": "Pathfinder Rage of Elements",
+    "bookInArchive": 826
+   },
+   {
+    "key": "wraith-deviant-classification",
+    "name": "Wraith Deviant Classification",
+    "book": "Pathfinder Dark Archive (Remastered)",
+    "bookInArchive": 601
+   }
+  ],
+  "feats": [
+   {
+    "key": "lotus-above-the-wind",
+    "name": "Lotus Above the Wind",
+    "book": "Pathfinder Lost Omens Tian Xia Character Guide",
+    "bookInArchive": 570
+   },
+   {
+    "key": "harsh-judgement",
+    "name": "Harsh Judgement",
+    "book": "Pathfinder Adventure: Night of the Gray Death",
+    "bookInArchive": 0
+   },
+   {
+    "key": "knight-vigilant-dedication",
+    "name": "Knight Vigilant Dedication",
+    "book": "Pathfinder Lost Omens Character Guide",
+    "bookInArchive": 374
+   },
+   {
+    "key": "construct-dynamo",
+    "name": "Construct Dynamo",
+    "book": "Pathfinder Guns & Gears",
+    "bookInArchive": 1972
+   },
+   {
+    "key": "empathic-envoy",
+    "name": "Empathic Envoy",
+    "book": "Pathfinder Adventure Path: Gatewalkers",
+    "bookInArchive": 0
+   },
+   {
+    "key": "autonomic-psychic-action",
+    "name": "Autonomic Psychic Action",
+    "book": "Pathfinder Dark Archive (Remastered)",
+    "bookInArchive": 601
+   },
+   {
+    "key": "avenger-of-envy",
+    "name": "Avenger of Envy",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "avenger-of-gluttony",
+    "name": "Avenger of Gluttony",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "avenger-of-greed",
+    "name": "Avenger of Greed",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "avenger-of-lust",
+    "name": "Avenger of Lust",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "avenger-of-sloth",
+    "name": "Avenger of Sloth",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "avenger-of-wrath",
+    "name": "Avenger of Wrath",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   }
+  ],
+  "heritages": [
+   {
+    "key": "battle-trained-human-bb",
+    "name": "Battle-Trained Human (BB)",
+    "book": "Pathfinder Beginner Box: Secrets of the Unlit Star",
+    "bookInArchive": 0
+   },
+   {
+    "key": "warden-human-bb",
+    "name": "Warden Human (BB)",
+    "book": "Pathfinder Beginner Box",
+    "bookInArchive": 0
+   }
+  ],
+  "deities": [
+   {
+    "key": "alocer",
+    "name": "Alocer",
+    "book": "Pathfinder One-Shot #2: Dinner at Lionlodge",
+    "bookInArchive": 0
+   },
+   {
+    "key": "the-curtain-call",
+    "name": "The Curtain Call",
+    "book": "Pathfinder Curtain Call Player's Guide",
+    "bookInArchive": 9
+   },
+   {
+    "key": "atheists-and-free-agents",
+    "name": "Atheists and Free Agents",
+    "book": "Pathfinder Lost Omens Divine Mysteries",
+    "bookInArchive": 575
+   }
+  ],
+  "actions": [
+   {
+    "key": "mirror-trickery",
+    "name": "Mirror-Trickery",
+    "book": "Pathfinder Dark Archive (Remastered)",
+    "bookInArchive": 601
+   },
+   {
+    "key": "swirl-crimson-shroud",
+    "name": "Swirl Crimson Shroud",
+    "book": "Pathfinder Adventure: Prey for Death",
+    "bookInArchive": 0
+   },
+   {
+    "key": "aegis-of-envy",
+    "name": "Aegis of Envy",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "convocation-of-greed",
+    "name": "Convocation of Greed",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "gluttonous-feast",
+    "name": "Gluttonous Feast",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "host-of-wrath",
+    "name": "Host of Wrath",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "sorshens-devotion",
+    "name": "Sorshen's Devotion",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "summon-sloth",
+    "name": "Summon Sloth",
+    "book": "Pathfinder #220: Crypt of Runes",
+    "bookInArchive": 0
+   },
+   {
+    "key": "activate-resonant-reflection",
+    "name": "Activate Resonant Reflection",
+    "book": "Pathfinder #153: Life's Long Shadows",
+    "bookInArchive": 73
+   }
+  ],
+  "vehicles": [
+   {
+    "key": "magic-broom",
+    "name": "Flying Broom",
+    "book": "",
+    "bookInArchive": 0
+   },
+   {
+    "key": "flying-carpet",
+    "name": "Magic Carpet",
+    "book": "",
+    "bookInArchive": 0
+   },
+   {
+    "key": "sandsailer",
+    "name": "Sandsailer",
+    "book": "",
+    "bookInArchive": 0
+   }
+  ]
+ }
+}

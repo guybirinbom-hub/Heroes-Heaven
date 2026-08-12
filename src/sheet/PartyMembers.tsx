@@ -3,7 +3,7 @@ import type { ContentDatabase } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { rememberPartyCapabilities } from '../data/partyCapabilities';
-import { fetchParty, fetchMemberSheet, currentUserId, kickFromParty, subscribeParty, type PartyMember } from '../data/party';
+import { fetchParty, fetchMemberSheet, currentUserId, kickFromParty, subscribeParty, subscribeMemberSheet, type PartyMember } from '../data/party';
 import type { PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
 import { GmEditSheet } from './GmEditSheet';
@@ -13,6 +13,7 @@ import { useBackHandler } from './useEscapeClose';
 interface ViewingState {
   campaignId: string;
   ownerId: string;
+  charId: string;
   sheet: SavedChar;
 }
 
@@ -27,18 +28,56 @@ export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: b
   const open = async (campaignId: string, charId: string, ownerId: string): Promise<boolean> => {
     const sheet = await fetchMemberSheet(campaignId, charId);
     if (sheet && sheet.character) {
-      setViewing({ campaignId, ownerId, sheet });
+      setViewing({ campaignId, ownerId, charId, sheet });
       return true;
     }
     return false;
   };
+
+  /*
+   * Keep the OPEN sheet live.
+   *
+   * `open()` takes a snapshot, and until now that snapshot was the whole story: a GM reading a player's
+   * sheet saw whatever was published the instant they tapped the card, for as long as they left it
+   * open. Subscribing to that one row means the player taking damage, spending a slot or picking up an
+   * item shows on the GM's screen as it happens.
+   *
+   * The GM's EDITING view is deliberately not force-updated here — it owns a working copy, and
+   * replacing that out from under a half-finished edit would destroy the GM's work. GmEditSheet takes
+   * the live sheet as a prop and decides for itself (adopt it when clean, flag it when dirty).
+   */
+  const campaignId = viewing?.campaignId;
+  const charId = viewing?.charId;
+  useEffect(() => {
+    if (!campaignId || !charId) return;
+    let cancelled = false;
+    const pull = () => {
+      void fetchMemberSheet(campaignId, charId).then((sheet) => {
+        if (cancelled || !sheet?.character) return;
+        setViewing((v) =>
+          // Guard against a late response for a sheet the viewer has since closed or swapped away from,
+          // and skip identical payloads so an unchanged re-publish doesn't re-render the whole sheet.
+          v && v.campaignId === campaignId && v.charId === charId && JSON.stringify(v.sheet) !== JSON.stringify(sheet)
+            ? { ...v, sheet }
+            : v,
+        );
+      });
+    };
+    const unsub = subscribeMemberSheet(campaignId, charId, pull);
+    return () => {
+      cancelled = true;
+      unsub();
+    };
+  }, [campaignId, charId]);
   let sheetEl = null;
   if (viewing) {
     if (options?.gmEdit) {
       sheetEl = (
         <div className="party-viewer">
           <GmEditSheet
+            key={viewing.charId}
             initial={viewing.sheet}
+            live={viewing.sheet}
             content={content}
             campaignId={viewing.campaignId}
             playerOwnerId={viewing.ownerId}

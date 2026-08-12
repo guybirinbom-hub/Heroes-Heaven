@@ -73,9 +73,13 @@
   --app-pad: 14px;
   --app-gap: 11px;
 
-  /* scrollbars — thin neutral by default; :root.sb-accent (a device pref) swaps to the brand color */
-  --app-sb-thumb: color-mix(in srgb, var(--app-text-dim) 50%, transparent);
-  --app-sb-thumb-hover: color-mix(in srgb, var(--app-text-dim) 78%, transparent);
+  /* scrollbars — thin neutral by default; :root.sb-accent (a device pref) swaps to the brand color.
+     The `-on` pair is the colour this look calls for; the live pair is what actually paints, so a
+     panel can blank the bars behind it (see :root.cust-open) and hand the real colour back to itself. */
+  --app-sb-thumb-on: color-mix(in srgb, var(--app-text-dim) 50%, transparent);
+  --app-sb-thumb-hover-on: color-mix(in srgb, var(--app-text-dim) 78%, transparent);
+  --app-sb-thumb: var(--app-sb-thumb-on);
+  --app-sb-thumb-hover: var(--app-sb-thumb-hover-on);
 
   color-scheme: dark;
 }
@@ -87,22 +91,64 @@
 /* App-wide scrollbars (WebView2/Chromium). Element-scoped rules (e.g. the hidden .tabs / .lstrip
    bars) are more specific and still win, so they keep their own treatment. */
 :root.sb-accent {
-  --app-sb-thumb: color-mix(in srgb, var(--app-accent) 60%, transparent);
-  --app-sb-thumb-hover: color-mix(in srgb, var(--app-accent) 88%, transparent);
+  --app-sb-thumb-on: color-mix(in srgb, var(--app-accent) 60%, transparent);
+  --app-sb-thumb-hover-on: color-mix(in srgb, var(--app-accent) 88%, transparent);
 }
+/* Customize is a drawer over a live sheet, so the page keeps its scroll position and its scrollbar —
+   two bars side by side, one of them not yours to use. Blank the thumbs behind the drawer and hand the
+   colour back inside it. Blanking the COLOUR rather than the bar is deliberate: hiding the bar would
+   reflow the sheet by its width every time the drawer opened. */
+:root.cust-open {
+  --app-sb-thumb: transparent;
+  --app-sb-thumb-hover: transparent;
+}
+:root.cust-open .cust-drawer-wrap {
+  --app-sb-thumb: var(--app-sb-thumb-on);
+  --app-sb-thumb-hover: var(--app-sb-thumb-hover-on);
+}
+/* 11px of gutter carrying a 7px pill: the thumb is inset by a transparent border rather than sitting
+   flush against the edge of whatever it scrolls, so it reads as part of the panel instead of an OS bar
+   bolted to the side of it. `background-clip: padding-box` is what makes the border show as inset. */
 *::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+  width: 11px;
+  height: 11px;
 }
 *::-webkit-scrollbar-track {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
   background: var(--app-sb-thumb);
-  border-radius: 6px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
 }
 *::-webkit-scrollbar-thumb:hover {
   background: var(--app-sb-thumb-hover);
+  background-clip: padding-box;
+}
+/* Where a vertical and a horizontal bar meet — transparent, not the browser's default grey block. */
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/*
+ * The same bars for engines with no ::-webkit-scrollbar — Firefox, where every rule above is inert and
+ * the app was drawing the OS's own chunky grey scrollbar instead of its own.
+ *
+ * Gated behind @supports rather than set globally, and that gate is load-bearing: Chromium supports
+ * the standard `scrollbar-width`/`scrollbar-color` too, and when they are set they take PRECEDENCE
+ * over the ::-webkit-scrollbar rules — so applying them everywhere would throw away the 11px inset
+ * pill above and give the desktop app a thin default bar. `selector(::-webkit-scrollbar)` is true in
+ * Chromium and false in Firefox, so each engine gets exactly one of the two treatments.
+ *
+ * `thin` is the closest the standard properties can get; the colours come from the same tokens, so a
+ * theme change and the Customize drawer's blanking (see :root.cust-open) both still work.
+ */
+@supports not selector(::-webkit-scrollbar) {
+  :root {
+    scrollbar-width: thin;
+    scrollbar-color: var(--app-sb-thumb) transparent;
+  }
 }
 
 html,

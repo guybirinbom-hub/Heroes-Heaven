@@ -34,10 +34,17 @@ export function InfoTerm({
         role="button"
         tabIndex={0}
         title="Show description"
-        onClick={() => setOpen(true)}
+        // stopPropagation because an InfoTerm is frequently nested inside a clickable row (a feat in
+        // the Feats & features list, an item card). Clicking the term means "explain THIS word", never
+        // "and also open whatever contains it" — without this, a trait chip opened two popups at once.
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
+            e.stopPropagation();
             setOpen(true);
           }
         }}

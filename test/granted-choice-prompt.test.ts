@@ -22,12 +22,17 @@ describe('a granted feat’s choice is labelled from its flag, like a picked one
     expect(featChoicePrompt(def?.prompt)).toBe('Choose an option');
   });
 
-  it('25 feats were mislabelled on the granted lane, so this is not one record', () => {
+  // 23, down from the 25 first measured. Two records have since been given a real prompt and so no
+  // longer lean on the flag fallback at all: Manifold Modifications ("Additional initial modification",
+  // from ruling Q9's filtering lane) and Sterling Dynamo Dedication ("Sterling dynamo", from ruling
+  // Q20's echo-picker pass). A record LEAVING this set is the fallback becoming unnecessary, never the
+  // fallback breaking — which is why the bound is a floor and not an equality.
+  it('two dozen feats were mislabelled on the granted lane, so this is not one record', () => {
     const affected = Object.values(c.feats).filter((f) => {
       const d = f?.choice;
       return d && featChoicePrompt(d.prompt) !== featChoicePrompt(d.prompt, d.flag);
     });
-    expect(affected.length).toBeGreaterThanOrEqual(25);
+    expect(affected.length).toBeGreaterThanOrEqual(23);
   });
 
   /**

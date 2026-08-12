@@ -2432,7 +2432,7 @@
   "id": "constant-levitation",
   "field": "speeds",
   "value": {
-   "fly": 40
+   "fly": "max(@actor.speed.land,20)"
   }
  },
  {
@@ -14696,7 +14696,7 @@
   "category": "backgrounds",
   "id": "reputation-seeker",
   "field": "trainedLore",
-  "value": "Jungle"
+  "value": null
  },
  {
   "category": "backgrounds",
@@ -36392,78 +36392,201 @@
   "field": "choice",
   "value": {
    "flag": "modification",
-   "prompt": "Prompt",
+   "prompt": "Additional initial modification",
    "kind": "array",
+   "disableIfOwned": true,
    "options": [
     {
      "value": "harmonic-oscillator",
-     "label": "Harmonic Oscillator"
+     "label": "Harmonic Oscillator",
+     "requiresAnyFeature": [
+      "armor-innovation"
+     ]
     },
     {
      "value": "metallic-reactance",
-     "label": "Metallic Reactance"
+     "label": "Metallic Reactance",
+     "requiresAnyFeature": [
+      "armor-innovation"
+     ]
     },
     {
      "value": "muscular-exoskeleton",
-     "label": "Muscular Exoskeleton"
+     "label": "Muscular Exoskeleton",
+     "requiresAnyFeature": [
+      "armor-innovation"
+     ]
     },
     {
      "value": "otherworldly-protection",
-     "label": "Otherworldly Protection"
+     "label": "Otherworldly Protection",
+     "requiresAnyFeature": [
+      "armor-innovation"
+     ]
     },
     {
      "value": "phlogistonic-regulator",
-     "label": "Phlogistonic Regulator"
+     "label": "Phlogistonic Regulator",
+     "requiresAnyFeature": [
+      "armor-innovation"
+     ]
     },
     {
      "value": "speed-boosters",
-     "label": "Speed Boosters"
+     "label": "Speed Boosters",
+     "requiresAnyFeature": [
+      "armor-innovation"
+     ]
     },
     {
      "value": "subtle-dampeners",
-     "label": "Subtle Dampeners"
+     "label": "Subtle Dampeners",
+     "requiresAnyFeature": [
+      "armor-innovation"
+     ]
     },
     {
      "value": "blunt-shot",
-     "label": "Blunt Shot"
+     "label": "Blunt Shot",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "complex-simplicity",
-     "label": "Complex Simplicity"
+     "label": "Complex Simplicity",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "dynamic-weighting",
-     "label": "Dynamic Weighting"
+     "label": "Dynamic Weighting",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "entangling-form",
-     "label": "Entangling Form"
+     "label": "Entangling Form",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "hampering-spikes",
-     "label": "Hampering Spikes"
+     "label": "Hampering Spikes",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "hefty-composition",
-     "label": "Hefty Composition"
+     "label": "Hefty Composition",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "modular-head",
-     "label": "Modular Head"
+     "label": "Modular Head",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "pacification-tools",
-     "label": "Pacification Tools"
+     "label": "Pacification Tools",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "razor-prongs",
-     "label": "Razor Prongs"
+     "label": "Razor Prongs",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
     },
     {
      "value": "segmented-frame",
-     "label": "Segmented Frame"
+     "label": "Segmented Frame",
+     "requiresAnyFeature": [
+      "weapon-innovation"
+     ]
+    },
+    {
+     "value": "accelerated-mobility",
+     "label": "Accelerated Mobility — innovation's Speed increases to 40 feet",
+     "requiresAnyFeature": [
+      "construct-innovation"
+     ]
+    },
+    {
+     "value": "amphibious-construction",
+     "label": "Amphibious Construction — gains a swim Speed of 25 feet",
+     "requiresAnyFeature": [
+      "construct-innovation"
+     ]
+    },
+    {
+     "value": "increased-size",
+     "label": "Increased Size — your construct is Large",
+     "requiresAnyFeature": [
+      "construct-innovation"
+     ]
+    },
+    {
+     "value": "manual-dexterity",
+     "label": "Manual Dexterity — can perform manipulate actions with up to two limbs",
+     "requiresAnyFeature": [
+      "construct-innovation"
+     ]
+    },
+    {
+     "value": "projectile-launcher",
+     "label": "Projectile Launcher — ranged unarmed attack, 1d4 bludgeoning or piercing, propulsive, 30 ft",
+     "requiresAnyFeature": [
+      "construct-innovation"
+     ]
+    },
+    {
+     "value": "sensory-array",
+     "label": "Sensory Array — low-light vision, darkvision, imprecise tremorsense 30 feet",
+     "requiresAnyFeature": [
+      "construct-innovation"
+     ]
+    },
+    {
+     "value": "wonder-gears",
+     "label": "Wonder Gears — innovation becomes trained in Intimidation, Stealth, and Survival",
+     "requiresAnyFeature": [
+      "construct-innovation"
+     ]
+    },
+    {
+     "value": "contained-shrapnel",
+     "label": "Contained Shrapnel — your innovation gains the nonlethal trait (optional on each Launch)",
+     "requiresAnyFeature": [
+      "light-mortar-innovation"
+     ]
+    },
+    {
+     "value": "enhanced-shrapnel",
+     "label": "Enhanced Shrapnel — your innovation gains the versatile P and versatile S traits",
+     "requiresAnyFeature": [
+      "light-mortar-innovation"
+     ]
+    },
+    {
+     "value": "spring-loaded",
+     "label": "Spring-Loaded — you can deploy your light mortar as a free action",
+     "requiresAnyFeature": [
+      "light-mortar-innovation"
+     ]
     }
-   ]
+   ],
+   "ownsFeature": true
   }
  },
  {
@@ -36806,7 +36929,7 @@
    "flag": "eidolonsWrathDamage",
    "prompt": "Eidolon's Wrath damage type",
    "kind": "array",
-   "note": "The focus spell itself is granted; the chosen type is recorded but isn't substituted into the spell's listed damage. Spirit stands in for the alignment-damage option and applies only if your eidolon is a celestial, fiend, or monitor.",
+   "note": "Spirit stands in for the printed alignment-damage option, and is available only if your eidolon is a celestial, fiend, or monitor.",
    "options": [
     {
      "value": "acid",
@@ -66019,33 +66142,25 @@
   "category": "classFeatures",
   "id": "battle-creed",
   "field": "grantsClassFeatures",
-  "value": [
-   "divine-defense"
-  ]
+  "value": null
  },
  {
   "category": "classFeatures",
   "id": "first-doctrine-warpriest",
   "field": "grantsClassFeatures",
-  "value": [
-   "divine-defense"
-  ]
+  "value": null
  },
  {
   "category": "classFeatures",
   "id": "initial-creed",
   "field": "grantsClassFeatures",
-  "value": [
-   "divine-defense"
-  ]
+  "value": null
  },
  {
   "category": "classFeatures",
   "id": "warpriest",
   "field": "grantsClassFeatures",
-  "value": [
-   "divine-defense"
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -82566,21 +82681,7 @@
   "category": "backgrounds",
   "id": "isgeri-reclaimer",
   "field": "choice",
-  "value": {
-   "flag": "terrain",
-   "prompt": "Terrain",
-   "kind": "array",
-   "options": [
-    {
-     "value": "rubble",
-     "label": "Rubble"
-    },
-    {
-     "value": "underbrush",
-     "label": "Underbrush"
-    }
-   ]
-  }
+  "value": null
  },
  {
   "category": "backgrounds",
@@ -99572,7 +99673,7 @@
   "category": "feats",
   "id": "battle-harbinger-dedication",
   "field": "note",
-  "value": "If you already had Toughness, take another general feat of your choice in its place — grant it through Setup → Overrides → Grant a feat."
+  "value": "If you already had Toughness, take another general feat of your choice in its place — grant it through Setup → Overrides → Grant a feat. If you are already trained in BOTH Athletics and Acrobatics, you instead become trained in another skill of your choice — pick it through Setup → Overrides."
  },
  {
   "category": "feats",
@@ -105822,5 +105923,518 @@
     "label": "Underground"
    }
   ]
+ },
+ {
+  "category": "backgrounds",
+  "id": "toymaker",
+  "field": "choiceOptionLimits",
+  "value": [
+   {
+    "target": "specialty-crafting",
+    "flag": "specialtyCrafting",
+    "allow": [
+     {
+      "value": "artistry"
+     },
+     {
+      "value": "blacksmithing"
+     },
+     {
+      "value": "glassmaking"
+     },
+     {
+      "value": "leatherworking"
+     },
+     {
+      "value": "tailoring"
+     },
+     {
+      "value": "woodworking"
+     }
+    ],
+    "reason": "Toymaker names the six specialties it allows: Artistry, Blacksmithing, Glassmaking, Leatherworking, Tailoring or Woodworking."
+   }
+  ]
+ },
+ {
+  "category": "backgrounds",
+  "id": "isgeri-reclaimer",
+  "field": "choiceOptionLimits",
+  "value": [
+   {
+    "target": "terrain-stalker",
+    "flag": "choice",
+    "allow": [
+     {
+      "value": "rubble"
+     },
+     {
+      "value": "underbrush"
+     }
+    ],
+    "reason": "Isgeri Reclaimer grants Terrain Stalker “in either rubble or underbrush”."
+   }
+  ]
+ },
+ {
+  "category": "backgrounds",
+  "id": "reputation-seeker",
+  "field": "choiceOptionLimits",
+  "value": [
+   {
+    "target": "terrain-expertise",
+    "flag": "terrain",
+    "allow": [
+     {
+      "value": "underground",
+      "requiresSkillRank": {
+       "skill": "lore:darklands",
+       "min": "trained"
+      }
+     },
+     {
+      "value": "desert",
+      "requiresSkillRank": {
+       "skill": "lore:desert",
+       "min": "trained"
+      }
+     },
+     {
+      "value": "forest",
+      "requiresSkillRank": {
+       "skill": "lore:jungle",
+       "min": "trained"
+      }
+     }
+    ],
+    "reason": "Reputation Seeker ties the terrain to the Lore you took: underground with Darklands Lore, desert with Desert Lore, forest with Jungle Lore."
+   }
+  ]
+ },
+ {
+  "category": "backgrounds",
+  "id": "reputation-seeker",
+  "field": "trainedLoreOptions",
+  "value": [
+   "darklands",
+   "desert",
+   "jungle"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "magaambyan-attendant-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "magaambyan-attendant",
+    "halcyon-speaker"
+   ],
+   "count": 2,
+   "except": [
+    "halcyon-speaker-dedication"
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "juggler-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "juggler"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "category": "feats",
+  "id": "jalmeri-heavenseeker-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "jalmeri-heavenseeker",
+    "student-of-perfection"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "spellshot-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "spellshot",
+    "beast-gunner"
+   ],
+   "count": 2,
+   "except": [
+    "beast-gunner-dedication"
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "familiar-sage-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "familiar-master",
+    "familiar-sage"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "scion-of-domora-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "scions-of-domora",
+    "familiar-master"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "wellspring-mage-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "wellspring-mage"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "spell-trickster-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "spell-trickster"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "soul-warden-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "soul-warden"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "undead-slayer-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "undead-slayer"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "mummy-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "mummy"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "harrower-dedication",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "harrower"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "knight-vigilant",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "knight-vigilant"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "aon-knight-vigilant",
+  "field": "dedicationGate",
+  "value": {
+   "archetypes": [
+    "knight-vigilant"
+   ],
+   "count": 2
+  }
+ },
+ {
+  "category": "feats",
+  "id": "exemplar-dedication",
+  "field": "choice",
+  "value": {
+   "flag": "ikon",
+   "prompt": "Ikon",
+   "kind": "array",
+   "ownsFeature": true,
+   "options": [
+    {
+     "value": "bands-of-imprisonment",
+     "label": "Bands of Imprisonment"
+    },
+    {
+     "value": "barrows-edge",
+     "label": "Barrow's Edge"
+    },
+    {
+     "value": "eye-catching-spot",
+     "label": "Eye-Catching Spot"
+    },
+    {
+     "value": "fetching-bangles",
+     "label": "Fetching Bangles"
+    },
+    {
+     "value": "gaze-sharp-as-steel",
+     "label": "Gaze Sharp as Steel"
+    },
+    {
+     "value": "gleaming-blade",
+     "label": "Gleaming Blade"
+    },
+    {
+     "value": "hands-of-the-wildling",
+     "label": "Hands of the Wildling"
+    },
+    {
+     "value": "horn-of-plenty",
+     "label": "Horn of Plenty"
+    },
+    {
+     "value": "mirrored-aegis",
+     "label": "Mirrored Aegis"
+    },
+    {
+     "value": "mortal-harvest",
+     "label": "Mortal Harvest"
+    },
+    {
+     "value": "noble-branch",
+     "label": "Noble Branch"
+    },
+    {
+     "value": "pelt-of-the-beast",
+     "label": "Pelt of the Beast"
+    },
+    {
+     "value": "scar-of-the-survivor",
+     "label": "Scar of the Survivor"
+    },
+    {
+     "value": "shadow-sheath",
+     "label": "Shadow Sheath"
+    },
+    {
+     "value": "skin-hard-as-horn",
+     "label": "Skin Hard as Horn"
+    },
+    {
+     "value": "skybearers-belt",
+     "label": "Skybearer's Belt"
+    },
+    {
+     "value": "starshot",
+     "label": "Starshot"
+    },
+    {
+     "value": "thousand-league-sandals",
+     "label": "Thousand-League Sandals"
+    },
+    {
+     "value": "titans-breaker",
+     "label": "Titan's Breaker"
+    },
+    {
+     "value": "unfailing-bow",
+     "label": "Unfailing Bow"
+    },
+    {
+     "value": "victors-wreath",
+     "label": "Victor's Wreath"
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "exemplar-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "exemplar"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "battle-harbinger-dedication",
+  "field": "choice",
+  "value": {
+   "flag": "skill",
+   "prompt": "Trained skill",
+   "kind": "array",
+   "options": [
+    {
+     "value": "acrobatics",
+     "label": "Acrobatics"
+    },
+    {
+     "value": "athletics",
+     "label": "Athletics"
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "sterling-dynamo-dedication",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Dynamo",
+    "die": "d6",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "shove"
+    ],
+    "group": "brawling",
+    "choiceValue": "feature:dynamo:automatic-power"
+   },
+   {
+    "name": "Dynamo",
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "shove"
+    ],
+    "group": "brawling",
+    "choiceValue": "feature:dynamo:manual-power"
+   },
+   {
+    "name": "Dynamo",
+    "die": "d4",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "agile",
+     "finesse"
+    ],
+    "group": "brawling",
+    "choiceValue": "feature:dynamo:automatic-percussive"
+   },
+   {
+    "name": "Dynamo",
+    "die": "d6",
+    "damageType": "bludgeoning",
+    "traits": [
+     "unarmed",
+     "agile",
+     "finesse"
+    ],
+    "group": "brawling",
+    "choiceValue": "feature:dynamo:manual-percussive"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sterling-dynamo-dedication",
+  "field": "choice",
+  "value": {
+   "flag": "dynamo",
+   "prompt": "Sterling dynamo",
+   "kind": "array",
+   "options": [
+    {
+     "value": "feature:dynamo:automatic-power",
+     "label": "Automatic power driver — 1d6 bludgeoning, shove; needs no free hand"
+    },
+    {
+     "value": "feature:dynamo:manual-power",
+     "label": "Manual power driver — 1d8 bludgeoning, shove; needs a free hand to operate"
+    },
+    {
+     "value": "feature:dynamo:automatic-percussive",
+     "label": "Automatic percussive striker — 1d4 bludgeoning, agile finesse; needs no free hand"
+    },
+    {
+     "value": "feature:dynamo:manual-percussive",
+     "label": "Manual percussive striker — 1d6 bludgeoning, agile finesse; needs a free hand to operate"
+    }
+   ],
+   "note": "The dynamo is made of silver, which the Strike row does not show. An ARM dynamo is always manual, and uses that arm’s hand to operate it."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "eidolons-wrath",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "eidolons-wrath",
+    "fromChoice": true,
+    "note": "The damage type you chose when you gained this feat is {choice}, so this spell deals {choice} damage."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "creature-of-myth",
+  "field": "choice",
+  "value": {
+   "flag": "choice",
+   "prompt": "Your united companion gains",
+   "kind": "array",
+   "options": [
+    {
+     "value": "baleful-body",
+     "label": "Baleful Body — melee attackers take half your level in acid, fire, or poison damage"
+    },
+    {
+     "value": "chimeric-heads",
+     "label": "Chimeric Heads — an extra head: all-around vision, and paired Strikes for a Mythic Point"
+    },
+    {
+     "value": "energy-aegis",
+     "label": "Energy Aegis — immunity to one energy type, and +1 status to AC and saves against it"
+    },
+    {
+     "value": "magnificent-flight",
+     "label": "Magnificent Flight — a fly Speed equal to its Speed, and the mount ability"
+    },
+    {
+     "value": "protective-skin",
+     "label": "Protective Skin — +30 maximum HP, and weakness 10 to cold iron or silver"
+    }
+   ]
+  }
  }
 ]

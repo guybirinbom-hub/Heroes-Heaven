@@ -51,13 +51,14 @@ import type {
 import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, SourceInfo, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod, askedAtDailyPrep, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, profBonus, resolveFormula, splinterDomainsOf } from './derive';
+import { abilityMod, askedAtDailyPrep, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, profBonus, resolveFormula, splinterDomainsOf, type NarrowedOption } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { applyCounterMods } from './counterMods';
 import { choiceGrantFor, FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
 import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE } from './featFeatGrants';
 import { BACKGROUND_GRANT_BOUND_CHOICE } from './backgroundGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from './featPickGrants';
+import { kineticistElements } from './kineticElements';
 import { FEAT_CANTRIP_GRANTS } from './featCantripGrants';
 import { FORMULA_BOOK_ITEM_ID, formulaBookSource, formulaGrantsOwned, grantsFormulaBook, isFormulaBook, withFormula } from './formulaBook';
 import { grantForSpellPick } from './spellChoice';
@@ -568,22 +569,95 @@ export function additionalClassSkills(build: BuildState, content: ContentDatabas
   return Math.max(0, base + abilityMod(abilities.int));
 }
 
+
 /**
- * The archetype multiclass rule: you can't select a new dedication feat until every
- * archetype you've already started has at least two OTHER (non-dedication) feats from it.
- * Returns true if a new dedication may currently be taken, given the taken feat ids.
+ * Why this dedication cannot be taken yet — or `null` when it can. Ruling Q25.
+ *
+ * The archetype chapter states the rule once, for everyone: *"once you select a dedication feat for
+ * an archetype, you must satisfy its requirements before you can gain another dedication feat.
+ * Typically, you satisfy an archetype dedication feat by gaining a certain number of feats from the
+ * archetype's list."* The number is the "typically" — two — and the 13 records that still PRINT a
+ * Special clause are the ones whose requirement differs from it. So the default lives here and the
+ * variations live on the records, in `Feat.dedicationGate`.
+ *
+ * ⚠ Per-CANDIDATE, not per-slot, which is the whole reason this replaced a boolean. Magaambyan
+ * Attendant's clause exempts Halcyon Speaker Dedication and Spellshot's exempts Beast Gunner
+ * Dedication; a slot-wide "can I take any dedication" answer has nowhere to put an exception, so both
+ * of those legal picks were blocked.
+ *
+ * A dedication the character was GIVEN rather than picked is not gated at all: Multitalented,
+ * Social Purview and Speak for the Gravelands each say the grant happens *"even if you normally
+ * couldn't take another dedication feat"*, and a grant never passes through this picker.
  */
-export function canTakeNewDedication(takenFeatIds: string[], content: ContentDatabase): boolean {
-  const started = new Set<string>(); // archetypes with a dedication taken
+export function dedicationBlock(
+  takenFeatIds: string[],
+  candidate: Feat,
+  content: ContentDatabase,
+): string | null {
+  if (!candidate.traits.includes('dedication')) return null;
+  const started: Feat[] = [];
   const counts = new Map<string, number>(); // archetype -> non-dedication feats taken
   for (const id of takenFeatIds) {
     const f = content.feats[id];
-    if (!f?.archetype) continue;
-    if (f.traits.includes('dedication')) started.add(f.archetype);
-    else counts.set(f.archetype, (counts.get(f.archetype) ?? 0) + 1);
+    if (!f) continue;
+    // A dedication counts as STARTED on its own `dedicationGate` as well as on `archetype`. Three
+    // dedications carry no archetype at all — the two legacy Knight Vigilant records and Marine
+    // Marauder — and requiring one let them through the gate entirely, which is the opposite of what
+    // Knight Vigilant prints. Its gate names the archetype the field is missing.
+    if (f.traits.includes('dedication')) {
+      if (f.dedicationGate || f.archetype) started.push(f);
+    } else if (f.archetype) counts.set(f.archetype, (counts.get(f.archetype) ?? 0) + 1);
   }
-  for (const s of started) if ((counts.get(s) ?? 0) < 2) return false;
-  return true;
+  for (const d of started) {
+    // ⚠ ONLY a dedication that PRINTS the clause gates. Owner ruling Q28: "not every dedication keeps
+    // the general two-feat gate — only feats that say it."
+    //
+    // Player Core's Archetypes chapter does state the rule generally, and the Remaster lifted that
+    // boilerplate out of the individual feats — which is why only 13 records still print one. So a
+    // default gate is defensible on RAW, and this app previously had one. The owner has ruled
+    // otherwise: the printed clause is the whole rule here. Reinstating a default would silently gate
+    // 213 dedications they have said should not gate.
+    const gate = d.dedicationGate;
+    if (!gate) continue;
+    if (gate.except?.includes(candidate.id)) continue;
+    // Sibling archetypes count TOGETHER — "two other feats from the spellshot or beast gunner
+    // archetypes" is one pool of two, not two pools of two.
+    const have = gate.archetypes.reduce((n, a) => n + (counts.get(a) ?? 0), 0);
+    if (have >= gate.count) continue;
+    const need = gate.count - have;
+    return `Take ${need} more feat${need === 1 ? '' : 's'} from the ${archetypeLabel(gate.archetypes, content)} archetype${gate.archetypes.length > 1 ? 's' : ''} first.`;
+  }
+  return null;
+}
+
+/**
+ * Archetype slug → its printed name, taken from that archetype's own dedication feat.
+ *
+ * Memoized per ContentDatabase, for the same reason `declaredTokens` is: `dedicationBlock` runs once
+ * per row of an open feat picker, and naming an archetype by scanning ~6,200 feats would be a full
+ * content walk per keystroke.
+ */
+const archetypeNameCache = new WeakMap<ContentDatabase, Map<string, string>>();
+function archetypeNames(content: ContentDatabase): Map<string, string> {
+  const cached = archetypeNameCache.get(content);
+  if (cached) return cached;
+  const map = new Map<string, string>();
+  for (const f of Object.values(content.feats)) {
+    if (f.archetype && f.traits.includes('dedication') && !map.has(f.archetype)) {
+      map.set(f.archetype, f.name.replace(/\s+Dedication$/i, ''));
+    }
+  }
+  archetypeNameCache.set(content, map);
+  return map;
+}
+
+/** "spellshot or beast gunner", spelled the way the archetype's own feats are named. */
+function archetypeLabel(slugs: string[], content: ContentDatabase): string {
+  const byslug = archetypeNames(content);
+  // The slug de-hyphenated is the fallback for the two legacy Knight Vigilant records, which carry no
+  // `archetype` of their own — a readable phrase beats printing an id at the player.
+  const names = slugs.map((s) => byslug.get(s) ?? s.replace(/-/g, ' '));
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} or ${names[names.length - 1]}` : names[0];
 }
 
 /**
@@ -1208,6 +1282,11 @@ export function boundBackgroundGrantChoice(
  *
  * `slotKey` names the featPicks slot for a 'domains' choice, whose pool depends on which feat is
  * sitting in it (Splinter Faith replaces the deity's own list). Everything else ignores it.
+ *
+ * The 'array' branch then runs the widened list through ruling Q9's NARROWING (`narrowChoiceOptions`),
+ * so widening and narrowing meet in one place and in that order: a record may only narrow what the
+ * player can actually see, and a limit written against the printed list would otherwise silently
+ * delete anything a widening feat had added.
  */
 export function buildChoiceOptions(
   recordId: string,
@@ -1216,13 +1295,26 @@ export function buildChoiceOptions(
   content: ContentDatabase,
   character: Character,
   slotKey?: string,
-): { value: string; label: string; description?: string }[] {
+): NarrowedOption[] {
   if (def.kind === 'domains') {
     const featId = slotKey ? build.featPicks?.[slotKey] : undefined;
     return domainPoolForChoice(build, content, featId, def.domainPool).map((d) => ({ value: d, label: cap(d) }));
   }
   if (def.kind === 'skills') return trainedSkillOptions(character, def.minRank ?? 'trained');
-  return effectiveChoiceOptions(recordId, def, character, content);
+  const narrowed = narrowChoiceOptions(recordId, def, effectiveChoiceOptions(recordId, def, character, content), character, content);
+  // An `ownsFeature` option's value IS a classFeature id, so the record it names can describe it. The
+  // four that shipped before this each carried a COPY of that record's description on the option, and
+  // a copy is a second place for the same text to go stale — Exemplar Dedication's 21 ikons would have
+  // been 15 KB of duplicated prose in two files. Only fills a description that is absent, so those
+  // four are untouched.
+  if (def.ownsFeature) {
+    return narrowed.map((o) => {
+      if (o.description) return o;
+      const rec = content.classFeatures[o.value] ?? content.classFeatures[o.value.replace(/^aon-/, '')];
+      return rec?.description ? { ...o, description: rec.description } : o;
+    });
+  }
+  return narrowed;
 }
 
 const ABILITY_NAMES: Record<string, string> = {
@@ -1442,15 +1534,10 @@ export type InnovationType = 'armor' | 'weapon' | 'construct';
 /** Kineticist Gate's Threshold levels (each lets you Expand the Portal or Fork the Path for a new element). */
 export const GATE_THRESHOLD_LEVELS = [5, 9, 13, 17] as const;
 
-/** A kineticist's effective kinetic elements: the L1 gate picks plus any gained via Fork the Path at a
- *  reached Gate's Threshold. Returns element option ids (e.g. 'fire-gate'). */
-export function kineticistElements(build: BuildState, level: number): string[] {
-  const base = build.extraChoices?.['element'] ?? [];
-  const forks = Object.entries(build.gateForks ?? {})
-    .filter(([lvl, el]) => !!el && Number(lvl) <= level)
-    .map(([, el]) => el);
-  return [...new Set([...base, ...forks])];
-}
+// Re-exported so the many call sites that already import it from build.ts keep working. The function
+// itself moved to a leaf module so `featPickGrants.ts` — which build.ts imports — can read the same
+// rule without a runtime import cycle. See src/rules/kineticElements.ts.
+export { kineticistElements };
 
 /** Maps an innovation subclass id to its modification type (light-mortar is archetype-only → none). */
 export function innovationType(subclassId: string | null | undefined): InnovationType | undefined {
@@ -3338,7 +3425,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           ? slot.conditionalRank.upgraded
           : slot.conditionalRank.base
         : slot.rank;
-      proficiencies.skills[skill] = maxRank(cur, grant);
+      // `at()` — the level upgrade is documented as a floor on EVERY rank this feat grants, and this
+      // was the one lane it never reached. Both records that carry both fields print the upgrade for
+      // the chosen skill and nothing else: Dual Studies' *"at 7th level, you each become an expert in
+      // the chosen skills"*, and the Tome implement's *"at 5th level, you're an expert in both"*.
+      proficiencies.skills[skill] = maxRank(cur, at(grant));
     });
     // "Trained in a Lore of your choice" — grant lore:<subject> for each filled Lore slot (RAISES only).
     for (let idx = 0; idx < (g.loreChoices ?? 0); idx++) {
@@ -3771,13 +3862,37 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * and never take it for part of the spell as printed.
    */
   let spellNotes: Character['spellNotes'];
+  const pushSpellNote = (spellId: string, from: string, note: string) => {
+    if (!content.spells[spellId]) return; // a clause on a spell that does not ship renders nowhere
+    const on = ((spellNotes ??= {})[spellId] ??= []);
+    // Two worn copies of the same item are two entries in `ownedRecords`, and one clause printed
+    // twice reads as two different riders.
+    if (!on.some((e) => e.from === from && e.note === note)) on.push({ from, note });
+  };
   for (const rec of ownedRecords) {
     for (const n of rec?.spellNotes ?? []) {
-      if (!content.spells[n.spellId]) continue; // a clause on a spell that does not ship renders nowhere
-      const on = ((spellNotes ??= {})[n.spellId] ??= []);
-      // Two worn copies of the same item are two entries in `ownedRecords`, and one clause printed
-      // twice reads as two different riders.
-      if (!on.some((e) => e.from === rec!.name && e.note === n.note)) on.push({ from: rec!.name, note: n.note });
+      if (n.fromChoice) continue; // handled below, where the feat's own answer is still in reach
+      pushSpellNote(n.spellId, rec!.name, n.note);
+    }
+  }
+  /*
+   * The answer-driven half of N2. `ownedRecords` is a flat list of RECORDS, so by the loop above the
+   * feat's own `choice` answer is gone — and Eidolon's Wrath's whole clause is that answer ("You
+   * determine the damage type when you gain the feat"). Walking `feats` again is the cheap way to keep
+   * both halves in one registry instead of inventing a parallel one.
+   *
+   * Unanswered = no note, deliberately: see SpellNote.fromChoice.
+   */
+  for (const fc of feats) {
+    const rec = content.feats[fc.featId];
+    const answer = fc.choice?.label ?? fc.choice?.value;
+    if (!rec || !answer) continue;
+    for (const n of rec.spellNotes ?? []) {
+      if (!n.fromChoice) continue;
+      // A /g regex, not `replace('{choice}', …)`: a clause may name the answer more than once ("the
+      // type you chose is X, so this spell deals X damage"), and a string pattern substitutes only the
+      // first. (`replaceAll` would say it better but is above this project's TS lib target.)
+      pushSpellNote(n.spellId, rec.name, n.note.replace(/\{choice\}/g, answer.toLowerCase()));
     }
   }
 

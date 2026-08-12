@@ -9,6 +9,26 @@ const REPO = 'guybirinbom-hub/Heroes-Heaven';
 export const RELEASES_PAGE = `https://github.com/${REPO}/releases/latest`;
 const LATEST_API = `https://api.github.com/repos/${REPO}/releases/latest`;
 
+/* GitHub serves the newest release's asset under a stable path, so these never need updating with the
+ * version. Naming must match what the release workflow uploads (see the hh-release-* folders). */
+const ANDROID_ASSET = 'Heroes-Heaven-Android.apk';
+const WINDOWS_ASSET = 'Heroes-Heaven-Setup.exe';
+const assetUrl = (name: string) => `https://github.com/${REPO}/releases/latest/download/${name}`;
+
+/**
+ * Where "Get the update" should actually send you.
+ *
+ * The releases PAGE was the wrong destination on a phone: it opens, you tap the .apk on it, and
+ * nothing happens — the page is being shown by a WebView, and a WebView does not download files. The
+ * fix is to skip the page and hand the OS the asset URL directly, so Android's download manager takes
+ * it. Desktop gets the installer for the same reason (one tap instead of three). Anywhere else — the
+ * browser build, or an unknown platform whose asset we can't name — keeps the releases page.
+ */
+export function updateDownloadUrl(opts: { isTauri: boolean; isMobile: boolean }): string {
+  if (!opts.isTauri) return RELEASES_PAGE;
+  return assetUrl(opts.isMobile ? ANDROID_ASSET : WINDOWS_ASSET);
+}
+
 /** 'v1.2.3' or '1.2.3' → [1, 2, 3]; null when it isn't a plain x.y.z semver. */
 export function parseVersion(tag: string): [number, number, number] | null {
   const m = /^v?(\d+)\.(\d+)\.(\d+)$/.exec(tag.trim());

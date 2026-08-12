@@ -34,16 +34,45 @@
    reading width, and is user-RESIZABLE by dragging the bottom-right corner (long rules pages often want
    more room). Mobile keeps one consistent width (see the phone override below). */
 .ast-modal {
+  /* The corner grip below is position:absolute. Without a positioned ancestor here it resolved against
+     the fixed .picker-overlay and painted in the SCREEN's bottom-right corner instead of the popup's. */
+  position: relative;
   width: fit-content;
-  min-width: min(340px, 94vw);
-  max-width: min(760px, 94vw);
-  max-height: 88dvh;
-  overflow: auto;
+  /* Viewport units inside the html{zoom}-scaled page render multiplied by the zoom factor, so every
+     vw/dvh cap divides by var(--zoom) to mean "fraction of the REAL viewport" (see sheet.css). The
+     -40px covers the overlay's 20px padding so a tall popup fits between it rather than overflowing. */
+  min-width: min(340px, calc(94vw / var(--zoom, 1)));
+  /* The reading cap applies only while the popup auto-sizes to its content. Grabbing the corner lifts
+     it to the viewport cap (--ast-cap, set by DescriptionModal) — otherwise `resize: both` wrote an
+     inline width that max-width immediately clamped back, and the popup could not be made wider. */
+  max-width: var(--ast-cap, min(760px, calc(94vw / var(--zoom, 1))));
+  max-height: calc(88dvh / var(--zoom, 1) - 40px);
+  /* The BODY scrolls, not the whole popup: the name + Back/star/close stay reachable on a long rules
+     page, and the corner grip (an absolutely-positioned pseudo-element) no longer scrolls away with
+     the text. */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   resize: both;
   box-shadow: var(--app-shadow, 0 12px 30px rgba(0, 0, 0, .3));
   border-radius: var(--app-radius, 10px);
 }
-/* Draw a subtle resize grip in the corner (the native one is hidden) so it's clear the popup can grow. */
+.ast-modal > .ast-pop {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ast-modal .ast-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  /* Reaching the end of this popup's scroll must not carry on into the page behind it. */
+  overscroll-behavior: contain;
+}
+/* Draw a subtle resize grip in the corner (the native one is hidden) so it's clear the popup can grow.
+   Lines only, no filled square behind them — a backdrop there paints over whatever sits in the corner
+   (see the matching note on .picker in sheet.css). */
 .ast-modal::-webkit-resizer { display: none; }
 .ast-modal::after {
   content: ''; position: absolute; right: 3px; bottom: 3px; width: 13px; height: 13px;
@@ -51,7 +80,9 @@
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cg fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round'%3E%3Cline x1='12' y1='5' x2='5' y2='12'/%3E%3Cline x1='12' y1='9' x2='9' y2='12'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cg fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round'%3E%3Cline x1='12' y1='5' x2='5' y2='12'/%3E%3Cline x1='12' y1='9' x2='9' y2='12'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
 }
-.ast-modal .ast-pop { border: none; min-height: 100%; }
+/* (sizing lives in the `.ast-modal > .ast-pop` flex rule above — a `min-height: 100%` here would
+   re-inflate the flex item and stop the body from shrinking into its own scroll) */
+.ast-modal .ast-pop { border: none; }
 /* HH's Back/pin/close controls sit inline in the ast header */
 .ast-controls .info-back, .ast-controls .info-star, .ast-controls .picker-close { position: static; }
 
@@ -73,7 +104,13 @@
 .ast-body { padding: 12px 15px 15px; font-size: 14px; line-height: 1.62; color: var(--app-text); }
 /* Phone: keep ONE consistent popup width (the user relies on that) and drop the desktop resize grip. */
 @media (max-width: 720px) {
-  .ast-modal { width: min(460px, 94vw); min-width: 0; max-width: 94vw; resize: none; }
+  .ast-modal {
+    width: min(460px, calc(94vw / var(--zoom, 1)));
+    min-width: 0;
+    max-width: calc(94vw / var(--zoom, 1));
+    max-height: calc(90dvh / var(--zoom, 1));
+    resize: none;
+  }
   .ast-modal::after { display: none; }
 }
 .ast-body p { margin: 0 0 .6em; }

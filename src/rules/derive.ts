@@ -18,6 +18,7 @@ import type {
   ArmorItem,
   ArmorRunes,
   Character,
+  ChoiceOptionLimit,
   ClassFeature,
   ContentDatabase,
   DefenseGrants,
@@ -31,6 +32,7 @@ import type {
   Heritage,
   RuneDef,
   SenseEntry,
+  SkillRankGate,
   StanceStrike,
   SubclassOption,
   ItemDesignation,
@@ -1045,6 +1047,102 @@ export function effectiveChoiceOptions(
 }
 
 /**
+ * Every `ChoiceOptionLimit` the character is under that applies to this choice.
+ *
+ * The mirror of the widening walk above, with the BACKGROUND added as a source — the three records
+ * ruling Q9 names are all backgrounds, and a background is not in `DefenseGrants`' sweep because it
+ * is not a `DefenseGrants` at all.
+ *
+ * Several limits INTERSECT rather than union: each is an independent restriction, so a value must
+ * survive every one of them. Union would let a second narrowing hand back what the first took away.
+ */
+export function effectiveChoiceLimits(
+  recordId: string,
+  def: FeatChoiceDef,
+  c: Character,
+  db: ContentDatabase,
+): ChoiceOptionLimit[] {
+  const out: ChoiceOptionLimit[] = [];
+  const consider = (limits: ChoiceOptionLimit[] | undefined) => {
+    for (const l of limits ?? []) {
+      if (l.target !== recordId) continue;
+      if (l.flag && l.flag !== def.flag) continue;
+      out.push(l);
+    }
+  };
+  const bg = c.backgroundId ? db.backgrounds[c.backgroundId] : undefined;
+  consider(bg?.choiceOptionLimits);
+  for (const f of c.feats ?? []) consider(db.feats[f.featId]?.choiceOptionLimits);
+  for (const fid of ownedFeatureIds(c, db)) consider(db.classFeatures[fid]?.choiceOptionLimits);
+  for (const h of heritageRecords(c, db)) consider(h.choiceOptionLimits);
+  return out;
+}
+
+/** One option as a picker should render it. `disabled` is BOTH the flag and the reason — an option
+ *  greyed with no sentence is the half-fix ruling Q27 was written against. */
+export interface NarrowedOption {
+  value: string;
+  label: string;
+  description?: string;
+  /** Present ⇒ show it, grey it, and print this. Absent ⇒ a live option. */
+  disabled?: string;
+}
+
+/**
+ * Ruling Q9's filtering lane: the options a picker may actually show, with the untakeable ones marked.
+ *
+ * Three rulings meet here and they pull in different directions, so the split is written out rather
+ * than left to be re-derived:
+ *
+ *   - **Q9** — an option the player may not LEGALLY pick is removed (an armour modification on a
+ *     weapon inventor; a terrain whose Lore you do not hold).
+ *   - **Q21** — removal is only for a grant wasted across the WHOLE career. Canny Acumen keeps
+ *     offering a save you are already expert in because level 17 upgrades it to master, so nothing
+ *     here filters on "redundant right now".
+ *   - **Q27** — an option that is legal but cannot be taken (you already own it) stays VISIBLE,
+ *     greyed, and says why. Hiding it reads as missing content.
+ *
+ * A choice declaring none of the new fields comes back exactly as it went in, which is what keeps
+ * this safe to put in the one funnel every picker uses.
+ */
+export function narrowChoiceOptions(
+  recordId: string,
+  def: FeatChoiceDef,
+  options: NonNullable<FeatChoiceDef['options']>,
+  c: Character,
+  db: ContentDatabase,
+): NarrowedOption[] {
+  const limits = effectiveChoiceLimits(recordId, def, c, db);
+  // Resolved once: `ownedFeatureIds` walks the class table, the subclass, every class choice and the
+  // inventor's modifications, and a picker calls this per render.
+  const owned = def.disableIfOwned || options.some((o) => o.requiresAnyFeature?.length) ? ownedFeatureIds(c, db) : null;
+  const out: NarrowedOption[] = [];
+  for (const o of options) {
+    // A per-option gate on the record's OWN list. `requiresSkillRank` has existed since Haunting
+    // Memories but was read only on the daily-preparations path, so the same field on a BUILD-time
+    // choice was inert — this is the first place it applies to both.
+    if (!qualifiesForOption(c, o.requiresSkillRank)) continue;
+    if (o.requiresAnyFeature?.length && !o.requiresAnyFeature.some((id) => owned!.has(id))) continue;
+    if (limits.length) {
+      // Intersection: the value has to be allowed by EVERY limit in force, and by an entry whose own
+      // condition currently holds.
+      const allowedByAll = limits.every((l) =>
+        l.allow.some((a) => a.value === o.value && qualifiesForOption(c, a.requiresSkillRank)),
+      );
+      if (!allowedByAll) continue;
+    }
+    const already = def.disableIfOwned && owned!.has(o.value);
+    out.push({
+      value: o.value,
+      label: o.label,
+      ...(o.description ? { description: o.description } : {}),
+      ...(already ? { disabled: `Already taken — ${db.classFeatures[o.value]?.name ?? o.label}.` } : {}),
+    });
+  }
+  return out;
+}
+
+/**
  * What THIS MORNING's answers grant.
  *
  * Until now a daily choice was recorded and nothing more: the Rest sheet collected the answer and no
@@ -1057,10 +1155,7 @@ export function effectiveChoiceOptions(
 const RANK_ORDER = ['untrained', 'trained', 'expert', 'master', 'legendary'] as const;
 
 /** Whether a character meets an option's skill-rank gate. No gate ⇒ always offered. */
-export function qualifiesForOption(
-  c: Character,
-  gate: { skill: ProficiencyKey; min?: ProficiencyRank; max?: ProficiencyRank } | undefined,
-): boolean {
+export function qualifiesForOption(c: Character, gate: SkillRankGate | undefined): boolean {
   if (!gate) return true;
   const at = RANK_ORDER.indexOf((c.proficiencies.skills[gate.skill] ?? 'untrained') as (typeof RANK_ORDER)[number]);
   if (gate.min && at < RANK_ORDER.indexOf(gate.min)) return false;
@@ -2232,23 +2327,6 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
   for (const id of Object.values(c.inventor?.modifications ?? {})) {
     if (typeof id === 'string' && db.classFeatures[id]) out.add(id);
   }
-  // "You gain the Sneak Attack class feature." A record handing over a CLASS FEATURE rather than a
-  // feat — the archetype route into another class's signature ability. `grantsFeats` could not say it
-  // (the target is not a feat) and nothing else wrote in here, so 14 records said this and delivered
-  // none of it. Resolved LAST, over everything owned so far, so a granted feature can itself grant
-  // one; the seen-set stops a cycle.
-  for (let pass = 0; pass < 4; pass++) {
-    const before = out.size;
-    const sources: (DefenseGrants | undefined)[] = [
-      ...(c.feats ?? []).map((f) => db.feats[f.featId]),
-      ...[...out].map((id) => db.classFeatures[id]),
-      ...heritageRecords(c, db),
-    ];
-    for (const src of sources) {
-      for (const id of src?.grantsClassFeatures ?? []) if (db.classFeatures[id]) out.add(id);
-    }
-    if (out.size === before) break;
-  }
   // The chosen MYTHIC CALLING is a classFeatures record, but build.ts only pushes it to
   // `grantedFeatures`, which is a display list nothing derives from. So the calling was picked, shown
   // in the builder, and then ignored by everything that reads owned features — its own fields, its
@@ -2267,6 +2345,29 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
     // reachable by nothing at all.
     const opt = klass?.subclass?.options.find((o) => o.id === subId);
     for (const id of subclassFeatureIds(opt?.featureIds, c.level)) if (db.classFeatures[id]) out.add(id);
+  }
+  // "You gain the Sneak Attack class feature." A record handing over a CLASS FEATURE rather than a
+  // feat — the archetype route into another class's signature ability. `grantsFeats` could not say it
+  // (the target is not a feat) and nothing else wrote in here, so 14 records said this and delivered
+  // none of it. Resolved LAST, over everything owned so far, so a granted feature can itself grant
+  // one; the seen-set stops a cycle.
+  //
+  // ⚠ It has to be the LAST block in the function, not merely late. It used to sit ABOVE the chosen
+  // mythic calling, the chosen subclass and the `ownsFeature` choice answers, so a feature reached by
+  // any of those three granted nothing of its own: Exemplar Dedication's chosen ikon carries
+  // `grantsClassFeatures: [<its transcendence action>]`, and the action the feat exists to give you
+  // was owned by nobody.
+  for (let pass = 0; pass < 4; pass++) {
+    const before = out.size;
+    const sources: (DefenseGrants | undefined)[] = [
+      ...(c.feats ?? []).map((f) => db.feats[f.featId]),
+      ...[...out].map((id) => db.classFeatures[id]),
+      ...heritageRecords(c, db),
+    ];
+    for (const src of sources) {
+      for (const id of src?.grantsClassFeatures ?? []) if (db.classFeatures[id]) out.add(id);
+    }
+    if (out.size === before) break;
   }
   return out;
 }

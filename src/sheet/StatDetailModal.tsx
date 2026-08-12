@@ -2,7 +2,8 @@ import { useState, type ReactNode } from 'react';
 import type { ActionCost, Character, ContentDatabase } from '../rules/types';
 import { formatMod } from '../rules/derive';
 import { RANK_LABEL, nameOfRecord, recordMarkersFor, type StatBreakdown } from '../rules/explain';
-import { skillActionsFor } from '../rules/skillActions';
+import { skillActionsFor, type SkillAction } from '../rules/skillActions';
+import { DescriptionModal } from './DescriptionModal';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { useEscapeClose } from './useEscapeClose';
 import { DescBody } from './DescBody';
@@ -50,6 +51,8 @@ export function StatDetailModal({
   useEscapeClose(onClose);
   // Ruling H: the star note is capped at one line, and this holds the full text it was trimmed from.
   const [fullText, setFullText] = useState<{ name: string; html: string; id?: string; bucket?: string } | null>(null);
+  /** The skill action whose rules page is open on top of this modal. */
+  const [actionRead, setActionRead] = useState<SkillAction | null>(null);
   const b = breakdown;
   const featNames = new Set(character.feats.map((f) => content.feats[f.featId]?.name).filter(Boolean) as string[]);
   const actions = b.skill && b.rank ? skillActionsFor(b.skill, b.rank, (n) => featNames.has(n)) : [];
@@ -168,48 +171,36 @@ export function StatDetailModal({
               {actions.length === 0 ? (
                 <p className="sd-desc">No special actions unlocked yet at this proficiency.</p>
               ) : (
+                // Rows, not accordions. Each one opens the action's own rules page — the same popup
+                // every other action in the app opens — instead of unfolding a paragraph in place,
+                // which made the list jump around and still showed less than the real page does.
                 <div className="sd-actions">
                   {actions.map((a, i) => (
-                    <details className="sd-action" key={a.name + i} open={i === 0}>
-                      <summary>
-                        <span className="sd-act-chev">
-                          <i className="ti ti-chevron-right" aria-hidden="true" />
-                        </span>
-                        <span className="sd-act-name">{a.name}</span>
-                        {/* Ruling D: "Magic Hands show the d10 in () in the treat wounds action, with a *
-                            linking to the feat". A skill action renders HERE, not in the activity list,
-                            so this is where its marker has to be. */}
-                        {(() => {
-                          const marks = recordMarkersFor(character, content, 'action', actionSlug(a.name));
-                          if (!marks.length) return null;
-                          const val = marks.find((m) => m.value)?.value;
-                          return (
-                            <span className="action-mark" title={marks.map((m) => `${nameOfRecord(content, m.sourceId)}: ${m.note}`).join('\n')}>
-                              {val && <span className="action-mark-val">({val})</span>}
-                              <SituationalStar />
-                            </span>
-                          );
-                        })()}
-                        {(() => {
-                          const cost = parseActionCost(a.costText);
-                          if (cost) return <span className="sd-act-cost"><ActionGlyph cost={cost} /></span>;
-                          return a.costText ? <span className="sd-act-cost">{a.costText}</span> : null;
-                        })()}
-                        {a.feat && <span className="sd-act-feat">feat</span>}
-                      </summary>
-                      <div className="sd-act-body">
-                        <p>{a.desc}</p>
-                        {a.tiers && a.tiers.length > 0 && (
-                          <ul className="sd-tiers">
-                            {a.tiers.map((t, j) => (
-                              <li key={j}>
-                                <strong>{RANK_LABEL[t.rank]}:</strong> {t.note}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    </details>
+                    <button type="button" className="sd-action" key={a.name + i} title={`Read ${a.name}`} onClick={() => setActionRead(a)}>
+                      <span className="sd-act-name">{a.name}</span>
+                      {/* Ruling D: "Magic Hands show the d10 in () in the treat wounds action, with a *
+                          linking to the feat". A skill action renders HERE, not in the activity list,
+                          so this is where its marker has to be. */}
+                      {(() => {
+                        const marks = recordMarkersFor(character, content, 'action', actionSlug(a.name));
+                        if (!marks.length) return null;
+                        const val = marks.find((m) => m.value)?.value;
+                        return (
+                          <span className="action-mark" title={marks.map((m) => `${nameOfRecord(content, m.sourceId)}: ${m.note}`).join('\n')}>
+                            {val && <span className="action-mark-val">({val})</span>}
+                            <SituationalStar />
+                          </span>
+                        );
+                      })()}
+                      {(() => {
+                        const cost = parseActionCost(a.costText);
+                        // The glyph IS the notation — a box around it just adds a second border to read.
+                        if (cost) return <span className="sd-act-cost"><ActionGlyph cost={cost} /></span>;
+                        return a.costText ? <span className="sd-act-cost sd-act-cost-text">{a.costText}</span> : null;
+                      })()}
+                      {a.feat && <span className="sd-act-feat">feat</span>}
+                      <i className="ti ti-chevron-right sd-act-go" aria-hidden="true" />
+                    </button>
                   ))}
                 </div>
               )}
@@ -234,6 +225,21 @@ export function StatDetailModal({
             </div>
           </div>
         </div>
+      )}
+
+      {/* A skill action's own page. `actions` is the shipped rules bucket keyed by the action's slug, so
+          this is the full printed entry; the curated `desc` (and any proficiency tiers) is the fallback
+          for the handful with no page of their own. */}
+      {actionRead && (
+        <DescriptionModal
+          root={{
+            title: actionRead.name,
+            description: [actionRead.desc, ...(actionRead.tiers ?? []).map((t) => `**${RANK_LABEL[t.rank]}:** ${t.note}`)].join('\n\n'),
+            key: 'actions',
+            slug: actionSlug(actionRead.featName ?? actionRead.name),
+          }}
+          onClose={() => setActionRead(null)}
+        />
       )}
     </div>
   );

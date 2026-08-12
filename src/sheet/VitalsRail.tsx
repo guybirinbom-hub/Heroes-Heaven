@@ -23,7 +23,7 @@ import {
   applyDamage,
   applyHeal,
   removeCondition,
-  setConditionValue,
+  stepConditionValue,
   setHeroPoints,
   setMythicPoints,
   setHp,
@@ -38,7 +38,7 @@ import {
   type PlayUpdater,
 } from '../rules/play';
 import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
-import { CATALOG_MODES, modeTargetLabel, playerModeLibrary } from '../rules/modes';
+import { CATALOG_MODES, playerModeLibrary } from '../rules/modes';
 import { resourcesForCharacter, resourceMaxFor } from '../rules/classResources';
 import { explainDefense, nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatBreakdown, type StatRef } from '../rules/explain';
 import { StatDetailModal } from './StatDetailModal';
@@ -46,6 +46,7 @@ import { ConditionsModal } from './ConditionsModal';
 import { ItemDetail } from './ItemDetail';
 import { ItemEditorModal } from './ItemEditorModal';
 import { InfoTerm } from './InfoTerm';
+import { ModeDetailModal } from './ModeDetailModal';
 import { MythicRules, mythicDestinies } from './MythicRules';
 import { senseDesc, languageDesc } from '../rules/glossary';
 import { RankPill, SituationalStar } from './widgets';
@@ -624,6 +625,13 @@ export function VitalsRail({
             {statHasSituational(character, { kind: 'perception' }, content) && <SituationalStar />}
           </span>
           <span className="stat-short">Perc</span>
+          {/* Perception has a DC too — it's what a Sneaking or Hiding creature rolls against, and it
+              was the one number on this card the setting didn't cover. */}
+          {showSaveDCs && (
+            <span className="stat-dc" title="Perception DC">
+              DC {10 + perception.modifier}
+            </span>
+          )}
           <span className="stat-mod">{formatMod(perception.modifier)}</span>
         </div>
         {/* Initiative is its own line now. It was rolled with Perception and shown nowhere, so a
@@ -1041,11 +1049,11 @@ export function VitalsRail({
                 )}
                 {valued && onPlay ? (
                   <span className="cond-pill-step">
-                    <button aria-label="Decrease" onClick={() => onPlay((p) => setConditionValue(p, c.id, (c.value ?? 1) - 1), `cond:${c.id}`)}>
+                    <button aria-label="Decrease" onClick={() => onPlay((p) => stepConditionValue(p, c.id, -1), `cond:${c.id}`)}>
                       −
                     </button>
                     {c.value ?? 1}
-                    <button aria-label="Increase" onClick={() => onPlay((p) => setConditionValue(p, c.id, (c.value ?? 1) + 1), `cond:${c.id}`)}>
+                    <button aria-label="Increase" onClick={() => onPlay((p) => stepConditionValue(p, c.id, 1), `cond:${c.id}`)}>
                       +
                     </button>
                   </span>
@@ -1155,34 +1163,7 @@ export function VitalsRail({
 
       {/* A mode's detail: what it does, how long it lasts, and every stat it touches. For a
           display-only mode the note IS the mode, so this is the only place it can be read. */}
-      {modeInfo && (
-        <div className="picker-overlay" onClick={() => setModeInfo(null)}>
-          <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="picker-head">
-              <span>{modeInfo.name}</span>
-              <button className="picker-close" onClick={() => setModeInfo(null)} aria-label="Close">
-                <i className="ti ti-x" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="confirm-body">
-              {modeInfo.duration && <p className="mode-info-dur">Lasts {modeInfo.duration}.</p>}
-              {modeInfo.note && <p>{modeInfo.note}</p>}
-              {modeInfo.modifiers.length > 0 ? (
-                <ul className="mode-info-mods">
-                  {modeInfo.modifiers.map((mod, i) => (
-                    <li key={i}>
-                      <strong>{formatMod(mod.value)}</strong> {mod.type} to {modeTargetLabel(mod)}
-                      {mod.appliesWhen && <span className="mode-info-when"> — {mod.appliesWhen}</span>}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                !modeInfo.note && <p>Nothing on the sheet changes — this is here so you can see it is running.</p>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {modeInfo && <ModeDetailModal mode={modeInfo} onClose={() => setModeInfo(null)} />}
       {defBreak && (
         <StatDetailModal breakdown={defBreak} character={character} content={content} onClose={() => setDefBreak(null)} />
       )}
@@ -1197,7 +1178,7 @@ export function VitalsRail({
           active={character.conditions}
           onAdd={(id, valued) => onPlay((p) => addCondition(p, id, valued ? 1 : undefined))}
           onRemove={(id) => onPlay((p) => removeCondition(p, id))}
-          onSetValue={(id, value) => onPlay((p) => setConditionValue(p, id, value), `cond:${id}`)}
+          onStepValue={(id, delta) => onPlay((p) => stepConditionValue(p, id, delta), `cond:${id}`)}
           onClose={() => setCondOpen(false)}
           modesEnabled
           library={playerModeLibrary(Object.values(content.modes), charKey)}
@@ -1212,6 +1193,8 @@ export function VitalsRail({
           featIds={new Set([...character.feats.map((f) => f.featId), ...ownedFeatureIds(character, content)])}
           charKey={charKey}
           charName={character.name}
+          // This character's own Lore subjects, so a custom mode can point at one by name.
+          lores={Object.keys(character.proficiencies.skills).filter((k) => k.startsWith('lore:'))}
           activeModeIds={(character.activeModes ?? []).map((m) => m.id)}
           onToggleMode={(id) => onPlay((p) => toggleMode(p, id, content.modes))}
           onSaveMode={onSaveMode}

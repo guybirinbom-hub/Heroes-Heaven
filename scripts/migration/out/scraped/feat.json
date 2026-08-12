@@ -1,0 +1,374 @@
+[
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "feat-9411",
+  "_score": 35.014893,
+  "_source": {
+   "category": "feat",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "feat": [
+    "Avenger of Envy"
+   ],
+   "feat_markdown": "Avenger of Envy",
+   "id": "feat-9411",
+   "level": 14,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Feat 14\"\n    pfs=\"\"\n>\n[Avenger of Envy](/Feats.aspx?ID=9411) <actions string=\"\" />\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n</column>\n\n---\n\nYou've become the champion of the runelords of envy. Their support gives you a heightened awareness of your own failings, but you can call their spirits to your side to protect you from harm. The first time each day you critically fail a skill check or saving throw, you gain 1 Mythic Point. You gain the Aegis of Envy activity.\n\n**Activate—Aegis of Envy** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. The spirits of eight runelords of envy (Naaft, Tannaris, Ivamura, Jurah, Chalsardra, Esedrea, Zarve, Desamelia, and Phirandi) swirl about you for 1 minute. While at least one of the spirits remains, whenever you take damage, you can use a reaction that has the [concentrate](/Traits.aspx?ID=561) trait to gain resistance 10 to that damage, or resistance 20 if the damage was dealt by Xanderghul, the runelord of pride. Each time you use this feat to gain resistance, one of the spirits disappears.\n\n<title level=\"2\">Vengeance Feats</title>\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\nDuring Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny.\n\n**Related Feats**: [Avenger of Gluttony](/Feats.aspx?ID=9412), [Avenger of Greed](/Feats.aspx?ID=9413), [Avenger of Lust](/Feats.aspx?ID=9414), [Avenger of Sloth](/Feats.aspx?ID=9415), [Avenger of Wrath](/Feats.aspx?ID=9416)",
+   "name": "Avenger of Envy",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 84",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n</additional-info>\n\n---\n\n<summary>\nYou’ve become the champion of the runelords of envy.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 84"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "summary": "You’ve become the champion of the runelords of envy.",
+   "summary_markdown": "You’ve become the champion of the runelords of envy.",
+   "text": "<title level=\"1\" right=\"Feat 14\" pfs=\"\"\n>\nAvenger of Envy May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 84 --- You've become the champion of the runelords of envy. Their support gives you a heightened awareness of your own failings, but you can call their spirits to your side to protect you from harm. The first time each day you critically fail a skill check or saving throw, you gain 1 Mythic Point. You gain the Aegis of Envy activity. Activate—Aegis of Envy Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. The spirits of eight runelords of envy (Naaft, Tannaris, Ivamura, Jurah, Chalsardra, Esedrea, Zarve, Desamelia, and Phirandi) swirl about you for 1 minute. While at least one of the spirits remains, whenever you take damage, you can use a reaction that has the concentrate trait to gain resistance 10 to that damage, or resistance 20 if the damage was dealt by Xanderghul, the runelord of pride. Each time you use this feat to gain resistance, one of the spirits disappears. Vengeance Feats Source Pathfinder #220: Crypt of Runes pg. 84 During Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny. Related Feats : Avenger of Gluttony, Avenger of Greed, Avenger of Lust, Avenger of Sloth, Avenger of Wrath",
+   "trait": [
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Feat",
+   "url": "/Feats.aspx?ID=9411",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "feat-9412",
+  "_score": 35.014893,
+  "_source": {
+   "category": "feat",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "feat": [
+    "Avenger of Gluttony"
+   ],
+   "feat_markdown": "Avenger of Gluttony",
+   "id": "feat-9412",
+   "level": 14,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Feat 14\"\n    pfs=\"\"\n>\n[Avenger of Gluttony](/Feats.aspx?ID=9412) <actions string=\"\" />\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n</column>\n\n---\n\nYou've become the champion of the runelords of gluttony, and their hungry spirits are always near you. Whenever a spell or other magical effect restores Hit Points to you, you can choose to reduce the number of Hit Points you regain by any amount. The first time each day you reduce the Hit Points by an amount  equal to your level, you gain 1 Mythic Point. You gain the Gluttonous Feast activity.\n\n**Activate—Gluttonous Feast** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. The spirits of four runelords of gluttony (Kaliphesta, Atharend, Aethusa, and Goparlis) briefly appear in spaces within 60 feet of you. Each living creature adjacent to at least one of the spirits takes 4d6 void damage per adjacent spirit, to a maximum of 16d6 void damage if they are adjacent to all four spirits. Each target receives a basic Fortitude save against the damage, against the higher of your class DC or spell DC, but Xanderghul, the Runelord of Pride, treats the result of his saving throw as one degree of success worse.\n\n You gain temporary Hit Points equal to half the damage a single creature takes from this effect; calculate these temporary Hit Points using the creature that took the most damage. These temporary Hit Points last 1 minute.\n\n<title level=\"2\">Vengeance Feats</title>\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\nDuring Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny.\n\n**Related Feats**: [Avenger of Envy](/Feats.aspx?ID=9411), [Avenger of Greed](/Feats.aspx?ID=9413), [Avenger of Lust](/Feats.aspx?ID=9414), [Avenger of Sloth](/Feats.aspx?ID=9415), [Avenger of Wrath](/Feats.aspx?ID=9416)",
+   "name": "Avenger of Gluttony",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 84",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n</additional-info>\n\n---\n\n<summary>\nYou’ve become the champion of the runelords of gluttony.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 84"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "summary": "You’ve become the champion of the runelords of gluttony.",
+   "summary_markdown": "You’ve become the champion of the runelords of gluttony.",
+   "text": "<title level=\"1\" right=\"Feat 14\" pfs=\"\"\n>\nAvenger of Gluttony May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 84 --- You've become the champion of the runelords of gluttony, and their hungry spirits are always near you. Whenever a spell or other magical effect restores Hit Points to you, you can choose to reduce the number of Hit Points you regain by any amount. The first time each day you reduce the Hit Points by an amount equal to your level, you gain 1 Mythic Point. You gain the Gluttonous Feast activity. Activate—Gluttonous Feast Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. The spirits of four runelords of gluttony (Kaliphesta, Atharend, Aethusa, and Goparlis) briefly appear in spaces within 60 feet of you. Each living creature adjacent to at least one of the spirits takes 4d6 void damage per adjacent spirit, to a maximum of 16d6 void damage if they are adjacent to all four spirits. Each target receives a basic Fortitude save against the damage, against the higher of your class DC or spell DC, but Xanderghul, the Runelord of Pride, treats the result of his saving throw as one degree of success worse. You gain temporary Hit Points equal to half the damage a single creature takes from this effect; calculate these temporary Hit Points using the creature that took the most damage. These temporary Hit Points last 1 minute. Vengeance Feats Source Pathfinder #220: Crypt of Runes pg. 84 During Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny. Related Feats : Avenger of Envy, Avenger of Greed, Avenger of Lust, Avenger of Sloth, Avenger of Wrath",
+   "trait": [
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Feat",
+   "url": "/Feats.aspx?ID=9412",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "feat-9413",
+  "_score": 35.014893,
+  "_source": {
+   "category": "feat",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "feat": [
+    "Avenger of Greed"
+   ],
+   "feat_markdown": "Avenger of Greed",
+   "id": "feat-9413",
+   "level": 14,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Feat 14\"\n    pfs=\"\"\n>\n[Avenger of Greed](/Feats.aspx?ID=9413) <actions string=\"\" />\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n</column>\n\n---\n\nYou've become a champion of the runelords of greed. Their whispers encourage you to prepare for disasters that might never come to pass. The first time each day you touch an object worth at least 2,000 gp that you've never touched before, you gain 1 Mythic Point. You gain the Convocation of Greed activity.\n\n**Activate—Convocation of Greed** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. The spirits of the eight runelords of greed (Kaladurnae, Fethryr, Gimmel, Ligniya, Mazmiranna, Aethusa, Haphrama, and Karzoug) appear and bolster the armaments of you and your companions. For each of the spirits, one creature of your choice within 60 feet gains a +2 item bonus to AC, attack rolls, or saving throws (chosen by the creature) for 1 minute. These bonuses increase to +4 while the creature is within 100 feet of Xanderghul, the Runelord of Pride. A creature can receive bonuses from multiple runelords at once (gaining bonuses to both AC and attack rolls, for example), but the bonuses aren't cumulative.\n\n<title level=\"2\">Vengeance Feats</title>\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\nDuring Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny.\n\n**Related Feats**: [Avenger of Envy](/Feats.aspx?ID=9411), [Avenger of Gluttony](/Feats.aspx?ID=9412), [Avenger of Lust](/Feats.aspx?ID=9414), [Avenger of Sloth](/Feats.aspx?ID=9415), [Avenger of Wrath](/Feats.aspx?ID=9416)",
+   "name": "Avenger of Greed",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 84",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\n</additional-info>\n\n---\n\n<summary>\nYou’ve become a champion of the runelords of greed.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 84"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "summary": "You’ve become a champion of the runelords of greed.",
+   "summary_markdown": "You’ve become a champion of the runelords of greed.",
+   "text": "<title level=\"1\" right=\"Feat 14\" pfs=\"\"\n>\nAvenger of Greed May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 84 --- You've become a champion of the runelords of greed. Their whispers encourage you to prepare for disasters that might never come to pass. The first time each day you touch an object worth at least 2,000 gp that you've never touched before, you gain 1 Mythic Point. You gain the Convocation of Greed activity. Activate—Convocation of Greed Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. The spirits of the eight runelords of greed (Kaladurnae, Fethryr, Gimmel, Ligniya, Mazmiranna, Aethusa, Haphrama, and Karzoug) appear and bolster the armaments of you and your companions. For each of the spirits, one creature of your choice within 60 feet gains a +2 item bonus to AC, attack rolls, or saving throws (chosen by the creature) for 1 minute. These bonuses increase to +4 while the creature is within 100 feet of Xanderghul, the Runelord of Pride. A creature can receive bonuses from multiple runelords at once (gaining bonuses to both AC and attack rolls, for example), but the bonuses aren't cumulative. Vengeance Feats Source Pathfinder #220: Crypt of Runes pg. 84 During Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny. Related Feats : Avenger of Envy, Avenger of Gluttony, Avenger of Lust, Avenger of Sloth, Avenger of Wrath",
+   "trait": [
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Feat",
+   "url": "/Feats.aspx?ID=9413",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "feat-9414",
+  "_score": 35.014893,
+  "_source": {
+   "category": "feat",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "feat": [
+    "Avenger of Lust"
+   ],
+   "feat_markdown": "Avenger of Lust",
+   "id": "feat-9414",
+   "level": 14,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Feat 14\"\n    pfs=\"\"\n>\n[Avenger of Lust](/Feats.aspx?ID=9414) <actions string=\"\" />\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n</column>\n\n---\n\nYou've become a favorite of Sorshen, the Runelord of Lust. She watches over you wherever you go, protecting you and your companions in times of need. The first time each day you either cast or are the target of a spell of 6th rank or higher that has the [emotion](/Traits.aspx?ID=590) or [healing](/Traits.aspx?ID=623) trait, you gain 1 Mythic Point. You gain the Sorshen's Devotion reaction.\n\n**Activate—Sorshen's Devotion** <actions string=\"Reaction\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561), [Healing](/Traits.aspx?ID=623));  **Frequency** once per day;   **Effect** You or an ally within 60 feet uses [Rewrite Fate](/Actions.aspx?ID=2983) to reroll a saving throw; Effect Spend 1 Mythic Point. The triggering creature regains 7d10+28 Hit Points. The amount of healing increases to 10d10+40 Hit Points if Xanderghul, the Runel\n\n<title level=\"2\">Vengeance Feats</title>\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\nDuring Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny.\n\n**Related Feats**: [Avenger of Envy](/Feats.aspx?ID=9411), [Avenger of Gluttony](/Feats.aspx?ID=9412), [Avenger of Greed](/Feats.aspx?ID=9413), [Avenger of Sloth](/Feats.aspx?ID=9415), [Avenger of Wrath](/Feats.aspx?ID=9416)",
+   "name": "Avenger of Lust",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 85",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n</additional-info>\n\n---\n\n<summary>\nYou’ve become a favorite of Sorshen, the Runelord of Lust.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 85"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "summary": "You’ve become a favorite of Sorshen, the Runelord of Lust.",
+   "summary_markdown": "You’ve become a favorite of Sorshen, the Runelord of Lust.",
+   "text": "<title level=\"1\" right=\"Feat 14\" pfs=\"\"\n>\nAvenger of Lust May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 85 --- You've become a favorite of Sorshen, the Runelord of Lust. She watches over you wherever you go, protecting you and your companions in times of need. The first time each day you either cast or are the target of a spell of 6th rank or higher that has the emotion or healing trait, you gain 1 Mythic Point. You gain the Sorshen's Devotion reaction. Activate—Sorshen's Devotion Reaction (Arcane, Concentrate, Healing); Frequency once per day; Effect You or an ally within 60 feet uses Rewrite Fate to reroll a saving throw; Effect Spend 1 Mythic Point. The triggering creature regains 7d10+28 Hit Points. The amount of healing increases to 10d10+40 Hit Points if Xanderghul, the Runel Vengeance Feats Source Pathfinder #220: Crypt of Runes pg. 84 During Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny. Related Feats : Avenger of Envy, Avenger of Gluttony, Avenger of Greed, Avenger of Sloth, Avenger of Wrath",
+   "trait": [
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Feat",
+   "url": "/Feats.aspx?ID=9414",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "feat-9415",
+  "_score": 35.014893,
+  "_source": {
+   "category": "feat",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "feat": [
+    "Avenger of Sloth"
+   ],
+   "feat_markdown": "Avenger of Sloth",
+   "id": "feat-9415",
+   "level": 14,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Feat 14\"\n    pfs=\"\"\n>\n[Avenger of Sloth](/Feats.aspx?ID=9415) <actions string=\"\" />\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n</column>\n\n---\n\nYou've become a champion of the runelords of sloth. They spur you toward idleness, and their spirits are slow to come to your aid. Once they arrive, however, their combined might is undeniable. The first time each day you spend 10 minutes resting, you gain 1 Mythic Point. During this time, you don't need to sleep, but you can't perform activities like [Refocus](/Actions.aspx?ID=2621) or [Treat Wounds](/Actions.aspx?ID=2399). You gain the Summon Sloth activity.\n\n**Activate—Summon Sloth** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. You summon the spirit of one of the seven runelords of sloth (Xirie, Ilthyrius, Azeradni, Zalelet, Krenlith, Ivarinna, or Krune) into an unoccupied space within 30 feet. Allies can move through a space occupied by one of these spirits, but a spirit's space is [greater difficult terrain](/Rules.aspx?ID=2366) for your enemies.\n\n For the next minute, you can use a two-action activity with the [concentrate](/Traits.aspx?ID=561) trait to summon another runelord spirit in a different space within 30 feet, to a maximum of seven spirits. While you are within 120 feet of Xanderghul, the Runelord of Pride, you can summon an additional spirit as a single action (instead of as a two-action activity). At the end of the each of your turns, each spirit fires arcane energy at a different enemy of your choice within 120 feet of it (or does nothing if no enemy is within range), dealing 2d4+2 force damage. After 1 minute, all spirits disappear.\n\n<title level=\"2\">Vengeance Feats</title>\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\nDuring Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny.\n\n**Related Feats**: [Avenger of Envy](/Feats.aspx?ID=9411), [Avenger of Gluttony](/Feats.aspx?ID=9412), [Avenger of Greed](/Feats.aspx?ID=9413), [Avenger of Lust](/Feats.aspx?ID=9414), [Avenger of Wrath](/Feats.aspx?ID=9416)",
+   "name": "Avenger of Sloth",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 85",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n</additional-info>\n\n---\n\n<summary>\nYou’ve become a champion of the runelords of sloth.\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 85"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "summary": "You’ve become a champion of the runelords of sloth.",
+   "summary_markdown": "You’ve become a champion of the runelords of sloth.",
+   "text": "<title level=\"1\" right=\"Feat 14\" pfs=\"\"\n>\nAvenger of Sloth May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 85 --- You've become a champion of the runelords of sloth. They spur you toward idleness, and their spirits are slow to come to your aid. Once they arrive, however, their combined might is undeniable. The first time each day you spend 10 minutes resting, you gain 1 Mythic Point. During this time, you don't need to sleep, but you can't perform activities like Refocus or Treat Wounds. You gain the Summon Sloth activity. Activate—Summon Sloth Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. You summon the spirit of one of the seven runelords of sloth (Xirie, Ilthyrius, Azeradni, Zalelet, Krenlith, Ivarinna, or Krune) into an unoccupied space within 30 feet. Allies can move through a space occupied by one of these spirits, but a spirit's space is greater difficult terrain for your enemies. For the next minute, you can use a two-action activity with the concentrate trait to summon another runelord spirit in a different space within 30 feet, to a maximum of seven spirits. While you are within 120 feet of Xanderghul, the Runelord of Pride, you can summon an additional spirit as a single action (instead of as a two-action activity). At the end of the each of your turns, each spirit fires arcane energy at a different enemy of your choice within 120 feet of it (or does nothing if no enemy is within range), dealing 2d4+2 force damage. After 1 minute, all spirits disappear. Vengeance Feats Source Pathfinder #220: Crypt of Runes pg. 84 During Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny. Related Feats : Avenger of Envy, Avenger of Gluttony, Avenger of Greed, Avenger of Lust, Avenger of Wrath",
+   "trait": [
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Feat",
+   "url": "/Feats.aspx?ID=9415",
+   "weakness": {}
+  }
+ },
+ {
+  "_index": "aon-20260802-141253",
+  "_id": "feat-9416",
+  "_score": 35.014893,
+  "_source": {
+   "category": "feat",
+   "exclude_from_search": false,
+   "is_standard_ancestry_feat": false,
+   "feat": [
+    "Avenger of Wrath"
+   ],
+   "feat_markdown": "Avenger of Wrath",
+   "id": "feat-9416",
+   "level": 14,
+   "markdown": "<title\n    level=\"1\"\n    right=\"Feat 14\"\n    pfs=\"\"\n>\n[Avenger of Wrath](/Feats.aspx?ID=9416) <actions string=\"\" />\n</title>\n\n<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n</column>\n\n---\n\nYou've become a champion of the runelords of wrath. You gain the Reactive Strike reaction. The first time each day you score a critical hit with a Reactive Strike, you gain 1 Mythic Point. You gain the Host of Wrath activity.\n\n**Activate—Host of Wrath** <actions string=\"Two Actions\" /> ([Arcane](/Traits.aspx?ID=534), [Concentrate](/Traits.aspx?ID=561));  **Frequency** once per day;   **Effect** Spend 1 Mythic Point. The spirits of four runelords of wrath (Angothane, Xiren, Thybidos, and Alaznist) swirl around you for 1 minute. While the spirits remain, whenever you hit or critically hit with a Reactive Strike, the target takes an additional 5 spirit damage, or 10 spirit damage if the target of your Reactive Strike is Xanderghul, the Runelord of Pride.\n\n<title level=\"2\">Vengeance Feats</title>\n\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 84\n\nDuring Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny.\n\n**Related Feats**: [Avenger of Envy](/Feats.aspx?ID=9411), [Avenger of Gluttony](/Feats.aspx?ID=9412), [Avenger of Greed](/Feats.aspx?ID=9413), [Avenger of Lust](/Feats.aspx?ID=9414), [Avenger of Sloth](/Feats.aspx?ID=9415)",
+   "name": "Avenger of Wrath",
+   "primary_source": "Pathfinder #220: Crypt of Runes",
+   "primary_source_raw": "Pathfinder #220: Crypt of Runes pg. 85",
+   "primary_source_category": "Adventure Paths",
+   "primary_source_group": "Revenge of the Runelords",
+   "rarity": "rare",
+   "rarity_id": 3,
+   "release_date": "2025-11-05",
+   "resistance": {},
+   "search_markdown": "<spoilers>May contain spoilers from Revenge of the Runelords</spoilers>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Mythic\" url=\"/Traits.aspx?ID=835\" />\n</traits>\n\n<additional-info>\n**Source** [Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85\n\n</additional-info>\n\n---\n\n<summary>\nYou’ve become a champion of the runelords of wrath\n</summary>",
+   "skill_mod": {},
+   "source": [
+    "Pathfinder #220: Crypt of Runes"
+   ],
+   "source_raw": [
+    "Pathfinder #220: Crypt of Runes pg. 85"
+   ],
+   "source_category": [
+    "Adventure Paths"
+   ],
+   "source_group": [
+    "Revenge of the Runelords"
+   ],
+   "source_markdown": "[Pathfinder #220: Crypt of Runes](/Sources.aspx?ID=284) pg. 85",
+   "speed": {},
+   "spoilers": "Revenge of the Runelords",
+   "summary": "You’ve become a champion of the runelords of wrath",
+   "summary_markdown": "You’ve become a champion of the runelords of wrath",
+   "text": "<title level=\"1\" right=\"Feat 14\" pfs=\"\"\n>\nAvenger of Wrath May contain spoilers from Revenge of the Runelords Source Pathfinder #220: Crypt of Runes pg. 85 --- You've become a champion of the runelords of wrath. You gain the Reactive Strike reaction. The first time each day you score a critical hit with a Reactive Strike, you gain 1 Mythic Point. You gain the Host of Wrath activity. Activate—Host of Wrath Two Actions (Arcane, Concentrate); Frequency once per day; Effect Spend 1 Mythic Point. The spirits of four runelords of wrath (Angothane, Xiren, Thybidos, and Alaznist) swirl around you for 1 minute. While the spirits remain, whenever you hit or critically hit with a Reactive Strike, the target takes an additional 5 spirit damage, or 10 spirit damage if the target of your Reactive Strike is Xanderghul, the Runelord of Pride. Vengeance Feats Source Pathfinder #220: Crypt of Runes pg. 84 During Chapter 2 of this adventure, the PCs can take on the vengeful mantle of a specific runelord's vengeance and embody that need to avenge the violations Runelord Xanderghul has inflicted upon their legacies by creating risen runelords. These rewards manifest in the form of a bonus feat, chosen from the following. A PC can only select one vengeance feat. If you wish to use these feats in the context of another campaign, a mythic PC should be required to use one of their mythic feat slots granted from their mythic destiny. Related Feats : Avenger of Envy, Avenger of Gluttony, Avenger of Greed, Avenger of Lust, Avenger of Sloth",
+   "trait": [
+    "Mythic",
+    "Rare"
+   ],
+   "trait_group": [
+    "Mythic",
+    "Rarity"
+   ],
+   "trait_markdown": "[Mythic](/Traits.aspx?ID=835), [Rare](/Traits.aspx?ID=683)",
+   "trait_raw": [
+    "Mythic",
+    "Rare"
+   ],
+   "type": "Feat",
+   "url": "/Feats.aspx?ID=9416",
+   "weakness": {}
+  }
+ }
+]

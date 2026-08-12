@@ -5,6 +5,8 @@ import { subclassFeatureIds } from '../rules/derive';
 import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, type FeatEntry } from './FeatDetail';
 import { toPlainText } from './RichText';
+import { InfoTerm } from './InfoTerm';
+import { traitDesc, traitLabel } from '../rules/glossary';
 import { featUse, usesLabel, spendFeatUse, refundFeatUse, resetEncounterUses, isSubDaily } from '../rules/featUses';
 import type { PlayUpdater } from '../rules/play';
 
@@ -378,10 +380,14 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                       {e.isFeature && <span className="ff-tag">Feature</span>}
                       {e.groupLabel && <span className="ff-tag" title={`Chosen for ${e.groupLabel}`}>{e.groupLabel}</span>}
                       {e.grantedBy && <span className="ff-tag ff-tag-granted" title={`Granted by ${e.grantedBy}`}>Granted</span>}
+                      {/* Clickable right here in the list. These used to be inert text, so reading what
+                          "manipulate" means took opening the feat first and clicking the chip in its
+                          popup — two steps to reach a page one step away. InfoTerm stops the click from
+                          also opening the row's feat detail. */}
                       {e.traits.slice(0, 3).map((t) => (
-                        <span className="ff-trait" key={t}>
+                        <InfoTerm key={t} className="ff-trait" descKey="trait" title={traitLabel(t)} description={traitDesc(t, content)}>
                           {t}
-                        </span>
+                        </InfoTerm>
                       ))}
                     </div>
                     {/* A feat printing "Frequency once per day" used to be text the player had to

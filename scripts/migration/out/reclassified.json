@@ -1,0 +1,1115 @@
+{
+ "reclassified": {
+  "spells": {
+   "vindicators-judgment": {
+    "name": "Vindicator's Judgment",
+    "archiveName": "Vindicator's Judgement",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "spell-2149"
+   }
+  },
+  "items": {
+   "amulet-implement": {
+    "name": "Amulet Implement",
+    "archiveName": "Amulet",
+    "how": "reclass:suffix:implement",
+    "status": "doc",
+    "docId": "implement-1"
+   },
+   "awakened-adamantine-shot": {
+    "name": "Awakened Adamantine Shot",
+    "archiveName": "Awakened Metal Shot (Awakened Adamantine Shot)",
+    "how": "reclass:paren-variant",
+    "status": "doc",
+    "docId": "equipment-4293-3865"
+   },
+   "awakened-cold-iron-shot": {
+    "name": "Awakened Cold Iron Shot",
+    "archiveName": "Awakened Metal Shot (Awakened Cold Iron Shot)",
+    "how": "reclass:paren-variant",
+    "status": "doc",
+    "docId": "equipment-4293-3866"
+   },
+   "awakened-silver-shot": {
+    "name": "Awakened Silver Shot",
+    "archiveName": "Awakened Metal Shot (Awakened Silver Shot)",
+    "how": "reclass:paren-variant",
+    "status": "doc",
+    "docId": "equipment-4293-3867"
+   },
+   "bell-implement": {
+    "name": "Bell Implement",
+    "archiveName": "Bell",
+    "how": "reclass:suffix:implement",
+    "status": "doc",
+    "docId": "implement-2"
+   },
+   "cavalry-commanders-lance": {
+    "name": "Cavalry Commander's Lance",
+    "archiveName": "Calvary Commander's Lance",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "equipment-3838"
+   },
+   "chalice-implement": {
+    "name": "Chalice Implement",
+    "archiveName": "Chalice",
+    "how": "reclass:suffix:implement",
+    "status": "doc",
+    "docId": "implement-3"
+   },
+   "commandants-scabbard": {
+    "name": "Commandant's Scabbard",
+    "archiveName": "Comandant's Scabbard",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "equipment-3961"
+   },
+   "extendable-pincer": {
+    "name": "Extendable Pincer",
+    "archiveName": "Extendible Pincer",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "equipment-1148"
+   },
+   "greengut": {
+    "name": "Greengut",
+    "archiveName": "Green Gut",
+    "how": "reclass:exact",
+    "status": "doc",
+    "docId": "equipment-656"
+   },
+   "land-delvers-chair": {
+    "name": "Land-delver's Chair",
+    "archiveName": "Wheelchair (Land-Delver's Chair)",
+    "how": "reclass:paren-variant",
+    "status": "doc",
+    "docId": "equipment-2777-3105"
+   },
+   "lantern-implement": {
+    "name": "Lantern Implement",
+    "archiveName": "Lantern",
+    "how": "reclass:suffix:implement",
+    "status": "doc",
+    "docId": "implement-4"
+   },
+   "lucky-copper": {
+    "name": "Lucky Copper",
+    "archiveName": "Lucky Coin (Lucky Copper)",
+    "how": "reclass:paren-variant",
+    "status": "doc",
+    "docId": "equipment-4945-4508"
+   },
+   "lucky-gold": {
+    "name": "Lucky Gold",
+    "archiveName": "Lucky Coin (Lucky Gold)",
+    "how": "reclass:paren-variant",
+    "status": "doc",
+    "docId": "equipment-4945-4510"
+   },
+   "lucky-silver": {
+    "name": "Lucky Silver",
+    "archiveName": "Lucky Coin (Lucky Silver)",
+    "how": "reclass:paren-variant",
+    "status": "doc",
+    "docId": "equipment-4945-4509"
+   },
+   "mirror-implement": {
+    "name": "Mirror Implement",
+    "archiveName": "Mirror",
+    "how": "reclass:suffix:implement",
+    "status": "doc",
+    "docId": "implement-5"
+   },
+   "mythic-resilient": {
+    "name": "Mythic Resilient",
+    "archiveName": "Mythic Resilent",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "equipment-3499"
+   },
+   "nap-gas-dispenser": {
+    "name": "Nap Gas Dispenser",
+    "archiveName": "Nap Gas Disperser",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "equipment-3799"
+   },
+   "regalia-implement": {
+    "name": "Regalia Implement",
+    "archiveName": "Regalia",
+    "how": "reclass:suffix:implement",
+    "status": "doc",
+    "docId": "implement-6"
+   },
+   "smoky-hag-eye": {
+    "name": "Smoky Hag Eye",
+    "archiveName": "Hag Eye",
+    "how": "reclass:variant-prefix",
+    "status": "table",
+    "parentDocId": "equipment-935"
+   },
+   "stony-hag-eye": {
+    "name": "Stony Hag Eye",
+    "archiveName": "Hag Eye",
+    "how": "reclass:variant-prefix",
+    "status": "table",
+    "parentDocId": "equipment-935"
+   },
+   "supramarine-chair": {
+    "name": "Supramarine Chair",
+    "archiveName": "Wheelchair (Supramarine Chair)",
+    "how": "reclass:paren-variant",
+    "status": "doc",
+    "docId": "equipment-2777-3104"
+   },
+   "tome-implement": {
+    "name": "Tome Implement",
+    "archiveName": "Tome",
+    "how": "reclass:suffix:implement",
+    "status": "doc",
+    "docId": "implement-7"
+   },
+   "wand-implement": {
+    "name": "Wand Implement",
+    "archiveName": "Wand",
+    "how": "reclass:suffix:implement",
+    "status": "doc",
+    "docId": "implement-8"
+   },
+   "worldforge": {
+    "name": "Worldforge",
+    "archiveName": "World Forge",
+    "how": "reclass:exact",
+    "status": "doc",
+    "docId": "equipment-3511"
+   }
+  },
+  "classFeatures": {
+   "animal-order": {
+    "name": "Animal Order",
+    "archiveName": "Animal",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-1"
+   },
+   "armor-innovation": {
+    "name": "Armor Innovation",
+    "archiveName": "Armor",
+    "how": "reclass:suffix:innovation",
+    "status": "doc",
+    "docId": "innovation-1"
+   },
+   "ashes": {
+    "name": "Ashes",
+    "archiveName": "Ash",
+    "how": "reclass:plural",
+    "status": "doc",
+    "docId": "mystery-10"
+   },
+   "bloodline-aberrant": {
+    "name": "Bloodline: Aberrant",
+    "archiveName": "Aberrant",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-1"
+   },
+   "bloodline-angelic": {
+    "name": "Bloodline: Angelic",
+    "archiveName": "Angelic",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-2"
+   },
+   "bloodline-demonic": {
+    "name": "Bloodline: Demonic",
+    "archiveName": "Demonic",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-3"
+   },
+   "bloodline-diabolic": {
+    "name": "Bloodline: Diabolic",
+    "archiveName": "Diabolic",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-4"
+   },
+   "bloodline-draconic": {
+    "name": "Bloodline: Draconic",
+    "archiveName": "Draconic",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-5"
+   },
+   "bloodline-elemental": {
+    "name": "Bloodline: Elemental",
+    "archiveName": "Elemental",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-6"
+   },
+   "bloodline-harrow": {
+    "name": "Bloodline: Harrow",
+    "archiveName": "Harrow",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-18"
+   },
+   "bloodline-imperial": {
+    "name": "Bloodline: Imperial",
+    "archiveName": "Imperial",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-9"
+   },
+   "bloodline-phoenix": {
+    "name": "Bloodline: Phoenix",
+    "archiveName": "Phoenix",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-15"
+   },
+   "bloodline-psychopomp": {
+    "name": "Bloodline: Psychopomp",
+    "archiveName": "Psychopomp",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-13"
+   },
+   "bloodline-shadow": {
+    "name": "Bloodline: Shadow",
+    "archiveName": "Shadow",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-14"
+   },
+   "bloodline-undead": {
+    "name": "Bloodline: Undead",
+    "archiveName": "Undead",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-10"
+   },
+   "bloodline-wyrmblessed": {
+    "name": "Bloodline: Wyrmblessed",
+    "archiveName": "Wyrmblessed",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-17"
+   },
+   "construct-innovation": {
+    "name": "Construct Innovation",
+    "archiveName": "Construct",
+    "how": "reclass:suffix:innovation",
+    "status": "doc",
+    "docId": "innovation-2"
+   },
+   "flame-order": {
+    "name": "Flame Order",
+    "archiveName": "Flame",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-5"
+   },
+   "leaf-order": {
+    "name": "Leaf Order",
+    "archiveName": "Leaf",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-2"
+   },
+   "spore-order": {
+    "name": "Spore Order",
+    "archiveName": "Spore",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-13"
+   },
+   "stone-order": {
+    "name": "Stone Order",
+    "archiveName": "Stone",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-6"
+   },
+   "storm-order": {
+    "name": "Storm Order",
+    "archiveName": "Storm",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-3"
+   },
+   "untamed-order": {
+    "name": "Untamed Order",
+    "archiveName": "Untamed",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-11"
+   },
+   "wave-order": {
+    "name": "Wave Order",
+    "archiveName": "Wave",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-7"
+   },
+   "weapon-innovation": {
+    "name": "Weapon Innovation",
+    "archiveName": "Weapon",
+    "how": "reclass:suffix:innovation",
+    "status": "doc",
+    "docId": "innovation-3"
+   },
+   "bloodline-aesir": {
+    "name": "Bloodline: Aesir",
+    "archiveName": "Aesir",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-29"
+   },
+   "bloodline-genie": {
+    "name": "Bloodline: Genie",
+    "archiveName": "Genie",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-11"
+   },
+   "bloodline-nymph": {
+    "name": "Bloodline: Nymph",
+    "archiveName": "Nymph",
+    "how": "reclass:prefix:bloodline",
+    "status": "doc",
+    "docId": "bloodline-12"
+   },
+   "alchemical-sciences-methodology": {
+    "name": "Alchemical Sciences Methodology",
+    "archiveName": "Alchemical Sciences",
+    "how": "reclass:suffix:methodology",
+    "status": "doc",
+    "docId": "methodology-1"
+   },
+   "angel-eidolon": {
+    "name": "Angel Eidolon",
+    "archiveName": "Angel",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-1"
+   },
+   "animal-instinct": {
+    "name": "Animal Instinct",
+    "archiveName": "Animal",
+    "how": "reclass:suffix:instinct",
+    "status": "doc",
+    "docId": "instinct-1"
+   },
+   "construct-eidolon": {
+    "name": "Construct Eidolon",
+    "archiveName": "Construct",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-4"
+   },
+   "demon-eidolon": {
+    "name": "Demon Eidolon",
+    "archiveName": "Demon",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-5"
+   },
+   "dragon-eidolon": {
+    "name": "Dragon Eidolon",
+    "archiveName": "Dragon",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-7"
+   },
+   "elemental-eidolon": {
+    "name": "Elemental Eidolon",
+    "archiveName": "Elemental",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-12"
+   },
+   "empiricism-methodology": {
+    "name": "Empiricism Methodology",
+    "archiveName": "Empiricism",
+    "how": "reclass:suffix:methodology",
+    "status": "doc",
+    "docId": "methodology-2"
+   },
+   "fey-eidolon": {
+    "name": "Fey Eidolon",
+    "archiveName": "Fey",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-8"
+   },
+   "forensic-medicine-methodology": {
+    "name": "Forensic Medicine Methodology",
+    "archiveName": "Forensic Medicine",
+    "how": "reclass:suffix:methodology",
+    "status": "doc",
+    "docId": "methodology-3"
+   },
+   "fury-instinct": {
+    "name": "Fury Instinct",
+    "archiveName": "Fury",
+    "how": "reclass:suffix:instinct",
+    "status": "doc",
+    "docId": "instinct-3"
+   },
+   "giant-instinct": {
+    "name": "Giant Instinct",
+    "archiveName": "Giant",
+    "how": "reclass:suffix:instinct",
+    "status": "doc",
+    "docId": "instinct-4"
+   },
+   "interrogation-methodology": {
+    "name": "Interrogation Methodology",
+    "archiveName": "Interrogation",
+    "how": "reclass:suffix:methodology",
+    "status": "doc",
+    "docId": "methodology-4"
+   },
+   "plant-eidolon": {
+    "name": "Plant Eidolon",
+    "archiveName": "Plant",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-9"
+   },
+   "psychopomp-eidolon": {
+    "name": "Psychopomp Eidolon",
+    "archiveName": "Psychopomp",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-10"
+   },
+   "spirit-instinct": {
+    "name": "Spirit Instinct",
+    "archiveName": "Spirit",
+    "how": "reclass:suffix:instinct",
+    "status": "doc",
+    "docId": "instinct-5"
+   },
+   "superstition-instinct": {
+    "name": "Superstition Instinct",
+    "archiveName": "Superstition",
+    "how": "reclass:suffix:instinct",
+    "status": "doc",
+    "docId": "instinct-6"
+   },
+   "swarm-eidolon": {
+    "name": "Swarm Eidolon",
+    "archiveName": "Swarm",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-13"
+   },
+   "undead-eidolon": {
+    "name": "Undead Eidolon",
+    "archiveName": "Undead",
+    "how": "reclass:suffix:eidolon",
+    "status": "doc",
+    "docId": "eidolon-11"
+   },
+   "cultivation-order": {
+    "name": "Cultivation Order",
+    "archiveName": "Cultivation",
+    "how": "reclass:suffix:order",
+    "status": "doc",
+    "docId": "druidic-order-12"
+   }
+  },
+  "feats": {
+   "heat-wave": {
+    "name": "Heat Wave",
+    "archiveName": "Heatwave",
+    "how": "reclass:exact",
+    "status": "doc",
+    "docId": "feat-2558"
+   },
+   "pass-vengeful-judgment": {
+    "name": "Pass Vengeful Judgment",
+    "archiveName": "Pass Vengeful Judgement",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "feat-7399"
+   },
+   "opportune-trickster": {
+    "name": "Opportune Trickster",
+    "archiveName": "Oppurtune Trickster",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "feat-8538"
+   },
+   "decree-of-banishment": {
+    "name": "Decree of Banishment",
+    "archiveName": "Decree of Banisment",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "feat-7405"
+   },
+   "vengeful-remnant": {
+    "name": "Vengeful Remnant",
+    "archiveName": "Vengful Remnant",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "feat-7710"
+   },
+   "fracture-timeflow": {
+    "name": "Fracture Timeflow",
+    "archiveName": "Fracture Time Flow",
+    "how": "reclass:exact",
+    "status": "doc",
+    "docId": "feat-8175"
+   },
+   "vindicators-judgment": {
+    "name": "Vindicator's Judgment",
+    "archiveName": "Vindicator's Judgement",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "feat-7259"
+   }
+  },
+  "backgrounds": {
+   "reclaimer-investigator": {
+    "name": "Reclaimer Investigator",
+    "archiveName": "Reclaimed Investigator",
+    "how": "reclass:typo",
+    "status": "doc",
+    "docId": "background-314"
+   }
+  }
+ },
+ "stillUnknown": [
+  {
+   "bucket": "spells",
+   "key": "create-mycoguardian",
+   "name": "Create Mycoguardian",
+   "parentDocId": "creature-family-340",
+   "parentName": "Sporeborn",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "amulet-of-the-slumberer",
+   "name": "Amulet of the Slumberer",
+   "parentDocId": "action-4227",
+   "parentName": "(occult, water)",
+   "tried": 3,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "basic-ingredient",
+   "name": "Basic Ingredient",
+   "parentDocId": "action-1476",
+   "parentName": "Hunt and Gather",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "cutlery",
+   "name": "Cutlery",
+   "parentDocId": "creature-912",
+   "parentName": "Servant",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "cytillesh-toolkit",
+   "name": "Cytillesh Toolkit",
+   "parentDocId": "creature-2903",
+   "parentName": "Dero Strangler",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "fingerprint-kit",
+   "name": "Fingerprint Kit",
+   "parentDocId": "equipment-797",
+   "parentName": "Fingerprinting Kit",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "fireworks-display",
+   "name": "Fireworks Display",
+   "parentDocId": "feat-3247",
+   "parentName": "Expert Fireworks Crafter",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "gamtu-hat",
+   "name": "Gamtu Hat",
+   "parentDocId": "feat-6828",
+   "parentName": "Glorious Gamtu",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "ka-stone",
+   "name": "Ka Stone",
+   "parentDocId": "feat-889",
+   "parentName": "Ka Stone Ritual",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "light-barding",
+   "name": "Light Barding",
+   "parentDocId": "equipment-4010",
+   "parentName": "Anti-Dragon Barding",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "rounds-flintlock-pistol",
+   "name": "Rounds (Flintlock Pistol)",
+   "parentDocId": "creature-2054",
+   "parentName": "Rust Hag",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "rounds-hand-cannon",
+   "name": "Rounds (Hand Cannon)",
+   "parentDocId": "weapon-523",
+   "parentName": "Hand Cannon",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "rounds-jezail",
+   "name": "Rounds (Jezail)",
+   "parentDocId": "weapon-582",
+   "parentName": "Jezail",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "signifers-mask",
+   "name": "Signifer's Mask",
+   "parentDocId": "feat-1085",
+   "parentName": "Signifer's Sight",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "spare-wax-cylinder",
+   "name": "Spare Wax Cylinder",
+   "parentDocId": "equipment-764",
+   "parentName": "Clockwork Recorder",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "special-ingredient",
+   "name": "Special Ingredient",
+   "parentDocId": "rules-1893",
+   "parentName": "Ingredients",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "splendid-skull-mask",
+   "name": "Splendid Skull Mask",
+   "parentDocId": "feat-2424",
+   "parentName": "Skull Creeper",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "starless-scope-lens",
+   "name": "Starless Scope Lens",
+   "parentDocId": "equipment-954",
+   "parentName": "Starless Scope",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "submersible-helmet",
+   "name": "Submersible Helmet",
+   "parentDocId": "equipment-2337",
+   "parentName": "Submersible Helm",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "versatile-vial",
+   "name": "Versatile Vial",
+   "parentDocId": "feat-5767",
+   "parentName": "Improvise Admixture",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "items",
+   "key": "makeshift-staff",
+   "name": "Makeshift Staff",
+   "parentDocId": "arcane-thesis-5",
+   "parentName": "Staff Nexus",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "catharsis-emotion",
+   "name": "Catharsis Emotion",
+   "parentDocId": "feat-2963",
+   "parentName": "Cathartic Mage Dedication",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "curse-of-the-living-death",
+   "name": "Curse of the Living Death",
+   "parentDocId": "mystery-3",
+   "parentName": "Bones",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "earth-gate",
+   "name": "Earth Gate",
+   "parentDocId": "creature-2788",
+   "parentName": "Shrine Maiden",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "echoes-of-the-spells",
+   "name": "Echoes of the Spells",
+   "parentDocId": "class-feature-442",
+   "parentName": "Double Spellstrike ",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "elemental-magic",
+   "name": "Elemental Magic",
+   "parentDocId": "feat-4345",
+   "parentName": "Expanded Elemental Magic",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "elemental-school",
+   "name": "Elemental School",
+   "parentDocId": "archetype-207",
+   "parentName": "Elementalist",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "first-doctrine",
+   "name": "First Doctrine",
+   "parentDocId": "category-page-103",
+   "parentName": "Doctrines",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "life-draining",
+   "name": "Life-Draining",
+   "parentDocId": "spell-1403",
+   "parentName": "Life-Draining Roots",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "metal-gate",
+   "name": "Metal Gate",
+   "parentDocId": "hazard-313",
+   "parentName": "Electrified Gate",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "witch-lessons",
+   "name": "Witch Lessons",
+   "parentDocId": "class-feature-397",
+   "parentName": "Hexes",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "coiling-serpents",
+   "name": "Coiling Serpents",
+   "parentDocId": "feat-7164",
+   "parentName": "Binding Serpents Celestial Arrow",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "heavy-is-the-crown",
+   "name": "Heavy is the Crown",
+   "parentDocId": "source-210",
+   "parentName": "Pathfinder #195: Heavy is the Crown",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "mark-the-center",
+   "name": "Mark the Center",
+   "parentDocId": "feat-7171",
+   "parentName": "Breath of Vital Ash",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "classFeatures",
+   "key": "plant-thirty-barbs",
+   "name": "Plant Thirty Barbs",
+   "parentDocId": "feat-7188",
+   "parentName": "Branched Tree Of Pain",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "feats",
+   "key": "remember-their-names",
+   "name": "Remember Their Names",
+   "parentDocId": "action-847",
+   "parentName": "envision",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "feats",
+   "key": "innate-magical-intuition",
+   "name": "Innate Magical Intuition",
+   "parentDocId": "feat-2233",
+   "parentName": "Innate Magic Intuition",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "feats",
+   "key": "master-summoning-spellcasting",
+   "name": "Master Summoning Spellcasting",
+   "parentDocId": "feat-2961",
+   "parentName": "Master Summoner Spellcasting",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "feats",
+   "key": "armored-regiment-training",
+   "name": "Armored Regiment Training",
+   "parentDocId": "feat-7792",
+   "parentName": "Armor Regiment Training",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "heritages",
+   "key": "ambitious-human",
+   "name": "Ambitious Human",
+   "parentDocId": "category-page-6",
+   "parentName": "Ancestries",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "backgrounds",
+   "key": "wish-for-riches",
+   "name": "Wish for Riches",
+   "parentDocId": "background-580",
+   "parentName": "Wishes for Riches",
+   "tried": 2,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "manifest-realm",
+   "name": "Manifest Realm",
+   "parentDocId": "feat-7323",
+   "parentName": "Manipulate Realm",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "swirl-crimson-shroud",
+   "name": "Swirl Crimson Shroud",
+   "parentDocId": "feat-6521",
+   "parentName": "Crimson Shroud",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "bond-with-spirit",
+   "name": "Bond with Spirit",
+   "parentDocId": "feat-7571",
+   "parentName": "Rivethun Emissary Dedication",
+   "tried": 3,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "conjure-bullet",
+   "name": "Conjure Bullet",
+   "parentDocId": "way-11",
+   "parentName": "Way of the Spellshot",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "aegis-of-envy",
+   "name": "Aegis of Envy",
+   "parentDocId": "feat-9411",
+   "tried": 1,
+   "why": "parent doc not in the export"
+  },
+  {
+   "bucket": "actions",
+   "key": "convocation-of-greed",
+   "name": "Convocation of Greed",
+   "parentDocId": "feat-9413",
+   "tried": 1,
+   "why": "parent doc not in the export"
+  },
+  {
+   "bucket": "actions",
+   "key": "gluttonous-feast",
+   "name": "Gluttonous Feast",
+   "parentDocId": "feat-9412",
+   "tried": 1,
+   "why": "parent doc not in the export"
+  },
+  {
+   "bucket": "actions",
+   "key": "host-of-wrath",
+   "name": "Host of Wrath",
+   "parentDocId": "feat-9416",
+   "tried": 1,
+   "why": "parent doc not in the export"
+  },
+  {
+   "bucket": "actions",
+   "key": "sorshens-devotion",
+   "name": "Sorshen's Devotion",
+   "parentDocId": "feat-9414",
+   "tried": 1,
+   "why": "parent doc not in the export"
+  },
+  {
+   "bucket": "actions",
+   "key": "summon-sloth",
+   "name": "Summon Sloth",
+   "parentDocId": "feat-9415",
+   "tried": 1,
+   "why": "parent doc not in the export"
+  },
+  {
+   "bucket": "actions",
+   "key": "hunt-runelord",
+   "name": "Hunt Runelord",
+   "parentDocId": "background-565",
+   "parentName": "Runelord Survivor",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "coiling-serpents",
+   "name": "Coiling Serpents",
+   "parentDocId": "feat-7164",
+   "parentName": "Binding Serpents Celestial Arrow",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "heavy-is-the-crown",
+   "name": "Heavy is the Crown",
+   "parentDocId": "source-210",
+   "parentName": "Pathfinder #195: Heavy is the Crown",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "mark-the-center",
+   "name": "Mark the Center",
+   "parentDocId": "feat-7171",
+   "parentName": "Breath of Vital Ash",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "actions",
+   "key": "plant-thirty-barbs",
+   "name": "Plant Thirty Barbs",
+   "parentDocId": "feat-7188",
+   "parentName": "Branched Tree Of Pain",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "animalCompanions",
+   "key": "construct-companion",
+   "name": "Construct Companion",
+   "parentDocId": "feat-8567",
+   "parentName": "Incredible Construct Companion",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "vehicles",
+   "key": "warship",
+   "name": "Warship",
+   "parentDocId": "rules-3119",
+   "parentName": "Movement and Heading",
+   "tried": 4,
+   "why": "no matching section in any candidate parent"
+  },
+  {
+   "bucket": "vehicles",
+   "key": "second-kiss",
+   "name": "Second Kiss",
+   "parentDocId": "hazard-172",
+   "parentName": "Second Kiss Engine",
+   "tried": 1,
+   "why": "no matching section in any candidate parent"
+  }
+ ]
+}

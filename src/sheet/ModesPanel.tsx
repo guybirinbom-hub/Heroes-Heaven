@@ -1,8 +1,17 @@
-import { useState } from 'react';
-import type { ModeDef, ModeModifier, ModeTargetKind, ModifierType } from '../rules/types';
-import { SKILLS, SAVES } from '../rules/types';
-import { MODE_TARGETS, MODIFIER_TYPES, modeRelevant } from '../rules/modes';
+import { useMemo, useState } from 'react';
+import type { ModeDef, ModeModifier, ModifierType } from '../rules/types';
+import {
+  MODE_TARGETS,
+  MODIFIER_TYPES,
+  modeRelevant,
+  modeTargetLabel,
+  modeTargetOptions,
+  parseTargetKey,
+  targetKey,
+  type ModeTargetOption,
+} from '../rules/modes';
 import { usePrefs, togglePinnedMode } from '../data/prefs';
+import { ModeDetailModal } from './ModeDetailModal';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -13,6 +22,8 @@ const formatMod = (n: number) => (n >= 0 ? `+${n}` : String(n));
 function targetLabel(mod: ModeModifier): string {
   if (mod.target === 'save') return mod.detail ? `${cap(mod.detail)} save` : 'Saving throws';
   if (mod.target === 'skill') return mod.detail ? (mod.detail.startsWith('lore:') ? cap(mod.detail.slice(5)) + ' Lore' : cap(mod.detail)) : 'Skills';
+  // Every other kind carries its own detail-free label, and 'ability' spells the attribute out.
+  if (mod.target === 'ability') return modeTargetLabel(mod);
   return MODE_TARGETS.find((t) => t.kind === mod.target)?.label ?? mod.target;
 }
 export function summarizeMod(mod: ModeModifier): string {
@@ -40,6 +51,7 @@ export function ModesPanel({
   activeIds,
   charKey,
   charName,
+  lores,
   onToggle,
   onSave,
   onDelete,
@@ -55,6 +67,8 @@ export function ModesPanel({
   /** Roster id of the character whose panel this is — for creating character-specific modes. */
   charKey?: string;
   charName?: string;
+  /** This character's Lore keys, so a custom mode can target one. */
+  lores?: string[];
   onToggle: (id: string) => void;
   onSave: (mode: ModeDef) => void;
   onDelete: (id: string) => void;
@@ -63,6 +77,8 @@ export function ModesPanel({
   const [editing, setEditing] = useState<ModeDef | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [q, setQ] = useState('');
+  // The mode whose full write-up is open on top of the list.
+  const [reading, setReading] = useState<ModeDef | null>(null);
 
   // An item mode belongs to its consumable — you get it by drinking the thing. It is not the
   // player's to pick, edit, pin or delete, so it is stripped here rather than at each call site:
@@ -84,6 +100,7 @@ export function ModesPanel({
         draft={editing}
         catalog={catalog}
         scopeOptions={scopeOptions}
+        lores={lores}
         onChange={setEditing}
         onCancel={() => setEditing(null)}
         onSave={() => {
@@ -148,10 +165,9 @@ export function ModesPanel({
         >
           <i className={'ti ' + (on ? 'ti-circle-check' : 'ti-circle')} aria-hidden="true" />
         </button>
-        {/* The body only DISPLAYS the mode (its modifiers + note are shown inline here) — it no longer
-            toggles on click, so reading a mode never accidentally activates it. The circle is the sole
-            activate control. */}
-        <div className="mode-info mode-info-static">
+        {/* Pressing the body READS the mode — it opens the full write-up rather than toggling, so
+            reading one never accidentally activates it. The circle is the sole activate control. */}
+        <button type="button" className="mode-info cond-row-open" title={`Read ${mode.name}`} onClick={() => setReading(mode)}>
           <div className="mode-name">
             {mode.name}
             {editable && mode.charId && <span className="mode-scope-tag" title="Only this character">★ this character</span>}
@@ -159,7 +175,7 @@ export function ModesPanel({
           {mode.modifiers.length > 0 && <div className="mode-mods">{mode.modifiers.map(summarizeMod).join(' · ')}</div>}
           {mode.note && <div className="mode-note">{mode.note}</div>}
           {mode.modifiers.length === 0 && !mode.note && <div className="mode-mods">no modifiers</div>}
-        </div>
+        </button>
         <button
           className={'mode-pin' + (isPinned ? ' on' : '')}
           aria-label={isPinned ? 'Unpin' : 'Pin to top'}
@@ -236,7 +252,99 @@ export function ModesPanel({
           </div>
         ))
       )}
+      {reading && <ModeDetailModal mode={reading} onClose={() => setReading(null)} />}
     </div>
+  );
+}
+
+/**
+ * Pick what a modifier points at, by typing.
+ *
+ * A `<select>` of ten kinds plus a follow-up dropdown for "which save" / "which skill" meant the thing
+ * you wanted was two controls deep and never where you looked. This is one control over the whole flat
+ * list — "Reflex save", "Stealth", "Strength modifier", "Maximum HP" all one search away.
+ */
+function TargetPicker({
+  options,
+  value,
+  onChange,
+}: {
+  options: ModeTargetOption[];
+  value: string;
+  onChange: (key: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [q, setQ] = useState('');
+  const current = options.find((o) => o.value === value);
+  const ql = q.trim().toLowerCase();
+  const shown = ql
+    ? options.filter((o) => (o.label + ' ' + o.group + ' ' + (o.alias ?? '')).toLowerCase().includes(ql))
+    : options;
+  // Keep the picker's own headings, but only for the groups that survived the search.
+  const groups: { name: string; list: ModeTargetOption[] }[] = [];
+  for (const o of shown) {
+    let g = groups.find((x) => x.name === o.group);
+    if (!g) groups.push((g = { name: o.group, list: [] }));
+    g.list.push(o);
+  }
+  return (
+    <>
+      <button
+        type="button"
+        className="me-target"
+        aria-label="Target"
+        title="What this modifier changes"
+        onClick={() => {
+          setQ('');
+          setOpen(true);
+        }}
+      >
+        <span className="me-target-val">{current?.label ?? 'Choose a target…'}</span>
+        <i className="ti ti-selector" aria-hidden="true" />
+      </button>
+      {open && (
+        <div className="picker-overlay" onClick={() => setOpen(false)}>
+          <div className="picker me-target-picker" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-head">
+              <span>What does this change?</span>
+              <button className="picker-close" onClick={() => setOpen(false)} aria-label="Close">
+                <i className="ti ti-x" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="picker-controls">
+              <div className="search">
+                <i className="ti ti-search" aria-hidden="true" />
+                <input autoFocus placeholder="Search — “reflex”, “stealth”, “speed”…" value={q} onChange={(e) => setQ(e.target.value)} />
+              </div>
+              <span className="ss-count">{shown.length}</span>
+            </div>
+            <div className="cond-list">
+              {groups.map((g) => (
+                <div className="modes-cat-block" key={g.name}>
+                  <div className="modes-cat">{g.name}</div>
+                  <div className="me-target-grid">
+                    {g.list.map((o) => (
+                      <button
+                        type="button"
+                        key={o.value}
+                        className={'me-target-opt' + (o.value === value ? ' on' : '')}
+                        onClick={() => {
+                          onChange(o.value);
+                          setOpen(false);
+                        }}
+                      >
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              {shown.length === 0 && <div className="acts-empty">Nothing matches “{q}”.</div>}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -246,6 +354,7 @@ export function ModeEditor({
   draft,
   catalog,
   scopeOptions = [{ id: null, name: 'All characters' }],
+  lores = [],
   onChange,
   onSave,
   onCancel,
@@ -254,12 +363,16 @@ export function ModeEditor({
   draft: ModeDef;
   catalog: ModeDef[];
   scopeOptions?: ScopeOption[];
+  /** This character's own Lore keys ('lore:warfare'), so a mode can target one. Empty in the
+   *  character-less editor (Settings → Modes), where there is no character to read them off. */
+  lores?: string[];
   onChange: (m: ModeDef) => void;
   onSave: () => void;
   onCancel: () => void;
   /** Provided only when editing an existing custom mode — renders a Delete button. */
   onDelete?: () => void;
 }) {
+  const targetOptions = useMemo(() => modeTargetOptions(lores), [lores]);
   const setMod = (i: number, patch: Partial<ModeModifier>) =>
     onChange({ ...draft, modifiers: draft.modifiers.map((m, j) => (j === i ? { ...m, ...patch } : m)) });
   const removeMod = (i: number) => onChange({ ...draft, modifiers: draft.modifiers.filter((_, j) => j !== i) });
@@ -316,7 +429,6 @@ export function ModeEditor({
 
       <div className="me-mods-label">Modifiers</div>
       {draft.modifiers.map((mod, i) => {
-        const needsDetail = MODE_TARGETS.find((t) => t.kind === mod.target)?.needsDetail;
         return (
           <div className="me-mod" key={i}>
             <input
@@ -333,37 +445,14 @@ export function ModeEditor({
                 </option>
               ))}
             </select>
-            <select
-              value={mod.target}
-              aria-label="Target"
-              onChange={(e) => setMod(i, { target: e.target.value as ModeTargetKind, detail: undefined })}
-            >
-              {MODE_TARGETS.map((t) => (
-                <option key={t.kind} value={t.kind}>
-                  {t.label}
-                </option>
-              ))}
-            </select>
-            {needsDetail === 'save' && (
-              <select value={mod.detail ?? ''} aria-label="Which save" onChange={(e) => setMod(i, { detail: e.target.value || undefined })}>
-                <option value="">All saves</option>
-                {SAVES.map((s) => (
-                  <option key={s} value={s}>
-                    {cap(s)}
-                  </option>
-                ))}
-              </select>
-            )}
-            {needsDetail === 'skill' && (
-              <select value={mod.detail ?? ''} aria-label="Which skill" onChange={(e) => setMod(i, { detail: e.target.value || undefined })}>
-                <option value="">All skills</option>
-                {SKILLS.map((s) => (
-                  <option key={s} value={s}>
-                    {cap(s)}
-                  </option>
-                ))}
-              </select>
-            )}
+            <TargetPicker
+              options={targetOptions}
+              value={targetKey(mod.target, mod.detail)}
+              onChange={(key) => {
+                const { kind, detail } = parseTargetKey(key);
+                setMod(i, { target: kind, detail });
+              }}
+            />
             <input
               className="me-when"
               value={mod.appliesWhen ?? ''}
