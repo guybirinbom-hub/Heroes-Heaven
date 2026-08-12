@@ -51,7 +51,7 @@ import type {
 import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, SourceInfo, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, profBonus, resolveFormula, splinterDomainsOf } from './derive';
+import { abilityMod, askedAtDailyPrep, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, profBonus, resolveFormula, splinterDomainsOf } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { applyCounterMods } from './counterMods';
 import { choiceGrantFor, FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
@@ -676,7 +676,19 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
     if (!featId) continue;
     const feat = content.feats[featId];
     if (!feat?.choice) continue;
-    if (build.grantedFeatChoices?.[featId]) continue;
+    // …unless it is a DAILY pick. Those are answered at daily preparations and the builder no longer
+    // renders a control for them, so counting one here would put a "1 choice left" tag on the level
+    // with nothing on the page able to clear it.
+    if (askedAtDailyPrep(feat.choice)) continue;
+    // ⚠ Read the store the PICKER actually writes. A feat picked into a level slot stores its answer in
+    // `featChoices` under the SLOT key (`setFeatChoice`, shared.tsx); `grantedFeatChoices` is keyed by
+    // feat id and belongs to feats the character was GIVEN rather than picked. Checking only the latter
+    // meant a picked feat's answer was never seen, so the level kept a permanent "1 choice left" tag
+    // nothing on the page could clear — and `levelChoices` could never reach zero, which is exactly
+    // what the Create/Save completeness check reads.
+    // A multi-pick choice fans out to `key#0`, `key#1`, … so it is answered only when EVERY pick is.
+    const picked = choiceKeys(key, feat.choice).every((k) => build.featChoices?.[k]);
+    if (picked || build.grantedFeatChoices?.[featId]) continue;
     const lvl = Number(key.split(':')[0]);
     out.push({
       page: Number.isFinite(lvl) && lvl >= 1 ? lvl : 0,
@@ -3397,7 +3409,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // slug and is where all nine Raging Resistance clauses live.
   for (const fid of new Set([...ownedFeatureIds, ...grantOptions.map((o) => o.id)])) {
     const def = content.classFeatures[fid]?.choice;
-    if (!def || def.daily) continue; // a daily answer is play state, resolved by dailyChoiceGrants
+    // A daily answer is play state, resolved by dailyChoiceGrants. Keyed on `askedAtDailyPrep` rather
+    // than `daily` so this stays the exact complement of what the builder renders — a daily choice the
+    // Rest sheet cannot ask still has a builder picker, and a picker whose answer nothing applies is
+    // the defect this whole pass is about. (No record is in that shape today; the pair must not drift.)
+    if (!def || askedAtDailyPrep(def)) continue;
     const g = (def.options ?? []).find((o) => o.value === build.featChoices?.[`feature:${fid}`])?.grant;
     if (g) applyAlwaysOn(g, content.classFeatures[fid]?.name ?? fid);
   }

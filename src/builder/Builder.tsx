@@ -34,7 +34,7 @@ import {
   skillIncreaseCap,
 } from '../rules/build';
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
-import { classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions } from '../rules/derive';
+import { askedAtDailyPrep, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions } from '../rules/derive';
 import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
@@ -1305,7 +1305,7 @@ export function Builder({
                */
               const featureAsks = (fid: string): boolean => {
                 const rec = content.classFeatures[fid];
-                return !!(rec?.choice && !rec.choice.daily) || !!rec?.effectChoices?.length || !!FEAT_PICK_GRANTS[fid];
+                return !!(rec?.choice && !askedAtDailyPrep(rec.choice)) || !!rec?.effectChoices?.length || !!FEAT_PICK_GRANTS[fid];
               };
               const askingFeatures = g.features.filter((f) => f.id !== subAnchorId && featureAsks(f.id));
               const askingGrantedFeats = bgFeatAtThisLevel
@@ -1405,7 +1405,7 @@ export function Builder({
                             <SubCard icon="ti-award" label={f.name} key={`ask-${f.id}`}>
                               {(() => {
                                 const def = content.classFeatures[f.id]?.choice;
-                                return def && !def.daily ? renderChoice(def, `feature:${f.id}`, f.id) : null;
+                                return def && !askedAtDailyPrep(def) ? renderChoice(def, `feature:${f.id}`, f.id) : null;
                               })()}
                               <EffectChoicesPicker
                                 recordId={f.id}
@@ -1477,7 +1477,7 @@ export function Builder({
                             build.subclassId &&
                             (() => {
                               const def = content.classFeatures[build.subclassId!]?.choice;
-                              return def && !def.daily ? renderChoice(def, `feature:${build.subclassId}`, build.subclassId!) : null;
+                              return def && !askedAtDailyPrep(def) ? renderChoice(def, `feature:${build.subclassId}`, build.subclassId!) : null;
                             })()}
                           {/* …and its effectChoices, for the same reason. build.ts resolves these
                               (resolvePick over grantOptions) and the picker was mounted only for
@@ -1665,6 +1665,13 @@ export function Builder({
                             // A choice that GRANTS a feat (flag 'feat', e.g. Pitborn) is handled by the
                             // pick-a-feat picker below — don't also render the inert proficiency-choice dropdown.
                             !(content.feats[picked]!.choice!.flag === 'feat' && FEAT_PICK_GRANTS[picked]) &&
+                            /* A DAILY choice belongs to daily preparations, not the build. The two class-feature
+                               sites above already guarded; this one did not, so Harbinger's Armament asked for
+                               today's rune here AND again every morning — two stores for one answer, and the
+                               builder's copy moved nothing (build.ts skips daily answers) while the morning's did.
+                               Guarded on `askedAtDailyPrep`, not on `daily`, so a kind the Rest sheet cannot
+                               render keeps its picker here rather than becoming askable nowhere. */
+                            !askedAtDailyPrep(content.feats[picked]!.choice) &&
                             (() => {
                               return renderChoice(content.feats[picked]!.choice!, key, picked);
                             })()}

@@ -774,6 +774,23 @@ export function subclassFeatureIds(
 export const dailyChoiceKey = (recordId: string, flag: string) => `${recordId}:${flag}`;
 
 /**
+ * Is this choice asked at DAILY PREPARATIONS rather than in the builder?
+ *
+ * The builder must not ask a question the morning asks again — a daily pick is re-made every day and
+ * defaults to yesterday's answer, so a builder copy of it is a second, stale store of the same thing.
+ *
+ * ⚠ It is `daily` AND askable, not `daily` alone. `dailyChoicesFor` can only render 'array' / 'text' /
+ * 'open' — a 'skills' or 'domains' menu resolves against the BUILD, not the morning, so the Rest sheet
+ * skips it. Hiding one of those from the builder too would leave it askable NOWHERE, which is worse
+ * than asking it in the wrong place. Ancient Memories is the one record in that state today.
+ */
+export function askedAtDailyPrep(
+  def: FeatChoiceDef | null | undefined,
+): def is FeatChoiceDef & { kind: 'array' | 'text' | 'open' } {
+  return !!def?.daily && (def.kind === 'array' || def.kind === 'text' || def.kind === 'open');
+}
+
+/**
  * Records that can carry a DAILY-PREPARATIONS choice, in the order the Rest sheet lists them.
  *
  * Lives here, not in dailyChoices.ts, because deriveDefenses needs the same walk to turn this

@@ -11,10 +11,10 @@
  * new feat is a data edit, not a code edit.
  */
 import type { Character, ContentDatabase } from './types';
-import { dailyChoiceKey, effectiveChoiceOptions, ownedDailyChoiceRecords as ownedRecords, qualifiesForOption } from './derive';
+import { askedAtDailyPrep, dailyChoiceKey, effectiveChoiceOptions, ownedDailyChoiceRecords as ownedRecords, qualifiesForOption } from './derive';
 import { openChoiceOptions } from './openChoice';
 
-export { dailyChoiceKey, qualifiesForOption } from './derive';
+export { askedAtDailyPrep, dailyChoiceKey, qualifiesForOption } from './derive';
 
 export interface DailyChoice {
   /** Storage key in PlayState.dailyChoices — `${recordId}:${flag}`. */
@@ -37,9 +37,10 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
   const out: DailyChoice[] = [];
   for (const rec of ownedRecords(c, db)) {
     const def = rec.choice;
-    if (!def?.daily) continue;
-    // 'domains'/'skills' resolve against the BUILD, not the morning, so they never belong at rest.
-    if (def.kind !== 'array' && def.kind !== 'text' && def.kind !== 'open') continue;
+    // 'domains'/'skills' resolve against the BUILD, not the morning, so they never belong at rest —
+    // askedAtDailyPrep spells that out, and is the SAME predicate the builder uses to decide what to
+    // stop asking, so the two can never disagree and strand a choice between them.
+    if (!def || !askedAtDailyPrep(def)) continue;
     const options =
       def.kind === 'array'
         ? // Plus whatever another owned record adds to this menu — Radiant Armament's astral and
