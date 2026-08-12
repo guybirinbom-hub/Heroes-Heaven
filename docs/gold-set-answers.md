@@ -209,3 +209,33 @@ A choice is legitimately label-only only when **both** answers are no.
 
 **Assurance-style feats (Eidetic Ear, Weight of Experience) are correct to move no number — and still
 need the `*` on the chosen skill.**
+
+---
+
+## Round 6 — Canny Acumen, and when an option may NOT be filtered (2026-08-11)
+
+**Q21. Canny Acumen, as specified by the owner:**
+
+> *"you just let the user choose either Fortitude saves, Reflex saves, Will saves, or Perception and he
+> becomes expert at it. At 17th level, you become a master in his choice. Usually it shouldn't allow a
+> player to choose something he is already an expert in, but because at 17th level he becomes a master,
+> in this case allow it."*
+
+1. Four options: fortitude, reflex, will, perception.
+2. The pick grants **expert** in that track.
+3. At level 17 the **same** pick becomes **master** — an automatic upgrade, not a second choice.
+4. ⚠ The picker must **not** filter out a track the character is already expert in.
+
+### The principle — a deliberate exception to Q9
+
+| # | principle |
+|---|---|
+| **Q** | **An option is filtered out only when the grant would be genuinely WASTED. If a later level-scaling upgrade makes it worthwhile, the option stays.** |
+
+Q9 says the builder shows only what the player may legally pick, and the naive reading filters any
+option the character already has. Canny Acumen is the counter-example: choosing a save you are already
+expert in looks wasted at the moment you take it, and is not — the level-17 upgrade to master is the
+real prize. Filtering it would quietly deny the player the feat's whole point.
+
+**So option filtering must ask "is this wasted across the character's whole career?", not "is this
+redundant right now?"** Anywhere a feat scales at a later level, that later level is part of the answer.
