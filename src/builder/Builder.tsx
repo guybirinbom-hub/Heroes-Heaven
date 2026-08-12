@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { listValues } from '../data';
 import './builder.css';
 import {
@@ -21,6 +21,7 @@ import {
   levelChoices,
   subclassAnchorAt,
   backgroundGrantedFeats,
+  boundGrantChoice,
   choiceKeys,
   choiceOptionsFor,
 } from '../rules/build';
@@ -39,7 +40,7 @@ import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
-import { FEAT_FEAT_GRANTS } from '../rules/featFeatGrants';
+import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
 import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
@@ -469,6 +470,41 @@ export function Builder({
   const grantedChoicePicker = (grantedId: string) => {
     const def = content.feats[grantedId]?.choice;
     if (!def) return null;
+    /*
+     * A grant whose answer the GRANTING feat already gave gets no question at all — Weight of
+     * Experience's "the Assurance skill feat in that skill" is not a second choice, and offering all
+     * 16 skills let the player train one and be assured in another. Shown as a stated fact rather
+     * than dropped: ruling Q27's point is that the player must never be left wondering whether they
+     * missed a pick, and a granter that names the skill IS the answer to the question.
+     *
+     * The granter comes off the BUILT character (`grantedBy`) so this works from all three call
+     * sites, including the two that only know the granted feat's id.
+     *
+     * Rendered on the SPEC, not on the resolved value: Gnome Obsession's Lore has no default, so
+     * until the player names it there is no answer to show — and offering the free list meanwhile
+     * would hand them a control whose answer is discarded the moment they type the Lore in.
+     */
+    const granter = featPrereqChar.feats.find((f) => f.featId === grantedId)?.grantedBy;
+    if (granter && isBoundGrant(granter, grantedId)) {
+      const bound = boundGrantChoice(build, granter, grantedId);
+      const granterName = content.feats[granter]?.name ?? granter;
+      return (
+        <SubCard
+          key={`gfc-${grantedId}`}
+          icon="ti-adjustments"
+          label={`${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt)}`}
+        >
+          <div className="choice-inert">
+            <i className="ti ti-info-circle" aria-hidden="true" />
+            <span>
+              {bound
+                ? `${bound.label} — set by ${granterName}, which names the skill. Not a separate choice.`
+                : `Follows ${granterName}'s own choice above — answer that and this fills in.`}
+            </span>
+          </div>
+        </SubCard>
+      );
+    }
     const opts =
       def.kind === 'domains'
         ? domainPoolForChoice(build, content, grantedId, def.domainPool).map((d) => ({ value: d, label: cap(d) }))
@@ -2222,8 +2258,24 @@ export function Builder({
                       )}
                       {f.prerequisites && f.prerequisites.length > 0 && (
                         <div className="picker-prereq">
-                          {pre.met ? 'Requires: ' : 'Requires (unmet): '}
-                          {f.prerequisites.join(', ')}
+                          {pre.met ? (
+                            <>Requires: {f.prerequisites.join(', ')}</>
+                          ) : (
+                            // Mark WHICH clause blocks. The line printed every prerequisite in one
+                            // warn colour, so failing one of several read as failing all of them —
+                            // a Magaambyan attendant blocked on their branch was told they lacked
+                            // the dedication they were holding. Q27: an unpickable option must say
+                            // why, and a wrong reason is worse than a vague one.
+                            <>
+                              Requires (unmet):{' '}
+                              {f.prerequisites.map((p, i) => (
+                                <Fragment key={`${i}:${p}`}>
+                                  {i > 0 ? ', ' : ''}
+                                  <span className={pre.unmet.includes(p) ? 'prereq-unmet' : 'prereq-met'}>{p}</span>
+                                </Fragment>
+                              ))}
+                            </>
+                          )}
                         </div>
                       )}
                       {unmet && (allowed || canOverride) && (

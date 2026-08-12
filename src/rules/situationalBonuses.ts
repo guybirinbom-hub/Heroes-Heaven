@@ -3171,6 +3171,60 @@ export function featSituationalFor(
   return out;
 }
 
+/**
+ * A star whose TARGET is the PLAYER'S OWN ANSWER, supplied at display time.
+ *
+ * `FEAT_SITUATIONAL` names its targets outright, which only works when the affected stat is knowable
+ * when the entry is written. Assurance's is not — "choose a skill you're trained in" means the target
+ * is whichever skill this player picked, on this character, for this taking of a repeatable feat.
+ * There is no id to key a static entry to.
+ *
+ * The star is still required. Ruling Q20: *"remember Assurance needs to have a `*` on the skill that
+ * it affects."* Assurance moves no number — you take 10 + your proficiency bonus instead of rolling —
+ * so the skill row is the ONLY place a player would ever learn the feat reaches it. The same is true
+ * of every record below: each asks for a skill and then acts on that skill without changing its
+ * modifier, which is exactly the shape Q20's second test question was written for.
+ *
+ * Only the PROSE lives here, because the prose is the same for every taking; the target arrives from
+ * the character (see `choiceSituationalFor`).
+ *
+ * The answer is read as a SKILL key (`athletics`, `lore:games`) — every record listed asks a
+ * `kind: 'skills'` choice. A record whose answer named something else would need a kind field, and
+ * adding one now would be a field with no reader.
+ */
+export interface ChoiceSituational {
+  /** Short, player-facing trigger — as in `SituationalBonus`. */
+  when: string;
+  /** What it gives. Prose, not a modifier: none of these move a number. */
+  bonus: string;
+}
+export const CHOICE_SITUATIONAL: Record<string, ChoiceSituational[]> = {
+  // Ruling Q20, verbatim: "remember Assurance needs to have a `*` on the skill that it affects."
+  // Reached by a granted Assurance too (Eidetic Ear, Weight of Experience, Quah Bond, Gnome
+  // Obsession) — the granted feat carries its own answer on the character, so one entry covers all.
+  "assurance": [{ when: "you forgo the roll; no other bonus, penalty or modifier applies", bonus: "take 10 + your proficiency bonus instead of rolling" }],
+  // Prerequisite is "Assurance in that skill", so this star sits beside Assurance's own on the same
+  // skill — two different things the player does with it, and both belong where they look it up.
+  "automatic-knowledge": [{ when: "to Recall Knowledge with this skill, once per round", bonus: "a free action, and you must use Assurance" }],
+  // The chosen skill REPLACES Deception for this one use. Not a `skillSubstitutions` entry: that
+  // field names its skills on the record, and this one's is the player's answer.
+  "masterful-obfuscation": [{ when: "when you Lie about facts related to this skill's subject", bonus: "roll this skill instead of Deception" }],
+  "heroic-scion-dedication": [{ when: "on an action using this skill, if you spend a Mythic Point", bonus: "attempt the check at mythic proficiency" }],
+};
+
+/**
+ * The entries a record contributes once its choice is answered — the static prose above, aimed at
+ * the skill the player named.
+ *
+ * Returns the ordinary `SituationalBonus` shape so the synthesised entry travels the same display
+ * path as a shipped one and there is no second renderer to keep in step.
+ */
+export function choiceSituationalFor(recordId: string, answer: string): SituationalBonus[] {
+  const list = CHOICE_SITUATIONAL[recordId];
+  if (!list?.length || !answer) return [];
+  return list.map((e) => ({ targets: [{ kind: 'skill', detail: answer }], when: e.when, bonus: e.bonus }));
+}
+
 /** One line of the star list, before it is worded: who grants it, when it applies, and what it gives. */
 export interface SituationalLine {
   /** Display name of the source ("Ring of Sure Grip", "Inspire Courage"). */

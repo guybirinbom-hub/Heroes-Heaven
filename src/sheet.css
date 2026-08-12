@@ -7785,6 +7785,15 @@ button.strike-name:hover {
   color: var(--app-warn);
   margin-top: 2px;
 }
+/* Inside an UNMET prerequisite line, which clause is actually blocking. The whole line is warn, so
+   a prerequisite you DO meet has to step back to dim — otherwise a feat failing one clause of three
+   accuses you of failing all three, and the player has no way to see what to fix (Q27). */
+.picker-prereq .prereq-met {
+  color: var(--app-text-dim);
+}
+.picker-prereq .prereq-unmet {
+  font-weight: 600;
+}
 /* WHY an option can't be taken — "Already trained (from your background)", "Cantrips are full".
    The one shared reason line for every greyed-out option in the app (PickerRow rows and
    PopupSelect items alike), so "unpickable" always looks and reads the same wherever the player

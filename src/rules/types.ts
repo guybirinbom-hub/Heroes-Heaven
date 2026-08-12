@@ -1465,6 +1465,28 @@ export interface FeatChoiceDef {
     description?: string;
     grant?: EffectGrant;
     requiresSkillRank?: { skill: ProficiencyKey; min?: ProficiencyRank; max?: ProficiencyRank };
+    /**
+     * Picking this answer grants a named ELIGIBILITY TOKEN, so a later feat's prerequisite can require
+     * the ANSWER rather than a feat. Magaambyan Attendant's branch is the case: nine feats print
+     * "<Branch> affiliation" and, with nothing but feats and features in `checkPrerequisites`' has-set,
+     * every branch feat was offered to every attendant whichever branch they picked.
+     *
+     * Written as the exact prerequisite LINE it satisfies ("Cascade Bearers affiliation"). Matching
+     * normalizes case, hyphens, apostrophes and spacing away, so "Rain-Scribes affiliation" and
+     * "rain scribes affiliation" are one token. The prerequisite text is the token because
+     * `Feat.prerequisites` is a flat `string[]` with nowhere to hang a parallel per-line field — the
+     * alternative had to be authored on both ends and kept in sync.
+     *
+     * ⚠ A prerequisite line becomes ENFORCING only once some record DECLARES a matching token.
+     * Unmatched lines stay permissive on purpose: most prerequisite prose is unparseable ("member of
+     * the Magaambya of attendant rank"), and blocking on it would gate hundreds of feats on strings
+     * the app cannot read — far worse than the gap this closes.
+     *
+     * ⚠ Only the record types in `TOKEN_BUCKETS` (build.ts) participate. Declaring a token elsewhere
+     * is inert rather than wrong — the token never joins the character's held set, but it never joins
+     * the declared universe either, so the line simply stays permissive. Extend both halves together.
+     */
+    grantsToken?: string;
   }[];
   /**
    * Why this pick is RECORDED but grants nothing mechanical. Shown to the player next to the choice.
@@ -3571,6 +3593,16 @@ export interface Character {
    *  including options that carry only a note (a kineticist gate junction). Keyed by the owning
    *  record so a feat/feature row can label itself. */
   effectPicks?: { recordId: string; choiceId: string; label: string; note?: string }[];
+  /**
+   * Eligibility tokens the character's CHOICE ANSWERS grant (`FeatChoiceDef.options[].grantsToken`) —
+   * a Magaambyan attendant's branch. `checkPrerequisites` reads them, which is what lets a
+   * prerequisite line require an answer rather than a feat.
+   *
+   * DERIVED, like every field below the "final, built values" divider: `buildCharacter` recomputes it
+   * from `BuildState` on every build, so a saved character needs no migration and a stale value from
+   * an old save is simply overwritten.
+   */
+  choiceTokens?: string[];
   /** Secondary class DCs from multiclass dedications (Fighter/Ranger/Rogue/Alchemist Dedication) —
    *  the borrowed class's trained DC, shown alongside the primary class DC. */
   secondaryClassDcs?: { classId: string; name: string; keyAbility: AbilityId; dc: number; rank: ProficiencyRank }[];

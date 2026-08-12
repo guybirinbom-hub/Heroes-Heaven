@@ -15,6 +15,47 @@ export const FEAT_FEAT_GRANTS_LEVELED: Record<string, { feat: string; minLevel: 
   'covet-hoard': [{ feat: 'incredible-investiture', minLevel: 11 }],
 };
 
+/**
+ * How to answer a granted feat's sub-choice when the GRANTING feat has already answered it.
+ *
+ * The builder's default for a granted feat is to ask its own question, and for Assurance that is a
+ * free list of all 16 skills. Four granters do not permit that: their own text says which skill it
+ * is. Weight of Experience is the plainest — *"you gain the trained proficiency rank in one skill of
+ * your choice and the Assurance skill feat IN THAT SKILL"* — so asking a second time lets a player
+ * train Medicine and take Assurance in Stealth, which the feat never offered.
+ *
+ * `skillChoice`/`loreChoice` name an index into the granter's OWN `FEAT_GRANTS` entry, so the bound
+ * answer and the proficiency the grant hands out are read from the same stored pick and cannot
+ * disagree. `fixed` is for a granter that names the skill outright (Eidetic Ear: "Assurance
+ * (Performance)").
+ */
+export type BoundGrantAnswer =
+  | { kind: 'fixed'; skill: string }
+  | { kind: 'skillChoice'; index: number }
+  | { kind: 'loreChoice'; index: number };
+
+export const FEAT_GRANT_BOUND_CHOICE: Record<string, Record<string, BoundGrantAnswer>> = {
+  // "You gain the Assurance (Performance) feat."
+  'eidetic-ear': { assurance: { kind: 'fixed', skill: 'performance' } },
+  // "…trained proficiency rank in one skill of your choice and the Assurance skill feat in that skill"
+  'weight-of-experience': { assurance: { kind: 'skillChoice', index: 0 } },
+  // "…trained in the skill listed for your quah… You gain the Assurance skill feat in that skill"
+  'quah-bond': { assurance: { kind: 'skillChoice', index: 0 } },
+  // "You gain the Additional Lore feat and the Assurance feat FOR THE CHOSEN LORE."
+  'gnome-obsession': { assurance: { kind: 'loreChoice', index: 0 } },
+};
+
+/**
+ * Is this grant's sub-choice the granter's to answer?
+ *
+ * Distinct from resolving it, because a binding can be declared and not yet answerable — Gnome
+ * Obsession's Lore has no default until the player types a subject. The builder needs to withhold
+ * its free picker in BOTH states, or it offers a control whose answer is discarded.
+ */
+export function isBoundGrant(granterId: string, grantedId: string): boolean {
+  return !!FEAT_GRANT_BOUND_CHOICE[granterId]?.[grantedId];
+}
+
 export const FEAT_FEAT_GRANTS: Record<string, string[]> = {
   'alchemist-dedication': ['alchemical-crafting'],
   'alkenstar-agent-dedication': ['lie-to-me'],

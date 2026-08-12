@@ -67136,23 +67136,28 @@
    "options": [
     {
      "value": "cascade-bearers",
-     "label": "Cascade Bearers"
+     "label": "Cascade Bearers",
+     "grantsToken": "Cascade Bearers affiliation"
     },
     {
      "value": "emerald-boughs",
-     "label": "Emerald Boughs"
+     "label": "Emerald Boughs",
+     "grantsToken": "Emerald Boughs affiliation"
     },
     {
      "value": "rain-scribes",
-     "label": "Rain-Scribes"
+     "label": "Rain-Scribes",
+     "grantsToken": "Rain-Scribes affiliation"
     },
     {
      "value": "tempest-sun-mages",
-     "label": "Tempest-Sun Mages"
+     "label": "Tempest-Sun Mages",
+     "grantsToken": "Tempest-Sun Mages affiliation"
     },
     {
      "value": "uzunjati",
-     "label": "Uzunjati"
+     "label": "Uzunjati",
+     "grantsToken": "Uzunjati affiliation"
     }
    ]
   }

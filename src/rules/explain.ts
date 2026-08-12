@@ -52,6 +52,7 @@ import {
 import { mpArmorRefine } from './monsterParts';
 import { traitLabel } from './glossary';
 import {
+  choiceSituationalFor,
   featSituationalFor,
   hasFeatSituational,
   markersFor,
@@ -290,8 +291,30 @@ function degreeShiftMarkers(c: Character, db?: ContentDatabase): Record<string, 
 }
 
 function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituational | undefined {
-  if (!db) return undefined;
   let out: Record<string, SituationalBonus[]> | undefined;
+  /*
+   * A star whose TARGET IS THE PLAYER'S ANSWER (ruling Q20 — "Assurance needs to have a `*` on the
+   * skill that it affects"). `FEAT_SITUATIONAL` cannot hold these: it is keyed by record id and names
+   * its targets when it is written, and Assurance's target is whichever skill this character picked.
+   *
+   * Read off `f.choice`, the answer stored on the FeatChoice, rather than off the build — which is
+   * what makes one loop cover both routes into the feat. A granted Assurance (Eidetic Ear, Weight of
+   * Experience, Quah Bond, Gnome Obsession) carries its answer on its own feat entry exactly as a
+   * slot-picked one does, so neither needs a lane of its own.
+   *
+   * Keyed by the FEAT's id, not the granter's, so the note reads "from Assurance" and clicks through
+   * to the feat whose rule the player is being reminded of. Assurance is repeatable, so a character
+   * can have several entries under that one id — each with its own skill, which is precisely why
+   * `entriesFor` returns a list rather than one bonus.
+   *
+   * Above the `db` guard because it needs no content: everything it reads is on the character.
+   */
+  for (const f of c.feats ?? []) {
+    const answer = f.choice?.value;
+    if (!answer) continue;
+    for (const b of choiceSituationalFor(f.featId, answer)) ((out ??= {})[f.featId] ??= []).push(b);
+  }
+  if (!db) return out;
   for (const inv of c.inventory ?? []) {
     if (!(inv.equipped || inv.worn || inv.invested)) continue;
     const authored = db.items[inv.itemId]?.situational;

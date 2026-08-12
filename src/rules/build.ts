@@ -55,7 +55,7 @@ import { abilityMod, askedAtDailyPrep, choiceOwnedFeatureIds, classFeatureIdsOwn
 import { CLASS_ADVANCEMENT } from './advancement';
 import { applyCounterMods } from './counterMods';
 import { choiceGrantFor, FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
-import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED } from './featFeatGrants';
+import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE } from './featFeatGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from './featPickGrants';
 import { FEAT_CANTRIP_GRANTS } from './featCantripGrants';
 import { FORMULA_BOOK_ITEM_ID, formulaBookSource, formulaGrantsOwned, grantsFormulaBook, isFormulaBook, withFormula } from './formulaBook';
@@ -1069,10 +1069,62 @@ export function trainedSkillOptions(
   return Object.entries(character.proficiencies.skills)
     .filter(([, rank]) => PROFICIENCY_RANKS.indexOf(rank) >= floor)
     .sort(([aK, aR], [bK, bR]) => PROFICIENCY_RANKS.indexOf(bR) - PROFICIENCY_RANKS.indexOf(aR) || aK.localeCompare(bK))
-    .map(([key, rank]) => {
-      const name = key.startsWith('lore:') ? `${cap(key.slice(5).replace(/-/g, ' '))} Lore` : cap(key);
-      return { value: key, label: `${name} (${RANK_ABBR[rank]})` };
-    });
+    .map(([key, rank]) => ({ value: key, label: `${skillKeyLabel(key)} (${RANK_ABBR[rank]})` }));
+}
+
+/** A proficiency key as a player reads it: `athletics` → "Athletics", `lore:sea-shanties` → "Sea
+ *  shanties Lore". Shared so a bound grant's label and a picker's option cannot spell it differently. */
+export function skillKeyLabel(key: string): string {
+  return key.startsWith('lore:') ? `${cap(key.slice(5).replace(/-/g, ' '))} Lore` : cap(key);
+}
+
+/**
+ * The skill one `FEAT_GRANTS.skillChoices` slot resolves to — the player's pick, or the slot's first
+ *  option when they have not answered.
+ *
+ * The defaulting is the load-bearing part: an unanswered slot still trains SOMETHING, so anything
+ * that reads the answer afterwards has to reach the same skill or it names one the character was
+ * never trained in. Undefined only when the feat has no such slot.
+ */
+export function featSkillChoiceValue(
+  build: Pick<BuildState, 'featSkillChoices'>,
+  featId: string,
+  index: number,
+): ProficiencyKey | undefined {
+  const slot = FEAT_GRANTS[featId]?.skillChoices?.[index];
+  if (!slot) return undefined;
+  const opts = slot.options === 'any' ? SKILLS : slot.options;
+  const picked = build.featSkillChoices?.[`${featId}:${index}`];
+  return picked && opts.includes(picked) ? picked : opts[0];
+}
+
+/**
+ * The answer a GRANTING feat has already given on a granted feat's behalf, or undefined when the
+ * grant is free to ask for itself.
+ *
+ * Weight of Experience trains one skill and grants "the Assurance skill feat IN THAT SKILL". Asking
+ * Assurance's own question a second time let the player train Medicine and be assured in Stealth.
+ * Reading the granter's stored pick — through the same helper the proficiency grant uses — is what
+ * stops the two disagreeing.
+ *
+ * A Lore slot has no default: an un-named Lore has no key. So an unanswered one binds nothing and
+ * the grant stays unanswered rather than inventing a subject.
+ */
+export function boundGrantChoice(
+  build: Pick<BuildState, 'featSkillChoices' | 'featLoreChoices'>,
+  granterId: string,
+  grantedId: string,
+): { value: string; label: string } | undefined {
+  const spec = FEAT_GRANT_BOUND_CHOICE[granterId]?.[grantedId];
+  if (!spec) return undefined;
+  let key: string | undefined;
+  if (spec.kind === 'fixed') key = spec.skill;
+  else if (spec.kind === 'skillChoice') key = featSkillChoiceValue(build, granterId, spec.index);
+  else {
+    const subject = build.featLoreChoices?.[`${granterId}:${spec.index}`]?.trim();
+    if (subject) key = loreKey(subject);
+  }
+  return key ? { value: key, label: skillKeyLabel(key) } : undefined;
 }
 
 /**
@@ -3101,14 +3153,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           feats.find((f) => f.featId === srcId)?.level ??
           (content.classes[build.classId ?? '']?.features ?? []).find((f) => f.featureId === srcId)?.level ??
           1;
-        feats.push({ featId: gid, level: srcLevel, category: content.feats[gid].category as FeatCategory, grantedBy: srcId, choice: grantedChoiceById[gid] });
+        // A BOUND answer wins over the granted feat's own picker: Weight of Experience's Assurance
+        // belongs to the skill it just trained, and a stale free pick in `grantedFeatChoices` must
+        // not override the feat's own text. Only this lane reads it — the granters are all feats.
+        feats.push({ featId: gid, level: srcLevel, category: content.feats[gid].category as FeatCategory, grantedBy: srcId, choice: boundGrantChoice(build, srcId, gid) ?? grantedChoiceById[gid] });
         queue.push(gid);
       }
       // Level-gated grants (Covet Hoard → Incredible Investiture at 11th) — only once high enough.
       for (const lg of FEAT_FEAT_GRANTS_LEVELED[srcId] ?? []) {
         if (level < lg.minLevel || takenFeats.has(lg.feat) || !content.feats[lg.feat]) continue;
         takenFeats.add(lg.feat);
-        feats.push({ featId: lg.feat, level: lg.minLevel, category: content.feats[lg.feat].category as FeatCategory, grantedBy: srcId, choice: grantedChoiceById[lg.feat] });
+        feats.push({ featId: lg.feat, level: lg.minLevel, category: content.feats[lg.feat].category as FeatCategory, grantedBy: srcId, choice: boundGrantChoice(build, srcId, lg.feat) ?? grantedChoiceById[lg.feat] });
         queue.push(lg.feat);
       }
     }
@@ -3201,9 +3256,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // player's pick, defaulting to the first option (or Acrobatics for an 'any' slot). Trains that
     // skill (RAISES only).
     (g.skillChoices ?? []).forEach((slot, idx) => {
-      const opts = slot.options === 'any' ? SKILLS : slot.options;
-      const picked = build.featSkillChoices?.[`${fc.featId}:${idx}`];
-      const skill = picked && opts.includes(picked) ? picked : opts[0];
+      const skill = featSkillChoiceValue(build, fc.featId, idx)!;
       const cur = proficiencies.skills[skill] ?? 'untrained';
       // A conditional slot ("trained; expert if already trained" on a CHOSEN skill — Lion Blade)
       // upgrades when the pick already met `base` before this grant.
@@ -4595,6 +4648,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (b) featHp += (b.perLevel ?? 0) * level + (b.flat ?? 0);
   }
 
+  /**
+   * Eligibility tokens the character's choice ANSWERS grant — see Character.choiceTokens and the
+   * `grantsToken` note on FeatChoiceDef. Collected from exactly the buckets TOKEN_BUCKETS names,
+   * because `declaredTokens` scans that same list to decide which prerequisite lines may block.
+   *
+   * A feat's answer is already resolved onto `feats[].choice` (which covers granted feats too, not
+   * just slot picks). The other three keep theirs in `build.featChoices` under the `feature:` /
+   * `heritage:` / `background:` keys, so they are read from there.
+   */
+  const choiceTokens = (() => {
+    const out = new Set<string>();
+    const take = (def: FeatChoiceDef | undefined, value: string | undefined) => {
+      if (!def?.options?.length || !value) return;
+      // A multi-pick answer is stored JOINED ("forest,swamp"), so each half is looked up separately —
+      // otherwise a two-pick choice could only ever grant the token of a value nothing equals.
+      for (const v of value.split(',')) {
+        const t = def.options.find((o) => o.value === v.trim())?.grantsToken;
+        if (t) out.add(t);
+      }
+    };
+    for (const fc of feats) take(content.feats[fc.featId]?.choice, fc.choice?.value);
+    for (const fid of classFeatureIdsOwned(build, content)) take(content.classFeatures[fid]?.choice, build.featChoices?.[`feature:${fid}`]);
+    for (const hid of [build.heritageId, secondHeritageId]) if (hid) take(content.heritages[hid]?.choice, build.featChoices?.[`heritage:${hid}`]);
+    if (background) take(background.choice, build.featChoices?.[backgroundChoiceKey(background.id)]);
+    return [...out];
+  })();
+
   return {
     id: `char-${slug(build.name)}`,
     schemaVersion: CHARACTER_SCHEMA_VERSION,
@@ -4726,6 +4806,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(Object.keys(resolvedItemPassives).length ? { resolvedItemPassives } : {}),
     ...(effectWarnings.length ? { effectWarnings } : {}),
     ...(effectPicks.length ? { effectPicks } : {}),
+    ...(choiceTokens.length ? { choiceTokens } : {}),
     ...(secondaryClassDcs.length ? { secondaryClassDcs } : {}),
     ...(() => {
       // Body size (ancestry, raised by any feat/heritage sizeOverride — largest wins) + natural reach.
@@ -5605,6 +5686,8 @@ export function levelGrants(
  *    feature / heritage / subclass (so feature-prereqs like a rogue's Sneak Attack
  *    aren't false-blocked). Names that aren't known feats (darkvision, "focus pool",
  *    compound "X or Y", …) are shown but not enforced.
+ *  - CHOICE TOKEN (the line matches a `grantsToken` some record declares) — "met" only if one of the
+ *    character's choice answers granted it. See `declaredTokens`.
  */
 const ABILITY_BY_NAME: Record<string, AbilityId> = {
   strength: 'str',
@@ -5619,6 +5702,50 @@ const ABILITY_BY_NAME: Record<string, AbilityId> = {
 // feat with multiple ability prereqs uses the comma convention = AND (need both). The Foundry data
 // stores both shapes as identical separate entries, so the OR cases must be an explicit allow-list.
 const ABILITY_OR_FEATS = new Set(['fighter-dedication', 'monk-dedication']);
+
+/**
+ * The content buckets whose `choice.options[].grantsToken` participates in the eligibility lane.
+ *
+ * ⚠ Used TWICE, and the two uses MUST agree: `buildCharacter` collects the character's held tokens
+ * from these records, and `declaredTokens` scans the same list to decide which prerequisite lines are
+ * allowed to block. Scanning a bucket nothing collects from would make a line enforcing for a token
+ * no character can ever hold — the feat would become permanently untakeable.
+ */
+const TOKEN_BUCKETS = ['feats', 'classFeatures', 'heritages', 'backgrounds'] as const;
+
+/** Normalize a prerequisite line or a declared token for comparison. Case, hyphens, apostrophes and
+ *  spacing all differ between how a prerequisite is printed ("Rain-Scribes affiliation") and how a
+ *  token might reasonably be authored, and none of those differences mean anything. */
+const normToken = (s: string): string =>
+  s.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+
+/**
+ * Every token any record DECLARES, normalized. This is the gate that keeps the lane safe: a
+ * prerequisite line becomes enforcing ONLY when it appears here.
+ *
+ * Making unmatched lines blocking instead would gate hundreds of feats on prose the app cannot parse
+ * ("member of the Magaambya of attendant rank", "ability to cast shield"), which is a far worse bug
+ * than the unenforced ones — so the default stays permissive and authoring a token is the opt-in.
+ *
+ * Memoized per ContentDatabase: `checkPrerequisites` runs once per row of a feat picker, and rescanning
+ * ~6,200 feats each time would be a full content walk per keystroke. A WeakMap keys off the database
+ * identity, so a rebuilt/filtered database (the builder's `ovContent` vs `content`) gets its own entry
+ * and none of them pin memory.
+ */
+const declaredTokenCache = new WeakMap<ContentDatabase, Set<string>>();
+function declaredTokens(content: ContentDatabase): Set<string> {
+  const cached = declaredTokenCache.get(content);
+  if (cached) return cached;
+  const tokens = new Set<string>();
+  for (const bucket of TOKEN_BUCKETS) {
+    const records = content[bucket] as Record<string, { choice?: FeatChoiceDef } | undefined> | undefined;
+    for (const rec of Object.values(records ?? {})) {
+      for (const o of rec?.choice?.options ?? []) if (o.grantsToken) tokens.add(normToken(o.grantsToken));
+    }
+  }
+  declaredTokenCache.set(content, tokens);
+  return tokens;
+}
 
 export function checkPrerequisites(
   feat: Feat,
@@ -5637,7 +5764,20 @@ export function checkPrerequisites(
     if (id) has.add(id);
   }
 
+  // Tokens this character's CHOICE ANSWERS grant (Magaambyan branch, …), and the universe of tokens
+  // anything declares. Both normalized once, outside the loop.
+  const declared = declaredTokens(content);
+  const held = new Set((character.choiceTokens ?? []).map(normToken));
+
   for (const line of feat.prerequisites ?? []) {
+    // A DECLARED token is checked FIRST, ahead of every pattern below: it is an explicit authored
+    // statement about this exact line, where the patterns are guesses at what the prose means. Lines
+    // nobody declared fall straight through, so nothing that used to be permissive becomes blocking.
+    const tok = normToken(line);
+    if (declared.has(tok)) {
+      if (!held.has(tok)) unmet.push(line);
+      continue;
+    }
     const am = line.match(/^(strength|dexterity|constitution|intelligence|wisdom|charisma)\s+\+(\d+)$/i);
     if (am) {
       abilityResults.push({
