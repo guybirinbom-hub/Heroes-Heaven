@@ -33,6 +33,7 @@ import type {
   RuneDef,
   SenseEntry,
   SkillRankGate,
+  SpecialStatGrant,
   StanceStrike,
   SubclassOption,
   ItemDesignation,
@@ -459,6 +460,131 @@ export function deriveClassDc(c: Character): StatLine & { dc: number } {
     profBonus(rank, c.level, pwl(c)) +
     poolTypedMods([...conditionTypedMods(c.conditions, key, 'class-dc'), ...modeTypedMods(c.activeModes, { kind: 'class-dc' })]);
   return { rank, modifier, dc: 10 + modifier };
+}
+
+/** One derived row of the `specialStatistic` lane — see SpecialStatGrant for what earns a row. */
+export interface SpecialStat {
+  key: string;
+  name: string;
+  kind: 'attack' | 'dc';
+  /** What the row prints: a roll modifier for `attack`, a DC for `dc`. */
+  value: number;
+  rank: ProficiencyRank;
+  ability: AbilityId;
+  /** The class DC it is defined against, and whether that DC is borrowed from an archetype. */
+  basisClassId: string;
+  basisClassName: string;
+  borrowed: boolean;
+  itemBonus: number;
+  itemBonusFrom?: string;
+  note?: string;
+  /** Every owned record that grants this statistic — the breakdown names them. */
+  sourceIds: string[];
+}
+
+/**
+ * Resolve a `specialStatistic` basis to the class DC it names.
+ *
+ * Returns null when the character has no class DC for that class at all, which is the whole reason
+ * the lane keys off a class rather than a bare rank: the printed formula ("uses the same proficiency
+ * and attribute modifier as your kineticist class DC") has no value without one, so the row is
+ * absent rather than invented.
+ *
+ * A BORROWED DC (`secondaryClassDcs`, from a multiclass dedication) counts. That is not a convenience
+ * — Kineticist Dedication's own text grants "kineticist class DC and impulse attack rolls" in one
+ * sentence, so the two must resolve from the same place or an archetype kineticist would roll against
+ * a rank nothing set.
+ */
+function specialStatBasis(
+  c: Character,
+  db: ContentDatabase,
+  classId: string,
+): { rank: ProficiencyRank; ability: AbilityId; borrowed: boolean; className: string } | null {
+  if (c.classId === classId || c.classId2 === classId) {
+    // `c.keyAbility` is the same single value deriveClassDc uses; under Dual Class the app carries one
+    // class-DC key attribute, and reading a different one here would print two class DCs that disagree.
+    return {
+      rank: c.proficiencies.classDc,
+      ability: c.keyAbility ?? 'str',
+      borrowed: false,
+      className: db.classes[classId]?.name ?? classId,
+    };
+  }
+  const sec = c.secondaryClassDcs?.find((d) => d.classId === classId);
+  return sec ? { rank: sec.rank, ability: sec.keyAbility, borrowed: true, className: sec.name } : null;
+}
+
+/**
+ * Every named statistic this character has that no other row on the sheet is labelled for.
+ *
+ * Collapsed by `key`: the kineticist class feature and Kineticist Dedication both grant the impulse
+ * attack roll, and a character can only ever have one of them, but a future record that names the
+ * same statistic must not produce a second row saying the same number.
+ */
+export function deriveSpecialStats(c: Character, db: ContentDatabase): SpecialStat[] {
+  const grants = new Map<string, { g: SpecialStatGrant; sourceIds: string[] }>();
+  const collect = (rec: DefenseGrants | undefined, id: string) => {
+    const raw = rec?.specialStatistic;
+    if (!raw) return;
+    for (const g of Array.isArray(raw) ? raw : [raw]) {
+      const at = grants.get(g.key);
+      if (at) at.sourceIds.push(id);
+      else grants.set(g.key, { g, sourceIds: [id] });
+    }
+  };
+  for (const f of c.feats ?? []) collect(db.feats[f.featId], f.featId);
+  for (const fid of ownedFeatureIds(c, db)) collect(db.classFeatures[fid], fid);
+
+  const out: SpecialStat[] = [];
+  for (const [key, { g, sourceIds }] of grants) {
+    const basis = specialStatBasis(c, db, g.basis.classDc);
+    if (!basis) continue;
+    // The item bonus names ONE statistic (a gate attenuator raises the impulse attack modifier "but
+    // not to your impulse DC"), so it is matched by key and never by a generic attack/DC channel.
+    // ⚠ Conservative-adjacent reading: the attenuators print "If you're a kineticist", which strictly
+    // excludes an archetype kineticist. Matching on the statistic instead keeps this lane free of a
+    // hard-coded class id, and it can only ever reach a character who already has that statistic.
+    let itemBonus = 0;
+    let itemBonusFrom: string | undefined;
+    for (const inv of c.inventory) {
+      if (!(inv.worn || inv.invested || inv.equipped)) continue;
+      const b = db.items[inv.itemId]?.passiveEffects?.specialStatBonus;
+      if (b?.key !== key || !b.value || b.value <= itemBonus) continue;
+      itemBonus = b.value;
+      itemBonusFrom = db.items[inv.itemId]?.name ?? inv.itemId;
+    }
+    const base = abilityModOf(c, basis.ability) + profBonus(basis.rank, c.level, pwl(c));
+    // An attack-roll statistic takes the same typed pools a Strike does; a DC statistic takes the
+    // class-DC pools, because every DC entry in this lane IS a class DC put to a named use.
+    const mods =
+      g.kind === 'attack'
+        ? poolTypedMods([
+            { type: 'item', value: itemBonus },
+            ...conditionTypedMods(c.conditions, basis.ability, 'attack'),
+            ...modeTypedMods(c.activeModes, { kind: 'attack' }),
+          ])
+        : poolTypedMods([
+            { type: 'item', value: itemBonus },
+            ...conditionTypedMods(c.conditions, basis.ability, 'class-dc'),
+            ...modeTypedMods(c.activeModes, { kind: 'class-dc' }),
+          ]);
+    out.push({
+      key,
+      name: g.name,
+      kind: g.kind,
+      value: (g.kind === 'dc' ? 10 : 0) + base + mods,
+      rank: basis.rank,
+      ability: basis.ability,
+      basisClassId: g.basis.classDc,
+      basisClassName: basis.className,
+      borrowed: basis.borrowed,
+      itemBonus,
+      itemBonusFrom,
+      note: g.note,
+      sourceIds,
+    });
+  }
+  return out;
 }
 
 export interface SpellStats {
@@ -1214,13 +1340,67 @@ export function mapStepFor(c: Character, db: ContentDatabase, traits: string[]):
   const on = (state?: string) => !state || (c.classResources?.[state] ?? 0) > 0;
   const consider = (g: DefenseGrants | undefined) => {
     const r = g?.mapReduction;
-    if (!r || !on(r.whileState)) return;
+    // `appliesWhen` reductions never move the number — see the field's comment on DefenseGrants. They
+    // reach the player through `mapNotesFor` and the strike breakdown instead.
+    if (!r || r.appliesWhen || !on(r.whileState)) return;
     const candidate = agile ? r.agileStep : r.step;
     if (candidate != null && candidate < step) step = candidate;
   };
   for (const f of c.feats ?? []) consider(db.feats[f.featId]);
   for (const fid of ownedFeatureIds(c, db)) consider(db.classFeatures[fid]);
   return step;
+}
+
+/** One line of provenance for a Strike's multiple attack penalty. */
+export interface MapNote {
+  /** The record that prints the progression. */
+  sourceId: string;
+  /** Its label — "Flurry (hunted prey)". */
+  label: string;
+  /** The second/third attack penalties this source states for THIS Strike, e.g. [3, 6]. */
+  steps: [number, number];
+  /** True when the source is the one the printed numbers came from; false = an alternative that the
+   *  app cannot tell applies (`appliesWhen`), shown so the player can apply it themselves. */
+  applied: boolean;
+  /** For an unapplied source: the circumstance it needs, printed verbatim. */
+  when?: string;
+}
+
+/**
+ * Where a Strike's multiple attack penalty came from — the whole answer, applied and unapplied.
+ *
+ * `mapStepFor` returns a bare number, so a strike row could show −3/−6 with nothing anywhere saying
+ * why, and a reduction the app deliberately does NOT apply (Combination Finisher, whose Strikes only
+ * qualify while they are part of a finisher) would have been invisible rather than merely uncounted.
+ * Both are failures of the same kind: the sheet knows something about the player's numbers and does
+ * not say it. This is what the breakdown prints.
+ *
+ * Returns [] for an ordinary −5/−10 Strike with no reductions owned — there is nothing to explain.
+ */
+export function mapNotesFor(c: Character, db: ContentDatabase, traits: string[]): MapNote[] {
+  const agile = traits.includes('agile');
+  const applied = mapStepFor(c, db, traits);
+  const notes: MapNote[] = [];
+  const on = (state?: string) => !state || (c.classResources?.[state] ?? 0) > 0;
+  const consider = (g: DefenseGrants | undefined, id: string) => {
+    const r = g?.mapReduction;
+    if (!r) return;
+    const candidate = agile ? r.agileStep : r.step;
+    // A source that says nothing about THIS Strike explains nothing about it: Agile Grace prints only
+    // an agile step, and listing it under a greatsword would claim a reduction the feat never grants.
+    if (candidate == null) return;
+    if (r.appliesWhen) {
+      notes.push({ sourceId: id, label: r.note ?? id, steps: [candidate, candidate * 2], applied: false, when: r.appliesWhen });
+      return;
+    }
+    // A state-gated source that is switched off is not "an alternative the player can choose to
+    // apply" — it is simply not running, and the toggle that turns it on is already on their sheet.
+    if (!on(r.whileState)) return;
+    if (candidate === applied) notes.push({ sourceId: id, label: r.note ?? id, steps: [candidate, candidate * 2], applied: true });
+  };
+  for (const f of c.feats ?? []) consider(db.feats[f.featId], f.featId);
+  for (const fid of ownedFeatureIds(c, db)) consider(db.classFeatures[fid], fid);
+  return notes;
 }
 
 export function deriveAc(c: Character, db: ContentDatabase): AcResult {
@@ -1283,7 +1463,10 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   // proficiency. Returning here rather than adding is the whole point of the lane — pest form says
   // "AC 15", and folding that in as a bonus would have given a champion 45.
   const form = activeBattleForm(c);
-  if (form?.ac != null) return { value: form.ac, rank, dexCap: effDexCap, fromBattleForm: true };
+  // Resolved, not read raw: every printed form states "AC = N + your level", so the authored value is
+  // a formula string far more often than it is a number. `resolveFormula` returns the number
+  // unchanged, so a hand-written flat AC still behaves exactly as it did.
+  if (form?.ac != null) return { value: resolveFormula(form.ac, { level: c.level, abilities: c.abilities }), rank, dexCap: effDexCap, fromBattleForm: true };
   return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + armorBase + pooled, rank, dexCap: effDexCap };
 }
 
@@ -2096,8 +2279,11 @@ export interface Strike {
   dmgBonus: number;
   /** Extra damage dice beyond the base die, from striking/ABP. */
   strikingDice: number;
-  /** Multiple-attack-penalty step (4 agile, 5 otherwise). */
+  /** Multiple-attack-penalty step (4 agile, 5 otherwise, lower if a feat changes the progression). */
   mapStep: number;
+  /** Where a NON-default progression came from, plus any reduction the app cannot tell applies.
+   *  Empty/absent on an ordinary −5/−10 Strike. See mapNotesFor. */
+  mapSources?: MapNote[];
   /** Conditional extra-damage riders that apply only in a specific circumstance (Sneak Attack when
    *  off-guard, Ranger Precision on the first hit vs hunted prey). Rendered as an annotation on the
    *  strike row and in the damage breakdown — NOT folded into the flat `dmgBonus`/`damage` dice. */
@@ -2973,6 +3159,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     poolTypedMods([{ type: 'item', value: potencyBonus }, ...condMods, ...modeTypedMods(c.activeModes, { kind: 'attack' })]);
 
   const step = mapStepFor(c, db, w.traits);
+  const mapSources = mapNotesFor(c, db, w.traits);
   const attack = [base, base - step, base - step * 2];
 
   const strikingExtra = Math.max(
@@ -3091,6 +3278,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     dmgBonus,
     strikingDice: strikingExtra,
     mapStep: step,
+    mapSources: mapSources.length ? mapSources : undefined,
     conditionalDamage: conditionalDamage.length ? conditionalDamage : undefined,
   };
 }
@@ -3143,7 +3331,14 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
     profBonus(c.proficiencies.classDc, c.level, pwl(c)) +
     conditionPenalty(c.conditions, 'con', 'attack') +
     modeNumberBonus(c.activeModes, { kind: 'attack' });
-  const attack = [base, base - 5, base - 10];
+  // MAP belongs to the character, not to the attack — a ranger/kineticist's Flurry lowers it on an
+  // Elemental Blast against their hunted prey too. Hardcoding −5/−10 here made this the one strike
+  // source that ignored a changed progression. A blast has no agile trait, so this is 5 for everyone
+  // who owns no reduction, which is what it printed before.
+  const blastTraits = ['attack', 'impulse', 'kineticist'];
+  const step = mapStepFor(c, db, blastTraits);
+  const mapSources = mapNotesFor(c, db, blastTraits);
+  const attack = [base, base - step, base - step * 2];
   const dice = 1 + [5, 9, 13, 17].filter((l) => c.level >= l).length;
   // Unconditional damage-mode bonuses (e.g. Courageous Anthem) apply to blasts too; fold them into
   // dmgBonus so the strike-damage breakdown (which sums these via modeAdjust) reconciles with the total.
@@ -3186,7 +3381,8 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
         potencyBonus: 0,
         dmgBonus: flat,
         strikingDice: dice - 1,
-        mapStep: 5,
+        mapStep: step,
+        mapSources: mapSources.length ? mapSources : undefined,
       };
     });
 }
@@ -3256,6 +3452,7 @@ function deriveUnarmedStrike(
       ...modeTypedMods(c.activeModes, { kind: 'attack' }),
     ]);
   const step = mapStepFor(c, db, p.traits);
+  const mapSources = mapNotesFor(c, db, p.traits);
   const attack = [base, base - step, base - step * 2];
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
   // Thief racket also applies to a finesse UNARMED attack (thief.json selector melee-strike-damage) —
@@ -3336,6 +3533,7 @@ function deriveUnarmedStrike(
     dmgBonus,
     strikingDice: strikingExtra,
     mapStep: step,
+    mapSources: mapSources.length ? mapSources : undefined,
     conditionalDamage: conditionalDamage.length ? conditionalDamage : undefined,
   };
 }
@@ -3403,10 +3601,15 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
   // striking runes, no ability modifier, because a bat's fangs do not care how strong you are.
   const form = activeBattleForm(c);
   if (form?.strikes?.length) {
-    const step = 5; // Form strikes are agile only if the form says so, via their own traits.
     return form.strikes.map((s, i) => {
       const atk = form.attackMod ?? 0;
-      const mapStep = (s.traits ?? []).includes('agile') ? 4 : step;
+      // The multiple attack penalty is a property of the CHARACTER, not of the weapon in their hands,
+      // and nothing in the battle-form rules suspends it — so a Flurry ranger keeps −3/−6 while
+      // transformed. This was a literal `agile ? 4 : 5`, which silently reinstated the default
+      // progression for exactly the four characters who own a different one. Form strikes are agile
+      // only when the form's own traits say so, which is what gets passed here.
+      const mapStep = mapStepFor(c, db, s.traits ?? []);
+      const mapSources = mapNotesFor(c, db, s.traits ?? []);
       return {
         instanceId: `form:${i}`,
         name: s.name,
@@ -3424,6 +3627,7 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
         dmgBonus: 0,
         strikingDice: 1,
         mapStep,
+        mapSources: mapSources.length ? mapSources : undefined,
         fromBattleForm: true,
       } satisfies Strike;
     });

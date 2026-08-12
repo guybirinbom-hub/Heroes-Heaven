@@ -49,7 +49,7 @@ for (const cls of Object.values(core.classes ?? {})) {
 const types = read('src/rules/types.ts');
 const EFFECT = new Set(
   [...types.matchAll(/^ {2}([a-zA-Z][\w]*)\??:/gm)].map((m) => m[1]).filter((f) =>
-    /^(resistances|weaknesses|immunities|senses|speeds|speedPenalty|landSpeedBonus|landSpeedMin|effectChoices|choice|choiceResistance|situational|innateSpells|focusSpells|focusPoolBonus|spellcastingGrant|spellSlotBonus|grantedFeatId|grantsFeats|grantsGeneralFeat|grantedStrikes|trainedSkill|trainedLore|trainedSkillChoice|loreChoices|dynamicSkillBonus|classDcGrant|classDcRank|limitedUses|usesUpgrade|critSpec|conditionalSenses|senseIfFeat|speedsIf|negativeHealing|grantsLanguages|darkvisionIfAncestryLowLight|maxHpBonus|strikeDamage|mapReduction|whileActive|unarmedTraits|refocusRestore|sizeOverride|reach)$/.test(f),
+    /^(resistances|weaknesses|immunities|senses|speeds|speedPenalty|landSpeedBonus|landSpeedMin|effectChoices|choice|choiceResistance|situational|innateSpells|focusSpells|focusPoolBonus|spellcastingGrant|spellSlotBonus|grantedFeatId|grantsFeats|grantsGeneralFeat|grantedStrikes|trainedSkill|trainedLore|trainedSkillChoice|loreChoices|dynamicSkillBonus|classDcGrant|classDcRank|specialStatistic|limitedUses|usesUpgrade|critSpec|conditionalSenses|senseIfFeat|speedsIf|negativeHealing|grantsLanguages|darkvisionIfAncestryLowLight|maxHpBonus|strikeDamage|mapReduction|whileActive|unarmedTraits|refocusRestore|sizeOverride|reach)$/.test(f),
   ),
 );
 const hasEffect = (r) => Object.keys(r ?? {}).some((k) => EFFECT.has(k) && r[k] != null && (!Array.isArray(r[k]) || r[k].length));

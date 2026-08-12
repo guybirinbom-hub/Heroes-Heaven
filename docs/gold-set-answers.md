@@ -360,11 +360,116 @@ behaviour the owner rejected.
 | gap | records | ruling |
 |---|---|---|
 | **Aura** | 39 | **A mode.** Fits Q11 (it can be shut down) and Q1 (it outlasts a round). Ruling F still governs the numbers: an ally's bonus lands on no sheet of yours, but the mode shows it is running and carries the full text (Principle B). It also gives later feats that rewrite an aura something to attach to (Principle C). |
-| **Special statistic** | 9 | **Very important — build it.** A named statistic with its own DC that is not a save, a skill or the class DC. Gunslinger Dedication needs a *secondary* class DC for a class the character does not have. |
-| **Multiple attack penalty** | 4 | **Very important — build it.** Flurry and Agile Grace change the MAP progression itself (−3/−6 rather than −5/−10). `mapStep` is currently fixed. |
+| **Special statistic** | 9 | **Very important — build it.** A named statistic with its own DC that is not a save, a skill or the class DC. Gunslinger Dedication needs a *secondary* class DC for a class the character does not have. → **BUILT, see Q30** |
+| **Multiple attack penalty** | 4 | **Very important — build it.** Flurry and Agile Grace change the MAP progression itself (−3/−6 rather than −5/−10). `mapStep` is currently fixed. → **BUILT, see Q31** (the engine half already existed) |
 | Ephemeral effect | 21 | **No implementation.** |
 | Roll twice | 6 | **No implementation.** |
 | Fast healing | 4 | **No implementation** — rounds are not tracked. |
+
+### Q29 — the aura lane, as built (2026-08-12)
+
+**38 aura modes authored** (`scripts/author-aura-modes.mjs` → `scripts/data/toggle-modes.json`,
+`category: 'Aura'`), plus **20 `modeAdjust` rewrites** in `effect-backfill.json`.
+
+How "which records are auras" was decided, in order:
+1. Foundry's 39 `Aura` rule elements over our live feats + class features were the EVIDENCE set that
+   produced the ruling — reproduced exactly, then read against our own text one by one.
+2. **12 of the 39 are not auras of their own**: they REWRITE one (seven champion-aura feats, Blessed
+   Swiftness, Wide Overwatch, Glorious Banner, and the two later regalia benefits). Those became
+   `modeAdjust` rows on the aura they change — Principle C — rather than 12 extra toggles. That
+   leaves **27 of the 39 creating an aura**.
+3. **Foundry's silence carries no information**, so our own text was scanned independently: **11 more
+   aura-creating records** it does not mark, including Shield the Faithful, and the **earth** gate's
+   Aura Junction — Foundry marks the Aura Junction on the other five gates and not on that one.
+   27 + 11 = the 38 modes. Eight further rewriters came from the same scan.
+4. Excluded by a ruling, not by taste: Survive the Wilds (lasts 1 round — **Q1**), the Lantern
+   implement's umbrella record (**Ruling A**), Form Up! / Rattle the Earth (they use an aura as a
+   RANGE), War Rider Stance (the aura is the dragon companion's — the companion ruling).
+
+Numbers: **real** (the stat moves) only where the text puts no further condition on your half beyond
+the aura running AND no `situationalBonuses.ts` star already claims it — 4 modes. **Conditional**
+(`appliesWhen`; displays, moves nothing) where the text restricts it or a star already carries it.
+**Text only** for the 23 that land on allies or enemies — Ruling F.
+
+Two readers had to be fixed for the data to be anything but write-only: `adjustModes` looked in
+`content.feats` alone, so a class feature could never rewrite a mode; and `playerModeLibrary` put
+every gated content mode in the panel's "Your modes" section, which is not relevance-filtered.
+
+⚠ Still deferred, and measured rather than guessed: ~18 kineticist STANCE impulses reshape the
+kinetic aura (Thermal Nimbus, Shattershields, Winter Sleet …). They belong to the stance lane, which
+already carries several of them, and were left there rather than duplicated as modes.
+
+### Q30 — the special-statistic lane, as built (2026-08-12)
+
+**The lane test, and the answer to "how did you decide it was not an existing stat renamed":** a
+record joins only when **our own text names the statistic AND the number is not already printed on
+the sheet under another label.** Both halves do work.
+
+**Built:** `specialStatistic` on the record → `deriveSpecialStats` → a **Special statistics** rail
+card with a clickable breakdown, plus `passiveEffects.specialStatBonus` for an item bonus that names
+one statistic and no other. Three records authored:
+
+| record | statistic | why it qualifies |
+|---|---|---|
+| `classFeatures/impulses` | **Impulse attack roll** | our own text states the formula; 18 impulse feats roll it; a *gate attenuator* raises it *"(but not to your impulse DC)"*, so it is provably not the class DC |
+| `feats/kineticist-dedication` | the same, for an archetype kineticist | its own sentence grants *"kineticist class DC and impulse attack rolls"* together |
+| `feats/scroll-thaumaturgy` | **Scroll DC** | the owner's second example — a DC belonging to a THING, with no row of its own |
+
+⚠ **Gunslinger Dedication — the owner's clearest case — is an existing stat under another name, and
+the app already had the lane.** `classDcGrant` → `secondaryClassDcs` → the *Multiclass DCs* rail card
+shipped some time ago, and Gunslinger Dedication itself already carried the field. What was actually
+broken was **data**: of 16 dedications printing *"You become trained in ⟨class⟩ class DC"*, **9 carried
+nothing** (barbarian, champion, guardian, inventor, investigator, kineticist, monk, swashbuckler,
+thaumaturge), and Brilliant Crafter's *"expert in your inventor class DC"* had no `classDcRank` to
+raise a DC that was never granted. All ten are now authored.
+
+`basis` names a **class DC** rather than a rank, so an archetype character resolves through the
+borrowed DC and a feat that raises it raises the statistic too — which is why Expert Kinetic Control
+needed no entry of its own.
+
+**Excluded, each for a stated reason** — see `docs/mechanic-lanes.md` for the table. The one worth
+repeating: the **6 deviant classifications** are 6 of Foundry's 9 `SpecialStatistic` uses, and our own
+text names no deviant statistic anywhere — not the classifications, not the deviant feats, not AoN's
+five Dark Archive rules pages read from the local archive. Building the number from Foundry's rule
+element alone would import another implementation's ruling.
+
+### Q31 — the multiple attack penalty, as built (2026-08-12)
+
+The engine half was **already built** (commit 6201fcf: `mapReduction` + `mapStepFor`), and three of
+the four records were authored. Measured, the lane is four — the same four Foundry marks, and the
+same four our own text yields when scanned for a stated progression:
+
+| record | progression | state |
+|---|---|---|
+| `classFeatures/flurry` | −3/−6, −2/−4 agile, vs hunted prey | already authored |
+| `classFeatures/masterful-hunter-flurry` | −2/−4, −1/−2 agile | already authored |
+| `feats/agile-grace` | −3/−6, agile only | already authored |
+| `feats/combination-finisher` | −4/−8, −3/−6 agile, on FINISHER Strikes | **authored now** |
+
+**How agile and a replaced progression are kept from compounding.** `mapStepFor` starts at the
+default (4 agile / 5 otherwise) and takes the **lowest printed candidate for that agile-ness**. It
+never subtracts. Each record states its own pair — Flurry prints *"−3 (−2 with an agile attack)"* —
+so the matching one REPLACES the default and the agile discount can never be applied twice. Agile
+Grace states only an `agileStep`, which is why a greatsword in its owner's hands is still −5/−10, and
+a 17th-level Flurry ranger owning both Flurry and Masterful Hunter gets the better pair (2/1), not
+their sum.
+
+**Combination Finisher does not move a number**, and that is the ruling rather than an omission.
+Whether a Strike is *part of a finisher* is a fact about the ACTION, decided at the table; no toggle
+on the sheet can answer it. `whileState: 'panache'` was the tempting shape and is wrong — having
+panache is what lets you MAKE a finisher, not proof this Strike is one, so it would hand the player
+−4/−8 on every ordinary Strike while flush. It carries `appliesWhen`, displays, and moves nothing.
+
+**Three fixes were needed for the progression to actually reach the strike row.** The row prints
+three numbers derived from the step, and two of the four strike builders computed it from a literal
+`agile ? 4 : 5` — so a battle-formed or blasting character silently reverted to −5/−10. Both now read
+`mapStepFor`. And the breakdown now names the source (*"That progression comes from Flurry (hunted
+prey)"*), which it never did.
+
+⚠ **Combination Finisher's rule was hand-copied into `situationalBonuses.ts`** — the only one of the
+four whose rule lived there, restating numbers held nowhere else and checked by nothing. The star is
+now generated from the `mapReduction` field itself, so the row's `*`, its note and the breakdown all
+read the authored numbers. Same one-registry lesson as `degreeShifts`.
 
 ### ⚠ Two lanes are built but EMPTY
 

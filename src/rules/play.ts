@@ -552,10 +552,14 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     // A feat can CHANGE a mode before anything reads it (Extend Elixir doubles the duration, Perfect
     // Mutagen drops the drawback). Applied here, where a mode id becomes the live object, so every
     // reader downstream sees the adjusted version instead of each one having to remember to adjust.
+    // Class FEATURES rewrite modes too — Blessed Swiftness and the regalia benefits each add a line
+    // to an aura they did not create (Principle C) — and their ids live in ownedFeatureIds, never in
+    // ch.feats, so leaving them out made those records write-only.
     activeModes: adjustModes(
       (play.activeModes ?? []).map((id) => content.modes[id]).filter(Boolean),
       ch.feats ?? [],
       content,
+      ownedFeatureIds(ch, content),
     ),
     activeStance: play.activeStance && content.stances?.[play.activeStance] ? play.activeStance : undefined,
     companionModes: Object.fromEntries(

@@ -105,4 +105,78 @@ describe('battle forms replace rather than add', () => {
     expect(deriveAc(plain, con).fromBattleForm).toBeUndefined();
     expect(deriveStrikes(plain, con).some((s) => s.fromBattleForm)).toBe(false);
   });
+
+  it('AC accepts the FORMULA every printed form actually states', () => {
+    // No battle form in the game prints a flat AC — they all say "AC = N + your level". Typed as a
+    // number the field could not hold one, so a pest-form druid would have sat at AC 15 forever.
+    const { c, content: con } = mk({ ac: '15+@actor.level' });
+    expect(deriveAc(c, con).value).toBe(25); // level 10
+    expect(deriveAc(c, con).fromBattleForm).toBe(true);
+  });
+});
+
+/**
+ * The AUTHORING pass (scripts/apply-battle-forms.mjs). The lane above was built and carried zero
+ * records, so none of it ran on any real character.
+ */
+describe('battleForm — the shipped modes', () => {
+  const forms = () => Object.values(db().modes ?? {}).filter((m) => (m as ModeDef).battleForm) as ModeDef[];
+
+  it('the content ships battle-form modes (it shipped with none)', () => {
+    expect(forms().length).toBeGreaterThanOrEqual(16);
+  });
+
+  it('every battle-form mode is mutually exclusive and gated to the record that grants it', () => {
+    const con = db();
+    for (const m of forms()) {
+      // Two forms at once would merge into a creature that exists in no book — activeBattleForm takes
+      // the first and the rest silently vanish, so the data must not allow it.
+      expect(`${m.id}: ${m.exclusiveGroup}`).toBe(`${m.id}: battle-form`);
+      // Ungated modes are "general" and show for every character (modeRelevant), which would put
+      // sixteen polymorph forms in front of a fighter who can use none of them.
+      expect(`${m.id}: ${(m.feats ?? []).length > 0}`).toBe(`${m.id}: true`);
+      for (const f of m.feats ?? []) expect(`${m.id}: ${f}`).toBe(`${m.id}: ${con.feats[f] ? f : 'NO SUCH FEAT'}`);
+    }
+  });
+
+  it('every mode carries the full printed text, including the parts the app cannot compute', () => {
+    // Ruling Q3's second half — "must make plain a mode is active and what changed" — plus principle
+    // B. `size` and `tempHp` are authored but read by nothing yet, so the note is what the player sees.
+    for (const m of forms()) expect(`${m.id}: ${(m.note ?? '').length > 60}`).toBe(`${m.id}: true`);
+  });
+
+  it("a form's AC formula resolves against the character's own level", () => {
+    const con = db();
+    const critter = con.modes?.['critter-shape'] as ModeDef | undefined;
+    expect(critter?.battleForm?.ac).toBe('15+@actor.level');
+    const base = buildCharacter({ ...emptyBuild(), level: 8, ancestryId: 'dwarf', backgroundId: Object.keys(con.backgrounds)[0], classId: 'champion', subclassId: con.classes.champion?.subclass?.options?.[0]?.id ?? null, keyAbility: 'str' }, con);
+    expect(deriveAc({ ...base, activeModes: [critter!] } as Character, con).value).toBe(23);
+  });
+
+  it('a form that says "you use your own AC and attack modifier" writes neither', () => {
+    // Dragon Transformation. An absent field means "keep the character's own value", and that is the
+    // ONLY way to say it — writing a guess would silently replace a real statistic.
+    const dt = db().modes?.['dragon-transformation'] as ModeDef | undefined;
+    expect(dt?.battleForm).toBeDefined();
+    expect(dt?.battleForm?.ac).toBeUndefined();
+    expect(dt?.battleForm?.attackMod).toBeUndefined();
+    // …and no strikes either, because deriveStrikes would roll them at attackMod ?? 0.
+    expect(dt?.battleForm?.strikes).toBeUndefined();
+    expect(dt?.battleForm?.speeds?.fly).toBe(100);
+  });
+
+  it('no authored form prints Strikes without an attack modifier to roll them at', () => {
+    for (const m of forms()) {
+      const bf = m.battleForm!;
+      const bad = (bf.strikes?.length ?? 0) > 0 && bf.attackMod == null;
+      expect(`${m.id}: ${bad ? 'STRIKES AT +0' : 'ok'}`).toBe(`${m.id}: ok`);
+    }
+  });
+
+  it('a form that grants a fly Speed and keeps its land Speed says both', () => {
+    // `speeds` REPLACES the block outright, so 4th-rank pest form has to restate the 20-foot land
+    // Speed or the bat would lose it — the trap that made a dwarf in pest form walk at 45.
+    const bat = db().modes?.['bat-form'] as ModeDef | undefined;
+    expect(bat?.battleForm?.speeds).toEqual({ land: 20, fly: 20 });
+  });
 });

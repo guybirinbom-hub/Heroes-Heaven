@@ -101,6 +101,7 @@ carries → candidates. Two buckets matter:
 | lane | the text says | satisfied by |
 |---|---|---|
 | `weaponRider` | changes a weapon's damage, range, traits, or reload | `weaponTraits`, `strikeDamage` |
+| `mapReduction` | the MULTIPLE ATTACK PENALTY PROGRESSION itself changes — "your multiple attack penalty … is −3 (−2 with an agile attack) … instead of −5 … and −6 … instead of −10" | `mapReduction` on the record. **4 records, all authored.** ⚠ It REPLACES, never discounts: a record states its own pair and `mapStepFor` takes the lowest printed candidate for that agile-ness, so the agile trait's −4 can never be applied twice. A reduction the sheet cannot evaluate (Combination Finisher's "your finishers' Strikes") carries `appliesWhen`, moves no number, and becomes a `*` on the strike row |
 | `critSpec` | grants or changes critical specialization | `critSpec`, `critSpecWeapons`, `critSpecLevel` |
 | `favoredWeapon` | a deity's favoured weapon | `favoredWeapons` |
 
@@ -126,11 +127,15 @@ carries → candidates. Two buckets matter:
 | `limitedUses` | "N times per day/hour", a per-day resource | `limitedUses`, `featUses`, `usesUpgrade` |
 | `extraReaction` | "You gain an additional reaction" | `extraReaction` |
 | `note` | a clause worth printing on the sheet but not computable | `note` |
+| `degreeShift` | a degree of success CHANGES — "a success is a critical success instead", "a critical failure is a failure instead", "one degree of success better" | `degreeShifts` on the record. Owner ruling **Q2**: one entry stars the skill AND marks the action, and all three saves when it applies to saves generally. ⚠ Do **not** also write the sentence into `situationalBonuses.ts` — that was two registries drifting apart, which is why the field exists |
+| `aura` | the record CREATES a persistent emanation centred on you (or on a banner, implement or mount you carry) — "a 15-foot emanation", "you and allies within 30 feet", "you emanate a nimbus" | a **mode** with `category: 'Aura'` in `scripts/data/toggle-modes.json`, gated to the record that projects it. Owner ruling **Q29**. ⚠ A record that merely USES an aura as a range ("an ally in your champion's aura") is not one — it is a consumer. A record that CHANGES another's aura is a **rewriter**: `modeAdjust` matched to that aura's mode id, never a second toggle |
+| `battleForm` | the text states statistics that REPLACE yours — "AC = 18 + your level", "these are the only attacks you can Strike with", "Speed 40 feet" | `battleForm` on a **mode** (`scripts/data/toggle-modes.json`). Owner ruling **Q3**. ⚠ Every other lane ADDS; this one SETS, and a field the text does not state must stay ABSENT — absent is the only way to say "keep the character's own value" |
 
 ## K. Structural
 
 | lane | the text says | satisfied by |
 |---|---|---|
+| `specialStatistic` | a NAMED statistic the player rolls, or whose DC an opponent beats, that no row on the sheet is labelled for — "Make an **impulse attack roll**", "using your thaumaturge class DC for **the scroll's DC**" | `specialStatistic` on the record; `passiveEffects.specialStatBonus` for an item bonus that names it. Rendered as the **Special statistics** rail card, with a breakdown. Owner ruling **Round 9** |
 | `classArchetype` | replaces class features wholesale | `classArchetype` |
 | `advancement` | changes what a class table gives at a level | `advancement.ts` |
 
@@ -146,6 +151,8 @@ are empty.
 |---|---|---|
 | `builtInRunes` | the item's own text calls it "a *+2 greater striking flaming* longsword" | **no field exists.** 551 live items. Verified: Obsidian Edge (True) renders +21/1d10 instead of +24/3d10 + 1d6 fire |
 | `armorTyped` | "Usage worn armor", "Base Armor X" on a record stored as something other than armour | **65 live items** cannot be worn as armour at all |
+| `degreeShiftDown` | the degree gets WORSE — "use the result one degree of success worse", "if you roll a critical success, you get a success instead", "a failure becomes a critical failure" | **no value exists.** `DegreeShift.shift` has four values and all four improve. 9 live records; they stay as `situationalBonuses.ts` prose, which can at least say it in words. Listed in `scripts/apply-degree-shifts.mjs` → `DOWNGRADES` |
+| `noStrikes` | a battle form says "you can't make Strikes" | **no field exists.** `BattleForm.strikes` REPLACES your Strikes, and an empty array is read as "the form grants none", which leaves your weapons in place. Pest form, A Little Bird Told Me and Bone Swarm carry the clause in their mode `note` instead |
 
 ---
 
@@ -178,8 +185,14 @@ and the item in the companion's inventory. Absence from the character's sheet is
 
 ### Ruling M — an aura you might not be standing in
 Whether an emanation includes you depends on where you stand, **which the app can never know.** The
-owner chose a permanent star carrying the positional condition in its note — not a mode, not a pill,
-and emphatically not a positional model. **Auras are not a missing system.**
+owner chose a permanent star carrying the positional condition in its note — and emphatically not a
+positional model.
+
+⚠ **Q29 (Round 9) revised the "not a mode" half of this.** *"Aura should be a mode."* The star stays —
+it is what the player sees on the stat row — and the mode is added on top: it shows the aura is
+RUNNING, carries the full text including the ally half (Principle B / Ruling F), and gives the feats
+that rewrite an aura something to attach to (Principle C). **The no-positional-model half is
+untouched**: nothing is derived from who is standing inside the emanation. See the `aura` lane below.
 
 ### Ruling E — consumables, in three cases
 1. instantaneous only (a healing potion) → **no mode at all**
@@ -246,6 +259,27 @@ random sampling were exactly this shape — a wand keyed to rank 6 when its text
 
 So this is a complement to the nine field-comparison checks in `npm run verify`, not a replacement.
 The two instruments are blind to opposite things.
+
+### `specialStatistic` — the test, and what it deliberately EXCLUDES
+
+A record joins only when **our own text names the statistic AND the number is not already printed on
+the sheet under another label.** Two shapes qualify:
+
+- **created** — the statistic exists only because of this record. The kineticist's impulse attack
+  roll: our own text states the whole formula, 18 impulse feats say "Make an impulse attack roll",
+  and a *gate attenuator* raises it *"(but not to your impulse DC)"*, which makes it provably a
+  different number from the class DC.
+- **borrowed for a named use** — the record binds an existing statistic to a thing that has no row.
+  Scroll Thaumaturgy: *"using your thaumaturge class DC for the scroll's DC"*.
+
+**Excluded — an existing stat under another name.** Each was checked and rejected for a stated reason:
+
+| not in the lane | why |
+|---|---|
+| the **16 archetype class DCs** (Gunslinger Dedication and kin) | the class DC of a class you do not have. Already a lane: `classDcGrant` → `secondaryClassDcs` → the *Multiclass DCs* rail card. What was wrong was DATA, not the lane |
+| a record that **raises** a statistic already in the lane (Expert Kinetic Control) | it carries `classDcRank`, and the statistic follows the class DC it is defined against. A second rank track for one printed rule is how two numbers for one roll appear |
+| a record **pointing at a statistic that already has a row** (Kinetic Activation, Alchemical Power, Intensify Investiture) | *"you can substitute your impulse attack roll or class DC"* — printing that number a third time under a third name |
+| the **6 deviant classifications** (6 of Foundry's 9 `SpecialStatistic` uses) | Foundry gives them a `deviant` statistic extending the class DC. **Our own text never names one** — not the classifications, not the deviant feats, not AoN's five Dark Archive rules pages. Specification comes from our own text |
 
 ### `dedicationGate` — a Special clause restricting further dedications
 

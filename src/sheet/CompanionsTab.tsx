@@ -44,7 +44,7 @@ import { companionModKeys, featGrantedCompanions, offeredCreatures, CREATURE_OFF
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
-import { CATALOG_MODES, playerModeLibrary } from '../rules/modes';
+import { CATALOG_MODES, contentGatedModes, playerModeLibrary } from '../rules/modes';
 import { FEAT_SITUATIONAL } from '../rules/situationalBonuses';
 import { AddItemsModal } from './AddItemsModal';
 import { PickerRow, descNodeOf } from './FilterableSelect';
@@ -1613,7 +1613,8 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           onClose={() => setCondFor(null)}
           modesEnabled
           library={playerModeLibrary(Object.values(content.modes), charKey)}
-          predefined={CATALOG_MODES}
+          // Gated content modes sit beside the catalog — see the note at the VitalsRail call site.
+          predefined={[...CATALOG_MODES, ...contentGatedModes(Object.values(content.modes))]}
           catalog={CATALOG_MODES}
           classId={character.classId}
           ancestryId={character.ancestryId}

@@ -8,6 +8,7 @@ import type {
   AbilityId,
   Character,
   ContentDatabase,
+  DefenseGrants,
   ProficiencyKey,
   ProficiencyRank,
   SaveId,
@@ -21,7 +22,7 @@ import { deriveInitiative } from './initiative';
 import { conditionPenalty } from './conditions';
 import { modeModifiersFor, hasConditionalMode, activeModesTouch, type ModeTarget } from './modes';
 import { abpOn, abpSave, abpPerception, abpDefense, abpSkillBonus } from './abp';
-import type { CharacterDefenses } from './derive';
+import type { CharacterDefenses, MapNote } from './derive';
 import {
   wornArmorOf,
   RANK_VALUE,
@@ -36,6 +37,7 @@ import {
   resilientSaveBonus,
   deriveSkill,
   deriveSpeeds,
+  deriveSpecialStats,
   deriveSpellcasting,
   deriveStrikes,
   formatMod,
@@ -75,6 +77,8 @@ export type StatRef =
   | { kind: 'perception' }
   | { kind: 'ac' }
   | { kind: 'classDc' }
+  /** A row of the `specialStatistic` lane, addressed by its statistic key (`impulse-attack`). */
+  | { kind: 'specialStat'; statKey: string }
   | { kind: 'spell'; entryId: string; which: 'dc' | 'attack' }
   // Damage dealt by your spells. It has no computed total of its own — the number lives on each
   // spell — so this row exists purely to hold the conditional bonuses that modify it.
@@ -336,10 +340,40 @@ function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituation
         // Q2: a general save clause stars all three. `detail: 'all'` is already what targetMatches
         // reads as all three, so no per-save fan-out is needed here.
         ...(sh.saves ?? []).map((detail) => ({ kind: 'save', detail }) as SituationalTarget),
+        // Perception is a number the player looks up on its own row, exactly as a skill is — see the
+        // note on `DegreeShift.perception` for why the field had to exist before any conversion ran.
+        ...(sh.perception ? [{ kind: 'perception' } as SituationalTarget] : []),
       ];
       if (!targets.length) continue; // an actions-only shift is carried entirely by its markers
       ((out ??= {})[id] ??= []).push({ targets, when: sh.when, bonus: DEGREE_SHIFT_TEXT[sh.shift] ?? sh.shift });
     }
+  }
+  /*
+   * A MAP reduction the app cannot evaluate becomes a strike-attack star, off the SAME
+   * `mapReduction` field the numeric ones use.
+   *
+   * Combination Finisher used to be hand-written into `situationalBonuses.ts` — the only one of the
+   * four MAP records that was, because it is the only one whose numbers never move. That is two
+   * registries for one rule, which is exactly the drift the `degreeShifts` field was created to end:
+   * the prose there said "-4 (-3 with an agile weapon) … instead of -5/-10" and nothing checked it
+   * against the record. Generating it means the star, its wording and the breakdown all read the
+   * authored numbers, and a change to them cannot leave one surface behind.
+   */
+  if (db) {
+    const mapConditional = (id: string, rec: { mapReduction?: DefenseGrants['mapReduction'] } | undefined) => {
+      const r = rec?.mapReduction;
+      if (!r?.appliesWhen) return;
+      const pair = (n?: number) => (n == null ? null : `${formatMod(-n)}/${formatMod(-n * 2)}`);
+      const plain = pair(r.step);
+      const agile = pair(r.agileStep);
+      ((out ??= {})[id] ??= []).push({
+        targets: [{ kind: 'strikeAttack' }],
+        when: `when the Strike is ${r.appliesWhen}`,
+        bonus: `multiple attack penalty ${[plain, agile && `${agile} with an agile weapon`].filter(Boolean).join(', ')}`,
+      });
+    };
+    for (const f of c.feats) mapConditional(f.featId, db.feats[f.featId]);
+    for (const id of ownedFeatureIds(c, db)) mapConditional(id, db.classFeatures[id]);
   }
   // A CONDITIONAL skill substitution ("use Nature instead of Medicine to Treat Wounds") is exactly a
   // situational note: it does NOT move the skill's number — Natural Medicine's own text says it
@@ -559,6 +593,25 @@ const DESC: Record<string, string> = {
   classDc: 'The DC enemies roll against for your class’s special abilities.',
   hp: 'Your Hit Points: ancestry HP plus (class HP + Constitution modifier) for each level.',
 };
+
+/**
+ * The sentence(s) that follow the MAP line in a strike breakdown.
+ *
+ * Two different jobs, and both matter to the player:
+ *   • an APPLIED source names what changed the printed −3/−6 from the default −5/−10, so the number
+ *     is attributable rather than mysterious.
+ *   • an UNAPPLIED source is a reduction the app refuses to fold in because whether this Strike
+ *     qualifies is decided at the table (Combination Finisher's "your finishers' Strikes"). Printing
+ *     it is the entire surface that lane gets — silently applying it would over-grant on every
+ *     ordinary Strike, and silently dropping it would hide a feat the player paid for.
+ */
+function mapProvenance(sources: MapNote[] | undefined): string {
+  // Only the APPLIED half. An unapplied reduction reaches the player as a `*` on the strike row and a
+  // line in this same popup's star list, generated from the same field in `authoredSituational` —
+  // saying it twice in one popup is how the two would come to disagree.
+  const applied = sources?.filter((s) => s.applied) ?? [];
+  return applied.map((s) => ` That progression comes from ${s.label}.`).join('');
+}
 
 function profPart(rank: ProficiencyRank, level: number, withoutLevel = false): CalcPart {
   if (rank === 'untrained')
@@ -893,6 +946,34 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         situational,
       };
     }
+    case 'specialStat': {
+      const stat = deriveSpecialStats(c, db).find((s) => s.key === ref.statKey);
+      if (!stat) return { title: 'Special statistic', totalText: '—', parts: [], timeline: [] };
+      const parts: CalcPart[] = [];
+      if (stat.kind === 'dc') parts.push({ label: 'Base', value: 10 });
+      parts.push(profPart(stat.rank, lvl, pwl(c)), abilityPart(c, stat.ability));
+      if (stat.itemBonus) parts.push({ label: stat.itemBonusFrom ?? 'Item', note: 'item bonus', value: stat.itemBonus });
+      const cond = conditionPart(c, stat.ability, stat.kind === 'dc' ? 'class-dc' : 'attack');
+      if (cond) parts.push(cond);
+      const situational = situationalList(modeAdjust(c, { kind: stat.kind === 'dc' ? 'class-dc' : 'attack' }, parts), featSituationalLines(c, db, ref));
+      // Naming the basis is the point of the row: this statistic has no proficiency track of its own,
+      // it borrows one, and a player who raises that class DC needs to know this number follows it.
+      const basis = `${stat.basisClassName} class DC${stat.borrowed ? ' (archetype)' : ''}`;
+      return {
+        title: stat.name,
+        subtitle: `${basis} · ${ABIL_LABEL[stat.ability]}`,
+        totalText: stat.kind === 'dc' ? String(stat.value) : formatMod(stat.value),
+        rank: stat.rank,
+        parts,
+        timeline: [],
+        description:
+          (stat.note ? stat.note + ' ' : '') +
+          `Its proficiency rank and key attribute are those of your ${basis}, so anything that raises that DC raises this too.` +
+          (stat.sourceIds.length ? ` From ${stat.sourceIds.map((id) => nameOfRecord(db, id)).join(', ')}.` : ''),
+        roll: stat.kind === 'attack' ? { label: stat.name, modifier: stat.value } : undefined,
+        situational,
+      };
+    }
     case 'spell': {
       const entry = c.spellcasting.find((e) => e.id === ref.entryId) as SpellcastingEntry | undefined;
       if (!entry) return { title: 'Spellcasting', totalText: '—', parts: [], timeline: [] };
@@ -1082,7 +1163,13 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         rank: strike.rank,
         parts,
         timeline: [],
-        description: `Your attack-roll modifier. Multiple attack penalty: ${formatMod(-strike.mapStep)} on a second attack this turn, ${formatMod(-strike.mapStep * 2)} on a third.`,
+        description:
+          `Your attack-roll modifier. Multiple attack penalty: ${formatMod(-strike.mapStep)} on a second attack this turn, ` +
+          `${formatMod(-strike.mapStep * 2)} on a third.` +
+          // A changed progression showed up as a bare number with nothing saying what changed it, and a
+          // reduction the app deliberately does not apply (Combination Finisher — only its finishers'
+          // Strikes qualify, which the sheet cannot know) was invisible altogether. Both are printed.
+          mapProvenance(strike.mapSources),
         roll: { label: `${strike.name} attack`, modifier: strike.attack[0] },
         situational,
       };

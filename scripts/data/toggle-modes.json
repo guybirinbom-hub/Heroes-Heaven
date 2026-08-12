@@ -3294,5 +3294,1112 @@
       }
     ],
     "note": "Immanence: you're affected by a 4th-rank Enlarge — you become Huge, your reach increases by 10 feet, you gain a +4 status bonus to melee damage and are clumsy 1. You can forgo this effect when your body ikon becomes empowered."
+  },
+  "critter-shape": {
+    "id": "critter-shape",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Critter Shape",
+    "feats": [
+      "critter-shape"
+    ],
+    "duration": "up to 10 minutes, once per hour",
+    "battleForm": {
+      "ac": "15+@actor.level",
+      "speeds": {
+        "land": 20
+      },
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Tiny"
+    },
+    "note": "Critter Shape: the effect of a 1st-rank pest form, in an animal matching your inherent animal. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on."
+  },
+  "rat-form": {
+    "id": "rat-form",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Rat Form",
+    "feats": [
+      "rat-form"
+    ],
+    "battleForm": {
+      "ac": "15+@actor.level",
+      "speeds": {
+        "land": 20
+      },
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Tiny"
+    },
+    "note": "Rat Form: the effect of a 1st-rank pest form, as a Tiny rat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on."
+  },
+  "crawling-form": {
+    "id": "crawling-form",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Crawling Form",
+    "feats": [
+      "crawling-form"
+    ],
+    "battleForm": {
+      "ac": "15+@actor.level",
+      "speeds": {
+        "land": 20
+      },
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Tiny"
+    },
+    "note": "Crawling Form: the effect of a 1st-rank pest form, in a shape matching your heritage. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on."
+  },
+  "bat-form": {
+    "id": "bat-form",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Bat Form",
+    "feats": [
+      "bat-form"
+    ],
+    "duration": "once per hour",
+    "battleForm": {
+      "ac": "15+@actor.level",
+      "speeds": {
+        "land": 20,
+        "fly": 20
+      },
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Tiny"
+    },
+    "note": "Bat Form: the effect of a 4th-rank pest form, as a bat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on. At 14th level you can spend 2 actions instead to gain a 4th- or 5th-rank aerial form (bat only) — those statistics are not this mode."
+  },
+  "form-of-the-bat": {
+    "id": "form-of-the-bat",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Form of the Bat",
+    "feats": [
+      "form-of-the-bat"
+    ],
+    "duration": "once per hour",
+    "battleForm": {
+      "ac": "15+@actor.level",
+      "speeds": {
+        "land": 20,
+        "fly": 20
+      },
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Tiny"
+    },
+    "note": "Form of the Bat: the effect of a 4th-rank pest form, always a bat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on."
+  },
+  "a-little-bird-told-me": {
+    "id": "a-little-bird-told-me",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "A Little Bird Told Me",
+    "feats": [
+      "a-little-bird-told-me"
+    ],
+    "battleForm": {
+      "ac": "20+@actor.level",
+      "speeds": {
+        "fly": 25
+      },
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Tiny"
+    },
+    "note": "A Little Bird Told Me: AC = 20 + your level, fly Speed 25 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form. You resume your normal shape automatically at 0 Hit Points."
+  },
+  "ancestors-rage": {
+    "id": "ancestors-rage",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Ancestors’ Rage (canine)",
+    "feats": [
+      "ancestors-rage"
+    ],
+    "duration": "once per day, 5th-rank animal form",
+    "battleForm": {
+      "ac": "18+@actor.level",
+      "attackMod": 18,
+      "strikes": [
+        {
+          "name": "Jaws",
+          "damage": "4d8+7 piercing",
+          "traits": [
+            "unarmed",
+            "reach-15"
+          ]
+        }
+      ],
+      "speeds": {
+        "land": 40
+      },
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Huge",
+      "tempHp": 20
+    },
+    "note": "Ancestors’ Rage: a 5th-rank animal form, canine only, as an enormous otherworldly hyena. AC = 18 + your level, 20 temporary Hit Points, attack modifier +18, Athletics +20 unless yours is higher, Huge with 15-foot reach. The jaws print 2d8 piercing with a +7 damage bonus; 5th rank doubles the damage dice, so it deals 4d8+7. You gain the animal trait and must have room to expand into Huge."
+  },
+  "form-of-the-beloved-mother": {
+    "id": "form-of-the-beloved-mother",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Form of the Beloved Mother (snake)",
+    "feats": [
+      "form-of-the-beloved-mother"
+    ],
+    "duration": "once per day, 5th-rank animal form",
+    "battleForm": {
+      "ac": "18+@actor.level",
+      "attackMod": 18,
+      "strikes": [
+        {
+          "name": "Fangs",
+          "damage": "4d4+7 piercing plus 1d6 poison",
+          "traits": [
+            "unarmed",
+            "reach-15"
+          ]
+        }
+      ],
+      "speeds": {
+        "land": 20,
+        "climb": 20,
+        "swim": 20
+      },
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Huge",
+      "tempHp": 20
+    },
+    "note": "Form of the Beloved Mother: a 5th-rank animal form, snake only. AC = 18 + your level, 20 temporary Hit Points, attack modifier +18, Athletics +20 unless yours is higher, Huge with 15-foot reach. Snake fangs print 2d4 piercing plus 1d6 poison with a +7 damage bonus; 5th rank doubles the printed damage dice, so the piercing becomes 4d4+7 (the rider poison die is left as printed — the spell doubles \"the number of damage dice\", and the conservative reading is that the rider is not part of the form’s listed damage). Spending an extra action also casts 5th-rank slither, which never harms you."
+  },
+  "storm-form": {
+    "id": "storm-form",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Storm Form (air elemental)",
+    "feats": [
+      "storm-form"
+    ],
+    "duration": "once per day, 7th-rank elemental form",
+    "battleForm": {
+      "ac": "22+@actor.level",
+      "attackMod": 25,
+      "strikes": [
+        {
+          "name": "Gust",
+          "damage": "2d4+11 bludgeoning",
+          "traits": [
+            "unarmed",
+            "reach-15"
+          ]
+        }
+      ],
+      "speeds": {
+        "fly": 80
+      },
+      "senses": [
+        {
+          "name": "darkvision"
+        }
+      ],
+      "size": "Huge",
+      "tempHp": 20
+    },
+    "note": "Storm Form: a 7th-rank elemental form, air only. AC = 22 + your level, 20 temporary Hit Points, attack modifier +25, Acrobatics +25 unless yours is higher, darkvision, Huge with 15-foot reach. Your movement does not trigger reactions. The gust prints 1d4 bludgeoning with a +11 damage bonus; 7th rank doubles the damage dice, so it deals 2d4+11. You have hands and can take manipulate actions."
+  },
+  "transcend-the-azimuth-sun": {
+    "id": "transcend-the-azimuth-sun",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Transcend the Azimuth (sun)",
+    "feats": [
+      "transcend-the-azimuth"
+    ],
+    "duration": "once per day, 7th-rank cosmic form",
+    "battleForm": {
+      "ac": "21+@actor.level",
+      "attackMod": 25,
+      "strikes": [
+        {
+          "name": "Fist",
+          "damage": "2d6+10 fire plus 1d6 persistent fire",
+          "traits": [
+            "agile",
+            "unarmed",
+            "reach-10"
+          ]
+        },
+        {
+          "name": "Sunbeam",
+          "damage": "1d6+10 fire plus 1d6 persistent fire",
+          "traits": [
+            "range-90"
+          ],
+          "ranged": true
+        }
+      ],
+      "speeds": {
+        "land": 30,
+        "fly": 50
+      },
+      "senses": [
+        {
+          "name": "darkvision"
+        }
+      ],
+      "size": "Large",
+      "tempHp": 20
+    },
+    "note": "Transcend the Azimuth, sun form: AC = 21 + your level, 20 temporary Hit Points, darkvision, attack modifier +25, Athletics +25 unless yours is higher, Large. On a critical hit with either Strike the target is dazzled for 1 round. You have hands and can take manipulate actions. Sustaining lets you switch to the moon form once per turn — switch the mode over when you do."
+  },
+  "transcend-the-azimuth-moon": {
+    "id": "transcend-the-azimuth-moon",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Transcend the Azimuth (moon)",
+    "feats": [
+      "transcend-the-azimuth"
+    ],
+    "duration": "once per day, 7th-rank cosmic form",
+    "battleForm": {
+      "ac": "21+@actor.level",
+      "attackMod": 25,
+      "strikes": [
+        {
+          "name": "Fist",
+          "damage": "2d4+10 bludgeoning plus 1d6 fire",
+          "traits": [
+            "agile",
+            "unarmed",
+            "reach-10"
+          ]
+        },
+        {
+          "name": "Moonbeam",
+          "damage": "2d4+10 fire",
+          "traits": [
+            "range-90"
+          ],
+          "ranged": true
+        }
+      ],
+      "speeds": {
+        "land": 30,
+        "fly": 50
+      },
+      "senses": [
+        {
+          "name": "darkvision"
+        }
+      ],
+      "size": "Large",
+      "tempHp": 20
+    },
+    "note": "Transcend the Azimuth, moon form: AC = 21 + your level, 20 temporary Hit Points, darkvision, attack modifier +25, Athletics +25 unless yours is higher, Large. This form’s fire damage counts as silver for resistances and weaknesses. On a critical hit with either Strike the target is stupefied 2 for 1 round. Sustaining lets you switch to the sun form once per turn — switch the mode over when you do."
+  },
+  "worm-form-purple-worm": {
+    "id": "worm-form-purple-worm",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Worm Form (purple worm)",
+    "feats": [
+      "worm-form"
+    ],
+    "battleForm": {
+      "ac": "20+@actor.level",
+      "attackMod": 25,
+      "strikes": [
+        {
+          "name": "Jaws",
+          "damage": "3d10+15 piercing",
+          "traits": [
+            "unarmed",
+            "deadly-2d10",
+            "reach-15"
+          ]
+        },
+        {
+          "name": "Stinger",
+          "damage": "2d12+15 piercing plus 2d6 persistent poison",
+          "traits": [
+            "agile",
+            "poison",
+            "unarmed",
+            "reach-15"
+          ]
+        },
+        {
+          "name": "Body",
+          "damage": "1d10+13 bludgeoning",
+          "traits": [
+            "unarmed",
+            "reach-15"
+          ]
+        }
+      ],
+      "speeds": {
+        "land": 40,
+        "burrow": 30,
+        "swim": 20
+      },
+      "senses": [
+        {
+          "name": "darkvision"
+        }
+      ],
+      "size": "Huge",
+      "tempHp": 40
+    },
+    "note": "Worm Form, purple worm: AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge — you must have room to expand into. You gain the animal trait and can Dismiss the form."
+  },
+  "worm-form-hybrid": {
+    "id": "worm-form-hybrid",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Worm Form (humanoid-worm hybrid)",
+    "feats": [
+      "worm-form"
+    ],
+    "battleForm": {
+      "ac": "20+@actor.level",
+      "attackMod": 25,
+      "strikes": [
+        {
+          "name": "Stinger",
+          "damage": "2d12+15 piercing plus 1d6 persistent poison",
+          "traits": [
+            "agile",
+            "poison",
+            "unarmed",
+            "reach-10"
+          ]
+        },
+        {
+          "name": "Body",
+          "damage": "1d10+13 bludgeoning",
+          "traits": [
+            "unarmed",
+            "reach-10"
+          ]
+        }
+      ],
+      "speeds": {
+        "land": 40
+      },
+      "senses": [
+        {
+          "name": "darkvision"
+        }
+      ],
+      "size": "Huge",
+      "tempHp": 40
+    },
+    "note": "Worm Form, hybrid: your own head on a worm’s body. AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge. You keep the ability to speak — see the feat for what else the hybrid retains."
+  },
+  "dragon-transformation": {
+    "id": "dragon-transformation",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Dragon Transformation",
+    "feats": [
+      "dragon-transformation"
+    ],
+    "duration": "while raging",
+    "battleForm": {
+      "speeds": {
+        "land": 40,
+        "fly": 100
+      },
+      "senses": [
+        {
+          "name": "darkvision"
+        },
+        {
+          "name": "scent",
+          "range": 60,
+          "acuity": "imprecise"
+        }
+      ],
+      "size": "Large"
+    },
+    "note": "Dragon Transformation: a 6th-rank dragon form, except you keep your own AC and attack modifier, add your Rage damage, and your Dragon Breath uses your class DC. 10 temporary Hit Points (they stack with rage’s). Strikes: jaws 2d12 piercing plus 2d6 of your breath’s damage type; claw (agile) 3d10 slashing; tail (reach 10 feet) 3d10 bludgeoning — all rolled with YOUR attack modifier, so they are left off the Strikes list rather than printed at +0. Resistance 10 to your Dragon Breath’s damage type. At 18th level: +20-foot status bonus to fly Speed, dragon Strike damage bonus +12, and +14 status to Dragon Breath damage."
+  },
+  "animal-rage": {
+    "id": "animal-rage",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Animal Rage",
+    "feats": [
+      "animal-rage"
+    ],
+    "duration": "while raging",
+    "battleForm": {
+      "senses": [
+        {
+          "name": "low-light-vision"
+        },
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ]
+    },
+    "note": "Animal Rage: a 3rd-rank animal form, except you use your OWN statistics, temporary Hit Points and unarmed attacks, and keep the constant abilities of your gear — so only the form’s senses actually replace anything. Your animal’s own Speed from the animal form list applies; the feat does not pin which animal, so your Speed is left alone here. If your animal is a frog, your tongue’s reach becomes 15 feet. Dismissing the transformation has the rage trait."
+  },
+  "bone-swarm": {
+    "id": "bone-swarm",
+    "modifiers": [],
+    "exclusiveGroup": "battle-form",
+    "category": "Battle forms",
+    "predefined": true,
+    "name": "Bone Swarm",
+    "feats": [
+      "bone-swarm"
+    ],
+    "duration": "up to 1 minute, once per day",
+    "battleForm": {
+      "speeds": {
+        "fly": 40
+      },
+      "size": "Huge"
+    },
+    "note": "Bone Swarm: you become Huge, gain the swarm trait and a fly Speed of 40 feet. Immune to grabbed, prone and restrained; weakness 5 to area and splash damage. You can share a space with other creatures, and as a 2-action activity deal 10d6 damage to everything in your space (basic save against the higher of your class DC and spell DC). You cannot speak, Cast Spells, use manipulate actions, Activate items, or Strike. You do not gain swarm mind. Spend a single action to return to your normal shape."
+  },
+  "aura-marshal-dedication": {
+    "id": "aura-marshal-dedication",
+    "name": "Marshal's Aura",
+    "feats": [
+      "marshal-dedication"
+    ],
+    "duration": "while you're conscious",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against fear effects"
+      }
+    ],
+    "note": "A 15-foot emanation with the emotion, mental and visual traits. You and allies inside it gain a +1 status bonus to saves against fear. Entering a marshal stance REPLACES what the aura grants — Dread Marshal, Inspiring Marshal, Strategist and Devrin's Cunning each rewrite it, and each carries its own text in the Stances list. Allies' bonuses are not on your sheet, and the app cannot know who is standing in the emanation.",
+    "category": "Aura"
+  },
+  "aura-overwatch-dedication": {
+    "id": "aura-overwatch-dedication",
+    "name": "Overwatch Field",
+    "feats": [
+      "overwatch-dedication"
+    ],
+    "duration": "constant",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "circumstance",
+        "target": "perception",
+        "appliesWhen": "when you roll Perception for initiative"
+      }
+    ],
+    "note": "A 30-foot emanation with the auditory and visual traits. You and allies inside it gain a +2 circumstance bonus when rolling Perception for Initiative. Wide Overwatch enlarges it to 60 feet.",
+    "category": "Aura"
+  },
+  "aura-aura-of-confidence": {
+    "id": "aura-aura-of-confidence",
+    "name": "Aura of Confidence",
+    "feats": [
+      "aura-of-confidence"
+    ],
+    "duration": "constant",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against mental effects"
+      }
+    ],
+    "note": "You and all allies within 15 feet gain a +2 status bonus to saving throws against mental effects. The resistance to mental damage equal to half your level is NOT part of the aura — the feat grants it to you unconditionally, and it is already on your sheet.",
+    "category": "Aura"
+  },
+  "aura-enlightened-presence": {
+    "id": "aura-enlightened-presence",
+    "name": "Enlightened Presence",
+    "feats": [
+      "enlightened-presence"
+    ],
+    "duration": "constant",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "status",
+        "target": "save",
+        "detail": "will",
+        "appliesWhen": "against mental effects"
+      }
+    ],
+    "note": "An aura of resolve. You and allies within 15 feet gain a +2 status bonus to Will saving throws against mental effects.",
+    "category": "Aura"
+  },
+  "aura-primal-aegis": {
+    "id": "aura-primal-aegis",
+    "name": "Primal Aegis",
+    "feats": [
+      "primal-aegis"
+    ],
+    "duration": "constant",
+    "modifiers": [],
+    "note": "You and allies within 30 feet gain resistance equal to your Wisdom modifier to acid, cold, electricity, fire, vitality and void damage. Your own share is permanent and already in your resistances; this mode records that allies within 30 feet share it.",
+    "category": "Aura"
+  },
+  "aura-area-armor": {
+    "id": "aura-area-armor",
+    "name": "Area Armor",
+    "feats": [
+      "area-armor"
+    ],
+    "duration": "while you wear medium or heavy armor",
+    "modifiers": [],
+    "note": "Allies ADJACENT to you gain a +1 circumstance bonus to Reflex saves against area effects, or +2 if you are a master in the armor you are wearing. Nothing here lands on you — Ruling F keeps the ally bonus off your sheet.",
+    "category": "Aura"
+  },
+  "aura-undying-conviction": {
+    "id": "aura-undying-conviction",
+    "name": "Undying Conviction",
+    "feats": [
+      "undying-conviction"
+    ],
+    "duration": "constant",
+    "modifiers": [],
+    "note": "Undead under your control within a 30-foot emanation gain a +2 status bonus to saves against vitality damage and to Will saves against being controlled. It affects your minions, never you. The aura also gains the trait of your spellcasting tradition.",
+    "category": "Aura"
+  },
+  "aura-consecrated-aura": {
+    "id": "aura-consecrated-aura",
+    "name": "Consecrated Aura",
+    "feats": [
+      "consecrated-aura"
+    ],
+    "duration": "constant",
+    "modifiers": [],
+    "note": "A 20-foot emanation of vitality energy. Each undead creature that ends its turn inside must succeed at a Will save against your spell DC or become frightened 1 (frightened 2 on a critical failure); a creature that succeeds is temporarily immune for 1 minute. The aura gains the trait of the tradition you used to qualify for Hallowed Necromancer Dedication. Enemy-side numbers stay off your sheet.",
+    "category": "Aura"
+  },
+  "aura-corpse-stench": {
+    "id": "aura-corpse-stench",
+    "name": "Corpse Stench",
+    "feats": [
+      "corpse-stench"
+    ],
+    "duration": "constant",
+    "modifiers": [],
+    "note": "A 10-foot emanation of decay. A creature that starts its turn inside must succeed at a Fortitude save against the higher of your class DC or spell DC or be sickened 1 (and slowed 1 on a critical failure), and while inside it takes a −2 circumstance penalty to saves against disease and to recover from sickened. A creature that succeeds is temporarily immune for 1 minute.",
+    "category": "Aura"
+  },
+  "aura-empyreal-aura": {
+    "id": "aura-empyreal-aura",
+    "name": "Empyreal Aura",
+    "feats": [
+      "empyreal-aura"
+    ],
+    "duration": "constant",
+    "modifiers": [],
+    "note": "Each evil creature within 30 feet at the end of your turn must succeed at a save against the higher of your class DC or spell DC or become slowed 1 (slowed 2 on a critical failure). On a success it is temporarily immune for 10 minutes.",
+    "category": "Aura"
+  },
+  "aura-frightful-aura": {
+    "id": "aura-frightful-aura",
+    "name": "Frightful Aura",
+    "feats": [
+      "frightful-aura"
+    ],
+    "duration": "constant",
+    "modifiers": [],
+    "note": "A 15-foot emanation. An enemy that enters it or ends its turn inside must attempt a Will save against the higher of your spell DC or class DC: failure frightened 1, critical failure frightened 2, success unaffected and temporarily immune for 1 minute.",
+    "category": "Aura"
+  },
+  "aura-shepherd-of-desolation": {
+    "id": "aura-shepherd-of-desolation",
+    "name": "Shepherd of Desolation",
+    "feats": [
+      "shepherd-of-desolation"
+    ],
+    "duration": "constant",
+    "modifiers": [],
+    "note": "Allies within 10 feet of you gain the benefit of Survivor of Desolation. If you are a champion this counts as a champion aura even though it came from Knight Reclaimant. The benefit is entirely the allies’ — nothing changes on your sheet.",
+    "category": "Aura"
+  },
+  "aura-eternal-blessing": {
+    "id": "aura-eternal-blessing",
+    "name": "Eternal Blessing (bless)",
+    "feats": [
+      "eternal-blessing"
+    ],
+    "duration": "constant (Dismissable; it returns by itself after 1 minute)",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "attack"
+      }
+    ],
+    "note": "You are continuously surrounded by a bless spell of a rank equal to half your level (rounded up), in a 15-foot emanation you cannot enlarge. You and allies inside gain a +1 status bonus to attack rolls. You can Dismiss it; it comes back on its own after 1 minute.",
+    "category": "Aura"
+  },
+  "aura-shield-the-faithful": {
+    "id": "aura-shield-the-faithful",
+    "name": "Shield the Faithful",
+    "feats": [
+      "shield-the-faithful"
+    ],
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "item",
+        "target": "ac"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "spirit",
+        "value": "10+5*min(1,max(0,@actor.level-19))"
+      }
+    ],
+    "note": "For 1 minute, you and all allies within 10 feet gain a +1 item bonus to AC and resistance 10 to spirit damage (15 at 20th level). While it runs, a creature that hits you with a melee attack from an adjacent square, touches you, or hits you with an unarmed attack takes 5 spirit damage (10 at 20th level) — that damage is dealt to the attacker, so it is not a number on your sheet. Once per hour.",
+    "category": "Aura"
+  },
+  "aura-wrathful-presence": {
+    "id": "aura-wrathful-presence",
+    "name": "Wrathful Presence",
+    "feats": [
+      "wrathful-presence"
+    ],
+    "duration": "1 minute, or until you Dismiss it",
+    "modifiers": [
+      {
+        "value": 3,
+        "type": "status",
+        "target": "damage",
+        "appliesWhen": "to damage with Strikes, while you are inside your own aura"
+      }
+    ],
+    "note": "A 30-foot aura for 1 minute or until you Dismiss it, once per 10 minutes. You and your allies inside gain a +3 status bonus to damage with Strikes, and enemies who end their turn inside cannot reduce their frightened value below 1.",
+    "category": "Aura"
+  },
+  "aura-frightening-indignation": {
+    "id": "aura-frightening-indignation",
+    "name": "Frightening Indignation",
+    "feats": [
+      "frightening-indignation"
+    ],
+    "duration": "1 minute",
+    "modifiers": [],
+    "note": "For 1 minute, an enemy that ends its turn within a 15-foot emanation must save against the higher of your class DC or spell DC: success frightened 1, failure frightened 2 and it cannot drop below frightened 1 while inside, critical failure frightened 3. A critical success makes it temporarily immune for 1 minute. Once per day.",
+    "category": "Aura"
+  },
+  "aura-repel-darkness": {
+    "id": "aura-repel-darkness",
+    "name": "Repel Darkness",
+    "feats": [
+      "repel-darkness"
+    ],
+    "duration": "1 minute, or until you Dismiss it",
+    "modifiers": [],
+    "note": "For 1 minute you suppress magical darkness of a rank up to half your level (rounded up) within a 10-foot emanation, restoring the area to its natural light — it provides no light of its own. If your horse is at least a mature animal companion you can have the aura emanate from the horse instead, as long as it is within 100 feet. Once per hour.",
+    "category": "Aura"
+  },
+  "aura-dominion-aura": {
+    "id": "aura-dominion-aura",
+    "name": "Dominion Aura",
+    "feats": [
+      "dominion-aura"
+    ],
+    "duration": "1 minute",
+    "modifiers": [],
+    "note": "Every creature in a 10-foot emanation takes 8d6 force damage with a basic Fortitude save, and is knocked prone on a failure. For the next minute, any creature ending its turn inside takes 5d6 force damage with a basic Fortitude save. If you are not already drained you may become drained 2 to widen the emanation to 20 feet. Once per day.",
+    "category": "Aura"
+  },
+  "aura-irradiate": {
+    "id": "aura-irradiate",
+    "name": "Irradiate",
+    "feats": [
+      "irradiate"
+    ],
+    "duration": "while you exude the radiation",
+    "modifiers": [],
+    "note": "Every creature in a 15-foot emanation must succeed at a Fortitude save or become sickened 1, and is also fatigued for 1 minute on a critical failure. The sickened value rises by 1 for every 5 levels you have beyond 6th. You are immune to your own radiation.",
+    "category": "Aura"
+  },
+  "aura-convocation-of-earth-and-moon": {
+    "id": "aura-convocation-of-earth-and-moon",
+    "name": "Convocation of Earth and Moon",
+    "feats": [
+      "convocation-of-earth-and-moon"
+    ],
+    "duration": "5 minutes, or until you use the action again",
+    "speeds": {
+      "fly": "@actor.speed.land"
+    },
+    "modifiers": [],
+    "note": "You take a towering form for 5 minutes and gain the benefits of the 4th-rank enlarge and fly spells — enlarge makes you Large with +5-foot reach, +2 status damage on melee Strikes and clumsy 1; fly gives the fly Speed shown here. If you have your head gem it radiates an aura of moonlight: creatures that start their turn adjacent to you become dazzled until the beginning of their turn unless they succeed at a Will save against the higher of your class DC or spell DC. Once per day.",
+    "category": "Aura"
+  },
+  "aura-ascended-celestial-dedication": {
+    "id": "aura-ascended-celestial-dedication",
+    "name": "Nimbus of Light",
+    "feats": [
+      "ascended-celestial-dedication"
+    ],
+    "duration": "until you suppress it (a single action with the concentrate trait)",
+    "modifiers": [],
+    "note": "You shed bright light in a 30-foot radius and dim light for 30 feet beyond it, and can suppress or re-establish it as a single action with the concentrate trait. While the nimbus is active, all allies in its area gain a +1 status bonus to saves against fear — an ally bonus, so no number of yours moves. Bless Ally and several other Ascended Celestial feats require the nimbus to be active.",
+    "category": "Aura"
+  },
+  "aura-champions-aura": {
+    "id": "aura-champions-aura",
+    "name": "Champion's Aura",
+    "feats": [
+      "champions-aura",
+      "champion-dedication"
+    ],
+    "duration": "until you suppress it; it also ends if you fall unconscious",
+    "modifiers": [],
+    "note": "A 15-foot emanation with the aura and divine traits. Any follower of your deity inside knows at once that you are a champion of your deity. This is the RANGE your champion’s reaction uses, and what every \"in your champion’s aura\" feat refers to; feats that add to it appear here as extra lines. You can suppress or resume it as a single action with the concentrate trait.",
+    "category": "Aura"
+  },
+  "aura-commanders-banner": {
+    "id": "aura-commanders-banner",
+    "name": "Commander's Banner",
+    "feats": [
+      "commanders-banner"
+    ],
+    "duration": "while your banner is visible and in your possession",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "save",
+        "detail": "will",
+        "appliesWhen": "against fear effects (and to your DCs against fear)"
+      }
+    ],
+    "note": "While your banner is visible and in your possession it provides a 30-foot emanation with the aura, emotion, mental and visual traits, giving you and all allies inside a +1 status bonus to Will saves and to DCs against fear effects. You pause or resume it with any action that stows or retrieves the banner. If the banner is destroyed or stolen, allies currently benefiting become frightened 1.",
+    "category": "Aura"
+  },
+  "aura-initiate-benefit-regalia": {
+    "id": "aura-initiate-benefit-regalia",
+    "name": "Inspiring Aura (Regalia)",
+    "feats": [
+      "initiate-benefit-regalia"
+    ],
+    "duration": "while you hold your regalia implement",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against fear effects, while you hold your regalia"
+      }
+    ],
+    "note": "While you hold your regalia you have an inspiring aura in a 15-foot emanation, affecting you and every ally who can SEE you, granting a +1 status bonus to saves against fear. At the end of your turn, when you would reduce your own frightened value by 1, you also reduce the frightened value of every ally in the aura by 1. The aura has the emotion, mental and visual traits.",
+    "category": "Aura"
+  },
+  "aura-initiate-benefit-lantern": {
+    "id": "aura-initiate-benefit-lantern",
+    "name": "Lantern's Aura",
+    "feats": [
+      "initiate-benefit-lantern"
+    ],
+    "duration": "while your lantern implement is lit",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "perception",
+        "appliesWhen": "on visual Perception checks to notice something inside the lantern's aura"
+      },
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "appliesWhen": "to Recall Knowledge about a creature inside the lantern's aura"
+      }
+    ],
+    "note": "A lit lantern emits a 20-foot emanation with the light and magical traits; everything inside is bright-lit regardless of cover, and dim light extends the same distance again. Its counteract rank against magical darkness is half your level, rounded up. You and allies inside gain +1 status to visual Perception to notice anything also inside, and +1 status to Recall Knowledge about creatures inside. During exploration the GM rolls a secret check for you whenever a trap, hazard, haunt or secret enters the aura, even if you are not Searching.",
+    "category": "Aura"
+  },
+  "aura-mirrored-aegis": {
+    "id": "aura-mirrored-aegis",
+    "name": "Mirrored Aegis (immanence)",
+    "feats": [
+      "mirrored-aegis"
+    ],
+    "duration": "while your divine spark is in the mirrored aegis",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "ac",
+        "appliesWhen": "while your divine spark is in the mirrored aegis"
+      }
+    ],
+    "note": "The aegis emits a 15-foot emanation protecting you and all allies inside, granting a +1 status bonus to AC. If the aegis houses your divine spark for 10 uninterrupted minutes it is restored to full Hit Points.",
+    "category": "Aura"
+  },
+  "aura-victors-wreath": {
+    "id": "aura-victors-wreath",
+    "name": "Victor's Wreath (immanence)",
+    "feats": [
+      "victors-wreath"
+    ],
+    "duration": "while your divine spark is in the victor's wreath",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "attack",
+        "appliesWhen": "while your divine spark is in the victor's wreath"
+      }
+    ],
+    "note": "You and all allies in a 15-foot emanation gain a +1 status bonus to attack rolls.",
+    "category": "Aura"
+  },
+  "aura-fetching-bangles": {
+    "id": "aura-fetching-bangles",
+    "name": "Fetching Bangles (immanence)",
+    "feats": [
+      "fetching-bangles"
+    ],
+    "duration": "while your divine spark is in the fetching bangles",
+    "modifiers": [],
+    "note": "An aura surrounds you in a 10-foot emanation. An enemy inside that tries to move away from you must succeed at a Will save against your class DC or its move action is disrupted. The save is the enemy’s, so nothing on your sheet changes.",
+    "category": "Aura"
+  },
+  "aura-paragon-benefit-shield": {
+    "id": "aura-paragon-benefit-shield",
+    "name": "Shield Implement — allies within 15 feet",
+    "feats": [
+      "paragon-benefit-shield"
+    ],
+    "duration": "while your shield implement is raised",
+    "modifiers": [],
+    "note": "While your shield implement is raised, its circumstance bonuses — to AC and to saves against spells and other magic effects — also apply to every ally within 15 feet, and you can Shield Block in defense of any of them. Your own bonus is unchanged and already comes from Raise a Shield; this records the 15-foot reach of it, which is otherwise invisible.",
+    "category": "Aura"
+  },
+  "aura-cavaliers-banner": {
+    "id": "aura-cavaliers-banner",
+    "name": "Cavalier's Banner",
+    "feats": [
+      "cavaliers-banner"
+    ],
+    "duration": "while the banner flies from your mount",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "circumstance",
+        "target": "save",
+        "detail": "will",
+        "appliesWhen": "against fear effects (and to your DCs against fear)"
+      }
+    ],
+    "note": "A 30-foot emanation FROM YOUR MOUNT, not from you. You and all allies inside gain a +1 circumstance bonus to Will saves and to DCs against fear effects. If the banner is destroyed or removed, allies within 30 feet become frightened 1.",
+    "category": "Aura"
+  },
+  "aura-commander-dedication": {
+    "id": "aura-commander-dedication",
+    "name": "Commander's Banner (archetype)",
+    "feats": [
+      "commander-dedication"
+    ],
+    "duration": "while your banner is visible and in your possession",
+    "modifiers": [],
+    "note": "The banner you gain from Commander Dedication provides a 30-foot aura only for the purpose of using your tactics. It does NOT grant the commander’s banner bonus to Will saves and DCs against fear — that is the class feature’s, not the archetype’s.",
+    "category": "Aura"
+  },
+  "aura-channel-elements": {
+    "id": "aura-channel-elements",
+    "name": "Kinetic Aura",
+    "feats": [
+      "kinetic-aura",
+      "channel-elements",
+      "kineticist-dedication"
+    ],
+    "duration": "until you are knocked out, use an overflow impulse, or Dismiss it",
+    "modifiers": [],
+    "note": "A 10-foot emanation of your kinetic element(s), switched on with Channel Elements. It cannot damage anything or affect the environment by itself — a gate’s Aura Junction or a stance impulse is what gives it teeth. You cannot use new impulses while it is off, though ones already running continue and can still be Sustained, and stance impulses end with it. Aura Shaping lets you set its size anywhere from 5 to 20 feet (rising by 5 at 15th and 20th levels).",
+    "category": "Aura"
+  },
+  "aura-air-gate-junction": {
+    "id": "aura-air-gate-junction",
+    "name": "Air Gate — Aura Junction",
+    "feats": [
+      "air-gate"
+    ],
+    "duration": "while your kinetic aura is active",
+    "modifiers": [],
+    "note": "You and any ally that starts its turn in the aura gains a +10-foot status bonus to land Speed until the end of that turn, and to fly Speed if you have one. Switch this on only if you took this gate’s Aura Junction at a Gate’s Threshold — a gate gives you its Impulse Junction automatically, but the aura one is a choice — and only while your kinetic aura is active.",
+    "category": "Aura"
+  },
+  "aura-earth-gate-junction": {
+    "id": "aura-earth-gate-junction",
+    "name": "Earth Gate — Aura Junction",
+    "feats": [
+      "earth-gate"
+    ],
+    "duration": "while your kinetic aura is active",
+    "modifiers": [],
+    "note": "Squares in the aura are difficult terrain for your enemies, but only when moving into the square would take the enemy farther away from you. Switch this on only if you took this gate’s Aura Junction at a Gate’s Threshold — a gate gives you its Impulse Junction automatically, but the aura one is a choice — and only while your kinetic aura is active.",
+    "category": "Aura"
+  },
+  "aura-fire-gate-junction": {
+    "id": "aura-fire-gate-junction",
+    "name": "Fire Gate — Aura Junction",
+    "feats": [
+      "fire-gate"
+    ],
+    "duration": "while your kinetic aura is active",
+    "modifiers": [],
+    "note": "Enemies in your kinetic aura gain weakness to fire from your fire impulses equal to half your level (minimum 1). Switch this on only if you took this gate’s Aura Junction at a Gate’s Threshold — a gate gives you its Impulse Junction automatically, but the aura one is a choice — and only while your kinetic aura is active.",
+    "category": "Aura"
+  },
+  "aura-metal-gate-junction": {
+    "id": "aura-metal-gate-junction",
+    "name": "Metal Gate — Aura Junction",
+    "feats": [
+      "metal-gate"
+    ],
+    "duration": "while your kinetic aura is active",
+    "modifiers": [],
+    "note": "Your enemies in the aura take a −1 status penalty to attacks with metal objects, and a −1 status penalty to AC if they are wearing metal armor, have the metal trait, or are made of metal. Switch this on only if you took this gate’s Aura Junction at a Gate’s Threshold — a gate gives you its Impulse Junction automatically, but the aura one is a choice — and only while your kinetic aura is active.",
+    "category": "Aura"
+  },
+  "aura-water-gate-junction": {
+    "id": "aura-water-gate-junction",
+    "name": "Water Gate — Aura Junction",
+    "feats": [
+      "water-gate"
+    ],
+    "duration": "while your kinetic aura is active",
+    "resistances": [
+      {
+        "type": "fire",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "modifiers": [],
+    "note": "The aura becomes saturated with humidity: non-magical fires inside are extinguished, and creatures in the aura — you included — gain fire resistance equal to half your level. Switch this on only if you took this gate’s Aura Junction at a Gate’s Threshold — a gate gives you its Impulse Junction automatically, but the aura one is a choice — and only while your kinetic aura is active.",
+    "category": "Aura"
+  },
+  "aura-wood-gate-junction": {
+    "id": "aura-wood-gate-junction",
+    "name": "Wood Gate — Aura Junction",
+    "feats": [
+      "wood-gate"
+    ],
+    "duration": "while your kinetic aura is active",
+    "modifiers": [],
+    "note": "Any ally that begins its turn in the aura gains 1 temporary Hit Point until the start of its next turn, rising to 2 at 10th level and 3 at 15th. Switch this on only if you took this gate’s Aura Junction at a Gate’s Threshold — a gate gives you its Impulse Junction automatically, but the aura one is a choice — and only while your kinetic aura is active.",
+    "category": "Aura"
   }
 }

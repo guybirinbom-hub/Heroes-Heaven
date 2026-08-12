@@ -36,7 +36,7 @@ for (const x of JSON.parse(read('scripts/data/effect-backfill.json'))) REGISTERE
 const types = read('src/rules/types.ts');
 const MECHANICAL = new Set(
   [...types.matchAll(/^ {2}([a-zA-Z][\w]*)\??:/gm)].map((m) => m[1]).filter((f) =>
-    /^(resistances|weaknesses|immunities|senses|speeds|speedPenalty|landSpeedBonus|landSpeedMin|passiveEffects|effectChoices|choice|situational|innateSpells|focusSpells|focusPoolBonus|spellcastingGrant|spellSlotBonus|grantedFeatId|grantsFeats|grantedFeatByChoice|grantedStrikes|trainedSkill|trainedLore|trainedSkillChoice|trainedLoreChoice|trainedLoreOptions|dynamicSkillBonus|classDcGrant|limitedUses|usesUpgrade|critSpec|conditionalSenses|choiceResistance|senseIfFeat|speedsIf|negativeHealing|grantsLanguages)$/.test(f),
+    /^(resistances|weaknesses|immunities|senses|speeds|speedPenalty|landSpeedBonus|landSpeedMin|passiveEffects|effectChoices|choice|situational|innateSpells|focusSpells|focusPoolBonus|spellcastingGrant|spellSlotBonus|grantedFeatId|grantsFeats|grantedFeatByChoice|grantedStrikes|trainedSkill|trainedLore|trainedSkillChoice|trainedLoreChoice|trainedLoreOptions|dynamicSkillBonus|classDcGrant|classDcRank|specialStatistic|mapReduction|limitedUses|usesUpgrade|critSpec|conditionalSenses|choiceResistance|senseIfFeat|speedsIf|negativeHealing|grantsLanguages)$/.test(f),
   ),
 );
 const hasMechanic = (r) => Object.keys(r ?? {}).some((k) => MECHANICAL.has(k) && r[k] != null && (!Array.isArray(r[k]) || r[k].length));

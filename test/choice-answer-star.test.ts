@@ -25,6 +25,13 @@ const skillsOf = (ch: Parameters<typeof statHasSituational>[0]) =>
     statHasSituational(ch, { kind: 'skill', skill: k }, db),
   );
 
+/** The skills starred BY ONE RECORD. `skillsOf` counts every source, and the acolyte background this
+ *  harness picks now brings Student of the Canon, whose degree shift legitimately stars Religion. */
+const skillsFrom = (ch: Parameters<typeof explainStat>[0], sourceId: string) =>
+  (Object.keys(ch.proficiencies.skills) as ProficiencyKey[]).filter((k) =>
+    (explainStat(ch, db, { kind: 'skill', skill: k }).situational ?? []).some((s) => s.sourceId === sourceId),
+  );
+
 /** A character with one feat dropped into a slot, plus that slot's answer. */
 function withFeat(featId: string, slotKey: string, answer?: string, over: Partial<BuildState> = {}) {
   return build('rogue', 15, {
@@ -51,7 +58,11 @@ describe('a star whose target comes from the player’s answer', () => {
 
   it('an unanswered Assurance stars nothing — it must not guess a skill', () => {
     const ch = withFeat('assurance', '1:skill');
-    expect(skillsOf(ch)).toEqual([]);
+    // ⚠ This asserted `skillsOf(ch)` was empty, i.e. that NOTHING on the character starred any skill.
+    // That held only while the degreeShifts lane was empty: this harness's background is `acolyte`,
+    // which grants Student of the Canon, and its authored shift now correctly stars Religion. The
+    // claim being made here is about Assurance, so it now asks about Assurance.
+    expect(skillsFrom(ch, 'assurance')).toEqual([]);
   });
 
   it('the note says what to do and opens the feat that says it', () => {

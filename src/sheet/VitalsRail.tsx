@@ -11,6 +11,7 @@ import {
   derivePerception,
   deriveSave,
   deriveShield,
+  deriveSpecialStats,
   deriveSpeeds,
   deriveSpellcasting,
   formatMod,
@@ -38,7 +39,7 @@ import {
   type PlayUpdater,
 } from '../rules/play';
 import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
-import { CATALOG_MODES, playerModeLibrary } from '../rules/modes';
+import { CATALOG_MODES, contentGatedModes, playerModeLibrary } from '../rules/modes';
 import { resourcesForCharacter, resourceMaxFor } from '../rules/classResources';
 import { explainDefense, nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatBreakdown, type StatRef } from '../rules/explain';
 import { StatDetailModal } from './StatDetailModal';
@@ -828,6 +829,43 @@ export function VitalsRail({
       ))}
     </section>
   ) : null;
+  /*
+   * NAMED statistics that no other row on this sheet is labelled for — the kineticist's impulse
+   * attack roll, a scroll's DC under Scroll Thaumaturgy. See the `specialStatistic` lane.
+   *
+   * A SEPARATE card from "Multiclass DCs" on purpose. That one answers "what is my borrowed class
+   * DC" — the same statistic another class already has a row for — while these are numbers the
+   * player can find nowhere else. Folding them together would also have meant renaming the
+   * `multiclassDc` rail key, which every saved rail order and the Customize editor's label map key
+   * off, for no gain to the reader.
+   */
+  const specialStats = deriveSpecialStats(character, content);
+  cards.specialStats = specialStats.length ? (
+    <section className="card">
+      <div className="ct">
+        <i className="ti ti-math-symbols" aria-hidden="true" />
+        Special statistics
+      </div>
+      {specialStats.map((s) => (
+        <div
+          className={'rail-kv' + (onOpenStat ? ' openable' : '')}
+          key={s.key}
+          onClick={onOpenStat ? () => onOpenStat({ kind: 'specialStat', statKey: s.key }) : undefined}
+          title={onOpenStat ? `${s.name} — how is this calculated?` : undefined}
+        >
+          <span className="kv-label">{s.name}</span>
+          <span className="iwr-val">
+            {s.kind === 'dc' ? s.value : formatMod(s.value)}{' '}
+            {/* The basis is not decoration: the statistic has no proficiency track of its own, so the
+                player needs to see which class DC raising it would raise this number too. */}
+            <span className="mc-key">
+              ({s.basisClassName} DC{s.borrowed ? ', archetype' : ''}, {s.rank})
+            </span>
+          </span>
+        </div>
+      ))}
+    </section>
+  ) : null;
   cards.resources =
     classResources.length > 0 ? (
         <section className="card">
@@ -1182,7 +1220,11 @@ export function VitalsRail({
           onClose={() => setCondOpen(false)}
           modesEnabled
           library={playerModeLibrary(Object.values(content.modes), charKey)}
-          predefined={CATALOG_MODES}
+          // Authored, GATED modes are content, not the player's own: they belong in the predefined
+          // section, which `modeRelevant` filters, rather than in "Your modes", which it does not.
+          // `catalog` stays the hand-written templates — the mode editor offers it as a starting
+          // point, and a 38-entry aura list is not a template.
+          predefined={[...CATALOG_MODES, ...contentGatedModes(Object.values(content.modes))]}
           catalog={CATALOG_MODES}
           classId={character.classId}
           ancestryId={character.ancestryId}

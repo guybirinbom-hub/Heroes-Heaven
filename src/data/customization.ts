@@ -35,7 +35,7 @@ export const DEFAULT_CUSTOMIZATION: Customization = {
 };
 
 /** The natural (unconfigured) order of the vitals-rail cards. */
-export const DEFAULT_RAIL_ORDER = ['hp', 'saves', 'movement', 'defenses', 'resources', 'multiclassDc', 'panache', 'champion', 'mythic', 'conditions', 'languages'];
+export const DEFAULT_RAIL_ORDER = ['hp', 'saves', 'movement', 'defenses', 'resources', 'multiclassDc', 'specialStats', 'panache', 'champion', 'mythic', 'conditions', 'languages'];
 
 /** The desktop sheet tabs, in order — the single source of truth shared by the sheet + Customize editor. */
 export const SHEET_TABS = ['Main', 'Spells', 'Inventory', 'Feats & features', 'Companions', 'Notes', 'Details'];
@@ -51,6 +51,7 @@ export const RAIL_CARD_LABELS: Record<string, string> = {
   resources: 'Class resources',
   // Was missing, so the Customize editor listed the raw key "multiclassDc" among prose labels.
   multiclassDc: 'Archetype class DCs',
+  specialStats: 'Special statistics (impulse attack, scroll DC)',
   panache: 'Panache (swashbuckler)',
   champion: 'Cause (champion)',
   mythic: 'Mythic (calling & destiny)',

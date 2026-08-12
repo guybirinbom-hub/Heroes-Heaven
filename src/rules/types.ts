@@ -487,6 +487,38 @@ export interface ReachRider {
   };
 }
 
+/**
+ * One entry of the `specialStatistic` lane. See the field's comment on DefenseGrants for the test a
+ * record has to pass to be here at all.
+ *
+ * `basis` is deliberately the ONLY way to say where the number comes from, and it names a class DC
+ * rather than a rank + attribute. That is what the printed rules say in every case in the lane
+ * ("uses the same proficiency and attribute modifier as your kineticist class DC"), and it buys two
+ * things a hand-written rank could not:
+ *   • an ARCHETYPE character resolves through `secondaryClassDcs`, so Kineticist Dedication's
+ *     impulse attack roll follows the borrowed kineticist DC — including any later feat that raises
+ *     it (Expert Kinetic Control already carries `classDcRank`, so it needs no entry of its own).
+ *   • the statistic cannot drift from the DC it is defined against. Two independent rank tracks for
+ *     one printed rule is how the app would come to show two different numbers for the same roll.
+ *
+ * A record whose basis class the character has NO class DC for — neither their own nor a borrowed one
+ * — produces no row. That is correct rather than defensive: without the class DC the printed formula
+ * has no value, and inventing a rank would be inventing the number.
+ */
+export interface SpecialStatGrant {
+  /** Stable key, shared by every record that grants the same statistic (a class feature and the
+   *  archetype dedication that copies it both use `impulse-attack`), so they collapse to one row. */
+  key: string;
+  /** Row label, as the rules name it — "Impulse attack roll", "Scroll DC". */
+  name: string;
+  /** `attack` shows a roll modifier (+17); `dc` shows a DC (10 + the same modifier). */
+  kind: 'attack' | 'dc';
+  /** Rank and attribute follow this class's class DC — the character's own, or a borrowed one. */
+  basis: { classDc: string };
+  /** What the statistic is for, printed under the row and in its breakdown. One line. */
+  note?: string;
+}
+
 export interface DefenseGrants {
   /**
    * "You gain the instinct ability for the instinct you chose for Barbarian Dedication." The answer
@@ -530,7 +562,37 @@ export interface DefenseGrants {
     whileState?: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche';
     /** Short label for the strike breakdown. */
     note?: string;
+    /**
+     * The reduction applies only to SOME of the Strikes this character can make, and which ones is a
+     * fact about the action being taken rather than about the character — so the sheet cannot know.
+     * Combination Finisher lowers the penalty on "your finishers' Strikes"; whether a given Strike is
+     * part of a finisher is decided at the table, in the moment.
+     *
+     * ⚠ It must therefore NOT move `mapStep`. Applying it would quietly hand the player −4/−8 on every
+     * ordinary Strike, which is a bigger error than not showing it — an over-grant on the three numbers
+     * the strike row prints. `whileState` is the opposite case and stays numeric: that gate reads a
+     * toggle the sheet already tracks, so the app genuinely knows the answer.
+     *
+     * The text goes in the strike-attack breakdown instead (Ruling H: print the trigger, star nothing
+     * you cannot compute). The string is the condition, worded to finish "…when this Strike is".
+     */
+    appliesWhen?: string;
   };
+  /**
+   * A NAMED statistic — one the player rolls, or whose DC an opponent must beat — that no row on this
+   * sheet is labelled for. The lane test, and what it deliberately excludes, is in
+   * `docs/mechanic-lanes.md` under `specialStatistic`; in short, a record joins only when our own text
+   * names the statistic AND the number is not already printed somewhere under a different label.
+   *
+   * Two shapes qualify, and both are in the data:
+   *   • CREATED — the statistic exists only because of this record. The kineticist's impulse attack
+   *     roll: "Your impulse attack roll uses the same proficiency and attribute modifier as your
+   *     kineticist class DC… typically 10 lower than your class DC", and a *gate attenuator* gives it
+   *     an item bonus "(but not to your impulse DC)", so it is genuinely a different number.
+   *   • BORROWED FOR A NAMED USE — the record binds an existing statistic to something that has no row
+   *     of its own. Scroll Thaumaturgy: "using your thaumaturge class DC for the scroll's DC".
+   */
+  specialStatistic?: SpecialStatGrant | SpecialStatGrant[];
   senses?: SenseEntry[];
   resistances?: IwrEntry[];
   weaknesses?: IwrEntry[];
@@ -1274,6 +1336,15 @@ export interface ItemPassiveEffects {
    * versions print. Replaces a hardcoded two-id set, so a new such item needs no code.
    */
   copiesRunes?: 'fundamental' | 'all';
+  /**
+   * An item bonus to a `specialStatistic` (see SpecialStatGrant), keyed by that statistic's `key`.
+   *
+   * The *gate attenuator* line is the reason this is separate from `attack`: "+1 item bonus to your
+   * impulse attack modifier (but not to your impulse DC)". A generic attack bonus would have leaked
+   * onto every Strike, and folding it into the class DC would have raised the DC the item explicitly
+   * excludes — so the bonus has to be able to name the one statistic it touches.
+   */
+  specialStatBonus?: { key: string; value: number };
 }
 
 export interface Ancestry extends ContentBase {
@@ -2851,8 +2922,16 @@ export interface ModeDef {
  * yours. That is why every field is optional rather than the shape being a full stat block.
  */
 export interface BattleForm {
-  /** Your AC IS this while the form runs — not a bonus to it. Dex, armour and proficiency drop out. */
-  ac?: number;
+  /**
+   * Your AC IS this while the form runs — not a bonus to it. Dex, armour and proficiency drop out.
+   *
+   * A FORMULA STRING is allowed (resolved by `resolveFormula`, the same one `speeds` already uses)
+   * because every printed battle form in the game states its AC as *"AC = 15 + your level"*, not as a
+   * flat number. Typed `number` alone, the field could not hold a single real form's AC: authoring
+   * pest form as `15` would have given a 10th-level druid AC 15 instead of 25. The number form is
+   * kept for a form that genuinely prints one, and for the tests.
+   */
+  ac?: number | string;
   /** The attack modifier for the form's Strikes. The three-tier MAP array is still derived from it. */
   attackMod?: number;
   /**

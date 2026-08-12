@@ -35,7 +35,13 @@ describe('etched property runes keep their situational bonuses', () => {
 
   it('a rune on a weapon you are NOT wielding contributes nothing', () => {
     // Same gate as any other item: a bonus from a weapon in your pack is not a bonus you have.
-    expect(statHasSituational(withRune('deathdrinking', false), { kind: 'save', save: 'will' }, c)).toBe(false);
+    // ⚠ This asked `statHasSituational(…, 'will') === false`, i.e. that NOTHING starred the Will
+    // save. That stopped being a statement about the rune once the degreeShifts lane was authored:
+    // this level-5 fighter has Bravery, whose shift correctly stars Will. The claim is about the
+    // rune, so it now names the rune.
+    const stowed = withRune('deathdrinking', false);
+    const lines = explainStat(stowed, c, { kind: 'save', save: 'will' }).situational ?? [];
+    expect(lines.some((s) => s.sourceId === 'deathdrinking')).toBe(false);
   });
 
   it('every rune in the registry is reachable this way', () => {

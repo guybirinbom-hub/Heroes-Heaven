@@ -367,11 +367,37 @@ export function modeTargetLabel(mod: ModeModifier): string {
  * bypass `modeRelevant`.
  *
  * `charKey` narrows to modes scoped to that character plus the universal ones; omit it for all.
+ *
+ * ⚠ A GATED mode is CONTENT, never one of the player's own. The mode editor cannot write a
+ * `classes` / `ancestries` / `feats` gate — only the authoring scripts do — so a gate is the reliable
+ * mark of an authored record. Without this test all 113 authored toggle modes (and, with the aura
+ * lane, 38 more) were listed under "Your modes", which is NOT relevance-filtered and offers Edit and
+ * Delete: a 1st-level fighter was shown the champion's aura, the lantern's aura and every archetype
+ * trance in the game, all editable and none of them theirs. `contentGatedModes` hands those to the
+ * panel's gated section instead, where `modeRelevant` decides who sees them.
  */
 export function playerModeLibrary(modes: Iterable<ModeDef>, charKey?: string): ModeDef[] {
   return [...modes].filter(
-    (m) => !CATALOG_MODE_MAP[m.id] && !m.fromItemId && (charKey === undefined || !m.charId || m.charId === charKey),
+    (m) =>
+      !CATALOG_MODE_MAP[m.id] &&
+      !m.fromItemId &&
+      !isGated(m) &&
+      (charKey === undefined || !m.charId || m.charId === charKey),
   );
+}
+
+/** Does this mode carry a content gate? See `playerModeLibrary` for why that is the dividing line. */
+const isGated = (m: ModeDef): boolean => !!(m.classes?.length || m.ancestries?.length || m.feats?.length);
+
+/**
+ * The authored, gated modes out of `content.modes` — the other half of `playerModeLibrary`.
+ *
+ * They join `CATALOG_MODES` in the Modes panel's predefined list, so `modeRelevant` gates them to the
+ * character who actually has the feat, class feature, class or ancestry they name. Item modes stay
+ * out: they belong to their consumable and appear only by using it.
+ */
+export function contentGatedModes(modes: Iterable<ModeDef>): ModeDef[] {
+  return [...modes].filter((m) => !CATALOG_MODE_MAP[m.id] && !m.fromItemId && isGated(m));
 }
 
 /** Whether a predefined mode is relevant to a character — it must match at least one of its gates
@@ -433,17 +459,29 @@ function adjustMatches(
 }
 
 /**
- * Apply every `modeAdjust` the character's feats carry to the modes they have switched on.
+ * Apply every `modeAdjust` the character's feats and class features carry to the modes they have
+ * switched on.
  *
  * Returns new objects — the catalog and the content database are shared, and mutating a ModeDef here
  * would leak one character's feats into every other character's copy of the same elixir.
+ *
+ * ⚠ `featureIds` is not optional decoration. `modeAdjust` is declared on `DefenseGrants`, so a class
+ * feature has always been ABLE to carry one, and this reader looked only in `content.feats` — so any
+ * class feature that rewrote a mode was written and never read. The aura lane is where that bites:
+ * Blessed Swiftness (champion, 3rd) rewrites the champion's aura, and the thaumaturge's Adept and
+ * Paragon regalia benefits rewrite the inspiring aura. All three are class features, and all three
+ * would have been silent. Pass `ownedFeatureIds(character, content)`.
  */
 export function adjustModes(
   modes: readonly ModeDef[],
   feats: readonly { featId: string }[],
   content: ContentDatabase,
+  featureIds?: ReadonlySet<string>,
 ): ModeDef[] {
-  const adjusts = feats.flatMap((f) => content.feats[f.featId]?.modeAdjust ?? []);
+  const adjusts = [
+    ...feats.flatMap((f) => content.feats[f.featId]?.modeAdjust ?? []),
+    ...[...(featureIds ?? [])].flatMap((id) => content.classFeatures[id]?.modeAdjust ?? []),
+  ];
   if (!adjusts.length) return [...modes];
   return modes.map((mode) => {
     const item = mode.fromItemId ? content.items[mode.fromItemId] : undefined;

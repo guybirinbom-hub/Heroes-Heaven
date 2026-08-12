@@ -106436,5 +106436,5378 @@
     }
    ]
   }
+ },
+ {
+  "category": "classFeatures",
+  "id": "agile-mind",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "anvils-hardness",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "assured-evasion",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "battle-hardened",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "battlefield-intuition",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "blast-dodger",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "battle-creed",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "chemical-hardiness",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "churning-mind",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "commanding-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "confident-evasion",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "disciplined-mind",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "divine-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "dogged-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "earned-resilience",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "evasion",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "evasive-reflexes",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "explosion-dodger",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "fifth-doctrine-warpriest",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "fortress-of-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-resolve",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "improved-evasion",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "indomitable-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "juggernaut",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "kinetic-durability",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "kinetic-quickness",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "lead-constitution",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "majestic-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "major-creed",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "master-of-mind-and-spirit",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "mortality-reforged",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "mysterious-resolve",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "natural-reflexes",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "performers-heart",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "prodigious-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "reinforced-ego",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "resolute-faith",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "resolve",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "rogue-resilience",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "sacred-body",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "savvy-reflexes",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "tempered-reflexes",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "unassailable-soul",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "unyielding-resolve",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "walls-of-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "wardens-endurance",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "warpriest",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "wild-willpower",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "will-of-the-pupil",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-dogged-will",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-mysterious-resolve",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-unassailable-soul",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "perfected-mind",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-juggernaut",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-kinetic-durability",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Fortitude save",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-natural-reflexes",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-performers-heart",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Will save",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-rogue-reflexes",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any Reflex save",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "path-to-perfection",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the save you chose for Path to Perfection",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "third-path-to-perfection",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the save you chose for Path to Perfection",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "shared-resolve",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Will save (yours and your eidolon’s)",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "twin-juggernauts",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on any Fortitude save (yours and your eidolon’s)",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "guardian-mastery",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Reflex save against a damaging effect where you used your armor’s item bonus instead of Dexterity",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "paragon-benefit-regalia",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Coerce, Make an Impression, or Request",
+    "skills": [
+     "diplomacy",
+     "intimidation"
+    ],
+    "actions": [
+     "coerce",
+     "make-an-impression",
+     "request"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "necromantic-tenacity",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a necromancy effect",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a necromancy effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "witch-warden",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a curse, or against a spell cast by a witch or hag",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "kneel-for-no-god",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the save against a divine spell you answered with Call on Ancient Blood",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "grim-insight",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a fear effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "endure-deaths-touch",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an effect from the triggering undead’s natural attack",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "knight-reclaimant-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an undead’s special ability",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "survivor-of-desolation",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against unnatural weather or an environmental hazard in a blighted region",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against unnatural weather or an environmental hazard in a blighted region",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "glyph-expert",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a trap that features magical writing",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a trap that features magical writing",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "adhyabhau",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "emotionless",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion or fear effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "wind-tempered",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an air effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "tide-hardened",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a cold or water effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "alghollthu-bound",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a mental effect that would make you controlled",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "web-walker",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an effect involving a web",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "goloma-courage",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a fear effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "adaptive-vision",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a visual effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "blast-resistance",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an effect that causes dazzled or deafened",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "emotional-partitions",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "cold-minded",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "eldritch-calm",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against an emotion or fear effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "grove-harbored",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a poison effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "living-stone",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease or poison",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "forlorn",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "ancestral-suspicion",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an effect that would make you controlled",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "undaunted",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "called",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a mental effect that would make you controlled",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "lawbringer",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "raise-symbol",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "while your religious symbol is raised, on a save against a vitality or void effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "breath-control",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an inhaled threat, such as an inhaled poison",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "morph-risen",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a hostile morph or polymorph effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "lab-rat",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a poison or disease",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "reckless-abandon-goblin",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "for the remainder of your turn after Reckless Abandon, on a save against a harmful effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "reckless-abandon",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "for the remainder of your turn after Reckless Abandon, on a save against a harmful effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "eternal-legend-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an effect that would impose the condition you chose during daily preparations",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "duck",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Reflex save against an area ability from a Huge or larger creature",
+    "saves": [
+     "reflex"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a Reflex save against an area ability from a Huge or larger creature",
+    "saves": [
+     "reflex"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "unshakable-grit",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the reroll granted by your Grit and Tenacity reaction",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on the reroll granted by your Grit and Tenacity reaction",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "affliction-resistance",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease or poison",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a disease or poison, if another ability already turns such a success into a critical success",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "parthenogenic-hatchling",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a disease, if another ability already turns such a success into a critical success",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "necromantic-physiology",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a disease, if another ability already turns such a success into a critical success",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "divine-health",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease or poison",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a disease or poison, if you have the Sacred Body class feature",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "dragons-presence",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a fear effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "resolute-fetchling",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "technological-fleshwarp",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "wishborn-poppet",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion or fear effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "discarded-fleshwarp",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a transmutation effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "death-warden-dwarf",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an effect with the void trait or created by an undead",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "irongut-goblin",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Fortitude save to avoid becoming sickened, or against an ingested poison, from something you ate",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "gutsy-halfling",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "jinxed-tengu",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a curse or misfortune effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "dijiang",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "on a failure (but not a critical failure) on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "sewer-rat",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease or poison",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a disease or poison, if another ability already turns such a success into a critical success",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "even-tempered-tanuki",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "adroit-manipulation",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Thievery check to Pick a Lock",
+    "skills": [
+     "thievery"
+    ],
+    "actions": [
+     "pick-a-lock"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "forced-entry",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Force Open",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "force-open"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "extra-squishy",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "slither",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "flexible-form",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "amorphous-aspect",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "fluid-contortionist",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "lightless-litheness",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   },
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Escape",
+    "skills": [
+     "acrobatics",
+     "athletics"
+    ],
+    "actions": [
+     "escape"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "musetouched",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Escape",
+    "skills": [
+     "acrobatics",
+     "athletics"
+    ],
+    "actions": [
+     "escape"
+    ]
+   },
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Escape",
+    "skills": [
+     "acrobatics",
+     "athletics"
+    ],
+    "actions": [
+     "escape"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "unfettered-halfling",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Escape, or a save against an effect that would make you grabbed, immobilized, or restrained",
+    "skills": [
+     "acrobatics",
+     "athletics"
+    ],
+    "saves": [
+     "all"
+    ],
+    "actions": [
+     "escape"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "steady-on-stone",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Balance on narrow surfaces or uneven ground of stone and earth",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "rock-runner",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Balance on narrow surfaces or uneven ground of stone or earth",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "marsh-runner",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Balance on narrow surfaces or uneven marshy ground",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "steady-balance",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Balance",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "shore-step",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Balance on a slippery or wet surface, or an Athletics check to Swim",
+    "skills": [
+     "acrobatics",
+     "athletics"
+    ],
+    "actions": [
+     "balance",
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "rope-runner",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Climb or an Acrobatics check to Balance",
+    "skills": [
+     "athletics",
+     "acrobatics"
+    ],
+    "actions": [
+     "climb",
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "canopy-predator",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Climb a tree or an Acrobatics check to Balance on a branch",
+    "skills": [
+     "athletics",
+     "acrobatics"
+    ],
+    "actions": [
+     "climb",
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "geckos-grip",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Climb",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "spelunker",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Survival check to Sense Direction or an Athletics check to Climb",
+    "skills": [
+     "survival",
+     "athletics"
+    ],
+    "actions": [
+     "sense-direction",
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "viking-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "marine-marauder-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "swan-dive",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "until the end of your turn after Swan Dive, on an Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "until the end of your turn after Swan Dive, on an Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "practiced-brawn",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Shove",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "shove"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "flying-tackle",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the Athletics check to Trip",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "trip"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "shackles-of-law",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the Athletics check to Grapple while wielding a flail or spiked chain",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "grapple"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "scattering-in-spring",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the Feint or Shove you make after the triggering attack misses",
+    "skills": [
+     "deception",
+     "athletics"
+    ],
+    "actions": [
+     "feint",
+     "shove"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "hydraulic-maneuvers",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the Athletics check to Disarm, Shove, or Trip made with Hydraulic Maneuvers",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "disarm",
+     "shove",
+     "trip"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "woodcraft",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "in a forest or jungle, on a Survival check to Sense Direction, Subsist, or Cover Tracks",
+    "skills": [
+     "survival"
+    ],
+    "actions": [
+     "sense-direction",
+     "subsist",
+     "cover-tracks"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "in a forest or jungle, on a Survival check to Sense Direction, Subsist, or Cover Tracks",
+    "skills": [
+     "survival"
+    ],
+    "actions": [
+     "sense-direction",
+     "subsist",
+     "cover-tracks"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "pelagic-aptitude",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "in an aquatic environment, on a Survival check to Sense Direction or Subsist",
+    "skills": [
+     "survival"
+    ],
+    "actions": [
+     "sense-direction",
+     "subsist"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "natural-orienteering",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Survival check to Sense Direction or Track",
+    "skills": [
+     "survival"
+    ],
+    "actions": [
+     "sense-direction",
+     "track"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "warren-navigator",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "when you Sense Direction, or roll against a Quandary spell",
+    "skills": [
+     "survival"
+    ],
+    "actions": [
+     "sense-direction"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "wandering-chef-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "when you Subsist using Crafting or Cooking Lore",
+    "skills": [
+     "crafting",
+     "lore"
+    ],
+    "actions": [
+     "subsist"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "impeccable-crafting",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Crafting check to make an item of the type you chose with Specialty Crafting",
+    "skills": [
+     "crafting"
+    ],
+    "actions": [
+     "craft"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "meticulous-restorer",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a Crafting check to Repair an item",
+    "skills": [
+     "crafting"
+    ],
+    "actions": [
+     "repair"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "warshard-warrior-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a Crafting check to Repair your warshard weapon",
+    "skills": [
+     "crafting"
+    ],
+    "actions": [
+     "repair"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "spellbook-prodigy",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Learn a Spell",
+    "skills": [
+     "arcana"
+    ],
+    "actions": [
+     "learn-a-spell"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "assured-identification",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on an Arcana, Nature, Occultism, or Religion check to Identify Magic",
+    "skills": [
+     "arcana",
+     "nature",
+     "occultism",
+     "religion"
+    ],
+    "actions": [
+     "identify-magic"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "text-decoder",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "when you Decipher Writing",
+    "actions": [
+     "decipher-writing"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "crystal-keeper-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "when you Decipher Writing",
+    "actions": [
+     "decipher-writing"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "when you Decipher Writing",
+    "actions": [
+     "decipher-writing"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "esteemed-visitor",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "while you are in a settlement, on a Diplomacy check to Gather Information or Make an Impression",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "gather-information",
+     "make-an-impression"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "travelers-counsel",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "the first time each day you would critically fail to Gather Information or Make an Impression",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "gather-information",
+     "make-an-impression"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "hobnobber",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "when you Gather Information, if you are a master in Diplomacy",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "gather-information"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "shameless-request",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Request",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "request"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "earned-glory",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a Performance check to Make an Impression on an elf",
+    "skills": [
+     "performance"
+    ],
+    "actions": [
+     "make-an-impression"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "lord-of-the-fiends",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "for 1 hour after Lord of the Fiends, on a Deception, Diplomacy, or Intimidation check against a fiend",
+    "skills": [
+     "deception",
+     "diplomacy",
+     "intimidation"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "vicious-critique",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the Intimidation check to Coerce, after a critical success on Vicious Critique’s Crafting check",
+    "skills": [
+     "intimidation"
+    ],
+    "actions": [
+     "coerce"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on the Intimidation check to Coerce, after a critical success on Vicious Critique’s Crafting check",
+    "skills": [
+     "intimidation"
+    ],
+    "actions": [
+     "coerce"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "talent-envy",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on the Demoralize this feat grants, if you critically succeeded at the Performance check",
+    "skills": [
+     "intimidation"
+    ],
+    "actions": [
+     "demoralize"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sneak-adept",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "on a Stealth check to Sneak",
+    "skills": [
+     "stealth"
+    ],
+    "actions": [
+     "sneak"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "thorough-search",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the secret Seek check when you spend the extra time to search thoroughly",
+    "actions": [
+     "seek"
+    ],
+    "perception": true
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "risky-surgery",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the Medicine check to Treat Wounds after Risky Surgery",
+    "skills": [
+     "medicine"
+    ],
+    "actions": [
+     "treat-wounds"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "megafauna-veterinarian",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "when the subject of your medical care is your megafauna",
+    "skills": [
+     "nature",
+     "medicine"
+    ],
+    "actions": [
+     "treat-wounds"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "remember-your-training",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "on the once-per-day Recall Knowledge check Remember Your Training grants",
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "familiar-foe",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Recall Knowledge about undead",
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "eliminate-red-herrings",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Recall Knowledge related to one of your active investigations",
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "reveal-beasts",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Recall Knowledge to identify an animal, beast, fungus, or plant",
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "know-your-own",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Recall Knowledge about elves, elven society, or elven history",
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "ancestral-insight",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge",
+    "skills": [
+     "lore"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "unmistakable-lore",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "when you Recall Knowledge using a Lore subcategory you are trained in",
+    "skills": [
+     "lore"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "golden-league-xun-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "when you use Underworld Lore to Earn Income or Recall Knowledge",
+    "skills": [
+     "lore"
+    ],
+    "actions": [
+     "earn-income",
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "tap-into-blood",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the arcane Tap Into Blood check to Recall Knowledge using Arcana",
+    "skills": [
+     "arcana"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "commitment-to-protection",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "on the Warfare Lore check, if you are legendary in Warfare Lore",
+    "skills": [
+     "lore"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "practiced-guidance",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "when you Aid a member of your crop",
+    "actions": [
+     "aid"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "reliable-squire",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Aid",
+    "actions": [
+     "aid"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "proud-mentor",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on an attempt to Aid",
+    "actions": [
+     "aid"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "cooperative-soul",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "when you Aid a skill check you are at least an expert in",
+    "actions": [
+     "aid"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "scroll-trickster-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "when you Trick a Magic Item that is a scroll",
+    "skills": [
+     "arcana",
+     "nature",
+     "occultism",
+     "religion"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "river-azarketi",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "lethoci",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on an Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "vine-leshy",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Climb",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "kijimuna-gnome",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the Athletics check to Climb",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "stickytoe-tripkee",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "when ascending trees, vines, and other foliage, on the Athletics check to Climb",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "rite-of-passage",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Balance on narrow surfaces or uneven ground",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "warrenbred-hobgoblin",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "cavernstalker-kobold",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Squeeze",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "heavenscribe-kobold",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a Diplomacy check to Make an Impression or Request",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "make-an-impression",
+     "request"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "runtboss-hobgoblin",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Intimidation check to Coerce a goblin",
+    "skills": [
+     "intimidation"
+    ],
+    "actions": [
+     "coerce"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on an Intimidation check to Coerce a goblin",
+    "skills": [
+     "intimidation"
+    ],
+    "actions": [
+     "coerce"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "steadying-stone",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Balance on uneven ground made of earth or rock",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "athletic-might",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Climb or Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "climb",
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "brine-may",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "jungle-strider",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "to Balance on narrow surfaces or uneven ground made of plant material",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "emerald-boughs-accustomation",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Society check to Subsist",
+    "skills": [
+     "society"
+    ],
+    "actions": [
+     "subsist"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a Society check to Subsist",
+    "skills": [
+     "society"
+    ],
+    "actions": [
+     "subsist"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "empathy-incarnate",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Diplomacy check to Make an Impression or Request against a lower-level creature",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "make-an-impression",
+     "request"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "just-the-facts",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "when you Recall Knowledge (the check is not secret, and you know which information is inaccurate)",
+    "skills": [
+     "all"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "magical-shorthand",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Learn a Spell",
+    "skills": [
+     "arcana",
+     "nature",
+     "occultism",
+     "religion"
+    ],
+    "actions": [
+     "learn-a-spell"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "intuitive-crafting",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a Crafting check to Repair an item",
+    "skills": [
+     "crafting"
+    ],
+    "actions": [
+     "repair"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "backgrounds",
+  "id": "nocturnal-navigator",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a Survival check whenever you can clearly identify the stars",
+    "skills": [
+     "survival"
+    ],
+    "actions": [
+     "sense-direction"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "experienced-professional",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "when you use Lore to Earn Income",
+    "skills": [
+     "lore"
+    ],
+    "actions": [
+     "earn-income"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sturdy-bindings",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on your check to Grapple",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "grapple"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sure-feet",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Balance or an Athletics check to Climb",
+    "skills": [
+     "acrobatics",
+     "athletics"
+    ],
+    "actions": [
+     "balance",
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "fire-savvy",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against suffocation or choking from smoke or ash",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "haughty-obstinacy",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a mental effect that directly controls your actions",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "iron-lung",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a save against an inhaled poison",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "unwavering-mien",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a save against an effect that would make you fall asleep",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "abjure-the-false-kin",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a mental effect that doesn’t deal damage",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "irrepressible",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against an emotion effect, if you have the gutsy halfling heritage",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "irrepressible-ganzi",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "irrepressible-halfling",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against an emotion effect, if you have the gutsy halfling heritage",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "irrepressible-nephilim",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "cantorian-reinforcement",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease or poison",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a disease or poison, if you also have Battle Hardened or a similar ability",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "disillusionment",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an illusion or dream effect, and on a Perception check to disbelieve an illusion",
+    "saves": [
+     "all"
+    ],
+    "perception": true
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against an illusion or dream effect, and on a Perception check to disbelieve an illusion",
+    "saves": [
+     "all"
+    ],
+    "perception": true
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "dragonblood",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a fear effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "caveclimber-kobold",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the Athletics check to Climb (your hands stay free)",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "cliffscale-lizardfolk",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "while not wearing footwear, on the Athletics check to Climb (your hands stay free)",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "fishseeker-shoony",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Grab an Edge",
+    "saves": [
+     "reflex"
+    ],
+    "actions": [
+     "grab-an-edge"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Grab an Edge",
+    "saves": [
+     "reflex"
+    ],
+    "actions": [
+     "grab-an-edge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "paddler-shoony",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "student-of-the-canon",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Recall Knowledge about the tenets of faiths, or on a Religion check to Decipher Writing of a religious nature",
+    "skills": [
+     "religion"
+    ],
+    "actions": [
+     "recall-knowledge",
+     "decipher-writing"
+    ]
+   },
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Recall Knowledge about your own faith",
+    "skills": [
+     "religion"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "bravery",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Will save against a fear effect",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "cloak-of-repute",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "once per day, on the Diplomacy check to Request when you activate the cloak",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "request"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "cloak-of-repute-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "twice per day, on the Diplomacy check to Request when you activate the cloak",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "request"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "cloak-of-repute-major",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "three times per day, on the Diplomacy check to Request when you activate the cloak",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "request"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "three times per day, on the Diplomacy check to Request when you activate the cloak",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "request"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "runic-skullcap",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a failed or critically failed check to Recall Knowledge about rune magic or Lissala",
+    "skills": [
+     "all"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "travelers-fulu",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on the Sense Direction check you activated the fulu for (two degrees if you are a master in Survival)",
+    "skills": [
+     "survival"
+    ],
+    "actions": [
+     "sense-direction"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "the-publican",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "while invested, on a check to Aid",
+    "actions": [
+     "aid"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "hardened-harrow-deck",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "while you carry more than half the deck, on a save against a fear effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "potion-of-stable-form",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a polymorph effect while the potion lasts",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "potion-of-stable-form-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a polymorph effect while the potion lasts",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "sanguine-mutagen",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease, poison, or an effect that would make you fatigued",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "sanguine-mutagen-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease, poison, or an effect that would make you fatigued",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "sanguine-mutagen-major",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease, poison, or an effect that would make you fatigued",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a disease, poison, or an effect that would make you fatigued",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "juggernaut-mutagen",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Fortitude save while the mutagen lasts",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "juggernaut-mutagen-major",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Fortitude save while the mutagen lasts",
+    "saves": [
+     "fortitude"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a Fortitude save while the mutagen lasts",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "serene-mutagen",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Will save against a mental effect while the mutagen lasts",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "serene-mutagen-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Will save against a mental effect while the mutagen lasts",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "serene-mutagen-major",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Will save against a mental effect while the mutagen lasts",
+    "saves": [
+     "will"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a Will save against a mental effect while the mutagen lasts",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "bravos-brew",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against fear while the brew lasts",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "desolation-locket-major",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "inextinguishable",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a death or void effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "living-death",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a save against an effect that would deal void damage to you",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "stormshard",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on the saving throw the stormshard is used for",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "stormshard-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on the saving throw the stormshard is used for",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "stormshard-major",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on the saving throw the stormshard is used for",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "armbands-of-the-gorgon",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a save against a spell or effect with the incapacitation trait",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "iron-medallion",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "on the triggering save",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on the triggering save",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "star-of-cynosure",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToSuccess",
+    "when": "on the triggering save",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on the triggering save",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "mesmerizing-opal",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the triggering save",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on the triggering save",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "evil-reflecting-shield",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on the saving throw this shield is activated for",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "hunters-hagbook",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on the saving throw you use the hagbook for",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "tradecraft-tattoo",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a Crafting check to Earn Income",
+    "skills": [
+     "crafting"
+    ],
+    "actions": [
+     "earn-income"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "tradecraft-tattoo-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a Crafting check to Earn Income",
+    "skills": [
+     "crafting"
+    ],
+    "actions": [
+     "earn-income"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "thurible-of-revelation",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "while holding the thurible, when you Decipher Writing of a religious nature",
+    "skills": [
+     "religion"
+    ],
+    "actions": [
+     "decipher-writing"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "thurible-of-revelation-lesser",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "while holding the thurible, when you Decipher Writing of a religious nature",
+    "skills": [
+     "religion"
+    ],
+    "actions": [
+     "decipher-writing"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "thurible-of-revelation-moderate",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "while holding the thurible, when you Decipher Writing of a religious nature",
+    "skills": [
+     "religion"
+    ],
+    "actions": [
+     "decipher-writing"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "thurible-of-revelation-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "while holding the thurible, when you Decipher Writing of a religious nature",
+    "skills": [
+     "religion"
+    ],
+    "actions": [
+     "decipher-writing"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "creative-spark",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "once per day, on a Crafting check related to blacksmithing",
+    "skills": [
+     "crafting"
+    ],
+    "actions": [
+     "craft"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "elements-of-creation",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a Crafting check related to blacksmithing, while all four creative-spark wisps assist you",
+    "skills": [
+     "crafting"
+    ],
+    "actions": [
+     "craft"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "matchmaker-fulu",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the Diplomacy check the fulu is activated for",
+    "skills": [
+     "diplomacy"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "skinstitch-salve",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the Medicine check the salve is applied for",
+    "skills": [
+     "medicine"
+    ],
+    "actions": [
+     "treat-wounds"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "breastplate-of-the-mountain",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the check this armor is activated for",
+    "skills": [
+     "athletics"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "lawbringers-lasso",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on an attempt to Grapple a chaotic creature with the lasso",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "grapple"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "grappling-vine",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the check to secure the vine",
+    "skills": [
+     "athletics"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "cryolite-eye",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Perception check against an illusion",
+    "perception": true
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "possibility-tome",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the check the tome is consulted for",
+    "skills": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "sash-of-books",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the Recall Knowledge check the sash is used for",
+    "skills": [
+     "all"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "the-vision",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a Recall Knowledge check with that Lore, if you are already a master or legendary in it",
+    "skills": [
+     "lore"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "eye-of-enlightenment",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the check the eye is activated for",
+    "skills": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "enveloping-light-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on any check to Treat your Wounds",
+    "skills": [
+     "medicine"
+    ],
+    "actions": [
+     "treat-wounds"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "enveloping-light",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "the first time each day someone Treats your Wounds",
+    "skills": [
+     "medicine"
+    ],
+    "actions": [
+     "treat-wounds"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "headbands-of-translocation",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "while both headbands are invested, when you Aid an ally wearing the paired headband",
+    "actions": [
+     "aid"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "artistic-perfection",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check with the skill you chose",
+    "skills": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "topology-protoplasm",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "on a check to Squeeze while in the protoplasm",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "squeeze"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "words-of-wisdom",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "during the activation, on a Diplomacy check or the associated skill",
+    "skills": [
+     "diplomacy",
+     "intimidation",
+     "deception",
+     "performance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "inubrix-shield",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Disarm a metal item, if you drop the weapon",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "disarm"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "inubrix-shield-standard-grade",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Disarm a metal item, if you drop the weapon",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "disarm"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "inubrix-shield-high-grade",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Disarm a metal item, if you drop the weapon",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "disarm"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "inubrix-buckler-standard-grade",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Disarm a metal item, if you drop the weapon",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "disarm"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "inubrix-buckler-high-grade",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Disarm a metal item, if you drop the weapon",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "disarm"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "monkey-pin",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "on the triggering Athletics check",
+    "skills": [
+     "athletics"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "savior-spike",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the triggering attempt",
+    "skills": [
+     "athletics"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on the triggering attempt",
+    "skills": [
+     "athletics"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "shark-tooth-charm",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the triggering Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on the triggering Athletics check to Swim",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "swim"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "well-groomed",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "the-sickness",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a disease",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "grub-gloves",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Reflex save to Grab an Edge",
+    "saves": [
+     "reflex"
+    ],
+    "actions": [
+     "grab-an-edge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "grub-gloves-lesser",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Reflex save to Grab an Edge",
+    "saves": [
+     "reflex"
+    ],
+    "actions": [
+     "grab-an-edge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "grub-gloves-moderate",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Reflex save to Grab an Edge",
+    "saves": [
+     "reflex"
+    ],
+    "actions": [
+     "grab-an-edge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "grub-gloves-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Reflex save to Grab an Edge",
+    "saves": [
+     "reflex"
+    ],
+    "actions": [
+     "grab-an-edge"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "bravos-brew-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Will save against fear while the brew lasts",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "juggernaut-mutagen-greater",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a Fortitude save while the mutagen lasts",
+    "saves": [
+     "fortitude"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "wajaghand-vanara",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "hydra-mutagen",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "once per mutagen, when you fail or critically fail a Will save against a mental effect",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "lovers-gloves",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "while a shared Bond lasts, on a save against an emotion effect that causes negative emotions",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "heritages",
+  "id": "born-of-item",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "in yaoguai form, on a save against a mental effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "numb",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "while Deteriorated, on a save against an emotion or pain effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "gorilla-stance",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Athletics check to Climb while in Gorilla Stance",
+    "skills": [
+     "athletics"
+    ],
+    "actions": [
+     "climb"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "staff-acrobat-dedication",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on an Acrobatics check to Balance while wielding your staff",
+    "skills": [
+     "acrobatics"
+    ],
+    "actions": [
+     "balance"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "conceited-mindset",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a save against a mental effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "healing-sanctuary",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-shield-the-faithful"
+     ]
+    },
+    "note": "Healing Sanctuary: an ally who begins their turn in this aura gains 10 temporary Hit Points that last 1 round. Rounds are not tracked, so it adds no number here."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "wide-overwatch",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-overwatch-dedication"
+     ]
+    },
+    "note": "Wide Overwatch: your overwatch field is a 60-foot emanation instead of 30 feet."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aura-of-faith",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Aura of Faith: each willing ally in the aura adds the holy trait to their Strikes if you are holy, or the unholy trait if you are unholy."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aura-of-determination",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Aura of Determination: you and all allies in the aura gain a +1 status bonus to saves against mental, morph and polymorph effects."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aura-of-life",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Aura of Life: you and all allies in the aura gain resistance 5 to void damage and a +1 status bonus to saves against void effects. Your own resistance is permanent and already on your sheet."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aura-of-righteousness",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Aura of Righteousness: you and all allies in the aura gain resistance 5 to unholy spells, Strikes and other unholy effects, and the aura counteracts teleportation that would move an unholy creature out of it (using your devotion spells’ rank and DC)."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aura-of-despair",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Aura of Despair: enemies in the aura take a −1 circumstance penalty to saves against fear, and an enemy that ends its turn inside cannot reduce its frightened value below 1."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aura-of-courage",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Aura of Courage: at the end of your turn, each ally in the aura reduces its frightened value by 1. (Your own reduction is not the aura — it applies wherever you are.)"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "divine-health",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Divine Health: allies in the aura share your bonus against diseases and poisons, but theirs is +1 rather than +2. They do not share the success-to-critical-success upgrade."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "oath-of-the-defender",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Oath of the Defender: allies in the aura — NOT you — get resistance 2 to damage dealt by creatures of the kind you swore against, rising to 3 at 7th, 4 at 12th and 5 at 17th, and +5 more when such a creature triggers your champion’s reaction."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "wyrmbane-aura",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Wyrmbane Aura: you and all allies within 15 feet gain resistance equal to your Charisma modifier to acid, cold, electricity, fire and poison — half your level instead when the source is a dragon’s breath. Your own resistance is permanent and already on your sheet."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aura-of-preservation",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Aura of Preservation: you and all allies within 15 feet gain a +1 status bonus to Fortitude and Will saves against effects from aberrations."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "expand-aura",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Expand Aura: a single action expands the aura to a 30-foot radius until the start of your next turn — for 1 minute from 10th level, and until you Dismiss it from 16th."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "blessed-swiftness",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-champions-aura"
+     ]
+    },
+    "note": "Blessed Swiftness: when an ally’s movement inside the aura triggers an enemy’s reaction, that ally gains a +2 status bonus to all defenses against it. (The +5-foot Speed is yours wherever you stand and is already on your sheet.)"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "glorious-banner",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-commanders-banner"
+     ]
+    },
+    "note": "Glorious Banner: the banner now affects a 60-foot emanation (80-foot burst with Plant Banner), the allies’ fear bonus rises to +2, you and affected allies gain +1 status to AC, Fortitude and Reflex saves, and enemies inside that can see the banner take a −2 status penalty to Will saves."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "battle-tested-companion",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-commanders-banner"
+     ]
+    },
+    "note": "Battle-Tested Companion: while the banner is affixed to that companion the aura is 10 feet larger than normal — typically 40 feet instead of 30."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "channel-divine-spark",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-ascended-celestial-dedication"
+     ]
+    },
+    "note": "Channel Your Divine Spark: the nimbus activates if it was off and its area doubles — bright light for 60 feet, dim for 60 more — and you cannot suppress it while channeling."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aura-shaping",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-channel-elements"
+     ]
+    },
+    "note": "Aura Shaping: you choose the emanation’s size, any multiple of 5 from 5 feet up to 20 feet, when you Channel Elements or use a stance impulse that affects it. The maximum rises by 5 feet at 15th and 20th levels."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "adept-benefit-regalia",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-initiate-benefit-regalia"
+     ]
+    },
+    "note": "Adept Benefit (7th): the +1 status bonus now applies to ALL saves against mental effects rather than only fear, and you and allies in the aura gain a +2 status bonus to damage rolls (+3 at 11th, +4 at 17th)."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "paragon-benefit-regalia",
+  "field": "modeAdjust",
+  "value": [
+   {
+    "match": {
+     "ids": [
+      "aura-initiate-benefit-regalia"
+     ]
+    },
+    "note": "Paragon Benefit (17th): allies in the aura are not off-guard from being flanked unless you are flanked too, and an ally in the aura that is clumsy, enfeebled, frightened, sickened or stupefied takes a status penalty 1 lower than the condition value — unless you have the same condition."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "combination-finisher",
+  "field": "mapReduction",
+  "value": {
+   "step": 4,
+   "agileStep": 3,
+   "note": "Combination Finisher",
+   "appliesWhen": "part of a finisher"
+  }
+ },
+ {
+  "category": "classFeatures",
+  "id": "impulses",
+  "field": "specialStatistic",
+  "value": {
+   "key": "impulse-attack",
+   "name": "Impulse attack roll",
+   "kind": "attack",
+   "basis": {
+    "classDc": "kineticist"
+   },
+   "note": "Some impulses ask for an impulse attack roll rather than a save."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "kineticist-dedication",
+  "field": "specialStatistic",
+  "value": {
+   "key": "impulse-attack",
+   "name": "Impulse attack roll",
+   "kind": "attack",
+   "basis": {
+    "classDc": "kineticist"
+   },
+   "note": "Some impulses ask for an impulse attack roll rather than a save."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "scroll-thaumaturgy",
+  "field": "specialStatistic",
+  "value": {
+   "key": "scroll-dc",
+   "name": "Scroll DC",
+   "kind": "dc",
+   "basis": {
+    "classDc": "thaumaturge"
+   },
+   "note": "You activate scrolls of any tradition against this DC rather than a spell DC."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "barbarian-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "barbarian"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "champion-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "champion"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "guardian-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "guardian"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "inventor-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "inventor"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "investigator-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "investigator"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "kineticist-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "kineticist"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "monk-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "monk"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "swashbuckler-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "swashbuckler"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "thaumaturge-dedication",
+  "field": "classDcGrant",
+  "value": {
+   "classId": "thaumaturge"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "brilliant-crafter",
+  "field": "classDcRank",
+  "value": {
+   "classId": "inventor",
+   "rank": "expert"
+  }
+ },
+ {
+  "category": "items",
+  "id": "gate-attenuator",
+  "field": "passiveEffects",
+  "value": {
+   "specialStatBonus": {
+    "key": "impulse-attack",
+    "value": 1
+   }
+  }
+ },
+ {
+  "category": "items",
+  "id": "gate-attenuator-greater",
+  "field": "passiveEffects",
+  "value": {
+   "specialStatBonus": {
+    "key": "impulse-attack",
+    "value": 2
+   }
+  }
+ },
+ {
+  "category": "items",
+  "id": "gate-attenuator-major",
+  "field": "passiveEffects",
+  "value": {
+   "specialStatBonus": {
+    "key": "impulse-attack",
+    "value": 2
+   }
+  }
  }
 ]
