@@ -249,7 +249,7 @@ redundant right now?"** Anywhere a feat scales at a later level, that later leve
 | **Q22 — size does NOT grant reach** | *"Large PCs do not automatically gain additional reach, though some Large ancestries (such as minotaurs) have ancestry feats that grant them additional reach."* **The app is correct as shipped** — base reach stays 5 ft for Large ancestries, and Jotun's Heart's explicit "10-foot reach" is right rather than redundant. Nothing to change; the reach lane's open question is closed. |
 | **Q23 — daily choices belong to daily prep, not the builder** | They must **not** render in the builder. They appear when the player presses **Daily preparations**, and **default to the last choice made**. ⚠ The owner thinks a setting for that default may already exist — **check before building one**. |
 | **Q24 — do not re-run the 500-feat audit** | Not yet, despite the Strength-wizard host bug. Finish the audit systems first; the owner will set the next step then. |
-| **Q25 — the archetype dedication rule is UNBUILT** | Feats print *"**Special** You cannot select another dedication feat other than X until you have gained two other feats from the Y archetype."* **Nothing in `src/` enforces this** — no dedication gate exists anywhere. It is a general rule across every archetype, not a per-feat clause, and the builder currently lets a player take dedications freely. |
+| **Q25 — the archetype dedication rule is UNBUILT** | Feats print *"**Special** You cannot select another dedication feat other than X until you have gained two other feats from the Y archetype."* **Nothing in `src/` enforces this** — no dedication gate exists anywhere. ⚠ **It is NOT a general rule.** Only **12 of the 240 live dedication feats** print the clause — Magaambyan Attendant, Juggler, Jalmeri Heavenseeker, Wellspring Mage and eight others. Building it as a blanket gate would wrongly block 228 legal picks, which is worse than the current gap. |
 
 ### Q25 — what has to be true
 
@@ -261,3 +261,23 @@ This belongs in the builder's eligibility test, alongside prerequisites — and 
 dedication should not be offered at all unless the player toggles "show options not meeting
 prerequisites". Per **Q21**, the filter must ask whether the pick is legal *now*, which for this rule
 genuinely is a now-question rather than a career-question.
+
+### Q25, corrected — the rule is PER-FEAT, not global
+
+⚠ I first recorded this as "a general rule across every archetype". **That was wrong**, and the owner
+corrected it. Measured: **12 of 240 live dedication feats** carry the Special clause. A blanket gate
+would wrongly block 228 legal picks — a worse bug than the one it fixes.
+
+So the gate must be driven by **the feat's own text**, read per record, and each clause names its own
+exception ("other than Halcyon Speaker Dedication") and its own archetype ("two other feats from the
+Magaambyan Attendant or halcyon speaker archetype"). It is a field on those 12 records, not a rule in
+the engine.
+
+### Q26 — a dead picker may be a MISSING LANE, not flavour
+
+Asked what Magaambyan Attendant's dead "Magaambya branch" picker should do, the owner: **"it should
+grant something we haven't built — then it's a missing lane."**
+
+So the default reading for a picker whose answer reaches nothing is **not** "it must be flavour". Each
+of the five is a candidate missing grant, and the branch pick is one. Do not close these by deciding
+they are decorative; find what the text says the branch gives and build it.
