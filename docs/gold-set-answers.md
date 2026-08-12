@@ -176,3 +176,36 @@ Requirement: a `*` on **Deception**, carrying the once-per-day reroll and the ri
 | **N2** | A feat that **modifies a spell it grants** writes its text into that spell's description **attributed to the feat and visually separated** from the spell's own rules. A recurring shape — build it as a lane. | 3 |
 | **O2** | **Per-round frequencies get no use pip.** A counter is for a resource that runs out across a scene, not one that resets every round. | 4 |
 | **P** | A benefit gated behind a **deliberate out-of-combat action** needs no star. The player already knows they did the thing. | 5 |
+
+---
+
+## Round 5 — the echo-only pickers (2026-08-11)
+
+**Q20. When a feat's choice changes nothing but the feat's own label, is that acceptable?**
+
+> **(c) Fine only when the choice has no mechanical consequence the app models.** Judged individually,
+> not by rule. *"but remember Assurance needs to have a `*` on the skill that it affects."*
+
+### ⚠ The refinement is the important half
+
+Label-only is **almost never the complete answer**. Even where no number moves, if the choice names a
+specific stat, **that stat carries a `*` back to the feat**. Assurance is the case: you roll 10 +
+proficiency instead of a d20, so nothing on the sheet changes — and the skill must still be starred,
+because that is where the player looks the number up.
+
+So the test is two questions, not one:
+1. Does the app model a mechanical consequence? If yes, the choice must produce it — a label is not enough.
+2. Does the choice name a specific stat? If yes, **that stat gets a `*`**, whether or not a number moves.
+
+A choice is legitimately label-only only when **both** answers are no.
+
+### The three worked examples the owner gave
+
+| feat | verdict | what it must do |
+|---|---|---|
+| **Ranged Combatant** | **defect — answer has no consumer** | The record carries the damage-type picker and *nothing else*. It must grant the eidolon a **ranged unarmed attack: range increment 30 ft, 1d4, magical + propulsive**, with the picked type as its damage. Owner's own words. |
+| **Manifold Modifications** | **defect — unfiltered list (Q9)** | Offers all 17 modifications. Must offer only those belonging to **the innovation the character already has**. |
+| **Exemplar Dedication** | **defect — a phantom question** | Its two-option "ability score" picker is the *prerequisite* ("Strength +2 or Dexterity +2") rendered as a choice. **Delete the picker.** The mangled prompt `"Class DCAbility Score"` is import damage; the feat's real unbuilt content is *trained in martial weapons* and *one ikon with its immanence and transcendence actions*. |
+
+**Assurance-style feats (Eidetic Ear, Weight of Experience) are correct to move no number — and still
+need the `*` on the chosen skill.**
