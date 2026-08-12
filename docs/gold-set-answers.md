@@ -239,3 +239,25 @@ real prize. Filtering it would quietly deny the player the feat's whole point.
 
 **So option filtering must ask "is this wasted across the character's whole career?", not "is this
 redundant right now?"** Anywhere a feat scales at a later level, that later level is part of the answer.
+
+---
+
+## Round 7 — reach, daily choices, and the dedication rule (2026-08-11)
+
+| Q | ruling |
+|---|---|
+| **Q22 — size does NOT grant reach** | *"Large PCs do not automatically gain additional reach, though some Large ancestries (such as minotaurs) have ancestry feats that grant them additional reach."* **The app is correct as shipped** — base reach stays 5 ft for Large ancestries, and Jotun's Heart's explicit "10-foot reach" is right rather than redundant. Nothing to change; the reach lane's open question is closed. |
+| **Q23 — daily choices belong to daily prep, not the builder** | They must **not** render in the builder. They appear when the player presses **Daily preparations**, and **default to the last choice made**. ⚠ The owner thinks a setting for that default may already exist — **check before building one**. |
+| **Q24 — do not re-run the 500-feat audit** | Not yet, despite the Strength-wizard host bug. Finish the audit systems first; the owner will set the next step then. |
+| **Q25 — the archetype dedication rule is UNBUILT** | Feats print *"**Special** You cannot select another dedication feat other than X until you have gained two other feats from the Y archetype."* **Nothing in `src/` enforces this** — no dedication gate exists anywhere. It is a general rule across every archetype, not a per-feat clause, and the builder currently lets a player take dedications freely. |
+
+### Q25 — what has to be true
+
+The rule is: once you take a dedication, you may not take **another** dedication until you have **two
+more feats from that same archetype**. Some feats name an exception (Halcyon Speaker Dedication is
+allowed after Magaambyan Attendant).
+
+This belongs in the builder's eligibility test, alongside prerequisites — and per **Q9** an ineligible
+dedication should not be offered at all unless the player toggles "show options not meeting
+prerequisites". Per **Q21**, the filter must ask whether the pick is legal *now*, which for this rule
+genuinely is a now-question rather than a career-question.
