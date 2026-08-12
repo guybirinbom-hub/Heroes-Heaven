@@ -56,6 +56,7 @@ import { CLASS_ADVANCEMENT } from './advancement';
 import { applyCounterMods } from './counterMods';
 import { choiceGrantFor, FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
 import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE } from './featFeatGrants';
+import { BACKGROUND_GRANT_BOUND_CHOICE } from './backgroundGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from './featPickGrants';
 import { FEAT_CANTRIP_GRANTS } from './featCantripGrants';
 import { FORMULA_BOOK_ITEM_ID, formulaBookSource, formulaGrantsOwned, grantsFormulaBook, isFormulaBook, withFormula } from './formulaBook';
@@ -1125,6 +1126,50 @@ export function boundGrantChoice(
     if (subject) key = loreKey(subject);
   }
   return key ? { value: key, label: skillKeyLabel(key) } : undefined;
+}
+
+/**
+ * The answer a BACKGROUND has already given on its granted feat's behalf, or undefined when the
+ * grant is free to ask for itself.
+ *
+ * The background twin of `boundGrantChoice`. Abadar's Avenger grants *"the Assurance skill feat with
+ * Religion"* and the builder still offered all 16 skills, so the star ruling Q20 requires could land
+ * on a skill the background never named — or, if the player never answered, on nothing at all.
+ *
+ * `bgSkill` reads the pick through the same defaulting `backgroundGrantedFeats` uses (the stored
+ * choice, else the first offered skill), which is what stops the assured skill and the TRAINED skill
+ * disagreeing. `bgLore` and `deitySkill` have no default: an unnamed Lore and an unchosen deity bind
+ * nothing rather than inventing an answer, exactly as Gnome Obsession's Lore does.
+ *
+ * A non-skill option ('underbrush', 'alchemy', 'comedy') is returned as-is with the granted feat's
+ * own label for it, since those choices are `kind: 'array'` and their labels live on the record.
+ */
+export function boundBackgroundGrantChoice(
+  build: Pick<BuildState, 'backgroundSkillChoice' | 'backgroundLore' | 'deityId'>,
+  content: ContentDatabase,
+  background: Background | undefined,
+  grantedId: string,
+): { value: string; label: string } | undefined {
+  const spec = background ? BACKGROUND_GRANT_BOUND_CHOICE[background.id]?.[grantedId] : undefined;
+  if (!spec) return undefined;
+  let key: string | undefined;
+  if (spec.kind === 'fixed') key = spec.skill;
+  else if (spec.kind === 'fixedLore') key = loreKey(spec.subject);
+  else if (spec.kind === 'bgSkill') {
+    const opts = background?.trainedSkillChoice ?? [];
+    const picked = build.backgroundSkillChoice;
+    key = picked && opts.includes(picked) ? picked : opts[0];
+  } else if (spec.kind === 'bgLore') {
+    const subject = build.backgroundLore?.trim();
+    if (subject) key = loreKey(subject);
+  } else {
+    key = build.deityId ? content.deities[build.deityId]?.skill : undefined;
+  }
+  if (!key) return undefined;
+  // An 'array' choice (Terrain Expertise's terrains, Specialty Crafting's specialties) carries its
+  // own human label on the record; only a skill/Lore key is labelled by shape.
+  const opt = content.feats[grantedId]?.choice?.options?.find((o) => o.value === key);
+  return { value: key, label: opt?.label ? featChoiceLabel(opt.label) : skillKeyLabel(key) };
 }
 
 /**
@@ -2898,13 +2943,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const pick = build.grantedFeatChoices?.[bgFeatId];
     // Same {value,label} shape a slot-picked grant stores, so every reader treats them alike.
     const raw = grantedChoice?.options?.find((o) => o.value === pick)?.label;
+    // A BOUND answer wins over the free pick, exactly as it does on the feat-grant lane: Abadar's
+    // Avenger names Religion, so a stale `grantedFeatChoices` entry saying Stealth must not survive
+    // it. Bound grants also arrive ANSWERED with no player input, which is what puts ruling Q20's
+    // `*` on the named skill for a character who never touched the picker.
+    const bound = boundBackgroundGrantChoice(build, content, background, bgFeatId);
     feats.push({
       featId: bgFeatId,
       level: 1,
       category: 'skill',
-      ...(grantedChoice && pick
-        ? { choice: { value: pick, label: grantedChoice.kind === 'domains' ? cap(pick) : raw ? featChoiceLabel(raw) : cap(pick) } }
-        : {}),
+      ...(bound
+        ? { choice: bound }
+        : grantedChoice && pick
+          ? { choice: { value: pick, label: grantedChoice.kind === 'domains' ? cap(pick) : raw ? featChoiceLabel(raw) : cap(pick) } }
+          : {}),
     });
     takenFeats.add(bgFeatId);
   }

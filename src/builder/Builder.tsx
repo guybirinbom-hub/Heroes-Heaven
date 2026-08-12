@@ -22,6 +22,7 @@ import {
   subclassAnchorAt,
   backgroundGrantedFeats,
   boundGrantChoice,
+  boundBackgroundGrantChoice,
   choiceKeys,
   choiceOptionsFor,
 } from '../rules/build';
@@ -41,6 +42,7 @@ import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from
 import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
+import { isBoundBackgroundGrant } from '../rules/backgroundGrants';
 import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
@@ -485,6 +487,33 @@ export function Builder({
      * would hand them a control whose answer is discarded the moment they type the Lore in.
      */
     const granter = featPrereqChar.feats.find((f) => f.featId === grantedId)?.grantedBy;
+    /*
+     * The same rule on the BACKGROUND lane. A background never becomes `grantedBy` — build.ts pushes
+     * its feats without one — so this needs its own lookup rather than falling out of the line above.
+     * Abadar's Avenger names Religion; offering the 16-skill list there let the player answer a
+     * question the background had already answered, and ruling Q20 makes that answer load-bearing
+     * because it decides which skill carries Assurance's `*`.
+     */
+    const boundBg = resolveBackground(build, content);
+    if (boundBg && isBoundBackgroundGrant(boundBg.id, grantedId)) {
+      const bound = boundBackgroundGrantChoice(build, content, boundBg, grantedId);
+      return (
+        <SubCard
+          key={`gfc-${grantedId}`}
+          icon="ti-adjustments"
+          label={`${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt, def.flag)}`}
+        >
+          <div className="choice-inert">
+            <i className="ti ti-info-circle" aria-hidden="true" />
+            <span>
+              {bound
+                ? `${bound.label} — set by ${boundBg.name}, which names it. Not a separate choice.`
+                : `Follows ${boundBg.name}'s own choice above — answer that and this fills in.`}
+            </span>
+          </div>
+        </SubCard>
+      );
+    }
     if (granter && isBoundGrant(granter, grantedId)) {
       const bound = boundGrantChoice(build, granter, grantedId);
       const granterName = content.feats[granter]?.name ?? granter;
@@ -1416,9 +1445,17 @@ export function Builder({
                                   <span className="lvl-gain-tag">skill feat · granted</span>
                                 </div>
                                 <ChoiceDetails name={nm} flavor={ft?.description} descRefs={ft?.descRefs} />
-                                {/* Its own sub-choice (Abadar's Avenger grants "Assurance with Religion")
-                                    is asked in the choice zone below, not here. */}
-                                {!!ft?.choice && <div className="lvl-gain-asks">Asks you to choose — see below</div>}
+                                {/* Its own sub-choice is asked in the choice zone below, not here —
+                                    UNLESS the background already answered it. Abadar's Avenger grants
+                                    "Assurance with Religion", so promising a choice it does not offer
+                                    would send the player looking for a control that is not there. */}
+                                {!!ft?.choice && (
+                                  <div className="lvl-gain-asks">
+                                    {isBoundBackgroundGrant(bg?.id, gid)
+                                      ? `${bg!.name} names it — nothing to choose`
+                                      : 'Asks you to choose — see below'}
+                                  </div>
+                                )}
                               </div>
                             );
                           })}

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { buildCharacter, emptyBuild, backgroundGrantedFeats } from '../src/rules/build';
+import { isBoundBackgroundGrant } from '../src/rules/backgroundGrants';
 import { content } from './_content';
 
 const c = () => content();
@@ -46,28 +47,55 @@ describe('a background-granted feat carries its own choice', () => {
     return buildCharacter(build, db2);
   };
 
-  it("Abadar's Avenger records the Religion the text names", () => {
+  /*
+   * ⚠ WHAT THESE TWO USED TO ASSERT, AND WHY IT WAS WRONG.
+   *
+   * The first was "Abadar's Avenger records the Religion the text names" — but it PASSED
+   * `{ assurance: 'religion' }` in, i.e. it fed the free answer and then checked the free answer came
+   * back. It proved the plumbing carried a pick; it did not prove the pick was Religion. The same
+   * assertion passed just as happily with `'stealth'`, from a background whose sentence is *"You gain
+   * the Assurance skill feat with Religion"*.
+   *
+   * The second asserted that with no pick the granted feat arrives with `choice: undefined` — i.e. it
+   * pinned the defect open. Under ruling Q20 an unanswered Assurance is not merely untidy: the answer
+   * is the ONLY thing Assurance produces, because it decides which skill carries the `*`. Undefined
+   * means the star lands nowhere, on a background that names the skill in its own text.
+   *
+   * A test that vouches for a defect is worse than no test, so both now assert the binding.
+   */
+  it("Abadar's Avenger binds Assurance to Religion, whatever the player answers", () => {
     const [{ bg, feat }] = affected().filter((a) => a.bg === 'abadars-avenger');
-    const ch = buildWith(bg, { [feat]: 'religion' });
+    // A stale free answer from before the binding existed. The background's own text must win.
+    const ch = buildWith(bg, { [feat]: 'stealth' });
     const got = ch.feats.find((f) => f.featId === feat);
     expect(got, 'the granted feat should be on the character').toBeTruthy();
     expect(got!.choice?.value).toBe('religion');
     expect(got!.choice?.label).toBe('Religion');
   });
 
-  it('without a pick the feat still arrives, just unanswered', () => {
-    // The feat is granted by the background — it must never depend on the player answering first.
+  it('without a pick the feat arrives ALREADY answered, because the background answered it', () => {
+    // The feat is granted by the background — it must never depend on the player answering first,
+    // and where the text names the skill there is nothing for them to answer.
     const ch = buildWith('abadars-avenger');
     const got = ch.feats.find((f) => f.featId === 'assurance');
     expect(got).toBeTruthy();
-    expect(got!.choice).toBeUndefined();
+    expect(got!.choice?.value).toBe('religion');
   });
 
-  it('the answer survives for every affected background, not just the one', () => {
+  it('a background that does NOT name the skill still honours the free answer', () => {
+    // The binding must not swallow the whole lane. Keys to Destiny grants Assurance and ties it to
+    // nothing — "You gain the Assurance skill feat and are trained in one of the following Lore
+    // skills" — so its picker is real and its answer must survive.
+    const ch = buildWith('keys-to-destiny', { assurance: 'stealth' });
+    expect(ch.feats.find((f) => f.featId === 'assurance')?.choice?.value).toBe('stealth');
+  });
+
+  it('the answer survives for every UNBOUND background, not just the one', () => {
     // The fix is generic, so a spot-check of one background would not prove it. Each background gets
     // its granted feat's first legal option and must come back carrying it.
     const failures: string[] = [];
     for (const { bg, feat } of affected()) {
+      if (isBoundBackgroundGrant(bg, feat)) continue; // answered by the background — covered below
       const def = db().feats[feat]!.choice!;
       const value = def.options?.[0]?.value ?? (def.kind === 'skills' ? 'stealth' : undefined);
       if (!value) continue; // an open-vocabulary choice (free-text Lore) has no option list to pick from

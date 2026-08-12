@@ -90422,6 +90422,12 @@
  },
  {
   "category": "feats",
+  "id": "potent-nectar",
+  "field": "choice",
+  "value": null
+ },
+ {
+  "category": "feats",
   "id": "magical-understudy",
   "field": "eidolonCantrips",
   "value": 2

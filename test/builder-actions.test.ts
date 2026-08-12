@@ -27,7 +27,7 @@ describe('builder: stale picks pruned on origin change', () => {
     expect(h.get().ancestryId).toBe('elf');
   });
 
-  it('changeDeity re-defaults a Domain-feat choice the new deity lacks', () => {
+  it('changeDeity CLEARS a Domain-feat choice the new deity lacks (it does not pick a replacement)', () => {
     const c = content();
     const domainFeat = Object.values(c.feats).find((f) => (f as { choice?: { kind?: string } }).choice?.kind === 'domains');
     const deities = Object.values(c.deities).filter((d) => (d.domains?.length ?? 0) > 0);
@@ -52,7 +52,41 @@ describe('builder: stale picks pruned on origin change', () => {
       featChoices: { '1:class:0': dom! },
     });
     h.actions.changeDeity(B!.id);
-    // the stale domain (absent from B) is re-defaulted to B's first domain
-    expect(B!.domains!.includes(h.get().featChoices['1:class:0'])).toBe(true);
+    // The stale domain (absent from B) is dropped, leaving the picker empty for the player. Silently
+    // substituting B's first domain handed them a focus spell they never chose.
+    expect(h.get().featChoices['1:class:0']).toBeUndefined();
+  });
+
+  it('changeClass leaves the subclass, extra choices and deity for the player to pick', () => {
+    const c = content();
+    // A class that has a subclass AND at least one extra-choice group, so both paths are exercised.
+    const cls =
+      Object.values(c.classes).find((x) => (x.subclass?.options.length ?? 0) > 0 && (x.extraChoices?.length ?? 0) > 0) ??
+      Object.values(c.classes).find((x) => (x.subclass?.options.length ?? 0) > 0);
+    expect(cls, 'a class with a subclass should exist').toBeTruthy();
+    const h = harness({});
+    h.actions.changeClass(cls!.id);
+    expect(h.get().classId).toBe(cls!.id);
+    expect(h.get().subclassId).toBeNull();
+    expect(h.get().deityId).toBeNull();
+    expect(h.get().divineFont).toBeNull();
+    for (const g of cls!.extraChoices ?? []) expect(h.get().extraChoices[g.id]).toEqual([]);
+  });
+
+  it('changeAncestry leaves the heritage empty', () => {
+    const h = harness({ ancestryId: 'human', heritageId: 'skilled-human' });
+    h.actions.changeAncestry('elf');
+    expect(h.get().heritageId).toBeNull();
+  });
+
+  it('setFeat does not answer the feat’s own embedded choice', () => {
+    const c = content();
+    const domainFeat = Object.values(c.feats).find((f) => (f as { choice?: { kind?: string } }).choice?.kind === 'domains');
+    expect(domainFeat, 'a domains-kind feat should exist').toBeTruthy();
+    const deity = Object.values(c.deities).find((d) => (d.domains?.length ?? 0) > 0);
+    const h = harness({ deityId: deity?.id ?? null });
+    h.actions.setFeat('1:class:0', domainFeat!.id);
+    expect(h.get().featPicks['1:class:0']).toBe(domainFeat!.id);
+    expect(h.get().featChoices['1:class:0']).toBeUndefined();
   });
 });
