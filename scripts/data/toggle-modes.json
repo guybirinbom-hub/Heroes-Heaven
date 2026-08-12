@@ -3752,7 +3752,10 @@
       "size": "Huge",
       "tempHp": 40
     },
-    "note": "Worm Form, purple worm: AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge — you must have room to expand into. You gain the animal trait and can Dismiss the form."
+    "note": "Worm Form, purple worm: AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge — you must have room to expand into. You gain the animal trait and can Dismiss the form.",
+    "creatureTraits": [
+      "animal"
+    ]
   },
   "worm-form-hybrid": {
     "id": "worm-form-hybrid",
@@ -3798,7 +3801,10 @@
       "size": "Huge",
       "tempHp": 40
     },
-    "note": "Worm Form, hybrid: your own head on a worm’s body. AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge. You keep the ability to speak — see the feat for what else the hybrid retains."
+    "note": "Worm Form, hybrid: your own head on a worm’s body. AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge. You keep the ability to speak — see the feat for what else the hybrid retains.",
+    "creatureTraits": [
+      "animal"
+    ]
   },
   "dragon-transformation": {
     "id": "dragon-transformation",
@@ -4410,5 +4416,20 @@
     "modifiers": [],
     "note": "Any ally that begins its turn in the aura gains 1 temporary Hit Point until the start of its next turn, rising to 2 at 10th level and 3 at 15th. Switch this on only if you took this gate’s Aura Junction at a Gate’s Threshold — a gate gives you its Impulse Junction automatically, but the aura one is a choice — and only while your kinetic aura is active.",
     "category": "Aura"
+  },
+  "fey-life-revived": {
+    "id": "fey-life-revived",
+    "name": "Fey Life (revived)",
+    "category": "Aftermath",
+    "modifiers": [],
+    "predefined": true,
+    "feats": [
+      "fey-life"
+    ],
+    "creatureTraits": [
+      "fey"
+    ],
+    "duration": "permanent — once you have died the first time",
+    "note": "Fey Life: “The first time you die after gaining this feat… Immediately after dying, you revive, becoming conscious (and wounded as normal) at 27 Hit Points, and you gain the fey trait.” Switch this on the first time it happens — until then the feat’s own prerequisite says “you’re not a fey”. The visual aspect you take on (wings, horns, a plantlike body) has no mechanical effect."
   }
 }

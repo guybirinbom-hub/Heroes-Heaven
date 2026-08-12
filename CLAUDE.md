@@ -61,18 +61,30 @@ marker on the record it changes. Getting this backwards invalidated six control 
 
 ## ▶ IN FLIGHT — pick this up first
 
-**The builder-side harness.** Spec: `docs/builder-harness-spec.md`. Target: `scripts/builder-evidence.mjs`.
+**Both halves of the mandate are now measured, and the audit reads both.** Spec:
+`docs/builder-harness-spec.md`.
 
-The owner's mandate has two halves — a record must be right if it is **choosing the things that are
-supposed to be chosen** *or* influencing the sheet correctly. `scripts/feat-evidence.mjs` measures the
-second. **Nothing measures the first**, so the 500-feat audit's numbers describe the sheet only and must
-never be quoted as covering the builder.
+| producer | measures | output |
+|---|---|---|
+| `scripts/feat-evidence.mjs` | what the SHEET does — build without the feat, build with it, diff every derived value | `scripts/audit/feat-500-evidence.json` |
+| `scripts/builder-evidence.mjs` | what the BUILDER asks — the pickers rendered, the option lists resolved, whether the answer moves anything | `scripts/audit/builder-500-evidence.json` |
+| `scripts/merge-evidence.mjs` | **neither** — it joins them per feat and adds the facts that need both | `scripts/audit/audit-500-evidence.json` ← what `audit-500.js` reads |
 
-If `scripts/builder-evidence.mjs` does not exist or does not run clean, build it from the spec. The two
-checks to run first need no model: a record declaring a choice the builder renders **no picker** for,
-and a choice whose answer is stored but **moves no derived value**.
+Regenerate all three in that order (`npm run evidence`); the merge **refuses to run over a stale or
+short half**, so a green run of it is also the freshness check.
 
-⚠ Verify the harness against feats you already know present choices BEFORE trusting a single number.
+**A re-run is now mostly cached.** `node scripts/audit-cache.mjs plan` says what still has to be asked
+and why, prints the `args` blob for the workflow, and `… apply <run.json>` folds the answers back in and
+assembles all 500 from the cache. Requirements survive any engine change (they are derived from the text
+alone); verdicts are re-judged only where the evidence pack moved. `--force` ignores the cache. Both
+producers and the merge now end with *how many feats your change actually moved*, which is the number
+that decides whether to launch the audit. Design and its invalidation rules: `docs/builder-harness-spec.md`.
+
+⚠ **`scripts/audit/audit-500-result.json` still describes the SHEET ONLY.** It predates the merge. Its
+136-correct / 342-candidate split must never be quoted as covering the builder, and re-running the audit
+is gated on **Q24** ("do not re-run yet").
+
+⚠ Verify any harness against feats you already know present choices BEFORE trusting a single number.
 Four measuring scripts in this project have produced confident wrong answers by reading fields instead
 of observing outcomes.
 

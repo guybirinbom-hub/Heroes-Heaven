@@ -3473,6 +3473,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const resolvedItemPassives: Record<string, ItemPassiveEffects> = {};
   const effectWarnings: { source: string; message: string }[] = [];
   const effectPicks: NonNullable<Character['effectPicks']> = [];
+  /** Creature traits a chosen OPTION granted, each keeping the name of the record that asked. Not
+   *  merged into `chosenEffects`: the Details tab has to say which feat made you an azata. */
+  const chosenCreatureTraits: NonNullable<Character['chosenCreatureTraits']> = [];
   /** Spells the player loaded into a staff a record hands them (Staff Nexus). Applied to the granted
    *  instance below rather than to the shared item, which every wizard would otherwise share. */
   const grantedStaffSpells: string[] = [];
@@ -3600,6 +3603,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // ("each of the granted 1st- and 2nd-rank innate spells"), and names are not identities.
       if (recordId) chosenInnateRecord[s.spellId] ??= recordId;
     }
+    // A creature trait one BRANCH of the choice confers ("Aquatic: you gain the aquatic trait").
+    // Deliberately not in `mergeEffect`: that fills `chosenEffects`, which the defence breakdown
+    // labels "Your chosen effect", and a trait pill has to name the record instead.
+    for (const t of g.grantsCreatureTraits ?? []) chosenCreatureTraits.push({ trait: t, ...(srcName ? { source: srcName } : {}) });
   };
   for (const fc of feats) resolvePick(fc.featId, content.feats[fc.featId]?.effectChoices, applyAlwaysOn, content.feats[fc.featId]?.name ?? fc.featId);
   // Both heritages: four of the nine a second-heritage feat can hand over carry their whole
@@ -3633,6 +3640,35 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (!def || askedAtDailyPrep(def)) continue;
     const g = (def.options ?? []).find((o) => o.value === build.featChoices?.[`feature:${fid}`])?.grant;
     if (g) applyAlwaysOn(g, content.classFeatures[fid]?.name ?? fid);
+  }
+  /*
+   * "…and the trait appropriate to the type of servitor you've become (such as daemon, demon, or
+   * devil)". The ANSWER is the trait — a picked option or a typed one — so the record names its own
+   * choice by flag and this reads whatever is stored under it.
+   *
+   * Resolved here rather than in `creatureTraitsOf` because a class feature's and a heritage's answers
+   * live in `BuildState.featChoices`, which the built Character does not carry; only a FEAT's answer
+   * survives onto `feats[].choice`. Doing it in one place keeps the three carriers from diverging into
+   * "works on feats, silently inert on features" — which is the shape of half the defects being fixed.
+   */
+  {
+    const fromChoice = (
+      rec: { name?: string; choice?: FeatChoiceDef; grantsCreatureTraitFromChoice?: string } | undefined,
+      answer: string | undefined,
+      fallbackName: string,
+    ) => {
+      const flag = rec?.grantsCreatureTraitFromChoice;
+      if (!flag || !answer) return;
+      // The flag must be THIS record's own choice. A record naming a flag it does not ask would read
+      // an answer belonging to some other picker.
+      if (rec?.choice?.flag !== flag) return;
+      chosenCreatureTraits.push({ trait: answer, source: rec?.name ?? fallbackName });
+    };
+    for (const fc of feats) fromChoice(content.feats[fc.featId], fc.choice?.value, fc.featId);
+    for (const fid of ownedFeatureIds) fromChoice(content.classFeatures[fid], build.featChoices?.[`feature:${fid}`], fid);
+    for (const hid of [build.heritageId, secondHeritageId]) {
+      if (hid) fromChoice(content.heritages[hid], build.featChoices?.[`heritage:${hid}`], hid);
+    }
   }
   // "Whenever you Refocus, you recover 3 Focus Points / completely refill your focus pool."
   // The Refocus control restored exactly 1 point with nothing able to say otherwise, so this whole
@@ -3828,7 +3864,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * Feat/ClassFeature/Heritage/Item, so a declared union would have to name all five to read two
    * fields they all inherit anyway.
    */
-  const ownedRecords: ({ name: string; grantsRituals?: { spellId: string; note?: string }[]; spellNotes?: SpellNote[] } | undefined)[] = [
+  const ownedRecords: (
+    | {
+        name: string;
+        grantsRituals?: { spellId: string; note?: string }[];
+        spellNotes?: SpellNote[];
+        innateSpells?: InnateSpellGrant[];
+        voidHealingSpellSwap?: { from: string; to: string };
+      }
+    | undefined
+  )[] = [
     ...feats.map((fc) => content.feats[fc.featId]),
     ...[...classFeatureIdsOwned(
       { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
@@ -3841,6 +3886,35 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       .filter((inv) => inv.invested || inv.worn || inv.equipped)
       .map((inv) => content.items[inv.itemId]),
   ];
+
+  /*
+   * VOID HEALING, as a build-time fact — see ContentBase.voidHealingSpellSwap.
+   *
+   * `deriveDefenses` already aggregates this (derive.ts, `negativeHealing`), but that runs on the
+   * finished character and the spells are assembled here, so the same three sources are read again
+   * rather than the answer being smuggled across. Kept deliberately identical to derive's rule,
+   * invested-only for items included: two different answers to "do I have void healing" on one sheet
+   * would be worse than none.
+   */
+  const hasVoidHealing =
+    !!(build.heritageId && content.heritages[build.heritageId]?.negativeHealing) ||
+    feats.some((f) => content.feats[f.featId]?.negativeHealing) ||
+    (build.inventory ?? []).some((inv) => inv.invested && content.items[inv.itemId]?.negativeHealing);
+  /** The spell a record actually grants for THIS character — its `from` spell swapped for `to` when
+   *  the character has void healing, and the id unchanged in every other case. */
+  const voidSwapped = (rec: { voidHealingSpellSwap?: { from: string; to: string } } | undefined, spellId: string): string => {
+    const sw = rec?.voidHealingSpellSwap;
+    return hasVoidHealing && sw && sw.from === spellId && content.spells[sw.to] ? sw.to : spellId;
+  };
+  /** …and the record's own clause about it, with the spell's NAME substituted. The rule is the same
+   *  rule ("you can cast <it> only on yourself"); leaving the old name in would name a spell the
+   *  character was not granted. Word-boundary and case-sensitive, so "Heal" never eats "healing". */
+  const renamedNote = (note: string, fromId: string, toId: string): string => {
+    const from = content.spells[fromId]?.name;
+    const to = content.spells[toId]?.name;
+    if (!from || !to) return note;
+    return note.replace(new RegExp(`\\b${from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'g'), to);
+  };
 
   const grantedRituals: NonNullable<Character['grantedRituals']> = [];
   for (const rec of ownedRecords) {
@@ -3872,7 +3946,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const rec of ownedRecords) {
     for (const n of rec?.spellNotes ?? []) {
       if (n.fromChoice) continue; // handled below, where the feat's own answer is still in reach
-      pushSpellNote(n.spellId, rec!.name, n.note);
+      // A clause about a spell this record does not grant YET ("At 10th level, you can also cast Seal
+      // Fate") would annotate a spell the character cannot cast from it — see InnateSpellGrant.minLevel.
+      const gate = (rec?.innateSpells ?? []).find((g) => g.spellId === n.spellId)?.minLevel;
+      if (gate != null && level < gate) continue;
+      const on = voidSwapped(rec, n.spellId);
+      pushSpellNote(on, rec!.name, on === n.spellId ? n.note : renamedNote(n.note, n.spellId, on));
     }
   }
   /*
@@ -4527,18 +4606,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       if (name && !innateSource[spellId]) innateSource[spellId] = name;
       if (recordId && !innateGrantedBy[spellId]) innateGrantedBy[spellId] = recordId;
     };
+    /** A record's grant as THIS character receives it — see ContentBase.voidHealingSpellSwap. The
+     *  grant is copied rather than mutated: `content` is shared by every character on the roster. */
+    const asGranted = (rec: { voidHealingSpellSwap?: { from: string; to: string } } | undefined, g: InnateSpellGrant): InnateSpellGrant => {
+      const on = voidSwapped(rec, g.spellId);
+      return on === g.spellId ? g : { ...g, spellId: on };
+    };
     const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
     for (const g of heritage?.innateSpells ?? []) {
-      innateGrants.push(g);
-      noteSrc(g.spellId, heritage?.name);
+      innateGrants.push(asGranted(heritage, g));
+      noteSrc(voidSwapped(heritage, g.spellId), heritage?.name);
     }
     // A handful of BACKGROUNDS grant an innate spell outright — Blessed gives Guidance, Astrological
     // Augur gives Augury. Only heritages and feats were read here, so those simply never appeared on
     // the Spells page no matter what the record said.
     const bgForSpells = resolveBackground(build, content);
     for (const g of bgForSpells?.innateSpells ?? []) {
-      innateGrants.push(g);
-      noteSrc(g.spellId, bgForSpells?.name);
+      innateGrants.push(asGranted(bgForSpells, g));
+      noteSrc(voidSwapped(bgForSpells, g.spellId), bgForSpells?.name);
     }
     // INVESTED items too — a Cloak of Elvenkind lets you cast Ghost Sound, a Nosoi Charm casts Sending
     // once a day. Invested (not merely owned), matching how an item's granted FEATS are already read.
@@ -4546,14 +4631,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       if (!inv.invested) continue;
       const item = content.items[inv.itemId];
       for (const g of item?.innateSpells ?? []) {
-        innateGrants.push(g);
-        noteSrc(g.spellId, item?.name);
+        innateGrants.push(asGranted(item, g));
+        noteSrc(voidSwapped(item, g.spellId), item?.name);
       }
     }
     for (const f of feats)
       for (const g of content.feats[f.featId]?.innateSpells ?? []) {
-        innateGrants.push(g);
-        noteSrc(g.spellId, content.feats[f.featId]?.name, f.featId);
+        const rec = content.feats[f.featId];
+        innateGrants.push(asGranted(rec, g));
+        noteSrc(voidSwapped(rec, g.spellId), rec?.name, f.featId);
       }
     // Innate spells from a resolved effect-choice (e.g. Fey Influence's chosen 1/day spell).
     for (const g of chosenInnateGrants) {
@@ -4570,7 +4656,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       }
     }
     const seenInnate = new Set<string>();
-    const innate = innateGrants.filter((g) => content.spells[g.spellId] && !seenInnate.has(g.spellId) && seenInnate.add(g.spellId));
+    const innate = innateGrants.filter(
+      // `minLevel` is the "At 10th level, you can ALSO cast…" ladder — the spell is not granted at all
+      // below it, so it must be dropped before the dedupe claims the id (see InnateSpellGrant.minLevel).
+      (g) => content.spells[g.spellId] && level >= (g.minLevel ?? 0) && !seenInnate.has(g.spellId) && seenInnate.add(g.spellId),
+    );
     if (innate.length) {
       // A leveled innate is cast at the grant's rank when it names one — a rank override (Invisible
       // Trickster: 4th-rank Invisibility) or the "heightened to half your level" ladder — never below
@@ -4991,6 +5081,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ? { classArchetype: { ...(archClassId ? { classId: archClassId } : {}), suppressedFeatures: [...archSuppressed], addedFeatures: archAddedFeatures, notes: archNotes } }
       : {}),
     ...(Object.keys(chosenEffects).length ? { chosenEffects } : {}),
+    ...(chosenCreatureTraits.length ? { chosenCreatureTraits } : {}),
     ...(Object.keys(resolvedItemPassives).length ? { resolvedItemPassives } : {}),
     ...(effectWarnings.length ? { effectWarnings } : {}),
     ...(effectPicks.length ? { effectPicks } : {}),

@@ -76,6 +76,13 @@ describe('the authored notes', () => {
           granted.add(typeof s === 'string' ? s : (s?.spellId ?? ''));
         for (const s of (rec.spells as (string | { spellId?: string })[] | undefined) ?? [])
           granted.add(typeof s === 'string' ? s : (s?.spellId ?? ''));
+        // A spell put into a REPERTOIRE or a FONT is granted just as surely as an innate one — that is
+        // how Vellumis Excision gives Field of Life ("as a 6th-rank halcyon spell"), which spent a
+        // while filed as an innate 1/day instead. `as: 'list'` is deliberately NOT counted: it only
+        // widens what the player MAY learn, so a clause about a spell they may never take is premature.
+        const additions = rec.spellListAdditions as { spells?: string[]; as?: string } | { spells?: string[]; as?: string }[] | undefined;
+        for (const add of additions == null ? [] : Array.isArray(additions) ? additions : [additions])
+          if (add.as === 'repertoire' || add.as === 'font') for (const s of add.spells ?? []) granted.add(s);
         for (const n of notes) {
           if (!c().spells[n.spellId]) bad.push(`${collection}/${id} → missing spell ${n.spellId}`);
           else if (!granted.has(n.spellId)) bad.push(`${collection}/${id} → does not grant ${n.spellId}`);

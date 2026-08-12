@@ -122,18 +122,40 @@ describe('withCustomAnswer — a typed answer has to look answered', () => {
   });
 });
 
-describe('the scope: terrain, and not choices in general', () => {
-  it('exactly the illustrative terrain lists opt in', () => {
+describe('the scope: a list the book declines to close, not choices in general', () => {
+  /*
+   * ⚠ This assertion used to read "exactly the illustrative TERRAIN lists opt in", and terrain was
+   * every member. The property that earns `allowCustom` was never terrain, though — it is a printed
+   * list the book itself refuses to close, and terrain was simply the only family anyone had authored.
+   * Celestial Form and Fiendish Form are the second: *"the trait appropriate to the type of servitor
+   * you've become (archon, angel, or azata, FOR EXAMPLE)"* and *"…(SUCH AS daemon, demon, or devil)"*.
+   * Those parentheses are examples of a set the rules leave open, so a closed three-option picker
+   * would be authoring an answer we know can be wrong — which is exactly what the flat
+   * `grantsCreatureTraits: ["celestial"]` those records shipped with had done, by dropping the clause
+   * altogether. The negative cases below are unchanged and are what keeps this from becoming "any
+   * `kind: 'array'` choice".
+   */
+  it('exactly the lists whose printed options are illustrative opt in', () => {
     expect(customAnswerRecords(c())).toEqual([
       'backgrounds/hired-killer',
       'backgrounds/spotter',
       'backgrounds/trailblazer',
+      // "the trait appropriate to the type of servitor you've become (…, for example / such as …)"
+      'feats/celestial-form',
+      'feats/fiendish-form',
       'feats/terrain-expertise',
       'feats/terrain-scout',
       'feats/terrain-stalker',
       'feats/underbrush-trailblazer',
       'feats/wilderness-spotter',
     ]);
+  });
+
+  it('a servitor list the book DOES close stays closed', () => {
+    // Celestial Rebirth prints "the agathion, angel, archon, or azata trait" — four named options and
+    // no "such as", so it is a closed set and takes no typed answer, unlike its two neighbours above.
+    expect(c().feats['celestial-rebirth']!.choice!.allowCustom).toBeUndefined();
+    expect(c().feats['celestial-rebirth']!.choice!.options).toHaveLength(4);
   });
 
   it('a terrain-SHAPED choice whose list is closed does NOT opt in', () => {

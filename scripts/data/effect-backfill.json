@@ -357,7 +357,8 @@
    {
     "spellId": "secret-page",
     "tradition": "occult",
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "heightenHalfLevel": true
    }
   ]
  },
@@ -884,7 +885,21 @@
    {
     "spellId": "summon-entity",
     "tradition": "occult",
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "heightenAt": [
+     {
+      "level": 16,
+      "rank": 6
+     },
+     {
+      "level": 18,
+      "rank": 7
+     },
+     {
+      "level": 20,
+      "rank": 8
+     }
+    ]
    }
   ]
  },
@@ -1105,7 +1120,13 @@
     "spellId": "mountain-resilience",
     "tradition": "primal",
     "rank": 4,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "heightenAt": [
+     {
+      "level": 18,
+      "rank": 6
+     }
+    ]
    }
   ]
  },
@@ -1262,7 +1283,8 @@
     "spellId": "air-walk",
     "tradition": "arcane",
     "rank": 4,
-    "atWill": true
+    "usesPerDay": 1,
+    "usesPer": "hour"
    }
   ]
  },
@@ -2315,6 +2337,13 @@
     "tradition": "occult",
     "rank": 4,
     "usesPerDay": 1
+   },
+   {
+    "spellId": "subconscious-suggestion",
+    "tradition": "occult",
+    "rank": 5,
+    "usesPerDay": 1,
+    "minLevel": 12
    }
   ]
  },
@@ -2322,14 +2351,7 @@
   "category": "feats",
   "id": "vellumis-excision",
   "field": "innateSpells",
-  "value": [
-   {
-    "spellId": "field-of-life",
-    "tradition": "primal",
-    "rank": 6,
-    "usesPerDay": 1
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -2508,7 +2530,9 @@
   "value": [
    {
     "spellId": "illusory-disguise",
-    "tradition": "primal"
+    "tradition": "primal",
+    "usesPerDay": 1,
+    "usesPer": "hour"
    }
   ]
  },
@@ -2519,7 +2543,9 @@
   "value": [
    {
     "spellId": "scouting-eye",
-    "tradition": "occult"
+    "tradition": "occult",
+    "usesPerDay": 1,
+    "usesPer": "hour"
    }
   ]
  },
@@ -2754,7 +2780,24 @@
     "spellId": "summon-fiend",
     "rank": 6,
     "usesPerDay": 1,
-    "heightenHalfLevel": true
+    "heightenAt": [
+     {
+      "level": 14,
+      "rank": 7
+     },
+     {
+      "level": 16,
+      "rank": 8
+     },
+     {
+      "level": 18,
+      "rank": 9
+     },
+     {
+      "level": 20,
+      "rank": 10
+     }
+    ]
    }
   ]
  },
@@ -8266,7 +8309,40 @@
     "tradition": "divine",
     "rank": 1,
     "usesPerDay": 1,
-    "heightenHalfLevel": true
+    "heightenAt": [
+     {
+      "level": 5,
+      "rank": 2
+     },
+     {
+      "level": 7,
+      "rank": 3
+     },
+     {
+      "level": 9,
+      "rank": 4
+     },
+     {
+      "level": 11,
+      "rank": 5
+     },
+     {
+      "level": 13,
+      "rank": 6
+     },
+     {
+      "level": 15,
+      "rank": 7
+     },
+     {
+      "level": 17,
+      "rank": 8
+     },
+     {
+      "level": 19,
+      "rank": 9
+     }
+    ]
    }
   ]
  },
@@ -11400,12 +11476,14 @@
    {
     "spellId": "seal-fate",
     "tradition": "occult",
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "minLevel": 10
    },
    {
     "spellId": "inevitable-disaster",
     "tradition": "occult",
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "minLevel": 12
    }
   ]
  },
@@ -20434,15 +20512,20 @@
      {
       "value": "aquatic",
       "label": "Aquatic (gain the aquatic trait; swim Speed 30 ft)",
+      "note": "The aquatic trait means you breathe water but not air, and your bludgeoning and slashing unarmed Strikes don’t take the usual –2 penalty for being underwater.",
       "grant": {
        "speeds": {
         "swim": 30
-       }
+       },
+       "grantsCreatureTraits": [
+        "aquatic"
+       ]
       }
      },
      {
       "value": "water-dwelling",
       "label": "Water-dwelling (hold breath 10 min; swim Speed 20 ft, land Speed 20 ft)",
+      "note": "You can hold your breath underwater for 10 minutes before needing air — so you do NOT gain the aquatic trait, which would mean breathing water and not air.",
       "grant": {
        "speeds": {
         "swim": 20
@@ -44319,56 +44402,76 @@
   "value": [
    {
     "id": "elemental-apotheosis-element",
-    "prompt": "Elemental Apotheosis — your element (Speeds from Elemental Form)",
+    "prompt": "Elemental Apotheosis — your element (its Speeds from Elemental Form, and its creature trait)",
     "options": [
      {
       "value": "air",
-      "label": "Air — fly 80 feet",
+      "label": "Air — fly 80 feet; the air trait",
       "grant": {
        "speeds": {
         "fly": 80
-       }
+       },
+       "grantsCreatureTraits": [
+        "air"
+       ]
       }
      },
      {
       "value": "earth",
-      "label": "Earth — burrow 20 feet",
+      "label": "Earth — burrow 20 feet; the earth trait",
       "grant": {
        "speeds": {
         "burrow": 20
-       }
+       },
+       "grantsCreatureTraits": [
+        "earth"
+       ]
       }
      },
      {
       "value": "fire",
-      "label": "Fire — no non-land Speed",
-      "note": "Elemental Form (fire) lists only a 50-foot land Speed."
+      "label": "Fire — the fire trait",
+      "note": "Elemental Form (fire) lists only a 50-foot land Speed.",
+      "grant": {
+       "grantsCreatureTraits": [
+        "fire"
+       ]
+      }
      },
      {
       "value": "metal",
-      "label": "Metal — fly 20 feet",
+      "label": "Metal — fly 20 feet; the metal trait",
       "grant": {
        "speeds": {
         "fly": 20
-       }
+       },
+       "grantsCreatureTraits": [
+        "metal"
+       ]
       }
      },
      {
       "value": "water",
-      "label": "Water — swim 60 feet",
+      "label": "Water — swim 60 feet; the water trait",
       "grant": {
        "speeds": {
         "swim": 60
-       }
+       },
+       "grantsCreatureTraits": [
+        "water"
+       ]
       }
      },
      {
       "value": "wood",
-      "label": "Wood — climb 30 feet",
+      "label": "Wood — climb 30 feet; the wood trait",
       "grant": {
        "speeds": {
         "climb": 30
-       }
+       },
+       "grantsCreatureTraits": [
+        "wood"
+       ]
       }
      }
     ]
@@ -75064,15 +75167,26 @@
    "options": [
     {
      "value": "holy",
-     "label": "Holy — gain the holy trait; add it to your Strikes"
+     "label": "Holy — gain the holy trait; add it to your Strikes",
+     "grant": {
+      "grantsCreatureTraits": [
+       "holy"
+      ]
+     }
     },
     {
      "value": "unholy",
-     "label": "Unholy — gain the unholy trait; add it to your Strikes"
+     "label": "Unholy — gain the unholy trait; add it to your Strikes",
+     "grant": {
+      "grantsCreatureTraits": [
+       "unholy"
+      ]
+     }
     },
     {
      "value": "none",
-     "label": "None — take no sanctification"
+     "label": "None — take no sanctification",
+     "description": "Your deity lists “none”: you take neither trait, and can choose only options that don’t require holy or unholy."
     }
    ]
   }
@@ -104567,6 +104681,9 @@
   "id": "ghost-dedication",
   "field": "grantsCreatureTraits",
   "value": [
+   "ghost",
+   "spirit",
+   "undead",
    "incorporeal"
   ]
  },
@@ -104626,9 +104743,7 @@
   "category": "feats",
   "id": "worm-form",
   "field": "grantsCreatureTraits",
-  "value": [
-   "animal"
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -104685,9 +104800,7 @@
   "category": "feats",
   "id": "fey-life",
   "field": "grantsCreatureTraits",
-  "value": [
-   "fey"
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -104701,9 +104814,7 @@
   "category": "classFeatures",
   "id": "deity-champion",
   "field": "grantsCreatureTraits",
-  "value": [
-   "holy"
-  ]
+  "value": null
  },
  {
   "category": "heritages",
@@ -104743,7 +104854,8 @@
   "id": "undine",
   "field": "grantsCreatureTraits",
   "value": [
-   "undine"
+   "undine",
+   "amphibious"
   ]
  },
  {
@@ -104791,7 +104903,8 @@
   "id": "aiuvarin",
   "field": "grantsCreatureTraits",
   "value": [
-   "elf"
+   "elf",
+   "aiuvarin"
   ]
  },
  {
@@ -104799,16 +104912,15 @@
   "id": "dromaar",
   "field": "grantsCreatureTraits",
   "value": [
-   "orc"
+   "orc",
+   "dromaar"
   ]
  },
  {
   "category": "heritages",
   "id": "swimming-animal",
   "field": "grantsCreatureTraits",
-  "value": [
-   "aquatic"
-  ]
+  "value": null
  },
  {
   "category": "heritages",
@@ -105474,7 +105586,7 @@
   "value": [
    {
     "spellId": "summon-entity",
-    "note": "As soon as the aberration arrives, instead of giving it any other commands you can demand that it help you with a single question you pose to it. You must Sustain the Spell for 1 minute and must understand and be understood by the aberration; if you do, it gives you a cryptic clue as provided by the Read Omens spell, except even more enigmatic than normal, then immediately returns from whence it came without providing any other benefit."
+    "note": "As soon as the aberration arrives, instead of giving it any other commands you can demand that it help you with a single question you pose to it. You must Sustain the Spell for 1 minute and must understand and be understood by the aberration; if you do, it gives you a cryptic clue as provided by the Read Omens spell, except even more enigmatic than normal, then immediately returns from whence it came without providing any other benefit. At 16th level and every 2 levels thereafter, the Summon Entity spell is heightened by 1 rank (to a maximum of 8th rank when you reach 20th level)."
    }
   ]
  },
@@ -105760,7 +105872,7 @@
   "value": [
    {
     "spellId": "interplanar-teleport",
-    "note": "Cast from this feat, the casting time is only 1 minute, you act as the planar key for the destination, and you can travel only to your deity's realm. You and the other targets always appear in the center of the realm, and you — but not necessarily your allies — are immune to all the realm's harmful conditions while there. You can return to your previous location by spending 1 minute picturing your destination, bringing up to 8 willing creatures back with you."
+    "note": "Cast from this feat, the casting time is only 1 minute, you act as the planar key for the destination, and you can travel only to your deity's realm. You and the other targets always appear in the center of the realm, and you — but not necessarily your allies — are immune to all the realm's harmful conditions while there. You can return to your previous location by spending 1 minute picturing your destination; you can bring up to 8 willing creatures back with you in this way, and they need not be the same targets of the previous casting of Interplanar Teleport."
    }
   ]
  },
@@ -106523,20 +106635,6 @@
  },
  {
   "category": "classFeatures",
-  "id": "battle-creed",
-  "field": "degreeShifts",
-  "value": [
-   {
-    "shift": "successToCrit",
-    "when": "on any Fortitude save",
-    "saves": [
-     "fortitude"
-    ]
-   }
-  ]
- },
- {
-  "category": "classFeatures",
   "id": "chemical-hardiness",
   "field": "degreeShifts",
   "value": [
@@ -107083,20 +107181,6 @@
  },
  {
   "category": "classFeatures",
-  "id": "warpriest",
-  "field": "degreeShifts",
-  "value": [
-   {
-    "shift": "successToCrit",
-    "when": "on any Fortitude save",
-    "saves": [
-     "fortitude"
-    ]
-   }
-  ]
- },
- {
-  "category": "classFeatures",
   "id": "wild-willpower",
   "field": "degreeShifts",
   "value": [
@@ -107298,7 +107382,7 @@
   "value": [
    {
     "shift": "critFailToFail",
-    "when": "on the save you chose for Path to Perfection",
+    "when": "on the save you chose for Third Path to Perfection, from those you selected for path to perfection or second path to perfection",
     "saves": [
      "all"
     ]
@@ -107563,7 +107647,7 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on a save against a mental effect that would make you controlled",
+    "when": "on a save against a mental effect that would make you controlled, unless the effect originates from an alghollthu",
     "saves": [
      "will"
     ]
@@ -107833,6 +107917,13 @@
     "saves": [
      "all"
     ]
+   },
+   {
+    "shift": "critFailToSuccess",
+    "when": "for the remainder of your turn after Reckless Abandon, on a save against a harmful effect",
+    "saves": [
+     "all"
+    ]
    }
   ]
  },
@@ -107894,14 +107985,16 @@
     "shift": "successToCrit",
     "when": "on the reroll granted by your Grit and Tenacity reaction",
     "saves": [
-     "all"
+     "fortitude",
+     "will"
     ]
    },
    {
     "shift": "critFailToFail",
     "when": "on the reroll granted by your Grit and Tenacity reaction",
     "saves": [
-     "all"
+     "fortitude",
+     "will"
     ]
    }
   ]
@@ -108088,7 +108181,7 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on a Fortitude save to avoid becoming sickened, or against an ingested poison, from something you ate",
+    "when": "on a Fortitude save against an affliction, against gaining the sickened condition, or to remove the sickened condition — only when it came from something you ingested",
     "saves": [
      "fortitude"
     ]
@@ -108908,14 +109001,26 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "when you Decipher Writing",
+    "when": "when you Decipher Writing by meditating before a crystal",
+    "skills": [
+     "arcana",
+     "occultism",
+     "religion",
+     "society"
+    ],
     "actions": [
      "decipher-writing"
     ]
    },
    {
     "shift": "critFailToFail",
-    "when": "when you Decipher Writing",
+    "when": "when you Decipher Writing by meditating before a crystal",
+    "skills": [
+     "arcana",
+     "occultism",
+     "religion",
+     "society"
+    ],
     "actions": [
      "decipher-writing"
     ]
@@ -109032,7 +109137,7 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on the Intimidation check to Coerce, after a critical success on Vicious Critique’s Crafting check",
+    "when": "on the Intimidation check to Coerce, after a success or critical success on Vicious Critique’s Crafting check",
     "skills": [
      "intimidation"
     ],
@@ -109131,7 +109236,10 @@
      "medicine"
     ],
     "actions": [
-     "treat-wounds"
+     "treat-wounds",
+     "treat-disease",
+     "treat-poison",
+     "administer-first-aid"
     ]
    }
   ]
@@ -109284,7 +109392,14 @@
     "shift": "failToSuccess",
     "when": "on the Warfare Lore check, if you are legendary in Warfare Lore",
     "skills": [
-     "lore"
+     "lore:warfare"
+    ]
+   },
+   {
+    "shift": "critFailToSuccess",
+    "when": "on the Warfare Lore check, if you are legendary in Warfare Lore",
+    "skills": [
+     "lore:warfare"
     ]
    }
   ]
@@ -109338,6 +109453,13 @@
   "value": [
    {
     "shift": "failToSuccess",
+    "when": "when you Aid a skill check you are at least an expert in",
+    "actions": [
+     "aid"
+    ]
+   },
+   {
+    "shift": "critFailToSuccess",
     "when": "when you Aid a skill check you are at least an expert in",
     "actions": [
      "aid"
@@ -109454,7 +109576,7 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on an Acrobatics check to Balance on narrow surfaces or uneven ground",
+    "when": "on an Acrobatics check to Balance on narrow surfaces or uneven ground within forests",
     "skills": [
      "acrobatics"
     ],
@@ -109636,6 +109758,16 @@
     "actions": [
      "subsist"
     ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a Society check to Recall Knowledge about cultural practices",
+    "skills": [
+     "society"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
    }
   ]
  },
@@ -109653,6 +109785,16 @@
     "actions": [
      "make-an-impression",
      "request"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a Diplomacy check to Gather Information",
+    "skills": [
+     "diplomacy"
+    ],
+    "actions": [
+     "gather-information"
     ]
    }
   ]
@@ -109717,8 +109859,18 @@
   "field": "degreeShifts",
   "value": [
    {
-    "shift": "oneBetter",
-    "when": "on a Survival check whenever you can clearly identify the stars",
+    "shift": "successToCrit",
+    "when": "on a Survival check to Sense Direction or otherwise orienteer, whenever you can clearly identify the stars",
+    "skills": [
+     "survival"
+    ],
+    "actions": [
+     "sense-direction"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a Survival check to Sense Direction or otherwise orienteer, whenever you can clearly identify the stars",
     "skills": [
      "survival"
     ],
@@ -110003,7 +110155,7 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "while not wearing footwear, on the Athletics check to Climb (your hands stay free)",
+    "when": "on an Athletics check to Climb",
     "skills": [
      "athletics"
     ],
@@ -110075,6 +110227,16 @@
    },
    {
     "shift": "successToCrit",
+    "when": "on a check to Recall Knowledge about your own faith",
+    "skills": [
+     "religion"
+    ],
+    "actions": [
+     "recall-knowledge"
+    ]
+   },
+   {
+    "shift": "failToSuccess",
     "when": "on a check to Recall Knowledge about your own faith",
     "skills": [
      "religion"
@@ -110759,10 +110921,17 @@
   "field": "degreeShifts",
   "value": [
    {
+    "shift": "failToSuccess",
+    "when": "on the Fortitude save that triggered this armor’s activation",
+    "saves": [
+     "fortitude"
+    ]
+   },
+   {
     "shift": "critFailToFail",
-    "when": "on the check this armor is activated for",
-    "skills": [
-     "athletics"
+    "when": "on the Fortitude save that triggered this armor’s activation",
+    "saves": [
+     "fortitude"
     ]
    }
   ]
@@ -111126,6 +111295,13 @@
     "saves": [
      "all"
     ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a save against a disease, if another ability already turns such a success into a critical success",
+    "saves": [
+     "all"
+    ]
    }
   ]
  },
@@ -111350,6 +111526,13 @@
   "value": [
    {
     "shift": "successToCrit",
+    "when": "on a save against a mental effect",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "failToCritFail",
     "when": "on a save against a mental effect",
     "saves": [
      "all"
@@ -112119,5 +112302,205 @@
     ]
    }
   ]
+ },
+ {
+  "category": "feats",
+  "id": "celestial-form",
+  "field": "choice",
+  "value": {
+   "flag": "servitorTrait",
+   "prompt": "The type of servitor you have become",
+   "kind": "array",
+   "allowCustom": {
+    "label": "Another kind of celestial",
+    "placeholder": "e.g. agathion"
+   },
+   "options": [
+    {
+     "value": "archon",
+     "label": "Archon"
+    },
+    {
+     "value": "angel",
+     "label": "Angel"
+    },
+    {
+     "value": "azata",
+     "label": "Azata"
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "celestial-form",
+  "field": "grantsCreatureTraitFromChoice",
+  "value": "servitorTrait"
+ },
+ {
+  "category": "feats",
+  "id": "fiendish-form",
+  "field": "choice",
+  "value": {
+   "flag": "servitorTrait",
+   "prompt": "The type of servitor you have become",
+   "kind": "array",
+   "allowCustom": {
+    "label": "Another kind of fiend",
+    "placeholder": "e.g. asura"
+   },
+   "options": [
+    {
+     "value": "daemon",
+     "label": "Daemon"
+    },
+    {
+     "value": "demon",
+     "label": "Demon"
+    },
+    {
+     "value": "devil",
+     "label": "Devil"
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "fiendish-form",
+  "field": "grantsCreatureTraitFromChoice",
+  "value": "servitorTrait"
+ },
+ {
+  "category": "feats",
+  "id": "celestial-rebirth",
+  "field": "choice",
+  "value": {
+   "flag": "celestialTrait",
+   "prompt": "Whose ranks are you joining?",
+   "kind": "array",
+   "options": [
+    {
+     "value": "agathion",
+     "label": "Agathion"
+    },
+    {
+     "value": "angel",
+     "label": "Angel"
+    },
+    {
+     "value": "archon",
+     "label": "Archon"
+    },
+    {
+     "value": "azata",
+     "label": "Azata"
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "celestial-rebirth",
+  "field": "grantsCreatureTraitFromChoice",
+  "value": "celestialTrait"
+ },
+ {
+  "category": "feats",
+  "id": "mortal-herald-dedication",
+  "field": "voidHealingSpellSwap",
+  "value": {
+   "from": "heal",
+   "to": "harm"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "vellumis-excision",
+  "field": "spellListAdditions",
+  "value": {
+   "spells": [
+    "field-of-life"
+   ],
+   "as": "repertoire",
+   "entryId": "halcyon-speaker-dedication-casting"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "vellumis-excision",
+  "field": "spellSlotBonus",
+  "value": {
+   "entryId": "halcyon-speaker-dedication-casting",
+   "byRank": {
+    "6": 1
+   }
+  }
+ },
+ {
+  "category": "items",
+  "id": "cloak-of-repute-greater",
+  "field": "frequency",
+  "value": {
+   "max": 2,
+   "per": "day"
+  }
+ },
+ {
+  "category": "items",
+  "id": "cloak-of-repute-major",
+  "field": "frequency",
+  "value": {
+   "max": 3,
+   "per": "day"
+  }
+ },
+ {
+  "category": "items",
+  "id": "aeon-stone-rainbow-prism",
+  "field": "frequency",
+  "value": {
+   "max": 3,
+   "per": "day"
+  }
+ },
+ {
+  "category": "items",
+  "id": "conundrum-spectacles-greater",
+  "field": "frequency",
+  "value": {
+   "max": 3,
+   "per": "day"
+  }
+ },
+ {
+  "category": "items",
+  "id": "invisibility-greater",
+  "field": "frequency",
+  "value": {
+   "max": 3,
+   "per": "day"
+  }
+ },
+ {
+  "category": "items",
+  "id": "flawed-orb-of-gold-dragonkind",
+  "field": "frequency",
+  "value": {
+   "max": 3,
+   "per": "day"
+  }
+ },
+ {
+  "category": "items",
+  "id": "razmiri-wayfinder",
+  "field": "frequency",
+  "value": null
+ },
+ {
+  "category": "items",
+  "id": "red-thread-knot",
+  "field": "frequency",
+  "value": null
  }
 ]

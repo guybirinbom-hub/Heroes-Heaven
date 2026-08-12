@@ -2209,6 +2209,18 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
  *
  * Deliberately NOT folded into `deriveDefenses`: this is an identity property, not a defence, and the
  * Details tab is where it belongs.
+ *
+ * FOUR SOURCES, because a trait arrives in four shapes and the record-level array can only say one of
+ * them. In the order they are folded in:
+ *  1. the ancestry's own — the baseline you were born with;
+ *  2. `grantsCreatureTraits` on an owned record — unconditional, for as long as you own it;
+ *  3. `Character.chosenCreatureTraits` — what your ANSWER granted, resolved by `buildCharacter`,
+ *     covering both a trait on one branch of a choice and a choice whose answer IS the trait;
+ *  4. an ACTIVE MODE's `creatureTraits` — "while in this form, you gain the animal trait".
+ *
+ * Sources 3 and 4 exist because authoring them as (2) said things that were flatly false: every
+ * Swimming Animal breathed water, every champion was holy, and an untransformed worm caller standing
+ * in a tavern was an animal.
  */
 export function creatureTraitsOf(
   c: Character,
@@ -2234,6 +2246,13 @@ export function creatureTraitsOf(
   ];
   for (const rec of grantors) {
     for (const t of rec?.grantsCreatureTraits ?? []) add(t, 'granted', rec?.name);
+  }
+  // What the player's ANSWERS granted (buildCharacter resolved these; see Character.chosenCreatureTraits).
+  for (const t of c.chosenCreatureTraits ?? []) add(t.trait, 'granted', t.source);
+  // …and what is true only while a mode is running. A battle form's animal trait ends when the form
+  // does, so it must arrive and leave with the toggle rather than with the feat.
+  for (const m of c.activeModes ?? []) {
+    for (const t of m.creatureTraits ?? []) add(t, 'granted', m.name ?? m.id);
   }
   return out;
 }

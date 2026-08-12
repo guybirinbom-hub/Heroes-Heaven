@@ -44,16 +44,37 @@ describe('a feat slot nothing can fill', () => {
 });
 
 describe('a record that grants the same thing twice', () => {
-  it('no record carries BOTH a granting `choice` and granting `effectChoices`', () => {
-    // Advanced Domain did: answering both pickers handed a cleric the INITIAL domain spell as well
-    // as the advanced one.
+  /*
+   * The bug class is DOUBLE-GRANTING, not double-asking. Advanced Domain carried a `choice` and an
+   * `effectChoices` that both handed over a domain focus spell, so answering both pickers gave a
+   * cleric the INITIAL domain spell as well as the advanced one.
+   *
+   * ⚠ This used to flag any record whose two pickers each carried a grant of ANY kind, which is a
+   * different — and wrong — claim: a record is entitled to ask two unrelated questions. Deity
+   * (Champion) asks which skill your deity trains AND which sanctification you take, a skill and a
+   * creature trait sharing nothing, and was reported as a duplicate grant purely for having two
+   * pickers. So the comparison is now between the LANES each picker feeds, and only an overlap
+   * counts. A `kind: 'domains'` choice grants a domain focus spell with no options list, which is why
+   * it resolves to `focusSpells` here rather than to a truth value.
+   */
+  const grantLanes = (def: { kind?: string; options?: { grant?: Record<string, unknown> }[] } | undefined): Set<string> => {
+    const lanes = new Set<string>();
+    if (!def) return lanes;
+    if (def.kind === 'domains') lanes.add('focusSpells');
+    for (const o of def.options ?? []) for (const k of Object.keys(o.grant ?? {})) lanes.add(k);
+    return lanes;
+  };
+
+  it('no record grants the SAME lane from both a `choice` and its `effectChoices`', () => {
     const both: string[] = [];
     for (const cat of ['feats', 'classFeatures', 'heritages', 'backgrounds'] as const) {
       for (const [id, r] of Object.entries(db[cat])) {
-        const rec = r as { choice?: { kind?: string; options?: { grant?: unknown }[] }; effectChoices?: { options?: { grant?: unknown }[] }[] };
-        const choiceGrants = !!rec.choice && (rec.choice.kind === 'domains' || (rec.choice.options ?? []).some((o) => o.grant));
-        const ecGrants = (rec.effectChoices ?? []).some((ec) => (ec.options ?? []).some((o) => o.grant));
-        if (choiceGrants && ecGrants) both.push(`${cat}/${id}`);
+        const rec = r as { choice?: Parameters<typeof grantLanes>[0]; effectChoices?: NonNullable<Parameters<typeof grantLanes>[0]>[] };
+        const fromChoice = grantLanes(rec.choice);
+        if (!fromChoice.size) continue;
+        const fromEffects = new Set((rec.effectChoices ?? []).flatMap((ec) => [...grantLanes(ec)]));
+        const shared = [...fromChoice].filter((k) => fromEffects.has(k));
+        if (shared.length) both.push(`${cat}/${id} (${shared.join(', ')})`);
       }
     }
     expect(both).toEqual([]);

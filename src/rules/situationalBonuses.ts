@@ -635,7 +635,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "unfazed-assessment": [{ targets: [{ kind: 'ac' }], when: "against the attacks of a creature you succeeded at Unfazed Assessment against, until the end of your next turn", bonus: "+1 circumstance (+2 on a critical success)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the attacks of a creature you succeeded at Unfazed Assessment against, until the end of your next turn", bonus: "+1 circumstance (+2 on a critical success)" }],
   "pivot-strike": [{ targets: [{ kind: 'strikeDamage' }], when: "on the Strike made as part of Pivot Strike, while wielding your staff", bonus: "circumstance bonus equal to 2x the weapon's number of damage dice" }],
   "tough-tumbler": [{ targets: [{ kind: 'ac' }], when: "against attacks you trigger by failing an Acrobatics check to Tumble Through", bonus: "+1 circumstance" }],
-  "conceited-mindset": [{ targets: [{ kind: "save", detail: "all" }], when: "against mental effects (but a failure becomes a critical failure)", bonus: "+2 circumstance" }],
+  // The "(but a failure becomes a critical failure)" half used to ride along here because the shift
+  // vocabulary had no downgrade. It has had `failToCritFail` since 2026-08-12, so the clause is now a
+  // second `degreeShifts` entry on the record and this line is back to carrying only its number.
+  "conceited-mindset": [{ targets: [{ kind: "save", detail: "all" }], when: "against mental effects", bonus: "+2 circumstance" }],
   "accelerating-touch": [{ targets: [{ kind: 'speed' }], when: "on a creature healed by your Lay on Hands, until the end of its next turn…", bonus: "+10-foot status" }],
   "resilient-touch": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on an ally you healed with Lay on Hands, until the end of their next turn (the bonus is theirs, not yours)", bonus: "+1 status" }],
   "aura-of-preservation": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "against effects from aberrations (also shared with allies within 15 feet)", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'will' }], when: "against effects from aberrations (also shared with allies within 15 feet)", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'fortitude' }], when: "against morph or polymorph effects", bonus: "+1 status (+2 if the effect comes from an aberration)" }, { targets: [{ kind: 'save', detail: 'will' }], when: "against mental effects", bonus: "+1 status (+2 if the effect comes from an aberration)" }],
@@ -2705,8 +2708,8 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "crossbow-crack-shot": [{ targets: [{ kind: 'strikeDamage' }], when: "on your next Strike after the first time each round you Interact to reload a wielded cross", bonus: "+1 precision damage per weapon damage die" }, { targets: [{ kind: 'strikeAttack' }], when: "on that same Strike, the crossbow's range increment is 10 feet longer", bonus: "+10 ft range increment" }, { targets: [{ kind: 'strikeDamage' }], when: "on that Strike vs an off-guard target if the crossbow has backstabber (replaces backstabbe", bonus: "+2 precision damage per weapon damage die" }],
   "distant-archer": [{ targets: [{ kind: 'strikeAttack' }], when: "with bow-group weapons beyond your first range increment (penalty reduction, min 0)", bonus: "+1 untyped" }],
   "eliminate-red-herrings": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge about one of your active investigations", bonus: "critical failure becomes a failure" }],
-  "emerald-boughs-accustomation": [{ targets: [{ kind: "skill", detail: "society" }], when: "to Subsist, on a critical success", bonus: "you provide for one additional creature" }, { targets: [{ kind: "skill", detail: "society" }], when: "to Recall Knowledge about cultural practices", bonus: "critical failure becomes a failure" }],
-  "empathy-incarnate": [{ targets: [{ kind: "skill", detail: "diplomacy" }], when: "to Make an Impression or Request", bonus: "+2 (the check's DC is reduced by 2)" }, { targets: [{ kind: "skill", detail: "diplomacy" }], when: "to Gather Information", bonus: "you can't critically fail" }],
+  "emerald-boughs-accustomation": [{ targets: [{ kind: "skill", detail: "society" }], when: "to Subsist, on a critical success", bonus: "you provide for one additional creature" }],
+  "empathy-incarnate": [{ targets: [{ kind: "skill", detail: "diplomacy" }], when: "to Make an Impression or Request", bonus: "+2 (the check's DC is reduced by 2)" }],
   "envenomed-edge": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit that deals slashing or piercing damage", bonus: "+1d4 persistent poison" }],
   "esteemed-visitor": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "in a settlement, to Gather Information or Make an Impression", bonus: "critical failure becomes failure" }],
   "expert-backstabber": [{ targets: [{ kind: 'strikeDamage' }], when: "with a backstabber weapon vs an off-guard foe", bonus: "+2 precision (4 with a +3 weapon), replacing backstabber's usual 1/2" }],
@@ -3078,12 +3081,22 @@ export interface DegreeShift {
    *
    * A downgrade needs no plumbing of its own: it fans out to the same skill/save/action surfaces, and
    * the two vocabularies below keep the wording from ever reading as its opposite.
+   *
+   * ⚠ `critFailToSuccess` is a TWO-RUNG jump and exists for the same reason the downgrades do. Four
+   * live records print *"when you roll a failure **or critical failure** … you get a success
+   * instead"* (Cooperative Soul, Reckless Abandon and its goblin twin, Commitment to Protection). The
+   * only values that could be reached for are wrong in opposite directions: `failToSuccess` alone
+   * tells a player who has just rolled a critical failure that the rule does not reach them, and
+   * `oneBetter` both understates the crit failure (→ failure, not success) and invents a
+   * success → critical success upgrade none of the four grants. Pair it with `failToSuccess` on those
+   * records, exactly as the two-entry records elsewhere pair an upgrade with its second rung.
    */
   shift:
     | 'successToCrit'
     | 'critFailToFail'
     | 'oneBetter'
     | 'failToSuccess'
+    | 'critFailToSuccess'
     | 'critSuccessToSuccess'
     | 'failToCritFail'
     | 'oneWorse';
@@ -3093,6 +3106,26 @@ export interface DegreeShift {
   skills?: string[];
   /** Save ids to star, or `['all']` — Q2: a general save clause stars all three. */
   saves?: string[];
+  /**
+   * The save this shift lands on is **the one the player chose**, not a fixed track. Path to
+   * Perfection prints *"Choose your Fortitude, Reflex, or Will saving throw … When you roll a success
+   * on THE CHOSEN saving throw, you get a critical success instead."*
+   *
+   * `saves` could not say that. A choice is not a general clause, so `['all']` was the wrong shape:
+   * it painted the star on all three rows when exactly one carries the benefit, and a monk reading
+   * their Reflex row was told about an upgrade they had spent their pick elsewhere on. Naming one
+   * track instead would have been a guess. The answer is not in the record at all — it is on the
+   * character.
+   *
+   * So this names a BUILD ANSWER, as `"<field>:<index>"`, and `resolveChoiceSaves` (explain.ts) turns
+   * it into the real save id at render time. Set this OR `saves`, never both; with no answer stored
+   * the entry stars nothing, which is also what the proficiency bump does with an unanswered pick.
+   *
+   * The same shape as `choiceSituationalFor` above, and for the same reason: ruling Q20 put
+   * Assurance's star on whichever skill THIS character picked, and a registry keyed by record id
+   * cannot hold an answer that differs per character.
+   */
+  savesFromChoice?: string;
   /** Action ids to mark. Matched against the SLUGIFIED action name, as `RecordMarker.id` is. */
   actions?: string[];
   /**
@@ -3114,6 +3147,10 @@ export const DEGREE_SHIFT_TEXT: Record<DegreeShift['shift'], string> = {
   successToCrit: 'a success is a critical success instead',
   critFailToFail: 'a critical failure is a failure instead',
   failToSuccess: 'a failure is a success instead',
+  // Two rungs, and worded so it cannot be mistaken for `critFailToFail` — the value a reader reaches
+  // for when the text says "failure or critical failure … you get a success instead" and stops one
+  // rung short of what it grants.
+  critFailToSuccess: 'a critical failure is a success instead',
   oneBetter: 'your degree of success is one step better',
   // The downgrades. Deliberately worded so no phrase here is a prefix or near-miss of one above: a
   // player who reads "a success is a critical success instead" on a record that means the opposite is
@@ -3128,6 +3165,7 @@ export const DEGREE_SHIFT_SHORT: Record<DegreeShift['shift'], string> = {
   successToCrit: 'success → crit success',
   critFailToFail: 'crit fail → fail',
   failToSuccess: 'fail → success',
+  critFailToSuccess: 'crit fail → success',
   oneBetter: 'one degree better',
   critSuccessToSuccess: 'crit success → success',
   failToCritFail: 'fail → crit fail',

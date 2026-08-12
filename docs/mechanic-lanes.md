@@ -57,6 +57,24 @@ carries → candidates. Two buckets matter:
 | `speedBonus` / `speedPenalty` | "+N feet to your Speed" | `landSpeedBonus`, `passiveEffects.speedBonus`, `speedPenalty` |
 | `language` | "You learn X" / "You can speak with Y" | `languages`, `passiveEffects.grantsLanguages` |
 | `perception` | a bonus to Perception | `passiveEffects.perception` |
+| `creatureTrait` | "You gain the undead and zombie traits" — a CREATURE trait, which decides what can target you | `grantsCreatureTraits` on the record, read through `creatureTraitsOf` and printed on the Details tab. Owner ruling **Q6**. ⚠ **Four shapes, and only the first fits that field** — see below |
+
+### `creatureTrait` — the four shapes, and why one field could not hold them
+
+`grantsCreatureTraits` is flat, unconditional and unchosen: owning the record grants every trait listed,
+for as long as you own it. Twelve records used it for clauses that were none of those things, and each
+one made the Details tab state something false. Verified and fixed 2026-08-13.
+
+| the text says | lane | example |
+|---|---|---|
+| you simply gain these traits | `grantsCreatureTraits` on the record | Zombie Dedication. Ghost Dedication is the failure mode: *"You gain the ghost, spirit, and undead traits"* was dropped and only the later *"you also gain the incorporeal trait"* authored, so a ghost read as a living humanoid |
+| one BRANCH of a choice grants it | `EffectGrant.grantsCreatureTraits` on that option | Swimming Animal — *"**Aquatic:** you gain the aquatic trait"*, against a Water-dwelling branch that exists because that character still breathes air. Deity (Champion) likewise: holy, unholy, or a *"none"* deity's neither |
+| the ANSWER is the trait | `grantsCreatureTraitFromChoice: '<this record's own choice flag>'` | *"the trait appropriate to the type of servitor you've become (archon, angel, or azata, **for example**)"*. The parenthesis is illustrative, so the picker takes `allowCustom` (principle **I**) and the answer is taken at its word |
+| it is true only WHILE something runs | `ModeDef.creatureTraits` on the mode that IS the form or the event | Worm Form — *"**while in this form**, you gain the animal trait"*, which on the feat made an untransformed worm caller an animal. Fey Life is the same shape with a trigger instead of a duration: *"the **first time you die** after gaining this feat … you gain the fey trait"*, against a prerequisite reading *"you're not a fey"* (principle **M2** — the app supplies the capability, the player supplies the timing) |
+
+⚠ `EffectGrant.grantsCreatureTraits` is honoured on the **always-on** sink only. The item sink writes
+`ItemPassiveEffects` and the daily sink's readers take skills/senses/IWR, so a trait authored into
+either would be resolved and dropped without a sound; `test/creature-trait-lanes.test.ts` guards both.
 
 ## E. Magic
 
@@ -74,6 +92,14 @@ carries → candidates. Two buckets matter:
 | `curriculum` | a wizard school's spell list | `curriculum` |
 | `heldSpell` | an ITEM whose activation casts a spell | `heldSpells` (keyed by RANK — the rank must match the text) |
 | `spellNote` | the record grants a spell and then CHANGES it — "when you cast it this way…", "except the spell has…", "you can target only yourself" | `spellNotes`, printed in that spell's description under the granting record's name (owner principle N2) |
+| `innateGate` | one record grants its spells on a LADDER — *"You can cast Claim Curse. **At 10th level**, you can also cast Seal Fate, and **at 12th level**, you can also cast Inevitable Disaster"* | `InnateSpellGrant.minLevel`. Below it the grant is dropped, and so is any `spellNotes` clause the same record writes about that spell. Distinct from `heightenAt`, which scales a spell you already have; the alternatives before it existed were handing all three over at 8th (Accursed Magic) or dropping the late one (Lion's Magic) |
+| `innateSwap` | the spell the record grants DEPENDS ON THE CHARACTER — *"**Special** If you have void healing, you instead cast Harm"* | `ContentBase.voidHealingSpellSwap`. Applied to the grant and to the record's own `spellNotes`, whose text has the spell's name substituted, since the clause is the same rule about a differently-named spell. Always-on paths only — a swap inside `effectChoices` would be resolved and dropped in silence |
+
+⚠ `heightenHalfLevel` means exactly `ceil(level/2)` and **overrides `rank`**. Where the text names its
+own steps ("at 5th level and every 2 levels thereafter, to a maximum of a 9th-rank charm") it is the
+wrong field twice over: it reached a rank the sentence caps, and it discarded the printed base rank
+underneath. Those belong in `heightenAt`, which the resolver reads as "the highest step you have
+passed, never below the base" — see `test/innate-spell-verification.test.ts`.
 
 ## F. Granting other records
 

@@ -59,6 +59,9 @@ describe('degreeShifts — the lane is authored, not just built', () => {
       // The DOWNGRADES, added 2026-08-12. Every value here used to IMPROVE the result, so the nine
       // records whose text makes it worse could not be authored and sat in a list in the apply script.
       'critSuccessToSuccess', 'failToCritFail', 'oneWorse',
+      // The TWO-RUNG upgrade, added 2026-08-13 — "a failure OR CRITICAL FAILURE … you get a success
+      // instead", which no existing value could say without over- or under-stating it.
+      'critFailToSuccess',
     ]);
     for (const { bucket, id, shifts } of allShifts(db())) {
       for (const sh of shifts) {

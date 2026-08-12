@@ -14,11 +14,21 @@
  *   EDIT   — the entry ALSO carried a number (+2 circumstance) or a second rule ("you aren't
  *            off-guard while you Balance"). That half is not a degree shift and has nowhere else to
  *            live, so the entry stays and only the degree clause is cut out.
- *   KEEP   — not touched here: a DOWNGRADE ("but a failure becomes a critical failure"), which no
- *            value of `DegreeShift.shift` can express, stays in the prose that can say it.
+ *   KEEP   — not touched here: a rule the structured field genuinely cannot express stays in the
+ *            prose that can say it. ⚠ This category is now EMPTY. Its one member was a DOWNGRADE
+ *            ("but a failure becomes a critical failure") on Conceited Mindset, unauthorable when
+ *            this ran; `failToCritFail` landed on 2026-08-12 and the clause moved to the record.
+ *            A KEEP is a statement about the vocabulary of the day, so re-read it whenever the
+ *            vocabulary grows — nothing else was watching this one, and it sat stale for a day.
  *
  * The registries are rewritten by re-serialising the PARSED objects for the lines it changes, so a
  * field this script does not know about (`dcOnly`, extra targets) survives untouched.
+ *
+ * ⛔ ONE-SHOT. Every key below is `<id>#<index into the PRE-dedupe array>`, and this script has run —
+ * the indices no longer address what they name. Re-running it would delete whatever now sits at those
+ * positions: `emerald-boughs-accustomation#0` would take the "one additional creature" clause, which
+ * is not a degree shift at all. Kept as the record of what was removed and why, not as a step to
+ * repeat. A later dedupe needs its own table read against the file as it stands.
  *
  * Run: node scripts/dedupe-degree-prose.mjs [--dry]
  */
@@ -44,9 +54,12 @@ const EDITS = {
   'wajaghand-vanara#0': { when: 'against emotion effects' },
   'numb#0': { when: 'on saves against emotion and pain effects' },
   'gorilla-stance#0': { when: 'on Athletics checks to Climb while in Gorilla Stance' },
-  // ⚠ KEPT deliberately: the "but a failure becomes a critical failure" half is a DOWNGRADE, and
-  // `DegreeShift.shift` has no value that can say it. Cutting it would delete a real rule.
-  'conceited-mindset#0': { when: 'against mental effects (but a failure becomes a critical failure)' },
+  // ⚠ WAS a deliberate KEEP: "but a failure becomes a critical failure" is a DOWNGRADE, and at the
+  // time `DegreeShift.shift` had no value that could say it, so cutting it would have deleted a real
+  // rule. `failToCritFail` arrived on 2026-08-12 and this record was never revisited — the clause sat
+  // in prose while Dragon's Presence and the even-tempered tanuki, the identical shape, got structured
+  // entries. It is now this record's second `degreeShifts` entry, so the prose keeps only its number.
+  'conceited-mindset#0': { when: 'against mental effects' },
   // A second, non-degree rule that shared the entry.
   'brine-may#0': { bonus: "you don't sink if you end your turn in water without having succeeded at a Swim that round" },
   'jungle-strider#0': { bonus: "you aren't off-guard while doing so" },

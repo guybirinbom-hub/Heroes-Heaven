@@ -277,6 +277,26 @@ interface ContentBase {
    * record and set apart from the spell's own rules wherever the spell is read.
    */
   spellNotes?: SpellNote[];
+  /**
+   * The spell this record grants becomes a DIFFERENT spell for a character with **void healing**.
+   *
+   * Mortal Herald Dedication prints *"**Special** If you have void healing, you instead cast Harm."*
+   * Every rider its clause carries — self-only, the 1-action cast getting the 2-action benefit, the
+   * auto-heighten, the free action at 0 HP — is then true of Harm and of no spell the character has,
+   * because a dhampir Mortal Herald was granted Heal and read a note about a spell they cannot use
+   * this way. `InnateSpellGrant` has no predicate, so the grant could not say it; authoring Harm
+   * instead would have been equally wrong for the other half of the characters.
+   *
+   * Applied at build time to BOTH halves of the grant: the innate spell, and the record's own
+   * `spellNotes` — whose text has the spell's name substituted too, since the clause is the same rule
+   * about a differently-named spell. Nothing else is rewritten: the swap is one record's grant, not a
+   * global heal→harm remap.
+   *
+   * Honoured on the always-on paths only — feats, heritages, backgrounds, invested items and class
+   * features. A swap authored inside `effectChoices` would be resolved and dropped in silence, which
+   * is why `void-healing-swap.test.ts` asserts no record does that.
+   */
+  voidHealingSpellSwap?: { from: string; to: string };
   /** App-level link to the user Homebrew source that authored this entry (groups it in the Homebrew
    *  manager). Absent on imported/seed content. Ignored by the rules engine. */
   homebrewSourceId?: string;
@@ -851,7 +871,7 @@ export interface DefenseGrants {
   breathesWater?: boolean;
   /**
    * CREATURE TRAITS the record adds to the character — "You gain the undead and zombie traits"
-   * (Zombie Dedication), the animal trait a battle form confers.
+   * (Zombie Dedication).
    *
    * Not cosmetic. A creature trait changes what can target you: an effect that only affects humanoids
    * stops working on you, one that targets undead starts. Your ancestry's own traits are the baseline;
@@ -859,8 +879,34 @@ export interface DefenseGrants {
    *
    * Owner ruling Q6 — record them on the sheet. Read through `creatureTraitsOf`, never off a record
    * directly, so every consumer sees the same set.
+   *
+   * ⚠ THIS FIELD IS UNCONDITIONAL AND UNCHOSEN. Owning the record grants every trait listed, for as
+   * long as the record is owned. Three shapes it therefore cannot express, each of which had been
+   * authored here anyway and each of which stated something false about the character:
+   *  - ONE BRANCH of a choice ("Choose if you are aquatic or water-dwelling — **Aquatic:** you gain
+   *    the aquatic trait"): use `EffectGrant.grantsCreatureTraits` on that option alone.
+   *  - THE ANSWER ITSELF ("the trait appropriate to the type of servitor you've become"): use
+   *    `grantsCreatureTraitFromChoice`.
+   *  - WHILE SOMETHING IS RUNNING ("while in this form, you gain the animal trait", "the first time
+   *    you die … you gain the fey trait"): use `ModeDef.creatureTraits` on the mode that IS the form
+   *    or the event, so the trait arrives when the player says it did and not a moment earlier.
    */
   grantsCreatureTraits?: string[];
+  /**
+   * The creature trait this record grants is WHATEVER THE PLAYER ANSWERED in its own `choice` — named
+   * here by that choice's `flag`.
+   *
+   * "You gain the fiend trait **and the trait appropriate to the type of servitor you've become**
+   * (such as daemon, demon, or devil)". The second trait is one specific trait, not the three the
+   * parenthesis lists, and the parenthesis is illustrative ("such as", "for example") rather than a
+   * closed set — so neither a flat `grantsCreatureTraits` nor a fixed option list can say it.
+   * Authoring `["fiend"]` and dropping the clause is what these three records had done.
+   *
+   * The ANSWER is the trait, so the option values are trait ids and a typed `allowCustom` answer is
+   * taken at its word (gold-set principle I — free-text player input is a legitimate choice type).
+   * Resolved by `buildCharacter` into `Character.chosenCreatureTraits`, attributed to this record.
+   */
+  grantsCreatureTraitFromChoice?: string;
   /**
    * DEGREE-OF-SUCCESS shifts this record grants — "a success on a Thievery check to Pick a Lock is a
    * critical success instead". No number moves, so it fits no numeric lane.
@@ -1236,6 +1282,21 @@ export interface EffectGrant {
    *  `chosenEffects`, which deriveDefenses applies unconditionally, so the pick would have granted a
    *  permanent resistance to a barbarian who was not raging and had not yet reached 9th level. */
   whileActive?: DefenseGrants['whileActive'];
+  /**
+   * CREATURE TRAITS this option alone confers — the branch half of `DefenseGrants.grantsCreatureTraits`.
+   *
+   * Swimming Animal is the case: *"Choose if you are aquatic or water-dwelling. **Aquatic:** You gain
+   * the aquatic trait… **Water-dwelling:** You can hold your breath underwater for 10 minutes before
+   * needing air."* The trait belongs to one branch, and the record carried it at record level, so a
+   * water-dwelling awakened animal — whose branch exists precisely because it still breathes air —
+   * was displayed as a creature that breathes water and not air.
+   *
+   * ⚠ Honoured on the ALWAYS-ON path only (feats, heritages, class features, the deity, the
+   * background), never on the item path: `resolvedItemPassives` carries `ItemPassiveEffects`, which
+   * has no trait lane, so a trait authored inside an ITEM's `effectChoices` would be resolved and
+   * dropped in silence. No item authors one, and `creature-traits-lanes.test.ts` keeps it that way.
+   */
+  grantsCreatureTraits?: string[];
 }
 
 /** A "choose one of N" the player resolves in the builder. Either an explicit `options` list, or a
@@ -1430,6 +1491,21 @@ export interface InnateSpellGrant {
   /** A CUSTOM heighten ladder — "7th rank, 8th at level 18, 9th at 20". The highest entry whose
    *  `level` the character has reached wins; below the first entry the base `rank` applies. */
   heightenAt?: { level: number; rank: number }[];
+  /**
+   * The character level at which THIS grant arrives, when one record hands out its spells on a
+   * ladder — Accursed Magic (a level-8 feat) reads *"You can cast Claim Curse. **At 10th level**, you
+   * can also cast Seal Fate, and **at 12th level**, you can also cast Inevitable Disaster."*
+   *
+   * Without it the three grants were flat, so an 8th-level taker was handed all three at once with
+   * nothing on the sheet saying two of them were not yet his. `heightenAt` scales the RANK of a spell
+   * you already have; this decides whether you have it at all, so neither field stands in for the
+   * other — and the alternative the sibling Lion's Magic took was to DROP its 12th-level spell.
+   *
+   * Below `minLevel` the grant is dropped, and so is any `spellNotes` clause the same record writes
+   * about that spell: a clause reading "you can cast Seal Fate from this feat only while…" printed
+   * on a spell the feat does not yet grant is worse than no clause.
+   */
+  minLevel?: number;
 }
 
 export interface Heritage extends ContentBase, DefenseGrants {
@@ -2912,6 +2988,21 @@ export interface ModeDef {
    * and no record needs that.
    */
   spellSlotBonus?: SpellSlotBonus;
+  /**
+   * CREATURE TRAITS the mode confers WHILE IT IS ON — Worm Form's *"while in this form, you gain the
+   * animal trait"*.
+   *
+   * `DefenseGrants.grantsCreatureTraits` is read off the owned RECORD and has no off switch, so the
+   * animal trait sat on the feat and the Details tab called an untransformed worm caller an animal
+   * from the moment they took the feat. A form-scoped trait belongs to the form, which is the mode
+   * (owner ruling Q3), exactly as the form's AC, Speeds and senses already do.
+   *
+   * It is also the home for a trait gated on an event only the player can witness — Fey Life's *"the
+   * first time you die after gaining this feat … you revive … and you gain the fey trait"*, whose own
+   * prerequisite is *"you're not a fey"*. Principle M2: the app supplies the capability, the player
+   * supplies the timing.
+   */
+  creatureTraits?: string[];
   /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
    *  universal (every character on this device). Catalog/predefined modes never set this. */
   charId?: string;
@@ -3857,6 +3948,17 @@ export interface Character {
   /** Resolved always-on effect-choice grants (feat/heritage/feature "choose one of N"): senses / IWR /
    *  speeds the sheet applies. deriveDefenses + deriveSpeeds include these as sources. */
   chosenEffects?: DefenseGrants;
+  /**
+   * CREATURE TRAITS the character's ANSWERS granted — an `EffectGrant.grantsCreatureTraits` on the
+   * option they picked, or a `grantsCreatureTraitFromChoice` record whose answer IS the trait.
+   *
+   * Kept apart from `chosenEffects` (which is a merged `DefenseGrants` bag) because a creature trait
+   * has to name the record that granted it: the Details tab prints "Granted by <record>" in the
+   * pill's popup, and "Your chosen effect" — what the defence breakdown calls the merged bag — does
+   * not answer "which of my feats made me an azata". Read through `creatureTraitsOf` like every
+   * other source.
+   */
+  chosenCreatureTraits?: { trait: string; source?: string }[];
   /** Resolved item-choice passives, keyed by item id → the chosen passive effects. derive applies them
    *  (like the item's own passiveEffects) only while that item is worn/invested. */
   resolvedItemPassives?: Record<string, ItemPassiveEffects>;
