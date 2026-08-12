@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { build, content } from './_content';
 import { recordMarkersFor, statHasSituational, explainStat } from '../src/rules/explain';
@@ -53,7 +54,12 @@ describe('degreeShifts — the lane is authored, not just built', () => {
   });
 
   it('every authored shift uses a known shift value and states its trigger', () => {
-    const known = new Set(['successToCrit', 'critFailToFail', 'oneBetter', 'failToSuccess']);
+    const known = new Set([
+      'successToCrit', 'critFailToFail', 'oneBetter', 'failToSuccess',
+      // The DOWNGRADES, added 2026-08-12. Every value here used to IMPROVE the result, so the nine
+      // records whose text makes it worse could not be authored and sat in a list in the apply script.
+      'critSuccessToSuccess', 'failToCritFail', 'oneWorse',
+    ]);
     for (const { bucket, id, shifts } of allShifts(db())) {
       for (const sh of shifts) {
         expect(`${bucket}/${id}: ${sh.shift}`).toBe(`${bucket}/${id}: ${known.has(sh.shift) ? sh.shift : 'UNKNOWN'}`);
@@ -162,5 +168,89 @@ describe('the rule is stated ONCE', () => {
     const stone = withFeat('ranger', 5, 'steadying-stone');
     expect(statHasSituational(stone, { kind: 'skill', skill: 'acrobatics' }, con)).toBe(true);
     expect(recordMarkersFor(stone, con, 'action', 'balance').some((m) => m.sourceId === 'steadying-stone')).toBe(true);
+  });
+});
+
+/**
+ * DOWNGRADES — a degree of success that gets WORSE.
+ *
+ * `DegreeShift.shift` had four values and all four improved the result, so nine live records whose
+ * text says the opposite ("use the result one degree of success worse", "you get a critical failure
+ * instead") could not be expressed at all. They were listed in `scripts/apply-degree-shifts.mjs` under
+ * DOWNGRADES and left as prose, which is a lane that silently omits the worst news on the sheet.
+ *
+ * Two of them are records that ALREADY carried their upgrade half — Dragon's Presence and the
+ * even-tempered tanuki each print both directions in one sentence — so the record was showing the good
+ * half of its own rule and hiding the bad half. That is worse than showing neither.
+ */
+describe('degree shifts that make the result WORSE', () => {
+  const DOWNGRADES: [string, string, string][] = [
+    ['feats', 'bravos-determination', 'oneWorse'],
+    ['feats', 'explosive-entry', 'critSuccessToSuccess'],
+    ['feats', 'flash-your-badge', 'oneWorse'],
+    ['feats', 'dragons-presence', 'failToCritFail'],
+    ['heritages', 'even-tempered-tanuki', 'failToCritFail'],
+    ['items', 'jax', 'oneWorse'],
+    ['items', 'ladys-blessing-oil', 'failToCritFail'],
+    ['items', 'devils-luck', 'failToCritFail'],
+    ['items', 'cresset-of-grisly-interrogation', 'oneWorse'],
+  ];
+
+  it('all nine are authored, each with the direction its own text prints', () => {
+    const con = db() as unknown as Record<string, Record<string, { degreeShifts?: DegreeShift[] }>>;
+    for (const [bucket, id, shift] of DOWNGRADES) {
+      const shifts = con[bucket]?.[id]?.degreeShifts ?? [];
+      const found = shifts.some((s) => s.shift === shift);
+      expect(`${bucket}/${id}: ${found ? shift : shifts.map((s) => s.shift).join('|') || 'NOTHING AUTHORED'}`).toBe(`${bucket}/${id}: ${shift}`);
+    }
+  });
+
+  it('the two records that print BOTH directions carry both', () => {
+    const con = db();
+    for (const rec of [con.feats['dragons-presence'], con.heritages['even-tempered-tanuki']]) {
+      const kinds = new Set((rec?.degreeShifts ?? []).map((s) => s.shift));
+      expect(kinds.has('successToCrit')).toBe(true);
+      expect(kinds.has('failToCritFail')).toBe(true);
+    }
+  });
+
+  it('a downgrade reaches the same surfaces an upgrade does', () => {
+    const con = db();
+    // Dragon's Presence: "when you roll a failure against a fear effect, you get a critical failure
+    // instead" — a general save clause, so ruling Q2 puts it on all three saves.
+    const c = withFeat('fighter', 5, 'dragons-presence');
+    const b = explainStat(c, con, { kind: 'save', save: 'will' });
+    expect(b.situational?.some((s) => s.text.startsWith('a failure is a critical failure instead'))).toBe(true);
+  });
+
+  it('a downgrade on an action shows the worse result on the action row', () => {
+    const con = db();
+    // Flash Your Badge: "the result of your check against that creature is one degree of success
+    // worse" — the Demoralize row is where the player reads it.
+    const c = withFeat('fighter', 5, 'flash-your-badge');
+    const marks = recordMarkersFor(c, con, 'action', 'demoralize');
+    const mark = marks.find((m) => m.sourceId === 'flash-your-badge');
+    expect(mark, 'no marker on Demoralize').toBeDefined();
+    expect(mark!.value).toBe('one degree worse');
+  });
+
+  it('the downgrade wording is never the upgrade wording', () => {
+    // A player reading "a success is a critical success instead" on a record that means the opposite
+    // is worse off than one reading nothing, so the two vocabularies must not overlap.
+    const con = db();
+    const c = withFeat('fighter', 5, 'dragons-presence');
+    const b = explainStat(c, con, { kind: 'save', save: 'reflex' });
+    const lines = (b.situational ?? []).filter((s) => s.sourceId === 'dragons-presence').map((s) => s.text);
+    expect(lines.length).toBe(2);
+    expect(lines.some((t) => t.includes('critical failure instead'))).toBe(true);
+    expect(lines.some((t) => t.includes('critical success instead'))).toBe(true);
+  });
+
+  it('the apply script no longer lists any of them as unbuildable', () => {
+    // The DOWNGRADES list in the script was the record of what the lane could not say. Leaving the
+    // nine there while authoring them would be two answers to one question.
+    const src = readFileSync('scripts/apply-degree-shifts.mjs', 'utf8');
+    const block = src.slice(src.indexOf('const DOWNGRADES'), src.indexOf('const OTHERS_ROLL'));
+    for (const [, id] of DOWNGRADES) expect(`${id}: ${block.includes(`/${id} —`) ? 'STILL LISTED' : 'ok'}`).toBe(`${id}: ok`);
   });
 });

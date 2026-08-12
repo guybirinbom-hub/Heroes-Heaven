@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { content } from './_content';
 import { buildCharacter, emptyBuild } from '../src/rules/build';
-import { deriveAc, deriveSpeeds, deriveStrikes, deriveDefenses } from '../src/rules/derive';
+import { deriveAc, deriveSpeeds, deriveStrikes, deriveDefenses, deriveSize, strikesBlockedBy } from '../src/rules/derive';
 import { explainStat } from '../src/rules/explain';
+import { emptyPlay, toggleMode, setTempHp, applyDamage } from '../src/rules/play';
 import type { BattleForm, Character, ModeDef } from '../src/rules/types';
 
 /**
@@ -141,7 +142,8 @@ describe('battleForm — the shipped modes', () => {
 
   it('every mode carries the full printed text, including the parts the app cannot compute', () => {
     // Ruling Q3's second half — "must make plain a mode is active and what changed" — plus principle
-    // B. `size` and `tempHp` are authored but read by nothing yet, so the note is what the player sees.
+    // B: the note still has to carry the parts no field can hold (the +10 skill floors, the weakness
+    // to physical damage). `size` and `tempHp` are no longer among them — they have readers now.
     for (const m of forms()) expect(`${m.id}: ${(m.note ?? '').length > 60}`).toBe(`${m.id}: true`);
   });
 
@@ -178,5 +180,147 @@ describe('battleForm — the shipped modes', () => {
     // Speed or the bat would lose it — the trap that made a dwarf in pest form walk at 45.
     const bat = db().modes?.['bat-form'] as ModeDef | undefined;
     expect(bat?.battleForm?.speeds).toEqual({ land: 20, fly: 20 });
+  });
+});
+
+/**
+ * `size` was AUTHORED ON FOURTEEN FORMS AND READ BY NOTHING — the write-only-with-no-reader failure
+ * this project has hit repeatedly. A stored value no code consumes is indistinguishable from a typo.
+ *
+ * Size is the one battle-form statistic the player needs at the table and cannot work out: it decides
+ * the space you occupy and whether you fit through the gap, and a Huge worm was still labelled Medium.
+ */
+describe('a battle form changes what size you are', () => {
+  it('the form’s size replaces the body’s, and names the form it came from', () => {
+    const { c, content: con } = mk({ size: 'Tiny' });
+    const s = deriveSize(c, con);
+    expect(s.size).toBe('Tiny');
+    expect(s.from).toBe('Pest Form');
+  });
+
+  it('a form that says nothing about size leaves the character’s own', () => {
+    const { c, content: con } = mk({ ac: 15 });
+    // The mk() character is a dwarf: medium, and no form size to override it.
+    expect(deriveSize(c, con).size.toLowerCase()).toBe('medium');
+    expect(deriveSize(c, con).from).toBeUndefined();
+  });
+
+  it('every authored form that names a size is a size the sheet can show', () => {
+    const SIZES = ['tiny', 'small', 'medium', 'large', 'huge', 'gargantuan'];
+    const forms = Object.values(db().modes ?? {}).filter((m) => (m as ModeDef).battleForm) as ModeDef[];
+    const withSize = forms.filter((m) => m.battleForm!.size);
+    // The premise: the authoring pass really did write sizes. Without this the test below is vacuous.
+    expect(withSize.length).toBeGreaterThanOrEqual(14);
+    for (const m of withSize) expect(`${m.id}: ${m.battleForm!.size!.toLowerCase()}`).toBe(`${m.id}: ${SIZES.find((x) => x === m.battleForm!.size!.toLowerCase()) ?? 'UNKNOWN SIZE'}`);
+  });
+});
+
+/**
+ * `tempHp` was likewise authored on seven forms and read by nothing. "20 temporary Hit Points" is a
+ * number the player has to have; leaving it in prose meant typing it in by hand from a note.
+ *
+ * Applied when the form is SWITCHED ON, which is when the rules grant it, and taken away again when
+ * the form ends — but only if the pool is still the form's own.
+ */
+describe('a battle form’s temporary Hit Points', () => {
+  const con = () => db();
+  const form = (tempHp: number): Record<string, ModeDef> => ({
+    'worm-test': { id: 'worm-test', name: 'Worm Form', modifiers: [], exclusiveGroup: 'battle-form', battleForm: { tempHp } },
+  });
+
+  it('switching the form on grants them', () => {
+    const p = toggleMode(emptyPlay(), 'worm-test', form(40));
+    expect(p.tempHp).toBe(40);
+  });
+
+  it('switching it off takes them away again', () => {
+    const on = toggleMode(emptyPlay(), 'worm-test', form(40));
+    const off = toggleMode(on, 'worm-test', form(40));
+    expect(off.tempHp).toBe(0);
+  });
+
+  it('temporary Hit Points never stack — a bigger pool you already have is kept', () => {
+    // PF2e: "If you gain temporary Hit Points when you already have some, choose whether to keep the
+    // ones you have or the new ones." Raising is the only safe automatic answer.
+    const rich = setTempHp(emptyPlay(), 50);
+    const p = toggleMode(rich, 'worm-test', form(40));
+    expect(p.tempHp).toBe(50);
+    // …and leaving the form must not delete a pool the form never granted.
+    expect(toggleMode(p, 'worm-test', form(40)).tempHp).toBe(50);
+  });
+
+  it('a pool the player set themselves survives leaving the form', () => {
+    const on = toggleMode(emptyPlay(), 'worm-test', form(40));
+    const mine = setTempHp(on, 12);
+    expect(toggleMode(mine, 'worm-test', form(40)).tempHp).toBe(12);
+  });
+
+  it('once the pool is spent, leaving the form cannot take it negative or resurrect it', () => {
+    const on = toggleMode(emptyPlay(), 'worm-test', form(40));
+    const hurt = applyDamage(on, 40, 100);
+    expect(hurt.tempHp).toBe(0);
+    expect(toggleMode(hurt, 'worm-test', form(40)).tempHp).toBe(0);
+  });
+
+  it('a mode with no battle form leaves temporary Hit Points alone', () => {
+    const plain: Record<string, ModeDef> = { x: { id: 'x', name: 'X', modifiers: [] } };
+    const p = toggleMode(setTempHp(emptyPlay(), 7), 'x', plain);
+    expect(p.tempHp).toBe(7);
+    expect(toggleMode(p, 'x', plain).tempHp).toBe(7);
+  });
+
+  it('the shipped forms carry the temporary Hit Points their text prints', () => {
+    expect((con().modes?.['worm-form-purple-worm'] as ModeDef).battleForm?.tempHp).toBe(40);
+    expect((con().modes?.['storm-form'] as ModeDef).battleForm?.tempHp).toBe(20);
+    expect((con().modes?.['dragon-transformation'] as ModeDef).battleForm?.tempHp).toBe(10);
+  });
+});
+
+/**
+ * "You can't make Strikes in this form" — a clause an empty `strikes` array could not express, because
+ * an absent/empty list means "the form grants none" and leaves your weapons in place. Pest form,
+ * A Little Bird Told Me and Bone Swarm all print it, and all three previously left a dwarf holding a
+ * warhammer while shaped like a rat.
+ */
+describe('a form that forbids Strikes', () => {
+  it('removes every Strike, including the always-present Fist', () => {
+    const { c, content: con } = mk({ ac: '15+@actor.level', noStrikes: true });
+    expect(deriveStrikes(c, con)).toEqual([]);
+  });
+
+  it('says which form did it, so an empty list does not read as a broken app', () => {
+    const { c, content: con } = mk({ ac: '15+@actor.level', noStrikes: true });
+    const by = strikesBlockedBy(c);
+    expect(by, 'nothing tells the player why they have no Strikes').toBeDefined();
+    expect(by!.name).toBe('Pest Form');
+    // A character not in such a form gets nothing to display.
+    const { c: normal } = mk({ ac: 15 });
+    expect(strikesBlockedBy(normal)).toBeUndefined();
+  });
+
+  it('a form that GRANTS Strikes is untouched by the flag', () => {
+    const { c, content: con } = mk({ attackMod: 12, strikes: [{ name: 'Jaws', damage: '1d6 piercing' }] });
+    expect(deriveStrikes(c, con)).toHaveLength(1);
+    expect(strikesBlockedBy(c)).toBeUndefined();
+  });
+
+  it('every form whose text prints the clause carries the flag, and no other does', () => {
+    const con = db();
+    // Measured, not guessed: the six pest-form variants ("⚠ You cannot make Strikes in this form")
+    // plus Bone Swarm, whose sentence is "You cannot speak, Cast Spells, use manipulate actions,
+    // Activate items, or Strike." Listed by id so the set is reviewable — a regex over the notes
+    // silently missed Bone Swarm, which is exactly the record most in need of the flag.
+    const BLOCKED = ['a-little-bird-told-me', 'bat-form', 'bone-swarm', 'crawling-form', 'critter-shape', 'form-of-the-bat', 'rat-form'];
+    const forms = Object.values(con.modes ?? {}).filter((m) => (m as ModeDef).battleForm) as ModeDef[];
+    const flagged = forms.filter((m) => m.battleForm!.noStrikes).map((m) => m.id).sort();
+    expect(flagged).toEqual(BLOCKED);
+  });
+
+  it('and no form both forbids Strikes and lists some', () => {
+    const forms = Object.values(db().modes ?? {}).filter((m) => (m as ModeDef).battleForm) as ModeDef[];
+    for (const m of forms) {
+      const bad = m.battleForm!.noStrikes && (m.battleForm!.strikes?.length ?? 0) > 0;
+      expect(`${m.id}: ${bad ? 'CONTRADICTS ITSELF' : 'ok'}`).toBe(`${m.id}: ok`);
+    }
   });
 });

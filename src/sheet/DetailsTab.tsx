@@ -3,7 +3,7 @@ import type { Character, ContentDatabase, ProficiencyRank, SenseEntry, Character
 import { RankPill } from './widgets';
 import { RANK_LABEL } from '../rules/explain';
 import { InfoTerm } from './InfoTerm';
-import { deriveDefenses, creatureTraitsOf } from '../rules/derive';
+import { deriveDefenses, creatureTraitsOf, deriveSize } from '../rules/derive';
 import { setAvatar, setDetail, setPortrait, type PlayUpdater } from '../rules/play';
 import { proficiencyDesc, rankDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
 import { useAvatar } from './usePortrait';
@@ -71,6 +71,7 @@ export function DetailsTab({
   const d = character.details;
   const deity = d.deityId ? content.deities[d.deityId] : undefined;
   const senses = deriveDefenses(character, content).senses;
+  const shownSize = deriveSize(character, content);
   const creatureTraits = creatureTraitsOf(character, content);
 
   const bgName = background?.name ?? character.customBackground?.name;
@@ -381,9 +382,17 @@ export function DetailsTab({
         <div className="id-row">
           <span className="idl">Size</span>
           <div className="idpills">
-            <span className="lang-pill">{cap(character.size ?? ancestry?.size ?? '—')}</span>
-            {character.size && ancestry && character.size !== ancestry.size && (
-              <span className="lang-pill" style={{ opacity: 0.7 }}>from {cap(ancestry.size)}</span>
+            {/* A BATTLE FORM replaces your size for as long as it runs (deriveSize) — a worm-form
+                character is Huge, and this row said Medium until the field had a reader. The second
+                pill always says where the size came from, so a size that changed never changes
+                silently. */}
+            <span className="lang-pill">{cap(shownSize.size)}</span>
+            {shownSize.from ? (
+              <span className="lang-pill" style={{ opacity: 0.7 }}>from {shownSize.from}</span>
+            ) : (
+              character.size && ancestry && character.size !== ancestry.size && (
+                <span className="lang-pill" style={{ opacity: 0.7 }}>from {cap(ancestry.size)}</span>
+              )
             )}
           </div>
         </div>

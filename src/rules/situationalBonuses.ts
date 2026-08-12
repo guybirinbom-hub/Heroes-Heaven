@@ -3066,8 +3066,27 @@ export type ExtraSituational = Readonly<Record<string, readonly SituationalBonus
  * Acrobatics bare. One entry now fans out to every surface it names, so they cannot disagree.
  */
 export interface DegreeShift {
-  /** Which way the result moves. `oneBetter` shifts every degree up one step. */
-  shift: 'successToCrit' | 'critFailToFail' | 'oneBetter' | 'failToSuccess';
+  /**
+   * Which way the result moves. `oneBetter` / `oneWorse` shift every degree one step.
+   *
+   * ⚠ The last three make the result WORSE, and they exist because the first four could not. Nine
+   * live records print a downgrade — *"use the result one degree of success worse"*, *"you get a
+   * critical failure instead"* — and with an improve-only vocabulary they were unauthorable and stayed
+   * prose. Two of them (Dragon's Presence, the even-tempered tanuki) print BOTH directions in a single
+   * sentence, so those records were showing the good half of their own rule and hiding the bad half,
+   * which is worse than showing neither.
+   *
+   * A downgrade needs no plumbing of its own: it fans out to the same skill/save/action surfaces, and
+   * the two vocabularies below keep the wording from ever reading as its opposite.
+   */
+  shift:
+    | 'successToCrit'
+    | 'critFailToFail'
+    | 'oneBetter'
+    | 'failToSuccess'
+    | 'critSuccessToSuccess'
+    | 'failToCritFail'
+    | 'oneWorse';
   /** The trigger, printed verbatim in the note — "on a check to Pick a Lock". */
   when: string;
   /** Skill keys to star, or `['all']`. */
@@ -3096,6 +3115,12 @@ export const DEGREE_SHIFT_TEXT: Record<DegreeShift['shift'], string> = {
   critFailToFail: 'a critical failure is a failure instead',
   failToSuccess: 'a failure is a success instead',
   oneBetter: 'your degree of success is one step better',
+  // The downgrades. Deliberately worded so no phrase here is a prefix or near-miss of one above: a
+  // player who reads "a success is a critical success instead" on a record that means the opposite is
+  // worse off than one who reads nothing at all.
+  critSuccessToSuccess: 'a critical success is a success instead',
+  failToCritFail: 'a failure is a critical failure instead',
+  oneWorse: 'your degree of success is one step worse',
 };
 
 /** The compact form for an action row's inline `( )` slot, where space is tight. */
@@ -3104,6 +3129,9 @@ export const DEGREE_SHIFT_SHORT: Record<DegreeShift['shift'], string> = {
   critFailToFail: 'crit fail → fail',
   failToSuccess: 'fail → success',
   oneBetter: 'one degree better',
+  critSuccessToSuccess: 'crit success → success',
+  failToCritFail: 'fail → crit fail',
+  oneWorse: 'one degree worse',
 };
 
 const entriesFor = (id: string, extra?: ExtraSituational): readonly SituationalBonus[] => {
@@ -3291,6 +3319,11 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   "majordomo-torc": [{ on: 'condition', id: 'deafened', value: "DC 3", note: "Your elocution lowers the flat-check DC to perform an auditory action while deafened from…" }],
   "quick-refugee": [{ on: 'action', id: 'hide', note: "A successful Hide also hides you from undead lifesense and other special precise senses…" }, { on: 'action', id: 'sneak', note: "A successful Sneak also conceals you from undead lifesense and other special precise…" }],
   "quick-unlock": [{ on: 'action', id: 'pick-a-lock', value: "1 action", note: "You Pick a Lock using 1 action instead of 2." }],
+  /* The MAP clause `mapReduction` cannot hold. Furious Focus does not change WHAT the penalty steps
+   * are — it changes how many steps one action spends — so no step/agileStep pair can say it, and
+   * writing one would have lowered the penalty on every Strike the character makes. Ruling Q8's shape
+   * instead: mark the action the feat modifies. The record carried no fields at all before this. */
+  "furious-focus": [{ on: 'action', id: 'vicious-swing', value: "counts as one attack", note: "Vicious Swing with a melee weapon in two hands counts as one attack toward your multiple attack penalty instead of two." }],
   "vicious-vengeance": [{ on: 'action', id: 'destructive-vengeance', value: "+ its number of damage dice", note: "Vicious Vengeance: the ENEMY takes a circumstance bonus to the damage equal to the…" }],
   "wand": [{ on: 'action', id: 'fling-magic', value: "+your level status to damage", note: "Wand implement, Intensify Vulnerability: Fling Magic against the target of your Exploit…" }],
 

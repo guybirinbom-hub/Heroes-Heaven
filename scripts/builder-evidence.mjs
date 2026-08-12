@@ -43,9 +43,10 @@
  *   npx jiti scripts/builder-evidence.mjs --limit 25       # smoke test
  *   npx jiti scripts/builder-evidence.mjs --only assurance,domain-initiate,terrain-scout
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { packHash, packDelta } from './lib/audit-cache.mjs';
 import { seedContent } from '../src/rules/seed';
 import { findDuplicateIds } from '../src/data';
 import {
@@ -881,6 +882,12 @@ export function main() {
 
   mkdirSync(join(root, 'scripts/audit'), { recursive: true });
   const outPath = 'scripts/audit/builder-500-evidence.json';
+  /* Same stamp as the sheet half carries, for the same reason: the audit that reads this file costs
+   * millions of tokens, and "how many feats did my change actually move?" is the number that decides
+   * whether to launch it. A `--only` run is not comparable with a full one and says so. */
+  const previous = existsSync(join(root, outPath)) ? (JSON.parse(read(outPath)).packs ?? null) : null;
+  for (const p of packs) p.hash = packHash(p);
+  const delta = packDelta(only ? null : previous, packs);
   writeFileSync(join(root, outPath), JSON.stringify({
     generated: new Date().toISOString(),
     sample: only ? `--only ${only}` : 'scripts/audit/feat-500.json',
@@ -903,6 +910,11 @@ export function main() {
   console.log(`CHECK 2  an answer nobody reads         ${check2.length} feats  (${totals.check2_answerNobodyReads.notRead + totals.check2_answerNobodyReads.echoOnly} pickers)`);
   console.log(`           nothing moves at all         ${totals.check2_answerNobodyReads.notRead}`);
   console.log(`           only the feat-row label       ${totals.check2_answerNobodyReads.echoOnly}   <- Ruling K may make these correct`);
+  console.log(
+    delta.comparable
+      ? `CHANGED since the last run             ${delta.changed.length}  (unchanged ${delta.unchanged}, new ${delta.added.length}, gone ${delta.removed.length})  <- only these need re-judging`
+      : 'CHANGED since the last run             n/a — nothing comparable to diff against, so every feat would be judged fresh',
+  );
   console.log(`wrote ${outPath}`);
   return { packs, check1, check2, totals };
 }

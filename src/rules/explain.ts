@@ -957,8 +957,8 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       if (cond) parts.push(cond);
       const situational = situationalList(modeAdjust(c, { kind: stat.kind === 'dc' ? 'class-dc' : 'attack' }, parts), featSituationalLines(c, db, ref));
       // Naming the basis is the point of the row: this statistic has no proficiency track of its own,
-      // it borrows one, and a player who raises that class DC needs to know this number follows it.
-      const basis = `${stat.basisClassName} class DC${stat.borrowed ? ' (archetype)' : ''}`;
+      // it borrows one, and a player who raises that DC needs to know this number follows it.
+      const basis = `${stat.basisLabel}${stat.borrowed ? ' (archetype)' : ''}`;
       return {
         title: stat.name,
         subtitle: `${basis} · ${ABIL_LABEL[stat.ability]}`,
@@ -968,6 +968,11 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         timeline: [],
         description:
           (stat.note ? stat.note + ' ' : '') +
+          // The `basisNote` half exists because a "whichever is higher" statistic follows a track the
+          // player did not choose and could change: a wizard's chronoskimmer DC rides their spell DC
+          // today and their class DC the moment that one overtakes it. Printing only the winner would
+          // make the number look pinned to a track it is not pinned to.
+          (stat.basisNote ? stat.basisNote + ' ' : '') +
           `Its proficiency rank and key attribute are those of your ${basis}, so anything that raises that DC raises this too.` +
           (stat.sourceIds.length ? ` From ${stat.sourceIds.map((id) => nameOfRecord(db, id)).join(', ')}.` : ''),
         roll: stat.kind === 'attack' ? { label: stat.name, modifier: stat.value } : undefined,

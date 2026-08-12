@@ -3321,9 +3321,10 @@
           "acuity": "imprecise"
         }
       ],
-      "size": "Tiny"
+      "size": "Tiny",
+      "noStrikes": true
     },
-    "note": "Critter Shape: the effect of a 1st-rank pest form, in an animal matching your inherent animal. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on."
+    "note": "Critter Shape: the effect of a 1st-rank pest form, in an animal matching your inherent animal. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. You cannot make Strikes in this form."
   },
   "rat-form": {
     "id": "rat-form",
@@ -3350,9 +3351,10 @@
           "acuity": "imprecise"
         }
       ],
-      "size": "Tiny"
+      "size": "Tiny",
+      "noStrikes": true
     },
-    "note": "Rat Form: the effect of a 1st-rank pest form, as a Tiny rat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on."
+    "note": "Rat Form: the effect of a 1st-rank pest form, as a Tiny rat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. You cannot make Strikes in this form."
   },
   "crawling-form": {
     "id": "crawling-form",
@@ -3379,9 +3381,10 @@
           "acuity": "imprecise"
         }
       ],
-      "size": "Tiny"
+      "size": "Tiny",
+      "noStrikes": true
     },
-    "note": "Crawling Form: the effect of a 1st-rank pest form, in a shape matching your heritage. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on."
+    "note": "Crawling Form: the effect of a 1st-rank pest form, in a shape matching your heritage. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. You cannot make Strikes in this form."
   },
   "bat-form": {
     "id": "bat-form",
@@ -3410,9 +3413,10 @@
           "acuity": "imprecise"
         }
       ],
-      "size": "Tiny"
+      "size": "Tiny",
+      "noStrikes": true
     },
-    "note": "Bat Form: the effect of a 4th-rank pest form, as a bat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on. At 14th level you can spend 2 actions instead to gain a 4th- or 5th-rank aerial form (bat only) — those statistics are not this mode."
+    "note": "Bat Form: the effect of a 4th-rank pest form, as a bat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. You cannot make Strikes in this form. At 14th level you can spend 2 actions instead to gain a 4th- or 5th-rank aerial form (bat only) — those statistics are not this mode."
   },
   "form-of-the-bat": {
     "id": "form-of-the-bat",
@@ -3441,9 +3445,10 @@
           "acuity": "imprecise"
         }
       ],
-      "size": "Tiny"
+      "size": "Tiny",
+      "noStrikes": true
     },
-    "note": "Form of the Bat: the effect of a 4th-rank pest form, always a bat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your Strikes away without replacing them, so ignore the Strikes list while this is on."
+    "note": "Form of the Bat: the effect of a 4th-rank pest form, always a bat. Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. You cannot make Strikes in this form."
   },
   "a-little-bird-told-me": {
     "id": "a-little-bird-told-me",
@@ -3470,9 +3475,10 @@
           "acuity": "imprecise"
         }
       ],
-      "size": "Tiny"
+      "size": "Tiny",
+      "noStrikes": true
     },
-    "note": "A Little Bird Told Me: AC = 20 + your level, fly Speed 25 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form. You resume your normal shape automatically at 0 Hit Points."
+    "note": "A Little Bird Told Me: AC = 20 + your level, fly Speed 25 feet, weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. You cannot make Strikes in this form. You resume your normal shape automatically at 0 Hit Points."
   },
   "ancestors-rage": {
     "id": "ancestors-rage",
@@ -3820,7 +3826,9 @@
           "acuity": "imprecise"
         }
       ],
-      "size": "Large"
+      "size": "Large",
+      "tempHp": 10,
+      "tempHpStacks": true
     },
     "note": "Dragon Transformation: a 6th-rank dragon form, except you keep your own AC and attack modifier, add your Rage damage, and your Dragon Breath uses your class DC. 10 temporary Hit Points (they stack with rage’s). Strikes: jaws 2d12 piercing plus 2d6 of your breath’s damage type; claw (agile) 3d10 slashing; tail (reach 10 feet) 3d10 bludgeoning — all rolled with YOUR attack modifier, so they are left off the Strikes list rather than printed at +0. Resistance 10 to your Dragon Breath’s damage type. At 18th level: +20-foot status bonus to fly Speed, dragon Strike damage bonus +12, and +14 status to Dragon Breath damage."
   },
@@ -3864,7 +3872,8 @@
       "speeds": {
         "fly": 40
       },
-      "size": "Huge"
+      "size": "Huge",
+      "noStrikes": true
     },
     "note": "Bone Swarm: you become Huge, gain the swarm trait and a fly Speed of 40 feet. Immune to grabbed, prone and restrained; weakness 5 to area and splash damage. You can share a space with other creatures, and as a 2-action activity deal 10d6 damage to everything in your space (basic save against the higher of your class DC and spell DC). You cannot speak, Cast Spells, use manipulate actions, Activate items, or Strike. You do not gain swarm mind. Spend a single action to return to your normal shape."
   },

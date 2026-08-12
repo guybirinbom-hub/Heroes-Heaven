@@ -11,9 +11,6 @@
  *   • A shift that lands on SOMEONE ELSE'S roll — an enemy's save, an ally's check, a companion's.
  *     Ruling F: no number of theirs belongs on your sheet. Starring your Athletics because an enemy's
  *     Grapple gets worse would promise you a bonus you do not have.
- *   • A DOWNGRADE ("use the result one degree worse", "a critical success is a success instead").
- *     `DegreeShift.shift` has four values and all four improve. Rather than invent a fifth enum value
- *     in an authoring pass, these are listed in DOWNGRADES below so the next run can see them.
  *   • A shift on a roll that has no row on the sheet — a ritual's secondary check, a counteract check.
  *   • The `aon-*` records: those are collision-suppressed duplicates (display hygiene rule
  *     "hide-never-delete"), so authoring them would put the same rule on a record nobody can reach.
@@ -47,6 +44,14 @@ const S2C = 'successToCrit';
 const CF2F = 'critFailToFail';
 const F2S = 'failToSuccess';
 const BETTER = 'oneBetter';
+/* The DOWNGRADES (2026-08-12). `DegreeShift.shift` used to hold four values and all four improved the
+ * result, so nine live records saying the opposite could not be authored at all and were listed below
+ * instead. Two of them — Dragon's Presence and the even-tempered tanuki — already carried their
+ * UPGRADE half here, which meant the sheet was printing the good half of a two-sided rule and hiding
+ * the bad half. Showing half a rule is worse than showing none of it. */
+const CS2S = 'critSuccessToSuccess';
+const F2CF = 'failToCritFail';
+const WORSE = 'oneWorse';
 
 /** shorthand: e(shift, when, {sk, sv, act, p}) */
 const e = (shift, when, t = {}) => ({
@@ -206,9 +211,13 @@ const AUTHORED = {
     e(S2C, 'on a save against a disease or poison', { sv: ALL }),
     e(CF2F, 'on a save against a disease or poison, if you have the Sacred Body class feature', { sv: ALL }),
   ],
-  // The upgrade half only. Dragon's Presence also turns a failure into a critical failure, which no
-  // value of `shift` can say — see DOWNGRADES.
-  'feats/dragons-presence': [e(S2C, 'on a save against a fear effect', { sv: ALL })],
+  // BOTH halves of one sentence: "When you roll a success on a saving throw against a fear effect,
+  // you get a critical success instead. When you roll a failure against a fear effect, you get a
+  // critical failure instead." The downgrade half was unauthorable until `failToCritFail` existed.
+  'feats/dragons-presence': [
+    e(S2C, 'on a save against a fear effect', { sv: ALL }),
+    e(F2CF, 'on a save against a fear effect', { sv: ALL }),
+  ],
   'heritages/resolute-fetchling': [e(S2C, 'on a save against an emotion effect', { sv: ALL })],
   'heritages/technological-fleshwarp': [e(S2C, 'on a save against an emotion effect', { sv: ALL })],
   'heritages/wishborn-poppet': [e(S2C, 'on a save against an emotion or fear effect', { sv: ALL })],
@@ -222,8 +231,12 @@ const AUTHORED = {
     e(S2C, 'on a save against a disease or poison', { sv: ALL }),
     e(CF2F, 'on a save against a disease or poison, if another ability already turns such a success into a critical success', { sv: ALL }),
   ],
-  // Upgrade half only — the "a failure becomes a critical failure" half is a downgrade (see below).
-  'heritages/even-tempered-tanuki': [e(S2C, 'on a save against an emotion effect', { sv: ALL })],
+  // Both halves, same shape as Dragon's Presence: "…you get a critical success instead, but when you
+  // roll a failure at a saving throw against an emotion effect, you get a critical failure instead."
+  'heritages/even-tempered-tanuki': [
+    e(S2C, 'on a save against an emotion effect', { sv: ALL }),
+    e(F2CF, 'on a save against an emotion effect', { sv: ALL }),
+  ],
 
   /* ═══ SKILL + ACTION shifts ════════════════════════════════════════════════════════════════════
    * Q2's "both". Where the text names no skill (Aid can be rolled with any of them) the entry is
@@ -502,23 +515,62 @@ const AUTHORED = {
   'feats/gorilla-stance': [e(S2C, 'on an Athletics check to Climb while in Gorilla Stance', { sk: ['athletics'], act: ['climb'] })],
   'feats/staff-acrobat-dedication': [e(S2C, 'on an Acrobatics check to Balance while wielding your staff', { sk: ['acrobatics'], act: ['balance'] })],
   'feats/conceited-mindset': [e(S2C, 'on a save against a mental effect', { sv: ALL })],
+
+  /* ═══ DOWNGRADES ═══════════════════════════════════════════════════════════════════════════════
+   * Added 2026-08-12, when `shift` gained three values that make the result worse. Every one is the
+   * PLAYER'S OWN roll, checked one by one against its text — a downgrade landing on someone else
+   * (an enemy's save getting worse) is still Ruling F and still stays out.                        */
+
+  // "If the triggering attack was a critical hit, use the result one degree of success worse than
+  // what you rolled." The check is the Deception roll the reaction itself calls for.
+  'feats/bravos-determination': [
+    e(WORSE, 'on the Deception check this reaction calls for, if the triggering Strike was a critical hit', { sk: ['deception'] }),
+  ],
+  // "If you roll a critical success, you get a success instead." Engineering Lore to Force Open, so
+  // the Lore key is the specific one the feat names — a bare `lore` would star every Lore the
+  // character has for a feat that only ever touches this one.
+  'feats/explosive-entry': [
+    e(CS2S, 'on the Engineering Lore check to Force Open a target you set explosives on', { sk: ['lore:engineering'], act: ['force-open'] }),
+  ],
+  // "the result of YOUR check against that creature is one degree of success worse" — your own
+  // Intimidation roll, not the target's save, which is why this one is in and the ally-facing ones
+  // are not.
+  'feats/flash-your-badge': [
+    e(WORSE, 'on the Intimidation check to Demoralize a creature that has not broken a law in the past week', { sk: ['intimidation'], act: ['demoralize'] }),
+  ],
+  // "If you're chaotic or a worshipper of Lamashtu, you take a -2 penalty to your Will save, and the
+  // result of your save is one degree of success worse" — a cursed intelligent weapon dominating its
+  // own wielder.
+  'items/jax': [
+    e(WORSE, "on the Will save against Jax's dominate, if you are chaotic or a worshipper of Lamashtu", { sv: ['will'] }),
+  ],
+  // "if you roll a failure on the check, you get a critical failure instead" — the price of the oil's
+  // reduced Administer First Aid DC.
+  'items/ladys-blessing-oil': [
+    e(F2CF, 'on the Medicine check to Administer First Aid while using the oil', { sk: ['medicine'], act: ['administer-first-aid'] }),
+  ],
+  // The contract's hidden condition: "if you roll a failure on a saving throw against a death effect,
+  // you get a critical failure instead."
+  'items/devils-luck': [e(F2CF, 'on a saving throw against a death effect', { sv: ALL })],
+  // "the next time you use this activation … the result of your Intimidation check is one degree of
+  // success worse than the result you rolled."
+  'items/cresset-of-grisly-interrogation': [
+    e(WORSE, 'on the Intimidation check the next time you activate the cresset within 24 hours, after a critical failure', { sk: ['intimidation'] }),
+  ],
 };
 
 /* ------------------------------------------------------------------------------------------------
  * Records the text describes but this lane deliberately does NOT carry. Printed by the run so the
  * next pass sees them rather than rediscovering them.
  * ---------------------------------------------------------------------------------------------- */
-const DOWNGRADES = [
-  'feats/bravos-determination — "use the result one degree of success worse"',
-  'feats/explosive-entry — "if you roll a critical success, you get a success instead"',
-  'feats/flash-your-badge — the target\'s result is one degree worse',
-  'feats/dragons-presence — the failure→critical failure half (the upgrade half IS authored)',
-  'heritages/even-tempered-tanuki — the failure→critical failure half (the upgrade half IS authored)',
-  'items/jax — "the result of your save is one degree of success worse"',
-  'items/ladys-blessing-oil — "you get a critical failure instead"',
-  'items/devils-luck — failure→critical failure against a death effect',
-  'items/cresset-of-grisly-interrogation — the next Intimidation check is one degree worse',
-];
+/* ⚠ EMPTIED 2026-08-12. This list held nine records the lane could not express, because every value
+ * of `DegreeShift.shift` improved the result. `critSuccessToSuccess`, `failToCritFail` and `oneWorse`
+ * now exist and all nine are authored above — see the DOWNGRADES block in AUTHORED.
+ *
+ * The list is kept, empty, because it was the honest record of a limit rather than a to-do: anything
+ * added here again means the vocabulary has run out a second time, and that is worth seeing in the
+ * run's output rather than discovering from a record that silently says nothing. */
+const DOWNGRADES = [];
 const OTHERS_ROLL = [
   'feats/elven-aloofness', 'feats/wardens-guidance', 'feats/swimmers-guidance', 'feats/heightened-instincts',
   'feats/hey-over-here', 'feats/command-attention', 'feats/assured-ritualist', 'feats/blowgun-poisoner',
@@ -571,7 +623,11 @@ if (missing.length) {
   console.log(`\nNOT IN core.json (${missing.length}) — nothing written for these:`);
   for (const m of missing) console.log('   ' + m);
 }
-console.log(`\nnot authored — a downgrade the enum cannot say (${DOWNGRADES.length}):`);
+console.log(
+  DOWNGRADES.length
+    ? `\n⚠ not authored — a downgrade the enum still cannot say (${DOWNGRADES.length}):`
+    : '\nevery downgrade the corpus prints is authored (the enum can say all three directions)',
+);
 for (const d of DOWNGRADES) console.log('   ' + d);
 console.log(`not authored — someone else's roll, ruling F (${OTHERS_ROLL.length}): ${OTHERS_ROLL.join(', ')}`);
 console.log(`not authored — no row on the sheet to star (${NO_SHEET_ROW.length}):`);

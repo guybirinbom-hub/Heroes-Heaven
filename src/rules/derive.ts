@@ -34,6 +34,7 @@ import type {
   SenseEntry,
   SkillRankGate,
   SpecialStatGrant,
+  SpecialStatBasis,
   StanceStrike,
   SubclassOption,
   ItemDesignation,
@@ -471,9 +472,14 @@ export interface SpecialStat {
   value: number;
   rank: ProficiencyRank;
   ability: AbilityId;
-  /** The class DC it is defined against, and whether that DC is borrowed from an archetype. */
-  basisClassId: string;
-  basisClassName: string;
+  /** The class DC it is defined against, when it is defined against one. Absent for a `higherOf`
+   *  basis, whose winning track may be a spellcasting entry rather than a class. */
+  basisClassId?: string;
+  /** The statistic this number follows, ready to print — "Kineticist class DC", "Arcane spell DC". */
+  basisLabel: string;
+  /** Present only when the basis needs explaining beyond its label: the printed rule that chose it. */
+  basisNote?: string;
+  /** True when the basis is a class DC BORROWED from an archetype dedication. */
   borrowed: boolean;
   itemBonus: number;
   itemBonusFrom?: string;
@@ -495,11 +501,21 @@ export interface SpecialStat {
  * sentence, so the two must resolve from the same place or an archetype kineticist would roll against
  * a rank nothing set.
  */
-function specialStatBasis(
-  c: Character,
-  db: ContentDatabase,
-  classId: string,
-): { rank: ProficiencyRank; ability: AbilityId; borrowed: boolean; className: string } | null {
+interface ResolvedBasis {
+  rank: ProficiencyRank;
+  ability: AbilityId;
+  borrowed: boolean;
+  /** Ready to print — "Kineticist class DC", "Arcane spell DC". */
+  label: string;
+  /** Only when the basis is a class DC. */
+  classId?: string;
+  /** The printed rule, when the label alone does not explain where the number came from. */
+  note?: string;
+}
+
+function specialStatBasis(c: Character, db: ContentDatabase, basis: SpecialStatBasis): ResolvedBasis | null {
+  if ('higherOfClassDcOrSpellDc' in basis) return higherOfClassOrSpellBasis(c, db);
+  const classId = basis.classDc;
   if (c.classId === classId || c.classId2 === classId) {
     // `c.keyAbility` is the same single value deriveClassDc uses; under Dual Class the app carries one
     // class-DC key attribute, and reading a different one here would print two class DCs that disagree.
@@ -507,11 +523,55 @@ function specialStatBasis(
       rank: c.proficiencies.classDc,
       ability: c.keyAbility ?? 'str',
       borrowed: false,
-      className: db.classes[classId]?.name ?? classId,
+      label: `${db.classes[classId]?.name ?? classId} class DC`,
+      classId,
     };
   }
   const sec = c.secondaryClassDcs?.find((d) => d.classId === classId);
-  return sec ? { rank: sec.rank, ability: sec.keyAbility, borrowed: true, className: sec.name } : null;
+  return sec ? { rank: sec.rank, ability: sec.keyAbility, borrowed: true, label: `${sec.name} class DC`, classId } : null;
+}
+
+/**
+ * "…either your class DC or spell DC, whichever is higher."
+ *
+ * Compared by VALUE, which is what the rule says: an expert spell DC on a +5 attribute beats a master
+ * class DC on a +3 one, and picking by rank would print a number the character does not have. The
+ * winner supplies the rank and attribute, so `deriveSpecialStats` recomputes exactly the same total
+ * from them and every later bonus lands once.
+ *
+ * A character with NO class DC track and no spellcasting cannot have this statistic at all, and gets
+ * no row — the same rule the `classDc` basis follows for a class DC it cannot find.
+ */
+function higherOfClassOrSpellBasis(c: Character, db: ContentDatabase): ResolvedBasis | null {
+  const note = 'The printed rule is "your class DC or spell DC, whichever is higher".';
+  const candidates: { value: number; basis: ResolvedBasis }[] = [];
+  // A character with no class at all still carries a classDc rank, but it explains nothing without a
+  // class to name — so the class-DC candidate needs the class, exactly as the `classDc` basis does.
+  const ownClassId = c.classId ?? undefined;
+  const own = ownClassId ? db.classes[ownClassId] : undefined;
+  if (own && ownClassId) {
+    const dc = deriveClassDc(c);
+    candidates.push({
+      value: dc.dc,
+      basis: { rank: dc.rank, ability: c.keyAbility ?? 'str', borrowed: false, label: `${own.name} class DC`, classId: ownClassId, note },
+    });
+  }
+  for (const entry of c.spellcasting ?? []) {
+    // A focus-only entry has a spell DC exactly as a slot entry does — a champion's devotion spells are
+    // rolled against one — so it is a legitimate candidate rather than an edge case to skip.
+    const sc = deriveSpellcasting(c, entry);
+    // The TRADITION, not `entry.name`: that reads "Arcane prepared spellcasting", which is a sentence
+    // rather than the name of a statistic, and the row prints this inside a parenthetical.
+    const tradition = entry.tradition ? entry.tradition[0].toUpperCase() + entry.tradition.slice(1) : 'Spell';
+    candidates.push({
+      value: sc.dc,
+      basis: { rank: entry.proficiency, ability: entry.keyAbility, borrowed: false, label: `${tradition} spell DC`, note },
+    });
+  }
+  if (!candidates.length) return null;
+  // Ties go to the FIRST candidate, which is the class DC — the order the rule prints them in. With
+  // equal values the choice cannot change the number, only the label, so the printed order wins.
+  return candidates.reduce((best, x) => (x.value > best.value ? x : best)).basis;
 }
 
 /**
@@ -537,7 +597,7 @@ export function deriveSpecialStats(c: Character, db: ContentDatabase): SpecialSt
 
   const out: SpecialStat[] = [];
   for (const [key, { g, sourceIds }] of grants) {
-    const basis = specialStatBasis(c, db, g.basis.classDc);
+    const basis = specialStatBasis(c, db, g.basis);
     if (!basis) continue;
     // The item bonus names ONE statistic (a gate attenuator raises the impulse attack modifier "but
     // not to your impulse DC"), so it is matched by key and never by a generic attack/DC channel.
@@ -575,8 +635,9 @@ export function deriveSpecialStats(c: Character, db: ContentDatabase): SpecialSt
       value: (g.kind === 'dc' ? 10 : 0) + base + mods,
       rank: basis.rank,
       ability: basis.ability,
-      basisClassId: g.basis.classDc,
-      basisClassName: basis.className,
+      ...(basis.classId ? { basisClassId: basis.classId } : {}),
+      basisLabel: basis.label,
+      ...(basis.note ? { basisNote: basis.note } : {}),
       borrowed: basis.borrowed,
       itemBonus,
       itemBonusFrom,
@@ -1479,6 +1540,32 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
  */
 export function activeBattleForm(c: Character): BattleForm | undefined {
   return (c.activeModes ?? []).find((m) => m.battleForm)?.battleForm;
+}
+
+/**
+ * The active battle form that FORBIDS Strikes, if any — so the empty Strikes list can say why.
+ *
+ * A list that is simply empty reads as a broken app rather than as a rule (ruling Q27's principle: a
+ * control that is inert without looking inert is bad design). Returning the mode rather than a boolean
+ * means the message can name the form the player switched on.
+ */
+export function strikesBlockedBy(c: Character): { id: string; name: string } | undefined {
+  const m = (c.activeModes ?? []).find((x) => x.battleForm?.noStrikes);
+  return m ? { id: m.id, name: m.name } : undefined;
+}
+
+/**
+ * The size the character IS right now.
+ *
+ * `character.size` is the BODY's size, decided at build time by ancestry and any `sizeOverride`. A
+ * battle form replaces it for as long as it runs — a worm-form character is Huge — and that is a fact
+ * the player needs (it decides their space and whether they fit) and can work out from nothing else on
+ * the sheet. `from` names the form, because a size that changed without saying why is worse than none.
+ */
+export function deriveSize(c: Character, db: ContentDatabase): { size: string; from?: string } {
+  const mode = (c.activeModes ?? []).find((m) => m.battleForm?.size);
+  if (mode) return { size: mode.battleForm!.size!, from: mode.name };
+  return { size: c.size ?? (c.ancestryId ? (db.ancestries[c.ancestryId]?.size as string | undefined) : undefined) ?? 'medium' };
 }
 
 /** The active modes with Raise a Shield's placeholder AC value swapped for the HELD shield's real
@@ -3600,6 +3687,10 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
   // which is precisely the bug the ruling is aimed at. Damage is printed and fixed: no handwraps, no
   // striking runes, no ability modifier, because a bat's fangs do not care how strong you are.
   const form = activeBattleForm(c);
+  // "You can't make Strikes in this form" (pest form, A Little Bird Told Me, Bone Swarm). Returning
+  // an empty list is the WHOLE implementation of the clause, and it is only safe because
+  // `strikesBlockedBy` puts the reason on the Strikes tab — otherwise the sheet just looks broken.
+  if (form?.noStrikes) return [];
   if (form?.strikes?.length) {
     return form.strikes.map((s, i) => {
       const atk = form.attackMod ?? 0;

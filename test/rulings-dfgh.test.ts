@@ -45,12 +45,25 @@ describe('D — the mark goes on the action it changes', () => {
   });
 
   it('every marked action or condition exists in the shipped data', () => {
-    // A marker pointing at an id core.json does not have would render nowhere at all.
+    // A marker pointing at an id nothing renders would land nowhere at all.
+    //
+    // ⚠ `content.actions` is not the only source of an action ROW. MainTab also lists every feat that
+    // carries a non-passive `actionCost` (MainTab.tsx:260) and marks it with the slug of its NAME, the
+    // same slug used here — so Vicious Swing is a real row despite being a feat rather than an
+    // `actions` record. Checking only `content.actions` would have rejected a marker that renders.
+    const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const featRows = new Set(
+      Object.values(c().feats)
+        .filter((f) => f.actionCost && f.actionCost.type !== 'passive')
+        .map((f) => slug(f.name)),
+    );
     const missing: string[] = [];
     for (const [source, marks] of Object.entries(RECORD_MARKERS)) {
       for (const m of marks) {
         const bucket = m.on === 'action' ? c().actions : c().conditions;
-        if (!(bucket as Record<string, unknown>)[m.id]) missing.push(`${source} → ${m.on}/${m.id}`);
+        if ((bucket as Record<string, unknown>)[m.id]) continue;
+        if (m.on === 'action' && featRows.has(m.id)) continue;
+        missing.push(`${source} → ${m.on}/${m.id}`);
       }
     }
     expect(missing).toEqual([]);

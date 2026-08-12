@@ -42,11 +42,19 @@
  *     statistic that already has a row ("you can substitute your impulse attack roll or class DC").
  *     Printing the same number a third time under a third name is exactly the failure the owner asked
  *     to guard against.
- *   • THE 6 DEVIANT CLASSIFICATIONS, which are 6 of Foundry's 9. Foundry gives them a `deviant`
- *     statistic extending the class DC. **Our own text never names one** — not the classification
- *     records, not the deviant feats ("Make a ranged attack roll against a creature within 30 feet"),
- *     and not AoN's five Dark Archive rules pages, read from the local archive. Building a number
- *     from Foundry's rule element alone would be importing another implementation's ruling.
+ *
+ * ⚠ THE EXCLUSION BELOW WAS WRONG, AND IS CORRECTED IN PASS 2 (see the second section of this file).
+ *   This pass recorded: *"THE 6 DEVIANT CLASSIFICATIONS … Our own text never names one — not the
+ *   classification records, not the deviant feats, and not AoN's five Dark Archive rules pages."*
+ *   Both halves are false and both were checkable in one grep:
+ *     – our own `classFeatures/flicker-deviant-classification` (and its `desynchronized-motions`
+ *       sub-feature) says *"You can attempt to Escape against **your deviation DC**"*;
+ *     – AoN rules-3506 *Deviation Saves and Attack Rolls*, in the local archive, prints the formula:
+ *       *"The DC for any saving throw called for by a deviation is the higher of your class DC or
+ *       spell DC. The attack modifier of a deviation is 10 lower than that DC."*
+ *   What was actually missing was a `basis` that could SAY "the higher of two statistics" — the field
+ *   only spoke of one class DC — so the record could not be authored and was rationalised away
+ *   instead. That is the false-gap failure in reverse: a real gap closed by writing down a reason.
  *
  * ── Where the values land ───────────────────────────────────────────────────────────────────────
  * public/core.json (so the app sees them now) AND scripts/data/effect-backfill.json — the ONLY
@@ -75,6 +83,54 @@ const IMPULSE_ATTACK = {
   note: 'Some impulses ask for an impulse attack roll rather than a save.',
 };
 
+/* ────────────────────────────────────────────── PASS 2 (2026-08-12) — the "higher of two" shape ──
+ *
+ * Found by scanning OUR OWN text for a named statistic rather than by re-reading Foundry's list, which
+ * is what the lane test says to do — and which is why one of these two records is not in Foundry's 9
+ * at all. Both are the same shape, and neither could be expressed until `basis` learned to say it:
+ *
+ *   • CHRONOSKIMMER DC. Chronoskimmer Dedication: "The DC for these abilities is either your class DC
+ *     or spell DC, whichever is higher, and is called your chronoskimmer DC." Two feats in the same
+ *     archetype roll against it BY NAME (Guide the Timeline, Steal Time). The maximum of two rows is a
+ *     third number: the sheet prints a class DC and a spell DC, and never their higher.
+ *   • DEVIATION DC and DEVIATION ATTACK ROLL, on all seven classifications. See the correction above
+ *     for why the first pass excluded these. Two rows rather than one because the rule states them
+ *     separately and they are 10 apart — four deviant feats say only "Make an attack roll", so a
+ *     player with Blasting Beams has no number to roll without the attack row.
+ *
+ * Authored on the CLASSIFICATION, not on the 30 deviant feats: a deviant feat GRANTS its
+ * classification (`grantsClassFeatures`), so the classification is the one record every deviant
+ * character owns, and `deriveSpecialStats` collapses by `key` if they ever hold two.
+ */
+const DEVIATION = [
+  {
+    key: 'deviation-dc',
+    name: 'Deviation DC',
+    kind: 'dc',
+    basis: { higherOfClassDcOrSpellDc: true },
+    note: 'Saves against your deviations, and checks made against them, use this DC.',
+  },
+  {
+    key: 'deviation-attack',
+    name: 'Deviation attack roll',
+    kind: 'attack',
+    basis: { higherOfClassDcOrSpellDc: true },
+    // "unless the deviation calls for a Strike, in which case the attack modifier is the normal
+    // attack modifier of the Strike" — the exception is on the STRIKE, which already has its own row.
+    note: 'Deviations that say "Make an attack roll" use this. A deviation that calls for a Strike uses that Strike instead.',
+  },
+];
+
+const CLASSIFICATIONS = [
+  'blight-soul-deviant-classification',
+  'dragon-deviant-classification',
+  'flicker-deviant-classification',
+  'leech-deviant-classification',
+  'troll-deviant-classification',
+  'verdant-core-deviant-classification',
+  'wraith-deviant-classification',
+];
+
 const SPECIAL_STATS = {
   'classFeatures/impulses': IMPULSE_ATTACK,
   'feats/kineticist-dedication': IMPULSE_ATTACK,
@@ -85,6 +141,14 @@ const SPECIAL_STATS = {
     basis: { classDc: 'thaumaturge' },
     note: 'You activate scrolls of any tradition against this DC rather than a spell DC.',
   },
+  'feats/chronoskimmer-dedication': {
+    key: 'chronoskimmer-dc',
+    name: 'Chronoskimmer DC',
+    kind: 'dc',
+    basis: { higherOfClassDcOrSpellDc: true },
+    note: 'Chronoskimmer abilities that allow a saving throw use this DC.',
+  },
+  ...Object.fromEntries(CLASSIFICATIONS.map((id) => [`classFeatures/${id}`, DEVIATION])),
 };
 
 /* ------------------------------------------------- the data half of the secondary-class-DC lane -- */

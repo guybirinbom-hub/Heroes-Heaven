@@ -12,6 +12,7 @@ import {
   critSpecSources,
   strikeShowsCritSpec,
   skillTakesArmorPenalty,
+  strikesBlockedBy,
   type Strike,
 } from '../rules/derive';
 import { togglePin, togglePinnedDesc, toggleTactic, setActiveStance, descId, type PlayUpdater } from '../rules/play';
@@ -192,6 +193,8 @@ export function MainTab({
     [character, content],
   );
   const strikes = useMemo(() => deriveStrikes(character, content), [character, content]);
+  // The battle form that forbids Strikes, when one is running — see the empty-list message below.
+  const noStrikesForm = strikesBlockedBy(character);
   // Crit-spec sources the character has (class features, feats, subclass/doctrine), each with the
   // level it activates + any weapon restriction. A Strike shows its crit-spec effect only when a
   // source actually covers that weapon — computed per strike below.
@@ -957,7 +960,17 @@ export function MainTab({
                 {shownStrikes.map((s) => (
                   <StrikeRow key={s.instanceId} s={s} />
                 ))}
-                {shownStrikes.length === 0 && <div className="acts-empty">No strikes match.</div>}
+                {/* A form that says "you can't make Strikes" empties this list, and an empty list on
+                    its own reads as a broken app rather than as a rule (Q27: an inert control must
+                    look inert, and say why). Named so the player knows which toggle to switch off. */}
+                {shownStrikes.length === 0 &&
+                  (noStrikesForm ? (
+                    <div className="acts-empty">
+                      You can’t make Strikes while <strong>{noStrikesForm.name}</strong> is active.
+                    </div>
+                  ) : (
+                    <div className="acts-empty">No strikes match.</div>
+                  ))}
               </div>
             ) : (
               <div className="actions">

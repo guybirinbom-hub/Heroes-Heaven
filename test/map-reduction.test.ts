@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { mapStepFor, mapNotesFor, deriveStrikes } from '../src/rules/derive';
-import { explainStat, statHasSituational } from '../src/rules/explain';
+import { explainStat, recordMarkersFor, statHasSituational } from '../src/rules/explain';
 import type { Character } from '../src/rules/types';
 
 /**
@@ -200,5 +200,33 @@ describe('every strike source honours the progression', () => {
       expect(b.attack[0] - b.attack[1]).toBe(5);
       expect(b.attack[0] - b.attack[2]).toBe(10);
     }
+  });
+});
+
+/**
+ * The one record in the MAP area that `mapReduction` genuinely cannot express, measured rather than
+ * assumed: scanning our own text for a stated progression yields exactly four records (all authored,
+ * above) plus **Furious Focus**, which says something else entirely —
+ *
+ *   *"When you make a Vicious Swing with a melee weapon you're wielding in two hands, it counts as
+ *   one attack toward your multiple attack penalty instead of two."*
+ *
+ * That changes how many MAP steps an ACTION consumes, not what the steps are, so no `step`/`agileStep`
+ * pair can say it and none should be invented. The correct shape is ruling Q8's: mark the action the
+ * feat modifies. The record carried no fields at all, so the feat did nothing anywhere.
+ */
+describe('a MAP clause that is not a progression', () => {
+  it('Furious Focus is NOT authored as a progression change', () => {
+    // Authoring a step here would hand the player a lower penalty on every Strike they make.
+    expect(db.feats['furious-focus'].mapReduction).toBeUndefined();
+    expect(mapStepFor(build('fighter', 6, { featPicks: { '6:class': 'furious-focus' } }), db, [])).toBe(5);
+  });
+
+  it('but it marks Vicious Swing, which is the action it actually changes', () => {
+    const ch = build('fighter', 6, { featPicks: { '1:class': 'vicious-swing', '6:class': 'furious-focus' } });
+    const marks = recordMarkersFor(ch, db, 'action', 'vicious-swing');
+    const mark = marks.find((m) => m.sourceId === 'furious-focus');
+    expect(mark, 'Furious Focus reached no surface at all').toBeDefined();
+    expect(mark!.note).toContain('one attack');
   });
 });

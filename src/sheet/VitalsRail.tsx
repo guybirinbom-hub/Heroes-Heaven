@@ -859,7 +859,7 @@ export function VitalsRail({
             {/* The basis is not decoration: the statistic has no proficiency track of its own, so the
                 player needs to see which class DC raising it would raise this number too. */}
             <span className="mc-key">
-              ({s.basisClassName} DC{s.borrowed ? ', archetype' : ''}, {s.rank})
+              ({s.basisLabel}{s.borrowed ? ', archetype' : ''}, {s.rank})
             </span>
           </span>
         </div>

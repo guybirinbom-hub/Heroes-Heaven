@@ -14,9 +14,10 @@
  *   npx jiti scripts/feat-evidence.mjs                    # all 500, -> scripts/audit/feat-500-evidence.json
  *   npx jiti scripts/feat-evidence.mjs --limit 20         # smoke test
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { packHash, packDelta } from './lib/audit-cache.mjs';
 import { seedContent } from '../src/rules/seed';
 import { buildCharacter, emptyBuild } from '../src/rules/build';
 import {
@@ -263,10 +264,26 @@ for (const featId of sample.featIds.slice(0, LIMIT)) {
   });
 }
 
+/* ── What moved since the last run ──────────────────────────────────────────────────────────────
+ * Each pack carries a hash of itself, and the run says how many changed. Re-running this script is
+ * cheap; what is expensive is the 500-feat audit that reads its output, and the only question that
+ * decides whether to launch it is "how many feats did my change actually move?". Answering it here —
+ * before the merge, before a single token — is why the hash is worth carrying.
+ * The field is internal: `merge-evidence.mjs` copies named fields, so it never reaches the reader. */
+const OUT = 'scripts/audit/feat-500-evidence.json';
+const previous = existsSync(join(root, OUT)) ? JSON.parse(read(OUT)) : null;
+for (const p of packs) p.hash = packHash(p);
+const delta = packDelta(previous, packs);
+
 mkdirSync(join(root, 'scripts/audit'), { recursive: true });
-writeFileSync(join(root, 'scripts/audit/feat-500-evidence.json'), JSON.stringify(packs, null, 1));
+writeFileSync(join(root, OUT), JSON.stringify(packs, null, 1));
 console.log(`feats processed      ${packs.length}`);
 console.log(`  placed in a slot   ${landed}`);
 console.log(`  UNPLACEABLE        ${unplaceable}  (no slot accepted them — evidence is text+fields only)`);
 console.log(`  EMPTY sheet diff   ${empty}  <- change nothing when taken`);
-console.log('wrote scripts/audit/feat-500-evidence.json');
+console.log(
+  delta.comparable
+    ? `  CHANGED since last ${delta.changed.length}  (unchanged ${delta.unchanged}, new ${delta.added.length}, gone ${delta.removed.length})  <- only these need re-judging`
+    : '  CHANGED since last  n/a — no comparable previous run, so every feat would be judged fresh',
+);
+console.log(`wrote ${OUT}`);

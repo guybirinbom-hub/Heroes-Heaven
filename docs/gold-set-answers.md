@@ -471,9 +471,38 @@ four whose rule lived there, restating numbers held nowhere else and checked by 
 now generated from the `mapReduction` field itself, so the row's `*`, its note and the breakdown all
 read the authored numbers. Same one-registry lesson as `degreeShifts`.
 
-### ⚠ Two lanes are built but EMPTY
+### ⚠ Two lanes are built but EMPTY — CLOSED, both authored
 
 `degreeShifts` and `battleForm` exist in the engine with **zero records authored**. Until an authoring
 pass runs, the 176 degree-of-success feats and 44 battle-form feats still report as broken and the lanes
 look pointless. Both are mechanical passes — no model, no design decisions, specs already settled by
 Q2 and Q3.
+
+**Both passes have since run**: `degreeShifts` carries **308 records / 348 entries**, `battleForm`
+**16 modes**. See the closing note below for what the three follow-up passes changed.
+
+---
+
+## Round 10 — the write-only fields, closed (2026-08-12)
+
+Three things an auditor would have reported as defects, each fixed by making the FIELD able to say what
+the text says rather than by writing a reason it could not:
+
+| was | now |
+|---|---|
+| `BattleForm.size` (14 modes) and `BattleForm.tempHp` (7) were authored and read by **nothing** | `deriveSize` prints the form's size on the Details tab naming the form; `toggleMode` grants the temporary Hit Points on entry and takes them back on exit. `apply-battle-forms.mjs` kept a `NO_READER` list excusing them with "it is also in the note" — a note is prose the player must act on by hand |
+| a form saying **"you can't make Strikes"** could not say it — an empty `strikes` array reads as "grants none", not "removes yours" | `BattleForm.noStrikes` (7 modes: the six pest-form variants + Bone Swarm). `strikesBlockedBy` puts the reason on the Strikes tab, because an empty list with no explanation reads as a broken app (**Q27**) |
+| **9 records state a DOWNGRADE** and `DegreeShift.shift` had four values that all improved | `critSuccessToSuccess`, `failToCritFail`, `oneWorse`; all nine authored. ⚠ Two of them (Dragon's Presence, the even-tempered tanuki) print both directions in one sentence and had shipped with **only the upgrade half** — showing the good news and hiding the bad |
+
+⚠ **Q30's deviant exclusion was wrong.** It recorded that our own text names no deviant statistic. It
+does — `classFeatures/flicker-deviant-classification` says *"Escape against your deviation DC"* — and
+AoN rules-3506 prints the formula. What was missing was a `basis` that could express *"the higher of
+your class DC or spell DC"*. The lane is now **11 records**: the three from Q30, plus the
+**chronoskimmer DC** (found by scanning our own text, not in Foundry's 9) and the **deviation DC +
+attack roll** on all seven classifications. Full account in `docs/mechanic-lanes.md`.
+
+**Q31 needed nothing.** The MAP lane was measured, not rebuilt: `mapReduction` carries 4 records,
+`mapStepFor` is read by all four strike builders, and Flurry and Agile Grace do change the progression
+(`test/map-reduction.test.ts`). No field named `mapAdjust` has ever existed. The one real gap in that
+area is **Furious Focus**, whose clause changes how many MAP steps an ACTION spends rather than what
+the steps are — no `step`/`agileStep` pair can say it, and it is now a marker on Vicious Swing (Q8).

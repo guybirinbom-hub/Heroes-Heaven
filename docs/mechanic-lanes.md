@@ -128,6 +128,8 @@ carries → candidates. Two buckets matter:
 | `extraReaction` | "You gain an additional reaction" | `extraReaction` |
 | `note` | a clause worth printing on the sheet but not computable | `note` |
 | `degreeShift` | a degree of success CHANGES — "a success is a critical success instead", "a critical failure is a failure instead", "one degree of success better" | `degreeShifts` on the record. Owner ruling **Q2**: one entry stars the skill AND marks the action, and all three saves when it applies to saves generally. ⚠ Do **not** also write the sentence into `situationalBonuses.ts` — that was two registries drifting apart, which is why the field exists |
+| `degreeShiftDown` | the degree gets WORSE — "use the result one degree of success worse", "if you roll a critical success, you get a success instead", "a failure becomes a critical failure" | **the same `degreeShifts` field**, with `shift` set to `critSuccessToSuccess`, `failToCritFail` or `oneWorse` (added 2026-08-12; all four earlier values improved the result). **9 records, all authored.** ⚠ Two of them — Dragon's Presence and the even-tempered tanuki — print both directions in one sentence and had shipped with only the UPGRADE half, so the sheet showed the good news and hid the bad |
+| `noStrikes` | a battle form says "you can't make Strikes" | `battleForm.noStrikes` on the mode. **7 modes, all authored.** ⚠ An empty or absent `strikes` array cannot say this: absent means "the form states none, keep your own", so removing your Strikes needed its own word. `strikesBlockedBy` puts the reason on the Strikes tab — an empty list with no explanation reads as a broken app (**Q27**) |
 | `aura` | the record CREATES a persistent emanation centred on you (or on a banner, implement or mount you carry) — "a 15-foot emanation", "you and allies within 30 feet", "you emanate a nimbus" | a **mode** with `category: 'Aura'` in `scripts/data/toggle-modes.json`, gated to the record that projects it. Owner ruling **Q29**. ⚠ A record that merely USES an aura as a range ("an ally in your champion's aura") is not one — it is a consumer. A record that CHANGES another's aura is a **rewriter**: `modeAdjust` matched to that aura's mode id, never a second toggle |
 | `battleForm` | the text states statistics that REPLACE yours — "AC = 18 + your level", "these are the only attacks you can Strike with", "Speed 40 feet" | `battleForm` on a **mode** (`scripts/data/toggle-modes.json`). Owner ruling **Q3**. ⚠ Every other lane ADDS; this one SETS, and a field the text does not state must stay ABSENT — absent is the only way to say "keep the character's own value" |
 
@@ -135,7 +137,7 @@ carries → candidates. Two buckets matter:
 
 | lane | the text says | satisfied by |
 |---|---|---|
-| `specialStatistic` | a NAMED statistic the player rolls, or whose DC an opponent beats, that no row on the sheet is labelled for — "Make an **impulse attack roll**", "using your thaumaturge class DC for **the scroll's DC**" | `specialStatistic` on the record; `passiveEffects.specialStatBonus` for an item bonus that names it. Rendered as the **Special statistics** rail card, with a breakdown. Owner ruling **Round 9** |
+| `specialStatistic` | a NAMED statistic the player rolls, or whose DC an opponent beats, that no row on the sheet is labelled for — "Make an **impulse attack roll**", "using your thaumaturge class DC for **the scroll's DC**", "…is called your **chronoskimmer DC**" | `specialStatistic` on the record; `passiveEffects.specialStatBonus` for an item bonus that names it. Rendered as the **Special statistics** rail card, with a breakdown. Owner ruling **Round 9**. **11 records.** `basis` has two shapes: `{ classDc }`, and `{ higherOfClassDcOrSpellDc }` for a statistic defined as the maximum of two rows, which is a third number printed nowhere |
 | `classArchetype` | replaces class features wholesale | `classArchetype` |
 | `advancement` | changes what a class table gives at a level | `advancement.ts` |
 
@@ -151,8 +153,9 @@ are empty.
 |---|---|---|
 | `builtInRunes` | the item's own text calls it "a *+2 greater striking flaming* longsword" | **no field exists.** 551 live items. Verified: Obsidian Edge (True) renders +21/1d10 instead of +24/3d10 + 1d6 fire |
 | `armorTyped` | "Usage worn armor", "Base Armor X" on a record stored as something other than armour | **65 live items** cannot be worn as armour at all |
-| `degreeShiftDown` | the degree gets WORSE — "use the result one degree of success worse", "if you roll a critical success, you get a success instead", "a failure becomes a critical failure" | **no value exists.** `DegreeShift.shift` has four values and all four improve. 9 live records; they stay as `situationalBonuses.ts` prose, which can at least say it in words. Listed in `scripts/apply-degree-shifts.mjs` → `DOWNGRADES` |
-| `noStrikes` | a battle form says "you can't make Strikes" | **no field exists.** `BattleForm.strikes` REPLACES your Strikes, and an empty array is read as "the form grants none", which leaves your weapons in place. Pest form, A Little Bird Told Me and Bone Swarm carry the clause in their mode `note` instead |
+**Two entries were removed on 2026-08-12** because the lane was built rather than described — see
+`degreeShiftDown` and `noStrikes` in section J. Both were listed here as "no field exists", which was
+true and was also the whole reason nine records and seven modes said nothing.
 
 ---
 
@@ -271,6 +274,16 @@ the sheet under another label.** Two shapes qualify:
   different number from the class DC.
 - **borrowed for a named use** — the record binds an existing statistic to a thing that has no row.
   Scroll Thaumaturgy: *"using your thaumaturge class DC for the scroll's DC"*.
+- **defined as the higher of two** — the value is the maximum of two rows the sheet already prints,
+  which is a third number printed nowhere. Chronoskimmer Dedication: *"either your class DC or spell
+  DC, whichever is higher, and is called your chronoskimmer DC"*. ⚠ Resolved by comparing the VALUES,
+  not the ranks — "whichever is higher" is what the rule says, and an expert spell DC on a +5
+  attribute beats a master class DC on a +3 one.
+
+**The 11 records:** the kineticist **impulse attack roll** (`classFeatures/impulses` +
+`feats/kineticist-dedication`), the **scroll DC** (`feats/scroll-thaumaturgy`), the **chronoskimmer
+DC** (`feats/chronoskimmer-dedication`), and the **deviation DC + deviation attack roll** on all seven
+deviant classifications.
 
 **Excluded — an existing stat under another name.** Each was checked and rejected for a stated reason:
 
@@ -279,7 +292,30 @@ the sheet under another label.** Two shapes qualify:
 | the **16 archetype class DCs** (Gunslinger Dedication and kin) | the class DC of a class you do not have. Already a lane: `classDcGrant` → `secondaryClassDcs` → the *Multiclass DCs* rail card. What was wrong was DATA, not the lane |
 | a record that **raises** a statistic already in the lane (Expert Kinetic Control) | it carries `classDcRank`, and the statistic follows the class DC it is defined against. A second rank track for one printed rule is how two numbers for one roll appear |
 | a record **pointing at a statistic that already has a row** (Kinetic Activation, Alchemical Power, Intensify Investiture) | *"you can substitute your impulse attack roll or class DC"* — printing that number a third time under a third name |
-| the **6 deviant classifications** (6 of Foundry's 9 `SpecialStatistic` uses) | Foundry gives them a `deviant` statistic extending the class DC. **Our own text never names one** — not the classifications, not the deviant feats, not AoN's five Dark Archive rules pages. Specification comes from our own text |
+| the **impulse DC** | it IS the kineticist class DC, which has a row. A *gate attenuator*'s *"(but not to your impulse DC)"* is what proves the impulse ATTACK is a different number, and equally proves the DC is not |
+
+### ⚠ The deviant classifications — a WRONG exclusion, corrected 2026-08-12
+
+The first pass excluded all six of Foundry's deviant `SpecialStatistic` uses, recording: *"Our own text
+never names one — not the classifications, not the deviant feats, not AoN's five Dark Archive rules
+pages."* **Both halves are false, and both were one grep away:**
+
+- `classFeatures/flicker-deviant-classification` (and its `desynchronized-motions` sub-feature) says
+  *"You can attempt to Escape against **your deviation DC**"*;
+- AoN **rules-3506** *Deviation Saves and Attack Rolls*, in the local archive, prints the formula:
+  *"The DC for any saving throw called for by a deviation is the higher of your class DC or spell DC.
+  The attack modifier of a deviation is 10 lower than that DC."* (Our own copy of that rules page is a
+  title-only stub, which is how the first read missed it.)
+
+What was actually missing was a `basis` that could SAY "the higher of two" — so a limit of the FIELD
+was written up as a property of the corpus. That is the false-gap failure in reverse: rather than
+sending someone to rebuild something that works, it closed a real gap by writing down a reason.
+**When a record cannot be authored, check whether the field is what cannot say it before concluding
+the text does not say it.**
+
+Reachability was measured, not assumed: 30 deviant feats are live and each carries
+`grantsClassFeatures: [<its classification>]`, so a character who takes one owns the classification and
+gets both rows. Four of them say only *"Make an attack roll"*, with the modifier printed nowhere.
 
 ### `dedicationGate` — a Special clause restricting further dedications
 

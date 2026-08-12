@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
-import { abilityMod, deriveClassDc, deriveSpecialStats } from '../src/rules/derive';
+import { abilityMod, deriveClassDc, deriveSpecialStats, deriveSpellcasting } from '../src/rules/derive';
 import { explainStat } from '../src/rules/explain';
 import type { Character } from '../src/rules/types';
 
@@ -149,5 +149,98 @@ describe('archetype class DCs the dedications print', () => {
     // "at 15th level … you become an expert in your inventor class DC" — the upgrade carried no
     // `classDcRank`, and Inventor Dedication carried no grant, so the pair moved nothing at all.
     expect(db.feats['brilliant-crafter']?.classDcRank).toEqual({ classId: 'inventor', rank: 'expert' });
+  });
+});
+
+/**
+ * A statistic defined as the HIGHER OF TWO existing ones.
+ *
+ * Two records print this shape and neither could join the lane while `basis` was `{ classDc }` alone:
+ *
+ *   • Chronoskimmer Dedication — *"The DC for these abilities is either your class DC or spell DC,
+ *     whichever is higher, and is called your chronoskimmer DC."* Two more feats in the archetype roll
+ *     against it by name (Guide the Timeline, Steal Time), and it is printed on no row: the sheet has
+ *     a class DC and a spell DC, and the maximum of the two is a third number.
+ *   • Every deviant classification — Dark Archive's *Deviation Saves and Attack Rolls*: *"The DC for
+ *     any saving throw called for by a deviation is the higher of your class DC or spell DC. The
+ *     attack modifier of a deviation is 10 lower than that DC."* Our own text names the statistic
+ *     outright in the flicker classification's moderate backlash — *"You can attempt to Escape against
+ *     your deviation DC"* — and four deviant feats say only "Make an attack roll" with no modifier
+ *     anywhere for the player to read.
+ *
+ * ⚠ The value has to be chosen by COMPARING THE NUMBERS, not the ranks: "whichever is higher" is what
+ * the rule says, and an expert spell DC on a +5 attribute beats a master class DC on a +3 one.
+ */
+describe('a statistic defined as the higher of your class DC and your spell DC', () => {
+  it('a Chronoskimmer with no spellcasting at all falls to the class DC', () => {
+    const ch = build('fighter', 8, { featPicks: { '2:class': 'chronoskimmer-dedication' } });
+    const stat = deriveSpecialStats(ch, db).find((s) => s.key === 'chronoskimmer-dc');
+    expect(stat, 'Chronoskimmer Dedication produced no row').toBeDefined();
+    expect(stat!.kind).toBe('dc');
+    expect(stat!.value).toBe(deriveClassDc(ch).dc);
+    expect(stat!.basisLabel).toContain('class DC');
+  });
+
+  it('a caster whose spell DC is higher gets the spell DC, and the row says so', () => {
+    const ch = build('wizard', 8, { featPicks: { '2:class': 'chronoskimmer-dedication' } });
+    const casting = ch.spellcasting.find((e) => e.type === 'prepared')!;
+    const spellDc = deriveSpellcasting(ch, casting).dc;
+    const classDc = deriveClassDc(ch).dc;
+    // Premise: a wizard is expert in spellcasting at 8 and only trained in their class DC.
+    expect(spellDc).toBeGreaterThan(classDc);
+    const stat = deriveSpecialStats(ch, db).find((s) => s.key === 'chronoskimmer-dc')!;
+    expect(stat.value).toBe(spellDc);
+    expect(stat.basisLabel).toBe('Arcane spell DC');
+    expect(stat.rank).toBe(casting.proficiency);
+  });
+
+  it('the breakdown prints the printed rule, not just the winning track', () => {
+    const ch = build('wizard', 8, { featPicks: { '2:class': 'chronoskimmer-dedication' } });
+    const b = explainStat(ch, db, { kind: 'specialStat', statKey: 'chronoskimmer-dc' });
+    expect(b.title).toBe('Chronoskimmer DC');
+    // Without this the number looks pinned to the spell DC, and the player would not know it moves to
+    // the class DC the moment that one overtakes it.
+    expect(b.description).toContain('whichever is higher');
+    expect(b.description).toContain('Chronoskimmer Dedication');
+  });
+
+  it('a deviant feat gives the deviation DC and its attack modifier, 10 apart', () => {
+    // Blasting Beams says only "Make an attack roll against a creature within 30 feet" — the modifier
+    // is printed nowhere on this feat, on its classification, or on any row the sheet had.
+    const ch = build('fighter', 8, { featPicks: { '2:class': 'blasting-beams' } });
+    const stats = deriveSpecialStats(ch, db);
+    const dc = stats.find((s) => s.key === 'deviation-dc');
+    const atk = stats.find((s) => s.key === 'deviation-attack');
+    expect(dc, 'the deviation DC produced no row').toBeDefined();
+    expect(atk, 'the deviation attack modifier produced no row').toBeDefined();
+    expect(dc!.value).toBe(deriveClassDc(ch).dc);
+    expect(atk!.value).toBe(dc!.value - 10);
+    expect(atk!.kind).toBe('attack');
+  });
+
+  it('every deviant classification carries it, and they collapse to one pair of rows', () => {
+    const CLASSIFICATIONS = [
+      'blight-soul-deviant-classification',
+      'dragon-deviant-classification',
+      'flicker-deviant-classification',
+      'leech-deviant-classification',
+      'troll-deviant-classification',
+      'verdant-core-deviant-classification',
+      'wraith-deviant-classification',
+    ];
+    for (const id of CLASSIFICATIONS) {
+      const raw = db.classFeatures[id]?.specialStatistic;
+      expect(Array.isArray(raw) ? raw.length : 0, `${id} carries no deviation statistic`).toBe(2);
+    }
+    // Two deviant feats from DIFFERENT classifications must not print the statistic twice.
+    const ch = build('fighter', 8, { featPicks: { '2:class': 'blasting-beams', '4:class': 'sonic-dash' } });
+    const stats = deriveSpecialStats(ch, db);
+    expect(stats.filter((s) => s.key === 'deviation-dc').length).toBe(1);
+    expect(new Set(stats.map((s) => s.key)).size).toBe(stats.length);
+  });
+
+  it('a character with no deviant ability has neither row', () => {
+    const ch = build('fighter', 8, {});
+    expect(deriveSpecialStats(ch, db).some((s) => s.key.startsWith('deviation-'))).toBe(false);
   });
 });

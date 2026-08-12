@@ -50,12 +50,15 @@ const PEST_FORM = {
   speeds: { land: 20 },
   senses: [LOW_LIGHT, SCENT30],
   size: 'Tiny',
+  // "You can't make Strikes while you're in this form." The note used to carry this alone, because an
+  // empty `strikes` array reads as "the form grants none" and left the character's weapons on the
+  // sheet — removing your Strikes is a different claim from granting none, and it needed its own word.
+  noStrikes: true,
 };
 const PEST_NOTE =
   'Pest form: AC = 15 + your level (ignore your armor’s check penalty and Speed reduction), Speed 20 feet, ' +
   'weakness 5 to physical damage, low-light vision and imprecise scent 30 feet, Acrobatics and Stealth +10 ' +
-  'unless yours are higher, Athletics −4. ⚠ You cannot make Strikes in this form — the app cannot take your ' +
-  'Strikes away without replacing them, so ignore the Strikes list while this is on.';
+  'unless yours are higher, Athletics −4. You cannot make Strikes in this form.';
 
 const MODES = {
   /* ── PEST FORM, 1st rank ─────────────────────────────────────────────────────────────────────── */
@@ -99,11 +102,11 @@ const MODES = {
   'a-little-bird-told-me': {
     name: 'A Little Bird Told Me',
     feats: ['a-little-bird-told-me'],
-    battleForm: { ac: '20+@actor.level', speeds: { fly: 25 }, senses: [LOW_LIGHT, SCENT30], size: 'Tiny' },
+    battleForm: { ac: '20+@actor.level', speeds: { fly: 25 }, senses: [LOW_LIGHT, SCENT30], size: 'Tiny', noStrikes: true },
     note:
       'A Little Bird Told Me: AC = 20 + your level, fly Speed 25 feet, weakness 5 to physical damage, low-light ' +
       'vision and imprecise scent 30 feet, Acrobatics and Stealth +10 unless yours are higher, Athletics −4. ' +
-      '⚠ You cannot make Strikes in this form. You resume your normal shape automatically at 0 Hit Points.',
+      'You cannot make Strikes in this form. You resume your normal shape automatically at 0 Hit Points.',
   },
   /* ── ANIMAL FORM at a rank and variant the FEAT pins ─────────────────────────────────────────── */
   // 5th rank: Huge, 15-foot reach, 20 temp HP, AC = 18 + level, attack +18, damage +7 and DOUBLE the
@@ -267,7 +270,11 @@ const MODES = {
     // absent field is the only way to say "keep yours". No `strikes` either — the dragon Strikes are
     // rolled at YOUR attack modifier, and `deriveStrikes` reads a form's strikes at `attackMod ?? 0`,
     // so authoring them without a modifier would print +0 on every one of them.
-    battleForm: { speeds: { land: 40, fly: 100 }, senses: [DARKVISION, { name: 'scent', range: 60, acuity: 'imprecise' }], size: 'Large' },
+    // `tempHpStacks` is this record's own sentence: "Add the temporary Hit Points from dragon form to
+    // any you already have from entering a rage." It is the only printed exception to the
+    // do-not-stack rule, and without it a raging barbarian would gain nothing here — their rage pool
+    // is already larger than 10, so the raise-only default would keep it and grant no dragon HP.
+    battleForm: { speeds: { land: 40, fly: 100 }, senses: [DARKVISION, { name: 'scent', range: 60, acuity: 'imprecise' }], size: 'Large', tempHp: 10, tempHpStacks: true },
     note:
       'Dragon Transformation: a 6th-rank dragon form, except you keep your own AC and attack modifier, add your ' +
       'Rage damage, and your Dragon Breath uses your class DC. 10 temporary Hit Points (they stack with rage’s). ' +
@@ -297,7 +304,10 @@ const MODES = {
     duration: 'up to 1 minute, once per day',
     // The text states a size and a fly Speed and nothing else about AC or attacks, so nothing else is
     // written: your AC stays yours, which is what the ability means by saying nothing about it.
-    battleForm: { speeds: { fly: 40 }, size: 'Huge' },
+    // `noStrikes`: "You cannot speak, Cast Spells, use manipulate actions, Activate items, or Strike."
+    // The clause is buried at the end of a list, which is why a regex over the notes missed it and the
+    // flag is authored from the record's text rather than from a pattern.
+    battleForm: { speeds: { fly: 40 }, size: 'Huge', noStrikes: true },
     note:
       'Bone Swarm: you become Huge, gain the swarm trait and a fly Speed of 40 feet. Immune to grabbed, prone ' +
       'and restrained; weakness 5 to area and splash damage. You can share a space with other creatures, and as ' +
@@ -322,10 +332,15 @@ const NOT_AUTHORED = [
   ['long-nosed-form / landscape-form / rolling-white-bottle-form / polymorphic-escape / crawling shapes with no block',
    'a disguise or a movement trick, not a stat-replacing battle form'],
 ];
-/* Two BattleForm fields are authored here and read by nothing yet: `size` and `tempHp`. They are
- * written because they are part of what the text states and the field exists for them, and repeated
- * in each mode's `note` — which IS displayed — so the player is not relying on a silent field. */
-const NO_READER = ['BattleForm.size', 'BattleForm.tempHp'];
+/*
+ * ⚠ CLOSED 2026-08-12. This list used to hold `BattleForm.size` and `BattleForm.tempHp`, authored here
+ * and read by NOTHING — the write-only-with-no-reader failure, excused at the time by "it is also in
+ * the note". A note is prose the player must act on by hand; the fields now have real readers:
+ *   • `size`   → `deriveSize` (derive.ts), printed on the Details tab with the form named.
+ *   • `tempHp` → `toggleMode` (play.ts) grants the pool on activation and takes it back on exit.
+ * Anything added to this list is a defect waiting to be reported, not a note-to-self.
+ */
+const NO_READER = [];
 
 /* ---------------------------------------------------------------------------------- apply ------ */
 const core = JSON.parse(readFileSync(p('public/core.json'), 'utf8'));
@@ -346,7 +361,7 @@ console.log(`battle-form modes ${written.length}${skipped.length ? ` · skipped 
 for (const s of skipped) console.log('   SKIP ' + s);
 console.log(`\nnot authored (${NOT_AUTHORED.length} groups):`);
 for (const [who, why] of NOT_AUTHORED) console.log(`   ${who}\n      → ${why}`);
-console.log(`\nauthored but read by nothing yet: ${NO_READER.join(', ')} (each is also spelled out in the mode's note)`);
+console.log(NO_READER.length ? `\n⚠ authored but read by nothing: ${NO_READER.join(', ')}` : '\nevery authored BattleForm field has a reader');
 
 if (DRY) { console.log('\n--dry: nothing written'); process.exit(0); }
 

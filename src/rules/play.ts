@@ -30,6 +30,15 @@ export interface PlayState {
   damage: number;
   /** Temporary HP (a separate pool that absorbs damage first). */
   tempHp: number;
+  /**
+   * The mode id whose battle form granted the CURRENT temporary HP pool, when one did.
+   *
+   * Ownership, not bookkeeping: without it, leaving a form would either strand 40 temporary Hit Points
+   * the character no longer has, or delete a pool that came from somewhere else entirely. Cleared the
+   * moment the player sets the pool themselves or spends it, because from then on it is not the
+   * form's to take back.
+   */
+  tempHpFrom?: string;
   /** Damage dealt to the wielded shield's HP (Shield Block / repair); clamped to its max. */
   shieldDamage?: number;
   /** Temporary land-Speed override in feet; when set, the sheet shows + highlights this
@@ -586,7 +595,11 @@ export function applyDamage(play: PlayState, amount: number, max: number, deathB
   const soaked = Math.min(play.tempHp, n);
   const toHp = n - soaked;
   const damage = clamp(play.damage + toHp, 0, max);
-  let next: PlayState = { ...play, tempHp: play.tempHp - soaked, damage, conditions: play.conditions ?? [] };
+  const tempHp = play.tempHp - soaked;
+  // A pool spent to nothing is no longer the form's to take back — otherwise leaving the form would
+  // "remove" temporary Hit Points that are already gone, which is harmless today and a live bug the
+  // moment anything else writes to the pool.
+  let next: PlayState = { ...play, tempHp, ...(tempHp === 0 ? { tempHpFrom: undefined } : {}), damage, conditions: play.conditions ?? [] };
   // Reduced to 0 HP → knocked out and Dying (PF2e). The Dying value gained is
   // 1 + your Wounded value (or +1 if already Dying); a single blow ≥ 2× max HP is
   // instant death. The Dying tracker / Heal then drive recovery.
@@ -627,9 +640,10 @@ export function setMythicPoints(play: PlayState, value: number): PlayState {
   return { ...play, mythicPoints: clamp(value, 0, MAX_MYTHIC_POINTS) };
 }
 
-/** Set the temporary-HP pool directly (never negative). */
+/** Set the temporary-HP pool directly (never negative). Clears the battle-form claim on it: once the
+ *  player has typed a number in, leaving the form must not wipe what they set. */
 export function setTempHp(play: PlayState, value: number): PlayState {
-  return { ...play, tempHp: Math.max(0, Math.round(value)) };
+  return { ...play, tempHp: Math.max(0, Math.round(value)), tempHpFrom: undefined };
 }
 
 /** Set damage dealt to the wielded shield, clamped to [0, maxHp]. Current shield HP =
@@ -1649,13 +1663,38 @@ export function togglePinnedDesc(play: PlayState, node: PinnedDesc): PlayState {
  */
 export function toggleMode(play: PlayState, id: string, modeDefs?: Record<string, ModeDef>): PlayState {
   const active = play.activeModes ?? [];
-  if (active.includes(id)) return { ...play, activeModes: active.filter((m) => m !== id) };
+  const form = modeDefs?.[id]?.battleForm;
+  const grantedTemp = form?.tempHp ?? 0;
+  if (active.includes(id)) {
+    const off: PlayState = { ...play, activeModes: active.filter((m) => m !== id) };
+    // The form's temporary Hit Points end with the form — but only the ones it actually granted. A
+    // pool the player typed in, or one already spent to 0, is not this mode's to remove. A STACKING
+    // form gave back only its own share, so it takes back only that share (never below zero, because
+    // the pool may already have soaked damage).
+    if (play.tempHpFrom !== id) return off;
+    return { ...off, tempHp: form?.tempHpStacks ? Math.max(0, play.tempHp - grantedTemp) : 0, tempHpFrom: undefined };
+  }
   let next = [...active, id];
   const group = modeDefs?.[id]?.exclusiveGroup;
   if (group) {
     next = next.filter((mid) => mid === id || modeDefs?.[mid]?.exclusiveGroup !== group);
   }
-  return { ...play, activeModes: next };
+  const on: PlayState = { ...play, activeModes: next };
+  /*
+   * "You gain 40 temporary Hit Points." Applied here because switching the mode on IS entering the
+   * form, and the field was otherwise authored on seven records and read by nothing.
+   *
+   * RAISES ONLY. PF2e: "If you gain temporary Hit Points when you already have some, choose whether to
+   * keep the ones you have or the new ones" — the app cannot ask mid-toggle, and silently lowering a
+   * bigger pool would destroy Hit Points the character has. Keeping the larger one is the choice that
+   * can never be wrong for the player, and it leaves `tempHpFrom` unset, so leaving the form will not
+   * remove a pool this form never granted.
+   *
+   * `tempHpStacks` is the one printed exception — see the field.
+   */
+  if (!grantedTemp) return on;
+  if (form?.tempHpStacks) return { ...on, tempHp: play.tempHp + grantedTemp, tempHpFrom: id };
+  return grantedTemp > play.tempHp ? { ...on, tempHp: grantedTemp, tempHpFrom: id } : on;
 }
 
 /** Enter a stance by slug, or exit it (pass the same slug again, or null). Exclusive by construction —

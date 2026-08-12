@@ -491,10 +491,10 @@ export interface ReachRider {
  * One entry of the `specialStatistic` lane. See the field's comment on DefenseGrants for the test a
  * record has to pass to be here at all.
  *
- * `basis` is deliberately the ONLY way to say where the number comes from, and it names a class DC
- * rather than a rank + attribute. That is what the printed rules say in every case in the lane
- * ("uses the same proficiency and attribute modifier as your kineticist class DC"), and it buys two
- * things a hand-written rank could not:
+ * `basis` is deliberately the ONLY way to say where the number comes from, and it names an EXISTING
+ * statistic rather than a rank + attribute. That is what the printed rules say in every case in the
+ * lane ("uses the same proficiency and attribute modifier as your kineticist class DC"), and it buys
+ * two things a hand-written rank could not:
  *   • an ARCHETYPE character resolves through `secondaryClassDcs`, so Kineticist Dedication's
  *     impulse attack roll follows the borrowed kineticist DC — including any later feat that raises
  *     it (Expert Kinetic Control already carries `classDcRank`, so it needs no entry of its own).
@@ -505,6 +505,26 @@ export interface ReachRider {
  * — produces no row. That is correct rather than defensive: without the class DC the printed formula
  * has no value, and inventing a rank would be inventing the number.
  */
+export type SpecialStatBasis =
+  /** Rank and attribute follow this class's class DC — the character's own, or a borrowed one. */
+  | { classDc: string }
+  /**
+   * "…is either your class DC or spell DC, whichever is higher, and is called your chronoskimmer DC"
+   * (Chronoskimmer Dedication); "the DC for any saving throw called for by a deviation is the higher
+   * of your class DC or spell DC" (Dark Archive, *Deviation Saves and Attack Rolls*).
+   *
+   * ⚠ This shape is not a convenience — it is the reason those records could not join the lane while
+   * `basis` was `{ classDc }` alone. A statistic defined as the MAXIMUM of two tracks belongs to
+   * neither: a wizard's chronoskimmer DC follows their spell DC, a fighter's follows their class DC,
+   * and pinning it to one of them would print the wrong number for half the characters who have it.
+   *
+   * Resolved by COMPARING the computed values, not the ranks: a master class DC on a +3 attribute
+   * loses to an expert spell DC on a +5 one, and the printed rule says "whichever is higher", not
+   * "whichever is better trained". The winning track supplies the rank and attribute, so every
+   * downstream bonus (conditions, modes, item bonuses) still applies exactly once.
+   */
+  | { higherOfClassDcOrSpellDc: true };
+
 export interface SpecialStatGrant {
   /** Stable key, shared by every record that grants the same statistic (a class feature and the
    *  archetype dedication that copies it both use `impulse-attack`), so they collapse to one row. */
@@ -513,8 +533,8 @@ export interface SpecialStatGrant {
   name: string;
   /** `attack` shows a roll modifier (+17); `dc` shows a DC (10 + the same modifier). */
   kind: 'attack' | 'dc';
-  /** Rank and attribute follow this class's class DC — the character's own, or a borrowed one. */
-  basis: { classDc: string };
+  /** Where the number comes from. See SpecialStatBasis. */
+  basis: SpecialStatBasis;
   /** What the statistic is for, printed under the row and in its breakdown. One line. */
   note?: string;
 }
@@ -591,6 +611,8 @@ export interface DefenseGrants {
    *     an item bonus "(but not to your impulse DC)", so it is genuinely a different number.
    *   • BORROWED FOR A NAMED USE — the record binds an existing statistic to something that has no row
    *     of its own. Scroll Thaumaturgy: "using your thaumaturge class DC for the scroll's DC".
+   *   • DEFINED AS THE HIGHER OF TWO — "either your class DC or spell DC, whichever is higher, and is
+   *     called your chronoskimmer DC". The maximum of two rows is a third number, printed nowhere.
    */
   specialStatistic?: SpecialStatGrant | SpecialStatGrant[];
   senses?: SenseEntry[];
@@ -2946,10 +2968,33 @@ export interface BattleForm {
   /** Replaces your senses. Absent leaves yours alone; present is the whole list, so a form CAN take
    *  darkvision away — the one thing `addSense`'s best-of merge can never do. */
   senses?: SenseEntry[];
-  /** The size you become, shown so the player knows their reach and space changed. */
+  /**
+   * "You can't make Strikes in this form."
+   *
+   * ⚠ An empty (or absent) `strikes` array cannot say this. Absent means "the form states no Strikes,
+   * so keep your own" — the same rule every other field here follows — which left a druid in pest form
+   * still swinging the warhammer they are no longer holding. Removing your Strikes is a DIFFERENT
+   * claim from granting none, and it needed its own word.
+   *
+   * Never set alongside `strikes`: a form that lists attacks is not a form that forbids them, and the
+   * two together would be a record contradicting itself. Asserted in the battle-form tests.
+   */
+  noStrikes?: boolean;
+  /** The size you become — read by `deriveSize`, which is what the Details tab prints while the form
+   *  runs. It decides the space you occupy and whether you fit, and no other field implies it. */
   size?: string;
-  /** Temporary Hit Points the form grants. Displayed, never folded into max HP. */
+  /** Temporary Hit Points the form grants, applied when the mode is switched ON (`toggleMode`) and
+   *  removed when it is switched off, if the pool is still the form's. Never folded into max HP. */
   tempHp?: number;
+  /**
+   * The form's temporary Hit Points ADD to a pool you already have instead of replacing it.
+   *
+   * The default is the general rule — temporary Hit Points do not stack, you keep the larger pool —
+   * and exactly one record overrides it in its own words: Dragon Transformation, *"Add the temporary
+   * Hit Points from dragon form to any you already have from entering a rage."* Without this flag a
+   * raging barbarian would enter the form and gain nothing, because their rage pool is already bigger.
+   */
+  tempHpStacks?: boolean;
 }
 
 /** An unarmed Strike a stance grants while active (e.g. Tiger Stance's claw). */

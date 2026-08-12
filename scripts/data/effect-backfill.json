@@ -108001,6 +108001,13 @@
     "saves": [
      "all"
     ]
+   },
+   {
+    "shift": "failToCritFail",
+    "when": "on a save against a fear effect",
+    "saves": [
+     "all"
+    ]
    }
   ]
  },
@@ -108158,6 +108165,13 @@
   "value": [
    {
     "shift": "successToCrit",
+    "when": "on a save against an emotion effect",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "failToCritFail",
     "when": "on a save against an emotion effect",
     "saves": [
      "all"
@@ -111809,5 +111823,301 @@
     "value": 2
    }
   }
+ },
+ {
+  "category": "feats",
+  "id": "chronoskimmer-dedication",
+  "field": "specialStatistic",
+  "value": {
+   "key": "chronoskimmer-dc",
+   "name": "Chronoskimmer DC",
+   "kind": "dc",
+   "basis": {
+    "higherOfClassDcOrSpellDc": true
+   },
+   "note": "Chronoskimmer abilities that allow a saving throw use this DC."
+  }
+ },
+ {
+  "category": "classFeatures",
+  "id": "blight-soul-deviant-classification",
+  "field": "specialStatistic",
+  "value": [
+   {
+    "key": "deviation-dc",
+    "name": "Deviation DC",
+    "kind": "dc",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Saves against your deviations, and checks made against them, use this DC."
+   },
+   {
+    "key": "deviation-attack",
+    "name": "Deviation attack roll",
+    "kind": "attack",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Deviations that say \"Make an attack roll\" use this. A deviation that calls for a Strike uses that Strike instead."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "dragon-deviant-classification",
+  "field": "specialStatistic",
+  "value": [
+   {
+    "key": "deviation-dc",
+    "name": "Deviation DC",
+    "kind": "dc",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Saves against your deviations, and checks made against them, use this DC."
+   },
+   {
+    "key": "deviation-attack",
+    "name": "Deviation attack roll",
+    "kind": "attack",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Deviations that say \"Make an attack roll\" use this. A deviation that calls for a Strike uses that Strike instead."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "flicker-deviant-classification",
+  "field": "specialStatistic",
+  "value": [
+   {
+    "key": "deviation-dc",
+    "name": "Deviation DC",
+    "kind": "dc",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Saves against your deviations, and checks made against them, use this DC."
+   },
+   {
+    "key": "deviation-attack",
+    "name": "Deviation attack roll",
+    "kind": "attack",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Deviations that say \"Make an attack roll\" use this. A deviation that calls for a Strike uses that Strike instead."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "leech-deviant-classification",
+  "field": "specialStatistic",
+  "value": [
+   {
+    "key": "deviation-dc",
+    "name": "Deviation DC",
+    "kind": "dc",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Saves against your deviations, and checks made against them, use this DC."
+   },
+   {
+    "key": "deviation-attack",
+    "name": "Deviation attack roll",
+    "kind": "attack",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Deviations that say \"Make an attack roll\" use this. A deviation that calls for a Strike uses that Strike instead."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "troll-deviant-classification",
+  "field": "specialStatistic",
+  "value": [
+   {
+    "key": "deviation-dc",
+    "name": "Deviation DC",
+    "kind": "dc",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Saves against your deviations, and checks made against them, use this DC."
+   },
+   {
+    "key": "deviation-attack",
+    "name": "Deviation attack roll",
+    "kind": "attack",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Deviations that say \"Make an attack roll\" use this. A deviation that calls for a Strike uses that Strike instead."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "verdant-core-deviant-classification",
+  "field": "specialStatistic",
+  "value": [
+   {
+    "key": "deviation-dc",
+    "name": "Deviation DC",
+    "kind": "dc",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Saves against your deviations, and checks made against them, use this DC."
+   },
+   {
+    "key": "deviation-attack",
+    "name": "Deviation attack roll",
+    "kind": "attack",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Deviations that say \"Make an attack roll\" use this. A deviation that calls for a Strike uses that Strike instead."
+   }
+  ]
+ },
+ {
+  "category": "classFeatures",
+  "id": "wraith-deviant-classification",
+  "field": "specialStatistic",
+  "value": [
+   {
+    "key": "deviation-dc",
+    "name": "Deviation DC",
+    "kind": "dc",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Saves against your deviations, and checks made against them, use this DC."
+   },
+   {
+    "key": "deviation-attack",
+    "name": "Deviation attack roll",
+    "kind": "attack",
+    "basis": {
+     "higherOfClassDcOrSpellDc": true
+    },
+    "note": "Deviations that say \"Make an attack roll\" use this. A deviation that calls for a Strike uses that Strike instead."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "bravos-determination",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneWorse",
+    "when": "on the Deception check this reaction calls for, if the triggering Strike was a critical hit",
+    "skills": [
+     "deception"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "explosive-entry",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critSuccessToSuccess",
+    "when": "on the Engineering Lore check to Force Open a target you set explosives on",
+    "skills": [
+     "lore:engineering"
+    ],
+    "actions": [
+     "force-open"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "flash-your-badge",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneWorse",
+    "when": "on the Intimidation check to Demoralize a creature that has not broken a law in the past week",
+    "skills": [
+     "intimidation"
+    ],
+    "actions": [
+     "demoralize"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "jax",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneWorse",
+    "when": "on the Will save against Jax's dominate, if you are chaotic or a worshipper of Lamashtu",
+    "saves": [
+     "will"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "ladys-blessing-oil",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToCritFail",
+    "when": "on the Medicine check to Administer First Aid while using the oil",
+    "skills": [
+     "medicine"
+    ],
+    "actions": [
+     "administer-first-aid"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "devils-luck",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "failToCritFail",
+    "when": "on a saving throw against a death effect",
+    "saves": [
+     "all"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "items",
+  "id": "cresset-of-grisly-interrogation",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneWorse",
+    "when": "on the Intimidation check the next time you activate the cresset within 24 hours, after a critical failure",
+    "skills": [
+     "intimidation"
+    ]
+   }
+  ]
  }
 ]
