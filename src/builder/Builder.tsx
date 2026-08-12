@@ -25,6 +25,7 @@ import {
   boundBackgroundGrantChoice,
   choiceKeys,
   choiceOptionsFor,
+  withCustomAnswer,
 } from '../rules/build';
 import { openChoiceOptions } from '../rules/openChoice';
 import { confirmDialog } from '../sheet/confirm';
@@ -429,11 +430,24 @@ export function Builder({
                                           }
                                           value={build.featChoices[k] ?? ''}
                                           onChange={(v) => actions.setFeatChoice(k, v)}
-                                          options={choiceOptionsFor(opts, def, answers, i).map((o) => ({
-                                            value: o.value,
-                                            label: featChoiceLabel(o.label),
-                                            description: (o as { description?: string }).description,
-                                          }))}
+                                          // A typed answer needs a row of its own or the filled control cannot
+                                          // show it — applied per PICK, after `distinct` has removed the other
+                                          // picks' answers, so pick 2 never re-offers what pick 1 typed.
+                                          options={withCustomAnswer(
+                                            choiceOptionsFor(opts, def, answers, i).map((o) => ({
+                                              value: o.value,
+                                              label: featChoiceLabel(o.label),
+                                              description: (o as { description?: string }).description,
+                                            })),
+                                            def,
+                                            answers[i],
+                                          )}
+                                          addCustom={
+                                            def.allowCustom && {
+                                              ...def.allowCustom,
+                                              onAdd: (text) => actions.setFeatChoice(k, text),
+                                            }
+                                          }
                                         />
                                       ));
                                     })()
@@ -544,14 +558,20 @@ export function Builder({
             effectiveChoiceOptions(grantedId, def, featPrereqChar, content);
     if (!opts.length) return null;
     const label = `${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt)}`;
+    const answer = build.grantedFeatChoices?.[grantedId] ?? '';
+    const setAnswer = (v: string) =>
+      actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [grantedId]: v } });
     return (
       <SubCard key={`gfc-${grantedId}`} icon="ti-adjustments" label={label}>
         <PopupSelect
           title={featChoicePrompt(def.prompt)}
           placeholder={`${featChoicePrompt(def.prompt)}…`}
-          value={build.grantedFeatChoices?.[grantedId] ?? ''}
-          onChange={(v) => actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [grantedId]: v } })}
-          options={opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label) }))}
+          value={answer}
+          onChange={setAnswer}
+          // Trailblazer's "one terrain you've explored (such as forest or underground)" arrives on this
+          // lane, not the slot one — a granted feat's question is as open as a picked one's.
+          options={withCustomAnswer(opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label) })), def, answer)}
+          addCustom={def.allowCustom && { ...def.allowCustom, onAdd: setAnswer }}
         />
       </SubCard>
     );

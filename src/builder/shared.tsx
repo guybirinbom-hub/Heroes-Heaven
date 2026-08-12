@@ -41,6 +41,7 @@ import {
   trainedSkillOptions,
   chosenFromBooks,
   removeChosenIds,
+  withCustomAnswer,
 } from '../rules/build';
 import { cantripsKnown } from '../rules/spellcasting';
 import { spellsMatching } from '../rules/spellChoice';
@@ -2832,10 +2833,22 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             onChange={(v) =>
               actions.patch({ featChoices: { ...build.featChoices, [backgroundChoiceKey(background.id)]: v } })
             }
-            options={
+            // Trailblazer names its terrain "(such as forest or underground)" — an illustrative list,
+            // so `allowCustom` lets the player write the one they actually explored. Only choices that
+            // opt in get the row; the field is what confines it, not the kind.
+            options={withCustomAnswer(
               background.choice.kind === 'skills'
                 ? trainedSkillOptions(buildCharacter(build, content), background.choice.minRank ?? 'trained')
-                : (background.choice.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description }))
+                : (background.choice.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description })),
+              background.choice,
+              backgroundChoiceValue(build, background),
+            )}
+            addCustom={
+              background.choice.allowCustom && {
+                ...background.choice.allowCustom,
+                onAdd: (text) =>
+                  actions.patch({ featChoices: { ...build.featChoices, [backgroundChoiceKey(background.id)]: text } }),
+              }
             }
           />
           {/* An answer with no sheet number (a terrain, a constellation, a deviant classification)

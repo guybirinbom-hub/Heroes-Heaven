@@ -73056,7 +73056,11 @@
      "value": "underbrush",
      "label": "Underbrush"
     }
-   ]
+   ],
+   "allowCustom": {
+    "label": "Type another type of difficult terrain…",
+    "placeholder": "Difficult terrain (e.g. deep mud)…"
+   }
   }
  },
  {
@@ -81133,7 +81137,11 @@
      "value": "underground",
      "label": "Underground"
     }
-   ]
+   ],
+   "allowCustom": {
+    "label": "Type another terrain…",
+    "placeholder": "Terrain (e.g. subterranean bodies of water)…"
+   }
   }
  },
  {
@@ -81398,7 +81406,11 @@
      "value": "underbrush",
      "label": "Underbrush"
     }
-   ]
+   ],
+   "allowCustom": {
+    "label": "Type another type of difficult terrain…",
+    "placeholder": "Difficult terrain (e.g. deep mud)…"
+   }
   }
  },
  {
@@ -81442,7 +81454,11 @@
      "value": "underbrush",
      "label": "Underbrush"
     }
-   ]
+   ],
+   "allowCustom": {
+    "label": "Type another type of difficult terrain…",
+    "placeholder": "Difficult terrain (e.g. deep mud)…"
+   }
   }
  },
  {
@@ -99521,7 +99537,11 @@
    ],
    "picks": 2,
    "distinct": true,
-   "note": "Terrain Scout grants Terrain Stalker twice. Pick both terrains here; the granted Terrain Stalker row carries the first."
+   "note": "Terrain Scout grants Terrain Stalker twice. Pick both terrains here; the granted Terrain Stalker row carries the first.",
+   "allowCustom": {
+    "label": "Type another type of difficult terrain…",
+    "placeholder": "Difficult terrain (e.g. deep mud)…"
+   }
   }
  },
  {
@@ -105714,6 +105734,92 @@
    {
     "spellId": "cleanse-affliction",
     "note": "Cast from this background, Cleanse Affliction automatically heightens to a rank equal to half your level, rounded up. If you're cleansing an affliction with the fungus trait, you gain a +4 status bonus to your counteract check."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "terrain-expertise",
+  "path": [
+   "choice"
+  ],
+  "field": "allowCustom",
+  "value": {
+   "label": "Type another terrain…",
+   "placeholder": "Terrain (e.g. subterranean bodies of water)…"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "wilderness-spotter",
+  "path": [
+   "choice"
+  ],
+  "field": "allowCustom",
+  "value": {
+   "label": "Type another terrain…",
+   "placeholder": "Terrain (e.g. subterranean bodies of water)…"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "terrain-stalker",
+  "path": [
+   "choice"
+  ],
+  "field": "allowCustom",
+  "value": {
+   "label": "Type another type of difficult terrain…",
+   "placeholder": "Difficult terrain (e.g. deep mud)…"
+  }
+ },
+ {
+  "category": "feats",
+  "id": "terrain-expertise",
+  "path": [
+   "choice"
+  ],
+  "field": "options",
+  "value": [
+   {
+    "value": "aquatic",
+    "label": "Aquatic"
+   },
+   {
+    "value": "arctic",
+    "label": "Arctic"
+   },
+   {
+    "value": "desert",
+    "label": "Desert"
+   },
+   {
+    "value": "forest",
+    "label": "Forest"
+   },
+   {
+    "value": "mountain",
+    "label": "Mountain"
+   },
+   {
+    "value": "plain",
+    "label": "Plains"
+   },
+   {
+    "value": "sky",
+    "label": "Sky"
+   },
+   {
+    "value": "subterranean-water",
+    "label": "Subterranean bodies of water"
+   },
+   {
+    "value": "swamp",
+    "label": "Swamp"
+   },
+   {
+    "value": "underground",
+    "label": "Underground"
    }
   ]
  }

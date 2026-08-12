@@ -107,9 +107,13 @@ export const BACKGROUND_GRANT_BOUND_CHOICE: Record<string, Record<string, Backgr
   // "You gain the Terrain Expertise skill feat with underground terrain."
   miner: { 'terrain-expertise': { kind: 'fixed', skill: 'underground' } },
   // "You gain the Terrain Expertise skill feat with both swamp terrain and subterranean bodies of
-  //  water." Only `swamp` is one of the feat's nine options; the second terrain has no option to
-  //  bind to and stays in the description. Binding the half that IS modelled beats asking a free
-  //  question the text has already answered.
+  //  water." The second terrain is now a value the feat offers — `subterranean-water`, added because
+  //  this sentence names a terrain the printed nine do not contain (Foundry has the same nine and
+  //  drops the clause). The binding still names only `swamp`, because the grant is ONE take of the
+  //  feat and a binding holds one answer.
+  //  ⚠ STILL SHORT OF THE TEXT: two terrains means two takes, and neither `grantedFeatId` nor this
+  //  table can express the same feat granted twice with different answers. A Witchlight Follower who
+  //  wants the second one has to spend a skill feat on it and pick `subterranean-water` themselves.
   'witchlight-follower': { 'terrain-expertise': { kind: 'fixed', skill: 'swamp' } },
   // "You gain the Virtuosic Performer (Comedy) skill feat."
   clown: { 'virtuosic-performer': { kind: 'fixed', skill: 'comedy' } },

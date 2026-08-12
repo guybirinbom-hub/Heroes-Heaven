@@ -448,6 +448,27 @@ export function choiceKeys(slotKey: string, def: FeatChoiceDef | undefined): str
   return n === 1 ? [slotKey] : Array.from({ length: n }, (_, i) => `${slotKey}#${i}`);
 }
 
+/**
+ * The option list a picker must show once the player has TYPED their answer.
+ *
+ * `allowCustom` lets a terrain choice take a word the book never printed, and every filled control in
+ * the builder renders by looking the stored value up in its own options — so without a row for it the
+ * answer is stored, correct, and the card reads as an unmade pick with a pending `!` on it. That is
+ * the "the value is right and no surface shows it" defect class, arrived at from the opposite side.
+ *
+ * The row is synthesised from the answer itself, never persisted: the record's printed list stays the
+ * printed list, and clearing the answer removes the row with it.
+ */
+export function withCustomAnswer<T extends { value: string; label: string }>(
+  options: T[],
+  def: FeatChoiceDef | undefined,
+  value: string | undefined,
+): T[] {
+  if (!def?.allowCustom || !value) return options;
+  if (options.some((o) => o.value === value)) return options;
+  return [...options, { value, label: value } as T];
+}
+
 /** Options still selectable for pick `idx` — with `distinct`, the other picks' answers are removed. */
 export function choiceOptionsFor<T extends { value: string }>(
   options: T[],

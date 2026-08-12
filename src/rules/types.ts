@@ -1439,6 +1439,22 @@ export interface FeatChoiceDef {
    *                language". Resolved against content at render time and shown as a searchable list;
    *                baking the list into the record would bloat core.json and go stale. */
   kind: 'domains' | 'array' | 'skills' | 'text' | 'open';
+  /**
+   * The listed options are ILLUSTRATIVE, so the picker also offers a "type your own" row and records
+   * whatever the player writes. Gold-set principle **I**: *"free-text player input is a legitimate
+   * choice type."*
+   *
+   * ⚠ OPT-IN, and it is NOT a property of `kind: 'array'` — most array choices are closed sets whose
+   * answers drive a grant, and a typed one there would be an answer nothing could read. It is set on
+   * the TERRAIN choices, where the book itself names terrains outside the printed list: Witchlight
+   * Follower grants *"Terrain Expertise with both swamp terrain and subterranean bodies of water"*,
+   * and Underbrush Trailblazer says *"you can select a different type of difficult terrain"* without
+   * naming which. A GM naming a tenth terrain is playing the game as written.
+   *
+   * Carries its own wording because "terrain" and "difficult terrain" are different questions and a
+   * generated label would get one of them wrong.
+   */
+  allowCustom?: { label: string; placeholder: string };
   /** For 'open': what the player is choosing from. */
   from?: OpenChoiceFrom;
   /** For 'domains': which domains are offered. Default 'deity' (the deity's own list). Splinter
