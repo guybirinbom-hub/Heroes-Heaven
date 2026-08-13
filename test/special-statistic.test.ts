@@ -243,4 +243,46 @@ describe('a statistic defined as the higher of your class DC and your spell DC',
     const ch = build('fighter', 8, {});
     expect(deriveSpecialStats(ch, db).some((s) => s.key.startsWith('deviation-'))).toBe(false);
   });
+
+  /*
+   * THE SHAPE: an authored statistic on a record NOTHING CAN OWN is invisible, and reads as authored
+   * on every field-checking measurement.
+   *
+   * Two of the seven classifications were exactly that for a day. `specialStatistic` was correct on
+   * all seven; only 20 of the 30 deviant feats carried `grantsClassFeatures`, and the eight
+   * Pathfinder #202 feats (Verdant Core, Blight Soul) carried none — so `ownedFeatureIds`, whose only
+   * route to a classification is that field, could never reach them. A Verdant Core deviant holding
+   * Vine Lash ("Make a melee attack roll against a creature within 30 feet") had no modifier printed
+   * anywhere on the sheet.
+   *
+   * The test above did not catch it and could not: it asserts the FIELD is present, and builds its
+   * runtime half from two Dark Archive feats that both happen to grant. The instrument has to be a
+   * character built from a feat of EACH classification and the rows observed on it.
+   */
+  it('every classification is reachable — one of ITS OWN feats produces both rows', () => {
+    const classifications = Object.keys(db.classFeatures).filter((id) => id.endsWith('-deviant-classification'));
+    expect(classifications.length).toBe(7);
+    for (const id of classifications) {
+      // The lowest-level feat that grants this classification, taken from the data rather than named
+      // here, so a renamed feat fails as "unreachable" instead of silently testing nothing.
+      const granting = Object.values(db.feats)
+        .filter((f) => (f.grantsClassFeatures ?? []).includes(id))
+        .sort((a, b) => (a.level ?? 99) - (b.level ?? 99));
+      expect(granting.length, `no feat grants ${id}; its statistics are authored and unreachable`).toBeGreaterThan(0);
+
+      const ch = build('fighter', 12, { featPicks: { '2:class': granting[0].id } });
+      const keys = deriveSpecialStats(ch, db).map((s) => s.key);
+      expect(keys, `${id} via ${granting[0].id}`).toContain('deviation-dc');
+      expect(keys, `${id} via ${granting[0].id}`).toContain('deviation-attack');
+    }
+  });
+
+  it('the reachability is not an accident of one book — all 30 deviant feats are accounted for', () => {
+    // 28 classification feats (4 each) grant; the two universal ones (Awakened Power, Greater
+    // Awakened Power) legitimately grant none, because they modify a deviation you already have.
+    const deviant = Object.values(db.feats).filter((f) => f.traits.includes('deviant'));
+    expect(deviant.length).toBe(30);
+    const ungranting = deviant.filter((f) => !(f.grantsClassFeatures ?? []).some((g) => g.endsWith('-deviant-classification')));
+    expect(ungranting.map((f) => f.id).sort()).toEqual(['awakened-power', 'greater-awakened-power']);
+  });
 });

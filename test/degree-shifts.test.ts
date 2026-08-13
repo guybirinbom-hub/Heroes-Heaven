@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest';
 import { build, content } from './_content';
 import { recordMarkersFor, statHasSituational, explainStat } from '../src/rules/explain';
 import { FEAT_SITUATIONAL, RECORD_MARKERS, type DegreeShift } from '../src/rules/situationalBonuses';
+import { ACTIVITIES } from '../src/rules/actions';
+import { SKILL_ACTIONS } from '../src/rules/skillActions';
 import type { Character, ContentDatabase } from '../src/rules/types';
 
 /**
@@ -45,10 +47,35 @@ describe('degreeShifts — the lane is authored, not just built', () => {
   it('every authored entry names at least one surface, or it reaches nothing', () => {
     // `authoredSituational` drops an entry with no skill/save/perception target, and
     // `degreeShiftMarkers` emits nothing without actions. An entry with neither is invisible data.
+    //
+    // `savesFromChoice` counts as a surface even though it names no track: it names the BUILD ANSWER
+    // that holds the track (Path to Perfection's pick), which `resolveChoiceSaves` turns into a real
+    // save row per character. Leaving it out of this count would report the one shape that had to
+    // stop saying `['all']` as the shape that reaches nothing.
     for (const { bucket, id, shifts } of allShifts(db())) {
       for (const sh of shifts) {
-        const surfaces = (sh.skills?.length ?? 0) + (sh.saves?.length ?? 0) + (sh.actions?.length ?? 0) + (sh.perception ? 1 : 0);
+        const surfaces =
+          (sh.skills?.length ?? 0) +
+          (sh.saves?.length ?? 0) +
+          (sh.savesFromChoice ? 1 : 0) +
+          (sh.actions?.length ?? 0) +
+          (sh.perception ? 1 : 0);
         expect(`${bucket}/${id}: ${surfaces}`).toBe(`${bucket}/${id}: ${surfaces > 0 ? surfaces : 'NO SURFACE'}`);
+      }
+    }
+  });
+
+  it('a savesFromChoice entry names an answer something can resolve, and never also names saves', () => {
+    // Two answers to one question: `authoredSituational` would star both sets, so the record would
+    // be back to promising rows the pick never reached.
+    for (const { bucket, id, shifts } of allShifts(db())) {
+      for (const sh of shifts) {
+        if (!sh.savesFromChoice) continue;
+        expect(`${bucket}/${id}: ${sh.savesFromChoice} + saves ${sh.saves?.join(',') ?? 'none'}`).toBe(
+          `${bucket}/${id}: ${sh.savesFromChoice} + saves none`,
+        );
+        // "<build field>:<index>" — the only shape resolveChoiceSaves parses.
+        expect(`${bucket}/${id}: ${sh.savesFromChoice}`).toMatch(/^[\w/-]+: [a-zA-Z]+:\d+$/);
       }
     }
   });
@@ -74,7 +101,17 @@ describe('degreeShifts — the lane is authored, not just built', () => {
   it('every action a shift names exists, or its marker lands on a row nobody renders', () => {
     const con = db();
     const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    const known = new Set(Object.values(con.actions ?? {}).map((a) => slug((a as { name?: string }).name ?? '')));
+    /*
+     * The id space is whatever the two RENDERERS slugify, not `content.actions` alone — MainTab keys
+     * its rows off `ACTIVITIES` and StatDetailModal off `SKILL_ACTIONS`, both by name. Checking only
+     * the imported catalog under-approximates it: Battle Medicine is a curated row on both surfaces
+     * and has no `content.actions` record, so a correct mark on it read as a mark on nothing.
+     */
+    const known = new Set([
+      ...Object.values(con.actions ?? {}).map((a) => slug((a as { name?: string }).name ?? '')),
+      ...ACTIVITIES.map((a) => slug(a.name)),
+      ...Object.values(SKILL_ACTIONS).flat().map((a) => slug(a.name)),
+    ]);
     for (const { bucket, id, shifts } of allShifts(con)) {
       for (const sh of shifts) {
         for (const a of sh.actions ?? []) expect(`${bucket}/${id}: ${a}`).toBe(`${bucket}/${id}: ${known.has(a) ? a : 'NO SUCH ACTION'}`);

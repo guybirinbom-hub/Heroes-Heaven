@@ -75,6 +75,17 @@ describe('a record whose clause differs from the default (Q25)', () => {
     expect(block(['familiar-sage-dedication', 'enhanced-familiar', 'familiar-mascot'], 'fighter-dedication')).toBeNull();
   });
 
+  it('Familiar Sage exempts Familiar Master Dedication, which its SECOND sentence names', () => {
+    // The clause runs to two sentences and the gate had been read from the last one only: "…AND YOU
+    // CAN TAKE FAMILIAR MASTER DEDICATION even if you haven't yet gained three feats from the familiar
+    // sage archetype. You can't select another dedication feat until you've gained two other feats
+    // from the familiar master or familiar sage archetypes." Archetypes and count were right; the one
+    // pick the clause explicitly allows was refused, `gate.except` being the only escape
+    // `dedicationBlock` has.
+    expect(block(['familiar-sage-dedication'], 'familiar-master-dedication')).toBeNull();
+    expect(block(['familiar-sage-dedication'], 'fighter-dedication')).toMatch(/2 more feats/i);
+  });
+
   it('the two legacy Knight Vigilant records gate at all', () => {
     // Neither carries an `archetype` field, so the default — which reads `archetype` to know what to
     // count — passed them straight through: a character holding one could take a second dedication
@@ -103,5 +114,44 @@ describe('the clause is NOT general — the other dedications keep the default',
       ).length;
       expect(available, `${f.id} would be a permanent lock`).toBeGreaterThanOrEqual(gate.count);
     }
+  });
+
+  /*
+   * THE SHAPE, checked over every gate rather than the three we know about.
+   *
+   * These clauses are transcribed by hand from a record's own prose, and the failure mode is reading
+   * one sentence of a two-sentence clause: Familiar Sage's exception lived in the sentence BEFORE the
+   * one the count came from, so the gate blocked the single pick its text names as allowed. A gate is
+   * silently over-strict — nothing crashes, the picker simply hides a legal option — so only a check
+   * that reads the printed text back finds it.
+   *
+   * Two printed shapes name a permitted dedication: "other than X Dedication" and "you can take X
+   * Dedication even if…". A record naming ITSELF is not an exception to its own gate (Scion of Domora
+   * waives Familiar Master's requirement, not its own), so self-references are skipped.
+   */
+  it('every gate excepts each dedication its own text names as still takeable', () => {
+    const dedicationsByName = new Map<string, string[]>();
+    for (const f of Object.values(db.feats)) {
+      if (f.traits.includes('dedication')) dedicationsByName.set(f.name, [...(dedicationsByName.get(f.name) ?? []), f.id]);
+    }
+    let clausesFound = 0;
+    for (const f of Object.values(db.feats)) {
+      if (!f.dedicationGate) continue;
+      const text = String(f.description ?? '').replace(/\s+/g, ' ').replace(/’/g, "'");
+      const named = new Set<string>();
+      for (const m of text.matchAll(/other than ([A-Z][\w'-]*(?: [A-Z][\w'-]*)*? Dedication)/g)) named.add(m[1]);
+      for (const m of text.matchAll(/you can take ([A-Z][\w'-]*(?: [A-Z][\w'-]*)*? Dedication) even if/gi)) named.add(m[1]);
+      for (const name of named) {
+        if (name === f.name) continue;
+        const ids = dedicationsByName.get(name);
+        expect(ids, `${f.id} names "${name}", which is no dedication in the data`).toBeTruthy();
+        clausesFound++;
+        for (const id of ids!) {
+          expect(f.dedicationGate.except ?? [], `${f.id}'s text permits ${id} and its gate does not`).toContain(id);
+        }
+      }
+    }
+    // The check is only worth its runtime if the corpus still contains such clauses at all.
+    expect(clausesFound).toBe(3);
   });
 });

@@ -339,9 +339,33 @@ sending someone to rebuild something that works, it closed a real gap by writing
 **When a record cannot be authored, check whether the field is what cannot say it before concluding
 the text does not say it.**
 
-Reachability was measured, not assumed: 30 deviant feats are live and each carries
-`grantsClassFeatures: [<its classification>]`, so a character who takes one owns the classification and
-gets both rows. Four of them say only *"Make an attack roll"*, with the modifier printed nowhere.
+### ⚠⚠ …and the reachability claim under it was ALSO wrong — corrected 2026-08-13
+
+The paragraph that stood here read: *"Reachability was measured, not assumed: 30 deviant feats are
+live and each carries `grantsClassFeatures: [<its classification>]`."* **It was not measured.** Counted
+properly: 30 deviant feats, **20 carried the field and 10 did not.** Eight of the ten are the
+classification feats from *Pathfinder #202: Severed at the Root* — sprout-fruit, vine-lash,
+defensive-growth, disperse-into-petals (Verdant Core) and release-spores, rotten-slurry, irradiate,
+unleash-the-blight (Blight Soul). The other two are the universal Awakened Power / Greater Awakened
+Power, which legitimately grant none.
+
+`ownedFeatureIds` reaches a deviant classification **only** through `grantsClassFeatures`, so **two of
+the seven classifications could never be owned**, and `deriveSpecialStats` emitted neither row for
+them — authored, correct, and shown to nobody. A Verdant Core deviant holding **Vine Lash** (*"Make a
+melee attack roll against a creature within 30 feet"*) had no modifier printed anywhere on the sheet:
+exactly the failure the attack row exists to prevent, and exactly the argument that justified the row
+for Blasting Beams.
+
+**The written measurement was itself what hid it** — a sentence claiming a count is what the next
+reader trusts instead of counting. The eight grants are now authored (membership taken from each
+classification's own archive record, which embeds its four feats as
+`<document level="3" id="feat-NNNN" />`), and two things now fail rather than pass quietly:
+`scripts/apply-special-statistics.mjs` throws if any classification has no granting feat, and
+`test/special-statistic.test.ts` builds a character from a feat of EACH classification and observes the
+rows. The old test asserted only that the FIELD was present, and built its runtime half from two Dark
+Archive feats that both happened to grant.
+
+Four deviant feats say only *"Make an attack roll"*, with the modifier printed nowhere else.
 
 ### `dedicationGate` — a Special clause restricting further dedications
 

@@ -5087,6 +5087,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(effectPicks.length ? { effectPicks } : {}),
     ...(choiceTokens.length ? { choiceTokens } : {}),
     ...(secondaryClassDcs.length ? { secondaryClassDcs } : {}),
+    // The monk's save picks, kept as ANSWERS rather than only as the ranks they produced. The ranks
+    // above already carry the mechanical half; what they cannot carry is WHICH save was chosen at
+    // which tier once two of them are master, and Path to Perfection's degree shift lands on exactly
+    // one of them ("the chosen saving throw"). See Character.pathToPerfection.
+    ...((build.classId === 'monk' || build.classId2 === 'monk') && build.pathToPerfection?.some(Boolean)
+      ? { pathToPerfection: build.pathToPerfection }
+      : {}),
     ...(() => {
       // Body size (ancestry, raised by any feat/heritage sizeOverride — largest wins) + natural reach.
       const SIZE_ORDER = ['tiny', 'small', 'medium', 'large', 'huge', 'gargantuan'] as const;
@@ -5457,13 +5464,21 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   const focusSpellIds = focusEntry ? Object.values(focusEntry.repertoire ?? {}).flat() : [];
   b.devotionSpell = ['shields-of-the-spirit', 'lay-on-hands', 'touch-of-the-void'].find((id) => focusSpellIds.includes(id)) ?? null;
 
-  // Monk Path to Perfection — best-effort recovery from save ranks (a monk's master/legendary saves
-  // come only from these picks). Order of the two master picks is approximate.
+  // Monk Path to Perfection — the ANSWERS if the character carries them, and only otherwise a
+  // best-effort recovery from save ranks (a monk's master/legendary saves come only from these
+  // picks), whose order between the two master picks is approximate. Reading the stored answers
+  // first matters because a round-trip through here used to REWRITE the tier-0 pick to whichever
+  // mastered save sorts first, which would move Path to Perfection's degree-shift star to the other
+  // row on save-and-reopen.
   if (c.classId === 'monk') {
-    const sv = c.proficiencies.saves;
-    const mastered = (['fortitude', 'reflex', 'will'] as SaveId[]).filter((s) => sv[s] === 'master' || sv[s] === 'legendary');
-    const legendary = (['fortitude', 'reflex', 'will'] as SaveId[]).find((s) => sv[s] === 'legendary');
-    b.pathToPerfection = [mastered[0] ?? null, mastered[1] ?? null, legendary ?? null];
+    const stored = c.pathToPerfection;
+    if (stored?.some(Boolean)) b.pathToPerfection = [stored[0] ?? null, stored[1] ?? null, stored[2] ?? null];
+    else {
+      const sv = c.proficiencies.saves;
+      const mastered = (['fortitude', 'reflex', 'will'] as SaveId[]).filter((s) => sv[s] === 'master' || sv[s] === 'legendary');
+      const legendary = (['fortitude', 'reflex', 'will'] as SaveId[]).find((s) => sv[s] === 'legendary');
+      b.pathToPerfection = [mastered[0] ?? null, mastered[1] ?? null, legendary ?? null];
+    }
   }
 
   // Druid Voice of Nature — recover the chosen feat.

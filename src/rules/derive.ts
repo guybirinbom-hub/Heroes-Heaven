@@ -3079,6 +3079,10 @@ function strikeReaches(c: Character, db: ContentDatabase, ctx: ReachContext): St
   let base = naturalReach(c) + (hasTraitFamily(ctx.traits, 'reach') ? 5 : 0);
   let floor = 0;
   let add = 0;
+  // Feet that come from being BIGGER, kept apart from `add` because Giant's Lunge's stated reach
+  // combines with those and with nothing else. Counted into `add` as well — a size increase raises
+  // the reach whether or not anything combines with it.
+  let sizeAdd = 0;
   // Collected rather than resolved in place: a conditional "+5 feet" is 5 feet on top of the reach
   // the character actually has, so every unconditional rider must have landed before any of them.
   const conditional: { r: ReachRider; id: string; collection: StrikeReach['sourceCollection'] }[] = [];
@@ -3107,14 +3111,48 @@ function strikeReaches(c: Character, db: ContentDatabase, ctx: ReachContext): St
         // cannot both be true, and the longer one is the one you use); an increment adds on top.
         floor = Math.max(floor, r.feet ?? 0);
         add += r.add ?? 0;
+        if (r.fromSize) sizeAdd += r.add ?? 0;
       }
     }
   }
   base = Math.max(base, floor) + add;
+
+  /*
+   * "…but it does combine with abilities that increase your reach due to increased size."
+   *
+   * A stated `feet` otherwise wins outright, so without this the two clauses cancel: a raging
+   * giant-instinct barbarian holding Giant's Lunge AND Giant's Stature saw two separate 10-ft rows and
+   * never the 15 ft the printed rule gives. Each size rider is combined SEPARATELY rather than summed
+   * together — a creature is one size at a time, and Titan's Stature is explicitly an alternative to
+   * Giant's Stature ("you can INSTEAD become Huge"), so adding both would invent a reach.
+   */
+  const sizeRiders = conditional.filter((e) => e.r.fromSize && e.r.add);
+  const combined = conditional.flatMap(({ r, id, collection }) =>
+    r.combinesWithSize && r.feet != null
+      ? sizeRiders.map((s) => ({
+          feet: r.feet! + sizeAdd + (s.r.add ?? 0),
+          // Both circumstances have to hold, so the row says both. The star opens the record whose
+          // text states the combination, which is the one that explains why the number is not 10.
+          when: `${r.when}, and ${s.r.when}`,
+          sourceId: id,
+          sourceCollection: collection,
+        }))
+      : [],
+  );
+
   return [
     { feet: base },
     ...conditional
-      .map(({ r, id, collection }) => ({ feet: r.feet ?? base + (r.add ?? 0), when: r.when, sourceId: id, sourceCollection: collection }))
+      .map(({ r, id, collection }) => ({
+        // An unconditional size increase is already in `base`, and a `combinesWithSize` reach has to
+        // clear it too — otherwise the stated 10 would silently shorten a character the size rule
+        // already put at 10.
+        feet: r.feet != null ? r.feet + (r.combinesWithSize ? sizeAdd : 0) : base + (r.add ?? 0),
+        when: r.when,
+        sourceId: id,
+        sourceCollection: collection,
+      }))
+      .concat(combined)
       .filter((r) => r.feet !== base)
       // Ascending, so two circumstances printing the same reach land next to each other and read as
       // the pair they are. Array#sort is stable, so equal values keep their source order.

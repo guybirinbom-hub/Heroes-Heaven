@@ -105087,7 +105087,8 @@
     "excludeTraits": [
      "reach"
     ]
-   }
+   },
+   "combinesWithSize": true
   }
  },
  {
@@ -105144,7 +105145,8 @@
   "field": "strikeReach",
   "value": {
    "add": 5,
-   "when": "while Large from Giant's Stature (Clumsy 1 until you stop raging)"
+   "when": "while Large from Giant's Stature (Clumsy 1 until you stop raging)",
+   "fromSize": true
   }
  },
  {
@@ -105153,7 +105155,8 @@
   "field": "strikeReach",
   "value": {
    "add": 10,
-   "when": "while Huge from Giant's Stature, if you were Medium or smaller"
+   "when": "while Huge from Giant's Stature, if you were Medium or smaller",
+   "fromSize": true
   }
  },
  {
@@ -105162,7 +105165,8 @@
   "field": "strikeReach",
   "value": {
    "add": 5,
-   "when": "while Large from Towering Presence — 10 feet instead if you started out Tiny; no effect if you were already Large"
+   "when": "while Large from Towering Presence — 10 feet instead if you started out Tiny; no effect if you were already Large",
+   "fromSize": true
   }
  },
  {
@@ -105171,7 +105175,8 @@
   "field": "strikeReach",
   "value": {
    "add": 5,
-   "when": "while Assume Earth's Mantle is active, if you were smaller than Large — 10 feet instead if you started out Tiny"
+   "when": "while Assume Earth's Mantle is active, if you were smaller than Large — 10 feet instead if you started out Tiny",
+   "fromSize": true
   }
  },
  {
@@ -105210,7 +105215,8 @@
   "field": "strikeReach",
   "value": {
    "add": 5,
-   "when": "while Large from the giant instinct crown's rage activation — 10 feet instead if you were Tiny"
+   "when": "while Large from the giant instinct crown's rage activation — 10 feet instead if you were Tiny",
+   "fromSize": true
   }
  },
  {
@@ -106195,7 +106201,10 @@
     "familiar-master",
     "familiar-sage"
    ],
-   "count": 2
+   "count": 2,
+   "except": [
+    "familiar-master-dedication"
+   ]
   }
  },
  {
@@ -107369,9 +107378,7 @@
    {
     "shift": "successToCrit",
     "when": "on the save you chose for Path to Perfection",
-    "saves": [
-     "all"
-    ]
+    "savesFromChoice": "pathToPerfection:0"
    }
   ]
  },
@@ -107934,6 +107941,13 @@
   "value": [
    {
     "shift": "failToSuccess",
+    "when": "for the remainder of your turn after Reckless Abandon, on a save against a harmful effect",
+    "saves": [
+     "all"
+    ]
+   },
+   {
+    "shift": "critFailToSuccess",
     "when": "for the remainder of your turn after Reckless Abandon, on a save against a harmful effect",
     "saves": [
      "all"
@@ -108864,13 +108878,22 @@
   "value": [
    {
     "shift": "oneBetter",
-    "when": "when you Sense Direction, or roll against a Quandary spell",
+    "when": "when you Sense Direction",
     "skills": [
      "survival"
     ],
     "actions": [
      "sense-direction"
     ]
+   },
+   {
+    "shift": "oneBetter",
+    "when": "on a roll to escape a Quandary spell",
+    "skills": [
+     "occultism",
+     "thievery"
+    ],
+    "perception": true
    }
   ]
  },
@@ -110463,20 +110486,6 @@
  },
  {
   "category": "items",
-  "id": "juggernaut-mutagen",
-  "field": "degreeShifts",
-  "value": [
-   {
-    "shift": "successToCrit",
-    "when": "on a Fortitude save while the mutagen lasts",
-    "saves": [
-     "fortitude"
-    ]
-   }
-  ]
- },
- {
-  "category": "items",
   "id": "juggernaut-mutagen-major",
   "field": "degreeShifts",
   "value": [
@@ -110547,26 +110556,12 @@
  },
  {
   "category": "items",
-  "id": "bravos-brew",
-  "field": "degreeShifts",
-  "value": [
-   {
-    "shift": "successToCrit",
-    "when": "on a save against fear while the brew lasts",
-    "saves": [
-     "all"
-    ]
-   }
-  ]
- },
- {
-  "category": "items",
   "id": "desolation-locket-major",
   "field": "degreeShifts",
   "value": [
    {
     "shift": "critFailToFail",
-    "when": "on a save against an emotion effect",
+    "when": "while the locket is affixed to your armor, on a save against an emotion effect",
     "saves": [
      "all"
     ]
@@ -110608,9 +110603,9 @@
   "value": [
    {
     "shift": "oneBetter",
-    "when": "on the saving throw the stormshard is used for",
+    "when": "on your own basic Fortitude save against the stormshard when you Free the Spirits",
     "saves": [
-     "all"
+     "fortitude"
     ]
    }
   ]
@@ -110622,9 +110617,9 @@
   "value": [
    {
     "shift": "oneBetter",
-    "when": "on the saving throw the stormshard is used for",
+    "when": "on your own basic Fortitude save against the stormshard when you Free the Spirits",
     "saves": [
-     "all"
+     "fortitude"
     ]
    }
   ]
@@ -110636,9 +110631,9 @@
   "value": [
    {
     "shift": "oneBetter",
-    "when": "on the saving throw the stormshard is used for",
+    "when": "on your own basic Fortitude save against the stormshard when you Free the Spirits",
     "saves": [
-     "all"
+     "fortitude"
     ]
    }
   ]
@@ -110664,16 +110659,16 @@
   "value": [
    {
     "shift": "failToSuccess",
-    "when": "on the triggering save",
+    "when": "on the triggering Will save against a fear effect",
     "saves": [
-     "all"
+     "will"
     ]
    },
    {
     "shift": "critFailToFail",
-    "when": "on the triggering save",
+    "when": "on the triggering Will save against a fear effect",
     "saves": [
-     "all"
+     "will"
     ]
    }
   ]
@@ -110685,16 +110680,16 @@
   "value": [
    {
     "shift": "failToSuccess",
-    "when": "on the triggering save",
+    "when": "on the triggering Will save against a mental spell",
     "saves": [
-     "all"
+     "will"
     ]
    },
    {
     "shift": "critFailToFail",
-    "when": "on the triggering save",
+    "when": "on the triggering Will save against a mental spell",
     "saves": [
-     "all"
+     "will"
     ]
    }
   ]
@@ -110706,16 +110701,22 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on the triggering save",
-    "saves": [
-     "all"
+    "when": "on the Deception check to Feint the opal is activated for",
+    "skills": [
+     "deception"
+    ],
+    "actions": [
+     "feint"
     ]
    },
    {
     "shift": "critFailToFail",
-    "when": "on the triggering save",
-    "saves": [
-     "all"
+    "when": "on the Deception check to Feint the opal is activated for",
+    "skills": [
+     "deception"
+    ],
+    "actions": [
+     "feint"
     ]
    }
   ]
@@ -110741,7 +110742,7 @@
   "value": [
    {
     "shift": "oneBetter",
-    "when": "on the saving throw you use the hagbook for",
+    "when": "on a save against a coven spell, if you end a spell you prepared from this book that is affecting you",
     "saves": [
      "all"
     ]
@@ -110891,9 +110892,12 @@
   "value": [
    {
     "shift": "critFailToFail",
-    "when": "on the Diplomacy check the fulu is activated for",
+    "when": "on the Diplomacy check to Make an Impression the fulu is activated for",
     "skills": [
      "diplomacy"
+    ],
+    "actions": [
+     "make-an-impression"
     ]
    }
   ]
@@ -110910,7 +110914,8 @@
      "medicine"
     ],
     "actions": [
-     "treat-wounds"
+     "treat-wounds",
+     "battle-medicine"
     ]
    }
   ]
@@ -110955,20 +110960,6 @@
  },
  {
   "category": "items",
-  "id": "grappling-vine",
-  "field": "degreeShifts",
-  "value": [
-   {
-    "shift": "critFailToFail",
-    "when": "on the check to secure the vine",
-    "skills": [
-     "athletics"
-    ]
-   }
-  ]
- },
- {
-  "category": "items",
   "id": "cryolite-eye",
   "field": "degreeShifts",
   "value": [
@@ -110986,9 +110977,19 @@
   "value": [
    {
     "shift": "critFailToFail",
-    "when": "on the check the tome is consulted for",
+    "when": "on the Recall Knowledge check the tome is consulted for, with the skill you chose when you Skimmed it",
     "skills": [
-     "all"
+     "arcana",
+     "crafting",
+     "medicine",
+     "nature",
+     "occultism",
+     "religion",
+     "society",
+     "lore"
+    ],
+    "actions": [
+     "recall-knowledge"
     ]
    }
   ]
@@ -111017,7 +111018,7 @@
   "value": [
    {
     "shift": "oneBetter",
-    "when": "on a Recall Knowledge check with that Lore, if you are already a master or legendary in it",
+    "when": "once per day, on the Recall Knowledge check you activate The Vision for, if you are already master or legendary in that Lore",
     "skills": [
      "lore"
     ],
@@ -111034,9 +111035,12 @@
   "value": [
    {
     "shift": "critFailToFail",
-    "when": "on the check the eye is activated for",
+    "when": "on the Recall Knowledge check the eye is activated for",
     "skills": [
      "all"
+    ],
+    "actions": [
+     "recall-knowledge"
     ]
    }
   ]
@@ -111096,9 +111100,10 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on a check with the skill you chose",
+    "when": "on a check with the skill you chose, Crafting or Performance",
     "skills": [
-     "all"
+     "crafting",
+     "performance"
     ]
    }
   ]
@@ -111229,9 +111234,12 @@
   "value": [
    {
     "shift": "critFailToFail",
-    "when": "on the triggering Athletics check",
+    "when": "on Athletics checks to Climb, from activating the pin until the end of your turn",
     "skills": [
      "athletics"
+    ],
+    "actions": [
+     "climb"
     ]
    }
   ]
@@ -111243,16 +111251,28 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on the triggering attempt",
+    "when": "on the triggering attempt to Grab an Edge",
     "skills": [
-     "athletics"
+     "acrobatics"
+    ],
+    "saves": [
+     "reflex"
+    ],
+    "actions": [
+     "grab-an-edge"
     ]
    },
    {
     "shift": "critFailToFail",
-    "when": "on the triggering attempt",
+    "when": "on the triggering attempt to Grab an Edge",
     "skills": [
-     "athletics"
+     "acrobatics"
+    ],
+    "saves": [
+     "reflex"
+    ],
+    "actions": [
+     "grab-an-edge"
     ]
    }
   ]
@@ -111264,22 +111284,22 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on the triggering Athletics check to Swim",
+    "when": "on the Acrobatics check to Escape made when you activate the charm",
     "skills": [
-     "athletics"
+     "acrobatics"
     ],
     "actions": [
-     "swim"
+     "escape"
     ]
    },
    {
     "shift": "critFailToFail",
-    "when": "on the triggering Athletics check to Swim",
+    "when": "on the Acrobatics check to Escape made when you activate the charm",
     "skills": [
-     "athletics"
+     "acrobatics"
     ],
     "actions": [
-     "swim"
+     "escape"
     ]
    }
   ]
@@ -111394,9 +111414,9 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on a Will save against fear while the brew lasts",
+    "when": "on a save against fear while the brew lasts",
     "saves": [
-     "will"
+     "all"
     ]
    }
   ]
@@ -112502,5 +112522,81 @@
   "id": "red-thread-knot",
   "field": "frequency",
   "value": null
+ },
+ {
+  "category": "classFeatures",
+  "id": "second-path-to-perfection",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on the save you chose for Second Path to Perfection",
+    "savesFromChoice": "pathToPerfection:1"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sprout-fruit",
+  "field": "grantsClassFeatures",
+  "value": [
+   "verdant-core-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "vine-lash",
+  "field": "grantsClassFeatures",
+  "value": [
+   "verdant-core-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "defensive-growth",
+  "field": "grantsClassFeatures",
+  "value": [
+   "verdant-core-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "disperse-into-petals",
+  "field": "grantsClassFeatures",
+  "value": [
+   "verdant-core-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "release-spores",
+  "field": "grantsClassFeatures",
+  "value": [
+   "blight-soul-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "rotten-slurry",
+  "field": "grantsClassFeatures",
+  "value": [
+   "blight-soul-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "irradiate",
+  "field": "grantsClassFeatures",
+  "value": [
+   "blight-soul-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "unleash-the-blight",
+  "field": "grantsClassFeatures",
+  "value": [
+   "blight-soul-deviant-classification"
+  ]
  }
 ]

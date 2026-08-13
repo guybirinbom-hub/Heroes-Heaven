@@ -479,6 +479,34 @@ export interface ReachRider {
   /** The circumstance, in the record's own words. Absent = it always applies. */
   when?: string;
   /**
+   * This rider's feet come from the character being BIGGER — "You become Large, increasing your reach
+   * by 5 feet" (Giant's Stature), "Increase your size to Large… Your reach increases by 5 feet"
+   * (Towering Presence).
+   *
+   * Marked only where the record's own text ties the increase to the size change. Greater
+   * Transformation is the near miss and is deliberately NOT marked: Oni Form says *"Your size
+   * increases to Large… This doesn't change your Speed, reach, or other statistics except as noted
+   * here"*, so its +5 is a benefit of the feat rather than a consequence of the size.
+   *
+   * Inert on its own. It exists so `combinesWithSize` has something to name.
+   */
+  fromSize?: true;
+  /**
+   * *"…but it does combine with abilities that increase your reach due to increased size, such as
+   * Giant's Stature."* (Giant's Lunge.)
+   *
+   * A stated `feet` normally REPLACES — that is what "gain a reach of 10 feet" means, and it is right
+   * for every other record in the lane. This one clause says otherwise, so it needs a field rather
+   * than a re-transcription: authoring Giant's Lunge as `add: 5` would combine, and would be wrong for
+   * a character whose reach is not 5 (a Small barbarian, or one already reaching 10 from Jotun's
+   * Heart) — the feat states a reach of 10, not an increase of 5.
+   *
+   * With it set, the reach is also written a SECOND time combined with each `fromSize` rider in play,
+   * because the two circumstances are independent: a raging barbarian may have used Giant's Lunge, or
+   * Giant's Stature, or both, and the row has to be able to answer which.
+   */
+  combinesWithSize?: true;
+  /**
    * Which Strikes it reaches. An unfiltered rider applies to EVERY melee Strike, which is the loudest
    * over-grant here: Lunge without `unarmed: false` puts 10 feet on a fist the feat never mentions.
    */
@@ -3982,6 +4010,25 @@ export interface Character {
   /** Secondary class DCs from multiclass dedications (Fighter/Ranger/Rogue/Alchemist Dedication) —
    *  the borrowed class's trained DC, shown alongside the primary class DC. */
   secondaryClassDcs?: { classId: string; name: string; keyAbility: AbilityId; dc: number; rank: ProficiencyRank }[];
+  /**
+   * The monk's Path to Perfection save picks, carried through from the build: `[0]` = the 7th-level
+   * pick (→ master), `[1]` = 11th (→ master), `[2]` = 15th (→ legendary).
+   *
+   * ⚠ These have ALREADY moved the numbers — `buildCharacter` raises the ranks — so this is not how
+   * the proficiency reaches the sheet. It exists because **which** save was picked is not recoverable
+   * from the ranks once there are two of them: `buildFromCharacter` reads them back off
+   * `proficiencies.saves` and its own comment calls the order "approximate". Approximate is fine for
+   * re-opening the builder and wrong for anything that has to name ONE of the three rows.
+   *
+   * Path to Perfection prints *"When you roll a success on THE CHOSEN saving throw, you get a
+   * critical success instead"*, and `DegreeShift.savesFromChoice` points here to find out which row
+   * that star belongs on. Without the field the entry could only say `saves: ['all']`, which promised
+   * a monk who had spent their pick on Fortitude the same upgrade on Reflex and Will.
+   *
+   * DERIVED, like every field below the divider: recomputed from `BuildState` on every build, so no
+   * saved character needs migrating.
+   */
+  pathToPerfection?: (SaveId | null)[];
   /** Derived body size (ancestry size, raised by a feat/heritage sizeOverride). */
   size?: Size;
   /** Natural reach in feet (5 by default; raised by a feat/heritage — Jotun's Heart → 10). */

@@ -73,6 +73,7 @@ scripts/audit/*
 !scripts/audit/tier-result.json
 !scripts/audit/uncertain-settled.json
 !scripts/audit/authored-verification.json
+!scripts/audit/authored-fix-recheck.json
 scripts/aon-verify/
 tmptest/
 

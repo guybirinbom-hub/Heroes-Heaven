@@ -101,6 +101,18 @@ const IMPULSE_ATTACK = {
  * Authored on the CLASSIFICATION, not on the 30 deviant feats: a deviant feat GRANTS its
  * classification (`grantsClassFeatures`), so the classification is the one record every deviant
  * character owns, and `deriveSpecialStats` collapses by `key` if they ever hold two.
+ *
+ * ⚠ THAT LAST SENTENCE WAS AN ASSUMPTION, AND IT WAS FALSE FOR TWO OF THE SEVEN (fixed 2026-08-13).
+ * Only 20 of the 30 deviant feats carried `grantsClassFeatures`; the eight Pathfinder #202 feats did
+ * not, so `ownedFeatureIds` had no route to Verdant Core or Blight Soul and both classifications'
+ * rows were unreachable — authored, correct, and shown to nobody. A Verdant Core deviant holding Vine
+ * Lash ("Make a melee attack roll against a creature within 30 feet") had no modifier printed
+ * anywhere, which is the exact failure the attack row exists to prevent. `CLASSIFICATION_FEATS` below
+ * closes it, and the reachability check at the end turns the assumption into something that fails.
+ *
+ * Membership was MEASURED, not paired by name: each classification's own archive record embeds its
+ * four feats as `<document level="3" id="feat-NNNN" />` (…/by-category/deviant-ability-classification/),
+ * and those ids resolve through `aonId` to exactly the 20 already authored plus these 8.
  */
 const DEVIATION = [
   {
@@ -130,6 +142,18 @@ const CLASSIFICATIONS = [
   'verdant-core-deviant-classification',
   'wraith-deviant-classification',
 ];
+
+/**
+ * The route that makes a classification OWNABLE. Only the eight that had none are listed — the other
+ * 22 rows already ship, and re-writing them would be a 22-row diff saying nothing.
+ *
+ * Both of these classifications are Pathfinder #202: Severed at the Root, which is why they were
+ * missed as a pair: the Dark Archive import carried the grant and the later one did not.
+ */
+const CLASSIFICATION_FEATS = {
+  'verdant-core-deviant-classification': ['sprout-fruit', 'vine-lash', 'defensive-growth', 'disperse-into-petals'],
+  'blight-soul-deviant-classification': ['release-spores', 'rotten-slurry', 'irradiate', 'unleash-the-blight'],
+};
 
 const SPECIAL_STATS = {
   'classFeatures/impulses': IMPULSE_ATTACK,
@@ -233,6 +257,37 @@ for (const [key, v] of Object.entries(ITEM_BONUSES)) {
 }
 const preexisting = Object.keys(ITEM_BONUSES).filter((k) => core.items?.[k.slice(k.indexOf('/') + 1)]?.passiveEffects);
 if (preexisting.length) console.log(`note: merged into existing passiveEffects on ${preexisting.join(', ')}`);
+
+// The route that makes the classification ownable. `grantsClassFeatures` is a list, so the grant is
+// APPENDED rather than assigned — an id already there stays, and nothing else the record grants is
+// dropped by writing this one.
+for (const [classification, feats] of Object.entries(CLASSIFICATION_FEATS)) {
+  for (const featId of feats) {
+    const rec = core.feats?.[featId];
+    if (!rec) { missing.push(`feats/${featId}`); continue; }
+    if (!rec.traits?.includes('deviant')) throw new Error(`${featId} does not carry the deviant trait — check the classification mapping`);
+    const now = rec.grantsClassFeatures ?? [];
+    add(`feats/${featId}`, 'grantsClassFeatures', now.includes(classification) ? now : [...now, classification]);
+  }
+}
+
+/*
+ * ⚠ THE CHECK THAT WAS MISSING. A `specialStatistic` on a record nothing can own is invisible, and
+ * reads on every measuring script as authored. Two of the seven classifications were in exactly that
+ * state for a day. `ownedFeatureIds` reaches a deviant classification ONLY through a feat's
+ * `grantsClassFeatures`, so that is what is counted — after the writes above are folded in.
+ */
+const grantsAfter = (id) =>
+  Object.entries(core.feats ?? {}).filter(([fid, f]) => {
+    const w = writes.find((x) => x.category === 'feats' && x.id === fid && x.field === 'grantsClassFeatures');
+    return (w?.value ?? f.grantsClassFeatures ?? []).includes(id);
+  }).length;
+const unreachable = CLASSIFICATIONS.filter((id) => grantsAfter(id) === 0);
+if (unreachable.length) {
+  throw new Error(
+    `no feat grants ${unreachable.join(', ')} — its deviation DC and attack roll would be authored and unreachable`,
+  );
+}
 
 const byField = {};
 for (const w of writes) byField[w.field] = (byField[w.field] ?? 0) + 1;

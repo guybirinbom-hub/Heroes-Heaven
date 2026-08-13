@@ -18,14 +18,14 @@
  * rather than trusting this file.
  */
 import { readFileSync, existsSync, writeFileSync } from 'node:fs';
-import { formatBackfill } from './lib/write-backfill.mjs';
+import { readBackfill, writeBackfill } from './lib/write-backfill.mjs';
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const ARCHIVE = 'C:/wonderers guide/aon-2e-archive/data/by-category/feat/';
 const CORE = ROOT + 'public/core.json';
 const BF = ROOT + 'scripts/data/effect-backfill.json';
 const db = JSON.parse(readFileSync(CORE, 'utf8'));
-const rows = JSON.parse(readFileSync(BF, 'utf8'));
+const rows = readBackfill(ROOT);
 
 const fail = (m) => {
   console.error('REFUSED: ' + m);
@@ -65,11 +65,27 @@ const GATES = {
     quote: 'other than Beast Gunner Dedication until you',
     gate: { archetypes: ['spellshot', 'beast-gunner'], count: 2, except: ['beast-gunner-dedication'] },
   },
-  // "You can't select another dedication feat until you've gained two other feats from the familiar
-  //  master or familiar sage archetypes."
+  /*
+   * ⚠ TWO sentences, and the first pass read only the second.
+   *
+   * "You can take Familiar Sage Dedication even if you haven't yet gained three feats from the
+   *  familiar master archetype, AND YOU CAN TAKE FAMILIAR MASTER DEDICATION EVEN IF YOU HAVEN'T YET
+   *  GAINED THREE FEATS FROM THE FAMILIAR SAGE ARCHETYPE. You can't select another dedication feat
+   *  until you've gained two other feats from the familiar master or familiar sage archetypes."
+   *
+   * The gate came from the last sentence alone, so a character holding Familiar Sage Dedication was
+   * blocked from the one dedication the clause names as allowed — `dedicationBlock` escapes solely
+   * via `gate.except`. The quote is therefore widened to span both sentences, which is what makes the
+   * archive check above vouch for the exception rather than only for the count.
+   *
+   * The mirrored half ("you can take Familiar Sage Dedication even if…") needs nothing: the Remaster
+   * `familiar-master-dedication` prints no Special clause and so carries no gate to except from.
+   */
   'familiar-sage-dedication': {
-    quote: 'two other feats from the familiar master or familiar sage archetypes',
-    gate: { archetypes: ['familiar-master', 'familiar-sage'], count: 2 },
+    quote:
+      'you can take Familiar Master Dedication even if you haven’t yet gained three feats from the familiar sage archetype. ' +
+      'You can’t select another dedication feat until you’ve gained two other feats from the familiar master or familiar sage archetypes',
+    gate: { archetypes: ['familiar-master', 'familiar-sage'], count: 2, except: ['familiar-master-dedication'] },
   },
   // "You can't select another dedication feat until you have gained at least two other feats from the
   //  scion of Domora or familiar master archetypes."
@@ -188,10 +204,12 @@ for (const [id, { gate }] of Object.entries(GATES)) {
   db.feats[id].dedicationGate = gate;
 }
 
-writeFileSync(BF, formatBackfill(rows));
+writeBackfill(ROOT, rows);
 writeFileSync(CORE, JSON.stringify(db));
 console.log(
   `${Object.keys(GATES).length} dedication gates written (${checked} quotes verified against the AoN archive); ` +
-    `${printing - Object.keys(GATES).length} dedications left to the general default\n` +
+    // Owner ruling Q28 removed the general default — "only feats that say it" — so the rest gate
+    // nothing at all. Saying "left to the default" here would vouch for behaviour that was deleted.
+    `${printing - Object.keys(GATES).length} dedications carry no clause and so are not gated\n` +
     `written: ${BF}, ${CORE}`,
 );

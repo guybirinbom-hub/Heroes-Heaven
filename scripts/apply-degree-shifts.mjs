@@ -60,12 +60,16 @@ const WORSE = 'oneWorse';
  * the same shape every other two-degree record here uses. */
 const CF2S = 'critFailToSuccess';
 
-/** shorthand: e(shift, when, {sk, sv, act, p}) */
+/** shorthand: e(shift, when, {sk, sv, svPick, act, p}) */
 const e = (shift, when, t = {}) => ({
   shift,
   when,
   ...(t.sk ? { skills: t.sk } : {}),
   ...(t.sv ? { saves: t.sv } : {}),
+  /* The save the PLAYER chose, named as the build answer that holds it ("pathToPerfection:0") and
+   * resolved per character by `resolveChoiceSaves` (explain.ts). Never set alongside `sv`: they are
+   * two answers to the same question and `authoredSituational` would star both sets. */
+  ...(t.svPick ? { savesFromChoice: t.svPick } : {}),
   ...(t.act ? { actions: t.act } : {}),
   ...(t.p ? { perception: true } : {}),
 });
@@ -136,9 +140,28 @@ const AUTHORED = {
   'classFeatures/greater-natural-reflexes': saveShift(CF2F, 'reflex', 'on any Reflex save'),
   'classFeatures/greater-performers-heart': saveShift(CF2F, 'will', 'on any Will save'),
   'classFeatures/greater-rogue-reflexes': saveShift(CF2F, 'reflex', 'on any Reflex save'),
-  // The chosen track is a builder answer, so the entry cannot name one save: `all` is honest here —
-  // the player knows which they chose and the note says so.
-  'classFeatures/path-to-perfection': [e(S2C, 'on the save you chose for Path to Perfection', { sv: ALL })],
+  /* "Choose your Fortitude, Reflex, or Will saving throw… When you roll a success on THE CHOSEN
+   * saving throw, you get a critical success instead." ONE track carries this, and `sv: ALL` painted
+   * it on all three: a monk who spent the 7th-level pick on Fortitude read the same upgrade on the
+   * two rows they had deliberately not chosen. Q2's `['all']` is for a clause that applies to saves
+   * generally, which this is the opposite of — the note "on the save you chose" was doing the
+   * narrowing in prose that the star then contradicted.
+   *
+   * The answer is not in the record; it is on the character. `savesFromChoice` names the build answer
+   * (`pathToPerfection` tier 0 = the 7th-level pick) and `resolveChoiceSaves` turns it into the real
+   * save id per character, so an unanswered pick stars nothing rather than everything. The field was
+   * declared for exactly this record and had no reader until now. */
+  'classFeatures/path-to-perfection': [e(S2C, 'on the save you chose for Path to Perfection', { svPick: 'pathToPerfection:0' })],
+  /* ⚠ NOT in the verified defect list, and authored here because the correction above would otherwise
+   * have DELETED a star that was landing on the right row for the wrong reason. Second Path prints
+   * its own copy of the clause — "Choose a different saving throw than the one you chose for your
+   * path to perfection… If you roll a success with the chosen saving throw, you instead critically
+   * succeed" — and had nothing authored: the 11th-level pick's star was arriving only as collateral
+   * from Path to Perfection's `sv: ALL`. Narrowing that entry to tier 0 without this one would have
+   * left an 11th-level monk's second mastered save bare. */
+  'classFeatures/second-path-to-perfection': [
+    e(S2C, 'on the save you chose for Second Path to Perfection', { svPick: 'pathToPerfection:1' }),
+  ],
   // Third Path re-picks: "Choose one of the saving throws you selected for path to perfection OR
   // SECOND PATH TO PERFECTION." Its trigger used to be byte-identical to the line above, naming only
   // the first of the two sources — so a monk who took Fortitude at 7th, Reflex at 11th and Reflex

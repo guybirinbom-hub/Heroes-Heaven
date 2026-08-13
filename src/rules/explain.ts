@@ -274,6 +274,37 @@ function degreeShiftRecords(c: Character, db?: ContentDatabase): [string, Degree
 }
 
 /**
+ * The build answers a `DegreeShift.savesFromChoice` can point at, as `"<field>:<index>"`.
+ *
+ * One entry today, and the shape is deliberately a lookup rather than a special case: the reason it
+ * exists is that a record's shift can land on a save the CHARACTER chose, and Path to Perfection is
+ * simply the first. Anything added here has to be an answer stored on the Character, never one
+ * re-derived from the numbers the answer produced — see `Character.pathToPerfection` for why
+ * `buildFromCharacter`'s rank-reading recovery is not good enough to name a row.
+ */
+const CHOICE_SAVE_ANSWERS: Record<string, (c: Character) => readonly (SaveId | null | undefined)[]> = {
+  pathToPerfection: (c) => c.pathToPerfection ?? [],
+};
+
+/**
+ * Resolve `DegreeShift.savesFromChoice` to the save the player actually picked.
+ *
+ * Returns EMPTY when the pick has not been made — the entry then stars nothing, which is what the
+ * proficiency bump does with an unanswered pick too. Starring all three in the meantime is the
+ * defect this field was added to end: it told a monk who had spent their 7th-level pick on Fortitude
+ * that Reflex and Will crit on a success as well.
+ */
+function resolveChoiceSaves(c: Character, spec: string): string[] {
+  const at = spec.lastIndexOf(':');
+  if (at <= 0) return [];
+  const read = CHOICE_SAVE_ANSWERS[spec.slice(0, at)];
+  const index = Number(spec.slice(at + 1));
+  if (!read || !Number.isInteger(index) || index < 0) return [];
+  const pick = read(c)[index];
+  return pick ? [pick] : [];
+}
+
+/**
  * The ACTION half of ruling Q2 — the same `degreeShifts` field, rendered as a RecordMarker so the
  * shift appears on the action row the player performs, not only on the skill they look up.
  */
@@ -340,6 +371,12 @@ function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituation
         // Q2: a general save clause stars all three. `detail: 'all'` is already what targetMatches
         // reads as all three, so no per-save fan-out is needed here.
         ...(sh.saves ?? []).map((detail) => ({ kind: 'save', detail }) as SituationalTarget),
+        // …and a clause that lands on the save the PLAYER chose stars that one. `saves` could not
+        // say it, so those entries were authored `['all']` and starred two rows the pick never
+        // reached. Set one or the other, never both.
+        ...(sh.savesFromChoice ? resolveChoiceSaves(c, sh.savesFromChoice) : []).map(
+          (detail) => ({ kind: 'save', detail }) as SituationalTarget,
+        ),
         // Perception is a number the player looks up on its own row, exactly as a skill is — see the
         // note on `DegreeShift.perception` for why the field had to exist before any conversion ran.
         ...(sh.perception ? [{ kind: 'perception' } as SituationalTarget] : []),

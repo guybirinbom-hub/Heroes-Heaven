@@ -146,6 +146,101 @@ describe('two circumstances giving the SAME reach are both written', () => {
   });
 });
 
+/*
+ * THE SHAPE: a stated reach that says it COMBINES with a size increase.
+ *
+ * A stated `feet` wins over `add` — right for every record in the lane except one. Giant's Lunge ends
+ * "…but it does combine with abilities that increase your reach due to increased size, such as
+ * Giant's Stature", and with `feet` winning, a raging giant-instinct barbarian holding both feats saw
+ * two separate 10-ft rows and never the 15 ft the printed rule gives. The number was right and the
+ * FIELD could not say the sentence, so `combinesWithSize` / `fromSize` were built rather than the
+ * value re-authored — `add: 5` would combine and would be wrong for anyone whose reach is not 5.
+ */
+describe('a stated reach that combines with a size increase', () => {
+  const giant = (picks: Record<string, string>) =>
+    wielding(build('barbarian', 14, { subclassId: 'giant-instinct', keyAbility: 'str', featPicks: picks }), wield('greataxe'));
+
+  const both = () => giant({ '14:class': 'giants-lunge', '8:class': 'giants-stature' });
+
+  it('writes the combined reach as a THIRD row, not in place of either half', () => {
+    // Each half stays separately reachable — you may have used one action, the other, or both — so the
+    // row can still answer which circumstance you are in.
+    expect(feet(both(), 'Greataxe')).toEqual([5, 10, 10, 15]);
+  });
+
+  it('names both circumstances on the combined row, and stars the record that explains it', () => {
+    const combined = strikeNamed(both(), 'Greataxe').reaches!.find((r) => r.feet === 15)!;
+    expect(combined.when).toContain("Giant's Lunge");
+    expect(combined.when).toContain('Large');
+    // 15 ft is Giant's Lunge's clause doing the work; its text is what the player needs to read.
+    expect(combined.sourceId).toBe('giants-lunge');
+  });
+
+  it('reaches the unarmed attack too — "all your melee weapons and unarmed attacks"', () => {
+    expect(feet(both(), 'Fist')).toEqual([5, 10, 10, 15]);
+  });
+
+  it("combines with a LARGER size increase by that record's own number", () => {
+    // Titan's Stature prints 10 feet, not 5. Both are listed because it is an alternative ("you can
+    // INSTEAD become Huge"), never a second step on top of Large — summing them would invent a reach.
+    const titan = giant({ '14:class': 'giants-lunge', '8:class': 'giants-stature', '12:class': 'titans-stature' });
+    expect(feet(titan, 'Greataxe')).toEqual([5, 10, 10, 15, 15, 20]);
+    expect(feet(titan, 'Greataxe')).not.toContain(25);
+  });
+
+  it('does nothing on its own — the size half has to be in play', () => {
+    expect(feet(giant({ '14:class': 'giants-lunge' }), 'Greataxe')).toEqual([5, 10]);
+    expect(feet(giant({ '8:class': 'giants-stature' }), 'Greataxe')).toEqual([5, 10]);
+  });
+
+  it('leaves a reach weapon alone, so the exclusion still wins over the combination', () => {
+    // "This doesn't increase the reach of any weapon that already has the reach trait" — a longspear
+    // gets the size increase and nothing from Giant's Lunge, combined or otherwise.
+    const ch = wielding(
+      build('barbarian', 14, {
+        subclassId: 'giant-instinct',
+        keyAbility: 'str',
+        featPicks: { '14:class': 'giants-lunge', '8:class': 'giants-stature' },
+      }),
+      wield('longspear'),
+    );
+    expect(feet(ch, 'Longspear')).toEqual([10, 15]);
+  });
+
+  it('does NOT combine for a record whose text does not say it does', () => {
+    // Stretching Reach prints only "the weapon gains a reach of 10 feet". Combining it would be us
+    // writing a rule, which is the failure this lane exists to avoid.
+    const ch = wielding(
+      build('barbarian', 14, {
+        ancestryId: 'minotaur',
+        subclassId: 'giant-instinct',
+        keyAbility: 'str',
+        featPicks: { '5:ancestry': 'stretching-reach', '8:class': 'giants-stature' },
+      }),
+      wield('greatsword'),
+    );
+    expect(feet(ch, 'Greatsword')).toEqual([5, 10, 10]);
+    expect(feet(ch, 'Greatsword')).not.toContain(15);
+  });
+
+  it('prints the combined number on the sheet, not only in the derived value', () => {
+    const text = renderText(<MainTab character={both()} content={db} onPlay={noop} />);
+    expect(text).toContain('Reach 5 ft/10 ft*/10 ft*/15 ft*');
+  });
+
+  it("only Giant's Lunge carries the clause, and every fromSize rider states an increase", () => {
+    // The data half, measured rather than asserted: if an import starts marking more records, this is
+    // the line that notices.
+    type Rider = { fromSize?: true; combinesWithSize?: true; add?: number };
+    const riders = (rec: { strikeReach?: Rider | Rider[] }): Rider[] =>
+      Array.isArray(rec.strikeReach) ? rec.strikeReach : rec.strikeReach ? [rec.strikeReach] : [];
+    const all = [...Object.entries(db.feats), ...Object.entries(db.items)] as [string, { strikeReach?: Rider | Rider[] }][];
+    expect(all.filter(([, r]) => riders(r).some((x) => x.combinesWithSize)).map(([id]) => id)).toEqual(['giants-lunge']);
+    // `fromSize` without an `add` would be inert — the combination would have no number to add.
+    for (const [id, rec] of all) for (const r of riders(rec)) if (r.fromSize) expect(r.add, id).toBeGreaterThan(0);
+  });
+});
+
 describe('a reach rider only reaches the Strikes its record names', () => {
   it("Lunge's +5 lands on a wielded weapon and not on your fist", () => {
     const ch = wielding(build('fighter', 5, { featPicks: { '2:class': 'lunge' } }), wield('longsword'));
