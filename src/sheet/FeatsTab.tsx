@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import type { Character, ContentDatabase } from '../rules/types';
 import { classFeatureDescription } from '../rules/featureText';
 import { subclassFeatureIds } from '../rules/derive';
+import { markNote, nameOfRecord, recordMarkersFor } from '../rules/explain';
 import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, type FeatEntry } from './FeatDetail';
 import { toPlainText } from './RichText';
@@ -59,8 +60,19 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
     id;
   // "Choose one of N" picks, so a row can say WHICH option this character took (and why it matters).
   const picksOf = (recordId: string) => (character.effectPicks ?? []).filter((p) => p.recordId === recordId);
-  const pickSuffix = (recordId: string) => {
-    const p = picksOf(recordId);
+  /**
+   * `own` is the record's OWN `choice` label, which the caller has already printed.
+   *
+   * 23 records carry BOTH a `choice` and an `effectChoices` asking the same question — Elemental
+   * Wrath, Nephilim Resistance, Draconic Resistance … — and both answers reached this line, so the
+   * row read "Elemental Wrath (Fire) (Fire)". Where the `choice` has no consumer at all the picker
+   * itself is deleted (scripts/apply-builder-choice-sets.mjs); where it grants something — Molten
+   * Wit's skill, Hold Mark's — both lanes have to stay, and this is where the duplicate stops being
+   * printed.
+   */
+  const pickSuffix = (recordId: string, own?: string) => {
+    const same = (s: string) => s.trim().toLowerCase() === (own ?? "\u0000").trim().toLowerCase();
+    const p = picksOf(recordId).filter((x) => !own || !same(x.label));
     return p.length ? ` (${p.map((x) => x.label).join(', ')})` : '';
   };
   const withPicks = (recordId: string, description: string) => {
@@ -74,6 +86,19 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
      * Nectar's critical-hit rider. Distinct from `dataWarning`, which says something is BROKEN and
      * shows in the red "Missing data" panel.
      */
+    /*
+     * Marks another record put ON THIS ONE (Principle A / Principle C). The record's own `note`
+     * below says "here is the part you apply yourself"; this says "something ELSE of yours changed
+     * this", attributed to the source so the player can tell the two apart — which is exactly what
+     * gold answer #1 asked for on Lay on Hands.
+     *
+     * `markNote` rather than `m.note`: 40 of the shipped marks open with their own record's name, and
+     * this line prints that name itself, so the raw note would render "Weapon Supremacy: Weapon
+     * Supremacy: …" for a third of the table.
+     */
+    for (const m of recordMarkersFor(character, content, 'feature', recordId)) {
+      out += `<p><strong>${nameOfRecord(content, m.sourceId)}:</strong> ${markNote(content, m)}</p>`;
+    }
     const own = (content.feats[recordId] ?? content.classFeatures[recordId])?.note;
     if (own) out += `<p><strong>Note:</strong> ${own}</p>`;
     return out;
@@ -84,12 +109,14 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
     entries.push({
       key: `feat:${fc.featId}:${fc.level}`,
       featId: fc.featId,
-      name: (fc.choice ? `${feat.name} (${fc.choice.label})` : feat.name) + pickSuffix(fc.featId),
+      name: (fc.choice ? `${feat.name} (${fc.choice.label})` : feat.name) + pickSuffix(fc.featId, fc.choice?.label),
       level: fc.level,
       traits: feat.traits,
       actionCost: feat.actionCost,
       description: withPicks(fc.featId, feat.description),
       descRefs: feat.descRefs,
+      // The enhancement tier, if an augmentation is pointing at this feat.
+      enhancedBy: (character.enhancements ?? []).find((e) => e.featId === fc.featId)?.from,
       isFeature: false,
       // build.ts sets `grantedBy` from heritages, class features, invested items and subclass /
       // extra-choice options as well as feats — so resolving the name through `content.feats` alone

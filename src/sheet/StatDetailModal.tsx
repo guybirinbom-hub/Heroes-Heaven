@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import type { ActionCost, Character, ContentDatabase } from '../rules/types';
 import { formatMod } from '../rules/derive';
-import { RANK_LABEL, nameOfRecord, recordMarkersFor, type StatBreakdown } from '../rules/explain';
+import { RANK_LABEL, markTooltip, recordMarkersFor, type StatBreakdown } from '../rules/explain';
 import { skillActionsFor, type SkillAction } from '../rules/skillActions';
 import { DescriptionModal } from './DescriptionModal';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
@@ -186,7 +186,7 @@ export function StatDetailModal({
                         if (!marks.length) return null;
                         const val = marks.find((m) => m.value)?.value;
                         return (
-                          <span className="action-mark" title={marks.map((m) => `${nameOfRecord(content, m.sourceId)}: ${m.note}`).join('\n')}>
+                          <span className="action-mark" title={markTooltip(content, marks)}>
                             {val && <span className="action-mark-val">({val})</span>}
                             <SituationalStar />
                           </span>

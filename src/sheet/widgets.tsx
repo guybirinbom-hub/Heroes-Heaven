@@ -57,9 +57,11 @@ function Glyph({ char, title }: { char: string; title: string }) {
   );
 }
 
-/** True only for an action cost that ActionGlyph renders as glyph(s) — actions/reaction/free/variable.
- *  Passive and duration costs render nothing, so a caller's "Activate" label/row must gate on this to
- *  avoid an empty glyph slot. */
+/** True only for an action cost that ActionGlyph renders as a GLYPH — actions/reaction/free/variable.
+ *  A passive cost renders nothing, so a caller's "Activate" label/row must gate on this to avoid an
+ *  empty glyph slot. A DURATION cost now renders its printed words instead of a glyph, and is still
+ *  excluded here on purpose: no item carries one, and an item "Activate" row is a different question
+ *  from "is this a thing the player DOES on their turn" (that gate is MainTab's own, widened there). */
 export function isActionCost(c?: ActionCost): boolean {
   return !!c && (c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable');
 }
@@ -74,6 +76,16 @@ export function ActionGlyph({ cost }: { cost?: ActionCost }) {
       return <Glyph char="4" title="Free action" />;
     case 'reaction':
       return <Glyph char="5" title="Reaction" />;
+    // A DURATION cost ("10 minutes") has no glyph in the Pathfinder2eActions font, so it renders as
+    // the printed words. Before this it fell through to `default: return null` and the cost slot came
+    // out EMPTY — which is a large part of why `ActionCost {type:'duration'}` had ZERO records using
+    // it: a record authored with one was invisible twice over.
+    case 'duration':
+      return (
+        <span className="pf2-action-duration" title={cost.text}>
+          {cost.text}
+        </span>
+      );
     case 'variable':
       return (
         <span className="pf2-action-range">

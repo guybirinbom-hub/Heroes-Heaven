@@ -13,6 +13,7 @@
  *
  *   npx jiti scripts/feat-evidence.mjs                    # all 500, -> scripts/audit/feat-500-evidence.json
  *   npx jiti scripts/feat-evidence.mjs --limit 20         # smoke test
+ *   npx jiti scripts/feat-evidence.mjs --in scripts/audit/batch-001.json --out scripts/audit/batch-001-evidence.json
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -51,7 +52,16 @@ for (const k of new Set([...Object.keys(seedContent), ...Object.keys(core)])) {
   db[k] = { ...(seedContent[k] ?? {}), ...(core[k] ?? {}) };
 }
 
-const sample = JSON.parse(read('scripts/audit/feat-500.json'));
+/* The work list is a parameter, not a constant. It was the frozen 500-feat sample; from 2026-08-13 the
+ * audit runs in LEVEL ORDER (scripts/feat-audit-order.mjs cuts scripts/audit/batch-NNN.json), and the
+ * 500 stays only as the fixed instrument for "did the defect rate move". Both are {featIds:[...]}.
+ * Defaults are the old paths so every existing invocation keeps working unchanged. */
+/* `--only a,b,c` skips the work list entirely and reads exactly those feats. This is the tight loop:
+ * fixing one feat and asking "what does the sheet do now?" should take seconds, not a batch run.
+ * `builder-evidence.mjs` has had this flag all along; the two now match. */
+const ONLY = arg('only', '').split(',').map((s) => s.trim()).filter(Boolean);
+const SAMPLE_IN = arg('in', 'scripts/audit/feat-500.json');
+const sample = ONLY.length ? { featIds: ONLY } : JSON.parse(read(SAMPLE_IN));
 const LIMIT = Number(arg('limit', 0)) || sample.featIds.length;
 
 /* ── Host selection ────────────────────────────────────────────────────────────────────────────
@@ -270,8 +280,9 @@ for (const featId of sample.featIds.slice(0, LIMIT)) {
  * decides whether to launch it is "how many feats did my change actually move?". Answering it here —
  * before the merge, before a single token — is why the hash is worth carrying.
  * The field is internal: `merge-evidence.mjs` copies named fields, so it never reaches the reader. */
-const OUT = 'scripts/audit/feat-500-evidence.json';
-const previous = existsSync(join(root, OUT)) ? JSON.parse(read(OUT)) : null;
+const OUT = arg('out', ONLY.length ? 'scripts/audit/feat-only-evidence.json' : 'scripts/audit/feat-500-evidence.json');
+// A --only run is not comparable with a full one, so it must never overwrite the run's delta baseline.
+const previous = !ONLY.length && existsSync(join(root, OUT)) ? JSON.parse(read(OUT)) : null;
 for (const p of packs) p.hash = packHash(p);
 const delta = packDelta(previous, packs);
 

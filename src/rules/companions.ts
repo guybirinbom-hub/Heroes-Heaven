@@ -11,13 +11,13 @@
  * The maturity ranks + HP formula are sourced from the published Animal Companion
  * rules (Archives of Nethys), authored into COMPANION_FORMULA below.
  */
-import { deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl, bestHandwrapsRunes, bestMpHandwraps } from './derive';
+import { abilityModOf, deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl, bestHandwrapsRunes, bestMpHandwraps } from './derive';
 import { mpWeaponRefine, mpImbuedDamageTerms, type MpDamage } from './monsterParts';
 import { abpOn, abpAttack, abpStrikingDice } from './abp';
 import { conditionPenalty } from './conditions';
 import { modeNumberBonus } from './modes';
 import { specificFamiliar } from './specificFamiliars';
-import { companionModKeys, COMPANION_MODS, CREATURE_OFFERS, type CreatureOffer } from './companionGrants';
+import { companionModKeys, COMPANION_MODS, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, type CreatureOffer } from './companionGrants';
 import type {
   AbilityId,
   ActionCost,
@@ -37,6 +37,10 @@ import type {
 
 /** A save's defining ability → the save name a mode targets (modes match saves by name, not ability). */
 const SAVE_NAME: Partial<Record<AbilityId, string>> = { con: 'fortitude', dex: 'reflex', wis: 'will' };
+
+/** Attribute display names, for the one printed companion clause that NAMES one — "The familiar uses
+ *  your Intelligence modifier to determine its Perception, Acrobatics, and Stealth modifiers". */
+const ABILITY_FULL: Record<AbilityId, string> = { str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma' };
 
 /** young → mature → one of the four advancements → its specialized form. Nimble and savage are the
  *  Player Core pair; indomitable (megafauna), genie-touched and unseen (cryptid) are taken INSTEAD of
@@ -330,6 +334,20 @@ function rankMax(a: ProficiencyRank, b?: ProficiencyRank): ProficiencyRank {
   return b && RANK_ORDER.indexOf(b) > RANK_ORDER.indexOf(a) ? b : a;
 }
 
+/**
+ * The NAME of the character's Hunter's Edge, or null.
+ *
+ * The ranger's Hunter's Edge IS its subclass (`classes.ranger.subclass.options` — flurry, outwit,
+ * precision, vindicator), and a dual-class ranger carries it on the second class, so both are read
+ * rather than assuming the primary. Exported because Animal Companion (Ranger) prints "and your
+ * hunter's edge benefit IF YOU HAVE ONE", and the companion block cannot see the owner's class.
+ */
+export function huntersEdgeName(character: Character, content: ContentDatabase): string | null {
+  const opt = (cid?: string | null, sid?: string | null) =>
+    cid === 'ranger' && sid ? content.classes.ranger?.subclass?.options?.find((o) => o.id === sid)?.name ?? null : null;
+  return opt(character.classId, character.subclassId) ?? opt(character.classId2, character.subclassId2);
+}
+
 export function deriveAnimalCompanion(
   cfg: CompanionConfig,
   type: AnimalCompanionType,
@@ -340,6 +358,10 @@ export function deriveAnimalCompanion(
   modes: ModeDef[] = [],
   /** The OWNER's feat ids — companion-modifying feats (COMPANION_MODS: Celestial Mount, …) key off them. */
   ownerFeatIds?: Set<string>,
+  /** The owner's Hunter's Edge NAME, when they have one. Animal Companion (Ranger) is the one printed
+   *  companion clause whose text depends on something the companion cannot see — "and your hunter's
+   *  edge benefit IF YOU HAVE ONE" — so the caller resolves it with `huntersEdgeName` and passes it. */
+  huntersEdge?: string | null,
 ): AnimalCompanionBlock {
   // Upgrade feats (Advanced/Incredible/Paragon Companion) raise the maturity FLOOR — in this engine a
   // "paragon companion" is the specialized rung of the same ladder, so the feat can only improve it.
@@ -519,6 +541,26 @@ export function deriveAnimalCompanion(
       if (mod.note) modNotes.push(mod.note);
     }
   }
+  /*
+   * Animal Companion (Ranger), second sentence: *"When you Hunt Prey, your animal companion gains the
+   * action's benefits and your hunter's edge benefit if you have one."* It reached nothing — the only
+   * mention of this id in src/ was companionGrants.ts, whose note is the generic "choose its type and
+   * advance it in the Edit tab" — so a precision ranger's companion shared the precision damage, and a
+   * flurry ranger's its multiple-attack-penalty progression, with nothing on either sheet saying so.
+   *
+   * NOT a COMPANION_MODS row: that table's `note` is a fixed string and "if you have one" makes this
+   * sentence different for every edge, and different again for someone who took the feat through an
+   * archetype and has none. The SURFACE is the same one — `modNotes` — only the text is finished here.
+   * The character's own half of the clause is the Hunt Prey action marker,
+   * RECORD_MARKERS['animal-companion-ranger'].
+   */
+  if (ownerFeatIds?.has('animal-companion-ranger')) {
+    modNotes.push(
+      huntersEdge
+        ? `Animal Companion (Ranger): when you Hunt Prey, the companion you gained from this feat gains Hunt Prey's benefits against that target, and your ${huntersEdge} hunter's edge benefit.`
+        : "Animal Companion (Ranger): when you Hunt Prey, the companion you gained from this feat gains Hunt Prey's benefits against that target, and your hunter's edge benefit if you have one.",
+    );
+  }
 
   return {
     name: cfg.name || type.name,
@@ -594,6 +636,12 @@ export interface FamiliarBlock extends Defenses {
     note?: string;
     source?: SourceInfo;
   };
+  /** Skill rows a plain familiar's block has none of, present only when the granting record names the
+   *  master attribute they and Perception all come from (Alchemical Familiar's Intelligence). The
+   *  clause had no field to be wrong on, which is why it read as "not modelled" rather than "wrong". */
+  skills?: { name: string; modifier: number }[];
+  /** The muted line under Perception, when a grant changed where those three modifiers come from. */
+  statNote?: string;
   /** The record OFFER the PLAYER added this creature from (Out of Hand's severed arm) — carried whole
    *  so the card can print what offered it and the printed rules the numbers can't express. */
   offer?: CreatureOffer;
@@ -614,7 +662,20 @@ export function deriveFamiliar(
   // a severed limb.
   const offer = cfg.offerSlug ? CREATURE_OFFERS[cfg.offerSlug] : undefined;
   const noAbilities = !!offer?.familiar?.noAbilities;
-  const own = noAbilities ? [] : cfg.abilities ?? [];
+  // The record that GRANTED this familiar, when one did (Alchemical Familiar, Friend of the Sea, …).
+  const grant = cfg.grantSlug ? FEAT_COMPANION_GRANTS[cfg.grantSlug] : undefined;
+  // FREE locked abilities are the RECORD's, not the player's: they are added below through the granted
+  // channel, so they cost none of `abilityBudget` and cannot be toggled off. Filtered out of the chosen
+  // list too, because CompanionsTab used to SEED every locked id into `cfg.abilities` and a companion
+  // materialized before that fix still carries them there — the two paths must not disagree.
+  // A locked ability that COUNTS (Corgi Mount's Scent, Draconic Familiar's Dragon) is deliberately NOT
+  // in this set: it is one of the player's picks, seeded for them, and it spends a slot as printed.
+  const locked = new Set(grant?.lockedFree ? grant.lockedAbilities ?? [] : []);
+  const own = (noAbilities ? [] : cfg.abilities ?? []).filter((id) => !locked.has(id));
+  // "The familiar uses your Intelligence modifier to determine its Perception, Acrobatics, and Stealth
+  // modifiers." A familiar is always your level, so the modifier is that attribute's modifier + level.
+  const statAb = grant?.statAbility;
+  const statMod = statAb ? abilityModOf(character, statAb) + character.level : null;
   // Abilities an OWNER's feat grants ("Your familiar gains the Lightning Needles ability"). The
   // ability records already shipped and the roster already rendered them; nothing attached one, so
   // those feats left the familiar's block exactly as it was. They do NOT cost an ability slot.
@@ -625,6 +686,11 @@ export function deriveFamiliar(
       if (!ownerFeats.has(slug) || !mod.kinds.includes('familiar')) continue;
       for (const id of mod.familiarAbilities ?? []) if (!grantedAbilityIds.has(id)) grantedAbilityIds.set(id, slug);
     }
+    // "…which has the Construct familiar ability; this is permanent … and doesn't count against your
+    // usual limit of familiar abilities (typically 2)." Same channel as an owner-feat grant, so the
+    // block prints them "from a feat", the budget line does not count them, and `has()` below still
+    // sees them — a granted Flier still flies, and a granted Tough would still raise HP.
+    if (cfg.grantSlug) for (const id of locked) if (!grantedAbilityIds.has(id)) grantedAbilityIds.set(id, cfg.grantSlug);
   }
   const chosen = new Set(own);
   const abilities = [
@@ -665,6 +731,20 @@ export function deriveFamiliar(
     // Spellslime's Ooze Defense: its AC is 10 + your level, NOT equal to yours (immune to crits/precision).
     ...(sf?.id === 'spellslime'
       ? { ac: 10 + character.level + conditionPenalty(conditions, 'dex', 'ac') + modeNumberBonus(modes, { kind: 'ac' }) }
+      : {}),
+    // All three printed modifiers move together, so one grant field carries all three. This OVERRIDES
+    // the Perception the `masterDefenses` spread just above copied from the master, and Acrobatics and
+    // Stealth are rows the block never had at all — the clause could not be applied OR shown, and it
+    // could not track Intelligence as it changed.
+    ...(statAb && statMod != null
+      ? {
+          perception: statMod + conditionPenalty(conditions, 'wis', 'perception') + modeNumberBonus(modes, { kind: 'perception' }),
+          skills: [
+            { name: 'Acrobatics', modifier: statMod + conditionPenalty(conditions, 'dex', 'skill') },
+            { name: 'Stealth', modifier: statMod + conditionPenalty(conditions, 'dex', 'skill') },
+          ],
+          statNote: `Uses your AC and saves; its Perception, Acrobatics and Stealth are your ${ABILITY_FULL[statAb]} modifier + your level. HP equal to ${5 + (hasTough ? 2 : 0)} × your level.`,
+        }
       : {}),
     abilities,
     specific: sf
@@ -955,6 +1035,41 @@ export function deriveEidolon(
       named
         ? `Pushing Attack: its ${named.name} unarmed attack gains the Push action (the attack must have the shove trait).`
         : 'Pushing Attack: choose the primary or secondary unarmed attack in the builder — that attack gains the Push action (it must have the shove trait).',
+    );
+  }
+
+  /*
+   * Advanced Weaponry. *"Choose one of your eidolon's starting melee unarmed attacks. It gains one of
+   * the following traits, chosen when you gain the feat: disarm, grapple, nonlethal, shove, trip, or
+   * versatile bludgeoning, piercing, or slashing."* TWO questions, and the record asked only the
+   * second: the trait pick was marked "Recorded only" and reached nothing, so the attack the whole
+   * feat is about was unchanged and Grasping Limbs had no grapple to point at.
+   *
+   * The trait is the feat's own `choice`; WHICH attack is its `effectChoices` answer (the sibling
+   * evolution feats ask the same question through `choice`, but each of those has only one question to
+   * spend it on). `effectPicks` carries the option LABEL, not its value — the same read Dual Studies
+   * does below.
+   *
+   * attacks[0]/[1] are Primary/Secondary, built above in that order; the COMPANION_MODS loop only ever
+   * PUSHES granted Strikes onto the end, so the two indices stay put.
+   */
+  if (featIdSet.has('advanced-weaponry')) {
+    const trait = character.feats.find((f) => f.featId === 'advanced-weaponry')?.choice?.value;
+    const pick = (character.effectPicks ?? []).find((p) => p.recordId === 'advanced-weaponry' && p.choiceId === 'eidolon-attack');
+    const named = pick ? (/^secondary/i.test(pick.label) ? attacks[1] : attacks[0]) : undefined;
+    // The printed option names become the app's own suffixed traits — the vocabulary every weapon
+    // record, `traitFamily` and the trait glossary already use, so the Strike row prints it with the
+    // same "each Strike can instead deal the listed damage type" description a versatile weapon gets.
+    // This app models versatile as a trait everywhere; it has no per-Strike damage-type toggle for
+    // anyone, so inventing one here would be a surface nothing else has.
+    const VERSATILE: Record<string, string> = { 'versatile-bludgeoning': 'versatile-b', 'versatile-piercing': 'versatile-p', 'versatile-slashing': 'versatile-s' };
+    const VTYPE: Record<string, string> = { 'versatile-b': 'bludgeoning', 'versatile-p': 'piercing', 'versatile-s': 'slashing' };
+    const added = trait ? VERSATILE[trait] ?? trait : undefined;
+    if (named && added && !named.traits.includes(added)) named.traits.push(added);
+    evoNotes.push(
+      named && added
+        ? `Advanced Weaponry: its ${named.name} unarmed attack gains the ${added.startsWith('versatile-') ? `versatile ${added.slice(-1).toUpperCase()}` : added} trait${VTYPE[added] ? ` — each Strike with it can deal ${VTYPE[added]} damage instead of its listed type` : ''}.`
+        : "Advanced Weaponry: choose the trait AND which of the eidolon's starting melee unarmed attacks gains it in the builder — the trait is then added to that Strike.",
     );
   }
 

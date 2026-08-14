@@ -32,10 +32,20 @@ export interface Prefs {
    *   'characters' — stay on the Characters list, the boot screen, and go no further.
    *  'last' is the long-standing behaviour and stays the default. */
   startupScreen: 'last' | 'characters';
+  /** The undo/redo arrow pair — the sheet header, the builder header, and the floating pair on every
+   *  other screen:
+   *    'auto' — shown on desktop, hidden on phones. A phone header fits about four controls and undo
+   *             isn't one of the four; the pair crowded out the ones that are.
+   *    'on'   — always shown, phones included.
+   *    'off'  — never shown.
+   *  Ctrl+Z / Ctrl+Shift+Z keep working in every case: this hides the buttons, not the feature. A
+   *  tri-state rather than a boolean because prefs sync between a user's devices, so a plain
+   *  `hidden: false` chosen on a desktop would travel to the phone and put them back. */
+  undoButtons: 'auto' | 'on' | 'off';
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';
-const DEFAULTS: Prefs = { popupSizeSync: false, showNicheSources: false, pinnedModes: [], startupScreen: 'last' };
+const DEFAULTS: Prefs = { popupSizeSync: false, showNicheSources: false, pinnedModes: [], startupScreen: 'last', undoButtons: 'auto' };
 
 let prefs: Prefs = { ...DEFAULTS };
 const listeners = new Set<(p: Prefs) => void>();

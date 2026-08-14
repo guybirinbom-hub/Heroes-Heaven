@@ -132,6 +132,31 @@ function AppearanceSection() {
         your roster instead.
       </p>
 
+      <div className="menu-label">Undo and redo buttons</div>
+      <div className="menu-row">
+        {(
+          [
+            ['auto', 'Desktop only'],
+            ['on', 'Always show'],
+            ['off', 'Never show'],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            key={id}
+            className={'chip' + ((prefs.undoButtons ?? 'auto') === id ? ' active' : '')}
+            onClick={() => setPref('undoButtons', id)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <p className="settings-desc">
+        The ↩ ↪ arrow pair in the character sheet header, the builder header, and the floating pair on the other screens.{' '}
+        <strong>Desktop only</strong> hides them on phones, where the header has room for the controls you reach for
+        constantly and not much else. <strong>Ctrl+Z</strong> and <strong>Ctrl+Shift+Z</strong> keep working whichever you
+        pick — this hides the buttons, not undo itself.
+      </p>
+
       <div className="menu-label">Sources</div>
       <div className="menu-row">
         <button className={'chip' + (prefs.showNicheSources ? ' active' : '')} onClick={() => setPref('showNicheSources', !prefs.showNicheSources)}>

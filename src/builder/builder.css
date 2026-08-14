@@ -368,7 +368,15 @@
   /* Sits in the left column; main content stays first in the DOM for sensible tab order. */
   order: -1;
   position: sticky;
-  top: 14px;
+  /* `top: 0`, not 14px, and the 14px gap is still there when it sticks.
+     .builder-body is BOTH the grid and the scroll container, and Chromium measures a sticky inset
+     from the scroller's CONTENT box — which the container's own 14px padding has already moved down.
+     `top: 14px` therefore counted that padding twice: the rail rendered 14px BELOW the level card it
+     is supposed to line up with. It only showed once the right-hand column grew taller than the rail
+     (a level-0 page with a class chosen); while the rail was the taller of the two, the shift was
+     clamped by the grid area and the two happened to line up, which is why every other level looked
+     right. */
+  top: 0;
   background: var(--app-surface);
   border: var(--app-bw) solid var(--app-border);
   border-radius: var(--app-radius);

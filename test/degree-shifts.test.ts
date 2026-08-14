@@ -178,7 +178,16 @@ describe('the rule is stated ONCE', () => {
   // The conversion's whole point: ~110 of these lived as PROSE in situationalBonuses.ts, in a `bonus`
   // string or a RecordMarker value. Leaving both would put the same sentence on the sheet twice from
   // two sources that cannot be kept in step — exactly the drift the structured field was built to end.
-  const DEGREE_PROSE = /(critical success instead|becomes a critical success|is a critical success|is a failure instead|becomes a failure instead|critical failure is a failure|is a success instead|one degree of success|one degree better|success → crit|success -> crit|crit fail → fail|crit fail -> fail)/i;
+  /*
+   * ⚠ THE ARTICLE IS OPTIONAL, and that is why this guard is wider than it looks.
+   *
+   * Breath Control's registry entry shipped green saying "(success becomes critical success)" beside
+   * a structured `successToCrit` shift on the same record, because every alternative here demanded
+   * "becomes A critical success". One missing word, and every save popup printed the upgrade TWICE
+   * from two registries that can drift apart. The `(an? )?` forms close that hole; the pattern is
+   * deliberately wider than the prose any current record uses.
+   */
+  const DEGREE_PROSE = /(critical success instead|becomes (an? )?critical success|is (an? )?critical success|is (an? )?failure instead|becomes (an? )?failure instead|critical failure is (an? )?failure|is (an? )?success instead|one degree of success|one degree better|one degree worse|success → crit|success -> crit|crit fail → fail|crit fail -> fail)/i;
 
   it('no record carries a degree shift in BOTH the structured field and the situational registry', () => {
     const con = db();
@@ -284,6 +293,76 @@ describe('degree shifts that make the result WORSE', () => {
     expect(lines.length).toBe(2);
     expect(lines.some((t) => t.includes('critical failure instead'))).toBe(true);
     expect(lines.some((t) => t.includes('critical success instead'))).toBe(true);
+  });
+
+  it('a two-rung shift stars the skill AND marks the action it rides (Aeonbound)', () => {
+    /*
+     * "Once per day, when someone rolls a failure or a critical failure on a check to Treat YOUR
+     * Wounds, you can … increase the degree of success by one step." (AoN feat-7195)
+     *
+     * The record carried NOTHING before this pass — neither surface. Ruling F does not withdraw the
+     * star: F governs a bonus that lands on a TEAMMATE's statistic, and here the benefit lands on
+     * you, while "someone" includes you because you may Treat your own Wounds. So both surfaces, out
+     * of the one structured entry, with the `when` doing the self-limiting.
+     */
+    const con = db();
+    const ch = withFeat('fighter', 3, 'aeonbound');
+    expect(statHasSituational(ch, { kind: 'skill', skill: 'medicine' }, con)).toBe(true);
+    const line = (explainStat(ch, con, { kind: 'skill', skill: 'medicine' }).situational ?? [])
+      .find((s) => s.sourceId === 'aeonbound');
+    expect(line, 'no Medicine line from Aeonbound').toBeDefined();
+    expect(line!.text).toMatch(/one step better/);
+    expect(line!.text).toMatch(/Treat your Wounds/);
+
+    // …and the Treat Wounds row carries BOTH of the feat's clauses: the shift (via degreeShiftMarkers)
+    // and the healer's-toolkit waiver (a RECORD_MARKERS row, which no structured field can say).
+    const marks = recordMarkersFor(ch, con, 'action', 'treat-wounds').filter((m) => m.sourceId === 'aeonbound');
+    expect(marks.length).toBe(2);
+    expect(marks.some((m) => /one degree better/.test(m.value ?? ''))).toBe(true);
+    expect(marks.some((m) => /without a healer's toolkit/.test(m.note))).toBe(true);
+  });
+
+  it('a shift naming its Lores stars only those, not every Lore (Ancestral Insight)', () => {
+    /*
+     * `targetMatches` reads a bare `lore` target as EVERY `lore:*` row the character owns, so
+     * `skills: ['lore']` painted this critical-failure upgrade onto Warfare Lore, Sailing Lore and
+     * anything else the player had typed — a rule that can never fire there. Two more records carried
+     * the same shape; `npm run scan:lore-wildcard` holds the count at zero.
+     */
+    const con = db();
+    const ch = withFeat('fighter', 3, 'ancestral-insight');
+    expect(statHasSituational(ch, { kind: 'skill', skill: 'lore:Alghollthu' }, con)).toBe(true);
+    expect(statHasSituational(ch, { kind: 'skill', skill: 'lore:Azlanti' }, con)).toBe(true);
+    // The bug: before the narrowing this was TRUE for every Lore the character owns.
+    expect(statHasSituational(ch, { kind: 'skill', skill: 'lore:Warfare' }, con)).toBe(false);
+    expect(statHasSituational(ch, { kind: 'skill', skill: 'lore:Sailing' }, con)).toBe(false);
+  });
+
+  it('the other two wildcard Lores were narrowed as well', () => {
+    // Found by the scan, not by the audit — neither record had ever been read.
+    const con = db();
+    const xun = withFeat('fighter', 9, 'golden-league-xun-dedication');
+    expect(statHasSituational(xun, { kind: 'skill', skill: 'lore:Underworld' }, con)).toBe(true);
+    expect(statHasSituational(xun, { kind: 'skill', skill: 'lore:Warfare' }, con)).toBe(false);
+
+    const chef = withFeat('fighter', 3, 'wandering-chef-dedication');
+    expect(statHasSituational(chef, { kind: 'skill', skill: 'lore:Cooking' }, con)).toBe(true);
+    expect(statHasSituational(chef, { kind: 'skill', skill: 'crafting' }, con)).toBe(true);
+    expect(statHasSituational(chef, { kind: 'skill', skill: 'lore:Warfare' }, con)).toBe(false);
+  });
+
+  it('Breath Control states the crit upgrade once, not twice', () => {
+    // The registry `when` said "(success becomes critical success)" while the record's own
+    // `degreeShifts` entry said the same thing, and explain.ts merges both into ONE star list.
+    const con = db();
+    const ch = withFeat('fighter', 3, 'breath-control');
+    const lines = (explainStat(ch, con, { kind: 'save', save: 'will' }).situational ?? [])
+      .filter((s) => s.sourceId === 'breath-control')
+      .map((s) => s.text);
+    expect(lines.filter((t) => /critical success/i.test(t)).length).toBe(1);
+    // Both halves still reach the player: the +1 and the upgrade, one line each.
+    expect(lines.some((t) => /^\+1 circumstance/.test(t))).toBe(true);
+    expect(lines.length).toBe(2);
   });
 
   it('the apply script no longer lists any of them as unbuildable', () => {

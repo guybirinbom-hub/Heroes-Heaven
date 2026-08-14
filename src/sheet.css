@@ -1766,6 +1766,23 @@ body {
   font-size: 10.5px;
   opacity: 0.85;
 }
+/* Principle C: what a state will grant, readable before you switch it on. */
+.state-grants {
+  margin-top: 6px;
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--app-text-dim);
+}
+.state-grants .sg-head {
+  display: block;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.8;
+}
+.state-grants .sg-from {
+  font-weight: 600;
+  color: var(--app-text);
+}
 /* "Needs Rage / Panache" badge on a gated action row (still readable + clickable, just not usable). */
 .needs-badge {
   display: inline-flex;
@@ -4694,6 +4711,64 @@ button.strike-name:hover {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Drag-to-reorder. The dragged row fades; the row you'd land on grows an accent rule along its top
+   edge, which is where the page will end up. */
+.note-item[draggable='true'] {
+  cursor: grab;
+}
+.note-item.dragging {
+  opacity: 0.4;
+  cursor: grabbing;
+}
+.note-item.drop-target {
+  box-shadow: inset 0 2px 0 0 var(--app-accent);
+}
+/* Right-click / long-press menu for a page row. Positioned at the pointer (hence `fixed`), unlike
+   .topmenu which hangs off its trigger button. */
+.note-menu {
+  position: fixed;
+  z-index: 50;
+  min-width: 178px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow);
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.note-menu-title {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  padding: 4px 10px 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-bottom: var(--app-bw) solid var(--app-border);
+  margin-bottom: 4px;
+}
+.topmenu-item:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+.topmenu-item:disabled:hover {
+  background: none;
+}
+.topmenu-item.danger,
+.topmenu-item.danger i {
+  color: var(--app-bad);
+}
+/* The empty Notes tab: one centred column filling the space the editor would have occupied, rather
+   than a thin dashed strip in the corner of it. `.content` is a flex ROW, so without flex:1 the
+   placeholder shrink-wraps to the width of the words inside it. */
+.notes-empty {
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  gap: 12px;
+  min-height: calc(100vh / var(--zoom, 1) - 132px);
+  justify-content: center;
+}
 .editor-card {
   padding: 0;
   display: flex;
@@ -4737,6 +4812,23 @@ button.strike-name:hover {
 .icon-search-row .search {
   min-width: 0;
   width: 100%;
+}
+/* The colour strip under the icon grid. `flex: none` matters: the grid above it is the scroller, and
+   without it a long icon list squeezes the swatches to nothing. */
+.icon-color-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: none;
+  padding: 10px 12px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.icon-color-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--app-text-dim);
+  margin-right: 2px;
 }
 .icon-grid {
   display: flex;
@@ -4965,28 +5057,26 @@ button.strike-name:hover {
 
 /* ---- Notes page: the reading surface ----
    Scoped to `.editor-card` so the small rich-text boxes inside the item editor (.ie-rich) keep their
-   own compact look. Notes are prose the player writes and re-reads at the table, and prose set edge to
-   edge at 14px in a 900px column reads like a form field. What follows is the usual typographic kit for
-   long-form text: one comfortable measure, a real heading scale with space earned above each level,
-   and quiet marks (rules, quotes, markers) that don't compete with the words. */
+   own compact look. What follows is the usual typographic kit for long-form text: a real heading scale
+   with space earned above each level, and quiet marks (rules, quotes, markers) that don't compete with
+   the words.
+
+   The text runs the FULL width of the editor. It used to sit in a centred ~68ch measure — the
+   typographically "correct" choice for prose, and wrong for this box: a note is a working surface the
+   player types into, and a column floating in the middle of a wide window reads as a bug, not as
+   typesetting. The empty page was the tell — "Write your notes…" appeared in the centre of the screen
+   with no visible reason. Padding, not a max-width, keeps the text off the edge. */
 .editor-card .editor-body {
   font-size: 15px;
   line-height: 1.72;
   padding: 20px 28px 44px;
   color: var(--app-text);
-  /* ~68 characters is the long-standing comfortable line; the column centres in a wide editor rather
-     than running the full width of the sheet. */
-  --notes-measure: 68ch;
   /* Break lines so the last one isn't a lonely short word (progressive — ignored where unsupported). */
   text-wrap: pretty;
   -webkit-font-smoothing: antialiased;
   /* Loose text typed straight into the editor, before it lands in a <p>, still gets its own direction
      per paragraph. Everything inside a block is handled by dir="auto" (see autoDir.ts). */
   unicode-bidi: plaintext;
-}
-.editor-card .editor-body > * {
-  max-width: var(--notes-measure);
-  margin-inline: auto;
 }
 .editor-card .editor-body p {
   margin: 0 0 0.85em;
@@ -5039,13 +5129,19 @@ button.strike-name:hover {
   opacity: 0.88;
 }
 .editor-card .editor-body hr {
-  margin: 1.7em auto;
+  margin: 1.7em 0;
   border: none;
   height: 1px;
   background: linear-gradient(to right, transparent, var(--app-border) 18%, var(--app-border) 82%, transparent);
 }
 .editor-card .editor-body strong {
   font-weight: 650;
+}
+/* An action glyph typed into a note sits ON the text baseline. The global .pf2-action token nudges
+   itself down 0.12em, which centres it nicely against the small UI labels it was written for but
+   leaves it hanging below the line in running prose. */
+.editor-card .editor-body .pf2-action {
+  vertical-align: baseline;
 }
 .editor-card .editor-body a {
   text-decoration-thickness: 1px;
@@ -5054,11 +5150,9 @@ button.strike-name:hover {
 .editor-card .editor-body > *:last-child {
   margin-bottom: 0;
 }
-/* The placeholder inherits the measure, so it starts on the same left edge the first line will. */
+/* The placeholder sits exactly where the first line will: same block flow, same padding, no centring. */
 .editor-card .editor-body[contenteditable]:empty::before {
   display: block;
-  max-width: var(--notes-measure);
-  margin-inline: auto;
   font-style: italic;
 }
 @media (max-width: 720px) {
@@ -8405,9 +8499,18 @@ button.strike-name:hover {
 .ms-sig.on {
   color: var(--app-warn);
 }
+/* A signature spell a record GRANTED. Still lit — it really is a signature spell — but not a control:
+   the feat's text says it is one, so there is nothing here for the player to decide. */
+.ms-sig.fixed {
+  cursor: default;
+  opacity: 0.75;
+}
 .ms-sig:hover,
 .ms-remove:hover {
   color: var(--app-text);
+}
+.ms-sig.fixed:hover {
+  color: var(--app-warn);
 }
 .ms-add {
   display: inline-flex;

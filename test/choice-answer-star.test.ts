@@ -239,7 +239,15 @@ describe('a granted choice the granting feat already answered', () => {
     for (const [granter, grants] of Object.entries(FEAT_GRANT_BOUND_CHOICE)) {
       for (const [granted, spec] of Object.entries(grants)) {
         if (!(FEAT_FEAT_GRANTS[granter] ?? []).includes(granted)) bad.push(`${granter} does not grant ${granted}`);
-        if (!db.feats[granted]?.choice) bad.push(`${granted} has no choice to bind`);
+        /*
+         * The granted feat must have a QUESTION for the binding to answer — but a record asks one of
+         * two ways, and this used to know only the first. Assurance asks through `choice`, a
+         * FeatChoiceDef the builder renders. Additional Lore asks through `FEAT_GRANTS.loreChoices`,
+         * a free-text Lore slot, and carries no `choice` at all: `core.feats['additional-lore']` holds
+         * only maxTakable/edition/aonId. Checking `choice` alone would reject all 46 `fixedLore`
+         * bindings even though every one of them resolves and trains a Lore.
+         */
+        if (!db.feats[granted]?.choice && !FEAT_GRANTS[granted]?.loreChoices) bad.push(`${granted} has no choice to bind`);
         if (spec.kind === 'skillChoice' && !FEAT_GRANTS[granter]?.skillChoices?.[spec.index])
           bad.push(`${granter} has no skillChoices[${spec.index}]`);
         if (spec.kind === 'fixed' && !boundGrantChoice({}, granter, granted))

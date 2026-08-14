@@ -8,7 +8,13 @@ import { emptyBuild, buildCharacter } from '../src/rules/build';
 
 /*
  * The 8 "judgment call" feats the user specified: covet-hoard level grant, terrain-scout, pitborn pick,
- * bloodrager caster archetype, elver-pet aquatic, alchemical-familiar Construct(+Tough), snare formulas.
+ * bloodrager caster archetype, elver-pet aquatic, alchemical-familiar Construct, snare formulas.
+ *
+ * ⚠ This header used to read "alchemical-familiar Construct(+Tough)". That was the wrong ruling and it
+ * shipped a wrong number: the feat's own text WAIVES the requirement ("doesn't require the familiar to
+ * have the Tough familiar ability"), so its familiar has 5 × level Hit Points, not 7 × level. Nothing
+ * here ever asserted it — a stale comment with no test under it is how a fixed bug gets re-derived.
+ * The assertions live in test/companion-cluster-batch1.test.ts.
  */
 describe('Covet Hoard (level-gated feat grant)', () => {
   it('grants Hefty Hauler always, and Incredible Investiture only at 11th', () => {

@@ -104,7 +104,18 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "aerobatics-mastery": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Maneuver in Flight", bonus: "+2 circumstance" }],
   "affliction-resistance": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against diseases and poisons", bonus: "+1 circumstance" }],
   "ageless-patience": [{ targets: [{ kind: 'perception' }, { kind: 'skill', detail: 'all' }], when: "when you spend twice as long on a check that takes 1+ actions", bonus: "+2 circumstance" }],
-  "alghollthu-bound": [{ targets: [{ kind: 'save', detail: 'will' }], when: "against mental effects that would make you controlled", bonus: "+2 circumstance" }],
+  /* Both halves of the sentence, and both scoped to WILL. The record shipped the +2 without the
+   * alghollthu carve-out its own `degreeShifts` entry already carries, and never shipped the -2 at
+   * all — the Dragon's Presence shape from Round 10, good news shown and bad news hidden. R1 keeps
+   * the penalty on Will: an unqualified follow-on clause takes the scope of the sentence that governs
+   * it, and "none of THESE BENEFITS … and INSTEAD" binds the penalty to the row the benefits sat on.
+   * ⚠ This is an OVERRIDE of the batch-001 finding, which asked for the -2 on all three saves under
+   * ruling H. R1 settles the identical shape (Adhyabhau) the other way. */
+  "alghollthu-bound": [{ targets: [{ kind: 'save', detail: 'will' }], when: "against mental effects that would make you controlled, unless the effect originates from an alghollthu", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'will' }], when: "against mental effects from alghollthus", bonus: "-2 circumstance" }],
+  /* R2 keeps this star: it is not a bonus inside the feat's own activity but a new outcome for the
+   * player's ORDINARY use of Survival to Subsist. Q20's second test ("does it name a specific stat?")
+   * puts the `*` on Survival even though no number moves. */
+  "all-of-the-animal": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Subsist near a Large or larger animal corpse that died within the past day", bonus: "feeds you and one additional Medium creature, using up that carcass's meat" }],
   "all-this-has-happened-before": [{ targets: [{ kind: 'initiative' }], when: "on your initiative roll (once per day)", bonus: "+4 circumstance" }],
   "all-this-will-happen-again": [{ targets: [{ kind: 'save', detail: 'will' }], when: "reroll a failed save vs an emotion effect (keep the 2nd result)", bonus: "+1 status" }],
   "always-ready": [{ targets: [{ kind: 'initiative' }], when: "on initiative when all your opponents are undead", bonus: "+1 circumstance" }],
@@ -113,7 +124,16 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "analyze-idiolect": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate someone you studied for 10+ minutes", bonus: "+4 circumstance" }],
   "ancestral-suspicion": [{ targets: [{ kind: 'save', detail: 'all' }, { kind: 'perception' }], when: "against effects that would make you controlled (e.g. Dominate)", bonus: "+2 circumstance" }],
   "animal-actor": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate an animal of a type you have Lore about", bonus: "+2 circumstance" }],
-  "animal-elocutionist": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on animals", bonus: "+1 circumstance" }],
+  "animal-elocutionist": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on animals", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "with animals — you hear their sounds as conversation and can respond in turn", bonus: "you can ask questions of, receive answers from, and use Diplomacy with animals" }],
+  // R1's shape — one star carrying the printed sentence — for a clause that grants a NEW USE of a
+  // skill rather than a bonus inside an activity (both feats are passive, so R2 does not reach them).
+  // The bonus phrase says "(no modifier)" on purpose: neither feat grants one, and the star exists so
+  // the player reads the capability where they look Diplomacy up. RUDIMENTARY is kept verbatim.
+  // ⚠ NO ENTRY for `animal-empathy-druid`, which is the SAME AoN document (feat-4709) and is now in
+  // NEAR_DUPLICATE_IDS. test/triage-lane-close.test.ts refuses a star on a hidden record, and it is
+  // right: the only character who could see it is one saved before the dedupe. The visible twin above
+  // carries it.
+  "animal-empathy": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "with animals — rudimentary communication only; wild animals usually give you time to make your case", bonus: "you can ask questions of, receive answers from, and use Diplomacy with animals (no modifier)" }],
   "animal-skin": [{ targets: [{ kind: 'ac' }], when: "while Raging and unarmored (Dex cap +3)", bonus: "+2 item (+3 with Greater Juggernaut)" }],
   "animal-soul-siblings": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Gather Information from animals", bonus: "+1 circumstance" }],
   "animal-speaker": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on animals", bonus: "+1 circumstance" }],
@@ -121,20 +141,68 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "ankle-biter": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Trip while prone", bonus: "+1 circumstance" }],
   "aquatic-conversationalist": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on amphibious or aquatic animals", bonus: "+1 circumstance" }],
   "arc-of-destruction": [{ targets: [{ kind: 'ac' }], when: "against the triggering ranged Strike (spend a Mythic Point)", bonus: "+4 status" }],
+  /* Only the lethal-attack clause. The d6 fist die, the arcane trait and the brawling crit-spec DC
+   * belong to `unarmedTraits` / R5's strike-trait lane and are NOT closed here. */
+  "arcane-fists": [{ targets: [{ kind: 'strikeAttack' }], when: "when making a lethal attack with your fist or any other unarmed attack", bonus: "no -2 circumstance penalty" }],
   "archaeologist-dedication": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'occultism' }, { kind: 'skill', detail: 'religion' }, { kind: 'skill', detail: 'society' }], when: "to Recall Knowledge about ancient history, peoples, and cultures", bonus: "+1 circumstance" }],
   "ardent-armiger": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against effects that could inflict controlled or frightened", bonus: "+1 circumstance" }],
+  /* Ruling C / principle D — star EVERY skill that could perform the named check. The feat prints
+   * "an Athletics or Warfare Lore check" twice, so both rows carry it. The Lore key is EXACT, not the
+   * `lore` wildcard: targetMatches (see the `case 'skill'` arm) reads a bare `lore` as every `lore:*`
+   * row the character owns. Same precedent as commitment-to-protection in apply-degree-shifts.mjs. */
+  "armor-assist": [{ targets: [{ kind: 'skill', detail: 'athletics' }, { kind: 'skill', detail: 'lore:warfare' }], when: "to halve the time you or an ally takes to don armor, vs a GM DC (usually 15/20/25 by rarity)", bonus: "halve the donning time on a success" }],
+  /* ⚠ TWO RECORDS, one feat: `armor-regiment-training` (aonId feat-7792) and
+   * `armored-regiment-training` (no aonId) are duplicate imports of the same Battlecry! commander
+   * feat and BOTH are offered by the class-feat picker, so both need the row. The travel-only wording
+   * matches four shipped precedents (horizon-walker-dedication, scouts-speed, legendary-guide,
+   * hardy-traveler) and must not strip the armour penalty from the printed encounter Speed. */
+  "armor-regiment-training": [{ targets: [{ kind: 'speed' }], when: "when calculating travel Speed in exploration mode (not your encounter Speed)", bonus: "you and your allies ignore your armor's Speed penalty" }],
+  "armored-regiment-training": [{ targets: [{ kind: 'speed' }], when: "when calculating travel Speed in exploration mode (not your encounter Speed)", bonus: "you and your allies ignore your armor's Speed penalty" }],
+  /* NOT a sense. The printed text grants no vision through smoke — the creature stays concealed and
+   * only the flat check to TARGET it auto-succeeds — so the clause belongs on the Strike row, the
+   * same shape as `firesight`, `fire-lung` and `uncanny-bombs`. Its `senses` backfill row is
+   * `value: null` for that reason; do not re-author it as a sense. `scripts/scan-sense-lane.mjs`
+   * holds this bucket at zero so the shape cannot come back. */
+  "ash-piercing-gaze": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by smoke or mist", bonus: "automatically succeed at the flat check" }],
   "aurochs-headed": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'intimidation' }], when: "to Make an Impression or Coerce creatures with the orc trait", bonus: "+1 circumstance" }],
   "avenger-dedication": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against divine spells and effects that deal spirit damage", bonus: "+1 status" }],
   "barbarian-dedication": [{ targets: [{ kind: 'ac' }], when: "while raging", bonus: "-1 (penalty)" }],
+  /* Diplomacy, not Crafting. `skillSubstitutions` was the tempting shape and is wrong here: Earn
+   * Income has no single `forSkill` (Crafting, Lore or Performance by RAW), and the app's own record
+   * says Crafting — so a substitution row would star CRAFTING on a feat gated on Diplomacy, for a
+   * character who may be untrained in Crafting and never look at that row. Same shape as the shipped
+   * `leaf-transformation` entry for the identical "Earn Income with X" clause.
+   * ⚠ The Diplomacy popup only reaches the mark on the Earn Income ROW that skillActions.ts now adds
+   * under this feat's name — without that row the star led to a popup that never mentions it. */
+  "bargain-hunter": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Earn Income, or to hunt a bargain — the income becomes a discount on one item instead", bonus: "you can Earn Income using Diplomacy" }],
   "bashing-charge": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Force Open an obstacle you move through", bonus: "+1 circumstance" }],
   "beast-speaker": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make a Request of animals while Speak with Animals is active", bonus: "+2 circumstance" }],
   "blessed-blood-nephilim": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "to Craft holy water", bonus: "+4 circumstance" }],
   "bloodline-resistance": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against spells and magical effects", bonus: "+1 status" }],
+  /* The Stealth half is a check the feat MAKES YOU ROLL, so Stealth is where the player looks the
+   * number up. The two strike halves carry the rules that change what a blowgun Strike does, and are
+   * TWO entries rather than one because ruling H caps a line and nothing trims a `bonus` —
+   * cap-situational-notes.mjs only rewrites an over-long `when`, so a 141-character `bonus` would
+   * render as a paragraph inside a list item for ever. The crit-success misfortune stays PROSE and
+   * gets no `degreeShifts` entry: it worsens the TARGET's save, and apply-degree-shifts.mjs already
+   * parks this record in OTHERS_ROLL under ruling F. */
+  "blowgun-poisoner": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "after a blowgun Strike made while hidden or undetected, vs the target's Perception DC", bonus: "on a success you stay hidden instead of becoming observed" }, { targets: [{ kind: 'strikeAttack' }], when: "on blowgun Strikes carrying a poisoned dart", bonus: "injury poisons apply even when resistance zeroes the damage" }, { targets: [{ kind: 'strikeAttack' }], when: "on a critical hit with a poisoned blowgun dart", bonus: "the target's initial save is one degree worse (misfortune)" }],
   "boarding-party": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Climb a sea vehicle with both hands free", bonus: "+2 circumstance" }],
   "bouncy-goblin": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Tumble Through a foe's space", bonus: "+2 circumstance" }],
-  "breath-control": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against inhaled threats (success becomes critical success)", bonus: "+1 circumstance" }],
+  /* SUBTRACTION. The record's own `degreeShifts` entry already states the upgrade (`successToCrit`,
+   * "on a save against an inhaled threat, such as an inhaled poison") and explain.ts merges it into
+   * THIS star list, so every save popup printed the crit upgrade twice from two registries that can
+   * drift. The `well-groomed#0` treatment: keep the entry, cut only the degree clause, because the
+   * +1 has nowhere else to live. ⚠ The old wording evaded test/degree-shifts.test.ts's DEGREE_PROSE
+   * guard on one word ("becomes critical success" vs "becomes a critical success"), which is why the
+   * duplicate shipped green — see the guard's own test for the widened pattern. */
+  "breath-control": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against inhaled threats, such as inhaled poisons", bonus: "+1 circumstance" }],
   "bright-lion-dedication": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "against careful inspection, to pass yourself off as a worshipper of Walkena", bonus: "+4 circumstance" }],
   "brightsoul": [{ targets: [{ kind: 'skill', detail: 'stealth' }, { kind: 'save', detail: 'all' }], when: "vs light effects or effects that blind/dazzle (+1 save); -2 to Hide or Sneak while glowing", bonus: "+1 circumstance (saves); -2 circumstance (Stealth)" }],
+  /* Also not a sense — same shape, found by the corpus scan rather than by reading it. The record
+   * carried `senses: [{ name: 'ignores concealment from clouds, dust, fog, mist, and smoke' }]`, so
+   * the Senses row printed that whole sentence beside the ancestry's vision. */
+  "brilliant-vision": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by clouds, dust, fog, mist, smoke, or similarly loose matter", bonus: "you ignore the concealment (no flat check)" }],
   "burn-it": [{ targets: [{ kind: 'spellDamage' }], when: "on fire damage from your spells…", bonus: "+status equal to half the spell's rank, minimum +1" }],
   "called": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on Will saves against mental effects", bonus: "+1 circumstance" }],
   "cel-rau": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against effects with the darkness, light, or shadow trait", bonus: "+1 circumstance" }],
@@ -216,14 +284,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "flashy-roll": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on a Reflex save when you use Flashy Dodge against it", bonus: "+2 circumstance" }],
   "fluttering-misdirection": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "to Hide or Sneak while wielding a fan (you and adjacent allies)", bonus: "+1 circumstance" }],
   "folk-healer": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "to Treat Wounds and similar Medicine tasks", bonus: "+1 circumstance" }],
-  "forlorn": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against emotion effects (success becomes critical success)", bonus: "+1 circumstance" }],
+  /* The degree clause is trimmed here for the same reason it is on breath-control below: the record's
+   * own `degreeShifts` entry states it, and explain.ts merges both into ONE star list. Found by
+   * widening test/degree-shifts.test.ts's DEGREE_PROSE guard to make the article optional. */
+  "forlorn": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against emotion effects", bonus: "+1 circumstance" }],
   "fortunes-favor": [{ targets: [{ kind: 'skill', detail: 'all' }, { kind: 'save', detail: 'all' }], when: "on a skill check or save you're about to reroll via a fortune effect", bonus: "+2 circumstance" }],
   "fresh-ingredients": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Treat Wounds with Natural Medicine (+2 anywhere, +4 in wilderness)", bonus: "+2/+4 circumstance" }],
   "friend-of-the-family": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression or Request with politicians or officials", bonus: "+2 circumstance" }],
   "frostbite-runes": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against evil and necromancy spells and effects", bonus: "+1 status" }],
   "furious-bully": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "for attack actions (Shove, Trip, Grapple, Disarm) while raging", bonus: "+2 circumstance" }],
   "game-hunter-dedication": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "against your hunted prey", bonus: "+2 circumstance" }],
-  "goloma-courage": [{ targets: [{ kind: 'save', detail: 'will' }], when: "against fear effects (success becomes critical success); +2 vs Demoralize", bonus: "+1 circumstance" }],
+  "goloma-courage": [{ targets: [{ kind: 'save', detail: 'will' }], when: "against fear effects; +2 vs Demoralize", bonus: "+1 circumstance" }],
   "graft-technician": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "to implant grafts (+2 if master in Medicine)", bonus: "+1 circumstance" }],
   "gravel-guts": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "against the sickened condition", bonus: "+1 circumstance" }],
   "green-empathy": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on or Request from plants and fungi", bonus: "+2 circumstance" }],
@@ -360,6 +431,11 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "skeleton-commander": [{ targets: [{ kind: 'skill', detail: 'religion' }], when: "on Religion checks for Create Undead rituals", bonus: "+2 circumstance" }],
   "slippery-as-an-eel": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "while underwater, to Escape, Squeeze, or Tumble Through", bonus: "+2 circumstance" }],
   "smile-at-failure": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "after a creature's attitude worsens toward you, to Make an Impression on it (1 hr)", bonus: "+2 circumstance (or +1 to initiative if it starts combat)" }],
+  /* Also not a sense. ⚠ ONLY THE FIRST CLAUSE. The feat prints a second one — "when you are concealed
+   * or hidden in smoke, increase the DC of the flat check to target you to 6 / 12" — which is a
+   * defence on the player's OWN Concealed/Hidden condition and wants a RECORD_MARKERS row, not a
+   * Strike star. Deliberately unbuilt: the star surface would put it in the wrong place. */
+  "smoke-sight": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by smoke", bonus: "automatically succeed at the DC 5 flat check" }],
   "soaring-shape": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "in a wild/untamed shape that grants an Acrobatics modifier (flight)", bonus: "+1 status" }],
   "social-camouflage": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate as a resident of a settlement you've stayed in 1+ day", bonus: "+1 circumstance" }],
   "sorcerous-potency": [{ targets: [{ kind: 'spellDamage' }], when: "when you Cast a Spell from a spell slot that deals damage or restores Hit Points…", bonus: "+status equal to the spell's rank" }],
@@ -422,7 +498,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "well-versed": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against auditory, illusion, linguistic, sonic, or visual effects", bonus: "+1 circumstance" }],
   "wild-speech": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on animals (requires Animal Empathy)", bonus: "+1 circumstance" }],
   "wilderness-born": [{ targets: [{ kind: 'skill', detail: 'stealth' }, { kind: 'skill', detail: 'survival' }], when: "to Hide, Sneak, and Sense Direction in natural terrain", bonus: "+1 circumstance" }],
-  "wind-tempered": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against air and electricity effects (air-effect success becomes critical success)", bonus: "+1 circumstance" }],
+  /* The +1 covers air AND electricity; the upgrade covers air only, and the record's own
+   * `degreeShifts` entry says so ("on a save against an air effect"), so nothing is lost by trimming
+   * the parenthetical that restated it. */
+  "wind-tempered": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against air and electricity effects", bonus: "+1 circumstance" }],
   "winters-embrace": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against effects that inflict the dazzled condition", bonus: "+1 status" }],
   "witch-warden": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against curses, and vs spells cast by a witch or hag", bonus: "+1 circumstance" }],
   "you-seem-somewhat-familiar": [{ targets: [{ kind: 'save', detail: 'all' }, { kind: 'attack' }], when: "your next attack, damage, or save after succeeding at Recall Knowledge about a creature", bonus: "+2 circumstance" }],
@@ -2721,7 +2800,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "fire-lung": [{ targets: [{ kind: 'hp' }], when: "on the flat check to recover from persistent fire damage", bonus: "DC 10 instead of 15 (DC 5 with particularly effective assistance)" }, { targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by smoke", bonus: "you ignore the concealed condition (no flat check)" }],
   "fire-savvy": [{ targets: [{ kind: "hp" }], when: "on the flat check to remove persistent fire damage", bonus: "DC 10 instead of 15 (DC 5 with appropriate assistance)" }],
   "firesight": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by smoke and fire", bonus: "automatically succeed at the flat check" }],
-  "fluid-contortionist": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "on checks to Squeeze", bonus: "critical failure becomes failure and success becomes critical success" }],
+  // fluid-contortionist REMOVED — its whole content was a restatement of the two `degreeShifts`
+  // entries the record carries, which already star Acrobatics AND mark the Squeeze row. The deletion
+  // is durable because apply-feat-audit.mjs (which wrote this line, and rewrites this block whole)
+  // now refuses to emit a clause that restates a record's own degree shift.
   "flying-blade": [{ targets: [{ kind: 'strikeDamage' }], when: "ranged Strike with a thrown agile or finesse weapon, in its first range increment", bonus: "your Precise Strike damage applies (and such a Strike can be used for Confident Finisher and other finishers)" }],
   "ghostly-grasp": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease and poison", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against paralysis and sleep effects", bonus: "+1 circumstance" }],
   "ghostly-grasp-ghost": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease and poison", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against paralysis and sleep effects", bonus: "+1 circumstance" }],
@@ -3314,10 +3396,25 @@ export interface SituationalLine {
  * The owner's ruling was to attach the mark to the thing it modifies and show the changed value
  * inline: "Magic Hands show the d10 in () in the treat wounds action, with a * linking to the feat".
  * Both surfaces already render on the sheet, so this is where they get their marks.
+ *
+ * ⚠ A MARK DOES NOT MEAN "no stat row" — that was true only while the two tables happened to be
+ * disjoint. Q2 requires BOTH surfaces where a record moves a statistic and modifies the action that
+ * uses it ("the Athletics star and the Disarm/Shove/Trip markers coexist rather than one replacing
+ * the other"), and the batch-001 pass below is the first time a record ships with a star in
+ * `FEAT_SITUATIONAL` and a mark here at the same time.
+ *
+ * ⚠ A MARK CANNOT BE SCOPED TO A SKILL. `recordMarkersFor` is keyed by action id alone, and
+ * `StatDetailModal` draws it beside every skill whose `SKILL_ACTIONS` list carries that action — so a
+ * mark on `escape` shows under Acrobatics AND Athletics, and one on `subsist` under Society AND
+ * Survival. When the clause names one skill, say so in the note's first words and leave `value`
+ * unset; a bare "(+1 status)" on the wrong skill's row is a bonus the record does not grant.
  */
 export interface RecordMarker {
-  /** Which surface: an action row, or a condition. */
-  on: 'action' | 'condition';
+  /** Which surface: an action row, a condition, or a FEAT/CLASS-FEATURE entry on the Feats tab.
+   *  'feature' exists because Principle C's "reflected in that thing" had no target when the thing is
+   *  a class feature: blood magic is a paragraph inside each bloodline feature's description, not a
+   *  record of its own, so neither 'action' nor 'condition' could reach it. */
+  on: 'action' | 'condition' | 'feature';
   /** The action's or condition's id in core.json ("treat-wounds", "leap", "dying"). */
   id: string;
   /** The CHANGED value, shown inline in parentheses on that row: "d10", "+10 feet". Omitted when
@@ -3330,6 +3427,14 @@ export interface RecordMarker {
 /** Source record id → the action/condition marks it carries. Keyed the same way as FEAT_SITUATIONAL
  *  so the character's owned-ids lookup finds both by the same route. */
 export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
+  // Principle C — a feat that modifies ANOTHER record's granted thing must be reflected in that
+  // thing. Blood magic is printed inside the bloodline class feature, so this is the first user of
+  // `on: 'feature'`. Target `bloodline` rather than `bloodline-<x>`: measured, FeatsTab's variant
+  // lookup `${featureId}-${subclassId}` finds no `bloodline-bloodline-draconic`, so every sorcerer's
+  // rendered entry keeps the id `bloodline` whichever bloodline they picked — and the subclass PICK
+  // renders through `character.classChoices` (FeatsTab), which has no recordId to mark.
+  // ⚠ The note does NOT open with this record's own name: all three renderers prefix it themselves.
+  "ancestral-blood-magic": [{ on: 'feature', id: 'bloodline', note: "you also gain your blood magic effect when you cast a non-cantrip spell you gained from a heritage or an ancestry feat, in addition to the normal circumstances that trigger it." }],
   "come-and-get-me": [{ on: 'condition', id: 'off-guard', note: "Until your rage ends you are off-guard, and damage rolls against you gain a +2 circumstanc" }],
   "berserkers-cloak": [{ on: 'action', id: 'rage', value: "jaws 1d10 P, claws 1d6 S (agile)", note: "While raging you grow jaws and claws bearing a +1 potency and striking rune…" }],
   "berserkers-cloak-greater": [{ on: 'action', id: 'rage', value: "jaws 1d10 P, claws 1d6 S (agile)", note: "While raging you grow jaws and claws bearing a +2 potency and greater striking rune…" }],
@@ -3364,6 +3469,44 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   "furious-focus": [{ on: 'action', id: 'vicious-swing', value: "counts as one attack", note: "Vicious Swing with a melee weapon in two hands counts as one attack toward your multiple attack penalty instead of two." }],
   "vicious-vengeance": [{ on: 'action', id: 'destructive-vengeance', value: "+ its number of damage dice", note: "Vicious Vengeance: the ENEMY takes a circumstance bonus to the damage equal to the…" }],
   "wand": [{ on: 'action', id: 'fling-magic', value: "+your level status to damage", note: "Wand implement, Intensify Vulnerability: Fling Magic against the target of your Exploit…" }],
+
+  // ---- batch-001, the star/marker authoring pass (2026-08-13) ----
+  // Twelve records whose remaining clause had a shipped reader and no row. Q8 ("Yes — Ruling D's
+  // shape applies: mark the action the feat modifies") places each one.
+  // ⚠ Seven of these records ALSO carry a FEAT_SITUATIONAL star. Until now the two tables were
+  // perfectly disjoint; the coexistence is the shape docs/gold-set-final.md specifies under Q2
+  // ("the Athletics star and the Disarm/Shove/Trip markers coexist rather than one replacing the
+  // other"), and this is the first time it actually ships.
+  // ⚠ `recordMarkersFor` is keyed by ACTION ID ALONE and cannot be scoped to a skill, so a mark on a
+  // shared action renders in every skill popup that lists it — Escape sits under Acrobatics AND
+  // Athletics, Subsist under Society AND Survival. Where the clause names one skill, the note SAYS
+  // SO first ("Athletics only:", "Survival only:") and carries no `value`, because a bare "(+1
+  // status)" beside the Acrobatics Escape row is a bonus the feat does not grant.
+  "acrobatic-performer": [{ on: 'action', id: 'perform', note: "You can roll an Acrobatics check instead of a Performance check when using the Perform action." }],
+  "adrenaline-rush": [{ on: 'action', id: 'escape', note: "Athletics only: while you are Raging, your Athletics check to Escape takes a +1 status bonus (an Acrobatics Escape gets nothing)." }, { on: 'action', id: 'force-open', value: "+1 status", note: "While you are Raging, your Athletics check to Force Open takes a +1 status bonus." }],
+  // Aeonbound's SECOND clause. Its once-per-day degree shift lives in the structured `degreeShifts`
+  // field (scripts/apply-degree-shifts.mjs) and reaches this same row through `degreeShiftMarkers`;
+  // this row is the toolkit waiver, which no structured field can say.
+  "aeonbound": [{ on: 'action', id: 'treat-wounds', note: "You and your allies can Treat your Wounds without a healer's toolkit." }],
+  // Principle H, as far as data can carry it: the row prints its own "10 minutes" and the mark prints
+  // "(1 action)" beside it, so both costs are on the one row with the conditions in the popup. A row
+  // that renders under two cost headings is a display lane nothing in the app has yet.
+  "alchemical-assessment": [{ on: 'action', id: 'identify-alchemy', value: "1 action", note: "Identify Alchemy on an alchemical item you are HOLDING takes a single action instead of 10 minutes." }],
+  "all-of-the-animal": [{ on: 'action', id: 'subsist', note: "Survival only: Subsisting near a Large or larger animal corpse that died within the past day always feeds you and one additional Medium creature; that carcass's meat is used up and nobody else can use it." }],
+  // ⚠ `interact`, NOT `reload`. core.json's `reload` action is Battlecry!'s commander TACTIC
+  // "Reload!" (traits commander/tactic) — a mark filed there would land on someone else's row and
+  // never on a thaumaturge's. The feat's own text names Interact, so the two agree.
+  "ammunition-thaumaturgy": [{ on: 'action', id: 'interact', note: "You can Interact to reload a weapon using the hand holding your implement." }],
+  "animal-soul-siblings": [{ on: 'action', id: 'gather-information', value: "+1 circumstance", note: "+1 circumstance bonus to Diplomacy checks to Gather Information from animals." }],
+  // The rest-in-armour clause has no Rest surface to sit on, so it marks the condition it prevents —
+  // the same shape `steel-skin` already ships for the identical sentence, and prefixed with the
+  // record's name for the same reason: a character can hold both, and the condition pill's hover
+  // shows the notes without their sources.
+  "armor-regiment-training": [{ on: 'condition', id: 'fatigued', note: "Armor Regiment Training: you can rest normally while wearing armor of any type." }],
+  "armored-regiment-training": [{ on: 'condition', id: 'fatigued', note: "Armored Regiment Training: you can rest normally while wearing armor of any type." }],
+  "bamboo-and-silt-repose": [{ on: 'action', id: 'stride', note: "You ignore non-magical difficult terrain due to light undergrowth and shallow bogs, mud, and water, and treat non-magical greater difficult terrain due to these features as difficult terrain instead." }],
+  "bargain-hunter": [{ on: 'action', id: 'earn-income', note: "You can Earn Income using Diplomacy. Spent hunting a bargain instead, the income becomes a discount on one item — free if it equals or exceeds the item's Price." }],
+  "bodyguard": [{ on: 'action', id: 'taunt', value: "-2 vs your charge", note: "The penalty your taunted enemy takes increases to -2 against the charge you chose during your daily preparations." }],
 
 
 
@@ -3409,6 +3552,16 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'water-step': [{"on":"action","id":"stride","note":"You can Stride across liquid and surfaces that don't support your weight; the benefit lasts only during that movement, and you fall if you end on such a surface."}],
   'water-walker': [{"on":"action","id":"stride","value":"while cursebound","note":"While Cursebound 1 you can Stride across liquids that don't support your weight, but must end on a supporting surface or fall in. At cursebound 2 or worse you gain the effects of water walk."}],
   'weapon-supremacy': [{"on":"condition","id":"quickened","value":"always on","note":"Weapon Supremacy: you're permanently quickened; the extra action can be used only to Strike."}],
+  // Animal Companion (Ranger): "When you Hunt Prey, your animal companion gains the action's benefits
+  // and your hunter's edge benefit if you have one." The action half of the clause, on the action the
+  // player is actually pressing. The companion half is a note on the companion's own card, finished
+  // with the edge's real name in deriveAnimalCompanion — see companions.ts. Deliberately generic here:
+  // this row sits on the character's own sheet, where their Hunter's Edge is already on the class line.
+  // ⚠ The note does NOT repeat the record's name. All three renderers of a mark build the tooltip as
+  // `${nameOfRecord(sourceId)}: ${note}` (MainTab, StatDetailModal, VitalsRail), so a note that opens
+  // with its own record's name prints it twice — measured live before this line was trimmed:
+  // "Animal Companion (Ranger): Animal Companion (Ranger): when you Hunt Prey…".
+  "animal-companion-ranger": [{ on: "action", id: "hunt-prey", value: "your animal companion too", note: "when you Hunt Prey, your animal companion gains the action's benefits against that target — and your hunter's edge benefit if you have one." }],
 
 
   // ---- full feature audit — action/condition marks ----
@@ -3517,7 +3670,7 @@ export function supersededIds(ownedIds: Iterable<string>): Set<string> {
 /** Every mark this character's records put on one action or condition. */
 export function markersFor(
   ownedIds: Iterable<string>,
-  on: 'action' | 'condition',
+  on: 'action' | 'condition' | 'feature',
   id: string,
   extra?: Readonly<Record<string, readonly RecordMarker[] | undefined>>,
 ): { sourceId: string; value?: string; note: string }[] {

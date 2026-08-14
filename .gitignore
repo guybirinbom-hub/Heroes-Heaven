@@ -54,9 +54,19 @@ scripts/audit/*
 # derived files (feat-500-evidence.json, builder-500-evidence.json, audit-500-evidence.json,
 # gold-text-only.json) stay ignored — every one of them regenerates in minutes.
 !scripts/audit/feat-500.json
+# The LEVEL-ORDERED work lists and their results (2026-08-13 onward). `batch-NNN.json` is the input —
+# 100 feats in (level, id) order — and `batch-NNN-result.json` is what the run judged. Both are
+# durable: a batch is only meaningful if it never changes, and a verdict costs real tokens. The
+# derived evidence beside them (batch-NNN-evidence.json and its two halves) stays ignored — it
+# regenerates in minutes from the two harnesses.
+!scripts/audit/batch-[0-9][0-9][0-9].json
+!scripts/audit/batch-[0-9][0-9][0-9]-result.json
 # The audit's own definition — the prompts ARE the instrument, and a run is only reproducible if the
 # prompt that produced it is in the history. Same reason bakeoff.js is kept.
 !scripts/audit/audit-500.js
+# audit-batch.js is audit-500.js with the work list handed in — derived, never hand-copied, so the
+# level-ordered run asks byte-identical questions.
+!scripts/audit/audit-batch.js
 !scripts/audit/feat-text-defects.json
 !scripts/audit/lane-gaps.json
 !scripts/audit/gold-candidates.json
@@ -74,8 +84,16 @@ scripts/audit/*
 !scripts/audit/uncertain-settled.json
 !scripts/audit/authored-verification.json
 !scripts/audit/authored-fix-recheck.json
+# The diagnosis of that recheck's 6 open findings (2026-08-13, 12 agents / 1.9M tokens): current state
+# of each, the remedy, and the refutation that broke 5 of the 6. Durable because the refutations found
+# live defects nobody had a finding for, and because re-deriving it costs another 1.9M.
+!scripts/audit/recheck-diagnosis.json
 scripts/aon-verify/
 tmptest/
+# Probe/measurement one-offs written while diagnosing. They are how a finding gets MEASURED rather than
+# asserted, and they are worth writing — but they are working notes, not deliverables. Anything worth
+# keeping graduates into scripts/ with a header explaining what it measures and why.
+scratchpad/
 
 # Android release signing — NEVER commit the keystore or its passwords.
 # BACK THESE UP somewhere safe: losing the keystore means release updates can no longer be installed.

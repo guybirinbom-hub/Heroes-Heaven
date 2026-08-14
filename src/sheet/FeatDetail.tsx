@@ -32,6 +32,8 @@ export interface FeatEntry {
   prerequisites?: string[];
   /** When set, this feat was auto-granted by another feat — the granting feat's display name. */
   grantedBy?: string;
+  /** When set, this feat's ENHANCEMENT tier is running, and this is the record that turned it on. */
+  enhancedBy?: string;
   /** The core.json feat id, for rows that are real feats (features and heritages leave it unset).
    *  Needed to look up per-day uses; `key` can't serve, since it embeds the level for uniqueness. */
   featId?: string;
@@ -87,6 +89,18 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
               <div className="sd-stat">
                 <span className="sd-stat-k">Prerequisites</span>
                 <span className="sd-stat-v">{entry.prerequisites.join(', ')}</span>
+              </div>
+            </div>
+          ) : null}
+          {/* The ENHANCEMENT tier, when it is running. Rendered HERE rather than appended to the
+              description because a record with an ast renders from the ast and DescBody discards the
+              description string entirely — the Enhancement paragraph itself is already in that prose,
+              so what this adds is the one fact the printed text cannot carry: that YOU have it. */}
+          {entry.enhancedBy ? (
+            <div className="sd-stats">
+              <div className="sd-stat">
+                <span className="sd-stat-k">Enhancement</span>
+                <span className="sd-stat-v">active — granted by {entry.enhancedBy}</span>
               </div>
             </div>
           ) : null}

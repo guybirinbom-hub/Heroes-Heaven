@@ -16,6 +16,37 @@ export const FEAT_FEAT_GRANTS_LEVELED: Record<string, { feat: string; minLevel: 
 };
 
 /**
+ * A grant the granting feat's OWN CHOICE decides — *"you gain your choice of the Pet general feat or
+ * the Train Animal skill feat"* (Beast Trainer, Player Core p.72).
+ *
+ * FEAT_FEAT_GRANTS is `Record<string, string[]>` with nowhere to say "it depends on the answer", and
+ * `grantedFeatByChoice` is honoured for BACKGROUNDS only, so Beast Trainer handed out Train Animal
+ * whichever branch the player picked — a missing grant and a spurious one in one act, with the Pet
+ * branch's Tiny minion never appearing even though `FEAT_COMPANION_GRANTS['pet']` was ready to
+ * receive it.
+ *
+ * Keys are the granting record; inner keys are the `choice` answer VALUES as the record spells them.
+ *
+ * ⚠ Declared ABOVE the auto table so the aon-verify regenerators preserve it: they keep everything
+ * before `FEAT_FEAT_GRANTS_MARKER` (scripts/aon-verify/_ser.ts) and rewrite the rest.
+ */
+export const CHOICE_FEAT_GRANTS: Record<string, Record<string, string[]>> = {
+  'beast-trainer': { pet: ['pet'], 'train-animal': ['train-animal'] },
+};
+
+/**
+ * The feats `granterId` hands over, honouring its own choice once the player has answered it.
+ *
+ * Falls back to the flat table for an unanswered pick rather than defaulting to the first option, so
+ * every character saved before this existed keeps the grant it already had.
+ */
+export function featFeatGrantsFor(granterId: string, choiceValue?: string): string[] {
+  const byChoice = CHOICE_FEAT_GRANTS[granterId];
+  if (byChoice && choiceValue && byChoice[choiceValue]) return byChoice[choiceValue];
+  return FEAT_FEAT_GRANTS[granterId] ?? [];
+}
+
+/**
  * How to answer a granted feat's sub-choice when the GRANTING feat has already answered it.
  *
  * The builder's default for a granted feat is to ask its own question, and for Assurance that is a
@@ -32,7 +63,26 @@ export const FEAT_FEAT_GRANTS_LEVELED: Record<string, { feat: string; minLevel: 
 export type BoundGrantAnswer =
   | { kind: 'fixed'; skill: string }
   | { kind: 'skillChoice'; index: number }
-  | { kind: 'loreChoice'; index: number };
+  | { kind: 'loreChoice'; index: number }
+  /**
+   * The granter NAMES the Lore in its own sentence: *"You also gain the Additional Lore general
+   * feat FOR CATFOLK LORE."* There is nothing to ask — and until this existed there was nowhere to
+   * answer it either, because the builder renders Additional Lore's Lore box only for a feat PICKED
+   * into a slot and a granted feat never is. So the granted feat trained NOTHING. Measured: an
+   * athamaru holding Athamaru Lore owned `additional-lore` with `grantedBy: 'athamaru-lore'` and no
+   * Athamaru Lore whatsoever.
+   *
+   * It matters even where the granter ALSO trains the Lore directly, because the vehicle is what
+   * carries *"at 3rd, 7th, and 15th levels … an additional skill increase you can apply only to the
+   * chosen Lore subcategory"* — without it a level-20 catfolk’s Catfolk Lore sits at trained.
+   *
+   * A LIST for the two records that name two: Hellbreaker Dedication’s *"for both Devil Lore and
+   * Hellknight Lore"* and Viking Dedication’s *"for Sailing Lore and Warfare Lore"*.
+   *
+   * `npm run scan:lore` classifies all 52 granters against their printed text and fails the guard
+   * test if one that names its Lore is left unbound.
+   */
+  | { kind: 'fixedLore'; lore: string | string[] };
 
 export const FEAT_GRANT_BOUND_CHOICE: Record<string, Record<string, BoundGrantAnswer>> = {
   // "You gain the Assurance (Performance) feat."
@@ -42,7 +92,113 @@ export const FEAT_GRANT_BOUND_CHOICE: Record<string, Record<string, BoundGrantAn
   // "…trained in the skill listed for your quah… You gain the Assurance skill feat in that skill"
   'quah-bond': { assurance: { kind: 'skillChoice', index: 0 } },
   // "You gain the Additional Lore feat and the Assurance feat FOR THE CHOSEN LORE."
-  'gnome-obsession': { assurance: { kind: 'loreChoice', index: 0 } },
+  // "You gain the Additional Lore feat and the Assurance feat FOR THE CHOSEN LORE." Both granted
+  // feats follow the Lore the player typed on Gnome Obsession itself, so both are bound to it.
+  'gnome-obsession': { assurance: { kind: 'loreChoice', index: 0 }, 'additional-lore': { kind: 'loreChoice', index: 0 } },
+  /*
+   * Every granter that NAMES the Lore it hands over, quoted from the record above each one.
+   * Produced by reading all 52 printed clauses (scripts/scan-granted-lore.mjs --list), not by
+   * pattern-matching alone: the six that describe a Lore the app cannot name (a plane of your
+   * lineage, the settlement, your culture, your past life) and the three that offer the player a
+   * choice between named Lores are deliberately NOT here — binding those would answer a question
+   * the book leaves open.
+   */
+  // "You gain the Additional Lore feat for Dueling Lore."
+  'aldori-duelist-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'dueling' } },
+  // "You also gain the Additional Lore general feat for Athamaru Lore."
+  'athamaru-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'athamaru' } },
+  // "You also gain the Additional Lore feat for Automaton Lore."
+  'automaton-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'automaton' } },
+  // "You also gain the Additional Lore general feat for Awakened Animal Lore."
+  'awakened-animal-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'awakened animal' } },
+  // "You gain the Additional Lore skill feat for Warfare Lore."
+  'blackjacket-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'warfare' } },
+  // "You also gain the Additional Lore general feat for Catfolk Lore."
+  'catfolk-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'catfolk' } },
+  // "You also gain the Additional Lore general feat for Centaur Lore."
+  'centaur-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'centaur' } },
+  // "You also gain the Additional Lore general feat for Hag Lore."
+  'changeling-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'hag' } },
+  // "You gain the Additional Lore feat for Dragon Lore."
+  'draconic-acolyte-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'dragon' } },
+  // "You also gain the Additional Lore general feat for Dragon Lore."
+  'dragon-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'dragon' } },
+  // "You also gain the Additional Lore general feat for Dragon Lore."
+  'dragonscaled-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'dragon' } },
+  // "You also gain the Additional Lore general feat for Boneyard Lore."
+  'duskwalker-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'boneyard' } },
+  // "You also gain the Additional Lore general feat for Dwarf Lore. (Remaster name; the record’s own direct grant was still keyed lore:dwarven and is renamed to match.)"
+  'dwarven-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'dwarf' } },
+  // "You gain the Additional Lore skill feat for Politics Lore."
+  'eagle-knight-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'politics' } },
+  // "You also gain the Additional Lore general feat for Elf Lore. (Remaster name; see dwarven-lore.)"
+  'elven-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'elf' } },
+  // "You gain the Additional Lore general feat for Gladiatorial Lore."
+  'gladiator-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'gladiatorial' } },
+  // "You also gain the Additional Lore general feat for Goblin Lore."
+  'goblin-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'goblin' } },
+  // "You also gain the Additional Lore general feat for Warfare Lore."
+  'golden-legionnaire-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'warfare' } },
+  // "You also gain the Additional Lore general feat for Halfling Lore."
+  'halfling-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'halfling' } },
+  // "You gain the Additional Lore general feat for both Devil Lore and Hellknight Lore."
+  'hellbreaker-dedication': { 'additional-lore': { kind: 'fixedLore', lore: ['devil', 'hellknight'] } },
+  // "You gain the Additional Lore general feat for Hell Lore. (No lore reached the sheet at all before this.)"
+  'hellknight-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'hell' } },
+  // "Finally, you gain the Additional Lore feat for a special Lore skill subcategory—Incarnation Lore."
+  'heroic-scion-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'incarnation' } },
+  // "You gain the Additional Lore general feat for Hobgoblin Lore."
+  'hobgoblin-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'hobgoblin' } },
+  // "You also gain the Additional Lore general feat for Jotunborn Lore."
+  'jotunborn-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'jotunborn' } },
+  // "You also gain the Additional Lore general feat for Kholo Lore."
+  'kholo-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'kholo' } },
+  // "You also gain the Additional Lore general feat for Kobold Lore."
+  'kobold-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'kobold' } },
+  // "You also gain the Additional Lore general feat for Leshy Lore."
+  'leshy-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'leshy' } },
+  // "You gain the Additional Lore skill feat for Espionage Lore."
+  'lion-blade-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'espionage' } },
+  // "You also gain the Additional Lore feat for Merfolk Lore."
+  'merfolk-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'merfolk' } },
+  // "You also gain the Additional Lore general feat for Minotaur Lore."
+  'minotaur-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'minotaur' } },
+  // "You also gain the Additional Lore general feat for Orc Lore."
+  'orc-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'orc' } },
+  // "You also gain the Additional Lore general feat for Ratfolk Lore."
+  'ratfolk-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'ratfolk' } },
+  // "You also gain the Additional Lore general feat for Yaksha Lore."
+  'sage-of-scattered-leaves': { 'additional-lore': { kind: 'fixedLore', lore: 'yaksha' } },
+  // "You also gain the Additional Lore general feat for Samsaran Lore."
+  'samsaran-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'samsaran' } },
+  // "You also gain the Additional Lore general feat for Sarangay Lore."
+  'sarangay-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'sarangay' } },
+  // "You gain the Additional Lore general feat for Devil Lore."
+  'sister-of-the-golden-erinys-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'devil' } },
+  // "You also gain the Additional Lore general feat for Surki Lore."
+  'surki-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'surki' } },
+  // "You also gain the Additional Lore general feat for Tanuki Lore."
+  'tanuki-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'tanuki' } },
+  // "You also gain the Additional Lore general feat for Tengu Lore."
+  'tengu-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'tengu' } },
+  // "You also gain the Additional Lore general feat for Tripkee Lore."
+  'tripkee-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'tripkee' } },
+  // "You gain the Additional Lore general feat for Espionage Lore."
+  'twilight-talon-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'espionage' } },
+  // "You gain the Additional Lore skill feat for Warfare Lore."
+  'ulfen-guard-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'warfare' } },
+  // "You also gain the Additional Lore general feat for Vampire Lore."
+  'vampire-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'vampire' } },
+  // "You gain the Additional Lore general feat for Sailing Lore and Warfare Lore."
+  'viking-dedication': { 'additional-lore': { kind: 'fixedLore', lore: ['sailing', 'warfare'] } },
+  // "You also gain the Additional Lore general feat for Warfare Lore."
+  'war-mage-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'warfare' } },
+  // "You also gain the Additional Lore general feat for Wayang Lore."
+  'wayang-lore': { 'additional-lore': { kind: 'fixedLore', lore: 'wayang' } },
+  // "You gain the Additional Lore skill feat for Demon Lore."
+  'wylderheart-dedication': { 'additional-lore': { kind: 'fixedLore', lore: 'demon' } },
+  // "You also gain the Additional Lore general feat for Yaoguai Lore."
+  'yaoguai-historian': { 'additional-lore': { kind: 'fixedLore', lore: 'yaoguai' } },
 };
 
 /**
@@ -56,7 +212,22 @@ export function isBoundGrant(granterId: string, grantedId: string): boolean {
   return !!FEAT_GRANT_BOUND_CHOICE[granterId]?.[grantedId];
 }
 
+/*
+ * ⚠ SEVEN records print *"you gain the Additional Lore … feat for <X> Lore"* and had no entry here
+ * at all — the vehicle was replaced by a direct `lore:<x>` grant in featGrantsAuto.ts (that is what
+ * scripts/aon-verify/apply-reviewed.ts's SPECIFIC_LORE table does). The direct grant delivers the
+ * training but NOT the 3rd/7th/15th-level increases, which live on Additional Lore, so those Lores
+ * were frozen at trained forever. hellknight-dedication was worse: it has no direct grant either,
+ * so its Hell Lore reached the sheet by no route at all. Measured by scripts/scan-granted-lore.mjs.
+ */
 export const FEAT_FEAT_GRANTS: Record<string, string[]> = {
+  'aldori-duelist-dedication': ['additional-lore'],
+  'golden-legionnaire-dedication': ['additional-lore'],
+  'hellknight-dedication': ['additional-lore'],
+  'jotunborn-lore': ['additional-lore'],
+  'lion-blade-dedication': ['additional-lore'],
+  'orc-lore': ['additional-lore'],
+  'wylderheart-dedication': ['additional-lore'],
   'alchemist-dedication': ['alchemical-crafting'],
   'alkenstar-agent-dedication': ['lie-to-me'],
   'anchoring-roots': ['steady-balance'],

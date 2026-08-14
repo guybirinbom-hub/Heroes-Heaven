@@ -20,12 +20,41 @@ export interface CompanionGrant {
   kind: CompanionKind;
   /** Short display label for the granted companion (shown before the player names it). */
   label: string;
-  /** Familiar: how many familiar abilities the player chooses (a display hint — the picker itself is
-   *  not hard-capped, matching how a class/feat can raise the count). */
+  /** Familiar: how many familiar abilities the player chooses. Shown on the Companions Edit card as
+   *  "N of B chosen" (CompanionsTab), and still not hard-capped — a class or feat can raise the count. */
   abilityBudget?: number;
-  /** Familiar-ability ids that are ALWAYS present (locked), on top of the chosen ones — e.g. Friend
-   *  of the Sea's pet always has Darkvision + Tough. */
+  /**
+   * Familiar-ability ids that are ALWAYS present — the record names them rather than the player.
+   *
+   * By DEFAULT they still COST one of `abilityBudget`, because that is what most records that name
+   * one print: Corgi Mount *"It has the scent ability, which counts against your limit for familiar
+   * and master abilities as normal"*; Psychopomp Familiar *"the speech ability counts against your
+   * familiar's abilities each day"*; Draconic Familiar *"one of them must always be the Dragon
+   * familiar ability"*. Those are constraints on the player's own picks, not extra abilities.
+   * Set `lockedFree` for the minority that print the opposite.
+   */
   lockedAbilities?: string[];
+  /**
+   * `lockedAbilities` do NOT count against `abilityBudget` — set ONLY where the record prints it:
+   * Alchemical Familiar *"doesn't count against your usual limit of familiar abilities (typically
+   * 2)"*; Friend of the Sea *"in addition to the two abilities you normally choose"*; Elver Pet
+   * *"Instead of the normal choice of pet abilities"*. Absent = the ability is one of the player's
+   * own picks and is seeded into `CompanionConfig.abilities` as such.
+   *
+   * `deriveFamiliar` hands a FREE one over through the granted channel (`fromFeat`), so the stat
+   * block tags it "from a feat", the budget line does not count it, and the player cannot toggle it
+   * off — which is what "doesn't count against your usual limit" is for.
+   */
+  lockedFree?: boolean;
+  /**
+   * The master ATTRIBUTE this familiar's Perception, Acrobatics and Stealth modifiers all come from.
+   * Alchemical Familiar: *"The familiar uses your Intelligence modifier to determine its Perception,
+   * Acrobatics, and Stealth modifiers."* Those three move together in the printed rules, so one field
+   * carries all three: the modifier is that attribute's modifier + your level. Read by
+   * `deriveFamiliar`, which overrides the Perception copied from the master and adds the two skill
+   * rows the familiar block otherwise has none of.
+   */
+  statAbility?: AbilityId;
   /** A rules note shown on the companion card (restrictions, what the player still chooses). */
   note?: string;
   /** Other grant-feat slugs this grant REPLACES, so overlapping grants surface a single companion
@@ -44,7 +73,14 @@ export interface CompanionGrant {
 export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   "enhanced-psychopomp-familiar": {"kind":"familiar","label":"Enhanced Psychopomp Familiar","abilityBudget":4,"lockedAbilities":["speech"],"supersedes":["psychopomp-familiar"],"note":"Choose 4 familiar or master abilities each day. It always has Speech. Two of the four must come from the Psychopomp Familiar list (Soul Sight, Spirit Touch) or Augury (8th level or higher)."},
   'additional-companion': { kind: 'animal', label: 'Additional Companion', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
-  'alchemical-familiar': { kind: 'familiar', label: 'Alchemical Familiar', abilityBudget: 2, lockedAbilities: ['construct', 'tough'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities. It always has Construct (a construct-trait familiar; requires and includes Tough).' },
+  // "You gain a familiar, which has the Construct familiar ability; this is permanent, doesn't require
+  // the familiar to have the Tough familiar ability, and doesn't count against your usual limit of
+  // familiar abilities (typically 2). The familiar uses your Intelligence modifier to determine its
+  // Perception, Acrobatics, and Stealth modifiers." (Player Core 2 p63 — the record this app ships.)
+  // Tough was authored here because the Construct ability's OWN line reads "Your familiar must have the
+  // tough pet ability to select this" — but this feat waives exactly that sentence, and `hasTough` was
+  // raising the familiar to (5 + 2) × level Hit Points the printed waiver denies.
+  'alchemical-familiar': { kind: 'familiar', label: 'Alchemical Familiar', abilityBudget: 2, lockedAbilities: ['construct'], lockedFree: true, statAbility: 'int', note: 'Grants a familiar you configure here. Choose 2 familiar abilities. It always has Construct: permanent, it does NOT require (or gain) Tough, and it does not count against those 2. Its Perception, Acrobatics and Stealth use YOUR Intelligence modifier.' },
   'animal-accomplice': { kind: 'familiar', label: 'Animal Accomplice', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'animal-companion': { kind: 'animal', label: 'Animal Companion', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'animal-companion-ranger': { kind: 'animal', label: 'Animal Companion (Ranger)', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
@@ -63,13 +99,17 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   'draconic-familiar': { kind: 'familiar', label: 'Draconic Familiar', abilityBudget: 4, lockedAbilities: ['dragon'], note: 'Grants a familiar you configure here. Choose 4 familiar abilities. It always has Dragon.' },
   'drake-rider-dedication': { kind: 'animal', label: 'Drake Rider Dedication', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'elemental-familiar-kineticist': { kind: 'familiar', label: 'Elemental Familiar (Kineticist)', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
-  'elver-pet': { kind: 'familiar', label: 'Elver Pet', lockedAbilities: ['fast-movement', 'damage-avoidance'], supersedes: ['pet'], note: 'Your pet is a young eel: aquatic (breathes water, swim Speed instead of land), with Fast Movement and Damage Avoidance in place of the usual chosen pet abilities.' },
+  // "Instead of the normal choice of pet abilities, your eel has aquatic, Fast Movement, and the
+  // Damage Avoidance familiar ability for Reflex saves." — they REPLACE the choice, so they are the
+  // record's, not the player's.
+  'elver-pet': { kind: 'familiar', label: 'Elver Pet', lockedAbilities: ['fast-movement', 'damage-avoidance'], lockedFree: true, supersedes: ['pet'], note: 'Your pet is a young eel: aquatic (breathes water, swim Speed instead of land), with Fast Movement and Damage Avoidance in place of the usual chosen pet abilities.' },
   'emissary-familiar': { kind: 'familiar', label: 'Emissary Familiar', abilityBudget: 4, note: 'Grants a familiar you configure here. Choose 4 familiar abilities.' },
   'faithful-steed': { kind: 'animal', label: 'Faithful Steed', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'familiar': { kind: 'familiar', label: 'Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'familiar-master-dedication': { kind: 'familiar', label: 'Familiar Master Dedication', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'familiar-witch': { kind: 'familiar', label: 'Familiar (Witch)', abilityBudget: 4, note: 'Grants a familiar you configure here. Choose 4 familiar abilities.' },
-  'friend-of-the-sea': { kind: 'familiar', label: 'Friend of the Sea', abilityBudget: 2, lockedAbilities: ['darkvision', 'tough'], supersedes: ['pet'], note: 'Your pet must be an aquatic creature. It has Darkvision and Tough in addition to the two familiar abilities you choose.' },
+  // "it gains the darkvision and tough abilities IN ADDITION TO the two abilities you normally choose".
+  'friend-of-the-sea': { kind: 'familiar', label: 'Friend of the Sea', abilityBudget: 2, lockedAbilities: ['darkvision', 'tough'], lockedFree: true, supersedes: ['pet'], note: 'Your pet must be an aquatic creature. It has Darkvision and Tough in addition to the two familiar abilities you choose.' },
   'hyena-familiar': { kind: 'familiar', label: 'Hyena Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'improved-familiar-attunement': { kind: 'familiar', label: 'Improved Familiar Attunement', abilityBudget: 4, supersedes: ['familiar'], note: 'Grants a familiar you configure here. Choose 4 familiar abilities.' },
   'leaf-order': { kind: 'familiar', label: 'Leaf Order', abilityBudget: 2, supersedes: ['leshy-familiar'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
@@ -88,8 +128,18 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   'shaman': { kind: 'familiar', label: 'Shaman', abilityBudget: 4, supersedes: ['spirit-familiar-animist'], note: 'Grants a familiar you configure here. Choose 4 familiar abilities.' },
   'spirit-companion': { kind: 'animal', label: 'Spirit Companion', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'spirit-familiar-animist': { kind: 'familiar', label: 'Spirit Familiar (Animist)', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
-  'spore-order': { kind: 'familiar', label: 'Spore Order', abilityBudget: 2, lockedAbilities: ['fungus'], supersedes: ['leshy-familiar'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities. It always has Fungus.' },
-  'star-orb': { kind: 'familiar', label: 'Star Orb', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
+  // The clause is printed on the feat this order GRANTS, which is why nobody had read it here. Leshy
+  // Familiar: "You gain a familiar, which has your choice of either the plant or fungus familiar
+  // ability; THIS DOESN'T COUNT AGAINST YOUR USUAL LIMIT of familiar abilities (typically 2)." Spore
+  // Order: "You also gain the Leshy Familiar druid feat, but you must create a fungus leshy" — the
+  // same free ability with the choice already made, so it is free here too.
+  // Found by `npm run scan:companion-locks`, whose INHERITED map exists for exactly this shape.
+  'spore-order': { kind: 'familiar', label: 'Spore Order', abilityBudget: 2, lockedAbilities: ['fungus'], lockedFree: true, supersedes: ['leshy-familiar'], note: 'Grants a fungus leshy familiar you configure here. Choose 2 familiar abilities. It always has Fungus, and that does not count against those 2.' },
+  // "It always has the innate surge master ability, WHICH COUNTS AGAINST your limit for familiar and
+  // master abilities." Found by `npm run scan:companion-locks`, not by the audit: the record named an
+  // always-present ability and the table listed none, so the star orb's defining ability was absent
+  // from its stat block. No `lockedFree` — the sentence says the opposite.
+  'star-orb': { kind: 'familiar', label: 'Star Orb', abilityBudget: 2, lockedAbilities: ['innate-surge'], note: 'A Tiny stone of light Bulk with no Speeds: it must take a Speed familiar ability before it can move, and while immobile it can take no ability that requires moving. It always has Innate Surge, which counts as one of your 2 choices.' },
   'undead-master-dedication': { kind: 'animal', label: 'Undead Master Dedication', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'witch-dedication': { kind: 'familiar', label: 'Witch Dedication', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
 

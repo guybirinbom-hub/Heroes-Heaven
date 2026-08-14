@@ -29,7 +29,7 @@ import { applyZoomOverlay, applyGlobalZoom } from '../theme/zoom';
 import { CustomizeModal } from './CustomizeModal';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
-import { useIsMobile } from './useIsMobile';
+import { useIsMobile, useShowUndoButtons } from './useIsMobile';
 import { useAvatar, usePortrait } from './usePortrait';
 import { PartyPage } from './PartyPage';
 import { loadCampaigns } from '../data/storage';
@@ -183,6 +183,7 @@ export function CharacterSheet({
   const bodyRef = useRef<HTMLDivElement>(null);
   const [partyOpen, setPartyOpen] = useState(false);
   const isMobile = useIsMobile();
+  const showUndoButtons = useShowUndoButtons();
   // Notes fill the sheet: no vitals rail, and the body stops scrolling so the page list and the editor
   // own their own scroll (a note is as long as you make it — the whole sheet shouldn't grow with it).
   const notesFull = tab === 'Notes' && custom.notesShowRail !== true;
@@ -605,13 +606,15 @@ export function CharacterSheet({
           // Customize is moved INTO it (still per-character); Edit stays a quick-access icon.
           <>
             {/* Undo/redo were keyboard-only (Ctrl+Z / Ctrl+Shift+Z) — invisible on a tablet and
-                undiscoverable everywhere else. The tracker has had these buttons all along. */}
-            {undo && (
+                undiscoverable everywhere else. The tracker has had these buttons all along.
+                Settings → Interface can hide them again; on a phone header, where four controls is
+                already a crowd, 'auto' does that by default. The shortcuts stay live either way. */}
+            {showUndoButtons && undo && (
               <button className="icon-btn" title="Undo (Ctrl+Z)" aria-label="Undo" disabled={!canUndo} onClick={() => canUndo && undo()}>
                 <i className="ti ti-arrow-back-up" aria-hidden="true" />
               </button>
             )}
-            {redo && (
+            {showUndoButtons && redo && (
               <button className="icon-btn" title="Redo (Ctrl+Shift+Z)" aria-label="Redo" disabled={!canRedo} onClick={() => canRedo && redo()}>
                 <i className="ti ti-arrow-forward-up" aria-hidden="true" />
               </button>
@@ -780,7 +783,7 @@ export function CharacterSheet({
                           <option value="">{`${ch.prompt}…`}</option>
                           {ch.options.map((o) => (
                             <option key={o.value} value={o.value}>
-                              {o.label}
+                              {o.note ? `${o.label} (${o.note})` : o.label}
                             </option>
                           ))}
                         </select>
@@ -799,6 +802,11 @@ export function CharacterSheet({
                           ))}
                         </div>
                       )}
+                      {/* The record's own caveat about its OWN answer — "this proficiency lasts
+                          until you prepare again… you can't use it as a prerequisite". The def has
+                          always carried it and there was nowhere to put it, so seven records printed
+                          their most important rule to nobody. */}
+                      {ch.note && <p className="confirm-note daily-pick-note">{ch.note}</p>}
                     </div>
                   ))}
                 </div>

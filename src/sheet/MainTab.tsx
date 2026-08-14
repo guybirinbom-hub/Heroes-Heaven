@@ -6,6 +6,7 @@ import {
   abilityMod,
   deriveArmorCheckPenalty,
   deriveSkill,
+  dailySkillRank,
   ownedFeatureIds,
   deriveStrikes,
   formatMod,
@@ -15,7 +16,7 @@ import {
   strikesBlockedBy,
   type Strike,
 } from '../rules/derive';
-import { togglePin, togglePinnedDesc, toggleTactic, setActiveStance, descId, type PlayUpdater } from '../rules/play';
+import { togglePin, togglePinnedDesc, toggleTactic, setActiveStance, toggleMode, descId, type PlayUpdater } from '../rules/play';
 import { resourcesForCharacter } from '../rules/classResources';
 import { featUse, spendFeatUse, refundFeatUse } from '../rules/featUses';
 import { actionGate, gateLabel, type ResourceGate } from '../rules/actionGates';
@@ -23,7 +24,7 @@ import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
-import { nameOfRecord, recordMarkersFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
+import { markTooltip, recordMarkersFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { stanceRequirementIssue } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
@@ -225,7 +226,11 @@ export function MainTab({
   // here — passive feats (Toughness, Natural Ambition, …) carry actionCost {type:'passive'}
   // and must NOT be listed as activities.
   const isActionCost = (c?: ActionCost) =>
-    !!c && (c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable');
+    // 'duration' belongs here too: an activity with a printed time ("As an activity that takes 10
+    // minutes…") is something the player DOES, and the Feat actions section is where they look for
+    // it. Passive stays out. ⚠ This is NOT the same predicate as widgets' exported isActionCost,
+    // which asks the narrower "does ActionGlyph draw a glyph" for an item's Activate row.
+    !!c && (c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable' || c.type === 'duration');
   // A CLASS FEATURE can be an action too — Flurry of Blows, Channel Smite, an oracle's curse, a
   // gunslinger's deed. This list was built from `character.feats` alone, so every one of those was
   // owned, correct, described on the Feats tab, and absent from the encounter action list where a
@@ -293,6 +298,25 @@ export function MainTab({
   const stanceFeats = character.feats
     .map((f) => content.feats[f.featId])
     .filter((f): f is NonNullable<typeof f> => !!f && !!content.stances?.[f.id] && ((f.traits ?? []).includes('stance') || !!content.stances[f.id]!.form));
+
+  /*
+   * A battle form has TWO carriers, and only one of them works.
+   *
+   * `content.stances[id]` gave the chip below a toggle, but a stance record can only hold what a stance
+   * is — senses, a Strike, an AC tweak. The real form lives in `content.modes[…].battleForm`: the AC
+   * formula, the temporary Hit Points, the form's own Strikes, the size, the creature trait. So a
+   * player who entered Worm Form from this bar got darkvision and nothing else, while the same form
+   * entered from the Modes panel gave AC 20 + level, 40 temporary HP, three Strikes at +25 and the
+   * animal trait. The rest was printed in the stance's note — prose to apply by hand.
+   *
+   * The chip stays (mid-combat, this bar is where you are looking) and now toggles the mode. Where a
+   * feat has more than one form — Worm Form's purple worm and hybrid — it gets a chip per form rather
+   * than a chooser: the modes' shared `exclusiveGroup` already makes them mutually exclusive, and the
+   * printed rules make you pick one anyway. 7 of the 8 have exactly one.
+   */
+  const formModesFor = (featId: string) =>
+    Object.values(content.modes ?? {}).filter((m) => (m.feats ?? []).includes(featId) && !!m.battleForm);
+  const activeModeIds = new Set((character.activeModes ?? []).map((m) => m.id));
   // Item actions: activatable carried items (consumables, or invested/worn/equipped magic items).
   const itemActions: (Act & { key: string })[] = (character.inventory ?? [])
     .map((inv) => ({ inv, item: content.items[inv.itemId] }))
@@ -564,7 +588,7 @@ export function MainTab({
     // all, so starring the nearest roll would have claimed something the feat does not grant.
     const marks = recordMarkersFor(character, content, 'action', actionId(a.name));
     const markValue = marks.find((m) => m.value)?.value;
-    const markTitle = marks.map((m) => `${nameOfRecord(content, m.sourceId)}: ${m.note}`).join('\n');
+    const markTitle = markTooltip(content, marks);
     const MarkTag = () =>
       marks.length === 0 ? null : (
         <span className="action-mark" title={markTitle}>
@@ -767,6 +791,16 @@ export function MainTab({
           {skillKeys.map((key) => {
             const d = deriveSkill(character, key, content);
             const acp = acpFor(key);
+            // A rank THIS MORNING's answer supplied — Ageless Spirit, Ancestral Longevity, Ancient
+            // Memories, Endless Memories, Expert Longevity, Haunting Memories — lapses at the next
+            // daily preparations. Without saying so the row is indistinguishable from permanent
+            // training, which is the one thing all of those records’ text is at pains to deny.
+            // `dailySkillRank` returns a rank only when the morning’s answer BEATS what the build
+            // already gave, so it never labels a real rank.
+            const dailyRank = dailySkillRank(character, content, key);
+            const dailyNote = dailyRank
+              ? `${dailyRank.charAt(0).toUpperCase() + dailyRank.slice(1)} until your next daily preparations — temporary, so it can't be a prerequisite or a base for a skill increase`
+              : '';
             const penalized = acp.value < 0 && skillTakesArmorPenalty(key);
             // "You can use your proficiency rank in Crafting for anything that requires a proficiency
             // rank in Medicine." When that stand-in beats the skill's own number it IS the number the
@@ -775,7 +809,7 @@ export function MainTab({
             const subNote = d.substitutedFrom
               ? `Uses ${skillLabel(d.substitutedFrom.skill)} instead — from ${d.substitutedFrom.source}`
               : '';
-            const note = [penalized ? `${formatMod(acp.value)} armor check penalty (${acp.source})` : '', subNote]
+            const note = [penalized ? `${formatMod(acp.value)} armor check penalty (${acp.source})` : '', subNote, dailyNote]
               .filter(Boolean)
               .join(' · ');
             return (
@@ -789,6 +823,11 @@ export function MainTab({
                 <span className="skill-name">
                   {skillLabel(key)}
                   {statHasSituational(character, { kind: 'skill', skill: key }, content) && <SituationalStar />}
+                  {dailyRank && (
+                    <span className="skill-sub" title={dailyNote}>
+                      today
+                    </span>
+                  )}
                   {d.substitutedFrom && (
                     <span className="skill-sub" title={subNote}>
                       via {skillLabel(d.substitutedFrom.skill)}
@@ -909,27 +948,45 @@ export function MainTab({
                       : 'Stance'}
                 </span>
                 <div className="stance-chips">
-                  {stanceFeats.map((f) => (
-                    <button
-                      key={f.id}
-                      type="button"
-                      className={
-                        'stance-chip' +
-                        (character.activeStance === f.id ? ' on' : '') +
-                        (character.activeStance === f.id && stanceIssue ? ' unmet' : '')
-                      }
-                      disabled={!onPlay}
-                      title={
-                        [content.stances[f.id]?.requires?.text && `Requires: ${content.stances[f.id]!.requires!.text}`,
-                         content.stances[f.id]?.note || f.name]
-                          .filter(Boolean)
-                          .join(' — ')
-                      }
-                      onClick={onPlay ? () => onPlay((p) => setActiveStance(p, f.id)) : undefined}
-                    >
-                      {f.name}
-                    </button>
-                  ))}
+                  {stanceFeats.flatMap((f) => {
+                    // A feat with real battle-form modes gets a chip PER FORM, wired to the mode.
+                    const forms = formModesFor(f.id);
+                    if (forms.length) {
+                      return forms.map((m) => (
+                        <button
+                          key={m.id}
+                          type="button"
+                          className={'stance-chip' + (activeModeIds.has(m.id) ? ' on' : '')}
+                          disabled={!onPlay}
+                          title={m.note || m.name}
+                          onClick={onPlay ? () => onPlay((p) => toggleMode(p, m.id, content.modes)) : undefined}
+                        >
+                          {m.name}
+                        </button>
+                      ));
+                    }
+                    return [
+                      <button
+                        key={f.id}
+                        type="button"
+                        className={
+                          'stance-chip' +
+                          (character.activeStance === f.id ? ' on' : '') +
+                          (character.activeStance === f.id && stanceIssue ? ' unmet' : '')
+                        }
+                        disabled={!onPlay}
+                        title={
+                          [content.stances[f.id]?.requires?.text && `Requires: ${content.stances[f.id]!.requires!.text}`,
+                           content.stances[f.id]?.note || f.name]
+                            .filter(Boolean)
+                            .join(' — ')
+                        }
+                        onClick={onPlay ? () => onPlay((p) => setActiveStance(p, f.id)) : undefined}
+                      >
+                        {f.name}
+                      </button>,
+                    ];
+                  })}
                 </div>
                 {/* A stance whose Requirements aren't met grants nothing (derive gates it), so say so
                     plainly — an inert stance that still looks active reads as a broken sheet. */}
@@ -945,6 +1002,14 @@ export function MainTab({
                 {character.activeStance && content.stances[character.activeStance]?.note && (
                   <div className="stance-note">{content.stances[character.activeStance].note}</div>
                 )}
+                {/* A form entered from a chip is an active MODE, not an activeStance, so its note has
+                    to come from the mode or the bar goes silent about the form you are in. */}
+                {stanceFeats
+                  .flatMap((f) => formModesFor(f.id))
+                  .filter((m) => activeModeIds.has(m.id) && m.note)
+                  .map((m) => (
+                    <div className="stance-note" key={m.id}>{m.note}</div>
+                  ))}
               </div>
             )}
 

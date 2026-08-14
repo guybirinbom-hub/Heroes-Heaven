@@ -195,6 +195,32 @@ for (const rec of records) {
     continue;
   }
 
+  // ---- would this restate a degree of success the record ALREADY carries structurally? ----
+  //
+  // `degreeShifts` exists so one authored entry reaches the skill/save star AND the action mark
+  // (explain.ts fans it out through `authoredSituational` + `degreeShiftMarkers`). A registry entry
+  // that ALSO says "a success is a critical success instead" therefore prints the same rule twice on
+  // the same popup, out of two tables that can drift apart — which is exactly what the structured
+  // field was built to end.
+  //
+  // Measured: five records shipped this way (breath-control, forlorn, goloma-courage, wind-tempered,
+  // fluid-contortionist). Four were hand-authored and are fixed in place; fluid-contortionist came
+  // from THIS script, so a hand deletion would come straight back at the next run. The guard is the
+  // fix, and it covers every future batch rather than the one record.
+  //
+  // ⚠ The article is optional — breath-control evaded an earlier version of this pattern for months
+  // by saying "success becomes critical success" rather than "becomes A critical success". Keep the
+  // `(an? )?` forms; test/degree-shifts.test.ts asserts the same shape from the other side.
+  if (core.feats[id]?.degreeShifts?.length && Array.isArray(fix.situational)) {
+    const DEGREE_PROSE = /(critical success instead|becomes (an? )?critical success|is (an? )?critical success|is (an? )?failure instead|becomes (an? )?failure instead|critical failure is (an? )?failure|is (an? )?success instead|one degree of success|one degree better|one degree worse)/i;
+    const restates = fix.situational.filter((b) => DEGREE_PROSE.test(`${b?.when ?? ''} ${b?.bonus ?? ''} ${b?.value ?? ''} ${b?.note ?? ''}`));
+    if (restates.length && restates.length === fix.situational.length) {
+      skipped.push(`${id}: every clause restates the record's own degreeShifts — the structured field already stars the stat AND marks the action`);
+      continue;
+    }
+    if (restates.length) skipped.push(`${id}: ⚠ ${restates.length} of ${fix.situational.length} clauses restate its degreeShifts — trim the degree wording out of them`);
+  }
+
   // ---- a mark on an ACTION or a CONDITION rather than on a stat ----
   // Adversaries return these under `situational` too, but they carry {on,id,note} instead of
   // {targets,when,bonus} and belong in RECORD_MARKERS. Routing them by their shape rather than by

@@ -44,6 +44,7 @@ export const SENSE_GLOSSARY: Record<string, string> = {
   bloodsense: 'Bloodsense: an imprecise sense that detects the blood of living creatures within range, letting you notice them even without sight.',
   magicsense: 'Magicsense: an imprecise sense that detects active spells and magic items within range, alerting you to nearby magic.',
   wavesense: 'Wavesense: an imprecise sense that detects motion in water within range, much as tremorsense detects motion on the ground.',
+  'touch-telepathy': 'Touch telepathy: you can communicate silently and mentally with any creature you are touching, as long as you share a language. A range in feet is shown when an effect extends it beyond touch.',
 };
 
 /** Common creature-type traits (ancestry traits are described generically from the data). */
@@ -260,6 +261,17 @@ export function languageDesc(id: string): string {
     `${pretty(id)}: one of the languages of Golarion. A character who knows it can understand its speakers and read its writing.`
   );
 }
+
+/**
+ * What a language RECALLED AT DAILY PREPARATIONS is, appended to that language’s own description.
+ *
+ * Ancestral Linguistics: "You know this language until you prepare again. Since this knowledge is
+ * temporary, you can’t use it as a prerequisite for a permanent character option." Both halves have
+ * to reach the player — a pill that reads like every other language states the opposite of the rule.
+ * Lives here, beside `languageDesc`, so the two pill sites cannot word it differently.
+ */
+export const DAILY_LANGUAGE_NOTE =
+  'Recalled during your daily preparations — you know it until you prepare again. Temporary, so it cannot be a prerequisite for a permanent character option.';
 
 /** Description for a trait. Prefers the curated glossary (covering common weapon/spell/item
  *  traits), then suffixed weapon-trait families (versatile-p, deadly-d8, …), then ancestry and

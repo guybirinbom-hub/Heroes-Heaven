@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { usePrefs } from '../data/prefs';
 
 /**
  * Overrides the viewport check for a subtree.
@@ -20,6 +21,22 @@ export const ForceMobileContext = createContext<boolean | null>(null);
  *  should be off on phones so a popup doesn't auto-open the on-screen keyboard. Safe with no DOM. */
 export function isMobileNow(maxWidth = 720): boolean {
   return typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia(`(max-width: ${maxWidth}px)`).matches;
+}
+
+/**
+ * Whether the undo/redo arrow pair should be drawn. The sheet header, the builder header and the
+ * floating pair App puts on every other screen all ask this one question, so they can never disagree.
+ * The setting lives in prefs (`undoButtons`); 'auto' means desktop-only.
+ *
+ * This governs the BUTTONS only. Ctrl+Z / Ctrl+Shift+Z are registered app-wide with no mode gate and
+ * stay live however this resolves — hiding a control must not take the capability with it.
+ */
+export function useShowUndoButtons(): boolean {
+  const isMobile = useIsMobile();
+  const { undoButtons } = usePrefs();
+  if (undoButtons === 'on') return true;
+  if (undoButtons === 'off') return false;
+  return !isMobile;
 }
 
 export function useIsMobile(maxWidth = 720): boolean {

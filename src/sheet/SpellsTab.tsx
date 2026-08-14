@@ -628,13 +628,18 @@ function ManageSpellsModal({
     onPlay((p) => setRepertoireRank(p, entry.id, rank, cur.filter((x) => x !== id)));
   };
 
+  /* A signature spell a RECORD granted is not the player's to un-star — the feat's text says it IS
+   * one — so the ★ on it refuses rather than appearing to work and silently coming back. */
+  const fixedSig = new Set(entry.signatureFixed ?? []);
   // One signature spell per rank: toggling a new one drops any existing same-rank signature.
   const toggleSig = (rank: number, id: string) => {
+    if (fixedSig.has(id)) return;
     const cur = entry.signature ?? [];
     if (cur.includes(id)) {
       onPlay((p) => setSignatureSpells(p, entry.id, cur.filter((x) => x !== id)));
     } else {
-      const sameRank = new Set(entry.repertoire?.[rank] ?? []);
+      // A granted signature never yields its rank to a new pick, for the same reason.
+      const sameRank = new Set((entry.repertoire?.[rank] ?? []).filter((x) => !fixedSig.has(x)));
       onPlay((p) => setSignatureSpells(p, entry.id, [...cur.filter((x) => !sameRank.has(x)), id]));
     }
   };
@@ -745,9 +750,17 @@ function ManageSpellsModal({
                       <div key={id} className={'ms-slot' + (isSig ? ' sig' : '')}>
                         {sigAvailable && (
                           <button
-                            className={'ms-sig' + (isSig ? ' on' : '')}
-                            title={isSig ? 'Signature spell — click to unset' : 'Set as signature spell'}
+                            className={'ms-sig' + (isSig ? ' on' : '') + (fixedSig.has(id) ? ' fixed' : '')}
+                            title={
+                              fixedSig.has(id)
+                                ? 'Signature spell — granted, so it can’t be unset'
+                                : isSig
+                                  ? 'Signature spell — click to unset'
+                                  : 'Set as signature spell'
+                            }
                             aria-label="Toggle signature spell"
+                            aria-disabled={fixedSig.has(id) || undefined}
+                            disabled={fixedSig.has(id)}
                             onClick={() => toggleSig(rank, id)}
                           >
                             <i className="ti ti-star" aria-hidden="true" />
@@ -1195,6 +1208,17 @@ export function SpellsTab({
   const maxRank = Math.max(
     0,
     focus ? Math.ceil(character.level / 2) : 0,
+    // INNATE spells count too. A cantrip auto-heightens to ceil(level/2) — "A cantrip is heightened to
+    // a spell rank equal to half your level rounded up" (Awakened Jewel, Awakened Magic, Bone Magic) —
+    // and a leveled grant's own rank is the rank it is cast at. This list read prepared/spontaneous/
+    // focus ONLY, so a character whose only magic is innate saw every cantrip frozen at its base rank
+    // in the detail view, while a class caster's identical cantrip printed "heightened to 10th".
+    ...itemEntries
+      .filter((e) => e.type === 'innate')
+      .flatMap((e) => [
+        ...(e.cantrips.length ? [Math.ceil(character.level / 2)] : []),
+        ...Object.keys(e.repertoire ?? {}).map(Number),
+      ]),
     ...mains.flatMap((e) =>
       [...Object.keys(e.prepared ?? {}), ...Object.keys(e.repertoire ?? {}), ...Object.keys(e.slots ?? {})].map(Number),
     ),
@@ -1273,8 +1297,13 @@ export function SpellsTab({
       const cards = main.cantrips
         .map((id, i) => {
           const sp = content.spells[id];
+          // A cantrip a RECORD put in this pool — Adapted Cantrip's "you can cast this cantrip as a
+          // spell of your class's tradition" — is named, so the extra row does not read as one of the
+          // player's own picks. `spellSources` was populated for the pooled entries and read only
+          // there; the class pool never wrote it, so the attribution costs no new field.
+          const from = main.spellSources?.[id];
           return sp && visible(sp) ? (
-            <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta="at will" marks={marksFor(id)} onClick={() => setDetail(sp)} />
+            <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} onClick={() => setDetail(sp)} />
           ) : null;
         })
         .concat(
@@ -1794,8 +1823,19 @@ export function SpellsTab({
     for (const id of entry.cantrips) {
       const sp = content.spells[id];
       if (!visible(sp)) continue;
+      // An innate cantrip carries the same two facts a leveled innate does and printed NEITHER: the
+      // rank it is cast at ("heightened to a spell rank equal to half your level rounded up") and which
+      // record granted it. `spellSources` was populated for these all along and read only by the leveled
+      // branch below — a write-only field for this one shape — so a fighter's Detect Magic from Arcane
+      // Sense read as a bare "at will", unranked and unattributed. The tradition is appended only when
+      // it differs from the pooled entry's, which is the whole point of `spellTraditions`.
+      const cTrad = entry.spellTraditions?.[id];
+      const cFrom = entry.spellSources?.[id];
+      const cMeta = isInnate
+        ? `at will · heightened to ${ord(Math.min(10, Math.ceil(character.level / 2)))}${cFrom ? ` · from ${cFrom}` : ''}${cTrad && cTrad !== entry.tradition ? ` · ${cTrad}` : ''}`
+        : 'cantrip · at will';
       cards.push(
-        <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={isInnate ? 'at will' : 'cantrip · at will'} marks={marksFor(id)} onClick={sp ? () => setDetail(sp) : undefined} />,
+        <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={cMeta} marks={marksFor(id)} onClick={sp ? () => setDetail(sp) : undefined} />,
       );
     }
     for (const rank of Object.keys(entry.repertoire ?? {}).map(Number).sort((a, b) => a - b)) {
@@ -1809,8 +1849,12 @@ export function SpellsTab({
         // Pooled entries (innate / focus) draw from many feats — name the granting source so it's
         // obvious where each spell came from.
         const from = entry.spellSources?.[id];
+        // …and its TRADITION when that differs from the entry's. One pooled entry has one tradition and
+        // its spells do not, so the header was a majority vote: a psychic's heritage spell and an
+        // invested item's outvote each other and the loser is described wrongly.
+        const trad = entry.spellTraditions?.[id];
         const meta = isInnate
-          ? `rank ${rank} · ${uses === 0 ? 'at will' : cadence ?? `${uses ?? 1}/day`}${from ? ` · from ${from}` : ''}`
+          ? `rank ${rank} · ${uses === 0 ? 'at will' : cadence ?? `${uses ?? 1}/day`}${from ? ` · from ${from}` : ''}${trad && trad !== entry.tradition ? ` · ${trad}` : ''}`
           : counterId === 'pool'
             ? `rank ${rank} · ${cost} charge${cost === 1 ? '' : 's'}`
             : counterId === 'freq'
@@ -1846,7 +1890,9 @@ export function SpellsTab({
               entry.name
             )}
             <span style={{ fontSize: 11.5, color: 'var(--app-text-dim)', marginLeft: 6 }}>
-              · {isInnate ? 'innate' : 'item'} spells ({entry.tradition.charAt(0).toUpperCase() + entry.tradition.slice(1)})
+              {/* Every tradition present, not just the majority vote — "innate spells (Arcane)" over a
+                  sarangay's occult cantrip is the pooled-header defect this fixes. */}
+              · {isInnate ? 'innate' : 'item'} spells ({[...new Set([entry.tradition, ...Object.values(entry.spellTraditions ?? {})])].map(cap).join(', ')})
             </span>
             {counter && itemInv && (
               <span className="item-charges">

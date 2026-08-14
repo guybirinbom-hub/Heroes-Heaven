@@ -56,6 +56,15 @@ export const NEAR_DUPLICATE_IDS = new Set([
   'aon-post-guard-of-all-trade', // -> post-guard-of-all-trades
   'aon-reclaimed-investigator', // -> reclaimer-investigator
   'aon-wishes-for-riches', // -> wish-for-riches
+  // Not an `aon-` scrape, and not a background: TWO imports of the same AoN document (feat-4709)
+  // under different names, so the exact-name pass above cannot see them and neither can the `aon-`
+  // prefix rule. MEASURED on the live db: `eligibleFeatsForSlot` for a level-1 druid class slot
+  // returned 13 options and TWO of them were this feat, and the mirror index holds exactly one druid
+  // document under that id. The KEPT id is `animal-empathy`: it is the fully-modelled record of the
+  // pair (it carries `actionCost`, `prerequisites` and a source license; the hidden one carries
+  // none of the three). ⚠ Do NOT generalise this into a sweep from `npm run scan:dupe-feats` — that
+  // scanner finds 40 colliding groups and its own EXEMPT notes record why no blanket rule works.
+  'animal-empathy-druid', // -> animal-empathy
 ]);
 
 /**

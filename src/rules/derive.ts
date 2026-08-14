@@ -38,6 +38,7 @@ import type {
   StanceStrike,
   SubclassOption,
   ItemDesignation,
+  ModeDef,
   ProficiencyKey,
   ProficiencyRank,
   ReachRider,
@@ -926,15 +927,18 @@ export function activeStanceDef(c: Character, db: ContentDatabase): StanceDef | 
   return stanceRequirementIssue(c, db) ? undefined : activeStanceEntry(c, db);
 }
 
-/** The `whileActive` grants from owned feats/features whose resource STATE is currently toggled on
- *  (Raging Resistance while raging). Shared by deriveDefenses (IWR/senses) and deriveSpeeds (speeds). */
-export function activeStateGrants(c: Character, db: ContentDatabase): NonNullable<DefenseGrants['whileActive']> {
-  const out: NonNullable<DefenseGrants['whileActive']> = [];
-  const on = (state: string) => (c.classResources?.[state] ?? 0) > 0;
-  const scan = (g: DefenseGrants | undefined) => {
+type WhileActiveClause = NonNullable<DefenseGrants['whileActive']>[number];
+
+/** Every `whileActive` clause the character owns whose level gate is met — ON OR OFF — paired with the
+ *  record that printed it. Two callers want different slices of the same walk: `activeStateGrants`
+ *  wants the ones switched on, `stateGrantSummary` wants all of them so the state's own card can say
+ *  what entering it will do. One walk, so the two can never drift. */
+function ownedWhileActive(c: Character, db: ContentDatabase): { from: string; wa: WhileActiveClause }[] {
+  const out: { from: string; wa: WhileActiveClause }[] = [];
+  const scan = (g: (DefenseGrants & { name?: string }) | undefined) => {
     // minLevel: an instinct is chosen at 1st but prints the damage types for Raging Resistance, a
     // 9th-level feature. Without the gate a 1st-level barbarian would rage with a 9th-level defence.
-    for (const wa of g?.whileActive ?? []) if (on(wa.state) && c.level >= (wa.minLevel ?? 0)) out.push(wa);
+    for (const wa of g?.whileActive ?? []) if (c.level >= (wa.minLevel ?? 0)) out.push({ from: g?.name ?? 'Active state', wa });
   };
   for (const f of c.feats) scan(db.feats[f.featId]);
   for (const h of heritageRecords(c, db)) scan(h);
@@ -942,6 +946,47 @@ export function activeStateGrants(c: Character, db: ContentDatabase): NonNullabl
   // A resolved PICK may itself be state-gated — Giant Instinct's "your choice of cold, electricity,
   // or fire" is part of Raging Resistance, not a standing benefit.
   scan(c.chosenEffects);
+  return out;
+}
+
+/** The `whileActive` grants from owned feats/features whose resource STATE is currently toggled on
+ *  (Raging Resistance while raging). Shared by deriveDefenses (IWR/senses) and deriveSpeeds (speeds). */
+export function activeStateGrants(c: Character, db: ContentDatabase): NonNullable<DefenseGrants['whileActive']> {
+  const on = (state: string) => (c.classResources?.[state] ?? 0) > 0;
+  return ownedWhileActive(c, db).filter((e) => on(e.wa.state)).map((e) => e.wa);
+}
+
+/**
+ * What entering a STATE will grant — whether or not it is on right now.
+ *
+ * Principle C: "a feat that modifies another record's granted thing must be reflected in that thing."
+ * Acute Vision's darkvision, Acute Scent's scent, Raging Athlete's climb/swim and every instinct's
+ * Raging Resistance are `whileActive` clauses that reach the sheet ONLY once the toggle is on — so a
+ * barbarian deciding whether to rage could see nowhere what raging would give them. The Rage card is
+ * where they are looking. Same walk and the same `minLevel` gate as `activeStateGrants`, without the
+ * "is it on" test.
+ *
+ * NAMES the effects without resolving their numbers, deliberately: the resistance rows already carry
+ * the resolved value with its full breakdown, and a speed formula ("@actor.speed.land") resolved
+ * without the Speeds in scope would print a confident 0. This is the index, not a second copy.
+ */
+export function stateGrantSummary(
+  c: Character,
+  db: ContentDatabase,
+  state: string,
+): { from: string; senses: SenseEntry[]; other: string[] }[] {
+  const out: { from: string; senses: SenseEntry[]; other: string[] }[] = [];
+  for (const { from, wa } of ownedWhileActive(c, db)) {
+    if (wa.state !== state) continue;
+    const other: string[] = [];
+    for (const r of wa.resistances ?? []) other.push(`resistance to ${r.type}`);
+    for (const w of wa.weaknesses ?? []) other.push(`weakness to ${w.type}`);
+    for (const t of wa.immunities ?? []) other.push(`immunity to ${t}`);
+    for (const k of Object.keys(wa.speeds ?? {})) other.push(`${k} Speed`);
+    if (wa.speedPenalty) other.push(`${wa.speedPenalty} ft Speed penalty`);
+    const senses = wa.senses ?? [];
+    if (senses.length || other.length) out.push({ from, senses, other });
+  }
   return out;
 }
 
@@ -971,7 +1016,12 @@ export const dailyChoiceKey = (recordId: string, flag: string) => `${recordId}:$
  * ⚠ It is `daily` AND askable, not `daily` alone. `dailyChoicesFor` can only render 'array' / 'text' /
  * 'open' — a 'skills' or 'domains' menu resolves against the BUILD, not the morning, so the Rest sheet
  * skips it. Hiding one of those from the builder too would leave it askable NOWHERE, which is worse
- * than asking it in the wrong place. Ancient Memories is the one record in that state today.
+ * than asking it in the wrong place. NO record is in that state today. Ancient Memories was the last
+ * one, and its 'skills' menu is now an 'array' daily menu authored by
+ * scripts/apply-temporary-proficiency-lane.mjs. That also fixed the LIST, because 'skills' resolves
+ * through `trainedSkillOptions` — the skills you are ALREADY trained in — and the feat can only help
+ * an untrained one. test/daily-choices-not-in-builder.test.tsx pins the stranded list at EMPTY, so a
+ * new record in that shape fails there rather than quietly falling back to the builder.
  */
 export function askedAtDailyPrep(
   def: FeatChoiceDef | null | undefined,
@@ -1190,9 +1240,26 @@ export function bodyRuneExcluded(rune: RuneDef, db: ContentDatabase): boolean {
   return !!usage && usage !== 'etched-onto-armor';
 }
 
-/** 'holy', 'unholy', or null. Recorded as the deity's `sanctification` effect choice. */
+/**
+ * 'holy', 'unholy', or null — YOUR OWN sanctification, recorded as the deity's `sanctification`
+ * effect choice.
+ *
+ * ⚠ THE ID `sanctification` BELONGS TO THE DEITY AND TO NOBODY ELSE. This was a bare `find()` over
+ * every effect pick, and `feats/sanctified-relic` carried a choice under the same id — the trait its
+ * relic confers on whoever WEARS it, which by the feat's own text cannot be you ("You cannot wear it
+ * yourself"). buildCharacter resolves feats before the deity, so the relic's answer was found first
+ * and won: a champion of Ma'at, deity answered holy, relic answered unholy, measured as UNHOLY.
+ *
+ * The relic's choice is renamed `relic-sanctification` (scripts/backfill-sanctified-relic.mjs), and
+ * this guard is the other half of the fix — a `Character` carries no deityId to scope by, so a bare
+ * id in a shared namespace will collide again the moment another record reaches for the obvious word.
+ * Anything that is not the character's own sanctification must not answer here.
+ */
+const NOT_YOUR_SANCTIFICATION = new Set(['sanctified-relic']);
 export function sanctificationOf(c: Character): 'holy' | 'unholy' | null {
-  const label = (c.effectPicks ?? []).find((p) => p.choiceId === 'sanctification')?.label?.toLowerCase();
+  const label = (c.effectPicks ?? [])
+    .find((p) => p.choiceId === 'sanctification' && !NOT_YOUR_SANCTIFICATION.has(p.recordId))
+    ?.label?.toLowerCase();
   return label === 'holy' || label === 'unholy' ? label : null;
 }
 
@@ -1377,6 +1444,15 @@ export function dailyChoiceGrants(c: Character, db: ContentDatabase): EffectGran
     if (def.kind === 'open' && def.from?.type === 'spell' && def.from.grantInnate && answer && db.spells[answer]) {
       const g = def.from.grantInnate;
       out.push({ innateSpells: [{ spellId: answer, usesPerDay: g.usesPerDay ?? 1 }] });
+      continue;
+    }
+    // A LANGUAGE recalled this morning becomes a real language, exactly as the borrowed spell above
+    // becomes a real casting. Ancestral Linguistics: "you can recede into old memories to become
+    // fluent in one common language or one other language you have access to. You know this language
+    // until you prepare again." Gated on `grantLanguage` rather than on the type, so the one
+    // non-granting language picker in the data (Settlement Scholastics) cannot start granting.
+    if (def.kind === 'open' && def.from?.type === 'language' && def.from.grantLanguage && answer && db.languages?.[answer]) {
+      out.push({ grantsLanguages: [answer] });
       continue;
     }
     const opt = (def.options ?? []).find((o) => o.value === answer);
@@ -1687,6 +1763,55 @@ export interface CharacterDefenses {
 }
 
 const ACUITY_ORDER: Record<string, number> = { precise: 3, imprecise: 2, vague: 1 };
+
+/** The VISION ladder, weakest rung first. Each rung already contains the one below it, which is why
+ *  Q13 prints only the strongest — see the supersede pass at the end of deriveDefenses. Names are
+ *  normalised before lookup, and every grant in the corpus now uses ONE spelling per sense: the two
+ *  records writing "low-light vision" and the three writing "greater darkvision" were respelt, because
+ *  ranking normalised while `addSense` keyed its Map by the raw name, so a character holding both
+ *  spellings printed two rows for one sense. The normalisation here stays as belt-and-braces —
+ *  `npm run scan:choices` shape E fails if a second spelling ever reappears. */
+const VISION_LADDER = ['normal', 'low-light', 'darkvision', 'greater-darkvision'];
+
+/**
+ * A sense name as a comparison key.
+ *
+ * The ladder above already normalises before RANKING, which is why supersede always worked — but
+ * `addSense` keys its Map by the raw NAME, so two spellings of one sense printed two rows. The data
+ * is one spelling now; this exists because a GATE has to compare a requirement written on a record
+ * against a sense granted by another record, and neither side owns the spelling.
+ */
+export const senseKey = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+/** The senses this character has, as comparison keys. Senses are computed here and appear NOWHERE
+ *  on what `buildCharacter` returns, so a caller cannot read them off the built object. */
+export function characterSenseKeys(c: Character, db: ContentDatabase): Set<string> {
+  return new Set(deriveDefenses(c, db).senses.map((s) => senseKey(s.name)));
+}
+
+/**
+ * Why an option gated on a sense cannot be taken — or undefined when it can.
+ *
+ * Animal Senses prints *"You must have low-light vision before you can gain darkvision with this
+ * feat"* and it was enforced nowhere, so a normal-sighted character was offered Darkvision as a live
+ * pick. `requiresAnySense` is a LIST so the data says which senses satisfy the gate — darkvision
+ * satisfies a low-light requirement — rather than the reader hard-coding a supersede rule.
+ *
+ * `alreadyAnswered` never gates: a pick must not vanish out from under the player, and a gate must
+ * not invalidate itself once its own grant lands.
+ *
+ * Returns the SENTENCE, because ruling Q27 is "greyed, and ideally saying why" — a boolean here
+ * would have left the caller to invent the wording, which is how one gets two of them.
+ */
+export function senseGateReason(
+  gate: string[] | undefined,
+  have: ReadonlySet<string>,
+  alreadyAnswered = false,
+): string | undefined {
+  if (!gate?.length || alreadyAnswered) return undefined;
+  if (gate.some((s) => have.has(senseKey(s)))) return undefined;
+  return `Requires ${gate.map((s) => s.replace(/-/g, ' ')).join(' or ')}.`;
+}
 
 /** The values a data formula may reference. `level` is always available; the rest come from the
  *  character when one is in hand (ability modifiers, the character's own Speeds). */
@@ -2148,6 +2273,25 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       for (const s of formSenses) addSense(s);
     }
   }
+  // Q13 — "Show ONLY darkvision when it supersedes low-light." Vision is a ladder in which each rung
+  // already contains the one below, so printing both told the player they had two senses where the
+  // rules give them one: a vishkanya with Alabaster Eyes read "Low-light vision, Darkvision", and a
+  // human with any darkvision grant read "Normal vision, …". MARKED, never removed — the ruling is a
+  // display suppression (docs/gold-set-final.md line 277: the character still counts as having the
+  // lower sense wherever the rules consult it), so `defenses.senses` stays complete and only the three
+  // display surfaces filter. Runs LAST, after the battle-form clear, so a form's vision is ranked
+  // against the form's own senses and nothing the character used to have.
+  {
+    const rung = (name: string) =>
+      VISION_LADDER.indexOf(name.toLowerCase().replace(/[\s_]+/g, '-').replace(/-vision$/, ''));
+    let best = -1;
+    for (const s of senses.values()) best = Math.max(best, rung(s.name));
+    for (const [k, s] of senses) {
+      // A CLONE: the entry is the content record's own object (addSense stores the reference), and
+      // marking it in place would write the flag into the database for every other character.
+      if (rung(s.name) >= 0 && rung(s.name) < best) senses.set(k, { ...s, superseded: true });
+    }
+  }
   // Choice-resistance heritage (Deep Fetchling: cold/void; Elementheart Kobold: an element's type): the
   // player's chosen damage type, resistance = half level (min 1). Same-type resistances don't stack.
   if (heritage?.choiceResistance && c.heritageResistanceChoice) {
@@ -2277,7 +2421,7 @@ function formatMpDamageTerm(t: MpDamage): string {
 const DIE_LADDER = ['d4', 'd6', 'd8', 'd10', 'd12'] as const;
 
 /** Step a damage die up one size (d4→d6→d8→d10→d12, capped at d12). Unknown dice are returned as-is. */
-function stepDie(die: string): string {
+export function stepDie(die: string): string {
   const i = DIE_LADDER.indexOf(die as (typeof DIE_LADDER)[number]);
   if (i < 0) return die;
   return DIE_LADDER[Math.min(i + 1, DIE_LADDER.length - 1)];
@@ -2394,6 +2538,9 @@ export interface Strike {
    *  off-guard, Ranger Precision on the first hit vs hunted prey). Rendered as an annotation on the
    *  strike row and in the damage breakdown — NOT folded into the flat `dmgBonus`/`damage` dice. */
   conditionalDamage?: { text: string; note: string }[];
+  /** Where a damage die BIGGER than the granting record's printed one came from, printed in the
+   *  damage breakdown. Absent on a Strike whose die is the one its record states. */
+  dieNote?: string;
 }
 
 /** Handwraps of Mighty Blows (and kin): worn-gloves UNARMED "weapons" whose runes buff every
@@ -3173,9 +3320,14 @@ function strikeReaches(c: Character, db: ContentDatabase, ctx: ReachContext): St
  * such feats turns a d6 into a d10.
  */
 function applyWeaponRiders(c: Character, db: ContentDatabase, w: WeaponItem, inv?: InventoryItem): WeaponItem {
-  const sources: (DefenseGrants | undefined)[] = [
+  const sources: (DefenseGrants | Pick<ModeDef, 'weaponTraits'> | undefined)[] = [
     ...(c.feats ?? []).map((fc) => db.feats[fc.featId]),
     ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
+    // An ACTIVE MODE rides here too, exactly as it already does for strikeDamage (the
+    // `for (const m of c.activeModes ?? []) if (m.strikeDamage)` push in deriveUnarmed). A mode is
+    // the only shape that can say "…until you switch back", which is Agile Shield Grip's own last
+    // sentence and therefore Q11's test for a mode rather than a passive rider on the feat.
+    ...(c.activeModes ?? []).filter((m) => m.weaponTraits),
   ];
   const deityWeapons = deitySimpleFavoredWeaponIds(c, db);
 
@@ -3549,6 +3701,9 @@ interface UnarmedProfile {
   /** Extra damage dice this attack has from its own level scaling rather than from handwraps — a
    *  FLOOR, so better handwraps still win. */
   strikingFloor?: number;
+  /** Carried from `NaturalAttack.dieNote`, so the damage breakdown can name what stepped this
+   *  attack's die up. Survives applyUnarmedRiders, which rebuilds the profile by spreading it. */
+  dieNote?: string;
 }
 
 const FIST_PROFILE: UnarmedProfile = {
@@ -3679,6 +3834,7 @@ function deriveUnarmedStrike(
     mapStep: step,
     mapSources: mapSources.length ? mapSources : undefined,
     conditionalDamage: conditionalDamage.length ? conditionalDamage : undefined,
+    dieNote: p.dieNote,
   };
 }
 
@@ -3801,6 +3957,7 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
         traits: na.traits?.length ? na.traits : ['unarmed'],
         group: na.group ?? 'brawling',
         range: na.range,
+        dieNote: na.dieNote,
       }),
       hwRunes,
       false,

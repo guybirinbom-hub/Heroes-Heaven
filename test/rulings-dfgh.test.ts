@@ -9,6 +9,8 @@ import {
   supersededIds,
 } from '../src/rules/situationalBonuses';
 import { explainStat, recordMarkersFor, saveDcHasSituational, spellSituationalFor, statHasSituational } from '../src/rules/explain';
+import { SKILL_ACTIONS, skillActionsFor } from '../src/rules/skillActions';
+import { ACTIVITIES } from '../src/rules/actions';
 import type { Character, ContentDatabase } from '../src/rules/types';
 import { content, build } from './_content';
 
@@ -60,7 +62,12 @@ describe('D — the mark goes on the action it changes', () => {
     const missing: string[] = [];
     for (const [source, marks] of Object.entries(RECORD_MARKERS)) {
       for (const m of marks) {
-        const bucket = m.on === 'action' ? c().actions : c().conditions;
+        // 'feature' is the third surface (situationalBonuses.ts RecordMarker): a feat or class-feature
+        // ENTRY on the Feats tab, for a rule printed inside another record's prose. Its ids live in
+        // feats/classFeatures, so the two-bucket ternary sent every one of them to `conditions` and
+        // reported a live marker as missing.
+        const bucket =
+          m.on === 'action' ? c().actions : m.on === 'condition' ? c().conditions : { ...c().feats, ...c().classFeatures };
         if ((bucket as Record<string, unknown>)[m.id]) continue;
         if (m.on === 'action' && featRows.has(m.id)) continue;
         missing.push(`${source} → ${m.on}/${m.id}`);
@@ -230,6 +237,104 @@ describe('H — wording', () => {
     for (const save of ['fortitude', 'reflex', 'will'] as const) {
       expect(statHasSituational(ch, { kind: 'save', save }, c()), `${save} should be starred`).toBe(true);
     }
+  });
+});
+
+/**
+ * batch-001, the MARKER half — and the three ways a mark lands on a row it does not belong to.
+ *
+ * `recordMarkersFor` is keyed by ACTION ID ALONE. It cannot know which skill's popup is asking, and
+ * `StatDetailModal` draws the mark beside every skill whose SKILL_ACTIONS list carries that action.
+ * So a mark is not "the row the feat modifies" — it is EVERY row that performs that action.
+ */
+describe('batch-001 — a mark lands on the row the player is actually looking at', () => {
+  it('Ammunition Thaumaturgy marks Interact, not the commander tactic named "Reload!"', () => {
+    // core.json's `reload` record is Battlecry!'s commander TACTIC — a mark filed there would render
+    // on a commander's tactic row and never on a thaumaturge's. The feat's own text names Interact.
+    const ch = withSource('ammunition-thaumaturgy');
+    expect(recordMarkersFor(ch, c(), 'action', 'interact')).toHaveLength(1);
+    expect(recordMarkersFor(ch, c(), 'action', 'reload')).toHaveLength(0);
+    expect(c().actions['reload'].name).toBe('Reload!');
+  });
+
+  it('a mark on a SHARED action claims no number for the skill it does not touch', () => {
+    /*
+     * Escape is listed under Acrobatics AND Athletics; Subsist under Society AND Survival. Adrenaline
+     * Rush's +1 status is Athletics-only and All of the Animal's clause is Survival-only, so neither
+     * mark may carry a `value` — a bare "(+1 status)" beside the Acrobatics Escape row is a bonus the
+     * feat does not grant, and the audit praises the record for NOT fanning out to Acrobatics.
+     */
+    const escape = RECORD_MARKERS['adrenaline-rush'].find((m) => m.id === 'escape')!;
+    expect(escape.value).toBeUndefined();
+    expect(escape.note).toMatch(/^Athletics only:/);
+    // Force Open exists under Athletics ALONE, so there the number is safe to show.
+    const forceOpen = RECORD_MARKERS['adrenaline-rush'].find((m) => m.id === 'force-open')!;
+    expect(forceOpen.value).toBe('+1 status');
+
+    const subsist = RECORD_MARKERS['all-of-the-animal'].find((m) => m.id === 'subsist')!;
+    expect(subsist.value).toBeUndefined();
+    expect(subsist.note).toMatch(/^Survival only:/);
+  });
+
+  it('Bargain Hunter\'s star and its mark lead to the same place', () => {
+    /*
+     * SKILL_ACTIONS ships Earn Income under Crafting, Lore and Performance only. Before this pass the
+     * Diplomacy `*` opened a popup with no Earn Income line in it at all, while the mark rendered in
+     * three popups belonging to skills the feat does not touch. The row below is the fix; its gate is
+     * the FEAT'S NAME, because that is what StatDetailModal passes to `skillActionsFor`.
+     */
+    const has = (n: string) => n === 'Bargain Hunter';
+    const withIt = skillActionsFor('diplomacy', 'trained', has).map((a) => a.name);
+    const without = skillActionsFor('diplomacy', 'trained', () => false).map((a) => a.name);
+    expect(withIt).toContain('Earn Income');
+    expect(without).not.toContain('Earn Income');
+    // …and the mark reaches that row.
+    const marks = recordMarkersFor(withSource('bargain-hunter'), c(), 'action', 'earn-income');
+    expect(marks.some((m) => m.sourceId === 'bargain-hunter')).toBe(true);
+    // The gate is the NAME in core.json — a rename there silently empties the row.
+    expect(c().feats['bargain-hunter'].name).toBe('Bargain Hunter');
+  });
+
+  it('two records with the same condition mark say which is which', () => {
+    /*
+     * The condition pill's hover concatenates notes; the precedent `steel-skin` is name-prefixed for
+     * that reason, and a character can hold Steel Skin AND a regiment feat at once.
+     */
+    for (const id of ['armor-regiment-training', 'armored-regiment-training', 'steel-skin']) {
+      const mark = RECORD_MARKERS[id].find((m) => m.on === 'condition' && m.id === 'fatigued')!;
+      expect(mark, `${id} has no fatigued mark`).toBeDefined();
+      expect(mark.note, `${id}'s note is not name-prefixed`).toMatch(/^[A-Z][A-Za-z' ]+:/);
+    }
+  });
+
+  it('every batch-001 mark reaches a row the sheet actually draws', () => {
+    /*
+     * A record is not a ROW. `StatDetailModal` draws a mark only beside a `SKILL_ACTIONS` entry, and
+     * `MainTab` only beside a curated ACTIVITY or a granted action — so a mark on an action that
+     * exists in core.json but appears in neither list renders nowhere at all.
+     */
+    // Both surfaces slug the row's NAME to look the mark up (StatDetailModal's `actionSlug`,
+    // MainTab's `actionId`), so the set of reachable ids is the set of slugged row names.
+    const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const skillRows = new Set(Object.values(SKILL_ACTIONS).flat().map((a) => slug(a.name)));
+    const activityRows = new Set(ACTIVITIES.map((a) => slug(a.name)));
+    const BATCH = ['acrobatic-performer', 'adrenaline-rush', 'aeonbound', 'alchemical-assessment',
+      'all-of-the-animal', 'ammunition-thaumaturgy', 'animal-soul-siblings', 'bamboo-and-silt-repose',
+      'bargain-hunter', 'bodyguard'];
+    const orphan: string[] = [];
+    for (const id of BATCH) {
+      for (const m of RECORD_MARKERS[id] ?? []) {
+        if (m.on !== 'action') continue;
+        if (skillRows.has(m.id) || activityRows.has(m.id)) continue;
+        // `taunt` is a granted class action (classFeatures/taunt), which MainTab lists separately.
+        if (Object.values(c().classFeatures).some((f) => (f as { grantsActions?: string[] }).grantsActions?.includes(m.id))) continue;
+        orphan.push(`${id} → ${m.id}`);
+      }
+    }
+    expect(orphan, 'these marks render on no row the sheet draws').toEqual([]);
+    // …and the check can fail: an id that is a real core.json record but no ROW is unreachable.
+    expect(c().actions['fling-magic'], 'fixture assumption').toBeDefined();
+    expect(skillRows.has('fling-magic') || activityRows.has('fling-magic')).toBe(false);
   });
 });
 

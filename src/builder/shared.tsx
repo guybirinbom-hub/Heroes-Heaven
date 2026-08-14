@@ -17,7 +17,7 @@ import {
   type BoostSlot,
   boostSlots,
   buildCharacter,
-  buildNeedsDeity,
+  buildUsesDeity,
   championDevotionOptions,
   extraPickCount,
   commanderFolioMax,
@@ -3291,7 +3291,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             </SubCard>
           );
         })()}
-      {buildNeedsDeity(build, content) && (
+      {/* buildUsesDeity, not buildNeedsDeity: a sorcerer who took Blessed Blood needs the picker
+          even though their class never asks for a deity. The narrower predicate also drives the
+          favored-weapon proficiency, which is a cleric benefit, so it stays where it is. */}
+      {buildUsesDeity(build, content) && (
         <SetupCard icon="ti-flare" label="Deity">
           <SearchSelect
             bare

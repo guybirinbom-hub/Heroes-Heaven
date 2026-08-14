@@ -88,7 +88,19 @@ describe('auto-extracted feat skill grants', () => {
 
   it("lore choice: a 'trained in a Lore of your choice' feat grants the typed subject", () => {
     const ch = build('wizard', 4, { featPicks: { '1:ancestry:0': 'gnome-obsession' }, featLoreChoices: { 'gnome-obsession:0': 'Warfare Lore' } });
-    expect(ch.proficiencies.skills['lore:warfare']).toBe('trained');
+    /*
+     * EXPERT, not trained, and the change is the point. Gnome Obsession's entire printed mechanic is
+     * *"You gain the Additional Lore feat and the Assurance feat for the chosen Lore"* — so the rank
+     * comes from Additional Lore, and with it *"at 3rd, 7th, and 15th levels, you gain an additional
+     * skill increase you can apply only to the chosen Lore subcategory"*. A level-4 gnome is past 3rd.
+     * This read `trained` before because the GRANTED Additional Lore reached the chosen Lore by no
+     * route at all, so its ladder could never fire.
+     */
+    expect(ch.proficiencies.skills['lore:warfare']).toBe('expert');
+    expect(
+      build('wizard', 2, { featPicks: { '1:ancestry:0': 'gnome-obsession' }, featLoreChoices: { 'gnome-obsession:0': 'Warfare Lore' } })
+        .proficiencies.skills['lore:warfare'],
+    ).toBe('trained');
     // no subject typed → no lore granted
     expect(build('wizard', 4, { featPicks: { '1:ancestry:0': 'gnome-obsession' } }).proficiencies.skills['lore:warfare']).toBeUndefined();
   });
@@ -357,7 +369,13 @@ describe('repeatable feats (maxTakable)', () => {
   it('the picker offers a repeatable feat until its cap, and a normal feat only once', () => {
     // General slots at L3/7/11/15/19. eligibleFeatsForSlot for a later slot must still offer
     // armor-proficiency while it sits in only the L3 slot, but hide a once-only feat already taken.
-    const b0: BuildState = { ...emptyBuild(), ancestryId: 'human', classId: 'fighter', level: 20 };
+    //
+    // The host is a WIZARD, not the fighter this used to use. `eligibleFeatsForSlot` is untouched by
+    // it, but a fighter is already trained in light, medium AND heavy armor, so every take of this
+    // feat grants that fighter nothing — the exhausted-grant case `exhaustedGrantReason`
+    // (featGrants.ts) now filters out of the real picker. Asserting "the picker offers it" on that
+    // host documented the defect as the intended behaviour.
+    const b0: BuildState = { ...emptyBuild(), ancestryId: 'human', classId: 'wizard', level: 20 };
     const has = (b: BuildState, key: string, id: string) =>
       eligibleFeatsForSlot(b, c, { level: Number(key.split(':')[0]), category: 'general', idx: 0 }).some((f) => f.id === id);
 

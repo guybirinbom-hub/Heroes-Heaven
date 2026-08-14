@@ -12,6 +12,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { formatBackfill } from './lib/write-backfill.mjs';
+import { MANUAL_SKILL_SUBSTITUTIONS } from './lib/manual-skill-substitutions.mjs';
 
 const CORE = 'public/core.json';
 const BACKFILL = 'scripts/data/effect-backfill.json';
@@ -86,9 +87,34 @@ for (const coll of ['feats', 'classFeatures', 'heritages', 'items']) {
   }
 }
 
+/* How many rows the PARSER produced, captured before MANUAL rows are merged in.
+ *
+ * The refuse-to-write guard below has to test THIS, not `entries.length`: a hand-written MANUAL row
+ * would otherwise satisfy the guard on its own and let a run write core.json and the overlay off a
+ * parse that found nothing. That is exactly the failure this script is one bad regex away from —
+ * `clean(rec)` reads `rec.description`, which the core-descriptions split emptied for all but ~100
+ * of 6,312 feats, so the parser is stale TODAY and the guard is the only thing that says so. */
+const parsedCount = entries.length;
+
+/*
+ * ROWS THE DESCRIPTION PARSER CANNOT REACH, written out rather than guessed at, and merged AFTER the
+ * parse so a parsed row for the same record still wins. The table itself lives in
+ * scripts/lib/manual-skill-substitutions.mjs — see the note there for why it is not in this file.
+ */
+for (const [key, subs] of Object.entries(MANUAL_SKILL_SUBSTITUTIONS)) {
+  const at = key.indexOf('/');
+  const coll = key.slice(0, at);
+  const id = key.slice(at + 1);
+  if (!core[coll]?.[id]) { skipped.push(`${key}: MANUAL row names no record`); continue; }
+  if (entries.some((e) => e.category === coll && e.id === id)) continue; // the parser found it; it wins
+  core[coll][id].skillSubstitutions = subs;
+  entries.push({ category: coll, id, field: 'skillSubstitutions', value: subs });
+  rows.push(`${coll}/${id}: ${subs.map((s) => `${s.use}→${s.forSkill} (${s.when}) [MANUAL]`).join('; ')}`);
+}
+
 if (skipped.length) console.warn(`SKIPPED (${skipped.length}):\n  ` + skipped.join('\n  '));
-if (!entries.length) {
-  console.error('nothing parsed — refusing to write.');
+if (!parsedCount) {
+  console.error('nothing PARSED — public/core.json descriptions are split out into public/core-descriptions.json; refusing to write.');
   process.exit(1);
 }
 

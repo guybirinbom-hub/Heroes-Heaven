@@ -16,6 +16,7 @@ import {
   deriveSpellcasting,
   formatMod,
   ownedFeatureIds,
+  stateGrantSummary,
   type DefenseSource,
 } from '../rules/derive';
 import { deriveInitiative } from '../rules/initiative';
@@ -41,7 +42,7 @@ import {
 import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
 import { CATALOG_MODES, contentGatedModes, playerModeLibrary } from '../rules/modes';
 import { resourcesForCharacter, resourceMaxFor } from '../rules/classResources';
-import { explainDefense, nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatBreakdown, type StatRef } from '../rules/explain';
+import { explainDefense, markNote, markTooltip, nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatBreakdown, type StatRef } from '../rules/explain';
 import { StatDetailModal } from './StatDetailModal';
 import { ConditionsModal } from './ConditionsModal';
 import { ItemDetail } from './ItemDetail';
@@ -49,7 +50,7 @@ import { ItemEditorModal } from './ItemEditorModal';
 import { InfoTerm } from './InfoTerm';
 import { ModeDetailModal } from './ModeDetailModal';
 import { MythicRules, mythicDestinies } from './MythicRules';
-import { senseDesc, languageDesc } from '../rules/glossary';
+import { senseDesc, languageDesc, DAILY_LANGUAGE_NOTE } from '../rules/glossary';
 import { RankPill, SituationalStar } from './widgets';
 import { useIsMobile } from './useIsMobile';
 import { HpNumpadModal } from './HpNumpadModal';
@@ -727,7 +728,8 @@ export function VitalsRail({
         <div className="rail-kv">
           <span className="kv-label">Senses</span>
           <span className="iwr-val senses-val">
-            {charDefenses.senses.map((s, i) => (
+            {/* Q13: a superseded rung of the vision ladder is HELD but not printed — see deriveDefenses. */}
+            {charDefenses.senses.filter((s) => !s.superseded).map((s, i) => (
               <span key={s.name}>
                 {i > 0 ? ', ' : ''}
                 <InfoTerm title={senseLabel(s)} description={senseDesc(s.name)}>
@@ -937,6 +939,9 @@ export function VitalsRail({
       {stateResources.map((r) => {
         const ui = STATE_UI[r.id];
         const on = !!(resourceVals[r.id] ?? 0);
+        // Principle C: what entering this state grants has to be readable BEFORE you enter it. A
+        // barbarian could not see that raging gives them Acute Vision's darkvision until they raged.
+        const grants = stateGrantSummary(character, content, r.id);
         return (
           <section key={r.id} className={`card state-card state-${r.id}` + (on ? ' on' : '')}>
             <div className="ct">
@@ -953,6 +958,16 @@ export function VitalsRail({
               <div className={'state-toggle' + (on ? ' on' : '')} aria-disabled="true">
                 <i className={'ti ' + (on ? ui.onIcon : ui.offIcon)} aria-hidden="true" />
                 <span className="state-name">{on ? ui.on : ui.off}</span>
+              </div>
+            )}
+            {grants.length > 0 && (
+              <div className="state-grants">
+                <span className="sg-head">{ui.label} grants</span>
+                {grants.map((g) => (
+                  <div key={g.from}>
+                    <span className="sg-from">{g.from}</span> {[...g.senses.map(senseLabel), ...g.other].join(', ')}
+                  </div>
+                ))}
               </div>
             )}
           </section>
@@ -1078,7 +1093,10 @@ export function VitalsRail({
                 {marks.length > 0 && (
                   <button
                     className="cond-mark"
-                    title={marks.map((m) => m.note).join('\n')}
+                    // Attributed AND de-duplicated: this used to print notes alone, so a note that
+                    // opens with its own record name was the only attribution — and the popup below,
+                    // which prints the name itself, showed it twice. `markTooltip` does both.
+                    title={markTooltip(content, marks)}
                     onClick={() => setCondMark({ name, marks })}
                     aria-label={`What changes ${name} for you`}
                   >
@@ -1142,11 +1160,21 @@ export function VitalsRail({
           Languages
         </div>
         <div className="pill-wrap">
-          {character.languages.map((id) => (
-            <InfoTerm className="lang-pill" key={id} title={content.languages[id]?.name ?? id} description={languageDesc(id)}>
-              {content.languages[id]?.name ?? id}
-            </InfoTerm>
-          ))}
+          {character.languages.map((id) => {
+            // Recalled at daily preparations, not known — see the same marking on the Details tab.
+            const today = character.dailyLanguages?.includes(id);
+            const name = content.languages[id]?.name ?? id;
+            return (
+              <InfoTerm
+                className={'lang-pill' + (today ? ' granted-trait' : '')}
+                key={id}
+                title={today ? `${name} — recalled today` : name}
+                description={today ? `${languageDesc(id)} ${DAILY_LANGUAGE_NOTE}` : languageDesc(id)}
+              >
+                {name}
+              </InfoTerm>
+            );
+          })}
         </div>
       </section>
   );
@@ -1190,7 +1218,7 @@ export function VitalsRail({
               <ul className="mode-info-mods">
                 {condMark.marks.map((m, i) => (
                   <li key={i}>
-                    <strong>{nameOfRecord(content, m.sourceId)}</strong> — {m.note}
+                    <strong>{nameOfRecord(content, m.sourceId)}</strong> — {markNote(content, m)}
                   </li>
                 ))}
               </ul>

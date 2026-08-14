@@ -20,9 +20,14 @@ const c = content();
 const grantsInnate = (r: {
   innateSpells?: unknown[];
   effectChoices?: { spellFilter?: { grantAs?: string }; options?: { grant?: { innateSpells?: unknown[] } }[] }[];
+  enhancement?: { grant?: { innateSpells?: unknown[] } };
 }) =>
   (r.innateSpells ?? []).length > 0 ||
-  (r.effectChoices ?? []).some((e) => e.spellFilter?.grantAs === 'innate' || (e.options ?? []).some((o) => (o.grant?.innateSpells ?? []).length > 0));
+  (r.effectChoices ?? []).some((e) => e.spellFilter?.grantAs === 'innate' || (e.options ?? []).some((o) => (o.grant?.innateSpells ?? []).length > 0)) ||
+  // THE FIFTH LANE. `enhancement.grant` (the automaton Enhancement tier) is a general grant sink any
+  // record may carry, so a sweep that does not walk it reports a working record as granting nothing —
+  // and, below, lets an unresolvable spell id ship unchecked.
+  (r.enhancement?.grant?.innateSpells ?? []).length > 0;
 
 describe('innate spell grants', () => {
   it('a named single spell', () => {
@@ -65,6 +70,8 @@ describe('innate spell grants', () => {
         for (const e of r.effectChoices ?? [])
           for (const o of e.options ?? [])
             for (const s of o.grant?.innateSpells ?? []) if (!c.spells[(s as { spellId: string }).spellId]) bad.push(`${col}/${id}/${(o as { value?: string }).value} -> ${(s as { spellId: string }).spellId}`);
+        for (const s of r.enhancement?.grant?.innateSpells ?? [])
+          if (!c.spells[(s as { spellId: string }).spellId]) bad.push(`${col}/${id}/enhancement -> ${(s as { spellId: string }).spellId}`);
       }
     }
     expect(bad).toEqual([]);

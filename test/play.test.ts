@@ -27,6 +27,7 @@ import {
   togglePin,
   toggleTactic,
   addNotePage,
+  moveNotePage,
   removeNotePage,
   updateNotePage,
   addCompanionCondition,
@@ -227,6 +228,41 @@ describe('inventory', () => {
     p = removeNotePage(p, id);
     expect(p.notes!.find((n) => n.id === id)).toBeUndefined();
     expect(p.notes).toHaveLength(1);
+  });
+
+  it('a new notes page is PRIVATE, and carries the icon + colour it was created with', () => {
+    // The default is the point: a teammate's read-only view filters on `private`, so a page that
+    // starts shared has already been read by the time the player finds the lock.
+    let p: PlayState = { ...emptyPlay(), notes: [] };
+    p = addNotePage(p);
+    expect(p.notes![0].private).toBe(true);
+    p = addNotePage(p, 'ti-flame', '#e5484d');
+    expect(p.notes![1]).toMatchObject({ icon: 'ti-flame', color: '#e5484d', private: true });
+    // No colour chosen leaves the field off entirely rather than writing an empty string.
+    expect(Object.prototype.hasOwnProperty.call(p.notes![0], 'color')).toBe(false);
+  });
+
+  it('moveNotePage reorders, clamps out-of-range targets, and ignores an unknown id', () => {
+    let p: PlayState = { ...emptyPlay(), notes: [] };
+    p = addNotePage(p, 'a');
+    p = addNotePage(p, 'b');
+    p = addNotePage(p, 'c');
+    const [a, b, c] = p.notes!.map((n) => n.id);
+
+    // last → first
+    let moved = moveNotePage(p, c, 0);
+    expect(moved.notes!.map((n) => n.id)).toEqual([c, a, b]);
+    // first → last
+    moved = moveNotePage(p, a, 2);
+    expect(moved.notes!.map((n) => n.id)).toEqual([b, c, a]);
+    // Past either end clamps instead of dropping the page out of the array.
+    expect(moveNotePage(p, a, 99).notes!.map((n) => n.id)).toEqual([b, c, a]);
+    expect(moveNotePage(p, c, -5).notes!.map((n) => n.id)).toEqual([c, a, b]);
+    // A no-op move and an unknown id both return the state untouched, by identity.
+    expect(moveNotePage(p, b, 1)).toBe(p);
+    expect(moveNotePage(p, 'note-nope', 0)).toBe(p);
+    // Never duplicates or loses a page.
+    expect(moveNotePage(p, a, 1).notes).toHaveLength(3);
   });
 
   it('canAfford compares wallet to price (free is always affordable)', () => {

@@ -32,6 +32,14 @@
   align-items: center;
   gap: 1px;
 }
+.pf2-action-duration {
+  font-size: 10.5px;
+  color: var(--app-text-dim);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
 .pf2-action-sep {
   font-size: 0.8em;
   color: var(--app-text-dim);

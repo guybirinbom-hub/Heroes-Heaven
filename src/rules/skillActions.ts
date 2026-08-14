@@ -435,6 +435,25 @@ export const SKILL_ACTIONS: Record<string, SkillAction[]> = {
       "feat": true,
       "featName": "Hobnobber",
       "desc": "You Gather Information in half the usual time (typically 1 hour). If you're a master in Diplomacy, a critical failure on the Gather Information check becomes a failure instead."
+    },
+    /*
+     * Earn Income is not ordinarily a Diplomacy action — SKILL_ACTIONS carries it under Crafting, Lore
+     * and Performance only — and Bargain Hunter is the feat that adds it ("You can Earn Income using
+     * Diplomacy, spending your days hunting for bargains and reselling at a profit", AoN feat-5123).
+     *
+     * Without this row the feat's `*` on Diplomacy opened a popup with no Earn Income line in it,
+     * while its RECORD_MARKERS mark — which `recordMarkersFor` keys by ACTION ID alone — showed up in
+     * the Crafting, Lore and Performance popups instead, three skills the feat does not touch.
+     * ⚠ `skillActionsFor`'s gate is the FEAT'S NAME (StatDetailModal passes `featNames.has`), never the
+     * record id, so `featName` here has to stay exactly the name in core.json.
+     */
+    {
+      "name": "Earn Income",
+      "costText": "downtime",
+      "minRank": "trained",
+      "feat": true,
+      "featName": "Bargain Hunter",
+      "desc": "Spend your downtime hunting for bargains and reselling at a profit, attempting a Diplomacy check against a GM-set DC for a task of the chosen level. You can instead spend the time sniffing out one great bargain: the income you would have earned becomes a discount on that item, and the item is free if the income equals or exceeds its Price."
     }
   ],
   "intimidation": [
@@ -567,6 +586,14 @@ export const SKILL_ACTIONS: Record<string, SkillAction[]> = {
       "feat": true,
       "featName": "Battle Medicine",
       "desc": "While wearing or holding a healer's toolkit, immediately treat yourself or an adjacent creature, healing as Treat Wounds (same DC and HP, including the higher-DC options if you qualify) but without removing the wounded condition. The target is then immune to your Battle Medicine for 1 day."
+    },
+    {
+      "name": "Acupuncturist",
+      "costText": "downtime",
+      "minRank": "trained",
+      "feat": true,
+      "featName": "Acupuncturist",
+      "desc": "Using the needles stored in your healer's tools, spend a day studying an ally and attempt a Medicine check to improve their qi against a standard DC for YOUR ALLY'S level. Critical success: they choose either a +2 circumstance bonus to one downtime activity skill check within the next week, or to roll twice on their next saving throw against an affliction within the next week and take the higher result (fortune). Success: a +1 circumstance bonus to one downtime activity skill check within the next week. Critical failure: a -1 circumstance penalty to all their downtime activity skill checks within the next week. The ally is then immune to all uses of Acupuncturist for 1 week."
     }
   ],
   "nature": [

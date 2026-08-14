@@ -22,8 +22,12 @@ const fail = (m) => {
   console.error('REFUSED: ' + m);
   process.exit(1);
 };
-const t = String(db.feats['sanctified-relic']?.description ?? '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-if (!t) fail('sanctified-relic has no description');
+/* Descriptions were split out of core.json (22.5 MB → 8.4) into public/core-descriptions.json, so a
+ * script that reads a record's TEXT has to merge them back or it sees an empty string and refuses. */
+const desc = JSON.parse(readFileSync(ROOT + 'public/core-descriptions.json', 'utf8'));
+const rawDesc = db.feats['sanctified-relic']?.description ?? desc.feats?.['sanctified-relic']?.d ?? '';
+const t = String(rawDesc).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+if (!t) fail('sanctified-relic has no description in core.json OR core-descriptions.json');
 for (const [what, re] of [
   ['the two-attribute pick', /choose two attributes \(one of which must be your key attribute\) as your divine attributes/i],
   ['the sanctification pick', /either holy or unholy sanctification/i],
@@ -64,7 +68,21 @@ put('effectChoices', [
     })),
   },
   {
-    id: 'sanctification',
+    /*
+     * `relic-sanctification`, NOT `sanctification`.
+     *
+     * The deity record asks its own question under the id `sanctification`, and `sanctificationOf`
+     * (src/rules/derive.ts) looked up the FIRST effectPick with that id and no check on who asked.
+     * buildCharacter resolves feats before the deity, so this one won. Measured: a champion of Ma'at
+     * with the deity answered holy and this relic answered unholy read as UNHOLY.
+     *
+     * They are not the same question. This one is the trait the relic confers on WHOEVER WEARS IT —
+     * and by the feat's own text that cannot be you ("You cannot wear it yourself"). The printed rule
+     * that the two must agree ("if you have the holy or unholy trait through a class feature or other
+     * ability, you must choose that same trait") is a constraint on the player's choice, not licence
+     * for one to answer for the other.
+     */
+    id: 'relic-sanctification',
     prompt: 'Sanctification — the trait your relic confers',
     options: [
       { value: 'holy', label: 'Holy', note: 'If you already have the holy trait from a class feature or other ability, you must choose this one.' },

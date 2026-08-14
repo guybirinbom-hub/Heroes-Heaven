@@ -3,6 +3,7 @@ import {
   loadDb, baseBuild, hostIdsFor, hostContext, slotFor, probeAt, pickersFor,
   declaredChoices, evidenceFor, referenceHosts, isEcho, withAnswer,
 } from '../scripts/builder-evidence.mjs';
+import { buildCharacter } from '../src/rules/build';
 
 /**
  * THE HARNESS'S OWN TEST.
@@ -233,5 +234,60 @@ describe('builder-evidence — pickersFor is driven by the build, not by the rec
     const probe = probeAt('domain-initiate', db, classId, ancestryId, 20);
     expect(p.key).toBe(probe.slotKey);
     expect(p.storage).toBe('featChoices');
+  });
+});
+
+/**
+ * THE ENHANCEMENT GATE — the one Builder.tsx suppression this mirror did not know about.
+ *
+ * `pickersFor` mirrors Builder.tsx because jiti cannot parse .tsx, and this file's own header says
+ * that mirror is the single thing here that can drift from the app. Before these two edits it knew
+ * exactly one suppression (`spellFilter.minLevel`). The automaton Enhancement lane adds a second: a
+ * choice a record's own tier asks is not rendered until an augmentation names that feat.
+ *
+ * Left unmirrored, the harness reported a picker the builder hides, then wrote the answer, watched
+ * the gated `resolvePick` skip it, and filed `answerNotRead` — the lane reporting itself as the
+ * defect that produced it, into an audit loop that consumes exactly that field.
+ *
+ * Measured baseline for the negative case: before the lane existed, `evidenceFor('automaton-lore')`
+ * reported only two `skillFallback` pickers and `answerNotRead: []`. That is still what it reports.
+ */
+describe('builder-evidence — the enhancement gate is mirrored, both ways', () => {
+  it('a tier-gated choice is not reported as a rendered picker on a host without the tier', () => {
+    expect(db.feats['automaton-lore'].enhancement?.choiceIds).toEqual(['enhancement-rank']);
+    expect(pickers('automaton-lore').some((p) => p.lane === 'effectChoice')).toBe(false);
+    const pack = evidenceFor('automaton-lore', db, hosts);
+    expect(pack.checks.answerNotRead).toEqual([]);
+    // …and it must not be traded for the OTHER false defect: `declaredChoices` has no character, so
+    // it excludes tier-gated ids outright rather than leaving check 1 to report them.
+    expect(declaredChoices('automaton-lore', db)).not.toContain('record.effectChoices[enhancement-rank]');
+    expect(pack.checks.declaredWithoutPicker).toEqual([]);
+  });
+
+  it('…and IS reported once an augmentation names the feat', () => {
+    // The positive half. Without it the filter could be an unconditional `continue` and pass.
+    const { classId, ancestryId } = hostIdsFor(db.feats['automaton-lore'], db);
+    const probe = probeAt('automaton-lore', db, classId, ancestryId, 20);
+    const enhanced = {
+      ...probe.build,
+      featPicks: { ...probe.build.featPicks, '9:ancestry:0': 'lesser-augmentation' },
+      effectChoices: { 'lesser-augmentation:enhancement': 'automaton-lore' },
+    };
+    const char = buildCharacter(enhanced, db);
+    expect(char.enhancements).toEqual([{ featId: 'automaton-lore', from: 'Lesser Augmentation' }]);
+    const rendered = pickersFor(enhanced, probe.slotKey, 'automaton-lore', db, char);
+    expect(rendered.some((p: { lane: string; key: string }) => p.key === 'automaton-lore:enhancement-rank')).toBe(true);
+  });
+
+  it("an option list naming feats the character must OWN is re-measured on a host that owns them", () => {
+    // "one of YOUR 1st- or 5th-level automaton ancestry feats" moves nothing on a host holding only
+    // the feat under test, which every reference host is — the same class of false defect that
+    // `zeroOptionsHostDependent` already exists to prevent, one step further along.
+    const pack = evidenceFor('lesser-augmentation', db, hosts);
+    const a = pack.answerIsRead.find((x: { key: string }) => x.key === 'lesser-augmentation:enhancement');
+    expect(a.verdict).toBe('read');
+    expect(a.movedOn).toBe('host owning the named feats');
+    expect(pack.checks.answerEchoOnly).toEqual([]);
+    expect(pack.checks.answerNotRead).toEqual([]);
   });
 });

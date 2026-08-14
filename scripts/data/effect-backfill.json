@@ -1643,7 +1643,20 @@
    {
     "spellId": "detect-magic",
     "tradition": "arcane",
-    "atWill": true
+    "atWill": true,
+    "rank": 1,
+    "heightenBySkill": [
+     {
+      "skill": "arcana",
+      "rank": "master",
+      "spellRank": 3
+     },
+     {
+      "skill": "arcana",
+      "rank": "legendary",
+      "spellRank": 4
+     }
+    ]
    }
   ]
  },
@@ -2278,7 +2291,19 @@
     "spellId": "spirit-link",
     "tradition": "divine",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "heightenBySkill": [
+     {
+      "skill": "religion",
+      "rank": "master",
+      "spellRank": 3
+     },
+     {
+      "skill": "religion",
+      "rank": "legendary",
+      "spellRank": 4
+     }
+    ]
    }
   ]
  },
@@ -2297,7 +2322,14 @@
     "spellId": "spiritual-guardian",
     "tradition": "divine",
     "rank": 5,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "heightenBySkill": [
+     {
+      "skill": "religion",
+      "rank": "legendary",
+      "spellRank": 7
+     }
+    ]
    }
   ]
  },
@@ -3484,7 +3516,7 @@
    },
    "senses": [
     {
-     "name": "greater darkvision"
+     "name": "greater-darkvision"
     }
    ]
   }
@@ -3496,7 +3528,7 @@
   "value": {
    "senses": [
     {
-     "name": "greater darkvision"
+     "name": "greater-darkvision"
     }
    ],
    "immunities": [
@@ -7884,7 +7916,7 @@
   "value": {
    "senses": [
     {
-     "name": "low-light vision"
+     "name": "low-light-vision"
     },
     {
      "name": "scent",
@@ -7986,7 +8018,7 @@
   "field": "senses",
   "value": [
    {
-    "name": "greater darkvision"
+    "name": "greater-darkvision"
    }
   ]
  },
@@ -8556,6 +8588,7 @@
    {
     "spellId": "dinosaur-form",
     "tradition": "primal",
+    "traditionFromChoiceFlag": "boneMagicTradition",
     "rank": 5,
     "usesPerDay": 1
    }
@@ -8849,11 +8882,7 @@
   "category": "feats",
   "id": "brilliant-vision",
   "field": "senses",
-  "value": [
-   {
-    "name": "ignores concealment from clouds, dust, fog, mist, and smoke"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -9542,7 +9571,8 @@
    {
     "ifPresent": "low-light-vision",
     "base": {
-     "name": "low-light-vision"
+     "name": "low-light-vision",
+     "acuity": "precise"
     },
     "upgraded": {
      "name": "darkvision"
@@ -9558,7 +9588,8 @@
    {
     "ifPresent": "low-light-vision",
     "base": {
-     "name": "low-light-vision"
+     "name": "low-light-vision",
+     "acuity": "precise"
     },
     "upgraded": {
      "name": "darkvision"
@@ -9574,7 +9605,8 @@
    {
     "ifPresent": "low-light-vision",
     "base": {
-     "name": "low-light-vision"
+     "name": "low-light-vision",
+     "acuity": "precise"
     },
     "upgraded": {
      "name": "darkvision"
@@ -17863,7 +17895,11 @@
          "name": "darkvision"
         }
        ]
-      }
+      },
+      "requiresAnySense": [
+       "low-light-vision",
+       "darkvision"
+      ]
      },
      {
       "value": "low-light-vision",
@@ -17871,7 +17907,7 @@
       "grant": {
        "senses": [
         {
-         "name": "low-light vision"
+         "name": "low-light-vision"
         }
        ]
       }
@@ -20524,8 +20560,8 @@
      },
      {
       "value": "water-dwelling",
-      "label": "Water-dwelling (hold breath 10 min; swim Speed 20 ft, land Speed 20 ft)",
-      "note": "You can hold your breath underwater for 10 minutes before needing air — so you do NOT gain the aquatic trait, which would mean breathing water and not air.",
+      "label": "Water-dwelling (hold breath 10 min; swim Speed 20 ft)",
+      "note": "You can hold your breath underwater for 10 minutes before needing air, and if you can move on land you have a base Speed of 20 feet.",
       "grant": {
        "speeds": {
         "swim": 20
@@ -38045,7 +38081,6 @@
    "flag": "advancedWeaponry",
    "prompt": "Trait gained by one of your eidolon's starting melee unarmed attacks",
    "kind": "array",
-   "inert": "Recorded only — the app doesn't track traits added to an eidolon's unarmed attacks. Note in your eidolon's notes WHICH attack (primary or secondary) you chose; Grasping Limbs later needs the attack that gained grapple.",
    "options": [
     {
      "value": "disarm",
@@ -38304,10 +38339,11 @@
    "kind": "open",
    "from": {
     "type": "spell",
-    "cantripsOnly": true
+    "cantripsOnly": true,
+    "excludeOwnTraditions": true,
+    "grantToClassEntry": true
    },
-   "inert": "Recorded only: the cantrip is not added to your prepared options or your repertoire — add it yourself, cast as a spell of your own class's tradition.",
-   "note": "Must be from a magical tradition OTHER than your own — the picker can't filter that, because your tradition depends on your class."
+   "note": "Cast as a spell of your class's tradition, from your class's own pool, spell attack and DC. It REPLACES one of your cantrips known, so your class cantrip budget is one lower — pick the cantrip you are giving up by simply not choosing it."
   }
  },
  {
@@ -38531,43 +38567,12 @@
   "value": {
    "flag": "adoptedAncestry",
    "prompt": "Adopted ancestry",
-   "kind": "array",
-   "inert": "Recorded only: the chosen ancestry's feats aren't yet offered in your ancestry feat slots — add them through Setup → Overrides.",
-   "note": "Only ancestries marked common in the app's data are listed; an uncommon or rare one needs GM-granted access.",
-   "options": [
-    {
-     "value": "dwarf",
-     "label": "Dwarf"
-    },
-    {
-     "value": "elf",
-     "label": "Elf"
-    },
-    {
-     "value": "gnome",
-     "label": "Gnome"
-    },
-    {
-     "value": "goblin",
-     "label": "Goblin"
-    },
-    {
-     "value": "halfling",
-     "label": "Halfling"
-    },
-    {
-     "value": "human",
-     "label": "Human"
-    },
-    {
-     "value": "leshy",
-     "label": "Leshy"
-    },
-    {
-     "value": "orc",
-     "label": "Orc"
-    }
-   ]
+   "kind": "open",
+   "from": {
+    "type": "ancestry",
+    "excludeOwn": true
+   },
+   "note": "Choose a common ancestry, or an uncommon or rare one your GM has given you access to — each option shows its rarity. The GM still rules out any feat of that ancestry needing a physiological feature you lack."
   }
  },
  {
@@ -45189,79 +45194,97 @@
   "value": [
    {
     "id": "enhancement",
-    "prompt": "Which automaton ancestry feat's enhancement do you gain? (prose benefit — read that feat's Enhancement entry)",
+    "prompt": "Which automaton ancestry feat's Enhancement do you gain?",
     "options": [
      {
       "value": "automaton-armament",
-      "label": "Automaton Armament (1st)"
+      "label": "Automaton Armament (1st)",
+      "note": "Computed on your sheet: the claw or pincer this feat grants steps up one damage die (1d4 to 1d6, 1d6 to 1d8)."
      },
      {
       "value": "arcane-communication",
-      "label": "Arcane Communication (1st)"
+      "label": "Arcane Communication (1st)",
+      "note": "Computed on your sheet: your touch telepathy gains a 10-foot range, shown on the Senses row."
      },
      {
       "value": "arcane-eye",
-      "label": "Arcane Eye (1st)"
+      "label": "Arcane Eye (1st)",
+      "note": "Computed on your sheet: See the Unseen becomes an arcane innate spell, once per hour, on the Spells page."
      },
      {
       "value": "automaton-lore",
-      "label": "Automaton Lore (1st)"
+      "label": "Automaton Lore (1st)",
+      "note": "Computed on your sheet: choose Arcana or Crafting on Automaton Lore itself; that rank becomes expert."
      },
      {
       "value": "energy-beam",
-      "label": "Energy Beam (1st)"
+      "label": "Energy Beam (1st)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "reinforced-chassis",
-      "label": "Reinforced Chassis (1st)"
+      "label": "Reinforced Chassis (1st)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "arcane-safeguards",
-      "label": "Arcane Safeguards (5th)"
+      "label": "Arcane Safeguards (5th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "integrated-armament",
-      "label": "Integrated Armament (5th)"
+      "label": "Integrated Armament (5th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "magical-resistance",
-      "label": "Magical Resistance (5th)"
+      "label": "Magical Resistance (5th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "arcane-camouflage",
-      "label": "Arcane Camouflage (9th)"
+      "label": "Arcane Camouflage (9th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "arcane-propulsion",
-      "label": "Arcane Propulsion (9th)"
+      "label": "Arcane Propulsion (9th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "arcane-slam",
-      "label": "Arcane Slam (9th)"
+      "label": "Arcane Slam (9th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "core-attunement",
-      "label": "Core Attunement (9th)"
+      "label": "Core Attunement (9th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "rain-of-bolts",
-      "label": "Rain of Bolts (9th)"
+      "label": "Rain of Bolts (9th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "arcane-locomotion",
-      "label": "Arcane Locomotion (13th)"
+      "label": "Arcane Locomotion (13th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "astral-blink",
-      "label": "Astral Blink (13th)"
+      "label": "Astral Blink (13th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "core-rejuvenation",
-      "label": "Core Rejuvenation (13th)"
+      "label": "Core Rejuvenation (13th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "enlarged-chassis",
-      "label": "Enlarged Chassis (13th)"
+      "label": "Enlarged Chassis (13th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      }
     ]
    }
@@ -45306,43 +45329,52 @@
   "value": [
    {
     "id": "enhancement",
-    "prompt": "Which automaton ancestry feat's enhancement do you gain? (prose benefit — read that feat's Enhancement entry)",
+    "prompt": "Which automaton ancestry feat's Enhancement do you gain?",
     "options": [
      {
       "value": "automaton-armament",
-      "label": "Automaton Armament (1st)"
+      "label": "Automaton Armament (1st)",
+      "note": "Computed on your sheet: the claw or pincer this feat grants steps up one damage die (1d4 to 1d6, 1d6 to 1d8)."
      },
      {
       "value": "arcane-communication",
-      "label": "Arcane Communication (1st)"
+      "label": "Arcane Communication (1st)",
+      "note": "Computed on your sheet: your touch telepathy gains a 10-foot range, shown on the Senses row."
      },
      {
       "value": "arcane-eye",
-      "label": "Arcane Eye (1st)"
+      "label": "Arcane Eye (1st)",
+      "note": "Computed on your sheet: See the Unseen becomes an arcane innate spell, once per hour, on the Spells page."
      },
      {
       "value": "automaton-lore",
-      "label": "Automaton Lore (1st)"
+      "label": "Automaton Lore (1st)",
+      "note": "Computed on your sheet: choose Arcana or Crafting on Automaton Lore itself; that rank becomes expert."
      },
      {
       "value": "energy-beam",
-      "label": "Energy Beam (1st)"
+      "label": "Energy Beam (1st)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "reinforced-chassis",
-      "label": "Reinforced Chassis (1st)"
+      "label": "Reinforced Chassis (1st)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "arcane-safeguards",
-      "label": "Arcane Safeguards (5th)"
+      "label": "Arcane Safeguards (5th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "integrated-armament",
-      "label": "Integrated Armament (5th)"
+      "label": "Integrated Armament (5th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      },
      {
       "value": "magical-resistance",
-      "label": "Magical Resistance (5th)"
+      "label": "Magical Resistance (5th)",
+      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
      }
     ]
    }
@@ -45589,76 +45621,252 @@
   "field": "choice",
   "value": {
    "flag": "endlessMemoriesSkill",
-   "prompt": "Endless Memories: a skill you're already trained in becomes expert",
+   "prompt": "Endless Memories — a skill you’re already trained in becomes expert",
    "kind": "array",
    "daily": true,
    "options": [
     {
      "value": "acrobatics",
-     "label": "Acrobatics"
+     "label": "Acrobatics",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "acrobatics",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "acrobatics": "expert"
+      }
+     }
     },
     {
      "value": "arcana",
-     "label": "Arcana"
+     "label": "Arcana",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "arcana",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "arcana": "expert"
+      }
+     }
     },
     {
      "value": "athletics",
-     "label": "Athletics"
+     "label": "Athletics",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "athletics",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "athletics": "expert"
+      }
+     }
     },
     {
      "value": "crafting",
-     "label": "Crafting"
+     "label": "Crafting",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "crafting",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "crafting": "expert"
+      }
+     }
     },
     {
      "value": "deception",
-     "label": "Deception"
+     "label": "Deception",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "deception",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "deception": "expert"
+      }
+     }
     },
     {
      "value": "diplomacy",
-     "label": "Diplomacy"
+     "label": "Diplomacy",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "diplomacy",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "diplomacy": "expert"
+      }
+     }
     },
     {
      "value": "intimidation",
-     "label": "Intimidation"
+     "label": "Intimidation",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "intimidation",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "intimidation": "expert"
+      }
+     }
     },
     {
      "value": "medicine",
-     "label": "Medicine"
+     "label": "Medicine",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "medicine",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "medicine": "expert"
+      }
+     }
     },
     {
      "value": "nature",
-     "label": "Nature"
+     "label": "Nature",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "nature",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "nature": "expert"
+      }
+     }
     },
     {
      "value": "occultism",
-     "label": "Occultism"
+     "label": "Occultism",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "occultism",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "occultism": "expert"
+      }
+     }
     },
     {
      "value": "performance",
-     "label": "Performance"
+     "label": "Performance",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "performance",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "performance": "expert"
+      }
+     }
     },
     {
      "value": "religion",
-     "label": "Religion"
+     "label": "Religion",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "religion",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "religion": "expert"
+      }
+     }
     },
     {
      "value": "society",
-     "label": "Society"
+     "label": "Society",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "society",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "society": "expert"
+      }
+     }
     },
     {
      "value": "stealth",
-     "label": "Stealth"
+     "label": "Stealth",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "stealth",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "stealth": "expert"
+      }
+     }
     },
     {
      "value": "survival",
-     "label": "Survival"
+     "label": "Survival",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "survival",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "survival": "expert"
+      }
+     }
     },
     {
      "value": "thievery",
-     "label": "Thievery"
+     "label": "Thievery",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "thievery",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "thievery": "expert"
+      }
+     }
     }
    ],
-   "note": "Pick one you are ALREADY trained in (the list is not filtered, and Lore skills are not enumerable here). Lasts until Ancient Memories expires. This temporary proficiency can't be used as a prerequisite for a skill increase or a permanent character option."
+   "note": "Expert in this skill until your Ancient Memories expires. Since it is temporary, you can’t use it as a prerequisite for a skill increase or a permanent character option like a feat. Lore skills are not listed here."
   }
  },
  {
@@ -51682,11 +51890,7 @@
   "category": "feats",
   "id": "ash-piercing-gaze",
   "field": "senses",
-  "value": [
-   {
-    "name": "ignores concealment from smoke and mist"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -52334,7 +52538,7 @@
   "category": "feats",
   "id": "land-legs",
   "field": "landSpeedBonus",
-  "value": 15
+  "value": null
  },
  {
   "category": "feats",
@@ -52921,11 +53125,7 @@
   "category": "feats",
   "id": "smoke-sight",
   "field": "senses",
-  "value": [
-   {
-    "name": "ignores concealment from smoke"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -65071,40 +65271,6 @@
   "value": true
  },
  {
-  "category": "feats",
-  "id": "ancestral-mind",
-  "field": "entryRetune",
-  "value": [
-   {
-    "scope": "innate",
-    "tradition": "occult",
-    "keyAbilityFromClass": "psychic"
-   }
-  ]
- },
- {
-  "category": "feats",
-  "id": "razmiran-priest-dedication",
-  "field": "grantsItems",
-  "value": [
-   {
-    "itemId": "razmiri-mask"
-   }
-  ]
- },
- {
-  "category": "feats",
-  "id": "razmiran-priest-dedication",
-  "field": "entryRetune",
-  "value": [
-   {
-    "scope": "cleric-dedication-casting",
-    "tradition": "occult",
-    "keyAbility": "cha"
-   }
-  ]
- },
- {
   "category": "items",
   "id": "extradimensional-stash-space",
   "create": true,
@@ -67337,11 +67503,7 @@
   "category": "feats",
   "id": "adroit-manipulation",
   "field": "choice",
-  "value": {
-   "flag": "adroitSkill",
-   "prompt": "Replacement skill",
-   "kind": "skills"
-  }
+  "value": null
  },
  {
   "category": "feats",
@@ -67420,11 +67582,7 @@
   "category": "feats",
   "id": "superior-sight",
   "field": "senses",
-  "value": [
-   {
-    "name": "low-light-vision"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -68144,11 +68302,7 @@
   "category": "feats",
   "id": "embers-eyes",
   "field": "senses",
-  "value": [
-   {
-    "name": "low-light-vision"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -68226,11 +68380,7 @@
   "category": "feats",
   "id": "aquatic-eyes",
   "field": "senses",
-  "value": [
-   {
-    "name": "low-light-vision"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -70031,8 +70181,252 @@
   "field": "choice",
   "value": {
    "flag": "longevitySkill",
-   "prompt": "Skill",
-   "kind": "skills"
+   "prompt": "Expert Longevity — a skill you’re already trained in becomes expert",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "acrobatics",
+     "label": "Acrobatics",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "acrobatics",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "acrobatics": "expert"
+      }
+     }
+    },
+    {
+     "value": "arcana",
+     "label": "Arcana",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "arcana",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "arcana": "expert"
+      }
+     }
+    },
+    {
+     "value": "athletics",
+     "label": "Athletics",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "athletics",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "athletics": "expert"
+      }
+     }
+    },
+    {
+     "value": "crafting",
+     "label": "Crafting",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "crafting",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "crafting": "expert"
+      }
+     }
+    },
+    {
+     "value": "deception",
+     "label": "Deception",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "deception",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "deception": "expert"
+      }
+     }
+    },
+    {
+     "value": "diplomacy",
+     "label": "Diplomacy",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "diplomacy",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "diplomacy": "expert"
+      }
+     }
+    },
+    {
+     "value": "intimidation",
+     "label": "Intimidation",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "intimidation",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "intimidation": "expert"
+      }
+     }
+    },
+    {
+     "value": "medicine",
+     "label": "Medicine",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "medicine",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "medicine": "expert"
+      }
+     }
+    },
+    {
+     "value": "nature",
+     "label": "Nature",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "nature",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "nature": "expert"
+      }
+     }
+    },
+    {
+     "value": "occultism",
+     "label": "Occultism",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "occultism",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "occultism": "expert"
+      }
+     }
+    },
+    {
+     "value": "performance",
+     "label": "Performance",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "performance",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "performance": "expert"
+      }
+     }
+    },
+    {
+     "value": "religion",
+     "label": "Religion",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "religion",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "religion": "expert"
+      }
+     }
+    },
+    {
+     "value": "society",
+     "label": "Society",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "society",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "society": "expert"
+      }
+     }
+    },
+    {
+     "value": "stealth",
+     "label": "Stealth",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "stealth",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "stealth": "expert"
+      }
+     }
+    },
+    {
+     "value": "survival",
+     "label": "Survival",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "survival",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "survival": "expert"
+      }
+     }
+    },
+    {
+     "value": "thievery",
+     "label": "Thievery",
+     "description": "You are trained in it today.",
+     "requiresSkillRank": {
+      "skill": "thievery",
+      "min": "trained",
+      "max": "trained"
+     },
+     "grant": {
+      "skills": {
+       "thievery": "expert"
+      }
+     }
+    }
+   ],
+   "note": "Expert in this skill until your Ancestral Longevity expires. Since it is temporary, you can’t use it as a prerequisite for a skill increase or a permanent character option like a feat. Lore skills are not listed here."
   }
  },
  {
@@ -70774,7 +71168,8 @@
   "value": {
    "flag": "assuredSkill",
    "prompt": "Skill",
-   "kind": "skills"
+   "kind": "skills",
+   "distinctAcrossTakes": true
   }
  },
  {
@@ -71412,12 +71807,7 @@
   "category": "feats",
   "id": "draconic-sight",
   "field": "senses",
-  "value": [
-   {
-    "name": "low-light-vision",
-    "acuity": "precise"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -72144,12 +72534,7 @@
   "category": "feats",
   "id": "hungry-eyes",
   "field": "senses",
-  "value": [
-   {
-    "name": "low-light-vision",
-    "acuity": "precise"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -72394,12 +72779,7 @@
   "category": "feats",
   "id": "twilight-dweller",
   "field": "senses",
-  "value": [
-   {
-    "name": "low-light-vision",
-    "acuity": "precise"
-   }
-  ]
+  "value": null
  },
  {
   "category": "feats",
@@ -91368,7 +91748,7 @@
     ]
    },
    {
-    "id": "sanctification",
+    "id": "relic-sanctification",
     "prompt": "Sanctification — the trait your relic confers",
     "options": [
      {
@@ -98950,7 +99330,7 @@
   "category": "feats",
   "id": "blessed-blood-sorcerer",
   "field": "note",
-  "value": "Your deity's three cleric spells are added to your spell list — you still spend a repertoire slot to learn one. Pick a deity in Setup if you have not."
+  "value": "Up to three of your deity's cleric spells join your spell list — you still spend a repertoire slot to learn one. Pick your deity on the level 0 page if you have not."
  },
  {
   "category": "feats",
@@ -99778,9 +100158,235 @@
   "value": {
    "flag": "ancientMemoriesSkill",
    "prompt": "Skill remembered from a past life",
-   "kind": "skills",
+   "kind": "array",
    "daily": true,
-   "note": "Trained in this skill until your next daily preparations. Temporary, so it cannot be a prerequisite for a skill increase or a feat."
+   "options": [
+    {
+     "value": "acrobatics",
+     "label": "Acrobatics",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "acrobatics",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "acrobatics": "trained"
+      }
+     }
+    },
+    {
+     "value": "arcana",
+     "label": "Arcana",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "arcana",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "arcana": "trained"
+      }
+     }
+    },
+    {
+     "value": "athletics",
+     "label": "Athletics",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "athletics",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "athletics": "trained"
+      }
+     }
+    },
+    {
+     "value": "crafting",
+     "label": "Crafting",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "crafting",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "crafting": "trained"
+      }
+     }
+    },
+    {
+     "value": "deception",
+     "label": "Deception",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "deception",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "deception": "trained"
+      }
+     }
+    },
+    {
+     "value": "diplomacy",
+     "label": "Diplomacy",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "diplomacy",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "diplomacy": "trained"
+      }
+     }
+    },
+    {
+     "value": "intimidation",
+     "label": "Intimidation",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "intimidation",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "intimidation": "trained"
+      }
+     }
+    },
+    {
+     "value": "medicine",
+     "label": "Medicine",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "medicine",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "medicine": "trained"
+      }
+     }
+    },
+    {
+     "value": "nature",
+     "label": "Nature",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "nature",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "nature": "trained"
+      }
+     }
+    },
+    {
+     "value": "occultism",
+     "label": "Occultism",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "occultism",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "occultism": "trained"
+      }
+     }
+    },
+    {
+     "value": "performance",
+     "label": "Performance",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "performance",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "performance": "trained"
+      }
+     }
+    },
+    {
+     "value": "religion",
+     "label": "Religion",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "religion",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "religion": "trained"
+      }
+     }
+    },
+    {
+     "value": "society",
+     "label": "Society",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "society",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "society": "trained"
+      }
+     }
+    },
+    {
+     "value": "stealth",
+     "label": "Stealth",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "stealth",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "stealth": "trained"
+      }
+     }
+    },
+    {
+     "value": "survival",
+     "label": "Survival",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "survival",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "survival": "trained"
+      }
+     }
+    },
+    {
+     "value": "thievery",
+     "label": "Thievery",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "thievery",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "thievery": "trained"
+      }
+     }
+    }
+   ],
+   "note": "This proficiency lasts until you prepare again. Since it is temporary, you can’t use it as a prerequisite for a skill increase or a permanent character option like a feat. Lore skills are not listed here."
   }
  },
  {
@@ -99829,13 +100435,13 @@
   "category": "feats",
   "id": "lesser-augmentation",
   "field": "note",
-  "value": "Your answer is recorded on the sheet; this feat’s effect is one the app does not compute, so no number changes here."
+  "value": "Your Enhancement pick is applied wherever the app can compute it; each option says which. Reconfiguring the choice is a week of downtime."
  },
  {
   "category": "feats",
   "id": "greater-augmentation",
   "field": "note",
-  "value": "Your answer is recorded on the sheet; this feat’s effect is one the app does not compute, so no number changes here."
+  "value": "Your Enhancement pick is applied wherever the app can compute it; each option says which. Reconfiguring the choice is a week of downtime."
  },
  {
   "category": "feats",
@@ -108907,7 +109513,7 @@
     "when": "when you Subsist using Crafting or Cooking Lore",
     "skills": [
      "crafting",
-     "lore"
+     "lore:cooking"
     ],
     "actions": [
      "subsist"
@@ -109346,7 +109952,8 @@
     "shift": "critFailToFail",
     "when": "on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge",
     "skills": [
-     "lore"
+     "lore:alghollthu",
+     "lore:azlanti"
     ],
     "actions": [
      "recall-knowledge"
@@ -109380,7 +109987,7 @@
     "shift": "successToCrit",
     "when": "when you use Underworld Lore to Earn Income or Recall Knowledge",
     "skills": [
-     "lore"
+     "lore:underworld"
     ],
     "actions": [
      "earn-income",
@@ -112597,6 +113204,1529 @@
   "field": "grantsClassFeatures",
   "value": [
    "blight-soul-deviant-classification"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "pact-of-eldritch-eyes",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "scouting-eye",
+    "note": "Cast from this feat, the spell uses the higher of your class DC and your spell DC."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "animal-magic",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "animal-messenger",
+    "note": "Cast from this feat, the spell uses your class DC or spell DC, whichever is higher."
+   },
+   {
+    "spellId": "calm",
+    "note": "Cast from this feat, the spell uses your class DC or spell DC, whichever is higher, and it affects animals only."
+   },
+   {
+    "spellId": "speak-with-animals",
+    "note": "Cast from this feat, the spell uses your class DC or spell DC, whichever is higher."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "innocent-butterfly",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "aura-of-the-unremarkable",
+    "note": "Cast from this feat, the spell uses your class DC or spell DC, whichever is higher."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "dominating-gaze",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "dominate",
+    "note": "Cast from this feat, Dominate uses your class DC or spell DC, whichever is higher, and it gains the visual trait. A creature that succeeds at its save is temporarily immune to your domination for 24 hours, though in most cases, you can't Cast the Spell again within 24 hours. If you are destroyed, all your Dominate spells from Dominating Gaze immediately end."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "tengu-feather-fan",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "gust-of-wind",
+    "note": "Cast from this feat, the spell uses your class DC or spell DC, whichever is higher."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "kaijus-footfalls",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "enlarge",
+    "note": "When you cast Enlarge from this feat, you can target only yourself, and the first time each turn you High Jump, Leap, or Long Jump while affected by it, creatures of your size or smaller adjacent to where you land must attempt a Reflex save against your class DC or spell DC, whichever is higher; on a failure the creature is knocked prone, and on a critical failure it is knocked prone and takes 2d6 bludgeoning damage. At 17th level, you can choose to heighten this innate Enlarge spell to 4th rank."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "land-legs",
+  "field": "landSpeedMin",
+  "value": 20
+ },
+ {
+  "category": "feats",
+  "id": "aerial-boomerang",
+  "field": "description",
+  "value": "A blade of shearing wind races away from you in a 60-foot line. Each creature in the area takes 2d4 slashing damage with a basic Reflex save against your class DC. In the final square of the line, the boomerang whirls in place until the end of your next turn. Any creature that ends its turn in that square has to save against the boomerang.\n\nOn your next turn, you can use a single action, which has the concentrate trait, to return the boomerang to you. It returns in a line from its square to your current location, with the same effect as the initial line, then the impulse ends. You must have line of effect to the boomerang and be within 60 feet of it.\n\n---\n\n**Level (+2)** The damage increases by 1d4."
+ },
+ {
+  "category": "feats",
+  "id": "breath-of-the-dragon-dragonblood",
+  "field": "description",
+  "value": "Tapping into the physiology of your draconic ancestor, you can exhale a torrent of energy in a 15-foot cone or a 30-foot line, dealing 1d4 damage. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1d4 rounds.\n\nAt 3rd level and every 2 levels thereafter, the damage increases by 1d4. The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar. This ability has the trait associated with the type of damage it deals."
+ },
+ {
+  "category": "feats",
+  "id": "battle-medicine",
+  "field": "description",
+  "value": "**Requirements** You're holding or wearing a healer's toolkit.\n\n---\n\nYou can patch up wounds, even in combat. Attempt a Medicine check with the same DC as for Treat Wounds and restore the corresponding amount of HP; this doesn't remove the wounded condition. As with Treat Wounds, you can attempt checks against higher DCs if you have the minimum proficiency rank. The target is then immune to your Battle Medicine for 1 day. This does not make them immune to, or otherwise count as, Treat Wounds."
+ },
+ {
+  "category": "actions",
+  "id": "treat-wounds",
+  "field": "description",
+  "value": "**Requirements** You're wearing or holding a Healer's Toolkit.\n\n---\n\nYou spend 10 minutes treating one injured living creature (targeting yourself, if you so choose). The target is then temporarily immune to Treat Wounds actions for 1 hour, but this interval overlaps with the time you spent treating (so a patient can be treated once per hour, not once per 70 minutes).\n\nThe Medicine check DC is usually 15, though the GM might adjust it based on the circumstances, such as treating a patient outside in a storm, or treating magically cursed wounds. If you're an expert in Medicine, you can instead attempt a DC 20 check to increase the Hit Points regained by 10; if you're a master of Medicine, you can instead attempt a DC 30 check to increase the Hit Points regained by 30; and if you're legendary, you can instead attempt a DC 40 check to increase the Hit Points regained by 50. The damage dealt on a critical failure remains the same.\n\nIf you succeed at your check, you can continue treating the target to grant additional healing. If you treat it for a total of 1 hour, double the Hit Points it regains from Treat Wounds.\n\nThe result of your Medicine check determines how many Hit Points the target regains.\n\nTreat Wounds\n\n---\n\n**Critical Success** The target regains 4d8 Hit Points and loses the wounded condition.\n\n**Success** The target regains 2d8 Hit Points, and loses the wounded condition.\n\n**Critical Failure** The target takes 1d8 damage."
+ },
+ {
+  "category": "feats",
+  "id": "you-dont-smell-right",
+  "field": "senses",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "aeonbound",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "oneBetter",
+    "when": "when someone rolls a failure or a critical failure on a check to Treat your Wounds (once per day)",
+    "skills": [
+     "medicine"
+    ],
+    "actions": [
+     "treat-wounds"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "acrobatic-performer",
+  "field": "skillSubstitutions",
+  "value": [
+   {
+    "use": "acrobatics",
+    "forSkill": "performance",
+    "when": "when using the Perform action"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "ageless-spirit",
+  "field": "choice",
+  "value": {
+   "flag": "agelessSpiritSkill",
+   "prompt": "Skill remembered from a past incarnation",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "acrobatics",
+     "label": "Acrobatics",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "acrobatics",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "acrobatics": "trained"
+      }
+     }
+    },
+    {
+     "value": "arcana",
+     "label": "Arcana",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "arcana",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "arcana": "trained"
+      }
+     }
+    },
+    {
+     "value": "athletics",
+     "label": "Athletics",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "athletics",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "athletics": "trained"
+      }
+     }
+    },
+    {
+     "value": "crafting",
+     "label": "Crafting",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "crafting",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "crafting": "trained"
+      }
+     }
+    },
+    {
+     "value": "deception",
+     "label": "Deception",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "deception",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "deception": "trained"
+      }
+     }
+    },
+    {
+     "value": "diplomacy",
+     "label": "Diplomacy",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "diplomacy",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "diplomacy": "trained"
+      }
+     }
+    },
+    {
+     "value": "intimidation",
+     "label": "Intimidation",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "intimidation",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "intimidation": "trained"
+      }
+     }
+    },
+    {
+     "value": "medicine",
+     "label": "Medicine",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "medicine",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "medicine": "trained"
+      }
+     }
+    },
+    {
+     "value": "nature",
+     "label": "Nature",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "nature",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "nature": "trained"
+      }
+     }
+    },
+    {
+     "value": "occultism",
+     "label": "Occultism",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "occultism",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "occultism": "trained"
+      }
+     }
+    },
+    {
+     "value": "performance",
+     "label": "Performance",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "performance",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "performance": "trained"
+      }
+     }
+    },
+    {
+     "value": "religion",
+     "label": "Religion",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "religion",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "religion": "trained"
+      }
+     }
+    },
+    {
+     "value": "society",
+     "label": "Society",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "society",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "society": "trained"
+      }
+     }
+    },
+    {
+     "value": "stealth",
+     "label": "Stealth",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "stealth",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "stealth": "trained"
+      }
+     }
+    },
+    {
+     "value": "survival",
+     "label": "Survival",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "survival",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "survival": "trained"
+      }
+     }
+    },
+    {
+     "value": "thievery",
+     "label": "Thievery",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "thievery",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "thievery": "trained"
+      }
+     }
+    }
+   ],
+   "note": "This proficiency lasts until you prepare again. Since it is temporary, you can’t use it as a prerequisite for a skill increase or a permanent character option like a feat. Lore skills are not listed here."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "ancestral-longevity",
+  "field": "choice",
+  "value": {
+   "flag": "ancestralLongevitySkill",
+   "prompt": "Skill recalled from your long life",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "acrobatics",
+     "label": "Acrobatics",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "acrobatics",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "acrobatics": "trained"
+      }
+     }
+    },
+    {
+     "value": "arcana",
+     "label": "Arcana",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "arcana",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "arcana": "trained"
+      }
+     }
+    },
+    {
+     "value": "athletics",
+     "label": "Athletics",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "athletics",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "athletics": "trained"
+      }
+     }
+    },
+    {
+     "value": "crafting",
+     "label": "Crafting",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "crafting",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "crafting": "trained"
+      }
+     }
+    },
+    {
+     "value": "deception",
+     "label": "Deception",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "deception",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "deception": "trained"
+      }
+     }
+    },
+    {
+     "value": "diplomacy",
+     "label": "Diplomacy",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "diplomacy",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "diplomacy": "trained"
+      }
+     }
+    },
+    {
+     "value": "intimidation",
+     "label": "Intimidation",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "intimidation",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "intimidation": "trained"
+      }
+     }
+    },
+    {
+     "value": "medicine",
+     "label": "Medicine",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "medicine",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "medicine": "trained"
+      }
+     }
+    },
+    {
+     "value": "nature",
+     "label": "Nature",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "nature",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "nature": "trained"
+      }
+     }
+    },
+    {
+     "value": "occultism",
+     "label": "Occultism",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "occultism",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "occultism": "trained"
+      }
+     }
+    },
+    {
+     "value": "performance",
+     "label": "Performance",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "performance",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "performance": "trained"
+      }
+     }
+    },
+    {
+     "value": "religion",
+     "label": "Religion",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "religion",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "religion": "trained"
+      }
+     }
+    },
+    {
+     "value": "society",
+     "label": "Society",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "society",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "society": "trained"
+      }
+     }
+    },
+    {
+     "value": "stealth",
+     "label": "Stealth",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "stealth",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "stealth": "trained"
+      }
+     }
+    },
+    {
+     "value": "survival",
+     "label": "Survival",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "survival",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "survival": "trained"
+      }
+     }
+    },
+    {
+     "value": "thievery",
+     "label": "Thievery",
+     "description": "You are untrained in it today.",
+     "requiresSkillRank": {
+      "skill": "thievery",
+      "max": "untrained"
+     },
+     "grant": {
+      "skills": {
+       "thievery": "trained"
+      }
+     }
+    }
+   ],
+   "note": "This proficiency lasts until you prepare again. Since it is temporary, you can’t use it as a prerequisite for a skill increase or a permanent character option like a feat. Lore skills are not listed here."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "ancestral-linguistics",
+  "field": "choice",
+  "value": {
+   "flag": "ancestralLanguage",
+   "prompt": "Language recalled from old memories",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "language",
+    "grantLanguage": true
+   },
+   "note": "You know this language until you prepare again. Since this knowledge is temporary, you can’t use it as a prerequisite for a permanent character option. Languages you already speak are not listed."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "twilight-talon-dedication",
+  "field": "choice",
+  "value": {
+   "flag": "twilightTalonLore",
+   "prompt": "Lore field you brushed up on today",
+   "kind": "text",
+   "daily": true,
+   "note": "Trained in this Lore until you prepare again — expert instead if you are a master in Espionage Lore, master if you are legendary. Recorded here rather than added to your skill list, because a Lore subject you type has no permanent row. Temporary, so it can’t be a prerequisite for a skill increase or a feat."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "automaton-armament",
+  "field": "enhancement",
+  "value": {
+   "strikeDieStep": 1
+  }
+ },
+ {
+  "category": "feats",
+  "id": "arcane-eye",
+  "field": "innateSpells",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "arcane-eye",
+  "field": "enhancement",
+  "value": {
+   "grant": {
+    "innateSpells": [
+     {
+      "spellId": "see-the-unseen",
+      "tradition": "arcane",
+      "usesPer": "hour"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "arcane-communication",
+  "field": "senses",
+  "value": [
+   {
+    "name": "touch-telepathy",
+    "range": 0
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "arcane-communication",
+  "field": "enhancement",
+  "value": {
+   "grant": {
+    "senses": [
+     {
+      "name": "touch-telepathy",
+      "range": 10
+     }
+    ]
+   }
+  }
+ },
+ {
+  "category": "feats",
+  "id": "automaton-lore",
+  "field": "description",
+  "value": "You have come to better understand the process that made your body and the magic that powers it. You gain the trained proficiency rank in Arcana and Crafting. If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice. You also gain the Additional Lore feat for Automaton Lore.\n\n**Enhancement** Increase your proficiency rank in your choice of either Arcana or Crafting to expert."
+ },
+ {
+  "category": "feats",
+  "id": "automaton-lore",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "enhancement-rank",
+    "prompt": "Enhancement - increase your proficiency rank to expert",
+    "options": [
+     {
+      "value": "arcana",
+      "label": "Arcana",
+      "grant": {
+       "skills": {
+        "arcana": "expert"
+       }
+      }
+     },
+     {
+      "value": "crafting",
+      "label": "Crafting",
+      "grant": {
+       "skills": {
+        "crafting": "expert"
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "automaton-lore",
+  "field": "enhancement",
+  "value": {
+   "choiceIds": [
+    "enhancement-rank"
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "lesser-augmentation",
+  "field": "enhancementPicker",
+  "value": {
+   "choiceIds": [
+    "enhancement"
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "greater-augmentation",
+  "field": "enhancementPicker",
+  "value": {
+   "choiceIds": [
+    "enhancement"
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "advanced-weaponry",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "eidolon-attack",
+    "prompt": "Eidolon attack that gains the trait",
+    "options": [
+     {
+      "value": "primary",
+      "label": "Primary unarmed attack"
+     },
+     {
+      "value": "secondary",
+      "label": "Secondary unarmed attack"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "aberration-kinship",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "mindlink",
+    "note": "When you cast Mindlink from this feat, you can target only aberrations."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "blessing-of-the-five",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "heal",
+    "tradition": "divine",
+    "rank": 1,
+    "usesPerDay": 1,
+    "heightenAt": [
+     {
+      "level": 5,
+      "rank": 2
+     },
+     {
+      "level": 7,
+      "rank": 3
+     },
+     {
+      "level": 9,
+      "rank": 4
+     },
+     {
+      "level": 11,
+      "rank": 5
+     },
+     {
+      "level": 13,
+      "rank": 6
+     },
+     {
+      "level": 15,
+      "rank": 7
+     },
+     {
+      "level": 17,
+      "rank": 8
+     },
+     {
+      "level": 19,
+      "rank": 9
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "blessing-of-the-five",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "heal",
+    "note": "Blessing of the Five casts the 3-action version of Heal, heightened to a rank one lower than half your level rounded up. You can select up to five creatures in the area to remain unaffected by the spell. You can instead spend the daily use to bring a creature within 30 feet that has died within the last round back from the dead; it is restored to 1 Hit Point and is doomed 1."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "fossil-rider",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "mask-of-terror",
+    "tradition": "primal",
+    "traditionFromChoiceFlag": "boneMagicTradition",
+    "usesPerDay": 1
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "bone-magic",
+  "field": "choice",
+  "value": {
+   "flag": "boneMagicTradition",
+   "prompt": "Bone Magic — are your innate spells primal or occult?",
+   "kind": "array",
+   "options": [
+    {
+     "value": "primal",
+     "label": "Primal"
+    },
+    {
+     "value": "occult",
+     "label": "Occult"
+    }
+   ],
+   "note": "Your answer sets the tradition of the cantrip you pick for Bone Magic and of every innate spell from a lizardfolk ancestry feat that has Bone Magic as a prerequisite (Bone Investiture, Fossil Rider)."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "blessed-blood-sorcerer",
+  "field": "choice",
+  "value": {
+   "flag": "blessedBloodDeitySpells",
+   "prompt": "Deity spell added to your spell list",
+   "kind": "open",
+   "picks": 3,
+   "distinct": true,
+   "from": {
+    "type": "own-deity-spell"
+   },
+   "note": "Up to three. A deity granting exactly three adds all three whether or not you answer; a deity granting more (Nethys, Nalinivati, Abraxas, Yuelral, Isis, Zeaki and the three Nyarlathotep entries each grant nine) adds only the ones picked here."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "adapted-cantrip",
+  "field": "spellSlotBonus",
+  "value": {
+   "cantrips": -1
+  }
+ },
+ {
+  "category": "feats",
+  "id": "awakened-jewel",
+  "field": "spellNotes",
+  "value": [
+   {
+    "fromCantripPick": true,
+    "note": "You can cast this cantrip as an innate spell at will only as long as you possess your head gem."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "ancestral-mind",
+  "field": "entryRetune",
+  "value": [
+   {
+    "scope": "innate",
+    "tradition": "occult",
+    "onlySources": [
+     "heritage",
+     "ancestryFeat"
+    ],
+    "keyAbilityFromClass": "psychic"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "razmiran-priest-dedication",
+  "field": "grantsItems",
+  "value": [
+   {
+    "itemId": "razmiri-mask"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "razmiran-priest-dedication",
+  "field": "entryRetune",
+  "value": [
+   {
+    "scope": "cleric-dedication-casting",
+    "tradition": "occult",
+    "keyAbility": "cha"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "irriseni-ice-witch",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "wall-of-ice",
+    "tradition": "arcane"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "heroes-call",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "heroism",
+    "tradition": "occult"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "elemental-wrath",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "acid-splash",
+    "atWill": true,
+    "tradition": "primal"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "sense-thoughts",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "mind-reading",
+    "tradition": "occult"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "dig-up-secrets",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "hypercognition",
+    "tradition": "occult"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "astral-blink",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "translocate",
+    "tradition": "arcane"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "reimagine",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "dreaming-potential",
+    "tradition": "occult"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "mentor-of-legends",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "heroism",
+    "tradition": "divine"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "siphon-torment",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "claim-curse",
+    "tradition": "divine"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "brilliant-vision",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "see-the-unseen",
+    "tradition": "occult"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "replicate",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "illusory-disguise",
+    "tradition": "occult"
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "animal-senses",
+  "field": "choice",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "greater-animal-senses",
+  "field": "choice",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "natural-senses",
+  "field": "choice",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "benefactors-resistance",
+  "field": "choice",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "aqueous-dragonblood",
+  "field": "choice",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "summiting-dragonblood",
+  "field": "choice",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "animal-actor",
+  "field": "choice",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "terrain-stalker",
+  "field": "choice",
+  "value": {
+   "flag": "choice",
+   "prompt": "Prompt",
+   "kind": "array",
+   "options": [
+    {
+     "value": "rubble",
+     "label": "Rubble"
+    },
+    {
+     "value": "snow",
+     "label": "Snow"
+    },
+    {
+     "value": "underbrush",
+     "label": "Underbrush"
+    }
+   ],
+   "allowCustom": {
+    "label": "Type another type of difficult terrain…",
+    "placeholder": "Difficult terrain (e.g. deep mud)…"
+   },
+   "distinctAcrossTakes": true
+  }
+ },
+ {
+  "category": "feats",
+  "id": "mercy",
+  "field": "choice",
+  "value": {
+   "flag": "choice",
+   "prompt": "Choose an option",
+   "kind": "array",
+   "options": [
+    {
+     "value": "body",
+     "label": "Body"
+    },
+    {
+     "value": "grace",
+     "label": "Grace"
+    },
+    {
+     "value": "mind",
+     "label": "Mind"
+    }
+   ],
+   "distinctAcrossTakes": true
+  }
+ },
+ {
+  "category": "feats",
+  "id": "artisanal-crafter",
+  "field": "choiceOptionLimits",
+  "value": [
+   {
+    "target": "specialty-crafting",
+    "flag": "specialtyCrafting",
+    "allow": [
+     {
+      "value": "blacksmithing"
+     },
+     {
+      "value": "leatherworking"
+     },
+     {
+      "value": "stonemasonry"
+     }
+    ],
+    "reason": "Artisanal Crafter grants Specialty Crafting \"in your choice of blacksmithing, leatherworking, or stonemasonry\" — the other nine specialties are not on offer through this feat."
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "bounce-boost",
+  "field": "prerequisites",
+  "value": [
+   "Trained in Athletics"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "round-ears",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "tusks",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "willing-death",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "elemental-eyes",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "pierce-the-darkness",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "quadruped",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "tough-skin",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "whitecape",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "alabaster-eyes",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "bestial-manifestation",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "elf-atavism",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "orc-sight",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "sensitive-nose",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "parthenogenic-hatchling",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "nocturnal-tripkee",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "eyes-of-night",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "draconic-aspect",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "scaly-hide",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "chance-death",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "deliberate-death",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "gravesight",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "crocodiles-twin",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "made-for-combat",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "nalinivatis-light",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "tusks-orc",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "tusks-half-orc",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "aon-nocturnal-grippli",
+  "field": "onlyAtLevel",
+  "value": 1
+ },
+ {
+  "category": "feats",
+  "id": "bestial-manifestation",
+  "field": "choice",
+  "value": {
+   "flag": "bestialManifestation",
+   "prompt": "Unarmed Attack",
+   "kind": "array",
+   "options": [
+    {
+     "value": "claw",
+     "label": "Claw",
+     "description": "1d4 slashing — agile, finesse, unarmed, versatile piercing. Brawling group."
+    },
+    {
+     "value": "hoof",
+     "label": "Hoof",
+     "description": "1d6 bludgeoning — finesse, unarmed. Brawling group."
+    },
+    {
+     "value": "jaws",
+     "label": "Jaws",
+     "description": "1d6 piercing — finesse, unarmed. Brawling group."
+    },
+    {
+     "value": "tail",
+     "label": "Tail",
+     "description": "1d4 bludgeoning — agile, finesse, unarmed. Brawling group."
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "bestial-manifestation",
+  "field": "grantedStrikes",
+  "value": [
+   {
+    "name": "Claw",
+    "die": "d4",
+    "damageType": "slashing",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed",
+     "versatile-p"
+    ],
+    "group": "brawling",
+    "choiceValue": "claw"
+   },
+   {
+    "name": "Hoof",
+    "die": "d6",
+    "damageType": "bludgeoning",
+    "traits": [
+     "finesse",
+     "unarmed"
+    ],
+    "group": "brawling",
+    "choiceValue": "hoof"
+   },
+   {
+    "name": "Jaws",
+    "die": "d6",
+    "damageType": "piercing",
+    "traits": [
+     "finesse",
+     "unarmed"
+    ],
+    "group": "brawling",
+    "choiceValue": "jaws"
+   },
+   {
+    "name": "Tail",
+    "die": "d4",
+    "damageType": "bludgeoning",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed"
+    ],
+    "group": "brawling",
+    "choiceValue": "tail"
+   }
+  ]
+ },
+ {
+  "category": "actions",
+  "id": "apparition-sense",
+  "create": true,
+  "value": {
+   "id": "apparition-sense",
+   "name": "Apparition Sense",
+   "traits": [
+    "animist",
+    "divine"
+   ],
+   "rarity": "common",
+   "actionCost": {
+    "type": "duration",
+    "text": "10 minutes"
+   },
+   "source": {
+    "book": "Pathfinder War of Immortals",
+    "license": "ORC"
+   },
+   "edition": "remaster-era",
+   "aonParentId": "feat-7120",
+   "aonSection": "Apparition Sense",
+   "description": "As an activity that takes 10 minutes, you can act as a link between disembodied souls and their mortal bodies. As long as you are in contact with both a spirit and a living body that belonged to it in life during that entire time, the spirit can use you to return to that body; this does not allow you to bring the dead back to life, but can assist in restoring a disembodied soul to a still-living body. If the body is occupied by another spirit or soul, that entity must succeed at a Will save against your spell DC or be cast from the body when its original owner is returned."
+  }
+ },
+ {
+  "category": "feats",
+  "id": "apparition-sense",
+  "field": "grantsActions",
+  "value": [
+   "apparition-sense"
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "apparition-sense",
+  "field": "note",
+  "value": "You can allow a spirit or undead otherwise incapable of speech to speak through you as long as you are in direct contact with it."
+ },
+ {
+  "category": "feats",
+  "id": "apparition-sense",
+  "field": "description",
+  "value": "You can see and interact with things others can't. You have apparition sight, an imprecise sense that allows you to detect the presence of invisible or hidden spirits, haunts, and undead within 30 feet of you.\n\nYou also gain the Apparition Sense activity, which lets you act as a link between disembodied souls and their mortal bodies."
+ },
+ {
+  "category": "feats",
+  "id": "animal-empathy-druid",
+  "field": "description",
+  "value": "You have a connection to the creatures of the natural world that allows you to communicate with them on a rudimentary level. You can ask questions of, receive answers from, and use the Diplomacy skill with animals. In most cases, wild animals will give you time to make your case."
+ },
+ {
+  "category": "feats",
+  "id": "ancestral-blood-magic",
+  "field": "spellNotes",
+  "value": [
+   {
+    "fromAncestrySpells": true,
+    "note": "Casting this spell triggers your blood magic effect — you gained it from a heritage or an ancestry feat, and it is not a cantrip."
+   }
   ]
  }
 ]

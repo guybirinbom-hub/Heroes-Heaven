@@ -3305,6 +3305,9 @@
     "feats": [
       "critter-shape"
     ],
+    "creatureTraits": [
+      "animal"
+    ],
     "duration": "up to 10 minutes, once per hour",
     "battleForm": {
       "ac": "15+@actor.level",
@@ -3336,6 +3339,9 @@
     "feats": [
       "rat-form"
     ],
+    "creatureTraits": [
+      "animal"
+    ],
     "battleForm": {
       "ac": "15+@actor.level",
       "speeds": {
@@ -3366,6 +3372,9 @@
     "feats": [
       "crawling-form"
     ],
+    "creatureTraits": [
+      "animal"
+    ],
     "battleForm": {
       "ac": "15+@actor.level",
       "speeds": {
@@ -3395,6 +3404,9 @@
     "name": "Bat Form",
     "feats": [
       "bat-form"
+    ],
+    "creatureTraits": [
+      "animal"
     ],
     "duration": "once per hour",
     "battleForm": {
@@ -3428,6 +3440,9 @@
     "feats": [
       "form-of-the-bat"
     ],
+    "creatureTraits": [
+      "animal"
+    ],
     "duration": "once per hour",
     "battleForm": {
       "ac": "15+@actor.level",
@@ -3460,6 +3475,9 @@
     "feats": [
       "a-little-bird-told-me"
     ],
+    "creatureTraits": [
+      "animal"
+    ],
     "battleForm": {
       "ac": "20+@actor.level",
       "speeds": {
@@ -3489,6 +3507,9 @@
     "name": "Ancestors’ Rage (canine)",
     "feats": [
       "ancestors-rage"
+    ],
+    "creatureTraits": [
+      "animal"
     ],
     "duration": "once per day, 5th-rank animal form",
     "battleForm": {
@@ -3531,6 +3552,9 @@
     "name": "Form of the Beloved Mother (snake)",
     "feats": [
       "form-of-the-beloved-mother"
+    ],
+    "creatureTraits": [
+      "animal"
     ],
     "duration": "once per day, 5th-rank animal form",
     "battleForm": {
@@ -3575,6 +3599,10 @@
     "name": "Storm Form (air elemental)",
     "feats": [
       "storm-form"
+    ],
+    "creatureTraits": [
+      "air",
+      "elemental"
     ],
     "duration": "once per day, 7th-rank elemental form",
     "battleForm": {
@@ -3707,6 +3735,9 @@
     "feats": [
       "worm-form"
     ],
+    "creatureTraits": [
+      "animal"
+    ],
     "battleForm": {
       "ac": "20+@actor.level",
       "attackMod": 25,
@@ -3752,10 +3783,7 @@
       "size": "Huge",
       "tempHp": 40
     },
-    "note": "Worm Form, purple worm: AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge — you must have room to expand into. You gain the animal trait and can Dismiss the form.",
-    "creatureTraits": [
-      "animal"
-    ]
+    "note": "Worm Form, purple worm: AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge — you must have room to expand into. You gain the animal trait and can Dismiss the form."
   },
   "worm-form-hybrid": {
     "id": "worm-form-hybrid",
@@ -3766,6 +3794,9 @@
     "name": "Worm Form (humanoid-worm hybrid)",
     "feats": [
       "worm-form"
+    ],
+    "creatureTraits": [
+      "animal"
     ],
     "battleForm": {
       "ac": "20+@actor.level",
@@ -3801,10 +3832,7 @@
       "size": "Huge",
       "tempHp": 40
     },
-    "note": "Worm Form, hybrid: your own head on a worm’s body. AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge. You keep the ability to speak — see the feat for what else the hybrid retains.",
-    "creatureTraits": [
-      "animal"
-    ]
+    "note": "Worm Form, hybrid: your own head on a worm’s body. AC = 20 + your level, 40 temporary Hit Points, darkvision, attack modifier +25, Athletics +30 unless yours is higher, Huge. You keep the ability to speak — see the feat for what else the hybrid retains."
   },
   "dragon-transformation": {
     "id": "dragon-transformation",
@@ -3815,6 +3843,9 @@
     "name": "Dragon Transformation",
     "feats": [
       "dragon-transformation"
+    ],
+    "creatureTraits": [
+      "dragon"
     ],
     "duration": "while raging",
     "battleForm": {
@@ -3848,6 +3879,9 @@
     "feats": [
       "animal-rage"
     ],
+    "creatureTraits": [
+      "animal"
+    ],
     "duration": "while raging",
     "battleForm": {
       "senses": [
@@ -3872,6 +3906,9 @@
     "name": "Bone Swarm",
     "feats": [
       "bone-swarm"
+    ],
+    "creatureTraits": [
+      "swarm"
     ],
     "duration": "up to 1 minute, once per day",
     "battleForm": {
@@ -4429,7 +4466,60 @@
     "creatureTraits": [
       "fey"
     ],
-    "duration": "permanent — once you have died the first time",
     "note": "Fey Life: “The first time you die after gaining this feat… Immediately after dying, you revive, becoming conscious (and wounded as normal) at 27 Hit Points, and you gain the fey trait.” Switch this on the first time it happens — until then the feat’s own prerequisite says “you’re not a fey”. The visual aspect you take on (wings, horns, a plantlike body) has no mechanical effect."
+  },
+  "armor-in-earth": {
+    "id": "armor-in-earth",
+    "name": "Armor in Earth",
+    "feats": [
+      "armor-in-earth"
+    ],
+    "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
+    "modifiers": [],
+    "note": "Medium stone armor that uses your highest armor proficiency: AC Bonus +4, Dex Cap +1, Check Penalty -2, Speed Penalty -10 feet, Strength +3, Bulk 1, group plate. You gain its armor specialization effect. Any bonuses, runes and magical abilities of your actual armor are suppressed, but any runes that could apply to the stone armor are replicated onto it. At 3rd level the armor becomes HEAVY armor, its AC Bonus becomes +5, and it gains the bulwark armor trait. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
+  },
+  "agile-shield-grip": {
+    "id": "agile-shield-grip",
+    "name": "Agile Shield Grip",
+    "feats": [
+      "agile-shield-grip"
+    ],
+    "duration": "until you use Agile Shield Grip again to switch to a normal grip",
+    "modifiers": [],
+    "weaponTraits": {
+      "match": {
+        "items": [
+          "shield-boss",
+          "shield-spikes"
+        ]
+      },
+      "setDie": "d4",
+      "add": [
+        "agile"
+      ]
+    },
+    "note": "Requires you to be wielding a shield with a shield boss or shield spikes in one hand. Your shield boss and shield spikes weapon damage die drops to 1d4, and as long as it is 1d4 those Strikes gain the agile weapon trait — so their multiple attack penalty becomes -4/-8. Use Agile Shield Grip again to switch back to a normal grip."
+  },
+  "bon-mot-backfired": {
+    "id": "bon-mot-backfired",
+    "name": "Bon Mot backfired",
+    "feats": [
+      "bon-mot"
+    ],
+    "duration": "1 minute, or until you issue another Bon Mot and succeed",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "status",
+        "target": "perception"
+      },
+      {
+        "value": -2,
+        "type": "status",
+        "target": "save",
+        "detail": "will"
+      }
+    ],
+    "note": "Bon Mot, critical failure: your quip is atrocious and you take the same penalty an enemy would have taken had you succeeded — a -2 status penalty to Perception and Will saves. It ends after 1 minute or if you issue another Bon Mot and succeed."
   }
 }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { content } from './_content';
 import { buildCharacter, emptyBuild } from '../src/rules/build';
-import { deriveAc, deriveSpeeds, deriveStrikes, deriveDefenses, deriveSize, strikesBlockedBy } from '../src/rules/derive';
+import { deriveAc, deriveSpeeds, deriveStrikes, deriveDefenses, deriveSize, strikesBlockedBy, creatureTraitsOf } from '../src/rules/derive';
 import { explainStat } from '../src/rules/explain';
 import { emptyPlay, toggleMode, setTempHp, applyDamage } from '../src/rules/play';
 import type { BattleForm, Character, ModeDef } from '../src/rules/types';
@@ -321,6 +321,75 @@ describe('a form that forbids Strikes', () => {
     for (const m of forms) {
       const bad = m.battleForm!.noStrikes && (m.battleForm!.strikes?.length ?? 0) > 0;
       expect(`${m.id}: ${bad ? 'CONTRADICTS ITSELF' : 'ok'}`).toBe(`${m.id}: ok`);
+    }
+  });
+});
+
+/**
+ * The printed form block states a creature trait, and for a long time every one of the 16 modes took
+ * the stat lines and left that sentence out. A creature trait is a statistic the Details tab prints —
+ * "you are an animal" is what a ranger's Hunt Prey and a druid's Wild Empathy read — so dropping it
+ * shipped a form that is mechanically the wrong kind of creature.
+ *
+ * The two Cosmic Form modes are the control: AoN spell-889 prints no trait clause, so if they ever
+ * gain one the sweep has started guessing instead of reading.
+ */
+describe('battle forms carry the creature trait their block prints', () => {
+  const EXPECTED: Record<string, string[]> = {
+    'critter-shape': ['animal'],
+    'rat-form': ['animal'],
+    'crawling-form': ['animal'],
+    'bat-form': ['animal'],
+    'form-of-the-bat': ['animal'],
+    'a-little-bird-told-me': ['animal'],
+    'ancestors-rage': ['animal'],
+    'animal-rage': ['animal'],
+    'form-of-the-beloved-mother': ['animal'],
+    'storm-form': ['air', 'elemental'],
+    'dragon-transformation': ['dragon'],
+    'bone-swarm': ['swarm'],
+    'worm-form-purple-worm': ['animal'],
+    'worm-form-hybrid': ['animal'],
+  };
+  const NO_TRAIT_PRINTED = ['transcend-the-azimuth-sun', 'transcend-the-azimuth-moon'];
+
+  it('all 14 forms whose text states a trait carry it, and the 2 that state none carry none', () => {
+    const con = db();
+    for (const [id, traits] of Object.entries(EXPECTED)) {
+      expect(`${id}: ${JSON.stringify((con.modes?.[id] as ModeDef | undefined)?.creatureTraits)}`).toBe(
+        `${id}: ${JSON.stringify(traits)}`,
+      );
+    }
+    for (const id of NO_TRAIT_PRINTED) {
+      expect(`${id}: ${JSON.stringify((con.modes?.[id] as ModeDef | undefined)?.creatureTraits)}`).toBe(`${id}: undefined`);
+    }
+  });
+
+  it('and the trait reaches the character once the form is on', () => {
+    const con = db();
+    const base = buildCharacter(
+      { ...emptyBuild(), level: 14, ancestryId: 'dwarf', backgroundId: Object.keys(con.backgrounds)[0], classId: 'fighter', keyAbility: 'str' },
+      con,
+    );
+    const off = creatureTraitsOf({ ...base, activeModes: [] }, con).map((t) => t.trait);
+    const on = creatureTraitsOf({ ...base, activeModes: [con.modes!['worm-form-purple-worm'] as ModeDef] }, con).map((t) => t.trait);
+    expect(off).not.toContain('animal');
+    expect(on).toContain('animal');
+  });
+
+  /* The values live in scripts/apply-battle-forms.mjs because that script rebuilds each of these mode
+   * objects WHOLE on every run. They were briefly authored in apply-creature-trait-lanes.mjs instead,
+   * where one run of the owning script would have deleted them without a word. */
+  it('no battle-form mode is missing a trait its own note names', () => {
+    const con = db();
+    const forms = Object.values(con.modes ?? {}).filter((m) => (m as ModeDef).battleForm) as ModeDef[];
+    for (const m of forms) {
+      const namesOne = /\b(?:gain|gains) the (animal|dragon|swarm|elemental|fey|plant|fungus) trait\b/i.exec(m.note ?? '');
+      if (!namesOne) continue;
+      expect(`${m.id} note names "${namesOne[1]}"; creatureTraits=${JSON.stringify(m.creatureTraits)}`).toBe(
+        `${m.id} note names "${namesOne[1]}"; creatureTraits=${JSON.stringify(m.creatureTraits)}`,
+      );
+      expect(m.creatureTraits ?? []).toContain(namesOne[1].toLowerCase());
     }
   });
 });

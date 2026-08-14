@@ -34,6 +34,49 @@ describe('Blessed Blood (Sorcerer)', () => {
   it('grants nothing when no deity is chosen, rather than guessing one', () => {
     expect(sorc(true, null).spellListAdditions?.['*'] ?? []).toEqual([]);
   });
+
+  /**
+   * "Add UP TO THREE of your deity's spells." The cap was read only on the whole-tradition branch, so
+   * this one unioned the deity's entire list. Measured over the app's own deity data: 460 deities
+   * grant exactly three and TWELVE grant more — nine of them grant NINE, three times the printed cap,
+   * and a Nethys sorcerer was handed all nine including the 9th-rank one.
+   *
+   * WHICH three is the player's and never a slice: at 19th level the 9th-rank spell is the whole
+   * point, and "the first three" would be the app putting its own ruling on the sheet dressed as the
+   * book's.
+   */
+  describe('a deity that grants more than three', () => {
+    const NINE = 'nethys';
+    const picks = (...ids: string[]) => Object.fromEntries(ids.map((id, i) => [`1:class:0#${i}`, id]));
+    const withPicks = (fc: Record<string, string>) =>
+      build('sorcerer', 20, { subclassId: 'draconic', deityId: NINE, featPicks: { '1:class:0': 'blessed-blood-sorcerer' }, featChoices: fc });
+
+    it('is the case at all — this is not a hypothetical', () => {
+      expect(c().deities[NINE]?.spells?.length).toBe(9);
+      expect(c().feats['blessed-blood-sorcerer'].spellListAdditions).toMatchObject({ from: 'deity', max: 3 });
+      expect(c().feats['blessed-blood-sorcerer'].choice?.picks).toBe(3);
+    });
+
+    it('adds exactly the three the player picked', () => {
+      const three = ['force-barrage', 'levitate', 'disjunction'];
+      expect(withPicks(picks(...three)).spellListAdditions?.['*']).toEqual(three);
+    });
+
+    it('adds none of them unanswered, rather than all nine', () => {
+      expect(withPicks({}).spellListAdditions?.['*'] ?? []).toEqual([]);
+    });
+
+    it('ignores an answer that is not one of that deity’s spells', () => {
+      // A retuned or re-deitied character keeps stale answers; a stale one must not smuggle a spell in.
+      expect(withPicks(picks('force-barrage', 'fireball')).spellListAdditions?.['*']).toEqual(['force-barrage']);
+    });
+
+    it('and a deity at or under the cap is unchanged, answered or not', () => {
+      const three = c().deities.abadar!.spells!;
+      const bare = build('sorcerer', 20, { subclassId: 'draconic', deityId: 'abadar', featPicks: { '1:class:0': 'blessed-blood-sorcerer' } });
+      expect(bare.spellListAdditions?.['*']).toEqual(expect.arrayContaining(three));
+    });
+  });
 });
 
 describe('Mysterious Repertoire', () => {

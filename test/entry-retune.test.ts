@@ -17,9 +17,12 @@ const withFeat = (classId: string, level: number, featId: string, over: Record<s
 };
 
 describe('Ancestral Mind retunes the innate entry', () => {
-  it('the record says what it changes, and reads the attribute off the psychic', () => {
+  it('the record says what it changes, its SCOPE, and reads the attribute off the psychic', () => {
+    // The scope is the load-bearing half: "any innate spells you know FROM AN ANCESTRY FEAT OR
+    // HERITAGE". Without it the one pooled innate entry relabelled a background's and an invested
+    // item's spells occult too — spells the feat never mentions.
     expect(db.feats['ancestral-mind'].entryRetune).toEqual([
-      { scope: 'innate', tradition: 'occult', keyAbilityFromClass: 'psychic' },
+      { scope: 'innate', tradition: 'occult', onlySources: ['heritage', 'ancestryFeat'], keyAbilityFromClass: 'psychic' },
     ]);
   });
 
@@ -44,6 +47,23 @@ describe('Ancestral Mind retunes the innate entry', () => {
     const c = build('psychic', 10, { featPicks: { '1:ancestry': INNATE_FEAT, '2:class': 'ancestral-mind' } });
     expect(innateOf(c)!.tradition).toBe('occult');
     expect(innateOf(c)!.keyAbility, "the psychic's own key attribute, not a named one").toBe(key);
+  });
+
+  it('retunes ONLY the spells its scope clause names — per spell, not by relabelling the entry', () => {
+    /* "You can cast any innate spells you know FROM AN ANCESTRY FEAT OR HERITAGE using your psychic
+     * spellcasting… the spell's tradition becomes occult." There is ONE pooled innate entry and it
+     * also collects a BACKGROUND's spell (Astrological Augur's divine Augury) and every invested
+     * item's, so setting `entry.tradition = 'occult'` said something false about spells this feat
+     * never mentions. */
+    const BG = 'astrological-augur';
+    expect(db.backgrounds[BG].innateSpells?.[0], 'the control must be a background-granted innate spell').toMatchObject({
+      spellId: 'augury',
+      tradition: 'divine',
+    });
+    const ch = build('psychic', 10, { backgroundId: BG, featPicks: { '1:ancestry': INNATE_FEAT, '2:class': 'ancestral-mind' } });
+    const e = innateOf(ch)!;
+    expect(e.spellTraditions?.['fly'], 'the ancestry feat’s spell is in scope').toBe('occult');
+    expect(e.spellTraditions?.['augury'], 'the background’s spell is NOT').toBe('divine');
   });
 
   it('a non-psychic still turns the entry occult, and keeps its own attribute', () => {

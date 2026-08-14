@@ -108,8 +108,12 @@ describe('nothing is hidden from BOTH screens', () => {
    * resolves against the build, not the morning — so `askedAtDailyPrep` requires BOTH the flag and an
    * askable kind, and anything else keeps its builder picker.
    *
-   * Ancient Memories is the single record in that state. This pins the list: a new one added to the
-   * data fails here rather than silently becoming unanswerable.
+   * Ancient Memories WAS the single record in that state, and it is why this list was ever non-empty:
+   * its `kind: 'skills'` menu resolved through `trainedSkillOptions`, i.e. the skills you are ALREADY
+   * trained in, so every option the builder offered was a wasted grant and the untrained skills the
+   * feat exists to help could not be picked at all. It is now a `kind: 'array'` daily menu of the
+   * skills you are UNTRAINED in, like Haunting Memories and Endless Memories, so the list is EMPTY.
+   * This pins it: a new record in that state fails here rather than silently becoming unanswerable.
    */
   it('every daily choice is asked on exactly one of the two screens', () => {
     const db = c();
@@ -123,13 +127,29 @@ describe('nothing is hidden from BOTH screens', () => {
         if (!askedAtDailyPrep(def as never)) stranded.push(`${id} (kind ${def.kind})`);
       }
     }
-    expect(stranded.sort()).toEqual(['ancient-memories (kind skills)']);
+    expect(stranded.sort()).toEqual([]);
   });
 
-  it('Ancient Memories keeps its builder picker, so it is answerable somewhere', () => {
+  it('Ancient Memories is asked at daily preparations and NOT in the builder', () => {
     const slot = classSlotKey(4, 'fighter');
     const text = textAtLevel(buildWith(4, slot, 'ancient-memories'), 4);
+    // We are on the right page and the feat really is picked…
     expect(text).toContain('Ancient Memories');
-    expect(text).toContain('Skill remembered from a past life');
+    // …and its daily question is not asked here (Q23), nor is the duplicate FEAT_SKILL_GRANTS picker
+    // that used to render a second 16-skill "Trained skill" list beside it.
+    expect(text).not.toContain('Skill remembered from a past life');
+    // ⚠ `(?!s)` is load-bearing: the character rail on this very page reads "Trained skills", so a
+    // plain substring check passes whatever the builder does. Positive control below.
+    expect(text).not.toMatch(/Trained skill(?!s)/);
+  });
+
+  it('…and that assertion can still fail — a feat that DOES keep its skill picker still shows it', () => {
+    // Without this control the test above would pass if `SubCard label="Trained skill"` were deleted
+    // outright, or if the regex were wrong. Cleric Dedication grants "trained in one skill of your
+    // choice" permanently, at build time — the picker there is correct and must stay.
+    const slot = classSlotKey(4, 'fighter');
+    const text = textAtLevel(buildWith(4, slot, 'cleric-dedication'), 4);
+    expect(text).toContain('Cleric Dedication');
+    expect(text).toMatch(/Trained skill(?!s)/);
   });
 });

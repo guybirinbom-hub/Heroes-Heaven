@@ -26,7 +26,20 @@ const FIXES = [
     //  your psychic spellcasting attribute modifier instead of Charisma…"
     // The attribute is READ OFF the psychic's own entry rather than named: a psychic's key attribute
     // is a choice, so writing one here would be right for some psychics and wrong for others.
-    fields: { entryRetune: [{ scope: 'innate', tradition: 'occult', keyAbilityFromClass: 'psychic' }] },
+    //
+    // ⚠ `onlySources` is the SCOPE CLAUSE, and it is the load-bearing half of the sentence: "any
+    // innate spells you know FROM AN ANCESTRY FEAT OR HERITAGE". `scope: 'innate'` resolves to the one
+    // POOLED innate entry, which also collects a BACKGROUND's spell (Astrological Augur's Augury) and
+    // every INVESTED item's (a Cloak of Elvenkind's Ghost Sound) — so relabelling the entry told a
+    // psychic that spells this feat never mentions had become occult, which is a wrong value, not a
+    // cosmetic one. build.ts retunes per spell instead and recomputes the entry's own tradition from
+    // the result, so a psychic whose innate spells ALL qualify still reads occult.
+    //
+    // ⚠ IT BELONGS HERE, not in scripts/data/effect-backfill.json. This script holds the literal and
+    // re-appends its own overlay row (see the filter at the foot of the file), so a hand edit of the
+    // overlay is deleted in BOTH places at this script's next run — and `test/entry-retune.test.ts`'s
+    // strict toEqual would then go red pointing at a value that silently reverted.
+    fields: { entryRetune: [{ scope: 'innate', tradition: 'occult', onlySources: ['heritage', 'ancestryFeat'], keyAbilityFromClass: 'psychic' }] },
   },
   {
     id: 'razmiran-priest-dedication',

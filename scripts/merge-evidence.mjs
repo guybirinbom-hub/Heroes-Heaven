@@ -40,10 +40,17 @@ const abs = (p) => join(root, p);
 const readJson = (p) => JSON.parse(readFileSync(abs(p), 'utf8'));
 const has = (n) => process.argv.includes(`--${n}`);
 
-const SHEET_IN = 'scripts/audit/feat-500-evidence.json';
-const BUILDER_IN = 'scripts/audit/builder-500-evidence.json';
-const SAMPLE = 'scripts/audit/feat-500.json';
-const OUT = 'scripts/audit/audit-500-evidence.json';
+/* All four are parameters. The frozen 500 is one work list; a level-ordered batch (batch-NNN.json,
+ * cut by scripts/feat-audit-order.mjs) is another, and both must be mergeable without editing this
+ * file. Defaults are the 500 so existing invocations are unchanged.
+ *   node scripts/merge-evidence.mjs --sheet scripts/audit/batch-001-sheet-evidence.json \
+ *     --builder scripts/audit/batch-001-builder-evidence.json \
+ *     --sample scripts/audit/batch-001.json --out scripts/audit/batch-001-evidence.json */
+const argOf = (n, d) => { const i = process.argv.indexOf(`--${n}`); return i > -1 ? process.argv[i + 1] : d; };
+const SHEET_IN = argOf('sheet', 'scripts/audit/feat-500-evidence.json');
+const BUILDER_IN = argOf('builder', 'scripts/audit/builder-500-evidence.json');
+const SAMPLE = argOf('sample', 'scripts/audit/feat-500.json');
+const OUT = argOf('out', 'scripts/audit/audit-500-evidence.json');
 
 /* ── Staleness ─────────────────────────────────────────────────────────────────────────────────
  * What an evidence pack is a photograph OF: the content it built characters from, the engine that
@@ -57,7 +64,7 @@ const SOURCES = [
   'public/core.json',
   'public/core-descriptions.json',
   'src/rules',
-  'scripts/audit/feat-500.json',
+  SAMPLE,
 ];
 
 function newestMtime(rel) {

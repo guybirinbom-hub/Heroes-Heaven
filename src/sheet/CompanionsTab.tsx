@@ -10,6 +10,7 @@ import {
   COMPANION_FORMULA,
   EIDOLON_PRIMARY_OPTIONS,
   eidolonCantripSlots,
+  huntersEdgeName,
   type AnimalCompanionBlock,
   type EidolonBlock,
   type FamiliarBlock,
@@ -335,10 +336,29 @@ function AddCompanionModal({ content, currency, enabledSources, offers, onAdd, o
 
 /* ============================ Choice pickers ============================ */
 
-function FamiliarAbilityPicker({ content, chosen, onToggle, onClose }: { content: ContentDatabase; chosen: string[]; onToggle: (id: string) => void; onClose: () => void }) {
+function FamiliarAbilityPicker({
+  content,
+  chosen,
+  granted,
+  grantLabel,
+  onToggle,
+  onClose,
+}: {
+  content: ContentDatabase;
+  chosen: string[];
+  /** Ability ids the granting record hands over FREE. Q27: they are already the familiar's and cost
+   *  none of the budget, so picking one would spend a slot on something it already has — the row has
+   *  to say so rather than looking live and doing nothing. */
+  granted?: string[];
+  /** The granting record's own name, for the reason line. */
+  grantLabel?: string;
+  onToggle: (id: string) => void;
+  onClose: () => void;
+}) {
   const [q, setQ] = useState('');
   const [descNode, setDescNode] = useState<DescNode | null>(null);
   const has = new Set(chosen);
+  const free = new Set(granted ?? []);
   const list = Object.values(content.familiarAbilities)
     .filter((a) => a.name.toLowerCase().includes(q.trim().toLowerCase()))
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -356,20 +376,30 @@ function FamiliarAbilityPicker({ content, chosen, onToggle, onClose }: { content
             <i className="ti ti-search" aria-hidden="true" />
             <input autoFocus={!isMobileNow()} placeholder="Search abilities" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
-          <span className="ss-count">{chosen.length} chosen</span>
+          {/* Free abilities are excluded from the count for the same reason they are unpickable: they
+              are not among the ones the player is spending. This number and the Edit card's chip and
+              the stat block's "N chosen" now all read the same list. */}
+          <span className="ss-count">{chosen.filter((id) => !free.has(id)).length} chosen</span>
         </div>
         <div className="cond-list">
           {list.map((a) => {
             const on = has.has(a.id);
+            const isFree = free.has(a.id);
             // The row body opens the ability's full description; the Add/Remove button is the only toggle.
             const node = descNodeOf({ name: a.name, description: a.description }, 'familiarAbilities');
             return (
               <PickerRow
                 key={a.id}
                 name={<>{a.name}{a.kind === 'master' && <span className="cond-valued-tag">master</span>}</>}
-                chosen={on}
+                chosen={on || isFree}
                 onOpenDesc={() => setDescNode(node)}
-                selectLabel={on ? 'Remove' : 'Add'}
+                selectLabel={isFree ? 'Granted' : on ? 'Remove' : 'Add'}
+                selectDisabled={isFree}
+                disabledReason={
+                  isFree
+                    ? `Granted by ${grantLabel ?? 'a feat'} — your familiar already has it, and it doesn't count against your limit.`
+                    : undefined
+                }
                 onSelect={() => onToggle(a.id)}
               />
             );
@@ -791,8 +821,19 @@ function FamiliarBlockView({ b, cond, hp }: { b: FamiliarBlock; cond?: ReactNode
       {cond}
       <div className="sb-line">
         <b>Perception</b> {formatMod(b.perception)}
+        {b.skills?.length ? (
+          <>
+            {'; '}
+            {b.skills.map((s, j) => (
+              <Fragment key={s.name}>
+                {j > 0 ? ', ' : ''}
+                <b>{s.name}</b> {formatMod(s.modifier)}
+              </Fragment>
+            ))}
+          </>
+        ) : null}
       </div>
-      <div className="sb-line sb-muted">Uses your AC, saves, and Perception (shown); HP equal to 5 × your level.</div>
+      <div className="sb-line sb-muted">{b.statNote ?? 'Uses your AC, saves, and Perception (shown); HP equal to 5 × your level.'}</div>
       <div className="sb-div" />
       <SaveLine ac={b.ac} saves={b.saves} />
       {hp ? (
@@ -1210,6 +1251,12 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
   // A creature the player added from a record's offer has nothing to configure — every statistic is
   // the offer's. Offering the familiar controls here would let a severed arm be turned into a Pipefox.
   const offer = cfg.offerSlug ? CREATURE_OFFERS[cfg.offerSlug] : undefined;
+  // The record that granted this familiar: how many abilities it lets the player choose, and which
+  // ones it hands over free. `abilityBudget` shipped with NO reader anywhere in src/, so the card said
+  // nothing about a budget and the count had nothing to count against.
+  const famGrant = cfg.grantSlug ? FEAT_COMPANION_GRANTS[cfg.grantSlug] : undefined;
+  const famBudget = famGrant?.abilityBudget;
+  const famFree = new Set(famGrant?.lockedFree ? famGrant.lockedAbilities ?? [] : []);
   const type = cfg.kind === 'animal' && cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
   const isConstruct = type?.category === 'construct';
   const animalOpts = Object.values(content.animalCompanions).filter((t) => (t.category === 'construct') === isConstruct);
@@ -1296,10 +1343,18 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
           <div className="cmp-crow">
             <span className="cmp-lbl">Abilities</span>
             <button className="cmp-chip filled" onClick={onAbilities}>
-              <i className="ti ti-sparkles" aria-hidden="true" /> {(cfg.abilities ?? []).length} chosen
+              {/* One JSX line on purpose: JSX strips whitespace at line boundaries, so splitting the
+                  count from " of N" renders "2of 2 chosen". A free ability is not counted — that is
+                  what "doesn't count against your usual limit" means, and it is the same number the
+                  stat block prints, which used to disagree with this one. */}
+              <i className="ti ti-sparkles" aria-hidden="true" /> {(cfg.abilities ?? []).filter((a) => !famFree.has(a)).length}{famBudget != null ? ` of ${famBudget}` : ''} chosen
             </button>
           </div>
-          <div className="cmp-note">Your class and feats determine how many familiar abilities you can choose.</div>
+          <div className="cmp-note">
+            {famBudget != null
+              ? `${famGrant?.label ?? 'The record that granted this familiar'} lets you choose ${famBudget} familiar abilities.${famFree.size ? ' Any it grants outright are listed on the stat block as “from a feat” and do not count against that number.' : ''}`
+              : 'Your class and feats determine how many familiar abilities you can choose.'}
+          </div>
         </>
       )}
 
@@ -1454,7 +1509,13 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
     grantSourceIds.add(cc.name.toLowerCase().normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
   const autoGranted: CompanionConfig[] = featGrantedCompanions(grantSourceIds)
     .filter((g) => !explicit.some((c) => c.grantSlug === g.grantSlug))
-    .map((g) => ({ id: g.id, kind: g.grant.kind, name: '', abilities: g.grant.lockedAbilities ?? [], grantSlug: g.grantSlug }));
+    // `abilities` is the PLAYER's list. A locked ability that COUNTS against the budget is still one of
+    // their picks (Corgi Mount's Scent), so it is seeded here as before. A FREE one is not: seeding it
+    // made the Edit card read "2 chosen" before the player had chosen anything — spending the very
+    // budget the printed clause exists to protect ("doesn't count against your usual limit of familiar
+    // abilities") — and let the player toggle a permanent ability off. `deriveFamiliar` reads those off
+    // the grant instead and hands them over as "from a feat".
+    .map((g) => ({ id: g.id, kind: g.grant.kind, name: '', abilities: g.grant.lockedFree ? [] : g.grant.lockedAbilities ?? [], grantSlug: g.grantSlug }));
   // Creatures the character's records OFFER (Out of Hand's severed arm). Nothing is added here on
   // purpose: an offer is a capability, and the player adds the creature when it happens at the table.
   const offers = offeredCreatures(grantSourceIds);
@@ -1582,7 +1643,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
       if (!type) return { node: <StatBlock name={cfg.name || 'Animal companion'} kind="Animal companion" icon="ti-paw"><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
       // `companionModKeys`, not a bare set of feat ids: a feat whose CHOICE decides which modification
       // it gives (Creature of Myth's five) is keyed `<featId>:<answer>` and is invisible without it.
-      const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel, modesOf(cfg.id), companionModKeys(character.feats));
+      const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel, modesOf(cfg.id), companionModKeys(character.feats), huntersEdgeName(character, content));
       return { node: <AnimalBlock b={b} cond={cond} hp={hpTrackerFor(cfg.id, b.hp)} />, bulkMax: b.bulk.max };
     }
     if (cfg.kind === 'familiar') {
@@ -1641,10 +1702,15 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
       {abilityFor && onPlay && (() => {
         const comp = explicit.find((c) => c.id === abilityFor);
         const chosen = comp?.abilities ?? [];
+        // The grant's FREE abilities are the familiar's already (`deriveFamiliar` adds them through
+        // the granted channel), so the picker must show them as granted rather than as live options.
+        const g = comp?.grantSlug ? FEAT_COMPANION_GRANTS[comp.grantSlug] : undefined;
         return (
           <FamiliarAbilityPicker
             content={content}
             chosen={chosen}
+            granted={g?.lockedFree ? g.lockedAbilities ?? [] : []}
+            grantLabel={g?.label}
             onToggle={(aid) => onPlay((p) => updatePlayCompanion(p, abilityFor, { abilities: chosen.includes(aid) ? chosen.filter((x) => x !== aid) : [...chosen, aid] }))}
             onClose={() => setAbilityFor(null)}
           />
@@ -1747,7 +1813,9 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
         <div className="cmp-cardbody" key={mode}>
           {grant?.note && (
             <div className="cmp-grantnote">
-              <i className="ti ti-info-circle" aria-hidden="true" /> <span>Granted by a feat. {grant.note}</span>
+              {/* NAME the record. `kindMeta` gives the generic title ("Familiar"), so a player holding
+                  two grants had no way to tell which one put this card here. */}
+              <i className="ti ti-info-circle" aria-hidden="true" /> <span>Granted by {grant.label}. {grant.note}</span>
             </div>
           )}
           {/* Not "granted": the record only made this addable. The player put it here when it happened

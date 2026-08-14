@@ -18,7 +18,11 @@ describe('grantsActions', () => {
   it('names an action record that exists and is actually an action', () => {
     const c = content();
     const buckets = ['feats', 'classFeatures', 'heritages', 'backgrounds'] as const;
-    const costs = new Set(['actions', 'reaction', 'free', 'variable']);
+    // 'duration' is the fifth: an ACTIVITY with a printed time rather than a symbol ("As an activity
+    // that takes 10 minutes…"). It is still something the player DOES, which is what this asks — and
+    // the same widening MainTab's own isActionCost gate carries. 'passive' stays out: a passive record
+    // granting a passive record would list nothing.
+    const costs = new Set(['actions', 'reaction', 'free', 'variable', 'duration']);
     let n = 0;
     for (const bucket of buckets) {
       for (const rec of Object.values(c[bucket] as Record<string, { grantsActions?: string[]; name: string }>)) {

@@ -28,8 +28,16 @@ describe('aon- duplicate suppression', () => {
     for (const [tid, t] of Object.entries(c.items)) {
       if (!dupes.has(tid) && t?.name) visibleByName.set(key(t.name), tid);
     }
+    // A FOURTH mechanism: two imports of the SAME AoN DOCUMENT under different names
+    // ("Animal Empathy" / "Animal Empathy (Druid)", both feat-4709). Neither the exact-name rule nor
+    // the grade-spelling rule can see that, and a shared document id is stronger evidence of a twin
+    // than either — so it satisfies the guarantee that matters, checked here rather than waived.
+    const visibleWithAonId = (aonId: string) =>
+      Object.entries(c.feats).some(([fid, f]) => !dupes.has(fid) && (f as { aonId?: string }).aonId === aonId);
     for (const id of dupes) {
       if (id.startsWith('aon-')) continue;
+      const aonId = (c.feats[id] as { aonId?: string } | undefined)?.aonId;
+      if (aonId && visibleWithAonId(aonId)) continue;
       const rec = c.items[id];
       expect(rec, `${id} hidden but not an item`).toBeTruthy();
       expect(GRADES.some((g) => rec.name.toLowerCase().startsWith(`${g} `)), `${id} is a "Grade Name" spelling`).toBe(true);
@@ -70,6 +78,14 @@ describe('aon- duplicate suppression', () => {
     };
     for (const id of NEAR_DUPLICATE_IDS) {
       let twin: string | undefined;
+      // …or a twin by SHARED AON DOCUMENT ID, which the edit-distance test cannot reach: "Animal
+      // Empathy (Druid)" is 7 edits from "Animal Empathy" and is unambiguously the same document.
+      const mineAon = (c.feats[id] as { aonId?: string } | undefined)?.aonId;
+      if (mineAon) {
+        for (const [fid, f] of Object.entries(c.feats)) {
+          if (fid !== id && (f as { aonId?: string }).aonId === mineAon && !NEAR_DUPLICATE_IDS.has(fid)) twin = fid;
+        }
+      }
       for (const map of Object.values(c) as Record<string, { name?: string }>[]) {
         if (!map || typeof map !== 'object' || map instanceof Set || !map[id]?.name) continue;
         const mine = key(map[id].name!);

@@ -4,6 +4,7 @@ import { build, content } from './_content';
 import { renderText } from './_render';
 import { SpellsTab } from '../src/sheet/SpellsTab';
 import { spellNotesFor } from '../src/rules/explain';
+import { FEAT_CANTRIP_GRANTS } from '../src/rules/featCantripGrants';
 import type { SpellNote } from '../src/rules/types';
 
 /**
@@ -84,6 +85,28 @@ describe('the authored notes', () => {
         for (const add of additions == null ? [] : Array.isArray(additions) ? additions : [additions])
           if (add.as === 'repertoire' || add.as === 'font') for (const s of add.spells ?? []) granted.add(s);
         for (const n of notes) {
+          // A PICK-DRIVEN clause names no spell, and must not: Awakened Jewel's "as long as you possess
+          // your head gem" is about whichever of its 34 cantrips the player chose, so any spellId here
+          // would be a lie about the other 33. It attaches to the answer instead (build.ts, the
+          // `fromCantripPick` loop). What it still has to have is a pick to attach to — a note on a
+          // record that asks nothing renders nowhere at all — so the picker registry is the assertion.
+          if (n.fromCantripPick) {
+            if (n.spellId) bad.push(`${collection}/${id} → fromCantripPick note also names ${n.spellId}, which is ignored`);
+            if (!FEAT_CANTRIP_GRANTS[id]) bad.push(`${collection}/${id} → fromCantripPick note on a record with no cantrip picker`);
+            if (!n.note?.trim()) bad.push(`${collection}/${id} → empty fromCantripPick note`);
+            continue;
+          }
+          // A SOURCE-DRIVEN clause names no spell either, and for a stronger reason than the pick:
+          // Ancestral Blood Magic's set is "every non-cantrip spell you gained from a heritage or an
+          // ancestry feat", which is a property of the CHARACTER — 252 ancestry-feat grants qualify and
+          // which of them any given sorcerer has is not knowable here. It attaches in build.ts's
+          // `wantsAncestrySpellNote` pass. There is no registry to point at (that is the whole reason
+          // the shape exists), so what is asserted is that it names no spell and says something.
+          if (n.fromAncestrySpells) {
+            if (n.spellId) bad.push(`${collection}/${id} → fromAncestrySpells note also names ${n.spellId}, which is ignored`);
+            if (!n.note?.trim()) bad.push(`${collection}/${id} → empty fromAncestrySpells note`);
+            continue;
+          }
           if (!c().spells[n.spellId]) bad.push(`${collection}/${id} → missing spell ${n.spellId}`);
           else if (!granted.has(n.spellId)) bad.push(`${collection}/${id} → does not grant ${n.spellId}`);
           if (!n.note?.trim()) bad.push(`${collection}/${id} → empty note on ${n.spellId}`);

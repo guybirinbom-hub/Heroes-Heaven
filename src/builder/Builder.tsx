@@ -17,6 +17,7 @@ import {
   featChoiceLabel,
   featChoicePrompt,
   buildChoiceOptions,
+  cantripBonusFor,
   levelGrants,
   levelChoices,
   subclassAnchorAt,
@@ -27,7 +28,7 @@ import {
   choiceOptionsFor,
   withCustomAnswer,
 } from '../rules/build';
-import { openChoiceOptions } from '../rules/openChoice';
+import { OPEN_SOURCE_LABEL, openChoiceOptions } from '../rules/openChoice';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet } from '../rules/sources';
 import { eligibleFeatsForSlot, findHiddenFeatMatches } from '../rules/featSlots';
@@ -39,16 +40,17 @@ import {
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
 import {
   askedAtDailyPrep,
-  classFeatureIdsOwned,
+  characterSenseKeys,
   domainPoolForChoice,
   effectiveChoiceLimits,
   effectiveChoiceOptions,
   narrowChoiceOptions,
+  senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
 import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
-import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
+import { exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
 import { isBoundBackgroundGrant } from '../rules/backgroundGrants';
@@ -64,7 +66,7 @@ import { DescriptionModal } from '../sheet/DescriptionModal';
 import type { DescNode } from '../sheet/descref';
 import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
-import { useIsMobile } from '../sheet/useIsMobile';
+import { useIsMobile, useShowUndoButtons } from '../sheet/useIsMobile';
 import { PinContext, type PinDescApi } from '../sheet/PinContext';
 import { WindowControls } from '../sheet/WindowControls';
 import { useUndoableState } from '../useUndoableState';
@@ -253,6 +255,7 @@ export function Builder({
     else if (build.level < prev) setSel((cur) => (typeof cur === 'number' && cur > build.level ? build.level : cur));
   }, [build.level]);
   const isMobile = useIsMobile();
+  const showUndoButtons = useShowUndoButtons();
   // Mobile: the live "Character" stat preview collapses behind a chevron to reclaim builder space.
   const [statsOpen, setStatsOpen] = useState(false);
   // When lowering the level would drop choices already made at that level, confirm first.
@@ -369,16 +372,19 @@ export function Builder({
       : {};
   // Cantrip Expansion and its kin raise this. Without the same bonus here the extra cantrips exist on
   // the sheet and the builder gives the player no slot in which to choose them.
-  const cantripBonus = [
-    ...Object.values(build.featPicks ?? {}).filter(Boolean).map((id) => content.feats[id as string]),
-    ...[...classFeatureIdsOwned({ classId: build.classId, subclassId: build.subclassId, level: build.level }, content)].map(
-      (id) => content.classFeatures[id],
-    ),
-  ].reduce((n, r) => n + (r?.spellSlotBonus?.cantrips ?? 0), 0);
+  //
+  // ⚠ `buildCharacter`'s own function, not a copy of it. The copy that used to live here had drifted:
+  // it ignored the `cantripsAt` LADDER, and it charged Adapted Cantrip's `-1` before its picker was
+  // answered, so the page read "5 / 4" over a set of picks the sheet was perfectly happy with.
+  const cantripBonus = cantripBonusFor(build, content);
   const cantripCap = (casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0) + cantripBonus;
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
   const featPrereqChar = useMemo(() => buildCharacter(build, ovContent), [build, ovContent]);
+  // The senses the character actually HAS, for the per-option gates in the effect-choice pickers.
+  // Memoized for the same reason featPrereqChar is: deriveDefenses walks feats, items, modes and
+  // stances, and a picker re-renders on every keystroke.
+  const builderSenses = useMemo(() => characterSenseKeys(featPrereqChar, content), [featPrereqChar, content]);
 
   /**
    * Render one build-time choice picker.
@@ -429,7 +435,9 @@ export function Builder({
                                             key={k}
                                             bare
                                             label={featChoicePrompt(def.prompt, def.flag)}
-                                            placeholder={`Search ${def.from?.type ?? 'options'}…`}
+                                            // NOT the raw `from.type` — that printed the slug at the
+                                            // player ("Search own-deity-spell…") on sixteen records.
+                                            placeholder={`Search ${OPEN_SOURCE_LABEL[def.from?.type ?? ''] ?? 'options'}…`}
                                             value={build.featChoices[k] ?? null}
                                             onChange={(v) => actions.setFeatChoice(k, v)}
                                             options={all.filter((o) => !taken.has(o.id))}
@@ -557,7 +565,10 @@ export function Builder({
       );
     }
     if (granter && isBoundGrant(granter, grantedId)) {
-      const bound = boundGrantChoice(build, granter, grantedId);
+      // The granter's SLOT, because a Lore answer is stored per taking now — without it Gnome
+      // Obsession's bound Assurance reads blank and the card says "answer that and this fills in"
+      // forever, even though the player already typed the Lore.
+      const bound = boundGrantChoice(build, granter, grantedId, featPrereqChar.feats.find((f) => f.featId === granter)?.slotKey);
       const granterName = content.feats[granter]?.name ?? granter;
       return (
         <SubCard
@@ -581,7 +592,20 @@ export function Builder({
         ? domainPoolForChoice(build, content, grantedId, def.domainPool).map((d) => ({ value: d, label: cap(d) }))
         : def.kind === 'skills'
           ? SKILLS.map((s) => ({ value: s, label: cap(s) }))
-          : // A granted feat's menu can be widened by another record just like a picked one's — the
+          : def.kind === 'open'
+            ? /*
+               * An OPEN set carries no `options` on the record, so the narrowing path below resolved it
+               * to an empty list and `if (!opts.length) return null` rendered NO PICKER AT ALL. As in
+               * Life, So in Death grants Adopted Ancestry, whose list is every ancestry — the one place
+               * a granted feat's menu is open rather than enumerated. The picked-feat path (renderChoice)
+               * has handled `open` since it shipped; this one never did.
+               */
+              openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy, character: featPrereqChar }).map((o) => ({
+                value: o.id,
+                label: o.note ? `${o.name} (${o.note})` : o.name,
+                ...(o.description ? { description: o.description } : {}),
+              }))
+            : // A granted feat's menu can be widened by another record just like a picked one's — the
             // widening is addressed by record id, and a granted feat has the same id either way.
             // …and NARROWED the same way (ruling Q9). This is where the three narrowing backgrounds
             // land: Toymaker, Isgeri Reclaimer and Reputation Seeker all restrict a feat they GRANT,
@@ -612,6 +636,22 @@ export function Builder({
           // deleting a player's pick behind their back.
           addCustom={!limitReasons.length && def.allowCustom ? { ...def.allowCustom, onAdd: setAnswer } : undefined}
         />
+        {/* The picked-feat path has rendered these two since it shipped; this one never did, so a note
+            or an inert admission authored on a record went invisible the moment the record was GRANTED
+            rather than picked — Adopted Ancestry's "an uncommon or rare one needs your GM's access"
+            caveat lands on exactly that path (As in Life, So in Death). */}
+        {def.note && (
+          <div className="choice-inert">
+            <i className="ti ti-alert-circle" aria-hidden="true" />
+            <span>{def.note}</span>
+          </div>
+        )}
+        {def.inert && (
+          <div className="choice-inert">
+            <i className="ti ti-info-circle" aria-hidden="true" />
+            <span>{def.inert}</span>
+          </div>
+        )}
         {limitReasons.map((r) => (
           <div className="choice-inert" key={r}>
             <i className="ti ti-filter" aria-hidden="true" />
@@ -1178,28 +1218,30 @@ export function Builder({
         {/* In the bar rather than the floating app-wide pill: that one is fixed to a screen corner,
             and this header already has both corners spoken for (the window buttons on the desktop
             app, Save changes beside them). Before Cancel, so the two commit buttons stay together. */}
-        <div className="b-undo" role="group" aria-label="Undo and redo">
-          <button
-            type="button"
-            className="icon-btn"
-            title="Undo (Ctrl+Z)"
-            aria-label="Undo"
-            disabled={!canUndoBuild}
-            onClick={undoBuild}
-          >
-            <i className="ti ti-arrow-back-up" aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            className="icon-btn"
-            title="Redo (Ctrl+Shift+Z)"
-            aria-label="Redo"
-            disabled={!canRedoBuild}
-            onClick={redoBuild}
-          >
-            <i className="ti ti-arrow-forward-up" aria-hidden="true" />
-          </button>
-        </div>
+        {showUndoButtons && (
+          <div className="b-undo" role="group" aria-label="Undo and redo">
+            <button
+              type="button"
+              className="icon-btn"
+              title="Undo (Ctrl+Z)"
+              aria-label="Undo"
+              disabled={!canUndoBuild}
+              onClick={undoBuild}
+            >
+              <i className="ti ti-arrow-back-up" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className="icon-btn"
+              title="Redo (Ctrl+Shift+Z)"
+              aria-label="Redo"
+              disabled={!canRedoBuild}
+              onClick={redoBuild}
+            >
+              <i className="ti ti-arrow-forward-up" aria-hidden="true" />
+            </button>
+          </div>
+        )}
         <button className="b-cancel" onClick={onCancel}>
           Cancel
         </button>
@@ -1671,6 +1713,30 @@ export function Builder({
                                 .filter((gid) => !handled.has(gid) && content.feats[gid]?.choice)
                                 .map((gid) => grantedChoicePicker(gid));
                             })()}
+                          {/* …and the SAME lane's `effectChoices`. This block filtered on `choice`
+                              alone, so a granted feat asking its second question through
+                              `effectChoices` had no control at all — Advanced Weaponry, which a
+                              summoner takes through the Evolution Feat grant rather than a feat slot,
+                              rendered its trait picker and not "which unarmed attack". Measured in the
+                              browser: the card appeared with one question, and the answer the eidolon
+                              needs could not be given. Same shape as the comment above — a lane that
+                              mounts one picker and not the other. */}
+                          {subAnchorId &&
+                            (() => {
+                              const slotPicked = new Set(Object.values(build.featPicks).filter(Boolean));
+                              return [...new Set(featPrereqChar.feats.filter((f) => f.grantedBy).map((f) => f.featId))]
+                                .filter((gid) => !slotPicked.has(gid) && content.feats[gid]?.effectChoices?.length)
+                                .map((gid) => (
+                                  <EffectChoicesPicker
+                                    key={`gec-${gid}`}
+                                    recordId={gid}
+                                    choices={content.feats[gid]!.effectChoices}
+                                    build={build}
+                                    actions={actions}
+                                    content={content}
+                                  />
+                                ));
+                            })()}
                           {/* Extra-choice picks (kineticist gates, thaumaturge implements, animist
                               apparitions…) carry them too — the four elemental gates ask which
                               damage type, and nothing asked. */}
@@ -1891,13 +1957,20 @@ export function Builder({
                               })}
                           {picked &&
                             Array.from({ length: FEAT_GRANTS[picked]?.loreChoices ?? 0 }).map((_, li) => {
-                              const loreKey2 = `${picked}:${li}`;
+                              // Keyed by SLOT, not by feat id. Additional Lore is `maxTakable: null` and
+                              // its Special clause demands a NEW subcategory each time, so a bare-id key
+                              // made take 2 an alias of take 1 and two takes trained ONE Lore. Same fix
+                              // and same shape as the pick-a-feat lane's slot key in build.ts.
+                              const loreKey2 = `${key}:${li}`;
+                              // The old key is still READ, so a character saved before this keeps its
+                              // subject; the first edit migrates it to the slot key.
+                              const loreLegacy = `${picked}:${li}`;
                               return (
                                 <SubCard key={`lore-${loreKey2}`} icon="ti-bulb" label="Trained Lore">
                                   <input
                                     className="lvl-lore-input"
                                     placeholder="Lore subject (e.g. Warfare)…"
-                                    value={build.featLoreChoices?.[loreKey2] ?? ''}
+                                    value={build.featLoreChoices?.[loreKey2] ?? build.featLoreChoices?.[loreLegacy] ?? ''}
                                     onChange={(e) => actions.patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [loreKey2]: e.target.value } })}
                                   />
                                 </SubCard>
@@ -1950,7 +2023,16 @@ export function Builder({
                           {/* Effect choices ("choose one of N" — a dragon tattoo's resistance type, an
                               energy heart's element): each picked option confers a concrete effect. */}
                           {picked &&
-                            (content.feats[picked]?.effectChoices ?? []).map((ch) => {
+                            (content.feats[picked]?.effectChoices ?? [])
+                              // A choice the record's own ENHANCEMENT tier asks is only asked once an
+                              // augmentation names this feat. Rendering it before that is a live
+                              // control whose answer nothing applies — the shape Q27 rules out.
+                              .filter(
+                                (ch) =>
+                                  !(content.feats[picked]?.enhancement?.choiceIds ?? []).includes(ch.id) ||
+                                  (featPrereqChar.enhancements ?? []).some((e) => e.featId === picked),
+                              )
+                              .map((ch) => {
                               const ecKey = `${picked}:${ch.id}`;
                               const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
                               // An OPEN pick ("any 1st-rank arcane spell") gets a searchable spell list;
@@ -1978,7 +2060,32 @@ export function Builder({
                                     // An option may carry a note instead of a grant (a kineticist gate
                                     // junction: only Elemental Resistance moves a stat). Show the note as
                                     // the description so the player can read each option before picking.
-                                    options={(ch.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.note }))}
+                                    // …and an option that names a RECORD the character must OWN to
+                                    // pick it ("one of YOUR 1st- or 5th-level automaton ancestry
+                                    // feats") is greyed with the reason rather than offered and then
+                                    // silently dropped by the engine (Q9 filtering + Q27 display).
+                                    // …and an option gated on a SENSE the character must already have
+                                    // ("You must have low-light vision before you can gain darkvision
+                                    // with this feat") is greyed with its reason too. The answer ALREADY
+                                    // STORED is never greyed, so a pick cannot vanish out from under the
+                                    // player and a gate cannot invalidate itself once its own grant lands.
+                                    options={(ch.options ?? []).map((o) => {
+                                      const mustOwn = (content.feats[picked]?.enhancementPicker?.choiceIds ?? []).includes(ch.id);
+                                      const missing = mustOwn && !featPrereqChar.feats.some((f) => f.featId === o.value);
+                                      const gateWhy = senseGateReason(
+                                        o.requiresAnySense,
+                                        builderSenses,
+                                        build.effectChoices?.[ecKey] === o.value,
+                                      );
+                                      return {
+                                        value: o.value,
+                                        label: o.label,
+                                        description: o.note,
+                                        disabled: missing || !!gateWhy,
+                                        ...(missing ? { disabledReason: 'You do not have this feat.' } : {}),
+                                        ...(!missing && gateWhy ? { disabledReason: gateWhy } : {}),
+                                      };
+                                    })}
                                   />
                                 </SubCard>
                               );
@@ -2042,13 +2149,16 @@ export function Builder({
                                       return {
                                         value: k,
                                         label: `${skillLabel(k)} (${atAbsoluteMax ? `${RANK_ABBR[cur]} — max` : `${RANK_ABBR[cur]} → ${RANK_ABBR[next]}`})`,
-                                        disabled: atAbsoluteMax || !allowedByLevel,
+                                        // …and a skill a record LOCKS: Bardic Lore "can't be increased by
+                                        // any other means". It was offered live and un-greyed, and three
+                                        // increases spent on it took a level-20 bard to master.
+                                        disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k],
                                         // The greying was already right; only the reason was missing.
                                         disabledReason: atAbsoluteMax
                                           ? 'Already legendary — nothing left to increase.'
                                           : !allowedByLevel
                                             ? `This level's increases cap at ${skillIncreaseCap(lvl)}.`
-                                            : undefined,
+                                            : LOCKED_SKILL_KEYS[k],
                                       };
                                     }),
                                   ]}
@@ -2213,10 +2323,32 @@ export function Builder({
             const bd = b.traits.includes('dedication') ? 0 : 1;
             return ad - bd || a.level - b.level || a.name.localeCompare(b.name);
           });
+        /*
+         * A feat whose GRANT IS EXHAUSTED — legal to take, and guaranteed to do nothing.
+         *
+         * Armor Proficiency cascades "you become trained in the NEXT type of armor", and a fighter is
+         * already trained in light, medium and heavy, so build.ts finds no category to train and the take
+         * grants nothing. No later level rescues it either: the 13th-level clause upgrades only the
+         * category THIS feat granted.
+         *
+         * Ruling Q21 — "the grant would be WASTED ACROSS YOUR WHOLE CAREER" — is the FILTERED row, so
+         * this rides `featIneligible` and is hidden by default, exactly like a blocked dedication.
+         * Ruling Q27 governs how it looks once "Show ineligible" reveals it: dimmed, with this sentence.
+         * Both halves are needed. Greying alone would leave it live-and-inert in the default view (the
+         * bug Q27 was written about); filtering alone would hide it with no explanation anywhere.
+         *
+         * Never applied to the feat already sitting in THIS slot: featPrereqChar includes that take, so
+         * a re-open of the slot would grey the player's own pick.
+         */
+        // Never applied to the feat already sitting in THIS slot: featPrereqChar includes that take,
+        // so a re-open of the slot would grey the player's own pick.
+        const noOpWhy = (f: Feat): string | undefined =>
+          build.featPicks?.[pickerKey] === f.id ? undefined : exhaustedGrantReason(f, featPrereqChar);
         // "Hide ineligible" filter predicate — mirrors the row's unmet/allowed logic below.
         const featIneligible = (f: Feat) => {
           if (build.overrides?.allowedFeats?.includes(f.id)) return false;
           if (dedBlockedWhy(f)) return true;
+          if (noOpWhy(f)) return true;
           return !checkPrerequisites(f, featPrereqChar, content).met;
         };
         // "Why is my feat missing?" — everything needed to diff a search against the FULL content
@@ -2271,7 +2403,15 @@ export function Builder({
               if (hidden.sources.length) parts.push(`${hidden.sources.length} from disabled source books — shown below`);
               if (hidden.archetype) parts.push(`${hidden.archetype} archetype feat${hidden.archetype === 1 ? '' : 's'} — turn on “Archetypes” above`);
               if (hidden.campaign) parts.push(`${hidden.campaign} behind a Setup toggle (Mythic / Kingmaker / Deviant abilities / Pervasive Magic)`);
-              if (hidden.invalid) parts.push(`${hidden.invalid} not valid for this slot (wrong type, level too high, or already taken)`);
+              // The parenthetical ENUMERATES the reasons, so it has to keep up with them. "Only at 1st
+              // level" became a reason when `Feat.onlyAtLevel` shipped, and a list of three causes none
+              // of which applies is the wrong-reason failure Q27 calls worse than a vague one: a
+              // nephilim searching for Bestial Manifestation in a 5th-level slot was told "wrong type,
+              // level too high, or already taken", and it is none of those.
+              if (hidden.invalid)
+                parts.push(
+                  `${hidden.invalid} not valid for this slot (wrong type, wrong level — some feats can only be taken at 1st — or already taken)`,
+                );
               const CAP = 20;
               return (
                 <>
@@ -2332,7 +2472,11 @@ export function Builder({
               // wrong for Juggler (which asks for one) and for every clause counting a sibling too.
               const dedBlockedWhyRow = dedBlockedWhy(f);
               const dedBlocked = !!dedBlockedWhyRow;
-              const unmet = !pre.met || dedBlocked;
+              // …and a feat whose grant is already used up (see noOpWhy). Same treatment as a blocked
+              // dedication: dimmed, with the sentence, and still takeable through Overrides — a player
+              // deliberately spending a slot on nothing is their call, not a bug to hard-block.
+              const noOpWhyRow = noOpWhy(f);
+              const unmet = !pre.met || dedBlocked || !!noOpWhyRow;
               // Overrides (creative editing): a feat you don't qualify for isn't dead-greyed — you can
               // "Take anyway", which records this one feat as a deliberate override (no global switch).
               // Offered ONLY when the Overrides feature is enabled; otherwise unmet feats stay blocked
@@ -2407,8 +2551,8 @@ export function Builder({
                   selectDisabled={unmet && !allowed && !canOverride}
                   disabledReason={
                     unmet && !allowed && !canOverride
-                      ? dedBlockedWhyRow
-                        ? dedBlockedWhyRow
+                      ? (dedBlockedWhyRow ?? noOpWhyRow)
+                        ? (dedBlockedWhyRow ?? noOpWhyRow)
                         : // The "Requires (unmet): …" line above already names them; repeat the
                           // generic sentence only when there is no such line to explain the greying.
                           f.prerequisites?.length
@@ -2421,8 +2565,8 @@ export function Builder({
                       if (!canOverride) return;
                       // Taking a feat you don't qualify for is a deliberate rule-break — confirm it,
                       // and say exactly which prerequisite is being ignored.
-                      const why = dedBlockedWhyRow
-                        ? dedBlockedWhyRow
+                      const why = (dedBlockedWhyRow ?? noOpWhyRow)
+                        ? (dedBlockedWhyRow ?? noOpWhyRow)
                         : pre.unmet.length
                           ? `Unmet: ${pre.unmet.join('; ')}`
                           : "You don't meet this feat's prerequisites.";

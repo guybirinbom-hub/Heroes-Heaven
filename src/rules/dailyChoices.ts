@@ -26,7 +26,15 @@ export interface DailyChoice {
    *  bonded weapon); 'open' renders a searchable list resolved from content — Aroden's Innovation
    *  picks "a general feat of 3rd level or lower", which is far too many for chips. */
   kind: 'array' | 'text' | 'open';
-  options: { value: string; label: string; description?: string }[];
+  /** `note` is the right-hand hint the source already computes — a language’s rarity, a spell’s
+   *  rank. It is kept OFF `label` so `dailyChoiceLabel` still returns the bare name for the
+   *  "reusing yesterday’s answers" summary; the picker appends it itself. */
+  options: { value: string; label: string; description?: string; note?: string }[];
+  /** The record's own caveat about its OWN answer — "temporary, so it can't be a prerequisite".
+   *  `FeatChoiceDef.note` has always carried this and it reached nobody: the Rest sheet had no field
+   *  to render it in, so seven "until you prepare again" records stated their most important rule to
+   *  no one. Read by CharacterSheet.tsx's daily-pick block. */
+  note?: string;
 }
 
 
@@ -57,7 +65,35 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
           // list with room for a reason, so those are dropped rather than rendered inert.
           narrowChoiceOptions(rec.id, def, effectiveChoiceOptions(rec.id, def, c, db), c, db).filter((o) => !o.disabled)
         : def.kind === 'open'
-          ? openChoiceOptions(def.from, db, { character: c }).map((o) => ({ value: o.id, label: o.name, description: o.description }))
+          ? openChoiceOptions(def.from, db, { character: c })
+              // A grant the applier will THROW AWAY must not be offered as a live control.
+              // `applyPlayState` drops a `grantLanguage` answer the character already knows, so
+              // leaving Common and Elven on an elf's morning list rendered two options that did
+              // nothing when picked — Q27’s exact complaint ("there isn’t any point in showing
+              // them — the user is just annoyed"), whose scope is "every picker in the app".
+              // REMOVED rather than greyed because a language you already speak is wasted for the
+              // WHOLE career (Q21 / Principle Q) — there is no later level that makes it worthwhile
+              // — and because this screen already drops its inert options one branch above.
+              // Gated on `grantLanguage`, so the non-granting language picker (Settlement
+              // Scholastics) keeps its full list.
+              /* ⚠ …EXCEPT a language TODAY'S OWN ANSWER granted. This runs against the applyPlayState
+               * output, whose `languages` already contains this morning's pick — so the filter removed
+               * the answer from its own option list. The `<select>` then found no matching `<option>`
+               * and rendered the placeholder every morning while the answer was still stored, and the
+               * reuse summary printed "not set" while the Details tab showed the language: two screens
+               * contradicting each other, which is Q27's exact complaint. `dailyLanguages` is exactly
+               * the set granted by today's daily choices, so exempting it keeps the answer selectable
+               * while a permanently-known language stays hidden. */
+              .filter(
+                (o) =>
+                  !(
+                    def.from?.type === 'language' &&
+                    def.from?.grantLanguage &&
+                    c.languages?.includes(o.id) &&
+                    !c.dailyLanguages?.includes(o.id)
+                  ),
+              )
+              .map((o) => ({ value: o.id, label: o.name, description: o.description, ...(o.note ? { note: o.note } : {}) }))
           : [];
     // An array/open choice with nothing to offer is malformed or unresolvable — skip it rather than
     // render an empty row the player can't answer (and which would block "Prepare for the day").
@@ -65,7 +101,7 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
     const key = dailyChoiceKey(rec.id, def.flag);
     if (seen.has(key)) continue;
     seen.add(key);
-    out.push({ key, recordId: rec.id, recordName: rec.name, prompt: def.prompt, kind: def.kind, options });
+    out.push({ key, recordId: rec.id, recordName: rec.name, prompt: def.prompt, kind: def.kind, options, ...(def.note ? { note: def.note } : {}) });
   }
   return out;
 }

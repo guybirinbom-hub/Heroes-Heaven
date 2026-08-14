@@ -25,6 +25,38 @@ export interface FeatSlotRef {
 /** The featPicks key for a slot — "level:category:idx" (mirrors the builder's slotKey). */
 export const featSlotKey = (p: FeatSlotRef) => `${p.level}:${p.category}:${p.idx}`;
 
+/** The Adopted Ancestry feat id — the one pick that widens somebody else's ancestry-feat slot. */
+const ADOPTED_ANCESTRY = 'adopted-ancestry';
+
+/**
+ * The ancestries Adopted Ancestry has opened, at or below `level`.
+ *
+ * Read from BOTH stores because the feat arrives two ways: picked in a general slot, where the answer
+ * is `featChoices[slotKey]`; or GRANTED — As in Life, So in Death grants it — and a granted feat's
+ * sub-choice lives in `grantedFeatChoices`, keyed by the granted feat.
+ *
+ * An ancestry id IS the trait its feats carry: measured across all 50 ancestries in core.json, every
+ * id matches at least one feat trait, so no id-to-trait table is needed and none can go stale.
+ *
+ * Level-gated on the slot the feat sits in, so adopting an ancestry at 15th does not retroactively
+ * widen the 1st-level ancestry slot.
+ */
+export function adoptedAncestryIds(build: BuildState, content: ContentDatabase, level: number): string[] {
+  const out: string[] = [];
+  const push = (v: string | undefined) => {
+    // The character's OWN ancestry is never a legal answer to "choose ANOTHER ancestry", and adding it
+    // here would be a no-op that reads as though the feat did something.
+    if (v && content.ancestries[v] && v !== build.ancestryId && !out.includes(v)) out.push(v);
+  };
+  for (const [slotKey, featId] of Object.entries(build.featPicks ?? {})) {
+    if (featId !== ADOPTED_ANCESTRY) continue;
+    if (Number(slotKey.split(':')[0]) > level) continue;
+    push(build.featChoices?.[slotKey]);
+  }
+  push(build.grantedFeatChoices?.[ADOPTED_ANCESTRY]);
+  return out;
+}
+
 /**
  * Feats eligible for a given slot: right category + level, not already taken as many times as it may
  * be (once for most feats; up to maxTakes() for a repeatable one like Armor Proficiency), and — for
@@ -46,6 +78,17 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     // SAME feat twice in one picker. They stay in the db, so a feat already picked still resolves.
     if (content.duplicateIds?.has(f.id)) return false;
     if (f.level > p.level) return false;
+    /*
+     * "**Special** You can select this feat only at 1st level." 28 records print that clause and
+     * nothing in the app could say it, so Bestial Manifestation — a permanent unarmed attack chosen
+     * once — was offerable in a 5th, 9th, 13th or 17th-level ancestry slot. Distinct from `level`,
+     * which is a FLOOR; this one is an equality.
+     *
+     * 27 of the 28 are authored. `nocturnal-grippli` is NOT: it ships as category `general`, and
+     * general slots start at 3rd, so an equality on 1 would make it takeable in no slot at all.
+     * scripts/scan-choice-sets.mjs carries it as an EXEMPT row with that reason.
+     */
+    if (f.onlyAtLevel != null && p.level !== f.onlyAtLevel) return false;
     if ((taken.get(f.id) ?? 0) >= maxTakes(f)) return false;
     // Free Archetype slot: any archetype feat (these are stored as class-category feats carrying the
     // 'archetype' trait, so match on the trait rather than the category).
@@ -88,7 +131,23 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
       const her = build.heritageId ? content.heritages[build.heritageId] : undefined;
       const ok =
         f.traits.includes(build.ancestryId) ||
-        (her?.versatile && f.traits.includes(her.id)) ||
+        /*
+         * A versatile heritage's feats are matched by its id AND by its own traits. Five heritages
+         * ship an importer-prefixed id — aon-aasimar, aon-ifrit, aon-tiefling, aon-aphorite,
+         * aon-ganzi — while their feats carry the bare trait (aasimar, ifrit, tiefling, …), so the
+         * id test matched NOTHING and 66 ancestry feats were reachable by no character at all:
+         * aasimar 20, ifrit 23, tiefling 16 (Beastbrood among them), aphorite 5, ganzi 2.
+         * Nephilim passed only because its id and its trait are the same string.
+         *
+         * Measured over all 22 versatile heritages before writing this: adding the traits gains
+         * exactly those 66 and changes nothing else. Hungerseed is NOT one of them — its own id
+         * matches 11 feats and its `oni` trait matches none — and `geniekin` (Suli) and
+         * `amphibious` (Undine) are likewise carried by zero feats, so none of the three moves.
+         */
+        (her?.versatile && (f.traits.includes(her.id) || (her.traits ?? []).some((t) => f.traits.includes(t)))) ||
+        // ADOPTED ANCESTRY — "You can select ancestry feats from the ancestry you chose, in addition
+        // to your character's own ancestry." The pick was recorded and widened nothing, at any level.
+        adoptedAncestryIds(build, content, p.level).some((a) => f.traits.includes(a)) ||
         // …and a heritage that opens ANOTHER ancestry's list: "you can select elf, half-elf, and
         // human feats whenever you gain an ancestry feat" (half-elf, half-orc).
         (her?.extraAncestryFeatTraits ?? []).some((t) => f.traits.includes(t)) ||

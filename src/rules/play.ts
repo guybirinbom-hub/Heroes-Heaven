@@ -357,7 +357,22 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
           repertoire[rank] = repOverride[rank] ?? e.repertoire[rank];
         }
       }
-      out = { ...out, repertoire, signature: play.signatureSpells?.[e.id] ?? e.signature };
+      /*
+       * The player's ★ picks ADD to the record's granted signature spells; they never replace them.
+       * This was `play.signatureSpells?.[e.id] ?? e.signature`, so the moment the entry had a stored
+       * list at all, the authored one stopped being consulted — a granted signature ("you treat the
+       * field of life halcyon spell as a signature spell", an animist's whole apparition repertoire)
+       * was shadowed permanently, including any the record gained afterwards. A grant is a rule, not
+       * a preference; only the player's own half is theirs to edit.
+       */
+      const granted = e.signature ?? [];
+      const chosen = play.signatureSpells?.[e.id];
+      out = {
+        ...out,
+        repertoire,
+        signature: chosen ? [...new Set([...granted, ...chosen])] : e.signature,
+        signatureFixed: granted.length ? granted : undefined,
+      };
     }
     /*
      * Learn a Spell. "A spell you learn is added to your repository of spells, such as a spellbook for
@@ -523,6 +538,19 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
       else spellcasting.push(merged);
     }
   }
+  // Languages recalled at DAILY PREPARATIONS (Ancestral Linguistics), overlaid the same way the
+  // borrowed spell above is. They cannot come from the build — the answer is re-made nightly — and
+  // they MUST not: the sentence that grants one continues "Since this knowledge is temporary, you
+  // can't use it as a prerequisite for a permanent character option", and the built character is what
+  // a prerequisite would be read from. Kept as their own list too, so the pills can say it lapses
+  // instead of rendering identically to a language you actually know.
+  const dailyLanguages = [
+    ...new Set(
+      dailyChoiceGrants({ ...ch, dailyChoices: play.dailyChoices }, content)
+        .flatMap((g) => g.grantsLanguages ?? [])
+        .filter((id) => content.languages?.[id] && !(ch.languages ?? []).includes(id)),
+    ),
+  ];
   const focus = ch.focus ? { ...ch.focus, current: clamp(ch.focus.max - focusUsed, 0, ch.focus.max) } : ch.focus;
   return {
     ...ch,
@@ -548,6 +576,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     classResources: play.resources ?? ch.classResources ?? {},
     alchemyPrep: play.alchemyPrep ?? ch.alchemyPrep,
     dailyChoices: play.dailyChoices ?? ch.dailyChoices,
+    ...(dailyLanguages.length ? { languages: [...(ch.languages ?? []), ...dailyLanguages], dailyLanguages } : {}),
     dailyItems: play.dailyItems ?? ch.dailyItems,
     featUses: play.featUses ?? ch.featUses,
     formulaPicks: play.formulaPicks ?? ch.formulaPicks,
@@ -1740,15 +1769,42 @@ export function nextNoteId(notes: NotePage[]): string {
   return `note-${max + 1}`;
 }
 
-/** Add a blank notes page. */
-export function addNotePage(play: PlayState, icon = 'ti-note'): PlayState {
+/**
+ * Add a blank notes page.
+ *
+ * New pages are PRIVATE by default. A note is where a player writes the thing they'd rather not have
+ * read over their shoulder — a suspicion about an NPC, a plan, a secret the GM handed them alone —
+ * and a default of "visible to the whole party" leaks it before the player knows there was a switch
+ * to find. Sharing is one click on the lock; un-sharing after the fact isn't.
+ */
+export function addNotePage(play: PlayState, icon = 'ti-note', color?: string): PlayState {
   const notes = play.notes ?? [];
-  return { ...play, notes: [...notes, { id: nextNoteId(notes), title: 'New page', content: '', icon }] };
+  return {
+    ...play,
+    notes: [...notes, { id: nextNoteId(notes), title: 'New page', content: '', icon, private: true, ...(color ? { color } : {}) }],
+  };
 }
 
 /** Remove a notes page by id. */
 export function removeNotePage(play: PlayState, id: string): PlayState {
   return { ...play, notes: (play.notes ?? []).filter((p) => p.id !== id) };
+}
+
+/**
+ * Move a notes page to a new index (drag-to-reorder, and the context menu's up/down).
+ * `to` is clamped and an unknown id is a no-op, so a stale drag can't drop a page out of the array
+ * or duplicate it.
+ */
+export function moveNotePage(play: PlayState, id: string, to: number): PlayState {
+  const notes = play.notes ?? [];
+  const from = notes.findIndex((p) => p.id === id);
+  if (from < 0) return play;
+  const target = Math.max(0, Math.min(notes.length - 1, to));
+  if (target === from) return play;
+  const next = notes.slice();
+  const [moved] = next.splice(from, 1);
+  next.splice(target, 0, moved);
+  return { ...play, notes: next };
 }
 
 /** Merge a partial update into a notes page (title, content, icon, color, private). */

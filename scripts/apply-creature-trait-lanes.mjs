@@ -100,13 +100,34 @@ put('heritages', 'swimming-animal', 'effectChoices', [
       },
       {
         value: 'water-dwelling',
-        label: 'Water-dwelling (hold breath 10 min; swim Speed 20 ft, land Speed 20 ft)',
-        note: 'You can hold your breath underwater for 10 minutes before needing air — so you do NOT gain the aquatic trait, which would mean breathing water and not air.',
+        /* The label used to promise "land Speed 20 ft" that the grant never delivered — awakened-animal's
+         * base is 5, so the sheet derived 5. The engine has no per-OPTION land floor (`EffectGrant` has
+         * no landSpeedMin and `speeds.land` is additive), so until that lane exists the label must say
+         * only what the grant does. The printed clause is in the note, in full, so nothing is lost. */
+        label: 'Water-dwelling (hold breath 10 min; swim Speed 20 ft)',
+        /* The note is the printed sentence and nothing else. It used to end "…so you do NOT gain the
+         * aquatic trait, which would mean breathing water and not air" — sound reasoning, but the app's,
+         * written in the second person into a player-facing field as though the book said it. The
+         * sibling branch's note is a verbatim quote; this one now matches. */
+        note: 'You can hold your breath underwater for 10 minutes before needing air, and if you can move on land you have a base Speed of 20 feet.',
         grant: { speeds: { swim: 20 } },
       },
     ],
   },
 ]);
+
+/* ── 2b. Land Legs — a SET clause authored as an additive ──────────────────────────────────────
+ * AoN feat-5300, verbatim: "You gain a land Speed of 20 and can breathe air for 10 minutes."
+ * That is the same shape as its two sibling heritages — "You have a land Speed of 20 feet" is
+ * flying-animal's landSpeedMin 20, "a land Speed of 30 feet" is running-animal's 30 — and it alone was
+ * authored as landSpeedBonus 15. A number that is only ever right because awakened-animal's base Speed
+ * happens to be 5, and wrong the moment anything else raises it: derive.ts adds the bonus AFTER the
+ * floor, so Flying Animal + Land Legs derived 20 + 15 = 35 and Running Animal + Land Legs 30 + 15 = 45.
+ * Neither prerequisite gates the pairing. As a floor every branch lands on its printed number.
+ * No authoring script owned this row — it was a bare overlay entry — so it lives here, beside the
+ * heritage whose branches it composes with. */
+put('feats', 'land-legs', 'landSpeedBonus', null);
+put('feats', 'land-legs', 'landSpeedMin', 20);
 
 /* ── 3. the champion's sanctification ──────────────────────────────────────────────────────────
  * The record already asked the question and threw the answer away. Its three branches are holy,
@@ -198,10 +219,14 @@ put('feats', 'celestial-rebirth', 'grantsCreatureTraitFromChoice', 'celestialTra
 put('feats', 'worm-form', 'grantsCreatureTraits', null);
 put('feats', 'fey-life', 'grantsCreatureTraits', null);
 
-const MODE_PATCHES = {
-  'worm-form-purple-worm': { creatureTraits: ['animal'] },
-  'worm-form-hybrid': { creatureTraits: ['animal'] },
-};
+/* Empty, and it has to stay empty for battle-form modes.
+ * The two worm-form entries lived here, and they were a SECOND REGISTRY for a value another script
+ * owns: scripts/apply-battle-forms.mjs holds all 16 battle-form mode ids and rebuilds each object
+ * WHOLE (`core.modes[id] = { id, modifiers: [], …, ...def }`), so one run of it would have silently
+ * deleted both traits — the same shape as the degreeShifts and situationalBonuses duplications this
+ * project has already had to unpick. The trait line is part of the printed form block, so it lives in
+ * the block beside the AC and the Speeds; all 14 forms that print one are authored there now. */
+const MODE_PATCHES = {};
 const NEW_MODES = {
   'fey-life-revived': {
     id: 'fey-life-revived',
@@ -211,7 +236,12 @@ const NEW_MODES = {
     predefined: true,
     feats: ['fey-life'],
     creatureTraits: ['fey'],
-    duration: 'permanent — once you have died the first time',
+    /* NO `duration`. It read "permanent — once you have died the first time", which the feat never
+     * says; `ModeDef.duration` is documented as "the printed duration" and all 466 other uses are
+     * short printed phrases ("1 day", "10 minutes", "until the start of your next turn"). It rendered
+     * as "Lasts permanent — once you have died the first time." on the mode popup and in full on the
+     * vitals pill. The timing is already in the note, where it is prose rather than a field claiming
+     * to quote the book. */
     note:
       'Fey Life: “The first time you die after gaining this feat… Immediately after dying, you revive, becoming conscious (and wounded as normal) at 27 Hit Points, and you gain the fey trait.” ' +
       'Switch this on the first time it happens — until then the feat’s own prerequisite says “you’re not a fey”. ' +

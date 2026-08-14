@@ -15,7 +15,9 @@ const c = content();
 describe('Assurance — choose a skill you are trained in', () => {
   it('the record now carries a skills choice', () => {
     const feat = c.feats['assurance'];
-    expect(feat.choice).toEqual({ flag: 'assuredSkill', prompt: 'Skill', kind: 'skills' });
+    // `distinctAcrossTakes` came later, from the Special clause: "You can select this feat multiple
+    // times. Each time, choose a different skill." See distinct-across-takes.test.ts for what it does.
+    expect(feat.choice).toEqual({ flag: 'assuredSkill', prompt: 'Skill', kind: 'skills', distinctAcrossTakes: true });
   });
 
   it('offers exactly the skills the character is trained in — no more, no less', () => {

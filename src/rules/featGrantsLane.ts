@@ -27,7 +27,10 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
   'gildedsoul': {"skillChoices":[{"options":["diplomacy","society"],"rank":"trained"}]},
   'hold-mark': {"skillChoices":[{"options":["diplomacy","survival","religion","intimidation"],"rank":"trained"}]},
   'oatia-skysage-dedication': {"skillChoices":[{"options":["lore:astronomy","occultism"],"rank":"trained"}]},
-  'avenging-runelord-dedication': {"skills":{"arcana":"trained"},"rankUpgrade":[{"level":14,"rank":"expert"},{"level":16,"rank":"master"}]},
+  /* weaponFamiliarity MERGED in, not added as a second entry: "you have familiarity with weapons in
+   * the polearm and spear weapon groups — martial as simple, advanced as martial". Two clauses because
+   * a group rule carries one rank, so each step narrows the same groups by `category`. */
+  'avenging-runelord-dedication': { skills: { arcana: 'trained' }, rankUpgrade: [{ level: 14, rank: 'expert' }, { level: 16, rank: 'master' }], weaponFamiliarity: [{ weapons: [], groups: ['polearm', 'spear'], category: 'martial', mirrorCategory: 'simple' }, { weapons: [], groups: ['polearm', 'spear'], category: 'advanced', mirrorCategory: 'martial' }] },
   'magical-knowledge': {"skillChoices":[{"options":["arcana","nature","occultism","religion"],"rank":"master"},{"options":["arcana","nature","occultism","religion"],"rank":"expert"}]},
   'resolute': {"save":{"will":"master"}},
   'master-spotter-investigator': {"perception":"master"},
@@ -53,4 +56,42 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
   'performance-weapon-expert': {"weapon":{"simple":"expert","martial":"expert"}},
   'signifer-armor-expertise': {"armor":{"medium":"expert","heavy":"expert"}},
   'tools-of-the-trade': {"weaponFamiliarity":{"weapons":["bola","sap","whip"],"mirrorCategory":"simple"}},
+
+/* ── ancestry weapon familiarity: the category remap ─────────────────────────────────────── */
+  /* Derived from each record's own `critSpecWeapons` by scripts/apply-weapon-familiarity.mjs, so the
+   * weapons this feat covers and the weapons it crit-specialises can never disagree. The printed
+   * clause is "treat any of these that are martial weapons as simple weapons and any that are
+   * advanced weapons as martial weapons" — per-weapon, which is what `treatAsLowerCategory` says. */
+  'dwarven-weapon-familiarity': { weaponFamiliarity: { weapons: ['battle-axe', 'pick', 'warhammer'], traits: ['dwarf'], treatAsLowerCategory: true } },
+  'elven-weapon-familiarity': { weaponFamiliarity: { weapons: ['longbow', 'rapier', 'shortbow'], traits: ['elf'], treatAsLowerCategory: true } },
+  'gnome-weapon-familiarity': { weaponFamiliarity: { weapons: ['glaive', 'kukri'], traits: ['gnome'], treatAsLowerCategory: true } },
+  'goblin-weapon-familiarity': { weaponFamiliarity: { weapons: [], traits: ['goblin'], treatAsLowerCategory: true } },
+  'halfling-weapon-familiarity': { weaponFamiliarity: { weapons: ['sling', 'shortsword'], traits: ['halfling'], treatAsLowerCategory: true } },
+  'orc-weapon-familiarity': { weaponFamiliarity: { weapons: ['falchion', 'greataxe'], traits: ['orc'], treatAsLowerCategory: true } },
+  'athamaru-weapon-familiarity': { weaponFamiliarity: { weapons: ['crossbow', 'heavy-crossbow', 'longspear', 'spear', 'trident'], traits: ['athamaru'], treatAsLowerCategory: true } },
+  'merfolk-weapon-familiarity': { weaponFamiliarity: { weapons: ['crossbow', 'heavy-crossbow', 'longspear', 'spear', 'trident'], traits: ['merfolk'], treatAsLowerCategory: true } },
+  'minotaur-weapon-familiarity': { weaponFamiliarity: { weapons: ['battle-axe', 'falchion', 'glaive', 'greataxe'], treatAsLowerCategory: true } },
+  'surki-weapon-familiarity': { weaponFamiliarity: { weapons: ['{item|flags.system.rulesSelections.weapon}', 'light-hammer', 'sickle', 'scythe'], treatAsLowerCategory: true } },
+  'catfolk-weapon-familiarity': { weaponFamiliarity: { weapons: ['kama', 'kukri', 'scimitar', 'sickle'], traits: ['catfolk'], treatAsLowerCategory: true } },
+  'hobgoblin-weapon-familiarity': { weaponFamiliarity: { weapons: ['composite-longbow', 'longbow', 'composite-shortbow', 'shortbow', 'glaive', 'longsword'], traits: ['hobgoblin'], treatAsLowerCategory: true } },
+  'kholo-weapon-familiarity': { weaponFamiliarity: { weapons: ['flail', 'khopesh', 'mambele', 'war-flail'], traits: ['kholo'], treatAsLowerCategory: true } },
+  'kobold-weapon-familiarity': { weaponFamiliarity: { weapons: ['greatpick', 'light-pick', 'pick'], traits: ['kobold'], treatAsLowerCategory: true } },
+  'tengu-weapon-familiarity': { weaponFamiliarity: { weapons: ['katana', 'khakkara', 'temple-sword', 'wakazashi'], traits: ['tengu'], treatAsLowerCategory: true } },
+  'tripkee-weapon-familiarity': { weaponFamiliarity: { weapons: ['hatchet', 'scythe', 'shortbow', 'composite-shortbow', 'blowgun', 'dart'], traits: ['tripkee'], treatAsLowerCategory: true } },
+  'duskwalker-weapon-familiarity': { weaponFamiliarity: { weapons: ['bo-staff', 'staff', 'scythe', 'longbow', 'composite-longbow'], treatAsLowerCategory: true } },
+  'performative-weapons-training': { weaponFamiliarity: { weapons: ['bo-staff', 'dueling-cape', 'spiked-chain', 'sword-cane', 'trident', 'war-flail', 'whip'], treatAsLowerCategory: true } },
+  'mauler-dedication': { weaponFamiliarity: { weapons: [], traits: ['two-hand-d6', 'two-hand-d8', 'two-hand-d10', 'two-hand-d12'], treatAsLowerCategory: true } },
+  'pirate-combat-training': { weaponFamiliarity: { weapons: ['hatchet', 'rapier', 'scimitar', 'whip'], treatAsLowerCategory: true } },
+  'viking-weapon-familiarity': { weaponFamiliarity: { weapons: ['battle-axe', 'hatchet', 'longsword', 'shield-boss', 'shield-spikes', 'shortsword'], treatAsLowerCategory: true } },
+  'oni-weapon-familiarity': { weaponFamiliarity: { weapons: ['khakkhara', 'nodachi', 'ogre-hook', 'tetsubo'], treatAsLowerCategory: true } },
+  'samsaran-weapon-memory': { weaponFamiliarity: { weapons: ['{item|flags.system.rulesSelections.weaponOne}', '{item|flags.system.rulesSelections.weaponTwo}'], treatAsLowerCategory: true } },
+  'wayang-weapon-familiarity': { weaponFamiliarity: { weapons: ['blowgun', 'fighting-fan', 'longspear', 'machete', 'sai', 'trident'], treatAsLowerCategory: true } },
+  'aristocratic-arms': { weaponFamiliarity: { weapons: [], traits: ['disarm', 'parry'], treatAsLowerCategory: true } },
+
+/* ── archetype weapon familiarity: the category remap ──────────────────────────────────── */
+  'archer-dedication': { weaponFamiliarity: [{ weapons: [], groups: ['bow', 'crossbow'], category: 'martial', mirrorCategory: 'simple' }, { weapons: [], groups: ['bow', 'crossbow'], category: 'advanced', mirrorCategory: 'martial' }] },
+  'aldori-duelist-dedication': { weaponFamiliarity: { weapons: ['aldori-dueling-sword'], mirrorCategory: 'martial' } },
+  'sister-of-the-golden-erinys-dedication': { weaponFamiliarity: { weapons: ['asp-coil', 'scourge'], mirrorCategory: 'simple' } },
+  'centaur-weapon-familiarity': { weaponFamiliarity: { weapons: ['lance', 'longbow', 'longspear', 'shortbow', 'spear'], treatAsLowerCategory: true } },
+  'aquatic-elf-warrior': { weaponFamiliarity: { weapons: ['crossbow', 'heavy-crossbow', 'dagger', 'longspear', 'spear', 'trident'], treatAsLowerCategory: true } },
 };

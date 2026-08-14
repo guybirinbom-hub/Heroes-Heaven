@@ -5,7 +5,7 @@ import { RANK_LABEL } from '../rules/explain';
 import { InfoTerm } from './InfoTerm';
 import { deriveDefenses, creatureTraitsOf, deriveSize } from '../rules/derive';
 import { setAvatar, setDetail, setPortrait, type PlayUpdater } from '../rules/play';
-import { proficiencyDesc, rankDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
+import { proficiencyDesc, rankDesc, senseDesc, traitDesc, languageDesc, DAILY_LANGUAGE_NOTE } from '../rules/glossary';
 import { useAvatar } from './usePortrait';
 import { uploadImage } from './portraitUpload';
 import { getSharpPortrait } from '../data/portraitStore';
@@ -70,7 +70,8 @@ export function DetailsTab({
   const cls = character.classId ? content.classes[character.classId] : undefined;
   const d = character.details;
   const deity = d.deityId ? content.deities[d.deityId] : undefined;
-  const senses = deriveDefenses(character, content).senses;
+  // Q13: a superseded rung of the vision ladder is held but not printed — see deriveDefenses.
+  const senses = deriveDefenses(character, content).senses.filter((s) => !s.superseded);
   const shownSize = deriveSize(character, content);
   const creatureTraits = creatureTraitsOf(character, content);
 
@@ -426,11 +427,23 @@ export function DetailsTab({
           <span className="idl">Languages</span>
           <div className="idpills">
             {character.languages.length ? (
-              character.languages.map((id) => (
-                <InfoTerm className="lang-pill" key={id} title={content.languages[id]?.name ?? cap(id)} description={languageDesc(id)}>
-                  {content.languages[id]?.name ?? cap(id)}
-                </InfoTerm>
-              ))
+              character.languages.map((id) => {
+                // A language RECALLED this morning is not one you know. It takes the same accent
+                // border a granted creature trait uses — acquired, not native — and its popup carries
+                // the feat's own caveat, which is the half the player must not miss.
+                const today = character.dailyLanguages?.includes(id);
+                const name = content.languages[id]?.name ?? cap(id);
+                return (
+                  <InfoTerm
+                    className={'lang-pill' + (today ? ' granted-trait' : '')}
+                    key={id}
+                    title={today ? `${name} — recalled today` : name}
+                    description={today ? `${languageDesc(id)} ${DAILY_LANGUAGE_NOTE}` : languageDesc(id)}
+                  >
+                    {name}
+                  </InfoTerm>
+                );
+              })
             ) : (
               <span className="lang-pill">—</span>
             )}

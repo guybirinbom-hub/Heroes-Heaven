@@ -406,6 +406,10 @@ export function pickersFor(build, slotKey, featId, db, char) {
   // Builder.tsx:1748 — effectChoices. A spell-filtered one is HIDDEN below its unlock level.
   for (const ch of feat.effectChoices ?? []) {
     const declaredBy = `record.effectChoices[${ch.id}]`;
+    // Builder.tsx — a choice the record's own ENHANCEMENT tier asks is not rendered until an
+    // augmentation names this feat. Mirrored here for the same reason spellFilter.minLevel is:
+    // a picker the app hides but the harness reports is precisely the drift this file warns about.
+    if ((feat.enhancement?.choiceIds ?? []).includes(ch.id) && !(char?.enhancements ?? []).some((e) => e.featId === featId)) continue;
     if (ch.spellFilter) {
       if (build.level < (ch.spellFilter.minLevel ?? 1)) continue; // renders nothing at this level
       const opts = spellsMatching(ch.spellFilter, db, build.hideLegacy);
@@ -417,9 +421,15 @@ export function pickersFor(build, slotKey, featId, db, char) {
       continue;
     }
     const opts = ch.options ?? [];
+    // "one of YOUR 1st- or 5th-level automaton ancestry feats" — the answer is honoured only when the
+    // character OWNS the record named, so on a host that owns none of them it legitimately moves
+    // nothing. Flagged here; `evidenceFor` re-measures on a host that does, rather than reporting the
+    // harness's own bare host as the app's defect (the same reason `hostDependent` exists above).
+    const ownedTargets = (feat.enhancementPicker?.choiceIds ?? []).includes(ch.id);
     out.push({
       lane: 'effectChoice', declaredBy, control: 'select', prompt: ch.prompt, kind: 'array',
       key: `${featId}:${ch.id}`, storage: 'effectChoices',
+      ...(ownedTargets ? { ownedTargets: true } : {}),
       optionCount: opts.length, options: opts.map(optOf),
     });
   }
@@ -459,7 +469,12 @@ export function declaredChoices(featId, db) {
   const out = [];
   if (!feat) return out;
   if (feat.choice) out.push('record.choice');
-  for (const ch of feat.effectChoices ?? []) out.push(`record.effectChoices[${ch.id}]`);
+  for (const ch of feat.effectChoices ?? []) {
+    // Asked only while the record's own enhancement tier runs, so it is not "declared and never
+    // rendered" — without this, check 1 reports a false defect in place of check 2's false one.
+    if ((feat.enhancement?.choiceIds ?? []).includes(ch.id)) continue;
+    out.push(`record.effectChoices[${ch.id}]`);
+  }
   if (feat.languageChoices || feat.languageChoicesAtRank?.length) out.push('record.languageChoices');
   const g = FEAT_GRANTS[featId];
   (g?.skillChoices ?? []).forEach((_, i) => out.push(`registry.FEAT_GRANTS.skillChoices[${i}]`));
@@ -765,6 +780,21 @@ export function evidenceFor(featId, db, hosts) {
       echoed = echoed || atLow.echoed;
       if (atLow.changes.length) { changes = atLow.changes; rec.movedOn = name; }
     }
+    // A picker whose options name RECORDS THE CHARACTER MUST OWN moves nothing on a host holding
+    // only the feat under test, which every reference host is. Re-measured on a host that also takes
+    // two of the named feats — otherwise the automaton Enhancement lane reports itself as the very
+    // "answer nobody reads" defect that produced it.
+    if (!changes.length && p.ownedTargets) {
+      const targets = (p.options ?? []).map((o) => o.value).filter((v) => db.feats[v]).slice(0, 2);
+      if (targets.length === 2) {
+        const owning = { ...build, featPicks: { ...build.featPicks, '1:ancestry:0': targets[0], '5:ancestry:0': targets[1] } };
+        const snaps = targets.map((v) => snapshot(buildCharacter(withAnswer(owning, p, v), db), db));
+        const d = diff(snaps[0], snaps[1]);
+        if (d.some((c) => isEcho(c.path))) echoed = true;
+        const real = d.filter((c) => !isEcho(c.path));
+        if (real.length) { changes = real; rec.movedOn = 'host owning the named feats'; }
+      }
+    }
     rec.moved = changes.length > 0;
     rec.movedPaths = changes.slice(0, 6).map((c) => c.path);
     rec.echoed = echoed;
@@ -850,7 +880,9 @@ export function evidenceFor(featId, db, hosts) {
 export function main() {
   const db = loadDb();
   const hosts = referenceHosts(db);
-  const sample = JSON.parse(read('scripts/audit/feat-500.json'));
+  // Work list is a parameter — the frozen 500, or a level-ordered batch-NNN.json. Same shape.
+  const sampleIn = arg('in', 'scripts/audit/feat-500.json');
+  const sample = JSON.parse(read(sampleIn));
   const only = arg('only', '');
   const ids = only ? only.split(',').map((s) => s.trim()).filter(Boolean) : sample.featIds;
   const limit = Number(arg('limit', 0)) || ids.length;
@@ -881,7 +913,7 @@ export function main() {
   };
 
   mkdirSync(join(root, 'scripts/audit'), { recursive: true });
-  const outPath = 'scripts/audit/builder-500-evidence.json';
+  const outPath = arg('out', 'scripts/audit/builder-500-evidence.json');
   /* Same stamp as the sheet half carries, for the same reason: the audit that reads this file costs
    * millions of tokens, and "how many feats did my change actually move?" is the number that decides
    * whether to launch it. A `--only` run is not comparable with a full one and says so. */
@@ -890,7 +922,7 @@ export function main() {
   const delta = packDelta(only ? null : previous, packs);
   writeFileSync(join(root, outPath), JSON.stringify({
     generated: new Date().toISOString(),
-    sample: only ? `--only ${only}` : 'scripts/audit/feat-500.json',
+    sample: only ? `--only ${only}` : sampleIn,
     hosts: hosts.map((h) => h.name),
     totals,
     packs,

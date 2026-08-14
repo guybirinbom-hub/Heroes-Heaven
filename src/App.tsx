@@ -25,6 +25,7 @@ import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, curre
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { getPrefs } from './data/prefs';
+import { useShowUndoButtons } from './sheet/useIsMobile';
 import { playerWorkWasOverwritten } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
@@ -83,6 +84,9 @@ export default function App() {
   // Roster lives in an undo/redo timeline: every character-data change (all sheet mutations funnel
   // through setRoster) becomes an undoable step, driving Ctrl+Z / Ctrl+Shift+Z below.
   const { state: roster, set: setRoster, undo, redo, canUndo, canRedo } = useUndoableState<SavedChar[]>(initialRoster);
+  // Settings → Interface can hide the undo/redo arrows (and 'auto' hides them on phones). The keyboard
+  // shortcuts below are NOT gated on this — the setting is about header clutter, not about undo.
+  const showUndoButtons = useShowUndoButtons();
   const [activeId, setActiveId] = useState<string>(() => {
     // Reopen the last-active character if it still exists, else the first (or '' on an empty roster).
     const r = initialRoster();
@@ -899,7 +903,7 @@ export default function App() {
           app-wide with no mode gate. A mouse or tablet user had no way to undo on any of them. */}
       {/* Not on the builder: it keeps its own build timeline and draws its own pair in its header,
           so the floating one would be a second undo button that undoes something else. */}
-      {which !== 'sheet' && which !== 'loading' && which !== 'builder' && (canUndo || canRedo) && (
+      {showUndoButtons && which !== 'sheet' && which !== 'loading' && which !== 'builder' && (canUndo || canRedo) && (
         <div className="app-undo" role="group" aria-label="Undo and redo">
           <button className="icon-btn" title="Undo (Ctrl+Z)" aria-label="Undo" disabled={!canUndo} onClick={() => canUndo && undo()}>
             <i className="ti ti-arrow-back-up" aria-hidden="true" />

@@ -83,7 +83,12 @@ describe('Terrain Scout and Ancient Memories', () => {
   });
   it('Ancient Memories is a daily choice like its six siblings', () => {
     expect(c().feats['ancient-memories']?.choice?.daily).toBe(true);
-    expect(c().feats['ancient-memories']?.choice?.kind).toBe('skills');
+    // It WAS `kind: 'skills'`, which `askedAtDailyPrep` cannot render at the Rest sheet — so the
+    // question fell back to the builder, where 'skills' resolves through `trainedSkillOptions` and
+    // offered only skills the character was ALREADY trained in, i.e. every option a wasted grant.
+    // Now the same array shape as its siblings Haunting Memories and Endless Memories.
+    expect(c().feats['ancient-memories']?.choice?.kind).toBe('array');
+    expect((c().feats['ancient-memories']?.choice?.options ?? []).every((o) => o.grant?.skills)).toBe(true);
   });
 });
 

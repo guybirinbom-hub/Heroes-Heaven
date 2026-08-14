@@ -355,7 +355,9 @@ const AUTHORED = {
     e(BETTER, 'when you Sense Direction', { sk: ['survival'], act: ['sense-direction'] }),
     e(BETTER, 'on a roll to escape a Quandary spell', { sk: ['occultism', 'thievery'], p: true }),
   ],
-  'feats/wandering-chef-dedication': [e(F2S, 'when you Subsist using Crafting or Cooking Lore', { sk: ['crafting', 'lore'], act: ['subsist'] })],
+  /* "you can use Crafting or COOKING LORE in place of Survival" — one named Lore, not the bucket.
+   * Third instance of the wildcard defect; see ancestral-insight. */
+  'feats/wandering-chef-dedication': [e(F2S, 'when you Subsist using Crafting or Cooking Lore', { sk: ['crafting', 'lore:cooking'], act: ['subsist'] })],
   'feats/impeccable-crafting': [e(S2C, 'on a Crafting check to make an item of the type you chose with Specialty Crafting', { sk: ['crafting'], act: ['craft'] })],
   'feats/meticulous-restorer': [e(CF2F, 'on a Crafting check to Repair an item', { sk: ['crafting'], act: ['repair'] })],
   'feats/warshard-warrior-dedication': [e(CF2F, 'on a Crafting check to Repair your warshard weapon', { sk: ['crafting'], act: ['repair'] })],
@@ -394,14 +396,33 @@ const AUTHORED = {
   // rank-gated action in the sentence ABOUT PROFICIENCY RANK; the shift is on the whole set. The
   // authored `when` already asserted that breadth while its `actions` list contradicted it.
   'feats/megafauna-veterinarian': [e(S2C, 'when the subject of your medical care is your megafauna', { sk: ['nature', 'medicine'], act: ['treat-wounds', 'treat-disease', 'treat-poison', 'administer-first-aid'] })],
+  /* AEONBOUND. "Once per day, when SOMEONE rolls a failure or a critical failure on a check to Treat
+   * YOUR Wounds, you can focus on your internal cohesion to increase the degree of success by one
+   * step." Ruling F does NOT withdraw this from your Medicine row: F governs a bonus that lands on a
+   * TEAMMATE's statistic, and here the benefit lands on you — and "someone" includes you, because you
+   * may Treat your own Wounds. So both surfaces: the star on Medicine (whose `when` self-limits) and
+   * the mark on the Treat Wounds row. `oneBetter` covers BOTH printed entry degrees — failure and
+   * critical failure — in one shift, which is the Dragon's Presence omission answered rather than
+   * repeated. R2 keeps the star: the shift rides an ordinary Treat Wounds check, not an activity of
+   * the feat's own. */
+  'feats/aeonbound': [e(BETTER, 'when someone rolls a failure or a critical failure on a check to Treat your Wounds (once per day)', { sk: ['medicine'], act: ['treat-wounds'] })],
   'feats/remember-your-training': [e(F2S, 'on the once-per-day Recall Knowledge check Remember Your Training grants', { act: ['recall-knowledge'] })],
   'feats/familiar-foe': [e(CF2F, 'on a check to Recall Knowledge about undead', { act: ['recall-knowledge'] })],
   'feats/eliminate-red-herrings': [e(CF2F, 'on a check to Recall Knowledge related to one of your active investigations', { act: ['recall-knowledge'] })],
   'feats/reveal-beasts': [e(S2C, 'on a check to Recall Knowledge to identify an animal, beast, fungus, or plant', { act: ['recall-knowledge'] })],
   'feats/know-your-own': [e(CF2F, 'on a check to Recall Knowledge about elves, elven society, or elven history', { act: ['recall-knowledge'] })],
-  'feats/ancestral-insight': [e(CF2F, 'on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge', { sk: ['lore'], act: ['recall-knowledge'] })],
+  /* The two Lore keys the feat NAMES, not the wildcard. `targetMatches` (situationalBonuses.ts, the
+   * `case 'skill'` arm) reads a bare `lore` as EVERY `lore:*` row, so this painted the critical-failure
+   * star on Warfare Lore, Sea Shanties Lore and anything else the player had typed, for a rule that can
+   * never reach them — the identical defect the Commitment to Protection note below describes.
+   * featGrantsLane.ts:17 grants exactly `lore:alghollthu` and `lore:azlanti`, so those two keys are
+   * the whole of its reach. Matching is case-insensitive, so the player's own capitalisation is fine. */
+  'feats/ancestral-insight': [e(CF2F, 'on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge', { sk: ['lore:alghollthu', 'lore:azlanti'], act: ['recall-knowledge'] })],
   'feats/unmistakable-lore': [e(CF2F, 'when you Recall Knowledge using a Lore subcategory you are trained in', { sk: ['lore'], act: ['recall-knowledge'] })],
-  'feats/golden-league-xun-dedication': [e(S2C, 'when you use Underworld Lore to Earn Income or Recall Knowledge', { sk: ['lore'], act: ['earn-income', 'recall-knowledge'] })],
+  /* Same wildcard defect as ancestral-insight above, found by `npm run scan:lore-wildcard` rather
+   * than by reading: the feat is prerequisite-gated on "Master in Underworld Lore" and names that one
+   * Lore, so a bare `lore` starred every other Lore the character had typed. */
+  'feats/golden-league-xun-dedication': [e(S2C, 'when you use Underworld Lore to Earn Income or Recall Knowledge', { sk: ['lore:underworld'], act: ['earn-income', 'recall-knowledge'] })],
   'feats/tap-into-blood': [e(CF2F, 'on the arcane Tap Into Blood check to Recall Knowledge using Arcana', { sk: ['arcana'], act: ['recall-knowledge'] })],
   // The Lore key is the one the feat names, for the same reason Explosive Entry's is: the feat prints
   // "Warfare Lore" three times and is prerequisite-gated on it, so a bare `lore` wildcard — which

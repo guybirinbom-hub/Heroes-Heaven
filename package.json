@@ -1,11 +1,11 @@
 {
   "name": "heroes-heaven",
   "private": true,
-  "version": "0.1.21",
+  "version": "0.1.22",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "data": "node scripts/import-core-v2.mjs && node scripts/import-siege-and-gaps.mjs && node scripts/split-descriptions.mjs",
+    "data": "node scripts/import-core-v2.mjs && node scripts/import-siege-and-gaps.mjs && node scripts/split-descriptions.mjs && node scripts/migration/stamp-aonid.mjs --write",
     "data:foundry": "node scripts/import-core.mjs",
     "build": "tsc -b && vite build",
     "build:web": "vite build",
@@ -16,8 +16,22 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verify": "jiti scripts/verify-characters.mjs && node scripts/class-table-diff.mjs && jiti scripts/orphan-features.mjs && node scripts/price-check.mjs && node scripts/field-diff.mjs && node scripts/stat-check.mjs && node scripts/identity-check.mjs && node scripts/spell-check.mjs && node scripts/action-cost-check.mjs",
+    "evidence": "jiti scripts/feat-evidence.mjs && jiti scripts/builder-evidence.mjs && node scripts/merge-evidence.mjs",
     "triage": "node scripts/triage-mechanics.mjs",
-    "coverage": "node scripts/coverage-report.mjs"
+    "coverage": "node scripts/coverage-report.mjs",
+    "feat": "node scripts/feat-doctor.mjs",
+    "scan:text": "node scripts/scan-damaged-descriptions.mjs",
+    "scan:fallback": "jiti scripts/scan-redundant-fallback.mjs",
+    "scan:weapons": "jiti scripts/scan-weapon-familiarity.mjs",
+    "scan:lore": "jiti scripts/scan-granted-lore.mjs",
+    "scan:lore-wildcard": "node scripts/scan-lore-wildcard.mjs",
+    "scan:senses": "node scripts/scan-sense-lane.mjs",
+    "scan:daily": "node scripts/scan-daily-prep.mjs",
+    "scan:enhancements": "node scripts/scan-enhancements.mjs",
+    "scan:companion-locks": "jiti scripts/scan-companion-locks.mjs",
+    "scan:traditions": "node scripts/scan-innate-traditions.mjs",
+    "scan:choices": "node scripts/scan-choice-sets.mjs",
+    "scan:dupe-feats": "jiti scripts/scan-duplicate-feats.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.1",

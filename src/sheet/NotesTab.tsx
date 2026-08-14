@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import type { Character } from '../rules/types';
-import { addNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayUpdater } from '../rules/play';
+import { addNotePage, moveNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayUpdater } from '../rules/play';
 import { RefSearchModal, refLinkHtml, type RefTarget } from './RichEditor';
 import { confirmDialog } from './confirm';
 import { DescBody } from './DescBody';
@@ -176,8 +176,10 @@ function NoteEditor({
         <button className="tb-btn" title="Highlight" onMouseDown={(e) => (e.preventDefault(), setPop(pop === 'hili' ? null : 'hili'))}>
           <i className="ti ti-highlight" aria-hidden="true" />
         </button>
+        {/* The button wears the thing it inserts — the real one-action glyph from the Pathfinder font,
+            not Tabler's circled "1", which is a different mark that happens to contain a 1. */}
         <button className="tb-btn" title="Action glyph" onMouseDown={(e) => (e.preventDefault(), setPop(pop === 'glyph' ? null : 'glyph'))}>
-          <i className="ti ti-circle-1" aria-hidden="true" />
+          <span className="pf2-action" aria-hidden="true">1</span>
         </button>
         <button className="tb-btn" title="Link selected text to a description" onMouseDown={(e) => (e.preventDefault(), openLink())}>
           <i className="ti ti-link" aria-hidden="true" />
@@ -404,8 +406,18 @@ const iconLabel = (icon: string) => {
   return words.charAt(0).toUpperCase() + words.slice(1);
 };
 
-/** A small popup for choosing a note's icon/type — opened when adding a page or tapping the icon.
- *  In edit mode it also offers a per-page color (onPickColor), which tints the page icon + header. */
+/**
+ * A small popup for choosing a note's icon/type — opened when adding a page or tapping the icon.
+ *
+ * Colour is offered in BOTH modes. It used to appear only when re-icadding an existing page, so the
+ * one moment you are actually deciding what a page looks like — creating it — was the one moment you
+ * couldn't set its colour; you made the page, then reopened the same popup to colour it.
+ *
+ * The whole grid previews in the chosen colour, because the icon and the colour are one decision: a
+ * flame is a different thing in red than in blue, and picking them blind, one after the other, is
+ * guesswork. `onPickColor` (edit mode only) applies a swatch immediately, so changing JUST the colour
+ * of an existing page still works without re-picking its icon.
+ */
 function IconPickerModal({
   current,
   currentColor,
@@ -417,10 +429,15 @@ function IconPickerModal({
   current?: string;
   currentColor?: string;
   title: string;
-  onPick: (icon: string) => void;
+  onPick: (icon: string, color: string | undefined) => void;
   onPickColor?: (color: string | undefined) => void;
   onClose: () => void;
 }) {
+  const [color, setColor] = useState<string | undefined>(currentColor);
+  const chooseColor = (c: string | undefined) => {
+    setColor(c);
+    onPickColor?.(c);
+  };
   const [query, setQuery] = useState('');
   const q = query.trim().toLowerCase();
   // Every word must match somewhere ("map pin" and "pin map" both find it).
@@ -469,9 +486,10 @@ function IconPickerModal({
                     key={icon}
                     className={'icon-opt' + (current === icon ? ' on' : '')}
                     title={iconLabel(icon)}
-                    onClick={() => onPick(icon)}
+                    onClick={() => onPick(icon, color)}
                   >
-                    <i className={'ti ' + icon} aria-hidden="true" />
+                    {/* Tinted live by the swatch below — you see the pair you're actually choosing. */}
+                    <i className={'ti ' + icon} style={color ? { color } : undefined} aria-hidden="true" />
                     <span>{iconLabel(icon)}</span>
                   </button>
                 ))}
@@ -480,25 +498,31 @@ function IconPickerModal({
           ))}
           {groups.length === 0 && <div className="ff-empty">No icon matches “{query}”.</div>}
         </div>
-        {onPickColor && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--app-border)' }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--app-text-dim)', marginRight: 2 }}>Color</span>
-            {NOTE_COLORS.map((hex) => (
-              <button
-                type="button"
-                key={hex}
-                className={'tb-swatch' + (currentColor === hex ? ' on' : '')}
-                style={{ background: hex }}
-                title={hex}
-                aria-label={`Color ${hex}`}
-                onClick={() => onPickColor(hex)}
-              />
-            ))}
-            <button type="button" className="tb-swatch tb-swatch-clear" title="Default" aria-label="Default color" onClick={() => onPickColor(undefined)}>
-              <i className="ti ti-ban" aria-hidden="true" />
-            </button>
-          </div>
-        )}
+        <div className="icon-color-row">
+          <span className="icon-color-label">Color</span>
+          {NOTE_COLORS.map((hex) => (
+            <button
+              type="button"
+              key={hex}
+              className={'tb-swatch' + (color === hex ? ' on' : '')}
+              style={{ background: hex }}
+              title={hex}
+              aria-label={`Color ${hex}`}
+              aria-pressed={color === hex}
+              onClick={() => chooseColor(hex)}
+            />
+          ))}
+          <button
+            type="button"
+            className={'tb-swatch tb-swatch-clear' + (color ? '' : ' on')}
+            title="Default"
+            aria-label="Default color"
+            aria-pressed={!color}
+            onClick={() => chooseColor(undefined)}
+          >
+            <i className="ti ti-ban" aria-hidden="true" />
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -516,6 +540,18 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
 
   // Choosing an icon either creates a new page with it, or re-icons an existing page.
   const [iconPicker, setIconPicker] = useState<{ mode: 'new' } | { mode: 'edit'; id: string } | null>(null);
+
+  // Right-click (desktop) / long-press (touch) menu for a row in the page list.
+  const [menu, setMenu] = useState<{ id: string; x: number; y: number } | null>(null);
+  /* Drag-to-reorder. The dragged id is held in a REF, not just state: dragover/drop read it, and a
+     drag can deliver both before React has committed the setState from dragstart — in which case a
+     state-only read sees null and the drop silently does nothing. State is kept alongside purely to
+     drive the two CSS classes. */
+  const dragIdRef = useRef<string | null>(null);
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
+  // A long-press opens the menu; the tap that ends it must NOT also open the page.
+  const longPress = useRef<{ timer?: ReturnType<typeof setTimeout>; fired: boolean }>({ fired: false });
 
   // Mobile uses a List → editor flow: false = show the page list; true = show the editor full-screen.
   const isMobile = useIsMobile();
@@ -557,26 +593,41 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
   };
   const listWidth = Math.min(NOTES_LIST_MAX, Math.max(NOTES_LIST_MIN, notesListWidth ?? NOTES_LIST_DEFAULT));
 
-  const pickIcon = (icon: string) => {
+  // Escape / Android Back closes the row menu before it does anything else.
+  useBackHandler(!!menu, () => setMenu(null));
+
+  const deletePage = async (id: string, title: string) => {
+    if (!onPlay) return;
+    if (await confirmDialog({ title: 'Delete page?', message: `“${title}” will be removed.`, confirmLabel: 'Delete', danger: true })) {
+      onPlay((pl) => removeNotePage(pl, id));
+      if (isMobile && id === activeId) setMobileOpen(false);
+    }
+  };
+  /* Reorder is offered only on the UNFILTERED list. With a search running you can see three of nine
+     pages, and "drop this one below that one" has no single answer about the six you can't see. */
+  const canReorder = !!onPlay && !q && !isMobile;
+  const moveTo = (id: string, to: number) => onPlay?.((pl) => moveNotePage(pl, id, to));
+
+  const pickIcon = (icon: string, color: string | undefined) => {
     if (!onPlay || !iconPicker) return;
     if (iconPicker.mode === 'new') {
       const id = nextNoteId(pages);
-      onPlay((p) => addNotePage(p, icon));
+      onPlay((p) => addNotePage(p, icon, color));
       setActiveId(id);
       setMobileOpen(true);
     } else {
-      onPlay((p) => updateNotePage(p, iconPicker.id, { icon }));
+      onPlay((p) => updateNotePage(p, iconPicker.id, { icon, color }));
     }
     setIconPicker(null);
   };
 
   if (!active) {
     return (
-      <div className="placeholder">
+      <div className="placeholder notes-empty">
         <i className="ti ti-notebook" aria-hidden="true" />
         <span>No notes yet</span>
         {onPlay && (
-          <button className="add-item-btn" style={{ marginTop: 10 }} onClick={() => setIconPicker({ mode: 'new' })}>
+          <button className="add-item-btn" onClick={() => setIconPicker({ mode: 'new' })}>
             <i className="ti ti-plus" aria-hidden="true" /> New page
           </button>
         )}
@@ -611,8 +662,65 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
           {shown.map((p) => (
             <div
               key={p.id}
-              className={'note-item' + (p.id === active.id && !isMobile ? ' on' : '') + (isMobile ? ' note-item-m' : '')}
+              className={
+                'note-item' +
+                (p.id === active.id && !isMobile ? ' on' : '') +
+                (isMobile ? ' note-item-m' : '') +
+                (dragId === p.id ? ' dragging' : '') +
+                (overId === p.id && dragId && dragId !== p.id ? ' drop-target' : '')
+              }
+              draggable={canReorder}
+              onDragStart={(e) => {
+                dragIdRef.current = p.id;
+                setDragId(p.id);
+                e.dataTransfer.effectAllowed = 'move';
+                // Firefox refuses to start a drag unless some data is set.
+                e.dataTransfer.setData('text/plain', p.id);
+              }}
+              onDragEnd={() => {
+                dragIdRef.current = null;
+                setDragId(null);
+                setOverId(null);
+              }}
+              onDragOver={(e) => {
+                if (!dragIdRef.current || dragIdRef.current === p.id) return;
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                setOverId(p.id);
+              }}
+              onDragLeave={() => setOverId((cur) => (cur === p.id ? null : cur))}
+              onDrop={(e) => {
+                e.preventDefault();
+                const src = dragIdRef.current;
+                if (src && src !== p.id) moveTo(src, pages.findIndex((x) => x.id === p.id));
+                dragIdRef.current = null;
+                setDragId(null);
+                setOverId(null);
+              }}
+              onContextMenu={(e) => {
+                if (!onPlay) return;
+                e.preventDefault();
+                setMenu({ id: p.id, x: e.clientX, y: e.clientY });
+              }}
+              // Touch has no right-click: hold the row for half a second to get the same menu.
+              onPointerDown={(e) => {
+                if (!onPlay || e.pointerType === 'mouse') return;
+                longPress.current.fired = false;
+                const { clientX, clientY } = e;
+                longPress.current.timer = setTimeout(() => {
+                  longPress.current.fired = true;
+                  setMenu({ id: p.id, x: clientX, y: clientY });
+                }, 500);
+              }}
+              onPointerUp={() => clearTimeout(longPress.current.timer)}
+              onPointerMove={() => clearTimeout(longPress.current.timer)}
+              onPointerCancel={() => clearTimeout(longPress.current.timer)}
               onClick={() => {
+                // Swallow the click that ends a long-press, or the menu opens and the page opens under it.
+                if (longPress.current.fired) {
+                  longPress.current.fired = false;
+                  return;
+                }
                 setActiveId(p.id);
                 if (isMobile) setMobileOpen(true);
               }}
@@ -699,23 +807,7 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
               >
                 <i className={'ti ' + (active.private ? 'ti-lock' : 'ti-lock-open')} aria-hidden="true" />
               </button>
-              <button
-                className="icon-btn"
-                title="Delete page"
-                onClick={async () => {
-                  if (
-                    await confirmDialog({
-                      title: 'Delete page?',
-                      message: `“${active.title}” will be removed.`,
-                      confirmLabel: 'Delete',
-                      danger: true,
-                    })
-                  ) {
-                    onPlay((pl) => removeNotePage(pl, active.id));
-                    if (isMobile) setMobileOpen(false);
-                  }
-                }}
-              >
+              <button className="icon-btn" title="Delete page" onClick={() => deletePage(active.id, active.title)}>
                 <i className="ti ti-trash" aria-hidden="true" />
               </button>
             </>
@@ -735,6 +827,55 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
         )}
       </div>
       )}
+
+      {/* Row menu. Rendered at the pointer, clamped so it can't hang off the bottom/right edge. */}
+      {menu && onPlay && (() => {
+        const p = pages.find((x) => x.id === menu.id);
+        if (!p) return null;
+        const idx = pages.findIndex((x) => x.id === menu.id);
+        const close = () => setMenu(null);
+        const act = (fn: () => void) => () => {
+          close();
+          fn();
+        };
+        return (
+          <>
+            <div className="menu-backdrop" onClick={close} onContextMenu={(e) => (e.preventDefault(), close())} />
+            <div
+              className="note-menu"
+              role="menu"
+              style={{ left: Math.min(menu.x, window.innerWidth - 190), top: Math.min(menu.y, window.innerHeight - 170) }}
+            >
+              <div className="note-menu-title" dir="auto">{p.title}</div>
+              <button className="topmenu-item" role="menuitem" disabled={idx <= 0} onClick={act(() => moveTo(p.id, idx - 1))}>
+                <i className="ti ti-arrow-up" aria-hidden="true" /> Move up
+              </button>
+              <button
+                className="topmenu-item"
+                role="menuitem"
+                disabled={idx < 0 || idx >= pages.length - 1}
+                onClick={act(() => moveTo(p.id, idx + 1))}
+              >
+                <i className="ti ti-arrow-down" aria-hidden="true" /> Move down
+              </button>
+              <button className="topmenu-item" role="menuitem" onClick={act(() => setIconPicker({ mode: 'edit', id: p.id }))}>
+                <i className="ti ti-palette" aria-hidden="true" /> Icon &amp; color
+              </button>
+              <button
+                className="topmenu-item"
+                role="menuitem"
+                onClick={act(() => onPlay((pl) => updateNotePage(pl, p.id, { private: !p.private })))}
+              >
+                <i className={'ti ' + (p.private ? 'ti-lock-open' : 'ti-lock')} aria-hidden="true" />{' '}
+                {p.private ? 'Make shared' : 'Make private'}
+              </button>
+              <button className="topmenu-item danger" role="menuitem" onClick={act(() => deletePage(p.id, p.title))}>
+                <i className="ti ti-trash" aria-hidden="true" /> Delete
+              </button>
+            </div>
+          </>
+        );
+      })()}
 
       {iconPicker && onPlay && (
         <IconPickerModal

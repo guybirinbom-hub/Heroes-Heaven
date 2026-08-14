@@ -621,7 +621,10 @@ export function FilterableSelect<T>({
                   type="button"
                   className={'fsel-inel' + (hideInel ? ' on' : '')}
                   onClick={() => setHideInel((v) => !v)}
-                  title={hideInel ? 'Show options whose prerequisites you don’t meet' : 'Hide options whose prerequisites you don’t meet'}
+                  // NOT "prerequisites": a blocked dedication has met every prerequisite it has, and
+                  // Armor Proficiency on a fighter carries none at all. The toggle hides everything the
+                  // slot will not take; the row itself prints the specific reason.
+                  title={hideInel ? 'Show options you can’t take here' : 'Hide options you can’t take here'}
                 >
                   {/* The label names the ACTION. Ineligible options are hidden by default, so the
                     * button normally offers to reveal them (with how many are being held back). */}

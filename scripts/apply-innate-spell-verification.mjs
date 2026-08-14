@@ -166,6 +166,50 @@ const WRITES = {
   },
   'feats/pact-of-eldritch-eyes': {
     innateSpells: [{ spellId: 'scouting-eye', tradition: 'occult', usesPerDay: 1, usesPer: 'hour' }],
+    // "…using the higher of your class DC and your spell DC to determine the DC." Word for word what
+    // its twin pact-of-fey-glamour already carries — the printed sentences are identical, so this is a
+    // transcription, not a composition.
+    spellNotes: [{ spellId: 'scouting-eye', note: 'Cast from this feat, the spell uses the higher of your class DC and your spell DC.' }],
+  },
+
+  /* ── the DC-choice clause, on the six records that print it and never said so ──────────────────
+   * Seven sibling records already carry this note. The wording is transcribed from each record's OWN
+   * sentence and never normalised: pact-of-eldritch-eyes prints "the higher of your class DC and your
+   * spell DC", the rest print "your class DC or spell DC, whichever is higher", and both survive.
+   * Riders the same record states about the same spell are folded into the SAME note rather than
+   * dropped — the shape manipulative-charm and nocturnal-kindred set.
+   *
+   * Three of these spells (animal-messenger, speak-with-animals, scouting-eye) have no saving throw at
+   * all, so the clause is inert prose on them. Kept deliberately: the printed sentence is plural
+   * ("These spells use…"), and the long-accepted pact-of-fey-glamour note sits on illusory-disguise,
+   * which likewise has no save. Precedent, not oversight. */
+  'feats/animal-magic': {
+    spellNotes: [
+      { spellId: 'animal-messenger', note: 'Cast from this feat, the spell uses your class DC or spell DC, whichever is higher.' },
+      { spellId: 'calm', note: 'Cast from this feat, the spell uses your class DC or spell DC, whichever is higher, and it affects animals only.' },
+      { spellId: 'speak-with-animals', note: 'Cast from this feat, the spell uses your class DC or spell DC, whichever is higher.' },
+    ],
+  },
+  'feats/innocent-butterfly': {
+    spellNotes: [{ spellId: 'aura-of-the-unremarkable', note: 'Cast from this feat, the spell uses your class DC or spell DC, whichever is higher.' }],
+  },
+  'feats/dominating-gaze': {
+    /* The "within 24 hours" clause is NOT a restatement of the once-per-day cadence: once per day is a
+     * daily-prep reset, "within 24 hours" is a rolling window, and that clause is the one telling the
+     * player the 24-hour immunity is usually moot. The heighten ladder is already on the grant. */
+    spellNotes: [{ spellId: 'dominate', note: "Cast from this feat, Dominate uses your class DC or spell DC, whichever is higher, and it gains the visual trait. A creature that succeeds at its save is temporarily immune to your domination for 24 hours, though in most cases, you can't Cast the Spell again within 24 hours. If you are destroyed, all your Dominate spells from Dominating Gaze immediately end." }],
+  },
+  /* The DC clause sits on the fan's Activate rather than on the feat's own sentence, but the app
+   * surfaces the spell as THIS feat's innate grant, so the note lives here or nowhere.
+   * ⚠ SEPARATE, UNFIXED: the grant carries no tradition, so build.ts falls back to gust-of-wind's
+   * traditions[0] and the card reads "Innate spells (Arcane)". The feat calls the fan primal and says
+   * you cast tengu magic with it, but never "as a primal innate spell" — authoring primal would be an
+   * inference, not a transcription. Its own finding, and it has to pass the same printed-text test. */
+  'feats/tengu-feather-fan': {
+    spellNotes: [{ spellId: 'gust-of-wind', note: 'Cast from this feat, the spell uses your class DC or spell DC, whichever is higher.' }],
+  },
+  'feats/kaijus-footfalls': {
+    spellNotes: [{ spellId: 'enlarge', note: 'When you cast Enlarge from this feat, you can target only yourself, and the first time each turn you High Jump, Leap, or Long Jump while affected by it, creatures of your size or smaller adjacent to where you land must attempt a Reflex save against your class DC or spell DC, whichever is higher; on a failure the creature is knocked prone, and on a critical failure it is knocked prone and takes 2d6 bludgeoning damage. At 17th level, you can choose to heighten this innate Enlarge spell to 4th rank.' }],
   },
 
   // ── the void-healing swap (the new lane) ──────────────────────────────────────────────────────
@@ -210,7 +254,12 @@ const WRITES = {
   const cur = rec('feats/entities-from-afar')?.spellNotes?.[0]?.note;
   if (!cur) throw new Error('entities-from-afar has no spellNotes to extend');
   if (!cur.includes('without providing any other benefit')) throw new Error('entities-from-afar note is not the one this script was written against');
-  WRITES['feats/entities-from-afar'].spellNotes = [{ spellId: 'summon-entity', note: cur + ENTITIES_LADDER }];
+  /* ⚠ Idempotent, deliberately. This APPENDS to whatever the record currently holds, and the record
+   * already ends with the ladder from the first run — so a second run without this guard would print
+   * the sentence twice, a third time three times. Every other write in this file is a whole-value
+   * replacement and is idempotent for free; this one and enter-divine-realm's are the exceptions. */
+  const ladder = cur.endsWith(ENTITIES_LADDER.trim()) || cur.includes(ENTITIES_LADDER.trim()) ? cur : cur + ENTITIES_LADDER;
+  WRITES['feats/entities-from-afar'].spellNotes = [{ spellId: 'summon-entity', note: ladder }];
 }
 
 /** Nothing here may name a spell that does not ship — a typo grants and annotates nothing, silently. */

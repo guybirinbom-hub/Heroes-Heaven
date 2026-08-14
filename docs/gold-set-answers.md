@@ -506,3 +506,116 @@ attack roll** on all seven classifications. Full account in `docs/mechanic-lanes
 (`test/map-reduction.test.ts`). No field named `mapAdjust` has ever existed. The one real gap in that
 area is **Furious Focus**, whose clause changes how many MAP steps an ACTION spends rather than what
 the steps are — no `step`/`agileStep` pair can say it, and it is now a marker on Vicious Swing (Q8).
+
+---
+
+## Round 11 — the owner's rulings on batch-001 and the correction pass (2026-08-13)
+
+The first level-ordered audit batch (100 level-1 feats) and the diagnosis of the stalled corrections
+each produced questions only the owner can settle. His answers, verbatim where he gave wording.
+
+### R1 · Adhyabhau — WILL ONLY, one star carrying the whole sentence
+
+> "the feat clearly sayes Will saves against effects with the emotion trait so a `*` that sayes
+> **+1 circumstance bonus to Will saves against effects with the emotion trait, and when you roll a
+> success on a saving throw against such an effect, you get a critical success instead.**"
+
+Both clauses are Will-only. The second sentence's unqualified *"a saving throw"* does NOT widen it to
+all three saves — the sentence's own first half names Will, and that governs. The star's text is the
+printed sentence, not a paraphrase.
+
+### R2 · Ask the Bones — A BONUS INSIDE AN ACTIVITY DOES NOT STAR THE SKILL
+
+> "its an action, it shouldnt apear as a bonus on skills."
+
+**This is general, not one record.** When a bonus exists ONLY inside a feat's own activity — you must
+spend the action to get it — it belongs to the activity, not to the statistic. It gets no `*` on the
+skill/save/AC row; it lives in the activity's own entry and popup.
+
+This settles the tension the audit flagged between **Principle P** (Posse — a benefit gated behind a
+deliberate action needs no star) and **Mastermind's Eye** (star every skill that can Recall Knowledge).
+The distinction is *whose* action: Mastermind's Eye improves Recall Knowledge **whenever you do it**,
+so the skill really is better; Ask the Bones improves only the check made inside **its own** activity,
+so the skill is not. Star the statistic when the bonus applies to the player's ordinary use of it.
+
+⚠ Ask the Bones currently stars all sixteen skills. Others share the shape and must be swept.
+
+### R3 · Avenge in Glory — TEMP HP WITH A RIDER IS A MODE
+
+> "because the temp hp has a bonus to attcak and da,age rolls it needs to be a mode."
+
+**Refines Q15.** Q15 said temporary Hit Points alone are not complicated enough to need a mode — that
+stands. But when the temp HP is the CONDITION for something else (*"while you still have them"*), the
+character has two states and the sheet must be able to be in either. That is a mode: it grants the
+temporary Hit Points on entry, carries the +1 to attack and damage while on, and takes both back on exit.
+
+### R4 · Halcyon Speaker — ONE MERGED ENTRY
+
+A legal halcyon speaker holds both dedications and the app models one caster archetype per character,
+so the whole archetype is inert today. **Merge**, do not replace: keep the Magaambyan entry id (existing
+characters keep the id they already have) and fold Halcyon's schedule onto it.
+
+⚠ Replacing the Magaambyan entry destroys **Cascade Bearer's Spellcasting** — its divine/occult
+widening lives only in the Attendant's `traditionOptionFeats`, and its bonus cantrip points at the
+entry that would be deleted.
+
+### R5 · "add that trait to any Strikes you make" — BUILD THE LANE
+
+Nothing in the app puts a trait on a Strike. Build it. Champions are not the only records told this,
+so it is a lane, not a value on one record.
+
+### R6 · "class DC or spell DC, whichever is higher" on an ACTION — NOTHING
+
+> "no need to write the dc thats higehr, the user can view his dcs in the side bar."
+
+The 219 records printing this for a granted action or item activation get no surface. Both DCs are
+already on the sheet and the player can read the larger one. Consistent with **Ruling D** (a DC the
+target rolls against gets no surface) and with the `specialStatistic` entry test (the text must NAME a
+statistic — none of these do).
+
+### R7 · The four measured defects — ALL FIX
+
+Ruled "fix", no further design questions:
+
+| defect | what a player sees |
+|---|---|
+| Land Legs authored as `+15` rather than a floor of 20 | Flying Animal + Land Legs = 35 ft; Running Animal + Land Legs = 45 ft |
+| a feat-granted repertoire spell is written to `grantedRepertoire`, which the Spells tab does not render | the spell is granted and appears nowhere (all 4 such grants) |
+| the ★ signature toggle replaces the whole list instead of merging | the first ★ a bard/sorcerer/psychic/oracle taps erases the authored signature spell |
+| 12 battle-form modes never took their printed creature-trait line | Pest/Animal/Dragon/Elemental Form grant no creature trait |
+
+⚠ The battle-form values go in **`scripts/apply-battle-forms.mjs`**, which OWNS those mode objects and
+replaces them whole on every run. Putting them anywhere else deletes them at its next run — including
+the two Worm Form traits that already landed.
+
+### R8 · Sanctification — the relic must stop answering for you
+
+`feats/sanctified-relic` carries an effectChoice whose id is `sanctification`, the same id the deity
+uses, and `sanctificationOf` takes the first match with no check on who asked. Feats resolve before the
+deity, so the relic wins. Measured: champion of Ma'at, deity holy, relic unholy → the app reads
+**unholy**. The relic's sanctification is for *its wearer*, who by the feat's own text cannot be you.
+
+Rename the relic's choice id and make the lookup scope-aware. Both, not either.
+
+### R9 · The battle-form `Form` chip — REWIRED, not removed
+
+Eight feats offer a `Form` chip on the Encounter tab that enters a strictly weaker copy of the form
+than the Modes panel does (Worm Form via the chip: darkvision only — no AC 20+level, no 40 temporary
+Hit Points, no +25 strikes, no Huge, no animal trait; the rest is printed as a note the player has to
+apply by hand).
+
+I put "remove the chip or rewire it" to the owner as a ruling. **It was not one.** Both options make
+the sheet correct, so it was a routine judgement call and asking cost him a round trip. His reply was
+the standing mandate restated: *"we need this to effect the characetr sheet in the orrct way."*
+
+**Rewired.** The chip keeps its place on the Encounter tab — that is where a player is looking mid
+combat, and deleting it would fix a data defect by making the app worse at the moment of use — and it
+toggles the real battle-form mode. Measured: **7 of the 8 feats have exactly one mode**, so the chip
+maps one-to-one with nothing to decide. Only Worm Form has two (purple worm / hybrid), where the chip
+asks which — a question the printed rules make the player answer anyway.
+
+⚠ **The lesson, for every future session: do not spend an owner ruling on a question whose options are
+all correct.** A ruling is for when two of his own decisions genuinely point opposite ways, or when the
+printed text does not settle a mechanic. Where to put a control is neither. He has said twice that the
+volume of what I put in front of him is the problem; a question he did not need to answer is part of
+that volume.

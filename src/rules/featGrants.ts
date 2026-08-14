@@ -108,6 +108,16 @@ export interface WeaponFamiliarity {
    * hand, and one that would go stale the moment the data gained another bomb.
    */
   groups?: string[];
+  /**
+   * …or every weapon carrying one of these TRAITS.
+   *
+   * Every ancestry weapon-familiarity feat prints two halves — "weapons with the dwarf trait PLUS the
+   * battle axe, pick, and warhammer" — and only the named half could be expressed. The open half is
+   * resolved against the item data at build time so it stays right as the data gains weapons, the same
+   * reasoning as `groups`. These lists already existed on the records, under `critSpecWeapons.traits`,
+   * where they drove critical specialisation and nothing else.
+   */
+  traits?: string[];
   /** Narrow `groups` to weapons of this printed category, so the two halves of "martial firearms as
    *  simple, advanced firearms as martial" are two clauses over the same group. */
   category?: WeaponCategory;
@@ -197,6 +207,16 @@ export interface FeatGrant {
    * weapons the category doesn't already cover (advanced ancestry weapons, limited-expertise classes).
    */
   weaponFamiliarity?: WeaponFamiliarity | WeaponFamiliarity[];
+  /**
+   * A rank this grant confers only once ANOTHER statistic has reached a rank.
+   *
+   * `conditionalSkills` evaluates the SAME skill's own prior rank ("trained; expert if already
+   * trained"), which cannot express Bardic Lore's *"If you have legendary proficiency in Occultism,
+   * you gain expert proficiency in Bardic Lore"* — a different skill entirely decides it. Read in
+   * build.ts's grant loop, after class advancement and after skill increases, so the gate sees the
+   * character's final rank rather than a half-built one.
+   */
+  crossConditionalSkills?: Record<string, { whenSkill: ProficiencyKey; whenRank: ProficiencyRank; rank: ProficiencyRank }>;
   /**
    * The feat grants a BONUS skill feat the player picks (Rogue Dedication: "You gain a skill feat").
    * Injected as an extra level-<feat's level> skill-feat slot; the pick is stored in
@@ -397,6 +417,25 @@ export const FEAT_GRANTS: Record<string, FeatGrant> = {
 };
 
 /**
+ * Skills whose rank NO skill increase may raise, because a record's own text forbids it — keyed by
+ * proficiency key, valued with the reason the player is shown.
+ *
+ * Bardic Lore: *"…but you can't increase your proficiency rank in Bardic Lore by any other means."*
+ * Measured before this existed: three skill increases spent on it took a level-20 bard's Bardic Lore
+ * to MASTER, and the picker offered it live and un-greyed with no explanation.
+ *
+ * Two readers, and both are needed. `build.ts` DROPS an increase filed against a locked key, so a
+ * character saved before this cannot keep an illegal rank. `Builder.tsx` greys the option and prints
+ * this string as the reason — Q27: an option that cannot be picked must LOOK unpickable, and one
+ * rendered identically to a live option and silently inert reads as a broken app.
+ *
+ * Hand-authored here rather than in featGrantsAuto.ts, which five scripts rewrite whole.
+ */
+export const LOCKED_SKILL_KEYS: Record<string, string> = {
+  'lore:bardic': "Bardic Lore can't be increased by any other means — it becomes expert only if your Occultism is legendary.",
+};
+
+/**
  * How many times a feat may be taken. Mirrors Foundry's `system.maxTakable`: absent → 1, `null` →
  * unlimited (Infinity), any number → that hard cap. Always read the field through this — a direct
  * comparison mis-handles the `null`-means-unlimited case.
@@ -405,4 +444,35 @@ export function maxTakes(feat: { maxTakable?: number | null } | undefined): numb
   if (!feat) return 1;
   if (feat.maxTakable === null) return Infinity;
   return feat.maxTakable ?? 1;
+}
+
+/**
+ * Why taking this feat would grant the character NOTHING — legal, and guaranteed to be wasted.
+ *
+ * Armor Proficiency prints a cascade: *"You become trained in light armor. If you already were
+ * trained in light armor, you gain training in medium armor. If you were trained in both, you become
+ * trained in heavy armor. If you are at least 13th level, you become an expert in THIS armor type."*
+ * A fighter is already trained in all three, so `applyFeatGrant` finds no category to train and the
+ * take stays bare — and no later level rescues it, because the 13th-level clause upgrades only the
+ * category this feat granted.
+ *
+ * That is ruling Q21's "the grant would be WASTED ACROSS YOUR WHOLE CAREER" row, which is the
+ * FILTERED one — not Q27's "already trained" row, which is about an option INSIDE a list. So the
+ * builder feeds this to `featIneligible` (hidden by default, like a blocked dedication) AND prints
+ * the sentence on the row once "Show ineligible" reveals it, which is Q27's half.
+ *
+ * Returns the SENTENCE. Armor Proficiency carries `prerequisites: []`, so the row's "Requires
+ * (unmet): …" line never renders for it and a bare boolean would grey it with no explanation at all
+ * — the same silent-inert failure from the other direction.
+ */
+export function exhaustedGrantReason(
+  feat: { id: string } | undefined,
+  character: { proficiencies: { defenses: Record<string, ProficiencyRank> } },
+): string | undefined {
+  if (!feat || !FEAT_GRANTS[feat.id]?.armorCascade) return undefined;
+  const d = character.proficiencies.defenses;
+  const open = (['light', 'medium', 'heavy'] as const).some((cat) => (d[cat] ?? 'untrained') === 'untrained');
+  return open
+    ? undefined
+    : 'You are already trained in light, medium and heavy armor — this feat would train you in nothing.';
 }

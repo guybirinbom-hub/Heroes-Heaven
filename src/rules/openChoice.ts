@@ -21,6 +21,28 @@ export interface OpenOption {
   description?: string;
 }
 
+/**
+ * What each source is CALLED to a player, for the picker's "Search …" placeholder.
+ *
+ * The builder printed `from.type` raw, so sixteen records showed the player a slug —
+ * "Search own-deity-spell…", "Search own-item…". Kept beside the cases it names so adding one without
+ * a label is visible here rather than on the page; `test/innate-tradition.test.ts` fails if a case has
+ * no entry.
+ */
+export const OPEN_SOURCE_LABEL: Record<string, string> = {
+  spell: 'spells',
+  feat: 'feats',
+  weapon: 'weapons',
+  language: 'languages',
+  heritage: 'heritages',
+  ancestry: 'ancestries',
+  'own-deity-spell': "your deity's spells",
+  'own-spell': 'spells you know',
+  'own-feat': 'feats you have',
+  'own-item': 'your items',
+  'own-companion': 'your companions',
+};
+
 /** Feats a filter admits: category, level ceiling and required traits. */
 function featsMatching(from: OpenChoiceFrom, content: ContentDatabase): Feat[] {
   const wantTraits = (from.traits ?? []).map((t) => t.toLowerCase());
@@ -63,7 +85,18 @@ export function openChoiceOptions(
       const any = (from.anyTraits ?? []).map((t) => t.toLowerCase());
       const matchesAny = (s: { traits?: string[] }) =>
         !any.length || (s.traits ?? []).some((t) => any.includes(String(t).toLowerCase()));
-      return spellsMatching(filter, content, opts?.hideLegacy).filter(matchesAny).map((s) => ({
+      // "…from a magical tradition OTHER THAN YOUR OWN" (Adapted Cantrip). The legal set depends on the
+      // character, so `traditions` could never carry it and the record shipped a note apologising that
+      // "the picker can't filter that, because your tradition depends on your class". It can: this
+      // resolver already runs against a built character (Builder.tsx:424 passes `featPrereqChar`).
+      // Class pools only — an innate or item entry is not a tradition you cast in for this purpose —
+      // and with no class casting at all nothing is excluded, so the list is never emptied.
+      const ownTraditions = new Set<string>(
+        (opts?.character?.spellcasting ?? []).filter((e) => e.type === 'prepared' || e.type === 'spontaneous').map((e) => e.tradition),
+      );
+      const traditionOk = (s: { traditions?: string[] }) =>
+        !from.excludeOwnTraditions || !ownTraditions.size || !(s.traditions ?? []).some((t) => ownTraditions.has(t));
+      return spellsMatching(filter, content, opts?.hideLegacy).filter(matchesAny).filter(traditionOk).map((s) => ({
         id: s.id,
         name: s.name,
         note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
@@ -105,9 +138,58 @@ export function openChoiceOptions(
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((h) => ({ id: h.id, name: h.name, description: h.description }));
 
+    /*
+     * "Choose a common ancestry or another ancestry to which you have access" (Adopted Ancestry), and
+     * "You can choose any ancestry" (As in Life, So in Death). The record enumerated 8 common
+     * ancestries; core.json ships 50 (8 common, 20 uncommon, 22 rare), so a skeleton who was a kobold,
+     * hobgoblin or tengu in life could not record it.
+     *
+     * Rarity is SHOWN, not filtered — access is the GM's to grant, and hard-blocking it made a pick the
+     * rules allow unreachable. `excludeOwn` drops the character's own ancestry, which is the one answer
+     * that grants nothing.
+     */
+    case 'ancestry':
+      return Object.values(content.ancestries ?? {})
+        .filter((a) => !(from.excludeOwn && a.id === opts?.character?.ancestryId))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((a) => ({
+          id: a.id,
+          name: a.name,
+          note: a.rarity !== 'common' ? a.rarity : undefined,
+          description: a.description,
+        }));
+
     // ---- BUILD-RESOLVED sources: the pool is what this character has -------------------------
     // Without a character these return [] rather than falling back to all of content, because
     // offering every spell for "one spell YOU KNOW" would let the player pick one they don't have.
+
+    // "Add up to three of your DEITY'S spells (spells your deity grants to clerics) to your spell list"
+    // — Blessed Blood. The legal set is this character's deity's cleric spells: neither a static options
+    // array nor a content-wide filter can express it, which is why the pick was never asked at all and
+    // the app silently added the deity's WHOLE list instead, nine spells deep for twelve deities.
+    //
+    // ⚠ It is an `own-` kind, and the prefix is load-bearing rather than cosmetic: two shipped guards
+    // (`test/choice-lane-applied.test.ts`, `test/multi-pick-choices.test.ts`) require every OTHER open
+    // choice to resolve a non-empty list with no character, and a deity-scoped pool cannot.
+    case 'own-deity-spell': {
+      // ⚠ A built Character keeps its deity on `details`, not at the top level — `build.deityId` is a
+      // BuildState field, and this resolver is handed the built character (Builder.tsx passes
+      // `featPrereqChar`). Reading `character.deityId` type-checks against nothing and is always
+      // undefined, which would have emptied the picker in silence.
+      const deityId = opts?.character?.details?.deityId;
+      const deity = deityId ? content.deities[deityId] : undefined;
+      return (deity?.spells ?? [])
+        .map((id) => content.spells[id])
+        .filter(Boolean)
+        .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0) || a.name.localeCompare(b.name))
+        .map((s) => ({
+          id: s.id,
+          name: s.name,
+          note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
+          description: s.description,
+        }));
+    }
+
     case 'own-spell': {
       const ch = opts?.character;
       if (!ch) return [];

@@ -460,12 +460,13 @@ export function saveDcHasSituational(c: Character, save: SaveId, db?: ContentDat
 /**
  * Marks this character's records put on an ACTION row or a CONDITION — ruling D's answer to the
  * effects that change no stat: the mark goes on the thing it modifies, with the changed value shown
- * inline and a `*` back to the source.
+ * inline and a `*` back to the source. `'feature'` is the third target: a feat or class-feature ENTRY
+ * on the Feats tab, for a rule printed inside another record's prose rather than on a row of its own.
  */
 export function recordMarkersFor(
   c: Character,
   db: ContentDatabase,
-  on: 'action' | 'condition',
+  on: 'action' | 'condition' | 'feature',
   id: string,
 ): { sourceId: string; value?: string; note: string }[] {
   // `grantMarkers` is the GATED half — a mark that exists only because the character has the record
@@ -482,6 +483,30 @@ export function recordMarkersFor(
     for (const [id, marks] of Object.entries(shifts)) extra[id] = [...(extra[id] ?? []), ...marks];
   }
   return markersFor(characterSituationalIds(c, db), on, id, extra);
+}
+
+/**
+ * The tooltip for a set of record marks: one line per mark, "Record Name: what it changes".
+ *
+ * ⚠ It STRIPS a note's own leading record name. MEASURED: 40 of the 119 RECORD_MARKERS entries write
+ * the note as "Weapon Supremacy: you're permanently quickened…", and all three renderers prefix the
+ * record's name — so a third of the table printed "Weapon Supremacy: Weapon Supremacy: …" to the
+ * player. Fixing the data would not have held: 26 of the 40 sit inside the block
+ * `scripts/apply-feature-audit.mjs` regenerates whole. Fixing it here covers every entry, generated or
+ * hand-authored, and the redundant prefix in the data becomes harmless rather than wrong.
+ *
+ * Exported so MainTab, StatDetailModal and VitalsRail share one definition — they each had their own
+ * copy of the same `.map(...).join('\n')`.
+ */
+export function markTooltip(db: ContentDatabase, marks: { sourceId: string; note: string }[]): string {
+  return marks.map((m) => `${nameOfRecord(db, m.sourceId)}: ${markNote(db, m)}`).join('\n');
+}
+
+/** A mark's note with its own record name stripped off the front — for the surfaces that print the
+ *  name themselves (the condition popup's `<strong>Name</strong> — note`). See `markTooltip`. */
+export function markNote(db: ContentDatabase, m: { sourceId: string; note: string }): string {
+  const name = nameOfRecord(db, m.sourceId);
+  return m.note.startsWith(`${name}: `) ? m.note.slice(name.length + 2) : m.note;
 }
 
 /**
@@ -1254,7 +1279,12 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         totalText: formatMod(strike.dmgBonus),
         parts,
         timeline: [],
-        description: `The flat damage bonus added to each hit. Your full damage roll is ${strike.damage} — the dice (and any rune riders) are rolled, then this bonus is added.`,
+        description:
+          `The flat damage bonus added to each hit. Your full damage roll is ${strike.damage} — the dice (and any rune riders) are rolled, then this bonus is added.` +
+          // A die BIGGER than the one the granting record prints has to say what enlarged it, for the
+          // same reason Q31 made a changed MAP progression name its source ("That progression comes
+          // from Flurry"): a number that moved with nothing explaining it reads as a bug.
+          (strike.dieNote ? ` ${strike.dieNote}` : ''),
         situational,
       };
     }

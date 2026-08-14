@@ -334,8 +334,9 @@ interface ContentBase {
  * is that answer generalised, because the owner expects more of them.
  */
 export interface SpellNote {
-  /** The spell whose description carries it. */
-  spellId: string;
+  /** The spell whose description carries it. REQUIRED except on a `fromCantripPick` clause, whose
+   *  spell is the player's own answer and so cannot be named here. */
+  spellId?: string;
   /** The clause, printed verbatim under the granting record's name. `{choice}` is replaced by the
    *  granting FEAT's own answer — see `fromChoice`. */
   note: string;
@@ -353,6 +354,37 @@ export interface SpellNote {
    * field lives on `ContentBase`, shared by all six.
    */
   fromChoice?: boolean;
+  /**
+   * The clause belongs to the spell this record's PICK-A-CANTRIP answer chose, so `spellId` is
+   * ignored and the answer supplies it. Awakened Jewel is the case: *"You gain one cantrip from the
+   * occult spell list. **As long as you possess your head gem**, you can cast this spell as an innate
+   * spell at will."* — a condition on a spell whose identity is the player's answer, which no
+   * `spellId`-keyed note could name.
+   *
+   * Withheld while the pick is unanswered, for the same reason `fromChoice` is: there is no spell to
+   * put it on. FEATS only — `build.pickCantripChoices` is keyed by feat id.
+   */
+  fromCantripPick?: boolean;
+  /**
+   * The clause applies to EVERY non-cantrip spell this character gained from a HERITAGE or an
+   * ANCESTRY FEAT, so `spellId` is ignored and the character supplies the set. Ancestral Blood
+   * Magic is the case: *"You gain your blood magic effect when you cast a non-cantrip spell you
+   * gained from a heritage or an ancestry feat"* — a rule about WHERE a spell came from, which no
+   * `spellId`-keyed note could enumerate (252 ancestry-feat grants + 1 heritage grant qualify, and
+   * which of them a given character has is a per-character fact).
+   *
+   * Cantrips are excluded deliberately: the printed clause says "non-cantrip", and marking one would
+   * promise a blood magic trigger the sorcerer does not get.
+   *
+   * ⚠ KNOWN RESIDUAL, named rather than silently covered: two ancestry records grant a whole
+   * SPELLCASTING ENTRY instead of specific spells (`dracomancer`, heritage `spellhorn-kobold`).
+   * `SpellcastingGrant` carries no source id, so a repertoire spell cannot be traced back to the
+   * ancestry record that opened the entry, and those spells are NOT marked. `npm run scan:ancestry-spells`
+   * prints them so the gap stays measured.
+   *
+   * FEATS only — the pass walks `feats`, which is where the clause is printed.
+   */
+  fromAncestrySpells?: boolean;
 }
 
 /** A precise/imprecise/vague sense granted by a feat, heritage, or class feature. */
@@ -362,6 +394,11 @@ export interface SenseEntry {
   /** Range in feet, if limited. */
   range?: number;
   acuity?: 'precise' | 'imprecise' | 'vague';
+  /** DISPLAY ONLY, set by `deriveDefenses` when a stronger rung of the same vision ladder is present
+   *  (Q13: "Show only darkvision when it supersedes low-light"). The sense is still HELD — it stays in
+   *  `defenses.senses` so rules consults and the Wanderer's Guide export keep seeing it, which matters
+   *  because Aquatic Eyes' own printed prerequisite is low-light vision. Never authored in content. */
+  superseded?: boolean;
 }
 
 /** A resistance or weakness entry. `value` may be a level formula string
@@ -762,6 +799,18 @@ export interface DefenseGrants {
     /** Which entry: an exact id, or 'innate' for the innate-spell entry. */
     scope: 'innate' | string;
     tradition?: Tradition;
+    /**
+     * Retune only the pooled spells that came from these sources, writing `SpellcastingEntry
+     * .spellTraditions` per spell instead of relabelling the whole entry.
+     *
+     * Ancestral Mind's scope clause is the load-bearing half of its sentence — *"You can cast any
+     * innate spells you know **from an ancestry feat or heritage** using your psychic spellcasting…
+     * the spell's tradition becomes occult"* — and there is exactly ONE pooled innate entry, which
+     * also holds a BACKGROUND's spell (Astrological Augur's Augury) and every INVESTED item's (a Cloak
+     * of Elvenkind's Ghost Sound). Relabelling the entry stated something false about spells the feat
+     * never mentions, and a wrong tradition is a wrong value rather than a cosmetic one.
+     */
+    onlySources?: ('heritage' | 'ancestryFeat')[];
     keyAbility?: AbilityId;
     /** Take the key attribute from the entry belonging to this class ("your PSYCHIC spellcasting
      *  attribute modifier"), rather than naming one — a psychic's is not fixed. */
@@ -1290,6 +1339,19 @@ export interface EffectGrant {
   speeds?: SpeedGrants;
   /** Skill (or `lore:<subject>`) → minimum rank trained. */
   skills?: Partial<Record<ProficiencyKey, ProficiencyRank>>;
+  /**
+   * Languages this answer confers. Authored only on the DAILY path today: Ancestral Linguistics —
+   * "During your daily preparations, you can recede into old memories to become fluent in one common
+   * language or one other language you have access to. You know this language until you prepare
+   * again."
+   *
+   * A build-time language grant is `DefenseGrants.grantsLanguages`. This one must NOT go there: the
+   * same sentence continues "Since this knowledge is temporary, you can’t use it as a prerequisite
+   * for a permanent character option", and the BUILT character is what a prerequisite is read from.
+   * Applied by `applyPlayState`, which also records the ids on `Character.dailyLanguages` so the
+   * language pills can say it lapses.
+   */
+  grantsLanguages?: string[];
   innateSpells?: InnateSpellGrant[];
   /** Focus spells the chosen option grants (each carries its own Focus Point, like Feat.focusSpells) —
    *  for "choose one of N focus spells" feats (Additional Shadow Magic, Greater Deathly Secrets). */
@@ -1329,14 +1391,56 @@ export interface EffectGrant {
 
 /** A "choose one of N" the player resolves in the builder. Either an explicit `options` list, or a
  *  `spellFilter` describing an OPEN set ("any 1st-rank arcane spell") the builder searches. */
+/**
+ * A benefit a record PRINTS but only HAS while another record names it — the automaton
+ * "**Enhancement**" tier.
+ *
+ * Measured on the shipped data: 22 feats carry the `automaton` trait, 19 of them print an
+ * Enhancement paragraph, and you gain that paragraph only by pointing an augmentation at the feat —
+ * *"You gain the enhancement benefits of one of your 1st- or 5th-level automaton ancestry feats"*
+ * (Lesser Augmentation, AoN feat-3103). Both augmentations already shipped an `effectChoices` picker
+ * listing those feats by name and NOTHING under src/ read the answer — owner ruling **Q26**: a dead
+ * picker is a missing lane, not flavour.
+ *
+ * ⚠ The payload lives on the RECORD, authored once, and never on the augmentations' option lists.
+ * Nine options on Lesser plus eighteen on Greater would be 27 copies of 19 rules — the two-registries
+ * shape that `degreeShifts` exists to prevent.
+ */
+export interface EnhancementDef {
+  /** Always-on effects the tier adds, resolved through the same sink as an `effectChoices` option
+   *  (senses, innate spells, skills, IWR) — so it needs no reader of its own. */
+  grant?: EffectGrant;
+  /** Step the damage die of every Strike THIS record grants, once per step: *"Increase the damage
+   *  die of the unarmed attack you gain from this feat by one step (from 1d4 to 1d6, or from 1d6 to
+   *  1d8)"*. Applied in `collectGrantedNaturals`, so it is a VALUE on the Strikes row, never a note —
+   *  with the attribution carried separately on `NaturalAttack.dieNote` for the damage breakdown. */
+  strikeDieStep?: number;
+  /** ids of THIS record's own `effectChoices` that are asked ONLY once the tier is active (Automaton
+   *  Lore's Arcana-or-Crafting). Until then the builder does not render them and `resolvePick` does
+   *  not resolve them — a live control that does nothing is exactly what **Q27** rules out. */
+  choiceIds?: string[];
+}
+
 export interface EffectChoice {
   /** Stable key (unique within the record) so the pick round-trips. */
   id: string;
   prompt: string;
-  /** `grant` is optional: some menus mix a mechanical option with play-time ones (a kineticist gate
-   *  junction — only Elemental Resistance changes a stat), and the pick should still be recorded and
-   *  shown. An option with no grant simply applies nothing. */
-  options?: { value: string; label: string; grant?: EffectGrant; note?: string }[];
+  /**
+   * `grant` is optional: some menus mix a mechanical option with play-time ones (a kineticist gate
+   * junction — only Elemental Resistance changes a stat), and the pick should still be recorded and
+   * shown. An option with no grant simply applies nothing.
+   *
+   * `requiresAnySense` is the first per-option GATE on this lane: the option is legal only while the
+   * character already has one of the named senses. Animal Senses prints *"You must have low-light
+   * vision before you can gain darkvision with this feat"* and it was enforced nowhere, so a
+   * normal-sighted character was offered Darkvision as a live pick. A LIST rather than one name so the
+   * data says which senses satisfy the gate — darkvision satisfies a low-light requirement — instead of
+   * the reader hard-coding a supersede rule. Names are compared normalised (the same sense is spelled
+   * "low-light vision" on some grants and "low-light-vision" on every ancestry). Read by the
+   * effect-choice picker in Builder.tsx, which GREYS the option with the reason (ruling Q27) rather
+   * than hiding it.
+   */
+  options?: { value: string; label: string; grant?: EffectGrant; note?: string; requiresAnySense?: string[] }[];
   /** Open-ended spell pick. The chosen spell id becomes the value; `grantTemplate` says how it is
    *  granted (as an innate spell at some cadence, or as a focus spell). */
   spellFilter?: SpellChoiceFilter;
@@ -1355,9 +1459,36 @@ export interface OpenChoiceFrom {
    * spell YOU KNOW of 5th rank or lower", Fuse Stance "two stances you already know". Offering the
    * whole of content for those would let the player choose something they don't have.
    */
-  type: 'spell' | 'feat' | 'weapon' | 'language' | 'heritage' | 'own-spell' | 'own-feat' | 'own-item' | 'own-companion';
+  type: 'spell' | 'feat' | 'weapon' | 'language' | 'heritage' | 'ancestry' | 'own-spell' | 'own-deity-spell' | 'own-feat' | 'own-item' | 'own-companion';
+  /**
+   * ancestry: the character's OWN ancestry is not on offer. Adopted Ancestry says "choose a common
+   * ancestry or ANOTHER ancestry to which you have access", and the picker listed the human host's
+   * own Human as a live option — the one pick that buys nothing across the whole career (Q21).
+   *
+   * The gate reads the character and is SKIPPED with none, so `ancestry` still resolves non-empty
+   * characterless — which is what lets it stay outside the `own-*` family that two shipped guards
+   * exempt (test/choice-lane-applied.test.ts, test/multi-pick-choices.test.ts).
+   */
+  excludeOwn?: boolean;
   /** spell: allowed traditions / rank window / required traits / cantrip filter. */
   traditions?: Tradition[];
+  /**
+   * spell: exclude every tradition the character ALREADY casts in — Adapted Cantrip's *"Choose one
+   * cantrip from a magical tradition other than your own."*
+   *
+   * No static `traditions` list can say it: the legal set depends on the class, which is exactly what
+   * the record's own note apologised for ("the picker can't filter that"). `openChoiceOptions` already
+   * runs against a built character, so it can. Only the CLASS pools count as "your own" — an innate or
+   * item entry is not a tradition you cast in for this purpose — and with no class casting at all
+   * nothing is excluded, so the picker is never emptied.
+   */
+  excludeOwnTraditions?: boolean;
+  /**
+   * spell: the answer joins the character's own CLASS casting entry rather than the innate pool —
+   * *"You can cast this cantrip as a spell of your class's tradition."* Marked granted, so it neither
+   * counts against the known-spells cap nor can be removed in play.
+   */
+  grantToClassEntry?: boolean;
   rank?: number;
   minRank?: number;
   maxRank?: number;
@@ -1375,6 +1506,16 @@ export interface OpenChoiceFrom {
    * rather than a recorded note — an open daily choice otherwise granted nothing at all.
    */
   grantInnate?: { usesPerDay?: number; note?: string };
+  /**
+   * language + `daily`: the morning's pick becomes a language you actually have, not a recorded note.
+   * The exact counterpart of `grantInnate` above, and OPT-IN for the same reason: `type: 'language'`
+   * is also used by a BUILD choice that grants nothing by itself (Settlement Scholastics), and keying
+   * the grant off the type alone would make that one start granting silently.
+   *
+   * It also gates the "you already speak it" filter in `dailyChoicesFor`, so the non-granting picker
+   * keeps offering its full list.
+   */
+  grantLanguage?: boolean;
   /** feat: level ceiling. weapon: item-level ceiling ("choose a level 0 weapon"). */
   maxLevel?: number;
   /** weapon: required rarity ("an uncommon simple or martial weapon"). */
@@ -1519,6 +1660,38 @@ export interface InnateSpellGrant {
   /** A CUSTOM heighten ladder — "7th rank, 8th at level 18, 9th at 20". The highest entry whose
    *  `level` the character has reached wins; below the first entry the base `rank` applies. */
   heightenAt?: { level: number; rank: number }[];
+  /**
+   * A heighten ladder keyed to a SKILL PROFICIENCY rather than to level — Arcane Sense: *"You can
+   * cast 1st-rank detect magic at will as an arcane innate spell. If you're a master in Arcana, the
+   * spell is heightened to 3rd rank; if you're legendary, it is heightened to 4th rank."*
+   *
+   * `heightenAt` cannot say it — two characters of the same level get different ranks. Measured over
+   * every record's own text, exactly THREE print one (Arcane Sense; Rivethun Devotion's *spirit link*;
+   * Rivethun Adept's *spiritual guardian*) and all three carried no heighten at all, so the printed
+   * rank never moved when the skill did.
+   *
+   * ⚠ A FLOOR, never a replacement. HH's `detect-magic` is a rank-0 record with the `cantrip` trait,
+   * and PF2e heightens an innate cantrip to half your level rounded up — so returning the ladder's
+   * step outright would DOWNGRADE a 20th-level fighter's Detect Magic from 10th rank to 1st. Ruling
+   * R7 settled the same shape for Land Legs (a printed number that can be lower than what the
+   * character already has is a floor), so `castRank` takes the maximum of the base rank, the grant's
+   * own rank, the reached step, and the cantrip auto-heighten.
+   *
+   * The highest step whose proficiency the character has REACHED wins.
+   */
+  heightenBySkill?: { skill: string; rank: ProficiencyRank; spellRank: number }[];
+  /**
+   * The tradition is the PLAYER's answer to a choice, named by that choice's `flag` — Bone Magic:
+   * *"**Special** Choose when you gain this feat whether your innate spells are primal or occult; this
+   * choice applies to all innate spells you gain from lizardfolk ancestry feats that have Bone Magic
+   * as a prerequisite."*
+   *
+   * The FLAG rather than the granting feat's id — the shape `StrikeDamageRider.fromChoiceFlag` already
+   * uses — so Bone Investiture and Fossil Rider follow the answer without naming Bone Magic. Measured:
+   * those two are the only feats in the app with Bone Magic as a prerequisite. `tradition` stays as
+   * the fallback for a character who has not answered yet.
+   */
+  traditionFromChoiceFlag?: string;
   /**
    * The character level at which THIS grant arrives, when one record hands out its spells on a
    * ladder — Accursed Magic (a level-8 feat) reads *"You can cast Claim Curse. **At 10th level**, you
@@ -1823,6 +1996,19 @@ export interface FeatChoiceDef {
   /** The picks must differ ("choose two DIFFERENT terrains") — each picker hides the others' answers. */
   distinct?: boolean;
   /**
+   * The answer must differ from the ones the character's OTHER TAKES of this feat already gave —
+   * Assurance's *"Special You can select this feat multiple times. Each time, choose a different
+   * skill"*.
+   *
+   * Deliberately not `distinct`, which separates the picks of ONE choice def; a repeatable feat's
+   * takes sit in separate SLOTS and nothing crossed between them, so a player could build two
+   * Assurances on Athletics. Opt-in: most repeatable feats may legitimately repeat an answer.
+   *
+   * GREYED, not removed — ruling Q27 puts "already taken" in the shown-and-explained row. Read by
+   * `buildChoiceOptions` (build.ts), the one funnel every picker uses.
+   */
+  distinctAcrossTakes?: boolean;
+  /**
    * The pick is re-made at DAILY PREPARATIONS ("During your daily preparations, choose…") rather than
    * once when the feat is taken — Environmental Adaptability's cold-or-heat, Mask of Power's spell.
    * These answers live in `PlayState.dailyChoices`, NOT in the build: they change nightly, so a
@@ -1847,6 +2033,14 @@ export interface FeatChoiceDef {
 
 export interface Feat extends ContentBase, DefenseGrants {
   level: number;
+  /**
+   * "You can select this feat only at 1st level" — the slot's level must EQUAL this, not merely reach
+   * it. Distinct from `level`, which is a floor: 27 ancestry feats (Bestial Manifestation, Round Ears,
+   * Tusks, Quadruped, Elf Atavism, Orc Sight, Draconic Aspect, Scaly Hide, Gravesight …) print the
+   * clause and had no way to say it, so each was offerable in a 5th/9th/13th/17th-level slot.
+   * Read by `eligibleFeatsForSlot` (featSlots.ts).
+   */
+  onlyAtLevel?: number;
   /** Cantrips this feat gives the summoner's EIDOLON, cast as innate spells (Magical Understudy
    *  grants two). The eidolon had no spellcasting at all, so putting them in the feat's own
    *  innateSpells would have granted them to the SUMMONER instead. */
@@ -2044,6 +2238,21 @@ export interface Feat extends ContentBase, DefenseGrants {
    * Distinct from `grantedStrikes`, which CREATES an attack. There was no way to say "change the one
    * you already have", so a whole family of capstone feats printed a trait nobody received.
    */
+  /**
+   * The "**Enhancement**" paragraph this feat prints, as a payload gated on an augmentation naming
+   * it. Absent = the feat has no second tier, or it is one of the 15 whose Enhancement is prose the
+   * app does not compute (those keep their option in the picker, with a note saying so).
+   */
+  enhancement?: EnhancementDef;
+  /**
+   * This feat HANDS OUT another record's enhancement tier: `choiceIds` names which of its own
+   * `effectChoices` holds the answer. Carried by Lesser and Greater Augmentation only.
+   *
+   * The printed clause is *"one of YOUR 1st- or 5th-level automaton ancestry feats"*, so the answer
+   * is honoured only when the character actually owns the feat named — enforced in buildCharacter
+   * AND surfaced in the builder, which greys an option the character does not have (Q9 + Q27).
+   */
+  enhancementPicker?: { choiceIds: string[] };
   /** Innate spells this feat grants (cast at a fixed tradition; cantrips at-will, else 1/day). */
   innateSpells?: InnateSpellGrant[];
   /** Max-HP modifier (Toughness/Mountain's Stoutness = perLevel 1; Thick Hide Mask = flat 20;
@@ -3053,6 +3262,25 @@ export interface ModeDef {
    * is meant to end it.
    */
   survivesRest?: boolean;
+
+  /* ---- weapon riders, while the mode is on ---------------------------------------------------- */
+  /**
+   * WEAPON RIDERS the mode applies while it is on — Agile Shield Grip's *"You reduce your shield boss
+   * and shield spikes weapon damage die to 1d4. As long as the weapon damage die is 1d4, your shield
+   * boss and shield spike Strikes gain the agile weapon trait."*
+   *
+   * `DefenseGrants.weaponTraits` already says exactly that, but it is read off the owned RECORD and
+   * has no off switch, so authoring it on the feat would make the reduced die and the agile trait
+   * UNCONDITIONAL — and the feat's own last sentence (*"You can use Agile Shield Grip again to switch
+   * to a normal grip, returning the damage to the usual amount and removing the agile trait"*) is a
+   * switch, which by Q11 is a mode. Measured before this: 0 of 484 modes could carry one.
+   *
+   * Same hoist, and the same reason, as `strikeDamage` above: the rider shape is the one feats and
+   * class features already use, so a toggleable source and a permanent one produce the same Strike
+   * row. Read by `applyWeaponRiders` (derive.ts), which folds it in before `mapStepFor` — so adding
+   * `agile` really does move the row's three attack numbers onto the −4/−8 progression.
+   */
+  weaponTraits?: WeaponRider | WeaponRider[];
 }
 
 /**
@@ -3481,6 +3709,10 @@ export interface NaturalAttack {
   group?: string;
   /** Range increment (ft) for a RANGED natural attack (Spined Azarketi spine); undefined = melee. */
   range?: number;
+  /** Why this attack's damage die is LARGER than the die its granting record prints — one sentence
+   *  naming what enlarged it. The die itself stays a VALUE on the Strikes row; this is the source
+   *  attribution Q31 established for a changed MAP progression, applied to a changed die. */
+  dieNote?: string;
 }
 
 /**
@@ -3682,8 +3914,32 @@ export interface SpellcastingEntry {
    *  entries (innate spells, focus spells) draw from many sources, so the sheet labels each spell with
    *  where it came from. */
   spellSources?: Record<string, string>;
+  /**
+   * The tradition each POOLED spell is actually cast at, where the entry's single `tradition` cannot
+   * say it.
+   *
+   * One innate entry collects the heritage's spells, a background's, every invested item's and every
+   * feat's, and its `tradition` is a MAJORITY VOTE over them. Measured by building the characters: a
+   * level-20 sarangay fighter with Awakened Jewel ("you gain one cantrip from the occult spell list")
+   * reads tradition 'arcane' for Bullhorn and 'divine' for Forbidding Ward, and a lizardfolk holding
+   * Bone Magic + Bone Investiture flips between 'arcane' and 'primal' on grant ORDER alone. The vote
+   * stays — one entry can only have one header — but the per-spell truth is now recorded beside it, so
+   * the card can say it and Ancestral Mind's scoped retune has something to write to.
+   */
+  spellTraditions?: Record<string, string>;
   /** Spontaneous: ids that can be cast from any higher slot. */
   signature?: string[];
+  /**
+   * The subset of `signature` a RECORD granted rather than the player choosing — an animist's
+   * apparition repertoire (all of it), or a feat whose text says "you treat X as a signature spell".
+   *
+   * It exists because these two are not the same kind of fact. The player's picks are theirs to change;
+   * a granted one is a rule, and the ★ that would un-star it must refuse. Before this, the player's
+   * stored list REPLACED the authored one outright (`play.signatureSpells?.[id] ?? e.signature`), so
+   * the first ★ they touched shadowed every granted signature on that entry permanently — including
+   * any the record gained later from a data fix or a level-up. Populated in applyPlayState.
+   */
+  signatureFixed?: string[];
   /** Wizard: learned spells per rank (the daily preparation is drawn from this). */
   spellbook?: Record<number, string[]>;
   /**
@@ -3998,6 +4254,16 @@ export interface Character {
    *  record so a feat/feature row can label itself. */
   effectPicks?: { recordId: string; choiceId: string; label: string; note?: string }[];
   /**
+   * Feats whose ENHANCEMENT tier is running, and the record that turned each on. Derived from the
+   * augmentation pickers on every build.
+   *
+   * It exists because the tier is otherwise invisible: the claw quietly reads 1d6, the telepathy pill
+   * quietly gains "(10 ft)", and nothing on the sheet says why. `FeatDetail` prints one
+   * "Enhancement — active, granted by X" row from this, OUTSIDE `DescBody`, because a record with an
+   * ast renders from the ast and drops anything appended to `description`.
+   */
+  enhancements?: { featId: string; from: string }[];
+  /**
    * Eligibility tokens the character's CHOICE ANSWERS grant (`FeatChoiceDef.options[].grantsToken`) —
    * a Magaambyan attendant's branch. `checkPrerequisites` reads them, which is what lets a
    * prerequisite line require an answer rather than a feat.
@@ -4154,6 +4420,10 @@ export interface Character {
 
   // --- choices ---
   languages: string[];
+  /** The subset of `languages` that came from THIS MORNING's answer (Ancestral Linguistics) rather
+   *  than from the build. Populated in `applyPlayState`; both language pills read it, so a language
+   *  that lapses at the next preparation does not render identically to one you actually know. */
+  dailyLanguages?: string[];
   feats: FeatChoice[];
   /** Class features force-granted via Overrides (rendered in the Feats & Features list). */
   grantedFeatures?: { featureId: string; name: string; level: number; description: string; descRefs?: DescRef[]; traits: Trait[]; actionCost?: ActionCost; rarity?: Rarity }[];

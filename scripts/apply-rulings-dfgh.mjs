@@ -237,31 +237,55 @@ const close = src.indexOf('\n};', open);
 if (open < 0 || close < 0) throw new Error('registry: could not locate FEAT_SITUATIONAL');
 src = src.slice(0, close) + banner + entryLines.join('\n') + src.slice(close);
 
-// The marker / supersede / spell tables are generated wholesale, so they are ASSIGNED rather than
-// spliced. Each declaration is matched from `= {` to its closing brace, which covers both the empty
-// `= {};` this file starts life with and the multi-line body a previous run left behind.
-function assignTable(decl, body) {
+/*
+ * ⚠ THESE THREE TABLES USED TO BE ASSIGNED WHOLESALE, AND THAT WAS A LOADED GUN.
+ *
+ * This script builds `markers` from work/dfgh/raw.json alone — SIX records — and then wrote the whole
+ * `RECORD_MARKERS` object literal from it. That literal holds 119 entries today: the ruling-D/F/G/H
+ * six, the 12 oracle curses, the 36 from the feature audit, and every hand-authored row since. A
+ * single re-run of this file would have deleted 113 of them with no error and no way to notice, the
+ * same failure mode the apply-reviewed.ts serialiser had.
+ *
+ * MEASURED before the change: `node scripts/apply-rulings-dfgh.mjs --dry` reports "markers : 6
+ * records"; simulating its own assignTable in memory took RECORD_MARKERS from 119 entries to 6, and
+ * SPELL_MARKERS from 2 to 1.
+ *
+ * So they MERGE now, with the same semantics scripts/apply-sweep-b1.mjs already uses: existing keys
+ * win (a hand-authored row is authoritative and re-running is a no-op), new ones are appended sorted.
+ * A key this script owns and wants to CHANGE must be removed from the .ts by hand first — which is
+ * loud, unlike silently losing 113.
+ */
+function mergeTable(decl, entries, fmt) {
   const at = src.indexOf(decl);
   if (at < 0) throw new Error(`registry: could not find "${decl}"`);
   const openBrace = src.indexOf('{', at + decl.length - 1);
   let end = src[openBrace + 1] === '}' ? openBrace + 2 : src.indexOf('\n};', openBrace) + 3;
   // Step past the statement's own semicolon so re-running cannot leave `};;` behind.
   while (src[end] === ';') end++;
-  src = src.slice(0, at) + `${decl} {\n${body}\n};` + src.slice(end);
+  const body = src.slice(openBrace + 1, end - 2).replace(/^\n+|\n+$/g, '');
+  const have = new Set([...body.matchAll(/^\s*['"]?([a-z0-9-]+)['"]?\s*:/gm)].map((m) => m[1]));
+  const added = [...entries.entries()].filter(([k]) => !have.has(k)).sort(([a], [b]) => a.localeCompare(b));
+  for (const [k] of entries) if (have.has(k)) skippedTable.push(`${k}: already in ${decl.split(' ')[2].replace(':', '')}`);
+  if (!added.length) return;
+  const next = [body, ...added.map(fmt)].filter(Boolean).join('\n');
+  src = src.slice(0, at) + `${decl} {\n${next}\n};` + src.slice(end);
 }
-const table = (m, fmt) => [...m.entries()].sort(([a], [b]) => a.localeCompare(b)).map(fmt).join('\n');
+const skippedTable = [];
 
-assignTable(
+mergeTable(
   'export const RECORD_MARKERS: Record<string, RecordMarker[]> =',
-  table(markers, ([id, ms]) => `  "${id}": [${ms.join(', ')}],`),
+  markers,
+  ([id, ms]) => `  "${id}": [${ms.join(', ')}],`,
 );
-assignTable(
+mergeTable(
   'export const SITUATIONAL_SUPERSEDES: Record<string, string[]> =',
-  table(supersedes, ([id, ids]) => `  "${id}": [${ids.map((x) => `'${esc(x)}'`).join(', ')}],`),
+  supersedes,
+  ([id, ids]) => `  "${id}": [${ids.map((x) => `'${esc(x)}'`).join(', ')}],`,
 );
-assignTable(
+mergeTable(
   'export const SPELL_MARKERS: Record<string, SpellMarker[]> =',
-  table(spellMarks, ([id, ms]) => `  "${id}": [${ms.join(', ')}],`),
+  spellMarks,
+  ([id, ms]) => `  "${id}": [${ms.join(', ')}],`,
 );
 
 // ---- F's display-only modes into core.json ----
@@ -274,6 +298,10 @@ core.modes = Object.fromEntries([...kept, ...modes.map((m) => [m.id, m])]);
 
 console.log(`\nregistry : +${entryLines.length} records / ${bonusCount} bonuses`);
 console.log(`markers  : ${markers.size} records mark an action or condition`);
+if (skippedTable.length) {
+  console.log(`  ${skippedTable.length} table entries left alone (the live file wins — see the mergeTable note):`);
+  for (const s of skippedTable) console.log('     ' + s);
+}
 console.log(`spells   : ${spellMarks.size} spells carry a marker`);
 console.log(`supersede: ${supersedes.size} set entries replace a piece's`);
 console.log(`modes    : ${modes.length} display-only pills for timed ally effects`);

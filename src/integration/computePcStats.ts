@@ -67,7 +67,7 @@ export function computePcStats(c: Character, content: ContentDatabase): PcStats 
   }, undefined);
 
   const senses = safe(() => {
-    const list = deriveDefenses(c, content).senses.map((s) => s.name ?? '').filter(Boolean);
+    const list = deriveDefenses(c, content).senses.filter((s) => !s.superseded).map((s) => s.name ?? '').filter(Boolean);
     return list.length ? list.join(', ') : undefined;
   }, undefined);
 

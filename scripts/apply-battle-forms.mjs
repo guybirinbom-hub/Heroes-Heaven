@@ -41,6 +41,9 @@ const SCENT30 = { name: 'scent', range: 30, acuity: 'imprecise' };
 const DARKVISION = { name: 'darkvision' };
 
 /**
+ * ⚠ THE TRAIT LINE IS PART OF THE BLOCK. All 16 modes shipped with the stat lines transcribed and the
+ * spell's "you gain the <x> trait" sentence left out — a creature trait is a statistic the Details tab
+ * prints, not flavour. If a form's printed block states a trait, it carries `creatureTraits`.
  * PEST FORM's printed statistics (1st rank). "AC = 15 + your level" is a FORMULA, not a number —
  * which is why `BattleForm.ac` accepts a string: authored as the flat 15 it printed, a 10th-level
  * druid would have walked around at AC 15.
@@ -65,6 +68,7 @@ const MODES = {
   'critter-shape': {
     name: 'Critter Shape',
     feats: ['critter-shape'],
+    creatureTraits: ['animal'], // spell-1626 pest form: "While in this form, you gain the animal trait"
     duration: 'up to 10 minutes, once per hour',
     battleForm: PEST_FORM,
     note: `Critter Shape: the effect of a 1st-rank pest form, in an animal matching your inherent animal. ${PEST_NOTE}`,
@@ -72,12 +76,14 @@ const MODES = {
   'rat-form': {
     name: 'Rat Form',
     feats: ['rat-form'],
+    creatureTraits: ['animal'], // spell-1626 pest form
     battleForm: PEST_FORM,
     note: `Rat Form: the effect of a 1st-rank pest form, as a Tiny rat. ${PEST_NOTE}`,
   },
   'crawling-form': {
     name: 'Crawling Form',
     feats: ['crawling-form'],
+    creatureTraits: ['animal'], // spell-1626 pest form
     battleForm: PEST_FORM,
     note: `Crawling Form: the effect of a 1st-rank pest form, in a shape matching your heritage. ${PEST_NOTE}`,
   },
@@ -85,6 +91,7 @@ const MODES = {
   'bat-form': {
     name: 'Bat Form',
     feats: ['bat-form'],
+    creatureTraits: ['animal'], // spell-1626 pest form
     duration: 'once per hour',
     // 4th-rank pest form is the 1st-rank block plus "a fly Speed of 20 feet". `speeds` REPLACES the
     // block outright, so the land Speed has to be restated or the bat would lose it.
@@ -94,6 +101,7 @@ const MODES = {
   'form-of-the-bat': {
     name: 'Form of the Bat',
     feats: ['form-of-the-bat'],
+    creatureTraits: ['animal'], // spell-1626 pest form
     duration: 'once per hour',
     battleForm: { ...PEST_FORM, speeds: { land: 20, fly: 20 } },
     note: `Form of the Bat: the effect of a 4th-rank pest form, always a bat. ${PEST_NOTE}`,
@@ -102,6 +110,7 @@ const MODES = {
   'a-little-bird-told-me': {
     name: 'A Little Bird Told Me',
     feats: ['a-little-bird-told-me'],
+    creatureTraits: ['animal'], // feat-7602: "You become Tiny, gain the animal trait"
     battleForm: { ac: '20+@actor.level', speeds: { fly: 25 }, senses: [LOW_LIGHT, SCENT30], size: 'Tiny', noStrikes: true },
     note:
       'A Little Bird Told Me: AC = 20 + your level, fly Speed 25 feet, weakness 5 to physical damage, low-light ' +
@@ -115,6 +124,7 @@ const MODES = {
   'ancestors-rage': {
     name: 'Ancestors’ Rage (canine)',
     feats: ['ancestors-rage'],
+    creatureTraits: ['animal'], // spell-1440 animal form: "you gain the animal trait"
     duration: 'once per day, 5th-rank animal form',
     battleForm: {
       ac: '18+@actor.level',
@@ -134,6 +144,7 @@ const MODES = {
   'form-of-the-beloved-mother': {
     name: 'Form of the Beloved Mother (snake)',
     feats: ['form-of-the-beloved-mother'],
+    creatureTraits: ['animal'], // spell-1440 animal form
     duration: 'once per day, 5th-rank animal form',
     battleForm: {
       ac: '18+@actor.level',
@@ -158,6 +169,7 @@ const MODES = {
   'storm-form': {
     name: 'Storm Form (air elemental)',
     feats: ['storm-form'],
+    creatureTraits: ['air', 'elemental'], // spell-1510 elemental form: "you gain the corresponding trait and the elemental trait"
     duration: 'once per day, 7th-rank elemental form',
     battleForm: {
       ac: '22+@actor.level',
@@ -223,6 +235,7 @@ const MODES = {
   'worm-form-purple-worm': {
     name: 'Worm Form (purple worm)',
     feats: ['worm-form'],
+    creatureTraits: ['animal'], // feat-4368: "While in this form, you gain the animal trait."
     battleForm: {
       ac: '20+@actor.level',
       attackMod: 25,
@@ -244,6 +257,7 @@ const MODES = {
   'worm-form-hybrid': {
     name: 'Worm Form (humanoid-worm hybrid)',
     feats: ['worm-form'],
+    creatureTraits: ['animal'], // feat-4368, same clause
     battleForm: {
       ac: '20+@actor.level',
       attackMod: 25,
@@ -265,6 +279,7 @@ const MODES = {
   'dragon-transformation': {
     name: 'Dragon Transformation',
     feats: ['dragon-transformation'],
+    creatureTraits: ['dragon'], // spell-1502 dragon form: "you gain the dragon trait"
     duration: 'while raging',
     // No `ac` and no `attackMod`: the feat says "you use your own AC and attack modifier", and an
     // absent field is the only way to say "keep yours". No `strikes` either — the dragon Strikes are
@@ -286,6 +301,7 @@ const MODES = {
   'animal-rage': {
     name: 'Animal Rage',
     feats: ['animal-rage'],
+    creatureTraits: ['animal'], // spell-1440 animal form
     duration: 'while raging',
     // Animal Rage explicitly keeps your statistics, temporary HP and unarmed attacks, so the only
     // things the form really overrides are the senses animal form grants. Speed is per-animal and the
@@ -301,6 +317,7 @@ const MODES = {
   'bone-swarm': {
     name: 'Bone Swarm',
     feats: ['bone-swarm'],
+    creatureTraits: ['swarm'], // feat-3543: "You become Huge, gain the swarm trait"
     duration: 'up to 1 minute, once per day',
     // The text states a size and a fly Speed and nothing else about AC or attacks, so nothing else is
     // written: your AC stays yours, which is what the ability means by saying nothing about it.
