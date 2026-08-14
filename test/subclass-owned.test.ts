@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { ownedFeatureIds } from '../src/rules/derive';
+import { subclassAnchorAt, subclassAnchorLevel } from '../src/rules/build';
 
 /**
  * The subclass you picked is a class feature you own.
@@ -71,5 +72,59 @@ describe('a chosen subclass is owned', () => {
     const want = db.classFeatures[granting.opt.id].grantedStrikes![0].name.toLowerCase();
     const times = (ch.naturalAttacks ?? []).filter((n) => n.name.toLowerCase() === want).length;
     expect(times).toBe(1);
+  });
+});
+
+/**
+ * A SUBCLASS IS CHOSEN ONCE — the picker must not come back at a later level.
+ *
+ * `subclassAnchorAt` decided which level renders the Doctrine / Bloodline / Innovation card by matching
+ * the subclass NAME against each level's feature names, and its fallback branch accepted any feature
+ * whose name merely CONTAINED it. PF2e names later features after the choice constantly, so a 3rd-level
+ * cleric was shown the Doctrine card again — with a Replace button and its granted Domain Initiate
+ * sub-choice — for a decision made at 1st.
+ *
+ * MEASURED when it was found: 21 spurious pickers across 5 classes. Cleric 6 levels (Second, Third,
+ * Fourth, Fifth and Final Doctrine), summoner 8 (Eidolon Symbiosis, Greater Eidolon Specialization, …),
+ * inventor 3 (Breakthrough Innovation), witch 2 (Patron's Gift), sorcerer 2 (Bloodline Paragon).
+ *
+ * The guard is the INVARIANT, not the five names: tightening the string match would have fixed the ones
+ * we knew about and left the next one for a player to find. This sweeps every class and every level.
+ */
+describe('the subclass picker appears at exactly one level', () => {
+  const con = content();
+  const withSubclass = () => Object.entries(con.classes).filter(([, c]) => !!c?.subclass);
+
+  it('never re-offers a choice the character already made', () => {
+    const offenders: string[] = [];
+    for (const [id] of withSubclass()) {
+      const b = { classId: id, level: 20, featPicks: {} } as unknown as Parameters<typeof subclassAnchorAt>[0];
+      const levels: string[] = [];
+      for (let lvl = 1; lvl <= 20; lvl++) {
+        const a = subclassAnchorAt(b, con, lvl);
+        if (a) levels.push(`${lvl}:${a}`);
+      }
+      if (levels.length !== 1) offenders.push(`${id} offered at ${levels.length} levels — ${levels.join(', ')}`);
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  /* The other half. A guard that only forbids duplicates is satisfied by returning null everywhere,
+   * which would hide the picker entirely and leave the class unpickable. */
+  it('and every class with a subclass still has one', () => {
+    const lost: string[] = [];
+    for (const [id] of withSubclass()) {
+      const b = { classId: id, level: 20, featPicks: {} } as unknown as Parameters<typeof subclassAnchorAt>[0];
+      const lvl = subclassAnchorLevel(b, con);
+      if (lvl == null || !subclassAnchorAt(b, con, lvl)) lost.push(id);
+    }
+    expect(lost).toEqual([]);
+    expect(withSubclass().length).toBeGreaterThanOrEqual(18);
+  });
+
+  it('and the cleric picks a Doctrine at 1st, not again at 3rd', () => {
+    const b = { classId: 'cleric', level: 20, featPicks: {} } as unknown as Parameters<typeof subclassAnchorAt>[0];
+    expect(subclassAnchorAt(b, con, 1)).toBe('doctrine');
+    for (const lvl of [3, 7, 11, 15, 19]) expect(subclassAnchorAt(b, con, lvl)).toBeNull();
   });
 });

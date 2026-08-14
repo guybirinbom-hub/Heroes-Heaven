@@ -803,7 +803,9 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
  * Shared so the card that RENDERS the picker and the count that says it is unanswered can never
  * disagree about which level owns it.
  */
-export function subclassAnchorAt(build: BuildState, content: ContentDatabase, lvl: number): string | null {
+/** The class feature at `lvl` whose NAME identifies it as the subclass choice, ignoring how many times
+ *  the class re-uses that word later. Not exported: on its own it is not the anchor — see below. */
+function subclassAnchorCandidate(build: BuildState, content: ContentDatabase, lvl: number): string | null {
   const cls = build.classId ? content.classes[build.classId] : undefined;
   if (!cls?.subclass) return null;
   const g = levelGrants(
@@ -815,13 +817,42 @@ export function subclassAnchorAt(build: BuildState, content: ContentDatabase, lv
   const sn = norm(cls.subclass.name);
   const exact = g.features.find((f) => norm(f.name) === sn);
   if (exact) return exact.id;
+  /* The loose branch exists because a class's anchoring FEATURE is not always named exactly like its
+   * subclass. It is also what made this fuzzy enough to match "Second Doctrine", so it is only ever
+   * consulted through `subclassAnchorAt`, which keeps the first hit and discards the rest. */
   return g.features.find((f) => { const fn = norm(f.name); return fn.includes(sn) || sn.includes(fn); })?.id ?? null;
+}
+
+/**
+ * The class feature at `lvl` that anchors the subclass choice — or null, which is the answer at every
+ * level except one.
+ *
+ * ⚠ A SUBCLASS IS CHOSEN ONCE. This used to return a match at every level whose feature name merely
+ * CONTAINED the subclass name, and PF2e names its later features after the choice constantly, so the
+ * builder re-rendered the picker — with a Replace button and the granted feat's sub-choices — long
+ * after the decision was made. A 3rd-level cleric was invited to re-pick their Doctrine and its Domain.
+ *
+ * MEASURED before the fix: 21 spurious pickers across 5 classes — cleric 6 levels ("Second/Third/…
+ * Doctrine"), summoner 8 ("Eidolon Symbiosis", "Greater Eidolon Specialization", …), inventor 3
+ * ("Breakthrough Innovation"), witch 2 ("Patron's Gift"), sorcerer 2 ("Bloodline Paragon").
+ *
+ * The fix is the INVARIANT, not the name matching: whatever the later features are called, only the
+ * earliest level that anchors counts. Tightening the string match would have fixed the five names we
+ * know and left the sixth for a player to find.
+ */
+export function subclassAnchorAt(build: BuildState, content: ContentDatabase, lvl: number): string | null {
+  const here = subclassAnchorCandidate(build, content, lvl);
+  if (!here) return null;
+  for (let earlier = 1; earlier < lvl; earlier++) {
+    if (subclassAnchorCandidate(build, content, earlier)) return null; // already chosen, and not here
+  }
+  return here;
 }
 
 /** The level at which the class's subclass is chosen, or null. */
 export function subclassAnchorLevel(build: BuildState, content: ContentDatabase): number | null {
   for (let lvl = 1; lvl <= Math.max(1, build.level); lvl++) {
-    if (subclassAnchorAt(build, content, lvl)) return lvl;
+    if (subclassAnchorCandidate(build, content, lvl)) return lvl;
   }
   return null;
 }
