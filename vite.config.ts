@@ -124,6 +124,14 @@ function stripBuildOnlyAssets(): Plugin {
       }
       drop('core.foundry-backup.json');
 
+      /* Any stray BACKUP left in public/. Vite copies that folder verbatim, so a file parked there
+       * during a data migration gets packaged into the installer and shipped to every user —
+       * `public/core.json.pre-aonid.bak` was riding along at 9 MB, a quarter of the download. Matched
+       * by shape rather than by name so the next one does not have to be noticed first. */
+      for (const f of readdirSync(root)) {
+        if (/\.(bak|orig|old)$|\.pre-[\w-]+\.json$|~$/.test(f)) drop(f);
+      }
+
       if (!removed.length) return;
       const total = removed.length;
       // Report the total, not the list — 60-odd buckets would bury the build output.
