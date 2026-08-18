@@ -74,11 +74,20 @@ const RARITY = new Set(['common', 'uncommon', 'rare', 'unique']);
 // bucket (CAT_BUCKET) and not a heavy entity stat-block (REF_SKIP) becomes a reference bucket automatically.
 // Entity stat-blocks are skipped: they're large, rarely linked from builder content, and belong to a later
 // step. camelCase keeps the internal bucket key valid; the key is arbitrary (resolveTo emits "bucket:slug").
+// ⚠ These are the HEAVY entity stat-blocks only. Five smaller categories used to sit in this list and
+// were shipped by scripts/import-archive-buckets.mjs instead — kingdom-structure (76), kingdom-event
+// (45), creature-theme-template (16), creature-adjustment (54 after dropping reprinted legacy) and
+// campsite-meal (27, which the owner ruled should be buyable items with no encoded effect). None is a
+// stat-block, all carry a parsed ast, and none was reachable while they were skipped here. Removed so a
+// regen keeps producing them; keep the genuine stat-blocks below.
 const REF_SKIP = new Set([
   'creature', 'npc', 'hazard', 'weather-hazard', 'creature-ability', 'creature-family',
-  'creature-adjustment', 'creature-theme-template', 'eidolon', 'article', 'class-sample',
-  'warfare-army', 'warfare-tactic', 'kingdom-event', 'kingdom-structure', 'campsite-meal', 'cult-activity',
+  'eidolon', 'article', 'class-sample',
+  'warfare-army', 'warfare-tactic', 'cult-activity',
 ]);
+// campsite-meal lands in `items` rather than a bucket of its own (the owner's ruling), so it is a
+// CAT_BUCKET entry, not a reference bucket.
+CAT_BUCKET['campsite-meal'] = 'items';
 const camel = (s) => String(s).replace(/-(\w)/g, (_, c) => c.toUpperCase());
 const REFERENCE_BUCKETS = new Set();
 
@@ -399,7 +408,28 @@ function parseActionCost(str) {
   if (s === 'free action' || s === 'free') return { type: 'free' };
   return { type: 'passive' };
 }
+/**
+ * Every class the APP has — not merely every class the Foundry base file had.
+ *
+ * `featCategory` calls a feat a CLASS feat when one of its traits is a class slug, and `cur` is the
+ * Foundry-sourced reference. A class authored after that file was made is therefore invisible here
+ * and all of its feats are filed `general` instead. Measured 2026-08-16: every one of the 52
+ * runesmith and 74 necromancer feats came out `general`, which left "runesmith feat" at 1st level a
+ * slot nothing could fill — a class you can pick and then cannot build.
+ *
+ * Hand-authored classes live in `work/new-classes/*.json` and are merged by
+ * `scripts/import-new-classes.mjs`, which runs AFTER this, so their ids are read from there.
+ */
 const classSlugs = new Set(Object.keys(cur.classes || {}));
+try {
+  const authoredDir = 'work/new-classes';
+  if (existsSync(authoredDir)) {
+    for (const f of readdirSync(authoredDir).filter((x) => x.endsWith('.json'))) {
+      const id = JSON.parse(readFileSync(join(authoredDir, f), 'utf8'))?.class?.id;
+      if (id) classSlugs.add(id);
+    }
+  }
+} catch { /* no authored classes is the normal case */ }
 const ancestrySlugs = new Set(Object.keys(cur.ancestries || {}));
 function featCategory(traits) {
   const t = new Set(traits);

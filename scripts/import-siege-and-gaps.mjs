@@ -39,6 +39,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
+import { plain, unlink, decode, ACTION_WORD } from './lib/aon-plain.mjs';
 
 /** The PRISTINE AoN mirror (one JSON file per record). Facets + markdown come from here. */
 const SRC = process.env.AON_MIRROR || 'C:/wonderers guide/aon-2e-archive/data/by-category';
@@ -58,36 +59,16 @@ const OUT = argv.includes('--out') ? argv[argv.indexOf('--out') + 1] : CORE;
 const slug = (s) =>
   String(s).toLowerCase().normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
-const ENTITIES = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&nbsp;': ' ', '&ndash;': '–', '&mdash;': '—' };
-const decode = (s) => s.replace(/&(amp|lt|gt|quot|#39|nbsp|ndash|mdash);/g, (m) => ENTITIES[m] ?? m);
-
-/** `[label](url)` -> `label`. Run BEFORE any line-based processing. */
-const unlink = (md) => String(md ?? '').replace(/\r/g, '').replace(/\[([\s\S]*?)\]\((?:[^()]|\([^()]*\))*\)/g, '$1');
-
-/** AoN ships ~829 documents with UNSUBSTITUTED cross-reference templates (`<%EQUIPMENT%3021%%>label<%END>`).
- *  Drop the markers and keep the label (see audit note project_aon_text_formatting_issues). */
-const stripTemplates = (s) => (s.indexOf('<%') === -1 ? s : s.replace(/<%[^>]*?>/g, '').replace(/ {2,}/g, ' '));
-
-/** AoN markdown -> plain text: unwrap links, drop tags, keep list/paragraph breaks. */
-function plain(md) {
-  let s = stripTemplates(unlink(md));
-  s = s.replace(/<br\s*\/?>/g, '\n');
-  s = s.replace(/<actions\s+string="([^"]*)"\s*\/>/g, (_, a) => ` (${ACTION_WORD[a] ?? a}) `);
-  s = s.replace(/<\/li>\s*<li>/g, '\n• ');
-  s = s.replace(/<ul>\s*<li>/g, '\n• ').replace(/<\/li>\s*<\/ul>/g, '\n');
-  s = s.replace(/<[^>]*>/g, '');
-  s = s.replace(/\*\*/g, '');
-  s = s.replace(/(^|[\s(“"'[])_(?=\S)/g, '$1').replace(/(?<=\S)_(?=$|[\s).,;:!?”"'\]])/g, '');
-  s = decode(s);
-  // AoN's own typography defects: a hard-wrapped "10- foot burst", the degree sign variants.
-  s = s.replace(/(\d)-\s+(foot|ft)\b/g, '$1-$2');
-  return s.replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n').split('\n').map((l) => l.trimEnd()).join('\n').trim();
-}
-
-const ACTION_WORD = {
-  'Single Action': '1 action', 'Two Actions': '2 actions', 'Three Actions': '3 actions',
-  'Free Action': 'free action', Reaction: 'reaction',
-};
+/*
+ * `plain`, `unlink`, `decode` and ACTION_WORD now live in scripts/lib/aon-plain.mjs (imported at the top
+ * of this file).
+ *
+ * They HAVE to be shared. A repair script can only tell whether an artefact in stored prose came from
+ * this transform or from AoN's own text by applying the identical function; a second copy answers that
+ * question with a different function and quietly gets it wrong. Two artefacts this code used to
+ * introduce — a literal " ()" from `<actions string="" />`, and a newline kept from inside a link label —
+ * are documented there with the evidence that found them.
+ */
 
 const readCat = (cat) => {
   const dir = join(SRC, cat);
@@ -100,7 +81,17 @@ const readCat = (cat) => {
 /* ------------------------------------------------------------------ core.json context */
 
 const core = JSON.parse(readFileSync(CORE, 'utf8'));
-const BUCKETS = ['siegeWeapons', 'heritages', 'deities', 'languages', 'archetype'];
+const BUCKETS = ['siegeWeapons', 'heritages', 'deities', 'languages', 'archetype', 'familiarAbilities', 'animalCompanions'];
+
+/**
+ * Slugs `topUpCarried` adds, so `writeAst` knows which trees it may write and leaves every
+ * pre-existing record's alone.
+ *
+ * Declared HERE, above the function that fills it. `const` is in its temporal dead zone until its
+ * own declaration executes — putting these sets down beside OWNED_IDS (which appears later in the
+ * file) threw "Cannot access 'OWNED_IDS' before initialization" at run time, not at parse time.
+ */
+const TOPPED_UP = { familiarAbilities: new Set(), animalCompanions: new Set() };
 
 /** book display name -> edition, from core.json's own `source` catalog ("Battlecry!" -> remaster-era). */
 const bookEdition = {};
@@ -631,6 +622,79 @@ function buildLanguages() {
   return out;
 }
 
+/* ==================================================================== carried-bucket top-up */
+
+/**
+ * The buckets `import-core-v2.mjs` copies WHOLESALE from the previous core.json instead of rebuilding.
+ *
+ * `CARRY_WHOLESALE` exists to protect hand-curated records (modes, stances, runes) from being
+ * clobbered by a regeneration. The cost is that a bucket on that list can never GAIN a record: the
+ * importer reads the old file and ignores the export entirely. Measured 2026-08-16, after the
+ * Impossible Magic delta — 78 familiar abilities and 7 animal-companion records existed in the
+ * mirror and could not reach the app however many times `npm run data` was run.
+ *
+ * ADD-ONLY, deliberately. An existing record is left byte-for-byte alone: that is the whole point of
+ * the carry list, and these buckets hold authored mechanics the mirror knows nothing about. This
+ * only fills in names the app has never seen.
+ */
+const CARRIED_TOPUP = [
+  { bucket: 'familiarAbilities', cats: ['familiar-ability', 'familiar-specific'], kind: 'familiar' },
+  { bucket: 'animalCompanions', cats: ['animal-companion', 'animal-companion-unique'] },
+];
+
+function topUpCarried() {
+  for (const { bucket, cats, kind } of CARRIED_TOPUP) {
+    const prevMap = core[bucket] ?? {};
+    const out = { ...prevMap };
+    const heldAon = new Set(Object.values(prevMap).map((r) => String(r?.aonId)).filter(Boolean));
+    /**
+     * ⚠ A SLUG CHECK ALONE IS NOT ENOUGH, and this is not theoretical.
+     *
+     * `animalCompanions` keys many records under something other than their slugged name — our Hyena
+     * does not live at `hyena`. Skipping only on `out[key]` would have added 74 SECOND COPIES of
+     * companions the app already holds: Hyena, Roc, Riding Tarantula, Durian Crab, Hermit Krait…
+     * Measured before anything was written. Match on the NAME too, since a duplicate name is what a
+     * player actually sees twice in a picker.
+     */
+    const nameKey = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+    const heldNames = new Set(Object.values(prevMap).map((r) => nameKey(r?.name)).filter(Boolean));
+    let added = 0;
+    for (const cat of cats) {
+      for (const rec of readCat(cat)) {
+        if (rec.exclude_from_search) continue;
+        const key = slug(rec.name ?? '');
+        if (!key || out[key]) continue; // never touch what is already there
+        if (heldNames.has(nameKey(rec.name))) continue; // …nor add a second copy under a new key
+        heldNames.add(nameKey(rec.name)); // two mirror docs can share a name (both "Jimothy")
+        /* A record superseded by one we already hold is a reprint, not a gap — the same rule the
+         * main importer applies, restated here because this path bypasses it. */
+        if (rec.superseded_by && heldAon.has(String(rec.superseded_by))) continue;
+        /* The PROSE, not just the identity. A record with no description and no ast renders an empty
+         * popup — measured at 98 of 209 familiar abilities when this wrote identity fields alone.
+         * `descRefsOf` emits a cross-reference only where the target resolves, so no ref is dead. */
+        const body = plain(rec.markdown ?? rec.text ?? '');
+        const refs = body ? descRefsOf(rec.markdown, body) : [];
+        out[key] = {
+          id: key,
+          name: rec.name,
+          ...(kind ? { kind } : {}),
+          ...(RARITY.has(rec.rarity) && rec.rarity !== 'common' ? { rarity: rec.rarity } : {}),
+          ...(sourceOf(rec.primary_source) ? { source: sourceOf(rec.primary_source) } : {}),
+          edition: editionOf(rec.primary_source),
+          aonId: String(rec.id),
+          ...(body ? { description: body } : {}),
+          ...(refs.length ? { descRefs: refs } : {}),
+        };
+        /* Claim the slug so writeAst() writes THIS record's tree and no pre-existing one's. */
+        TOPPED_UP[bucket]?.add(key);
+        added++;
+      }
+    }
+    stats[bucket] = { before: Object.keys(prevMap).length, after: Object.keys(out).length, added, refreshed: 0 };
+    core[bucket] = out;
+  }
+}
+
 /* ==================================================================== archetype reference entries */
 
 /**
@@ -681,6 +745,7 @@ core.heritages = buildHeritages();
 core.deities = buildDeities();
 core.languages = buildLanguages();
 core.archetype = buildArchetypes();
+topUpCarried();
 
 /* ==================================================================== ast (lazy-loaded descriptions)
  * Every record in core.json renders its description from public/ast/<bucket>.json — the pre-parsed
@@ -689,7 +754,14 @@ core.archetype = buildArchetypes();
  * from the same corpus the rest of public/ast was built from; internal links are re-pointed at
  * "bucket:slug" via public/idmap.json exactly like import-core-v2 does.
  */
-const AON_CATEGORY = { siegeWeapons: 'siege-weapon', heritages: 'heritage', deities: 'deity', languages: 'language', archetype: 'archetype' };
+const AON_CATEGORY = {
+  siegeWeapons: 'siege-weapon', heritages: 'heritage', deities: 'deity', languages: 'language',
+  archetype: 'archetype',
+  /* The carried buckets topped up above. Without these, a record arrives with an identity and no
+   * prose and no display tree — measured: 98 of the 209 familiar abilities could render NOTHING,
+   * because `topUpCarried` wrote {id,name,kind,source,edition,aonId} and stopped there. */
+  familiarAbilities: 'familiar-ability', animalCompanions: 'animal-companion',
+};
 
 /** The slugs this script authored — the only asts it may (re)write. Everything else in a bucket's
  *  ast file was produced by the full importer and is left exactly as found. */
@@ -698,6 +770,10 @@ const OWNED_IDS = {
   deities: new Set(DEITY_NAMES.map(slug)),
   languages: new Set(LANGUAGE_NAMES.map(slug)),
   archetype: new Set(ARCHETYPE_NAMES.map(slug)),
+  /* Filled by topUpCarried with exactly the slugs it added, so the ast pass writes those and leaves
+   * every pre-existing record's tree untouched. */
+  familiarAbilities: TOPPED_UP.familiarAbilities,
+  animalCompanions: TOPPED_UP.animalCompanions,
 };
 const ownsSlug = (bucket, s) => (bucket === 'siegeWeapons' ? !CURATED_SIEGE_IDS.has(s) : OWNED_IDS[bucket].has(s));
 

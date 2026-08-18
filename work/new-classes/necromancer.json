@@ -1,0 +1,461 @@
+{
+ "class": {
+  "id": "necromancer",
+  "name": "Necromancer",
+  "traits": [],
+  "rarity": "common",
+  "source": {
+   "book": "Pathfinder Impossible Magic"
+  },
+  "keyAbility": [
+   "int"
+  ],
+  "hpPerLevel": 8,
+  "perception": "trained",
+  "saves": {
+   "fortitude": "expert",
+   "reflex": "trained",
+   "will": "trained"
+  },
+  "attacks": {
+   "unarmed": "trained",
+   "simple": "trained",
+   "martial": "untrained",
+   "advanced": "untrained"
+  },
+  "defenses": {
+   "unarmored": "trained",
+   "light": "trained",
+   "medium": "untrained",
+   "heavy": "untrained"
+  },
+  "classDc": "trained",
+  "trainedSkills": {
+   "fixed": [
+    "occultism"
+   ],
+   "additional": 2,
+   "lore": "undead"
+  },
+  "features": [
+   {
+    "level": 1,
+    "featureId": "necromancer-spellcasting"
+   },
+   {
+    "level": 1,
+    "featureId": "grave-spells"
+   },
+   {
+    "level": 1,
+    "featureId": "fatal-method"
+   },
+   {
+    "level": 1,
+    "featureId": "grim-fascination"
+   },
+   {
+    "level": 1,
+    "featureId": "mastery-of-life-and-death"
+   },
+   {
+    "level": 1,
+    "featureId": "undead-lore"
+   },
+   {
+    "level": 3,
+    "featureId": "inevitable-return"
+   },
+   {
+    "level": 3,
+    "featureId": "mental-wards"
+   },
+   {
+    "level": 5,
+    "featureId": "reflex-expertise"
+   },
+   {
+    "level": 7,
+    "featureId": "expert-necromancy"
+   },
+   {
+    "level": 7,
+    "featureId": "perception-expertise"
+   },
+   {
+    "level": 11,
+    "featureId": "unnatural-fortitude"
+   },
+   {
+    "level": 11,
+    "featureId": "weapon-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "light-armor-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "weapon-specialization"
+   },
+   {
+    "level": 15,
+    "featureId": "master-necromancy"
+   },
+   {
+    "level": 17,
+    "featureId": "undying-resilience"
+   },
+   {
+    "level": 19,
+    "featureId": "epitaph"
+   },
+   {
+    "level": 19,
+    "featureId": "legendary-necromancy"
+   }
+  ],
+  "featProgression": {
+   "class": [
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20
+   ],
+   "skill": [
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20
+   ],
+   "general": [
+    3,
+    7,
+    11,
+    15,
+    19
+   ],
+   "ancestry": [
+    1,
+    5,
+    9,
+    13,
+    17
+   ]
+  },
+  "skillIncreaseLevels": [
+   3,
+   5,
+   7,
+   9,
+   11,
+   13,
+   15,
+   17,
+   19
+  ],
+  "spellcasting": {
+   "type": "prepared",
+   "tradition": "occult",
+   "keyAbility": "int",
+   "repertoire": false,
+   "progression": "psychic"
+  },
+  "focusSpells": [
+   "necrotic-bomb",
+   "create-thrall",
+   "thrall-charge"
+  ],
+  "subclass": {
+   "name": "Fatal Method",
+   "options": [
+    {
+     "id": "puppeteer",
+     "name": "Puppeteer",
+     "description": "You prefer to study life and death from afar. You gain the Consume Thrall action and the thrall proliferation ability.\n\n### Consume Thrall\n\n**Free Action** (concentrate, necromancer, occult)\n\n**Frequency** once per day; **Requirements** You have 0 Focus Points and at least one thrall with 30 feet of you; **Effects** You destroy one thrall within 30 feet of you and regain 1 Focus Point. You can spend this focus point only to cast a grave spell.\n\n### Thrall Proliferation\n\nOnce per round when you cast *create thrall*, you can create one additional thrall in range.",
+     "descRefs": [
+      {
+       "label": "create thrall",
+       "key": "spells"
+      }
+     ]
+    },
+    {
+     "id": "reaper",
+     "name": "Reaper",
+     "description": "You study flesh up close by clashing blade against bone. You gain the reaper's edge and thrall teamwork abilities.\n\n### Reaper's Edge\n\nYou become trained in martial weapons and medium armor. At 11th level, you become an expert in martial weapons, and at 13th you become an expert in medium armor.\n\n### Thrall Teamwork\n\nOnce per round after you cast *create thrall*, you can make a melee Strike as a free action against a creature within your melee reach that is adjacent to at least one of your thralls.",
+     "descRefs": [
+      {
+       "label": "create thrall",
+       "key": "spells"
+      }
+     ],
+     "grants": {
+      "armor": [
+       "medium"
+      ]
+     }
+    }
+   ]
+  },
+  "extraChoices": [
+   {
+    "id": "grim-fascination",
+    "name": "Grim Fascination",
+    "pickByLevel": {
+     "1": 1
+    },
+    "options": [
+     {
+      "id": "blood",
+      "name": "Blood",
+      "description": "Blood necromancers, also known as sanguimancers, manipulate their own blood and the flowing blood of their enemies. Your thralls often resemble vampiric spawn or constructs of hardened blood.\n\n**Grave Spell** Blood Infusion\n\n**Thrall Enhancement** Your thralls are enhanced with a drop of your blood, and when they fall, your blood returns to you. Whenever a thrall is destroyed, you regain 1 Hit Point. At 5th level and every 4 levels thereafter, the amount of Hit Points you regain when a thrall is destroyed increases by 1.",
+      "descRefs": [
+       {
+        "label": "Blood Infusion",
+        "key": "spells"
+       }
+      ],
+      "focusSpells": [
+       "blood-infusion"
+      ]
+     },
+     {
+      "id": "bone",
+      "name": "Bone",
+      "description": "Bone necromancers, also known as osteomancers, craft what they desire from the skeletons of the dead or simply create new skeletons by expanding and shaping small bone pieces.\n\n**Grave Spell** Bone Spear\n\n**Thrall Enhancement** Your thralls are well constructed and nimble. Each of your thralls' Speed is increased by 5 feet.",
+      "descRefs": [
+       {
+        "label": "Bone Spear",
+        "key": "spells"
+       }
+      ],
+      "focusSpells": [
+       "bone-spear"
+      ]
+     },
+     {
+      "id": "flesh",
+      "name": "Flesh",
+      "description": "Flesh necromancers, also known as caromancers, are experts at the destruction, production, and manipulation of flesh and muscles. Your thralls generally take on the form of zombies and other creatures of dead flesh.\n\n**Grave Spell** Dead Weight\n\n**Thrall Enhancement** You can still make use of a destroyed thrall's flesh. Whenever one of your thralls is destroyed, you can cause the thrall to leave behind difficult terrain in the space it was destroyed. The difficult terrain lasts 10 minutes.",
+      "descRefs": [
+       {
+        "label": "Dead Weight",
+        "key": "spells"
+       }
+      ],
+      "focusSpells": [
+       "dead-weight"
+      ]
+     },
+     {
+      "id": "spirit",
+      "name": "Spirit",
+      "description": "Spirit necromancers, also known as vitamancers, seek the secrets of the soul and play with the eternal energies of the living and dead. Your thralls often resemble ghosts and spirits.\n\n**Grave Spell** Life Tap\n\n**Thrall Enhancement** Your thralls, while still being tied to the physical world, have an incorporeal essence. Whenever one of your thralls Strikes, you can choose for that damage to be spirit or void damage instead of physical damage.",
+      "descRefs": [
+       {
+        "label": "Life Tap",
+        "key": "spells"
+       }
+      ],
+      "focusSpells": [
+       "life-tap"
+      ]
+     }
+    ]
+   }
+  ],
+  "edition": "remaster-era",
+  "aonId": "class-75"
+ },
+ "features": {
+  "necromancer-spellcasting": {
+   "id": "necromancer-spellcasting",
+   "name": "Necromancer Spellcasting",
+   "level": 1,
+   "description": "Your studies into the nature of life and death have resulted in the ability to cast occult spells. You are a spellcaster, and you can cast spells of the occult tradition using the Cast a Spell activity. As a necromancer, your chants are generally inspired by laments, requiems, and other rites for the dead, while your gestures evoke the unnatural movement of muscle and cracking of bone.\n\nAt 1st level, you can prepare one 1st-rank spell and five cantrips each morning from your dirge (see below). Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare each day is called your spell slots.\n\nAs you increase in level as a necromancer, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in the Necromancer Spells per Day table.\n\nSome of your spells require you to attempt a spell attack to see how effective they are or for your enemies to roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Intelligence, your spell attack modifier and spell DC use your Intelligence modifier.\n\n### Heightening Spells\n\nWhen you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they are heightened to certain ranks.\n\n### Cantrips\n\nSome of your spells are cantrips. A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up—this is usually equal to the highest rank of necromancer spell slot you have. For example, as a 1st-level necromancer, your cantrips are 1st-rank spells, and as a 5th-level necromancer, your cantrips are 3rd-rank spells.\n\n### Dirge\n\nYour occult spells become a part of an internal dirge that echoes throughout your body, bones, and even your spirit. Each day, to prepare your spells, you pull forth pieces of your dirge to vocalize. Your dirge contains your choice of eight occult cantrips, the 1st-rank spell harm, and four other 1st-rank occult spells of your choice. You choose these from the common spells on the occult spell list or from other occult spells you gain access to. You can prepare and cast *harm* as an occult spell.\n\nEach time you gain a level, you add two occult spells to your dirge, of any spell rank for which you have spell slots, chosen from common occult spells or others you gain access to and learn via Learn a Spell.",
+   "descRefs": [
+    {
+     "label": "Cast a Spell",
+     "key": "actions"
+    },
+    {
+     "label": "harm",
+     "key": "spells"
+    },
+    {
+     "label": "Learn a Spell",
+     "key": "actions"
+    }
+   ]
+  },
+  "grave-spells": {
+   "id": "grave-spells",
+   "name": "Grave Spells",
+   "level": 1,
+   "description": "Your necromantic prowess allows you to create unique effects called grave spells, which are a type of focus spell. It costs 1 Focus Point to cast a focus spell. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to speak to the dead, meditate on local supernatural activity, or contemplate anatomical truths. If you have a thrall when you begin Refocusing, you can destroy it to regain 2 Focus Points when you Refocus.\n\nFocus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points.\n\nYou gain the *necrotic bomb* grave spell and an additional grave spell from your grim fascination at 1st level. Therefore, you start with a focus pool of 2 Focus Points. You can learn additional grave spells through necromancer feats.\n\n### Grave Cantrips\n\nGrave cantrips are special grave spells that don't cost Focus Points, so you can use them as often as you like. Grave cantrips are granted in addition to the cantrips you choose with necromancer spellcasting. Unlike other cantrips, you can't swap out grave cantrips gained from necromancer feats at a later level, unless you swap out the specific feat via retraining. You learn the *create thrall* and *thrall charge* grave cantrips, which allow you to summon expendable thralls and manipulate them to do your bidding.",
+   "descRefs": [
+    {
+     "label": "Refocus",
+     "key": "actions"
+    },
+    {
+     "label": "necrotic bomb",
+     "key": "spells"
+    },
+    {
+     "label": "create thrall",
+     "key": "spells"
+    },
+    {
+     "label": "thrall charge",
+     "key": "spells"
+    }
+   ]
+  },
+  "fatal-method": {
+   "id": "fatal-method",
+   "name": "Fatal Method",
+   "level": 1,
+   "description": "As a necromancer, you select one fatal method at 1st level. This choice determines your combat style: a puppeteer who creates more thralls to fuel spells, or a reaper who becomes more combat-focused with weapons and armor."
+  },
+  "grim-fascination": {
+   "id": "grim-fascination",
+   "name": "Grim Fascination",
+   "level": 1,
+   "description": "As a necromancer, you select one grim fascination at 1st level. This fascination is a focus of necrotic study that you have developed a greater mastery over. However, grim fascinations don't prevent you from studying and using other forms of necromancy. Your choice of grim fascination grants you a grave spell and a thrall enhancement that applies to any thrall you create."
+  },
+  "mastery-of-life-and-death": {
+   "id": "mastery-of-life-and-death",
+   "name": "Mastery of Life and Death",
+   "level": 1,
+   "description": "You have studied the delicate balance of life and death to such a point that you can dance between them with ease. Whenever you Cast a Spell or use an ability that would deal void or vitality damage, you can choose for the spell to do either void or vitality damage to each target separately. When you Cast a Spell or use an ability that would affect or target only living creatures or only undead creatures, you can affect and target both. This does not apply to the healing effects of spells or abilities. For example, you could have the *harm* spell deal vitality damage to undead enemies, but it would not be able to heal living allies.",
+   "descRefs": [
+    {
+     "label": "harm",
+     "key": "spells"
+    }
+   ]
+  },
+  "undead-lore": {
+   "id": "undead-lore",
+   "name": "Undead Lore",
+   "level": 1,
+   "description": "Your dealings with death have expanded your knowledge of the macabre. You know the dead and what they are capable of. You become trained in Undead Lore, a special lore skill that can be used to Recall Knowledge regarding undead creatures, haunts, and effects caused by undead creatures or other necromancers, but that can't be used to Recall Knowledge of other topics. At 3rd level, you become an expert in Undead Lore; at 7th level, you become a master in Undead Lore; and at 15th level, you become legendary in Undead Lore.",
+   "descRefs": [
+    {
+     "label": "Recall Knowledge",
+     "key": "actions"
+    }
+   ]
+  },
+  "inevitable-return": {
+   "id": "inevitable-return",
+   "name": "Inevitable Return",
+   "level": 3,
+   "description": "The dead do not rest around you. You gain the Inevitable Return reaction.",
+   "descRefs": [
+    {
+     "label": "Inevitable Return",
+     "key": "actions"
+    }
+   ],
+   "grantsActions": [
+    "inevitable-return"
+   ]
+  },
+  "mental-wards": {
+   "id": "mental-wards",
+   "name": "Mental Wards",
+   "level": 3,
+   "description": "You have created wards to protect yourself against the mental effects caused by undead creatures and effects. Your proficiency rank for Will saves increases to expert. When you roll a success at a Will save against a mental or possession effect caused by an undead or haunt, you get a critical success instead.",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a Will save against a mental or possession effect caused by an undead or haunt",
+     "saves": [
+      "will"
+     ]
+    }
+   ]
+  },
+  "expert-necromancy": {
+   "id": "expert-necromancy",
+   "name": "Expert Necromancy",
+   "level": 7,
+   "description": "You wield the necromantic arts with greater finesse. Your proficiency ranks for spell attack modifier and spell DC increase to expert."
+  },
+  "unnatural-fortitude": {
+   "id": "unnatural-fortitude",
+   "name": "Unnatural Fortitude",
+   "level": 11,
+   "description": "Your body has been necromantically enhanced. Your proficiency rank for Fortitude saves increases to master. When you roll a success at a Fortitude save, you get a critical success instead.",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on any Fortitude save",
+     "saves": [
+      "fortitude"
+     ]
+    }
+   ]
+  },
+  "master-necromancy": {
+   "id": "master-necromancy",
+   "name": "Master Necromancy",
+   "level": 15,
+   "description": "The souls of the dead heed your beck and call. Your proficiency ranks for spell attack modifier and spell DC increase to master."
+  },
+  "undying-resilience": {
+   "id": "undying-resilience",
+   "name": "Undying Resilience",
+   "level": 17,
+   "description": "Your body has been necromantically enhanced. Your proficiency rank for Fortitude saves increases to legendary. When you roll a critical failure on a Fortitude save, you get a failure instead. When you fail a Fortitude save against a damaging effect, you take half damage.",
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "on any Fortitude save",
+     "saves": [
+      "fortitude"
+     ]
+    }
+   ]
+  },
+  "epitaph": {
+   "id": "epitaph",
+   "name": "Epitaph",
+   "level": 19,
+   "description": "From the deepest crypts of magical knowledge, you summon forth a spell of immense occult power. You gain a single 10th-level spell slot and can prepare a spell in that slot using necromancer spellcasting. You don't gain more 10th-level spells as you level up, unlike other spell slots, and you can't use 10th-level slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You can take the Mortem Ultimatum necromancer feat to gain a second slot.",
+   "descRefs": [
+    {
+     "label": "Mortem Ultimatum",
+     "key": "feats"
+    }
+   ],
+   "spellSlotBonus": {
+    "byRank": {
+     "10": 1
+    },
+    "createRank": true
+   }
+  },
+  "legendary-necromancy": {
+   "id": "legendary-necromancy",
+   "name": "Legendary Necromancy",
+   "level": 19,
+   "description": "Death in one hand, life in the other, you shape the cycles of necromancy. Your proficiency ranks for spell attack modifier and spell DC increase to legendary."
+  }
+ }
+}

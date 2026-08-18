@@ -1,0 +1,59 @@
+{
+ "modes": [
+  {
+   "id": "armor-in-earth",
+   "name": "Armor in Earth",
+   "feats": [
+    "armor-in-earth"
+   ],
+   "duration": "10 minutes (Dismissible; using the impulse again ends the old one)",
+   "modifiers": [],
+   "note": "Medium stone armor that uses your highest armor proficiency: AC Bonus +4, Dex Cap +1, Check Penalty -2, Speed Penalty -10 feet, Strength +3, Bulk 1, group plate. You gain its armor specialization effect. Any bonuses, runes and magical abilities of your actual armor are suppressed, but any runes that could apply to the stone armor are replicated onto it. At 3rd level the armor becomes HEAVY armor, its AC Bonus becomes +5, and it gains the bulwark armor trait. The app cannot swap armor statistics automatically — unequip your worn armor while this is active."
+  },
+  {
+   "id": "agile-shield-grip",
+   "name": "Agile Shield Grip",
+   "feats": [
+    "agile-shield-grip"
+   ],
+   "duration": "until you use Agile Shield Grip again to switch to a normal grip",
+   "modifiers": [],
+   "weaponTraits": {
+    "match": {
+     "items": [
+      "shield-boss",
+      "shield-spikes"
+     ]
+    },
+    "setDie": "d4",
+    "add": [
+     "agile"
+    ]
+   },
+   "note": "Requires you to be wielding a shield with a shield boss or shield spikes in one hand. Your shield boss and shield spikes weapon damage die drops to 1d4, and as long as it is 1d4 those Strikes gain the agile weapon trait — so their multiple attack penalty becomes -4/-8. Use Agile Shield Grip again to switch back to a normal grip."
+  },
+  {
+   "id": "bon-mot-backfired",
+   "name": "Bon Mot backfired",
+   "feats": [
+    "bon-mot"
+   ],
+   "duration": "1 minute, or until you issue another Bon Mot and succeed",
+   "modifiers": [
+    {
+     "value": -2,
+     "type": "status",
+     "target": "perception"
+    },
+    {
+     "value": -2,
+     "type": "status",
+     "target": "save",
+     "detail": "will"
+    }
+   ],
+   "note": "Bon Mot, critical failure: your quip is atrocious and you take the same penalty an enemy would have taken had you succeeded — a -2 status penalty to Perception and Will saves. It ends after 1 minute or if you issue another Bon Mot and succeed."
+  }
+ ],
+ "skipped": []
+}

@@ -99,3 +99,20 @@ scratchpad/
 # BACK THESE UP somewhere safe: losing the keystore means release updates can no longer be installed.
 signing/
 tsconfig.tsbuildinfo
+
+# Wanderer's Guide database dump — GPL-3.0 material, kept LOCAL as a comparison source only.
+# Never commit it: this repo ships proprietary, and vendoring GPL data here would relicense the app.
+work/wg/
+
+# Pre-change snapshots. These are local safety copies, not history: the data they
+# guard is verified by the guards in `npm run verify` (bestiary-fields-check,
+# render-check, aonid-integrity, classfeature-page-check, edition-drift-check,
+# process-parity). Committing them would add ~125 MB of duplicate JSON.
+work/*.bak
+public/*.bak
+public/data.pre-bestiary.bak/
+out.txt
+
+# Regenerable batch intermediates from the Wanderer's Guide parity pass. The
+# scripts that produce them ARE tracked; their outputs are not.
+work/wg-batch-*.json

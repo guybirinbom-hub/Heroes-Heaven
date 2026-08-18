@@ -137,6 +137,18 @@ const MANUAL = {
   'feats|Empathic Envoy': { status: 'doc', docId: 'feat-4115', how: 'manual:spelling' },
   'feats|Knight Vigilant Dedication': { status: 'doc', docId: 'feat-1092', how: 'manual:HH appends " Dedication" to archetype entry feats' },
   'actions|Swirl Crimson Shroud': { status: 'subblock', parentDocId: 'feat-6521', how: 'manual:probable — feat text does not say "Swirl"' },
+  /*
+   * The animist's Apparition Sense activity. The Archives file it as the FEAT feat-7120 of the same
+   * name, and the 10-minute activity is described inside that feat's text — so the action record is a
+   * section of it, exactly like the six Crypt of Runes activities above.
+   *
+   * The matcher could not see it because our action and their feat share a name but not a bucket, so
+   * the name lookup found a feat where it wanted an action. Verified against the live index
+   * (2026-08-15): one hit, feat-7120, War of Immortals; and core.json already carried
+   * aonParentId feat-7120 from an earlier stamping, which this now makes reproducible instead of
+   * a value nothing regenerates.
+   */
+  'actions|Apparition Sense': { status: 'subblock', parentDocId: 'feat-7120', how: 'manual:activity described inside the feat of the same name' },
   'vehicles|Flying Broom': { status: 'doc', docId: 'equipment-251', how: 'manual:word-order (equipment "Broom of Flying")' },
   /*
    * The Archives file the Norns under their TITLE, not their name: deity-322 is "Followers of Fate".
@@ -218,6 +230,24 @@ for (const [bucket, records] of Object.entries(core)) {
       entry = { status: 'scraped', docId: scrapedNames.get(name), how: '#220 targeted fetch' };
     } else if (DERIVED[name]) {
       entry = { status: 'derived', parentDocId: DERIVED[name], how: 'HH generates this from one archive feature' };
+    } else if (rec.aonId) {
+      /*
+       * LAST RESORT — a record that already carries its own `aonId`.
+       *
+       * Every branch above reconstructs provenance from stage-1 artefacts that only know about
+       * records the FULL importer built, so anything a targeted merger added
+       * (`import-siege-and-gaps.mjs`) came out "open" — and `stamp-aonid.mjs` then refuses to write
+       * at all, which silently dropped ALL 24,534 aonIds on the next regeneration. Measured: the 99
+       * familiar abilities and companions added on 2026-08-16 left two records unmapped and the
+       * stamp count fell to 99.
+       *
+       * ⚠ IT MUST STAY LAST. Placed earlier it OVERRULES the join, and the join is more precise: it
+       * knows a record is a graded BLOCK of a page (`equipment-5194-4715`) where the record's own
+       * field may hold the PAGE (`equipment-5194`). Soulheart flipped exactly that way when this ran
+       * early, and a page id makes the base artifact look like a family summary — which the umbrella
+       * rule then hides, deleting the item from the game. Caught by test/umbrella-items.test.ts.
+       */
+      entry = { status: 'doc', docId: String(rec.aonId), how: 'record carries its own aonId (targeted merge)' };
     } else {
       entry = { status: 'open', how: null };
       open.push({ bucket, key, name, book: (rec.source || {}).book || '' });

@@ -1,0 +1,232 @@
+{
+ "class": {
+  "id": "runesmith",
+  "name": "Runesmith",
+  "traits": [],
+  "rarity": "common",
+  "source": {
+   "book": "Pathfinder Impossible Magic"
+  },
+  "keyAbility": [
+   "int"
+  ],
+  "hpPerLevel": 8,
+  "perception": "trained",
+  "saves": {
+   "fortitude": "expert",
+   "reflex": "trained",
+   "will": "expert"
+  },
+  "attacks": {
+   "unarmed": "trained",
+   "simple": "trained",
+   "martial": "trained",
+   "advanced": "untrained"
+  },
+  "defenses": {
+   "unarmored": "trained",
+   "light": "trained",
+   "medium": "trained",
+   "heavy": "untrained"
+  },
+  "classDc": "trained",
+  "trainedSkills": {
+   "fixed": [
+    "crafting"
+   ],
+   "additional": 2,
+   "choice": [
+    "arcana",
+    "nature",
+    "occultism",
+    "religion"
+   ]
+  },
+  "features": [
+   {
+    "level": 1,
+    "featureId": "runes"
+   },
+   {
+    "level": 1,
+    "featureId": "runic-repertoire"
+   },
+   {
+    "level": 1,
+    "featureId": "shield-block"
+   },
+   {
+    "level": 2,
+    "featureId": "runic-crafter"
+   },
+   {
+    "level": 5,
+    "featureId": "weapon-expertise"
+   },
+   {
+    "level": 7,
+    "featureId": "expert-runes"
+   },
+   {
+    "level": 7,
+    "featureId": "reflex-expertise"
+   },
+   {
+    "level": 7,
+    "featureId": "runic-optimization"
+   },
+   {
+    "level": 9,
+    "featureId": "assured-runic-crafter"
+   },
+   {
+    "level": 11,
+    "featureId": "forged-endurance"
+   },
+   {
+    "level": 13,
+    "featureId": "medium-armor-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "perception-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "weapon-mastery"
+   },
+   {
+    "level": 15,
+    "featureId": "greater-runic-optimization"
+   },
+   {
+    "level": 15,
+    "featureId": "masterful-runes"
+   },
+   {
+    "level": 19,
+    "featureId": "legendary-runes"
+   },
+   {
+    "level": 19,
+    "featureId": "medium-armor-mastery"
+   }
+  ],
+  "featProgression": {
+   "class": [
+    1,
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20
+   ],
+   "skill": [
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20
+   ],
+   "general": [
+    3,
+    7,
+    11,
+    15,
+    19
+   ],
+   "ancestry": [
+    1,
+    5,
+    9,
+    13,
+    17
+   ]
+  },
+  "skillIncreaseLevels": [
+   3,
+   5,
+   7,
+   9,
+   11,
+   13,
+   15,
+   17,
+   19
+  ],
+  "edition": "remaster-era",
+  "aonId": "class-76"
+ },
+ "features": {
+  "runes": {
+   "id": "runes",
+   "name": "Runes",
+   "level": 1,
+   "description": "Through meticulous study, you have carved the knowledge of secret runes into your mind and body. You can apply special **runesmith runes** onto objects and creatures, which grant the bearer magical effects. You must know a rune to use it, and you learn runes via the runic repertoire class feature.\n\n### Applying Runes\n\nAll runes can be applied in one of two ways: a rune can be **etched** on or merely **traced**. An etched rune is carved, inked, or branded in; this application doesn't damage the creature or item. Etching or tracing runes requires an artisan's toolkit. Your magic can sustain up to two etched runes at a time, and this maximum increases as you go up in level. You can etch any number of runes up to your maximum during your daily preparations or by spending 10 minutes in exploration mode. Your etched runes remain indefinitely until they are expended or removed or until you etch more runes than your maximum, which causes your oldest rune to fade.\n\nA traced rune is drawn lightly in dust, light, or a similar fleeting medium. You can trace a rune with the Trace Rune action.\n\n### Invoking Runes\n\nMagic on your lips, you can pronounce the true name of a rune you have applied, calling it to power using invocation actions. You gain the Invoke Rune action.\n\n### Runic Magic\n\nRunes are magical effects. Some runes have a specific tradition trait; for instance, the elemental ranshu, rune of thunder is a primal rune. If a rune has the magical trait, you can choose to replace the magical trait with a specific tradition trait, provided you're trained in the skill matching that tradition. For instance, you could create an arcane _pluuna, rune of illumination_ if you were trained in Arcana.\n\nThough runes aren't spells, some things that affect spells also affect runes. Abilities that restrict you from casting spells (such as being polymorphed into a battle form) or protect against spells (such as a spell that protects against other spells or a creature's bonus to saves against spells) also apply to tracing or invoking runes, though you can continue to benefit from the effects of a rune that's already applied.\n\nAny runes that require a saving throw use your runesmith class DC. Rune you etch or trace have the same level as you, even if this would increase the rune's initial level. For instance, if you're 5th level, your runes would be 5th level (and their counteract rank would be 3rd rank), even if you gained the rune at 1st level. Similar to spells, many runes get more powerful as you increase in level. In these cases, the rune ends with one or more Level entries. This either lists the levels the rune gets an upgrade or has an entry with a plus sign that describes a benefit that increases on a regular basis. For instance, a 1st-level rune with a “Level (+4)” entry would get stronger at 5th, 9th, 13th, and 17th levels."
+  },
+  "runic-repertoire": {
+   "id": "runic-repertoire",
+   "name": "Runic Repertoire",
+   "level": 1,
+   "description": "The collection of runes that you know is called your runic repertoire. At 1st level, you learn four 1st-level runes of your choice. You choose these from the common runes on the rune list as well as any uncommon or rarer runes you have access to.\n\nAs you increase in level, you add more runes to your repertoire. You can add any rune to your repertoire as long as it is common (or you have access to it) and its level is equal to or less than your own.\n\n**Runesmith Runic Repertoire**\n\n| Your Level | Runic Repertoire | Max Etched Runes |\n| --- | --- | --- |\n| 1 | 4 | 2 |\n| 2 | 4 | 2 |\n| 3 | 4 | 2 |\n| 4 | 4 | 2 |\n| 5 | 6 | 3 |\n| 6 | 6 | 3 |\n| 7 | 6 | 3 |\n| 8 | 6 | 3 |\n| 9 | 8 | 4 |\n| 10 | 8 | 4 |\n| 11 | 8 | 4 |\n| 12 | 8 | 4 |\n| 13 | 10 | 5 |\n| 14 | 10 | 5 |\n| 15 | 10 | 5 |\n| 16 | 10 | 5 |\n| 17 | 12 | 6 |\n| 18 | 12 | 6 |\n| 19 | 12 | 6 |\n| 20 | 12 | 6 |"
+  },
+  "runic-crafter": {
+   "id": "runic-crafter",
+   "name": "Runic Crafter",
+   "level": 2,
+   "description": "Your study of secret runes leaves you well practiced in crafting their more common cousins. You gain the Magical Crafting skill feat, even if you don't meet the prerequisites. You automatically learn the formulas for the fundamental armor runes (armor potency and resilient), fundamental shield rune (reinforcing), and fundamental weapon runes (weapon potency and striking) as soon as your level equals each item's. You practice your runes so thoroughly you can draw them by heart and thus do not need a formula book to record the formula of any runes you learn how to create.\n\nAt 4th level and every 2 levels thereafter, you learn the formula for an armor or weapon property rune of your choice. The rune must be of your level or lower, and can be a common rune or another rune to which you have access."
+  },
+  "expert-runes": {
+   "id": "expert-runes",
+   "name": "Expert Runes",
+   "level": 7,
+   "description": "Your expertise in magical scripting lends further power to your runic magic. Your proficiency rank for your runesmith class DC increases to expert."
+  },
+  "runic-optimization": {
+   "id": "runic-optimization",
+   "name": "Runic Optimization",
+   "level": 7,
+   "description": "You've learned to draw upon the magic of weapon runes to deal greater damage. You deal 2 additional damage with weapons bearing a _striking rune_. This damage increases to 3 if the weapon bears a _greater striking rune_ and 4 if it bears a _major striking rune_."
+  },
+  "assured-runic-crafter": {
+   "id": "assured-runic-crafter",
+   "name": "Assured Runic Crafter",
+   "level": 9,
+   "description": "You're so used to tracing and etching runes in the field that when given the peace and quiet of a proper workshop, it's hard for things to go too astray. When you roll a check to Craft a magic item in downtime and that item is a permanent rune, you get the outcome one degree of success better than the result of your Crafting check."
+  },
+  "forged-endurance": {
+   "id": "forged-endurance",
+   "name": "Forged Endurance",
+   "level": 11,
+   "description": "Your body is toughened by long days immersed in crafting, without break for food or drink. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+  },
+  "greater-runic-optimization": {
+   "id": "greater-runic-optimization",
+   "name": "Greater Runic Optimization",
+   "level": 15,
+   "description": "Your weapon runes harmonize with your own innate magic, multiplying their damage even further. Your extra damage from runic optimization increases to 4 with weapons bearing a _striking rune_, 6 for a _greater striking rune_, and 8 for a _major striking rune_."
+  },
+  "masterful-runes": {
+   "id": "masterful-runes",
+   "name": "Masterful Runes",
+   "level": 15,
+   "description": "You are a true master of the magical brush, quill, and engraver. Your proficiency rank for your runesmith class DC increases to master."
+  },
+  "legendary-runes": {
+   "id": "legendary-runes",
+   "name": "Legendary Runes",
+   "level": 19,
+   "description": "The runes you carve are drawn with a legendary hand—each character precise, yet a style distinctly your own. Your proficiency rank for your runesmith class DC increases to legendary."
+  }
+ }
+}

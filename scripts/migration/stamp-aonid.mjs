@@ -21,12 +21,39 @@
  *   node scripts/migration/stamp-aonid.mjs
  *   node scripts/migration/stamp-aonid.mjs --write
  */
-import { readFileSync, writeFileSync, copyFileSync, existsSync } from 'node:fs';
-import { join as pjoin } from 'node:path';
+import { readFileSync, writeFileSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
+import { join as pjoin, join } from 'node:path';
+import { buildDocIndex, resolveDoc, linkIsPlausible } from '../lib/aonid-categories.mjs';
 
 const OUT = 'scripts/migration/out';
 const CORE = 'public/core.json';
+const EXPORT = 'C:/trying ai 2/hh-data-export/without-images/data';
 const WRITE = process.argv.includes('--write');
+
+/*
+ * The name-collision guard the `subblock`/`table` branch below already applies, extended to whole
+ * DOCUMENT matches.
+ *
+ * That branch refuses to stamp an unverified parent and gives the gems as its worked example —
+ * "`Alabaster` is filed under the feat `Alabaster Eyes`, `Emerald` under `Emerald Grasshopper`" — but a
+ * `doc`/`scraped` match skipped the check entirely, which is how three gemstones came to own a dragon,
+ * a familiar ability and a creature:
+ *
+ *     items/coral -> draconic-exemplar-8    items/jet -> familiar-ability-94    items/sard -> creature-792
+ *
+ * So: before writing a docId, confirm the document's category is one this bucket may point into. A
+ * rejected stamp leaves the record with no provenance — which is exactly what the comment below argues
+ * for, being better than a provenance known to be false.
+ */
+const docIndex = buildDocIndex(EXPORT, { readFileSync, readdirSync, join });
+const rejected = [];
+function plausibleDoc(bucket, key, docId) {
+  const { doc } = resolveDoc(docIndex, docId);
+  if (!doc) return true;                       // not in the export at all: not this guard's business
+  if (linkIsPlausible(bucket, doc.cat, key)) return true;
+  rejected.push(`${bucket}|${key}  -> ${docId}  (${doc.cat} "${doc.name}")`);
+  return false;
+}
 
 const { map } = JSON.parse(readFileSync(pjoin(OUT, 'map.json'), 'utf8'));
 const core = JSON.parse(readFileSync(CORE, 'utf8'));
@@ -54,7 +81,9 @@ for (const [bucket, records] of Object.entries(core)) {
     switch (m.status) {
       case 'doc':
       case 'scraped':
-        if (m.docId) { rec.aonId = m.docId; bump(m.status); } else { bump('doc WITHOUT AN ID'); }
+        if (!m.docId) { bump('doc WITHOUT AN ID'); break; }
+        if (!plausibleDoc(bucket, key, m.docId)) { bump(`${m.status} — WRONG KIND OF PAGE, not stamped`); break; }
+        rec.aonId = m.docId; bump(m.status);
         break;
       case 'subblock':
       case 'table': {
@@ -103,6 +132,12 @@ if (unmapped.length) {
 if (unresolved.length) {
   console.log(`\n${unresolved.length} records carry NO provenance yet — their parent was never verified.`);
   console.log('These are the NEED-LOOKUP set; stamping is still safe, they simply have no aon* field.');
+}
+if (rejected.length) {
+  console.log(`\n${rejected.length} document match(es) REJECTED — the page is a different kind of thing:`);
+  for (const r of rejected) console.log(`   ${r}`);
+  console.log('  Left unstamped on purpose. If one of these is actually correct, add it to BUCKET_QUIRK');
+  console.log('  in scripts/lib/aonid-categories.mjs with the evidence.');
 }
 
 const json = JSON.stringify(core);

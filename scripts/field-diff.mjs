@@ -51,7 +51,13 @@ const printedLevel = (m) => {
 const SETS = [
   ['items', ['equipment', 'weapon', 'armor', 'shield'], (r) => r.level],
   ['feats', ['feat'], (r) => r.level],
-  ['spells', ['spell'], (r) => r.rank],
+  /*
+   * `ritual` belongs here: the app keeps rituals in the `spells` bucket, and leaving the directory
+   * out meant a ritual could only ever be matched against a same-named SPELL. Wish is exactly that —
+   * ours is ritual-125, Player Core, Rare, while the Core Rulebook spell-377 of the same name is
+   * common — so the checker reported a rarity error against a record that is not the same thing.
+   */
+  ['spells', ['spell', 'ritual'], (r) => r.rank],
 ];
 
 let compared = 0;
@@ -78,6 +84,33 @@ for (const [coll, dirs, appLevel] of SETS) {
     if (!list.length) continue;
     compared++;
 
+    /*
+     * THE RECORD'S OWN DOCUMENT SETTLES IT, when we know which one that is.
+     *
+     * The source-book narrowing below is a good tiebreak but it is still reasoning about a name. Our
+     * records carry `aonId`, which names the exact document the record was built from, and a
+     * disagreement with THAT document is the only disagreement worth reporting. After the 2026-08-15
+     * import this cleared the last two rarity reports — Sleepwalker Dedication and Pact Broker were
+     * both being compared against a same-named record from another book, while their own documents
+     * (feat-8515, spell-2597) say "uncommon", exactly as the app does.
+     */
+    const own = rec.aonId ? list.find((m) => String(m.id) === String(rec.aonId)) : undefined;
+    if (own) {
+      const wantLevelOwn = printedLevel(own) ?? own.level;
+      const haveLevelOwn = appLevel(rec);
+      const isCantripOwn = coll === 'spells' && (rec.traits ?? []).includes('cantrip');
+      if (!isCantripOwn && wantLevelOwn > 0 && wantLevelOwn !== haveLevelOwn) {
+        unexplained.push({ coll, id, field: 'level', have: haveLevelOwn, want: wantLevelOwn });
+      }
+      const traitsOwn = (own.trait ?? []).map(norm);
+      const wantRarityOwn = RARITIES.find((x) => traitsOwn.includes(x)) ?? 'common';
+      const haveRarityOwn = norm(rec.rarity ?? 'common');
+      if (wantRarityOwn !== haveRarityOwn && norm(own.rarity ?? 'common') === wantRarityOwn) {
+        unexplained.push({ coll, id, field: 'rarity', have: haveRarityOwn, want: wantRarityOwn });
+      }
+      continue;
+    }
+
     // Narrow to one mirror record: by source book, then by preferring the remaster half.
     const distinct = new Set(list.map((m) => `${m.level}|${norm(m.rarity ?? 'common')}`));
     let matches = list;
@@ -98,6 +131,14 @@ for (const [coll, dirs, appLevel] of SETS) {
     const isCantrip = coll === 'spells' && (rec.traits ?? []).includes('cantrip');
     if (isCantrip) held.push({ coll, id, why: 'cantrip — rank 0 by design here, printed as "Cantrip 1"' });
     else if (wantLevel === 0) held.push({ coll, id, why: 'mirror level 0 — a graded family head, not this record' });
+    /*
+     * -1 is the mirror's SENTINEL for "this record prints no level", not a level below zero. Eight
+     * Impossible Magic relics arrived carrying it in the 2026-08-15 import — Alisendra's Fan,
+     * Augsten's Cudgel and the other named mementos — and every one was reported as
+     * `app 0 -> mirror -1`, which is the checker mistaking an absence for a disagreement. The app
+     * stores 0 for exactly the same absence, so there is nothing between them to fix.
+     */
+    else if (wantLevel < 0) held.push({ coll, id, why: 'mirror level -1 — the sentinel for "prints no level"' });
     else if (wantLevel !== haveLevel && m.level === wantLevel) unexplained.push({ coll, id, field: 'level', have: haveLevel, want: wantLevel });
 
     const traits = (m.trait ?? []).map(norm);

@@ -1578,5 +1578,52 @@
   "cost": {
    "type": "free"
   }
+ },
+ {
+  "name": "Avenger of Envy",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Avenger of Gluttony",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Avenger of Greed",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Avenger of Lust",
+  "via": "inline glyph",
+  "cost": {
+   "type": "reaction"
+  }
+ },
+ {
+  "name": "Avenger of Sloth",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
+ },
+ {
+  "name": "Avenger of Wrath",
+  "via": "inline glyph",
+  "cost": {
+   "type": "actions",
+   "value": 2
+  }
  }
 ]

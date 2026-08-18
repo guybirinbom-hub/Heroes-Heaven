@@ -42,6 +42,24 @@ const FIXES = [
     //  others the dragon has access to."
     fields: { languageChoices: 10 },
   },
+  {
+    id: 'officers-education',
+    /*
+     * "You become trained in two skills you are not already trained in, become an expert in one skill
+     *  you are currently trained in, LEARN ONE COMMON LANGUAGE YOU DO NOT ALREADY KNOW, and gain any
+     *  one general feat that you meet the prerequisites for."
+     *
+     * Four benefits; three were already carried — the skills by FEAT_SKILL_GRANTS and the general
+     * feat by FEAT_PICK_GRANTS — so a commander taking this got every picker except a language one,
+     * and the Languages card's budget never moved. Found by diffing against Wanderer's Guide, which
+     * encodes all four.
+     *
+     * ONE, not two, even though `maxTakable` is 2: `recordLanguageSlots` counts feat INSTANCES, so a
+     * second take supplies the second slot by itself. Writing 2 here would grant four languages to a
+     * commander who took it twice.
+     */
+    fields: { languageChoices: 1 },
+  },
 ];
 
 const core = JSON.parse(readFileSync(CORE, 'utf8'));

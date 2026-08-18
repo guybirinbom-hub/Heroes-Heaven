@@ -39,7 +39,19 @@ const SELF = {
     'fulu-familiar': { max: 1, per: 'day', maxByLevel: { 12: 2, 18: 3 } },
   },
   classFeatures: {
-    'patron-theme': { max: 1, per: 'round' },
+    /*
+     * ⚠ patron-theme was REMOVED here, deliberately. Do not add it back.
+     *
+     * The witch's Patron Theme prints "the benefit can occur only once per round when you Cast or
+     * Sustain a hex" — but that sentence limits the FAMILIAR'S ability, not the class feature, and
+     * Patron Theme itself is not a thing a character can use. `orphan-features.mjs` caught it as an
+     * unreachable record still carrying a live mechanical field, and the fix was to DELETE the field
+     * (effect-backfill.json holds `limitedUses: null`).
+     *
+     * Leaving the entry in this map would have re-authored it at the next run and silently undone
+     * that — the exact shape of failure this project keeps hitting: a fix in the overlay outlived by
+     * the script that owns the lane. Removed 2026-08-15; test/self-uses-owner.test.ts pins it.
+     */
     'cry-havoc': { max: 1, per: 'day' },
     'executioners-volley': { max: 1, per: 'day' },
     'valkyries-charge': { max: 1, per: 'day' },

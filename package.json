@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "data": "node scripts/import-core-v2.mjs && node scripts/import-siege-and-gaps.mjs && node scripts/split-descriptions.mjs && node scripts/migration/stamp-aonid.mjs --write",
+    "_data_note": "Order is load-bearing. stamp-aonid CLEARS and rewrites every aon* field from map.json, so the four steps after it must follow it, not precede it: import-archive-buckets adds the 5 categories REF_SKIP used to drop; fix-aonid-collisions re-applies the repoints and deletions stamping would undo; backfill-ast-edition needs the FINAL ast files and aonIds, so it is last but one; repair-topup-prose fixes prose the top-up wrote. All four are idempotent and report-only without --write.",
+    "data": "node scripts/import-core-v2.mjs && node scripts/import-siege-and-gaps.mjs && node scripts/split-descriptions.mjs && node scripts/migration/stamp-aonid.mjs --write && node scripts/import-archive-buckets.mjs --write && node scripts/fix-aonid-collisions.mjs --write && node scripts/backfill-ast-edition.mjs --write && node scripts/repair-topup-prose.mjs --write && node scripts/edition-drift-check.mjs --write",
     "data:foundry": "node scripts/import-core.mjs",
     "build": "tsc -b && vite build",
     "build:web": "vite build",
@@ -15,7 +16,8 @@
     "android:release": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android-release.ps1",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "jiti scripts/verify-characters.mjs && node scripts/class-table-diff.mjs && jiti scripts/orphan-features.mjs && node scripts/price-check.mjs && node scripts/field-diff.mjs && node scripts/stat-check.mjs && node scripts/identity-check.mjs && node scripts/spell-check.mjs && node scripts/action-cost-check.mjs",
+    "_verify_note": "render-check / aonid-integrity / process-parity run EARLY, before identity-check: the chain is && and identity-check exits non-zero on 3 deferred background picks, so anything after it never ran.",
+    "verify": "jiti scripts/verify-characters.mjs && node scripts/bestiary-fields-check.mjs && node scripts/render-check.mjs && node scripts/aonid-integrity.mjs && node scripts/classfeature-page-check.mjs && node scripts/edition-drift-check.mjs && node scripts/process-parity.mjs && node scripts/class-table-diff.mjs && jiti scripts/orphan-features.mjs && node scripts/price-check.mjs && node scripts/field-diff.mjs && node scripts/stat-check.mjs && node scripts/identity-check.mjs && node scripts/spell-check.mjs && node scripts/action-cost-check.mjs && jiti scripts/check-remaster-reprints.mjs",
     "evidence": "jiti scripts/feat-evidence.mjs && jiti scripts/builder-evidence.mjs && node scripts/merge-evidence.mjs",
     "triage": "node scripts/triage-mechanics.mjs",
     "coverage": "node scripts/coverage-report.mjs",
@@ -31,7 +33,8 @@
     "scan:companion-locks": "jiti scripts/scan-companion-locks.mjs",
     "scan:traditions": "node scripts/scan-innate-traditions.mjs",
     "scan:choices": "node scripts/scan-choice-sets.mjs",
-    "scan:dupe-feats": "jiti scripts/scan-duplicate-feats.mjs"
+    "scan:dupe-feats": "jiti scripts/scan-duplicate-feats.mjs",
+    "scan:reprints": "jiti scripts/check-remaster-reprints.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.1",

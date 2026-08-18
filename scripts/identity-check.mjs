@@ -198,7 +198,17 @@ const note = (coll, id, field, have, want) => bad.push({ coll, id, field, have, 
     const dom = (a) => set(a).map((d) => DOMAIN_ALIAS[d] ?? d).sort();
     const wantDomains = dom(m.domain_primary ?? m.domain);
     const haveDomains = dom(rec.domains);
-    if (wantDomains.length && haveDomains.length && JSON.stringify(wantDomains) !== JSON.stringify(haveDomains)) {
+    /*
+     * A SHORT mirror list is the mirror being wrong, not us. Every deity prints four domains; exactly
+     * three of AoN's 719 deity documents list fewer (Alocer, Lissala, Haagenti), and the Foundry pf2e
+     * pack — transcribed from the printed stat blocks — gives all three the missing fourth.
+     * `backfill-alternate-domains.mjs` restores it, so the app deliberately carries four where the
+     * mirror shows three. Comparing a superset against a short list would report that repair as a
+     * defect forever. A mirror list of four that DISAGREES is still reported.
+     */
+    const mirrorIsShort = wantDomains.length < 4 && haveDomains.length === 4 && wantDomains.every((d) => haveDomains.includes(d));
+    if (mirrorIsShort) held.push(`deities/${id}: the mirror prints only ${wantDomains.length} domains; the printed stat block has four`);
+    else if (wantDomains.length && haveDomains.length && JSON.stringify(wantDomains) !== JSON.stringify(haveDomains)) {
       note('deities', id, 'domains', haveDomains, wantDomains);
     }
   }

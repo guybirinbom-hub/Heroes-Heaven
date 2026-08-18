@@ -37,9 +37,28 @@ const copper = (p) => (p?.pp ?? 0) * 1000 + (p?.gp ?? 0) * 100 + (p?.sp ?? 0) * 
 const norm = (s) => String(s).toLowerCase().replace(/['’]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 
 const byName = new Map();
+/**
+ * …and by DOCUMENT ID, which is the only identifier that cannot collide.
+ *
+ * A name lookup picks one document per name, and Archives of Nethys has more than one document under
+ * plenty of names. Both of the "unexplained" disagreements this script reported after the 2026-08-15
+ * import were that, and in both the app was right:
+ *
+ *   Tales in Timber  equipment-2648 (85,000 cp — ours)   vs equipment-2648-2437 (100,000 cp)
+ *   Dragon Pearl     equipment-4011 (900,000 cp — ours, Draconic Codex, level 16)
+ *                                                        vs equipment-3482 (18,000 cp, Tian Xia, level 10)
+ *
+ * The second pair is not even the same item — two unrelated treasures that share a name across two
+ * books — and reporting it as a 50x price error is the checker being wrong, loudly, about correct
+ * data. Our records carry `aonId`; when they do, the document they name is the one to compare
+ * against, and the name index is only the fallback for records that have none.
+ */
+const byDocId = new Map();
 for (const f of readdirSync(MIRROR)) {
   const j = JSON.parse(readFileSync(join(MIRROR, f), 'utf8'));
-  if (!j.name || typeof j.price !== 'number') continue;
+  if (typeof j.price !== 'number') continue;
+  if (j.id) byDocId.set(String(j.id), j);
+  if (!j.name) continue;
   const k = norm(j.name);
   const prev = byName.get(k);
   // A record carrying `remaster_id` is the LEGACY half of a pair; prefer the remaster one.
@@ -51,7 +70,17 @@ const bad = [];
 const accepted = [];
 for (const [id, rec] of Object.entries(db.items ?? {})) {
   if (!rec?.name || !rec.price) continue;
-  const m = byName.get(norm(rec.name));
+  /*
+   * The document this record IS, before the document that merely shares its name — but ONLY when
+   * that document also carries the same name.
+   *
+   * A grade record's `aonId` is often the FAMILY PAGE rather than its own block, so trusting the id
+   * alone compares "Thieves' Tools (Concealable)" at 80 gp against the 3 gp base toolkit's page and
+   * calls it a 26x error. Requiring the name to agree keeps the whole benefit — it is what separates
+   * the two Dragon Pearls, which share a name and differ in id — while never reaching a parent.
+   */
+  const byId = rec.aonId ? byDocId.get(String(rec.aonId)) : undefined;
+  const m = byId && byId.name && norm(byId.name) === norm(rec.name) ? byId : byName.get(norm(rec.name));
   if (!m) continue;
   compared++;
   const app = copper(rec.price);
