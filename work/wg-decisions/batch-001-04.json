@@ -1,0 +1,23 @@
+[
+  {
+    "category": "feats",
+    "id": "mauler-dedication",
+    "field": "critSpecWeapons",
+    "value": { "traits": ["two-hand", "two-hand-d4", "two-hand-d6", "two-hand-d8", "two-hand-d10", "two-hand-d12"], "melee": true },
+    "why": "WG names SIX traits, not four. Decoded from work/wg/wg-data.sql (public.trait): WEAPON_FAMILIARITY = 2528 Two-Hand, 2750 Two-Hand d4, 2749 Two-Hand d6, 1831 Two-Hand d8, 1644 Two-Hand d10, 1597 Two-Hand d12 — and the same six under WEAPON_CRITICAL_SPECIALIZATIONS. We shipped only the four two-hand-dN traits, so the bare `two-hand` trait was missing; measured, that is 1 live weapon (dwarven-waraxe) and `two-hand-d4` is 0 today. Probed: with the 4-trait list strikeShowsCritSpec(Dwarven Waraxe) === false, with the 6-trait list === true. `melee: true` is left exactly as it was — WG does not contradict it and every two-hand-trait weapon is melee. This one field also drives the weaponFamiliarity half: scripts/apply-weapon-familiarity.mjs derives FEAT_LANE_GRANTS['mauler-dedication'].weaponFamiliarity.traits from this record's critSpecWeapons, so the remap (martial two-hander as simple, advanced as martial) widens with it rather than drifting."
+  },
+  {
+    "category": "feats",
+    "id": "zombie-dedication",
+    "field": "landSpeedBonus",
+    "value": -5,
+    "why": "Their `addBonusToValue SPEED = -5` for the printed 'Reduce all your Speeds by 5 feet'. We carried nothing at all, so a zombie PC walked at full Speed. `landSpeedBonus` on a feat is read by deriveSpeeds (derive.ts ~4080, `featLandBonus += db.feats[f.featId]?.landSpeedBonus`) and is ADDITIVE, so a negative lands: probed a level-4 fighter with the dedication, land 25 -> 20. Their other four ops (SPEED_FLY / SPEED_CLIMB / SPEED_BURROW / SPEED_SWIM = -5) have no field on this side — see the needs-new-lane note; a later pass building an unconditional all-Speeds penalty must REPLACE this row, not sit beside it, or land takes -10."
+  },
+  {
+    "category": "feats",
+    "id": "zombie-dedication",
+    "field": "unarmedTraits",
+    "value": { "match": ["fist"], "remove": ["nonlethal"] },
+    "why": "Their second `giveItem` is WG item 13693 'Zombie Fist' (1d4 B, brawling) — their way of saying the printed 'Your fist loses the nonlethal trait'. Ours is UnarmedRider.remove, whose own doc quotes that exact clause. Granting a second Fist strike instead would have put two Fist rows on the sheet; the rider edits the one the character already has. Probed: fist traits ['agile','finesse','nonlethal','unarmed'] -> ['agile','finesse','unarmed'], and the Jaws grant is untouched (their first giveItem, 13694 'Zombie Jaws', which our grantedStrikes already carries)."
+  }
+]

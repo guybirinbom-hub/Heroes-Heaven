@@ -5,7 +5,8 @@ describe('imported content integrity', () => {
   const db = content();
 
   it('has the full all-books import (ballpark counts)', () => {
-    expect(Object.keys(db.classes).length).toBe(27);
+    // 27 -> 29: Necromancer + Runesmith, authored from Impossible Magic's printed class tables.
+    expect(Object.keys(db.classes).length).toBe(29);
     expect(Object.keys(db.ancestries).length).toBeGreaterThanOrEqual(50);
     expect(Object.keys(db.backgrounds).length).toBeGreaterThanOrEqual(490);
     expect(Object.keys(db.feats).length).toBeGreaterThan(5000);

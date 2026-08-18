@@ -1,0 +1,60 @@
+[
+ {
+  "category": "items",
+  "id": "commanders-signet",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "diplomacy"
+     }
+    ],
+    "when": "on checks to Make an Impression",
+    "bonus": "+1 item"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "intimidation"
+     }
+    ],
+    "when": "on checks to Coerce",
+    "bonus": "+1 item"
+   }
+  ],
+  "why": "ADOPTED. They encode two restricted item bonuses we encode nowhere: addBonusToValue SKILL_DIPLOMACY +1 type:item text:'Checks to Make an Impression' and SKILL_INTIMIDATION +1 type:item text:'Checks to Coerce' (raw ops, wg-data.sql line 18086). Our record carried price/bulk/itemType and nothing mechanical, and no situationalBonuses.ts row names it. Ruling B: a flat bonus the rules restrict belongs in `situational` with the restriction in its `when`. Reader verified: explain.ts:359 reads db.items[inv.itemId].situational for any equipped/worn/invested item; probe with the signet invested gave statHasSituational(diplomacy)=true, statHasSituational(intimidation)=true and the Diplomacy breakdown line \"+1 item from Commander's Signet — on checks to Make an Impression\". The Activate's status bonus to a creature you TOUCH is left unencoded: they do not encode it either, and Ruling F puts an ally's bonus on nobody's sheet."
+ },
+ {
+  "category": "items",
+  "id": "holy-prayer-beads-greater",
+  "field": "heldSpells",
+  "value": {
+   "4": [
+    "bless",
+    "divine-wrath",
+    "heal",
+    "cleanse-affliction"
+   ]
+  },
+  "why": "ADOPTED, replacing ours. We both encode the four held spells and we encode them DIFFERENTLY: ours sat at heldSpells {1:[bless,heal], 2:[cleanse-affliction], 4:[divine-wrath]}; their four giveSpell ops all carry rank:4 (raw data, wg-data.sql line 20465: spellId 4415/4579/4656/4522, type INNATE, rank 4, tradition DIVINE, casts 1). Rule 2 — delete ours, do it their way. Setting the whole field replaces the three old rank keys in one write. Reader verified: with this value a cleric 12 holding the beads gets spellcasting entry {id:'item:inv-0', name:'Holy Prayer Beads (Greater)', type:'items', tradition:'divine', repertoire:{\"4\":[bless,divine-wrath,heal,cleanse-affliction]}} — all four now castable at the printed 4th rank instead of bless/heal at 1st. The four per-spell `counters` are our shape of their casts:1 and are left exactly as they are."
+ },
+ {
+  "category": "feats",
+  "id": "scout-dedication",
+  "field": "modifiesGrant",
+  "value": [
+   {
+    "from": "scout-dedication",
+    "actionRider": {
+     "actionId": "scout",
+     "value": "+2",
+     "note": "The bonus to initiative you grant when you Scout is +2 instead of +1."
+    }
+   }
+  ],
+  "why": "ADOPTED. Their single op is injectText{type:'action', id:21196} — action 21196 is Scout, the exploration activity (wg-data.sql line 8577). They put the clause on the SCOUT ACTION ROW; we put it only on the initiative row (situationalBonuses.ts:2834). Same reading, different surface, so theirs is added. `modifiesGrant.actionRider` is the only record-FIELD route to an action marker: build.ts:4110 turns it into character.grantMarkers keyed like RECORD_MARKERS, which MainTab.tsx:589 draws beside every action row including the exploration activities (ActionRow is used for shownExplore at line 1122). `from` is the record itself because the gate is ownedIds.has(mod.from) and only feats/classFeatures are in that set — 'scout' is an action id and would never gate. Verified: a ranger 4 with the dedication produced grantMarkers {scout-dedication:[{on:'action', id:'scout', value:'+2', note:...}]} and recordMarkersFor(ch,db,'action','scout') returned it. 'scout' is in no SKILL_ACTIONS list, so the '(+2)' chip cannot land on a skill row it does not belong to. Our initiative star is NOT deleted — it lives in src/rules/situationalBonuses.ts, which this pass may not edit, and Q2 explicitly allows a star and a mark on one record."
+ }
+]

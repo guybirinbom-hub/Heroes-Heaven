@@ -1,0 +1,1486 @@
+[
+ {
+  "category": "familiar-ability",
+  "fragment": 0,
+  "nameHeld": 12,
+  "record": [
+   {
+    "aonId": "familiar-ability-100",
+    "name": "Resonance",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 529
+   },
+   {
+    "aonId": "familiar-ability-101",
+    "name": "Little Wish",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 385
+   },
+   {
+    "aonId": "familiar-ability-102",
+    "name": "Elemental Diplomat",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 423
+   },
+   {
+    "aonId": "familiar-ability-104",
+    "name": "Scamp Elements",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 540
+   },
+   {
+    "aonId": "familiar-ability-105",
+    "name": "Elemental Mobility",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 388
+   },
+   {
+    "aonId": "familiar-ability-106",
+    "name": "Elemental Mobility",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 382
+   },
+   {
+    "aonId": "familiar-ability-107",
+    "name": "Sorcerous Sweets",
+    "level": null,
+    "source": "Wake the Dead #3",
+    "chars": 1048
+   },
+   {
+    "aonId": "familiar-ability-154",
+    "name": "Aeon Stone Reservoir",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 414
+   },
+   {
+    "aonId": "familiar-ability-155",
+    "name": "Can't Walk",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 176
+   },
+   {
+    "aonId": "familiar-ability-156",
+    "name": "Crystalline",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 268
+   },
+   {
+    "aonId": "familiar-ability-157",
+    "name": "Euphoric Breath",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 473
+   },
+   {
+    "aonId": "familiar-ability-158",
+    "name": "Porter",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 213
+   },
+   {
+    "aonId": "familiar-ability-159",
+    "name": "Blood Link",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 623
+   },
+   {
+    "aonId": "familiar-ability-160",
+    "name": "Imp Invisibility",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 233
+   },
+   {
+    "aonId": "familiar-ability-161",
+    "name": "Fiendish Temptation",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 727
+   },
+   {
+    "aonId": "familiar-ability-162",
+    "name": "Scholarly Linguist",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 308
+   },
+   {
+    "aonId": "familiar-ability-163",
+    "name": "Flammable",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 360
+   },
+   {
+    "aonId": "familiar-ability-164",
+    "name": "Magic Scent",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 284
+   },
+   {
+    "aonId": "familiar-ability-165",
+    "name": "Ooze Defense",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 334
+   },
+   {
+    "aonId": "familiar-ability-166",
+    "name": "Slime Rejuvenation",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 286
+   },
+   {
+    "aonId": "familiar-ability-179",
+    "name": "Ink Spray",
+    "level": null,
+    "source": "Rival Academies",
+    "chars": 649
+   },
+   {
+    "aonId": "familiar-ability-180",
+    "name": "Gibe",
+    "level": null,
+    "source": "Rival Academies",
+    "chars": 801
+   },
+   {
+    "aonId": "familiar-ability-184",
+    "name": "Forage",
+    "level": null,
+    "source": "Shining Kingdoms",
+    "chars": 318
+   },
+   {
+    "aonId": "familiar-ability-185",
+    "name": "Sure and Steady",
+    "level": null,
+    "source": "Shining Kingdoms",
+    "chars": 543
+   },
+   {
+    "aonId": "familiar-ability-186",
+    "name": "Stylus Claws",
+    "level": null,
+    "source": "Rival Academies",
+    "chars": 280
+   },
+   {
+    "aonId": "familiar-ability-187",
+    "name": "Spiritual Recall",
+    "level": null,
+    "source": "Gatewalkers (Hardcover)",
+    "chars": 322
+   },
+   {
+    "aonId": "familiar-ability-188",
+    "name": "Bound to Mortal",
+    "level": null,
+    "source": "Gatewalkers (Hardcover)",
+    "chars": 683
+   },
+   {
+    "aonId": "familiar-ability-190",
+    "name": "Gold Scent",
+    "level": null,
+    "source": "High Seas",
+    "chars": 256
+   },
+   {
+    "aonId": "familiar-ability-191",
+    "name": "Twinkle Tail",
+    "level": null,
+    "source": "High Seas",
+    "chars": 484
+   },
+   {
+    "aonId": "familiar-ability-192",
+    "name": "Fascinating Flutter",
+    "level": null,
+    "source": "High Seas",
+    "chars": 438
+   },
+   {
+    "aonId": "familiar-ability-193",
+    "name": "Fruity Ambrosia",
+    "level": null,
+    "source": "High Seas",
+    "chars": 751
+   },
+   {
+    "aonId": "familiar-ability-20",
+    "name": "Imp Invisibility",
+    "level": null,
+    "source": "Advanced Player's Guide",
+    "chars": 253
+   },
+   {
+    "aonId": "familiar-ability-21",
+    "name": "Infernal Temptation",
+    "level": null,
+    "source": "Advanced Player's Guide",
+    "chars": 603
+   },
+   {
+    "aonId": "familiar-ability-22",
+    "name": "Magic Scent",
+    "level": null,
+    "source": "Advanced Player's Guide",
+    "chars": 294
+   },
+   {
+    "aonId": "familiar-ability-23",
+    "name": "Ooze Defense",
+    "level": null,
+    "source": "Advanced Player's Guide",
+    "chars": 344
+   },
+   {
+    "aonId": "familiar-ability-24",
+    "name": "Slime Rejuvenation",
+    "level": null,
+    "source": "Advanced Player's Guide",
+    "chars": 296
+   },
+   {
+    "aonId": "familiar-ability-41",
+    "name": "Aeon Stone Reservoir",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 447
+   },
+   {
+    "aonId": "familiar-ability-42",
+    "name": "Can't Walk",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 172
+   },
+   {
+    "aonId": "familiar-ability-43",
+    "name": "Constructed",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 462
+   },
+   {
+    "aonId": "familiar-ability-44",
+    "name": "Crystalline",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 271
+   },
+   {
+    "aonId": "familiar-ability-45",
+    "name": "Ink Spray",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 488
+   },
+   {
+    "aonId": "familiar-ability-46",
+    "name": "Stylus Claws",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 288
+   },
+   {
+    "aonId": "familiar-ability-47",
+    "name": "Alter Dweomer",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 1097
+   },
+   {
+    "aonId": "familiar-ability-49",
+    "name": "Constructed",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 456
+   },
+   {
+    "aonId": "familiar-ability-50",
+    "name": "Flammable",
+    "level": null,
+    "source": "PFS Guide",
+    "chars": 399
+   },
+   {
+    "aonId": "familiar-ability-54",
+    "name": "Slink In Shadows",
+    "level": null,
+    "source": "Secrets of Magic",
+    "chars": 239
+   },
+   {
+    "aonId": "familiar-ability-57",
+    "name": "Constructed",
+    "level": null,
+    "source": "Grand Bazaar",
+    "chars": 663
+   },
+   {
+    "aonId": "familiar-ability-58",
+    "name": "Electricity Vulnerability",
+    "level": null,
+    "source": "Grand Bazaar",
+    "chars": 339
+   },
+   {
+    "aonId": "familiar-ability-59",
+    "name": "Steam Screen",
+    "level": null,
+    "source": "Grand Bazaar",
+    "chars": 579
+   },
+   {
+    "aonId": "familiar-ability-60",
+    "name": "Toggle Standby Mode",
+    "level": null,
+    "source": "Grand Bazaar",
+    "chars": 450
+   },
+   {
+    "aonId": "familiar-ability-74",
+    "name": "Resonance",
+    "level": null,
+    "source": "Grand Bazaar",
+    "chars": 422
+   },
+   {
+    "aonId": "familiar-ability-75",
+    "name": "Haunting Melody",
+    "level": null,
+    "source": "Grand Bazaar",
+    "chars": 802
+   },
+   {
+    "aonId": "familiar-ability-76",
+    "name": "Nosoi Resistance",
+    "level": null,
+    "source": "Grand Bazaar",
+    "chars": 221
+   },
+   {
+    "aonId": "familiar-ability-77",
+    "name": "Divinatory Linguist",
+    "level": null,
+    "source": "Grand Bazaar",
+    "chars": 322
+   },
+   {
+    "aonId": "familiar-ability-78",
+    "name": "Lend a Hand",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 661
+   },
+   {
+    "aonId": "familiar-ability-83",
+    "name": "Polong Possession",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 796
+   },
+   {
+    "aonId": "familiar-ability-84",
+    "name": "Heads Will Roll",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 474
+   },
+   {
+    "aonId": "familiar-ability-86",
+    "name": "Silver Infusion",
+    "level": null,
+    "source": "Shadows at Sundown",
+    "chars": 419
+   },
+   {
+    "aonId": "familiar-ability-87",
+    "name": "Tenacious Mind",
+    "level": null,
+    "source": "Shadows at Sundown",
+    "chars": 627
+   },
+   {
+    "aonId": "familiar-ability-88",
+    "name": "Created Magic",
+    "level": null,
+    "source": "Impossible Lands",
+    "chars": 432
+   },
+   {
+    "aonId": "familiar-ability-89",
+    "name": "Turn of Fate",
+    "level": null,
+    "source": "Impossible Lands",
+    "chars": 830
+   },
+   {
+    "aonId": "familiar-ability-91",
+    "name": "Spiritual Recall",
+    "level": null,
+    "source": "Pathfinder #188: They Watched the Stars",
+    "chars": 337
+   },
+   {
+    "aonId": "familiar-ability-92",
+    "name": "Bound to Mortal",
+    "level": null,
+    "source": "Pathfinder #188: They Watched the Stars",
+    "chars": 697
+   },
+   {
+    "aonId": "familiar-ability-96",
+    "name": "Emote",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 644
+   },
+   {
+    "aonId": "familiar-ability-97",
+    "name": "Crystal Scent",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 240
+   },
+   {
+    "aonId": "familiar-ability-98",
+    "name": "Elemental Mobility",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 374
+   },
+   {
+    "aonId": "familiar-ability-99",
+    "name": "Innate Element",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 278
+   }
+  ],
+  "records": 67
+ },
+ {
+  "category": "class-feature",
+  "fragment": 0,
+  "nameHeld": 326,
+  "record": [
+   {
+    "aonId": "class-feature-1002",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 205
+   },
+   {
+    "aonId": "class-feature-1010",
+    "name": "Swashbuckler Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 150
+   },
+   {
+    "aonId": "class-feature-1018",
+    "name": "Ancestry Feat",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 186
+   },
+   {
+    "aonId": "class-feature-1034",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 194
+   },
+   {
+    "aonId": "class-feature-1040",
+    "name": "Animist Feats",
+    "level": 2,
+    "source": "War of Immortals",
+    "chars": 138
+   },
+   {
+    "aonId": "class-feature-1057",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 195
+   },
+   {
+    "aonId": "class-feature-1061",
+    "name": "Exemplar Feats",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 152
+   },
+   {
+    "aonId": "class-feature-1085",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 190
+   },
+   {
+    "aonId": "class-feature-1092",
+    "name": "Commander Feats",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 137
+   },
+   {
+    "aonId": "class-feature-1111",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 189
+   },
+   {
+    "aonId": "class-feature-1114",
+    "name": "Guardian Feats",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 145
+   },
+   {
+    "aonId": "class-feature-1137",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 211
+   },
+   {
+    "aonId": "class-feature-1146",
+    "name": "Psychic Feats",
+    "level": 2,
+    "source": "Dark Archives (Remastered)",
+    "chars": 146
+   },
+   {
+    "aonId": "class-feature-1165",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 216
+   },
+   {
+    "aonId": "class-feature-1171",
+    "name": "Thaumaturge Feats",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 159
+   },
+   {
+    "aonId": "class-feature-1174",
+    "name": "Lightning Reflexes",
+    "level": 3,
+    "source": "Dark Archives (Remastered)",
+    "chars": 175
+   },
+   {
+    "aonId": "class-feature-416",
+    "name": "Ancestry And Background",
+    "level": 1,
+    "source": "Secrets of Magic",
+    "chars": 192
+   },
+   {
+    "aonId": "class-feature-423",
+    "name": "Magus Feats",
+    "level": 2,
+    "source": "Secrets of Magic",
+    "chars": 142
+   },
+   {
+    "aonId": "class-feature-429",
+    "name": "Lightning Reflexes",
+    "level": 5,
+    "source": "Secrets of Magic",
+    "chars": 159
+   },
+   {
+    "aonId": "class-feature-443",
+    "name": "Ancestry And Background",
+    "level": 1,
+    "source": "Secrets of Magic",
+    "chars": 195
+   },
+   {
+    "aonId": "class-feature-451",
+    "name": "Summoner Feats",
+    "level": 2,
+    "source": "Secrets of Magic",
+    "chars": 140
+   },
+   {
+    "aonId": "class-feature-475",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 216
+   },
+   {
+    "aonId": "class-feature-482",
+    "name": "Inventor Feats",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 402
+   },
+   {
+    "aonId": "class-feature-509",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 204
+   },
+   {
+    "aonId": "class-feature-512",
+    "name": "Gunslinger Feats",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 160
+   },
+   {
+    "aonId": "class-feature-593",
+    "name": "Ancestry And Background",
+    "level": 1,
+    "source": "Rage of Elements",
+    "chars": 197
+   },
+   {
+    "aonId": "class-feature-599",
+    "name": "Kineticist Feats",
+    "level": 1,
+    "source": "Rage of Elements",
+    "chars": 146
+   },
+   {
+    "aonId": "class-feature-621",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 220
+   },
+   {
+    "aonId": "class-feature-623",
+    "name": "Bard Spellcasting",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 2049
+   },
+   {
+    "aonId": "class-feature-628",
+    "name": "Bard Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 123
+   },
+   {
+    "aonId": "class-feature-646",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 189
+   },
+   {
+    "aonId": "class-feature-652",
+    "name": "Cleric Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 131
+   },
+   {
+    "aonId": "class-feature-663",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 188
+   },
+   {
+    "aonId": "class-feature-672",
+    "name": "Druid Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 127
+   },
+   {
+    "aonId": "class-feature-688",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 190
+   },
+   {
+    "aonId": "class-feature-692",
+    "name": "Fighter Feats",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 133
+   },
+   {
+    "aonId": "class-feature-716",
+    "name": "Ranger Feats",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 130
+   },
+   {
+    "aonId": "class-feature-739",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 188
+   },
+   {
+    "aonId": "class-feature-745",
+    "name": "Rogue Feats",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 127
+   },
+   {
+    "aonId": "class-feature-767",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 188
+   },
+   {
+    "aonId": "class-feature-775",
+    "name": "Witch Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 127
+   },
+   {
+    "aonId": "class-feature-790",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 189
+   },
+   {
+    "aonId": "class-feature-798",
+    "name": "Wizard Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 141
+   },
+   {
+    "aonId": "class-feature-814",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 201
+   },
+   {
+    "aonId": "class-feature-819",
+    "name": "Alchemist Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 152
+   },
+   {
+    "aonId": "class-feature-841",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 201
+   },
+   {
+    "aonId": "class-feature-847",
+    "name": "Barbarian Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 151
+   },
+   {
+    "aonId": "class-feature-868",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 200
+   },
+   {
+    "aonId": "class-feature-874",
+    "name": "Champion Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 148
+   },
+   {
+    "aonId": "class-feature-897",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 205
+   },
+   {
+    "aonId": "class-feature-903",
+    "name": "Investigator Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 151
+   },
+   {
+    "aonId": "class-feature-912",
+    "name": "Vigilant Senses",
+    "level": 7,
+    "source": "Player Core 2",
+    "chars": 206
+   },
+   {
+    "aonId": "class-feature-918",
+    "name": "Incredible Senses",
+    "level": 13,
+    "source": "Player Core 2",
+    "chars": 209
+   },
+   {
+    "aonId": "class-feature-926",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 197
+   },
+   {
+    "aonId": "class-feature-930",
+    "name": "Monk Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 137
+   },
+   {
+    "aonId": "class-feature-952",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 199
+   },
+   {
+    "aonId": "class-feature-958",
+    "name": "Oracle Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 133
+   },
+   {
+    "aonId": "class-feature-979",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 201
+   },
+   {
+    "aonId": "class-feature-987",
+    "name": "Sorcerer Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 149
+   }
+  ],
+  "records": 59
+ },
+ {
+  "category": "equipment",
+  "fragment": 0,
+  "nameHeld": 724,
+  "record": [
+   {
+    "aonId": "equipment-1347",
+    "name": "Basic Hearing Aid",
+    "level": 0,
+    "source": "Grand Bazaar",
+    "chars": 529
+   },
+   {
+    "aonId": "equipment-148-208",
+    "name": "Breastplate of Command",
+    "level": 10,
+    "source": "Core Rulebook",
+    "chars": 1112
+   },
+   {
+    "aonId": "equipment-148-209",
+    "name": "Breastplate of Command (Greater)",
+    "level": 18,
+    "source": "Core Rulebook",
+    "chars": 1112
+   },
+   {
+    "aonId": "equipment-148",
+    "name": "Breastplate of Command",
+    "level": 10,
+    "source": "Core Rulebook",
+    "chars": 1112
+   },
+   {
+    "aonId": "equipment-25-22",
+    "name": "Healer's Tools",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 769
+   },
+   {
+    "aonId": "equipment-25-23",
+    "name": "Healer's Tools (Expanded)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 769
+   },
+   {
+    "aonId": "equipment-25",
+    "name": "Healer's Tools",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 769
+   },
+   {
+    "aonId": "equipment-294-332",
+    "name": "Disrupting",
+    "level": 5,
+    "source": "Core Rulebook",
+    "chars": 944
+   },
+   {
+    "aonId": "equipment-294-333",
+    "name": "Disrupting (Greater)",
+    "level": 14,
+    "source": "Core Rulebook",
+    "chars": 944
+   },
+   {
+    "aonId": "equipment-294",
+    "name": "Disrupting",
+    "level": 5,
+    "source": "Core Rulebook",
+    "chars": 944
+   },
+   {
+    "aonId": "equipment-3-3",
+    "name": "Artisan's Tools",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 834
+   },
+   {
+    "aonId": "equipment-3-4",
+    "name": "Artisan's Tools (Sterling)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 834
+   },
+   {
+    "aonId": "equipment-3",
+    "name": "Artisan's Tools",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 834
+   },
+   {
+    "aonId": "equipment-386-477",
+    "name": "Flame Tongue",
+    "level": 13,
+    "source": "Core Rulebook",
+    "chars": 1205
+   },
+   {
+    "aonId": "equipment-386-478",
+    "name": "Flame Tongue (Greater)",
+    "level": 17,
+    "source": "Core Rulebook",
+    "chars": 1205
+   },
+   {
+    "aonId": "equipment-386",
+    "name": "Flame Tongue",
+    "level": 13,
+    "source": "Core Rulebook",
+    "chars": 1205
+   },
+   {
+    "aonId": "equipment-43-42",
+    "name": "Repair Kit",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 723
+   },
+   {
+    "aonId": "equipment-43-43",
+    "name": "Repair Kit (Superb)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 723
+   },
+   {
+    "aonId": "equipment-43",
+    "name": "Repair Kit",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 723
+   },
+   {
+    "aonId": "equipment-434",
+    "name": "Druid's Vestments",
+    "level": 10,
+    "source": "Core Rulebook",
+    "chars": 524
+   },
+   {
+    "aonId": "equipment-442-538",
+    "name": "Hat of Disguise",
+    "level": 2,
+    "source": "Core Rulebook",
+    "chars": 797
+   },
+   {
+    "aonId": "equipment-442-539",
+    "name": "Hat of Disguise (Greater)",
+    "level": 7,
+    "source": "Core Rulebook",
+    "chars": 797
+   },
+   {
+    "aonId": "equipment-442",
+    "name": "Hat of Disguise",
+    "level": 2,
+    "source": "Core Rulebook",
+    "chars": 797
+   },
+   {
+    "aonId": "equipment-443-540",
+    "name": "Hat of the Magi",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 772
+   },
+   {
+    "aonId": "equipment-443-541",
+    "name": "Hat of the Magi (Greater)",
+    "level": 9,
+    "source": "Core Rulebook",
+    "chars": 772
+   },
+   {
+    "aonId": "equipment-443",
+    "name": "Hat of the Magi",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 772
+   },
+   {
+    "aonId": "equipment-4441-3974",
+    "name": "Assassin Vine Wine",
+    "level": 9,
+    "source": "Treasure Vault",
+    "chars": 1097
+   },
+   {
+    "aonId": "equipment-4441-3975",
+    "name": "Assassin Vine Wine (Aged)",
+    "level": 12,
+    "source": "Treasure Vault",
+    "chars": 1097
+   },
+   {
+    "aonId": "equipment-4441",
+    "name": "Assassin Vine Wine",
+    "level": 9,
+    "source": "Treasure Vault",
+    "chars": 1097
+   },
+   {
+    "aonId": "equipment-4554-4089",
+    "name": "Bralani Breath",
+    "level": 3,
+    "source": "Treasure Vault",
+    "chars": 1186
+   },
+   {
+    "aonId": "equipment-4554-4090",
+    "name": "Bralani Breath (Greater)",
+    "level": 9,
+    "source": "Treasure Vault",
+    "chars": 1186
+   },
+   {
+    "aonId": "equipment-4554",
+    "name": "Bralani Breath",
+    "level": 3,
+    "source": "Treasure Vault",
+    "chars": 1186
+   },
+   {
+    "aonId": "equipment-4597-4131",
+    "name": "Messanger Missive",
+    "level": 4,
+    "source": "Treasure Vault",
+    "chars": 1333
+   },
+   {
+    "aonId": "equipment-4597-4132",
+    "name": "Messanger Missive (Multiple)",
+    "level": 7,
+    "source": "Treasure Vault",
+    "chars": 1333
+   },
+   {
+    "aonId": "equipment-4602-4133",
+    "name": "Disrupting Oil",
+    "level": 3,
+    "source": "Treasure Vault",
+    "chars": 559
+   },
+   {
+    "aonId": "equipment-4602-4134",
+    "name": "Disrupting Oil (Greater)",
+    "level": 11,
+    "source": "Treasure Vault",
+    "chars": 559
+   },
+   {
+    "aonId": "equipment-4602",
+    "name": "Disrupting Oil",
+    "level": 3,
+    "source": "Treasure Vault",
+    "chars": 559
+   },
+   {
+    "aonId": "equipment-4788-4308",
+    "name": "Librarian's Staff",
+    "level": 6,
+    "source": "Treasure Vault",
+    "chars": 1354
+   },
+   {
+    "aonId": "equipment-4788-4309",
+    "name": "Librarian's Staff (Greater)",
+    "level": 12,
+    "source": "Treasure Vault",
+    "chars": 1354
+   },
+   {
+    "aonId": "equipment-4910-4489",
+    "name": "Hat of Disagreeable Disguise",
+    "level": 2,
+    "source": "Treasure Vault",
+    "chars": 1316
+   },
+   {
+    "aonId": "equipment-4910-4490",
+    "name": "Hat of Disagreeable Disguise (Greater)",
+    "level": 7,
+    "source": "Treasure Vault",
+    "chars": 1316
+   },
+   {
+    "aonId": "equipment-4910",
+    "name": "Hat of Disagreeable Disguise",
+    "level": 2,
+    "source": "Treasure Vault",
+    "chars": 1316
+   },
+   {
+    "aonId": "equipment-716-702",
+    "name": "Oil of Object Animation",
+    "level": 8,
+    "source": "Advanced Player's Guide",
+    "chars": 1108
+   },
+   {
+    "aonId": "equipment-716-703",
+    "name": "Oil of Object Animation (Greater)",
+    "level": 16,
+    "source": "Advanced Player's Guide",
+    "chars": 1108
+   },
+   {
+    "aonId": "equipment-716",
+    "name": "Oil of Object Animation",
+    "level": 8,
+    "source": "Advanced Player's Guide",
+    "chars": 1108
+   },
+   {
+    "aonId": "equipment-738-721",
+    "name": "Mask of the Banshee",
+    "level": 9,
+    "source": "Advanced Player's Guide",
+    "chars": 1019
+   },
+   {
+    "aonId": "equipment-738-722",
+    "name": "Mask of the Banshee (Greater)",
+    "level": 19,
+    "source": "Advanced Player's Guide",
+    "chars": 1019
+   },
+   {
+    "aonId": "equipment-738",
+    "name": "Mask of the Banshee",
+    "level": 9,
+    "source": "Advanced Player's Guide",
+    "chars": 1019
+   }
+  ],
+  "records": 48
+ },
+ {
+  "category": "action",
+  "fragment": 3231,
+  "nameHeld": 37,
+  "record": [
+   {
+    "aonId": "action-167",
+    "name": "Treat Poison or 8 hours (Treat Disease)",
+    "level": null,
+    "source": "Core Rulebook",
+    "chars": 412
+   },
+   {
+    "aonId": "action-1716",
+    "name": "The actions required to Activate the tattoo are the same as those needed to cast its spell",
+    "level": null,
+    "source": "Treasure Vault (Remastered)",
+    "chars": 159
+   },
+   {
+    "aonId": "action-1856",
+    "name": "(concentrate, manipulate))",
+    "level": null,
+    "source": "Treasure Vault (Remastered)",
+    "chars": 447
+   },
+   {
+    "aonId": "action-1943",
+    "name": "<%ACTION.TYPES#2%%> or <%ACTION.TYPES#3%%> (concentrate, teleportation)",
+    "level": null,
+    "source": "Treasure Vault (Remastered)",
+    "chars": 216
+   },
+   {
+    "aonId": "action-2865",
+    "name": "Administer Stitch (manipulate)",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 242
+   },
+   {
+    "aonId": "action-2866",
+    "name": "Stitch Wounds (manipulate)",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 194
+   },
+   {
+    "aonId": "action-2933",
+    "name": "Close at Hand",
+    "level": null,
+    "source": "Tian Xia Character Guide",
+    "chars": 441
+   },
+   {
+    "aonId": "action-296",
+    "name": "(envision), or a different activation if otherwise specified",
+    "level": null,
+    "source": "World Guide",
+    "chars": 320
+   },
+   {
+    "aonId": "action-3031",
+    "name": "Rip Guts! Rip Guts!",
+    "level": null,
+    "source": "War of Immortals",
+    "chars": 564
+   },
+   {
+    "aonId": "action-3110",
+    "name": "Land With Grace",
+    "level": null,
+    "source": "Pathfinder #204: Stage Fright",
+    "chars": 220
+   },
+   {
+    "aonId": "action-3130",
+    "name": "Reflect Curse",
+    "level": null,
+    "source": "Pathfinder #206: Bring the House Down",
+    "chars": 311
+   },
+   {
+    "aonId": "action-3160",
+    "name": "Strengthen Resolve",
+    "level": null,
+    "source": "Pathfinder #209: Destroyer's Doom",
+    "chars": 170
+   },
+   {
+    "aonId": "action-3161",
+    "name": "Strengthen Resolve",
+    "level": null,
+    "source": "Pathfinder #209: Destroyer's Doom",
+    "chars": 250
+   },
+   {
+    "aonId": "action-3167",
+    "name": "Speak with Undead",
+    "level": null,
+    "source": "Pathfinder #209: Destroyer's Doom",
+    "chars": 254
+   },
+   {
+    "aonId": "action-3964",
+    "name": "The actions required to Activate the tattoo are the same as those needed to cast its spell",
+    "level": null,
+    "source": "Treasure Vault",
+    "chars": 159
+   },
+   {
+    "aonId": "action-4171",
+    "name": "<%ACTION.TYPES#2%%> envision; or <%ACTION.TYPES#3%%> command, envision (teleportation)",
+    "level": null,
+    "source": "Treasure Vault",
+    "chars": 231
+   },
+   {
+    "aonId": "action-4217",
+    "name": "manipulate, visual",
+    "level": null,
+    "source": "Troubles in Grayce",
+    "chars": 543
+   },
+   {
+    "aonId": "action-4218",
+    "name": "concentrate, manipulate, mental",
+    "level": null,
+    "source": "Troubles in Grayce",
+    "chars": 1106
+   },
+   {
+    "aonId": "action-4219",
+    "name": "concentrate, manipulate, mental",
+    "level": null,
+    "source": "Troubles in Grayce",
+    "chars": 314
+   },
+   {
+    "aonId": "action-4220",
+    "name": "fortune, manipulate",
+    "level": null,
+    "source": "Troubles in Grayce",
+    "chars": 468
+   },
+   {
+    "aonId": "action-535",
+    "name": "</u>",
+    "level": null,
+    "source": "Pathfinder #156: The Apocalypse Prophet",
+    "chars": 370
+   }
+  ],
+  "records": 21
+ },
+ {
+  "category": "background",
+  "fragment": 0,
+  "nameHeld": 5,
+  "record": [
+   {
+    "aonId": "background-40",
+    "name": "Refugee (FoP)",
+    "level": null,
+    "source": "The Fall of Plaguestone",
+    "chars": 644
+   }
+  ],
+  "records": 1
+ },
+ {
+  "category": "deity",
+  "fragment": 0,
+  "nameHeld": 4,
+  "record": [
+   {
+    "aonId": "deity-701",
+    "name": "Chinostes (Nightwarden)",
+    "level": null,
+    "source": "Pathfinder #216: The Acropolis Pyre",
+    "chars": 1502
+   }
+  ],
+  "records": 1
+ },
+ {
+  "category": "archetype",
+  "fragment": 0,
+  "nameHeld": 4,
+  "record": [
+   {
+    "aonId": "archetype-311",
+    "name": "Venture-Gossip",
+    "level": 4,
+    "source": "Foolish Housekeeping and Other Articles",
+    "chars": 1692
+   }
+  ],
+  "records": 1
+ },
+ {
+  "category": "feat",
+  "fragment": 0,
+  "nameHeld": 38,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "spell",
+  "fragment": 0,
+  "nameHeld": 30,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "weapon",
+  "fragment": 0,
+  "nameHeld": 56,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "ancestry",
+  "fragment": 0,
+  "nameHeld": 20,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "heritage",
+  "fragment": 0,
+  "nameHeld": 16,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "trait",
+  "fragment": 0,
+  "nameHeld": 10,
+  "record": [],
+  "records": 0
+ }
+]

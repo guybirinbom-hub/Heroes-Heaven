@@ -206,6 +206,59 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 17, track: 'will', rank: 'master', source: 'will-of-the-pupil' },
     { level: 19, track: 'spellcasting', rank: 'legendary', source: 'legendary-spellcaster' },
   ],
+
+  /*
+   * Impossible Magic's two classes, read off their printed tables (AoN class-75 / class-76).
+   *
+   * These entries are not optional decoration: the class record carries only its LEVEL-1 ranks, and
+   * without a row here every "expertise" feature in the level table is inert prose — the class would
+   * stay trained in everything to 20th. `scripts/import-new-classes.mjs` refuses to import a class
+   * that has no entry here, so the two halves cannot ship apart.
+   */
+  necromancer: [
+    { level: 3, track: 'will', rank: 'expert', source: 'mental-wards' },
+    { level: 5, track: 'reflex', rank: 'expert', source: 'reflex-expertise' },
+    { level: 7, track: 'spellcasting', rank: 'expert', source: 'expert-necromancy' },
+    { level: 7, track: 'perception', rank: 'expert', source: 'perception-expertise' },
+    { level: 11, track: 'fortitude', rank: 'master', source: 'unnatural-fortitude' },
+    { level: 11, track: 'unarmed', rank: 'expert', source: 'weapon-expertise' },
+    { level: 11, track: 'simple', rank: 'expert', source: 'weapon-expertise' },
+    { level: 13, track: 'unarmored', rank: 'expert', source: 'light-armor-expertise' },
+    { level: 13, track: 'light', rank: 'expert', source: 'light-armor-expertise' },
+    { level: 15, track: 'spellcasting', rank: 'master', source: 'master-necromancy' },
+    { level: 17, track: 'fortitude', rank: 'legendary', source: 'undying-resilience' },
+    { level: 19, track: 'spellcasting', rank: 'legendary', source: 'legendary-necromancy' },
+  ],
+  /*
+   * The Reaper subclass grants martial weapons and medium armour that the base class never gets, and
+   * advances them later. `buildCharacter` looks up CLASS_ADVANCEMENT by subclass id before class id
+   * — the `warpriest` precedent — so the subclass rows live under their own key.
+   */
+  reaper: [
+    { level: 11, track: 'martial', rank: 'expert', source: 'reapers-edge' },
+    { level: 13, track: 'medium', rank: 'expert', source: 'reapers-edge' },
+  ],
+  runesmith: [
+    { level: 5, track: 'unarmed', rank: 'expert', source: 'weapon-expertise' },
+    { level: 5, track: 'simple', rank: 'expert', source: 'weapon-expertise' },
+    { level: 5, track: 'martial', rank: 'expert', source: 'weapon-expertise' },
+    { level: 7, track: 'reflex', rank: 'expert', source: 'reflex-expertise' },
+    { level: 7, track: 'classDc', rank: 'expert', source: 'expert-runes' },
+    { level: 11, track: 'fortitude', rank: 'master', source: 'forged-endurance' },
+    { level: 13, track: 'perception', rank: 'expert', source: 'perception-expertise' },
+    { level: 13, track: 'unarmored', rank: 'expert', source: 'medium-armor-expertise' },
+    { level: 13, track: 'light', rank: 'expert', source: 'medium-armor-expertise' },
+    { level: 13, track: 'medium', rank: 'expert', source: 'medium-armor-expertise' },
+    { level: 13, track: 'unarmed', rank: 'master', source: 'weapon-mastery' },
+    { level: 13, track: 'simple', rank: 'master', source: 'weapon-mastery' },
+    { level: 13, track: 'martial', rank: 'master', source: 'weapon-mastery' },
+    { level: 15, track: 'classDc', rank: 'master', source: 'masterful-runes' },
+    { level: 19, track: 'classDc', rank: 'legendary', source: 'legendary-runes' },
+    { level: 19, track: 'unarmored', rank: 'master', source: 'medium-armor-mastery' },
+    { level: 19, track: 'light', rank: 'master', source: 'medium-armor-mastery' },
+    { level: 19, track: 'medium', rank: 'master', source: 'medium-armor-mastery' },
+  ],
+
   wizard: [
     { level: 5, track: 'reflex', rank: 'expert', source: 'reflex-expertise' },
     { level: 7, track: 'spellcasting', rank: 'expert', source: 'expert-spellcaster' },

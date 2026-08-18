@@ -51,7 +51,7 @@ import type {
 import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, SourceInfo, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod, askedAtDailyPrep, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
+import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { applyCounterMods } from './counterMods';
 import { choiceGrantFor, FEAT_GRANTS, LOCKED_SKILL_KEYS, maxTakes, upgradeRankAt } from './featGrants';
@@ -589,15 +589,46 @@ export function additionalClassSkills(build: BuildState, content: ContentDatabas
  * Social Purview and Speak for the Gravelands each say the grant happens *"even if you normally
  * couldn't take another dedication feat"*, and a grant never passes through this picker.
  */
+/** A feat the character has, and — when the caller knows it — the slot category it was taken in. */
+export type TakenFeat = string | { id: string; category?: string };
+
+/**
+ * Does holding this feat count toward *"take two more feats from the X archetype first"*?
+ *
+ * The same record can be two different things depending on how it was taken, and this is the only
+ * place that distinction is drawn.
+ *
+ *   · Enhanced Familiar is a class feat for seven classes AND appears on the Familiar Master
+ *     archetype's list. Taken in an archetype slot it is a Familiar Master feat and counts; taken as
+ *     a witch's own class feat it is a witch feat and does not.
+ *   · Domain Initiate is the same shape — a cleric class feat that Soul Warden may also select. A
+ *     cleric taking it in a class slot used to satisfy Soul Warden's gate, so two feats a cleric
+ *     takes anyway unlocked a second dedication they had not earned.
+ *
+ * `inArchetypeSlot` is undefined when the caller has only feat ids and no slot information. There the
+ * record's own traits decide, which is the honest answer to a question asked without the context that
+ * would settle it: a feat carrying the archetype or dedication trait is an archetype feat however it
+ * arrived, and a class feat merely listed by an archetype is not assumed to have come through it.
+ *
+ * Mythic destinies are archetypes whose feats carry `mythic` instead of `archetype` — see
+ * `belongsToArchetype`, which this defers to.
+ */
+export function countsForArchetype(f: Feat, inArchetypeSlot?: boolean): boolean {
+  if (!f.archetype) return false;
+  return inArchetypeSlot === true || belongsToArchetype(f);
+}
+
 export function dedicationBlock(
-  takenFeatIds: string[],
+  taken: TakenFeat[],
   candidate: Feat,
   content: ContentDatabase,
 ): string | null {
   if (!candidate.traits.includes('dedication')) return null;
   const started: Feat[] = [];
   const counts = new Map<string, number>(); // archetype -> non-dedication feats taken
-  for (const id of takenFeatIds) {
+  for (const t of taken) {
+    const id = typeof t === 'string' ? t : t.id;
+    const inArchetypeSlot = typeof t === 'string' ? undefined : t.category === 'archetype';
     const f = content.feats[id];
     if (!f) continue;
     // A dedication counts as STARTED on its own `dedicationGate` as well as on `archetype`. Three
@@ -606,7 +637,9 @@ export function dedicationBlock(
     // Knight Vigilant prints. Its gate names the archetype the field is missing.
     if (f.traits.includes('dedication')) {
       if (f.dedicationGate || f.archetype) started.push(f);
-    } else if (f.archetype) counts.set(f.archetype, (counts.get(f.archetype) ?? 0) + 1);
+    } else if (countsForArchetype(f, inArchetypeSlot)) {
+      counts.set(f.archetype!, (counts.get(f.archetype!) ?? 0) + 1);
+    }
   }
   for (const d of started) {
     // ⚠ ONLY a dedication that PRINTS the clause gates. Owner ruling Q28: "not every dedication keeps

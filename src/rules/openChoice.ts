@@ -205,7 +205,23 @@ export function openChoiceOptions(
         for (const id of e.cantrips ?? []) note(id, 0);
         for (const [rank, list] of Object.entries(e.repertoire ?? {})) for (const id of list) note(id, Number(rank));
         for (const [rank, list] of Object.entries(e.grantedRepertoire ?? {})) for (const id of list) note(id, Number(rank));
-        // Prepared casters know their whole book; today's prepared slots are a loadout, not knowledge.
+        /*
+         * Prepared casters know their whole book; today's prepared slots are a loadout, not knowledge.
+         *
+         * That comment stood here alone, and acted on neither half: `prepared` was correctly skipped,
+         * but the BOOK it points at was never read. So every `own-spell` picker was empty for a wizard
+         * or a witch — Westyr's Wayfinder Repository, whose text names the spellbook FIRST ("one
+         * 1st-rank spell from your spellbook or spell repertoire"), and all four Library Robes. A
+         * wizard's menu showed a single entry and it was a FOCUS spell that leaked in through the
+         * class's focus entry; a witch's showed nothing at all. Sorcerer and bard were always right,
+         * which is why a suite whose only `own-spell` fixture sets `repertoire` stayed green.
+         *
+         * `learned` is the Learn a Spell store. play.ts already merges a spellbook caster's learned
+         * spells into `spellbook`, so this line only reaches the repertoire caster who has learned a
+         * spell without slotting it, and cannot double-count.
+         */
+        for (const [rank, list] of Object.entries(e.spellbook ?? {})) for (const id of list) note(id, Number(rank));
+        for (const [rank, list] of Object.entries(e.learned ?? {})) for (const id of list) note(id, Number(rank));
       }
       return [...knownAt.entries()]
         .filter(([id, rank]) => {

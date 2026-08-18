@@ -1,0 +1,3516 @@
+[
+ {
+  "collection": "feats",
+  "id": "grasping-corpses",
+  "name": "Grasping Corpses",
+  "level": 8,
+  "fields": {
+   "level": 8,
+   "category": "class",
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Necrologist Dedication"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "necrologist",
+   "edition": "remaster-era"
+  },
+  "text": "Your foes are left reeling from the attacks made by the zombies or skeletons of your horde. A creature that is damaged by your horde's Mobbing Assault is off-guard until the beginning of your next turn."
+ },
+ {
+  "collection": "feats",
+  "id": "black-cat-curse",
+  "name": "Black Cat Curse",
+  "level": 13,
+  "fields": {
+   "level": 13,
+   "category": "ancestry",
+   "traits": [
+    "catfolk",
+    "misfortune",
+    "occult"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "reaction"
+   },
+   "edition": "remaster",
+   "limitedUses": {
+    "max": 1,
+    "per": "day"
+   }
+  },
+  "text": "**Frequency** once per day **Trigger** A creature within 30 feet you can see would succeed at a save. --- You hiss a spiteful curse. The target rerolls the triggering saving throw and use the worse result."
+ },
+ {
+  "collection": "feats",
+  "id": "kholo-lore",
+  "name": "Kholo Lore",
+  "level": 1,
+  "fields": {
+   "level": 1,
+   "category": "ancestry",
+   "traits": [
+    "kholo"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster"
+  },
+  "text": "You paid close attention to the senior hunters in your clan to learn their tricks. You gain the trained proficiency rank in Stealth and Survival. If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice. You also gain the Additional Lore general feat for Kholo Lore."
+ },
+ {
+  "collection": "feats",
+  "id": "devils-eye",
+  "name": "Devil's Eye",
+  "level": 4,
+  "fields": {
+   "level": 4,
+   "category": "class",
+   "traits": [
+    "aftermath",
+    "divine"
+   ],
+   "rarity": "rare",
+   "prerequisites": [
+    "You made a bargain with a devil or won a legal case or other similar duel of wits against a devil."
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster",
+   "grantsActions": [
+    "objection"
+   ]
+  },
+  "text": "Your experience in the finer points of bargaining with a devil has awakened a sinister power that now inhabits your left eye. The eye is the same shape and iris color as your normal eye would be, but the sclera is a deep red instead of white and the pupil is a narrow, vertical slit. The eye grants you an abnormal understanding of the loopholes and legal processes employed to trap poor creatures that don't know any better. You gain the Objection reaction. You also become an expert in Legal Lore and gain a +1 circumstance bonus to any check you make to read or negotiate a treatise, contract, or similar text. At 7th level you become a master of Legal Lore, and at 15th level you become legendary in Legal Lore. You can use Legal Lore in place of Perception to detect verbal loopholes, double entendres, hidden meanings, code, or contradictions in a conversation you can hear. This doesn't let you fully understand coded speech but alerts you to its presence."
+ },
+ {
+  "collection": "feats",
+  "id": "energy-fusion",
+  "name": "Energy Fusion",
+  "level": 10,
+  "fields": {
+   "level": 10,
+   "category": "class",
+   "traits": [
+    "concentrate",
+    "sorcerer",
+    "spellshape"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "edition": "remaster"
+  },
+  "text": "You fuse two spells together, combining their energy types. If the next action you use is to Cast a Spell that deals energy damage, select a non-cantrip spell in your spell repertoire that deals a different type of energy damage, and expend an additional spell slot of the same rank as this secondary spell. The spell you cast deals additional damage equal to the rank of the secondary spell slot expended. The spell's total damage is divided evenly between the energy type of the spell you cast and the energy type of the secondary spell."
+ },
+ {
+  "collection": "feats",
+  "id": "bloodrager-dedication",
+  "name": "Bloodrager Dedication",
+  "level": 2,
+  "fields": {
+   "level": 2,
+   "category": "class",
+   "traits": [
+    "archetype",
+    "class",
+    "dedication"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Bloodrager"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "choice": {
+    "flag": "skill",
+    "prompt": "Tradition",
+    "kind": "array",
+    "options": [
+     {
+      "value": "arcana",
+      "label": "Arcane"
+     },
+     {
+      "value": "religion",
+      "label": "Divine"
+     }
+    ]
+   },
+   "archetype": "bloodrager",
+   "edition": "remaster-era",
+   "grantsActions": [
+    "harvest-blood"
+   ],
+   "classArchetype": {
+    "classId": "barbarian",
+    "note": "Bloodrager: take the bloodrager instinct, and be trained in Athletics, Medicine and 2 + Int more skills instead of a barbarian’s normal starting skills."
+   }
+  },
+  "text": "Drinking powerful blood has awakened magical potential within you. You gain a spell repertoire with two cantrips of your choice, from either the arcane or divine spell list. You choose these cantrips from the common spells for your tradition or from other spells you have access to on that tradition's spell list. At least one cantrip must require a spell attack roll. You're trained in spell attack modifier and spell DC. Your key spellcasting attribute for these spells is Charisma. Spells in your repertoire gain the rage trait while you are raging, and when you Cast a Spell from your repertoire, you become Drained 1 (or increase the value of your drained condition by 1); you can reduce the value of this condition only by Harvesting Blood (see below). You become trained in Arcana if you chose arcane cantrips or Religion if you chose divine cantrips. If you were already trained in this skill, you become trained in a skill of your choice. You also gain the Harvest Blood action."
+ },
+ {
+  "collection": "feats",
+  "id": "crown-of-rule",
+  "name": "Crown of Rule",
+  "level": 16,
+  "fields": {
+   "level": 16,
+   "category": "class",
+   "traits": [
+    "exemplar",
+    "ikon"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster-era",
+   "grantsClassFeatures": [
+    "heavy-is-the-crown"
+   ]
+  },
+  "text": "**Usage** imbued into a worn ikon or a body ikon --- This badge of office proclaims your sovereignty. The imbued ikon gains the following ability. **Transcendence—Heavy is the Crown** ⟨2⟩ (concentrate, mental, spirit, transcendence)"
+ },
+ {
+  "collection": "feats",
+  "id": "hellbreaker-dedication",
+  "name": "Hellbreaker Dedication",
+  "level": 2,
+  "fields": {
+   "level": 2,
+   "category": "class",
+   "traits": [
+    "archetype",
+    "dedication"
+   ],
+   "rarity": "uncommon",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "hellbreaker",
+   "edition": "neutral"
+  },
+  "text": "**Access** You're a member of the Hellbreakers league. --- By joining the League, you've taken on the responsibilities of a Hellbreaker. You gain the Additional Lore general feat for both Devil Lore and Hellknight Lore. If you were already trained in one or both of those Lore skills, you also become trained in a Lore skill of your choice. When you roll initiative, you can attempt a recall-knowledge skill=devil-lore, recall-knowledge skill=hellknight-lore, or recall-knowledge skill=society check to Recall Knowledge about one enemy you can see as a free action, if that skill would be applicable. The GM is the final arbiter of whether or not one of those skills would be appropriate to Recall Knowledge about the enemy."
+ },
+ {
+  "collection": "feats",
+  "id": "defend-mount",
+  "name": "Defend Mount",
+  "level": 6,
+  "fields": {
+   "level": 6,
+   "category": "class",
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Cavalier Dedication"
+   ],
+   "actionCost": {
+    "type": "reaction"
+   },
+   "archetype": "cavalier",
+   "edition": "remaster"
+  },
+  "text": "**Trigger** An enemy makes a Strike or spell attack against your mount while you're riding it. --- You interpose yourself between an attacker and your mount, defending your mount from harm. Use your own defense against the triggering attack instead your mount's defense. If the triggering attack hits, you take the effects of the attack instead of your mount."
+ },
+ {
+  "collection": "feats",
+  "id": "flashforge",
+  "name": "Flashforge",
+  "level": 1,
+  "fields": {
+   "level": 1,
+   "category": "class",
+   "traits": [
+    "impulse",
+    "kineticist",
+    "metal",
+    "primal"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "actions",
+    "value": 2
+   }
+  },
+  "text": "An artificial metal object forms in the hands of you or a willing ally within 30 feet. You can choose a level 0, common, handheld weapon or piece of adventuring gear of 1 Bulk or less. The item is entirely made from metal, making some items impossible or impractical to use (if it's unclear, the GM decides). You can make items with simple moving parts or magnetism, like a compass, poor lock, or merchant's scale. The item lasts for 10 minutes, but each time it's used, the user must succeed at a or the item is destroyed after the action is completed."
+ },
+ {
+  "collection": "feats",
+  "id": "heralds-weapon",
+  "name": "Herald's Weapon",
+  "level": 14,
+  "fields": {
+   "level": 14,
+   "category": "class",
+   "traits": [
+    "archetype",
+    "divine"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Mortal Herald Dedication"
+   ],
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "archetype": "mortal-herald",
+   "edition": "remaster-era",
+   "limitedUses": {
+    "max": 1,
+    "per": "hour"
+   }
+  },
+  "text": "**Frequency** once per hour --- Your weapon becomes a wrathful instrument of your deity's power. Choose a weapon you are currently wielding or an unarmed attack, which is wreathed in pure spiritual energy for 1 minute. For the duration, the chosen weapon and unarmed attack deals spirit damage instead of its regular damage. In addition, the chosen weapon or unarmed attack gains the sanctified trait and deals an additional 2d4 spirit damage."
+ },
+ {
+  "collection": "feats",
+  "id": "bolster-ally",
+  "name": "Bolster Ally",
+  "level": 8,
+  "fields": {
+   "level": 8,
+   "category": "class",
+   "traits": [
+    "archetype",
+    "auditory"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Eagle Knight Dedication"
+   ],
+   "actionCost": {
+    "type": "reaction"
+   },
+   "archetype": "eagle-knight",
+   "edition": "neutral"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** One of your allies within 30 feet is targeted by a spell or ability that allows a saving throw. --- You shout encouragement to your embattled ally. The ally can use your saving throw modifier instead of their own against the triggering spell."
+ },
+ {
+  "collection": "feats",
+  "id": "basic-wizard-spellcasting",
+  "name": "Basic Wizard Spellcasting",
+  "level": 4,
+  "fields": {
+   "level": 4,
+   "category": "class",
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Wizard Dedication"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "wizard",
+   "edition": "remaster"
+  },
+  "text": "You gain the benefits. Each time you gain a spell slot of a new rank from the wizard archetype, add two common spells of that rank to your spellbook."
+ },
+ {
+  "collection": "feats",
+  "id": "ostentatious-reload",
+  "name": "Ostentatious Reload",
+  "level": 4,
+  "fields": {
+   "level": 4,
+   "category": "class",
+   "traits": [
+    "gunslinger"
+   ],
+   "rarity": "uncommon",
+   "prerequisites": [
+    "trained in Performance"
+   ],
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "edition": "neutral"
+  },
+  "text": "**Requirements** You're wielding two one-handed firearms. --- Every good Firebrand knows that style can be as important as substance—so long as you don't screw up the delivery. Make a Performance check against an easy DC for your level as you spin your guns around and juggle ammunition to reload them. --- **Critical Success** You Interact to reload up to two firearms you are currently wielding. **Success** You Interact to reload a single firearm you are currently wielding. **Failure** You drop one of the required firearms and a round of ammunition on the ground in your space. **Critical Failure** You drop both firearms and two rounds on the ground in your space."
+ },
+ {
+  "collection": "feats",
+  "id": "gather-disciples",
+  "name": "Gather Disciples",
+  "level": 10,
+  "fields": {
+   "level": 10,
+   "category": "class",
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Starstone Aspirant Dedication",
+    "master in Religion"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "starstone-aspirant",
+   "edition": "remaster-era"
+  },
+  "text": "Gods need followers, and you know that its best to gather a flock in the present to support you in your endeavor. Of course, you'll reward their faith in you in the future when you become a true deity. You can spend 1 week of downtime in a settlement to evangelize your coming godhood and establish a small group of disciples to your faith. Once this group has been established, these disciples are always helpful to you. You can use Religion to request skill=religion something of them, though your request must be able to be performed by the type of people who would follow you, at the GM's discretion. If you critically succeed at this check, your disciples give a piece of helpful advice or let you in on a small secret, granting you or a member of your party a +2 circumstance bonus to the first skill check you attempt when acting on the favor. If you critically fail this check, your disciples' attitude toward you doesn't worsen. You can have three groups of disciples at any one time (or five if you're legendary in Religion). If you exceed this number, the oldest group disbands and must be established again if you return to that settlement."
+ },
+ {
+  "collection": "feats",
+  "id": "tracing-sigil",
+  "name": "Tracing Sigil",
+  "level": 4,
+  "fields": {
+   "level": 4,
+   "category": "class",
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Spell Trickster Dedication",
+    "ability to cast sigil"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "spell-trickster",
+   "edition": "legacy-era"
+  },
+  "text": "When you cast Sigil, you can modify the spell to add the following to its standard effects: The target leaves a magical trail that you and others can try to follow. You and other creatures can attempt to Track the target, substituting an Arcana, Nature, Occultism, or Religion check (whichever matches the magical tradition of your sigil spell) for the Survival check. Much like Tracking with Survival, this must take place somewhere the target has been and follow the trail; it doesn't allow anyone to find the target from a distance. You can only have a single target marked with a modified sigil in this way. If you use this ability again on a second target, the sigil spell on the first target ends, and your mark fades."
+ },
+ {
+  "collection": "feats",
+  "id": "watchful-gaze",
+  "name": "Watchful Gaze",
+  "level": 1,
+  "fields": {
+   "level": 1,
+   "category": "ancestry",
+   "traits": [
+    "concentrate",
+    "goloma"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "edition": "legacy-era"
+  },
+  "text": "You use your many eyes to look in all directions at once, making you extremely observant for a short period of time. You gain All-Around Vision until the start of your next turn. This lets you see in all directions and prevents you from being flanked."
+ },
+ {
+  "collection": "feats",
+  "id": "fog-cloak",
+  "name": "Fog Cloak",
+  "level": 6,
+  "fields": {
+   "traits": [
+    "rogue"
+   ],
+   "rarity": "uncommon",
+   "level": 6,
+   "category": "class",
+   "edition": "neutral"
+  },
+  "text": "Fog Cloak Source High Seas pg. 65 Access member of the Red Mantis assassins When you are concealed by mist or fog, you’re hidden until a creature successfully Seeks to find you."
+ },
+ {
+  "collection": "feats",
+  "id": "flourish-and-ruin",
+  "name": "Flourish and Ruin",
+  "level": 17,
+  "fields": {
+   "level": 17,
+   "category": "ancestry",
+   "traits": [
+    "leshy"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster",
+   "innateSpells": [
+    {
+     "spellId": "field-of-life",
+     "tradition": "primal",
+     "rank": 6,
+     "usesPerDay": 1
+    },
+    {
+     "spellId": "tangling-creepers",
+     "tradition": "primal",
+     "rank": 6,
+     "usesPerDay": 1
+    }
+   ]
+  },
+  "text": "You can call upon the vital essence of your spirit to restore life to your allies and call forth vines to ensnare and bludgeon your foes. You can cast Field of Life and Tangling Creepers as 6th-rank primal innate spells once per day each."
+ },
+ {
+  "collection": "feats",
+  "id": "steelhoof",
+  "name": "Steelhoof",
+  "level": 1,
+  "fields": {
+   "level": 1,
+   "category": "ancestry",
+   "traits": [
+    "centaur"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "ironhoof centaur heritage"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "neutral",
+   "unarmedTraits": {
+    "match": [
+     "hoof"
+    ],
+    "stepDie": true
+   }
+  },
+  "text": "You've girded your hooves in steel or other reinforcements aimed to inflict maximum damage. Your hoof attack deals 1d8 bludgeoning damage instead of 1d6."
+ },
+ {
+  "collection": "feats",
+  "id": "adept-storyteller",
+  "name": "Adept Storyteller",
+  "level": 12,
+  "fields": {
+   "level": 12,
+   "category": "class",
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Uzunjati Storytelling",
+    "master in a Recall Knowledge skill"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "magaambyan-attendant",
+   "edition": "neutral"
+  },
+  "text": "Your ability to tell stories rivals those of the finest bards. You can use your proficiency rank in any skill that can be used to Recall Knowledge to meet the requirements of skill feats that require a particular rank in Performance. You gain two Performance skill feats of 7th level or lower that you meet the prerequisites for."
+ },
+ {
+  "collection": "feats",
+  "id": "wild-speech",
+  "name": "Wild Speech",
+  "level": 6,
+  "fields": {
+   "level": 6,
+   "category": "class",
+   "traits": [
+    "archetype",
+    "primal"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Wild Mimic Dedication",
+    "Animal Empathy or the ability to speak with a type of animal"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "wild-mimic",
+   "edition": "neutral"
+  },
+  "text": "Your connection to the denizens of the wilds grows ever stronger, and you find yourself able to speak with animals like you would in your native tongue. You can speak with all animals and beasts. If you have Animal Empathy, you gain a +1 circumstance bonus to checks to Make an Impression on animals."
+ },
+ {
+  "collection": "feats",
+  "id": "dueling-riposte",
+  "name": "Dueling Riposte",
+  "level": 8,
+  "fields": {
+   "level": 8,
+   "category": "class",
+   "traits": [
+    "fighter"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Dueling Parry"
+   ],
+   "actionCost": {
+    "type": "reaction"
+   },
+   "edition": "remaster"
+  },
+  "text": "**Trigger** A creature within your reach critically fails a Strike against you. **Requirements** You are benefiting from Dueling Parry. --- You elegantly counterattack against your flailing enemy. Make a melee Strike against or attempt to Disarm the triggering creature."
+ },
+ {
+  "collection": "feats",
+  "id": "draconic-sycophant",
+  "name": "Draconic Sycophant",
+  "level": 1,
+  "fields": {
+   "level": 1,
+   "category": "ancestry",
+   "traits": [
+    "kobold"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster"
+  },
+  "text": "You possess features that dragons find particularly cute or charming, making it easier to endear yourself to them, or at least cause them to momentarily forgive your insolence. You gain a +2 circumstance bonus to Perception checks and saving throws against dragons. In addition, whenever you meet a creature with the dragon trait in a social situation, you can attempt a Diplomacy check to make-an-impression on that creature immediately, rather than after conversing for 1 minute; you take a –5 circumstance penalty to this check. If you fail, you can choose to engage in 1 minute of conversation and then attempt a new check rather than accept the failure or critical failure result."
+ },
+ {
+  "collection": "feats",
+  "id": "combination-finisher",
+  "name": "Combination Finisher",
+  "level": 6,
+  "fields": {
+   "level": 6,
+   "category": "class",
+   "traits": [
+    "swashbuckler"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster"
+  },
+  "text": "You combine a series of attacks with a powerful finishing blow. Your finishers' Strikes have a lower multiple attack penalty: -4 (or -3 with an agile weapon) if it's the second attack on your turn, or -8 (or -6 with an agile weapon) if it's the third or subsequent attack on your turn, instead of -5 and -10, respectively."
+ },
+ {
+  "collection": "feats",
+  "id": "sacred-defender",
+  "name": "Sacred Defender",
+  "level": 20,
+  "fields": {
+   "level": 20,
+   "category": "class",
+   "traits": [
+    "champion"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "resistances": [
+    {
+     "type": "bludgeoning",
+     "value": 5
+    },
+    {
+     "type": "piercing",
+     "value": 5
+    },
+    {
+     "type": "slashing",
+     "value": 5
+    }
+   ],
+   "edition": "remaster"
+  },
+  "text": "You are a great warrior that can stand strong against the fiercest opponents to your cause. You gain resistance 5 to bludgeoning, piercing, and slashing damage. If you're holy, this resistance increases to 10 against unholy creatures, and if you're unholy it increases to 10 against holy creatures. In addition, creatures and effects that roll a natural 20 on an attack roll against you don't improve their result by one degree of success."
+ },
+ {
+  "collection": "feats",
+  "id": "grand-medics-mask",
+  "name": "Grand Medic's Mask",
+  "level": 20,
+  "fields": {
+   "level": 20,
+   "category": "class",
+   "traits": [
+    "archetype",
+    "druid",
+    "wizard"
+   ],
+   "rarity": "rare",
+   "prerequisites": [
+    "Druid Dedication or Wizard Dedication"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "wizard",
+   "edition": "neutral"
+  },
+  "text": "Your mask is infused with restorative magic associated with Ibex, the Flourishing Field, so it constantly repairs itself. You gain fast healing 5. If you lose a limb or other body part, it regrows within 1 day. Immediately after you Cast a non-cantrip Spell that targets only one creature, you can choose to have the spell also give that creature temporary Hit Points equal to the spell's rank until the start of your next turn."
+ },
+ {
+  "collection": "feats",
+  "id": "prophesied-monarch-dedication",
+  "name": "Prophesied Monarch Dedication",
+  "level": 12,
+  "fields": {
+   "level": 12,
+   "category": "class",
+   "traits": [
+    "destiny",
+    "mythic"
+   ],
+   "rarity": "uncommon",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "prophesied-monarch",
+   "edition": "remaster-era"
+  },
+  "text": "Your Calling has culminated in a destiny of rulership, and you're able to forge a mythic bond with noble knights whose destinies become intertwined with your own. Designate up to five allies as your knights; as long as you're conscious, your knights' doomed condition can't rise above 3, and if they're ever in mortal peril (such as being unconscious with the dying condition or imprisoned in an enemy fortress), you instantly receive a vision revealing their location and condition. In addition, you gain the Royal Grace exploration activity."
+ },
+ {
+  "collection": "feats",
+  "id": "oracular-providence",
+  "name": "Oracular Providence",
+  "level": 20,
+  "fields": {
+   "level": 20,
+   "category": "class",
+   "traits": [
+    "oracle"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "oracular clarity"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster",
+   "spellSlotBonus": {
+    "byRank": {
+     "10": 1
+    }
+   }
+  },
+  "text": "Your mystery grants you access to deep reserves of truly miraculous divine power. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "collection": "feats",
+  "id": "leaf-transformation",
+  "name": "Leaf Transformation",
+  "level": 5,
+  "fields": {
+   "level": 5,
+   "category": "ancestry",
+   "traits": [
+    "illusion",
+    "tanuki"
+   ],
+   "rarity": "uncommon",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster-era"
+  },
+  "text": "You know how to run an enterprise that others would never be able to get off the ground—some say it's your savvy acumen or jovial manner, but you know it's because you can cut costs by transforming leaves into money. You can use Deception to Earn Income, and you gain a +1 status bonus to your check if you do so. The illusion doesn't hold long, though! The GM rolls a secret d20; that many hours after concluding your check, the money transforms back, likely inviting consequences depending on how far the bills traveled from you in the time they were transformed."
+ },
+ {
+  "collection": "feats",
+  "id": "lingering-echoes",
+  "name": "Lingering Echoes",
+  "level": 9,
+  "fields": {
+   "level": 9,
+   "category": "ancestry",
+   "traits": [
+    "reincarnated",
+    "samsaran"
+   ],
+   "rarity": "rare",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "innateSpells": [
+    {
+     "spellId": "talking-corpse",
+     "tradition": "occult"
+    }
+   ],
+   "edition": "remaster"
+  },
+  "text": "Not everyone is reincarnated, and you feel a strong connection with the spiritual echoes of those who didn't receive the same opportunity as you. You gain Talking Corpse as an occult innate spell that you can cast once per day. You can ask a fourth question of a corpse when you cast this spell. The corpse attempts its save against your spell DC or your class DC, whichever is higher."
+ },
+ {
+  "collection": "feats",
+  "id": "ki-cutting-sight",
+  "name": "Ki Cutting Sight",
+  "level": 6,
+  "fields": {
+   "level": 6,
+   "category": "class",
+   "traits": [
+    "monk"
+   ],
+   "rarity": "rare",
+   "prerequisites": [
+    "Inner Upheaval"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "focusSpells": [
+    "ki-cutting-sight"
+   ],
+   "edition": "neutral"
+  },
+  "text": "Everything is connected—all is part of the whole, and the whole is distributed throughout the infinite parts. Find where to add your qi and you can break the whole. You gain the Ki Cutting Sight qi spell. Increase the number of Focus Points in your focus pool by 1."
+ },
+ {
+  "collection": "feats",
+  "id": "uncanny-bombs",
+  "name": "Uncanny Bombs",
+  "level": 12,
+  "fields": {
+   "level": 12,
+   "category": "class",
+   "traits": [
+    "alchemist"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Far Lobber"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster"
+  },
+  "text": "You lob bombs unerringly, despite obstructions or distance. When you throw an alchemical item with the bomb trait, its range increment increases to 60 feet, you reduce any circumstance bonus to the target's AC from cover by 1, and you automatically succeed at the flat check when targeting a concealed creature."
+ },
+ {
+  "collection": "feats",
+  "id": "you-cant-hide-from-us",
+  "name": "You Can't Hide From Us",
+  "level": 14,
+  "fields": {
+   "level": 14,
+   "category": "class",
+   "traits": [
+    "mythic"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Beast Lord Dedication"
+   ],
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "edition": "remaster-era"
+  },
+  "text": "**Requirements** Your united companion made a successful Strike against a creature this round. --- When you and your companion attack together, you can ensure that escape is but a whispered dream. Strike the same creature that your united companion hit. If your Strike is successful, the targeted creature has been marked for death by you and your companion and can't become hidden or concealed to you and your companion for 1 minute or until it moves more than 60 feet away from either you or your companion, whichever comes first. If the triggering creature is under an effect or spell that would normally grant it this condition, you can immediately attempt to counteract the effect. Your counteract rank is half your level rounded up, and your counteract check modifier is equal to the higher of your class DC –10 or spell DC –10."
+ },
+ {
+  "collection": "feats",
+  "id": "versatile-font",
+  "name": "Versatile Font",
+  "level": 2,
+  "fields": {
+   "level": 2,
+   "category": "class",
+   "traits": [
+    "cleric"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "harmful font or healing font",
+    "deity that allows clerics to have both fonts"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster",
+   "spellListAdditions": {
+    "spells": [
+     "heal",
+     "harm"
+    ],
+    "as": "font"
+   }
+  },
+  "text": "As you explore your deity's aspects, you move beyond restrictions on healing or harming. You can prepare either Harm or Heal in the spell slots gained from the harmful font or healing font."
+ },
+ {
+  "collection": "feats",
+  "id": "verdant-weapon",
+  "name": "Verdant Weapon",
+  "level": 1,
+  "fields": {
+   "level": 1,
+   "category": "class",
+   "traits": [
+    "druid",
+    "exploration"
+   ],
+   "rarity": "common",
+   "prerequisites": [],
+   "actionCost": {
+    "type": "passive"
+   },
+   "choice": {
+    "flag": "choice",
+    "prompt": "Prompt",
+    "kind": "array",
+    "options": [
+     {
+      "value": "granted",
+      "label": "Grant New"
+     },
+     {
+      "value": "existing",
+      "label": "Existing Item"
+     }
+    ]
+   },
+   "edition": "remaster"
+  },
+  "text": "You cultivate a seed that can sprout into a wooden staff, vine whip, or another weapon. You spend 10 minutes focusing primal energy into a seed, imprinting it with the potential of a single level 0 weapon you are trained with and that has no mechanical parts or metal components. When holding the imprinted seed, you can use an Interact action to cause it to immediately grow into that weapon; a second Interact action returns it to seed form. The verdant weapon can be etched with runes or affixed with talismans as normal, which are suppressed when the weapon is in seed form. You can have only one verdant seed at a time. If you prepare a second, your first verdant seed immediately becomes a mundane seed; any runes on the previous seed transfer to the new seed at no cost, but inapplicable runes are suppressed."
+ },
+ {
+  "collection": "feats",
+  "id": "inescapable-grasp",
+  "name": "Inescapable Grasp",
+  "level": 12,
+  "fields": {
+   "level": 12,
+   "category": "class",
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Wrestler Dedication"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "wrestler",
+   "edition": "remaster"
+  },
+  "text": "Your grasp has a supernatural quality to it, preventing your foes from easily escaping—with or without magical assistance. If a creature you have grabbed attempts to use a teleportation spell or effect, it must succeed at a or the spell fails. If a creature you have grabbed attempts to Escape while under the effect of Unfettered Movement or a similar effect, it must succeed at a or be forced to roll the Escape attempt normally, rather than automatically succeeding."
+ },
+ {
+  "collection": "feats",
+  "id": "feeding-frenzy",
+  "name": "Feeding Frenzy",
+  "level": 6,
+  "fields": {
+   "level": 6,
+   "category": "class",
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Werecreature Dedication",
+    "wereshark"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "werecreature",
+   "edition": "neutral"
+  },
+  "text": "Your serrated teeth rip and tear at your prey. When you critically hit with your jaws Strike from Werecreature Dedication, your target takes 1d4 persistent bleed damage and you gain a +1 circumstance bonus to jaws Strikes against the target until the end of your turn. If you have scent as a special sense, it's a precise sense with double its normal range when locating creatures taking persistent bleed damage."
+ },
+ {
+  "collection": "feats",
+  "id": "scour-the-library",
+  "name": "Scour the Library",
+  "level": 10,
+  "fields": {
+   "level": 10,
+   "category": "class",
+   "traits": [
+    "psyche",
+    "psychic"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "gathered lore subconscious mind"
+   ],
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "edition": "remaster"
+  },
+  "text": "Seeing an enemy's attack, you quickly consult multiple scraps of lore in your mind, synthesizing them into the perfect plan. Make a check to Recall Knowledge (using an appropriate skill) about one creature within 60 feet. On a success, in addition to the normal benefits, you gain a +1 circumstance bonus to your next attack roll against that creature and to your AC against the creature's next attack. On a critical success, the bonuses are +2."
+ },
+ {
+  "collection": "feats",
+  "id": "conceited-mindset",
+  "name": "Conceited Mindset",
+  "level": 2,
+  "fields": {
+   "traits": [
+    "champion"
+   ],
+   "rarity": "uncommon",
+   "level": 2,
+   "category": "class",
+   "edition": "legacy-era"
+  },
+  "text": "Conceited Mindset Source Advanced Player's Guide pg. 118 Prerequisites tenets of evil Because you know your mind is superior, you scoff at anyone who would alter your mental state—but this hubris gets the better of you when you're wrong. You gain a +2 circumstance bonus to saves against mental effects. If you succeed at a save against a mental effect, you critically succeed instead; similarly, if you fail at a save against a mental effect, you critically fail instead."
+ },
+ {
+  "collection": "feats",
+  "id": "cadence-call",
+  "name": "Cadence Call",
+  "level": 6,
+  "fields": {
+   "level": 6,
+   "category": "class",
+   "traits": [
+    "archetype",
+    "auditory",
+    "flourish"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Marshal Dedication"
+   ],
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "archetype": "marshal",
+   "edition": "remaster",
+   "limitedUses": {
+    "max": 1,
+    "per": "minute"
+   }
+  },
+  "text": "**Frequency** once per minute --- You call out a quick cadence, guiding your allies into a more efficient rhythm. Each willing ally in your marshal's aura is quickened until the end of their next turn, and they can use the extra action only to Stride. If an ally uses this extra action, at the end of its turn that ally becomes Slowed 1 until the end of its following turn."
+ },
+ {
+  "collection": "feats",
+  "id": "godbreaker",
+  "name": "Godbreaker",
+  "level": 20,
+  "fields": {
+   "level": 20,
+   "category": "class",
+   "traits": [
+    "monk"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Crushing Grab",
+    "Whirling Throw"
+   ],
+   "actionCost": {
+    "type": "actions",
+    "value": 3
+   },
+   "edition": "remaster-era"
+  },
+  "text": "**Requirements** You have a creature grabbed or restrained. --- You have mastered an ultimate grappling technique capable of breaking even the mightiest of foes. You hurl the creature 20 feet into the air, following behind it with a powerful jump, and then make an unarmed Strike. If the Strike is successful, you can repeat this process up to two more times, moving the creature an additional 20 feet directly up into the air with each Strike; the creature keeps the grabbed or restrained condition throughout the sequence. If you miss with any of the Strikes, Godbreaker and the grabbed or restrained condition immediately end and both you and the opponent fall, taking falling damage as normal for the total height of your jump. If all three Strikes are successful, you immediately grab the creature and bring it crashing to the ground, dealing your unarmed Strike damage plus falling damage to it. You land on your feet adjacent to the creature, you take no damage from the fall, and the creature remains grabbed or restrained by you."
+ },
+ {
+  "collection": "feats",
+  "id": "devastating-spellstrike",
+  "name": "Devastating Spellstrike",
+  "level": 4,
+  "fields": {
+   "level": 4,
+   "category": "class",
+   "traits": [
+    "magus"
+   ],
+   "rarity": "common",
+   "prerequisites": [
+    "Arcane Cascade",
+    "inexorable iron hybrid study",
+    "Spellstrike"
+   ],
+   "actionCost": {
+    "type": "actions",
+    "value": 2
+   },
+   "edition": "legacy-era"
+  },
+  "text": "**Requirements** You are in Arcane Cascade stance and your Spellstrike is charged. --- Your Spellstrike sweeps are so wide and devastating, they splash onto nearby foes. Make a Spellstrike. Foes adjacent to the target take splash damage equal to 2 + the extra damage from Arcane Cascade. The damage type is the same as Arcane Cascade; if the spell already deals splash damage of the same type, combine the damage together before applying weaknesses or resistances."
+ },
+ {
+  "collection": "feats",
+  "id": "expert-alchemy",
+  "name": "Expert Alchemy",
+  "level": 6,
+  "fields": {
+   "traits": [
+    "archetype"
+   ],
+   "rarity": "common",
+   "level": 6,
+   "category": "archetype",
+   "edition": "legacy"
+  },
+  "text": "Expert Alchemy Source Core Rulebook pg. 220 Archetype Alchemist Prerequisites Alchemist Dedication; Expert in Crafting Your advanced alchemy level increases to 3. At 10th level, it increases to 5. Expert Alchemy leads to... Master Alchemy"
+ },
+ {
+  "collection": "items",
+  "id": "researcher-level-3-expert",
+  "name": "Researcher (Level 3; expert)",
+  "level": 0,
+  "fields": {
+   "traits": [],
+   "rarity": "common",
+   "level": 0,
+   "bulk": 0,
+   "price": {
+    "gp": 10
+   },
+   "itemType": "equipment",
+   "edition": "neutral"
+  },
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When contracting independent research, you hire the researcher to study a subject on your behalf and report the findings to you upon completion. An independent researcher can provide information on subjects up to their level +4, though more difficult tasks take much longer to research. Once the research is done, the researcher presents the relevant findings for the subject as determined by the GM, which is typically the critical success of Recall Knowledge. The level of the subject determines how long the independent research takes. A researcher can provide information on a subject of their level after 1 week. The researcher needs an additional week for every additional level of the subject above their own. For example, a level 6 independent researcher can provide pertinent information on subjects of up to 10th level, but would need 5 weeks to do so. A researcher needs less time when researching subjects of a lower level. A subject 1 level lower requires 5 days, a subject 2 levels lower requires only 3 days, and a researcher only needs 1 day for a subject 3 levels lower. A subject 4 or more levels lower takes less than 1 day and typically not more than 12 hours, as the GM dictates. When hired as a research assistant, a researcher provides a bonus to checks during the research subsystem. The research assistant automatically Aids a single PC with a single skill check rolled as part of researching. If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency. A research assistant can never help out with a library that's more than 4 levels higher than their own level. The GM ultimately decides if a researcher is available for a given subject. Particularly obscure subjects may be outside of the capabilities of a hired researcher and are best reserved as something that the PCs must research themselves. Pathfinders typically employ fellow Pathfinders for additional research and must do so by working with a local lodge. Researcher (Level 1; trained) Source PFS Guide pg. 116 Price 4 gp (per day) Researcher (Level 2) Source PFS Guide pg. 116 Price 6 gp (per day) Researcher (Level 3; expert) Source PFS Guide pg. 116 Price 10 gp (per day) Researcher (Level 4) Source PFS Guide pg. 116 Price 14 gp (per day) Researcher (Level 5) Source PFS Guide pg. 116 Price 20 gp (per day) Researcher (Level 6) Source PFS Guide pg. 116 Price 40 gp (per day) Researcher (Level 7; master) Source PFS Guide pg. 116 Price 50 gp (per day)"
+ },
+ {
+  "collection": "items",
+  "id": "shark-tooth-charm",
+  "name": "Shark Tooth Charm",
+  "level": 5,
+  "fields": {
+   "level": 5,
+   "price": {
+    "gp": 23
+   },
+   "bulk": 0,
+   "traits": [
+    "consumable",
+    "magical",
+    "talisman"
+   ],
+   "rarity": "common",
+   "usage": "affixed-to-armor",
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "consumable",
+   "consumableType": "talisman",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "remaster"
+  },
+  "text": "**Activate** ⟨1⟩ (concentrate) --- This dried-seaweed bracelet is lined with charms shaped like small shark teeth. When you activate the bracelet, attempt to Escape using Acrobatics with a +1 item bonus to the check. If you roll a success, you get a critical success instead (if you roll a critical failure, you get a failure instead). If you fail the Acrobatics check against a grabbing creature, the creature must either release you as a free action or take 2d8 damage as shark's teeth momentarily emerge from your skin."
+ },
+ {
+  "collection": "items",
+  "id": "shrinking-potion",
+  "name": "Shrinking Potion",
+  "level": 4,
+  "fields": {
+   "level": 4,
+   "price": {
+    "gp": 15
+   },
+   "bulk": 0.1,
+   "traits": [
+    "consumable",
+    "magical",
+    "potion"
+   ],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "consumable",
+   "consumableType": "potion",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "remaster"
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This fungus-flavored potion conveys the effects of the Shrink spell to make you and all your gear smaller. After the onset, you remain small for 10 minutes. **Onset** 1 minute"
+ },
+ {
+  "collection": "items",
+  "id": "thorn-of-milani",
+  "name": "Thorn of Milani",
+  "level": 3,
+  "fields": {
+   "traits": [
+    "consumable",
+    "magical",
+    "talisman"
+   ],
+   "rarity": "uncommon",
+   "level": 3,
+   "bulk": 0,
+   "itemType": "consumable",
+   "edition": "neutral"
+  },
+  "text": "Thorn of Milani May contain spoilers from Hellbreakers Source Pathfinder #222: Hellbreakers pg. 210 Usage affixed to a weapon Activate (concentrate) Trigger You hit a creature with the affixed weapon. This pure white thorn glows bright with the spirit of justice. When you activate the thorn, you deal an additional 1d4 spirit damage with the holy trait. You then gain weakness 1 to unholy until the end of your next turn. Thorn of Milani (Lesser) Source Pathfinder #222: Hellbreakers pg. 210 Price 12 gp Thorn of Milani (Moderate) Source Pathfinder #222: Hellbreakers pg. 210 Price 60 gp You deal an additional 2d4 spirit damage and don’t gain weakness to unholy."
+ },
+ {
+  "collection": "items",
+  "id": "explosive-ammunition",
+  "name": "Explosive Ammunition",
+  "level": 9,
+  "fields": {
+   "level": 9,
+   "price": {
+    "gp": 130
+   },
+   "bulk": 0,
+   "traits": [
+    "consumable",
+    "fire",
+    "magical"
+   ],
+   "rarity": "common",
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "equipment",
+   "edition": "remaster"
+  },
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- This piece of ammunition is coated in gritty black soot. When activated *explosive ammunition* hits a target, the missile explodes in a , dealing damage to each creature in the area (including the target). Each creature must attempt a save."
+ },
+ {
+  "collection": "items",
+  "id": "void-mirror",
+  "name": "Void Mirror",
+  "level": 20,
+  "fields": {
+   "level": 20,
+   "price": {},
+   "bulk": 3,
+   "traits": [
+    "artifact",
+    "magical"
+   ],
+   "rarity": "unique",
+   "usage": "held-in-two-hands",
+   "frequency": {
+    "max": 1,
+    "per": "month"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per month",
+     "max": 1,
+     "per": "month",
+     "resetsOnRest": false
+    }
+   ],
+   "itemType": "equipment",
+   "edition": "neutral"
+  },
+  "text": "**Usage** Mounted in frame --- The *Void Mirror* was created on a distant planet by a now-extinct alien cult to aid in unlocking the secrets of the Dark Tapestry. It appears as a 5-foot-tall, 2-foot-wide mirror of dark glass. As long as it's unmounted in a frame, the *Void Mirror* functions only as a mirror, save that it always reflects the sky as if it were night, regardless of the time of day. When the *Void Mirror* is mounted in a frame, it instead serves as a window into space, displaying a star field in its glass rather than a reflection. This frame can be of any quality, but stouter frames help to prevent the frame's destruction and thus help to keep the *Void Mirror* functional. The view presented by the *Void Mirror* is any view of the night sky possible from its current physical location, regardless of time of day. Observations of the sky in this way add a +3 item bonus to Astronomy Lore or Perception checks made while using the mirror. The point of view can be shifted through hand gestures, causing the scene within the mirror to reorient in any direction desired. A character who peers into the starscape within the *Void Mirror* must attempt a save. On a **failure**, the character feels something looking back at them from the dark places between the stars. On a **critical failure**, this sensation causes the character to become Frightened 1. The character is then temporarily immune to this effect for 24 hours. By placing the *Void Mirror* in a specially-constructed frame, it can halt the ongoing transformation of a creature that has performed the apotheosis activation. Building such a frame is beyond the skill of low-level characters, as it requires an artisan with legendary proficiency in Crafting. The *Void Mirror* can be utilized in other ways, but before a character can activate these effects the occult methods to access these ritual-like effects must be Researched separately. Since the specific methods for these activations vary slightly from person to person, these methods can't be taught; each person who seeks to activate the *Void Mirror* in one of the following ways must complete their own research to unlock the artifact's secrets. Each requires a separate number of Occultism checks to Research, as detailed below for each activation. --- **Activate** 1 hour (Interact) **Research** Accumulate 12 RP by making (expert) checks when Researching (1 week per attempt) **Frequency** once per month --- **Effect** The first activation ritual is known as \"Speak to the Void\" and allows the user to contact an intelligence in a distant part of the universe, provided the mirror shows that location (regardless of distance). This alien intelligence infuses the user's mind with answers, allowing the user to Recall Knowledge using Nature or Occultism as if they were legendary proficiency with the skill (including the +8 proficiency bonus). If this check fails, the character takes 10d6 damage (100 mental damage on a critical failure) as the imparted knowledge does more harm than good. --- **Activate** 1 hour (Interact) **Research** Accumulate 12 RP by making (master) checks when Researching (1 month per attempt) **Frequency** once per year --- **Effect** The second activation ritual is known as \"Call from the Void.\" The user performs a 1-hour-long rite before the *Void Mirror*, during which they indicate a type of aberration, beast, fungus, ooze, or plant creature that's an alien life form from the planet the user is currently located on. The target creature must be a level equal to or less than the user's level +4. As the rite ends, the user attempts an check against the target creature's Will DC. --- **Critical Success** The creature is drawn across the universe to appear in a space adjacent to the *Void Mirror*. The creature's initial attitude toward the user is helpful, but this attitude can shift quickly if the creature realizes its goals and personality differs dramatically from the user's, or if the user makes a request of the creature that's against its nature. As long both the creature and the user are within 30 feet of the *Void Mirror*, the user can return the creature to its original location by Dismissing this activation. The creature can attempt a Will save against the user's Occultism DC to resist being returned; if it succeeds, it's temporarily immune for 24 hours. **Success** As critical success, but the creature is indifferent upon arrival. **Failure** As critical success, but the creature is hostile upon arrival. **Critical Failure** As failure, but magical feedback from the failed activation causes the user to become Stunned 3. --- **Activate** 7 days (Interact) **Research** Accumulate 12 RP by making (legendary) checks when Researching (1 year per attempt) **Frequency** once per century --- **Effect** The third activation ritual is known as \"Become the Void\" and requires the user to continue performing the rite for 7 consecutive days (as if they were performing a multi-day ritual). If the user fails to perform this rite for one of these 7 consecutive days, they immediately suffer the critical failure effect below. --- **Critical Success** The user's body, mind, and soul are infused with alien energies drawn from the Dark Tapestry, which transforms the user into an aberration of a level no higher than their current level +4. This new form could be an existing aberration or a unique one of the GM's creation. The user retains their memories and spellcasting ability (including any rituals they know) but becomes chaotic evil and loses all other abilities they possessed in their previous form. **Success** As critical success, but the aberration the user transforms into can be of a level no higher than half the user's current level. **Failure** The user's attempt to change is a painful mistake that deals 10d6+40 damage as their body twists, bends and breaks. Ultimately, they are not transformed. **Critical Failure** The user is slain, but their body shifts and transforms into a brand new creature as the bodiless alien intelligence Tchekuth incubates within the user's flesh, mind and soul. This transformation takes another 7 days to complete but can be halted indefinitely if the *Void Mirror* is placed in a specially constructed frame aimed at the body's location (regardless of any solid object between the mirror and the body). Slowing or stopping this transformation via other means requires complex rituals or divine intervention, subject to the GM's whim. After 7 days, the body completes its transformation and Tchekuth rises once more as a physical threat. --- **Destruction** A creature that completes the apotheosis of Becoming the Void can destroy the *Void Mirror* by smashing it, though doing so also destroys the creature performing this action in a violent burst of occult energy."
+ },
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen-greater",
+  "name": "Drakeheart Mutagen (Greater)",
+  "level": 11,
+  "fields": {
+   "level": 11,
+   "price": {
+    "gp": 300
+   },
+   "bulk": 0.1,
+   "traits": [
+    "alchemical",
+    "consumable",
+    "elixir",
+    "mutagen",
+    "polymorph"
+   ],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "consumable",
+   "consumableType": "mutagen",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "remaster"
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your skin grows scales like a drake, and your eyesight become sharp and your pupils slitted, but your mind and reflexes slow. **Benefit** You gain +6 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +3 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 1 hour or until you use Final Surge, whichever comes first."
+ },
+ {
+  "collection": "items",
+  "id": "warpriests-cascade",
+  "name": "Warpriest's Cascade",
+  "level": 5,
+  "fields": {
+   "level": 5,
+   "price": {
+    "gp": 145
+   },
+   "bulk": 0.1,
+   "traits": [
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "usage": "held-in-one-hand",
+   "itemType": "equipment",
+   "edition": "neutral"
+  },
+  "text": "This iron thurible—originally crafted by a Caydenite priest to disperse symbolic libations—swings from the end of an extendable shaft, allowing you to sprinkle the contents over an entire troop. The thurible's container can hold a magical potion up to the item level of the warpriest's cascade, dispersing its contents over an entire troop over the course of 1 minute. However, spreading out the potion lessens its duration. Potions with a duration of 1 hour or more affect a troop for only 10 minutes, and potions with a duration of 8 hours or more affect a troop for only 1 hour. Potions with a duration less than 1 hour don't work inside of a warpriest's cascade."
+ },
+ {
+  "collection": "items",
+  "id": "mycoweave-shield-greater",
+  "name": "Mycoweave Shield (Greater)",
+  "level": 8,
+  "fields": {
+   "level": 8,
+   "price": {
+    "gp": 40
+   },
+   "bulk": 1,
+   "traits": [],
+   "rarity": "uncommon",
+   "activationCost": {
+    "type": "reaction"
+   },
+   "itemType": "shield",
+   "acBonus": 2,
+   "hardness": 4,
+   "hp": 64,
+   "brokenThreshold": 32,
+   "speedPenalty": 0,
+   "edition": "neutral"
+  },
+  "text": "This shield is grown entirely of specially treated fungi, giving it the appearance of a frilly disc. The shield has Hardness 4, HP 64, and BT 32. When left atop at least 1 bulk of organic matter, it gains fast healing 1; after 10 minutes 1 Bulk of the organic matter has been consumed by the shield. This shield doubles its hardness against bludgeoning, electricity, and sonic damage. **Activate** ⟨5⟩ manipulate **Trigger** The shield is broken --- **Effect** The shield spews spores into one adjacent square, dealing 2d6 damage to all creatures in within it; a successful save negates the damage. --- **Craft Requirements** You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "collection": "items",
+  "id": "rogue-kit",
+  "name": "Rogue Kit",
+  "level": 0,
+  "fields": {
+   "traits": [],
+   "rarity": "common",
+   "level": 0,
+   "bulk": 4.1,
+   "price": {
+    "gp": 6,
+    "sp": 2
+   },
+   "itemType": "equipment",
+   "edition": "remaster-era"
+  },
+  "text": "Rogue Kit Source Player Core pg. 268 Price 6 gp, 2 sp Money Left Over 8 gp, 8 sp Bulk 4, 1 light Armor Leather Armor Weapons Rapier, Dagger Gear Adventurer's Pack Options thieves' toolkit (3 gp) Class Kits Source Core Rulebook pg. 289 If you want to quickly decide how to spend your starting money on what your class needs, start with one of these kits. Note than an adventurer’s pack, which is included in each kit, contains a backpack, a bedroll, 10 pieces of chalk, flint and steel, 50 feet of rope, 2 weeks’ rations, soap, 5 torches, and a waterskin. Click here for the full rules on Class Kits."
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-toxic-blades-8th-rank",
+  "name": "Wand of Toxic Blades (8th-Rank)",
+  "level": 19,
+  "fields": {
+   "level": 19,
+   "price": {
+    "cp": 0,
+    "gp": 37500,
+    "pp": 0,
+    "sp": 0
+   },
+   "bulk": 0.1,
+   "traits": [
+    "force",
+    "magical",
+    "poison",
+    "wand"
+   ],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "heldSpells": {
+    "6": [
+     "blessed-boundary"
+    ]
+   },
+   "itemType": "consumable",
+   "consumableType": "wand",
+   "uses": {
+    "current": 1,
+    "max": 1
+   }
+  },
+  "text": "This slender metal wand is tinted green and small images of bladed weapons are etched on its surface. **Activate** Cast a Spell **Frequency** once per day, plus overcharge --- **Effect** You cast 8th-rank Blessed Boundary. Damage from the wall also exposes the damaged creature to Cerulean Scourge. The poison uses its normal DC. A creature can be exposed to the poison no more than once per turn. --- **Craft Requirements** Supply a casting of Blessed Boundary of the appropriate rank."
+ },
+ {
+  "collection": "items",
+  "id": "marvelous-medicines",
+  "name": "Marvelous Medicines",
+  "level": 12,
+  "fields": {
+   "level": 12,
+   "price": {
+    "gp": 1800
+   },
+   "bulk": 1,
+   "traits": [
+    "magical"
+   ],
+   "rarity": "common",
+   "usage": "held-in-two-hands",
+   "itemType": "equipment",
+   "edition": "remaster",
+   "passiveEffects": {
+    "skills": {
+     "medicine": 2
+    }
+   }
+  },
+  "text": "This healer's toolkit contains a seemingly endless supply of bandages, herbs, and healing items of impeccable quality, granting you a +2 item bonus to Medicine checks. If you use the *marvelous medicines* when you Treat Poison or Treat Disease, before you roll your check, the medicines attempt to counteract the poison or disease you're treating, with a counteract rank of 5 and a counteract modifier of +21. This is a healing effect. The medicines can't be used to treat the same affliction for that patient again"
+ },
+ {
+  "collection": "items",
+  "id": "sword-cane",
+  "name": "Sword Cane",
+  "level": 0,
+  "fields": {
+   "level": 0,
+   "price": {
+    "gp": 5
+   },
+   "bulk": 1,
+   "traits": [
+    "agile",
+    "concealable",
+    "finesse"
+   ],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "itemType": "weapon",
+   "hands": 1,
+   "category": "martial",
+   "group": "sword",
+   "damage": {
+    "dice": 1,
+    "die": "d6",
+    "type": "piercing"
+   },
+   "edition": "remaster"
+  },
+  "text": "This slender, rapier-like sword is concealed within a wooden or metal cane that serves as a sheath, making it an inconspicuous weapon easy to slip past inspections or into high-society events. A sword cane is typically 4 feet long when sheathed, and its hilt is usually capped with a wooden or metal decoration."
+ },
+ {
+  "collection": "items",
+  "id": "caress-of-the-great-serpent",
+  "name": "Caress of the Great Serpent",
+  "level": 18,
+  "fields": {
+   "level": 18,
+   "price": {
+    "gp": 24000
+   },
+   "bulk": 2,
+   "traits": [
+    "deadly-d10",
+    "magical",
+    "sweep"
+   ],
+   "rarity": "uncommon",
+   "usage": "held-in-one-hand",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "actions",
+    "value": 3
+   },
+   "itemType": "weapon",
+   "hands": 1,
+   "category": "martial",
+   "group": "flail",
+   "damage": {
+    "dice": 1,
+    "die": "d6",
+    "type": "slashing"
+   },
+   "edition": "remaster-era"
+  },
+  "text": "This *+3 greater striking extending urumi* was fashioned after the legendary eightheaded orochi serpent, with its whiplike metal blades carved to resemble the many heads of the mythical beast, and its hilt wrapped in scaled leather. These weapons are commonly used by those who worship an orochi, raiding and threatening settlements to obtain sacrifices for the beast in hopes of being granted some modicum of its power. **Activate—Serpent's Kiss** ⟨3⟩ (concentrate) **Frequency** once per day --- **Effect** You use your urumi as an effigy with which to call upon an orochi's power, offering your blood in exchange. You can make up to eight Strikes with a –2 penalty, each against a different target within 30 feet. For each Strike you choose to make, you take 1d6 damage. Each attack counts toward your multiple attack penalty, but don't increase your penalty until you've made all your attacks."
+ },
+ {
+  "collection": "items",
+  "id": "alchemist-goggles-greater",
+  "name": "Alchemist Goggles (Greater)",
+  "level": 11,
+  "fields": {
+   "level": 11,
+   "price": {
+    "gp": 1400
+   },
+   "bulk": 0,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "common",
+   "usage": "worneyepiece",
+   "itemType": "equipment",
+   "edition": "neutral"
+  },
+  "text": "These brass goggles are engraved with flame patterns and have thick, heavy lenses. While worn, they give you a +2 item bonus to Crafting checks to Craft alchemical items. When making Strikes with alchemical bombs, you ignore lesser cover. If your Strike with an alchemical bomb fails (but doesn't critically fail), you gain a +2 item bonus to the splash damage the target of the Strike takes."
+ },
+ {
+  "collection": "items",
+  "id": "fleshgem",
+  "name": "Fleshgem",
+  "level": 5,
+  "fields": {
+   "traits": [
+    "evocation",
+    "invested",
+    "primal"
+   ],
+   "rarity": "uncommon",
+   "level": 5,
+   "bulk": 0,
+   "itemType": "equipment",
+   "edition": "legacy-era",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   }
+  },
+  "text": "Fleshgem Source Grand Bazaar pg. 110 Usage envision Base Weapon Fist Originally developed as a body modification by oreads, fleshgems are crystals that can be implanted in the skin of a creature of any ancestry. While a fleshgem can be applied anywhere on the body for cosmetic purposes, the most common usage among adventurers is to implant them at the base of the fingers, to be used like brass knuckles. Fleshgem (Combat) Source Grand Bazaar pg. 110 Price 160 gp These pointed crystal shards embedded in your fingers grant you a fist Strike that deals 1d6 piercing damage, is in the brawling group, and has the magical and unarmed traits. Combat fleshgems can be enhanced with the effects of handwraps of mighty blows, as normal for an unarmed attack. Fleshgem (Earthspeaker) Source Grand Bazaar pg. 110 Price 450 gp You siphon your fleshgem's power, and the earth around you erupts in crystal stalagmites. Activate command; Frequency once per day; Requirements You are standing on the ground; Effect The ground around you erupts in a 10-foot burst of knee-high crystal shards that remain for 1 round, or 1 minute if you spent two actions. To all creatures other than you, the area is difficult terrain as well as hazardous terrain. Creatures that move through a space containing crystal shards take 2 piercing damage."
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-final-rest-major",
+  "name": "Staff of Final Rest (Major)",
+  "level": 16,
+  "fields": {
+   "level": 16,
+   "price": {
+    "gp": 9000
+   },
+   "bulk": 1,
+   "traits": [
+    "magical",
+    "staff",
+    "two-hand-d8"
+   ],
+   "rarity": "uncommon",
+   "usage": "held-in-one-hand",
+   "counters": [
+    {
+     "id": "pool",
+     "label": "Charges",
+     "max": "level",
+     "resetsOnRest": true,
+     "startsFull": true
+    }
+   ],
+   "heldSpells": {
+    "0": [
+     "vitality-lash"
+    ],
+    "1": [
+     "infuse-vitality",
+     "heal"
+    ],
+    "2": [
+     "heal",
+     "peaceful-rest"
+    ],
+    "3": [
+     "bind-undead",
+     "infuse-vitality",
+     "heal"
+    ],
+    "4": [
+     "heal",
+     "holy-cascade"
+    ],
+    "5": [
+     "death-ward",
+     "infuse-vitality",
+     "heal"
+    ],
+    "6": [
+     "field-of-life",
+     "heal",
+     "holy-cascade"
+    ],
+    "7": [
+     "heal",
+     "holy-cascade",
+     "sunburst"
+    ]
+   },
+   "itemType": "weapon",
+   "hands": 1,
+   "category": "simple",
+   "group": "club",
+   "damage": {
+    "dice": 1,
+    "die": "d4",
+    "type": "bludgeoning"
+   },
+   "edition": "legacy-era"
+  },
+  "text": "This white marble staff is carved into the figure of an abstract knight, its shield bearing the symbol of Lastwall, with a wickedly pointed sword made of dark wood raised high above its head. When you wield it as a weapon, it gains the versatile P trait and functions as a wooden stake, allowing you to use it to stake vampires, and your Strikes with the staff gain a +3 circumstance bonus to damage rolls against undead. --- **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Vitality Lash - **1st** Infuse Vitality, Heal - **2nd** Heal, Peaceful Rest - **3rd** Bind Undead, Infuse Vitality, Heal - **4th** Heal, Holy Cascade - **5th** Death Ward, Infuse Vitality, Heal - **6th** Field of Life, Heal, Holy Cascade - **7th** Heal, Holy Cascade, Sunburst --- **Craft Requirements** Supply one casting of all listed levels of all listed spells."
+ },
+ {
+  "collection": "items",
+  "id": "warleaders-bulwark",
+  "name": "Warleader's Bulwark",
+  "level": 10,
+  "fields": {
+   "level": 10,
+   "price": {
+    "gp": 1000
+   },
+   "bulk": 2,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "common",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "armor",
+   "category": "medium",
+   "group": "plate",
+   "acBonus": 4,
+   "dexCap": 1,
+   "checkPenalty": -2,
+   "speedPenalty": -5,
+   "strength": 3,
+   "edition": "remaster",
+   "passiveEffects": {
+    "skills": {
+     "diplomacy": 2
+    }
+   }
+  },
+  "text": "This *+1 resilient breastplate* is made from shining bronze overlaid with reinforcing golden panels emblazoned with images of loyal soldiers. Wearing this breastplate grants you a commanding aura. You gain a +2 item bonus to Diplomacy checks, but you take a -2 item penalty to Stealth checks to Hide and Sneak and Deception checks to Impersonate. --- **Activate—Command Bravery** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** You grant allies within 100 feet a +2 status bonus to saves against fear effects for 1 minute. When you activate this ability, each affected ally who's frightened reduces their frightened value by 1."
+ },
+ {
+  "collection": "items",
+  "id": "indomitable-keepsake-greater",
+  "name": "Indomitable Keepsake (Greater)",
+  "level": 9,
+  "fields": {
+   "level": 9,
+   "price": {
+    "gp": 120
+   },
+   "bulk": 0,
+   "traits": [
+    "consumable",
+    "fortune",
+    "magical",
+    "talisman"
+   ],
+   "rarity": "common",
+   "usage": "affixed-to-armor",
+   "activationCost": {
+    "type": "free"
+   },
+   "itemType": "consumable",
+   "consumableType": "talisman",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "remaster"
+  },
+  "text": "**Usage** affixed to armor **Activate** ⟨4⟩ (concentrate) **Trigger** You're critically hit by a firearm attack. --- This talisman usually takes the form of a small sentimental object carried in a pocket or attached to the inside of a piece of armor. When you activate it, it slows the attack, and you reduce the damage from the triggering critical hit by 10, as the attack destroys the talisman. This effect only reduces the additional damage from a critical hit; it can't reduce the damage below the amount it would deal on a normal hit. When you activate a *greater indomitable keepsake*, you reduce the damage from a firearm critical hit by 20 instead of reducing it by 10."
+ },
+ {
+  "collection": "items",
+  "id": "the-bear",
+  "name": "The Bear",
+  "level": 20,
+  "fields": {
+   "level": 20,
+   "price": {},
+   "bulk": 0.1,
+   "traits": [
+    "artifact",
+    "harrow-court",
+    "invested",
+    "magical"
+   ],
+   "rarity": "unique",
+   "usage": "carried",
+   "frequency": {
+    "max": 1,
+    "per": "minute"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per minute",
+     "max": 1,
+     "per": "minute",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "equipment",
+   "edition": "neutral"
+  },
+  "text": "**Suit** Hammers (Str) **Alignment** neutral --- *The Bear* represents brute force applied to solve unusual problems. As long as you have *The Bear* invested, you can use Athletics checks to Tumble Through or Squeeze. **Activate** ⟨1⟩ Interact **Frequency** once per minute **Requirements** Your last action was a successful melee Strike --- **Effect** You attempt to Grapple, Shove, or Trip the creature you hit with the successful Strike, even if you have no hand free. You gain a +2 status bonus to your check. If you Grapple using a weapon, you can Strike with the weapon only if it has the grapple trait and you Strike the grabbed target, or if you cease Grabbing with the weapon. After the effect of the initial Grapple ends, you can't keep a target grabbed with a weapon that lacks the grapple trait. The status bonus increases to +3 if you're at least 17th level."
+ },
+ {
+  "collection": "items",
+  "id": "arboreals-revenge",
+  "name": "Arboreal's Revenge",
+  "level": 6,
+  "fields": {
+   "level": 6,
+   "price": {},
+   "bulk": 2,
+   "traits": [
+    "concussive",
+    "cursed",
+    "magical",
+    "scatter-10"
+   ],
+   "rarity": "rare",
+   "usage": "held-in-two-hands",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    },
+    {
+     "id": "freq2",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "free"
+   },
+   "heldSpells": {
+    "2": [
+     "cleanse-affliction",
+     "oaken-resilience"
+    ]
+   },
+   "itemType": "weapon",
+   "hands": 2,
+   "category": "martial",
+   "group": "firearm",
+   "damage": {
+    "dice": 1,
+    "die": "d8",
+    "type": "piercing"
+   },
+   "range": 40,
+   "reload": 1,
+   "edition": "remaster"
+  },
+  "text": "This walnut and brass *+1 striking blunderbuss* has a natural look, with wood worn smooth by time, but left knotted and gnarled. The handgrip beneath the flared muzzle is a well-positioned bulging tree knot, and the long stock looks as if it was grown to fit you. On closer examination, the whorls and rings in the wood resemble eyes. *Arboreal's revenge* is a haunted firearm constructed with wood hewn from a living arboreal, slaying the arboreal and trapping its spirit in the firearm. Perhaps a patient wielder could one day put the arboreal's spirit to rest, or at least come to terms with it, abating the drawbacks of the weapon while keeping its advantages. When you first fire *arboreal's revenge*, the blunderbuss fuses with you, after which it's almost impossible to remove it from your possession with a Cleanse Affliction or similar effect, like many cursed items. You gain weakness 5 to fire and the flat check for you to recover from persistent fire damage increases from 15 to 17, or from 10 to 12 if you receive appropriate help. Whenever you wield *arboreal's revenge*, the arboreal spirit bound to the blunderbuss attempts to overtake you. The wood handgrip sprouts roots which grow around your hand, binding both of your hands to the firearm. You gain a +4 circumstance bonus to your Reflex DC when defending against checks to Disarm you. However, you can't Release your grip on the blunderbuss until you forcibly tear off the roots, though they do allow you to move your hands enough (and only enough) to reload and fire the blunderbuss. Tearing off the roots takes 1 minute. The arboreal haunting the firearm can use the following two effects whenever it wants, often using them at random. You can coax it into performing them each intentionally once per day, with the following activations. --- **Activate—Arboreal Growth** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** The arboreal haunting the blunderbuss attempts to regrow itself into a new physical body by sprouting from the bodies of all the creatures that the firearm recently harmed. You and all creatures within 60 feet damaged by *arboreal's revenge* within the last minute must attempt a saving throw. On a failure, they take a –10-foot circumstance penalty to their Speeds as roots rapidly sprout from their wounds, which lasts until they escape show-dc=all dc=20. --- **Activate—Arboreal's Grace** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You cast Oaken Resilience from the blunderbuss as a 2nd-rank primal spell. However, the weakness to fire imposed by oaken resilience is cumulative with the weakness to fire imposed by this weapon's curse, for a total of weakness 8 to fire."
+ },
+ {
+  "collection": "items",
+  "id": "matchmaker-fulu",
+  "name": "Matchmaker Fulu",
+  "level": 3,
+  "fields": {
+   "level": 3,
+   "price": {
+    "gp": 10
+   },
+   "bulk": 0,
+   "traits": [
+    "consumable",
+    "fortune",
+    "fulu",
+    "magical",
+    "talisman"
+   ],
+   "rarity": "common",
+   "usage": "affixed-to-armor",
+   "activationCost": {
+    "type": "free"
+   },
+   "itemType": "consumable",
+   "consumableType": "fulu",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "legacy-era"
+  },
+  "text": "**Usage** affixed to armor **Activate** ⟨4⟩ envision **Trigger** You attempt a Diplomacy check to Make an Impression. --- This red fulu contains blessings for one's relationship from Shelyn, goddess of beauty and love. You get a +2 status bonus to the Diplomacy check, and if you roll a critical failure on the check, you get a failure instead."
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-hybrid-form-9th-rank-spell",
+  "name": "Wand of Hybrid Form (9th-Rank Spell)",
+  "level": 20,
+  "fields": {
+   "traits": [
+    "magical",
+    "polymorph",
+    "wand"
+   ],
+   "rarity": "uncommon",
+   "level": 20,
+   "bulk": 0.1,
+   "price": {
+    "gp": 55000
+   },
+   "itemType": "equipment",
+   "edition": "remaster",
+   "spellSlot": {
+    "rank": 9
+   },
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   }
+  },
+  "text": "Wand of Hybrid Form Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L The grain of this simple wooden wand forms shifting images of sharp claws, snapping jaws, and countless creatures. Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose. You gain the benefits of both forms. For example, if one form can breathe air and the other can breathe underwater, you can breathe in both situations. If there's overlap in abilities, you gain the better one. For instance, if both have a fly Speed, you get the higher one, and if both forms have claws, you gain only the claw Strike you prefer. The GM determines which abilities overlap and which are cumulative. Craft Requirements Supply a casting of a spell of the appropriate rank. The spell must have a casting time of or , must have the polymorph trait, and must allow more than one choice of battle form. Wand of Hybrid Form (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 200 gp Bulk L Wand of Hybrid Form (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 450 gp Bulk L Wand of Hybrid Form (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 850 gp Bulk L Wand of Hybrid Form (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,750 gp Bulk L Wand of Hybrid Form (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 3,750 gp Bulk L Wand of Hybrid Form (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 8,000 gp Bulk L Wand of Hybrid Form (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 19,000 gp Bulk L Wand of Hybrid Form (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 55,000 gp Bulk L"
+ },
+ {
+  "collection": "items",
+  "id": "jerkin-of-liberation",
+  "name": "Jerkin of Liberation",
+  "level": 17,
+  "fields": {
+   "level": 17,
+   "price": {
+    "gp": 14000
+   },
+   "bulk": 1,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "itemType": "armor",
+   "category": "light",
+   "group": "leather",
+   "acBonus": 2,
+   "dexCap": 3,
+   "checkPenalty": -1,
+   "speedPenalty": 0,
+   "strength": 1,
+   "edition": "neutral",
+   "passiveEffects": {
+    "speeds": {
+     "land": 15
+    }
+   }
+  },
+  "text": "This +2 greater resilient studded leather is traditionally inscribed with a symbol of either Norgorber or Cayden Cailean. Its leather is light as silk, and its buttons and studs are gleaming crystal. While you wear it, you get a +15-foot item bonus to your Speed, and effects that attempt to impose penalties on your Speed must first counteract the jerkin of liberation or they have no effect on you. In addition, you are hard to incapacitate. You use the jerkin's item level or your own level, whichever is higher, to determine effects of the incapacitation trait."
+ },
+ {
+  "collection": "items",
+  "id": "cloth-linen",
+  "name": "Cloth (Linen)",
+  "level": 0,
+  "fields": {
+   "traits": [],
+   "rarity": "common",
+   "level": 0,
+   "bulk": 0,
+   "price": {
+    "sp": 6
+   },
+   "itemType": "equipment",
+   "edition": "neutral"
+  },
+  "text": "Cloth Source Travel Guide pg. 37 Cloth (wool cloth, 1 Bulk) Source Travel Guide pg. 37 Price 4 sp Cloth (Wool Cloth, 1 square yard) Source Travel Guide pg. 37 Price 1 cp Cloth (Linen) Source Travel Guide pg. 37 Price 6 sp Cloth (Cotton) Source Travel Guide pg. 37 Price 8 sp"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-shadde-quah",
+  "name": "Unifying Emblem (Shadde-Quah)",
+  "level": 3,
+  "fields": {
+   "level": 3,
+   "price": {
+    "gp": 60
+   },
+   "bulk": 0,
+   "traits": [
+    "invested",
+    "magical",
+    "tattoo"
+   ],
+   "rarity": "common",
+   "usage": "tattooed-on-the-body",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "actions",
+    "value": 2
+   },
+   "itemType": "equipment",
+   "edition": "remaster"
+  },
+  "text": "These tattoos were first created using designs and techniques from the seven Shoanti clans. Each clan is known for one tattoo in particular. The clans would seal alliances in ancient days by tattooing their emblems on members of other clans to symbolically share their gifts. Though these tattoos are respected, the clans reserve their most prestigious symbols for true members of the clan. The tattoo allows you to understand and speak Shoanti. If you already know that language, you instead gain a +1 item bonus on Diplomacy checks you make when speaking Shoanti to someone who understands it. The tattoo of the Axe clan depicts a raw fish cut into portions. **Activate** ⟨2⟩ **Frequency** once per day --- **Effect** The tattoo casts Cleanse Cuisine."
+ },
+ {
+  "collection": "items",
+  "id": "implacable",
+  "name": "Implacable",
+  "level": 11,
+  "fields": {
+   "level": 11,
+   "price": {
+    "gp": 1200
+   },
+   "bulk": 0,
+   "traits": [
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "usage": "etched-onto-med-heavy-armor",
+   "itemType": "equipment",
+   "edition": "legacy-era"
+  },
+  "text": "This substantial rune makes you difficult to hold back. Whenever you are affected by an effect that lasts until you Escape (for instance, from the Grapple action or a tanglefoot bag), you become quickened. You can use the extra action each round only to Step or Escape."
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-annulment-lesser",
+  "name": "Potion of Annulment (Lesser)",
+  "level": 10,
+  "fields": {
+   "level": 10,
+   "price": {
+    "gp": 200
+   },
+   "bulk": 0.1,
+   "traits": [
+    "consumable",
+    "magical",
+    "potion"
+   ],
+   "rarity": "rare",
+   "usage": "held-in-one-hand",
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "consumable",
+   "consumableType": "potion",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "neutral"
+  },
+  "text": "**Activate** ⟨1⟩ Interact --- A potion of annulment magically breaks a supernatural deal you have made, such as an infernal contract, a sea hag's bargain, or the Geas ritual. Upon drinking the potion, attempt a counteract check against the highest- level such effect, with a counteract modifier of +17. If the check is successful, the deal ends for all parties. You're not penalized for breaking the contract, but you also enjoy none of its benefits or rewards. Individuals with whom you shared the contract are aware it has been annulled and may seek vengeance. This potion can't rewind time or negate effects that have already occurred; for example, if you have killed someone to fulfill an infernal contract, drinking this potion and canceling the contract doesn't bring the dead individual back to life."
+ },
+ {
+  "collection": "items",
+  "id": "sisterstone-object-high-grade",
+  "name": "Sisterstone Object (High-Grade)",
+  "level": 16,
+  "fields": {
+   "traits": [
+    "precious"
+   ],
+   "rarity": "rare",
+   "level": 16,
+   "bulk": 0,
+   "price": {
+    "gp": 5500
+   },
+   "itemType": "equipment",
+   "edition": "neutral"
+  },
+  "text": "Sisterstone May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 79 Sisterstone is a term used for two closely related ores infused by the spiritual runoff in the Field of Maidens, dusk sisterstone and scarlet sisterstone. They have the same physical properties except for color—dusk sisterstone is a pale orange while scarlet sisterstone is orange-red. When near an object made of the other type of sisterstone, they both begin exuding spiritual energy that repels undead. When an object made of dusk sisterstone is within 15 feet of an object made of scarlet sisterstone of the same grade, they create a reciprocal field. Any undead creature adjacent to one of the objects when the field is formed, or who moves adjacent to one while the field is active, becomes enfeebled 1 unless it succeeds at a DC 15 Fortitude save. This lasts until the undead creature is no longer adjacent to either of the items or until the field's removed (typically by the objects ceasing to be within 15 feet of one another). The DC increases to 22 if both items are standard grade or better, and to 33 if they're both high grade. Unworked chunks and ingots don't create a reciprocal field. A single object can't be made of both types of sisterstone. Sisterstone Items Sisterstone Items Hardness HP BT Thin Items Low-grade 6 18 9 Standard-grade 8 24 12 High-grade 10 36 18 Items Low-grade 10 28 14 Standard-grade 12 40 20 High-grade 15 54 27 Structures Low-grade 20 56 28 Standard-grade 24 80 40 High-grade 30 108 54 Material Uses Sisterstone Armor Sisterstone Weapon Sisterstone Chunk Source Pathfinder #183: Field of Maidens pg. 79 Price 20 gp Bulk L Sisterstone Ingot Source Pathfinder #183: Field of Maidens pg. 79 Price 200 gp Bulk 1 Sisterstone Object (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 79 Price 30 gp (per Bulk) Sisterstone Object (Standard-Grade) Source Pathfinder #183: Field of Maidens pg. 79 Price 350 gp (per Bulk) Sisterstone Object (High-Grade) Source Pathfinder #183: Field of Maidens pg. 79 Price 5,500 gp (per Bulk)"
+ },
+ {
+  "collection": "items",
+  "id": "winged-terror",
+  "name": "Winged Terror",
+  "level": 16,
+  "fields": {
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "level": 16,
+   "bulk": 1,
+   "itemType": "equipment",
+   "edition": "neutral"
+  },
+  "text": "Winged Terror Source High Seas pg. 64 Usage worn armor Bulk 1 Base Armor Studded Leather Armor Access You're a member of the Red Mantis Assassins This +2 greater resilient winged studded leather armor features the Red Mantis emblem in carapace studs. The wearer gains resistance 5 to physical damage dealt by frightened creatures."
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-gender-transformation-lesser",
+  "name": "Elixir of Gender Transformation (Lesser)",
+  "level": 1,
+  "fields": {
+   "level": 1,
+   "price": {
+    "gp": 1
+   },
+   "bulk": 0.1,
+   "traits": [
+    "alchemical",
+    "consumable",
+    "elixir"
+   ],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "consumable",
+   "consumableType": "elixir",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "remaster-era"
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This clear, bitter liquid can be ingested to change certain secondary sex characteristics. Different formulations create different changes—for example, one variety might cause the voice to deepen and promote body and facial hair growth, while another might cause fat redistribution around the hips and the growth of breasts. These changes tend to be accompanied by shifting of the fat in the face, sometimes dramatically or sometimes more subtly changing the user's appearance. The elixir must be taken every week, and changes occur over the course of a year or more."
+ },
+ {
+  "collection": "items",
+  "id": "gate-attenuator",
+  "name": "Gate Attenuator",
+  "level": 3,
+  "fields": {
+   "level": 3,
+   "price": {
+    "gp": 60
+   },
+   "bulk": 0,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "common",
+   "usage": "worn",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "actions",
+    "value": 2
+   },
+   "itemType": "equipment",
+   "edition": "neutral",
+   "effectChoices": [
+    {
+     "id": "element",
+     "prompt": "Attune the attenuator to one element",
+     "options": [
+      {
+       "value": "air",
+       "label": "Air"
+      },
+      {
+       "value": "earth",
+       "label": "Earth"
+      },
+      {
+       "value": "fire",
+       "label": "Fire"
+      },
+      {
+       "value": "metal",
+       "label": "Metal"
+      },
+      {
+       "value": "water",
+       "label": "Water"
+      },
+      {
+       "value": "wood",
+       "label": "Wood"
+      }
+     ]
+    }
+   ]
+  },
+  "text": "*Gate attenuators* are typically worn near the body's core and are shaped like portals or passageways, making literal the elemental gates kineticists possess within their bodies. The appearance can vary from a simple disk with a hole in the middle to a design matching a city gate of a particular settlement. If you're a kineticist, the attenuator grants you a +1 item bonus to your impulse attack modifier (but not to your impulse DC). When you invest a *gate attenuator*, attune it to one element of your choice. Designs on the attenuator's surface transform to match that element, and the attenuator gains the element's trait until it's no longer invested or is attuned to a different element. --- **Activate - Elemental Spell** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The *gate attenuator* casts a 1st-rank spell, with a spell attack modifier of +7 and spell DC of 17. If you're a kineticist and the spell's element matches one of your kinetic elements, you can use your impulse attack modifier instead of the spell attack modifier or your impulse DC instead of the spell DC. The spell corresponds to the element the item is attuned to, and it gains that element's trait if it doesn't already have it: **air** Gust of Wind **earth** Pummeling Rubble **fire** Dehydrate **metal** **water** Snowball **wood** Flourishing Flora"
+ },
+ {
+  "collection": "items",
+  "id": "pathfinders-mentor",
+  "name": "Pathfinder's Mentor",
+  "level": 6,
+  "fields": {
+   "level": 6,
+   "price": {
+    "gp": 200
+   },
+   "bulk": 0,
+   "traits": [
+    "illusion",
+    "intelligent",
+    "invested",
+    "magical"
+   ],
+   "rarity": "rare",
+   "usage": "worn",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "equipment",
+   "edition": "remaster"
+  },
+  "text": "**Perception** +15; precise vision 30 feet, imprecise hearing 30 feet **Communication** telepathy (Common and two other common languages) **Skills** Pathfinder Lore +15, Society +13, Survival +13 **Int** +3, **Wis** +3, **Cha** +1 **Will** +14 --- A *Pathfinder's mentor* is a wayfinder that has developed sapience. It has two *aeon stone* slots, and both stones grant their resonant powers without interfering with each other. If both slots are filled, the *wayfinder* and two stones count as two items toward your investiture limit. Most Pathfinder's mentors are eager explorers that object to staying in one location for long, urging their bearers toward ancient ruins to explore, relics to study, and discoveries to make. To this end, the wayfinder acts as a guide, making Survival checks on your behalf during your travels. A *Pathfinder's mentor* also has the following activations. --- **Activate** ⟨1⟩ (concentrate) **Effect** The wayfinder casts Know the Way on you. --- **Activate** 1 minute (concentrate, manipulate) **Frequency** once per day **Effect** The wayfinder casts Wanderer's Guide on you."
+ },
+ {
+  "collection": "items",
+  "id": "glue-bomb-major",
+  "name": "Glue Bomb (Major)",
+  "level": 17,
+  "fields": {
+   "level": 17,
+   "price": {
+    "gp": 2500
+   },
+   "bulk": 0.1,
+   "traits": [
+    "alchemical",
+    "bomb",
+    "consumable"
+   ],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "weapon",
+   "hands": 1,
+   "category": "martial",
+   "group": "bomb",
+   "damage": {
+    "dice": 0,
+    "die": "",
+    "type": "bludgeoning"
+   },
+   "range": 20,
+   "reload": null,
+   "edition": "remaster"
+  },
+  "text": "**Activate** ⟨1⟩ Strike --- A glue bomb is a harmless explosive mechanism bursting with sticky substances. When you hit a creature with a glue bomb, that creature takes a –20-foot status penalty to its Speeds for 1 minute. You gain a +3 item bonus to attack rolls, and the Escape DC is 37. On a critical hit, a creature in contact with a solid surface becomes stuck to the surface and immobilized for 1 round, and a creature flying via wings has its wings tangled, causing it to fall safely to the ground and become unable to Fly again for 1 round. Glue bombs are not effective when used on a creature that is in water. The target can end any effects by Escaping or spending a total of 3 Interact actions to carefully remove the sticky substances. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "collection": "items",
+  "id": "fortifying-pebble",
+  "name": "Fortifying Pebble",
+  "level": 4,
+  "fields": {
+   "level": 4,
+   "price": {
+    "gp": 13
+   },
+   "bulk": 0,
+   "traits": [
+    "consumable",
+    "magical",
+    "talisman"
+   ],
+   "rarity": "uncommon",
+   "usage": "affixed-to-armor-shield-or-weapon",
+   "activationCost": {
+    "type": "free"
+   },
+   "itemType": "consumable",
+   "consumableType": "talisman",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "legacy-era"
+  },
+  "text": "**Usage** affixed to armor, shield, or weapon **Activate** ⟨4⟩ envision **Trigger** The affixed object would take damage This small pebble is strangely dense and surprisingly durable, affixed to an object by a sturdy steel chain. When you activate the pebble, the affixed object takes 10 less damage."
+ },
+ {
+  "collection": "items",
+  "id": "religious-text",
+  "name": "Religious Text",
+  "level": 0,
+  "fields": {
+   "level": 0,
+   "price": {
+    "gp": 1
+   },
+   "bulk": 0.1,
+   "traits": [],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "itemType": "equipment",
+   "edition": "remaster"
+  },
+  "text": "This manuscript contains scripture of a particular religion. Some divine spellcasters, such as clerics, can use a religious text to use certain abilities. A religious text must be held in one hand to use it."
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-clinging-rime",
+  "name": "Wand of Clinging Rime",
+  "level": 16,
+  "fields": {
+   "traits": [
+    "cold",
+    "magical",
+    "wand",
+    "water"
+   ],
+   "rarity": "common",
+   "level": 16,
+   "bulk": 0.1,
+   "itemType": "equipment",
+   "edition": "remaster",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   }
+  },
+  "text": "Wand of Clinging Rime Source Treasure Vault (Remastered) pg. 139 Usage held in 1 hand Bulk L A thin layer of frost coats this gnarled holly wand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast frigid flurry of the indicated rank. After you cast the spell, the ice crystals freeze to flesh and other surfaces, clinging to the creatures in the area. Each creature that fails its save takes persistent cold damage with the amount determined by the wand's type. Craft Requirements Supply a casting of frigid flurry of the appropriate rank. Wand of Clinging Rime (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 10,000 gp Bulk L The persistent cold damage is 1d6. Wand of Clinging Rime (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 24,000 gp Bulk L The persistent cold damage is 2d6. Wand of Clinging Rime (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 139 Price 70,000 gp Bulk L The persistent cold damage is 3d6."
+ },
+ {
+  "collection": "items",
+  "id": "clothing-desert",
+  "name": "Clothing (Desert)",
+  "level": 0,
+  "fields": {
+   "level": 0,
+   "price": {
+    "sp": 4
+   },
+   "bulk": 0.1,
+   "traits": [],
+   "rarity": "common",
+   "usage": "wornclothing",
+   "itemType": "equipment",
+   "edition": "remaster"
+  },
+  "text": "Desert clothing is made up of loose-fitting, light, breathable clothes that protect your head and body from the sun and allow you to cool off easily. They allow you to negate the damage from severe environmental heat and reduce the damage from extreme heat to that of severe heat. This effect is negated if the clothing is worn with any armor, except armor that is especially cooling at the GM's discretion."
+ },
+ {
+  "collection": "items",
+  "id": "rhinoceros-mask-greater",
+  "name": "Rhinoceros Mask (Greater)",
+  "level": 8,
+  "fields": {
+   "level": 8,
+   "price": {
+    "gp": 425
+   },
+   "bulk": 0,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "usage": "wornmask",
+   "itemType": "equipment",
+   "edition": "remaster"
+  },
+  "text": "Covered with thick armor and bearing a thicker horn, this face mask grants you increased momentum. If you Stride at least 10 feet, your next melee Strike before the end of your turn ignores the Hardness of objects with a Hardness of 10 or less. If the object has more than Hardness 10, the mask grants no benefit."
+ },
+ {
+  "collection": "items",
+  "id": "greater-necrotic-cap",
+  "name": "Greater Necrotic Cap",
+  "level": 11,
+  "fields": {
+   "traits": [
+    "catalyst",
+    "consumable",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "level": 11,
+   "bulk": 0.1,
+   "price": {
+    "gp": 350
+   },
+   "itemType": "consumable",
+   "edition": "neutral"
+  },
+  "text": "Necrotic Cap May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L You can use this slimy, rotting mushroom as a spell catalyst when you cast an acid grip spell by tapping it against the target, causing the mushroom to release a cloud of necrotic spores. When you do, acid grip loses the acid trait, gains the fungus trait, and all acid damage the spell deals becomes void damage. On a hit, the target additionally gains the enfeebled and sickened conditions, with the listed values, as the spores consume their flesh. As long as the target is taking persistent void damage, they can’t reduce the value of their sickened condition below 1. Lesser Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 18 gp The value of the enfeebled and sickened conditions is 1. Moderate Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 80 gp The value of the enfeebled and sickened conditions is 2. Greater Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 350 gp The value of the enfeebled and sickened conditions is 3. Major Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 1,200 gp The value of the enfeebled and sickened conditions is 4."
+ },
+ {
+  "collection": "items",
+  "id": "energy-breath-potion-moderate",
+  "name": "Energy Breath Potion (Moderate)",
+  "level": 12,
+  "fields": {
+   "traits": [
+    "consumable",
+    "magical",
+    "potion"
+   ],
+   "rarity": "common",
+   "level": 12,
+   "bulk": 0.1,
+   "price": {
+    "gp": 400
+   },
+   "itemType": "consumable",
+   "edition": "remaster"
+  },
+  "text": "Energy Breath Potion Source GM Core pg. 259 Usage held in 1 hand Bulk L Activate (manipulate) Distilled from the energy of dangerous spells, an energy breath potion grants you the Energy Breath action for 1 hour after you imbibe the concoction. The potency of the breath depends on the potion's type, based on how long the distilled ingredients were aged. This potion has the trait matching the damage type. Energy Breath Each creature in an area takes damage depending on its basic saving throw. The damage amount and save DC depend on the potion's energy type. The damage type is the same as the potion's energy type. The area and save depend on the energy type, as seen in the table below. After you use Energy Breath, you can't do so again for 1d4 rounds. ## Energy Type Area (Save) Acid 30-foot line (Reflex) Cold 15-foot cone (Reflex) Electricity 30-foot line (Reflex) Fire 15-foot cone (Reflex) Sonic 15-foot cone (Fortitude) Energy Breath Potion (Lesser) Source GM Core pg. 259 Price 70 gp The damage is 4d6, and the save DC is 23. Energy Breath Potion (Moderate) Source GM Core pg. 259 Price 400 gp The damage is 6d6, and the save DC is 29. Energy Breath Potion (Greater) Source GM Core pg. 259 Price 3,000 gp The damage is 10d6, and the save DC is 37."
+ },
+ {
+  "collection": "items",
+  "id": "piereta",
+  "name": "Piereta",
+  "level": 20,
+  "fields": {
+   "level": 20,
+   "price": {},
+   "bulk": 1,
+   "traits": [
+    "deadly-d8",
+    "disarm",
+    "divine",
+    "finesse",
+    "intelligent"
+   ],
+   "rarity": "unique",
+   "usage": "held-in-one-hand",
+   "frequency": {
+    "max": 1,
+    "per": "minute"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per minute",
+     "max": 1,
+     "per": "minute",
+     "resetsOnRest": true
+    },
+    {
+     "id": "freq2",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "reaction"
+   },
+   "itemType": "weapon",
+   "hands": 1,
+   "category": "martial",
+   "group": "sword",
+   "damage": {
+    "dice": 1,
+    "die": "d6",
+    "type": "piercing"
+   },
+   "edition": "neutral"
+  },
+  "text": "**Perception** +27; precise vision 30 feet, imprecise hearing 30 feet **Communication** telepathy (Azlanti, Celestial, Common, Utopian) **Skills** Diplomacy +33, Religion +29, Warfare Lore +27 **Int** +0, **Wis** +4, **Cha** +6 **Will** +31 --- Piereta was a Knight of Ozem during the Shining Crusade, sworn to the service of Aroden's herald, Arazni. After Arazni perished at the hands of the Whispering Tyrant, Piereta became the first paladin to swear her service to the newly ascended goddess, Iomedae. When she fell in battle, a fragment of her spirit clung to the sword through which she had wielded her faith in countless battles, granting the weapon a sentience of its own. The sword named herself after her fallen bearer and has been a faithful companion to many Iomedaean warriors since. *Piereta* is a *+3 major striking Holy rapier* devoted to the principles of Iomedae as an exemplar of valorous action and as a protector of the innocent. *Piereta* is very particular about who she permits to wield her. She agrees to work with you if you are a follower of Iomedae, or if you are lawful good or neutral good and worship a different good deity. Otherwise, you must convince *Piereta* of the rightness of your cause. If *Piereta* doesn't want you to wield her, once per minute she can attempt to force you to put her down ( to resist this command). Even if you succeed at this saving throw, *Piereta* refuses to apply any of her fundamental or property runes and gives you a -2 penalty on attack rolls with *Piereta* or any other weapon until you drop her. *Piereta* can use the following activations. --- **Activate** ⟨5⟩ command, Interact **Frequency** once per minute **Effect** *Piereta* makes a Retributive Strike, resolved as though you had used the ability, including any benefits from champion feats you have. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day **Effect** *Piereta* casts a 9th-rank Field of Life."
+ },
+ {
+  "collection": "items",
+  "id": "abidance-blinders",
+  "name": "Abidance Blinders",
+  "level": 2,
+  "fields": {
+   "level": 2,
+   "price": {
+    "gp": 25
+   },
+   "bulk": 1,
+   "traits": [
+    "invested",
+    "magical"
+   ],
+   "rarity": "common",
+   "usage": "wornheadwear",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "reaction"
+   },
+   "itemType": "equipment",
+   "edition": "remaster-era"
+  },
+  "text": "While many skilled cavalry units have their own beloved mounts, troops often need to make do with whatever animals are available for mounted combat. These blinders, made of dark brown leather, nearly cover an animal's eyes and prevent it from seeing the dangers around them. It takes 1 minute to affix the blinders on an animal, whose attitude toward you must be indifferent or better. These blinders can be used only on a domesticated animal that doesn't have combat training or the minion trait. Animals with these blinders on do not suffer from the frightened condition due to being in combat, nor do they automatically flee combat, as would be normal for an animal without combat training. Unless mounted by a rider with the paired headband, which is braided from the same dark brown leather, the animal's speed is reduced to 10 feet. --- **Activate—It Can't Hurt You** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** An animal within 30 feet wearing the paired blinders attempts a saving throw against a fear effect but hasn't rolled yet --- **Effect** You grant a +1 status bonus to its saving throw against the triggering effect."
+ },
+ {
+  "collection": "items",
+  "id": "bedroll-of-deep-slumber",
+  "name": "Bedroll of Deep Slumber",
+  "level": 3,
+  "fields": {
+   "level": 3,
+   "price": {
+    "gp": 50
+   },
+   "bulk": 0.1,
+   "traits": [
+    "magical"
+   ],
+   "rarity": "common",
+   "usage": "held-in-two-hands",
+   "itemType": "equipment",
+   "edition": "remaster-era"
+  },
+  "text": "This bedroll is made of especially fine cotton, stuffed with goose down, and the hem is inscribed with the sigils of the Dreamlands. If you fall asleep in the bedroll, you gain 5 temporary Hit Points that last while you sleep and for 1 minute after you wake up, as well as a +1 status bonus to saves against mental effects that occur while you are asleep, such as the Nightmare spell."
+ },
+ {
+  "collection": "items",
+  "id": "potion-patch",
+  "name": "Potion Patch",
+  "level": 4,
+  "fields": {
+   "traits": [
+    "consumable",
+    "magical"
+   ],
+   "rarity": "common",
+   "level": 4,
+   "bulk": 0,
+   "itemType": "consumable",
+   "edition": "remaster"
+  },
+  "text": "Potion Patch Source Treasure Vault (Remastered) pg. 97 Usage worn Activate (concentrate) Requirement You must have the potion patch affixed to your skin. A potion patch is a sticky, bandage-like pad that can be filled with one potion and affixed to the skin. Filling the patch and affixing it is a 1-minute activity that takes two hands and has the manipulate trait. A patch has a maximum level of potion it can absorb, depending on the patch's type. When you Activate the patch, the potion affects you without you needing to have the potion in your hand. The patch's magic is negated after it's used, the next time you make your daily preparations, or when another potion patch is affixed to you, whichever comes first. Potion Patch (Lesser) Source Treasure Vault (Remastered) pg. 97 Price 20 gp The potion must be 10th level or lower. Potion Patch (Moderate) Source Treasure Vault (Remastered) pg. 97 Price 100 gp The potion must be 15th level or lower. Potion Patch (Greater) Source Treasure Vault (Remastered) pg. 97 Price 600 gp The potion can be any level."
+ },
+ {
+  "collection": "items",
+  "id": "demolition-fulu-lesser",
+  "name": "Demolition Fulu (Lesser)",
+  "level": 3,
+  "fields": {
+   "level": 3,
+   "price": {
+    "gp": 12
+   },
+   "bulk": 0,
+   "traits": [
+    "consumable",
+    "fulu",
+    "magical"
+   ],
+   "rarity": "common",
+   "usage": "affixed-to-a-ranged-weapon",
+   "itemType": "consumable",
+   "consumableType": "fulu",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "remaster"
+  },
+  "text": "A demolition fulu allows a saboteur or excavator to be far away from the scene when demolition happens. The fulu crumbles to ash over 5 minutes to 8 hours, as you determine when you place the fulu. Once the duration ends, the fulu lowers the Hardness of the object it's affixed to by an amount equal to the fulu's level and then deals 3d6 to the object. A demolition fulu serves as a hazard with a check to detect it and check to disable it according to its type."
+ },
+ {
+  "collection": "items",
+  "id": "buoyant-shot",
+  "name": "Buoyant Shot",
+  "level": 5,
+  "fields": {
+   "traits": [
+    "consumable",
+    "magical"
+   ],
+   "rarity": "common",
+   "level": 5,
+   "bulk": 0,
+   "price": {
+    "gp": 20
+   },
+   "itemType": "consumable",
+   "edition": "remaster-era"
+  },
+  "text": "Buoyant Shot Source Battlecry! pg. 132 Price 20 gp Ammunition stone sphere (bombard) These stone spheres are etched with images of clouds. Each buoyant shot is 1 Bulk instead of 4 and can float on the surface of water instead of sinking. When this ammunition is Launched, a creature who fails their Reflex saving throw is also pushed 5 feet away from the center of the burst (10 feet on a critical failure)."
+ },
+ {
+  "collection": "items",
+  "id": "obsidian-edge-true",
+  "name": "Obsidian Edge (True)",
+  "level": 18,
+  "fields": {
+   "level": 18,
+   "price": {
+    "gp": 22000
+   },
+   "bulk": 2,
+   "traits": [
+    "combination",
+    "concussive",
+    "fire",
+    "kickback",
+    "magical"
+   ],
+   "rarity": "uncommon",
+   "usage": "held-in-two-hands",
+   "frequency": {
+    "max": 1,
+    "per": "minute"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per minute",
+     "max": 1,
+     "per": "minute",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "weapon",
+   "hands": 2,
+   "category": "martial",
+   "group": "firearm",
+   "damage": {
+    "dice": 1,
+    "die": "d10",
+    "type": "piercing"
+   },
+   "range": 30,
+   "reload": 1,
+   "edition": "neutral"
+  },
+  "text": "This black obsidian blade is a *+3 greater striking greater flaming gun sword*. Magma seeps along its many cracks and crags, and the handle is hot but not scalding to the touch. --- **Activate—Explosion of Shards** ⟨1⟩ (manipulate) **Requirements** Your most recent action this turn was a successful ranged Strike with *true obsidian edge* **Frequency** once per 10 minutes **Effect** Magma coats the sword blade completely before exploding from your weapon in a of fire and glass. Creatures in the area take 5d6 fire damage and 4d6 piercing damage with a save."
+ },
+ {
+  "collection": "items",
+  "id": "morph-jewel",
+  "name": "Morph Jewel",
+  "level": 3,
+  "fields": {
+   "level": 3,
+   "price": {
+    "cp": 0,
+    "gp": 12,
+    "pp": 0,
+    "sp": 0
+   },
+   "bulk": 0.1,
+   "traits": [
+    "consumable",
+    "magical",
+    "whetstone"
+   ],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "activationCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "itemType": "consumable",
+   "consumableType": "other",
+   "uses": {
+    "current": 1,
+    "max": 1
+   },
+   "edition": "remaster-era"
+  },
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Constructed of an oddly flexible material, this golden jewel holds whatever shape it's twisted into. Choose bludgeoning, piercing, or slashing when you apply a morph jewel to a weapon. The weapon's damage becomes that type for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "corrosive-engravings",
+  "name": "Corrosive Engravings",
+  "level": 5,
+  "fields": {
+   "level": 5,
+   "price": {
+    "gp": 140
+   },
+   "bulk": 0.1,
+   "traits": [
+    "acid",
+    "grimoire",
+    "magical"
+   ],
+   "rarity": "common",
+   "usage": "held-in-one-hand",
+   "frequency": {
+    "max": 1,
+    "per": "day"
+   },
+   "counters": [
+    {
+     "id": "freq",
+     "label": "per day",
+     "max": 1,
+     "per": "day",
+     "resetsOnRest": true
+    }
+   ],
+   "activationCost": {
+    "type": "free"
+   },
+   "itemType": "equipment",
+   "edition": "remaster"
+  },
+  "text": "These tin sheets are bound in brass and show significant signs of erosion. The grimoire's title is acid-etched, and flipping between the sheets leaves your fingers covered in flecks of rust and powdery metal. **Activate** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** If your next action is to cast an acid or poison spell that deals persistent damage, any creature who takes persistent damage from the spell is also Sickened 2 until the persistent damage ends. Using an action to retch can reduce the sickened value as normal, but it can't reduce the sickened value below 1 until the persistent damage ends."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "phlogistonic-regulator",
+  "name": "Phlogistonic Regulator",
+  "level": 1,
+  "fields": {
+   "traits": [
+    "inventor"
+   ],
+   "rarity": "common",
+   "level": 1,
+   "actionCost": {
+    "type": "passive"
+   },
+   "otherTags": [
+    "armor-innovation-modification"
+   ],
+   "resistances": [
+    {
+     "type": "cold",
+     "value": "max(1,floor(@actor.level/2))"
+    },
+    {
+     "type": "fire",
+     "value": "max(1,floor(@actor.level/2))"
+    }
+   ]
+  },
+  "text": "A layer of insulation within your armor protects you from rapid temperature fluctuations. You gain resistance equal to half your level to cold and fire damage. When under the effects of Overdrive, the resistance increases by 2."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "adept-benefit-lantern",
+  "name": "Adept Benefit (Lantern)",
+  "level": 7,
+  "fields": {
+   "traits": [
+    "thaumaturge"
+   ],
+   "rarity": "common",
+   "level": 7,
+   "actionCost": {
+    "type": "passive"
+   }
+  },
+  "text": "In addition to the initiate benefits, when you hold your lantern, its light reveals the invisible and the ethereal. The lantern's aura of light increases to a . While you're holding your lantern, invisible and ethereal creatures within the aura become visible as rippling distortions, though they're still concealed. This doesn't give you any special ability to affect a creature on the Ethereal Plane, but it ensures you're aware of the creatures' presence."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "ready-aim-fire",
+  "name": "Ready, Aim, Fire!",
+  "level": 1,
+  "fields": {
+   "traits": [
+    "brandish",
+    "commander",
+    "tactic"
+   ],
+   "rarity": "common",
+   "level": 1,
+   "actionCost": {
+    "type": "actions",
+    "value": 2
+   }
+  },
+  "text": "**Frequency** once per 10 minutes --- You signal a volley of ranged attacks from your allies. Choose an enemy and signal up to three squadmates within the aura of your commander's banner; your squadmates can Interact to reload as a free action and attempt a ranged Strike against the enemy as a reaction --- **Special** If one of your squadmates knows or has prepared a cantrip with a range of 30 feet or more that deals damage and requires 2 or fewer actions to cast, they can cast it targeting the enemy instead of taking the other actions normally granted by this tactic."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "justice",
+  "name": "Justice",
+  "level": 1,
+  "fields": {
+   "traits": [
+    "champion"
+   ],
+   "rarity": "common",
+   "level": 1,
+   "actionCost": {
+    "type": "passive"
+   },
+   "otherTags": [
+    "champion-cause"
+   ]
+  },
+  "text": "In your deity's name you seek justice, following the law and punishing those who transgress it. **Edicts** follow the law, respect legitimate authorities or leadership **Anathema** take advantage of another, cheat --- **Champion's Reaction** Retributive Strike **Relentless Reaction (9th Level)** If your Strike hits, the target takes persistent spirit damage equal to your Charisma modifier. **Exalted Reaction (11th Level)** Each ally in your champion's aura with the target in their melee reach can spend a reaction to Strike the target with a –5 penalty."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "hex-spells",
+  "name": "Hex Spells",
+  "level": 1,
+  "fields": {
+   "traits": [
+    "witch"
+   ],
+   "rarity": "common",
+   "level": 1,
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster",
+   "effectChoices": [
+    {
+     "id": "starting-hex",
+     "prompt": "Choose your starting hex",
+     "options": [
+      {
+       "value": "patrons-puppet",
+       "label": "Patron's Puppet",
+       "grant": {
+        "focusSpells": [
+         "patrons-puppet"
+        ]
+       }
+      },
+      {
+       "value": "phase-familiar",
+       "label": "Phase Familiar",
+       "grant": {
+        "focusSpells": [
+         "phase-familiar"
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "text": "As a favored agent of your patron, you can invoke their power for a more direct magical intervention. A hex is a spell shaped by your patron and sent to you through your familiar, rather than an ability you use directly. Your patron expects you to advance its interests and does not take kindly to repeated requests for aid; as such, you can use only one hex each turn, and any attempts to use a second hex on that turn fail and the actions are lost. Hex spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to commune with your familiar. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but it can never be more than 3 points. You learn your choice of the Patron's Puppet hex or Phase Familiar hex, which let you command your familiar or defend it from harm, respectively. You learn most other hexes from witch lessons. ## Hex Cantrips Hex cantrips are special hexes that don't cost Focus Points, so you can cast them as often as you like, though you can still use only one hex each turn. Hex cantrips are in addition to the cantrips you choose with witch spellcasting and aren't counted toward your prepared cantrips. You gain a hex cantrip determined by your choice of patron."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-infinite-eye",
+  "name": "The Infinite Eye",
+  "level": 1,
+  "fields": {
+   "traits": [
+    "psychic"
+   ],
+   "rarity": "common",
+   "level": 1,
+   "actionCost": {
+    "type": "passive"
+   },
+   "otherTags": [
+    "psychic-conscious-mind"
+   ]
+  },
+  "text": "The true strength of the mind lies in the knowledge it contains, with each new observation contributing to the totality of its experiences. To grow your experiences—and with them, your power—you devote yourself to observing as much as possible, casting your senses through space and time with clairvoyance and precognition. **Granted Spells** - 1st: Sure Strike - 2nd: Augury - 3rd: Locate - 4th: - 5th: Scouting Eye - 6th: Truesight - 7th: True Target - 8th: Unrelenting Observation - 9th: Foresight **Standard Psi Cantrips** Detect Magic You have the kind of fine control over your magical senses that other spellcasters can only dream of. When you cast detect magic, you're aware of any creature in the emanation affected by a spell or carrying a magic item, and you determine the main location of magic within any magical hazard in the emanation (with the normal restrictions on detecting illusions). This typically manifests as an alteration to your vision, such as seeing a soft aura around the creature or hazard. Sensing these phenomena doesn't make it clear which spell is on a creature, nor which of its items are magical. Your detect magic also gains the following amp. **Amp** Your pulse of detection magic helps you gain a sense of nearby magic's strengths or weaknesses. When you detect the presence of magic on an enemy or hazard, you gain a +1 status bonus to saves against magic originating from that enemy or hazard for 3 rounds. If you find magic from multiple sources with a single casting of detect magic, you get the bonus against all of them. **Amp Heightened (7th)** The status bonus to saves against magic increases to +2. Guidance Your clairvoyant gaze extends further than most, allowing you to guide your allies from a greater distance. The range of guidance increases to 120 feet. It also gains the following amp. **Amp** You can project a flash of insight to your ally in the nick of time to save them from failure. Amped guidance doesn't cause a creature to become temporarily immune to guidance, and a creature can be targeted by amped guidance even if it is temporarily immune to guidance. You can cast an amped guidance spell as a reaction triggered when your ally fails or critically fails an attack roll, Perception check, saving throw, or skill check, and the bonus from guidance would change the failure to a success or the critical failure to a normal failure. The bonus from guidance applies retroactively to their check. **Amp Heightened (6th)** The bonus from the spell increases to +2. **Unique Psi Cantrips** surface: Glimpse Weakness **Amp** The additional precision damage is 1d4+1. **Amp Heightened (+2)** The additional precision damage increases by 1d4+1. deeper: Omnidirectional Scan **Amp** Your scans are so minute that you can project your foe's likely strengths and weaknesses. You learn which of the target enemy's saving throws is highest and which is lowest, and you and all allies within 30 feet gain a +1 circumstance bonus to attacks and damage against the creature. If you take the Aid reaction you prepared for and succeed at your roll, these bonuses increase to +2 on the attack you're Aiding. On a critical success, they increase to +3, or to +4 if you have legendary proficiency in spell attack modifier. deepest: Foresee the Path **Amp** The spell has the same result on a failure as on a success (but still no effect on a critical failure). Each time you Sustain the spell, you can choose an additional ally to target, granting them the same benefit as the initial target ally."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "psychic-weapon-specialization",
+  "name": "Psychic Weapon Specialization",
+  "level": 13,
+  "fields": {
+   "traits": [
+    "psychic"
+   ],
+   "rarity": "common",
+   "level": 13,
+   "actionCost": {
+    "type": "passive"
+   }
+  },
+  "text": "As you touch a weapon, you glimpse the hands that made and wielded it, teaching you how to inflict greater injuries. You deal 2 additional Damage with weapons and unarmed attacks in which you are an expert. This damage increases to 3 if you're a master, and 4 if you're legendary."
+ },
+ {
+  "collection": "spells",
+  "id": "summon-kaiju",
+  "name": "Summon Kaiju",
+  "level": 10,
+  "fields": {
+   "rank": 10,
+   "traditions": [
+    "primal"
+   ],
+   "traits": [
+    "concentrate",
+    "incarnate",
+    "manipulate"
+   ],
+   "rarity": "rare",
+   "cast": {
+    "type": "actions",
+    "value": 3
+   },
+   "range": "500 feet",
+   "duration": "until the end of your next turn",
+   "edition": "legacy-era"
+  },
+  "text": "You briefly conjure a kaiju, a massive, rampaging monster with a unique name and legendary reputation. It rises from its secluded lair to annihilate your foes. The summoned kaiju occupies the space of a Gargantuan creature. When you Cast this Spell, choose one of the kaiju below to summon. - **Agmazar the Star Titan** Speed 100 feet, climb 50 feet; **Arrive** (necromancy, negative) *Channel Void* Each foe in a 100-foot emanation takes 16d8 damage with a basic Fortitude save; **Depart** (transmutation) *Gravitic Repulsion* Each foe in a 50-foot emanation is pushed 100 feet away unless it succeeds at a Fortitude save. - **Agyra, the Forever Storm** Speed 80 feet, fly 200 feet; **Arrive** (electricity, evocation) *Breath of a Thousand Storms* Agyra shoots two 1,200-foot lines of electricity, one from each of her heads. The lines can't overlap. Each creature along one of the lines takes 6d12 damage with a basic Reflex save. On a failure, the creature is also Slowed 1 for 1 round (or for 1 minute on a critical failure); **Depart** (evocation, sonic) *Thunderous Blast* Each creature within a 100-foot emanation takes 6d10 damage with a basic Reflex save, and is also knocked prone on a failed save. - **Bezravnis, the Inferno Below** Speed 100 feet, burrow 100 feet; **Arrive** (earth, evocation) *Burrow from the Earth's Heart* Bezravnis explodes from the ground where it was summoned, causing all creatures in a 50-foot emanation to take 8d12 damage with a basic Reflex save. This potentially collapses structures with the collapse effect of the Earthquake spell, except there is no chance of falling into a fissure; **Depart** *Web Hurricane* Bezravnis departs with a hurricane of webbing. All creatures within a 50-foot emanation must succeed at a Reflex save or take a –20-foot circumstance penalty to its Speeds until it Escapes (or is immobilized until it escapes on a critical failure). The Escape DC is your spell DC. - **Mogaru, the Final King** Speed 100 feet, swim 100 feet; **Arrive** (auditory, enchantment, mental) *Trance of the King's Melody* Mogaru manifests with a burst of the song that summoned him, requiring all foes within 60 feet who can hear him to attempt a Will save, leaving them Stunned 3 on a failure; **Depart** (evocation, fire) *Volcanic Breath* Mogaru unleashes his scorching breath in a 120-foot cone. Each creature in the area takes 10d6 damage with a basic Reflex save. On a failure, it also takes 4d6 damage. - **Vorgozen, the Shapeless Feeder** Speed 50 feet, climb 50 feet, swim 100 feet; **Arrive** (necromancy) *Pollute Magic* Vorgozen's foul presence pollutes magic around her. Each of your enemies within a 60-foot emanation that are under the effects of a spell must attempt a Fortitude save. On a failure, the creature is Sickened 2. Any of your enemies that Casts a Spell within 60 feet of Vorgozen must attempt a Fortitude save with the same effects unless it's already sickened; **Depart** (acid, evocation) *Beam of Purest Vitriol* Each creature in a 1,200-foot line takes 10d6 damage and 10d6 damage with a basic Fortitude save. - **Yarthoon, the Moon Grub** Speed 60 feet, burrow 100 feet, fly 100 feet, swim 100 feet; **Arrive** (cold, evocation) *Algid Beam Barrage* Yarthoon fires countless beams, targeting each of your enemies within 200 feet of it. The beams deal 10d6 damage with a basic Reflex save; **Depart** (cold, conjuration, water) *Frostbite Mist* Chilling mist surges out in a 100-foot burst centered on Yarthoon and remains for 1 minute. This mist has the effects of Mist, plus any creature within the area at the end of its turn take 5d6 damage with a basic Fortitude save. - **Ebeshra, the Winged Razor** Speed 75 feet, fly 100 feet; **Arrive** (conjuration, teleportation) Planar Draw Each foe in a is pulled 50 feet towards the center, unless it succeeds at a Fortitude save. Creatures that fail and reach the center take 10d6 damage; **Depart** (electricity, evocation) Storm Discharge Each foe in a takes 12d8 damage with a basic Reflex save."
+ },
+ {
+  "collection": "spells",
+  "id": "euphoric-renewal",
+  "name": "Euphoric Renewal",
+  "level": 4,
+  "fields": {
+   "rank": 4,
+   "traditions": [],
+   "traits": [
+    "cleric",
+    "concentrate",
+    "focus",
+    "manipulate"
+   ],
+   "rarity": "rare",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "duration": "10 minutes",
+   "edition": "remaster"
+  },
+  "text": "You view death not as an ending but a beginning, and you delight in dancing on its edge. Each time you gain the dying condition and then regain consciousness while under the effect of euphoric renewal, you gain three benefits. - You're quickened on your next turn. You can use the extra action only to Stand. - You gain a +1 circumstance bonus to saves for 1 minute. - You gain 8 temporary Hit Points that last for 1 minute. --- **Heightened (+1)** The number of temporary HP increases by 2."
+ },
+ {
+  "collection": "spells",
+  "id": "conjured-clockwork",
+  "name": "Conjured Clockwork",
+  "level": 4,
+  "fields": {
+   "rank": 4,
+   "traditions": [],
+   "traits": [
+    "concentrate",
+    "focus",
+    "manipulate",
+    "wizard"
+   ],
+   "rarity": "uncommon",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "range": "60 feet",
+   "area": "10-foot burst",
+   "duration": "1 minute",
+   "save": {
+    "type": "reflex",
+    "basic": true
+   },
+   "baseDamage": "2d8",
+   "damageKind": "damage",
+   "baseArea": {
+    "value": 10,
+    "kind": "burst"
+   },
+   "heightening": {
+    "type": "interval",
+    "interval": 2,
+    "damageIncr": "1d8"
+   },
+   "edition": "neutral"
+  },
+  "text": "You conjure a complex clockwork device on the ground and cause it to slowly spread across the battlefield. The area is difficult terrain. Each creature that enters or ends its turn in the area takes 2d8 slashing damage with a basic Reflex save. A creature can take this damage only once per turn. On subsequent rounds, the first time you Sustain the spell each round, you can expand the radius of the clockwork device by 5 feet. --- **Heightened (+2)** The damage increases by 1d8."
+ },
+ {
+  "collection": "spells",
+  "id": "phantasmagoria",
+  "name": "Phantasmagoria",
+  "level": 9,
+  "fields": {
+   "rank": 9,
+   "traditions": [
+    "arcane",
+    "occult"
+   ],
+   "traits": [
+    "concentrate",
+    "death",
+    "illusion",
+    "manipulate",
+    "mental"
+   ],
+   "rarity": "common",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "range": "120 feet",
+   "targets": "any number of creatures",
+   "save": {
+    "type": "will",
+    "basic": false
+   },
+   "baseDamage": "16d6",
+   "damageKind": "damage",
+   "edition": "remaster"
+  },
+  "text": "You fill the targets' minds with endless images, like countless dreams and lives colliding with each other. The onrushing information deals 16d6 damage to each target, depending on its Will save. --- **Critical Success** The target is unaffected. **Success** The target takes half damage and can't use reactions until the start of your next turn. **Failure** The target takes full damage and is confused until the start of your next turn. **Critical Failure** The target takes double damage and is confused for 1 minute."
+ },
+ {
+  "collection": "spells",
+  "id": "bralani-referendum",
+  "name": "Bralani Referendum",
+  "level": 2,
+  "fields": {
+   "rank": 2,
+   "traditions": [
+    "divine",
+    "primal"
+   ],
+   "traits": [
+    "air",
+    "concentrate",
+    "manipulate"
+   ],
+   "rarity": "uncommon",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "range": "60 feet",
+   "area": "20-foot burst",
+   "duration": "1 minute",
+   "save": {
+    "type": "fortitude",
+    "basic": true
+   },
+   "baseDamage": "2d6",
+   "damageKind": "damage",
+   "baseArea": {
+    "value": 20,
+    "kind": "burst"
+   },
+   "heightening": {
+    "type": "interval",
+    "interval": 2,
+    "damageIncr": "2d6"
+   },
+   "edition": "neutral"
+  },
+  "text": "You enforce fair play with punishing zephyrs. When you Cast this Spell, choose one condition from among clumsy, drained, enfeebled, or stupefied. When a creature in the area inflicts the chosen condition, they take 2d6 slashing damage with a basic Fortitude save. A creature can't take this damage more than once per round. You can Dismiss the spell. --- **Heightened (+2)** Choose one more condition. The slashing damage when a creature inflicts any of the chosen conditions increases by 2d6."
+ },
+ {
+  "collection": "spells",
+  "id": "grim-tendrils",
+  "name": "Grim Tendrils",
+  "level": 1,
+  "fields": {
+   "rank": 1,
+   "traditions": [
+    "arcane",
+    "occult"
+   ],
+   "traits": [
+    "concentrate",
+    "manipulate",
+    "void"
+   ],
+   "rarity": "common",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "area": "30-foot line",
+   "save": {
+    "type": "fortitude",
+    "basic": false
+   },
+   "baseDamage": "2d4",
+   "damageKind": "damage",
+   "baseArea": {
+    "value": 30,
+    "kind": "line"
+   },
+   "heightening": {
+    "type": "interval",
+    "interval": 1,
+    "damageIncr": "2d4"
+   },
+   "edition": "remaster"
+  },
+  "text": "Tendrils of darkness curl out from your fingertips and race through the air. You deal 2d4 void damage and damage to living creatures in the line. Each living creature in the line must attempt a Fortitude save. --- **Critical Success** The creature is unaffected. **Success** The creature takes half the void damage and no persistent bleed damage. **Failure** The creature takes full damage. **Critical Failure** The creature takes double void damage and double persistent bleed damage. --- **Heightened (+1)** The void damage increases by 2d4, and the persistent bleed damage increases by 1."
+ },
+ {
+  "collection": "spells",
+  "id": "divine-inspiration",
+  "name": "Divine Inspiration",
+  "level": 8,
+  "fields": {
+   "rank": 8,
+   "traditions": [
+    "divine"
+   ],
+   "traits": [
+    "concentrate",
+    "manipulate",
+    "mental"
+   ],
+   "rarity": "common",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "range": "touch",
+   "targets": "1 willing creature",
+   "edition": "remaster"
+  },
+  "text": "You infuse a target with spiritual energy, refreshing its magic. If it prepares spells, it recovers one 6th-rank or lower spell it previously cast today and can cast that spell again. If it spontaneously casts spells, it recovers one of its 6th-rank or lower spell slots. If it has a focus pool, it regains its Focus Points, as if it had Refocused."
+ },
+ {
+  "collection": "spells",
+  "id": "cleanse-cuisine",
+  "name": "Cleanse Cuisine",
+  "level": 1,
+  "fields": {
+   "rank": 1,
+   "traditions": [
+    "divine",
+    "primal"
+   ],
+   "traits": [
+    "concentrate",
+    "manipulate"
+   ],
+   "rarity": "common",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "range": "10 feet",
+   "targets": "1 cubic foot",
+   "edition": "remaster"
+  },
+  "text": "You transform all food and beverages in the area into delicious fare, changing water into wine or another fine beverage, or enhancing the food's taste and ingredients to make it a gourmet treat. You can also choose to remove all toxins and contaminations from the food. This spell doesn't prevent future contamination, natural decay, or spoilage, nor does it make the food any more nutritious. --- **Heightened (+2)** Add another cubic foot to the area, which must be contiguous with the rest."
+ },
+ {
+  "collection": "spells",
+  "id": "levitate",
+  "name": "Levitate",
+  "level": 3,
+  "fields": {
+   "rank": 3,
+   "traditions": [
+    "arcane",
+    "occult"
+   ],
+   "traits": [
+    "concentrate",
+    "manipulate"
+   ],
+   "rarity": "common",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "range": "touch",
+   "targets": "1 unattended object or willing creature",
+   "duration": "5 minutes",
+   "edition": "remaster",
+   "spellLists": [
+    "elemental"
+   ]
+  },
+  "text": "You defy gravity and levitate the target 5 feet off the ground. You can Sustain the spell to move the target up or down 10 feet. A creature floating in the air from levitate takes a –2 circumstance penalty to attack rolls. A floating creature can spend an Interact action to stabilize itself and negate this penalty for the remainder of its turn. If the target is adjacent to a fixed object or terrain of suitable stability, it can move across the surface by climbing (if the surface is vertical, like a wall) or crawling (if the surface is horizontal, such as a ceiling). The GM determines which surfaces can be climbed or crawled across."
+ },
+ {
+  "collection": "spells",
+  "id": "belittling-boast",
+  "name": "Belittling Boast",
+  "level": 5,
+  "fields": {
+   "rank": 5,
+   "traditions": [
+    "arcane",
+    "divine",
+    "occult"
+   ],
+   "traits": [
+    "auditory",
+    "concentrate",
+    "emotion",
+    "fear",
+    "manipulate",
+    "mental"
+   ],
+   "rarity": "uncommon",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "area": "30-foot burst",
+   "duration": "1 minute",
+   "baseArea": {
+    "value": 30,
+    "kind": "burst"
+   },
+   "edition": "neutral"
+  },
+  "text": "You boast about your skills or combat prowess, bolstering your own abilities and belittling your opponents. Select one of the following to boast about: melee attack rolls, ranged attack rolls, spell attack rolls, or a single skill. Attempt an Intimidation check to Demoralize all enemies within 30 feet. Each creature that becomes frightened additionally takes a -1 circumstance penalty to the attack roll or skill you boasted about for 1 minute. If at least one creature becomes frightened, you gain a +1 status penalty to the attack roll or skill you boasted about for 1 minute. --- **Heightened (8th)** The bonus and penalty increase to 2."
+ },
+ {
+  "collection": "spells",
+  "id": "extend-spell",
+  "name": "Extend Spell",
+  "level": 3,
+  "fields": {
+   "rank": 3,
+   "traditions": [],
+   "traits": [
+    "concentrate",
+    "focus",
+    "sorcerer",
+    "spellshape"
+   ],
+   "rarity": "uncommon",
+   "cast": {
+    "type": "actions",
+    "value": 1
+   },
+   "edition": "legacy-era"
+  },
+  "text": "You call upon your blood's knowledge of the ancients to extend your magic. If your next action is to Cast a Spell with a duration of 1 minute on a single target, the spell instead lasts 10 minutes. You can extend a spell only if you cast it from a spell slot lower than your highest spell slot, and you can have only one active spell at a time extended in this way."
+ },
+ {
+  "collection": "spells",
+  "id": "shaken-confidence",
+  "name": "Shaken Confidence",
+  "level": 4,
+  "fields": {
+   "rank": 4,
+   "traditions": [],
+   "traits": [
+    "cleric",
+    "concentrate",
+    "emotion",
+    "focus",
+    "mental",
+    "misfortune"
+   ],
+   "rarity": "rare",
+   "cast": {
+    "type": "reaction"
+   },
+   "range": "30 feet",
+   "targets": "An enemy that critically failed an attack roll, Perception check, or skill check",
+   "duration": "varies",
+   "save": {
+    "type": "will",
+    "basic": false
+   },
+   "edition": "remaster"
+  },
+  "text": "**Trigger** An enemy within 30 feet of you critically fails an attack roll, Perception check, or skill check. --- You mock the target for all its failings, twisting its self-confidence into doubt. The enemy attempts a Will saving throw. --- **Success** The target is unaffected. **Failure** The target is briefly shaken and unsure of its abilities. It must roll twice and take the worse result on the next roll of the same type as the critical failure that triggered the spell (such as the target's next Acrobatics check if the spell's trigger was a critical failure on an Acrobatics check). If the target doesn't attempt any qualifying checks, the spell ends at the end of the target's next turn."
+ },
+ {
+  "collection": "spells",
+  "id": "reflected-beauty",
+  "name": "Reflected Beauty",
+  "level": 4,
+  "fields": {
+   "rank": 4,
+   "traditions": [
+    "divine",
+    "occult"
+   ],
+   "traits": [
+    "concentrate",
+    "illusion",
+    "manipulate",
+    "visual"
+   ],
+   "rarity": "uncommon",
+   "cast": {
+    "type": "actions",
+    "value": 2
+   },
+   "duration": "1 hour",
+   "edition": "neutral"
+  },
+  "text": "When you cast reflected beauty, choose a willing creature that's the same size as you and that you can see within 30 feet. The spell then disguises you with a realistic illusion, as if via Illusory Disguise heightened to 3rd rank, but includes tactile and olfactory sensation in addition to visual and voice. The appearance of the illusion that disguises you includes any changes to sex characteristics or other aspects needed to match the target creature's heart's desire, allowing you to interact with them as the person they could be. If you're ever more than 30 feet from the subject you're reflecting, *reflected beauty* immediately ends. You can Dismiss this spell."
+ },
+ {
+  "collection": "heritages",
+  "id": "bright-fetchling",
+  "name": "Bright Fetchling",
+  "level": null,
+  "fields": {
+   "ancestryId": "fetchling",
+   "versatile": false,
+   "traits": [],
+   "rarity": "common",
+   "innateSpells": [
+    {
+     "spellId": "light",
+     "tradition": "occult"
+    }
+   ],
+   "edition": "legacy-era"
+  },
+  "text": "Your body proves that shadow can't exist without light. Perhaps your eyes glow brighter or your veins occasionally pulse with light. You emit dim light within 5 feet of you. You can activate or suppress this ability as an action, which has the concentrate trait. Additionally, you can force fragments of your shadow to glow and cast Light as an occult innate cantrip. Cantrips are heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "collection": "heritages",
+  "id": "homing-drake",
+  "name": "Homing Drake",
+  "level": null,
+  "fields": {
+   "ancestryId": "dragonet",
+   "versatile": false,
+   "traits": [],
+   "rarity": "common",
+   "edition": "remaster-era",
+   "innateSpells": [
+    {
+     "spellId": "know-the-way",
+     "tradition": "arcane",
+     "atWill": true,
+     "heightenHalfLevel": true
+    }
+   ]
+  },
+  "text": "You have a short, stubby nose, and tiny spines that resemble hairs. You might have vividly colored scales or be a dun brown. You can cast the Know the Way cantrip as an arcane innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up. In addition, you always know the distance and direction to your home. You can designate a new location as your home after you spend 1 week there, but you can have only a single designated home at a time."
+ },
+ {
+  "collection": "heritages",
+  "id": "venomshield-nagaji",
+  "name": "Venomshield Nagaji",
+  "level": null,
+  "fields": {
+   "ancestryId": "nagaji",
+   "versatile": false,
+   "traits": [],
+   "rarity": "common",
+   "resistances": [
+    {
+     "type": "poison",
+     "value": "max(1,floor(@actor.level/2))"
+    }
+   ],
+   "edition": "neutral"
+  },
+  "text": "Your intrinsic connection to nagas and mundane serpents grants you an innate resistance to toxins of every sort. You gain resistance to poison equal to half your level (minimum 1 resistance), and you gain a +1 circumstance bonus to all saving throws against poison."
+ },
+ {
+  "collection": "heritages",
+  "id": "bloodhound-shoony",
+  "name": "Bloodhound Shoony",
+  "level": null,
+  "fields": {
+   "ancestryId": "shoony",
+   "versatile": false,
+   "traits": [],
+   "rarity": "common",
+   "senses": [
+    {
+     "name": "scent",
+     "range": 30,
+     "acuity": "imprecise"
+    }
+   ],
+   "edition": "neutral"
+  },
+  "text": "Your ancestors were famous trackers, and you carry in your blood that same gift of the hunt. You gain a special sense: imprecise scent with a range of 30 feet. This means you can use your sense of smell to determine the location of a creature, but it remains hidden. In addition, you gain a +2 circumstance bonus to Survival checks to Track creatures that you have previously sensed with your scent."
+ },
+ {
+  "collection": "backgrounds",
+  "id": "ulfen-raider",
+  "name": "Ulfen Raider",
+  "level": null,
+  "fields": {
+   "traits": [],
+   "rarity": "common",
+   "abilityBoosts": [
+    {
+     "kind": "choice",
+     "options": [
+      "cha",
+      "str"
+     ]
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "trainedSkill": "intimidation",
+   "trainedLore": "sailing",
+   "grantedFeatId": "intimidating-glare",
+   "edition": "legacy-era"
+  },
+  "text": "**Prerequisite** Region - Saga Lands --- You are an Ulfen warrior, feared among Avistan for the merciless and devastating raids your people once conducted along the shores. Though the days of these Ulfen raids are largely past, you have been trained to strike terror into the hearts of those who face you. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Sailing Lore skill. You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Sailing Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "dedicated-delver",
+  "name": "Dedicated Delver",
+  "level": null,
+  "fields": {
+   "traits": [],
+   "rarity": "uncommon",
+   "abilityBoosts": [
+    {
+     "kind": "choice",
+     "options": [
+      "dex",
+      "str"
+     ]
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "trainedSkillChoice": [
+    "athletics",
+    "survival"
+   ],
+   "trainedLore": "cave",
+   "edition": "neutral",
+   "grantedFeatId": "combat-climber",
+   "grantedFeatByChoice": {
+    "athletics": "combat-climber",
+    "survival": "terrain-expertise"
+   },
+   "choice": {
+    "flag": "delverSkill",
+    "prompt": "Trained skill",
+    "kind": "array",
+    "options": [
+     {
+      "value": "athletics",
+      "label": "Athletics — grants Combat Climber"
+     },
+     {
+      "value": "survival",
+      "label": "Survival — grants Terrain Expertise (Underground)"
+     }
+    ]
+   }
+  },
+  "text": "Filled with predators, pitfalls, and other perils, the Darklands rightfully scares off most travelers. Not you! Whether you're a veteran Darklands caravanner, a cartographer seeking safer paths through dangerous territory, or just a spelunker who loves to escape the surface and hear the caverns sing, you're adept at navigating underground obstacles and finding your way back to civilization. Clan Tolorr specializes more in studying the past than extracting it from dangerous areas. Its leader, Arghan Tolorr, was an avid explorer in his youth, and he's begun an initiative to befriend, recruit, and train subterranean daredevils who can extract relics responsibly. You're one of his candidates for this pilot program. Helping administrate recruits is Ria, a gnome curator and close Tolorr confidante who helped arrange your travel to Highhelm. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in either the Athletics skill or the Survival skill, and you're trained in the Cave Lore skill. If you selected Athletics, you gain the Combat Climber skill feat. If you chose Survival, you gain the Terrain Expertise (Underground) skill feat. **Connection:** Ria, an oread gnome curator who studies rivethun traditions **Reputation Points:** +0 --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Lore** Cave Lore"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "student-of-magic",
+  "name": "Student of Magic",
+  "level": null,
+  "fields": {
+   "traits": [],
+   "rarity": "common",
+   "abilityBoosts": [
+    {
+     "kind": "choice",
+     "options": [
+      "int",
+      "wis"
+     ]
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "trainedSkillChoice": [
+    "arcana",
+    "nature",
+    "occultism",
+    "religion"
+   ],
+   "trainedLore": "academia",
+   "grantedFeatId": "recognize-spell",
+   "edition": "legacy-era",
+   "choice": {
+    "flag": "backgroundSkill",
+    "prompt": "Skill",
+    "kind": "array",
+    "options": [
+     {
+      "value": "arcana",
+      "label": "Arcana"
+     },
+     {
+      "value": "nature",
+      "label": "Nature"
+     },
+     {
+      "value": "occultism",
+      "label": "Occultism"
+     },
+     {
+      "value": "religion",
+      "label": "Religion"
+     }
+    ]
+   }
+  },
+  "text": "You are currently enrolled at a school of magic, where you're learning the fundamentals of your magical tradition. Whether your adventuring occurs during breaks between semesters, as part of a work study program, or even within the halls of the academy itself, you'll have to learn to juggle your dual life. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of Arcana, Nature, Occultism, or Religion, as well as Academia Lore. You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "chelaxian-exile",
+  "name": "Chelaxian Exile",
+  "level": null,
+  "fields": {
+   "traits": [],
+   "rarity": "uncommon",
+   "abilityBoosts": [
+    {
+     "kind": "choice",
+     "options": [
+      "con",
+      "int"
+     ]
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "trainedSkill": "society",
+   "trainedLore": "underworld",
+   "grantedFeatId": "streetwise",
+   "edition": "neutral"
+  },
+  "text": "You hail from Cheliax but no longer call it home, having rejected its tyranny and hellish oppression. Yet the traces of your old home linger in your place of refuge, tainting it with violence and injustice. Now you must do in Isger what you couldn't in Cheliax—take up arms and cut out all traces of Abrogail Thrune's influence. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Society skill and the Underworld Lore skill. You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Underworld Lore **Skill Feat** Streetwise"
+ }
+]

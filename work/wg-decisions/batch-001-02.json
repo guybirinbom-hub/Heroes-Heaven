@@ -1,0 +1,16 @@
+[
+  {
+    "category": "backgrounds",
+    "id": "eidolon-contact",
+    "field": "trainedLore",
+    "value": null,
+    "why": "WG asks the player: `select from:ADJ_VALUE \"Select a Lore\"`. We hardcoded trainedLore:\"Angel\", which build.ts:2333 trains unconditionally as lore:Angel — every eidolon-contact character got Angel Lore and was never asked. The printed clause is open-ended (\"a Lore skill for the creature associated with your contacted eidolon (such as Angel Lore or Dragon Lore)\") — the parenthesis is illustrative. We both encode this and we encode it differently, so ours is deleted."
+  },
+  {
+    "category": "backgrounds",
+    "id": "eidolon-contact",
+    "field": "trainedLoreChoice",
+    "value": true,
+    "why": "Their reading, in our field. trainedLoreChoice renders the free-text Lore box (builder/shared.tsx:2813, gated on !trainedLoreOptions.length) and build.ts:2359 slugifies build.backgroundLore into lore:<subject> = trained. Free text, not a picker list, because the subject is open-ended — matching their unconstrained \"Select a Lore\". Probe: backgroundLore=\"Dragon\" now yields lore:dragon (was lore:Angel); Dubious Knowledge and the Arcana/Nature/Occultism/Religion pick are untouched."
+  }
+]

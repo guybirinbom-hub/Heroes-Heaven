@@ -180,7 +180,7 @@ describe('the scripts under scripts/aon-verify/ cannot run by being imported', (
 
 describe('descriptions damaged at import', () => {
   /**
-   * A RATCHET, not a target. 866 descriptions carry a value the importer deleted while leaving the
+   * A RATCHET, not a target. 888 descriptions carry a value the importer deleted while leaving the
    * sentence grammatical — "races away from you in a ." was "in a 60-foot line". That text is a live
    * player surface: MainTab's action popup renders `description` through RichText with no ast key.
    *
@@ -192,7 +192,51 @@ describe('descriptions damaged at import', () => {
    * The shapes come from the scanner itself rather than a copy of them, so the CLI and this test
    * cannot drift — two registries for one rule is the failure this project keeps repeating.
    */
-  const BASELINE = 866;
+  /* 866 → 888 on 2026-08-15, for the Impossible Magic import (734 new records: 240 feats, 242 items,
+   * 198 spells, plus traits/actions/archetypes). RAISED ONLY AFTER PROVING NOTHING REGRESSED:
+   *
+   *   1. All 22 additions are records that did not exist before the import. Diffed the damaged set
+   *      against work/core-descriptions.json.pre-delta.bak, then checked each new key against
+   *      work/core.json.pre-delta.bak: none of the 22 was in it (25,403 records → 26,137, delta 734).
+   *   2. No pre-existing prose was touched at all. All 19,246 description rows that existed before the
+   *      import are byte-identical after it; 0 rows dropped, 686 added. So no already-damaged record
+   *      got worse either, which a set-diff on "is damaged" alone could not have seen.
+   *   3. All 22 trip only `gap-before-punctuation`, and in every one the space before the punctuation
+   *      is in Paizo/AoN's own text — not a value this importer deleted. Verified verbatim against the
+   *      live AoN index: Stifling Shield (equipment-5009) really does read "Requirements ; Effect" with
+   *      an empty Requirements, Concealments's Curtain really does read "Arcana , Deception , Stealth",
+   *      Birchstaff really does read "protector tree , wooden fists".
+   *   4. The one sub-shape that IS ours — "Activate—Deflecting Parry\n ; Frequency", where the importer
+   *      strips the action token that AoN prints as "Deflecting Parry Reaction ;" — is long-standing
+   *      behaviour, not new: 39 pre-delta records already carried that exact shape.
+   *
+   * So this is the ratchet meeting new source material, not an importer regression. If it goes up again,
+   * redo steps 1 and 2 before touching this number: a raise is only ever correct when the additions are
+   * new records AND the old rows are unchanged.
+   *
+   * 888 → 890 on 2026-08-17. This ratchet CAUGHT A REAL DEFECT first: giving the topped-up familiar
+   * abilities prose took the count to 928, and 38 of those 40 were OURS, not AoN's.
+   *
+   *   • `plain()` substituted `<actions string="" />` — the glyph tag with an EMPTY string, which AoN
+   *     emits on any entry that has no action cost — so 37 familiar abilities read "Resonance ()",
+   *     "Porter ()", "Can't Walk ()".
+   *   • `unlink()` kept a newline sitting INSIDE a link label. Polong's granted abilities are
+   *     `[Skilled (Society)\r\n](/Familiars.aspx?ID=33), [Speech](…)`, so the prose broke the line before
+   *     the comma and read as a dropped word.
+   *
+   * Both are fixed in scripts/lib/aon-plain.mjs — extracted out of import-siege-and-gaps.mjs so that a
+   * repair script can apply the IDENTICAL transform, which is the only way to tell "we damaged this"
+   * from "AoN ships it that way". The text already written was repaired by
+   * scripts/repair-topup-prose.mjs. That took 928 → 890.
+   *
+   * The remaining +2 are new records whose damage is AoN's OWN text, verified verbatim in the mirror:
+   *   classes/necromancer                class-75              "[Interact](/Actions.aspx?ID=2297) , [Stand]"
+   *   familiarAbilities/elemental-scamp  familiar-specific-28  "curved fangs. . An elemental scamp"
+   *
+   * Steps 1 and 2 redone for this raise: of the 24 records damaged that are absent from
+   * work/core-descriptions.json.pre-delta.bak, all 24 carry the same shape in AoN's own markdown and 0
+   * are ours; 0 pre-existing description rows changed and 0 were dropped. */
+  const BASELINE = 890;
 
   it(`is at most ${BASELINE} records, and that number only ever goes down`, async () => {
     const { scan } = await import('../scripts/scan-damaged-descriptions.mjs');

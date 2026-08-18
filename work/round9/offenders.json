@@ -1,0 +1,858 @@
+[
+ {
+  "reg": "SB",
+  "id": "well-groomed",
+  "i": 0,
+  "n": 1,
+  "when": "against diseases (success becomes a critical success)",
+  "bonus": "+2 circumstance"
+ },
+ {
+  "reg": "SB",
+  "id": "steadying-stone",
+  "i": 2,
+  "n": 3,
+  "when": "on Acrobatics checks to Balance on uneven ground made of earth or rock",
+  "bonus": "success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "conceited-mindset",
+  "i": 0,
+  "n": 1,
+  "when": "against mental effects — a success becomes a critical success, but a failure becomes a critical failure",
+  "bonus": "+2 circumstance"
+ },
+ {
+  "reg": "SB",
+  "id": "the-sickness",
+  "i": 0,
+  "n": 1,
+  "when": "against disease (and a success on a save vs. disease becomes a critical success)",
+  "bonus": "+2 item (+3 at 20th level)"
+ },
+ {
+  "reg": "SB",
+  "id": "grub-gloves",
+  "i": 0,
+  "n": 1,
+  "when": "on Reflex saves to Grab an Edge (and a success becomes a critical success)",
+  "bonus": "+2 circumstance (+3 moderate, +4 greater)"
+ },
+ {
+  "reg": "SB",
+  "id": "grub-gloves-lesser",
+  "i": 0,
+  "n": 1,
+  "when": "on Reflex saves to Grab an Edge (and a success becomes a critical success)",
+  "bonus": "+2 circumstance"
+ },
+ {
+  "reg": "SB",
+  "id": "grub-gloves-moderate",
+  "i": 0,
+  "n": 1,
+  "when": "on Reflex saves to Grab an Edge (and a success becomes a critical success)",
+  "bonus": "+3 circumstance"
+ },
+ {
+  "reg": "SB",
+  "id": "grub-gloves-greater",
+  "i": 0,
+  "n": 1,
+  "when": "on Reflex saves to Grab an Edge (and a success becomes a critical success)",
+  "bonus": "+4 circumstance"
+ },
+ {
+  "reg": "SB",
+  "id": "hydra-mutagen",
+  "i": 8,
+  "n": 9,
+  "when": "you fail or critically fail a Will save against a mental effect while the mutagen is active",
+  "bonus": "one degree of success better (once per mutagen)"
+ },
+ {
+  "reg": "SB",
+  "id": "bravos-brew-greater",
+  "i": 1,
+  "n": 2,
+  "when": "on Will saves against fear (this replaces the +3, it does not stack); a success against fear becomes a critical success",
+  "bonus": "+4 item"
+ },
+ {
+  "reg": "SB",
+  "id": "juggernaut-mutagen-greater",
+  "i": 0,
+  "n": 4,
+  "when": "while the greater juggernaut mutagen is active (1 hour); a success on a Fortitude save becomes a critical success",
+  "bonus": "+3 item"
+ },
+ {
+  "reg": "SB",
+  "id": "wajaghand-vanara",
+  "i": 0,
+  "n": 1,
+  "when": "against emotion effects (and a success on such a save becomes a critical success)",
+  "bonus": "+1 circumstance"
+ },
+ {
+  "reg": "SB",
+  "id": "numb",
+  "i": 0,
+  "n": 1,
+  "when": "on saves against emotion and pain effects (while Deteriorated, a success on such a save becomes a critical success)",
+  "bonus": "+1 circumstance (+2 while Deteriorated)"
+ },
+ {
+  "reg": "SB",
+  "id": "cloak-of-repute",
+  "i": 1,
+  "n": 2,
+  "when": "once per day, when you activate the cloak (2 actions, command) to Request something of a creature",
+  "bonus": "success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "cloak-of-repute-greater",
+  "i": 1,
+  "n": 2,
+  "when": "twice per day, when you activate the cloak (2 actions, command) to Request something of a creature",
+  "bonus": "success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "cloak-of-repute-major",
+  "i": 1,
+  "n": 2,
+  "when": "three times per day, when you activate the cloak (2 actions, command) to Request something of a creature",
+  "bonus": "success becomes a critical success; critical failure becomes a failure"
+ },
+ {
+  "reg": "SB",
+  "id": "staff-acrobat-dedication",
+  "i": 1,
+  "n": 2,
+  "when": "on Acrobatics checks to Balance while wielding your staff (a success becomes a critical success)",
+  "bonus": "success → critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "gorilla-stance",
+  "i": 0,
+  "n": 1,
+  "when": "on Athletics checks to Climb while in Gorilla Stance (a success becomes a critical success)",
+  "bonus": "+2 circumstance"
+ },
+ {
+  "reg": "SB",
+  "id": "intuitive-crafting",
+  "i": 0,
+  "n": 1,
+  "when": "when you critically fail a Crafting check to Repair an item",
+  "bonus": "critical failure becomes a failure instead (untyped)"
+ },
+ {
+  "reg": "SB",
+  "id": "magical-shorthand",
+  "i": 0,
+  "n": 1,
+  "when": "on a check to Learn a Spell",
+  "bonus": "a success becomes a critical success (untyped)"
+ },
+ {
+  "reg": "SB",
+  "id": "nocturnal-navigator",
+  "i": 0,
+  "n": 1,
+  "when": "whenever you can clearly identify the stars…",
+  "bonus": "one degree of success better — success becomes a critical success, critical failure becomes a failure (untyped)"
+ },
+ {
+  "reg": "SB",
+  "id": "runic-skullcap",
+  "i": 0,
+  "n": 1,
+  "when": "on a check to Recall Knowledge about rune magic or Lissala, while wearing the skullcap",
+  "bonus": "failure or critical failure becomes one degree of success better"
+ },
+ {
+  "reg": "SB",
+  "id": "elements-of-creation",
+  "i": 0,
+  "n": 1,
+  "when": "while all four creative-spark wisps assist you",
+  "bonus": "creative spark's bonus is doubled; blacksmithing Crafting outcomes one degree better"
+ },
+ {
+  "reg": "SB",
+  "id": "travelers-fulu",
+  "i": 0,
+  "n": 1,
+  "when": "on the Sense Direction check you activated the fulu for (also counts as having a compass)",
+  "bonus": "one degree of success better (two if you are a master in Survival)"
+ },
+ {
+  "reg": "SB",
+  "id": "dragonblood",
+  "i": 0,
+  "n": 1,
+  "when": "against fear effects",
+  "bonus": "success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "abjure-the-false-kin",
+  "i": 0,
+  "n": 1,
+  "when": "on a saving throw against a mental effect that doesn't deal damage",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "athletic-might",
+  "i": 0,
+  "n": 1,
+  "when": "on Athletics checks to Climb or Swim",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "brine-may",
+  "i": 0,
+  "n": 1,
+  "when": "on an Athletics check to Swim",
+  "bonus": "a success is a critical success instead; and you don't sink if you end your turn in water without having succeeded at a Swim that round"
+ },
+ {
+  "reg": "SB",
+  "id": "cantorian-reinforcement",
+  "i": 0,
+  "n": 1,
+  "when": "on a saving throw against a disease or poison",
+  "bonus": "a success is a critical success instead (and, if you also have Battle Hardened or a similar ability, a critical failure is a failure instead)"
+ },
+ {
+  "reg": "SB",
+  "id": "disillusionment",
+  "i": 0,
+  "n": 2,
+  "when": "against an illusion or dream effect",
+  "bonus": "success is a critical success; critical failure is a failure"
+ },
+ {
+  "reg": "SB",
+  "id": "disillusionment",
+  "i": 1,
+  "n": 2,
+  "when": "to disbelieve an illusion",
+  "bonus": "success is a critical success; critical failure is a failure"
+ },
+ {
+  "reg": "SB",
+  "id": "emerald-boughs-accustomation",
+  "i": 0,
+  "n": 3,
+  "when": "to Subsist",
+  "bonus": "critical failure becomes a failure; success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "empathy-incarnate",
+  "i": 1,
+  "n": 3,
+  "when": "to Make an Impression or Request vs a lower-level creature",
+  "bonus": "any success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "fire-savvy",
+  "i": 1,
+  "n": 2,
+  "when": "against suffocation or choking due to smoke or ash",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "haughty-obstinacy",
+  "i": 0,
+  "n": 1,
+  "when": "vs a mental effect that directly controls your actions",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "iron-lung",
+  "i": 0,
+  "n": 1,
+  "when": "against an inhaled poison",
+  "bonus": "treat your result as one degree of success better"
+ },
+ {
+  "reg": "SB",
+  "id": "irrepressible",
+  "i": 0,
+  "n": 1,
+  "when": "against an emotion effect",
+  "bonus": "a success is a critical success instead (and, with the gutsy halfling heritage, a critical failure is a failure instead)"
+ },
+ {
+  "reg": "SB",
+  "id": "irrepressible-ganzi",
+  "i": 0,
+  "n": 1,
+  "when": "against an emotion effect",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "irrepressible-halfling",
+  "i": 0,
+  "n": 1,
+  "when": "against an emotion effect",
+  "bonus": "a success is a critical success instead (and, with the gutsy halfling heritage, a critical failure is a failure instead)"
+ },
+ {
+  "reg": "SB",
+  "id": "irrepressible-nephilim",
+  "i": 0,
+  "n": 1,
+  "when": "against an emotion effect",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "jungle-strider",
+  "i": 0,
+  "n": 1,
+  "when": "to Balance on narrow surfaces or uneven ground made of plant material",
+  "bonus": "you aren't off-guard while doing so, and a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "just-the-facts",
+  "i": 0,
+  "n": 1,
+  "when": "when you Recall Knowledge",
+  "bonus": "use the outcome one degree of success better; the check isn't secret, and you know which information is inaccurate"
+ },
+ {
+  "reg": "SB",
+  "id": "unwavering-mien",
+  "i": 0,
+  "n": 1,
+  "when": "against an effect that would make you fall asleep",
+  "bonus": "treat your result as one degree of success better"
+ },
+ {
+  "reg": "SB",
+  "id": "agile-mind",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "anvils-hardness",
+  "i": 0,
+  "n": 1,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "assured-evasion",
+  "i": 0,
+  "n": 1,
+  "when": "on any Reflex save",
+  "bonus": "a critical failure is a failure instead, and on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "battle-hardened",
+  "i": 0,
+  "n": 1,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "battlefield-intuition",
+  "i": 0,
+  "n": 1,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "blast-dodger",
+  "i": 0,
+  "n": 1,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "divine-will",
+  "i": 0,
+  "n": 1,
+  "when": "on a successful Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "dogged-will",
+  "i": 0,
+  "n": 1,
+  "when": "on a successful Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "earned-resilience",
+  "i": 0,
+  "n": 1,
+  "when": "on a successful Fortitude save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "evasive-reflexes",
+  "i": 0,
+  "n": 1,
+  "when": "on a successful Reflex save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "explosion-dodger",
+  "i": 0,
+  "n": 1,
+  "when": "on a successful Reflex save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "fortress-of-will",
+  "i": 0,
+  "n": 1,
+  "when": "on every Will save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "greater-dogged-will",
+  "i": 0,
+  "n": 1,
+  "when": "on every Will save",
+  "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "greater-juggernaut",
+  "i": 0,
+  "n": 1,
+  "when": "on every Fortitude save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "greater-kinetic-durability",
+  "i": 0,
+  "n": 1,
+  "when": "on every Fortitude save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "greater-mysterious-resolve",
+  "i": 0,
+  "n": 1,
+  "when": "on every Will save",
+  "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "greater-natural-reflexes",
+  "i": 0,
+  "n": 1,
+  "when": "on every Reflex save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "greater-performers-heart",
+  "i": 0,
+  "n": 1,
+  "when": "on every Will save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "greater-rogue-reflexes",
+  "i": 0,
+  "n": 1,
+  "when": "on every Reflex save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "greater-unassailable-soul",
+  "i": 0,
+  "n": 1,
+  "when": "on every Will save",
+  "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage"
+ },
+ {
+  "reg": "SB",
+  "id": "indomitable-will",
+  "i": 0,
+  "n": 1,
+  "when": "on every Will save",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "juggernaut",
+  "i": 0,
+  "n": 1,
+  "when": "on every Fortitude save",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "kinetic-durability",
+  "i": 0,
+  "n": 1,
+  "when": "on every Fortitude save",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "kinetic-quickness",
+  "i": 0,
+  "n": 1,
+  "when": "on every Reflex save",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "lead-constitution",
+  "i": 0,
+  "n": 1,
+  "when": "on every Fortitude save",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "majestic-will",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "master-of-mind-and-spirit",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "mortality-reforged",
+  "i": 0,
+  "n": 1,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "mysterious-resolve",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "natural-reflexes",
+  "i": 0,
+  "n": 1,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "path-to-perfection",
+  "i": 0,
+  "n": 1,
+  "when": "on the save you chose for Path to Perfection",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "perfected-mind",
+  "i": 0,
+  "n": 3,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "perfected-mind",
+  "i": 1,
+  "n": 3,
+  "when": "on any Will save",
+  "bonus": "a critical failure is a failure instead"
+ },
+ {
+  "reg": "SB",
+  "id": "performers-heart",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "prodigious-will",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "reinforced-ego",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "resolute-faith",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "resolve",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "rogue-resilience",
+  "i": 0,
+  "n": 1,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "sacred-body",
+  "i": 0,
+  "n": 1,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "savvy-reflexes",
+  "i": 0,
+  "n": 1,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "shared-resolve",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save (you and your eidolon)",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "tempered-reflexes",
+  "i": 0,
+  "n": 1,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "twin-juggernauts",
+  "i": 0,
+  "n": 1,
+  "when": "on any Fortitude save (also your eidolon's)",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "unassailable-soul",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "unyielding-resolve",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "walls-of-will",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "wardens-endurance",
+  "i": 0,
+  "n": 1,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "wild-willpower",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "will-of-the-pupil",
+  "i": 0,
+  "n": 1,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead"
+ },
+ {
+  "reg": "SB",
+  "id": "born-of-item",
+  "i": 1,
+  "n": 2,
+  "when": "in yaoguai form, on a save against a mental effect",
+  "bonus": "a success becomes a critical success"
+ },
+ {
+  "reg": "SB",
+  "id": "lovers-gloves",
+  "i": 2,
+  "n": 3,
+  "when": "on a success against an emotion effect that causes negative emotions, while a shared Bond lasts",
+  "bonus": "the success becomes a critical success"
+ },
+ {
+  "reg": "MK",
+  "id": "the-publican",
+  "i": 0,
+  "n": 1,
+  "value": "crit fail → fail",
+  "note": "While invested: critically failed checks to Aid count as failures; from 14th level the cir"
+ },
+ {
+  "reg": "MK",
+  "id": "experienced-professional",
+  "i": 0,
+  "n": 1,
+  "value": "crit fail -> fail",
+  "note": "When you use Lore to Earn Income a critical failure becomes a failure; if you're an expert in Lore, a failed check earns twice as much income (unless it was originally a critical failure)."
+ },
+ {
+  "reg": "MK",
+  "id": "student-of-the-canon",
+  "i": 0,
+  "n": 2,
+  "value": "crit fail -> fail (Religion)",
+  "note": "Student of the Canon: a critical failure to Recall Knowledge about the tenets of faiths becomes a failure. For your OWN faith, a failure becomes a success and a success becomes a critical success."
+ },
+ {
+  "reg": "MK",
+  "id": "student-of-the-canon",
+  "i": 1,
+  "n": 2,
+  "value": "crit fail -> fail (religious)",
+  "note": "Student of the Canon: a critical failure on a Religion check to Decipher Writing of a religious nature becomes a failure instead."
+ },
+ {
+  "reg": "MK",
+  "id": "sturdy-bindings",
+  "i": 0,
+  "n": 1,
+  "value": "crit fail -> fail",
+  "note": "Sturdy Bindings: a critical failure on your check to Grapple is a failure instead. A creature you have grabbed also turns a failed Escape into a critical failure, and a critical success into a success."
+ },
+ {
+  "reg": "MK",
+  "id": "sure-feet",
+  "i": 0,
+  "n": 2,
+  "value": "success -> crit success",
+  "note": "Sure Feet: a success on an Acrobatics check to Balance is a critical success instead, and you're not off-guard while you Balance."
+ },
+ {
+  "reg": "MK",
+  "id": "sure-feet",
+  "i": 1,
+  "n": 2,
+  "value": "success -> crit success",
+  "note": "Sure Feet: a success on an Athletics check to Climb is a critical success instead, and you're not off-guard while you Climb."
+ },
+ {
+  "reg": "MK",
+  "id": "bravery",
+  "i": 0,
+  "n": 1,
+  "value": "-1 when gained",
+  "note": "Bravery: anytime you gain the frightened condition, reduce its value by 1. In addition, when you roll a success at a Will save against a fear effect, you get a critical success instead."
+ },
+ {
+  "reg": "MK",
+  "id": "caveclimber-kobold",
+  "i": 0,
+  "n": 1,
+  "value": "success → critical success",
+  "note": "You Climb with your clawed feet and tail, leaving your hands free, and a success on the Athletics check is a critical success."
+ },
+ {
+  "reg": "MK",
+  "id": "cliffscale-lizardfolk",
+  "i": 0,
+  "n": 1,
+  "value": "success → critical success",
+  "note": "While not wearing footwear you climb with the sticky pads on your feet, leaving your hands free, and a success on the Athletics check is a critical success."
+ },
+ {
+  "reg": "MK",
+  "id": "fishseeker-shoony",
+  "i": 0,
+  "n": 1,
+  "value": "success → crit success; crit fail → fail",
+  "note": "On a check to Grab an Edge a success is a critical success and a critical failure is a failure instead."
+ },
+ {
+  "reg": "MK",
+  "id": "paddler-shoony",
+  "i": 0,
+  "n": 1,
+  "value": "success → critical success",
+  "note": "A success on a check to Swim is a critical success instead."
+ }
+]

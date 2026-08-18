@@ -15,12 +15,37 @@ const apexEntry = (itemId: string, over: Partial<InventoryItem> = {}): Inventory
   ...over,
 });
 
+/*
+ * The one apex item with no fixed attribute, so the invariant below can stay strict.
+ *
+ * `first-world-mince-pie` is a Kingmaker campsite meal (added with the other 26 by
+ * scripts/import-archive-buckets.mjs). Its printed Favorite Meal entry reads "+3 status bonus to skill
+ * checks for all skills associated with THE RANDOM ABILITY SCORE THAT INCREASES" — the attribute is
+ * rolled when the meal is eaten, so there is no value `apexAttribute` could hold. It also cannot be worn
+ * or invested, which is what every mechanic in this file is about.
+ *
+ * The `apex` trait stays on the record because it is AoN's own trait and display hygiene forbids editing
+ * game-data fields to suit our engine. Exempted by id, with the printed text quoted, rather than by
+ * loosening the assertion — a weakened invariant would stop catching real importer misses.
+ */
+const NO_FIXED_APEX_ATTRIBUTE = new Set(['first-world-mince-pie']);
+
 describe('Regular apex items (importer)', () => {
   it('every apex-trait item carries which attribute it boosts', () => {
-    const apexItems = Object.values(db.items).filter((i) => i.traits?.includes('apex'));
+    const apexItems = Object.values(db.items)
+      .filter((i) => i.traits?.includes('apex') && !NO_FIXED_APEX_ATTRIBUTE.has(i.id));
     expect(apexItems.length).toBeGreaterThan(30);
     expect(apexItems.filter((i) => !i.apexAttribute)).toEqual([]);
     expect(db.items['belt-of-giant-strength']?.apexAttribute).toBe('str');
+  });
+
+  it('the exempt item really is present and really has no attribute', () => {
+    // Guards the exemption itself: if the record gains an apexAttribute, or disappears, this fails and
+    // the exemption should be deleted rather than left to hide a future gap.
+    for (const id of NO_FIXED_APEX_ATTRIBUTE) {
+      expect(db.items[id], `${id} is exempted but missing`).toBeTruthy();
+      expect(db.items[id]?.apexAttribute, `${id} now has an apexAttribute — drop the exemption`).toBeUndefined();
+    }
   });
 });
 

@@ -1,0 +1,9 @@
+[
+  {
+    "category": "items",
+    "id": "shawl-of-seasons",
+    "field": "passiveEffects",
+    "value": null,
+    "why": "Their only op is `addBonusToValue SKILL_DIPLOMACY = \"2\" text:\"to Make an Impression\"` — one RESTRICTED bonus. We encoded the same clause TWICE: `passiveEffects.skills.diplomacy: 2` (flat, folded into the total while worn) plus a matching `situationalBonuses.ts` star. Measured with explainStat: wearing the shawl moves the Diplomacy total from +0 to +2 AND prints \"+2 item from Shawl of Seasons — on Diplomacy checks to Make an Impression\", so a player rolling a plain Diplomacy check gets a bonus the rules restrict, and one reading the star would add it a second time. Deleting passiveEffects leaves exactly their encoding: the star, and no flat number. Their ops touch nothing else on this record, so the once-per-day counter and the Change of Seasons Fortitude/Speed stars are left untouched. Precedent: items/gaze-of-the-mantis, nosoi-charm, violet-ray, halcyon-heart already carry `passiveEffects: null` for this same shape."
+  }
+]

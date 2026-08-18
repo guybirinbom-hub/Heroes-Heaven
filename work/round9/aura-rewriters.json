@@ -1,0 +1,1682 @@
+[
+ {
+  "label": "overwatch field",
+  "coll": "feats",
+  "id": "overwatch-dedication",
+  "name": "Overwatch Dedication",
+  "sent": "You're surrounded by an overwatch field aura in a 30-foot emanation."
+ },
+ {
+  "label": "overwatch field",
+  "coll": "feats",
+  "id": "spyglass-modification",
+  "name": "Spyglass Modification",
+  "sent": "Your enhanced visual gear includes a regulating scope and reflectors, combined in an ingenuous setup that allows you to see around corners within the area of your overwatch field."
+ },
+ {
+  "label": "overwatch field",
+  "coll": "feats",
+  "id": "swift-intervention",
+  "name": "Swift Intervention",
+  "sent": "**Trigger** An ally within your overwatch field fails in their attempt to Arrest a Fall, Balance, Grab an Edge, or Maneuver in Flight."
+ },
+ {
+  "label": "overwatch field",
+  "coll": "feats",
+  "id": "topple-giants",
+  "name": "Topple Giants",
+  "sent": "When an ally within your overwatch field attempts to Disarm, Shove, or Trip an opponent within your overwatch field and fails, you coordinate efforts to provide a +2 circumstance bonus to the next Athletics check rolled by a different ally "
+ },
+ {
+  "label": "overwatch field",
+  "coll": "feats",
+  "id": "wide-overwatch",
+  "name": "Wide Overwatch",
+  "sent": "Increase the size of your overwatch field from 30 feet to 60 feet."
+ },
+ {
+  "label": "overwatch field",
+  "coll": "feats",
+  "id": "forewarn",
+  "name": "Forewarn",
+  "sent": "**Frequency** once per minute **Trigger** An enemy within your overwatch field attempts an attack against an ally who is also within your overwatch field."
+ },
+ {
+  "label": "overwatch field",
+  "coll": "feats",
+  "id": "control-tower",
+  "name": "Control Tower",
+  "sent": "You and allies in your overwatch field gain a +2 circumstance bonus when using the Seek action to find hidden or undetected creatures within the overwatch field."
+ },
+ {
+  "label": "overwatch field",
+  "coll": "feats",
+  "id": "converge",
+  "name": "Converge",
+  "sent": "**Trigger** You make a successful ranged attack against an opponent who is within your overwatch field, and who is within reach of one or more of your allies who is also within your overwatch field."
+ },
+ {
+  "label": "marshal's aura",
+  "coll": "feats",
+  "id": "devrins-cunning-stance",
+  "name": "Devrin's Cunning Stance",
+  "sent": "--- **Critical Success** Your marshal's aura increases to a , and it grants you and your allies a +1 status bonus to skill checks."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "safe-elements",
+  "name": "Safe Elements",
+  "sent": "When you Channel Elements or use a stance impulse that affects your kinetic aura, you can designate a number of creatures up to your Constitution modifier (minimum 1 creature)."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "aura-shaping",
+  "name": "Aura Shaping",
+  "sent": "You control the size of your kinetic aura."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "elemental-transformation",
+  "name": "Elemental Transformation",
+  "sent": "--- You open your kinetic gate, but rather than activating your kinetic aura, you instead become overwhelmed with transformative elemental energy."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "imperious-aura",
+  "name": "Imperious Aura",
+  "sent": "--- Your glowing and majestic kinetic aura marks you as a true child of the elements."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "air-shroud",
+  "name": "Air Shroud",
+  "sent": "Turbulent air suffuses your kinetic aura."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "clear-as-air",
+  "name": "Clear as Air",
+  "sent": "If you activate your kinetic aura, the impulse conceals its elements, though any special effects of your aura might give away your location."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "ghosts-in-the-storm",
+  "name": "Ghosts in the Storm",
+  "sent": "Fast-moving gray clouds surround you, as well as your allies while they're in your kinetic aura."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "body-of-air",
+  "name": "Body of Air",
+  "sent": "If you activate your kinetic aura, Body of Air ends."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "crowned-in-tempests-fury",
+  "name": "Crowned in Tempest's Fury",
+  "sent": "- Any creature that enters your kinetic aura or ends its turn there takes 2d12 damage."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "geologic-attunement",
+  "name": "Geologic Attunement",
+  "sent": "You gain tremorsense (imprecise) in your kinetic aura."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "rattle-the-earth",
+  "name": "Rattle The Earth",
+  "sent": "This has the effects of Earthquake but comes from you, with an area of a or an emanation with the same size as your kinetic aura."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "thermal-nimbus",
+  "name": "Thermal Nimbus",
+  "sent": "You and allies in your kinetic aura gain resistance equal to your level to damage of that type."
+ },
+ {
+  "label": "nimbus",
+  "coll": "feats",
+  "id": "thermal-nimbus",
+  "name": "Thermal Nimbus",
+  "sent": "Elemental resistance from a gate junction is cumulative with resistance from Thermal Nimbus."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "crawling-fire",
+  "name": "Crawling Fire",
+  "sent": "When you use a fire impulse, you can have it originate from the crawling fire instead of you (with the exception of impulses that affect your kinetic aura)."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "volcanic-escape",
+  "name": "Volcanic Escape",
+  "sent": "**Trigger** An enemy in your kinetic aura damages you."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "kindle-inner-flames",
+  "name": "Kindle Inner Flames",
+  "sent": "You shed faint, glowing embers, as do your allies while they're in your kinetic aura."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "magnetic-field",
+  "name": "Magnetic Field",
+  "sent": "**Attract** A creature that is wearing metal armor, has the metal trait, or is made of metal treats squares in your kinetic aura as difficult terrain when moving away from you."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "shattershields",
+  "name": "Shattershields",
+  "sent": "You and allies in your kinetic aura gain a +1 circumstance bonus to AC."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "winter-sleet",
+  "name": "Winter Sleet",
+  "sent": "Surfaces in your kinetic aura are coated in slippery ice."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "sea-glass-guardians",
+  "name": "Sea Glass Guardians",
+  "sent": "They attempt to intercept all dangers, granting you and your allies within your kinetic aura a +1 status bonus to AC and saving throws."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "fresh-produce",
+  "name": "Fresh Produce",
+  "sent": "Choose a creature in your kinetic aura."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "ravel-of-thorns",
+  "name": "Ravel of Thorns",
+  "sent": "Thorny vines grow in geometric patterns on surfaces in your kinetic aura."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "drifting-pollen",
+  "name": "Drifting Pollen",
+  "sent": "A creature in your kinetic aura when you enter the stance, or who later enters the aura or ends its turn in the aura, attempts at a save against your class DC."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "orchards-endurance",
+  "name": "Orchard's Endurance",
+  "sent": "You and your allies in your kinetic aura gain resistance 5 to bludgeoning and piercing damage."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "desert-wind",
+  "name": "Desert Wind",
+  "sent": "Each creature inside your kinetic aura (including you) is concealed from any creature outside your kinetic aura, and creatures outside the aura are concealed from creatures inside the aura other than you."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "steam-knight",
+  "name": "Steam Knight",
+  "sent": "You shape your kinetic aura into swirling armor of steam that scalds your enemies and propels you on super-heated jet streams."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "kineticist-dedication",
+  "name": "Kineticist Dedication",
+  "sent": "You gain a kinetic aura and the Channel Elements action, though you don't get to use an Elemental Blast or stance impulse when you take that action."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "nimble-reprisal",
+  "name": "Nimble Reprisal",
+  "sent": "The enemy needs to be in range, but not in reach, and it must still be in your champion's aura."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "divine-health",
+  "name": "Divine Health",
+  "sent": "Allies in your champion's aura get this benefit, but their bonus is +1."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "aura-of-courage",
+  "name": "Aura of Courage",
+  "sent": "At the end of your turn, each ally in your champion's aura reduces its frightened value by 1."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "aura-of-despair",
+  "name": "Aura of Despair",
+  "sent": "Enemies in your champion's aura take a –1 circumstance penalty to saving throws against fear."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "security",
+  "name": "Security",
+  "sent": "If you do, you can choose one ally in your champion's aura to gain a spirit shield that accompanies it."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "expand-aura",
+  "name": "Expand Aura",
+  "sent": "Expand the radius of your champion's aura to 30 feet until the start of your next turn."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "aura-of-faith",
+  "name": "Aura of Faith",
+  "sent": "Each willing ally in your champion's aura adds the holy trait to their Strikes if you're holy or adds the unholy trait to their Strikes if you're unholy."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "aura-of-determination",
+  "name": "Aura of Determination",
+  "sent": "You and all allies in your champion's aura gain a +1 status bonus to saving throws against mental, morph, and polymorph effects."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "aura-of-life",
+  "name": "Aura of Life",
+  "sent": "You and all allies in your champion's aura gain resistance 5 to void damage and a +1 status bonus to saves against void effects."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "aura-of-righteousness",
+  "name": "Aura of Righteousness",
+  "sent": "You and all allies in your champion's aura gain resistance 5 to unholy spells, unholy Strikes, and other unholy effects."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "swift-paragon",
+  "name": "Swift Paragon",
+  "sent": "If your ally starts a move action in your champion's aura, their movement during that action doesn't trigger reactions."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "champion-dedication",
+  "name": "Champion Dedication",
+  "sent": "You are bound by your deity's anathema and gain the champion's aura and sanctification as described in the champion class."
+ },
+ {
+  "label": "marshal's aura",
+  "coll": "feats",
+  "id": "marshal-dedication",
+  "name": "Marshal Dedication",
+  "sent": "In addition, you're surrounded by a marshal's aura in a ."
+ },
+ {
+  "label": "marshal's aura",
+  "coll": "feats",
+  "id": "dread-marshal-stance",
+  "name": "Dread Marshal Stance",
+  "sent": "--- **Success** Your marshal's aura grants you and your allies in the aura a +1 status bonus to damage rolls."
+ },
+ {
+  "label": "marshal's aura",
+  "coll": "feats",
+  "id": "inspiring-marshal-stance",
+  "name": "Inspiring Marshal Stance",
+  "sent": "--- **Success** Your marshal's aura grants you and allies a +1 status bonus to attack rolls and saves against mental effects."
+ },
+ {
+  "label": "marshal's aura",
+  "coll": "feats",
+  "id": "steel-yourself",
+  "name": "Steel Yourself!",
+  "sent": "Choose one ally in your marshal's aura."
+ },
+ {
+  "label": "marshal's aura",
+  "coll": "feats",
+  "id": "cadence-call",
+  "name": "Cadence Call",
+  "sent": "Each willing ally in your marshal's aura is quickened until the end of their next turn, and they can use the extra action only to Stride."
+ },
+ {
+  "label": "marshal's aura",
+  "coll": "feats",
+  "id": "to-battle",
+  "name": "To Battle!",
+  "sent": "Choose one ally in your marshal's aura who has a reaction available."
+ },
+ {
+  "label": "marshal's aura",
+  "coll": "feats",
+  "id": "strategist-stance",
+  "name": "Strategist Stance",
+  "sent": "--- **Critical Success** Your marshal's aura increases to a , and it grants you and allies a +1 status bonus to Reflex saving throws."
+ },
+ {
+  "label": "nimbus",
+  "coll": "feats",
+  "id": "ascended-celestial-dedication",
+  "name": "Ascended Celestial Dedication",
+  "sent": "Additionally, you emanate a nimbus of light."
+ },
+ {
+  "label": "nimbus",
+  "coll": "feats",
+  "id": "aegis-for-the-innocent",
+  "name": "Aegis for the Innocent",
+  "sent": "**Requirements** Your nimbus is active."
+ },
+ {
+  "label": "nimbus",
+  "coll": "feats",
+  "id": "channel-divine-spark",
+  "name": "Channel Divine Spark",
+  "sent": "Your nimbus automatically activates (if it isn't already) and the area of your nimbus doubles; you shed bright light for 60 feet (and dim light to the next 60 feet)."
+ },
+ {
+  "label": "nimbus",
+  "coll": "feats",
+  "id": "celestial-armaments",
+  "name": "Celestial Armaments",
+  "sent": "Each ally within the bright light of your nimbus when you take this action selects one weapon in their possession."
+ },
+ {
+  "label": "nimbus",
+  "coll": "feats",
+  "id": "army-of-one",
+  "name": "Army of One",
+  "sent": "**Requirements** Your nimbus is active."
+ },
+ {
+  "label": "nimbus",
+  "coll": "feats",
+  "id": "shining-glory",
+  "name": "Shining Glory",
+  "sent": "**Requirements** Your nimbus is active."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "oath-of-the-defender",
+  "name": "Oath of The Defender",
+  "sent": "Allies in your champion's aura, not including you, get resistance 2 to damage dealt by creatures with the chosen trait."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "feats",
+  "id": "exalted-greatness",
+  "name": "Exalted Greatness",
+  "sent": "**Desecration** While you have the benefit, you also gain a +2 status bonus to saving throws against effects created by enemies in your champion's aura."
+ },
+ {
+  "label": "Shield the Faithful aura",
+  "coll": "feats",
+  "id": "healing-sanctuary",
+  "name": "Healing Sanctuary",
+  "sent": "An ally who begins their turn in your Shield the Faithful aura gains 10 temporary Hit Points that last for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "commanders-companion",
+  "name": "Commander's Companion",
+  "sent": "You can affix your banner to your companion's saddle, barding, or a simple harness, determining the effects of your commander's banner and other abilities that use your banner from your companion's space, even if you are not currently ridin"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "banners-inspiration",
+  "name": "Banner's Inspiration",
+  "sent": "Each ally currently benefiting from your commander's banner reduces their frightened condition by 1 and can immediately attempt a new saving throw against any one mental effect currently affecting them."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "battle-tested-companion",
+  "name": "Battle-Tested Companion",
+  "sent": "While your banner is affixed to this companion, the banner's aura is 10 feet greater than it normally is (typically this means the banner's 30-foot aura becomes a 40-foot aura)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "defiant-banner",
+  "name": "Defiant Banner",
+  "sent": "You and all allies within the aura of your commander's banner when you use this action gain resistance to bludgeoning, piercing, and slashing damage equal to your Intelligence modifier until the start of your next turn."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "rallying-banner",
+  "name": "Rallying Banner",
+  "sent": "You restore Hit Points to each ally within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "quickening-banner",
+  "name": "Quickening Banner",
+  "sent": "Each ally within the aura of your commander's banner is quickened for 1 round and can use this extra action to Strike or Stride."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "confusing-commands",
+  "name": "Confusing Commands",
+  "sent": "Each enemy within the aura of your commander's banner must succeed at a save against your class DC or become confused for 1 round (2 rounds on a critical failure)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "glorious-banner",
+  "name": "Glorious Banner",
+  "sent": "Your commander's banner now affects a (or an if you are using Plant Banner); the status bonus to Will saves and DCs against fear effects granted to your allies increases to +2; and you and affected allies gain a +1 status bonus to AC, Forti"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "pennant-of-victory",
+  "name": "Pennant of Victory",
+  "sent": "You and all allies within the aura of your commander's banner gain a +4 status bonus to attack and damage rolls, a +10-foot status bonus to all your Speeds, and 40 temporary Hit Points."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "feats",
+  "id": "commander-dedication",
+  "name": "Commander Dedication",
+  "sent": "You gain a commander's banner that grants you a 30-foot aura for the purposes of using your tactics, but the banner does not grant the commander's banner bonus to Will saves and DCs against fear effects."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "feats",
+  "id": "voice-of-elements",
+  "name": "Voice of Elements",
+  "sent": "Your kinetic aura grants you these three benefits while active."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "classFeatures",
+  "id": "kinetic-aura",
+  "name": "Kinetic Aura",
+  "sent": "The form and appearance of this kinetic aura are unique to you."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "classFeatures",
+  "id": "impulses",
+  "name": "Impulses",
+  "sent": "To wield an element, you must have your kinetic aura active and have a free hand, as described in the impulse trait."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "classFeatures",
+  "id": "final-gate",
+  "name": "Final Gate",
+  "sent": "If your kinetic aura is inactive, you automatically use the first action of your turn to Channel Elements as a free action."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "blessing-of-the-devoted",
+  "name": "Blessing of the Devoted",
+  "sent": "In addition, when the movement of one of your allies triggers an enemy's reaction while the ally is in your champion's aura, the ally gains a +2 status bonus to all defenses against that reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "commanders-banner",
+  "name": "Commander's Banner",
+  "sent": "Your banner requires customization and influences your allies' morale, so you can have only one banner at a time designated as your commander's banner; designating a new banner or standard as your commander's banner takes 1 minute."
+ },
+ {
+  "label": "lantern's aura",
+  "coll": "classFeatures",
+  "id": "adept-benefit-lantern",
+  "name": "Adept Benefit (Lantern)",
+  "sent": "The lantern's aura of light increases to a ."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "blessed-swiftness",
+  "name": "Blessed Swiftness",
+  "sent": "In addition, when the movement of one of your allies triggers an enemy's reaction while the ally is in your champion's aura, the ally gains a +2 status bonus to all defenses against that reaction."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "desecration",
+  "name": "Desecration",
+  "sent": "**Exalted Reaction (11th)** Each enemy in your champion's aura takes a –1 status penalty to attack rolls against you until the start of your next turn."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "classFeatures",
+  "id": "fire-gate",
+  "name": "Fire Gate",
+  "sent": "| | **Aura Junction** Enemies in your kinetic aura gain weakness to fire from your fire impulses."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "classFeatures",
+  "id": "gate-junction",
+  "name": "Gate Junction",
+  "sent": "- An **elemental resistance** grants you resistance to damage while your kinetic aura is active."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "grandeur",
+  "name": "Grandeur",
+  "sent": "**Exalted Reaction (11th Level)** In addition to the enemy affected by Flash of Grandeur, each other enemy in your champion's aura is affected by the revealing light spell for 1 round."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "iniquity",
+  "name": "Iniquity",
+  "sent": "(This applies only to the damage the reaction itself deals, not the damage you deal with subsequent Strikes.) **Exalted Reaction (11th Level)** Each enemy in your champion's aura other than the triggering creature takes half the damage you "
+ },
+ {
+  "label": "lantern's aura",
+  "coll": "classFeatures",
+  "id": "initiate-benefit-lantern",
+  "name": "Initiate Benefit (Lantern)",
+  "sent": "The lantern's aura attempts to reveal the unseen."
+ },
+ {
+  "label": "inspiring aura (regalia)",
+  "coll": "classFeatures",
+  "id": "initiate-benefit-regalia",
+  "name": "Initiate Benefit (Regalia)",
+  "sent": "While holding your regalia, you gain an inspiring aura affecting you and all allies in a 15-foot emanation who can see you, granting them a +1 status bonus to saving throws against fear."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "justice",
+  "name": "Justice",
+  "sent": "**Exalted Reaction (11th Level)** Each ally in your champion's aura with the target in their melee reach can spend a reaction to Strike the target with a –5 penalty."
+ },
+ {
+  "label": "lantern's aura",
+  "coll": "classFeatures",
+  "id": "lantern",
+  "name": "Lantern",
+  "sent": "The emanation of your lantern's aura doubles in size."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "liberation",
+  "name": "Liberation",
+  "sent": "**Exalted Reaction (11th Level)** In addition to the ally affected by Liberating Step, you and all other allies in your champion's aura can Step as a free action."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "obedience",
+  "name": "Obedience",
+  "sent": "**Exalted Reaction (11th Level)** Each enemy in your champion's aura other than the triggering creature must also either drop prone or take mental damage (each enemy chooses)."
+ },
+ {
+  "label": "lantern's aura",
+  "coll": "classFeatures",
+  "id": "paragon-benefit-lantern",
+  "name": "Paragon Benefit (Lantern)",
+  "sent": "The lantern's aura of light increases to a ."
+ },
+ {
+  "label": "inspiring aura (regalia)",
+  "coll": "classFeatures",
+  "id": "paragon-benefit-regalia",
+  "name": "Paragon Benefit (Regalia)",
+  "sent": "Allies in your inspiring aura aren't off-guard from being flanked unless you too are flanked."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "redemption",
+  "name": "Redemption",
+  "sent": "**Exalted Reaction (11th Level)** If the enemy refuses, you can choose to grant the resistance to yourself and all allies in your champion's aura, including the triggering ally."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "destructive-vengeance",
+  "name": "Destructive Vengeance",
+  "sent": "**Trigger** An enemy in your champion's aura damages you --- **Effect** Bloodshed begets bloodshed as you drag your enemy toward oblivion."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "flash-of-grandeur",
+  "name": "Flash of Grandeur",
+  "sent": "**Trigger** An enemy damages your ally, and both are in your champion's aura --- **Effect** Imperious divine light flashes out from you to surround your foe."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "glimpse-of-redemption",
+  "name": "Glimpse of Redemption",
+  "sent": "**Trigger** An enemy damages your ally, and both are in your champion's aura; --- **Effect** Your enemy hesitates under the weight of sin as visions of redemption play in their mind's eye."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "iron-command",
+  "name": "Iron Command",
+  "sent": "**Trigger** An enemy in your champion's aura damages you --- **Effect** You put an impertinent foe who dared harm you in their proper place."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "liberating-step",
+  "name": "Liberating Step",
+  "sent": "**Trigger** An enemy damages, grabs, or restrains your ally, and both are in your champion's aura --- You free an ally from restraint."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "retributive-strike",
+  "name": "Retributive Strike",
+  "sent": "**Trigger** An enemy damages your ally, and both are in your champion's aura --- **Effect** You protect your ally and strike your enemy."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "classFeatures",
+  "id": "selfish-shield",
+  "name": "Selfish Shield",
+  "sent": "**Trigger** An enemy in your champion's aura damages you --- **Effect** Your self-interest keeps you safe."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "bloody-guillotine",
+  "name": "Bloody Guillotine",
+  "sent": "Choose and signal up to three squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "buckle-cut-blitz",
+  "name": "Buckle-Cut Blitz",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; these squadmates can Stride up to their Speed as a reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "corpse-crenellation",
+  "name": "Corpse Crenellation",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "cry-havoc",
+  "name": "Cry Havoc!",
+  "sent": "Choose an enemy you are observing and signal all squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "demoralizing-charge",
+  "name": "Demoralizing Charge",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; as a free action, those squadmates can immediately Stride toward an enemy they are observing."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "executioners-volley",
+  "name": "Executioner's Volley",
+  "sent": "You and each squadmate within the aura of your commander's banner can attempt a ranged Strike as a reaction against a single target you choose; combine the damage from all attacks for the purpose of resistances and weaknesses."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "for-talmandor-for-freedom",
+  "name": "For Talmandor! For Freedom!",
+  "sent": "For yourself and each squadmate in your banner's aura when you use this tactic, you can attempt to counteract one effect affecting that creature."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "gather-to-me",
+  "name": "Gather to Me!",
+  "sent": "Signal all squadmates; each can immediately Stride as a reaction, though each must end their movement inside your banner's aura, or as close to your banner's aura as their movement Speed allows."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "insta-ballista",
+  "name": "Insta-Ballista",
+  "sent": "Signal all squadmates you previously chose to participate in this tactic (see Special); these squadmates must be within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "mirrored-wall",
+  "name": "Mirrored Wall",
+  "sent": "Then, signal a squadmate within the aura of your commander's banner who currently has a shield raised (including spellcasting allies with an active casting of the *shield* cantrip), and choose an enemy within 60 feet."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "passage-of-lines",
+  "name": "Passage of Lines",
+  "sent": "Signal all squadmates within the aura of your commander's banner; each can swap positions with another willing ally adjacent to them."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "piranha-assault",
+  "name": "Piranha Assault",
+  "sent": "Designate a creature within the aura of your commander's banner and signal all squadmates; for 1 minute, each time they attack that creature and deal damage to it of a type the creature resists, they ignore an amount of that creature's resi"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "pop-drop-and-lock",
+  "name": "Pop, Drop, and Lock",
+  "sent": "Signal up to three squadmates within the aura of your commander's banner who all have the same enemy within their reach; the squadmates can attempt to Strike, Trip, or Grapple the opponent as a reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "ready-aim-fire",
+  "name": "Ready, Aim, Fire!",
+  "sent": "Choose an enemy and signal up to three squadmates within the aura of your commander's banner; your squadmates can Interact to reload as a free action and attempt a ranged Strike against the enemy as a reaction --- **Special** If one of your"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "roaring-charge",
+  "name": "Roaring Charge",
+  "sent": "Signal all squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "sanguine-revitalization",
+  "name": "Sanguine Revitalization",
+  "sent": "Choose a creature within the aura of your commander's banner and signal all squadmates within the aura who are wielding a piercing or slashing melee weapon, or who have a piercing or slashing melee unarmed attack."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "seek-and-destroy",
+  "name": "Seek and Destroy",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; they can immediately seek as a free action."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "shadows-in-the-moonlight",
+  "name": "Shadows in the Moonlight",
+  "sent": "Signal all squadmates within your banner's aura; until the end of your next turn, you and each ally count as Following the Expert for any checks to hide or sneak and can ignore the noisy trait on any armor you wear."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "shields-up",
+  "name": "Shields Up!",
+  "sent": "Signal all squadmates within the aura of your commander's banner; each can immediately Raise a Shield as a reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "slip-and-sizzle",
+  "name": "Slip and Sizzle",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; one of these squadmates must be adjacent to an opponent and the other must be capable of casting a spell that deals damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "strike-hard",
+  "name": "Strike Hard!",
+  "sent": "Signal a squadmate within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "stupefying-raid",
+  "name": "Stupefying Raid",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; these squadmates can Stride up to their Speed as a reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "tactical-takedown",
+  "name": "Tactical Takedown",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "take-the-high-ground",
+  "name": "Take the High Ground",
+  "sent": "Signal a squadmate within the aura of your commander's banner; as a free action, that squadmate can Stride directly toward any other squadmate you are both observing."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "the-bigger-they-are",
+  "name": "The Bigger They Are",
+  "sent": "Signal a squadmate within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "valkyries-charge",
+  "name": "Valkyrie's Charge",
+  "sent": "You restore Hit Points to each squadmate within the aura of your commander's banner; this effect has the healing trait."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "classFeatures",
+  "id": "wait-for-it",
+  "name": "Wait For It...",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; while these squadmates Delay or Ready an action, they gain a +1 circumstance bonus to AC and saving throws."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "classFeatures",
+  "id": "channel-elements",
+  "name": "Channel Elements",
+  "sent": "Your kinetic aura activates, and as a part of this action, you can use a 1-action Elemental Blast or a 1-action stance impulse."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "actions",
+  "id": "retributive-strike",
+  "name": "Retributive Strike",
+  "sent": "**Trigger** An enemy damages your ally, and both are in your champion's aura --- **Effect** You protect your ally and strike your enemy."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "actions",
+  "id": "glimpse-of-redemption",
+  "name": "Glimpse of Redemption",
+  "sent": "**Trigger** An enemy damages your ally, and both are in your champion's aura; --- **Effect** Your enemy hesitates under the weight of sin as visions of redemption play in their mind's eye."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "actions",
+  "id": "liberating-step",
+  "name": "Liberating Step",
+  "sent": "**Trigger** An enemy damages, grabs, or restrains your ally, and both are in your champion's aura --- You free an ally from restraint."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "actions",
+  "id": "iron-command",
+  "name": "Iron Command",
+  "sent": "**Trigger** An enemy in your champion's aura damages you --- **Effect** You put an impertinent foe who dared harm you in their proper place."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "actions",
+  "id": "selfish-shield",
+  "name": "Selfish Shield",
+  "sent": "**Trigger** An enemy in your champion's aura damages you --- **Effect** Your self-interest keeps you safe."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "actions",
+  "id": "destructive-vengeance",
+  "name": "Destructive Vengeance",
+  "sent": "**Trigger** An enemy in your champion's aura damages you --- **Effect** Bloodshed begets bloodshed as you drag your enemy toward oblivion."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "actions",
+  "id": "channel-elements",
+  "name": "Channel Elements",
+  "sent": "Your kinetic aura activates, and as a part of this action, you can use a 1-action Elemental Blast or a 1-action stance impulse."
+ },
+ {
+  "label": "kinetic aura",
+  "coll": "actions",
+  "id": "extract-element",
+  "name": "Extract Element",
+  "sent": "--- **Critical Success** The creature is unaffected **Success** The creature takes half damage, and you add some of its elemental matter to your kinetic aura."
+ },
+ {
+  "label": "champion's aura",
+  "coll": "actions",
+  "id": "flash-of-grandeur",
+  "name": "Flash of Grandeur",
+  "sent": "**Trigger** An enemy damages your ally, and both are in your champion's aura --- **Effect** Imperious divine light flashes out from you to surround your foe."
+ },
+ {
+  "label": "nimbus",
+  "coll": "actions",
+  "id": "bless-ally",
+  "name": "Bless Ally",
+  "sent": "**Frequency** once per 10 minutes **Requirements** Your nimbus is active **Target** a willing ally within the bright light of your nimbus --- **Effect** Your radiance grants an ally some of your celestial grace."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "bloody-guillotine",
+  "name": "Bloody Guillotine",
+  "sent": "Choose and signal up to three squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "buckle-cut-blitz",
+  "name": "Buckle-Cut Blitz",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; these squadmates can Stride up to their Speed as a reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "corpse-crenellation",
+  "name": "Corpse Crenellation",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "cry-havoc",
+  "name": "Cry Havoc!",
+  "sent": "Choose an enemy you are observing and signal all squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "demoralizing-charge",
+  "name": "Demoralizing Charge",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; as a free action, those squadmates can immediately Stride toward an enemy they are observing."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "executioners-volley",
+  "name": "Executioner's Volley",
+  "sent": "You and each squadmate within the aura of your commander's banner can attempt a ranged Strike as a reaction against a single target you choose; combine the damage from all attacks for the purpose of resistances and weaknesses."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "for-talmandor-for-freedom",
+  "name": "For Talmandor! For Freedom!",
+  "sent": "For yourself and each squadmate in your banner's aura when you use this tactic, you can attempt to counteract one effect affecting that creature."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "gather-to-me",
+  "name": "Gather to Me!",
+  "sent": "Signal all squadmates; each can immediately Stride as a reaction, though each must end their movement inside your banner's aura, or as close to your banner's aura as their movement Speed allows."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "insta-ballista",
+  "name": "Insta-Ballista",
+  "sent": "Signal all squadmates you previously chose to participate in this tactic (see Special); these squadmates must be within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "mirrored-wall",
+  "name": "Mirrored Wall",
+  "sent": "Then, signal a squadmate within the aura of your commander's banner who currently has a shield raised (including spellcasting allies with an active casting of the *shield* cantrip), and choose an enemy within 60 feet."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "passage-of-lines",
+  "name": "Passage of Lines",
+  "sent": "Signal all squadmates within the aura of your commander's banner; each can swap positions with another willing ally adjacent to them."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "piranha-assault",
+  "name": "Piranha Assault",
+  "sent": "Designate a creature within the aura of your commander's banner and signal all squadmates; for 1 minute, each time they attack that creature and deal damage to it of a type the creature resists, they ignore an amount of that creature's resi"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "pop-drop-and-lock",
+  "name": "Pop, Drop, and Lock",
+  "sent": "Signal up to three squadmates within the aura of your commander's banner who all have the same enemy within their reach; the squadmates can attempt to Strike, Trip, or Grapple the opponent as a reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "ready-aim-fire",
+  "name": "Ready, Aim, Fire!",
+  "sent": "Choose an enemy and signal up to three squadmates within the aura of your commander's banner; your squadmates can Interact to reload as a free action and attempt a ranged Strike against the enemy as a reaction --- **Special** If one of your"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "roaring-charge",
+  "name": "Roaring Charge",
+  "sent": "Signal all squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "sanguine-revitalization",
+  "name": "Sanguine Revitalization",
+  "sent": "Choose a creature within the aura of your commander's banner and signal all squadmates within the aura who are wielding a piercing or slashing melee weapon, or who have a piercing or slashing melee unarmed attack."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "seek-and-destroy",
+  "name": "Seek and Destroy",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; they can immediately seek as a free action."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "shadows-in-the-moonlight",
+  "name": "Shadows in the Moonlight",
+  "sent": "Signal all squadmates within your banner's aura; until the end of your next turn, you and each ally count as Following the Expert for any checks to hide or sneak and can ignore the noisy trait on any armor you wear."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "shields-up",
+  "name": "Shields Up!",
+  "sent": "Signal all squadmates within the aura of your commander's banner; each can immediately Raise a Shield as a reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "slip-and-sizzle",
+  "name": "Slip and Sizzle",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; one of these squadmates must be adjacent to an opponent and the other must be capable of casting a spell that deals damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "strike-hard",
+  "name": "Strike Hard!",
+  "sent": "Signal a squadmate within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "stupefying-raid",
+  "name": "Stupefying Raid",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; these squadmates can Stride up to their Speed as a reaction."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "tactical-takedown",
+  "name": "Tactical Takedown",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "take-the-high-ground",
+  "name": "Take the High Ground",
+  "sent": "Signal a squadmate within the aura of your commander's banner; as a free action, that squadmate can Stride directly toward any other squadmate you are both observing."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "the-bigger-they-are",
+  "name": "The Bigger They Are",
+  "sent": "Signal a squadmate within the aura of your commander's banner."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "valkyries-charge",
+  "name": "Valkyrie's Charge",
+  "sent": "You restore Hit Points to each squadmate within the aura of your commander's banner; this effect has the healing trait."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "actions",
+  "id": "wait-for-it",
+  "name": "Wait For It...",
+  "sent": "Signal up to two squadmates within the aura of your commander's banner; while these squadmates Delay or Ready an action, they gain a +1 circumstance bonus to AC and saving throws."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-common-cause",
+  "name": "Banner of Common Cause",
+  "sent": "--- **Activate—Stand Firm** ⟨4⟩ (emotion, mental, visual) **Frequency** once per day **Trigger** A frightened ally begins their turn within your banner's aura --- **Effect** Reduce the ally's frightened condition by 1."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "thunderbird-tuft",
+  "name": "Thunderbird Tuft",
+  "sent": "When used as part of a shocking grasp spell, thunderbird tuft funnels electricity back into the spellcaster in a defensive nimbus."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "thunderbird-tuft-lesser",
+  "name": "Thunderbird Tuft (Lesser)",
+  "sent": "When used as part of a Shocking Grasp spell, *thunderbird tuft* funnels electricity back into the spellcaster in a defensive nimbus."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "thunderbird-tuft-moderate",
+  "name": "Thunderbird Tuft (Moderate)",
+  "sent": "When used as part of a Shocking Grasp spell, *thunderbird tuft* funnels electricity back into the spellcaster in a defensive nimbus."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "thunderbird-tuft-greater",
+  "name": "Thunderbird Tuft (Greater)",
+  "sent": "When used as part of a Shocking Grasp spell, *thunderbird tuft* funnels electricity back into the spellcaster in a defensive nimbus."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "thunderbird-tuft-major",
+  "name": "Thunderbird Tuft (Major)",
+  "sent": "When used as part of a Shocking Grasp spell, *thunderbird tuft* funnels electricity back into the spellcaster in a defensive nimbus."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "nimbus-breath",
+  "name": "Nimbus Breath",
+  "sent": "**Activate** ⟨1⟩ (manipulate) --- The dwarves of Cloudspire Citadel in Golarion's Mwangi Expanse create bottles of *nimbus breath* by capturing and bottling the fluffiest nimbus clouds from the lairs of cloud dragons."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "final-scalecloak",
+  "name": "Final Scalecloak",
+  "sent": "--- **Activate—Embody the Storm** ⟨2⟩ (concentrate, manipulate, primal) **Frequency** once per hour **Effect** Spend a Mythic Point; a nimbus of crackling electricity surrounds you for 1 minute."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "heart-bloodstone-of-arazni",
+  "name": "Heart Bloodstone of Arazni",
+  "sent": "--- **Activate—Raise Jar** ⟨1⟩ (manipulate) You hold the jar aloft, and a nimbus of crimson energy surrounds your body."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "arcane-standard",
+  "name": "Arcane Standard",
+  "sent": "One creature within the banner's aura that has taken acid, cold, electricity, fire, or sonic damage this turn gains weakness 5 to that damage type for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "greater-arcane-standard",
+  "name": "Greater Arcane Standard",
+  "sent": "One creature within the banner’s aura that has taken acid, cold, electricity, fire, or sonic damage this turn gains weakness 5 to that damage type for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-creeping-death",
+  "name": "Banner of Creeping Death",
+  "sent": "All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "lesser-banner-of-creeping-death",
+  "name": "Lesser Banner of Creeping Death",
+  "sent": "All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "moderate-banner-of-creeping-death",
+  "name": "Moderate Banner of Creeping Death",
+  "sent": "All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "greater-banner-of-creeping-death",
+  "name": "Greater Banner of Creeping Death",
+  "sent": "All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-banner-of-creeping-death",
+  "name": "Major Banner of Creeping Death",
+  "sent": "All living creatures within the banner’s aura take 1d4+1 void damage (DC 19 basic Fortitude save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-piercing-shards",
+  "name": "Banner of Piercing Shards",
+  "sent": "The magical banner deals 1d4 damage to any enemy within the banner's aura that has been dealt damage since the end of your last turn."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "greater-banner-of-piercing-shards",
+  "name": "Greater Banner of Piercing Shards",
+  "sent": "The magical banner deals 1d4 persistent bleed damage to any enemy within the banner’s aura that has been dealt damage since the end of your last turn."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-banner-of-piercing-shards",
+  "name": "Major Banner of Piercing Shards",
+  "sent": "The magical banner deals 1d4 persistent bleed damage to any enemy within the banner’s aura that has been dealt damage since the end of your last turn."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-the-restful",
+  "name": "Banner of the Restful",
+  "sent": "You and allies within the banner's aura gain a +1 item bonus to Perception DCs and protection from severe cold and heat."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "greater-banner-of-the-restful",
+  "name": "Greater Banner of the Restful",
+  "sent": "You and allies within the banner’s aura gain a +1 item bonus to Perception DCs and protection from severe cold and heat."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-banner-of-the-restful",
+  "name": "Major Banner of the Restful",
+  "sent": "You and allies within the banner’s aura gain a +1 item bonus to Perception DCs and protection from severe cold and heat."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-the-rising-star",
+  "name": "Banner of the Rising Star",
+  "sent": "An ally within the banner's aura with the dying condition regains Hit Points, does not increase their wounded condition, and can Stand as a free action."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "beacon-of-the-wilds",
+  "name": "Beacon of the Wilds",
+  "sent": "You and your allies ignore difficult terrain within the banner's aura."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "blazing-banner",
+  "name": "Blazing Banner",
+  "sent": "Whenever you or an ally within the banner's aura critically succeeds with a Strike, the Strike deals an additional 1d4 damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "greater-blazing-banner",
+  "name": "Greater Blazing Banner",
+  "sent": "Whenever you or an ally within the banner’s aura critically succeeds with a Strike, the Strike deals an additional 1d4 persistent fire damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-blazing-banner",
+  "name": "Major Blazing Banner",
+  "sent": "Whenever you or an ally within the banner’s aura critically succeeds with a Strike, the Strike deals an additional 1d4 persistent fire damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "dawnfire-beacon",
+  "name": "Dawnfire Beacon",
+  "sent": "This magical banner exudes bright light in the banner's aura (and dim light in an area equal to twice the banner's aura)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-dawnfire-beacon",
+  "name": "Major Dawnfire Beacon",
+  "sent": "This magical banner exudes bright light in the banner’s aura (and dim light in an area equal to twice the banner’s aura)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "flag-of-the-stronghold",
+  "name": "Flag of the Stronghold",
+  "sent": "You and allies within the banner's aura gain resistance 5 to damage from siege weapons."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-flag-of-the-stronghold",
+  "name": "Major Flag of the Stronghold",
+  "sent": "You and allies within the banner’s aura gain resistance 5 to damage from siege weapons."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "hexwise-banner",
+  "name": "Hexwise Banner",
+  "sent": "You and allies within the banner's aura gain resistance 5 to damage from spells; for spells that apply multiple instances of damage, such as Force Barrage, this applies only to the first instance of damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-hexwise-banner",
+  "name": "Major Hexwise Banner",
+  "sent": "You and allies within the banner’s aura gain resistance 5 to damage from spells; for spells that apply multiple instances of damage, such as force barrage, this applies only to the first instance of damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "knaves-standard",
+  "name": "Knave’s Standard",
+  "sent": "Whenever you or an ally within the banner's aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d4 precision damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "greater-knaves-standard",
+  "name": "Greater Knave’s Standard",
+  "sent": "Whenever you or an ally within the banner’s aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d4 precision damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-knaves-standard",
+  "name": "Major Knave’s Standard",
+  "sent": "Whenever you or an ally within the banner’s aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d4 precision damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "quickened-standard",
+  "name": "Quickened Standard",
+  "sent": "An ally within the banner's aura becomes quickened for 1 round and can use the additional action only to Stride."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "stalwarts-banner",
+  "name": "Stalwart’s Banner",
+  "sent": "**Activate—Stand Firm** ⟨1⟩ (concentrate) **Frequency** once per minute --- **Effect** You and allies within your banner's aura gain 5 temporary Hit Points and a +1 status bonus to your Fortitude DC and Reflex DC against any effect that wou"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "greater-stalwarts-banner",
+  "name": "Greater Stalwart’s Banner",
+  "sent": "Activate—Stand Firm (concentrate) Frequency once per minute; Effect You and allies within your banner’s aura gain 5 temporary Hit Points and a +1 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knoc"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-stalwarts-banner",
+  "name": "Major Stalwart’s Banner",
+  "sent": "Activate—Stand Firm (concentrate) Frequency once per minute; Effect You and allies within your banner’s aura gain 5 temporary Hit Points and a +1 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knoc"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "standard-of-the-sure-footed",
+  "name": "Standard of the Sure-Footed",
+  "sent": "An ally within the banner's aura can Stand as a free action."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "standard-of-the-true-ally",
+  "name": "Standard of the True Ally",
+  "sent": "Whenever you or an ally within the banner's aura uses an action on your turn to prepare to help with Aid, they can Step or Stride towards an ally as part of that action."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "swift-standard",
+  "name": "Swift Standard",
+  "sent": "You and allies that start your turn within the banner's aura gain a +5-foot status bonus to land Speeds for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "greater-swift-standard",
+  "name": "Greater Swift Standard",
+  "sent": "You and allies that start your turn within the banner’s aura gain a +5-foot status bonus to land Speeds for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-swift-standard",
+  "name": "Major Swift Standard",
+  "sent": "You and allies that start your turn within the banner’s aura gain a +5-foot status bonus to land Speeds for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "timepiece-standard",
+  "name": "Timepiece Standard",
+  "sent": "Whenever you or an ally within the banner's aura uses the Delay or Ready action, you or the ally gain 5 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "major-timepiece-standard",
+  "name": "Major Timepiece Standard",
+  "sent": "Whenever you or an ally within the banner’s aura uses the Delay or Ready action, you or the ally gain 5 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "titans-standard",
+  "name": "Titan's Standard",
+  "sent": "A Medium or smaller ally within the banner's aura becomes Large for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "vandals-banner",
+  "name": "Vandal's Banner",
+  "sent": "Strikes you or an ally make while within the banner's aura ignore the first 2 points of Hardness of an object."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "zealous-banner",
+  "name": "Zealous Banner",
+  "sent": "An ally within the banner's aura becomes quickened for 1 round and can use the additional action only to Strike."
+ },
+ {
+  "label": "nimbus",
+  "coll": "items",
+  "id": "draft-of-stellar-radiance",
+  "name": "Draft of Stellar Radiance",
+  "sent": "Upon drinking this potion, you're surrounded by a nimbus of blazing starlight that lasts for 1 minute."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "arcane-standard-greater",
+  "name": "Arcane Standard (Greater)",
+  "sent": "One creature within the banner's aura that has taken acid, cold, electricity, fire, or sonic damage this turn gains weakness 10 to that damage type for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-creeping-death-greater",
+  "name": "Banner of Creeping Death (Greater)",
+  "sent": "All living creatures within the banner's aura take damage ( save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-creeping-death-lesser",
+  "name": "Banner of Creeping Death (Lesser)",
+  "sent": "All living creatures within the banner's aura take damage ( save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-creeping-death-major",
+  "name": "Banner of Creeping Death (Major)",
+  "sent": "All living creatures within the banner's aura take damage ( save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-creeping-death-moderate",
+  "name": "Banner of Creeping Death (Moderate)",
+  "sent": "All living creatures within the banner's aura take damage ( save)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-piercing-shards-greater",
+  "name": "Banner of Piercing Shards (Greater)",
+  "sent": "The magical banner deals 2d4 damage to any enemy within the banner's aura that has been dealt damage since the end of your last turn."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-piercing-shards-major",
+  "name": "Banner of Piercing Shards (Major)",
+  "sent": "The magical banner deals 3d4 damage to any enemy within the banner's aura that has been dealt damage since the end of your last turn."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-the-restful-greater",
+  "name": "Banner of the Restful (Greater)",
+  "sent": "You and allies within the banner's aura gain a +2 item bonus to Perception DCs and protection from severe cold and heat."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "banner-of-the-restful-major",
+  "name": "Banner of the Restful (Major)",
+  "sent": "You and allies within the banner's aura gain a +3 item bonus to Perception DCs and protection from severe cold and heat."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "blazing-banner-greater",
+  "name": "Blazing Banner (Greater)",
+  "sent": "Whenever you or an ally within the banner's aura critically succeeds with a Strike, the Strike deals an additional 1d6 persistent fire damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "blazing-banner-major",
+  "name": "Blazing Banner (Major)",
+  "sent": "Whenever you or an ally within the banner's aura critically succeeds with a Strike, the Strike deals an additional 1d8 persistent fire damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "dawnfire-beacon-major",
+  "name": "Dawnfire Beacon (Major)",
+  "sent": "This magical banner exudes bright light in the banner's aura (and dim light in an area equal to twice the banner's aura)."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "flag-of-the-stronghold-major",
+  "name": "Flag of the Stronghold (Major)",
+  "sent": "You and allies within the banner's aura gain resistance 10 to damage from siege weapons."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "hexwise-banner-major",
+  "name": "Hexwise Banner (Major)",
+  "sent": "You and allies within the banner's aura gain resistance 10 to damage from spells; for spells that apply multiple instances of damage, such as Force Barrage, this applies only to the first instance of damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "knaves-standard-greater",
+  "name": "Knave's Standard (Greater)",
+  "sent": "Whenever you or an ally within the banner's aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d6 precision damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "knaves-standard-major",
+  "name": "Knave's Standard (Major)",
+  "sent": "Whenever you or an ally within the banner's aura critically succeeds with a Strike against an off-guard target, the Strike deals an additional 1d8 precision damage."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "stalwarts-banner-greater",
+  "name": "Stalwart's Banner (Greater)",
+  "sent": "**Activate—Stand Firm** ⟨1⟩ (concentrate) **Frequency** once per minute --- **Effect** You and allies within your banner's aura gain 10 temporary Hit Points and a +2 status bonus to your Fortitude DC and Reflex DC against any effect that wo"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "stalwarts-banner-major",
+  "name": "Stalwart's Banner (Major)",
+  "sent": "**Activate—Stand Firm** ⟨1⟩ (concentrate) **Frequency** once per minute --- **Effect** You and allies within your banner's aura gain 15 temporary Hit Points and a +3 status bonus to your Fortitude DC and Reflex DC against any effect that wo"
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "swift-standard-greater",
+  "name": "Swift Standard (Greater)",
+  "sent": "You and allies that start your turn within the banner's aura gain a +10-foot status bonus to land Speeds for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "swift-standard-major",
+  "name": "Swift Standard (Major)",
+  "sent": "You and allies that start your turn within the banner's aura gain a +15-foot status bonus to land Speeds for 1 round."
+ },
+ {
+  "label": "commander's banner aura",
+  "coll": "items",
+  "id": "timepiece-standard-major",
+  "name": "Timepiece Standard (Major)",
+  "sent": "Whenever you or an ally within the banner's aura uses the Delay or Ready action, you or the ally gain 10 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes."
+ }
+]

@@ -1,0 +1,49 @@
+[
+  {
+    "category": "feats",
+    "id": "expanded-necromancy",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": ["grisly-growths", "execute", "desiccate", "massacre"],
+      "as": "list"
+    },
+    "why": "WG runs four giveSpell ops (grisly growths flat, then execute/desiccate/massacre behind LEVEL conditionals); we carried nothing at all. Adopted into our spellListAdd lane. `as: 'list'` is the prepared-caster shape the printed 'Add ... to your dirge / you can prepare and cast these spells' calls for. Their LEVEL gates need no field of ours: SpellsTab's useTraditionSpells indexes the widened pool byRank/upTo, so a 7th-rank spell only appears once the caster has a slot of that rank. Probe: buildCharacter puts {\"*\":[\"grisly-growths\",\"execute\",\"desiccate\",\"massacre\"]} on character.spellListAdditions, which SpellsTab:286 reads."
+  },
+  {
+    "category": "feats",
+    "id": "greater-merciful-elixir",
+    "field": "modifiesGrant",
+    "value": [
+      {
+        "from": "merciful-elixir",
+        "actionRider": {
+          "note": "your elixir can instead attempt to counteract the blinded, deafened, sickened, or slowed condition."
+        }
+      }
+    ],
+    "why": "WG's only op is injectText onto Merciful Elixir — a rider on another record, not plumbing. Our record had actionCost:passive and nothing else, so the widened condition list reached the sheet nowhere. modifiesGrant/actionRider is our lane for it: build.ts:4109 emits {on:'action', id:'merciful-elixir'} into grantMarkers, gated on actually owning Merciful Elixir, and MainTab:589 draws it on that row (merciful-elixir is a free-action feat, so actionId(name) === the id). Probe confirmed grantMarkers appears only with both feats taken. Note deliberately does not open with this feat's name — all three renderers prefix it."
+  },
+  {
+    "category": "heritages",
+    "id": "hooded-nagaji",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Venomous Spit",
+        "die": "d4",
+        "damageType": "poison",
+        "traits": ["unarmed"],
+        "group": "brawling",
+        "range": 10
+      }
+    ],
+    "why": "Both apps grant the attack (their giveItem, our grantedStrikes) so the lane already agrees — but our grant's name is the literal placeholder 'StrikeLabel', and build.ts:1849 copies it verbatim into naturalAttacks, so the Strikes tab printed 'StrikeLabel'. Their giveItem necessarily names the weapon; adopting that half means naming ours from our own printed text ('a venomous spit ranged unarmed attack'). Every other key is left byte-identical — die, damageType, traits, group and range are untouched, including the group their encoding says nothing about."
+  },
+  {
+    "category": "feats",
+    "id": "tracing-studies",
+    "field": "grantsActions",
+    "value": ["trace-rune"],
+    "why": "WG's single op is giveAbilityBlock — the Trace Rune action. Our record carried no mechanics at all, and actions/trace-rune (1 action, concentrate/magical/manipulate/runesmith) sat in core.json with nothing owning it, so a Runesmith archetype character never saw it in the encounter action list. grantsActions is exactly that lane: MainTab:256 flatMaps grantsActions off every taken feat and isActionCost passes {type:'actions',value:1}."
+  }
+]

@@ -1830,11 +1830,43 @@ export interface FormulaScope {
  * The dedication counts itself: it IS an archetype class feat, so a lone Hellknight Dedication gives
  * resistance 1 + 1 = 2, matching the printed progression.
  */
+/**
+ * Is this feat a MEMBER of the archetype its `archetype` field names — or merely selectable by it?
+ *
+ * The field answers two different questions and the importer only ever wrote one of them. Archives of
+ * Nethys lists a class feat on an archetype's page when that archetype MAY SELECT it, and the import
+ * read "listed there" as "belongs to it". 420 feats carry `archetype` without the archetype trait:
+ * Domain Initiate, Advanced Domain and Expanded Domain Initiate are stamped `soul-warden` while their
+ * traits say `cleric`; Steady Spellcasting, Snagging Strike and 23 monk feats are stamped likewise.
+ *
+ * That is not cosmetic. Counting a cleric's own Domain Initiate as a Soul Warden feat let two feats a
+ * cleric would take anyway satisfy *"take two more feats from the Soul Warden archetype first"*, and
+ * six dedications print such a gate: Soul Warden, Knight Vigilant (both records), Wellspring Mage,
+ * Familiar Sage and Scion of Domora.
+ *
+ * MYTHIC IS THE EXCEPTION, and the reason this is a predicate rather than an inline trait check. A
+ * destiny's feats carry `mythic`, never `archetype` — Eternal Legend, Broken Chain and the rest are
+ * archetypes in every mechanical sense, and demanding the archetype trait would unbind all 18 of
+ * Eternal Legend's feats from their destiny (see `mythic.ts`, which groups on this same field).
+ *
+ * Deliberately narrow: this governs MEMBERSHIP — gate counting and `archetypeFeatCounts`. Grouping
+ * and display still read `archetype` directly, because "the Soul Warden archetype can select this"
+ * is true and worth showing the player.
+ */
+export function belongsToArchetype(f: { archetype?: string; traits?: string[] }): boolean {
+  if (!f.archetype) return false;
+  const t = f.traits ?? [];
+  return t.includes('archetype') || t.includes('dedication') || t.includes('mythic');
+}
+
 export function archetypeFeatCounts(c: Character, db: ContentDatabase): Record<string, number> {
   const out: Record<string, number> = {};
   for (const f of c.feats) {
-    const arch = db.feats[f.featId]?.archetype;
-    if (arch) out[arch] = (out[arch] ?? 0) + 1;
+    const rec = db.feats[f.featId];
+    /* MEMBERSHIP, not "this archetype may select it" — see `belongsToArchetype` in build.ts. Four of
+     * the sixteen feats stamped `hellknight` are plain class feats (Steady Spellcasting, Fearsome
+     * Brute, Shackles of Law, Sturdy Bindings), and each would have inflated this count by one. */
+    if (rec && belongsToArchetype(rec)) out[rec.archetype!] = (out[rec.archetype!] ?? 0) + 1;
   }
   return out;
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { content } from './_content';
+import { content, build } from './_content';
 import { openChoiceOptions, openChoiceLabel } from '../src/rules/openChoice';
 
 const c = content();
@@ -80,6 +80,62 @@ describe('build-resolved open choices', () => {
   it('own-spell honours the rank ceiling', () => {
     const ch = withSpells({ 1: ['guidance'], 8: ['heal'] });
     expect(openChoiceOptions({ type: 'own-spell', maxRank: 5 }, c, { character: ch }).map((o) => o.id)).toEqual(['guidance']);
+  });
+
+  /**
+   * ⚠ THE FIXTURE ABOVE IS WHY THIS SECTION EXISTS.
+   *
+   * `withSpells` sets `repertoire` and nothing else, so every assertion above describes a SPONTANEOUS
+   * caster. `own-spell` never read `spellbook`, and the suite stayed green while a wizard's Westyr's
+   * Wayfinder Repository picker showed one entry — a focus spell that leaked in through the class's
+   * focus entry — and a witch's showed nothing at all. Four Library Robes had the same hole.
+   *
+   * A hand-rolled fixture can only test the shapes its author remembered. These cases go through the
+   * REAL builder for one caster of each storage shape, so a resolver that reads a subset of the
+   * known-spell stores fails here instead of shipping a blank picker.
+   */
+  describe('own-spell sees every store a caster keeps its spells in', () => {
+    const rank1 = Object.entries(c.spells)
+      .filter(([, s]) => s.rank === 1 && !(s.traits ?? []).includes('focus'))
+      .slice(0, 4)
+      .map(([id]) => id);
+
+    /* wizard/witch keep known spells in `spellbook`; sorcerer/bard in `repertoire`. All four are the
+     * same question to a player — "a spell you know" — and must answer the same way. */
+    for (const cls of ['wizard', 'witch', 'sorcerer', 'bard'] as const) {
+      it(`${cls} can pick a 1st-rank spell it knows`, () => {
+        const ch = build(cls, 6, { spells: { 1: rank1 } });
+        const menu = openChoiceOptions({ type: 'own-spell', rank: 1 }, c, { character: ch });
+        expect(menu.length, `${cls} own-spell menu was empty`).toBeGreaterThan(0);
+        /* Not merely non-empty — the spells the player actually chose have to be in there. A menu
+         * holding only a leaked focus spell was the bug, and it was non-empty. */
+        const ids = new Set(menu.map((o) => o.id));
+        expect(rank1.filter((id) => ids.has(id)).length, `${cls} menu missed its own known spells`).toBeGreaterThan(0);
+      });
+    }
+
+    it('a prepared caster’s daily loadout is not knowledge', () => {
+      /* `prepared` is deliberately NOT a source: today's slots are what you readied, not what you
+       * know, and reading them would make the menu change every morning. */
+      const ch = build('wizard', 6, { spells: { 1: rank1 } });
+      const entry = (ch.spellcasting ?? []).find((e) => e.type === 'prepared');
+      expect(Object.keys(entry?.prepared ?? {}).length, 'fixture no longer prepares anything').toBeGreaterThan(0);
+      const menu = openChoiceOptions({ type: 'own-spell', rank: 1 }, c, { character: ch });
+      /* Every offered spell must come from a store that means KNOWLEDGE. A focus spell from the
+       * class's focus entry qualifies and legitimately appears — the exclusion is `prepared`, and
+       * only `prepared`. Asserting against the spellbook alone was wrong and this test caught it. */
+      const known = new Set(
+        (ch.spellcasting ?? []).flatMap((e) => [
+          ...(e.cantrips ?? []),
+          ...Object.values(e.repertoire ?? {}).flat(),
+          ...Object.values(e.grantedRepertoire ?? {}).flat(),
+          ...Object.values(e.spellbook ?? {}).flat(),
+          ...Object.values(e.learned ?? {}).flat(),
+        ]),
+      );
+      const fromPreparedOnly = menu.filter((o) => !known.has(o.id));
+      expect(fromPreparedOnly.map((o) => o.id), 'a spell reached the menu from nothing but today’s slots').toEqual([]);
+    });
   });
 
   it('own-* returns NOTHING without a character rather than falling back to content', () => {

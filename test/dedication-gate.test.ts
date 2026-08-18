@@ -72,7 +72,21 @@ describe('a record whose clause differs from the default (Q25)', () => {
 
   it('Familiar Sage counts familiar master feats — a sibling archetype, not its own', () => {
     expect(db.feats['familiar-sage-dedication'].dedicationGate!.archetypes).toContain('familiar-master');
-    expect(block(['familiar-sage-dedication', 'enhanced-familiar', 'familiar-mascot'], 'fighter-dedication')).toBeNull();
+    /* Enhanced Familiar is a CLASS feat for seven classes that the Familiar Master archetype also
+     * lists, so the SLOT it was taken in decides whether it counts — see `countsForArchetype`. Spelled
+     * out here because a bare id cannot say, and a bare id is what this used to pass. */
+    const inArchetypeSlots = [
+      { id: 'familiar-sage-dedication', category: 'archetype' },
+      { id: 'enhanced-familiar', category: 'archetype' },
+      { id: 'familiar-mascot', category: 'archetype' },
+    ];
+    expect(dedicationBlock(inArchetypeSlots, db.feats['fighter-dedication'], db)).toBeNull();
+    /* …and the same two feats taken as ordinary CLASS feats do not open the gate: a witch who happens
+     * to hold Enhanced Familiar has not taken a step into the Familiar Master archetype. */
+    const inClassSlots = inArchetypeSlots.map((t) =>
+      t.id === 'familiar-sage-dedication' ? t : { ...t, category: 'class' },
+    );
+    expect(dedicationBlock(inClassSlots, db.feats['fighter-dedication'], db)).not.toBeNull();
   });
 
   it('Familiar Sage exempts Familiar Master Dedication, which its SECOND sentence names', () => {

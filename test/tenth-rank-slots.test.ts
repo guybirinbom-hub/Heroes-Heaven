@@ -86,6 +86,10 @@ describe('it does not leak', () => {
         if (rec.spellSlotBonus?.createRank) carriers.push(id);
       }
     }
-    expect(carriers.sort()).toEqual(['infinite-mind', 'mind-over-matter', 'true-channel-spell']);
+    // `epitaph` is the Necromancer's 19th-level feature, and it prints this outright: "You gain a
+    // single 10th-level spell slot and can prepare a spell in that slot using necromancer
+    // spellcasting." A legitimate fourth carrier, not a leak — what this guard protects against is
+    // a record acquiring createRank by ACCIDENT.
+    expect(carriers.sort()).toEqual(['epitaph', 'infinite-mind', 'mind-over-matter', 'true-channel-spell']);
   });
 });

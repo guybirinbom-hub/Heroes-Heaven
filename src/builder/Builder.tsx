@@ -407,9 +407,32 @@ export function Builder({
                                 buildChoiceOptions(recordId, def, build, content, featPrereqChar, key);
                               // See the granted-feat picker: a narrowed menu has to say who narrowed it.
                               const limitReasons = effectiveChoiceLimits(recordId, def, featPrereqChar, content).map((l) => l.reason);
+                              /*
+                               * A MENU THAT IS EMPTY BECAUSE ANOTHER ANSWER IS MISSING MUST SAY SO.
+                               *
+                               * Domain Initiate offers the four domains of your deity. With no deity
+                               * chosen it offered nothing, silently: an open picker with an empty list
+                               * and no hint that the answer lives elsewhere on the page. The engine was
+                               * never at fault — every one of the 485 deities and all 1,911 deity×domain
+                               * combinations grant the right focus spell — but the player could not get
+                               * far enough to find that out, and reported the feat as broken.
+                               *
+                               * Only for menus whose pool is COMPUTED from another build answer. A menu
+                               * that is empty for any other reason is a defect, not a prompt, and must
+                               * not be papered over with a friendly sentence.
+                               */
+                              const unmetDependency =
+                                !opts.length && def.kind === 'domains' && !build.deityId
+                                  ? 'Choose a deity first — this offers your deity’s domains.'
+                                  : null;
                               return (
                                 <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt, def.flag)}>
-                                  {def.kind === 'text' ? (
+                                  {unmetDependency ? (
+                                    <div className="choice-inert">
+                                      <i className="ti ti-info-circle" aria-hidden="true" />
+                                      <span>{unmetDependency}</span>
+                                    </div>
+                                  ) : def.kind === 'text' ? (
                                     // No option list exists for these (Kingdom skills, leadership roles):
                                     // the app has no Kingmaker data, and typing one from memory would be
                                     // inventing content. The player supplies the word; we record it.
@@ -2309,9 +2332,12 @@ export function Builder({
         // (ruling Q25): the requirement, its count and its exceptions all come off whichever
         // dedication the character already has, so there is no slot-wide yes/no to compute here.
         const pickerKey = slotKey(picker.level, picker.category, picker.idx);
+        /* Carry the SLOT with each feat, not just its id. A feat listed by an archetype counts toward
+         * that archetype's gate only when it was taken in an archetype slot — see `countsForArchetype`.
+         * Dropping the key here is what let a cleric's own Domain Initiate count as a Soul Warden feat. */
         const takenForRule = Object.entries(build.featPicks)
           .filter(([k, v]) => v && k !== pickerKey)
-          .map(([, v]) => v);
+          .map(([k, v]) => ({ id: v as string, category: k.split(':')[1] }));
         const dedBlockedWhy = (f: Feat) => dedicationBlock(takenForRule, f, content);
         const archHidden = isClassSlot && !showArch;
         const feats = eligibleFor(picker)

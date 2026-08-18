@@ -1,0 +1,9 @@
+[
+  {
+    "category": "feats",
+    "id": "perfected-thrall",
+    "field": "focusSpells",
+    "value": ["perfected-thrall"],
+    "why": "Printed: 'You learn the perfected thrall grave spell.' WG encodes giveSpell {spellId:8761 (Perfected Thrall), type:FOCUS, castingSource:NECROMANCER, rank:10}; we carried NO mechanical field at all. Expressed in our vocabulary as the focusSpell lane. Reader verified: build.ts applyFeatFocus pushes feat.focusSpells into featFocusSpells and stamps focusSource — a probe holding the feat rendered 'perfected-thrall' in the focus repertoire at rank 10 sourced 'Perfected Thrall'. (Note: spells/perfected-thrall exists and carries the focus trait; the necromancer CLASS is absent from core.json, which is why no in-app holder can reach it yet — a class-level gap, not a defect of this field.)"
+  }
+]

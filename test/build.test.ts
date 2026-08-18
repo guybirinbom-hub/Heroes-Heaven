@@ -3,7 +3,9 @@ import { content, build, prof, mainCasting, firstSubclass } from './_content';
 
 describe('every class builds', () => {
   const ids = Object.keys(content().classes);
-  it('has all 27 classes', () => expect(ids.length).toBe(27));
+  // 29 since Impossible Magic: Necromancer and Runesmith were authored from the printed tables
+  // (the Archives importer cannot build a class spine — see scripts/import-new-classes.mjs).
+  it('has all 29 classes', () => expect(ids.length).toBe(29));
   for (const id of ids) {
     for (const level of [1, 7, 15, 20]) {
       it(`${id} builds at L${level}`, () => {

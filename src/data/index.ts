@@ -68,6 +68,60 @@ export const NEAR_DUPLICATE_IDS = new Set([
 ]);
 
 /**
+ * The Impossible Magic reprints that `gradeSpellingDuplicates` below cannot pair.
+ *
+ * Impossible Magic (2026) reprints Secrets of Magic equipment, and the 2026-08-15 import brought 49
+ * of those reprints in as new records beside the Secrets of Magic ones the app already held — so the
+ * shop offered "Grim Sandglass (Major)" and "Major Grim Sandglass" as two things to buy.
+ *
+ * AoN states the link outright: each reprint's mirror document carries `legacy_id`, naming the
+ * document it reprints. core.json keeps only `aonId`, so the rule below has to INFER "same item" from
+ * the name shape plus level plus price. That inference hides 41 of the 49. These seven are the ones
+ * it structurally cannot see, and they escape for three different reasons:
+ *
+ *   · THE GRADE LADDER WAS RE-INDEXED — not repriced. Secrets of Magic prints Healer's Gel as
+ *     Lesser/Moderate/Greater at levels 5/9/13 for 25/125/500 gp; Impossible Magic prints
+ *     base/Greater/Major at the SAME three levels for the SAME three prices (mirror documents
+ *     equipment-5055-4573/4574/4575 against equipment-1007-961/962/963). So "Greater Healer's Gel"
+ *     (level 9, 125 gp) is the reprint of "Healer's Gel (MODERATE)", and "Major Healer's Gel" is the
+ *     reprint of "Healer's Gel (Greater)". The grade WORD disagrees while level and price match
+ *     exactly, so a rule keyed on the grade word compares the wrong two records — and a rule that
+ *     believed the numbers had changed would drop the level-13 gel from the shop altogether.
+ *   · THE REPRINT WAS REPRICED. "Grim Sandglass (Major)" is 2,000 gp and "Major Grim Sandglass" is
+ *     1,750 gp, so the price test fails on an otherwise identical name and level. Its own sibling
+ *     Grim Sandglass (Greater), unchanged at 450 gp, WAS hidden — the family listed half-deduped,
+ *     which is what shows this is a blind spot and not two different items.
+ *   · THE QUALIFIER IS NOT A GRADE. "Trail Warding Tattoo" / "Warding Tattoo (Trail)" is the same
+ *     word-order swap with a variant name where a grade would be, and Cantrip Deck's "Full Pack" is
+ *     the same again with the family name dropped. The grade rule never looks at either.
+ *
+ * Curated rather than computed, for the reason NEAR_DUPLICATE_IDS gives: level and price alone would
+ * merge two grades of one family. Every entry was checked against its mirror document's `legacy_id`,
+ * and `npx jiti scripts/check-remaster-reprints.mjs` re-derives the whole set from the mirror and
+ * fails if a reprint pair is listed twice, so the next import cannot add one silently.
+ *
+ * THE REPRINT IS THE HIDDEN HALF, matching the 41 the rule hides. Every one of these arrived hollow —
+ * no `usage`, no `heldSpells`, no `counters`, no `activationCost`, and the whole family's blurb for a
+ * description — while the record it duplicates carries the per-grade prose and the fields the engine
+ * resolves. Hiding the modelled half instead empties the item: it would take the four resistances off
+ * the Chromatic Robe, the spell list off the Grim Sandglass and the uses off the Healer's Gel, and
+ * `derive.ts` reads `db.items[inv.itemId]`, never the twin's.
+ *
+ * NOT here: `grudge-journal`. Its `legacy_id` is Instructions for Lasting Agony, level 5 at 200 gp,
+ * and the reprint is level 11 at 1,350 gp — a rebuilt item under a new name, which is the
+ * `edition: 'superseded'` lane's business. Hiding it would take a real item off the shelf.
+ */
+export const REMASTER_REPRINT_IDS = new Set([
+  'greater-healers-gel', // -> healers-gel-moderate  (both level 9, 125 gp)
+  'major-healers-gel', // -> healers-gel-greater     (both level 13, 500 gp)
+  'major-grim-sandglass', // -> grim-sandglass-major (both level 12; the reprint reprices 2,000 -> 1,750 gp)
+  'trail-warding-tattoo', // -> warding-tattoo-trail (both level 6, 250 gp)
+  'wave-warding-tattoo', // -> warding-tattoo-wave   (both level 6, 220 gp)
+  'fiend-warding-tattoo', // -> warding-tattoo-fiend (both level 7, 300 gp)
+  'full-pack', // -> cantrip-deck-full-pack          (both level 1, 20 gp; AoN names the reprint just "Full Pack")
+]);
+
+/**
  * Ids of `aon-`-prefixed records that DUPLICATE a canonical record of the same name in the same
  * collection. An earlier scrape re-added content the app already had under a different id, so
  * pickers list many entries twice (408 item pairs, 100 actions, 81 feats, 91 Kingmaker rows…).
@@ -94,9 +148,9 @@ export function findDuplicateIds(db: ContentDatabase): Set<string> {
       if (id.startsWith('aon-') && rec?.name && canonical.has(dedupeKey(rec.name))) dupes.add(id);
     }
   }
-  // The curated near-miss set: same content, different spelling, so the exact match above misses it.
+  // The curated sets: same content, different spelling, so the exact match above misses it.
   // Guarded on existence so a retired id never hides something that took its place.
-  for (const id of NEAR_DUPLICATE_IDS) {
+  for (const id of [...NEAR_DUPLICATE_IDS, ...REMASTER_REPRINT_IDS]) {
     for (const mapName of DEDUPE_MAPS) {
       if ((db[mapName] as unknown as Record<string, unknown> | undefined)?.[id]) dupes.add(id);
     }
@@ -126,6 +180,15 @@ const GRADE_WORDS = ['lesser', 'moderate', 'greater', 'major', 'minor', 'true', 
  * that has not loaded when this runs, so the choice is made on the NAME shape, which is in core.json.
  *
  * Hidden, never deleted — a saved character may already carry one in its inventory.
+ *
+ * ⚠ THE LEVEL AND PRICE GUARDS ARE NOT A LIMITATION TO ROUTE AROUND. Where a pair disagrees on
+ * either, "hide the later edition's half" looks like the obvious generalisation and is wrong three
+ * times out of three: MEASURED on this database, it hides `healers-gel-greater`, `grim-sandglass-
+ * major` and `chromatic-robe-greater` — every one of them the half that carries the mechanics, while
+ * the half it keeps is a hollow re-scrape with no `usage`, no `heldSpells` and no `passiveEffects`.
+ * A rule that empties the Grim Sandglass of its spell list has not deduplicated anything. When a
+ * reprint really does disagree on the numbers, it goes in REMASTER_REPRINT_IDS above, named, with the
+ * record it duplicates written next to it.
  */
 function gradeSpellingDuplicates(db: ContentDatabase): string[] {
   type Priced = { name?: string; level?: number; price?: Record<string, number> };
@@ -180,13 +243,15 @@ function gradeSpellingDuplicates(db: ContentDatabase): string[] {
  * ruling: "the summary of all of the items shouldn't be an option for the characters, it's not a
  * real item so they shouldn't even see that, they should only see the options they can have."
  *
- * Three conditions, all required:
+ * Four conditions, all required:
  *   • NO PRICE. The summary carries none; every grade carries its own.
  *   • TWO OR MORE KIN — ids that extend this one. A single twin can be a genuine base item plus one
  *     upgrade; two or more is a family with a summary at its head.
  *   • NO MECHANICAL FIELD. The guard that spares anything the app actually resolves. Energy Robe is
  *     unpriced with four kin and would have been hidden, but it carries `effectChoices` — it IS the
  *     ownable item and its kin are AoN's row per choice. `staff` and `sling` are spared by `damage`.
+ *   • A PAGE ID, NOT A BLOCK ID. See `blockOfAPage` — the summary IS the page, so a record carrying
+ *     an id from inside one cannot be it.
  *
  * Hidden, not deleted, exactly like the duplicate scrapes above: a character who added one while it
  * was visible keeps resolving it.
@@ -221,6 +286,20 @@ const UMBRELLA_KEEP_IDS = new Set([
   // Not an item and not a summary: AoN relic-86, a Relic Minor Gift mis-imported into `items`. Its
   // kin are *Inspiring Spotlight*, a pure name-prefix collision.
   'inspiring',
+  /*
+   * `soulheart` used to be spared by `blockOfAPage` below, and no longer can be.
+   *
+   * It is the base 6-temporary-HP artifact — AoN's "Item 5" block — and it was carrying that block's
+   * id, `equipment-5194-4715`, which proved it was a grade rather than a family head. The 2026-08-16
+   * archive completion then fetched `equipment-5194`, the "Item 5+" PAGE, which had never been in the
+   * mirror; the importer picked the page as the best record for the slug, and the record's id became
+   * a page id. Nothing about the item changed — only which document we hold for it.
+   *
+   * So the structural signal is gone here and the id has to be curated. Without this the base
+   * artifact is hidden and the game keeps only Greater/Major/Pure. Artifacts are priceless, so
+   * price + kin cannot tell a summary from a grade in this family at all.
+   */
+  'soulheart',
 ]);
 
 export function findUmbrellaIds(items: Record<string, unknown> | undefined): Set<string> {
@@ -237,6 +316,24 @@ export function findUmbrellaIds(items: Record<string, unknown> | undefined): Set
       const v = it[k];
       return v != null && (!Array.isArray(v) || v.length > 0);
     });
+  /*
+   * AoN ids a family's summary PAGE `<category>-<page>` and each graded block inside that page
+   * `<category>-<page>-<block>`. A block id is therefore positive proof the record is one of the
+   * grades and not the head, whatever its price column says — the summary IS the page.
+   *
+   * This is the condition that spares an artifact family. Artifacts are priceless by nature, so
+   * price cannot tell a summary from a grade there. `soulheart` is AoN equipment-5194-4715, the
+   * "Item 5" block (the head is "Item 5+", equipment-5194, which our import does not carry at all);
+   * it is the base 6-temporary-HP artifact, and price + kin alone would have deleted it from the
+   * game leaving only Greater/Major/Pure.
+   *
+   * Measured over the shipped items, not assumed: 440 of the 441 candidates carry a page id and
+   * `soulheart` is the only one with a block id. 2,960 items carry block ids in all; only eight of
+   * those have two or more kin and seven are priced, so this condition can only ever fire on the
+   * priceless case it was written for. It cannot hide a real summary either — a summary is the page
+   * head by definition, and page heads carry page ids.
+   */
+  const blockOfAPage = (it: Record<string, unknown>) => /^[a-z-]+-\d+-\d+$/.test(String(it.aonId ?? ''));
 
   // Sorted once so the kin scan is a bounded walk forward rather than a full pass per id — this runs
   // over ~7,500 items at every content load.
@@ -244,7 +341,7 @@ export function findUmbrellaIds(items: Record<string, unknown> | undefined): Set
   for (let i = 0; i < sorted.length; i++) {
     const id = sorted[i];
     const it = rec[id];
-    if (!it || priced(it) || mechanical(it) || UMBRELLA_KEEP_IDS.has(id)) continue;
+    if (!it || priced(it) || mechanical(it) || blockOfAPage(it) || UMBRELLA_KEEP_IDS.has(id)) continue;
     let kin = 0;
     for (let j = i + 1; j < sorted.length && sorted[j].startsWith(id + '-'); j++) kin++;
     if (kin >= 2) out.add(id);

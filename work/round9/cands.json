@@ -1,0 +1,3557 @@
+[
+ {
+  "bucket": "feats",
+  "id": "necromantic-tenacity",
+  "name": "Necromantic Tenacity",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a necromancy effect, you get a critical success instead; if you roll a critical failure on such a save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "practiced-guidance",
+  "name": "Practiced Guidance",
+  "covered": false,
+  "sents": [
+   "When you roll a success to Aid a member of your crop, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "witch-warden",
+  "name": "Witch Warden",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a curse or a spell cast by a witch or hag, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "kneel-for-no-god",
+  "name": "Kneel for No God",
+  "covered": false,
+  "sents": [
+   "When you use your Call on Ancient Blood reaction against a divine spell and roll a critical failure on the saving throw against that spell, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "woodcraft",
+  "name": "Woodcraft",
+  "covered": false,
+  "sents": [
+   "When in a forest or jungle environment, if you roll a critical failure on a Survival skill check to Sense Direction, Subsist, or Cover Tracks, you get a failure instead, and if you roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "grim-insight",
+  "name": "Grim Insight",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a fear effect, you get a critical success instead, and the source of the fear effect is off-guard to you until the end of your next turn."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "adroit-manipulation",
+  "name": "Adroit Manipulation",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a Thievery check to Pick a Lock, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "bravos-determination",
+  "name": "Bravo's Determination",
+  "covered": false,
+  "sents": [
+   "If the triggering attack was a critical hit, use the result one degree of success worse than what you rolled."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "endure-deaths-touch",
+  "name": "Endure Death's Touch",
+  "covered": false,
+  "sents": [
+   "You gain a +2 circumstance bonus on any saving throws against effects from the undead's natural attack; if you succeed at the saving throw, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "knight-reclaimant-dedication",
+  "name": "Knight Reclaimant Dedication",
+  "covered": false,
+  "sents": [
+   "Whenever you roll a success on a saving throw against an undead's special ability, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "survivor-of-desolation",
+  "name": "Survivor of Desolation",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against such an effect, you get a critical success instead; if you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "emerald-boughs-accustomation",
+  "name": "Emerald Boughs Accustomation",
+  "covered": true,
+  "sents": [
+   "When you use the Society skill to Subsist, if you roll a critical failure, you get a failure instead; if you roll a success, you get a critical success instead; and if you roll a critical success, you can provide for another additional creature.",
+   "Furthermore, when you attempt a Society check to Recall Knowledge about cultural practices and roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "forced-entry",
+  "name": "Forced Entry",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a check to Force Open, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "crystal-keeper-dedication",
+  "name": "Crystal Keeper Dedication",
+  "covered": false,
+  "sents": [
+   "When you Decipher Writing and roll a critical failure, you get a failure instead, and when you Decipher Writing and roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "staff-acrobat-dedication",
+  "name": "Staff Acrobat Dedication",
+  "covered": true,
+  "sents": [
+   "Finally, when you roll a success on a check to Balance while wielding your staff, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "esteemed-visitor",
+  "name": "Esteemed Visitor",
+  "covered": false,
+  "sents": [
+   "While you are in a settlement, when you roll a critical failure on a Diplomacy check to Gather Information or Make an Impression, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "iron-lung",
+  "name": "Iron Lung",
+  "covered": true,
+  "sents": [
+   "Treat the result of your save against an inhaled poison as one degree of success better than you rolled."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "elven-aloofness",
+  "name": "Elven Aloofness",
+  "covered": false,
+  "sents": [
+   "If a non-elf rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (and thus can't try to Coerce you again for 1 week)."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "know-your-own",
+  "name": "Know Your Own",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Recall Knowledge about elves, elven society, or elven history, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "extra-squishy",
+  "name": "Extra Squishy",
+  "covered": false,
+  "sents": [
+   "If you roll a success to Squeeze, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "gorilla-stance",
+  "name": "Gorilla Stance",
+  "covered": true,
+  "sents": [
+   "While you are in Gorilla Stance, you gain a +2 circumstance bonus to Athletics checks to Climb, and if you roll a success on an Athletics check to Climb, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "remember-your-training",
+  "name": "Remember Your Training",
+  "covered": false,
+  "sents": [
+   "If you roll a failure (but not a critical failure) on this check, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "glyph-expert",
+  "name": "Glyph Expert",
+  "covered": false,
+  "sents": [
+   "When you attempt a saving throw against the effects of these traps, if you roll a success, you get a critical success instead.",
+   "If you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "ancestral-insight",
+  "name": "Ancestral Insight",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "pelagic-aptitude",
+  "name": "Pelagic Aptitude",
+  "covered": false,
+  "sents": [
+   "When in an aquatic environment, if you roll a critical failure on a Survival skill check to Sense Direction or Subsist, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "hydraulic-maneuvers",
+  "name": "Hydraulic Maneuvers",
+  "covered": false,
+  "sents": [
+   "You don't receive any item bonuses to that check or any circumstance bonuses related to your physical body, but if you roll a critical failure on that Athletics check, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "adhyabhau",
+  "name": "Adhyabhau",
+  "covered": false,
+  "sents": [
+   "You gain a +1 circumstance bonus to Will saves against effects with the emotion trait, and when you roll a success on a saving throw against such an effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "slither",
+  "name": "Slither",
+  "covered": false,
+  "sents": [
+   "When you roll a success on an Acrobatics check to Squeeze, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "emotionless",
+  "name": "Emotionless",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against an emotion or fear effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "lightless-litheness",
+  "name": "Lightless Litheness",
+  "covered": false,
+  "sents": [
+   "When you critically fail at Squeezing, you get a failure instead.",
+   "Additionally, when you roll a success at an Escape check, you get a critical success instead; if you roll a critical success, you can Step instead of Striding up to 5 feet."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "steady-on-stone",
+  "name": "Steady on Stone",
+  "covered": false,
+  "sents": [
+   "In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of stone and earth, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "wind-tempered",
+  "name": "Wind Tempered",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a save against an air effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "tide-hardened",
+  "name": "Tide-Hardened",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a save against a cold or water effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "fluid-contortionist",
+  "name": "Fluid Contortionist",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure on a check to Squeeze, you get a failure instead, and when you roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "alghollthu-bound",
+  "name": "Alghollthu Bound",
+  "covered": false,
+  "sents": [
+   "You receive a +2 circumstance bonus to Will saves against mental effects that would make you controlled, and if you roll a success against such an effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "golden-league-xun-dedication",
+  "name": "Golden League Xun Dedication",
+  "covered": false,
+  "sents": [
+   "In addition, if you use Underworld Lore to Earn Income or Recall Knowledge, when you get a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "rope-mastery",
+  "name": "Rope Mastery",
+  "covered": false,
+  "sents": [
+   "If you critically fail such a check while holding a rope, you can drop the rope to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "web-walker",
+  "name": "Web Walker",
+  "covered": false,
+  "sents": [
+   "Whenever you roll a success on a saving throw against an effect involving a web, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "goloma-courage",
+  "name": "Goloma Courage",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a saving throw against a fear effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "spelunker",
+  "name": "Spelunker",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a Survival check to Sense Direction or an Athletics check to Climb, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "shore-step",
+  "name": "Shore Step",
+  "covered": false,
+  "sents": [
+   "In addition, if you roll a success on an Acrobatics check to Balance on a slippery or wet surface, or on an Athletics check to Swim, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "steadying-stone",
+  "name": "Steadying Stone",
+  "covered": true,
+  "sents": [
+   "If you roll a success on an Acrobatics check made to Balance on uneven ground composed of earth or rock, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "unshakable-grit",
+  "name": "Unshakable Grit",
+  "covered": false,
+  "sents": [
+   "If the reroll granted to you by your Grit and Tenacity reaction is a success, you get a critical success instead; if it's a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "explosive-entry",
+  "name": "Explosive Entry",
+  "covered": false,
+  "sents": [
+   "If you roll a critical success, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "adaptive-vision",
+  "name": "Adaptive Vision",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a visual effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "fire-savvy",
+  "name": "Fire Savvy",
+  "covered": true,
+  "sents": [
+   "In addition, if you roll a success on a saving throw against suffocation or choking due to smoke or ash, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "blast-resistance",
+  "name": "Blast Resistance",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against an effect that causes the dazzled or deafened conditions, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "megafauna-veterinarian",
+  "name": "Megafauna Veterinarian",
+  "covered": false,
+  "sents": [
+   "If the subject of your care is your megafauna and you roll a success on your check, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "numb",
+  "name": "Numb",
+  "covered": true,
+  "sents": [
+   "While your body is , your numbness amplifies in two ways: the circumstance bonus from this feat increases to +2, and if you roll a success on a saving throw against an emotion or pain effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "flash-your-badge",
+  "name": "Flash your Badge",
+  "covered": false,
+  "sents": [
+   "If a target creature hasn't broken a law in the past week (as determined by the GM), the result of your check against that creature is one degree of success worse than the result you rolled."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "familiar-foe",
+  "name": "Familiar Foe",
+  "covered": false,
+  "sents": [
+   "Whenever you roll a critical failure on a check to Recall Knowledge about undead, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "reliable-squire",
+  "name": "Reliable Squire",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure on a check to Aid, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "flexible-form",
+  "name": "Flexible Form",
+  "covered": false,
+  "sents": [
+   "You become trained in Acrobatics, and if you roll a success to Squeeze, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "emotional-partitions",
+  "name": "Emotional Partitions",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "cold-minded",
+  "name": "Cold Minded",
+  "covered": false,
+  "sents": [
+   "You gain a +1 circumstance bonus to saving throws against emotion effects, and whenever you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "eldritch-calm",
+  "name": "Eldritch Calm",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure against an emotion or fear effect, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "vicious-critique",
+  "name": "Vicious Critique",
+  "covered": false,
+  "sents": [
+   "If you a roll a success on your Intimidation check, you get a critical success instead.",
+   "If you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "grove-harbored",
+  "name": "Grove-Harbored",
+  "covered": false,
+  "sents": [
+   "You gain a +1 circumstance bonus to saves against plant, poison, and wood effects, and if you roll a success on a save against a poison effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "living-stone",
+  "name": "Living Stone",
+  "covered": false,
+  "sents": [
+   "When you roll a successful saving throw against a disease or poison, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "rock-runner",
+  "name": "Rock Runner",
+  "covered": false,
+  "sents": [
+   "In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of stone or earth, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "forlorn",
+  "name": "Forlorn",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "unwavering-mien",
+  "name": "Unwavering Mien",
+  "covered": true,
+  "sents": [
+   "You still require natural sleep, but you treat your saving throws against effects that would cause you to fall asleep as one degree of success better."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "ancestral-suspicion",
+  "name": "Ancestral Suspicion",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a saving throw against such an effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "reckless-abandon-goblin",
+  "name": "Reckless Abandon (Goblin)",
+  "covered": false,
+  "sents": [
+   "For the remainder of your turn, if you roll a failure or critical failure on a saving throw against a harmful effect, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "sure-feet",
+  "name": "Sure Feet",
+  "covered": true,
+  "sents": [
+   "If you roll a success on an Acrobatics check to Balance or an Athletics check to Climb, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "unfettered-halfling",
+  "name": "Unfettered Halfling",
+  "covered": false,
+  "sents": [
+   "Whenever you roll a success on a check to Escape or a saving throw against an effect that would impose the grabbed, immobilized, or restrained condition on you, you get a critical success instead.",
+   "Whenever a creature rolls a failure on a check to Grapple you, it gets a critical failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "irrepressible",
+  "name": "Irrepressible",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a saving throw against an emotion effect, you get a critical success instead.",
+   "If your heritage is gutsy halfling, when you roll a critical failure on a saving throw against an emotion effect, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "haughty-obstinacy",
+  "name": "Haughty Obstinacy",
+  "covered": true,
+  "sents": [
+   "If a creature rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (so it can't try to Coerce you again for 1 week)."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "cooperative-soul",
+  "name": "Cooperative Soul",
+  "covered": false,
+  "sents": [
+   "If you are at least an expert in the skill you are Aiding, when you roll a failure or critical failure to Aid a skill check, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "undaunted",
+  "name": "Undaunted",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "athletic-might",
+  "name": "Athletic Might",
+  "covered": true,
+  "sents": [
+   "Whenever you roll a success on an Athletics check to Climb or Swim, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "brine-may",
+  "name": "Brine May",
+  "covered": true,
+  "sents": [
+   "Whenever you roll a success on an Athletics check to Swim, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "called",
+  "name": "Called",
+  "covered": false,
+  "sents": [
+   "If you roll a success on your saving throw against a mental effect that would make you controlled, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "lawbringer",
+  "name": "Lawbringer",
+  "covered": false,
+  "sents": [
+   "You gain a +1 circumstance bonus to saves against emotion effects, and if you roll a success on a save against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "musetouched",
+  "name": "Musetouched",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure on a check to Escape, you get a failure instead, and when you roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "earned-glory",
+  "name": "Earned Glory",
+  "covered": false,
+  "sents": [
+   "When you attempt a Performance check to Make an Impression on an elf, if you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "raise-symbol",
+  "name": "Raise Symbol",
+  "covered": false,
+  "sents": [
+   "While it's raised, if you roll a success at a saving throw against a vitality or void effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "wardens-guidance",
+  "name": "Warden's Guidance",
+  "covered": false,
+  "sents": [
+   "As long as your hunted prey is observed by you, all your allies who roll failures and critical failures when Seeking it get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "sneak-adept",
+  "name": "Sneak Adept",
+  "covered": false,
+  "sents": [
+   "When you roll a failure on a Sneak action, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "spellbook-prodigy",
+  "name": "Spellbook Prodigy",
+  "covered": false,
+  "sents": [
+   "Further, when you roll a critical failure on your check to Learn a Spell, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "breath-control",
+  "name": "Breath Control",
+  "covered": false,
+  "sents": [
+   "You gain a +1 circumstance bonus to saving throws against inhaled threats, such as inhaled poisons, and if you roll a success on such a saving throw, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "hobnobber",
+  "name": "Hobnobber",
+  "covered": false,
+  "sents": [
+   "If you're a master in Diplomacy and roll a critical failure to Gather Information, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "impeccable-crafting",
+  "name": "Impeccable Crafting",
+  "covered": false,
+  "sents": [
+   "Whenever you roll a success at a Crafting check to make an item of the type you chose with Specialty Crafting, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "shameless-request",
+  "name": "Shameless Request",
+  "covered": false,
+  "sents": [
+   "When you Request something, you reduce any DC increases for making an outrageous request by 2, and if you roll a critical failure for your Request, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "steady-balance",
+  "name": "Steady Balance",
+  "covered": false,
+  "sents": [
+   "Whenever you roll a success using the Balance action, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "student-of-the-canon",
+  "name": "Student of the Canon",
+  "covered": true,
+  "sents": [
+   "If you roll a critical failure at a Religion check to Decipher Writing of a religious nature or to Recall Knowledge about the tenets of faiths, you get a failure instead.",
+   "When attempting to Recall Knowledge about the tenets of your own faith, if you roll a failure, you get a success instead, and if you roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "unmistakable-lore",
+  "name": "Unmistakable Lore",
+  "covered": false,
+  "sents": [
+   "When you Recall Knowledge using any Lore subcategory in which you're trained, if you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "practiced-brawn",
+  "name": "Practiced Brawn",
+  "covered": false,
+  "sents": [
+   "When you roll a success on an Athletics check to Shove, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "proud-mentor",
+  "name": "Proud Mentor",
+  "covered": false,
+  "sents": [
+   "If you get a critical failure on an attempt to Aid, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "swimmers-guidance",
+  "name": "Swimmer's Guidance",
+  "covered": false,
+  "sents": [
+   "If any ally affected by Swimmer's Guidance rolls a critical failure on an Athletics check to Swim, they get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "natural-orienteering",
+  "name": "Natural Orienteering",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Survival check to Sense Direction or Track, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "defensive-dismissal",
+  "name": "Defensive Dismissal",
+  "covered": false,
+  "sents": [
+   "You Dismiss the polymorph effect you're under, and the result of the triggering Strike becomes a success instead of a critical success."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "heightened-instincts",
+  "name": "Heightened Instincts",
+  "covered": false,
+  "sents": [
+   "When one of your companions rolls a success on a saving throw, it gets a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "well-groomed",
+  "name": "Well-Groomed",
+  "covered": true,
+  "sents": [
+   "If you roll a success on a saving throw against a disease, you get a critical success instead.",
+   "If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "cantorian-reinforcement",
+  "name": "Cantorian Reinforcement",
+  "covered": true,
+  "sents": [
+   "If you roll a success on a saving throw against a disease or poison, you get a critical success instead.",
+   "If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "affliction-resistance",
+  "name": "Affliction Resistance",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a disease or poison, you get a critical success instead.",
+   "If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "dragons-presence",
+  "name": "Dragon's Presence",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a saving throw against a fear effect, you get a critical success instead.",
+   "When you roll a failure against a fear effect, you get a critical failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "marsh-runner",
+  "name": "Marsh Runner",
+  "covered": false,
+  "sents": [
+   "In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven marshy ground, you aren't off-guard, and if you roll a success on the Acrobatics check, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "parthenogenic-hatchling",
+  "name": "Parthenogenic Hatchling",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a disease, you get a critical success instead.",
+   "If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "geckos-grip",
+  "name": "Gecko's Grip",
+  "covered": false,
+  "sents": [
+   "You gain the Combat Climber feat as a bonus feat, and if you roll a success on an Athletics check to climb, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "warren-navigator",
+  "name": "Warren Navigator",
+  "covered": false,
+  "sents": [
+   "When you Sense Direction or attempt a roll against a Quandary spell, you get a result one degree of success better than you rolled."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "lab-rat",
+  "name": "Lab Rat",
+  "covered": false,
+  "sents": [
+   "If you roll a success on your saving throw against a poison or disease, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "jungle-strider",
+  "name": "Jungle Strider",
+  "covered": true,
+  "sents": [
+   "In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of plant material, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "necromantic-physiology",
+  "name": "Necromantic Physiology",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a disease, you get a critical success instead.",
+   "If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "blowgun-poisoner",
+  "name": "Blowgun Poisoner",
+  "covered": false,
+  "sents": [
+   "If you critically succeed at a blowgun Strike using a poisoned dart, the target's initial save against the poison is one degree of success worse than the creature rolls; this is a misfortune effect."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "divine-health",
+  "name": "Divine Health",
+  "covered": false,
+  "sents": [
+   "In addition, if you roll a success on a save against a disease or poison, you get a critical success instead.",
+   "(Your allies don't share this benefit.) If you have the Sacred Body class feature, when you roll a critical failure on a save against a disease or poison, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "eliminate-red-herrings",
+  "name": "Eliminate Red Herrings",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure on a skill check to Recall Knowledge related to a question about one of your active investigations, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "just-the-facts",
+  "name": "Just the Facts",
+  "covered": true,
+  "sents": [
+   "- When you Recall Knowledge, you use the outcome for one degree of success better than the result of your check."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "tiger-slash",
+  "name": "Tiger Slash",
+  "covered": false,
+  "sents": [
+   "If the attack is a critical success and deals damage, add your Strength modifier to the persistent bleed damage from your tiger claw."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "tap-into-blood",
+  "name": "Tap Into Blood",
+  "covered": false,
+  "sents": [
+   "If you critically fail at this check, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "command-attention",
+  "name": "Command Attention",
+  "covered": false,
+  "sents": [
+   "Whenever a creature in a around you attempts a saving throw against a different visual effect, it gets a result one degree of success better than it rolled."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "rope-runner",
+  "name": "Rope Runner",
+  "covered": false,
+  "sents": [
+   "Whenever you succeed at an Athletics check to Climb or an Acrobatics check to Balance, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "assured-ritualist",
+  "name": "Assured Ritualist",
+  "covered": false,
+  "sents": [
+   "If you are the primary caster, after all the secondary checks are rolled, you can choose one check that was a failure or critical failure, and improve the result to one degree of success better than what the secondary caster rolled."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "scroll-trickster-dedication",
+  "name": "Scroll Trickster Dedication",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure to Trick a Magic Item that's a scroll, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "viking-dedication",
+  "name": "Viking Dedication",
+  "covered": false,
+  "sents": [
+   "In addition, if you roll a success on an Athletics check to Swim, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "assured-identification",
+  "name": "Assured Identification",
+  "covered": false,
+  "sents": [
+   "When using Arcana, Nature, Occultism, or Religion checks to Identify Magic, if you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "risky-surgery",
+  "name": "Risky Surgery",
+  "covered": false,
+  "sents": [
+   "If you do, you gain a +2 circumstance bonus to your Medicine check to Treat Wounds, and if you roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "thorough-search",
+  "name": "Thorough Search",
+  "covered": false,
+  "sents": [
+   "If you do and the GM rolls your secret check to Seek to notice something, you gain a +2 circumstance bonus to that Perception check and if you succeed, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "witness-of-earth",
+  "name": "Witness of Earth",
+  "covered": false,
+  "sents": [
+   "When you use the *atone* ritual on yakshas and you roll a critical failure, you get a failure instead, and if you roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "duck",
+  "name": "Duck!",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure on a Reflex saving throw against an ability that targets an area and was caused by a Huge or larger creature, you get a failure instead, and when you roll a success against such an effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "travelers-counsel",
+  "name": "Traveler's Counsel",
+  "covered": false,
+  "sents": [
+   "The first time each day you would roll a critical failure when Gathering Information or Making an Impression, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "meticulous-restorer",
+  "name": "Meticulous Restorer",
+  "covered": false,
+  "sents": [
+   "In addition, when you roll a critical failure while attempting to Repair an item, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "abjure-the-false-kin",
+  "name": "Abjure the False Kin",
+  "covered": true,
+  "sents": [
+   "If you roll a success on a saving throw against a mental effect that doesn't deal damage, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "wandering-chef-dedication",
+  "name": "Wandering Chef Dedication",
+  "covered": false,
+  "sents": [
+   "When using the Subsist downtime activity, you can use Crafting or Cooking Lore in place of Survival, and if you roll a failure, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "the-bitter-scholars-promotion",
+  "name": "The Bitter Scholar's Promotion",
+  "covered": false,
+  "sents": [
+   "On a success with one of these rituals, you gain the effects of a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "the-immortal-attains-the-summit",
+  "name": "The Immortal Attains the Summit",
+  "covered": false,
+  "sents": [
+   "On a success with one of these rituals, you gain the effects of a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "scattering-in-spring",
+  "name": "Scattering in Spring",
+  "covered": false,
+  "sents": [
+   "If the attack misses you, you can immediately attempt a Feint or Shove against the triggering attacker; if you roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "intuitive-crafting",
+  "name": "Intuitive Crafting",
+  "covered": true,
+  "sents": [
+   "In addition, when you critically fail to Repair an item, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "irrepressible-ganzi",
+  "name": "Irrepressible (Ganzi)",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a save against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "amorphous-aspect",
+  "name": "Amorphous Aspect",
+  "covered": false,
+  "sents": [
+   "You gain a +1 circumstance bonus on checks to Escape or Squeeze, and when you critically fail when Squeezing, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "lord-of-the-fiends",
+  "name": "Lord of the Fiends",
+  "covered": false,
+  "sents": [
+   "For the next hour, whenever you roll a success on a Deception, Diplomacy, or Intimidation check against a fiend, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "fiend-eternal",
+  "name": "Fiend Eternal",
+  "covered": false,
+  "sents": [
+   "If you critically fail to do either, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "eternal-legend-dedication",
+  "name": "Eternal Legend Dedication",
+  "covered": false,
+  "sents": [
+   "For the remainder of the day, when you roll a success against an effect that would impose that condition on you, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "absolve-sins",
+  "name": "Absolve Sins",
+  "covered": false,
+  "sents": [
+   "Any creature who dealt damage to you or your hierophant since the end of your previous turn uses the outcome one degree of success worse than the result of their saving throw."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "talent-envy",
+  "name": "Talent Envy",
+  "covered": false,
+  "sents": [
+   "If you critically succeeded on your Performance check, improve the degree of success for your Demoralize check by one step."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "wake-to-strife",
+  "name": "Wake to Strife",
+  "covered": false,
+  "sents": [
+   "**Critical Failure** As failure, but if you succeed at the Athletics check to Grapple them, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "heralds-strike",
+  "name": "Herald's Strike",
+  "covered": false,
+  "sents": [
+   "If your Strike was a critical hit, the creature uses the outcome for one degree of success worse than the result of their saving throw."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "text-decoder",
+  "name": "Text Decoder",
+  "covered": false,
+  "sents": [
+   "In addition, you can ignore language constraints when Deciphering Writing, and when you critically fail to Decipher Writing, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "hey-over-here",
+  "name": "Hey! Over Here!",
+  "covered": false,
+  "sents": [
+   "Your targeted ally treats the result of their saving throw as one degree of success better."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "canopy-predator",
+  "name": "Canopy Predator",
+  "covered": false,
+  "sents": [
+   "Whenever you succeed at an Athletics check to Climb a tree or an Acrobatics check to Balance on a branch, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "shield-your-eyes",
+  "name": "Shield your Eyes",
+  "covered": false,
+  "sents": [
+   "Likewise, if such an effect critically succeeds against your DC, it's a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "flying-tackle",
+  "name": "Flying Tackle",
+  "covered": false,
+  "sents": [
+   "If you succeed at the Athletics check to Trip, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "bloody-denial",
+  "name": "Bloody Denial",
+  "covered": false,
+  "sents": [
+   "If your Strike was a critical hit, the result of the save is one degree of success worse."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "tenacious-jaws",
+  "name": "Tenacious Jaws",
+  "covered": false,
+  "sents": [
+   "When you use your Breath of the Dragon, an opponent grabbed or restrained in your jaws uses the outcome one degree of success worse than the result of their saving throw."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "warshard-warrior-dedication",
+  "name": "Warshard Warrior Dedication",
+  "covered": false,
+  "sents": [
+   "When you make Crafting checks to Repair your warshard weapon, your treat your proficiency rank in Crafting as legendary for determining how many Hit Points you restore to the item; in addition, if your Crafting result is a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "empathy-incarnate",
+  "name": "Empathy Incarnate",
+  "covered": true,
+  "sents": [
+   "Whenever you attempt a Diplomacy check to Make an Impression or Request something, the DC is reduced by 2, and if the creature you're speaking with is lower level than you, any success is a critical success."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "morph-risen",
+  "name": "Morph-Risen",
+  "covered": false,
+  "sents": [
+   "You gain a +1 circumstance bonus to saving throws against morph and polymorph effects, and if you roll a success on a saving throw against a hostile morph or polymorph effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "commitment-to-protection",
+  "name": "Commitment to Protection",
+  "covered": false,
+  "sents": [
+   "If you're legendary in Warfare Lore, when you roll a failure or critical failure, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "horselords-bond",
+  "name": "Horselord's Bond",
+  "covered": false,
+  "sents": [
+   "In addition, when your horse succeeds at a save against effects that would cause the confused, controlled, or fascinated condition, it gets a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "swan-dive",
+  "name": "Swan Dive",
+  "covered": false,
+  "sents": [
+   "Until the end of your turn, when you roll a success on an Athletics check to Swim you get a critical success instead, and when you roll a critical failure you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "cheaters-always-prosper",
+  "name": "Cheaters Always Prosper",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Dirty Trick using a weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "marine-marauder-dedication",
+  "name": "Marine Marauder Dedication",
+  "covered": false,
+  "sents": [
+   "You gain the Underwater Marauder skill feat, and when you roll a success on an Athletics check to Swim, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "reckless-abandon",
+  "name": "Reckless Abandon",
+  "covered": false,
+  "sents": [
+   "For the remainder of your turn, if you roll a failure or critical failure on a saving throw against a harmful effect, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "irrepressible-halfling",
+  "name": "Irrepressible (Halfling)",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a saving throw against an emotion effect, you get a critical success instead.",
+   "If your heritage is gutsy halfling, when you roll a critical failure on a saving throw against an emotion effect, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "irrepressible-nephilim",
+  "name": "Irrepressible (Nephilim)",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a save against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "shackles-of-law",
+  "name": "Shackles of Law",
+  "covered": false,
+  "sents": [
+   "If you're wielding a flail or spiked chain, you can ignore Grapple's requirement that you have a hand free, and if you succeed at the Athletics check, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "sturdy-bindings",
+  "name": "Sturdy Bindings",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a check to grapple a target, you get a failure instead.",
+   "In addition, when a creature you have grabbed rolls a failure on its check to Escape, it gets a critical failure instead, and if it rolls a critical success, it gets a success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "reveal-beasts",
+  "name": "Reveal Beasts",
+  "covered": false,
+  "sents": [
+   "If you succeed at a check to Recall Knowledge to identify an animal, beast, fungus, or plant, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "disillusionment",
+  "name": "Disillusionment",
+  "covered": true,
+  "sents": [
+   "If you roll a success on a saving throw against an illusion or dream effect or a Perception check to disbelieve an illusion, you get a critical success instead.",
+   "If you roll a critical failure on any of those checks, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "feats",
+  "id": "aon-wombat-bastion",
+  "name": "Wombat Bastion",
+  "covered": false,
+  "sents": [
+   "If your Strike or Shove is a critical success, you also gain a +2 circumstance bonus to your Fortitude DC to avoid being Repositioned or Shoved until the end of your next turn."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "oneiric-crystals-of-the-slumberer",
+  "name": "Oneiric Crystals of the Slumberer",
+  "covered": false,
+  "sents": [
+   "If the creature is asleep, it uses the outcome one degree of success worse than the result of its roll."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "cinderclaw-gauntlet",
+  "name": "Cinderclaw Gauntlet",
+  "covered": false,
+  "sents": [
+   "**Trigger** Your attack roll with the *Cinderclaw gauntlet* is a critical success."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "cloak-of-repute",
+  "name": "Cloak of Repute",
+  "covered": true,
+  "sents": [
+   "If you roll a success on the check, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "cloak-of-repute-greater",
+  "name": "Cloak of Repute (Greater)",
+  "covered": true,
+  "sents": [
+   "If you roll a success on the check, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "cloak-of-repute-major",
+  "name": "Cloak of Repute (Major)",
+  "covered": true,
+  "sents": [
+   "If you roll a success on the check, you get a critical success instead.",
+   "If you roll a critical failure on your Diplomacy check when you activate the cloak, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "radiant-lance",
+  "name": "Radiant Lance",
+  "covered": false,
+  "sents": [
+   "If the attack was a critical hit, the undead uses an outcome one degree of success worse than the result of its saving throw."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "hardened-harrow-deck",
+  "name": "Hardened Harrow Deck",
+  "covered": false,
+  "sents": [
+   "As long as you carry more than half the cards in the hardened harrow deck, when you roll a success on a saving throw against a fear effect, you get a critical success instead; if you already have an ability that would make a successful saving throw against a fear effect a critical success, you instead gain a +1 circumstance bonus to saving throws against fear effects."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "researcher",
+  "name": "Researcher",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "researcher-level-1-trained",
+  "name": "Researcher (Level 1; trained)",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "researcher-level-2",
+  "name": "Researcher (Level 2)",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "researcher-level-3-expert",
+  "name": "Researcher (Level 3; expert)",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "researcher-level-4",
+  "name": "Researcher (Level 4)",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "researcher-level-5",
+  "name": "Researcher (Level 5)",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "researcher-level-6",
+  "name": "Researcher (Level 6)",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "researcher-level-7-master",
+  "name": "Researcher (Level 7; master)",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "radiant-spark",
+  "name": "Radiant Spark",
+  "covered": false,
+  "sents": [
+   "Celestials get an outcome one degree of success worse than the result of their save."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "drovers-band",
+  "name": "Drover's Band",
+  "covered": false,
+  "sents": [
+   "If you are a devil, the target uses an outcome one degree of success worse than the result of its saving throw."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "devils-luck",
+  "name": "Devil's Luck",
+  "covered": false,
+  "sents": [
+   "You can't use the benefit against a death effect, and if you roll a failure on a saving throw against a death effect, you get a critical failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "headbands-of-translocation",
+  "name": "Headbands of Translocation",
+  "covered": false,
+  "sents": [
+   "If you both have Invested your headbands, you can Aid each other without taking an action to prepare and when you get a critical failure when attempting to Aid an ally with a paired headband, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "matchmaker-fulu",
+  "name": "Matchmaker Fulu",
+  "covered": false,
+  "sents": [
+   "You get a +2 status bonus to the Diplomacy check, and if you roll a critical failure on the check, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "eye-of-enlightenment",
+  "name": "Eye of Enlightenment",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "orchestral-brooch",
+  "name": "Orchestral Brooch",
+  "covered": false,
+  "sents": [
+   "If you roll a success, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "potion-of-stable-form",
+  "name": "Potion of Stable Form",
+  "covered": false,
+  "sents": [
+   "If you roll a success against a polymorph effect during that time, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "potion-of-stable-form-greater",
+  "name": "Potion of Stable Form (Greater)",
+  "covered": false,
+  "sents": [
+   "If you roll a success against a polymorph effect during that time, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "topology-protoplasm",
+  "name": "Topology Protoplasm",
+  "covered": false,
+  "sents": [
+   "In this state, a creature that attempts a check to Squeeze uses the outcome one degree of success better than it rolls and can move its full Speed while Squeezing, and an object can fit through a space 2 feet across."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "singing-muse",
+  "name": "Singing Muse",
+  "covered": false,
+  "sents": [
+   "If you roll a success on your triggering check, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "awakened-metal-shot",
+  "name": "Awakened Metal Shot",
+  "covered": false,
+  "sents": [
+   "If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead.",
+   "If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "awakened-metal-shot-awakened-adamantine-shot",
+  "name": "Awakened Metal Shot (Awakened Adamantine Shot)",
+  "covered": false,
+  "sents": [
+   "If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead.",
+   "If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "awakened-metal-shot-awakened-cold-iron-shot",
+  "name": "Awakened Metal Shot (Awakened Cold Iron Shot)",
+  "covered": false,
+  "sents": [
+   "If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead.",
+   "If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "awakened-metal-shot-awakened-silver-shot",
+  "name": "Awakened Metal Shot (Awakened Silver Shot)",
+  "covered": false,
+  "sents": [
+   "If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead.",
+   "If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "duelists-beacon",
+  "name": "Duelist's Beacon",
+  "covered": false,
+  "sents": [
+   "On a critical hit, the target uses the result one degree of success worse than it rolled for its Fortitude save."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "enveloping-light",
+  "name": "Enveloping Light",
+  "covered": false,
+  "sents": [
+   "The first time each day that someone attempts to Treat your Wounds and rolls a critical failure, they get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "enveloping-light-greater",
+  "name": "Enveloping Light (Greater)",
+  "covered": false,
+  "sents": [
+   "Any time someone rolls a critical failure to Treat your Wounds, they get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "stone-circle-greater",
+  "name": "Stone Circle (Greater)",
+  "covered": false,
+  "sents": [
+   "When you cast any ritual within the *stone circle*, the secondary check with the worst degree of success is improved by one degree of success, even if that secondary check succeeded."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "inubrix-shield",
+  "name": "Inubrix Shield",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Disarm a metal item using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "inubrix-buckler-standard-grade",
+  "name": "Inubrix Buckler (Standard-Grade)",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Disarm a metal item using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "inubrix-shield-standard-grade",
+  "name": "Inubrix Shield (Standard-Grade)",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Disarm a metal item using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "inubrix-buckler-high-grade",
+  "name": "Inubrix Buckler (High-Grade)",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Disarm a metal item using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "inubrix-shield-high-grade",
+  "name": "Inubrix Shield (High-Grade)",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Disarm a metal item using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "dragons-crest",
+  "name": "Dragon's Crest",
+  "covered": false,
+  "sents": [
+   "This counts as a successful hit with the bomb against the creature if it's adjacent to you or a successful hit against the appropriate adjacent square if it's not."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "grease-snare",
+  "name": "Grease Snare",
+  "covered": false,
+  "sents": [
+   "If the target rolls a failure at a Thievery check, it gets a critical failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "knight-captains-lance",
+  "name": "Knight Captain's Lance",
+  "covered": false,
+  "sents": [
+   "**Trigger** Your attack roll with the knight captain's lance is a critical success"
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "jax",
+  "name": "Jax",
+  "covered": false,
+  "sents": [
+   "If you're chaotic or a worshipper of Lamashtu, you take a -2 penalty to your Will save, and the result of your save is one degree of success worse than the result you rolled."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "lawbringers-lasso",
+  "name": "Lawbringer's Lasso",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure on your attempt to Grapple a chaotic creature with the lawbringer's lasso, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "ladys-blessing-oil",
+  "name": "Lady's Blessing Oil",
+  "covered": false,
+  "sents": [
+   "However, if you roll a failure on the check, you get a critical failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "hunters-hagbook",
+  "name": "Hunter's Hagbook",
+  "covered": false,
+  "sents": [
+   "If you do, the result of your saving throw is one degree of success better than your roll (for example, a critical failure becomes a failure)."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "cresset-of-grisly-interrogation",
+  "name": "Cresset of Grisly Interrogation",
+  "covered": false,
+  "sents": [
+   "**Critical Failure** As failure, but the head gains a +4 circumstance bonus to its Deception check, and the next time you use this activation of the *cresset of grisly interrogation* during the next 24 hours, the result of your Intimidation check is one degree of success worse than the result you rolled."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "grisly-scythe",
+  "name": "Grisly Scythe",
+  "covered": false,
+  "sents": [
+   "**Trigger** Your attack roll with the grisly scythe is a critical success"
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "sanguine-mutagen",
+  "name": "Sanguine Mutagen",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a save against a disease, poison, or effect that would give you the fatigued condition, you get a critical success instead.",
+   "When you roll a success on a save against a disease, poison, or effect that would give you the fatigued condition, you get a critical success instead and your critical failures on such saves become failures instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "sanguine-mutagen-greater",
+  "name": "Sanguine Mutagen (Greater)",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a save against a disease, poison, or effect that would give you the Fatigued condition, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "sanguine-mutagen-major",
+  "name": "Sanguine Mutagen (Major)",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a save against a disease, poison, or effect that would give you the fatigued condition, you get a critical success instead and your critical failures on such saves become failures instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "discord-fulu",
+  "name": "Discord Fulu",
+  "covered": false,
+  "sents": [
+   "The first failure the creature rolls on a Diplomacy check becomes a critical failure instead, and the fulu turns to ash, ending its effect."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "reflected-moonlight-fulu",
+  "name": "Reflected Moonlight Fulu",
+  "covered": false,
+  "sents": [
+   "If this new roll is a critical success, the effect is reflected on its creator, who's treated as the effect's target, with any void damage converted to vitality damage."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "ensnaring-disk",
+  "name": "Ensnaring Disk",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure on this check, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "armbands-of-the-gorgon",
+  "name": "Armbands of the Gorgon",
+  "covered": false,
+  "sents": [
+   "When targeted by a spell or effect with the incapacitation effect, you treat the result of your save as if it were one degree of success better, and the result of any check made to inflict such an effect on you as one degree of success worse (as if you were more than twice the rank of the spell or effect targeting you)."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "breastplate-of-the-mountain",
+  "name": "Breastplate of the Mountain",
+  "covered": false,
+  "sents": [
+   "If you critically failed, it becomes a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "jug-of-fond-remembrance",
+  "name": "Jug of Fond Remembrance",
+  "covered": false,
+  "sents": [
+   "If you fail but don't critically fail this check, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "tradecraft-tattoo",
+  "name": "Tradecraft Tattoo",
+  "covered": false,
+  "sents": [
+   "Furthermore, when you roll a critical failure on a Crafting check to Earn Income, treat it as a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "tradecraft-tattoo-greater",
+  "name": "Tradecraft Tattoo (Greater)",
+  "covered": false,
+  "sents": [
+   "Furthermore, when you roll a critical failure on a Crafting check to Earn Income, treat it as a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "desolation-locket-major",
+  "name": "Desolation Locket (Major)",
+  "covered": false,
+  "sents": [
+   "When you critically fail a saving throw against an emotion effect, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "wand-of-contagious-frailty",
+  "name": "Wand of Contagious Frailty",
+  "covered": false,
+  "sents": [
+   "Each creature in that area must attempt a Fortitude save as if struck by the *enfeeble* but gets an outcome one degree of success better than it rolled."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "blink-blade",
+  "name": "Blink Blade",
+  "covered": false,
+  "sents": [
+   "**Trigger** Your melee attack roll with the *blink blade* is a critical success"
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "the-vision",
+  "name": "The Vision",
+  "covered": false,
+  "sents": [
+   "If you're already master (or legendary) in that Lore, the result of your Recall Knowledge check is one degree of success better than it would otherwise be."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "the-sickness",
+  "name": "The Sickness",
+  "covered": true,
+  "sents": [
+   "If you roll a success on a save against a disease, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "sash-of-books",
+  "name": "Sash of Books",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure on this check, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "grub-gloves",
+  "name": "Grub Gloves",
+  "covered": true,
+  "sents": [
+   "If you roll a success to Grab an Edge, you get a critical success instead, as the gripping gloves allow you to hold on even with just a few fingertips."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "grub-gloves-lesser",
+  "name": "Grub Gloves (Lesser)",
+  "covered": true,
+  "sents": [
+   "If you roll a success to Grab an Edge, you get a critical success instead, as the gripping gloves allow you to hold on even with just a few fingertips."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "grub-gloves-moderate",
+  "name": "Grub Gloves (Moderate)",
+  "covered": true,
+  "sents": [
+   "If you roll a success to Grab an Edge, you get a critical success instead, as the gripping gloves allow you to hold on even with just a few fingertips."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "grub-gloves-greater",
+  "name": "Grub Gloves (Greater)",
+  "covered": true,
+  "sents": [
+   "If you roll a success to Grab an Edge, you get a critical success instead, as the gripping gloves allow you to hold on even with just a few fingertips."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "words-of-wisdom",
+  "name": "Words of Wisdom",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure on a Diplomacy check or the associated skill during this time, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "words-of-wisdom-lesser",
+  "name": "Words of Wisdom (Lesser)",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Diplomacy check or the associated skill during this time, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "words-of-wisdom-moderate",
+  "name": "Words of Wisdom (Moderate)",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Diplomacy check or the associated skill during this time, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "words-of-wisdom-greater",
+  "name": "Words of Wisdom (Greater)",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Diplomacy check or the associated skill during this time, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "sanitizing-pin",
+  "name": "Sanitizing Pin",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure on the triggering attempt, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "sky-hammer",
+  "name": "Sky Hammer",
+  "covered": false,
+  "sents": [
+   "**Trigger** Your attack roll with the *sky hammer* is a critical success"
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "bravos-brew",
+  "name": "Bravo's Brew",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a save against fear, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "penetrating-ammunition",
+  "name": "Penetrating Ammunition",
+  "covered": false,
+  "sents": [
+   "If your attack roll result is a natural 20, you improve your degree of success only against the first target in the line, but you can still score a critical hit on other targets if your result exceeds their AC by 10 or more."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "iron-medallion",
+  "name": "Iron Medallion",
+  "covered": false,
+  "sents": [
+   "On the triggering save, if the outcome of your roll is a failure, you get a success instead.",
+   "If the outcome is a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "mesmerizing-opal",
+  "name": "Mesmerizing Opal",
+  "covered": false,
+  "sents": [
+   "If the outcome is a success, you get a critical success instead.",
+   "If the outcome is a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "monkey-pin",
+  "name": "Monkey Pin",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "savior-spike",
+  "name": "Savior Spike",
+  "covered": false,
+  "sents": [
+   "If you roll a success on the triggering attempt, you get a critical success instead.",
+   "If you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "shark-tooth-charm",
+  "name": "Shark Tooth Charm",
+  "covered": false,
+  "sents": [
+   "If you roll a success, you get a critical success instead (if you roll a critical failure, you get a failure instead)."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "possibility-tome",
+  "name": "Possibility Tome",
+  "covered": false,
+  "sents": [
+   "This grants you a +3 item bonus to the check, and if you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "thurible-of-revelation",
+  "name": "Thurible of Revelation",
+  "covered": false,
+  "sents": [
+   "During that time, as long you are holding the thurible, you gain a +1 item bonus to Religion checks, and any critical failure you roll when you Decipher Writing of a religious nature is a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "thurible-of-revelation-lesser",
+  "name": "Thurible of Revelation (Lesser)",
+  "covered": false,
+  "sents": [
+   "During that time, as long you are holding the thurible, you gain a +1 item bonus to Religion checks, and any critical failure you roll when you Decipher Writing of a religious nature is a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "thurible-of-revelation-moderate",
+  "name": "Thurible of Revelation (Moderate)",
+  "covered": false,
+  "sents": [
+   "During that time, as long you are holding the thurible, you gain a +2 item bonus to Religion checks, and any critical failure you roll when you Decipher Writing of a religious nature is a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "thurible-of-revelation-greater",
+  "name": "Thurible of Revelation (Greater)",
+  "covered": false,
+  "sents": [
+   "During that time, as long you are holding the thurible, you gain a +3 item bonus to Religion checks, and any critical failure you roll when you Decipher Writing of a religious nature is a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "daredevil-boots",
+  "name": "Daredevil Boots",
+  "covered": false,
+  "sents": [
+   "You treat falls as 10 feet shorter or, if you have the Cat Fall feat, treat your proficiency rank in Acrobatics as one degree better to determine the benefits of that feat."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "daredevil-boots-greater",
+  "name": "Daredevil Boots (Greater)",
+  "covered": false,
+  "sents": [
+   "You treat falls as 10 feet shorter or, if you have the Cat Fall feat, treat your proficiency rank in Acrobatics as one degree better to determine the benefits of that feat."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "lovers-gloves",
+  "name": "Lover's Gloves",
+  "covered": true,
+  "sents": [
+   "If the creature shares your feelings, you gain the same benefits, and for the duration, when you both roll a success on a saving throw against an emotion effect that causes negative emotions, you both get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "hydra-mutagen",
+  "name": "Hydra Mutagen",
+  "covered": true,
+  "sents": [
+   "Once during the mutagen's effect, if you fail or critically fail a Will saving throw against a mental effect, you can treat the result as one degree of success better."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "bravos-brew-greater",
+  "name": "Bravo's Brew (Greater)",
+  "covered": true,
+  "sents": [
+   "If you roll a success on a save against fear, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "juggernaut-mutagen",
+  "name": "Juggernaut Mutagen",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead.",
+   "When you roll a success on a Fortitude save, you get a critical success instead, and your critical failures on Fortitude saves become failures instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "juggernaut-mutagen-greater",
+  "name": "Juggernaut Mutagen (Greater)",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "juggernaut-mutagen-major",
+  "name": "Juggernaut Mutagen (Major)",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Fortitude save you get a critical success instead, and your critical failures on Fortitude saves become failures instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "serene-mutagen",
+  "name": "Serene Mutagen",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Will save against a mental effect, you get a critical success instead.",
+   "When you roll a success on a Will save against a mental effect, you get a critical success instead, and your critical failures on Will saves against mental effects become failures instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "serene-mutagen-greater",
+  "name": "Serene Mutagen (Greater)",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Will save against a mental effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "serene-mutagen-major",
+  "name": "Serene Mutagen (Major)",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Will save against a mental effect, you get a critical success instead, and your critical failures on Will saves against mental effects become failures instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "skinstitch-salve",
+  "name": "Skinstitch Salve",
+  "covered": false,
+  "sents": [
+   "If you roll a success on the Medicine check, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "crimson-bluff",
+  "name": "Crimson Bluff",
+  "covered": false,
+  "sents": [
+   "The triggering Strike uses the outcome for one degree of success worse than the result of the attack roll."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "stormshard",
+  "name": "Stormshard",
+  "covered": false,
+  "sents": [
+   "You treat the result of your saving throw as one degree of success better than its outcome."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "greater-stormshard",
+  "name": "Greater Stormshard",
+  "covered": false,
+  "sents": [
+   "You treat the result of your saving throw as one degree of success better than its outcome."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "major-stormshard",
+  "name": "Major Stormshard",
+  "covered": false,
+  "sents": [
+   "You treat the result of your saving throw as one degree of success better than its outcome."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "successor-doll",
+  "name": "Successor Doll",
+  "covered": false,
+  "sents": [
+   "Roll 1d4 and add the result to your Diplomacy check as a circumstance bonus, which might improve the degree of success."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "star-of-cynosure",
+  "name": "Star of Cynosure",
+  "covered": false,
+  "sents": [
+   "On the triggering save, if the outcome of the roll is a failure, you get a success instead, or if the outcome is a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "flawless-celestial-shawl",
+  "name": "Flawless Celestial Shawl",
+  "covered": false,
+  "sents": [
+   "On any Crafting check the tennin attempts using the shawl, they use the outcome one degree of success better than the result of their roll."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "evil-reflecting-shield",
+  "name": "Evil-Reflecting Shield",
+  "covered": false,
+  "sents": [
+   "**Effect** Your saving throw result is considered one degree better than the actual result."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "travelers-fulu",
+  "name": "Traveler's Fulu",
+  "covered": true,
+  "sents": [
+   "Your attempt to Sense Direction functions as if you have a compass, and you use the outcome one degree of success better than the result of your Survival check to Sense Direction, or by two degrees of success if you're a master in Survival."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "cryolite-eye",
+  "name": "Cryolite Eye",
+  "covered": false,
+  "sents": [
+   "This eye allows you to see as normal, and when you succeed at a Perception check against an illusion, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "greased-axle",
+  "name": "Greased Axle",
+  "covered": false,
+  "sents": [
+   "If you critically fail, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "artistic-perfection",
+  "name": "Artistic Perfection",
+  "covered": false,
+  "sents": [
+   "(Choose one.) If you succeed at a check with the chosen skill, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "creative-spark",
+  "name": "Creative Spark",
+  "covered": false,
+  "sents": [
+   "Once per day, when you roll a critical failure on a Crafting check related to blacksmithing, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "elements-of-creation",
+  "name": "Elements of Creation",
+  "covered": true,
+  "sents": [
+   "While all four wisps are assisting you, the bonus you gain from creative spark is doubled, and your outcome for Crafting checks related to blacksmithing is one degree of success better than your roll."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "living-death",
+  "name": "Living Death",
+  "covered": false,
+  "sents": [
+   "If you attempt a saving throw against an effect that would deal void damage to you, such as harm, your outcome is one degree of success better than what you rolled."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "inextinguishable",
+  "name": "Inextinguishable",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a save against a death or void effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "perception-filter",
+  "name": "Perception Filter",
+  "covered": false,
+  "sents": [
+   "If it rolls a Perception check to Seek or otherwise detect you, it gets the outcome one degree of success worse than what it rolled, and if you roll a Stealth check to Hide, Sneak, or otherwise escape its attention, you get the outcome one degree of success better than what you rolled against the creature."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "grappling-vine",
+  "name": "Grappling Vine",
+  "covered": false,
+  "sents": [
+   "Make an attack roll as you would when using a grappling hook, but if you roll a critical failure on the check to secure the vine, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "monsoon-curtain",
+  "name": "Monsoon Curtain",
+  "covered": false,
+  "sents": [
+   "If a fire effect crosses through the wall, it either uses the outcome one degree of success worse than the result of its attack roll or its targets use the outcome one degree of success better than the result of their saving throw, as appropriate."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "awakened-cold-iron-shot",
+  "name": "Awakened Cold Iron Shot",
+  "covered": false,
+  "sents": [
+   "If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "awakened-silver-shot",
+  "name": "Awakened Silver Shot",
+  "covered": false,
+  "sents": [
+   "If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "runic-skullcap",
+  "name": "Runic Skullcap",
+  "covered": true,
+  "sents": [
+   "If a check is attempted to Recall Knowledge about rune magic or Lissala, the wearer treats the results of a failure or critical failure as one degree of success better."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "stormshard-greater",
+  "name": "Stormshard (Greater)",
+  "covered": false,
+  "sents": [
+   "You treat the result of your saving throw as one degree of success better than its outcome."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "stormshard-major",
+  "name": "Stormshard (Major)",
+  "covered": false,
+  "sents": [
+   "You treat the result of your saving throw as one degree of success better than its outcome."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "witch-token",
+  "name": "Witch Token",
+  "covered": false,
+  "sents": [
+   "While a creature has the *witch token* invested, it treats its saving throws against the uniila's spells as one degree of success worse, and the uniila always knows the distance and direction to the creature."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-researcher",
+  "name": "Researcher",
+  "covered": false,
+  "sents": [
+   "If the research assistant is at least 4 levels higher than the level of the library, the Aid is a critical success instead, possibly granting a higher bonus based on the research assistant's proficiency."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-awakened-metal-shot",
+  "name": "Awakened Metal Shot",
+  "covered": false,
+  "sents": [
+   "If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead.",
+   "If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-inubrix-shield",
+  "name": "Inubrix Shield",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Disarm a metal item using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-inubrix-buckler-standard-grade",
+  "name": "Inubrix Buckler (Standard-Grade)",
+  "covered": false,
+  "sents": [
+   "If you critically fail a check to Disarm a metal item using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-artistic-perfection",
+  "name": "Artistic Perfection",
+  "covered": false,
+  "sents": [
+   "(Choose one.) If you succeed at a check with the chosen skill, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-creative-spark",
+  "name": "Creative Spark",
+  "covered": false,
+  "sents": [
+   "Once per day, when you roll a critical failure on a Crafting check related to blacksmithing, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-elements-of-creation",
+  "name": "Elements of Creation",
+  "covered": false,
+  "sents": [
+   "While all four wisps are assisting you, the bonus you gain from creative spark is doubled, and your outcome for Crafting checks related to blacksmithing is one degree of success better than your roll."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-living-death",
+  "name": "Living Death",
+  "covered": false,
+  "sents": [
+   "If you attempt a saving throw against an effect that would deal void damage to you, such as harm , your outcome is one degree of success better than what you rolled."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-inextinguishable",
+  "name": "Inextinguishable",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a save against a death or void effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-perception-filter",
+  "name": "Perception Filter",
+  "covered": false,
+  "sents": [
+   "If it rolls a Perception check to Seek or otherwise detect you, it gets the outcome one degree of success worse than what it rolled, and if you roll a Stealth check to Hide, Sneak, or otherwise escape its attention, you get the outcome one degree of success better than what you rolled against the creature."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-grappling-vine",
+  "name": "Grappling Vine",
+  "covered": false,
+  "sents": [
+   "Make an attack roll as you would when using a grappling hook, but if you roll a critical failure on the check to secure the vine, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-monsoon-curtain",
+  "name": "Monsoon Curtain",
+  "covered": false,
+  "sents": [
+   "If a fire effect crosses through the wall, it either uses the outcome one degree of success worse than the result of its attack roll or its targets use the outcome one degree of success better than the result of their saving throw, as appropriate."
+  ]
+ },
+ {
+  "bucket": "items",
+  "id": "aon-archmage-s-regalia",
+  "name": "Archmage's Regalia",
+  "covered": false,
+  "sents": [
+   "Five Items: Treat the outcomes of skill checks you roll to Identify Magic, Learn a Spell, and Recall Knowledge as one degree of success better."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "resolve",
+  "name": "Resolve",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "juggernaut",
+  "name": "Juggernaut",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead.",
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "twin-juggernauts",
+  "name": "Twin Juggernauts",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead.",
+   "When your eidolon rolls a success on a Fortitude save, it gets a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "shared-resolve",
+  "name": "Shared Resolve",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead.",
+   "When your eidolon rolls a success on a Will save, it gets a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "blast-dodger",
+  "name": "Blast Dodger",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "lead-constitution",
+  "name": "Lead Constitution",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "kinetic-durability",
+  "name": "Kinetic Durability",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "kinetic-quickness",
+  "name": "Kinetic Quickness",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-kinetic-durability",
+  "name": "Greater Kinetic Durability",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Fortitude save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "performers-heart",
+  "name": "Performer's Heart",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-performers-heart",
+  "name": "Greater Performer's Heart",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Will save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "resolute-faith",
+  "name": "Resolute Faith",
+  "covered": true,
+  "sents": [
+   "When you roll a success at a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "wild-willpower",
+  "name": "Wild Willpower",
+  "covered": true,
+  "sents": [
+   "When you roll a success at a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "bravery",
+  "name": "Bravery",
+  "covered": true,
+  "sents": [
+   "When you roll a success at a Will save against a fear effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "battle-hardened",
+  "name": "Battle Hardened",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "tempered-reflexes",
+  "name": "Tempered Reflexes",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "natural-reflexes",
+  "name": "Natural Reflexes",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "wardens-endurance",
+  "name": "Warden's Endurance",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-natural-reflexes",
+  "name": "Greater Natural Reflexes",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Reflex save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "evasive-reflexes",
+  "name": "Evasive Reflexes",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "rogue-resilience",
+  "name": "Rogue Resilience",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-rogue-reflexes",
+  "name": "Greater Rogue Reflexes",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Reflex save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "agile-mind",
+  "name": "Agile Mind",
+  "covered": true,
+  "sents": [
+   "When you roll a success at a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "will-of-the-pupil",
+  "name": "Will of the Pupil",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "prodigious-will",
+  "name": "Prodigious Will",
+  "covered": true,
+  "sents": [
+   "When you roll a success at a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "chemical-hardiness",
+  "name": "Chemical Hardiness",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "explosion-dodger",
+  "name": "Explosion Dodger",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-juggernaut",
+  "name": "Greater Juggernaut",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Fortitude save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "indomitable-will",
+  "name": "Indomitable Will",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "sacred-body",
+  "name": "Sacred Body",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "divine-will",
+  "name": "Divine Will",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "dogged-will",
+  "name": "Dogged Will",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "savvy-reflexes",
+  "name": "Savvy Reflexes",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-dogged-will",
+  "name": "Greater Dogged Will",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure at a Will save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "path-to-perfection",
+  "name": "Path to Perfection",
+  "covered": true,
+  "sents": [
+   "When you roll a success on the chosen saving throw, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "third-path-to-perfection",
+  "name": "Third Path to Perfection",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure on the chosen type of save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "mysterious-resolve",
+  "name": "Mysterious Resolve",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-mysterious-resolve",
+  "name": "Greater Mysterious Resolve",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead.",
+   "When you roll a critical failure on a Will save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "majestic-will",
+  "name": "Majestic Will",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "confident-evasion",
+  "name": "Confident Evasion",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "assured-evasion",
+  "name": "Assured Evasion",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure on a Reflex save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "reinforced-ego",
+  "name": "Reinforced Ego",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "master-of-mind-and-spirit",
+  "name": "Master of Mind and Spirit",
+  "covered": true,
+  "sents": [
+   "When you roll a success at a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "unassailable-soul",
+  "name": "Unassailable Soul",
+  "covered": true,
+  "sents": [
+   "When you roll a success at a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-unassailable-soul",
+  "name": "Greater Unassailable Soul ",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure at a Will save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "mortality-reforged",
+  "name": "Mortality Reforged",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "commanding-will",
+  "name": "Commanding Will",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "battlefield-intuition",
+  "name": "Battlefield Intuition",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "unyielding-resolve",
+  "name": "Unyielding Resolve",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "guardian-mastery",
+  "name": "Guardian Mastery",
+  "covered": false,
+  "sents": [
+   "If you get a success when you do this, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "walls-of-will",
+  "name": "Walls of Will",
+  "covered": true,
+  "sents": [
+   "When you succeed at a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "fortress-of-will",
+  "name": "Fortress of Will",
+  "covered": true,
+  "sents": [
+   "When you critically fail a Will save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "disciplined-mind",
+  "name": "Disciplined Mind",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "perfected-mind",
+  "name": "Perfected Mind",
+  "covered": true,
+  "sents": [
+   "When you roll a critical failure at a Will save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "earned-resilience",
+  "name": "Earned Resilience",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "anvils-hardness",
+  "name": "Anvil's Hardness",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "battle-creed",
+  "name": "Battle Creed",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "churning-mind",
+  "name": "Churning Mind",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Will save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "devotion-phantom-eidolon",
+  "name": "Devotion Phantom Eidolon",
+  "covered": false,
+  "sents": [
+   "Your eidolon gains a +2 circumstance bonus to saving throws against mental effects, and if they roll a success against such an effect, they get a critical success instead.",
+   "If you have the shared resolve class feature and your eidolon rolls a critical failure against a mental effect, they get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "evasion",
+  "name": "Evasion",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Reflex save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "fifth-doctrine-warpriest",
+  "name": "Fifth Doctrine (Warpriest)",
+  "covered": false,
+  "sents": [
+   "When you roll a success at a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "greater-resolve",
+  "name": "Greater Resolve",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure at a Will save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "improved-evasion",
+  "name": "Improved Evasion",
+  "covered": false,
+  "sents": [
+   "When you roll a critical failure on a Reflex save, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "major-creed",
+  "name": "Major Creed",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "paragon-benefit-regalia",
+  "name": "Paragon Benefit (Regalia)",
+  "covered": false,
+  "sents": [
+   "If you roll a critical failure on a check to Coerce, Make an Impression, or Request, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "classFeatures",
+  "id": "warpriest",
+  "name": "Warpriest",
+  "covered": false,
+  "sents": [
+   "When you roll a success at a Fortitude save, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "fishseeker-shoony",
+  "name": "Fishseeker Shoony",
+  "covered": true,
+  "sents": [
+   "If you roll a success on an attempt to Grab an Edge, you get a critical success instead; if you roll a critical failure, you get a failure instead.",
+   "A creature that rolls a failure on a check to Disarm you gets a critical failure instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "paddler-shoony",
+  "name": "Paddler Shoony",
+  "covered": true,
+  "sents": [
+   "When you roll a success to Swim, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "resolute-fetchling",
+  "name": "Resolute Fetchling",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "technological-fleshwarp",
+  "name": "Technological Fleshwarp",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "river-azarketi",
+  "name": "River Azarketi",
+  "covered": false,
+  "sents": [
+   "When you succeed at an Athletics check to Swim, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "rite-of-passage",
+  "name": "Rite of Passage",
+  "covered": false,
+  "sents": [
+   "When you roll a success attempting one of these Acrobatics checks, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "wishborn-poppet",
+  "name": "Wishborn Poppet",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against an emotion or fear effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "discarded-fleshwarp",
+  "name": "Discarded Fleshwarp",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a transmutation effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "lethoci",
+  "name": "Lethoci",
+  "covered": false,
+  "sents": [
+   "If you critically fail an Athletics check to Swim, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "wajaghand-vanara",
+  "name": "Wajaghand Vanara",
+  "covered": true,
+  "sents": [
+   "You gain a +1 circumstance bonus to saving throws against emotion effects, and whenever you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "death-warden-dwarf",
+  "name": "Death Warden Dwarf",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against an effect that has the void trait or was created by an undead creature, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "irongut-goblin",
+  "name": "Irongut Goblin",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a Fortitude save affected by this bonus, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "gutsy-halfling",
+  "name": "Gutsy Halfling",
+  "covered": false,
+  "sents": [
+   "When you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "vine-leshy",
+  "name": "Vine Leshy",
+  "covered": false,
+  "sents": [
+   "Additionally, if you roll a success on an Athletics check to Climb, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "runtboss-hobgoblin",
+  "name": "Runtboss Hobgoblin",
+  "covered": false,
+  "sents": [
+   "If you roll a success on an Intimidation check to Coerce a goblin, you get a critical success instead; if you roll a critical failure, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "warrenbred-hobgoblin",
+  "name": "Warrenbred Hobgoblin",
+  "covered": false,
+  "sents": [
+   "In addition, if you roll a success on an Acrobatics check to Squeeze, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "cavernstalker-kobold",
+  "name": "Cavernstalker Kobold",
+  "covered": false,
+  "sents": [
+   "If you roll a success on an Acrobatics check to Squeeze, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "cliffscale-lizardfolk",
+  "name": "Cliffscale Lizardfolk",
+  "covered": true,
+  "sents": [
+   "Additionally, if you roll a success on an Athletics check to climb, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "sewer-rat",
+  "name": "Sewer Rat",
+  "covered": false,
+  "sents": [
+   "If you roll a success on a saving throw against a disease or poison, you get a critical success instead.",
+   "If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "jinxed-tengu",
+  "name": "Jinxed Tengu",
+  "covered": false,
+  "sents": [
+   "If you succeed at a saving throw against a curse or misfortune effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "stickytoe-tripkee",
+  "name": "Stickytoe Tripkee",
+  "covered": false,
+  "sents": [
+   "When ascending trees, vines, and other foliage, if you roll a success on the Athletics check to Climb, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "dragonblood",
+  "name": "Dragonblood",
+  "covered": true,
+  "sents": [
+   "When you roll a success on a saving throw against a fear effect, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "kijimuna-gnome",
+  "name": "Kijimuna Gnome",
+  "covered": false,
+  "sents": [
+   "You gain the Combat Climber feat, and if you roll a success on the Athletics check to Climb, you get a critical success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "heavenscribe-kobold",
+  "name": "Heavenscribe Kobold",
+  "covered": false,
+  "sents": [
+   "Whenever you critically fail a Diplomacy check to Make an Impression or Request, you get a failure instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "dijiang",
+  "name": "Dijiang",
+  "covered": false,
+  "sents": [
+   "When you roll a failure (though not a critical failure) on a saving throw against an emotion effect, you get a success instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "even-tempered-tanuki",
+  "name": "Even-tempered Tanuki",
+  "covered": false,
+  "sents": [
+   "If you roll a success at a saving throw against an emotion effect, you get a critical success instead, but when you roll a failure at a saving throw against an emotion effect, you get a critical failure instead."
+  ]
+ },
+ {
+  "bucket": "heritages",
+  "id": "born-of-item",
+  "name": "Born of Item",
+  "covered": true,
+  "sents": [
+   "If you roll a success on a mental effect, you gain a critical success instead."
+  ]
+ },
+ {
+  "bucket": "backgrounds",
+  "id": "nocturnal-navigator",
+  "name": "Nocturnal Navigator",
+  "covered": true,
+  "sents": [
+   "Whenever you can clearly identify the stars, if you roll a success on a check to Sense Direction or otherwise orienteer, you get a critical success instead; if you roll a critical failure at such a check, you get a failure instead."
+  ]
+ }
+]

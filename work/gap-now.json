@@ -1,0 +1,5499 @@
+[
+ {
+  "category": "class-feature",
+  "fragment": 0,
+  "nameHeld": 242,
+  "record": [
+   {
+    "aonId": "class-feature-1002",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 205
+   },
+   {
+    "aonId": "class-feature-1003",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 473
+   },
+   {
+    "aonId": "class-feature-1004",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 192
+   },
+   {
+    "aonId": "class-feature-1010",
+    "name": "Swashbuckler Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 150
+   },
+   {
+    "aonId": "class-feature-1011",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 211
+   },
+   {
+    "aonId": "class-feature-1013",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 134
+   },
+   {
+    "aonId": "class-feature-1015",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 594
+   },
+   {
+    "aonId": "class-feature-1018",
+    "name": "Ancestry Feat",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 186
+   },
+   {
+    "aonId": "class-feature-1034",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 194
+   },
+   {
+    "aonId": "class-feature-1035",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 470
+   },
+   {
+    "aonId": "class-feature-1036",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 213
+   },
+   {
+    "aonId": "class-feature-1040",
+    "name": "Animist Feats",
+    "level": 2,
+    "source": "War of Immortals",
+    "chars": 138
+   },
+   {
+    "aonId": "class-feature-1041",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "War of Immortals",
+    "chars": 208
+   },
+   {
+    "aonId": "class-feature-1043",
+    "name": "General Feats",
+    "level": 3,
+    "source": "War of Immortals",
+    "chars": 131
+   },
+   {
+    "aonId": "class-feature-1044",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "War of Immortals",
+    "chars": 497
+   },
+   {
+    "aonId": "class-feature-1045",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "War of Immortals",
+    "chars": 184
+   },
+   {
+    "aonId": "class-feature-1057",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 195
+   },
+   {
+    "aonId": "class-feature-1058",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 471
+   },
+   {
+    "aonId": "class-feature-1059",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 214
+   },
+   {
+    "aonId": "class-feature-1061",
+    "name": "Exemplar Feats",
+    "level": 1,
+    "source": "War of Immortals",
+    "chars": 152
+   },
+   {
+    "aonId": "class-feature-1064",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "War of Immortals",
+    "chars": 209
+   },
+   {
+    "aonId": "class-feature-1065",
+    "name": "General Feats",
+    "level": 3,
+    "source": "War of Immortals",
+    "chars": 132
+   },
+   {
+    "aonId": "class-feature-1067",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "War of Immortals",
+    "chars": 495
+   },
+   {
+    "aonId": "class-feature-1068",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "War of Immortals",
+    "chars": 185
+   },
+   {
+    "aonId": "class-feature-1085",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 190
+   },
+   {
+    "aonId": "class-feature-1086",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 471
+   },
+   {
+    "aonId": "class-feature-1087",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 194
+   },
+   {
+    "aonId": "class-feature-1092",
+    "name": "Commander Feats",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 137
+   },
+   {
+    "aonId": "class-feature-1093",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Battlecry!",
+    "chars": 238
+   },
+   {
+    "aonId": "class-feature-1094",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Battlecry!",
+    "chars": 127
+   },
+   {
+    "aonId": "class-feature-1095",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Battlecry!",
+    "chars": 489
+   },
+   {
+    "aonId": "class-feature-1097",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Battlecry!",
+    "chars": 180
+   },
+   {
+    "aonId": "class-feature-1111",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 189
+   },
+   {
+    "aonId": "class-feature-1112",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 470
+   },
+   {
+    "aonId": "class-feature-1113",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 208
+   },
+   {
+    "aonId": "class-feature-1114",
+    "name": "Guardian Feats",
+    "level": 1,
+    "source": "Battlecry!",
+    "chars": 145
+   },
+   {
+    "aonId": "class-feature-1119",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Battlecry!",
+    "chars": 203
+   },
+   {
+    "aonId": "class-feature-1120",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Battlecry!",
+    "chars": 126
+   },
+   {
+    "aonId": "class-feature-1121",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Battlecry!",
+    "chars": 488
+   },
+   {
+    "aonId": "class-feature-1123",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Battlecry!",
+    "chars": 179
+   },
+   {
+    "aonId": "class-feature-1137",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 211
+   },
+   {
+    "aonId": "class-feature-1138",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 479
+   },
+   {
+    "aonId": "class-feature-1139",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 198
+   },
+   {
+    "aonId": "class-feature-1146",
+    "name": "Psychic Feats",
+    "level": 2,
+    "source": "Dark Archives (Remastered)",
+    "chars": 146
+   },
+   {
+    "aonId": "class-feature-1147",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Dark Archives (Remastered)",
+    "chars": 217
+   },
+   {
+    "aonId": "class-feature-1148",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Dark Archives (Remastered)",
+    "chars": 140
+   },
+   {
+    "aonId": "class-feature-1150",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Dark Archives (Remastered)",
+    "chars": 503
+   },
+   {
+    "aonId": "class-feature-1151",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Dark Archives (Remastered)",
+    "chars": 193
+   },
+   {
+    "aonId": "class-feature-1165",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 216
+   },
+   {
+    "aonId": "class-feature-1166",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 484
+   },
+   {
+    "aonId": "class-feature-1167",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 203
+   },
+   {
+    "aonId": "class-feature-1171",
+    "name": "Thaumaturge Feats",
+    "level": 1,
+    "source": "Dark Archives (Remastered)",
+    "chars": 159
+   },
+   {
+    "aonId": "class-feature-1172",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Dark Archives (Remastered)",
+    "chars": 222
+   },
+   {
+    "aonId": "class-feature-1173",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Dark Archives (Remastered)",
+    "chars": 146
+   },
+   {
+    "aonId": "class-feature-1174",
+    "name": "Lightning Reflexes",
+    "level": 3,
+    "source": "Dark Archives (Remastered)",
+    "chars": 175
+   },
+   {
+    "aonId": "class-feature-1175",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Dark Archives (Remastered)",
+    "chars": 508
+   },
+   {
+    "aonId": "class-feature-1176",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Dark Archives (Remastered)",
+    "chars": 198
+   },
+   {
+    "aonId": "class-feature-1255",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 191
+   },
+   {
+    "aonId": "class-feature-1256",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 467
+   },
+   {
+    "aonId": "class-feature-1257",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 210
+   },
+   {
+    "aonId": "class-feature-1258",
+    "name": "Magus Spellcasting",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 3024
+   },
+   {
+    "aonId": "class-feature-1263",
+    "name": "Magus Feats",
+    "level": 2,
+    "source": "Impossible Magic",
+    "chars": 130
+   },
+   {
+    "aonId": "class-feature-1264",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Impossible Magic",
+    "chars": 205
+   },
+   {
+    "aonId": "class-feature-1265",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Impossible Magic",
+    "chars": 128
+   },
+   {
+    "aonId": "class-feature-1266",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Impossible Magic",
+    "chars": 597
+   },
+   {
+    "aonId": "class-feature-1267",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 181
+   },
+   {
+    "aonId": "class-feature-1270",
+    "name": "Studious Spell",
+    "level": 7,
+    "source": "Impossible Magic",
+    "chars": 684
+   },
+   {
+    "aonId": "class-feature-1274",
+    "name": "Twofold Will",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 275
+   },
+   {
+    "aonId": "class-feature-1278",
+    "name": "Spell-Tempered Body",
+    "level": 15,
+    "source": "Impossible Magic",
+    "chars": 284
+   },
+   {
+    "aonId": "class-feature-1282",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 198
+   },
+   {
+    "aonId": "class-feature-1283",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 474
+   },
+   {
+    "aonId": "class-feature-1284",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 217
+   },
+   {
+    "aonId": "class-feature-1291",
+    "name": "Necromancer Feats",
+    "level": 2,
+    "source": "Impossible Magic",
+    "chars": 160
+   },
+   {
+    "aonId": "class-feature-1292",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Impossible Magic",
+    "chars": 212
+   },
+   {
+    "aonId": "class-feature-1293",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Impossible Magic",
+    "chars": 135
+   },
+   {
+    "aonId": "class-feature-1296",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Impossible Magic",
+    "chars": 604
+   },
+   {
+    "aonId": "class-feature-1297",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 188
+   },
+   {
+    "aonId": "class-feature-1309",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 196
+   },
+   {
+    "aonId": "class-feature-1310",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 472
+   },
+   {
+    "aonId": "class-feature-1311",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 215
+   },
+   {
+    "aonId": "class-feature-1315",
+    "name": "Runesmith Feats",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 154
+   },
+   {
+    "aonId": "class-feature-1317",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Impossible Magic",
+    "chars": 210
+   },
+   {
+    "aonId": "class-feature-1318",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Impossible Magic",
+    "chars": 133
+   },
+   {
+    "aonId": "class-feature-1319",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Impossible Magic",
+    "chars": 496
+   },
+   {
+    "aonId": "class-feature-1320",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 186
+   },
+   {
+    "aonId": "class-feature-1334",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 195
+   },
+   {
+    "aonId": "class-feature-1335",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 471
+   },
+   {
+    "aonId": "class-feature-1336",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 214
+   },
+   {
+    "aonId": "class-feature-1342",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Impossible Magic",
+    "chars": 209
+   },
+   {
+    "aonId": "class-feature-1343",
+    "name": "Summoner Feats",
+    "level": 2,
+    "source": "Impossible Magic",
+    "chars": 150
+   },
+   {
+    "aonId": "class-feature-1344",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Impossible Magic",
+    "chars": 132
+   },
+   {
+    "aonId": "class-feature-1347",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Impossible Magic",
+    "chars": 495
+   },
+   {
+    "aonId": "class-feature-1348",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 185
+   },
+   {
+    "aonId": "class-feature-1366",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 189
+   },
+   {
+    "aonId": "class-feature-416",
+    "name": "Ancestry And Background",
+    "level": 1,
+    "source": "Secrets of Magic",
+    "chars": 192
+   },
+   {
+    "aonId": "class-feature-417",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Secrets of Magic",
+    "chars": 211
+   },
+   {
+    "aonId": "class-feature-423",
+    "name": "Magus Feats",
+    "level": 2,
+    "source": "Secrets of Magic",
+    "chars": 142
+   },
+   {
+    "aonId": "class-feature-424",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Secrets of Magic",
+    "chars": 206
+   },
+   {
+    "aonId": "class-feature-425",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Secrets of Magic",
+    "chars": 129
+   },
+   {
+    "aonId": "class-feature-426",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Secrets of Magic",
+    "chars": 492
+   },
+   {
+    "aonId": "class-feature-428",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Secrets of Magic",
+    "chars": 182
+   },
+   {
+    "aonId": "class-feature-429",
+    "name": "Lightning Reflexes",
+    "level": 5,
+    "source": "Secrets of Magic",
+    "chars": 159
+   },
+   {
+    "aonId": "class-feature-443",
+    "name": "Ancestry And Background",
+    "level": 1,
+    "source": "Secrets of Magic",
+    "chars": 195
+   },
+   {
+    "aonId": "class-feature-444",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Secrets of Magic",
+    "chars": 214
+   },
+   {
+    "aonId": "class-feature-450",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Secrets of Magic",
+    "chars": 209
+   },
+   {
+    "aonId": "class-feature-451",
+    "name": "Summoner Feats",
+    "level": 2,
+    "source": "Secrets of Magic",
+    "chars": 140
+   },
+   {
+    "aonId": "class-feature-452",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Secrets of Magic",
+    "chars": 132
+   },
+   {
+    "aonId": "class-feature-454",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Secrets of Magic",
+    "chars": 506
+   },
+   {
+    "aonId": "class-feature-457",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Secrets of Magic",
+    "chars": 185
+   },
+   {
+    "aonId": "class-feature-475",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 216
+   },
+   {
+    "aonId": "class-feature-476",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 227
+   },
+   {
+    "aonId": "class-feature-482",
+    "name": "Inventor Feats",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 402
+   },
+   {
+    "aonId": "class-feature-483",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 222
+   },
+   {
+    "aonId": "class-feature-485",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 145
+   },
+   {
+    "aonId": "class-feature-487",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 508
+   },
+   {
+    "aonId": "class-feature-488",
+    "name": "Attribute Boosts",
+    "level": 5,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 366
+   },
+   {
+    "aonId": "class-feature-489",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 198
+   },
+   {
+    "aonId": "class-feature-509",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 204
+   },
+   {
+    "aonId": "class-feature-510",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 230
+   },
+   {
+    "aonId": "class-feature-512",
+    "name": "Gunslinger Feats",
+    "level": 1,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 160
+   },
+   {
+    "aonId": "class-feature-514",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 225
+   },
+   {
+    "aonId": "class-feature-515",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 148
+   },
+   {
+    "aonId": "class-feature-516",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 565
+   },
+   {
+    "aonId": "class-feature-518",
+    "name": "Attribute Boosts",
+    "level": 5,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 369
+   },
+   {
+    "aonId": "class-feature-519",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Guns & Gears (Remastered)",
+    "chars": 201
+   },
+   {
+    "aonId": "class-feature-593",
+    "name": "Ancestry And Background",
+    "level": 1,
+    "source": "Rage of Elements",
+    "chars": 197
+   },
+   {
+    "aonId": "class-feature-594",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Rage of Elements",
+    "chars": 478
+   },
+   {
+    "aonId": "class-feature-595",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Rage of Elements",
+    "chars": 202
+   },
+   {
+    "aonId": "class-feature-599",
+    "name": "Kineticist Feats",
+    "level": 1,
+    "source": "Rage of Elements",
+    "chars": 146
+   },
+   {
+    "aonId": "class-feature-600",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Rage of Elements",
+    "chars": 211
+   },
+   {
+    "aonId": "class-feature-602",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Rage of Elements",
+    "chars": 134
+   },
+   {
+    "aonId": "class-feature-603",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Rage of Elements",
+    "chars": 496
+   },
+   {
+    "aonId": "class-feature-605",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Rage of Elements",
+    "chars": 187
+   },
+   {
+    "aonId": "class-feature-621",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 220
+   },
+   {
+    "aonId": "class-feature-622",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 462
+   },
+   {
+    "aonId": "class-feature-623",
+    "name": "Bard Spellcasting",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 2049
+   },
+   {
+    "aonId": "class-feature-624",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 191
+   },
+   {
+    "aonId": "class-feature-628",
+    "name": "Bard Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 123
+   },
+   {
+    "aonId": "class-feature-629",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 200
+   },
+   {
+    "aonId": "class-feature-630",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 123
+   },
+   {
+    "aonId": "class-feature-633",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 485
+   },
+   {
+    "aonId": "class-feature-634",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core",
+    "chars": 259
+   },
+   {
+    "aonId": "class-feature-646",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 189
+   },
+   {
+    "aonId": "class-feature-647",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 481
+   },
+   {
+    "aonId": "class-feature-648",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 193
+   },
+   {
+    "aonId": "class-feature-652",
+    "name": "Cleric Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 131
+   },
+   {
+    "aonId": "class-feature-653",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 203
+   },
+   {
+    "aonId": "class-feature-654",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 126
+   },
+   {
+    "aonId": "class-feature-655",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 550
+   },
+   {
+    "aonId": "class-feature-656",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core",
+    "chars": 262
+   },
+   {
+    "aonId": "class-feature-663",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 188
+   },
+   {
+    "aonId": "class-feature-664",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 465
+   },
+   {
+    "aonId": "class-feature-665",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 193
+   },
+   {
+    "aonId": "class-feature-672",
+    "name": "Druid Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 127
+   },
+   {
+    "aonId": "class-feature-673",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 202
+   },
+   {
+    "aonId": "class-feature-675",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 125
+   },
+   {
+    "aonId": "class-feature-677",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 594
+   },
+   {
+    "aonId": "class-feature-678",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core",
+    "chars": 261
+   },
+   {
+    "aonId": "class-feature-688",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 190
+   },
+   {
+    "aonId": "class-feature-689",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 466
+   },
+   {
+    "aonId": "class-feature-690",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 252
+   },
+   {
+    "aonId": "class-feature-692",
+    "name": "Fighter Feats",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 133
+   },
+   {
+    "aonId": "class-feature-694",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 204
+   },
+   {
+    "aonId": "class-feature-696",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 127
+   },
+   {
+    "aonId": "class-feature-697",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 489
+   },
+   {
+    "aonId": "class-feature-698",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core",
+    "chars": 263
+   },
+   {
+    "aonId": "class-feature-712",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 466
+   },
+   {
+    "aonId": "class-feature-713",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 193
+   },
+   {
+    "aonId": "class-feature-716",
+    "name": "Ranger Feats",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 130
+   },
+   {
+    "aonId": "class-feature-717",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 203
+   },
+   {
+    "aonId": "class-feature-718",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 126
+   },
+   {
+    "aonId": "class-feature-719",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 488
+   },
+   {
+    "aonId": "class-feature-721",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core",
+    "chars": 262
+   },
+   {
+    "aonId": "class-feature-739",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 188
+   },
+   {
+    "aonId": "class-feature-740",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 465
+   },
+   {
+    "aonId": "class-feature-741",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 192
+   },
+   {
+    "aonId": "class-feature-745",
+    "name": "Rogue Feats",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 127
+   },
+   {
+    "aonId": "class-feature-746",
+    "name": "Skill Feats",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 163
+   },
+   {
+    "aonId": "class-feature-747",
+    "name": "Skill Increases",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 545
+   },
+   {
+    "aonId": "class-feature-749",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 125
+   },
+   {
+    "aonId": "class-feature-750",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core",
+    "chars": 261
+   },
+   {
+    "aonId": "class-feature-767",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 188
+   },
+   {
+    "aonId": "class-feature-768",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 465
+   },
+   {
+    "aonId": "class-feature-769",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 192
+   },
+   {
+    "aonId": "class-feature-774",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 202
+   },
+   {
+    "aonId": "class-feature-775",
+    "name": "Witch Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 127
+   },
+   {
+    "aonId": "class-feature-776",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 125
+   },
+   {
+    "aonId": "class-feature-777",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 594
+   },
+   {
+    "aonId": "class-feature-778",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core",
+    "chars": 260
+   },
+   {
+    "aonId": "class-feature-790",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 189
+   },
+   {
+    "aonId": "class-feature-791",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 466
+   },
+   {
+    "aonId": "class-feature-792",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core",
+    "chars": 193
+   },
+   {
+    "aonId": "class-feature-797",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 203
+   },
+   {
+    "aonId": "class-feature-798",
+    "name": "Wizard Feats",
+    "level": 2,
+    "source": "Player Core",
+    "chars": 141
+   },
+   {
+    "aonId": "class-feature-799",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 126
+   },
+   {
+    "aonId": "class-feature-800",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core",
+    "chars": 595
+   },
+   {
+    "aonId": "class-feature-801",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core",
+    "chars": 262
+   },
+   {
+    "aonId": "class-feature-814",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 201
+   },
+   {
+    "aonId": "class-feature-815",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 469
+   },
+   {
+    "aonId": "class-feature-816",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 198
+   },
+   {
+    "aonId": "class-feature-819",
+    "name": "Alchemist Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 152
+   },
+   {
+    "aonId": "class-feature-820",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 207
+   },
+   {
+    "aonId": "class-feature-821",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 130
+   },
+   {
+    "aonId": "class-feature-822",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 599
+   },
+   {
+    "aonId": "class-feature-823",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 183
+   },
+   {
+    "aonId": "class-feature-841",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 201
+   },
+   {
+    "aonId": "class-feature-842",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 469
+   },
+   {
+    "aonId": "class-feature-843",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 187
+   },
+   {
+    "aonId": "class-feature-847",
+    "name": "Barbarian Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 151
+   },
+   {
+    "aonId": "class-feature-848",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 241
+   },
+   {
+    "aonId": "class-feature-850",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 130
+   },
+   {
+    "aonId": "class-feature-851",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 599
+   },
+   {
+    "aonId": "class-feature-852",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 183
+   },
+   {
+    "aonId": "class-feature-868",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 200
+   },
+   {
+    "aonId": "class-feature-869",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 468
+   },
+   {
+    "aonId": "class-feature-870",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 187
+   },
+   {
+    "aonId": "class-feature-871",
+    "name": "Deity",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 4518
+   },
+   {
+    "aonId": "class-feature-874",
+    "name": "Champion Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 148
+   },
+   {
+    "aonId": "class-feature-876",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 206
+   },
+   {
+    "aonId": "class-feature-878",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 129
+   },
+   {
+    "aonId": "class-feature-879",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 598
+   },
+   {
+    "aonId": "class-feature-880",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 182
+   },
+   {
+    "aonId": "class-feature-897",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 205
+   },
+   {
+    "aonId": "class-feature-898",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 473
+   },
+   {
+    "aonId": "class-feature-899",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 192
+   },
+   {
+    "aonId": "class-feature-903",
+    "name": "Investigator Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 151
+   },
+   {
+    "aonId": "class-feature-905",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 211
+   },
+   {
+    "aonId": "class-feature-906",
+    "name": "Skill Increases",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 557
+   },
+   {
+    "aonId": "class-feature-907",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 134
+   },
+   {
+    "aonId": "class-feature-910",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 187
+   },
+   {
+    "aonId": "class-feature-912",
+    "name": "Vigilant Senses",
+    "level": 7,
+    "source": "Player Core 2",
+    "chars": 206
+   },
+   {
+    "aonId": "class-feature-918",
+    "name": "Incredible Senses",
+    "level": 13,
+    "source": "Player Core 2",
+    "chars": 209
+   },
+   {
+    "aonId": "class-feature-926",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 197
+   },
+   {
+    "aonId": "class-feature-927",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 465
+   },
+   {
+    "aonId": "class-feature-928",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 184
+   },
+   {
+    "aonId": "class-feature-930",
+    "name": "Monk Feats",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 137
+   },
+   {
+    "aonId": "class-feature-932",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 203
+   },
+   {
+    "aonId": "class-feature-933",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 126
+   },
+   {
+    "aonId": "class-feature-936",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 514
+   },
+   {
+    "aonId": "class-feature-937",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 179
+   },
+   {
+    "aonId": "class-feature-952",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 199
+   },
+   {
+    "aonId": "class-feature-953",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 467
+   },
+   {
+    "aonId": "class-feature-954",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 186
+   },
+   {
+    "aonId": "class-feature-958",
+    "name": "Oracle Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 133
+   },
+   {
+    "aonId": "class-feature-959",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 205
+   },
+   {
+    "aonId": "class-feature-960",
+    "name": "General Feats",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 128
+   },
+   {
+    "aonId": "class-feature-962",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 491
+   },
+   {
+    "aonId": "class-feature-963",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 181
+   },
+   {
+    "aonId": "class-feature-979",
+    "name": "Ancestry and Background",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 201
+   },
+   {
+    "aonId": "class-feature-980",
+    "name": "Attribute Boosts",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 469
+   },
+   {
+    "aonId": "class-feature-981",
+    "name": "Initial Proficiencies",
+    "level": 1,
+    "source": "Player Core 2",
+    "chars": 188
+   },
+   {
+    "aonId": "class-feature-986",
+    "name": "Skill Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 207
+   },
+   {
+    "aonId": "class-feature-987",
+    "name": "Sorcerer Feats",
+    "level": 2,
+    "source": "Player Core 2",
+    "chars": 149
+   },
+   {
+    "aonId": "class-feature-989",
+    "name": "Skill Increases",
+    "level": 3,
+    "source": "Player Core 2",
+    "chars": 518
+   },
+   {
+    "aonId": "class-feature-990",
+    "name": "Ancestry Feats",
+    "level": 5,
+    "source": "Player Core 2",
+    "chars": 183
+   }
+  ],
+  "records": 255
+ },
+ {
+  "category": "kingdom-structure",
+  "fragment": 1,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "kingdom-structure-1",
+    "name": "Academy",
+    "level": 10,
+    "source": "Kingmaker Adventure Path",
+    "chars": 593
+   },
+   {
+    "aonId": "kingdom-structure-10",
+    "name": "Cathedral",
+    "level": 15,
+    "source": "Kingmaker Adventure Path",
+    "chars": 978
+   },
+   {
+    "aonId": "kingdom-structure-11",
+    "name": "Cemetery",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 634
+   },
+   {
+    "aonId": "kingdom-structure-12",
+    "name": "Construction Yard",
+    "level": 10,
+    "source": "Kingmaker Adventure Path",
+    "chars": 358
+   },
+   {
+    "aonId": "kingdom-structure-13",
+    "name": "Dump",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 402
+   },
+   {
+    "aonId": "kingdom-structure-14",
+    "name": "Embassy",
+    "level": 8,
+    "source": "Kingmaker Adventure Path",
+    "chars": 314
+   },
+   {
+    "aonId": "kingdom-structure-15",
+    "name": "Festival Hall",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 320
+   },
+   {
+    "aonId": "kingdom-structure-16",
+    "name": "Foundry",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 510
+   },
+   {
+    "aonId": "kingdom-structure-17",
+    "name": "Garrison",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 459
+   },
+   {
+    "aonId": "kingdom-structure-18",
+    "name": "General Store",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 306
+   },
+   {
+    "aonId": "kingdom-structure-19",
+    "name": "Granary",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 300
+   },
+   {
+    "aonId": "kingdom-structure-2",
+    "name": "Alchemy Laboratory",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 731
+   },
+   {
+    "aonId": "kingdom-structure-20",
+    "name": "Guildhall",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 909
+   },
+   {
+    "aonId": "kingdom-structure-21",
+    "name": "Herbalist",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 335
+   },
+   {
+    "aonId": "kingdom-structure-22",
+    "name": "Hospital",
+    "level": 9,
+    "source": "Kingmaker Adventure Path",
+    "chars": 428
+   },
+   {
+    "aonId": "kingdom-structure-23",
+    "name": "Houses",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 322
+   },
+   {
+    "aonId": "kingdom-structure-24",
+    "name": "Illicit Market",
+    "level": 6,
+    "source": "Kingmaker Adventure Path",
+    "chars": 567
+   },
+   {
+    "aonId": "kingdom-structure-25",
+    "name": "Inn",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 222
+   },
+   {
+    "aonId": "kingdom-structure-26",
+    "name": "Jail",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 378
+   },
+   {
+    "aonId": "kingdom-structure-27",
+    "name": "Keep",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 496
+   },
+   {
+    "aonId": "kingdom-structure-28",
+    "name": "Library",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 635
+   },
+   {
+    "aonId": "kingdom-structure-29",
+    "name": "Lumberyard",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 637
+   },
+   {
+    "aonId": "kingdom-structure-3",
+    "name": "Arcanist's Tower",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 667
+   },
+   {
+    "aonId": "kingdom-structure-30",
+    "name": "Luxury Store",
+    "level": 6,
+    "source": "Kingmaker Adventure Path",
+    "chars": 761
+   },
+   {
+    "aonId": "kingdom-structure-31",
+    "name": "Magic Shop",
+    "level": 8,
+    "source": "Kingmaker Adventure Path",
+    "chars": 661
+   },
+   {
+    "aonId": "kingdom-structure-32",
+    "name": "Magical Streetlamps",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 602
+   },
+   {
+    "aonId": "kingdom-structure-33",
+    "name": "Mansion",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 276
+   },
+   {
+    "aonId": "kingdom-structure-34",
+    "name": "Marketplace",
+    "level": 4,
+    "source": "Kingmaker Adventure Path",
+    "chars": 500
+   },
+   {
+    "aonId": "kingdom-structure-35",
+    "name": "Menagerie",
+    "level": 12,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1072
+   },
+   {
+    "aonId": "kingdom-structure-36",
+    "name": "Military Academy",
+    "level": 12,
+    "source": "Kingmaker Adventure Path",
+    "chars": 378
+   },
+   {
+    "aonId": "kingdom-structure-37",
+    "name": "Mill",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 434
+   },
+   {
+    "aonId": "kingdom-structure-38",
+    "name": "Mint",
+    "level": 15,
+    "source": "Kingmaker Adventure Path",
+    "chars": 382
+   },
+   {
+    "aonId": "kingdom-structure-39",
+    "name": "Monument",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 410
+   },
+   {
+    "aonId": "kingdom-structure-4",
+    "name": "Arena",
+    "level": 9,
+    "source": "Kingmaker Adventure Path",
+    "chars": 624
+   },
+   {
+    "aonId": "kingdom-structure-40",
+    "name": "Museum",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 633
+   },
+   {
+    "aonId": "kingdom-structure-41",
+    "name": "Noble Villa",
+    "level": 9,
+    "source": "Kingmaker Adventure Path",
+    "chars": 554
+   },
+   {
+    "aonId": "kingdom-structure-42",
+    "name": "Occult Shop",
+    "level": 13,
+    "source": "Kingmaker Adventure Path",
+    "chars": 883
+   },
+   {
+    "aonId": "kingdom-structure-43",
+    "name": "Opera House",
+    "level": 15,
+    "source": "Kingmaker Adventure Path",
+    "chars": 718
+   },
+   {
+    "aonId": "kingdom-structure-44",
+    "name": "Orphanage",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 403
+   },
+   {
+    "aonId": "kingdom-structure-45",
+    "name": "Palace",
+    "level": 15,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1189
+   },
+   {
+    "aonId": "kingdom-structure-46",
+    "name": "Park",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 439
+   },
+   {
+    "aonId": "kingdom-structure-47",
+    "name": "Paved Streets",
+    "level": 4,
+    "source": "Kingmaker Adventure Path",
+    "chars": 440
+   },
+   {
+    "aonId": "kingdom-structure-48",
+    "name": "Pier",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 322
+   },
+   {
+    "aonId": "kingdom-structure-49",
+    "name": "Rubble",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 317
+   },
+   {
+    "aonId": "kingdom-structure-5",
+    "name": "Bank",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 390
+   },
+   {
+    "aonId": "kingdom-structure-50",
+    "name": "Sacred Grove",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 513
+   },
+   {
+    "aonId": "kingdom-structure-51",
+    "name": "Secure Warehouse",
+    "level": 6,
+    "source": "Kingmaker Adventure Path",
+    "chars": 334
+   },
+   {
+    "aonId": "kingdom-structure-52",
+    "name": "Sewer System",
+    "level": 7,
+    "source": "Kingmaker Adventure Path",
+    "chars": 566
+   },
+   {
+    "aonId": "kingdom-structure-54",
+    "name": "Smithy",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 387
+   },
+   {
+    "aonId": "kingdom-structure-55",
+    "name": "Specialized Artisan",
+    "level": 4,
+    "source": "Kingmaker Adventure Path",
+    "chars": 433
+   },
+   {
+    "aonId": "kingdom-structure-56",
+    "name": "Stable",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 257
+   },
+   {
+    "aonId": "kingdom-structure-57",
+    "name": "Stockyard",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 333
+   },
+   {
+    "aonId": "kingdom-structure-58",
+    "name": "Stonemason",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 372
+   },
+   {
+    "aonId": "kingdom-structure-59",
+    "name": "Tannery",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 341
+   },
+   {
+    "aonId": "kingdom-structure-6",
+    "name": "Barracks",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 488
+   },
+   {
+    "aonId": "kingdom-structure-60",
+    "name": "Tavern, Dive",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 347
+   },
+   {
+    "aonId": "kingdom-structure-61",
+    "name": "Tavern, Popular",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 676
+   },
+   {
+    "aonId": "kingdom-structure-62",
+    "name": "Tavern, Luxury",
+    "level": 9,
+    "source": "Kingmaker Adventure Path",
+    "chars": 751
+   },
+   {
+    "aonId": "kingdom-structure-63",
+    "name": "Tavern, World-Class",
+    "level": 15,
+    "source": "Kingmaker Adventure Path",
+    "chars": 774
+   },
+   {
+    "aonId": "kingdom-structure-64",
+    "name": "Temple",
+    "level": 7,
+    "source": "Kingmaker Adventure Path",
+    "chars": 663
+   },
+   {
+    "aonId": "kingdom-structure-65",
+    "name": "Tenement",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 356
+   },
+   {
+    "aonId": "kingdom-structure-66",
+    "name": "Theater",
+    "level": 9,
+    "source": "Kingmaker Adventure Path",
+    "chars": 515
+   },
+   {
+    "aonId": "kingdom-structure-67",
+    "name": "Thieves' Guild",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 412
+   },
+   {
+    "aonId": "kingdom-structure-68",
+    "name": "Town Hall",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 525
+   },
+   {
+    "aonId": "kingdom-structure-69",
+    "name": "Trade Shop",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 466
+   },
+   {
+    "aonId": "kingdom-structure-7",
+    "name": "Brewery",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 466
+   },
+   {
+    "aonId": "kingdom-structure-70",
+    "name": "University",
+    "level": 15,
+    "source": "Kingmaker Adventure Path",
+    "chars": 477
+   },
+   {
+    "aonId": "kingdom-structure-71",
+    "name": "Wall, Stone",
+    "level": 5,
+    "source": "Kingmaker Adventure Path",
+    "chars": 509
+   },
+   {
+    "aonId": "kingdom-structure-72",
+    "name": "Wall, Wooden",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 440
+   },
+   {
+    "aonId": "kingdom-structure-73",
+    "name": "Watchtower",
+    "level": 3,
+    "source": "Kingmaker Adventure Path",
+    "chars": 403
+   },
+   {
+    "aonId": "kingdom-structure-74",
+    "name": "Waterfront",
+    "level": 8,
+    "source": "Kingmaker Adventure Path",
+    "chars": 751
+   },
+   {
+    "aonId": "kingdom-structure-76",
+    "name": "Gladiatorial Arena",
+    "level": 15,
+    "source": "Kingmaker Companion Guide",
+    "chars": 732
+   },
+   {
+    "aonId": "kingdom-structure-77",
+    "name": "Printing House",
+    "level": 10,
+    "source": "Kingmaker Companion Guide",
+    "chars": 545
+   },
+   {
+    "aonId": "kingdom-structure-8",
+    "name": "Bridge",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 678
+   },
+   {
+    "aonId": "kingdom-structure-9",
+    "name": "Castle",
+    "level": 9,
+    "source": "Kingmaker Adventure Path",
+    "chars": 709
+   }
+  ],
+  "records": 75
+ },
+ {
+  "category": "creature-adjustment",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "creature-adjustment-1",
+    "name": "Elite",
+    "level": null,
+    "source": "Bestiary",
+    "chars": 879
+   },
+   {
+    "aonId": "creature-adjustment-10",
+    "name": "Wight",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 797
+   },
+   {
+    "aonId": "creature-adjustment-11",
+    "name": "Zombie",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 685
+   },
+   {
+    "aonId": "creature-adjustment-12",
+    "name": "Experimental Cryptids",
+    "level": null,
+    "source": "Dark Archive",
+    "chars": 3464
+   },
+   {
+    "aonId": "creature-adjustment-13",
+    "name": "Mutant Cryptids",
+    "level": null,
+    "source": "Dark Archive",
+    "chars": 3443
+   },
+   {
+    "aonId": "creature-adjustment-14",
+    "name": "Primeval Cryptid",
+    "level": null,
+    "source": "Dark Archive",
+    "chars": 3262
+   },
+   {
+    "aonId": "creature-adjustment-15",
+    "name": "Rumored Cryptid",
+    "level": null,
+    "source": "Dark Archive",
+    "chars": 3426
+   },
+   {
+    "aonId": "creature-adjustment-16",
+    "name": "Air",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 754
+   },
+   {
+    "aonId": "creature-adjustment-17",
+    "name": "Earth",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 661
+   },
+   {
+    "aonId": "creature-adjustment-18",
+    "name": "Fire",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 684
+   },
+   {
+    "aonId": "creature-adjustment-19",
+    "name": "Metal",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 892
+   },
+   {
+    "aonId": "creature-adjustment-2",
+    "name": "Weak",
+    "level": null,
+    "source": "Bestiary",
+    "chars": 809
+   },
+   {
+    "aonId": "creature-adjustment-20",
+    "name": "Water",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 828
+   },
+   {
+    "aonId": "creature-adjustment-21",
+    "name": "Wood",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 841
+   },
+   {
+    "aonId": "creature-adjustment-22",
+    "name": "Elite",
+    "level": null,
+    "source": "Monster Core",
+    "chars": 978
+   },
+   {
+    "aonId": "creature-adjustment-23",
+    "name": "Weak",
+    "level": null,
+    "source": "Monster Core",
+    "chars": 914
+   },
+   {
+    "aonId": "creature-adjustment-24",
+    "name": "Amphibious",
+    "level": null,
+    "source": "Howl of the Wild",
+    "chars": 834
+   },
+   {
+    "aonId": "creature-adjustment-25",
+    "name": "Frostbound",
+    "level": null,
+    "source": "Howl of the Wild",
+    "chars": 1153
+   },
+   {
+    "aonId": "creature-adjustment-26",
+    "name": "Miniature",
+    "level": null,
+    "source": "Howl of the Wild",
+    "chars": 792
+   },
+   {
+    "aonId": "creature-adjustment-27",
+    "name": "Sandbound",
+    "level": null,
+    "source": "Howl of the Wild",
+    "chars": 1266
+   },
+   {
+    "aonId": "creature-adjustment-28",
+    "name": "Twinned",
+    "level": null,
+    "source": "Howl of the Wild",
+    "chars": 1312
+   },
+   {
+    "aonId": "creature-adjustment-29",
+    "name": "Winged",
+    "level": null,
+    "source": "Howl of the Wild",
+    "chars": 692
+   },
+   {
+    "aonId": "creature-adjustment-3",
+    "name": "Undead",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 1282
+   },
+   {
+    "aonId": "creature-adjustment-30",
+    "name": "Broodpiercer",
+    "level": null,
+    "source": "Howl of the Wild",
+    "chars": 3471
+   },
+   {
+    "aonId": "creature-adjustment-31",
+    "name": "Mythic Ambusher",
+    "level": null,
+    "source": "War of Immortals",
+    "chars": 1977
+   },
+   {
+    "aonId": "creature-adjustment-32",
+    "name": "Mythic Brute",
+    "level": null,
+    "source": "War of Immortals",
+    "chars": 1679
+   },
+   {
+    "aonId": "creature-adjustment-33",
+    "name": "Mythic Caster",
+    "level": null,
+    "source": "War of Immortals",
+    "chars": 1928
+   },
+   {
+    "aonId": "creature-adjustment-34",
+    "name": "Mythic Striker",
+    "level": null,
+    "source": "War of Immortals",
+    "chars": 1524
+   },
+   {
+    "aonId": "creature-adjustment-35",
+    "name": "Union Organizer",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 646
+   },
+   {
+    "aonId": "creature-adjustment-36",
+    "name": "Retired",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 1544
+   },
+   {
+    "aonId": "creature-adjustment-37",
+    "name": "Guerrilla",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 1109
+   },
+   {
+    "aonId": "creature-adjustment-38",
+    "name": "Corrupt",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 935
+   },
+   {
+    "aonId": "creature-adjustment-39",
+    "name": "Athamaru",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 341
+   },
+   {
+    "aonId": "creature-adjustment-4",
+    "name": "Ghost",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 1197
+   },
+   {
+    "aonId": "creature-adjustment-40",
+    "name": "Merfolk",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 462
+   },
+   {
+    "aonId": "creature-adjustment-41",
+    "name": "Catfolk",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 421
+   },
+   {
+    "aonId": "creature-adjustment-42",
+    "name": "Dwarf",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 580
+   },
+   {
+    "aonId": "creature-adjustment-43",
+    "name": "Elf",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 444
+   },
+   {
+    "aonId": "creature-adjustment-44",
+    "name": "Goblin",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 496
+   },
+   {
+    "aonId": "creature-adjustment-45",
+    "name": "Gnome",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 564
+   },
+   {
+    "aonId": "creature-adjustment-46",
+    "name": "Halfling",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 735
+   },
+   {
+    "aonId": "creature-adjustment-47",
+    "name": "Hobgoblin",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 338
+   },
+   {
+    "aonId": "creature-adjustment-48",
+    "name": "Kholo",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 557
+   },
+   {
+    "aonId": "creature-adjustment-49",
+    "name": "Kobold",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 334
+   },
+   {
+    "aonId": "creature-adjustment-5",
+    "name": "Ghoul",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 902
+   },
+   {
+    "aonId": "creature-adjustment-50",
+    "name": "Leshy",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 924
+   },
+   {
+    "aonId": "creature-adjustment-51",
+    "name": "Lizardfolk",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 625
+   },
+   {
+    "aonId": "creature-adjustment-52",
+    "name": "Orc",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 413
+   },
+   {
+    "aonId": "creature-adjustment-53",
+    "name": "Ratfolk",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 532
+   },
+   {
+    "aonId": "creature-adjustment-54",
+    "name": "Tengu",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 573
+   },
+   {
+    "aonId": "creature-adjustment-55",
+    "name": "Tripkee",
+    "level": null,
+    "source": "NPC Core",
+    "chars": 423
+   },
+   {
+    "aonId": "creature-adjustment-56",
+    "name": "Experimental Cryptids",
+    "level": null,
+    "source": "Dark Archives (Remastered)",
+    "chars": 3471
+   },
+   {
+    "aonId": "creature-adjustment-57",
+    "name": "Mutant Cryptids",
+    "level": null,
+    "source": "Dark Archives (Remastered)",
+    "chars": 3441
+   },
+   {
+    "aonId": "creature-adjustment-58",
+    "name": "Primeval Cryptid",
+    "level": null,
+    "source": "Dark Archives (Remastered)",
+    "chars": 3375
+   },
+   {
+    "aonId": "creature-adjustment-59",
+    "name": "Rumored Cryptid",
+    "level": null,
+    "source": "Dark Archives (Remastered)",
+    "chars": 3433
+   },
+   {
+    "aonId": "creature-adjustment-6",
+    "name": "Mummy",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 785
+   },
+   {
+    "aonId": "creature-adjustment-60",
+    "name": "Secret Society Member",
+    "level": null,
+    "source": "Dark Archives (Remastered)",
+    "chars": 8311
+   },
+   {
+    "aonId": "creature-adjustment-7",
+    "name": "Shadow",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 1018
+   },
+   {
+    "aonId": "creature-adjustment-8",
+    "name": "Skeleton",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 771
+   },
+   {
+    "aonId": "creature-adjustment-9",
+    "name": "Vampire",
+    "level": null,
+    "source": "Book of the Dead",
+    "chars": 1257
+   }
+  ],
+  "records": 60
+ },
+ {
+  "category": "equipment",
+  "fragment": 0,
+  "nameHeld": 890,
+  "record": [
+   {
+    "aonId": "equipment-1347",
+    "name": "Basic Hearing Aid",
+    "level": 0,
+    "source": "Grand Bazaar",
+    "chars": 529
+   },
+   {
+    "aonId": "equipment-148-208",
+    "name": "Breastplate of Command",
+    "level": 10,
+    "source": "Core Rulebook",
+    "chars": 1112
+   },
+   {
+    "aonId": "equipment-148-209",
+    "name": "Breastplate of Command (Greater)",
+    "level": 18,
+    "source": "Core Rulebook",
+    "chars": 1112
+   },
+   {
+    "aonId": "equipment-148",
+    "name": "Breastplate of Command",
+    "level": 10,
+    "source": "Core Rulebook",
+    "chars": 1112
+   },
+   {
+    "aonId": "equipment-25-22",
+    "name": "Healer's Tools",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 769
+   },
+   {
+    "aonId": "equipment-25-23",
+    "name": "Healer's Tools (Expanded)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 769
+   },
+   {
+    "aonId": "equipment-25",
+    "name": "Healer's Tools",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 769
+   },
+   {
+    "aonId": "equipment-294-332",
+    "name": "Disrupting",
+    "level": 5,
+    "source": "Core Rulebook",
+    "chars": 944
+   },
+   {
+    "aonId": "equipment-294-333",
+    "name": "Disrupting (Greater)",
+    "level": 14,
+    "source": "Core Rulebook",
+    "chars": 944
+   },
+   {
+    "aonId": "equipment-294",
+    "name": "Disrupting",
+    "level": 5,
+    "source": "Core Rulebook",
+    "chars": 944
+   },
+   {
+    "aonId": "equipment-3-3",
+    "name": "Artisan's Tools",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 834
+   },
+   {
+    "aonId": "equipment-3-4",
+    "name": "Artisan's Tools (Sterling)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 834
+   },
+   {
+    "aonId": "equipment-3",
+    "name": "Artisan's Tools",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 834
+   },
+   {
+    "aonId": "equipment-386-477",
+    "name": "Flame Tongue",
+    "level": 13,
+    "source": "Core Rulebook",
+    "chars": 1205
+   },
+   {
+    "aonId": "equipment-386-478",
+    "name": "Flame Tongue (Greater)",
+    "level": 17,
+    "source": "Core Rulebook",
+    "chars": 1205
+   },
+   {
+    "aonId": "equipment-386",
+    "name": "Flame Tongue",
+    "level": 13,
+    "source": "Core Rulebook",
+    "chars": 1205
+   },
+   {
+    "aonId": "equipment-43-42",
+    "name": "Repair Kit",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 723
+   },
+   {
+    "aonId": "equipment-43-43",
+    "name": "Repair Kit (Superb)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 723
+   },
+   {
+    "aonId": "equipment-43",
+    "name": "Repair Kit",
+    "level": 0,
+    "source": "Core Rulebook",
+    "chars": 723
+   },
+   {
+    "aonId": "equipment-434",
+    "name": "Druid's Vestments",
+    "level": 10,
+    "source": "Core Rulebook",
+    "chars": 524
+   },
+   {
+    "aonId": "equipment-442-538",
+    "name": "Hat of Disguise",
+    "level": 2,
+    "source": "Core Rulebook",
+    "chars": 797
+   },
+   {
+    "aonId": "equipment-442-539",
+    "name": "Hat of Disguise (Greater)",
+    "level": 7,
+    "source": "Core Rulebook",
+    "chars": 797
+   },
+   {
+    "aonId": "equipment-442",
+    "name": "Hat of Disguise",
+    "level": 2,
+    "source": "Core Rulebook",
+    "chars": 797
+   },
+   {
+    "aonId": "equipment-443-540",
+    "name": "Hat of the Magi",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 772
+   },
+   {
+    "aonId": "equipment-443-541",
+    "name": "Hat of the Magi (Greater)",
+    "level": 9,
+    "source": "Core Rulebook",
+    "chars": 772
+   },
+   {
+    "aonId": "equipment-443",
+    "name": "Hat of the Magi",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 772
+   },
+   {
+    "aonId": "equipment-4441-3974",
+    "name": "Assassin Vine Wine",
+    "level": 9,
+    "source": "Treasure Vault",
+    "chars": 1097
+   },
+   {
+    "aonId": "equipment-4441-3975",
+    "name": "Assassin Vine Wine (Aged)",
+    "level": 12,
+    "source": "Treasure Vault",
+    "chars": 1097
+   },
+   {
+    "aonId": "equipment-4441",
+    "name": "Assassin Vine Wine",
+    "level": 9,
+    "source": "Treasure Vault",
+    "chars": 1097
+   },
+   {
+    "aonId": "equipment-4554-4089",
+    "name": "Bralani Breath",
+    "level": 3,
+    "source": "Treasure Vault",
+    "chars": 1186
+   },
+   {
+    "aonId": "equipment-4554-4090",
+    "name": "Bralani Breath (Greater)",
+    "level": 9,
+    "source": "Treasure Vault",
+    "chars": 1186
+   },
+   {
+    "aonId": "equipment-4554",
+    "name": "Bralani Breath",
+    "level": 3,
+    "source": "Treasure Vault",
+    "chars": 1186
+   },
+   {
+    "aonId": "equipment-4597-4131",
+    "name": "Messanger Missive",
+    "level": 4,
+    "source": "Treasure Vault",
+    "chars": 1333
+   },
+   {
+    "aonId": "equipment-4597-4132",
+    "name": "Messanger Missive (Multiple)",
+    "level": 7,
+    "source": "Treasure Vault",
+    "chars": 1333
+   },
+   {
+    "aonId": "equipment-4602-4133",
+    "name": "Disrupting Oil",
+    "level": 3,
+    "source": "Treasure Vault",
+    "chars": 559
+   },
+   {
+    "aonId": "equipment-4602-4134",
+    "name": "Disrupting Oil (Greater)",
+    "level": 11,
+    "source": "Treasure Vault",
+    "chars": 559
+   },
+   {
+    "aonId": "equipment-4602",
+    "name": "Disrupting Oil",
+    "level": 3,
+    "source": "Treasure Vault",
+    "chars": 559
+   },
+   {
+    "aonId": "equipment-4788-4308",
+    "name": "Librarian's Staff",
+    "level": 6,
+    "source": "Treasure Vault",
+    "chars": 1354
+   },
+   {
+    "aonId": "equipment-4788-4309",
+    "name": "Librarian's Staff (Greater)",
+    "level": 12,
+    "source": "Treasure Vault",
+    "chars": 1354
+   },
+   {
+    "aonId": "equipment-4910-4489",
+    "name": "Hat of Disagreeable Disguise",
+    "level": 2,
+    "source": "Treasure Vault",
+    "chars": 1316
+   },
+   {
+    "aonId": "equipment-4910-4490",
+    "name": "Hat of Disagreeable Disguise (Greater)",
+    "level": 7,
+    "source": "Treasure Vault",
+    "chars": 1316
+   },
+   {
+    "aonId": "equipment-4910",
+    "name": "Hat of Disagreeable Disguise",
+    "level": 2,
+    "source": "Treasure Vault",
+    "chars": 1316
+   },
+   {
+    "aonId": "equipment-716-702",
+    "name": "Oil of Object Animation",
+    "level": 8,
+    "source": "Advanced Player's Guide",
+    "chars": 1108
+   },
+   {
+    "aonId": "equipment-716-703",
+    "name": "Oil of Object Animation (Greater)",
+    "level": 16,
+    "source": "Advanced Player's Guide",
+    "chars": 1108
+   },
+   {
+    "aonId": "equipment-716",
+    "name": "Oil of Object Animation",
+    "level": 8,
+    "source": "Advanced Player's Guide",
+    "chars": 1108
+   },
+   {
+    "aonId": "equipment-738-721",
+    "name": "Mask of the Banshee",
+    "level": 9,
+    "source": "Advanced Player's Guide",
+    "chars": 1019
+   },
+   {
+    "aonId": "equipment-738-722",
+    "name": "Mask of the Banshee (Greater)",
+    "level": 19,
+    "source": "Advanced Player's Guide",
+    "chars": 1019
+   },
+   {
+    "aonId": "equipment-738",
+    "name": "Mask of the Banshee",
+    "level": 9,
+    "source": "Advanced Player's Guide",
+    "chars": 1019
+   }
+  ],
+  "records": 48
+ },
+ {
+  "category": "kingdom-event",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "kingdom-event-1",
+    "name": "Archaeological Find",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1573
+   },
+   {
+    "aonId": "kingdom-event-10",
+    "name": "Drug Den",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1356
+   },
+   {
+    "aonId": "kingdom-event-11",
+    "name": "Economic Surge",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 702
+   },
+   {
+    "aonId": "kingdom-event-12",
+    "name": "Expansion Demand",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 796
+   },
+   {
+    "aonId": "kingdom-event-13",
+    "name": "Festive Invitation",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1730
+   },
+   {
+    "aonId": "kingdom-event-14",
+    "name": "Feud",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1692
+   },
+   {
+    "aonId": "kingdom-event-15",
+    "name": "Food Shortage",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1048
+   },
+   {
+    "aonId": "kingdom-event-16",
+    "name": "Food Surplus",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 924
+   },
+   {
+    "aonId": "kingdom-event-17",
+    "name": "Good Weather",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 629
+   },
+   {
+    "aonId": "kingdom-event-18",
+    "name": "Inquisition",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1544
+   },
+   {
+    "aonId": "kingdom-event-19",
+    "name": "Justice Prevails",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1188
+   },
+   {
+    "aonId": "kingdom-event-2",
+    "name": "Assassination Attempt",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1386
+   },
+   {
+    "aonId": "kingdom-event-20",
+    "name": "Land Rush",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1385
+   },
+   {
+    "aonId": "kingdom-event-21",
+    "name": "Local Disaster",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1277
+   },
+   {
+    "aonId": "kingdom-event-22",
+    "name": "Monster Activity",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 2078
+   },
+   {
+    "aonId": "kingdom-event-23",
+    "name": "Natural Disaster",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1298
+   },
+   {
+    "aonId": "kingdom-event-24",
+    "name": "Nature’s Blessing",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 881
+   },
+   {
+    "aonId": "kingdom-event-25",
+    "name": "New Subjects",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1173
+   },
+   {
+    "aonId": "kingdom-event-26",
+    "name": "Noblesse Oblige",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1128
+   },
+   {
+    "aonId": "kingdom-event-27",
+    "name": "Outstanding Success",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 916
+   },
+   {
+    "aonId": "kingdom-event-28",
+    "name": "Pilgrimage",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1118
+   },
+   {
+    "aonId": "kingdom-event-29",
+    "name": "Plague",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1438
+   },
+   {
+    "aonId": "kingdom-event-3",
+    "name": "Bandit Activity",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1236
+   },
+   {
+    "aonId": "kingdom-event-30",
+    "name": "Political Calm",
+    "level": -1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 717
+   },
+   {
+    "aonId": "kingdom-event-31",
+    "name": "Public Scandal",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1171
+   },
+   {
+    "aonId": "kingdom-event-32",
+    "name": "Remarkable Treasure",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1387
+   },
+   {
+    "aonId": "kingdom-event-33",
+    "name": "Sacrifices",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1447
+   },
+   {
+    "aonId": "kingdom-event-34",
+    "name": "Sensational Crime",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1408
+   },
+   {
+    "aonId": "kingdom-event-35",
+    "name": "Squatters",
+    "level": -1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1595
+   },
+   {
+    "aonId": "kingdom-event-36",
+    "name": "Undead Uprising",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1223
+   },
+   {
+    "aonId": "kingdom-event-37",
+    "name": "Unexpected Find",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 895
+   },
+   {
+    "aonId": "kingdom-event-38",
+    "name": "Vandals",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 906
+   },
+   {
+    "aonId": "kingdom-event-39",
+    "name": "Visiting Celebrity",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1126
+   },
+   {
+    "aonId": "kingdom-event-4",
+    "name": "Boomtown",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1258
+   },
+   {
+    "aonId": "kingdom-event-40",
+    "name": "Wealthy Immigrant",
+    "level": 2,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1176
+   },
+   {
+    "aonId": "kingdom-event-41",
+    "name": "Monster Hunt",
+    "level": 0,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1973
+   },
+   {
+    "aonId": "kingdom-event-42",
+    "name": "Barbarian Immigrants",
+    "level": 2,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1264
+   },
+   {
+    "aonId": "kingdom-event-43",
+    "name": "The Local Paper",
+    "level": 0,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1615
+   },
+   {
+    "aonId": "kingdom-event-44",
+    "name": "Special Edition",
+    "level": 0,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1065
+   },
+   {
+    "aonId": "kingdom-event-45",
+    "name": "Goblin Backlash",
+    "level": -2,
+    "source": "Kingmaker Companion Guide",
+    "chars": 2006
+   },
+   {
+    "aonId": "kingdom-event-5",
+    "name": "Building Demand",
+    "level": -1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1439
+   },
+   {
+    "aonId": "kingdom-event-6",
+    "name": "Crop Failure",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 744
+   },
+   {
+    "aonId": "kingdom-event-7",
+    "name": "Cult Activity",
+    "level": 1,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1894
+   },
+   {
+    "aonId": "kingdom-event-8",
+    "name": "Diplomatic Overture",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 1289
+   },
+   {
+    "aonId": "kingdom-event-9",
+    "name": "Discovery",
+    "level": 0,
+    "source": "Kingmaker Adventure Path",
+    "chars": 835
+   }
+  ],
+  "records": 45
+ },
+ {
+  "category": "runesmith-rune",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "runesmith-rune-1",
+    "name": "Atryl, Rune of Fire",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 528
+   },
+   {
+    "aonId": "runesmith-rune-10",
+    "name": "Pluuna, Rune of Illumination",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 539
+   },
+   {
+    "aonId": "runesmith-rune-11",
+    "name": "Ranshu, Rune of Thunder",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 609
+   },
+   {
+    "aonId": "runesmith-rune-12",
+    "name": "Rehgog, Rune of Bestial Might",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 544
+   },
+   {
+    "aonId": "runesmith-rune-13",
+    "name": "Sertum, Rune of Preparedness",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 724
+   },
+   {
+    "aonId": "runesmith-rune-14",
+    "name": "Thullax, Rune of Corrosion",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 665
+   },
+   {
+    "aonId": "runesmith-rune-15",
+    "name": "Tilus, Rune of Vocabulary",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 878
+   },
+   {
+    "aonId": "runesmith-rune-16",
+    "name": "Zohk, Rune of Homecoming",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 519
+   },
+   {
+    "aonId": "runesmith-rune-17",
+    "name": "Av-, Diacritic Rune of Succession",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 520
+   },
+   {
+    "aonId": "runesmith-rune-18",
+    "name": "En-, Diacritic Rune of Expansion",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 596
+   },
+   {
+    "aonId": "runesmith-rune-19",
+    "name": "Fob-, Diacritic Rune of Doubling",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 348
+   },
+   {
+    "aonId": "runesmith-rune-2",
+    "name": "Baruiel, Rune of Hold's Bravery",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 518
+   },
+   {
+    "aonId": "runesmith-rune-20",
+    "name": "Kit-, Diacritic Rune of Mercy",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 384
+   },
+   {
+    "aonId": "runesmith-rune-21",
+    "name": "Per-, Diacritic Rune of Continuum",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 487
+   },
+   {
+    "aonId": "runesmith-rune-22",
+    "name": "Sun-, Diacritic Rune of Preservation",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 505
+   },
+   {
+    "aonId": "runesmith-rune-23",
+    "name": "Ti-, Diacritic Rune of Fundaments",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 344
+   },
+   {
+    "aonId": "runesmith-rune-24",
+    "name": "Ur-, Diacritic Rune of Intensity",
+    "level": 5,
+    "source": "Impossible Magic",
+    "chars": 315
+   },
+   {
+    "aonId": "runesmith-rune-25",
+    "name": "Astillu, Rune of Submersion",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 634
+   },
+   {
+    "aonId": "runesmith-rune-26",
+    "name": "Cruonign, Rune of Leeching",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 835
+   },
+   {
+    "aonId": "runesmith-rune-27",
+    "name": "Feikris, Rune of Gravity",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 646
+   },
+   {
+    "aonId": "runesmith-rune-28",
+    "name": "Germantria, Rune of Partnership",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 860
+   },
+   {
+    "aonId": "runesmith-rune-29",
+    "name": "Ichelsu, Rune of Observation",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 562
+   },
+   {
+    "aonId": "runesmith-rune-3",
+    "name": "Camonica, Rune of Perplexity",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 698
+   },
+   {
+    "aonId": "runesmith-rune-30",
+    "name": "Jurroz, Rune of Dragon Fury",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 640
+   },
+   {
+    "aonId": "runesmith-rune-31",
+    "name": "Kojastri, Rune of Insulation",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 812
+   },
+   {
+    "aonId": "runesmith-rune-32",
+    "name": "Oraloq, Rune of Inarticulateness",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 976
+   },
+   {
+    "aonId": "runesmith-rune-33",
+    "name": "Piteregrin, Rune of Transposition",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 1023
+   },
+   {
+    "aonId": "runesmith-rune-34",
+    "name": "Trolistri, Rune of Forlorn Sorrow",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 762
+   },
+   {
+    "aonId": "runesmith-rune-35",
+    "name": "Ulgatus, Rune of Restraint",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 890
+   },
+   {
+    "aonId": "runesmith-rune-36",
+    "name": "Yudici, Rune of Remonstrance",
+    "level": 9,
+    "source": "Impossible Magic",
+    "chars": 542
+   },
+   {
+    "aonId": "runesmith-rune-37",
+    "name": "Eck-, Diacritic Rune of Phantasma",
+    "level": 13,
+    "source": "Impossible Magic",
+    "chars": 436
+   },
+   {
+    "aonId": "runesmith-rune-38",
+    "name": "Inth-, Diacritic Rune of Corruption",
+    "level": 13,
+    "source": "Impossible Magic",
+    "chars": 610
+   },
+   {
+    "aonId": "runesmith-rune-39",
+    "name": "Nesh-, Diacritic Rune of Contingency",
+    "level": 13,
+    "source": "Impossible Magic",
+    "chars": 699
+   },
+   {
+    "aonId": "runesmith-rune-4",
+    "name": "Esvadir, Rune of Whetstones",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 548
+   },
+   {
+    "aonId": "runesmith-rune-40",
+    "name": "Sar-, Diacritic Rune of Righteousness",
+    "level": 13,
+    "source": "Impossible Magic",
+    "chars": 535
+   },
+   {
+    "aonId": "runesmith-rune-41",
+    "name": "Aiuen, The Elf-Gate Key",
+    "level": 17,
+    "source": "Impossible Magic",
+    "chars": 811
+   },
+   {
+    "aonId": "runesmith-rune-42",
+    "name": "Ochygholl, The Poisoned Star",
+    "level": 17,
+    "source": "Impossible Magic",
+    "chars": 1056
+   },
+   {
+    "aonId": "runesmith-rune-43",
+    "name": "Rovan, Seal of the Dead Vault",
+    "level": 17,
+    "source": "Impossible Magic",
+    "chars": 1415
+   },
+   {
+    "aonId": "runesmith-rune-44",
+    "name": "Xinsala, The Well of Virtues",
+    "level": 17,
+    "source": "Impossible Magic",
+    "chars": 995
+   },
+   {
+    "aonId": "runesmith-rune-5",
+    "name": "Holtrik, Rune of Dwarven Ramparts",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 556
+   },
+   {
+    "aonId": "runesmith-rune-6",
+    "name": "Ledria, Rune of Appeal",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 495
+   },
+   {
+    "aonId": "runesmith-rune-7",
+    "name": "Lyskel, Rune of Frost",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 693
+   },
+   {
+    "aonId": "runesmith-rune-8",
+    "name": "Marssyl, Rune of Impact",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 776
+   },
+   {
+    "aonId": "runesmith-rune-9",
+    "name": "Oljinex, Rune of Cowards' Bane",
+    "level": 1,
+    "source": "Impossible Magic",
+    "chars": 713
+   }
+  ],
+  "records": 44
+ },
+ {
+  "category": "action",
+  "fragment": 3434,
+  "nameHeld": 39,
+  "record": [
+   {
+    "aonId": "action-123",
+    "name": "Intimidating Strike",
+    "level": null,
+    "source": "Core Rulebook",
+    "chars": 41
+   },
+   {
+    "aonId": "action-131",
+    "name": "Brutal Finish",
+    "level": null,
+    "source": "Core Rulebook",
+    "chars": 92
+   },
+   {
+    "aonId": "action-132",
+    "name": "Certain Strike",
+    "level": null,
+    "source": "Core Rulebook",
+    "chars": 93
+   },
+   {
+    "aonId": "action-167",
+    "name": "Treat Poison or 8 hours (Treat Disease)",
+    "level": null,
+    "source": "Core Rulebook",
+    "chars": 412
+   },
+   {
+    "aonId": "action-1716",
+    "name": "The actions required to Activate the tattoo are the same as those needed to cast its spell",
+    "level": null,
+    "source": "Treasure Vault (Remastered)",
+    "chars": 159
+   },
+   {
+    "aonId": "action-1856",
+    "name": "(concentrate, manipulate))",
+    "level": null,
+    "source": "Treasure Vault (Remastered)",
+    "chars": 447
+   },
+   {
+    "aonId": "action-1943",
+    "name": "<%ACTION.TYPES#2%%> or <%ACTION.TYPES#3%%> (concentrate, teleportation)",
+    "level": null,
+    "source": "Treasure Vault (Remastered)",
+    "chars": 216
+   },
+   {
+    "aonId": "action-2865",
+    "name": "Administer Stitch (manipulate)",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 242
+   },
+   {
+    "aonId": "action-2866",
+    "name": "Stitch Wounds (manipulate)",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 194
+   },
+   {
+    "aonId": "action-2933",
+    "name": "Close at Hand",
+    "level": null,
+    "source": "Tian Xia Character Guide",
+    "chars": 441
+   },
+   {
+    "aonId": "action-296",
+    "name": "(envision), or a different activation if otherwise specified",
+    "level": null,
+    "source": "World Guide",
+    "chars": 320
+   },
+   {
+    "aonId": "action-3031",
+    "name": "Rip Guts! Rip Guts!",
+    "level": null,
+    "source": "War of Immortals",
+    "chars": 564
+   },
+   {
+    "aonId": "action-3110",
+    "name": "Land With Grace",
+    "level": null,
+    "source": "Pathfinder #204: Stage Fright",
+    "chars": 220
+   },
+   {
+    "aonId": "action-3130",
+    "name": "Reflect Curse",
+    "level": null,
+    "source": "Pathfinder #206: Bring the House Down",
+    "chars": 311
+   },
+   {
+    "aonId": "action-3147",
+    "name": "Shift Scales",
+    "level": null,
+    "source": "Pathfinder #208: Hoof, Cinder, and Storm",
+    "chars": 226
+   },
+   {
+    "aonId": "action-3160",
+    "name": "Strengthen Resolve",
+    "level": null,
+    "source": "Pathfinder #209: Destroyer's Doom",
+    "chars": 170
+   },
+   {
+    "aonId": "action-3161",
+    "name": "Strengthen Resolve",
+    "level": null,
+    "source": "Pathfinder #209: Destroyer's Doom",
+    "chars": 250
+   },
+   {
+    "aonId": "action-3167",
+    "name": "Speak with Undead",
+    "level": null,
+    "source": "Pathfinder #209: Destroyer's Doom",
+    "chars": 254
+   },
+   {
+    "aonId": "action-3578",
+    "name": "1 week (concentrate, downtime)",
+    "level": null,
+    "source": "Pathfinder #220: Crypt of Runes",
+    "chars": 789
+   },
+   {
+    "aonId": "action-3579",
+    "name": "1 week (concentrate, downtime)",
+    "level": null,
+    "source": "Pathfinder #220: Crypt of Runes",
+    "chars": 816
+   },
+   {
+    "aonId": "action-3964",
+    "name": "The actions required to Activate the tattoo are the same as those needed to cast its spell",
+    "level": null,
+    "source": "Treasure Vault",
+    "chars": 159
+   },
+   {
+    "aonId": "action-4171",
+    "name": "<%ACTION.TYPES#2%%> envision; or <%ACTION.TYPES#3%%> command, envision (teleportation)",
+    "level": null,
+    "source": "Treasure Vault",
+    "chars": 231
+   },
+   {
+    "aonId": "action-4217",
+    "name": "manipulate, visual",
+    "level": null,
+    "source": "Troubles in Grayce",
+    "chars": 543
+   },
+   {
+    "aonId": "action-4218",
+    "name": "concentrate, manipulate, mental",
+    "level": null,
+    "source": "Troubles in Grayce",
+    "chars": 1106
+   },
+   {
+    "aonId": "action-4219",
+    "name": "concentrate, manipulate, mental",
+    "level": null,
+    "source": "Troubles in Grayce",
+    "chars": 314
+   },
+   {
+    "aonId": "action-4220",
+    "name": "fortune, manipulate",
+    "level": null,
+    "source": "Troubles in Grayce",
+    "chars": 468
+   },
+   {
+    "aonId": "action-535",
+    "name": "</u>",
+    "level": null,
+    "source": "Pathfinder #156: The Apocalypse Prophet",
+    "chars": 370
+   }
+  ],
+  "records": 27
+ },
+ {
+  "category": "campsite-meal",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "campsite-meal-1",
+    "name": "Baked Spider Legs",
+    "level": 5,
+    "source": "Kingmaker Companion Guide",
+    "chars": 867
+   },
+   {
+    "aonId": "campsite-meal-10",
+    "name": "Grilled Silver Eel",
+    "level": 6,
+    "source": "Kingmaker Companion Guide",
+    "chars": 950
+   },
+   {
+    "aonId": "campsite-meal-11",
+    "name": "Haggis",
+    "level": 1,
+    "source": "Kingmaker Companion Guide",
+    "chars": 783
+   },
+   {
+    "aonId": "campsite-meal-12",
+    "name": "Hearty Meal",
+    "level": 0,
+    "source": "Kingmaker Companion Guide",
+    "chars": 965
+   },
+   {
+    "aonId": "campsite-meal-13",
+    "name": "Hearty Purple Soup",
+    "level": 16,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1177
+   },
+   {
+    "aonId": "campsite-meal-14",
+    "name": "Hunter's Roast",
+    "level": 6,
+    "source": "Kingmaker Companion Guide",
+    "chars": 727
+   },
+   {
+    "aonId": "campsite-meal-15",
+    "name": "Jeweled Rice",
+    "level": 0,
+    "source": "Kingmaker Companion Guide",
+    "chars": 660
+   },
+   {
+    "aonId": "campsite-meal-16",
+    "name": "Kameberry Pie",
+    "level": 10,
+    "source": "Kingmaker Companion Guide",
+    "chars": 799
+   },
+   {
+    "aonId": "campsite-meal-17",
+    "name": "Mastodon Steak",
+    "level": 14,
+    "source": "Kingmaker Companion Guide",
+    "chars": 945
+   },
+   {
+    "aonId": "campsite-meal-18",
+    "name": "Monster Casserole",
+    "level": 11,
+    "source": "Kingmaker Companion Guide",
+    "chars": 915
+   },
+   {
+    "aonId": "campsite-meal-19",
+    "name": "Onion Soup",
+    "level": 8,
+    "source": "Kingmaker Companion Guide",
+    "chars": 682
+   },
+   {
+    "aonId": "campsite-meal-2",
+    "name": "Black Linnorm Stew",
+    "level": 18,
+    "source": "Kingmaker Companion Guide",
+    "chars": 886
+   },
+   {
+    "aonId": "campsite-meal-20",
+    "name": "Owlbear Omelet",
+    "level": 7,
+    "source": "Kingmaker Companion Guide",
+    "chars": 790
+   },
+   {
+    "aonId": "campsite-meal-21",
+    "name": "Rice-n-Nut Pudding",
+    "level": 2,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1228
+   },
+   {
+    "aonId": "campsite-meal-22",
+    "name": "Seasoned Wings and Thighs",
+    "level": 12,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1475
+   },
+   {
+    "aonId": "campsite-meal-23",
+    "name": "Shepherd's Pie",
+    "level": 2,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1174
+   },
+   {
+    "aonId": "campsite-meal-24",
+    "name": "Smoked Trout and Hydra Pate",
+    "level": 8,
+    "source": "Kingmaker Companion Guide",
+    "chars": 854
+   },
+   {
+    "aonId": "campsite-meal-25",
+    "name": "Succulent Sausages",
+    "level": 3,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1047
+   },
+   {
+    "aonId": "campsite-meal-26",
+    "name": "Sweet Pancakes",
+    "level": 7,
+    "source": "Kingmaker Companion Guide",
+    "chars": 733
+   },
+   {
+    "aonId": "campsite-meal-27",
+    "name": "Whiterose Oysters",
+    "level": 9,
+    "source": "Kingmaker Companion Guide",
+    "chars": 942
+   },
+   {
+    "aonId": "campsite-meal-3",
+    "name": "Broiled Tuskwater Oysters",
+    "level": 3,
+    "source": "Kingmaker Companion Guide",
+    "chars": 892
+   },
+   {
+    "aonId": "campsite-meal-4",
+    "name": "Cheese Crostata",
+    "level": 5,
+    "source": "Kingmaker Companion Guide",
+    "chars": 768
+   },
+   {
+    "aonId": "campsite-meal-5",
+    "name": "Chocolate Ice Cream",
+    "level": 4,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1146
+   },
+   {
+    "aonId": "campsite-meal-6",
+    "name": "First World Mince Pie",
+    "level": 20,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1477
+   },
+   {
+    "aonId": "campsite-meal-7",
+    "name": "Fish-on-a-Stick",
+    "level": 1,
+    "source": "Kingmaker Companion Guide",
+    "chars": 815
+   },
+   {
+    "aonId": "campsite-meal-8",
+    "name": "Galt Ragout",
+    "level": 4,
+    "source": "Kingmaker Companion Guide",
+    "chars": 751
+   },
+   {
+    "aonId": "campsite-meal-9",
+    "name": "Giant Scrambled Egg with Shambletus",
+    "level": 13,
+    "source": "Kingmaker Companion Guide",
+    "chars": 1057
+   }
+  ],
+  "records": 27
+ },
+ {
+  "category": "ancestry",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "ancestry-22",
+    "name": "Changeling",
+    "level": null,
+    "source": "Advanced Player's Guide",
+    "chars": 4611
+   },
+   {
+    "aonId": "ancestry-23",
+    "name": "Dhampir",
+    "level": null,
+    "source": "Advanced Player's Guide",
+    "chars": 4159
+   },
+   {
+    "aonId": "ancestry-25",
+    "name": "Duskwalker",
+    "level": null,
+    "source": "Advanced Player's Guide",
+    "chars": 5256
+   },
+   {
+    "aonId": "ancestry-29",
+    "name": "Beastkin",
+    "level": null,
+    "source": "Ancestry Guide",
+    "chars": 7434
+   },
+   {
+    "aonId": "ancestry-34",
+    "name": "Oread",
+    "level": null,
+    "source": "Ancestry Guide",
+    "chars": 8621
+   },
+   {
+    "aonId": "ancestry-35",
+    "name": "Suli",
+    "level": null,
+    "source": "Ancestry Guide",
+    "chars": 8024
+   },
+   {
+    "aonId": "ancestry-36",
+    "name": "Sylph",
+    "level": null,
+    "source": "Ancestry Guide",
+    "chars": 7804
+   },
+   {
+    "aonId": "ancestry-37",
+    "name": "Undine",
+    "level": null,
+    "source": "Ancestry Guide",
+    "chars": 7957
+   },
+   {
+    "aonId": "ancestry-51",
+    "name": "Reflection",
+    "level": null,
+    "source": "Dark Archive",
+    "chars": 4569
+   },
+   {
+    "aonId": "ancestry-57",
+    "name": "Ardande",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 5963
+   },
+   {
+    "aonId": "ancestry-58",
+    "name": "Talos",
+    "level": null,
+    "source": "Rage of Elements",
+    "chars": 6949
+   },
+   {
+    "aonId": "ancestry-67",
+    "name": "Changeling",
+    "level": null,
+    "source": "Player Core",
+    "chars": 2714
+   },
+   {
+    "aonId": "ancestry-68",
+    "name": "Nephilim",
+    "level": null,
+    "source": "Player Core",
+    "chars": 3582
+   },
+   {
+    "aonId": "ancestry-69",
+    "name": "Aiuvarin",
+    "level": null,
+    "source": "Player Core",
+    "chars": 2484
+   },
+   {
+    "aonId": "ancestry-70",
+    "name": "Dromaar",
+    "level": null,
+    "source": "Player Core",
+    "chars": 2350
+   },
+   {
+    "aonId": "ancestry-85",
+    "name": "Dhampir",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 2991
+   },
+   {
+    "aonId": "ancestry-86",
+    "name": "Dragonblood",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 3704
+   },
+   {
+    "aonId": "ancestry-87",
+    "name": "Duskwalker",
+    "level": null,
+    "source": "Player Core 2",
+    "chars": 2620
+   },
+   {
+    "aonId": "ancestry-94",
+    "name": "Hungerseed",
+    "level": null,
+    "source": "Tian Xia Character Guide",
+    "chars": 2652
+   },
+   {
+    "aonId": "ancestry-97",
+    "name": "Reflection",
+    "level": null,
+    "source": "Dark Archives (Remastered)",
+    "chars": 4571
+   }
+  ],
+  "records": 20
+ },
+ {
+  "category": "background",
+  "fragment": 0,
+  "nameHeld": 10,
+  "record": [
+   {
+    "aonId": "background-40",
+    "name": "Refugee (FoP)",
+    "level": null,
+    "source": "The Fall of Plaguestone",
+    "chars": 644
+   },
+   {
+    "aonId": "background-647",
+    "name": "Art \"Collector\"",
+    "level": null,
+    "source": "Bastion of Blasphemies Player's Guide",
+    "chars": 3232
+   },
+   {
+    "aonId": "background-648",
+    "name": "Blooded by the Dead",
+    "level": null,
+    "source": "Bastion of Blasphemies Player's Guide",
+    "chars": 2837
+   },
+   {
+    "aonId": "background-649",
+    "name": "Curse-Marked",
+    "level": null,
+    "source": "Bastion of Blasphemies Player's Guide",
+    "chars": 1861
+   },
+   {
+    "aonId": "background-650",
+    "name": "Friend of a Friend",
+    "level": null,
+    "source": "Bastion of Blasphemies Player's Guide",
+    "chars": 1439
+   },
+   {
+    "aonId": "background-651",
+    "name": "Once Possessed",
+    "level": null,
+    "source": "Bastion of Blasphemies Player's Guide",
+    "chars": 2779
+   },
+   {
+    "aonId": "background-652",
+    "name": "Trusted Rival",
+    "level": null,
+    "source": "Bastion of Blasphemies Player's Guide",
+    "chars": 2805
+   },
+   {
+    "aonId": "background-653",
+    "name": "Archival Assistant",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 530
+   },
+   {
+    "aonId": "background-654",
+    "name": "Azlanti Researcher",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 543
+   },
+   {
+    "aonId": "background-655",
+    "name": "Clockwork Wonder",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 446
+   },
+   {
+    "aonId": "background-657",
+    "name": "Battle's Spark",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 460
+   },
+   {
+    "aonId": "background-658",
+    "name": "Boundless Wonder",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 442
+   },
+   {
+    "aonId": "background-659",
+    "name": "Immortal Influence",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 466
+   },
+   {
+    "aonId": "background-660",
+    "name": "Unfettered Exploration",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 463
+   },
+   {
+    "aonId": "background-661",
+    "name": "Envoy's Alliance",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 479
+   },
+   {
+    "aonId": "background-662",
+    "name": "Grand Archive",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 395
+   },
+   {
+    "aonId": "background-663",
+    "name": "Horizon Hunters",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 425
+   },
+   {
+    "aonId": "background-664",
+    "name": "Radiant Oath",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 417
+   },
+   {
+    "aonId": "background-665",
+    "name": "Verdant Wheel",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 458
+   },
+   {
+    "aonId": "background-667",
+    "name": "Vigilant Seal",
+    "level": null,
+    "source": "Pathfinder Society Clockwork Mystery Player's Guide",
+    "chars": 516
+   }
+  ],
+  "records": 20
+ },
+ {
+  "category": "item-bonus",
+  "fragment": 0,
+  "nameHeld": 303,
+  "record": [
+   {
+    "aonId": "equipment-1077-bonus-323",
+    "name": "Specialist's Ring",
+    "level": 10,
+    "source": "Secrets of Magic",
+    "chars": 751
+   },
+   {
+    "aonId": "equipment-148-208-bonus-95",
+    "name": "Breastplate of Command",
+    "level": 10,
+    "source": "Core Rulebook",
+    "chars": 1112
+   },
+   {
+    "aonId": "equipment-148-209-bonus-96",
+    "name": "Breastplate of Command (Greater)",
+    "level": 18,
+    "source": "Core Rulebook",
+    "chars": 1112
+   },
+   {
+    "aonId": "equipment-25-23-bonus-8",
+    "name": "Healer's Tools (Expanded)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 769
+   },
+   {
+    "aonId": "equipment-3-4-bonus-1",
+    "name": "Artisan's Tools (Sterling)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 834
+   },
+   {
+    "aonId": "equipment-413-502-bonus-138",
+    "name": "Boots of Elvenkind",
+    "level": 5,
+    "source": "Core Rulebook",
+    "chars": 1053
+   },
+   {
+    "aonId": "equipment-413-503-bonus-139",
+    "name": "Boots of Elvenkind (Greater)",
+    "level": 11,
+    "source": "Core Rulebook",
+    "chars": 1053
+   },
+   {
+    "aonId": "equipment-424-513-bonus-149",
+    "name": "Cloak of Elvenkind",
+    "level": 7,
+    "source": "Core Rulebook",
+    "chars": 1310
+   },
+   {
+    "aonId": "equipment-424-514-bonus-150",
+    "name": "Cloak of Elvenkind (Greater)",
+    "level": 12,
+    "source": "Core Rulebook",
+    "chars": 1310
+   },
+   {
+    "aonId": "equipment-43-43-bonus-12",
+    "name": "Repair Kit (Superb)",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 723
+   },
+   {
+    "aonId": "equipment-434-bonus-167",
+    "name": "Druid's Vestments",
+    "level": 10,
+    "source": "Core Rulebook",
+    "chars": 524
+   },
+   {
+    "aonId": "equipment-443-540-bonus-173",
+    "name": "Hat of the Magi",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 772
+   },
+   {
+    "aonId": "equipment-443-541-bonus-174",
+    "name": "Hat of the Magi (Greater)",
+    "level": 9,
+    "source": "Core Rulebook",
+    "chars": 772
+   },
+   {
+    "aonId": "equipment-4454-3989-bonus-1465",
+    "name": "Journeybread (Power)",
+    "level": 4,
+    "source": "Treasure Vault",
+    "chars": 987
+   },
+   {
+    "aonId": "equipment-64-bonus-442",
+    "name": "Scholarly Journal",
+    "level": 3,
+    "source": "Core Rulebook",
+    "chars": 752
+   },
+   {
+    "aonId": "equipment-738-721-bonus-260",
+    "name": "Mask of the Banshee",
+    "level": 9,
+    "source": "Advanced Player's Guide",
+    "chars": 1019
+   },
+   {
+    "aonId": "equipment-738-722-bonus-261",
+    "name": "Mask of the Banshee (Greater)",
+    "level": 19,
+    "source": "Advanced Player's Guide",
+    "chars": 1019
+   },
+   {
+    "aonId": "equipment-846-bonus-447",
+    "name": "Astrolabe",
+    "level": 2,
+    "source": "PFS Guide",
+    "chars": 1246
+   }
+  ],
+  "records": 18
+ },
+ {
+  "category": "creature-theme-template",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "creature-theme-template-1",
+    "name": "Aldori Swordlords",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 780
+   },
+   {
+    "aonId": "creature-theme-template-11",
+    "name": "Pathfinder Society",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 833
+   },
+   {
+    "aonId": "creature-theme-template-12",
+    "name": "Red Mantis Assassin",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 844
+   },
+   {
+    "aonId": "creature-theme-template-13",
+    "name": "Whispering Way",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 1132
+   },
+   {
+    "aonId": "creature-theme-template-14",
+    "name": "Deity Worshiper",
+    "level": null,
+    "source": "Gods & Magic",
+    "chars": 1309
+   },
+   {
+    "aonId": "creature-theme-template-15",
+    "name": "The Magaambya",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 982
+   },
+   {
+    "aonId": "creature-theme-template-16",
+    "name": "Hellbound Creature",
+    "level": null,
+    "source": "Bestiary 3",
+    "chars": 1647
+   },
+   {
+    "aonId": "creature-theme-template-17",
+    "name": "Hellbound Creatures",
+    "level": null,
+    "source": "Monster Core 2",
+    "chars": 1697
+   },
+   {
+    "aonId": "creature-theme-template-2",
+    "name": "Aspis Consortium",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 761
+   },
+   {
+    "aonId": "creature-theme-template-3",
+    "name": "Bellflower Network",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 757
+   },
+   {
+    "aonId": "creature-theme-template-4",
+    "name": "Eagle Knights",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 861
+   },
+   {
+    "aonId": "creature-theme-template-5",
+    "name": "Firebrands",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 796
+   },
+   {
+    "aonId": "creature-theme-template-6",
+    "name": "Hellknights",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 1400
+   },
+   {
+    "aonId": "creature-theme-template-7",
+    "name": "Houses of Perfection",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 1229
+   },
+   {
+    "aonId": "creature-theme-template-8",
+    "name": "Knights of Lastwall",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 821
+   },
+   {
+    "aonId": "creature-theme-template-9",
+    "name": "Lion Blades",
+    "level": null,
+    "source": "Character Guide",
+    "chars": 733
+   }
+  ],
+  "records": 16
+ },
+ {
+  "category": "eidolon",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "eidolon-14",
+    "name": "Aberrant",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 1886
+   },
+   {
+    "aonId": "eidolon-15",
+    "name": "Angel",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2038
+   },
+   {
+    "aonId": "eidolon-16",
+    "name": "Anger Phantom",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2724
+   },
+   {
+    "aonId": "eidolon-17",
+    "name": "Beast",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 1990
+   },
+   {
+    "aonId": "eidolon-18",
+    "name": "Construct",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2774
+   },
+   {
+    "aonId": "eidolon-19",
+    "name": "Demon",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2656
+   },
+   {
+    "aonId": "eidolon-2",
+    "name": "Anger Phantom",
+    "level": null,
+    "source": "Secrets of Magic",
+    "chars": 2061
+   },
+   {
+    "aonId": "eidolon-20",
+    "name": "Devotion Phantom",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2451
+   },
+   {
+    "aonId": "eidolon-21",
+    "name": "Dragon",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2500
+   },
+   {
+    "aonId": "eidolon-22",
+    "name": "Fey",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2513
+   },
+   {
+    "aonId": "eidolon-23",
+    "name": "Ooze",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2434
+   },
+   {
+    "aonId": "eidolon-24",
+    "name": "Plant",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2489
+   },
+   {
+    "aonId": "eidolon-25",
+    "name": "Psychopomp",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 2742
+   },
+   {
+    "aonId": "eidolon-26",
+    "name": "Undead",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 3342
+   },
+   {
+    "aonId": "eidolon-3",
+    "name": "Beast",
+    "level": null,
+    "source": "Secrets of Magic",
+    "chars": 1483
+   },
+   {
+    "aonId": "eidolon-6",
+    "name": "Devotion Phantom",
+    "level": null,
+    "source": "Secrets of Magic",
+    "chars": 2274
+   }
+  ],
+  "records": 16
+ },
+ {
+  "category": "animal-companion-advanced",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "animal-companion-advanced-1",
+    "name": "Savage",
+    "level": null,
+    "source": "Core Rulebook",
+    "chars": 488
+   },
+   {
+    "aonId": "animal-companion-advanced-2",
+    "name": "Nimble",
+    "level": null,
+    "source": "Core Rulebook",
+    "chars": 428
+   },
+   {
+    "aonId": "animal-companion-advanced-3",
+    "name": "Indomitable",
+    "level": null,
+    "source": "World Guide",
+    "chars": 994
+   },
+   {
+    "aonId": "animal-companion-advanced-4",
+    "name": "Genie-Touched",
+    "level": null,
+    "source": "Legends",
+    "chars": 1664
+   },
+   {
+    "aonId": "animal-companion-advanced-5",
+    "name": "Unseen",
+    "level": null,
+    "source": "Dark Archive",
+    "chars": 794
+   },
+   {
+    "aonId": "animal-companion-advanced-7",
+    "name": "Nimble",
+    "level": null,
+    "source": "Player Core",
+    "chars": 421
+   },
+   {
+    "aonId": "animal-companion-advanced-8",
+    "name": "Savage",
+    "level": null,
+    "source": "Player Core",
+    "chars": 481
+   },
+   {
+    "aonId": "animal-companion-advanced-9",
+    "name": "Unseen",
+    "level": null,
+    "source": "Dark Archives (Remastered)",
+    "chars": 806
+   }
+  ],
+  "records": 8
+ },
+ {
+  "category": "cult-activity",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "cult-activity-1",
+    "name": "Assist Pantheon",
+    "level": null,
+    "source": "Pathfinder #217: Death Sails a Wine-Dark Sea\r\n",
+    "chars": 2133
+   },
+   {
+    "aonId": "cult-activity-2",
+    "name": "Create Wonders",
+    "level": null,
+    "source": "Pathfinder #217: Death Sails a Wine-Dark Sea\r\n",
+    "chars": 1216
+   },
+   {
+    "aonId": "cult-activity-3",
+    "name": "Oversee Rites",
+    "level": null,
+    "source": "Pathfinder #217: Death Sails a Wine-Dark Sea\r\n",
+    "chars": 843
+   },
+   {
+    "aonId": "cult-activity-4",
+    "name": "Recruit Adherents",
+    "level": null,
+    "source": "Pathfinder #217: Death Sails a Wine-Dark Sea\r\n",
+    "chars": 751
+   },
+   {
+    "aonId": "cult-activity-5",
+    "name": "Teach Doctrine",
+    "level": null,
+    "source": "Pathfinder #217: Death Sails a Wine-Dark Sea\r\n",
+    "chars": 1166
+   }
+  ],
+  "records": 5
+ },
+ {
+  "category": "arcane-school",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "arcane-school-31",
+    "name": "School of Breathtaking Influence",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 845
+   },
+   {
+    "aonId": "arcane-school-32",
+    "name": "School of Keen Inquiry",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 832
+   },
+   {
+    "aonId": "arcane-school-33",
+    "name": "School of Nexian Spaces",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 923
+   },
+   {
+    "aonId": "arcane-school-34",
+    "name": "School of Quantic Control",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 917
+   }
+  ],
+  "records": 4
+ },
+ {
+  "category": "grim-fascination",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "grim-fascination-1",
+    "name": "Blood",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 553
+   },
+   {
+    "aonId": "grim-fascination-2",
+    "name": "Bone",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 351
+   },
+   {
+    "aonId": "grim-fascination-3",
+    "name": "Flesh",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 522
+   },
+   {
+    "aonId": "grim-fascination-4",
+    "name": "Spirit",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 475
+   }
+  ],
+  "records": 4
+ },
+ {
+  "category": "fatal-method",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "fatal-method-1",
+    "name": "Puppeteer",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 578
+   },
+   {
+    "aonId": "fatal-method-2",
+    "name": "Reaper",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 528
+   }
+  ],
+  "records": 2
+ },
+ {
+  "category": "heritage",
+  "fragment": 0,
+  "nameHeld": 12,
+  "record": [
+   {
+    "aonId": "heritage-438",
+    "name": "Defensive Automaton",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 233
+   },
+   {
+    "aonId": "heritage-439",
+    "name": "Newly Minted Automaton",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 410
+   }
+  ],
+  "records": 2
+ },
+ {
+  "category": "hybrid-study",
+  "fragment": 0,
+  "nameHeld": 5,
+  "record": [
+   {
+    "aonId": "hybrid-study-15",
+    "name": "Twofold Tine",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 776
+   },
+   {
+    "aonId": "hybrid-study-16",
+    "name": "Volatile Spark",
+    "level": null,
+    "source": "Impossible Magic",
+    "chars": 1078
+   }
+  ],
+  "records": 2
+ },
+ {
+  "category": "archetype",
+  "fragment": 0,
+  "nameHeld": 6,
+  "record": [
+   {
+    "aonId": "archetype-311",
+    "name": "Venture-Gossip",
+    "level": 4,
+    "source": "Foolish Housekeeping and Other Articles",
+    "chars": 1692
+   }
+  ],
+  "records": 1
+ },
+ {
+  "category": "deity",
+  "fragment": 0,
+  "nameHeld": 4,
+  "record": [
+   {
+    "aonId": "deity-701",
+    "name": "Chinostes (Nightwarden)",
+    "level": null,
+    "source": "Pathfinder #216: The Acropolis Pyre",
+    "chars": 1502
+   }
+  ],
+  "records": 1
+ },
+ {
+  "category": "familiar-specific",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [
+   {
+    "aonId": "familiar-specific-54",
+    "name": "Dust Bunny",
+    "level": null,
+    "source": "Foolish Housekeeping and Other Articles",
+    "chars": 1320
+   }
+  ],
+  "records": 1
+ },
+ {
+  "category": "animal-companion",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "animal-companion-specialization",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "animal-companion-unique",
+  "fragment": 0,
+  "nameHeld": 1,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "apparition",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "arcane-thesis",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "armor",
+  "fragment": 0,
+  "nameHeld": 7,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "armor-group",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "bloodline",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "cause",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "class",
+  "fragment": 0,
+  "nameHeld": 2,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "class-kit",
+  "fragment": 0,
+  "nameHeld": 16,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "condition",
+  "fragment": 0,
+  "nameHeld": 1,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "conscious-mind",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "curse",
+  "fragment": 0,
+  "nameHeld": 1,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "deity-category",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "deviant-ability-classification",
+  "fragment": 0,
+  "nameHeld": 3,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "disease",
+  "fragment": 0,
+  "nameHeld": 15,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "doctrine",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "domain",
+  "fragment": 0,
+  "nameHeld": 2,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "draconic-exemplar",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "druidic-order",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "element",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "epithet",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "familiar-ability",
+  "fragment": 0,
+  "nameHeld": 10,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "feat",
+  "fragment": 0,
+  "nameHeld": 162,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "hellknight-order",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "hunters-edge",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "ikon",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "implement",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "innovation",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "instinct",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "language",
+  "fragment": 0,
+  "nameHeld": 1,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "lesson",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "methodology",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "muse",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "mystery",
+  "fragment": 0,
+  "nameHeld": 2,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "mythic-calling",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "patron",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "practice",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "racket",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "relic",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "research-field",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "ritual",
+  "fragment": 0,
+  "nameHeld": 13,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "set-relic",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "shield",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "siege-weapon",
+  "fragment": 0,
+  "nameHeld": 23,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "skill",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "spell",
+  "fragment": 0,
+  "nameHeld": 150,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "style",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "subconscious-mind",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "tactic",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "tenet",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "tradition",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "trait",
+  "fragment": 0,
+  "nameHeld": 15,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "vehicle",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "way",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "weapon",
+  "fragment": 0,
+  "nameHeld": 56,
+  "record": [],
+  "records": 0
+ },
+ {
+  "category": "weapon-group",
+  "fragment": 0,
+  "nameHeld": 0,
+  "record": [],
+  "records": 0
+ }
+]

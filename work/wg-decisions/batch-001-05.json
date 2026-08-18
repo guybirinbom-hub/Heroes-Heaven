@@ -1,0 +1,24 @@
+[
+  {
+    "category": "feats",
+    "id": "extended-kinesis",
+    "field": "modifiesGrant",
+    "value": [
+      {
+        "from": "base-kinesis",
+        "actionRider": {
+          "actionId": "base-kinesis",
+          "note": "adds three options: Proliferate (expand an existing element), Regulate (air, fire, metal or water — change its temperature) and Sculpt (earth, metal or wood — reshape it into a small crude object)."
+        }
+      }
+    ],
+    "why": "Printed: \"Add the following options to Base Kinesis.\" WG encodes this as injectText {type:'feat', id:21758 (Base Kinesis), text:'…Proliferate…Regulate…Sculpt…'} — its only operation. We encoded NOTHING (actionCost:passive alone), so the three options existed only inside this feat's own description and never reached the Base Kinesis row where a player performs it. modifiesGrant.actionRider is our field for exactly this (Principle C / RECORD_MARKERS on:'action'). Verified end to end: build.ts:4109 turns it into grantMarkers, recordMarkersFor(c, db, 'action', 'base-kinesis') returns it, and MainTab.tsx:589 keys markers off actionId(a.name) = 'base-kinesis'; classFeatures/base-kinesis carries actionCost {actions:2} so it IS an action row. Confirmed on BOTH routes — the kineticist (owns classFeatures/base-kinesis) and the archetype (took feats/base-kinesis) — since the `from` gate is ownedIds over feats + class features. Note deliberately does not open with the feat's own name (all three renderers prefix it)."
+  },
+  {
+    "category": "heritages",
+    "id": "respite-of-loam-and-leaf",
+    "field": "grantsCreatureTraits",
+    "value": ["plant"],
+    "why": "Printed: \"Your roots in the world grant you the plant trait.\" WG's first operation is giveTrait traitId:1654 (plant). We encoded nothing: the record carries traits ['plant','yaksha'] but creatureTraitsOf (derive.ts:2401) reads a heritage's grantsCreatureTraits ONLY — a heritage's own `traits` array is never read — and the ancestry half comes from ancestries.yaksha.traits, which is ['spirit','yaksha']. Measured before/after on a built yaksha: BEFORE ['spirit','yaksha'], AFTER ['spirit','yaksha','plant (granted / Respite of Loam and Leaf)'] on the Details tab. Same shape the sibling heritage tidepool-dragonet already uses (traits ['amphibious'] AND grantsCreatureTraits ['amphibious']). The cantrip half is untouched: our effectChoices picker already grants an at-will primal innate cantrip, matching their `select from:SPELL` filtered to Cantrip+Primal, and the option list stays ours."
+  }
+]

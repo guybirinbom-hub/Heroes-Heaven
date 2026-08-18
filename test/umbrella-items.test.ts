@@ -11,13 +11,22 @@ const umbrellas = () => findUmbrellaIds(content().items as unknown as Record<str
 
 describe('umbrella detection', () => {
   it('finds the AoN family summaries', () => {
-    // Measured, not guessed: this is what the three conditions catch over the shipped 7,568 items.
+    // Measured, not guessed: this is what the conditions catch over the shipped items.
     // It rose from 439 when ruling B stripped the leaked flat bonus off `maestros-instrument` and
     // `camouflaging-chromatophores` — both are summary rows, and the bonus was the only thing that
     // had been sparing them. The two rulings agreeing on those records is the point, not a surprise.
     // Back to 439 with `peachwood` and `peachwood-weapon`, two family summaries a fresher AoN export
     // brought in — new content, not a change in what detection catches.
-    expect(umbrellas().size).toBe(439);
+    // 440 with `poets-fritter`, from the Bastion of Blasphemies import. AoN heads that page "Item 7+"
+    // (equipment-5203 — the id we imported this record from, unpriced) above three level-2 grade
+    // blocks, and the app carries all three of those priced: a textbook summary, so the ratchet
+    // legitimately rises by one.
+    // The same import raised the count by TWO, and the second was a defect rather than content:
+    // `soulheart` is equipment-5194-4715, the "Item 5" grade block of that page, and price + kin
+    // caught it only because artifacts are priceless. Hiding it would have deleted the base artifact
+    // and left only Greater/Major/Pure. See `blockOfAPage` in src/data — an AoN block id now proves a
+    // record is one of the grades, so the fourth condition spares it and the count is 440, not 441.
+    expect(umbrellas().size).toBe(440);
   });
 
   it('hides the summaries the owner named', () => {

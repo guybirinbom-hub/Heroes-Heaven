@@ -1,0 +1,1480 @@
+[
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "well-groomed",
+  "i": 0,
+  "when": "against diseases (success becomes a critical success)",
+  "bonus": "+2 circumstance",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "steadying-stone",
+  "i": 2,
+  "when": "on Acrobatics checks to Balance on uneven ground made of earth or rock",
+  "bonus": "success becomes a critical success",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "acrobatics"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "conceited-mindset",
+  "i": 0,
+  "when": "against mental effects — a success becomes a critical success, but a failure becomes a critical failure",
+  "bonus": "+2 circumstance",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "on-my-best-day",
+  "i": 0,
+  "when": "until the end of your next turn after an Incarnation Lore check with On My Best Day…",
+  "bonus": "+1 to +3 status (by degree of success; on a critical failure it applies only to the next attack against you)",
+  "targets": [
+   {
+    "kind": "ac"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "the-sickness",
+  "i": 0,
+  "when": "against disease (and a success on a save vs. disease becomes a critical success)",
+  "bonus": "+2 item (+3 at 20th level)",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "grub-gloves",
+  "i": 0,
+  "when": "on Reflex saves to Grab an Edge (and a success becomes a critical success)",
+  "bonus": "+2 circumstance (+3 moderate, +4 greater)",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "grub-gloves-lesser",
+  "i": 0,
+  "when": "on Reflex saves to Grab an Edge (and a success becomes a critical success)",
+  "bonus": "+2 circumstance",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "grub-gloves-moderate",
+  "i": 0,
+  "when": "on Reflex saves to Grab an Edge (and a success becomes a critical success)",
+  "bonus": "+3 circumstance",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "grub-gloves-greater",
+  "i": 0,
+  "when": "on Reflex saves to Grab an Edge (and a success becomes a critical success)",
+  "bonus": "+4 circumstance",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "hydra-mutagen",
+  "i": 8,
+  "when": "you fail or critically fail a Will save against a mental effect while the mutagen is active",
+  "bonus": "one degree of success better (once per mutagen)",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "bravos-brew-greater",
+  "i": 1,
+  "when": "on Will saves against fear (this replaces the +3, it does not stack); a success against fear becomes a critical success",
+  "bonus": "+4 item",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "juggernaut-mutagen-greater",
+  "i": 0,
+  "when": "while the greater juggernaut mutagen is active (1 hour); a success on a Fortitude save becomes a critical success",
+  "bonus": "+3 item",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "wajaghand-vanara",
+  "i": 0,
+  "when": "against emotion effects (and a success on such a save becomes a critical success)",
+  "bonus": "+1 circumstance",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "aon-vulture",
+  "i": 0,
+  "when": "against diseases — this applies to the VULTURE's saves, not yours",
+  "bonus": "+1 status (a success against a disease becomes a critical success)",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "numb",
+  "i": 0,
+  "when": "on saves against emotion and pain effects (while Deteriorated, a success on such a save becomes a critical success)",
+  "bonus": "+1 circumstance (+2 while Deteriorated)",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "cloak-of-repute",
+  "i": 1,
+  "when": "once per day, when you activate the cloak (2 actions, command) to Request something of a creature",
+  "bonus": "success becomes a critical success",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "diplomacy"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "cloak-of-repute-greater",
+  "i": 1,
+  "when": "twice per day, when you activate the cloak (2 actions, command) to Request something of a creature",
+  "bonus": "success becomes a critical success",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "diplomacy"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "cloak-of-repute-major",
+  "i": 1,
+  "when": "three times per day, when you activate the cloak (2 actions, command) to Request something of a creature",
+  "bonus": "success becomes a critical success; critical failure becomes a failure",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "diplomacy"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "staff-acrobat-dedication",
+  "i": 1,
+  "when": "on Acrobatics checks to Balance while wielding your staff (a success becomes a critical success)",
+  "bonus": "success → critical success",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "acrobatics"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "gorilla-stance",
+  "i": 0,
+  "when": "on Athletics checks to Climb while in Gorilla Stance (a success becomes a critical success)",
+  "bonus": "+2 circumstance",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "athletics"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "intuitive-crafting",
+  "i": 0,
+  "when": "when you critically fail a Crafting check to Repair an item",
+  "bonus": "critical failure becomes a failure instead (untyped)",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "crafting"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "magical-shorthand",
+  "i": 0,
+  "when": "on a check to Learn a Spell",
+  "bonus": "a success becomes a critical success (untyped)",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "arcana"
+   },
+   {
+    "kind": "skill",
+    "detail": "nature"
+   },
+   {
+    "kind": "skill",
+    "detail": "occultism"
+   },
+   {
+    "kind": "skill",
+    "detail": "religion"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "nocturnal-navigator",
+  "i": 0,
+  "when": "whenever you can clearly identify the stars…",
+  "bonus": "one degree of success better — success becomes a critical success, critical failure becomes a failure (untyped)",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "survival"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "runic-skullcap",
+  "i": 0,
+  "when": "on a check to Recall Knowledge about rune magic or Lissala, while wearing the skullcap",
+  "bonus": "failure or critical failure becomes one degree of success better",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "elements-of-creation",
+  "i": 0,
+  "when": "while all four creative-spark wisps assist you",
+  "bonus": "creative spark's bonus is doubled; blacksmithing Crafting outcomes one degree better",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "crafting"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "travelers-fulu",
+  "i": 0,
+  "when": "on the Sense Direction check you activated the fulu for (also counts as having a compass)",
+  "bonus": "one degree of success better (two if you are a master in Survival)",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "survival"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "dragonblood",
+  "i": 0,
+  "when": "against fear effects",
+  "bonus": "success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "abjure-the-false-kin",
+  "i": 0,
+  "when": "on a saving throw against a mental effect that doesn't deal damage",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "athletic-might",
+  "i": 0,
+  "when": "on Athletics checks to Climb or Swim",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "athletics"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "brine-may",
+  "i": 0,
+  "when": "on an Athletics check to Swim",
+  "bonus": "a success is a critical success instead; and you don't sink if you end your turn in water without having succeeded at a Swim that round",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "athletics"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "cantorian-reinforcement",
+  "i": 0,
+  "when": "on a saving throw against a disease or poison",
+  "bonus": "a success is a critical success instead (and, if you also have Battle Hardened or a similar ability, a critical failure is a failure instead)",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "disillusionment",
+  "i": 0,
+  "when": "against an illusion or dream effect",
+  "bonus": "success is a critical success; critical failure is a failure",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "disillusionment",
+  "i": 1,
+  "when": "to disbelieve an illusion",
+  "bonus": "success is a critical success; critical failure is a failure",
+  "targets": [
+   {
+    "kind": "perception"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "emerald-boughs-accustomation",
+  "i": 0,
+  "when": "to Subsist",
+  "bonus": "critical failure becomes a failure; success becomes a critical success",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "society"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "empathy-incarnate",
+  "i": 1,
+  "when": "to Make an Impression or Request vs a lower-level creature",
+  "bonus": "any success becomes a critical success",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "diplomacy"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "fire-savvy",
+  "i": 1,
+  "when": "against suffocation or choking due to smoke or ash",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "haughty-obstinacy",
+  "i": 0,
+  "when": "vs a mental effect that directly controls your actions",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "iron-lung",
+  "i": 0,
+  "when": "against an inhaled poison",
+  "bonus": "treat your result as one degree of success better",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "irrepressible",
+  "i": 0,
+  "when": "against an emotion effect",
+  "bonus": "a success is a critical success instead (and, with the gutsy halfling heritage, a critical failure is a failure instead)",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "irrepressible-ganzi",
+  "i": 0,
+  "when": "against an emotion effect",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "irrepressible-halfling",
+  "i": 0,
+  "when": "against an emotion effect",
+  "bonus": "a success is a critical success instead (and, with the gutsy halfling heritage, a critical failure is a failure instead)",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "irrepressible-nephilim",
+  "i": 0,
+  "when": "against an emotion effect",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "jungle-strider",
+  "i": 0,
+  "when": "to Balance on narrow surfaces or uneven ground made of plant material",
+  "bonus": "you aren't off-guard while doing so, and a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "acrobatics"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "just-the-facts",
+  "i": 0,
+  "when": "when you Recall Knowledge",
+  "bonus": "use the outcome one degree of success better; the check isn't secret, and you know which information is inaccurate",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "savage-critical",
+  "i": 0,
+  "when": "with a weapon or unarmed attack you have legendary proficiency in",
+  "bonus": "a natural 19 that would be a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "strikeAttack"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "unwavering-mien",
+  "i": 0,
+  "when": "against an effect that would make you fall asleep",
+  "bonus": "treat your result as one degree of success better",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "agile-mind",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "anvils-hardness",
+  "i": 0,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "assured-evasion",
+  "i": 0,
+  "when": "on any Reflex save",
+  "bonus": "a critical failure is a failure instead, and on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "battle-hardened",
+  "i": 0,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "battlefield-intuition",
+  "i": 0,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "blast-dodger",
+  "i": 0,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "divine-will",
+  "i": 0,
+  "when": "on a successful Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "dogged-will",
+  "i": 0,
+  "when": "on a successful Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "earned-resilience",
+  "i": 0,
+  "when": "on a successful Fortitude save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "evasive-reflexes",
+  "i": 0,
+  "when": "on a successful Reflex save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "explosion-dodger",
+  "i": 0,
+  "when": "on a successful Reflex save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "fortress-of-will",
+  "i": 0,
+  "when": "on every Will save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "greater-dogged-will",
+  "i": 0,
+  "when": "on every Will save",
+  "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "greater-juggernaut",
+  "i": 0,
+  "when": "on every Fortitude save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "greater-kinetic-durability",
+  "i": 0,
+  "when": "on every Fortitude save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "greater-mysterious-resolve",
+  "i": 0,
+  "when": "on every Will save",
+  "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "greater-natural-reflexes",
+  "i": 0,
+  "when": "on every Reflex save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "greater-performers-heart",
+  "i": 0,
+  "when": "on every Will save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "greater-rogue-reflexes",
+  "i": 0,
+  "when": "on every Reflex save",
+  "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "greater-unassailable-soul",
+  "i": 0,
+  "when": "on every Will save",
+  "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "indomitable-will",
+  "i": 0,
+  "when": "on every Will save",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "juggernaut",
+  "i": 0,
+  "when": "on every Fortitude save",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "keen-flair",
+  "i": 0,
+  "when": "with a weapon or unarmed attack you have master proficiency in",
+  "bonus": "a 19 on the die that succeeds becomes a critical success",
+  "targets": [
+   {
+    "kind": "strikeAttack"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "kinetic-durability",
+  "i": 0,
+  "when": "on every Fortitude save",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "kinetic-quickness",
+  "i": 0,
+  "when": "on every Reflex save",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "lead-constitution",
+  "i": 0,
+  "when": "on every Fortitude save",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "majestic-will",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "master-of-mind-and-spirit",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "mortality-reforged",
+  "i": 0,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "mysterious-resolve",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "natural-reflexes",
+  "i": 0,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "path-to-perfection",
+  "i": 0,
+  "when": "on the save you chose for Path to Perfection",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "perfected-mind",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "perfected-mind",
+  "i": 1,
+  "when": "on any Will save",
+  "bonus": "a critical failure is a failure instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "performers-heart",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "prodigious-will",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "reinforced-ego",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "resolute-faith",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "resolve",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "rogue-resilience",
+  "i": 0,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "sacred-body",
+  "i": 0,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "savvy-reflexes",
+  "i": 0,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "shared-resolve",
+  "i": 0,
+  "when": "on any Will save (you and your eidolon)",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "tempered-reflexes",
+  "i": 0,
+  "when": "on any Reflex save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "reflex"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "twin-juggernauts",
+  "i": 0,
+  "when": "on any Fortitude save (also your eidolon's)",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "unassailable-soul",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "unyielding-resolve",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "walls-of-will",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "wardens-endurance",
+  "i": 0,
+  "when": "on any Fortitude save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "fortitude"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "wild-willpower",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "will-of-the-pupil",
+  "i": 0,
+  "when": "on any Will save",
+  "bonus": "a success is a critical success instead",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "will"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "words-of-wisdom-lesser",
+  "i": 1,
+  "when": "on a critical failure with Diplomacy or your phrase's skill during that 1 minute",
+  "bonus": "critical failure becomes a failure instead (untyped)",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "diplomacy"
+   },
+   {
+    "kind": "skill",
+    "detail": "intimidation"
+   },
+   {
+    "kind": "skill",
+    "detail": "deception"
+   },
+   {
+    "kind": "skill",
+    "detail": "performance"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "words-of-wisdom-moderate",
+  "i": 1,
+  "when": "on a critical failure with Diplomacy or your phrase's skill during those 10 minutes",
+  "bonus": "critical failure becomes a failure instead (untyped)",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "diplomacy"
+   },
+   {
+    "kind": "skill",
+    "detail": "intimidation"
+   },
+   {
+    "kind": "skill",
+    "detail": "deception"
+   },
+   {
+    "kind": "skill",
+    "detail": "performance"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "words-of-wisdom-greater",
+  "i": 1,
+  "when": "on a critical failure with Diplomacy or your phrase's skill during that hour",
+  "bonus": "critical failure becomes a failure instead (untyped)",
+  "targets": [
+   {
+    "kind": "skill",
+    "detail": "diplomacy"
+   },
+   {
+    "kind": "skill",
+    "detail": "intimidation"
+   },
+   {
+    "kind": "skill",
+    "detail": "deception"
+   },
+   {
+    "kind": "skill",
+    "detail": "performance"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "born-of-item",
+  "i": 1,
+  "when": "in yaoguai form, on a save against a mental effect",
+  "bonus": "a success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "FEAT_SITUATIONAL",
+  "id": "lovers-gloves",
+  "i": 2,
+  "when": "on a success against an emotion effect that causes negative emotions, while a shared Bond lasts",
+  "bonus": "the success becomes a critical success",
+  "targets": [
+   {
+    "kind": "save",
+    "detail": "all"
+   }
+  ]
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "the-publican",
+  "i": 0,
+  "on": "action",
+  "mkId": "aid",
+  "value": "crit fail → fail",
+  "note": "While invested: critically failed checks to Aid count as failures; from 14th level the cir"
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "experienced-professional",
+  "i": 0,
+  "on": "action",
+  "mkId": "earn-income",
+  "value": "crit fail -> fail",
+  "note": "When you use Lore to Earn Income a critical failure becomes a failure; if you're an expert in Lore, a failed check earns twice as much income (unless it was originally a critical failure)."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "student-of-the-canon",
+  "i": 0,
+  "on": "action",
+  "mkId": "recall-knowledge",
+  "value": "crit fail -> fail (Religion)",
+  "note": "Student of the Canon: a critical failure to Recall Knowledge about the tenets of faiths becomes a failure. For your OWN faith, a failure becomes a success and a success becomes a critical success."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "student-of-the-canon",
+  "i": 1,
+  "on": "action",
+  "mkId": "decipher-writing",
+  "value": "crit fail -> fail (religious)",
+  "note": "Student of the Canon: a critical failure on a Religion check to Decipher Writing of a religious nature becomes a failure instead."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "sturdy-bindings",
+  "i": 0,
+  "on": "action",
+  "mkId": "grapple",
+  "value": "crit fail -> fail",
+  "note": "Sturdy Bindings: a critical failure on your check to Grapple is a failure instead. A creature you have grabbed also turns a failed Escape into a critical failure, and a critical success into a success."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "sure-feet",
+  "i": 0,
+  "on": "action",
+  "mkId": "balance",
+  "value": "success -> crit success",
+  "note": "Sure Feet: a success on an Acrobatics check to Balance is a critical success instead, and you're not off-guard while you Balance."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "sure-feet",
+  "i": 1,
+  "on": "action",
+  "mkId": "climb",
+  "value": "success -> crit success",
+  "note": "Sure Feet: a success on an Athletics check to Climb is a critical success instead, and you're not off-guard while you Climb."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "bravery",
+  "i": 0,
+  "on": "condition",
+  "mkId": "frightened",
+  "value": "-1 when gained",
+  "note": "Bravery: anytime you gain the frightened condition, reduce its value by 1. In addition, when you roll a success at a Will save against a fear effect, you get a critical success instead."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "caveclimber-kobold",
+  "i": 0,
+  "on": "action",
+  "mkId": "climb",
+  "value": "success → critical success",
+  "note": "You Climb with your clawed feet and tail, leaving your hands free, and a success on the Athletics check is a critical success."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "cliffscale-lizardfolk",
+  "i": 0,
+  "on": "action",
+  "mkId": "climb",
+  "value": "success → critical success",
+  "note": "While not wearing footwear you climb with the sticky pads on your feet, leaving your hands free, and a success on the Athletics check is a critical success."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "fishseeker-shoony",
+  "i": 0,
+  "on": "action",
+  "mkId": "grab-an-edge",
+  "value": "success → crit success; crit fail → fail",
+  "note": "On a check to Grab an Edge a success is a critical success and a critical failure is a failure instead."
+ },
+ {
+  "reg": "RECORD_MARKERS",
+  "id": "paddler-shoony",
+  "i": 0,
+  "on": "action",
+  "mkId": "swim",
+  "value": "success → critical success",
+  "note": "A success on a check to Swim is a critical success instead."
+ }
+]

@@ -1,0 +1,419 @@
+[
+ {
+  "id": "convocation-of-earth-and-moon",
+  "coll": "feats",
+  "name": "Convocation of Earth and Moon",
+  "radius": [
+   null
+  ],
+  "effects": []
+ },
+ {
+  "id": "ascended-celestial-dedication",
+  "coll": "feats",
+  "name": "Ascended Celestial Dedication",
+  "radius": [
+   "@actor.flags.system.ascendedCelestial.aura"
+  ],
+  "effects": [
+   "Effect: Ascended Celestial Nimbus"
+  ]
+ },
+ {
+  "id": "commander-dedication",
+  "coll": "feats",
+  "name": "Commander Dedication",
+  "radius": [
+   30
+  ],
+  "effects": []
+ },
+ {
+  "id": "aura-of-confidence",
+  "coll": "feats",
+  "name": "Aura of Confidence",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Aura of Confidence"
+  ]
+ },
+ {
+  "id": "corpse-stench",
+  "coll": "feats",
+  "name": "Corpse Stench",
+  "radius": [
+   10
+  ],
+  "effects": []
+ },
+ {
+  "id": "consecrated-aura",
+  "coll": "feats",
+  "name": "Consecrated Aura",
+  "radius": [
+   20
+  ],
+  "effects": []
+ },
+ {
+  "id": "empyreal-aura",
+  "coll": "feats",
+  "name": "Empyreal Aura",
+  "radius": [
+   30
+  ],
+  "effects": []
+ },
+ {
+  "id": "marshal-dedication",
+  "coll": "feats",
+  "name": "Marshal Dedication",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Marshal's Aura"
+  ]
+ },
+ {
+  "id": "overwatch-dedication",
+  "coll": "feats",
+  "name": "Overwatch Dedication",
+  "radius": [
+   30
+  ],
+  "effects": [
+   "Effect: Overwatch Field"
+  ]
+ },
+ {
+  "id": "wide-overwatch",
+  "coll": "feats",
+  "name": "Wide Overwatch",
+  "radius": [
+   60
+  ],
+  "effects": [
+   "Effect: Overwatch Field"
+  ]
+ },
+ {
+  "id": "aura-of-faith",
+  "coll": "feats",
+  "name": "Aura of Faith",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": [
+   "Effect: Aura of Faith"
+  ]
+ },
+ {
+  "id": "aura-of-determination",
+  "coll": "feats",
+  "name": "Aura of Determination",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": [
+   "Effect: Aura of Determination"
+  ]
+ },
+ {
+  "id": "aura-of-life",
+  "coll": "feats",
+  "name": "Aura of Life",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": [
+   "Effect: Aura of Life"
+  ]
+ },
+ {
+  "id": "aura-of-righteousness",
+  "coll": "feats",
+  "name": "Aura of Righteousness",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": [
+   "Effect: Aura of Righteousness"
+  ]
+ },
+ {
+  "id": "divine-health",
+  "coll": "feats",
+  "name": "Divine Health",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": [
+   "Effect: Divine Health"
+  ]
+ },
+ {
+  "id": "oath-of-the-defender",
+  "coll": "feats",
+  "name": "Oath of The Defender",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": [
+   "Effect: Oath of the Defender"
+  ]
+ },
+ {
+  "id": "aura-of-despair",
+  "coll": "feats",
+  "name": "Aura of Despair",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": [
+   "Effect: Aura of Despair"
+  ]
+ },
+ {
+  "id": "eternal-blessing",
+  "coll": "feats",
+  "name": "Eternal Blessing",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Spell Effect: Bless"
+  ]
+ },
+ {
+  "id": "glorious-banner",
+  "coll": "feats",
+  "name": "Glorious Banner",
+  "radius": [
+   60
+  ],
+  "effects": [
+   "Effect: Commander's Banner",
+   "Effect: Glorious Banner"
+  ]
+ },
+ {
+  "id": "primal-aegis",
+  "coll": "feats",
+  "name": "Primal Aegis",
+  "radius": [
+   30
+  ],
+  "effects": [
+   "Effect: Primal Aegis"
+  ]
+ },
+ {
+  "id": "area-armor",
+  "coll": "feats",
+  "name": "Area Armor",
+  "radius": [
+   null
+  ],
+  "effects": [
+   "Effect: Area Armor",
+   "Effect: Area Armor"
+  ]
+ },
+ {
+  "id": "enlightened-presence",
+  "coll": "feats",
+  "name": "Enlightened Presence",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Enlightened Presence"
+  ]
+ },
+ {
+  "id": "undying-conviction",
+  "coll": "feats",
+  "name": "Undying Conviction",
+  "radius": [
+   30
+  ],
+  "effects": [
+   "Effect: Undying Conviction"
+  ]
+ },
+ {
+  "id": "adept-benefit-regalia",
+  "coll": "classFeatures",
+  "name": "Adept Benefit (Regalia)",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Regalia"
+  ]
+ },
+ {
+  "id": "air-gate",
+  "coll": "classFeatures",
+  "name": "Air Gate",
+  "radius": [
+   "@actor.flags.system.kineticist.auraRadius"
+  ],
+  "effects": [
+   "Effect: Aura Junction (Air)"
+  ]
+ },
+ {
+  "id": "blessed-swiftness",
+  "coll": "classFeatures",
+  "name": "Blessed Swiftness",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": [
+   "Effect: Blessed Swiftness"
+  ]
+ },
+ {
+  "id": "champions-aura",
+  "coll": "classFeatures",
+  "name": "Champion's Aura",
+  "radius": [
+   "@actor.flags.system.champion.aura"
+  ],
+  "effects": []
+ },
+ {
+  "id": "commanders-banner",
+  "coll": "classFeatures",
+  "name": "Commander's Banner",
+  "radius": [
+   30
+  ],
+  "effects": [
+   "Effect: Commander's Banner"
+  ]
+ },
+ {
+  "id": "fetching-bangles",
+  "coll": "classFeatures",
+  "name": "Fetching Bangles",
+  "radius": [
+   10
+  ],
+  "effects": []
+ },
+ {
+  "id": "fire-gate",
+  "coll": "classFeatures",
+  "name": "Fire Gate",
+  "radius": [
+   "@actor.flags.system.kineticist.auraRadius"
+  ],
+  "effects": [
+   "Effect: Aura Junction (Fire)"
+  ]
+ },
+ {
+  "id": "initiate-benefit-lantern",
+  "coll": "classFeatures",
+  "name": "Initiate Benefit (Lantern)",
+  "radius": [
+   "@actor.flags.system.thaumaturge.lantern"
+  ],
+  "effects": [
+   "Effect: Lantern"
+  ]
+ },
+ {
+  "id": "initiate-benefit-regalia",
+  "coll": "classFeatures",
+  "name": "Initiate Benefit (Regalia)",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Regalia"
+  ]
+ },
+ {
+  "id": "metal-gate",
+  "coll": "classFeatures",
+  "name": "Metal Gate",
+  "radius": [
+   "@actor.flags.system.kineticist.auraRadius"
+  ],
+  "effects": [
+   "Effect: Aura Junction (Metal)"
+  ]
+ },
+ {
+  "id": "mirrored-aegis",
+  "coll": "classFeatures",
+  "name": "Mirrored Aegis",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Mirrored Aegis"
+  ]
+ },
+ {
+  "id": "paragon-benefit-regalia",
+  "coll": "classFeatures",
+  "name": "Paragon Benefit (Regalia)",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Regalia"
+  ]
+ },
+ {
+  "id": "paragon-benefit-shield",
+  "coll": "classFeatures",
+  "name": "Paragon Benefit (Shield)",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Shield Paragon Benefit"
+  ]
+ },
+ {
+  "id": "victors-wreath",
+  "coll": "classFeatures",
+  "name": "Victor's Wreath",
+  "radius": [
+   15
+  ],
+  "effects": [
+   "Effect: Victor's Wreath"
+  ]
+ },
+ {
+  "id": "water-gate",
+  "coll": "classFeatures",
+  "name": "Water Gate",
+  "radius": [
+   "@actor.flags.system.kineticist.auraRadius"
+  ],
+  "effects": [
+   "Effect: Aura Junction (Water)"
+  ]
+ },
+ {
+  "id": "wood-gate",
+  "coll": "classFeatures",
+  "name": "Wood Gate",
+  "radius": [
+   "@actor.flags.system.kineticist.auraRadius"
+  ],
+  "effects": [
+   "Effect: Aura Junction (Wood)"
+  ]
+ }
+]

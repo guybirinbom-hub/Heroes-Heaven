@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
-import { listValues, isDuplicateId, NEAR_DUPLICATE_IDS } from '../src/data';
+import { listValues, isDuplicateId, NEAR_DUPLICATE_IDS, REMASTER_REPRINT_IDS } from '../src/data';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';
 import { emptyBuild } from '../src/rules/build';
 
@@ -40,6 +40,31 @@ describe('aon- duplicate suppression', () => {
       if (aonId && visibleWithAonId(aonId)) continue;
       const rec = c.items[id];
       expect(rec, `${id} hidden but not an item`).toBeTruthy();
+      /*
+       * A FIFTH mechanism: a REPRINT whose grade LADDER was re-indexed. Impossible Magic reprints
+       * Secrets of Magic equipment, and it renumbered the rungs — "Major Healer's Gel" is the reprint
+       * of "Healer's Gel (GREATER)", not of "(Major)". So the twin-name derivation below, which just
+       * swaps the grade word around, looks for an item that does not exist and never can.
+       *
+       * The guarantee this test exists to enforce is unchanged, and is still enforced: a visible
+       * record of the same item must remain. It is checked here on LEVEL AND PRICE — the two things
+       * the reprint kept identical and the two things REMASTER_REPRINT_IDS was curated against —
+       * rather than on a name the renumbering makes unreliable.
+       */
+      if (REMASTER_REPRINT_IDS.has(id)) {
+        const copper = (p?: Record<string, number>) =>
+          (p?.pp ?? 0) * 1000 + (p?.gp ?? 0) * 100 + (p?.sp ?? 0) * 10 + (p?.cp ?? 0);
+        const mine = rec as { level?: number; price?: Record<string, number> };
+        const twin = Object.entries(c.items).find(
+          ([tid, t]) =>
+            tid !== id &&
+            !dupes.has(tid) &&
+            (t as { level?: number }).level === mine.level &&
+            copper((t as { price?: Record<string, number> }).price) === copper(mine.price),
+        );
+        expect(twin, `${id} is a curated reprint but nothing visible matches its level and price`).toBeTruthy();
+        continue;
+      }
       expect(GRADES.some((g) => rec.name.toLowerCase().startsWith(`${g} `)), `${id} is a "Grade Name" spelling`).toBe(true);
       // …and its "Name (Grade)" twin is visible. "Greater Nail Bomb" -> "Nail Bomb (Greater)".
       const twinName = rec.name.replace(/^(\w+)\s+(.*)$/, '$2 ($1)');
